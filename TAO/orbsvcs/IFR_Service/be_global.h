@@ -23,7 +23,7 @@
 #include "TAO_IFR_BE_Export.h"
 #include "idl_bool.h"
 #include "tao/ORB.h"
-#include "tao/InterfaceC.h"
+#include "tao/IFR_Client/InterfaceC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

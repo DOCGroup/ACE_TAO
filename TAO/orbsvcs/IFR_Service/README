@@ -8,11 +8,7 @@ into the ORB dynamically. Applications can get the
 object reference with
 'orb->resolve_initial_references ("TypeCodeFactory");'
 
-The makefile for this library is Makefile.TypeCodeFactory,
-and for the build to succeed, the TAO library must be built 
-with either the compiler option 'interface_repo=1' or (for 
-MSVC users) the line #define TAO_HAS_INTERFACE_REPOSITORY 1 
-uncommented in TAO/tao/orbconf.h.
+The makefile for this library is Makefile.TypeCodeFactory.
 
 
 Interface Repository

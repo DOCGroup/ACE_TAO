@@ -14,7 +14,7 @@
 //    IR objects into the repository by hand, querying them, moving them,
 //    and destroying them.
 //
-// = AUTHORS
+// = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
@@ -22,6 +22,7 @@
 #if !defined (ADMIN_CLIENT_H)
 #define ADMIN_CLIENT_H
 
+#include "tao/IFR_Client/InterfaceC.h"
 #include "tao/corba.h"
 
 const CORBA::ULong NUMBER_OF_TESTS = 11;

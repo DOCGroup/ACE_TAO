@@ -115,6 +115,7 @@ ORB_CORE_FILES = \
   Client_Strategy_Factory.cpp \
   debug.cpp \
   Object_KeyC.cpp \
+  IFR_TypeCodes \
   Invocation.cpp \
   Interceptor.cpp \
   InterceptorC.cpp \
@@ -302,8 +303,6 @@ HEADER_FILES = \
   Interceptor.h \
   InterceptorC.h \
   InterceptorS.h \
-  InterfaceC.h \
-  InterfaceS.h \
   Invocation.h \
   Key_Adapters.h \
   Leader_Follower.h \
@@ -443,8 +442,6 @@ INLINE_FILES = \
   IORS.i \
   Interceptor.i \
   InterceptorC.i \
-  InterfaceC.i \
-  InterfaceS.i \
   Invocation.i \
   Key_Adapters.i \
   Leader_Follower.i \

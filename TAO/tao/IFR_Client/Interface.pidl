@@ -45,6 +45,10 @@ module IR
 
 module CORBA
 {
+  typedef string Identifier;
+  typedef string ScopedName;
+  typedef string RepositoryId;  
+
   interface IRObject 
   {
     // read interface
@@ -52,6 +56,12 @@ module CORBA
     // write interface
     void destroy ();
   };
+
+  typedef short ValueModifier; // PIDL
+  const ValueModifier VM_NONE = 0;
+  const ValueModifier VM_CUSTOM = 1;
+  const ValueModifier VM_ABSTRACT = 2;
+  const ValueModifier VM_TRUNCATABLE = 3;
 
   typedef short Visibility;
   const Visibility PRIVATE_MEMBER = 0;
@@ -888,3 +898,4 @@ module IR
   };
 };
 
+#pragma prefix ""

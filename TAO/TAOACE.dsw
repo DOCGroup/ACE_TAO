@@ -264,6 +264,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Domain"=.\tao\Domain\TAO_Domain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "DsLogAdmin"=.\orbsvcs\orbsvcs\DsLogAdmin.dsp - Package Owner=<4>
 
 Package=<5>
@@ -398,6 +416,21 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Svc Utils
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IFR_Client"=.\tao\IFR_Client\TAO_IFR_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -909,13 +942,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
+    Project_Dep_Name IFR_Client
     End Project Dependency
 }}}
 

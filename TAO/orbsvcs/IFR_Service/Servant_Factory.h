@@ -21,7 +21,7 @@
 #define IFR_SERVANT_FACTORY_H
 
 #include "tao/PortableServer/PortableServerC.h"
-#include "tao/ifrfwd.h"
+#include "tao/IFR_Client/ifrfwd.h"
 #include "ace/Configuration.h"
 
 class TAO_IDLType_i;

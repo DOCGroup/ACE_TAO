@@ -31,10 +31,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  class IR_InterfaceDef;
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
-
+class IR_InterfaceDef;
 class TAO_Stub;
 
 class TAO_Export CORBA_Object
@@ -91,16 +88,20 @@ public:
 
   /// This method is deprecated in the CORBA 2.2 spec, we just return 0
   /// every time.
-  virtual CORBA::ImplementationDef_ptr
-      _get_implementation (CORBA_Environment &ACE_TRY_ENV =
-                             TAO_default_environment ());
+  virtual CORBA::ImplementationDef_ptr _get_implementation (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+  virtual CORBA_IRObject_ptr _get_interface_def (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-  virtual IR_InterfaceDef *_get_interface (CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ());
-
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+  virtual IR_InterfaceDef *_get_interface (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

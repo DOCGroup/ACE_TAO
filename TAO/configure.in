@@ -210,21 +210,6 @@ AC_ARG_ENABLE(fast,
                esac
               ],)
 
-AC_ARG_ENABLE(intf-repo,
-              [  --enable-intf-repo      enable interface repository     [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(TAO_HAS_INTERFACE_REPOSITORY)
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-intf-repo)
-                  ;;
-               esac
-              ],)
-
 AC_ARG_ENABLE(messaging,
               [  --enable-messaging      enable CORBA messaging support  [default=yes]],
               [

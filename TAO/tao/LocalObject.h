@@ -72,12 +72,15 @@ public:
       _get_implementation (CORBA_Environment &ACE_TRY_ENV =
                              TAO_default_environment ());
 
+  /// From CORBA 2.x version of Interface Repository spec.
+  virtual CORBA_IRObject_ptr _get_interface_def (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    );
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  /// throws NO_IMPLEMENT.
-  virtual IR_InterfaceDef *_get_interface (CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ());
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+  /// From CORBA 3.x (CORBA Components) version of IFR spec.
+  virtual IR_InterfaceDef *_get_interface (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    );
 
   /// throws NO_IMPLEMENT.
   virtual void _create_request (CORBA::Context_ptr ctx,

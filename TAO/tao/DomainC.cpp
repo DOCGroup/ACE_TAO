@@ -11,8 +11,9 @@
 #include "Stub.h"
 #include "Invocation.h"
 #include "Exception.h"
-#include "InterfaceC.h"
+#include "tao/IFR_Client_Adapter.h"
 #include "ORB_Core.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 #include "DomainC.i"
@@ -401,7 +402,7 @@ CORBA_ConstructionPolicy::_duplicate (CORBA_ConstructionPolicy_ptr obj)
 }
 
 void CORBA_ConstructionPolicy::make_domain_manager (
-    IR_InterfaceDef* object_type,
+    IR_InterfaceDef *object_type,
     CORBA::Boolean constr_policy,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -409,14 +410,6 @@ void CORBA_ConstructionPolicy::make_domain_manager (
     CORBA::SystemException
   ))
 {
-#if (TAO_HAS_INTERFACE_REPOSITORY == 0)
-
-  ACE_UNUSED_ARG (object_type);
-  ACE_UNUSED_ARG (constr_policy);
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-
-#else // TAO_HAS_INTERFACE_REPOSITORY
-
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
@@ -448,6 +441,11 @@ void CORBA_ConstructionPolicy::make_domain_manager (
     {
 #endif /* TAO_HAS_INTERCEPTORS */
 
+      TAO_IFR_Client_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+            TAO_ORB_Core::ifr_client_adapter_name ()
+          );
+
       for (;;)
         {
           _tao_call.start (ACE_TRY_ENV);
@@ -469,7 +467,7 @@ void CORBA_ConstructionPolicy::make_domain_manager (
 
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
-                (_tao_out << object_type) &&
+                (adapter->interfacedef_cdr_insert (_tao_out, object_type)) &&
                 (_tao_out << CORBA::Any::from_boolean (constr_policy))
             ))
           TAO_INTERCEPTOR_THROW (CORBA::MARSHAL());
@@ -511,8 +509,6 @@ void CORBA_ConstructionPolicy::make_domain_manager (
   ACE_CHECK;
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
 CORBA::Boolean CORBA_ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -560,7 +556,7 @@ const char* CORBA_ConstructionPolicy::_interface_repository_id (void) const
 }
 
 
-#if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
     TAO_GIOP_Invocation *_tao_invocation,
@@ -587,8 +583,15 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
 
   CORBA::ULong len = parameter_list->length ();
   parameter_list->length (len + 1);
-  (*parameter_list)[len].argument <<=  this->object_type_;
 
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  adapter->interfacedef_any_insert ((*parameter_list)[len].argument,
+                                    this->object_type_);
+    
   (*parameter_list)[len].mode = Dynamic::PARAM_IN;
   len = parameter_list->length ();
   parameter_list->length (len + 1);
@@ -628,7 +631,7 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
   return result_any;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERCEPTORS */
 
 CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj

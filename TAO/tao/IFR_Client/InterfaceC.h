@@ -23,9 +23,14 @@
 #define TAO_IDL_INTERFACEC_H
 #include "ace/pre.h"
 
+#include "ifrfwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "IFR_Client_Adapter_Impl.h"
 #include "tao/TAO_Singleton.h"
-#include "tao/corbafwd.h"
-#include "tao/ifrfwd.h"
 #include "tao/Any.h"
 #include "tao/Object.h"
 #include "tao/Managed_Types.h"
@@ -33,23 +38,11 @@
 #include "tao/Typecode.h"
 #include "tao/Remote_Object_Proxy_Impl.h"
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Export
-
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
+#  define TAO_EXPORT_NESTED_MACRO TAO_IFR_Client_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -59,7 +52,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-  class TAO_Export CORBA_IRObject_var : public TAO_Base_var
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
+  class TAO_IFR_Client_Export CORBA_IRObject_var : public TAO_Base_var
   {
   public:
     CORBA_IRObject_var (void); // default constructor
@@ -87,7 +84,7 @@
     CORBA_IRObject_var &operator= (const TAO_Base_var &rhs);
   };
 
-  class TAO_Export CORBA_IRObject_out
+  class TAO_IFR_Client_Export CORBA_IRObject_out
   {
   public:
     CORBA_IRObject_out (CORBA_IRObject_ptr &);
@@ -109,7 +106,7 @@
   class _TAO_IRObject_Proxy_Broker;
   class _TAO_IRObject_Remote_Proxy_Broker;
 
-  class TAO_Export CORBA_IRObject : public virtual CORBA_Object
+  class TAO_IFR_Client_Export CORBA_IRObject : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -198,7 +195,7 @@
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_IRObject_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_IRObject_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
 public:
   virtual ~_TAO_IRObject_Proxy_Impl (void) { }
@@ -233,7 +230,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_IRObject_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_IRObject_Remote_Proxy_Impl :
   public virtual _TAO_IRObject_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl
 {
@@ -276,7 +273,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_IRObject_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_IRObject_Proxy_Broker
 {
 public:
   virtual ~_TAO_IRObject_Proxy_Broker (void);
@@ -301,7 +298,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_IRObject_Remote_Proxy_Broker : public virtual _TAO_IRObject_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_IRObject_Remote_Proxy_Broker : public virtual _TAO_IRObject_Proxy_Broker
 {
 public:
   _TAO_IRObject_Remote_Proxy_Broker (void);
@@ -327,8 +324,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-
-  class TAO_Export IR_Contained_var : public TAO_Base_var
+  class TAO_IFR_Client_Export IR_Contained_var : public TAO_Base_var
   {
   public:
     IR_Contained_var (void); // default constructor
@@ -356,7 +352,7 @@ public:
     IR_Contained_var &operator= (const TAO_Base_var &rhs);
   };
 
-  class TAO_Export IR_Contained_out
+  class TAO_IFR_Client_Export IR_Contained_out
   {
   public:
     IR_Contained_out (IR_Contained_ptr &);
@@ -373,7 +369,7 @@ public:
     IR_Contained_ptr &ptr_;
   };
 
-  class TAO_Export IR_Repository_var : public TAO_Base_var
+  class TAO_IFR_Client_Export IR_Repository_var : public TAO_Base_var
   {
   public:
     IR_Repository_var (void); // default constructor
@@ -401,7 +397,7 @@ public:
     IR_Repository_var &operator= (const TAO_Base_var &rhs);
   };
 
-  class TAO_Export IR_Repository_out
+  class TAO_IFR_Client_Export IR_Repository_out
   {
   public:
     IR_Repository_out (IR_Repository_ptr &);
@@ -418,7 +414,7 @@ public:
     IR_Repository_ptr &ptr_;
   };
 
-  class TAO_Export IR_Container_var : public TAO_Base_var
+  class TAO_IFR_Client_Export IR_Container_var : public TAO_Base_var
   {
   public:
     IR_Container_var (void); // default constructor
@@ -446,7 +442,7 @@ public:
     IR_Container_var &operator= (const TAO_Base_var &rhs);
   };
 
-  class TAO_Export IR_Container_out
+  class TAO_IFR_Client_Export IR_Container_out
   {
   public:
     IR_Container_out (IR_Container_ptr &);
@@ -469,7 +465,7 @@ public:
   class _TAO_Contained_Proxy_Broker;
   class _TAO_Contained_Remote_Proxy_Broker;
 
-  class TAO_Export IR_Contained: public virtual CORBA_IRObject
+  class TAO_IFR_Client_Export IR_Contained: public virtual CORBA_IRObject
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -574,7 +570,7 @@ public:
     struct Description;
     class Description_var;
 
-    struct TAO_Export Description
+    struct TAO_IFR_Client_Export Description
     {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -587,7 +583,7 @@ public:
       CORBA::Any value;
     };
 
-    class TAO_Export Description_var
+    class TAO_IFR_Client_Export Description_var
     {
     public:
       Description_var (void); // default constructor
@@ -616,7 +612,7 @@ public:
       Description *ptr_;
     };
 
-    class TAO_Export Description_out
+    class TAO_IFR_Client_Export Description_out
     {
     public:
       Description_out (Description *&);
@@ -702,7 +698,7 @@ public:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_Contained_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Contained_Proxy_Impl :
   public virtual _TAO_IRObject_Proxy_Impl
 {
 public:
@@ -815,7 +811,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_Contained_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Contained_Remote_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IRObject_Remote_Proxy_Impl
@@ -937,7 +933,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Contained_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Contained_Proxy_Broker
 {
 public:
   virtual ~_TAO_Contained_Proxy_Broker (void);
@@ -962,7 +958,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Contained_Remote_Proxy_Broker : public virtual _TAO_Contained_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Contained_Remote_Proxy_Broker : public virtual _TAO_Contained_Proxy_Broker
 {
 public:
   _TAO_Contained_Remote_Proxy_Broker (void);
@@ -988,7 +984,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-class TAO_Export IR_ModuleDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ModuleDef_var : public TAO_Base_var
 {
 public:
   IR_ModuleDef_var (void); // default constructor
@@ -1016,7 +1012,7 @@ private:
   IR_ModuleDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ModuleDef_out
+class TAO_IFR_Client_Export IR_ModuleDef_out
 {
 public:
   IR_ModuleDef_out (IR_ModuleDef_ptr &);
@@ -1033,7 +1029,7 @@ private:
   IR_ModuleDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ConstantDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ConstantDef_var : public TAO_Base_var
 {
 public:
   IR_ConstantDef_var (void); // default constructor
@@ -1061,7 +1057,7 @@ private:
   IR_ConstantDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ConstantDef_out
+class TAO_IFR_Client_Export IR_ConstantDef_out
 {
 public:
   IR_ConstantDef_out (IR_ConstantDef_ptr &);
@@ -1078,7 +1074,7 @@ private:
   IR_ConstantDef_ptr &ptr_;
 };
 
-class TAO_Export IR_IDLType_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_IDLType_var : public TAO_Base_var
 {
 public:
   IR_IDLType_var (void); // default constructor
@@ -1106,7 +1102,7 @@ private:
   IR_IDLType_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_IDLType_out
+class TAO_IFR_Client_Export IR_IDLType_out
 {
 public:
   IR_IDLType_out (IR_IDLType_ptr &);
@@ -1123,7 +1119,7 @@ private:
   IR_IDLType_ptr &ptr_;
 };
 
-class TAO_Export IR_StructDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_StructDef_var : public TAO_Base_var
 {
 public:
   IR_StructDef_var (void); // default constructor
@@ -1151,7 +1147,7 @@ private:
   IR_StructDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_StructDef_out
+class TAO_IFR_Client_Export IR_StructDef_out
 {
 public:
   IR_StructDef_out (IR_StructDef_ptr &);
@@ -1168,7 +1164,7 @@ private:
   IR_StructDef_ptr &ptr_;
 };
 
-class TAO_Export IR_UnionDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_UnionDef_var : public TAO_Base_var
 {
 public:
   IR_UnionDef_var (void); // default constructor
@@ -1196,7 +1192,7 @@ private:
   IR_UnionDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_UnionDef_out
+class TAO_IFR_Client_Export IR_UnionDef_out
 {
 public:
   IR_UnionDef_out (IR_UnionDef_ptr &);
@@ -1213,7 +1209,7 @@ private:
   IR_UnionDef_ptr &ptr_;
 };
 
-class TAO_Export IR_EnumDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_EnumDef_var : public TAO_Base_var
 {
 public:
   IR_EnumDef_var (void); // default constructor
@@ -1241,7 +1237,7 @@ private:
   IR_EnumDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_EnumDef_out
+class TAO_IFR_Client_Export IR_EnumDef_out
 {
 public:
   IR_EnumDef_out (IR_EnumDef_ptr &);
@@ -1258,7 +1254,7 @@ private:
   IR_EnumDef_ptr &ptr_;
 };
 
-class TAO_Export IR_AliasDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_AliasDef_var : public TAO_Base_var
 {
 public:
   IR_AliasDef_var (void); // default constructor
@@ -1286,7 +1282,7 @@ private:
   IR_AliasDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_AliasDef_out
+class TAO_IFR_Client_Export IR_AliasDef_out
 {
 public:
   IR_AliasDef_out (IR_AliasDef_ptr &);
@@ -1303,7 +1299,7 @@ private:
   IR_AliasDef_ptr &ptr_;
 };
 
-class TAO_Export IR_InterfaceDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_InterfaceDef_var : public TAO_Base_var
 {
 public:
   IR_InterfaceDef_var (void); // default constructor
@@ -1331,7 +1327,7 @@ private:
   IR_InterfaceDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_InterfaceDef_out
+class TAO_IFR_Client_Export IR_InterfaceDef_out
 {
 public:
   IR_InterfaceDef_out (IR_InterfaceDef_ptr &);
@@ -1348,7 +1344,7 @@ private:
   IR_InterfaceDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ExceptionDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ExceptionDef_var : public TAO_Base_var
 {
 public:
   IR_ExceptionDef_var (void); // default constructor
@@ -1376,7 +1372,7 @@ private:
   IR_ExceptionDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ExceptionDef_out
+class TAO_IFR_Client_Export IR_ExceptionDef_out
 {
 public:
   IR_ExceptionDef_out (IR_ExceptionDef_ptr &);
@@ -1393,7 +1389,7 @@ private:
   IR_ExceptionDef_ptr &ptr_;
 };
 
-class TAO_Export IR_NativeDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_NativeDef_var : public TAO_Base_var
 {
 public:
   IR_NativeDef_var (void); // default constructor
@@ -1421,7 +1417,7 @@ private:
   IR_NativeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_NativeDef_out
+class TAO_IFR_Client_Export IR_NativeDef_out
 {
 public:
   IR_NativeDef_out (IR_NativeDef_ptr &);
@@ -1479,7 +1475,7 @@ private:
 // IR_InterfaceDefSeq
 // *************************************************************
 
-class TAO_Export IR_InterfaceDefSeq : public
+class TAO_IFR_Client_Export IR_InterfaceDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -1509,7 +1505,7 @@ public:
 // class IR_InterfaceDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_InterfaceDefSeq_var
+class TAO_IFR_Client_Export IR_InterfaceDefSeq_var
 {
 public:
   IR_InterfaceDefSeq_var (void); // default constructor
@@ -1540,7 +1536,7 @@ private:
   IR_InterfaceDefSeq *ptr_;
 };
 
-class TAO_Export IR_InterfaceDefSeq_out
+class TAO_IFR_Client_Export IR_InterfaceDefSeq_out
 {
 public:
   IR_InterfaceDefSeq_out (IR_InterfaceDefSeq *&);
@@ -1559,7 +1555,7 @@ private:
   void operator= (const IR_InterfaceDefSeq_var &);
 };
 
-class TAO_Export IR_ValueDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ValueDef_var : public TAO_Base_var
 {
 public:
   IR_ValueDef_var (void); // default constructor
@@ -1587,7 +1583,7 @@ private:
   IR_ValueDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ValueDef_out
+class TAO_IFR_Client_Export IR_ValueDef_out
 {
 public:
   IR_ValueDef_out (IR_ValueDef_ptr &);
@@ -1645,7 +1641,7 @@ private:
 // IR_ValueDefSeq
 // *************************************************************
 
-class TAO_Export IR_ValueDefSeq : public
+class TAO_IFR_Client_Export IR_ValueDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -1675,7 +1671,7 @@ public:
 // class IR_ValueDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_ValueDefSeq_var
+class TAO_IFR_Client_Export IR_ValueDefSeq_var
 {
 public:
   IR_ValueDefSeq_var (void); // default constructor
@@ -1706,7 +1702,7 @@ private:
   IR_ValueDefSeq *ptr_;
 };
 
-class TAO_Export IR_ValueDefSeq_out
+class TAO_IFR_Client_Export IR_ValueDefSeq_out
 {
 public:
   IR_ValueDefSeq_out (IR_ValueDefSeq *&);
@@ -1725,7 +1721,7 @@ private:
   void operator= (const IR_ValueDefSeq_var &);
 };
 
-class TAO_Export IR_ValueBoxDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ValueBoxDef_var : public TAO_Base_var
 {
 public:
   IR_ValueBoxDef_var (void); // default constructor
@@ -1753,7 +1749,7 @@ private:
   IR_ValueBoxDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ValueBoxDef_out
+class TAO_IFR_Client_Export IR_ValueBoxDef_out
 {
 public:
   IR_ValueBoxDef_out (IR_ValueBoxDef_ptr &);
@@ -1770,7 +1766,7 @@ private:
   IR_ValueBoxDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ComponentDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ComponentDef_var : public TAO_Base_var
 {
 public:
   IR_ComponentDef_var (void); // default constructor
@@ -1798,7 +1794,7 @@ private:
   IR_ComponentDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ComponentDef_out
+class TAO_IFR_Client_Export IR_ComponentDef_out
 {
 public:
   IR_ComponentDef_out (IR_ComponentDef_ptr &);
@@ -1856,7 +1852,7 @@ private:
 // IR_ComponentDefSeq
 // *************************************************************
 
-class TAO_Export IR_ComponentDefSeq : public
+class TAO_IFR_Client_Export IR_ComponentDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -1886,7 +1882,7 @@ public:
 // class IR_ComponentDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_ComponentDefSeq_var
+class TAO_IFR_Client_Export IR_ComponentDefSeq_var
 {
 public:
   IR_ComponentDefSeq_var (void); // default constructor
@@ -1917,7 +1913,7 @@ private:
   IR_ComponentDefSeq *ptr_;
 };
 
-class TAO_Export IR_ComponentDefSeq_out
+class TAO_IFR_Client_Export IR_ComponentDefSeq_out
 {
 public:
   IR_ComponentDefSeq_out (IR_ComponentDefSeq *&);
@@ -1936,7 +1932,7 @@ private:
   void operator= (const IR_ComponentDefSeq_var &);
 };
 
-class TAO_Export IR_ProvidesDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ProvidesDef_var : public TAO_Base_var
 {
 public:
   IR_ProvidesDef_var (void); // default constructor
@@ -1964,7 +1960,7 @@ private:
   IR_ProvidesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ProvidesDef_out
+class TAO_IFR_Client_Export IR_ProvidesDef_out
 {
 public:
   IR_ProvidesDef_out (IR_ProvidesDef_ptr &);
@@ -2022,7 +2018,7 @@ private:
 // IR_ProvidesDefSeq
 // *************************************************************
 
-class TAO_Export IR_ProvidesDefSeq : public
+class TAO_IFR_Client_Export IR_ProvidesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2052,7 +2048,7 @@ public:
 // class IR_ProvidesDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_ProvidesDefSeq_var
+class TAO_IFR_Client_Export IR_ProvidesDefSeq_var
 {
 public:
   IR_ProvidesDefSeq_var (void); // default constructor
@@ -2083,7 +2079,7 @@ private:
   IR_ProvidesDefSeq *ptr_;
 };
 
-class TAO_Export IR_ProvidesDefSeq_out
+class TAO_IFR_Client_Export IR_ProvidesDefSeq_out
 {
 public:
   IR_ProvidesDefSeq_out (IR_ProvidesDefSeq *&);
@@ -2102,7 +2098,7 @@ private:
   void operator= (const IR_ProvidesDefSeq_var &);
 };
 
-class TAO_Export IR_UsesDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_UsesDef_var : public TAO_Base_var
 {
 public:
   IR_UsesDef_var (void); // default constructor
@@ -2130,7 +2126,7 @@ private:
   IR_UsesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_UsesDef_out
+class TAO_IFR_Client_Export IR_UsesDef_out
 {
 public:
   IR_UsesDef_out (IR_UsesDef_ptr &);
@@ -2188,7 +2184,7 @@ private:
 // IR_UsesDefSeq
 // *************************************************************
 
-class TAO_Export IR_UsesDefSeq : public
+class TAO_IFR_Client_Export IR_UsesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2218,7 +2214,7 @@ public:
 // class IR_UsesDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_UsesDefSeq_var
+class TAO_IFR_Client_Export IR_UsesDefSeq_var
 {
 public:
   IR_UsesDefSeq_var (void); // default constructor
@@ -2249,7 +2245,7 @@ private:
   IR_UsesDefSeq *ptr_;
 };
 
-class TAO_Export IR_UsesDefSeq_out
+class TAO_IFR_Client_Export IR_UsesDefSeq_out
 {
 public:
   IR_UsesDefSeq_out (IR_UsesDefSeq *&);
@@ -2268,7 +2264,7 @@ private:
   void operator= (const IR_UsesDefSeq_var &);
 };
 
-class TAO_Export IR_HomeDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_HomeDef_var : public TAO_Base_var
 {
 public:
   IR_HomeDef_var (void); // default constructor
@@ -2296,7 +2292,7 @@ private:
   IR_HomeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_HomeDef_out
+class TAO_IFR_Client_Export IR_HomeDef_out
 {
 public:
   IR_HomeDef_out (IR_HomeDef_ptr &);
@@ -2355,7 +2351,7 @@ private:
 // IR_HomeDefSeq
 // *************************************************************
 
-class TAO_Export IR_HomeDefSeq : public
+class TAO_IFR_Client_Export IR_HomeDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2385,7 +2381,7 @@ public:
 // class IR_HomeDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_HomeDefSeq_var
+class TAO_IFR_Client_Export IR_HomeDefSeq_var
 {
 public:
   IR_HomeDefSeq_var (void); // default constructor
@@ -2416,7 +2412,7 @@ private:
   IR_HomeDefSeq *ptr_;
 };
 
-class TAO_Export IR_HomeDefSeq_out
+class TAO_IFR_Client_Export IR_HomeDefSeq_out
 {
 public:
   IR_HomeDefSeq_out (IR_HomeDefSeq *&);
@@ -2435,7 +2431,7 @@ private:
   void operator= (const IR_HomeDefSeq_var &);
 };
 
-class TAO_Export IR_EventDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_EventDef_var : public TAO_Base_var
 {
 public:
   IR_EventDef_var (void); // default constructor
@@ -2463,7 +2459,7 @@ private:
   IR_EventDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_EventDef_out
+class TAO_IFR_Client_Export IR_EventDef_out
 {
 public:
   IR_EventDef_out (IR_EventDef_ptr &);
@@ -2480,7 +2476,7 @@ private:
   IR_EventDef_ptr &ptr_;
 };
 
-class TAO_Export IR_EmitsDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_EmitsDef_var : public TAO_Base_var
 {
 public:
   IR_EmitsDef_var (void); // default constructor
@@ -2508,7 +2504,7 @@ private:
   IR_EmitsDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_EmitsDef_out
+class TAO_IFR_Client_Export IR_EmitsDef_out
 {
 public:
   IR_EmitsDef_out (IR_EmitsDef_ptr &);
@@ -2566,7 +2562,7 @@ private:
 // IR_EmitsDefSeq
 // *************************************************************
 
-class TAO_Export IR_EmitsDefSeq : public
+class TAO_IFR_Client_Export IR_EmitsDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2596,7 +2592,7 @@ public:
 // class IR_EmitsDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_EmitsDefSeq_var
+class TAO_IFR_Client_Export IR_EmitsDefSeq_var
 {
 public:
   IR_EmitsDefSeq_var (void); // default constructor
@@ -2627,7 +2623,7 @@ private:
   IR_EmitsDefSeq *ptr_;
 };
 
-class TAO_Export IR_EmitsDefSeq_out
+class TAO_IFR_Client_Export IR_EmitsDefSeq_out
 {
 public:
   IR_EmitsDefSeq_out (IR_EmitsDefSeq *&);
@@ -2646,7 +2642,7 @@ private:
   void operator= (const IR_EmitsDefSeq_var &);
 };
 
-class TAO_Export IR_PublishesDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_PublishesDef_var : public TAO_Base_var
 {
 public:
   IR_PublishesDef_var (void); // default constructor
@@ -2674,7 +2670,7 @@ private:
   IR_PublishesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_PublishesDef_out
+class TAO_IFR_Client_Export IR_PublishesDef_out
 {
 public:
   IR_PublishesDef_out (IR_PublishesDef_ptr &);
@@ -2732,7 +2728,7 @@ private:
 // IR_PublishesDefSeq
 // *************************************************************
 
-class TAO_Export IR_PublishesDefSeq : public
+class TAO_IFR_Client_Export IR_PublishesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2762,7 +2758,7 @@ public:
 // class IR_PublishesDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_PublishesDefSeq_var
+class TAO_IFR_Client_Export IR_PublishesDefSeq_var
 {
 public:
   IR_PublishesDefSeq_var (void); // default constructor
@@ -2793,7 +2789,7 @@ private:
   IR_PublishesDefSeq *ptr_;
 };
 
-class TAO_Export IR_PublishesDefSeq_out
+class TAO_IFR_Client_Export IR_PublishesDefSeq_out
 {
 public:
   IR_PublishesDefSeq_out (IR_PublishesDefSeq *&);
@@ -2812,7 +2808,7 @@ private:
   void operator= (const IR_PublishesDefSeq_var &);
 };
 
-class TAO_Export IR_ConsumesDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ConsumesDef_var : public TAO_Base_var
 {
 public:
   IR_ConsumesDef_var (void); // default constructor
@@ -2840,7 +2836,7 @@ private:
   IR_ConsumesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ConsumesDef_out
+class TAO_IFR_Client_Export IR_ConsumesDef_out
 {
 public:
   IR_ConsumesDef_out (IR_ConsumesDef_ptr &);
@@ -2898,7 +2894,7 @@ private:
 // IR_ConsumesDefSeq
 // *************************************************************
 
-class TAO_Export IR_ConsumesDefSeq : public
+class TAO_IFR_Client_Export IR_ConsumesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -2928,7 +2924,7 @@ public:
 // class IR_ConsumesDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_ConsumesDefSeq_var
+class TAO_IFR_Client_Export IR_ConsumesDefSeq_var
 {
 public:
   IR_ConsumesDefSeq_var (void); // default constructor
@@ -2959,7 +2955,7 @@ private:
   IR_ConsumesDefSeq *ptr_;
 };
 
-class TAO_Export IR_ConsumesDefSeq_out
+class TAO_IFR_Client_Export IR_ConsumesDefSeq_out
 {
 public:
   IR_ConsumesDefSeq_out (IR_ConsumesDefSeq *&);
@@ -2978,7 +2974,7 @@ private:
   void operator= (const IR_ConsumesDefSeq_var &);
 };
 
-class TAO_Export IR_FactoryDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_FactoryDef_var : public TAO_Base_var
 {
 public:
   IR_FactoryDef_var (void); // default constructor
@@ -3006,7 +3002,7 @@ private:
   IR_FactoryDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_FactoryDef_out
+class TAO_IFR_Client_Export IR_FactoryDef_out
 {
 public:
   IR_FactoryDef_out (IR_FactoryDef_ptr &);
@@ -3064,7 +3060,7 @@ private:
 // IR_FactoryDefSeq
 // *************************************************************
 
-class TAO_Export IR_FactoryDefSeq : public
+class TAO_IFR_Client_Export IR_FactoryDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3094,7 +3090,7 @@ public:
 // class IR_FactoryDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_FactoryDefSeq_var
+class TAO_IFR_Client_Export IR_FactoryDefSeq_var
 {
 public:
   IR_FactoryDefSeq_var (void); // default constructor
@@ -3125,7 +3121,7 @@ private:
   IR_FactoryDefSeq *ptr_;
 };
 
-class TAO_Export IR_FactoryDefSeq_out
+class TAO_IFR_Client_Export IR_FactoryDefSeq_out
 {
 public:
   IR_FactoryDefSeq_out (IR_FactoryDefSeq *&);
@@ -3144,7 +3140,7 @@ private:
   void operator= (const IR_FactoryDefSeq_var &);
 };
 
-class TAO_Export IR_FinderDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_FinderDef_var : public TAO_Base_var
 {
 public:
   IR_FinderDef_var (void); // default constructor
@@ -3172,7 +3168,7 @@ private:
   IR_FinderDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_FinderDef_out
+class TAO_IFR_Client_Export IR_FinderDef_out
 {
 public:
   IR_FinderDef_out (IR_FinderDef_ptr &);
@@ -3230,7 +3226,7 @@ private:
 // IR_FinderDefSeq
 // *************************************************************
 
-class TAO_Export IR_FinderDefSeq : public
+class TAO_IFR_Client_Export IR_FinderDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3260,7 +3256,7 @@ public:
 // class IR_FinderDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_FinderDefSeq_var
+class TAO_IFR_Client_Export IR_FinderDefSeq_var
 {
 public:
   IR_FinderDefSeq_var (void); // default constructor
@@ -3291,7 +3287,7 @@ private:
   IR_FinderDefSeq *ptr_;
 };
 
-class TAO_Export IR_FinderDefSeq_out
+class TAO_IFR_Client_Export IR_FinderDefSeq_out
 {
 public:
   IR_FinderDefSeq_out (IR_FinderDefSeq *&);
@@ -3310,7 +3306,7 @@ private:
   void operator= (const IR_FinderDefSeq_var &);
 };
 
-class TAO_Export IR_PrimaryKeyDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_PrimaryKeyDef_var : public TAO_Base_var
 {
 public:
   IR_PrimaryKeyDef_var (void); // default constructor
@@ -3338,7 +3334,7 @@ private:
   IR_PrimaryKeyDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_PrimaryKeyDef_out
+class TAO_IFR_Client_Export IR_PrimaryKeyDef_out
 {
 public:
   IR_PrimaryKeyDef_out (IR_PrimaryKeyDef_ptr &);
@@ -3396,7 +3392,7 @@ private:
 // IR_ContainedSeq
 // *************************************************************
 
-class TAO_Export IR_ContainedSeq : public
+class TAO_IFR_Client_Export IR_ContainedSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ContainedSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3426,7 +3422,7 @@ public:
 // class IR_ContainedSeq_var
 // *************************************************************
 
-class TAO_Export IR_ContainedSeq_var
+class TAO_IFR_Client_Export IR_ContainedSeq_var
 {
 public:
   IR_ContainedSeq_var (void); // default constructor
@@ -3458,7 +3454,7 @@ private:
 };
 
 
-class TAO_Export IR_ContainedSeq_out
+class TAO_IFR_Client_Export IR_ContainedSeq_out
 {
 public:
   IR_ContainedSeq_out (IR_ContainedSeq *&);
@@ -3477,7 +3473,7 @@ private:
   void operator= (const IR_ContainedSeq_var &);
 };
 
-struct TAO_Export IR_StructMember
+struct TAO_IFR_Client_Export IR_StructMember
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -3491,7 +3487,7 @@ struct TAO_Export IR_StructMember
   IR_IDLType_var type_def;
 };
 
-class TAO_Export IR_StructMember_var
+class TAO_IFR_Client_Export IR_StructMember_var
 {
 public:
   IR_StructMember_var (void); // default constructor
@@ -3520,7 +3516,7 @@ private:
   IR_StructMember *ptr_;
 };
 
-class TAO_Export IR_StructMember_out
+class TAO_IFR_Client_Export IR_StructMember_out
 {
 public:
   IR_StructMember_out (IR_StructMember *&);
@@ -3578,7 +3574,7 @@ private:
 // IR_StructMemberSeq
 // *************************************************************
 
-class TAO_Export IR_StructMemberSeq : public
+class TAO_IFR_Client_Export IR_StructMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_StructMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3608,7 +3604,7 @@ public:
 // class IR_StructMemberSeq_var
 // *************************************************************
 
-class TAO_Export IR_StructMemberSeq_var
+class TAO_IFR_Client_Export IR_StructMemberSeq_var
 {
 public:
   IR_StructMemberSeq_var (void); // default constructor
@@ -3640,7 +3636,7 @@ private:
   IR_StructMemberSeq *ptr_;
 };
 
-class TAO_Export IR_StructMemberSeq_out
+class TAO_IFR_Client_Export IR_StructMemberSeq_out
 {
 public:
   IR_StructMemberSeq_out (IR_StructMemberSeq *&);
@@ -3659,7 +3655,7 @@ private:
   void operator= (const IR_StructMemberSeq_var &);
 };
 
-struct TAO_Export IR_Initializer
+struct TAO_IFR_Client_Export IR_Initializer
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -3672,7 +3668,7 @@ struct TAO_Export IR_Initializer
   TAO_String_Manager name;
 };
 
-class TAO_Export IR_Initializer_var
+class TAO_IFR_Client_Export IR_Initializer_var
 {
 public:
   IR_Initializer_var (void); // default constructor
@@ -3701,7 +3697,7 @@ private:
   IR_Initializer *ptr_;
 };
 
-class TAO_Export IR_Initializer_out
+class TAO_IFR_Client_Export IR_Initializer_out
 {
 public:
   IR_Initializer_out (IR_Initializer *&);
@@ -3759,7 +3755,7 @@ private:
 // IR_InitializerSeq
 // *************************************************************
 
-class TAO_Export IR_InitializerSeq : public
+class TAO_IFR_Client_Export IR_InitializerSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_InitializerSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3789,7 +3785,7 @@ public:
 // class IR_InitializerSeq_var
 // *************************************************************
 
-class TAO_Export IR_InitializerSeq_var
+class TAO_IFR_Client_Export IR_InitializerSeq_var
 {
 public:
   IR_InitializerSeq_var (void); // default constructor
@@ -3821,7 +3817,7 @@ private:
   IR_InitializerSeq *ptr_;
 };
 
-class TAO_Export IR_InitializerSeq_out
+class TAO_IFR_Client_Export IR_InitializerSeq_out
 {
 public:
   IR_InitializerSeq_out (IR_InitializerSeq *&);
@@ -3840,7 +3836,7 @@ private:
   void operator= (const IR_InitializerSeq_var &);
 };
 
-struct TAO_Export IR_UnionMember
+struct TAO_IFR_Client_Export IR_UnionMember
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -3855,7 +3851,7 @@ struct TAO_Export IR_UnionMember
   IR_IDLType_var type_def;
 };
 
-class TAO_Export IR_UnionMember_var
+class TAO_IFR_Client_Export IR_UnionMember_var
 {
 public:
   IR_UnionMember_var (void); // default constructor
@@ -3884,7 +3880,7 @@ private:
   IR_UnionMember *ptr_;
 };
 
-class TAO_Export IR_UnionMember_out
+class TAO_IFR_Client_Export IR_UnionMember_out
 {
 public:
   IR_UnionMember_out (IR_UnionMember *&);
@@ -3942,7 +3938,7 @@ private:
 // IR_UnionMemberSeq
 // *************************************************************
 
-class TAO_Export IR_UnionMemberSeq : public
+class TAO_IFR_Client_Export IR_UnionMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_UnionMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -3972,7 +3968,7 @@ public:
 // class IR_UnionMemberSeq_var
 // *************************************************************
 
-class TAO_Export IR_UnionMemberSeq_var
+class TAO_IFR_Client_Export IR_UnionMemberSeq_var
 {
 public:
   IR_UnionMemberSeq_var (void); // default constructor
@@ -4004,7 +4000,7 @@ private:
   IR_UnionMemberSeq *ptr_;
 };
 
-class TAO_Export IR_UnionMemberSeq_out
+class TAO_IFR_Client_Export IR_UnionMemberSeq_out
 {
 public:
   IR_UnionMemberSeq_out (IR_UnionMemberSeq *&);
@@ -4027,7 +4023,7 @@ private:
 // IR_EnumMemberSeq
 // *************************************************************
 
-class TAO_Export IR_EnumMemberSeq : public
+class TAO_IFR_Client_Export IR_EnumMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -4057,7 +4053,7 @@ public:
 // class IR_EnumMemberSeq_var
 // *************************************************************
 
-class TAO_Export IR_EnumMemberSeq_var
+class TAO_IFR_Client_Export IR_EnumMemberSeq_var
 {
 public:
   IR_EnumMemberSeq_var (void); // default constructor
@@ -4088,7 +4084,7 @@ private:
   IR_EnumMemberSeq *ptr_;
 };
 
-class TAO_Export IR_EnumMemberSeq_out
+class TAO_IFR_Client_Export IR_EnumMemberSeq_out
 {
 public:
   IR_EnumMemberSeq_out (IR_EnumMemberSeq *&);
@@ -4113,7 +4109,7 @@ class _TAO_Container_Remote_Proxy_Impl;
 class _TAO_Container_Proxy_Broker;
 class _TAO_Container_Remote_Proxy_Broker;
 
-class TAO_Export IR_Container: public virtual CORBA_IRObject
+class TAO_IFR_Client_Export IR_Container: public virtual CORBA_IRObject
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -4174,7 +4170,7 @@ public:
   struct Description;
   class Description_var;
 
-  struct TAO_Export Description
+  struct TAO_IFR_Client_Export Description
   {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -4188,7 +4184,7 @@ public:
     CORBA::Any value;
   };
 
-  class TAO_Export Description_var
+  class TAO_IFR_Client_Export Description_var
   {
   public:
     Description_var (void); // default constructor
@@ -4217,7 +4213,7 @@ public:
     Description *ptr_;
   };
 
-  class TAO_Export Description_out
+  class TAO_IFR_Client_Export Description_out
   {
   public:
     Description_out (Description *&);
@@ -4280,7 +4276,7 @@ public:
   // DescriptionSeq
   // *************************************************************
 
-  class TAO_Export DescriptionSeq : public
+  class TAO_IFR_Client_Export DescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -4310,7 +4306,7 @@ public:
   // class IR_Container::DescriptionSeq_var
   // *************************************************************
 
-  class TAO_Export DescriptionSeq_var
+  class TAO_IFR_Client_Export DescriptionSeq_var
   {
   public:
     DescriptionSeq_var (void); // default constructor
@@ -4341,7 +4337,7 @@ public:
     DescriptionSeq *ptr_;
   };
 
-  class TAO_Export DescriptionSeq_out
+  class TAO_IFR_Client_Export DescriptionSeq_out
   {
   public:
     DescriptionSeq_out (DescriptionSeq *&);
@@ -4559,7 +4555,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_Container_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Container_Proxy_Impl :
   public virtual _TAO_IRObject_Proxy_Impl
 {
 public:
@@ -4761,7 +4757,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_Container_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Container_Remote_Proxy_Impl :
   public virtual _TAO_Container_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IRObject_Remote_Proxy_Impl
@@ -4971,7 +4967,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Container_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Container_Proxy_Broker
 {
 public:
   virtual ~_TAO_Container_Proxy_Broker (void);
@@ -4996,7 +4992,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Container_Remote_Proxy_Broker : public virtual _TAO_Container_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Container_Remote_Proxy_Broker : public virtual _TAO_Container_Proxy_Broker
 {
 public:
   _TAO_Container_Remote_Proxy_Broker (void);
@@ -5028,7 +5024,7 @@ class _TAO_IDLType_Remote_Proxy_Impl;
 class _TAO_IDLType_Proxy_Broker;
 class _TAO_IDLType_Remote_Proxy_Broker;
 
-class TAO_Export IR_IDLType: public virtual CORBA_IRObject
+class TAO_IFR_Client_Export IR_IDLType: public virtual CORBA_IRObject
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -5109,7 +5105,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_IDLType_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_IDLType_Proxy_Impl :
   public virtual _TAO_IRObject_Proxy_Impl
 {
 public:
@@ -5137,7 +5133,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_IDLType_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_IDLType_Remote_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IRObject_Remote_Proxy_Impl
@@ -5174,7 +5170,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_IDLType_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_IDLType_Proxy_Broker
 {
 public:
   virtual ~_TAO_IDLType_Proxy_Broker (void);
@@ -5199,7 +5195,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_IDLType_Remote_Proxy_Broker : public virtual _TAO_IDLType_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_IDLType_Remote_Proxy_Broker : public virtual _TAO_IDLType_Proxy_Broker
 {
 public:
   _TAO_IDLType_Remote_Proxy_Broker (void);
@@ -5225,7 +5221,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-class TAO_Export IR_PrimitiveDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_PrimitiveDef_var : public TAO_Base_var
 {
 public:
   IR_PrimitiveDef_var (void); // default constructor
@@ -5254,7 +5250,7 @@ private:
 };
 
 
-class TAO_Export IR_PrimitiveDef_out
+class TAO_IFR_Client_Export IR_PrimitiveDef_out
 {
 public:
   IR_PrimitiveDef_out (IR_PrimitiveDef_ptr &);
@@ -5271,7 +5267,7 @@ private:
   IR_PrimitiveDef_ptr &ptr_;
 };
 
-class TAO_Export IR_StringDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_StringDef_var : public TAO_Base_var
 {
 public:
   IR_StringDef_var (void); // default constructor
@@ -5299,7 +5295,7 @@ private:
   IR_StringDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_StringDef_out
+class TAO_IFR_Client_Export IR_StringDef_out
 {
 public:
   IR_StringDef_out (IR_StringDef_ptr &);
@@ -5316,7 +5312,7 @@ private:
   IR_StringDef_ptr &ptr_;
 };
 
-class TAO_Export IR_SequenceDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_SequenceDef_var : public TAO_Base_var
 {
 public:
   IR_SequenceDef_var (void); // default constructor
@@ -5344,7 +5340,7 @@ private:
   IR_SequenceDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_SequenceDef_out
+class TAO_IFR_Client_Export IR_SequenceDef_out
 {
 public:
   IR_SequenceDef_out (IR_SequenceDef_ptr &);
@@ -5361,7 +5357,7 @@ private:
   IR_SequenceDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ArrayDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ArrayDef_var : public TAO_Base_var
 {
 public:
   IR_ArrayDef_var (void); // default constructor
@@ -5389,7 +5385,7 @@ private:
   IR_ArrayDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ArrayDef_out
+class TAO_IFR_Client_Export IR_ArrayDef_out
 {
 public:
   IR_ArrayDef_out (IR_ArrayDef_ptr &);
@@ -5406,7 +5402,7 @@ private:
   IR_ArrayDef_ptr &ptr_;
 };
 
-class TAO_Export IR_WstringDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_WstringDef_var : public TAO_Base_var
 {
 public:
   IR_WstringDef_var (void); // default constructor
@@ -5434,7 +5430,7 @@ private:
   IR_WstringDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_WstringDef_out
+class TAO_IFR_Client_Export IR_WstringDef_out
 {
 public:
   IR_WstringDef_out (IR_WstringDef_ptr &);
@@ -5451,7 +5447,7 @@ private:
   IR_WstringDef_ptr &ptr_;
 };
 
-class TAO_Export IR_FixedDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_FixedDef_var : public TAO_Base_var
 {
 public:
   IR_FixedDef_var (void); // default constructor
@@ -5479,7 +5475,7 @@ private:
   IR_FixedDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_FixedDef_out
+class TAO_IFR_Client_Export IR_FixedDef_out
 {
 public:
   IR_FixedDef_out (IR_FixedDef_ptr &);
@@ -5502,7 +5498,7 @@ class _TAO_Repository_Remote_Proxy_Impl;
 class _TAO_Repository_Proxy_Broker;
 class _TAO_Repository_Remote_Proxy_Broker;
 
-class TAO_Export IR_Repository: public virtual IR_Container
+class TAO_IFR_Client_Export IR_Repository: public virtual IR_Container
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -5650,7 +5646,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_Repository_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Repository_Proxy_Impl :
   public virtual _TAO_Container_Proxy_Impl
 {
 public:
@@ -5745,7 +5741,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_Repository_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_Repository_Remote_Proxy_Impl :
   public virtual _TAO_Repository_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Container_Remote_Proxy_Impl
@@ -5849,7 +5845,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Repository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker
 {
 public:
   virtual ~_TAO_Repository_Proxy_Broker (void);
@@ -5874,7 +5870,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_Repository_Remote_Proxy_Broker : public virtual _TAO_Repository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_Repository_Remote_Proxy_Broker : public virtual _TAO_Repository_Proxy_Broker
 {
 public:
   _TAO_Repository_Remote_Proxy_Broker (void);
@@ -5900,7 +5896,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-class TAO_Export IR_ComponentRepository_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ComponentRepository_var : public TAO_Base_var
 {
 public:
   IR_ComponentRepository_var (void); // default constructor
@@ -5928,7 +5924,7 @@ private:
   IR_ComponentRepository_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ComponentRepository_out
+class TAO_IFR_Client_Export IR_ComponentRepository_out
 {
 public:
   IR_ComponentRepository_out (IR_ComponentRepository_ptr &);
@@ -5951,7 +5947,7 @@ class _TAO_ComponentRepository_Remote_Proxy_Impl;
 class _TAO_ComponentRepository_Proxy_Broker;
 class _TAO_ComponentRepository_Remote_Proxy_Broker;
 
-class TAO_Export IR_ComponentRepository: public virtual IR_Repository
+class TAO_IFR_Client_Export IR_ComponentRepository: public virtual IR_Repository
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6051,7 +6047,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ComponentRepository_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Impl :
   public virtual _TAO_Repository_Proxy_Impl
 {
 public:
@@ -6098,7 +6094,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ComponentRepository_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ComponentRepository_Remote_Proxy_Impl :
   public virtual _TAO_ComponentRepository_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Repository_Remote_Proxy_Impl
@@ -6154,7 +6150,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ComponentRepository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Broker
 {
 public:
   virtual ~_TAO_ComponentRepository_Proxy_Broker (void);
@@ -6179,7 +6175,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ComponentRepository_Remote_Proxy_Broker : public virtual _TAO_ComponentRepository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ComponentRepository_Remote_Proxy_Broker : public virtual _TAO_ComponentRepository_Proxy_Broker
 {
 public:
   _TAO_ComponentRepository_Remote_Proxy_Broker (void);
@@ -6211,7 +6207,7 @@ class _TAO_ModuleDef_Remote_Proxy_Impl;
 class _TAO_ModuleDef_Proxy_Broker;
 class _TAO_ModuleDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ModuleDef: public virtual IR_Container, public virtual IR_Contained
+class TAO_IFR_Client_Export IR_ModuleDef: public virtual IR_Container, public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6284,7 +6280,7 @@ private:
   //                    Base  Impl. Declaration
   //
 
-  class TAO_Export _TAO_ModuleDef_Proxy_Impl :
+  class TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Impl :
     public virtual _TAO_Container_Proxy_Impl,
     public virtual _TAO_Contained_Proxy_Impl
   {
@@ -6305,7 +6301,7 @@ private:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ModuleDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ModuleDef_Remote_Proxy_Impl :
   public virtual _TAO_ModuleDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Container_Remote_Proxy_Impl,
@@ -6335,7 +6331,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ModuleDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ModuleDef_Proxy_Broker (void);
@@ -6360,7 +6356,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ModuleDef_Remote_Proxy_Broker : public virtual _TAO_ModuleDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ModuleDef_Remote_Proxy_Broker : public virtual _TAO_ModuleDef_Proxy_Broker
 {
 public:
   _TAO_ModuleDef_Remote_Proxy_Broker (void);
@@ -6386,7 +6382,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ModuleDescription
+struct TAO_IFR_Client_Export IR_ModuleDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6401,7 +6397,7 @@ struct TAO_Export IR_ModuleDescription
   TAO_String_Manager version;
 };
 
-class TAO_Export IR_ModuleDescription_var
+class TAO_IFR_Client_Export IR_ModuleDescription_var
 {
 public:
   IR_ModuleDescription_var (void); // default constructor
@@ -6430,7 +6426,7 @@ private:
   IR_ModuleDescription *ptr_;
 };
 
-class TAO_Export IR_ModuleDescription_out
+class TAO_IFR_Client_Export IR_ModuleDescription_out
 {
 public:
   IR_ModuleDescription_out (IR_ModuleDescription *&);
@@ -6454,7 +6450,7 @@ class _TAO_ConstantDef_Remote_Proxy_Impl;
 class _TAO_ConstantDef_Proxy_Broker;
 class _TAO_ConstantDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ConstantDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_ConstantDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6569,7 +6565,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ConstantDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -6631,7 +6627,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ConstantDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ConstantDef_Remote_Proxy_Impl :
   public virtual _TAO_ConstantDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -6702,7 +6698,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ConstantDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ConstantDef_Proxy_Broker (void);
@@ -6727,7 +6723,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ConstantDef_Remote_Proxy_Broker : public virtual _TAO_ConstantDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ConstantDef_Remote_Proxy_Broker : public virtual _TAO_ConstantDef_Proxy_Broker
 {
 public:
   _TAO_ConstantDef_Remote_Proxy_Broker (void);
@@ -6753,7 +6749,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ConstantDescription
+struct TAO_IFR_Client_Export IR_ConstantDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6770,7 +6766,7 @@ struct TAO_Export IR_ConstantDescription
   CORBA::Any value;
 };
 
-class TAO_Export IR_ConstantDescription_var
+class TAO_IFR_Client_Export IR_ConstantDescription_var
 {
 public:
   IR_ConstantDescription_var (void); // default constructor
@@ -6799,7 +6795,7 @@ private:
   IR_ConstantDescription *ptr_;
 };
 
-class TAO_Export IR_ConstantDescription_out
+class TAO_IFR_Client_Export IR_ConstantDescription_out
 {
 public:
   IR_ConstantDescription_out (IR_ConstantDescription *&);
@@ -6817,7 +6813,7 @@ private:
   void operator= (const IR_ConstantDescription_var &);
 };
 
-class TAO_Export IR_TypedefDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_TypedefDef_var : public TAO_Base_var
 {
 public:
   IR_TypedefDef_var (void); // default constructor
@@ -6845,7 +6841,7 @@ private:
   IR_TypedefDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_TypedefDef_out
+class TAO_IFR_Client_Export IR_TypedefDef_out
 {
 public:
   IR_TypedefDef_out (IR_TypedefDef_ptr &);
@@ -6868,7 +6864,7 @@ class _TAO_TypedefDef_Remote_Proxy_Impl;
 class _TAO_TypedefDef_Proxy_Broker;
 class _TAO_TypedefDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_TypedefDef: public virtual IR_Contained, public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_TypedefDef: public virtual IR_Contained, public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6941,7 +6937,7 @@ private:
   //                    Base  Impl. Declaration
   //
 
-  class TAO_Export _TAO_TypedefDef_Proxy_Impl :
+  class TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Impl :
     public virtual _TAO_Contained_Proxy_Impl,
     public virtual _TAO_IDLType_Proxy_Impl
   {
@@ -6962,7 +6958,7 @@ private:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_TypedefDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_TypedefDef_Remote_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl,
@@ -6992,7 +6988,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_TypedefDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_TypedefDef_Proxy_Broker (void);
@@ -7017,7 +7013,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_TypedefDef_Remote_Proxy_Broker : public virtual _TAO_TypedefDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_TypedefDef_Remote_Proxy_Broker : public virtual _TAO_TypedefDef_Proxy_Broker
 {
 public:
   _TAO_TypedefDef_Remote_Proxy_Broker (void);
@@ -7043,7 +7039,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_TypeDescription
+struct TAO_IFR_Client_Export IR_TypeDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -7059,7 +7055,7 @@ struct TAO_Export IR_TypeDescription
   CORBA::TypeCode_var type;
 };
 
-class TAO_Export IR_TypeDescription_var
+class TAO_IFR_Client_Export IR_TypeDescription_var
 {
 public:
   IR_TypeDescription_var (void); // default constructor
@@ -7088,7 +7084,7 @@ private:
   IR_TypeDescription *ptr_;
 };
 
-class TAO_Export IR_TypeDescription_out
+class TAO_IFR_Client_Export IR_TypeDescription_out
 {
 public:
   IR_TypeDescription_out (IR_TypeDescription *&);
@@ -7112,7 +7108,7 @@ class _TAO_StructDef_Remote_Proxy_Impl;
 class _TAO_StructDef_Proxy_Broker;
 class _TAO_StructDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_StructDef: public virtual IR_TypedefDef, public virtual IR_Container
+class TAO_IFR_Client_Export IR_StructDef: public virtual IR_TypedefDef, public virtual IR_Container
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -7202,7 +7198,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_StructDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_StructDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl,
   public virtual _TAO_Container_Proxy_Impl
 {
@@ -7240,7 +7236,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_StructDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_StructDef_Remote_Proxy_Impl :
   public virtual _TAO_StructDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl,
@@ -7287,7 +7283,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_StructDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_StructDef_Proxy_Broker (void);
@@ -7312,7 +7308,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_StructDef_Remote_Proxy_Broker : public virtual _TAO_StructDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_StructDef_Remote_Proxy_Broker : public virtual _TAO_StructDef_Proxy_Broker
 {
 public:
   _TAO_StructDef_Remote_Proxy_Broker (void);
@@ -7344,7 +7340,7 @@ class _TAO_UnionDef_Remote_Proxy_Impl;
 class _TAO_UnionDef_Proxy_Broker;
 class _TAO_UnionDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_UnionDef: public virtual IR_TypedefDef, public virtual IR_Container
+class TAO_IFR_Client_Export IR_UnionDef: public virtual IR_TypedefDef, public virtual IR_Container
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -7459,7 +7455,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_UnionDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl,
   public virtual _TAO_Container_Proxy_Impl
 {
@@ -7522,7 +7518,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_UnionDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_UnionDef_Remote_Proxy_Impl :
   public virtual _TAO_UnionDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl,
@@ -7594,7 +7590,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_UnionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_UnionDef_Proxy_Broker (void);
@@ -7619,7 +7615,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_UnionDef_Remote_Proxy_Broker : public virtual _TAO_UnionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_UnionDef_Remote_Proxy_Broker : public virtual _TAO_UnionDef_Proxy_Broker
 {
 public:
   _TAO_UnionDef_Remote_Proxy_Broker (void);
@@ -7651,7 +7647,7 @@ class _TAO_EnumDef_Remote_Proxy_Impl;
 class _TAO_EnumDef_Proxy_Broker;
 class _TAO_EnumDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_EnumDef: public virtual IR_TypedefDef
+class TAO_IFR_Client_Export IR_EnumDef: public virtual IR_TypedefDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -7741,7 +7737,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_EnumDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl
 {
 public:
@@ -7778,7 +7774,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_EnumDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_EnumDef_Remote_Proxy_Impl :
   public virtual _TAO_EnumDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl
@@ -7824,7 +7820,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EnumDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_EnumDef_Proxy_Broker (void);
@@ -7849,7 +7845,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EnumDef_Remote_Proxy_Broker : public virtual _TAO_EnumDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EnumDef_Remote_Proxy_Broker : public virtual _TAO_EnumDef_Proxy_Broker
 {
 public:
   _TAO_EnumDef_Remote_Proxy_Broker (void);
@@ -7881,7 +7877,7 @@ class _TAO_AliasDef_Remote_Proxy_Impl;
 class _TAO_AliasDef_Proxy_Broker;
 class _TAO_AliasDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_AliasDef: public virtual IR_TypedefDef
+class TAO_IFR_Client_Export IR_AliasDef: public virtual IR_TypedefDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -7971,7 +7967,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_AliasDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl
 {
 public:
@@ -8008,7 +8004,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_AliasDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_AliasDef_Remote_Proxy_Impl :
   public virtual _TAO_AliasDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl
@@ -8054,7 +8050,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_AliasDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_AliasDef_Proxy_Broker (void);
@@ -8079,7 +8075,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_AliasDef_Remote_Proxy_Broker : public virtual _TAO_AliasDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_AliasDef_Remote_Proxy_Broker : public virtual _TAO_AliasDef_Proxy_Broker
 {
 public:
   _TAO_AliasDef_Remote_Proxy_Broker (void);
@@ -8111,7 +8107,7 @@ class _TAO_NativeDef_Remote_Proxy_Impl;
 class _TAO_NativeDef_Proxy_Broker;
 class _TAO_NativeDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_NativeDef: public virtual IR_TypedefDef
+class TAO_IFR_Client_Export IR_NativeDef: public virtual IR_TypedefDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -8184,7 +8180,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_NativeDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl
 {
 public:
@@ -8204,7 +8200,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_NativeDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_NativeDef_Remote_Proxy_Impl :
   public virtual _TAO_NativeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl
@@ -8233,7 +8229,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_NativeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_NativeDef_Proxy_Broker (void);
@@ -8258,7 +8254,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_NativeDef_Remote_Proxy_Broker : public virtual _TAO_NativeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_NativeDef_Remote_Proxy_Broker : public virtual _TAO_NativeDef_Proxy_Broker
 {
 public:
   _TAO_NativeDef_Remote_Proxy_Broker (void);
@@ -8290,7 +8286,7 @@ class _TAO_PrimitiveDef_Remote_Proxy_Impl;
 class _TAO_PrimitiveDef_Proxy_Broker;
 class _TAO_PrimitiveDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_PrimitiveDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_PrimitiveDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -8371,7 +8367,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_PrimitiveDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -8399,7 +8395,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_PrimitiveDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_PrimitiveDef_Remote_Proxy_Impl :
   public virtual _TAO_PrimitiveDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -8436,7 +8432,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PrimitiveDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_PrimitiveDef_Proxy_Broker (void);
@@ -8461,7 +8457,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PrimitiveDef_Remote_Proxy_Broker : public virtual _TAO_PrimitiveDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PrimitiveDef_Remote_Proxy_Broker : public virtual _TAO_PrimitiveDef_Proxy_Broker
 {
 public:
   _TAO_PrimitiveDef_Remote_Proxy_Broker (void);
@@ -8493,7 +8489,7 @@ class _TAO_StringDef_Remote_Proxy_Impl;
 class _TAO_StringDef_Proxy_Broker;
 class _TAO_StringDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_StringDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_StringDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -8583,7 +8579,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_StringDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_StringDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -8620,7 +8616,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_StringDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_StringDef_Remote_Proxy_Impl :
   public virtual _TAO_StringDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -8666,7 +8662,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_StringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_StringDef_Proxy_Broker (void);
@@ -8691,7 +8687,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_StringDef_Remote_Proxy_Broker : public virtual _TAO_StringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_StringDef_Remote_Proxy_Broker : public virtual _TAO_StringDef_Proxy_Broker
 {
 public:
   _TAO_StringDef_Remote_Proxy_Broker (void);
@@ -8723,7 +8719,7 @@ class _TAO_WstringDef_Remote_Proxy_Impl;
 class _TAO_WstringDef_Proxy_Broker;
 class _TAO_WstringDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_WstringDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_WstringDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -8813,7 +8809,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_WstringDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -8850,7 +8846,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_WstringDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_WstringDef_Remote_Proxy_Impl :
   public virtual _TAO_WstringDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -8896,7 +8892,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_WstringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_WstringDef_Proxy_Broker (void);
@@ -8921,7 +8917,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_WstringDef_Remote_Proxy_Broker : public virtual _TAO_WstringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_WstringDef_Remote_Proxy_Broker : public virtual _TAO_WstringDef_Proxy_Broker
 {
 public:
   _TAO_WstringDef_Remote_Proxy_Broker (void);
@@ -8953,7 +8949,7 @@ class _TAO_FixedDef_Remote_Proxy_Impl;
 class _TAO_FixedDef_Proxy_Broker;
 class _TAO_FixedDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_FixedDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_FixedDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -9060,7 +9056,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_FixedDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_FixedDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -9114,7 +9110,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_FixedDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_FixedDef_Remote_Proxy_Impl :
   public virtual _TAO_FixedDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -9177,7 +9173,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FixedDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FixedDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_FixedDef_Proxy_Broker (void);
@@ -9202,7 +9198,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FixedDef_Remote_Proxy_Broker : public virtual _TAO_FixedDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FixedDef_Remote_Proxy_Broker : public virtual _TAO_FixedDef_Proxy_Broker
 {
 public:
   _TAO_FixedDef_Remote_Proxy_Broker (void);
@@ -9234,7 +9230,7 @@ class _TAO_SequenceDef_Remote_Proxy_Impl;
 class _TAO_SequenceDef_Proxy_Broker;
 class _TAO_SequenceDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_SequenceDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_SequenceDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -9349,7 +9345,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_SequenceDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -9412,7 +9408,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_SequenceDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_SequenceDef_Remote_Proxy_Impl :
   public virtual _TAO_SequenceDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -9483,7 +9479,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_SequenceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_SequenceDef_Proxy_Broker (void);
@@ -9508,7 +9504,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_SequenceDef_Remote_Proxy_Broker : public virtual _TAO_SequenceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_SequenceDef_Remote_Proxy_Broker : public virtual _TAO_SequenceDef_Proxy_Broker
 {
 public:
   _TAO_SequenceDef_Remote_Proxy_Broker (void);
@@ -9540,7 +9536,7 @@ class _TAO_ArrayDef_Remote_Proxy_Impl;
 class _TAO_ArrayDef_Proxy_Broker;
 class _TAO_ArrayDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ArrayDef: public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_ArrayDef: public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -9655,7 +9651,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ArrayDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Impl :
   public virtual _TAO_IDLType_Proxy_Impl
 {
 public:
@@ -9717,7 +9713,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ArrayDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ArrayDef_Remote_Proxy_Impl :
   public virtual _TAO_ArrayDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_IDLType_Remote_Proxy_Impl
@@ -9788,7 +9784,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ArrayDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ArrayDef_Proxy_Broker (void);
@@ -9813,7 +9809,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ArrayDef_Remote_Proxy_Broker : public virtual _TAO_ArrayDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ArrayDef_Remote_Proxy_Broker : public virtual _TAO_ArrayDef_Proxy_Broker
 {
 public:
   _TAO_ArrayDef_Remote_Proxy_Broker (void);
@@ -9845,7 +9841,7 @@ class _TAO_ExceptionDef_Remote_Proxy_Impl;
 class _TAO_ExceptionDef_Proxy_Broker;
 class _TAO_ExceptionDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ExceptionDef
+class TAO_IFR_Client_Export IR_ExceptionDef
   : public virtual IR_Contained,
     public virtual IR_Container
 {
@@ -9945,7 +9941,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ExceptionDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl,
   public virtual _TAO_Container_Proxy_Impl
 {
@@ -9991,7 +9987,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ExceptionDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ExceptionDef_Remote_Proxy_Impl :
   public virtual _TAO_ExceptionDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl,
@@ -10046,7 +10042,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ExceptionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ExceptionDef_Proxy_Broker (void);
@@ -10071,7 +10067,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ExceptionDef_Remote_Proxy_Broker : public virtual _TAO_ExceptionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ExceptionDef_Remote_Proxy_Broker : public virtual _TAO_ExceptionDef_Proxy_Broker
 {
 public:
   _TAO_ExceptionDef_Remote_Proxy_Broker (void);
@@ -10097,7 +10093,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ExceptionDescription
+struct TAO_IFR_Client_Export IR_ExceptionDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -10113,7 +10109,7 @@ struct TAO_Export IR_ExceptionDescription
   CORBA::TypeCode_var type;
 };
 
-class TAO_Export IR_ExceptionDescription_var
+class TAO_IFR_Client_Export IR_ExceptionDescription_var
 {
 public:
   IR_ExceptionDescription_var (void); // default constructor
@@ -10142,7 +10138,7 @@ private:
   IR_ExceptionDescription *ptr_;
 };
 
-class TAO_Export IR_ExceptionDescription_out
+class TAO_IFR_Client_Export IR_ExceptionDescription_out
 {
 public:
   IR_ExceptionDescription_out (IR_ExceptionDescription *&);
@@ -10201,7 +10197,7 @@ private:
 // IR_ExceptionDefSeq
 // *************************************************************
 
-class TAO_Export IR_ExceptionDefSeq : public
+class TAO_IFR_Client_Export IR_ExceptionDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -10231,7 +10227,7 @@ public:
 // class IR_ExceptionDefSeq_var
 // *************************************************************
 
-class TAO_Export IR_ExceptionDefSeq_var
+class TAO_IFR_Client_Export IR_ExceptionDefSeq_var
 {
 public:
   IR_ExceptionDefSeq_var (void); // default constructor
@@ -10262,7 +10258,7 @@ private:
   IR_ExceptionDefSeq *ptr_;
 };
 
-class TAO_Export IR_ExceptionDefSeq_out
+class TAO_IFR_Client_Export IR_ExceptionDefSeq_out
 {
 public:
   IR_ExceptionDefSeq_out (IR_ExceptionDefSeq *&);
@@ -10321,7 +10317,7 @@ private:
 // IR_ExcDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_ExcDescriptionSeq : public
+class TAO_IFR_Client_Export IR_ExcDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -10351,7 +10347,7 @@ public:
 // class IR_ExcDescriptionSeq_var
 // *************************************************************
 
-class TAO_Export IR_ExcDescriptionSeq_var
+class TAO_IFR_Client_Export IR_ExcDescriptionSeq_var
 {
 public:
   IR_ExcDescriptionSeq_var (void); // default constructor
@@ -10383,7 +10379,7 @@ private:
   IR_ExcDescriptionSeq *ptr_;
 };
 
-class TAO_Export IR_ExcDescriptionSeq_out
+class TAO_IFR_Client_Export IR_ExcDescriptionSeq_out
 {
 public:
   IR_ExcDescriptionSeq_out (IR_ExcDescriptionSeq *&);
@@ -10402,7 +10398,7 @@ private:
   void operator= (const IR_ExcDescriptionSeq_var &);
 };
 
-class TAO_Export IR_AttributeDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_AttributeDef_var : public TAO_Base_var
 {
 public:
   IR_AttributeDef_var (void); // default constructor
@@ -10430,7 +10426,7 @@ private:
   IR_AttributeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_AttributeDef_out
+class TAO_IFR_Client_Export IR_AttributeDef_out
 {
 public:
   IR_AttributeDef_out (IR_AttributeDef_ptr &);
@@ -10453,7 +10449,7 @@ class _TAO_AttributeDef_Remote_Proxy_Impl;
 class _TAO_AttributeDef_Proxy_Broker;
 class _TAO_AttributeDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_AttributeDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_AttributeDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -10568,7 +10564,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_AttributeDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -10630,7 +10626,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_AttributeDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_AttributeDef_Remote_Proxy_Impl :
   public virtual _TAO_AttributeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -10701,7 +10697,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_AttributeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_AttributeDef_Proxy_Broker (void);
@@ -10726,7 +10722,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_AttributeDef_Remote_Proxy_Broker : public virtual _TAO_AttributeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_AttributeDef_Remote_Proxy_Broker : public virtual _TAO_AttributeDef_Proxy_Broker
 {
 public:
   _TAO_AttributeDef_Remote_Proxy_Broker (void);
@@ -10752,7 +10748,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_AttributeDescription
+struct TAO_IFR_Client_Export IR_AttributeDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -10771,7 +10767,7 @@ struct TAO_Export IR_AttributeDescription
   IR_ExcDescriptionSeq put_exceptions;
 };
 
-class TAO_Export IR_AttributeDescription_var
+class TAO_IFR_Client_Export IR_AttributeDescription_var
 {
 public:
   IR_AttributeDescription_var (void); // default constructor
@@ -10800,7 +10796,7 @@ private:
   IR_AttributeDescription *ptr_;
 };
 
-class TAO_Export IR_AttributeDescription_out
+class TAO_IFR_Client_Export IR_AttributeDescription_out
 {
 public:
   IR_AttributeDescription_out (IR_AttributeDescription *&);
@@ -10818,7 +10814,7 @@ private:
   void operator= (const IR_AttributeDescription_var &);
 };
 
-struct TAO_Export IR_ParameterDescription
+struct TAO_IFR_Client_Export IR_ParameterDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -10833,7 +10829,7 @@ struct TAO_Export IR_ParameterDescription
   IR_ParameterMode mode;
 };
 
-class TAO_Export IR_ParameterDescription_var
+class TAO_IFR_Client_Export IR_ParameterDescription_var
 {
 public:
   IR_ParameterDescription_var (void); // default constructor
@@ -10862,7 +10858,7 @@ private:
   IR_ParameterDescription *ptr_;
 };
 
-class TAO_Export IR_ParameterDescription_out
+class TAO_IFR_Client_Export IR_ParameterDescription_out
 {
 public:
   IR_ParameterDescription_out (IR_ParameterDescription *&);
@@ -10920,7 +10916,7 @@ private:
 // IR_ParDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_ParDescriptionSeq : public
+class TAO_IFR_Client_Export IR_ParDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ParDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -10950,7 +10946,7 @@ public:
 // class IR_ParDescriptionSeq_var
 // *************************************************************
 
-class TAO_Export IR_ParDescriptionSeq_var
+class TAO_IFR_Client_Export IR_ParDescriptionSeq_var
 {
 public:
   IR_ParDescriptionSeq_var (void); // default constructor
@@ -10982,7 +10978,7 @@ private:
   IR_ParDescriptionSeq *ptr_;
 };
 
-class TAO_Export IR_ParDescriptionSeq_out
+class TAO_IFR_Client_Export IR_ParDescriptionSeq_out
 {
 public:
   IR_ParDescriptionSeq_out (IR_ParDescriptionSeq *&);
@@ -11005,7 +11001,7 @@ private:
 // IR_ContextIdSeq
 // *************************************************************
 
-class TAO_Export IR_ContextIdSeq : public
+class TAO_IFR_Client_Export IR_ContextIdSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -11035,7 +11031,7 @@ public:
 // class IR_ContextIdSeq_var
 // *************************************************************
 
-class TAO_Export IR_ContextIdSeq_var
+class TAO_IFR_Client_Export IR_ContextIdSeq_var
 {
 public:
   IR_ContextIdSeq_var (void); // default constructor
@@ -11066,7 +11062,7 @@ private:
   IR_ContextIdSeq *ptr_;
 };
 
-class TAO_Export IR_ContextIdSeq_out
+class TAO_IFR_Client_Export IR_ContextIdSeq_out
 {
 public:
   IR_ContextIdSeq_out (IR_ContextIdSeq *&);
@@ -11085,7 +11081,7 @@ private:
   void operator= (const IR_ContextIdSeq_var &);
 };
 
-class TAO_Export IR_OperationDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_OperationDef_var : public TAO_Base_var
 {
 public:
   IR_OperationDef_var (void); // default constructor
@@ -11113,7 +11109,7 @@ private:
   IR_OperationDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_OperationDef_out
+class TAO_IFR_Client_Export IR_OperationDef_out
 {
 public:
   IR_OperationDef_out (IR_OperationDef_ptr &);
@@ -11136,7 +11132,7 @@ class _TAO_OperationDef_Remote_Proxy_Impl;
 class _TAO_OperationDef_Proxy_Broker;
 class _TAO_OperationDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_OperationDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_OperationDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -11302,7 +11298,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_OperationDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -11415,7 +11411,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_OperationDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_OperationDef_Remote_Proxy_Impl :
   public virtual _TAO_OperationDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -11537,7 +11533,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_OperationDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_OperationDef_Proxy_Broker (void);
@@ -11562,7 +11558,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_OperationDef_Remote_Proxy_Broker : public virtual _TAO_OperationDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_OperationDef_Remote_Proxy_Broker : public virtual _TAO_OperationDef_Proxy_Broker
 {
 public:
   _TAO_OperationDef_Remote_Proxy_Broker (void);
@@ -11588,7 +11584,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_OperationDescription
+struct TAO_IFR_Client_Export IR_OperationDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -11608,7 +11604,7 @@ struct TAO_Export IR_OperationDescription
   IR_ExcDescriptionSeq exceptions;
 };
 
-class TAO_Export IR_OperationDescription_var
+class TAO_IFR_Client_Export IR_OperationDescription_var
 {
 public:
   IR_OperationDescription_var (void); // default constructor
@@ -11637,7 +11633,7 @@ private:
   IR_OperationDescription *ptr_;
 };
 
-class TAO_Export IR_OperationDescription_out
+class TAO_IFR_Client_Export IR_OperationDescription_out
 {
 public:
   IR_OperationDescription_out (IR_OperationDescription *&);
@@ -11659,7 +11655,7 @@ private:
 // IR_RepositoryIdSeq
 // *************************************************************
 
-class TAO_Export IR_RepositoryIdSeq : public
+class TAO_IFR_Client_Export IR_RepositoryIdSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -11689,7 +11685,7 @@ public:
 // class IR_RepositoryIdSeq_var
 // *************************************************************
 
-class TAO_Export IR_RepositoryIdSeq_var
+class TAO_IFR_Client_Export IR_RepositoryIdSeq_var
 {
 public:
   IR_RepositoryIdSeq_var (void); // default constructor
@@ -11720,7 +11716,7 @@ private:
   IR_RepositoryIdSeq *ptr_;
 };
 
-class TAO_Export IR_RepositoryIdSeq_out
+class TAO_IFR_Client_Export IR_RepositoryIdSeq_out
 {
 public:
   IR_RepositoryIdSeq_out (IR_RepositoryIdSeq *&);
@@ -11779,7 +11775,7 @@ private:
 // IR_OpDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_OpDescriptionSeq : public
+class TAO_IFR_Client_Export IR_OpDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_OpDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -11809,7 +11805,7 @@ public:
 // class IR_OpDescriptionSeq_var
 // *************************************************************
 
-class TAO_Export IR_OpDescriptionSeq_var
+class TAO_IFR_Client_Export IR_OpDescriptionSeq_var
 {
 public:
   IR_OpDescriptionSeq_var (void); // default constructor
@@ -11841,7 +11837,7 @@ private:
   IR_OpDescriptionSeq *ptr_;
 };
 
-class TAO_Export IR_OpDescriptionSeq_out
+class TAO_IFR_Client_Export IR_OpDescriptionSeq_out
 {
 public:
   IR_OpDescriptionSeq_out (IR_OpDescriptionSeq *&);
@@ -11900,7 +11896,7 @@ private:
 // IR_AttrDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_AttrDescriptionSeq : public
+class TAO_IFR_Client_Export IR_AttrDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -11931,7 +11927,7 @@ public:
 // class IR_AttrDescriptionSeq_var
 // *************************************************************
 
-class TAO_Export IR_AttrDescriptionSeq_var
+class TAO_IFR_Client_Export IR_AttrDescriptionSeq_var
 {
 public:
   IR_AttrDescriptionSeq_var (void); // default constructor
@@ -11963,7 +11959,7 @@ private:
   IR_AttrDescriptionSeq *ptr_;
 };
 
-class TAO_Export IR_AttrDescriptionSeq_out
+class TAO_IFR_Client_Export IR_AttrDescriptionSeq_out
 {
 public:
   IR_AttrDescriptionSeq_out (IR_AttrDescriptionSeq *&);
@@ -11988,7 +11984,7 @@ class _TAO_InterfaceDef_Remote_Proxy_Impl;
 class _TAO_InterfaceDef_Proxy_Broker;
 class _TAO_InterfaceDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_InterfaceDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_InterfaceDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -12152,7 +12148,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_InterfaceDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Impl :
   public virtual _TAO_Container_Proxy_Impl,
   public virtual _TAO_Contained_Proxy_Impl,
   public virtual _TAO_IDLType_Proxy_Impl
@@ -12265,7 +12261,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_InterfaceDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_InterfaceDef_Remote_Proxy_Impl :
   public virtual _TAO_InterfaceDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Container_Remote_Proxy_Impl,
@@ -12387,7 +12383,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_InterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_InterfaceDef_Proxy_Broker (void);
@@ -12412,7 +12408,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_InterfaceDef_Remote_Proxy_Broker : public virtual _TAO_InterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_InterfaceDef_Remote_Proxy_Broker : public virtual _TAO_InterfaceDef_Proxy_Broker
 {
 public:
   _TAO_InterfaceDef_Remote_Proxy_Broker (void);
@@ -12438,7 +12434,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_InterfaceDescription
+struct TAO_IFR_Client_Export IR_InterfaceDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -12459,7 +12455,7 @@ struct TAO_Export IR_InterfaceDescription
   CORBA::Boolean is_local;
 };
 
-class TAO_Export IR_InterfaceDescription_var
+class TAO_IFR_Client_Export IR_InterfaceDescription_var
 {
 public:
   IR_InterfaceDescription_var (void); // default constructor
@@ -12488,7 +12484,7 @@ private:
   IR_InterfaceDescription *ptr_;
 };
 
-class TAO_Export IR_InterfaceDescription_out
+class TAO_IFR_Client_Export IR_InterfaceDescription_out
 {
 public:
   IR_InterfaceDescription_out (IR_InterfaceDescription *&);
@@ -12506,7 +12502,7 @@ private:
   void operator= (const IR_InterfaceDescription_var &);
 };
 
-struct TAO_Export IR_ValueMember
+struct TAO_IFR_Client_Export IR_ValueMember
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -12524,7 +12520,7 @@ struct TAO_Export IR_ValueMember
   CORBA::Visibility access;
 };
 
-class TAO_Export IR_ValueMember_var
+class TAO_IFR_Client_Export IR_ValueMember_var
 {
 public:
   IR_ValueMember_var (void); // default constructor
@@ -12553,7 +12549,7 @@ private:
   IR_ValueMember *ptr_;
 };
 
-class TAO_Export IR_ValueMember_out
+class TAO_IFR_Client_Export IR_ValueMember_out
 {
 public:
   IR_ValueMember_out (IR_ValueMember *&);
@@ -12611,7 +12607,7 @@ private:
 // IR_ValueMemberSeq
 // *************************************************************
 
-class TAO_Export IR_ValueMemberSeq : public
+class TAO_IFR_Client_Export IR_ValueMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ValueMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -12641,7 +12637,7 @@ public:
 // class IR_ValueMemberSeq_var
 // *************************************************************
 
-class TAO_Export IR_ValueMemberSeq_var
+class TAO_IFR_Client_Export IR_ValueMemberSeq_var
 {
 public:
   IR_ValueMemberSeq_var (void); // default constructor
@@ -12673,7 +12669,7 @@ private:
   IR_ValueMemberSeq *ptr_;
 };
 
-class TAO_Export IR_ValueMemberSeq_out
+class TAO_IFR_Client_Export IR_ValueMemberSeq_out
 {
 public:
   IR_ValueMemberSeq_out (IR_ValueMemberSeq *&);
@@ -12692,7 +12688,7 @@ private:
   void operator= (const IR_ValueMemberSeq_var &);
 };
 
-class TAO_Export IR_ValueMemberDef_var : public TAO_Base_var
+class TAO_IFR_Client_Export IR_ValueMemberDef_var : public TAO_Base_var
 {
 public:
   IR_ValueMemberDef_var (void); // default constructor
@@ -12720,7 +12716,7 @@ private:
   IR_ValueMemberDef_var &operator= (const TAO_Base_var &rhs);
 };
 
-class TAO_Export IR_ValueMemberDef_out
+class TAO_IFR_Client_Export IR_ValueMemberDef_out
 {
 public:
   IR_ValueMemberDef_out (IR_ValueMemberDef_ptr &);
@@ -12743,7 +12739,7 @@ class _TAO_ValueMemberDef_Remote_Proxy_Impl;
 class _TAO_ValueMemberDef_Proxy_Broker;
 class _TAO_ValueMemberDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ValueMemberDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_ValueMemberDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -12858,7 +12854,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueMemberDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueMemberDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -12920,7 +12916,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueMemberDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueMemberDef_Remote_Proxy_Impl :
   public virtual _TAO_ValueMemberDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -12991,7 +12987,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueMemberDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueMemberDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ValueMemberDef_Proxy_Broker (void);
@@ -13016,7 +13012,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueMemberDef_Remote_Proxy_Broker : public virtual _TAO_ValueMemberDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueMemberDef_Remote_Proxy_Broker : public virtual _TAO_ValueMemberDef_Proxy_Broker
 {
 public:
   _TAO_ValueMemberDef_Remote_Proxy_Broker (void);
@@ -13048,7 +13044,7 @@ class _TAO_ValueDef_Remote_Proxy_Impl;
 class _TAO_ValueDef_Proxy_Broker;
 class _TAO_ValueDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ValueDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
+class TAO_IFR_Client_Export IR_ValueDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -13293,7 +13289,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueDef_Proxy_Impl :
   public virtual _TAO_Container_Proxy_Impl,
   public virtual _TAO_Contained_Proxy_Impl,
   public virtual _TAO_IDLType_Proxy_Impl
@@ -13487,7 +13483,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueDef_Remote_Proxy_Impl :
   public virtual _TAO_ValueDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Container_Remote_Proxy_Impl,
@@ -13690,7 +13686,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ValueDef_Proxy_Broker (void);
@@ -13715,7 +13711,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueDef_Remote_Proxy_Broker : public virtual _TAO_ValueDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueDef_Remote_Proxy_Broker : public virtual _TAO_ValueDef_Proxy_Broker
 {
 public:
   _TAO_ValueDef_Remote_Proxy_Broker (void);
@@ -13741,7 +13737,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ValueDescription
+struct TAO_IFR_Client_Export IR_ValueDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -13767,7 +13763,7 @@ struct TAO_Export IR_ValueDescription
   CORBA::TypeCode_var type;
 };
 
-class TAO_Export IR_ValueDescription_var
+class TAO_IFR_Client_Export IR_ValueDescription_var
 {
 public:
   IR_ValueDescription_var (void); // default constructor
@@ -13796,7 +13792,7 @@ private:
   IR_ValueDescription *ptr_;
 };
 
-class TAO_Export IR_ValueDescription_out
+class TAO_IFR_Client_Export IR_ValueDescription_out
 {
 public:
   IR_ValueDescription_out (IR_ValueDescription *&);
@@ -13820,7 +13816,7 @@ class _TAO_ValueBoxDef_Remote_Proxy_Impl;
 class _TAO_ValueBoxDef_Proxy_Broker;
 class _TAO_ValueBoxDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ValueBoxDef: public virtual IR_TypedefDef
+class TAO_IFR_Client_Export IR_ValueBoxDef: public virtual IR_TypedefDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -13910,7 +13906,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueBoxDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueBoxDef_Proxy_Impl :
   public virtual _TAO_TypedefDef_Proxy_Impl
 {
 public:
@@ -13947,7 +13943,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ValueBoxDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ValueBoxDef_Remote_Proxy_Impl :
   public virtual _TAO_ValueBoxDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_TypedefDef_Remote_Proxy_Impl
@@ -13993,7 +13989,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueBoxDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueBoxDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ValueBoxDef_Proxy_Broker (void);
@@ -14018,7 +14014,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ValueBoxDef_Remote_Proxy_Broker : public virtual _TAO_ValueBoxDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ValueBoxDef_Remote_Proxy_Broker : public virtual _TAO_ValueBoxDef_Proxy_Broker
 {
 public:
   _TAO_ValueBoxDef_Remote_Proxy_Broker (void);
@@ -14050,7 +14046,7 @@ class _TAO_ProvidesDef_Remote_Proxy_Impl;
 class _TAO_ProvidesDef_Proxy_Broker;
 class _TAO_ProvidesDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ProvidesDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_ProvidesDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -14131,7 +14127,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ProvidesDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -14159,7 +14155,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ProvidesDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ProvidesDef_Remote_Proxy_Impl :
   public virtual _TAO_ProvidesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -14196,7 +14192,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ProvidesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ProvidesDef_Proxy_Broker (void);
@@ -14221,7 +14217,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ProvidesDef_Remote_Proxy_Broker : public virtual _TAO_ProvidesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ProvidesDef_Remote_Proxy_Broker : public virtual _TAO_ProvidesDef_Proxy_Broker
 {
 public:
   _TAO_ProvidesDef_Remote_Proxy_Broker (void);
@@ -14247,7 +14243,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ProvidesDescription
+struct TAO_IFR_Client_Export IR_ProvidesDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -14263,7 +14259,7 @@ struct TAO_Export IR_ProvidesDescription
   IR_InterfaceDef_var interface_type;
 };
 
-class TAO_Export IR_ProvidesDescription_var
+class TAO_IFR_Client_Export IR_ProvidesDescription_var
 {
 public:
   IR_ProvidesDescription_var (void); // default constructor
@@ -14292,7 +14288,7 @@ private:
   IR_ProvidesDescription *ptr_;
 };
 
-class TAO_Export IR_ProvidesDescription_out
+class TAO_IFR_Client_Export IR_ProvidesDescription_out
 {
 public:
   IR_ProvidesDescription_out (IR_ProvidesDescription *&);
@@ -14316,7 +14312,7 @@ class _TAO_UsesDef_Remote_Proxy_Impl;
 class _TAO_UsesDef_Proxy_Broker;
 class _TAO_UsesDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_UsesDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_UsesDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -14405,7 +14401,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_UsesDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -14441,7 +14437,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_UsesDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_UsesDef_Remote_Proxy_Impl :
   public virtual _TAO_UsesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -14486,7 +14482,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_UsesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_UsesDef_Proxy_Broker (void);
@@ -14511,7 +14507,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_UsesDef_Remote_Proxy_Broker : public virtual _TAO_UsesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_UsesDef_Remote_Proxy_Broker : public virtual _TAO_UsesDef_Proxy_Broker
 {
 public:
   _TAO_UsesDef_Remote_Proxy_Broker (void);
@@ -14537,7 +14533,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_UsesDescription
+struct TAO_IFR_Client_Export IR_UsesDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -14554,7 +14550,7 @@ struct TAO_Export IR_UsesDescription
   CORBA::Boolean is_multiple;
 };
 
-class TAO_Export IR_UsesDescription_var
+class TAO_IFR_Client_Export IR_UsesDescription_var
 {
 public:
   IR_UsesDescription_var (void); // default constructor
@@ -14583,7 +14579,7 @@ private:
   IR_UsesDescription *ptr_;
 };
 
-class TAO_Export IR_UsesDescription_out
+class TAO_IFR_Client_Export IR_UsesDescription_out
 {
 public:
   IR_UsesDescription_out (IR_UsesDescription *&);
@@ -14600,8 +14596,6 @@ private:
   // assignment from T_var not allowed
   void operator= (const IR_UsesDescription_var &);
 };
-
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -14643,7 +14637,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
 // IR_ProvidesDescSeq
 // *************************************************************
 
-class TAO_Export IR_ProvidesDescSeq : public
+class TAO_IFR_Client_Export IR_ProvidesDescSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ProvidesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -14673,7 +14667,7 @@ public:
 // class IR_ProvidesDescSeq_var
 // *************************************************************
 
-class TAO_Export IR_ProvidesDescSeq_var
+class TAO_IFR_Client_Export IR_ProvidesDescSeq_var
 {
 public:
   IR_ProvidesDescSeq_var (void); // default constructor
@@ -14705,7 +14699,7 @@ private:
   IR_ProvidesDescSeq *ptr_;
 };
 
-class TAO_Export IR_ProvidesDescSeq_out
+class TAO_IFR_Client_Export IR_ProvidesDescSeq_out
 {
 public:
   IR_ProvidesDescSeq_out (IR_ProvidesDescSeq *&);
@@ -14764,7 +14758,7 @@ private:
 // IR_UsesDescSeq
 // *************************************************************
 
-class TAO_Export IR_UsesDescSeq : public
+class TAO_IFR_Client_Export IR_UsesDescSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_UsesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -14794,7 +14788,7 @@ public:
 // class IR_UsesDescSeq_var
 // *************************************************************
 
-class TAO_Export IR_UsesDescSeq_var
+class TAO_IFR_Client_Export IR_UsesDescSeq_var
 {
 public:
   IR_UsesDescSeq_var (void); // default constructor
@@ -14826,7 +14820,7 @@ private:
   IR_UsesDescSeq *ptr_;
 };
 
-class TAO_Export IR_UsesDescSeq_out
+class TAO_IFR_Client_Export IR_UsesDescSeq_out
 {
 public:
   IR_UsesDescSeq_out (IR_UsesDescSeq *&);
@@ -14851,7 +14845,7 @@ class _TAO_EventDef_Remote_Proxy_Impl;
 class _TAO_EventDef_Proxy_Broker;
 class _TAO_EventDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_EventDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_EventDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -14941,7 +14935,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_EventDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_EventDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -14978,7 +14972,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_EventDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_EventDef_Remote_Proxy_Impl :
   public virtual _TAO_EventDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -15024,7 +15018,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EventDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EventDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_EventDef_Proxy_Broker (void);
@@ -15049,7 +15043,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EventDef_Remote_Proxy_Broker : public virtual _TAO_EventDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EventDef_Remote_Proxy_Broker : public virtual _TAO_EventDef_Proxy_Broker
 {
 public:
   _TAO_EventDef_Remote_Proxy_Broker (void);
@@ -15075,7 +15069,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_EventDescription
+struct TAO_IFR_Client_Export IR_EventDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -15091,7 +15085,7 @@ struct TAO_Export IR_EventDescription
   IR_ValueDef_var value;
 };
 
-class TAO_Export IR_EventDescription_var
+class TAO_IFR_Client_Export IR_EventDescription_var
 {
 public:
   IR_EventDescription_var (void); // default constructor
@@ -15120,7 +15114,7 @@ private:
   IR_EventDescription *ptr_;
 };
 
-class TAO_Export IR_EventDescription_out
+class TAO_IFR_Client_Export IR_EventDescription_out
 {
 public:
   IR_EventDescription_out (IR_EventDescription *&);
@@ -15144,7 +15138,7 @@ class _TAO_EmitsDef_Remote_Proxy_Impl;
 class _TAO_EmitsDef_Proxy_Broker;
 class _TAO_EmitsDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_EmitsDef: public virtual IR_EventDef
+class TAO_IFR_Client_Export IR_EmitsDef: public virtual IR_EventDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -15217,7 +15211,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_EmitsDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_EmitsDef_Proxy_Impl
   : public virtual _TAO_EventDef_Proxy_Impl
 {
 public:
@@ -15237,7 +15231,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_EmitsDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_EmitsDef_Remote_Proxy_Impl :
   public virtual _TAO_EmitsDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_EventDef_Remote_Proxy_Impl
@@ -15266,7 +15260,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EmitsDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EmitsDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_EmitsDef_Proxy_Broker (void);
@@ -15291,7 +15285,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_EmitsDef_Remote_Proxy_Broker : public virtual _TAO_EmitsDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_EmitsDef_Remote_Proxy_Broker : public virtual _TAO_EmitsDef_Proxy_Broker
 {
 public:
   _TAO_EmitsDef_Remote_Proxy_Broker (void);
@@ -15322,7 +15316,7 @@ class _TAO_PublishesDef_Remote_Proxy_Impl;
 class _TAO_PublishesDef_Proxy_Broker;
 class _TAO_PublishesDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_PublishesDef: public virtual IR_EventDef
+class TAO_IFR_Client_Export IR_PublishesDef: public virtual IR_EventDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -15395,7 +15389,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_PublishesDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_PublishesDef_Proxy_Impl
   : public virtual _TAO_EventDef_Proxy_Impl
 {
 public:
@@ -15415,7 +15409,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_PublishesDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_PublishesDef_Remote_Proxy_Impl :
   public virtual _TAO_PublishesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_EventDef_Remote_Proxy_Impl
@@ -15444,7 +15438,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PublishesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PublishesDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_PublishesDef_Proxy_Broker (void);
@@ -15469,7 +15463,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PublishesDef_Remote_Proxy_Broker : public virtual _TAO_PublishesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PublishesDef_Remote_Proxy_Broker : public virtual _TAO_PublishesDef_Proxy_Broker
 {
 public:
   _TAO_PublishesDef_Remote_Proxy_Broker (void);
@@ -15501,7 +15495,7 @@ class _TAO_ConsumesDef_Remote_Proxy_Impl;
 class _TAO_ConsumesDef_Proxy_Broker;
 class _TAO_ConsumesDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ConsumesDef: public virtual IR_EventDef
+class TAO_IFR_Client_Export IR_ConsumesDef: public virtual IR_EventDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -15574,7 +15568,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ConsumesDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_ConsumesDef_Proxy_Impl
   : public virtual _TAO_EventDef_Proxy_Impl
 {
 public:
@@ -15594,7 +15588,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ConsumesDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ConsumesDef_Remote_Proxy_Impl :
   public virtual _TAO_ConsumesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_EventDef_Remote_Proxy_Impl
@@ -15623,7 +15617,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ConsumesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ConsumesDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ConsumesDef_Proxy_Broker (void);
@@ -15648,7 +15642,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ConsumesDef_Remote_Proxy_Broker : public virtual _TAO_ConsumesDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ConsumesDef_Remote_Proxy_Broker : public virtual _TAO_ConsumesDef_Proxy_Broker
 {
 public:
   _TAO_ConsumesDef_Remote_Proxy_Broker (void);
@@ -15680,7 +15674,7 @@ class _TAO_ComponentDef_Remote_Proxy_Impl;
 class _TAO_ComponentDef_Proxy_Broker;
 class _TAO_ComponentDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_ComponentDef: public virtual IR_InterfaceDef
+class TAO_IFR_Client_Export IR_ComponentDef: public virtual IR_InterfaceDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -15886,7 +15880,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_ComponentDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Impl :
   public virtual _TAO_InterfaceDef_Proxy_Impl
 {
 public:
@@ -16040,7 +16034,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_ComponentDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_ComponentDef_Remote_Proxy_Impl :
   public virtual _TAO_ComponentDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
@@ -16203,7 +16197,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ComponentDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ComponentDef_Proxy_Broker (void);
@@ -16228,7 +16222,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_ComponentDef_Remote_Proxy_Broker : public virtual _TAO_ComponentDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_ComponentDef_Remote_Proxy_Broker : public virtual _TAO_ComponentDef_Proxy_Broker
 {
 public:
   _TAO_ComponentDef_Remote_Proxy_Broker (void);
@@ -16254,7 +16248,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_ComponentDescription
+struct TAO_IFR_Client_Export IR_ComponentDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -16278,7 +16272,7 @@ struct TAO_Export IR_ComponentDescription
   CORBA::Boolean is_basic;
 };
 
-class TAO_Export IR_ComponentDescription_var
+class TAO_IFR_Client_Export IR_ComponentDescription_var
 {
 public:
   IR_ComponentDescription_var (void); // default constructor
@@ -16307,7 +16301,7 @@ private:
   IR_ComponentDescription *ptr_;
 };
 
-class TAO_Export IR_ComponentDescription_out
+class TAO_IFR_Client_Export IR_ComponentDescription_out
 {
 public:
   IR_ComponentDescription_out (IR_ComponentDescription *&);
@@ -16331,7 +16325,7 @@ class _TAO_PrimaryKeyDef_Remote_Proxy_Impl;
 class _TAO_PrimaryKeyDef_Proxy_Broker;
 class _TAO_PrimaryKeyDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_PrimaryKeyDef: public virtual IR_Contained
+class TAO_IFR_Client_Export IR_PrimaryKeyDef: public virtual IR_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -16421,7 +16415,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_PrimaryKeyDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Impl :
   public virtual _TAO_Contained_Proxy_Impl
 {
 public:
@@ -16458,7 +16452,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_PrimaryKeyDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Remote_Proxy_Impl :
   public virtual _TAO_PrimaryKeyDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_Contained_Remote_Proxy_Impl
@@ -16504,7 +16498,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PrimaryKeyDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_PrimaryKeyDef_Proxy_Broker (void);
@@ -16529,7 +16523,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_PrimaryKeyDef_Remote_Proxy_Broker : public virtual _TAO_PrimaryKeyDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Remote_Proxy_Broker : public virtual _TAO_PrimaryKeyDef_Proxy_Broker
 {
 public:
   _TAO_PrimaryKeyDef_Remote_Proxy_Broker (void);
@@ -16555,7 +16549,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_PrimaryKeyDescription
+struct TAO_IFR_Client_Export IR_PrimaryKeyDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -16571,7 +16565,7 @@ struct TAO_Export IR_PrimaryKeyDescription
   IR_ValueDef_var primary_key;
 };
 
-class TAO_Export IR_PrimaryKeyDescription_var
+class TAO_IFR_Client_Export IR_PrimaryKeyDescription_var
 {
 public:
   IR_PrimaryKeyDescription_var (void); // default constructor
@@ -16600,7 +16594,7 @@ private:
   IR_PrimaryKeyDescription *ptr_;
 };
 
-class TAO_Export IR_PrimaryKeyDescription_out
+class TAO_IFR_Client_Export IR_PrimaryKeyDescription_out
 {
 public:
   IR_PrimaryKeyDescription_out (IR_PrimaryKeyDescription *&);
@@ -16624,7 +16618,7 @@ class _TAO_FactoryDef_Remote_Proxy_Impl;
 class _TAO_FactoryDef_Proxy_Broker;
 class _TAO_FactoryDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_FactoryDef: public virtual IR_OperationDef
+class TAO_IFR_Client_Export IR_FactoryDef: public virtual IR_OperationDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -16697,7 +16691,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_FactoryDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Impl
   : public virtual _TAO_OperationDef_Proxy_Impl
 {
 public:
@@ -16717,7 +16711,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_FactoryDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_FactoryDef_Remote_Proxy_Impl :
   public virtual _TAO_FactoryDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_OperationDef_Remote_Proxy_Impl
@@ -16746,7 +16740,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FactoryDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_FactoryDef_Proxy_Broker (void);
@@ -16771,7 +16765,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FactoryDef_Remote_Proxy_Broker : public virtual _TAO_FactoryDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FactoryDef_Remote_Proxy_Broker : public virtual _TAO_FactoryDef_Proxy_Broker
 {
 public:
   _TAO_FactoryDef_Remote_Proxy_Broker (void);
@@ -16803,7 +16797,7 @@ class _TAO_FinderDef_Remote_Proxy_Impl;
 class _TAO_FinderDef_Proxy_Broker;
 class _TAO_FinderDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_FinderDef: public virtual IR_OperationDef
+class TAO_IFR_Client_Export IR_FinderDef: public virtual IR_OperationDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -16876,7 +16870,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_FinderDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Impl
   : public virtual _TAO_OperationDef_Proxy_Impl
 {
 public:
@@ -16896,7 +16890,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_FinderDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_FinderDef_Remote_Proxy_Impl :
   public virtual _TAO_FinderDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_OperationDef_Remote_Proxy_Impl
@@ -16925,7 +16919,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FinderDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_FinderDef_Proxy_Broker (void);
@@ -16950,7 +16944,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_FinderDef_Remote_Proxy_Broker : public virtual _TAO_FinderDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_FinderDef_Remote_Proxy_Broker : public virtual _TAO_FinderDef_Proxy_Broker
 {
 public:
   _TAO_FinderDef_Remote_Proxy_Broker (void);
@@ -16982,7 +16976,7 @@ class _TAO_HomeDef_Remote_Proxy_Impl;
 class _TAO_HomeDef_Proxy_Broker;
 class _TAO_HomeDef_Remote_Proxy_Broker;
 
-class TAO_Export IR_HomeDef: public virtual IR_InterfaceDef
+class TAO_IFR_Client_Export IR_HomeDef: public virtual IR_InterfaceDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -17141,7 +17135,7 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_Export _TAO_HomeDef_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Impl :
   public virtual _TAO_InterfaceDef_Proxy_Impl
 {
 public:
@@ -17247,7 +17241,7 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_Export _TAO_HomeDef_Remote_Proxy_Impl :
+class TAO_IFR_Client_Export _TAO_HomeDef_Remote_Proxy_Impl :
   public virtual _TAO_HomeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
   public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
@@ -17362,7 +17356,7 @@ public:
 //                 Base Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_HomeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_HomeDef_Proxy_Broker (void);
@@ -17387,7 +17381,7 @@ protected:
 //                 Remote Proxy Broker Declaration
 //
 
-class TAO_Export _TAO_HomeDef_Remote_Proxy_Broker : public virtual _TAO_HomeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_HomeDef_Remote_Proxy_Broker : public virtual _TAO_HomeDef_Proxy_Broker
 {
 public:
   _TAO_HomeDef_Remote_Proxy_Broker (void);
@@ -17413,7 +17407,7 @@ public:
 //              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
-struct TAO_Export IR_HomeDescription
+struct TAO_IFR_Client_Export IR_HomeDescription
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -17436,7 +17430,7 @@ struct TAO_Export IR_HomeDescription
   CORBA::Boolean is_basic;
 };
 
-class TAO_Export IR_HomeDescription_var
+class TAO_IFR_Client_Export IR_HomeDescription_var
 {
 public:
   IR_HomeDescription_var (void); // default constructor
@@ -17465,7 +17459,7 @@ private:
   IR_HomeDescription *ptr_;
 };
 
-class TAO_Export IR_HomeDescription_out
+class TAO_IFR_Client_Export IR_HomeDescription_out
 {
 public:
   IR_HomeDescription_out (IR_HomeDescription *&);
@@ -17483,820 +17477,820 @@ private:
   void operator= (const IR_HomeDescription_var &);
 };
 
-TAO_Export void operator<<= (CORBA::Any &, IR_DefinitionKind);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_DefinitionKind &);
-extern TAO_Export _TAO_IRObject_Proxy_Broker * (*_TAO_IRObject_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_DefinitionKind);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_DefinitionKind &);
+extern TAO_IFR_Client_Export _TAO_IRObject_Proxy_Broker * (*_TAO_IRObject_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA_IRObject
-TAO_Export void operator<<= (CORBA::Any &, CORBA_IRObject_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_IRObject *&);
-extern TAO_Export _TAO_Contained_Proxy_Broker * (*_TAO_Contained_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_IRObject_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_IRObject *&);
+extern TAO_IFR_Client_Export _TAO_Contained_Proxy_Broker * (*_TAO_Contained_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_Contained
-TAO_Export void operator<<= (CORBA::Any &, IR_Contained_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Contained *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_Contained::Description &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_Contained::Description*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Contained::Description *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Contained::Description *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_InterfaceDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_InterfaceDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InterfaceDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ValueDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ComponentDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ComponentDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ComponentDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ProvidesDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ProvidesDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_UsesDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_UsesDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_HomeDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_HomeDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_HomeDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_EmitsDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_EmitsDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EmitsDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EmitsDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_PublishesDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_PublishesDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PublishesDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_PublishesDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ConsumesDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ConsumesDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConsumesDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ConsumesDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_FactoryDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_FactoryDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FactoryDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_FactoryDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_FinderDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_FinderDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FinderDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_FinderDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ContainedSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ContainedSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ContainedSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ContainedSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_StructMember &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_StructMember*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructMember *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_StructMember *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_StructMemberSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_StructMemberSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructMemberSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_StructMemberSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_Initializer &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_Initializer*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Initializer *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Initializer *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_InitializerSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_InitializerSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InitializerSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InitializerSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_UnionMember &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_UnionMember*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionMember *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UnionMember *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_UnionMemberSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_UnionMemberSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionMemberSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UnionMemberSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_EnumMemberSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_EnumMemberSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumMemberSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EnumMemberSeq *&);
-extern TAO_Export _TAO_Container_Proxy_Broker * (*_TAO_Container_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Contained_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Contained *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Contained::Description &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Contained::Description*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Contained::Description *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Contained::Description *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_InterfaceDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_InterfaceDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InterfaceDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ComponentDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ComponentDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ProvidesDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UsesDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_HomeDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_HomeDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_HomeDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_EmitsDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EmitsDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EmitsDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EmitsDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_PublishesDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PublishesDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PublishesDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_PublishesDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ConsumesDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConsumesDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConsumesDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ConsumesDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_FactoryDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FactoryDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FactoryDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_FactoryDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_FinderDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FinderDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FinderDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_FinderDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ContainedSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ContainedSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ContainedSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ContainedSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_StructMember &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StructMember*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructMember *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_StructMember *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_StructMemberSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StructMemberSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructMemberSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_StructMemberSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Initializer &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Initializer*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Initializer *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Initializer *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_InitializerSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_InitializerSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InitializerSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InitializerSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UnionMember &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UnionMember*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionMember *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UnionMember *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UnionMemberSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UnionMemberSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionMemberSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UnionMemberSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_EnumMemberSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EnumMemberSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumMemberSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EnumMemberSeq *&);
+extern TAO_IFR_Client_Export _TAO_Container_Proxy_Broker * (*_TAO_Container_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_Container
-TAO_Export void operator<<= (CORBA::Any &, IR_Container_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_Container::Description &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_Container::Description*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container::Description *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Container::Description *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_Container::DescriptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_Container::DescriptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container::DescriptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Container::DescriptionSeq *&);
-extern TAO_Export _TAO_IDLType_Proxy_Broker * (*_TAO_IDLType_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Container_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Container::Description &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Container::Description*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container::Description *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Container::Description *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Container::DescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Container::DescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container::DescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Container::DescriptionSeq *&);
+extern TAO_IFR_Client_Export _TAO_IDLType_Proxy_Broker * (*_TAO_IDLType_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_IDLType
-TAO_Export void operator<<= (CORBA::Any &, IR_IDLType_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_IDLType *&);
-TAO_Export void operator<<= (CORBA::Any &, IR_PrimitiveKind);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveKind &);
-extern TAO_Export _TAO_Repository_Proxy_Broker * (*_TAO_Repository_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_IDLType_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_IDLType *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimitiveKind);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveKind &);
+extern TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker * (*_TAO_Repository_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_Repository
-TAO_Export void operator<<= (CORBA::Any &, IR_Repository_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Repository *&);
-extern TAO_Export _TAO_ComponentRepository_Proxy_Broker * (*_TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Repository_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Repository *&);
+extern TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Broker * (*_TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ComponentRepository
-TAO_Export void operator<<= (CORBA::Any &, IR_ComponentRepository_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentRepository *&);
-extern TAO_Export _TAO_ModuleDef_Proxy_Broker * (*_TAO_ModuleDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentRepository_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentRepository *&);
+extern TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker * (*_TAO_ModuleDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ModuleDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ModuleDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ModuleDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ModuleDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ModuleDescription *&);
-extern TAO_Export _TAO_ConstantDef_Proxy_Broker * (*_TAO_ConstantDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ModuleDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ModuleDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ModuleDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ModuleDescription *&);
+extern TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker * (*_TAO_ConstantDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ConstantDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ConstantDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ConstantDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ConstantDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ConstantDescription *&);
-extern TAO_Export _TAO_TypedefDef_Proxy_Broker * (*_TAO_TypedefDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConstantDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ConstantDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConstantDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ConstantDescription *&);
+extern TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Broker * (*_TAO_TypedefDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_TypedefDef
-TAO_Export void operator<<= (CORBA::Any &, IR_TypedefDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypedefDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_TypeDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_TypeDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypeDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_TypeDescription *&);
-extern TAO_Export _TAO_StructDef_Proxy_Broker * (*_TAO_StructDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_TypedefDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypedefDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_TypeDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_TypeDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypeDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_TypeDescription *&);
+extern TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker * (*_TAO_StructDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_StructDef
-TAO_Export void operator<<= (CORBA::Any &, IR_StructDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructDef *&);
-extern TAO_Export _TAO_UnionDef_Proxy_Broker * (*_TAO_UnionDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StructDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructDef *&);
+extern TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker * (*_TAO_UnionDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_UnionDef
-TAO_Export void operator<<= (CORBA::Any &, IR_UnionDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionDef *&);
-extern TAO_Export _TAO_EnumDef_Proxy_Broker * (*_TAO_EnumDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UnionDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionDef *&);
+extern TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker * (*_TAO_EnumDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_EnumDef
-TAO_Export void operator<<= (CORBA::Any &, IR_EnumDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumDef *&);
-extern TAO_Export _TAO_AliasDef_Proxy_Broker * (*_TAO_AliasDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EnumDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumDef *&);
+extern TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker * (*_TAO_AliasDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_AliasDef
-TAO_Export void operator<<= (CORBA::Any &, IR_AliasDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AliasDef *&);
-extern TAO_Export _TAO_NativeDef_Proxy_Broker * (*_TAO_NativeDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AliasDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AliasDef *&);
+extern TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker * (*_TAO_NativeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_NativeDef
-TAO_Export void operator<<= (CORBA::Any &, IR_NativeDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_NativeDef *&);
-extern TAO_Export _TAO_PrimitiveDef_Proxy_Broker * (*_TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_NativeDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_NativeDef *&);
+extern TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker * (*_TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_PrimitiveDef
-TAO_Export void operator<<= (CORBA::Any &, IR_PrimitiveDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveDef *&);
-extern TAO_Export _TAO_StringDef_Proxy_Broker * (*_TAO_StringDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimitiveDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveDef *&);
+extern TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker * (*_TAO_StringDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_StringDef
-TAO_Export void operator<<= (CORBA::Any &, IR_StringDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StringDef *&);
-extern TAO_Export _TAO_WstringDef_Proxy_Broker * (*_TAO_WstringDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StringDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StringDef *&);
+extern TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker * (*_TAO_WstringDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_WstringDef
-TAO_Export void operator<<= (CORBA::Any &, IR_WstringDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_WstringDef *&);
-extern TAO_Export _TAO_FixedDef_Proxy_Broker * (*_TAO_FixedDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_WstringDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_WstringDef *&);
+extern TAO_IFR_Client_Export _TAO_FixedDef_Proxy_Broker * (*_TAO_FixedDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_FixedDef
-TAO_Export void operator<<= (CORBA::Any &, IR_FixedDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FixedDef *&);
-extern TAO_Export _TAO_SequenceDef_Proxy_Broker * (*_TAO_SequenceDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FixedDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FixedDef *&);
+extern TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker * (*_TAO_SequenceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_SequenceDef
-TAO_Export void operator<<= (CORBA::Any &, IR_SequenceDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_SequenceDef *&);
-extern TAO_Export _TAO_ArrayDef_Proxy_Broker * (*_TAO_ArrayDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_SequenceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_SequenceDef *&);
+extern TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker * (*_TAO_ArrayDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ArrayDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ArrayDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ArrayDef *&);
-extern TAO_Export _TAO_ExceptionDef_Proxy_Broker * (*_TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ArrayDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ArrayDef *&);
+extern TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker * (*_TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ExceptionDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ExceptionDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ExceptionDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ExceptionDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExceptionDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ExceptionDefSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ExceptionDefSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDefSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExceptionDefSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ExcDescriptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ExcDescriptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExcDescriptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExcDescriptionSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, IR_AttributeMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeMode &);
-extern TAO_Export _TAO_AttributeDef_Proxy_Broker * (*_TAO_AttributeDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ExceptionDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ExceptionDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ExceptionDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExceptionDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ExceptionDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ExceptionDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExceptionDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ExcDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ExcDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExcDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExcDescriptionSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttributeMode);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeMode &);
+extern TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker * (*_TAO_AttributeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_AttributeDef
-TAO_Export void operator<<= (CORBA::Any &, IR_AttributeDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_AttributeDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_AttributeDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_AttributeDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, IR_OperationMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationMode &);
-TAO_Export void operator<<= (CORBA::Any &, IR_ParameterMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParameterMode &);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ParameterDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ParameterDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParameterDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ParameterDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ParDescriptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ParDescriptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParDescriptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ParDescriptionSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ContextIdSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ContextIdSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ContextIdSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ContextIdSeq *&);
-extern TAO_Export _TAO_OperationDef_Proxy_Broker * (*_TAO_OperationDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttributeDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_AttributeDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttributeDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_AttributeDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_OperationMode);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationMode &);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ParameterMode);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParameterMode &);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ParameterDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ParameterDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParameterDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ParameterDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ParDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ParDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ParDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ParDescriptionSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ContextIdSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ContextIdSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ContextIdSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ContextIdSeq *&);
+extern TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker * (*_TAO_OperationDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_OperationDef
-TAO_Export void operator<<= (CORBA::Any &, IR_OperationDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_OperationDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_OperationDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_OperationDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_RepositoryIdSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_RepositoryIdSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_RepositoryIdSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_RepositoryIdSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_OpDescriptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_OpDescriptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OpDescriptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_OpDescriptionSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_AttrDescriptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_AttrDescriptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttrDescriptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_AttrDescriptionSeq *&);
-extern TAO_Export _TAO_InterfaceDef_Proxy_Broker * (*_TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_OperationDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_OperationDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_OperationDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_OperationDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_RepositoryIdSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_RepositoryIdSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_RepositoryIdSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_RepositoryIdSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_OpDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_OpDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OpDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_OpDescriptionSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_AttrDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttrDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttrDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_AttrDescriptionSeq *&);
+extern TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker * (*_TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_InterfaceDef
-TAO_Export void operator<<= (CORBA::Any &, IR_InterfaceDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_InterfaceDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_InterfaceDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InterfaceDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ValueMember &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueMember*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMember *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueMember *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ValueMemberSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueMemberSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueMemberSeq *&);
-extern TAO_Export _TAO_ValueMemberDef_Proxy_Broker * (*_TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_InterfaceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_InterfaceDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_InterfaceDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_InterfaceDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueMember &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueMember*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMember *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueMember *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueMemberSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueMemberSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueMemberSeq *&);
+extern TAO_IFR_Client_Export _TAO_ValueMemberDef_Proxy_Broker * (*_TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ValueMemberDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueMemberDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberDef *&);
-extern TAO_Export _TAO_ValueDef_Proxy_Broker * (*_TAO_ValueDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueMemberDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberDef *&);
+extern TAO_IFR_Client_Export _TAO_ValueDef_Proxy_Broker * (*_TAO_ValueDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ValueDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ValueDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueDescription *&);
-extern TAO_Export _TAO_ValueBoxDef_Proxy_Broker * (*_TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueDescription *&);
+extern TAO_IFR_Client_Export _TAO_ValueBoxDef_Proxy_Broker * (*_TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ValueBoxDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ValueBoxDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueBoxDef *&);
-extern TAO_Export _TAO_ProvidesDef_Proxy_Broker * (*_TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueBoxDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueBoxDef *&);
+extern TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Broker * (*_TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ProvidesDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ProvidesDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ProvidesDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ProvidesDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDescription *&);
-extern TAO_Export _TAO_UsesDef_Proxy_Broker * (*_TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ProvidesDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDescription *&);
+extern TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Broker * (*_TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_UsesDef
-TAO_Export void operator<<= (CORBA::Any &, IR_UsesDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_UsesDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_UsesDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDescription *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ProvidesDescSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ProvidesDescSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDescSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDescSeq *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_UsesDescSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_UsesDescSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDescSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDescSeq *&);
-extern TAO_Export _TAO_EventDef_Proxy_Broker * (*_TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UsesDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ProvidesDescSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDescSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDescSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDescSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UsesDescSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDescSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDescSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDescSeq *&);
+extern TAO_IFR_Client_Export _TAO_EventDef_Proxy_Broker * (*_TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_EventDef
-TAO_Export void operator<<= (CORBA::Any &, IR_EventDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_EventDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_EventDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EventDescription *&);
-extern TAO_Export _TAO_EmitsDef_Proxy_Broker * (*_TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EventDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_EventDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EventDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EventDescription *&);
+extern TAO_IFR_Client_Export _TAO_EmitsDef_Proxy_Broker * (*_TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_EmitsDef
-TAO_Export void operator<<= (CORBA::Any &, IR_EmitsDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EmitsDef *&);
-extern TAO_Export _TAO_PublishesDef_Proxy_Broker * (*_TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EmitsDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EmitsDef *&);
+extern TAO_IFR_Client_Export _TAO_PublishesDef_Proxy_Broker * (*_TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_PublishesDef
-TAO_Export void operator<<= (CORBA::Any &, IR_PublishesDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PublishesDef *&);
-extern TAO_Export _TAO_ConsumesDef_Proxy_Broker * (*_TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PublishesDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PublishesDef *&);
+extern TAO_IFR_Client_Export _TAO_ConsumesDef_Proxy_Broker * (*_TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ConsumesDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ConsumesDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConsumesDef *&);
-extern TAO_Export _TAO_ComponentDef_Proxy_Broker * (*_TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConsumesDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConsumesDef *&);
+extern TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Broker * (*_TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_ComponentDef
-TAO_Export void operator<<= (CORBA::Any &, IR_ComponentDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_ComponentDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_ComponentDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ComponentDescription *&);
-extern TAO_Export _TAO_PrimaryKeyDef_Proxy_Broker * (*_TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ComponentDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ComponentDescription *&);
+extern TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Broker * (*_TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_PrimaryKeyDef
-TAO_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_PrimaryKeyDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_PrimaryKeyDescription *&);
-extern TAO_Export _TAO_FactoryDef_Proxy_Broker * (*_TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_PrimaryKeyDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_PrimaryKeyDescription *&);
+extern TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Broker * (*_TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_FactoryDef
-TAO_Export void operator<<= (CORBA::Any &, IR_FactoryDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FactoryDef *&);
-extern TAO_Export _TAO_FinderDef_Proxy_Broker * (*_TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FactoryDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FactoryDef *&);
+extern TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Broker * (*_TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_FinderDef
-TAO_Export void operator<<= (CORBA::Any &, IR_FinderDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FinderDef *&);
-extern TAO_Export _TAO_HomeDef_Proxy_Broker * (*_TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FinderDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FinderDef *&);
+extern TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Broker * (*_TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface IR_HomeDef
-TAO_Export void operator<<= (CORBA::Any &, IR_HomeDef_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDef *&);
-TAO_Export void operator<<= (CORBA::Any &, const IR_HomeDescription &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IR_HomeDescription*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDescription *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_HomeDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_HomeDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_HomeDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_HomeDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_HomeDescription *&);
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_DefinitionKind &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_DefinitionKind &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_IRObject_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_IRObject_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Contained_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Contained_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Contained::Description &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Contained::Description &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_DefinitionKind &); //
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_DefinitionKind &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_IRObject_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_IRObject_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Contained_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Contained_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Contained::Description &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Contained::Description &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_InterfaceDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_InterfaceDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ValueDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ValueDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ComponentDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ComponentDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ProvidesDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ProvidesDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_UsesDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_UsesDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_HomeDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_HomeDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_EmitsDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_EmitsDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_PublishesDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_PublishesDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ConsumesDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ConsumesDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_FactoryDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_FactoryDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_FinderDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_FinderDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ContainedSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ContainedSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StructMember &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StructMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StructMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StructMember &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_StructMemberSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_StructMemberSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Initializer &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Initializer &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Initializer &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Initializer &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_InitializerSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_InitializerSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UnionMember &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UnionMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UnionMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UnionMember &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_UnionMemberSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_UnionMemberSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_EnumMemberSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_EnumMemberSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Container_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Container_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Container::Description &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Container::Description &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Container_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Container_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Container::Description &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Container::Description &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_Container::DescriptionSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_Container::DescriptionSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_IDLType_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_IDLType_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimitiveKind &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimitiveKind &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Repository_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Repository_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentRepository_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentRepository_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ModuleDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ModuleDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ModuleDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ModuleDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConstantDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConstantDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConstantDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConstantDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_TypedefDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_TypedefDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_TypeDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_TypeDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StructDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StructDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UnionDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UnionDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EnumDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EnumDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AliasDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AliasDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_NativeDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_NativeDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimitiveDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimitiveDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StringDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StringDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_WstringDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_WstringDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FixedDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FixedDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_SequenceDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_SequenceDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ArrayDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ArrayDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ExceptionDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ExceptionDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ExceptionDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ExceptionDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_IDLType_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_IDLType_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimitiveKind &); //
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimitiveKind &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Repository_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Repository_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentRepository_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentRepository_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ModuleDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ModuleDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ModuleDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ModuleDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConstantDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConstantDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConstantDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConstantDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_TypedefDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_TypedefDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_TypeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_TypeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StructDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StructDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UnionDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UnionDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EnumDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EnumDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AliasDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AliasDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_NativeDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_NativeDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimitiveDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimitiveDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_StringDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_StringDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_WstringDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_WstringDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FixedDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FixedDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_SequenceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_SequenceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ArrayDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ArrayDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ExceptionDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ExceptionDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ExceptionDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ExceptionDescription &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ExceptionDefSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ExceptionDefSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ExcDescriptionSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ExcDescriptionSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeMode &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::AttributeMode &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationMode &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::OperationMode &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterMode &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::ParameterMode &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ParameterDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeMode &); //
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::AttributeMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationMode &); //
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::OperationMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterMode &); //
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::ParameterMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ParameterDescription &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ParDescriptionSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ParDescriptionSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ContextIdSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ContextIdSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_OperationDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_OperationDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_OperationDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_OperationDescription &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_RepositoryIdSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_RepositoryIdSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_OpDescriptionSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_OpDescriptionSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_AttrDescriptionSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_AttrDescriptionSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_InterfaceDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_InterfaceDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_InterfaceDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_InterfaceDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueMember &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_InterfaceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_InterfaceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_InterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_InterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueMember &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueMember &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ValueMemberSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ValueMemberSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueMemberDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueMemberDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueBoxDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueBoxDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ProvidesDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ProvidesDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ProvidesDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ProvidesDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UsesDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UsesDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UsesDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UsesDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueMemberDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueMemberDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ValueBoxDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ValueBoxDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ProvidesDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ProvidesDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ProvidesDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ProvidesDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UsesDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UsesDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_UsesDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_UsesDescription &);
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_ProvidesDescSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_ProvidesDescSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IR_UsesDescSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IR_UsesDescSeq &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EventDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EventDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EventDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EventDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EmitsDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EmitsDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PublishesDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PublishesDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConsumesDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConsumesDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimaryKeyDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimaryKeyDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimaryKeyDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimaryKeyDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FactoryDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FactoryDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FinderDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FinderDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_HomeDef_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_HomeDef_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_HomeDescription &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_HomeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EventDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EventDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EventDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EventDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_EmitsDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_EmitsDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PublishesDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PublishesDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ConsumesDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ConsumesDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ComponentDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ComponentDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimaryKeyDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimaryKeyDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_PrimaryKeyDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_PrimaryKeyDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FactoryDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FactoryDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_FinderDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_FinderDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_HomeDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_HomeDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_HomeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_HomeDescription &);
 
 #endif /* __ACE_INLINE__ */
 
@@ -18309,6 +18303,9 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_HomeDescription &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
+
 #include "ace/post.h"
 #endif /* ifndef */

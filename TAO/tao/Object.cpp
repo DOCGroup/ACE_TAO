@@ -13,10 +13,7 @@
 #include "tao/debug.h"
 #include "tao/Remote_Object_Proxy_Broker.h"
 #include "tao/Dynamic_Adapter.h"
-
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#include "tao/InterfaceC.h"
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+#include "tao/IFR_Client_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -370,69 +367,35 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   return _tao_retval;
 }
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
-IR::InterfaceDef_ptr
-CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
+CORBA_IRObject_ptr
+CORBA_Object::_get_interface_def (CORBA::Environment &ACE_TRY_ENV)
 {
-  IR::InterfaceDef_ptr _tao_retval = IR::InterfaceDef::_nil();
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
 
-  TAO_Stub *istub = this->_stubobj ();
-  if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA_SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          EINVAL),
-                        CORBA::COMPLETED_NO),
-                      _tao_retval);
+  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
 
-
-  TAO_GIOP_Twoway_Invocation _tao_call (
-      istub,
-      "_interface",
-      10,
-      0,
-      istub->orb_core ()
-    );
-
-  for (;;)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-    CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                              ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      int _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        continue;
-      // if (_invoke_status == TAO_INVOKE_EXCEPTION)
-      // cannot happen
-      if (_invoke_status != TAO_INVOKE_OK)
-        {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            _tao_retval);
-        }
-      break;
-    }
-
-  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-  if (!(
-        (_tao_in >> _tao_retval)
-        ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
-
-  return _tao_retval;
+  return adapter->get_interface_def (orb.in (),
+                                     this->_interface_repository_id (),
+                                     ACE_TRY_ENV);
 }
 
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+IR_InterfaceDef *
+CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
+
+  return adapter->get_interface (orb.in (),
+                                 this->_interface_repository_id (),
+                                 ACE_TRY_ENV);
+}
 
 CORBA::ImplementationDef_ptr
 CORBA_Object::_get_implementation (CORBA::Environment &)

@@ -299,7 +299,6 @@ class CORBA_ORB_ObjectIdList_out;
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 
 // Forward declarations for INTERFACE REPO..Bala
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
 class CORBA_IRObject;
 class CORBA_IRObject_var;
@@ -393,8 +392,6 @@ class CORBA_TypeCodeFactory;
 class CORBA_TypeCodeFactory_var;
 class CORBA_TypeCodeFactory_out;
 typedef CORBA_TypeCodeFactory *CORBA_TypeCodeFactory_ptr;
-
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 class CORBA_StringSeq;
 class CORBA_StringSeq_var;
@@ -605,8 +602,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Current_var Current_var;
   typedef CORBA_Current_out Current_out;
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
   typedef CORBA_IRObject IRObject;
   typedef CORBA_IRObject *IRObject_ptr;
   typedef CORBA_IRObject_out IRObject_out;
@@ -616,8 +611,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_TypeCodeFactory *TypeCodeFactory_ptr;
   typedef CORBA_TypeCodeFactory_out TypeCodeFactory_out;
   typedef CORBA_TypeCodeFactory_var TypeCodeFactory_var;
-
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   typedef CORBA_Bounds Bounds;
   typedef CORBA_Bounds *Bounds_ptr;
@@ -663,7 +656,7 @@ TAO_NAMESPACE CORBA
   TAO_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-    typedef CORBA_UnknownUserException UnknownUserException;
+  typedef CORBA_UnknownUserException UnknownUserException;
 
   // = all the CORBA::is_nil methods.
   TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Object_ptr);
@@ -945,7 +938,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_DIIPollable_ptr DIIPollable_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DIIPollable;
 
-    // ****************************************************************
+  // =================== Interface Repository =====================
   typedef char *RepositoryId;
   typedef CORBA::String_var RepositoryId_var;
   typedef CORBA::String_out RepositoryId_out;
@@ -956,11 +949,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA::String_out Identifier_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  // ------------------------------Interface REPOS Bala
-
-  // =================== Interface Repository =====================
-  typedef char * ScopedName;
+  typedef char *ScopedName;
   typedef CORBA_String_var ScopedName_var;
   typedef CORBA_String_out ScopedName_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
@@ -985,7 +974,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT;
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE;
   // ================== Interface Repository =====================
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
+
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.

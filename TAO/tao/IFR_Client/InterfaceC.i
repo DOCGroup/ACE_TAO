@@ -728,10 +728,27 @@ ACE_INLINE ::IR_Contained::Description_var &
 IR_Contained::Description_var::operator= (const ::IR_Contained::Description_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_Contained::Description (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_Contained::Description *deep_copy = 
+            new IR_Contained::Description (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_Contained::Description *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2723,10 +2740,27 @@ ACE_INLINE IR_InterfaceDefSeq_var &
 IR_InterfaceDefSeq_var::operator= (const ::IR_InterfaceDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_InterfaceDefSeq *deep_copy = 
+            new IR_InterfaceDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_InterfaceDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -3227,10 +3261,27 @@ ACE_INLINE IR_ValueDefSeq_var &
 IR_ValueDefSeq_var::operator= (const ::IR_ValueDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ValueDefSeq *deep_copy = 
+            new IR_ValueDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ValueDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -3898,10 +3949,27 @@ ACE_INLINE IR_ComponentDefSeq_var &
 IR_ComponentDefSeq_var::operator= (const ::IR_ComponentDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ComponentDefSeq *deep_copy = 
+            new IR_ComponentDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ComponentDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -4402,10 +4470,27 @@ ACE_INLINE IR_ProvidesDefSeq_var &
 IR_ProvidesDefSeq_var::operator= (const ::IR_ProvidesDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ProvidesDefSeq *deep_copy = 
+            new IR_ProvidesDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ProvidesDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -4906,10 +4991,27 @@ ACE_INLINE IR_UsesDefSeq_var &
 IR_UsesDefSeq_var::operator= (const ::IR_UsesDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_UsesDefSeq *deep_copy = 
+            new IR_UsesDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_UsesDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -5410,10 +5512,27 @@ ACE_INLINE IR_HomeDefSeq_var &
 IR_HomeDefSeq_var::operator= (const ::IR_HomeDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_HomeDefSeq *deep_copy = 
+            new IR_HomeDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_HomeDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -6081,10 +6200,27 @@ ACE_INLINE IR_EmitsDefSeq_var &
 IR_EmitsDefSeq_var::operator= (const ::IR_EmitsDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_EmitsDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_EmitsDefSeq *deep_copy = 
+            new IR_EmitsDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_EmitsDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -6585,10 +6721,27 @@ ACE_INLINE IR_PublishesDefSeq_var &
 IR_PublishesDefSeq_var::operator= (const ::IR_PublishesDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_PublishesDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_PublishesDefSeq *deep_copy = 
+            new IR_PublishesDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_PublishesDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -7089,10 +7242,27 @@ ACE_INLINE IR_ConsumesDefSeq_var &
 IR_ConsumesDefSeq_var::operator= (const ::IR_ConsumesDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ConsumesDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ConsumesDefSeq *deep_copy = 
+            new IR_ConsumesDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ConsumesDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -7593,10 +7763,27 @@ ACE_INLINE IR_FactoryDefSeq_var &
 IR_FactoryDefSeq_var::operator= (const ::IR_FactoryDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_FactoryDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_FactoryDefSeq *deep_copy = 
+            new IR_FactoryDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_FactoryDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -8097,10 +8284,27 @@ ACE_INLINE IR_FinderDefSeq_var &
 IR_FinderDefSeq_var::operator= (const ::IR_FinderDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_FinderDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_FinderDefSeq *deep_copy = 
+            new IR_FinderDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_FinderDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -8601,10 +8805,27 @@ ACE_INLINE IR_ContainedSeq_var &
 IR_ContainedSeq_var::operator= (const ::IR_ContainedSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ContainedSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ContainedSeq *deep_copy = 
+            new IR_ContainedSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ContainedSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -8789,10 +9010,27 @@ ACE_INLINE ::IR_StructMember_var &
 IR_StructMember_var::operator= (const ::IR_StructMember_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_StructMember (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_StructMember *deep_copy = 
+            new IR_StructMember (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_StructMember *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -9136,10 +9374,27 @@ ACE_INLINE IR_StructMemberSeq_var &
 IR_StructMemberSeq_var::operator= (const ::IR_StructMemberSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_StructMemberSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_StructMemberSeq *deep_copy = 
+            new IR_StructMemberSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_StructMemberSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -9330,10 +9585,27 @@ ACE_INLINE ::IR_Initializer_var &
 IR_Initializer_var::operator= (const ::IR_Initializer_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_Initializer (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_Initializer *deep_copy = 
+            new IR_Initializer (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_Initializer *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -9676,10 +9948,27 @@ ACE_INLINE IR_InitializerSeq_var &
 IR_InitializerSeq_var::operator= (const ::IR_InitializerSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_InitializerSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_InitializerSeq *deep_copy = 
+            new IR_InitializerSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_InitializerSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -9870,10 +10159,27 @@ ACE_INLINE ::IR_UnionMember_var &
 IR_UnionMember_var::operator= (const ::IR_UnionMember_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMember (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_UnionMember *deep_copy = 
+            new IR_UnionMember (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_UnionMember *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -10216,10 +10522,27 @@ ACE_INLINE IR_UnionMemberSeq_var &
 IR_UnionMemberSeq_var::operator= (const ::IR_UnionMemberSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMemberSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_UnionMemberSeq *deep_copy = 
+            new IR_UnionMemberSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_UnionMemberSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -10410,10 +10733,27 @@ ACE_INLINE IR_EnumMemberSeq_var &
 IR_EnumMemberSeq_var::operator= (const ::IR_EnumMemberSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_EnumMemberSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_EnumMemberSeq *deep_copy = 
+            new IR_EnumMemberSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_EnumMemberSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -10598,10 +10938,27 @@ ACE_INLINE ::IR_Container::Description_var &
 IR_Container::Description_var::operator= (const ::IR_Container::Description_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_Container::Description (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_Container::Description *deep_copy = 
+            new IR_Container::Description (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_Container::Description *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -10944,10 +11301,27 @@ ACE_INLINE IR_Container::DescriptionSeq_var &
 IR_Container::DescriptionSeq_var::operator= (const ::IR_Container::DescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_Container::DescriptionSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_Container::DescriptionSeq *deep_copy = 
+            new IR_Container::DescriptionSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_Container::DescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -12307,10 +12681,27 @@ ACE_INLINE ::IR_ModuleDescription_var &
 IR_ModuleDescription_var::operator= (const ::IR_ModuleDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ModuleDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ModuleDescription *deep_copy = 
+            new IR_ModuleDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ModuleDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -12483,10 +12874,27 @@ ACE_INLINE ::IR_ConstantDescription_var &
 IR_ConstantDescription_var::operator= (const ::IR_ConstantDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ConstantDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ConstantDescription *deep_copy = 
+            new IR_ConstantDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ConstantDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -12826,10 +13234,27 @@ ACE_INLINE ::IR_TypeDescription_var &
 IR_TypeDescription_var::operator= (const ::IR_TypeDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_TypeDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_TypeDescription *deep_copy = 
+            new IR_TypeDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_TypeDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -13002,10 +13427,27 @@ ACE_INLINE ::IR_ExceptionDescription_var &
 IR_ExceptionDescription_var::operator= (const ::IR_ExceptionDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ExceptionDescription *deep_copy = 
+            new IR_ExceptionDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ExceptionDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -13327,10 +13769,27 @@ ACE_INLINE IR_ExceptionDefSeq_var &
 IR_ExceptionDefSeq_var::operator= (const ::IR_ExceptionDefSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDefSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ExceptionDefSeq *deep_copy = 
+            new IR_ExceptionDefSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ExceptionDefSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -13685,10 +14144,27 @@ ACE_INLINE IR_ExcDescriptionSeq_var &
 IR_ExcDescriptionSeq_var::operator= (const ::IR_ExcDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ExcDescriptionSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ExcDescriptionSeq *deep_copy = 
+            new IR_ExcDescriptionSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ExcDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -14046,10 +14522,27 @@ ACE_INLINE ::IR_AttributeDescription_var &
 IR_AttributeDescription_var::operator= (const ::IR_AttributeDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_AttributeDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_AttributeDescription *deep_copy = 
+            new IR_AttributeDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_AttributeDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -14222,10 +14715,27 @@ ACE_INLINE ::IR_ParameterDescription_var &
 IR_ParameterDescription_var::operator= (const ::IR_ParameterDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ParameterDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ParameterDescription *deep_copy = 
+            new IR_ParameterDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ParameterDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -14568,10 +15078,27 @@ ACE_INLINE IR_ParDescriptionSeq_var &
 IR_ParDescriptionSeq_var::operator= (const ::IR_ParDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ParDescriptionSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ParDescriptionSeq *deep_copy = 
+            new IR_ParDescriptionSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ParDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -14762,10 +15289,27 @@ ACE_INLINE IR_ContextIdSeq_var &
 IR_ContextIdSeq_var::operator= (const ::IR_ContextIdSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ContextIdSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ContextIdSeq *deep_copy = 
+            new IR_ContextIdSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ContextIdSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -15117,10 +15661,27 @@ ACE_INLINE ::IR_OperationDescription_var &
 IR_OperationDescription_var::operator= (const ::IR_OperationDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_OperationDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_OperationDescription *deep_copy = 
+            new IR_OperationDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_OperationDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -15293,10 +15854,27 @@ ACE_INLINE IR_RepositoryIdSeq_var &
 IR_RepositoryIdSeq_var::operator= (const ::IR_RepositoryIdSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_RepositoryIdSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_RepositoryIdSeq *deep_copy = 
+            new IR_RepositoryIdSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_RepositoryIdSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -15651,10 +16229,27 @@ ACE_INLINE IR_OpDescriptionSeq_var &
 IR_OpDescriptionSeq_var::operator= (const ::IR_OpDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_OpDescriptionSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_OpDescriptionSeq *deep_copy = 
+            new IR_OpDescriptionSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_OpDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -16015,10 +16610,27 @@ ACE_INLINE IR_AttrDescriptionSeq_var &
 IR_AttrDescriptionSeq_var::operator= (const ::IR_AttrDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_AttrDescriptionSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_AttrDescriptionSeq *deep_copy = 
+            new IR_AttrDescriptionSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_AttrDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -16209,10 +16821,27 @@ ACE_INLINE ::IR_InterfaceDescription_var &
 IR_InterfaceDescription_var::operator= (const ::IR_InterfaceDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_InterfaceDescription *deep_copy = 
+            new IR_InterfaceDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_InterfaceDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -16385,10 +17014,27 @@ ACE_INLINE ::IR_ValueMember_var &
 IR_ValueMember_var::operator= (const ::IR_ValueMember_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMember (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ValueMember *deep_copy = 
+            new IR_ValueMember (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ValueMember *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -16731,10 +17377,27 @@ ACE_INLINE IR_ValueMemberSeq_var &
 IR_ValueMemberSeq_var::operator= (const ::IR_ValueMemberSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMemberSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ValueMemberSeq *deep_copy = 
+            new IR_ValueMemberSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ValueMemberSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -17092,10 +17755,27 @@ ACE_INLINE ::IR_ValueDescription_var &
 IR_ValueDescription_var::operator= (const ::IR_ValueDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ValueDescription *deep_copy = 
+            new IR_ValueDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ValueDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -17268,10 +17948,27 @@ ACE_INLINE ::IR_ProvidesDescription_var &
 IR_ProvidesDescription_var::operator= (const ::IR_ProvidesDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ProvidesDescription *deep_copy = 
+            new IR_ProvidesDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ProvidesDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -17444,10 +18141,27 @@ ACE_INLINE ::IR_UsesDescription_var &
 IR_UsesDescription_var::operator= (const ::IR_UsesDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_UsesDescription *deep_copy = 
+            new IR_UsesDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_UsesDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -17790,10 +18504,27 @@ ACE_INLINE IR_ProvidesDescSeq_var &
 IR_ProvidesDescSeq_var::operator= (const ::IR_ProvidesDescSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ProvidesDescSeq *deep_copy = 
+            new IR_ProvidesDescSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ProvidesDescSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -18154,10 +18885,27 @@ ACE_INLINE IR_UsesDescSeq_var &
 IR_UsesDescSeq_var::operator= (const ::IR_UsesDescSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_UsesDescSeq *deep_copy = 
+            new IR_UsesDescSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_UsesDescSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -18348,10 +19096,27 @@ ACE_INLINE ::IR_EventDescription_var &
 IR_EventDescription_var::operator= (const ::IR_EventDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_EventDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_EventDescription *deep_copy = 
+            new IR_EventDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_EventDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -18524,10 +19289,27 @@ ACE_INLINE ::IR_ComponentDescription_var &
 IR_ComponentDescription_var::operator= (const ::IR_ComponentDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_ComponentDescription *deep_copy = 
+            new IR_ComponentDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_ComponentDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -18700,10 +19482,27 @@ ACE_INLINE ::IR_PrimaryKeyDescription_var &
 IR_PrimaryKeyDescription_var::operator= (const ::IR_PrimaryKeyDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_PrimaryKeyDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_PrimaryKeyDescription *deep_copy = 
+            new IR_PrimaryKeyDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_PrimaryKeyDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -18876,10 +19675,27 @@ ACE_INLINE ::IR_HomeDescription_var &
 IR_HomeDescription_var::operator= (const ::IR_HomeDescription_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDescription (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IR_HomeDescription *deep_copy = 
+            new IR_HomeDescription (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IR_HomeDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -19130,116 +19946,116 @@ operator>> (
   return 0;
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_InterfaceDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_InterfaceDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ValueDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ValueDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ComponentDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ComponentDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ProvidesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ProvidesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_UsesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_UsesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_HomeDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_HomeDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_EmitsDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_EmitsDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_PublishesDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_PublishesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ConsumesDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ConsumesDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_FactoryDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_FactoryDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_FinderDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_FinderDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ContainedSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ContainedSeq &
   );
@@ -19282,11 +20098,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_StructMember &_tao_
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_StructMemberSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_StructMemberSeq &
   );
@@ -19315,11 +20131,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Initializer &_tao_a
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_InitializerSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_InitializerSeq &
   );
@@ -19352,20 +20168,20 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UnionMember &_tao_a
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_UnionMemberSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_UnionMemberSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_EnumMemberSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_EnumMemberSeq &
   );
@@ -19396,11 +20212,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Container::Descript
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_Container::DescriptionSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_Container::DescriptionSeq &
   );
@@ -20266,20 +21082,20 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ExceptionDescriptio
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ExceptionDefSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ExceptionDefSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ExcDescriptionSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ExcDescriptionSeq &
   );
@@ -20443,20 +21259,20 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ParameterDescriptio
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ParDescriptionSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ParDescriptionSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ContextIdSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ContextIdSeq &
   );
@@ -20537,29 +21353,29 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_OperationDescriptio
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_RepositoryIdSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_RepositoryIdSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_OpDescriptionSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_OpDescriptionSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_AttrDescriptionSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_AttrDescriptionSeq &
   );
@@ -20676,11 +21492,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ValueMember &_tao_a
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ValueMemberSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ValueMemberSeq &
   );
@@ -20987,20 +21803,20 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UsesDescription &_t
   
 }
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_ProvidesDescSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_ProvidesDescSeq &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
     TAO_OutputCDR &,
     const IR_UsesDescSeq &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
     TAO_InputCDR &,
     IR_UsesDescSeq &
   );
