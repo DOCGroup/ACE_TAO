@@ -242,10 +242,6 @@
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
 
-// Support for POSIX semaphore
-#define ACE_HAS_POSIX_SEM
-#define ACE_LACKS_NAMED_POSIX_SEM
-
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN
 
