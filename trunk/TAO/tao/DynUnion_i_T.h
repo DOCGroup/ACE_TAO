@@ -65,7 +65,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "DynUnion_i_T.cpp"
+#pragma implementation ("DynUnion_i_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_DYNUNION_I_T_H */

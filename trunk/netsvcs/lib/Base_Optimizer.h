@@ -42,7 +42,7 @@ struct Base_Optimizer : public Base
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Base_Optimizer.cpp"
+#pragma implementation ("Base_Optimizer.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* BASE_OPTIMIZER_H */

@@ -444,7 +444,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Map_Manager.cpp"
+#pragma implementation ("Map_Manager.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_MAP_MANAGER_H */

@@ -182,7 +182,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Event_Handler_T.cpp"
+#pragma implementation ("Event_Handler_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */

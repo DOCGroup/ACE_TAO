@@ -134,7 +134,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Stream_Modules.cpp"
+#pragma implementation ("Stream_Modules.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_STREAM_MODULES */

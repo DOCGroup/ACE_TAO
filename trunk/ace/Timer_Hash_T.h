@@ -246,7 +246,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Timer_Hash_T.cpp"
+#pragma implementation ("Timer_Hash_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_TIMER_HASH_T_H */

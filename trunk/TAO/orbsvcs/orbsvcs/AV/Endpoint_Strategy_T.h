@@ -216,7 +216,7 @@ public:
 #endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Endpoint_Strategy_T.cpp"
+#pragma implementation ("Endpoint_Strategy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_AV_ENDPOINT_STRATEGY_T_H */

@@ -262,7 +262,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "RB_Tree.cpp"
+#pragma implementation ("RB_Tree.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ! defined (ACE_RB_TREE_H) */

@@ -86,7 +86,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Typed_SV_Message.cpp"
+#pragma implementation ("Typed_SV_Message.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_TYPED_SV_MESSAGE_H */
