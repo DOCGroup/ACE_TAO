@@ -1,10 +1,5 @@
-project (bug_1636_testclient) : client {
+project (bug_1636_testclient) : taoexe, dynamicany, dynamicinterface, portableserver {
    exename = client
-   includes   += $(ACE_ROOT)/include $(TAO_ROOT)/orbsvcs .
-   libpaths += $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao/DynamicInterface $(ACE_ROOT)/ace $(TAO_ROOT)/tao $(TAO_ROOT)/tao/PortableServer 
-   libs += TAO_DynamicAny TAO_DynamicInterface TAO_PortableServer
-   
-   
 
    IDL_Files {
       test.idl
