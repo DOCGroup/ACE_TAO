@@ -86,7 +86,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "IOR is: <%s>\n",
-                  ior));
+                  ior.in ()));
 
       if (orb->run () == -1)
         {
