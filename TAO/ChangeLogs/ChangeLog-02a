@@ -1,3 +1,16 @@
+Thu Feb  1 22:57:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_Mutex.h: 
+	* tao/RT_Mutex.cpp:
+	* tao/RT_ORB.cpp:
+	* tao/RT_ORB.h:
+
+	  Code cleanup.
+	
+	* tests/RTCORBA/RTMutex/server.cpp:
+
+	  Fixed typo that was causing a compiler error.
+
 Thu Feb  1 21:47:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/RTCORBA/RTMutex/server.cpp: Various cosmetic changes

@@ -114,8 +114,7 @@ public:
    virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
                                                 CORBA::Environment &ACE_TRY_ENV =
                                                 TAO_default_environment () )
-     ACE_THROW_SPEC ((
-                      CORBA::SystemException,
+     ACE_THROW_SPEC ((CORBA::SystemException,
                       RTCORBA::RTORB::MutexNotFound
                       ));
 

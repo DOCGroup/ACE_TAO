@@ -148,7 +148,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
                             1);
 
         // test the pointers...
-        if (ACE_reinterpret_cast (void *, larry_mutex1.in ()) 
+        if (ACE_reinterpret_cast (void *, larry_mutex1.in ())
             != ACE_reinterpret_cast (void *, larry_mutex2.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
@@ -173,7 +173,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         ACE_TRY_CHECK;
 
         // test the pointers...
-        if (ACE_reinterpret_cast (void *,larry_mutex1.in ()) 
+        if (ACE_reinterpret_cast (void *,larry_mutex1.in ())
             != ACE_reinterpret_cast (void *,larry_mutex3.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
@@ -228,7 +228,7 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
       ACE_TRY_CHECK;
 
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Expected a MutexNotFound exception, but didn't get one.\n")
+                         "Expected a MutexNotFound exception, but didn't get one.\n"),
                         1);
     }
   ACE_CATCH (RTCORBA::RTORB::MutexNotFound, ex)
@@ -430,7 +430,7 @@ mutex_test_try_lock_thread (void *args)
                       measured.sec(),
                       measured.usec()));
 
-          if ((measured.sec() == 4 && measured.usec() >= 500000) 
+          if ((measured.sec() == 4 && measured.usec() >= 500000)
                || (measured.sec() == 5 && measured.usec() <= 500000))
             /* success */;
           else

@@ -68,6 +68,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+
   TAO_SYNCH_MUTEX mu_;
 };
 
@@ -77,7 +78,7 @@ class TAO_Named_RT_Mutex_Manager;
 /**
  * @class TAO_Named_RT_Mutex
  *
- * @brief Extension to TAO_RT_Mutex to support named mutexes
+ * @brief Extension to TAO_RT_Mutex to support named mutexes.
  *
  */
 
