@@ -6,16 +6,30 @@
 #include "Synch_T.h"
 
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
-ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong (void)
+ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (int init_obj_ref_count)
 {
-  // Set initial object reference count to 1.
-
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = 0;
   ACE_NEW_RETURN (temp,
-                  ACE_Bound_Ptr_Counter<ACE_LOCK> (1),
+                  ACE_Bound_Ptr_Counter<ACE_LOCK> (init_obj_ref_count),
                   0);
   return temp;
 }
+
+template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
+ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong (void)
+{
+  // Set initial object reference count to 1.
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (1);
+#if defined (ACE_NEW_THROWS_EXCEPTIONS)
+  if (temp == 0)
+    ACE_throw_bad_alloc;
+#else
+  ACE_ASSERT (temp != 0);
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  return temp;
+}
+
+
 
 template <class ACE_LOCK> inline int
 ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
@@ -66,10 +80,13 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak (void)
 {
   // Set initial object reference count to 0.
 
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = 0;
-  ACE_NEW_RETURN (temp,
-                  ACE_Bound_Ptr_Counter<ACE_LOCK> (),
-                  0);
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (0);
+#if defined (ACE_NEW_THROWS_EXCEPTIONS)
+  if (temp == 0)
+    ACE_throw_bad_alloc;
+#else
+  ACE_ASSERT (temp != 0);
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
   return temp;
 }
 
