@@ -59,15 +59,15 @@ interface Cubit
   oneof	cube_union (in oneof values);
   // cube a union.
 
-  typedef sequence<long> vector;
+  typedef sequence<long> long_seq;
 
-  void cube_sequence (in vector input,
-		      out vector output);
+  void cube_long_sequence (in long_seq input,
+			   out long_seq output);
   // Cube several longs.
 
 
-  typedef sequence<octet> Raw;
-  void cube_raw (in Raw input, out Raw output);
+  typedef sequence<octet> octet_seq;
+  void cube_octet_sequence (in octet_seq input, out octet_seq output);
   // Cube an octet sequence.
 
   oneway void shutdown ();

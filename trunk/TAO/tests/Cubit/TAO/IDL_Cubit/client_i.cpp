@@ -26,11 +26,11 @@ static const char *Cubit_Client_Timeprobe_Description[] =
   "Cubit_Client::cube_union - start",
   "Cubit_Client::cube_union - end",
 
-  "Cubit_Client::cube_sequence - start",
-  "Cubit_Client::cube_sequence - end",
+  "Cubit_Client::cube_long_sequence - start",
+  "Cubit_Client::cube_long_sequence - end",
 
-  "Cubit_Client::cube_raw - start",
-  "Cubit_Client::cube_raw - end"
+  "Cubit_Client::cube_octet_sequence - start",
+  "Cubit_Client::cube_octet_sequence - end"
 };
 
 enum
@@ -50,11 +50,11 @@ enum
   CUBIT_CLIENT_CUBE_UNION_START,
   CUBIT_CLIENT_CUBE_UNION_END,
 
-  CUBIT_CLIENT_CUBE_SEQUENCE_START,
-  CUBIT_CLIENT_CUBE_SEQUENCE_END,
+  CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START,
+  CUBIT_CLIENT_CUBE_LONG_SEQUENCE_END,
 
-  CUBIT_CLIENT_CUBE_RAW_START,
-  CUBIT_CLIENT_CUBE_RAW_END
+  CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_START,
+  CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_END
 };
 
 #endif /* ACE_ENABLE_TIMEPROBES */
@@ -168,7 +168,7 @@ Cubit_Client::parse_args (void)
 // Exercise the union.  Cube a union.
 
 void
-Cubit_Client::cube_union_stub (void)
+Cubit_Client::cube_union (void)
 {
   CORBA::Environment env;
   Cubit::oneof u;
@@ -243,101 +243,6 @@ Cubit_Client::cube_union_stub (void)
           this->error_count_++;
         }
     }
-}
-
-// Exercise the union using dii.
-
-void
-Cubit_Client::cube_union_dii (void)
-{
-  // Create the request ...
-  CORBA::Request_ptr req;
-
-  this->call_count_++;
-
-  req = this->cubit_->_request ((CORBA::String) "cube_union", this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->error_count_++;
-
-      this->env_.print_exception ("cube_union_dii request create");
-      return;
-    }
-
-  // ... initialise the argument list and result ...
-  Cubit::oneof  *u, *r;
-
-  u = new Cubit::oneof;
-  u->_d (Cubit::e_3rd);
-
-  u->cm ().l = 5;
-  u->cm ().s = -7;
-  u->cm ().o = 3;
-
-  CORBA::Any tmp_arg (Cubit::_tc_oneof, u, CORBA::B_FALSE);
-
-  req->arguments ()->add_value ("values",
-                                tmp_arg,
-                                CORBA::ARG_IN,
-                                this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_union_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
-
-  // set the result's typecode to indicate what we expect. Let the ORB allocate
-  // the memory
-  req->result ()->value ()->replace (Cubit::_tc_oneof,
-                                     0,
-                                     0,
-                                     this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_union_dii result type");
-      CORBA::release (req);
-      return;
-    }
-
-  // Make the invocation, verify the result.
-
-  req->invoke ();
-
-  if (req->env ()->exception () != 0)
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_union_dii invoke");
-      CORBA::release (req);
-      return;
-    }
-
-  // retrieve the value in "r". Note that we don't own the memory that the ORb
-  // has allocated
-  if (!((*req->result ()->value ()) >>= r))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Error retrieving union oneof via the >>= operator\n"));
-      CORBA::release (req);
-      return;
-    }
-
-  if (r->cm ().o != 27 || r->cm ().l != 125 || r->cm ().s != -343)
-    {
-      this->error_count_++;
-      ACE_ERROR ((LM_ERROR, "cube_union_dii -- bad results\n"));
-    }
-  else
-    dmsg ("cube_union_dii ... success!!");
-
-  CORBA::release (req);
-  delete u;
-  delete r;
 }
 
 // Cube a short.
@@ -499,11 +404,11 @@ Cubit_Client::cube_struct (int i)
 // Cube the numbers in a sequence
 
 void
-Cubit_Client::cube_sequence (int i, int l)
+Cubit_Client::cube_long_sequence (int i, int l)
 {
   this->call_count_++;
 
-  Cubit::vector input (l);
+  Cubit::long_seq input (l);
   input.length (l);
 
 #if 0
@@ -517,17 +422,17 @@ Cubit_Client::cube_sequence (int i, int l)
   input[0] = 4;
 #endif
 
-  Cubit::vector_var output;
-  Cubit::vector_out vout (output);
+  Cubit::long_seq_var output;
+  Cubit::long_seq_out vout (output);
 
   // Cube the sequence
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SEQUENCE_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START);
 
-    this->cubit_->cube_sequence (input, vout, this->env_);
+    this->cubit_->cube_long_sequence (input, vout, this->env_);
   }
 
-  //  Cubit::vector& output = *vout.ptr ();
+  //  Cubit::long_seq& output = *vout.ptr ();
   //  output = vout;
 
   if (this->env_.exception () != 0)
@@ -552,7 +457,7 @@ Cubit_Client::cube_sequence (int i, int l)
           CORBA::Long x = input[j];
           if (x*x*x != output[j])
             {
-              ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+              ACE_ERROR ((LM_ERROR, "** cube_long_sequence ERROR\n"));
               this->error_count_++;
             }
         }
@@ -560,7 +465,7 @@ Cubit_Client::cube_sequence (int i, int l)
       CORBA::Long x = input[0];
       if (x * x *x != output[0])
         {
-          ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+          ACE_ERROR ((LM_ERROR, "** cube_long_sequence ERROR\n"));
           this->error_count_++;
         }
 #endif
@@ -568,11 +473,11 @@ Cubit_Client::cube_sequence (int i, int l)
 }
 
 void
-Cubit_Client::cube_raw (int i, int l)
+Cubit_Client::cube_octet_sequence (int i, int l)
 {
   this->call_count_++;
 
-  Cubit::Raw input (l);
+  Cubit::octet_seq input (l);
   input.length (l);
 
 #if 0
@@ -586,17 +491,17 @@ Cubit_Client::cube_raw (int i, int l)
   input[0] = 4;
 #endif
 
-  Cubit::Raw_var output;
-  Cubit::Raw_out vout (output);
+  Cubit::octet_seq_var output;
+  Cubit::octet_seq_out vout (output);
 
   // Cube the sequence
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RAW_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_START);
 
-    this->cubit_->cube_raw (input, vout, this->env_);
+    this->cubit_->cube_octet_sequence (input, vout, this->env_);
   }
 
-  //  Cubit::vector& output = *vout.ptr ();
+  //  Cubit::long_seq& output = *vout.ptr ();
   //  output = vout;
 
   if (this->env_.exception () != 0)
@@ -634,85 +539,6 @@ Cubit_Client::cube_raw (int i, int l)
         }
 #endif
     }
-}
-
-// Cube the numbers in a struct
-
-void
-Cubit_Client::cube_struct_dii (void)
-{
-  // Create the request ...
-  CORBA::Request_ptr req =
-    this->cubit_->_request ((CORBA::String) "cube_struct", this->env_);
-
-  this->call_count_++;
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("DII request create");
-      return;
-    }
-
-  // ... initialise the argument list and result ...
-  Cubit::Many arg;
-  Cubit::Many *result;
-
-  arg.o = 3;
-  arg.l = 5;
-  arg.s = -7;
-
-  CORBA::Any tmp_arg (Cubit::_tc_Many, &arg, CORBA::B_FALSE);
-
-  req->arguments ()->add_value ("values",
-                                tmp_arg,
-                                CORBA::ARG_IN, this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("DII request arg add");
-      CORBA::release (req);
-      return;
-    }
-
-  // set the typecode for the result and expect the ORB to allocate the memory
-  req->result ()->value ()->replace (Cubit::_tc_Many,
-                                     0,
-                                     0,
-                                     this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("DII request result type");
-      CORBA::release (req);
-      return;
-    }
-
-  // Make the invocation, verify the result
-
-  req->invoke ();
-
-  if (req->env ()->exception () != 0)
-    {
-      req->env ()->print_exception ("DII invoke sending struct");
-      CORBA::release (req);
-      return;
-    }
-
-  if (!((*req->result ()->value ()) >>= result))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Error retrieving struct Many via the >>= operator\n"));
-      CORBA::release (req);
-      return;
-    }
-
-  if (result->o != 27 || result->l != 125 || result->s != -343)
-    ACE_ERROR ((LM_ERROR, "DII cube_struct -- bad results\n"));
-  else
-    dmsg ("DII cube_struct ... success!!");
-
-  CORBA::release (req);
-  delete result;
 }
 
 void
@@ -772,151 +598,117 @@ Cubit_Client::run (int testing_collocation)
 
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-
   //  ACE_Time_Value before;
 
-  // We start an ACE_Profile_Timer here...
-  timer.start ();
 
-  // Make the calls in a loop.
+  //
+  // Show the results one type at a time.
+  //
+
+  // SHORT
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_short (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_short", elapsed_time);
+
+  // OCTET
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_octet (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_octet", elapsed_time);
+
+  // LONG
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_long", elapsed_time);
+
+  // STRUCT
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_struct (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_struct", elapsed_time);
+
+  // UNION
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_union ();
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_union_stub call", elapsed_time);
+
+  // SMALL LONG SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_sequence (this->loop_count_, 4);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_small_sequence<long>", elapsed_time);
+
+  // LARGE LONG SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_sequence (this->loop_count_, 1024);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_large_sequence<long>", elapsed_time);
+
+  // SMALL OCTET SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_octet_sequence (this->loop_count_, 16);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_small_sequence<octet>", elapsed_time);
+
+  // LARGE OCTET SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_octet_sequence (this->loop_count_, 4096);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_large_sequence<octet>", elapsed_time);
+
+  
+  // MIXIN
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
   for (i = 0; i < this->loop_count_; i++)
     {
       this->cube_short (i);
       this->cube_octet (i);
       this->cube_long (i);
-      this->cube_struct (i);
-      this->cube_sequence (i, 4);
-      this->cube_raw (i, 16);
     }
-
-  // stop the timer.
   timer.stop ();
-
   timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube average call", elapsed_time);
-
-  // Simple test for DII: call "cube_struct". (It's not timed since
-  // the copious mallocation of DII would bias numbers against typical
-  // stub-based calls).
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  if (! testing_collocation)
-    {
-      timer.start ();
-
-      // Make the calls in a loop.
-      for (i = 0; i < this->loop_count_; i++)
-        this->cube_struct_dii ();
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-      // compute call average call time.
-      this->print_stats ("cube_struct_dii call", elapsed_time);
-    }
-
-  // ------------------>
-  // Two more tests, using the "cube_union" function
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  // unions using stubs
-  timer.start ();
-
-  // Make the calls in a loop.
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_union_stub ();
-
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube_union_stub call", elapsed_time);
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  if (! testing_collocation)
-    {
-      // union DII
-      timer.start ();
-
-      // Make the calls in a loop.
-      for (i = 0; i < this->loop_count_; i++)
-        this->cube_union_dii ();
-
-      timer.stop ();
-
-      timer.elapsed_time (elapsed_time);
-      // compute call average call time.
-      this->print_stats ("cube_union_dii call", elapsed_time);
-    }
-
-  // Small Long Sequences
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  timer.start ();
-
-  // Make the calls in a loop.
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_sequence (this->loop_count_, 4);
-
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube_small_sequence", elapsed_time);
-
-  // Large Long Sequences
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  timer.start ();
-
-  // Make the calls in a loop.
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_sequence (this->loop_count_, 1024);
-
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube_large_sequence", elapsed_time);
-
-  // Small Octet Sequences
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  timer.start ();
-
-  // Make the calls in a loop.
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_raw (this->loop_count_, 16);
-
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube_small_octet_sequence", elapsed_time);
-
-  // Large Octet Sequences
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-
-  timer.start ();
-
-  // Make the calls in a loop.
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_raw (this->loop_count_, 4096);
-
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  // compute call average call time.
-  this->print_stats ("cube_large_octet_sequence", elapsed_time);
+  this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
 
   if (testing_collocation)
     {
