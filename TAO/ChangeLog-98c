@@ -1,3 +1,31 @@
+Tue Apr 14 12:27:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/decode.cpp: 
+	* tao/encode.cpp: 
+	  Use the write_*_array() and read_*_array() when
+	  encoding/decoding arrays or sequences into/from a CDR
+	  stream. Since every request has at least one sequence (the
+	  object key) this is a improvement for all requests.
+	  I was able to measure improvements in the order of 5% to 10% for
+	  IDL_Cubit.
+
+	* tests/CDR/growth.cpp: 
+	  The correct interface to accumulate measurements in a
+	  ACE_High_Res_Timer is start_incr()/stop_incr().
+
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	  Increased the maximum sequence size to 100, otherwise it is hard
+	  to notice how the sequences affect performance.
+
+	* docs/releasenotes/ec.html: 
+	  Added an explicit example on how to run the Event_Latency test.
+
+	* tao/Exception.cpp: 
+	  Fixed indentation.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  An exception was not "rethrown".
+
 Tue Apr 14 12:23:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp,Strategy_Scheduler.cpp:
