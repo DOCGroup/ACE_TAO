@@ -15,8 +15,8 @@ Mon Jul 09 10:59:22 2001  Ossama Othman  <ossama@uci.edu>
 
 Mon Jul  9 11:10:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * config-win32-msvc-5.h:
-        * config-win32-msvc-6.h:
+        * ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-6.h:
 
           Added conditional definitions for ACE_LD_DECORATOR_STR
           "mfc" and "mfcd" so that the MFC release and debug versions
