@@ -24,6 +24,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 MKLIST = \
 	Makefile.TypeCodeFactory \
 	Makefile.IFR_Service
+
 all debug profile optimize install deinstall clean realclean clobber depend:
 ifeq (Windows,$(findstring Windows,$(OS)))
 	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
