@@ -13,7 +13,7 @@
 
 #ifndef ACE_PROFILE_TIMER_H
 #define ACE_PROFILE_TIMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -135,5 +135,5 @@ private:
 # include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROFILE_TIMER_H */

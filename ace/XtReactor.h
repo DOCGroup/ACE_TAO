@@ -15,7 +15,7 @@
 
 #ifndef ACE_XTREACTOR_H
 #define ACE_XTREACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -134,5 +134,5 @@ private:
 };
 #endif /* ACE_HAS_XT */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_XTREACTOR_H */

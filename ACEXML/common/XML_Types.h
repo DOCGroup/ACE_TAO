@@ -16,7 +16,7 @@
 #ifndef _ACEXML_XML_TYPES_H_
 #define _ACEXML_XML_TYPES_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -75,6 +75,6 @@ typedef ACE_CString ACEXML_String;
 # endif /* __ACEXML_INLINE */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_XML_TYPE_H_ */

@@ -12,7 +12,7 @@
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -190,6 +190,6 @@ public:
 # include "ACEXML/common/DefaultHandler.i"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_DEFAULTHANDLER_H */

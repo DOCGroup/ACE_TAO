@@ -14,7 +14,7 @@
 #ifndef ACE_XML_SVC_CONF_H
 #define ACE_XML_SVC_CONF_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -54,6 +54,6 @@ public:
 };
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_XML_SVC_CONF_H */

@@ -17,7 +17,7 @@
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -157,5 +157,5 @@ ACE_Convert (const ACE_TCHAR *s, double &d)
 #pragma implementation ("Env_Value_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ENV_VALUE_T_H */

@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef  ACE_CLASSIX_PORT_DEFAULT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_PORT_DEFAULT_H
 
 #include "ace/Singleton.h"
@@ -76,5 +76,5 @@ typedef ACE_Singleton<ACE_CLASSIX_Port_Default, ACE_SYNCH_NULL_MUTEX>
         ACE_CLASSIX_DEFAULT_PORT;
 /* ------------------------------------------------------------------------- */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_PORT_DEFAULT_H */

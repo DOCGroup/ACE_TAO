@@ -17,7 +17,7 @@
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_Dgram.h"
 
@@ -418,5 +418,5 @@ private:
 #include "ace/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_MCAST_H */

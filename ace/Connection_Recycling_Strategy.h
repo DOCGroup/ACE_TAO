@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef ACE_CONNECTION_RECYCLING_STRATEGY_H
 #define ACE_CONNECTION_RECYCLING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Recyclable.h"
 
@@ -63,5 +63,5 @@ protected:
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_CONNECTION_RECYCLING_STRATEGY*/

@@ -12,7 +12,7 @@
 
 #ifndef ACE_REFCOUNTED_AUTO_PTR_H
 #define ACE_REFCOUNTED_AUTO_PTR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/Auto_Ptr.h"
@@ -188,6 +188,6 @@ private:
 
 #include "ace/Refcounted_Auto_Ptr.i"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_REFCOUNTED_AUTO_PTR_H */
 

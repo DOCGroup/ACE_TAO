@@ -13,7 +13,7 @@
 #ifndef ACE_BOUND_PTR_H
 #define ACE_BOUND_PTR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -333,6 +333,6 @@ private:
 
 #include "ace/Bound_Ptr.i"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_BOUND_PTR_H */

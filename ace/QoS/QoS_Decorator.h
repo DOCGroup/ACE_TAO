@@ -13,7 +13,7 @@
 
 #ifndef QOS_DECORATOR_H
 #define QOS_DECORATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
 
@@ -173,5 +173,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* QOS_DECORATOR_H */

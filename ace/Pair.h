@@ -14,7 +14,7 @@
 #ifndef ACE_PAIR_H
 #define ACE_PAIR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -25,6 +25,6 @@
 // Include the templates here.
 #include "ace/Pair_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_PAIR_H */

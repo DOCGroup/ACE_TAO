@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_SCO_5_0_0_H
 #define ACE_CONFIG_SCO_5_0_0_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Compiling for SCO.
 #if !defined (SCO)
@@ -106,5 +106,5 @@
 #define ACE_LACKS_READDIR_R
 #define ACE_HAS_GPERF
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_SCO_5_0_0_H */

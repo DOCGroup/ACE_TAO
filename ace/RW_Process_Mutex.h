@@ -12,7 +12,7 @@
 
 #ifndef ACE_RW_PROCESS_MUTEX_H
 #define ACE_RW_PROCESS_MUTEX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/File_Lock.h"
 
@@ -110,5 +110,5 @@ private:
 #include "ace/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RW_PROCESS_MUTEX_H */

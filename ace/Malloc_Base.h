@@ -13,7 +13,7 @@
 
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -156,5 +156,5 @@ private:
   static int delete_allocator_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MALLOC_BASE_H */

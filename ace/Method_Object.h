@@ -18,7 +18,7 @@
 
 #ifndef ACE_METHOD_OBJECT_H
 #define ACE_METHOD_OBJECT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Method_Request.h"
 
@@ -30,5 +30,5 @@
 // postal... ;-)
 typedef ACE_Method_Request ACE_Method_Object;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_METHOD_OBJECT_H */

@@ -16,7 +16,7 @@
 
 #ifndef ACE_DEFAULT_CONSTANTS_H
 #define ACE_DEFAULT_CONSTANTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Included just keep compilers that see #pragma dierctive first
 // happy.
@@ -523,5 +523,5 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 #define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

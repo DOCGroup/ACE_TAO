@@ -17,7 +17,7 @@
 */
 
 #ifndef ACE_CLASSIX_CLD_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_CLD_CONNECTOR_H
 
 #include "ace/CLASSIX/CLASSIX_Stream.h"
@@ -130,5 +130,5 @@ class ACE_CLASSIX_CLD_Connector
 #include "ace/CLASSIX/CLASSIX_CLD_Connector.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_CLD_CONNECTOR_H */

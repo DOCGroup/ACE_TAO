@@ -13,7 +13,7 @@
 
 #ifndef ACE_TIMER_LIST_H
 #define ACE_TIMER_LIST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Timer_List_T.h"
 
@@ -34,5 +34,5 @@ typedef ACE_Timer_List_Iterator_T<ACE_Event_Handler *,
                                   ACE_SYNCH_RECURSIVE_MUTEX>
         ACE_Timer_List_Iterator;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TIMER_LIST_H */

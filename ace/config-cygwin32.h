@@ -7,7 +7,7 @@
 #ifndef ACE_CONFIG_CYGWIN32_H
 #define ACE_CONFIG_CYGWIN32_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_MT_SAFE)
 #define ACE_MT_SAFE 1
@@ -175,6 +175,6 @@
 #  define ACE_LACKS_PTHREAD_CANCEL
 #endif  /* ACE_MT_SAFE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_CYGWIN32_H */

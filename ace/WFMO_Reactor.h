@@ -14,7 +14,7 @@
 
 #ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -1349,5 +1349,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_WFMO_REACTOR_H */

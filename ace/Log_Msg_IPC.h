@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_MSG_LOGGER_H
 #define ACE_LOG_MSG_LOGGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Log_Msg_Backend.h"
 
@@ -59,5 +59,5 @@ private:
   ACE_LOG_MSG_IPC_STREAM message_queue_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

@@ -30,7 +30,7 @@
 #ifndef ACE_CDR_STREAM_H
 #define ACE_CDR_STREAM_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/CDR_Base.h"
 
@@ -1233,6 +1233,6 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CDR_STREAM_H */

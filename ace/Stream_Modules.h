@@ -19,7 +19,7 @@
 
 #ifndef ACE_STREAM_MODULES
 #define ACE_STREAM_MODULES
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 /**
  * @class ACE_Stream_Head
@@ -139,5 +139,5 @@ public:
 #pragma implementation ("Stream_Modules.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_STREAM_MODULES */

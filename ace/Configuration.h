@@ -29,7 +29,7 @@
 
 #ifndef ACE_CONFIGURATION_H
 #define ACE_CONFIGURATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
@@ -880,5 +880,5 @@ private:
   int default_map_size_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

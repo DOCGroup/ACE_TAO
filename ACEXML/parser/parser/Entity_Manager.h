@@ -14,7 +14,7 @@
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/parser/parser/Parser_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -93,6 +93,6 @@ private:
 # include "ACEXML/parser/parser/Entity_Manager.i"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_ENTITY_MANAGER_H */

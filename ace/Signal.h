@@ -12,7 +12,7 @@
 
 #ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
 # error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
@@ -515,5 +515,5 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context);
 #include "ace/Signal.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SIGNAL_HANDLER_H */

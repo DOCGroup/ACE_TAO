@@ -17,7 +17,7 @@
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Reactor_Impl.h"
 
@@ -1176,6 +1176,6 @@ private:
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_DEV_POLL_REACTOR_H */

@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_WIN32_GHS_H
 #define ACE_CONFIG_WIN32_GHS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -105,5 +105,5 @@
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_GHS_H */

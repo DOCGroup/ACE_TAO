@@ -12,7 +12,7 @@
 
 #ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 #include "ace/Reactor.h"
@@ -393,5 +393,5 @@ private:
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROCESS_MANAGER_H */

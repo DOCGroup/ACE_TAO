@@ -12,7 +12,7 @@
 
 #ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SPIPE.h"
 
@@ -163,5 +163,5 @@ private:
 #include "ace/SPIPE_Stream.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SPIPE_STREAM_H */

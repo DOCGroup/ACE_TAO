@@ -14,7 +14,7 @@
 #ifndef ACE_VECTOR_T_H
 #define ACE_VECTOR_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Array.h"
 
@@ -239,6 +239,6 @@ int partial_compare (const ACE_Vector<T>& v1,
 #pragma implementation ("Vector_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_VECTOR_T_H */

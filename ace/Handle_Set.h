@@ -12,7 +12,7 @@
 
 #ifndef ACE_HANDLE_SET_H
 #define ACE_HANDLE_SET_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -240,5 +240,5 @@ private:
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HANDLE_SET */

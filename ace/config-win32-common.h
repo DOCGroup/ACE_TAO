@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_WIN32_COMMON_H
 #define ACE_CONFIG_WIN32_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -575,5 +575,5 @@ typedef unsigned long long ACE_UINT64;
 #  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 #endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

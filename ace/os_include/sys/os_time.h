@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_SYS_OS_TIME_H
 #define ACE_OS_INCLUDE_SYS_OS_TIME_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -41,5 +41,5 @@ extern "C"
 }
 #endif /* __cplusplus */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_OS_TIME_H */

@@ -16,7 +16,7 @@
 #ifndef ACE_INIT_ACE_H
 #define ACE_INIT_ACE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -64,6 +64,6 @@ private:
 #include "ace/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_INIT_ACE_H */

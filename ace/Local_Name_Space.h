@@ -15,7 +15,7 @@
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SString.h"
 
@@ -124,6 +124,6 @@ private:
 // Include the ACE_Local_Name_Space templates stuff at this point.
 #include "ace/Local_Name_Space_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_LOCAL_NAME_SPACE_H */

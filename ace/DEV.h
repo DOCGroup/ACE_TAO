@@ -13,7 +13,7 @@
 
 #ifndef ACE_DEV_H
 #define ACE_DEV_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/IO_SAP.h"
 
@@ -70,5 +70,5 @@ protected:
 #include "ace/DEV.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DEV_H */

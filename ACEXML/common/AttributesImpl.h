@@ -14,7 +14,7 @@
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -305,6 +305,6 @@ private:
 # include "ACEXML/common/AttributesImpl.i"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_ATTRIBUTESIMPL_H */

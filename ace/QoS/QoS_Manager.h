@@ -13,7 +13,7 @@
 
 #ifndef ACE_QOS_MANAGER_H
 #define ACE_QOS_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Addr.h"
 
@@ -65,5 +65,5 @@ private:
   ACE_QOS_SESSION_SET qos_session_set_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_QOS_MANAGER_H */

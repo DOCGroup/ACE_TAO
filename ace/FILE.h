@@ -12,7 +12,7 @@
 
 #ifndef ACE_FILE_H
 #define ACE_FILE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/IO_SAP.h"
 
@@ -139,5 +139,5 @@ protected:
 #include "ace/FILE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FILE_H */

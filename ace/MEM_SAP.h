@@ -13,7 +13,7 @@
 
 #ifndef ACE_MEM_SAP_H
 #define ACE_MEM_SAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/PI_Malloc.h"
 
@@ -157,5 +157,5 @@ protected:
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SOCK_IO_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_RMCAST_PARTIAL_MESSAGE_H
 #define ACE_RMCAST_PARTIAL_MESSAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Export.h"
 #include "ace/Task.h"
@@ -98,5 +98,5 @@ private:
 #include "RMCast_Partial_Message.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_PARTIAL_MESSAGE_H */

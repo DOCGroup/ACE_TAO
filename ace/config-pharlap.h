@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_HAS_PHARLAP
 // Some features are only available with the Realtime edition of ETS.
@@ -56,5 +56,5 @@
 # include /**/ <embtcpip.h>
 #endif /* ACE_HAS_PHARLAP_RT */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

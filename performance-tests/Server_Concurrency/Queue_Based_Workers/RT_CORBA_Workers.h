@@ -14,7 +14,7 @@
 //=============================================================================
 #ifndef PERF_TEST_RT_CORBA_WORKERS_H
 #define PERF_TEST_RT_CORBA_WORKERS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task_T.h"
 
@@ -162,5 +162,5 @@ private:
 
 #endif /*ACE_HAS_THREADS*/
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*PERF_TEST_RT_CORBA_WORKERS_H*/

@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-posix.h"
 
@@ -254,6 +254,6 @@ typedef union sigval sigval_t;
 
 #define ACE_LACKS_STROPTS_H
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */

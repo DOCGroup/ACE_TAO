@@ -15,7 +15,7 @@
 
 #ifndef ACE_AUTO_PTR_H
 #define ACE_AUTO_PTR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -184,5 +184,5 @@ public:
 #  pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */

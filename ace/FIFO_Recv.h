@@ -14,7 +14,7 @@
 #ifndef ACE_FIFO_RECV_H
 #define ACE_FIFO_RECV_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/FIFO.h"
 
@@ -76,6 +76,6 @@ private:
 #include "ace/FIFO_Recv.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_FIFO_RECV_H */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_MSG_UNIX_SYSLOG_H
 #define ACE_LOG_MSG_UNIX_SYSLOG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -68,5 +68,5 @@ private:
 
 #endif /* !ACE_WIN32 && !ACE_HAS_WINCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_UNIX_SYSLOG_H */

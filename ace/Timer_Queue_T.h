@@ -14,7 +14,7 @@
 
 #ifndef ACE_TIMER_QUEUE_T_H
 #define ACE_TIMER_QUEUE_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Free_List.h"
 
@@ -553,5 +553,5 @@ private:
 #pragma implementation ("Timer_Queue_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TIMER_QUEUE_T_H */

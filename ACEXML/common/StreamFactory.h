@@ -9,7 +9,7 @@
 #ifndef _ACEXML_STREAM_FACTORY_H
 #define _ACEXML_STREAM_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -53,6 +53,6 @@ public:
   virtual ACEXML_CharStream* create_stream (const ACEXML_Char* uri);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_STREAM_FACTORY_H */

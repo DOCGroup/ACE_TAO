@@ -17,7 +17,7 @@
 */
 
 #ifndef ACE_CLASSIX_CO_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_CO_CONNECTOR_H
 
 #include "ace/CLASSIX/CLASSIX_CLD_Connector.h"
@@ -114,5 +114,5 @@ class ACE_CLASSIX_CO_Connector : public ACE_CLASSIX_CLD_Connector
 #include "ace/CLASSIX/CLASSIX_CO_Connector.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_CO_CONNECTOR_H */
