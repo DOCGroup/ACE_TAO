@@ -1,8 +1,25 @@
+Wed Apr  4 13:52:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/AMI/FL_Callback/Makefile:
+          Update dependencies
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/LoadBalancing/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+          Fixed realclean rules, several files were not removed in a
+          global realclean.
+
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+          Fixed warnings about unused variables.
+
 Wed Apr  4 14:54:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tao/Leader_Follower.h (TAO_Leader_Follower):
+        * tao/Leader_Follower.h (TAO_Leader_Follower):
 
-	 Fixed a erroneous comment.
+         Fixed a erroneous comment.
 
 Wed Apr  4 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -24,10 +41,10 @@ Wed Apr  4 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Apr  4 12:58:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Disable bogus
-	  fuzz errors.
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Disable bogus
+          fuzz errors.
 
 Wed Apr 04 07:38:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
