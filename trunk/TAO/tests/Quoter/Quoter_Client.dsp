@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="quoter_client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Quoter_Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=quoter_client - Win32 Debug
+CFG=Quoter_Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "quoter_client.mak".
+!MESSAGE NMAKE /f "Quoter_Client.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "quoter_client.mak" CFG="quoter_client - Win32 Debug"
+!MESSAGE NMAKE /f "Quoter_Client.mak" CFG="Quoter_Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "quoter_client - Win32 Release" (based on\
+!MESSAGE "Quoter_Client - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "quoter_client - Win32 Debug" (based on\
+!MESSAGE "Quoter_Client - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +29,7 @@ CFG=quoter_client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "quoter_client - Win32 Release"
+!IF  "$(CFG)" == "Quoter_Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
-!ELSEIF  "$(CFG)" == "quoter_client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Quoter_Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -80,58 +80,22 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "quoter_client - Win32 Release"
-# Name "quoter_client - Win32 Debug"
+# Name "Quoter_Client - Win32 Release"
+# Name "Quoter_Client - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;idl"
+# PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\quoter.idl
-
-!IF  "$(CFG)" == "quoter_client - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "quoter_client - Win32 Debug"
-
-# Begin Custom Build
-InputPath=.\quoter.idl
-
-BuildCmds= \
-	..\..\tao_idl\tao_idl quoter.idl
-
-"quoterC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"quoterC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"quoterC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"quoterS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"quoterS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"quoterS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
+SOURCE=.\Quoter_Client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\quoter_client.cpp
+SOURCE=.\QuoterC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\quoterC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\quoterS.cpp
+SOURCE=.\QuoterS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -139,15 +103,15 @@ SOURCE=.\quoterS.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\quoter_client.h
+SOURCE=.\Quoter_Client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\quoterC.h
+SOURCE=.\QuoterC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\quoterS.h
+SOURCE=.\QuoterS.h
 # End Source File
 # End Group
 # Begin Group "Include Files"
@@ -155,11 +119,52 @@ SOURCE=.\quoterS.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\quoterC.i
+SOURCE=.\QuoterC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\quoterS.i
+SOURCE=.\QuoterS.i
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Quoter.idl
+
+!IF  "$(CFG)" == "Quoter_Client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Quoter_Client - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO_IDL compiler
+InputPath=.\Quoter.idl
+InputName=Quoter
+
+BuildCmds= \
+	..\..\tao_idl\tao_idl $(InputName).idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
