@@ -69,7 +69,7 @@ Async_Timer_List::cancel (long timer_id,
 {
   // Block all signals.
   ACE_Sig_Guard sg;
-  ACE_UNSED_ARG (sg);
+  ACE_UNUSED_ARG (sg);
 
   return this->timer_list_.cancel (timer_id, act);
 }
@@ -80,9 +80,12 @@ Async_Timer_List::schedule (ACE_Event_Handler *eh,
 			    const ACE_Time_Value &delay,
 			    const ACE_Time_Value &interval)
 {
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (interval);
+
   // Block all signals.
   ACE_Sig_Guard sg;
-  ACE_UNSED_ARG (sg);
+  ACE_UNUSED_ARG (sg);
 
   long tid = this->timer_list_.schedule (eh, 0, delay);
 
