@@ -34,7 +34,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
+# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined(__IBMCPP__)
       typedef struct _stat ACE_stat;
 # else
       typedef struct stat ACE_stat;

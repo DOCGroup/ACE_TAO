@@ -1,3 +1,30 @@
+Fri Aug  6 08:34:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+          Added ACE_HAS_TEMPLATE_TYPEDEFS
+
+        * ace/config-win32-visualage.h:
+          Added huge list of new defines
+
+        * ace/Event_Handler_T.h:
+          Instead of -1 use ACE_INVALID_HANDLE to make it portable
+
+        * ace/Malloc.cpp:
+          Corrected assert
+
+        * ace/OS_NS_sys_stat.h:
+          For IBMCPP also define ACE_stat as stat
+
+        * ace/OS_NS_sys_stat.inl (stat):
+          For Visual Age use special _stat call
+
+        * ace/Task.cpp (svc_run):
+          For Visual Age also do a static cast
+
+          Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
+          this.
+
 Fri Aug  6 08:03:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/config-win32-msvc-8.h:

@@ -138,7 +138,7 @@ void
 ACE_Control_Block::ACE_Name_Node::name (const char *)
 {
 #if !defined (ACE_PSOS)
-  ACE_ASSERT (0 == "not implemented!");
+  ACE_ASSERT (!"not implemented!");
 #endif /* ! ACE_PSOS */
 }
 
