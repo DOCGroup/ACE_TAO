@@ -1,3 +1,19 @@
+Mon Oct  1 12:58:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem 
+	  that started showing  up this time is like this. One of the
+	  threads was dispatching an upcall. In the intermediate time the
+	  Reactor woke up another thread to close the handler, remember
+	  that this is possible with the TP_Reactor if the application 
+	  resumes the handles (the way TAO does that). Now when the thread
+	  that that dispatched the upcall returned it tries to invoke a
+	  method on the already closed handle. To prevent that from
+	  happening we make an extra check to see whether the handle
+	  associated with the handler is still available in the internal
+	  map of the Reactor. As this check is done in the return path of
+	  the thread this should have less performance impact. This is
+	  another reason why we should have #1031 in place ASAP. 
+
 Mon Oct  1 12:23:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst (WEB): Changed the name of the
