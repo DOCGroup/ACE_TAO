@@ -146,8 +146,8 @@ init (int config_count,
       // Make sure the new config info is cleaned up if we exit abruptly.
       if (new_config_info != new_config_info_ptr.get ())
         {
-          new_config_info_ptr.release ();
-          new_config_info_ptr = new_config_info;
+          auto_ptr<RtecScheduler::Config_Info> tmp_config_info_ptr(new_config_info);
+          new_config_info_ptr = tmp_config_info_ptr;
         }
 
       result = config_info_map_.bind (config_info [config_info_count_].preemption_priority,
@@ -1371,8 +1371,8 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
           // Make sure the new config info is cleaned up if we exit abruptly.
           if (new_config_info != new_config_info_ptr.get ())
             {
-              new_config_info_ptr.release ();
-              new_config_info_ptr = new_config_info;
+              auto_ptr<RtecScheduler::Config_Info> tmp_config_info_ptr(new_config_info);
+              new_config_info_ptr = tmp_config_info_ptr;
             }
 
           // Have the strategy fill in the new config info for that
