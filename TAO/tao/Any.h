@@ -30,8 +30,6 @@ namespace TAO
   class Any_Impl;
 };
 
-class TAO_Codeset_Translator_Factory;
-
 namespace CORBA
 {
   /**
@@ -437,7 +435,7 @@ TAO_Export void operator<<= (CORBA::Any_var &, CORBA::Any::from_wstring);
 /// These are not required by the spec, but will make users
 /// of other ORBs that are used to them more comfortable.
 
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Short &);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::UShort &);

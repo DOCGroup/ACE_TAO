@@ -15,10 +15,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Dynamic_Adapter.h"
 
-#if defined(ACE_MVS)
-#include "ace/Codeset_IBM1047.h"
-#endif /* ACE_MVS */
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
@@ -872,28 +868,12 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
                                             ACE_ENV_ARG_DECL)
 {
   // Create the TypeCode for the CORBA::UnknownUserException.
-
-#if defined(ACE_MVS)
-  // @@ We need to use a translator to make sure that all TypeCodes
-  // are stored in ISO8859 form, the problem is that this hack does
-  // not scale as more native sets have to be supported
-
-  ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (0,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                        &translator);
-#else
   TAO_OutputCDR stream (0,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-#endif /* ACE_MVS */
 
   const char *interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";

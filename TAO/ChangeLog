@@ -1,3 +1,18 @@
+Tue May 20 12:43:58 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Manager.cpp: Use the old codeset default macros from
+          corbafwd.h to initialize the default codeset values in the
+          codeset manager. These may still be overridden via the resource
+          manager if desired.
+
+        * tao/Any.cpp:
+        * tao/Any.h: Cleaned up unneeded references to codeset translator
+          factory class and header.
+
+        * tao/Exception.cpp: Removed old ACE_MVS code for alternative
+          codeset translator. This code would not compile if enabled.
+
+
 Tue May 20 11:11:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Makefile: Added -lTAO_SmartProxies to the
@@ -32,7 +47,7 @@ Mon May 19 11:05:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  reference count once more.  This is not needed as we already
 	  hold a reference to the handler.  Therefore we discard this
 	  second reference.  Fixes a memory leak.  [Bug 1506]
-	  
+
 	  (retrieve_credentials):
 
 	  For the default certificate and private key case, assign the
