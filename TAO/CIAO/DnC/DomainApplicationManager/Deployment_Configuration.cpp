@@ -17,6 +17,7 @@ CIAO::Deployment_Configuration::Deployment_Configuration (CORBA::ORB_ptr o)
 
 CIAO::Deployment_Configuration::~Deployment_Configuration (void)
 {
+  this->deployment_info_.unbind_all ();
 }
 
 int
