@@ -106,6 +106,12 @@ if test -d m4; then
   # Provide some "useful" information.
   echo Bootstrapping...
 
+  # Update the NEWS file
+  # For now just copy the contents of the `VERSION' file to make automake
+  # happy.  Eventually, we should start putting real news in to it.
+  echo Creating a NEWS file
+  cp VERSION NEWS
+
   # Generate an `aclocal.m4' file from all existing m4 macro files
   # including those in the `m4' directory.
   echo Running aclocal
@@ -173,12 +179,6 @@ if test -d m4; then
     test -f man/html/Makefile.am || echo 'man/html/Makefile.am is missing!'
     exit 1;
   fi  # test -f man/man3/Makefile.am && test -f man/html/Makefile.am
-
-  # Update the NEWS file
-  # For now just copy the contents of the `VERSION' file to make automake
-  # happy.  Eventually, we should start putting real news in to it.
-  echo Creating a NEWS file
-  cp VERSION NEWS
 
   # Provide some more "useful" information.
   echo Done bootstrapping.
