@@ -1,5 +1,6 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -n HUDisplay"
+// This file is modified from a file generated with
+//      "generate_component_mpc.pl -n HUDisplay"
 
 project(HUDisplay_stub): ciao_client {
 
@@ -21,6 +22,7 @@ project(HUDisplay_svnt) : ciao_server {
   sharedname  = HUDisplay_svnt
   libs    += HUDisplay_stub
 
+  idlflags  +=  -Wb,export_macro=HUDISPLAY_SVNT_Export -Wb,export_include=HUDisplay_svnt_export.h
   dllflags = HUDISPLAY_SVNT_BUILD_DLL
 
   Source_Files {

@@ -1,3 +1,31 @@
+Sat Jun 21 09:50:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/Display/HUDisplay.mpc:
+	* examples/OEP/Display/GPS/GPS.mpc:
+	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/OEP/Display/RateGen/RateGen.mpc: Added new MPC files
+	  that can handle CIDL and Qt files.
+
+	* examples/OEP/Display/Display.dsw:
+	* examples/OEP/Display/HUDisplay_stub.dsp:
+	* examples/OEP/Display/HUDisplay_svnt.dsp:
+	* examples/OEP/Display/GPS/GPS_exec.dsp:
+	* examples/OEP/Display/GPS/GPS_stub.dsp:
+	* examples/OEP/Display/GPS/GPS_svnt.dsp:
+	* examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
+	* examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
+	* examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
+	* examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+	* examples/OEP/Display/RateGen/RateGen_client.dsp:
+	* examples/OEP/Display/RateGen/RateGen_exec.dsp:
+	* examples/OEP/Display/RateGen/RateGen_stub.dsp:
+	* examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+	* examples/OEP/Display/RateGen/controller.dsp: Removed handcrafted
+	  projects/workspaces now that we can generate them with MPC
+	  files.
+
 Fri Jun 20 21:06:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/OEP/Display/HUDisplay_stub.dsp:
