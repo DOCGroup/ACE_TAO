@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver, valuetype, orbsvcslib {
+project : interceptors, portableserver, valuetype, corba_messaging, orbsvcslib {
   after     += Security
   libs      += TAO_Security
   tagchecks += Security

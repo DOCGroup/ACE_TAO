@@ -1,3 +1,14 @@
+Mon Aug 30 11:54:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/security.mpb:
+
+	  Added missing "interceptors" and "corba_messaging" base
+	  projects.
+
+	* bin/MakeProjectCreator/config/ssliop.mpb:
+
+	  Added missing "interceptors" base projects.
+
 Mon Aug 30 13:02:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Basic_Types.h: Don't use sizeof() when defining ACE_SIZEOF_WCHAR.
