@@ -231,7 +231,7 @@ Low_Priority_Task::svc (void)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static u_int
+static int
 get_options (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "c:n:p:y?");
@@ -242,20 +242,20 @@ get_options (int argc, char *argv[])
       if (ACE_OS::atoi (get_opt.optarg) >= 2)
         iterations = ACE_OS::atoi (get_opt.optarg);
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: iterations must be >= 2\n"), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: iterations must be >= 2\n"), -1);
       break;
     case 'n':
       if (ACE_OS::atoi (get_opt.optarg) >= 1)
         high_priority_tasks = ACE_OS::atoi (get_opt.optarg);
       else
         ACE_ERROR_RETURN ((LM_ERROR, "%n: number of high priority threads "
-                           "must be >= 1\n"), 1);
+                           "must be >= 1\n"), -1);
       break;
     case 'p':
       if (ACE_OS::atoi (get_opt.optarg) > 0)
         read_period = ACE_OS::atoi (get_opt.optarg);
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), (u_int) -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), -1);
       break;
     case 'y':
       low_yield = 1;
@@ -265,8 +265,8 @@ get_options (int argc, char *argv[])
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%n: unknown arg, %c\n"
-                         "usage: %n %s\n", opt, usage), 1);
+                         "%n: unknown arg, %c\nusage: %n %s\n", opt, usage),
+                        -1);
     }
   }
 
@@ -276,8 +276,8 @@ get_options (int argc, char *argv[])
     break;
   default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%n: too many arguments\n"
-                         "usage: %n %s\n", usage), 1);
+                         "%n: too many arguments\nusage: %n %s\n", usage),
+                        -1);
   }
 
   return 0;
