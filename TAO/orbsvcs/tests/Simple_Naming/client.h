@@ -164,6 +164,7 @@ class CosNaming_Client
   //    is needed.
 public:
   // = Initialization and termination methods.
+
   CosNaming_Client (void);
   // Constructor.
 
@@ -175,6 +176,9 @@ public:
 
   int init (int argc, char **argv);
   // Initialize the client communication endpoint with server.
+
+  enum {OBJ1_ID = 5, OBJ2_ID = 6};
+  // symbolic ids.
 
 private:
   int parse_args (void);

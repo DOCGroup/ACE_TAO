@@ -1,7 +1,13 @@
 // $Id$
 
-This application tests different features of TAO's Naming Service
-based on the command line option.
+This application tests different features of TAO's Naming Service.
+
+To run all tests automatically - 
+	execute Perl script run_test.pl
+
+To run tests manually - 
+	start Naming Service ($TAO_ROOT/orbsvcs/Naming_Service/Naming_Service),
+	 then run ./client with one of the following options below.
 
 The following options exist:
 
@@ -18,13 +24,25 @@ The following options exist:
 If no option is specified, Simple test is run.  If more than one
 option is specified, only one test runs.
 
-Below is the description of each test.
+NOTE: if running tests manually, Naming Service has to be restarted before each test
+(this is due to some tests not 'cleaning up' bindings after themselves).
+
+
+
+DESCRIPTION AND EXPECTED OUTPUT FOR EACH TEST
 *******************************************
 
 Simple Test.
 
 Performs bind (), resolve (), and unbind () of an object reference in
 the root context.
+
+
+Expected Output:
+
+Bound name OK
+Resolved name OK
+Unbound name OK
 
 ********************************************
 
@@ -51,6 +69,8 @@ root->resolve (level1/level2/foo)
 root->rebind (level1/level2/foo, obj2) to have a different object under the name bar.
 root->resolve (level1/level2/foo) to make sure correct reference is returned.
 
+
+Expected Output: none
 ********************************************
 
 Exceptions Test.
@@ -72,6 +92,15 @@ root->unbind (level1/level3/foo) - should get NotFound exception
 root->unbind (level1/foo/foo) -should get NotFound exception
   with why = not_context, rest_of_name = foo/foo.
 
+
+Expected Output:
+
+AlreadyBound exception (case 1) works properly
+AlreadyBound  exception (case 2) works properly
+NotFound  exception (case 1) works properly
+NotFound  exception (case 2) works properly
+NotFound  exception (case 3) works properly
+
 *********************************************
 
 Iterator Test.
@@ -85,10 +114,18 @@ iter->next_n (2, bl)
 iter->next_one () - should return false
 iter->destroy () 
 
+
+Expected Output:
+
+First binding: foo1
+Second binding: foo2
+Third binding: foo3
+Fourth binding: foo4
+
 *********************************************
 
 Destroy Test. 
 
-This test will ...
 
+Expected Output:
 ********************************************

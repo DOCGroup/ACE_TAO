@@ -24,32 +24,52 @@
 
 ACE_RCSID(Simple_Naming, client, "$Id$")
 
-//@@ Please make sure you run Purify on these tests!
-
 class My_Test_Object : public POA_Test_Object
 {
 public:
-  // @@ Please move the definitions of the method bodies to outside of
-  // the class definition.
-  My_Test_Object (CORBA::Short id = 0) 
-    // @@ Please use the base-member initialization section, i.e.,
-    // : id_ (id)
-  {
-    id_ = id;
-  };
+  // = Initialization and termination methods.
 
-  ~My_Test_Object (void) {};
+  My_Test_Object (CORBA::Short id);
+  // Constructor.
 
-  // @@ For kicks, you might define id() as an "attribute" rather than
-  // an "operation" in the IDL file.
-  CORBA::Short get_id (CORBA::Environment &_env)
-  {
-    return id_;
-  };
+  ~My_Test_Object (void);
+  // Destructor.
+
+  // = Interface implementation accessor methods.
+
+  void id (CORBA::Short id, CORBA::Environment &_env);
+  // Sets id.
+
+  CORBA::Short id (CORBA::Environment &_env);
+  // Gets id.
 
 private:
   short id_;
 };
+
+
+My_Test_Object::My_Test_Object (CORBA::Short id = 0) 
+    : id_ (id)
+{
+}
+
+My_Test_Object::~My_Test_Object (void) 
+{
+}
+
+CORBA::Short 
+My_Test_Object::id (CORBA::Environment &_env)
+{
+  return id_;
+}
+
+
+void
+My_Test_Object::id (CORBA::Short id, CORBA::Environment &_env)
+{
+  id_ = id;
+}
+
 
 // Constructor.
 
@@ -67,9 +87,6 @@ CosNaming_Client::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "dstiey");
   int c;
-  // @@ Instead of using a not_set flag, why not set this->test_ to 0
-  // initially, and then just check to see if it's already set?!
-  int not_set = 1;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -78,45 +95,34 @@ CosNaming_Client::parse_args (void)
 	TAO_debug_level++;
 	break;
       case 's':
-	if (not_set) 
-          {
-            // @@ Please use the ACE_NEW_RETURN macro to make sure
-            // that you check the return status in case new fails.
-            // if (this->test_ == 0)
-            //   ACE_NEW_RETURN (this->test_,
-            //                   Simple_Test,
-            //                   -1);
-            this->test_ = new Simple_Test ();
-            not_set = 0;
-          }
+	if (this->test_ == 0) 
+	  ACE_NEW_RETURN (this->test_,
+			  Simple_Test,
+			  -1);
 	break;
       case 't':
-	if (not_set) 
-          {
-            this->test_ = new Tree_Test ();
-            not_set = 0;
-          }
+	if (this->test_ == 0) 
+	  ACE_NEW_RETURN (this->test_,
+			  Tree_Test,
+			  -1);	  
 	break;
       case 'i':
-	if (not_set) 
-          {
-            this->test_ = new Iterator_Test ();
-            not_set = 0;
-          }
+	if (this->test_ == 0) 
+	  ACE_NEW_RETURN (this->test_,
+			  Iterator_Test,
+			  -1);
 	break;
       case 'e':
-	if (not_set) 
-          {
-            this->test_ = new Exceptions_Test ();
-            not_set = 0;
-          }
+	if (this->test_ == 0) 
+	  ACE_NEW_RETURN (this->test_,
+			  Exceptions_Test,
+			  -1);
 	break;
       case 'y':
-	if (not_set) 
-          {
-            this->test_ = new Destroy_Test ();
-            not_set = 0;
-          }
+	if (this->test_ == 0) 
+	  ACE_NEW_RETURN (this->test_,
+			  Destroy_Test,
+			  -1);
 	break;
       default:
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,9 +134,11 @@ CosNaming_Client::parse_args (void)
                           -1);
       }
 
-  // @@ Same thing here...
-  if (not_set)
-  test_ = new Simple_Test ();
+  if (this->test_ == 0) 
+    ACE_NEW_RETURN (this->test_,
+		    Simple_Test,
+		    -1);
+
   // Indicates successful parsing of command line.
   return 0;  
 }
@@ -184,10 +192,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
   TAO_TRY
     {
       // Dummy object instantiation.
-
-      // @@ Can you please replace the use of "5" with a symbolic
-      // constant, i.e., "DEFAULT_ID" or something?
-      My_Test_Object test_obj_impl (5);
+      My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
       Test_Object_var test_obj_ref =
         test_obj_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -213,7 +218,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
                               TAO_TRY_ENV);        
       TAO_CHECK_ENV;
       if (!CORBA::is_nil (result_object.in ()) 
-          && result_object->get_id (TAO_TRY_ENV) == 5)
+          && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
 	ACE_DEBUG ((LM_DEBUG,
                     "Resolved name OK\n"));
       TAO_CHECK_ENV;
@@ -256,7 +261,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       TAO_CHECK_ENV;
 
       // Instantiate a dummy object and bind it under the new context.
-      My_Test_Object impl1 (1);
+      My_Test_Object impl1 (CosNaming_Client::OBJ1_ID);
       Test_Object_var obj1 = impl1._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       CosNaming::Name obj_name;
@@ -278,7 +283,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       // Resolve and unbind level1/level2/foo, and bind it back.
       CosNaming::Name test_name (level2);
       test_name.length (3);
-      test_name[0].id = obj_name[0].id;
+      test_name[2].id = obj_name[0].id;
       CORBA::Object_var result_obj_ref =
         root_context->resolve (test_name,
                                TAO_TRY_ENV);
@@ -288,7 +293,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                               TAO_TRY_ENV);        
       TAO_CHECK_ENV;
       if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->get_id (TAO_TRY_ENV) == 1)
+          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "Problems with resolving foo in Tree Test\n"), 
                           -1);
@@ -303,13 +308,13 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                           obj1.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;      
-      
+            
       // Create new context and rebind under the name level1/level2.
       CosNaming::NamingContext_var new_level2_context;
       new_level2_context =
         root_context->new_context (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      root_context->bind_context (level2,
+      root_context->rebind_context (level2,
                                   new_level2_context.in (),
                                   TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -326,13 +331,13 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                                             TAO_TRY_ENV);        
       TAO_CHECK_ENV;
       if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->get_id (TAO_TRY_ENV) == 1)
+          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "Problems in the Tree Test\n"), 
                           -1);   
       TAO_CHECK_ENV;
 
-      My_Test_Object impl2 (2);
+      My_Test_Object impl2 (CosNaming_Client::OBJ2_ID);
       Test_Object_var obj2 = impl2._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       root_context->rebind (test_name,
@@ -346,7 +351,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                                             TAO_TRY_ENV);        
       TAO_CHECK_ENV;
       if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->get_id (TAO_TRY_ENV) == 2)
+          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ2_ID)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "Problems with rebind in Tree Test\n"), 
                           -1);   
