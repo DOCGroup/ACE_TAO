@@ -1,8 +1,9 @@
 // $Id$
 
-// This example tests the features of the <ACE_SOCK_Acceptor> and
-// <ACE_SOCK_Stream> classes.  If the platform supports threads it
-// uses a thread-per-connection concurrency model.
+// This example tests the features of the <ACE_SOCK_Acceptor>,
+// <ACE_SOCK_Stream>, and <ACE_Svc_Handler> classes.  If the platform
+// supports threads it uses a thread-per-connection concurrency model.
+// Otherwise, it uses a single-threaded iterative server model.
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
@@ -63,7 +64,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  void *buf;
+  void *request;
 
   // Read data from client (terminate on error).
 
@@ -96,14 +97,14 @@ twoway_server (void *arg)
       else
         {
           len = ntohl (len);
-          ACE_NEW_RETURN (buf,
+          ACE_NEW_RETURN (request,
                           char [len],
                           0);
         }
 
       // Subtract off the sizeof the length prefix.
-      r_bytes = new_stream.recv (buf, len - sizeof (ACE_UINT32));
-      
+      r_bytes = new_stream.recv_n (request,
+                                   len - sizeof (ACE_UINT32));
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -118,11 +119,14 @@ twoway_server (void *arg)
           break;
         }
       else if (verbose 
-               && ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
+               && ACE::write_n (ACE_STDOUT,
+                                request,
+                                r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
-      else if (new_stream.send_n (buf, r_bytes) != r_bytes)
+      else if (new_stream.send_n (request,
+                                  r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "send_n"));
@@ -130,13 +134,13 @@ twoway_server (void *arg)
       total_bytes += size_t (r_bytes);
       message_count++;
 
-      delete [] buf;
+      delete [] request;
     }
 
   // Close new endpoint (listening endpoint stays open).
   new_stream.close ();
 
-  delete [] buf;
+  delete [] request;
   return 0;
 }
 
@@ -175,7 +179,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  void *buf;
+  void *request;
 
   // Read data from client (terminate on error).
 
@@ -208,13 +212,14 @@ oneway_server (void *arg)
       else
         {
           len = ntohl (len);
-          ACE_NEW_RETURN (buf,
+          ACE_NEW_RETURN (request,
                           char [len],
                           0);
         }
 
       // Subtract off the sizeof the length prefix.
-      r_bytes = new_stream.recv (buf, len - sizeof (ACE_UINT32));
+      r_bytes = new_stream.recv_n (request,
+                                   len - sizeof (ACE_UINT32));
       
       if (r_bytes == -1)
         {
@@ -230,7 +235,7 @@ oneway_server (void *arg)
           break;
         }
       else if (verbose 
-               && ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
+               && ACE::write_n (ACE_STDOUT, request, r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
@@ -238,7 +243,7 @@ oneway_server (void *arg)
       total_bytes += size_t (r_bytes);
       message_count++;
 
-      delete [] buf;
+      delete [] request;
     }
 
   timer.stop ();
@@ -265,7 +270,7 @@ oneway_server (void *arg)
   // Close new endpoint (listening endpoint stays open).
   new_stream.close ();
 
-  delete [] buf;
+  delete [] request;
   return 0;
 }
 

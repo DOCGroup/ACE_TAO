@@ -2,12 +2,13 @@
 
 // This example tests the features of the <ACE_SOCK_Acceptor>,
 // <ACE_SOCK_Stream>, and <ACE_Svc_Handler> classes.  If the platform
-// supports threads it uses a thread-per-connection concurrency model;
-// otherwise it uses a single-threaded iterative server model.
+// supports threads it uses a thread-per-connection concurrency model.
+// Otherwise, it uses a single-threaded iterative server model.
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inserver_fancy, "$Id$")
 
@@ -36,7 +37,7 @@ private:
   // Initialize the acceptors.
 
   int create_handler (ACE_SOCK_Acceptor &acceptor,
-                      Handler *(*handler_factory) (ACE_HANDLE),
+                      Handler *(*handler_factory) (ACE_HANDLE, int),
                       const char *handler_type);
   // Factory that creates the right kind of <Handler>.
 
@@ -70,6 +71,9 @@ public:
   virtual int open (void * = 0);
   // Generic initialization method.
 
+  virtual int close (u_long);
+  // Close down and delete this.
+
 protected:
   Handler (ACE_HANDLE handle, int verbose = 0);
   // Constructor.
@@ -87,7 +91,7 @@ protected:
   virtual int svc (void);
   // Template method entry point into the handler task.
 
-  void print_results (void) = 0;
+  virtual void print_results (void);
   // Print the results.
 
   int verbose_;
@@ -127,7 +131,7 @@ private:
   virtual int run (void);
   // Template Method hook called by <svc>.
 
-  void print_results (void) = 0;
+  virtual void print_results (void);
   // Print the results.
 };
 
@@ -135,9 +139,7 @@ Handler::Handler (ACE_HANDLE handle,
                   int verbose)
   : verbose_ (verbose),
     total_bytes_ (0),
-    message_count_ (0),
-    len_ (0),
-    buf_ (0)
+    message_count_ (0)
 {
   this->peer ().set_handle (handle);
 }
@@ -163,6 +165,16 @@ Handler::open (void *)
 }
 
 int
+Handler::close (u_long)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) closing down %x\n",
+              this));
+  delete this;
+  return 0;
+}
+
+int
 Handler::svc (void)
 {
   // Timer logic.
@@ -179,18 +191,16 @@ Handler::svc (void)
 }
 
 int
-Handler::parse_header_and_allocate_buffer (ACE_INT32 *len,
-                                           char *&buf)
+Handler::parse_header_and_allocate_buffer (char *&request,
+                                           ACE_INT32 *len)
 {
-
   ssize_t result = this->peer ().recv_n ((void *) len,
                                          sizeof (ACE_INT32));
-
   if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG, 
                   "(%P|%t) connected closed\n"));
-      return 0;
+      return -1;
     }
   else if (result == -1 || result != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,14 +210,17 @@ Handler::parse_header_and_allocate_buffer (ACE_INT32 *len,
   else
     {
       *len = ntohl (*len);
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) reading messages of size %d\n",
-                  *len));
-      ACE_NEW_RETURN (buf,
+      ACE_NEW_RETURN (request,
                       char[*len],
                       -1);
     }
+
   return 0;
+}
+
+void
+Handler::print_results (void)
+{
 }
 
 Twoway_Handler::Twoway_Handler (ACE_HANDLE handle,
@@ -226,14 +239,15 @@ Twoway_Handler::run (void)
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *buf;
+      char *request;
 
-      if (parse_header_and_allocate_buffer (buf,
-                                            &len) <= 0)
+      if (parse_header_and_allocate_buffer (request,
+                                            &len) == -1)
         return -1;
 
-      ssize_t r_bytes = this->peer ().recv (buf,
-                                            len);
+      // Subtract off the sizeof the length prefix.
+      ssize_t r_bytes = this->peer ().recv_n (request,
+                                              len - sizeof (ACE_UINT32));
       
       if (r_bytes == -1)
         {
@@ -250,12 +264,12 @@ Twoway_Handler::run (void)
         }
       else if (this->verbose_ 
                && ACE::write_n (ACE_STDOUT,
-                                this->buf_,
+                                request,
                                 r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
-      else if (this->peer ().send_n (this->buf_,
+      else if (this->peer ().send_n (request,
                                      r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
@@ -303,12 +317,15 @@ Oneway_Handler::run (void)
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *buf;
+      char *request;
 
-      if (parse_header_and_allocate_buffer (buf, &len) <= 0)
+      if (parse_header_and_allocate_buffer (request,
+                                            &len) == -1)
         return -1;
 
-      ssize_t r_bytes = this->peer ().recv (buf, len);
+      // Subtract off the sizeof the length prefix.
+      ssize_t r_bytes = this->peer ().recv_n (request,
+                                              len - sizeof (ACE_UINT32));
       
       if (r_bytes == -1)
         {
@@ -325,7 +342,7 @@ Oneway_Handler::run (void)
         }
       else if (this->verbose_ 
                && ACE::write_n (ACE_STDOUT,
-                                this->buf_,
+                                request,
                                 r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
@@ -384,7 +401,7 @@ Handler_Factory::init_acceptors (void)
 
 int
 Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
-                                 Handler * (*handler_factory) (ACE_HANDLE),
+                                 Handler * (*handler_factory) (ACE_HANDLE, int),
                                  const char *handler_type)
 {
   ACE_SOCK_Stream new_stream;
@@ -442,7 +459,7 @@ Handler_Factory::parse_args (int argc, char *argv[])
 }
 
 Handler_Factory::Handler_Factory (int argc, char *argv[])
-  : port_ (ACE_DEFAULT_PORT),
+  : port_ (ACE_DEFAULT_SERVER_PORT),
     verbose_ (0)
 {
 }
@@ -485,7 +502,7 @@ Handler_Factory::handle_events (void)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
                     "select"));
-      else if (result == 0)
+      else if (result == 0 && this->verbose_)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) select timed out\n"));
       else 
