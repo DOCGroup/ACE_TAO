@@ -130,20 +130,20 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 // implementations ...
 
 static CORBA::Object_ptr
-ior_string_to_object (CORBA::String str,
+ior_string_to_object (const char *str,
                       CORBA::Environment &env)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  ACE_Message_Block mb (ACE_OS::strlen ((char *) str) / 2 + 1
-			+ CDR::MAX_ALIGNMENT);
+  ACE_Message_Block mb (ACE_OS::strlen ((char *) str) / 2
+                        + 1 + CDR::MAX_ALIGNMENT);
 
   CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
 
-  char *tmp = (char *) str;
+  const char *tmp = str;
   size_t len = 0;
 
   while (tmp [0] && tmp [1])
@@ -163,7 +163,7 @@ ior_string_to_object (CORBA::String str,
   if (tmp [0] && !isspace (tmp [0]))
     {
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-      return 0;
+      return CORBA::Object::_nil ();
     }
 
   // Create deencapsulation stream ... then unmarshal objref from that
@@ -186,14 +186,14 @@ ior_string_to_object (CORBA::String str,
 // Destringify URL style IIOP objref.
 
 static CORBA::Object_ptr
-iiop_string_to_object (CORBA::String string,
+iiop_string_to_object (const char *string,
                        CORBA::Environment &env)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
 
   if (!string || !*string)
-    return 0;
+    return CORBA::Object::_nil ();
 
   // type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
@@ -203,7 +203,8 @@ iiop_string_to_object (CORBA::String string,
   IIOP_Object *data;
 
   // null type ID.
-  ACE_NEW_RETURN (data, IIOP_Object ((char *) 0), 0);
+  ACE_NEW_RETURN (data, IIOP_Object ((char *) 0),
+                  CORBA::Object::_nil ());
 
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
@@ -219,7 +220,7 @@ iiop_string_to_object (CORBA::String string,
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->_decr_refcnt ();
-      return 0;
+      return CORBA::Object::_nil ();
     }
 
   if (data->profile.iiop_version.major != IIOP::MY_MAJOR
@@ -227,29 +228,32 @@ iiop_string_to_object (CORBA::String string,
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->_decr_refcnt ();
-      return 0;
+      return CORBA::Object::_nil ();
     }
 
   // Pull off the "hostname:port/" part of the objref
 
-  char *cp = ACE_OS::strchr (string, ':');
+  // Copy the string because we are going to modify it...
+  CORBA::String_var copy = CORBA::string_dup (string);
+
+  char *start = copy.inout ();
+  char *cp = ACE_OS::strchr (start, ':');
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->_decr_refcnt ();
-      return 0;
+      return CORBA::Object::_nil ();
     }
 
-  data->profile.host = CORBA::string_alloc (1 + cp - string);
+  data->profile.host = CORBA::string_alloc (1 + cp - start);
   for (cp = data->profile.host;
-       *string != ':';
-       *cp++ = *string++)
+       *start != ':';
+       *cp++ = *start++)
     continue;
 
-  *cp = 0;
-  string++;
+  *cp = 0; start++;
 
-  cp = ACE_OS::strchr ((char *) string, '/');
+  cp = ACE_OS::strchr (start, '/');
 
   if (cp == 0)
     {
@@ -257,16 +261,16 @@ iiop_string_to_object (CORBA::String string,
       CORBA::string_free (data->profile.host);
       data->profile.host = 0;
       data->_decr_refcnt ();
-      return 0;
+      return CORBA::Object::_nil ();
     }
 
-  data->profile.port = (short) ACE_OS::atoi ((char *) string);
+  data->profile.port = (short) ACE_OS::atoi (start);
   data->profile.object_addr (0);
-  string = ++cp;
+  start = ++cp;
 
   // Parse the object key
   TAO_POA::decode_string_to_sequence (data->profile.object_key,
-                                      string);
+                                      start);
 
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
@@ -285,7 +289,7 @@ iiop_string_to_object (CORBA::String string,
 // Destringify arbitrary objrefs.
 
 CORBA::Object_ptr
-IIOP_ORB::string_to_object (CORBA::String str,
+IIOP_ORB::string_to_object (const char *str,
                             CORBA::Environment &env)
 {
   env.clear ();
@@ -293,11 +297,12 @@ IIOP_ORB::string_to_object (CORBA::String str,
   CORBA::Object_ptr obj = 0;
 
   // Use the prefix code to choose which destringify algorithm to use.
-  if (ACE_OS::strncmp ((char *)str,
-                       iiop_prefix, sizeof iiop_prefix - 1) == 0)
+  if (ACE_OS::strncmp (str,
+                       iiop_prefix,
+                       sizeof iiop_prefix - 1) == 0)
     obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
 
-  else if (ACE_OS::strncmp ((char *)str,
+  else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);

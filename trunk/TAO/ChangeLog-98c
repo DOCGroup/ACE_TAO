@@ -1,3 +1,13 @@
+Tue Dec  1 14:35:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h: 
+	* tao/IIOP_ORB.h: 
+	* tao/IIOP_ORB.cpp: 
+	* tao/POA.h: 
+	* tao/POA.cpp: 
+	  CORBA::ORB::string_to_object() was taking a <char*> argument,
+	  but it should be a <const char*>.
+
 Tue Dec 01 13:55:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Generic_Servant/client.cpp: Changed to add native

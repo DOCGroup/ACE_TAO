@@ -490,7 +490,7 @@ public:
   static void encode_sequence_to_string (CORBA::String &str,
                                          const TAO_Unbounded_Sequence<CORBA::Octet> &seq);
   static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
-                                         CORBA::String str);
+                                         const char *str);
 
   static CORBA::String ObjectId_to_string (const PortableServer::ObjectId &id);
 
