@@ -9,6 +9,12 @@ Sat May 16 13:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: added TAO_Object_Mnaager
           instantiations.  g++/LynxOS 2.5.0 needs them.
 
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (print_priority_info):
+          replace Solaris priocntl () system calls with a call to
+          ACE_OS::lwp_getparams ().  This allowed removal of #includes
+          of the priocntl headers, which were causing warnings with
+          g++ because _REENTRANT was #defined after they were #included.
+
 1998-05-15  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
