@@ -1,3 +1,13 @@
+Tue May  4 12:34:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* TAO_IDL/be/be_helper.cpp:
+	  The IDL compiler can use either templates or explicit code for
+	  the classes mapped from IDL sequences.  I cleaned up the macros
+	  to control which scheme is used by default on each platform.
+	  The complete documentation is in orbconf.h next to
+	  TAO_USE_SEQUENCE_TEMPLATES
+
 Tue May 04 12:15:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Object_Adapter.cpp (dispatch_servant_i): replaced
