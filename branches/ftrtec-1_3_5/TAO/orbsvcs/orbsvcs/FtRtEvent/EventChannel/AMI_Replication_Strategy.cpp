@@ -7,7 +7,12 @@ ACE_RCSID (EventChannel,
            AMI_Replication_Strategy,
            "$Id$")
 
-AMI_Replication_Strategy::AMI_Replication_Strategy()
+AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)
+: mt_(mt)
+{
+}
+
+AMI_Replication_Strategy::~AMI_Replication_Strategy()
 {
 }
 
@@ -36,7 +41,7 @@ Replication_Strategy*
 AMI_Replication_Strategy::make_primary_strategy()
 {
   AMI_Primary_Replication_Strategy* result;
-  ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy, 0);
+  ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy(mt_), 0);
   auto_ptr<AMI_Primary_Replication_Strategy> holder(result);
   if (result->activate() == 0)
     return holder.release();

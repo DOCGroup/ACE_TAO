@@ -18,10 +18,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class  Basic_Replication_Strategy
+ *
+ * @brief Use two-way CORBA call to replicate the state to backup replicas.
+ */
+
 class Basic_Replication_Strategy : public Replication_Strategy
 {
 public:
-  Basic_Replication_Strategy();
+  /**
+   * @param mt Specifies whether multithreaded ORB is used. 
+   */
+  Basic_Replication_Strategy(bool mt);
+  ~Basic_Replication_Strategy();
 
   virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
 
@@ -39,7 +49,7 @@ public:
 
 private:
   FTRT::SequenceNumber sequence_num_;
-  ACE_Thread_Mutex mutex_;
+  ACE_Thread_Mutex* mutex_;
 };
 
 #endif

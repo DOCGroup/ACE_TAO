@@ -22,11 +22,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class  AMI_Primary_Replication_Strategy.
+ *
+ * @brief Used by primary replicas when AMI calls are used for replicating requests.
+ */
+
 class AMI_Primary_Replication_Strategy : public Replication_Strategy
                                , public ACE_Task_Base
 {
 public:
-  AMI_Primary_Replication_Strategy();
+  /**
+   * @param mt Specifies whether multithreaded ORB is used. 
+   */
+  AMI_Primary_Replication_Strategy(bool mt);
   virtual ~AMI_Primary_Replication_Strategy();
   virtual int init();
   virtual void replicate_request(const FTRT::State& state,
@@ -48,7 +57,7 @@ private:
   PortableServer::POA_var poa_;
   PortableServer::POAManager_var mgr_;
   bool running_;
-  ACE_RW_Thread_Mutex mutex_;
+  ACE_RW_Thread_Mutex* mutex_;
   UpdateableHandler handler_;
 };
 

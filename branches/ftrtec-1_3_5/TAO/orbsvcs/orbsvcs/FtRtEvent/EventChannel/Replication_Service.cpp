@@ -17,6 +17,7 @@ namespace FTRTEC
 {
   namespace {
     auto_ptr<Replication_Strategy> replication_strategy;
+    int threads = 1;
     Replication_Service* service;
   }
 
@@ -44,11 +45,25 @@ namespace FTRTEC
 
     initialized = 1;
 
+    bool ami = false;
+  
     // Parse any service configurator parameters.
-    if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("AMI")) == 0)
-      replication_strategy.reset(new AMI_Replication_Strategy);
+    while (argc > 0) {
+      if (ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("AMI")))
+        ami = true;
+      if (ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("-threads")) && argc > 1) {
+        FTRTEC::threads = ACE_OS::atoi(argv[1]);
+        if (FTRTEC::threads < 1) 
+          ACE_ERROR_RETURN((LM_ERROR,"Invalid Number of Threads specified\n"), -1);
+        ++argv; --argc;
+      }
+      ++argv; --argc;
+    }
+
+    if (ami)
+      replication_strategy.reset(new AMI_Replication_Strategy(threads() > 1) );
     else
-      replication_strategy.reset(new Basic_Replication_Strategy);
+      replication_strategy.reset(new Basic_Replication_Strategy(threads() > 1) );
 
       ACE_TRY_NEW_ENV
       {
@@ -142,6 +157,10 @@ namespace FTRTEC
     int r= replication_strategy->release();
     TAO_FTRTEC::Log(3, "Lock Released %d\n", r);
     return r;
+  }
+
+  int Replication_Service::threads() const {
+    return FTRTEC::threads;
   }
 
   ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
