@@ -169,7 +169,21 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
     {
       opname = req.op_name();
       skel = obj->lookup(opname);
+
+      if (skel != 0)
+	{
+	  skel(req, obj, env); // really should be scheduled .
+	}
+      else
+	{
+	  // this may fail in which case, we must try out the default operations
+	  // such as "_is_a", "non_existent", "hash", ... At this time, we try the
+	  // "is_a" method
+	}
     }
   // we need to pass this skel and associated information to the scheduler. How
   // do we do it??
 }
+
+
+
