@@ -168,7 +168,8 @@ class Client : public ACE_Task<ACE_SYNCH>
   //     The Cubit client.
   // 
   // = DESCRIPTION
-  //     @@ Please elaborate...
+  //     This class implements the Cubit Client, which is an active object.
+  //     `n' threads execute svc, and make 2way CORBA calls on the server
 public:
   Client (Task_State *ts);
   // constructor, with a pointer to the common task state.
