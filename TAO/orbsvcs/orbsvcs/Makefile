@@ -91,9 +91,11 @@ ifneq (,$(findstring  AV, $(TAO_ORBSVCS)))
   # AV service depends on CosNaming and CosProperty
   ifeq (,$(findstring Naming,$(TAO_ORBSVCS)))
     MKLIST += Makefile.CosNaming
+    TAO_ORBSVCS += Naming
   endif
   ifeq (,$(findstring  Property, $(TAO_ORBSVCS)))
     MKLIST += Makefile.CosProperty
+    TAO_ORBSVCS += Property
   endif
 
   MKLIST += Makefile.av
