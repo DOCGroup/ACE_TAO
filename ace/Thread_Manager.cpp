@@ -445,6 +445,9 @@ ace_thread_manager_adapter (void *args)
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
 // called with the lock_ held...
 
+// HEY!  Consider duping the handles so that users can have something
+// to manipulate if they want.
+
 int 
 ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func, 
 			     void *args, 
@@ -721,6 +724,9 @@ ACE_Thread_Manager::remove_thr (int i)
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
   this->current_count_--;
+
+  // This compaction strategy should be removed so that we can use the
+  // TSS trick.
 
   if (this->current_count_ > 0)
     // Compact the table by moving the last item into the slot vacated
@@ -1132,6 +1138,9 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 {
+  // HEY!  What we should do is build a table of threads which have
+  // been removed so that we can ``join'' with them later.
+
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
 #if defined (ACE_HAS_THREADS)
