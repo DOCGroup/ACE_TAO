@@ -8,14 +8,19 @@ while test "$1" != ""
 do
     case "$1" in
         -sciop) ORBNameServicePort=${ORBNameServicePort=10000}
-            export NameServiceIOR=${NameServiceIOR=corbaloc:sciop:$HOSTNAME:$ORBNameServicePort/NameService}
-            EndpointParam="-ORBEndpoint sciop://";;
-  -d) $FTEC_TransactionDepth=$2
-      shift;;
+                export NameServiceIOR=${NameServiceIOR=corbaloc:sciop:$HOSTNAME:$ORBNameServicePort/NameService}
+                EndpointParam="$EndpointParam -ORBEndpoint sciop://";;
+  	-td)    FTEC_TransactionDepth=$2
+                shift;;
+        -d)     EndpointParam="$EndpointParam -d $2"
+                shift;;
+        -k)     EndpointParam="$EndpointParam -k $2"
+                shift;;
+        -n)     EndpointParam="$EndpointParam -n";;
     esac
     shift
 done
 
 cd $TAO_ROOT/orbsvcs/tests/FtRtEvent
 export FTEC_TransactionDepth
-./supplier $EndpointParam
+./supplier $EndpointParam $*

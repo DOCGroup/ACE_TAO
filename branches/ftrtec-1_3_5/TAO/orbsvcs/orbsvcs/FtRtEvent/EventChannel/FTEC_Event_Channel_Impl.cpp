@@ -11,6 +11,7 @@
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
@@ -377,6 +378,8 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Log(3,"TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier\n");
+
   if (Request_Context_Repository().is_executed_request())
     return;
 
@@ -395,6 +398,8 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Log(3,"TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer\n");
+
   if (Request_Context_Repository().is_executed_request())
     return;
 

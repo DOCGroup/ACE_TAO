@@ -26,11 +26,13 @@ class AMI_Replication_Strategy: public Replication_Strategy
 {
 public:
   AMI_Replication_Strategy();
-  virtual void replicate_request(
-    const FTRT::State& state,
-    RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid
-    ACE_ENV_ARG_DECL);
+  virtual void replicate_request(const FTRT::State& state,
+                                 RollbackOperation rollback,
+                                 const FtRtecEventChannelAdmin::ObjectId& oid
+                                 ACE_ENV_ARG_DECL);
+  virtual void add_member(const FTRT::ManagerInfo & info,
+                          CORBA::ULong object_group_ref_version
+                          ACE_ENV_ARG_DECL);
   virtual Replication_Strategy* make_primary_strategy();
 
   virtual int  acquire_read (void);

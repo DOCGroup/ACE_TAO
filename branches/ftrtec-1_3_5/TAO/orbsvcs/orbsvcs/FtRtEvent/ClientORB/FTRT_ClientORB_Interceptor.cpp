@@ -122,7 +122,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
     // update the target
      CORBA::Object_var target = ri->target(ACE_ENV_SINGLE_ARG_PARAMETER);
      target->_stubobj ()->base_profiles ( obj->_stubobj()->base_profiles() );
-     ACE_DEBUG((LM_DEBUG, "target object updated\n"));
+     //TAO_FTRTEC::Log(1, "target object updated\n");
   }
 }
 

@@ -3,6 +3,7 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
@@ -115,7 +116,7 @@ get_transaction_depth_context(
   }
   ACE_CATCH  (CORBA::BAD_PARAM, ex)
   {
-    ACE_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
+    TAO_FTRTEC::Log(2, "Received request without transaction depth context\n");
     return -1;
   }
   ACE_ENDTRY;
@@ -315,7 +316,7 @@ FtEventServiceInterceptor::send_exception (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG, "%s return Exception\n", operation.in()));
+  TAO_FTRTEC::Log(1, "%s return Exception\n", operation.in());
 #endif
 }
 

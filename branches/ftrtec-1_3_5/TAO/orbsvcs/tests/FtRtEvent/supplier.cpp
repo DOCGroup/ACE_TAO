@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 /// include this file to statically linked with FT ORB
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
@@ -20,12 +21,13 @@ ACE_RCSID (FtRtEvent,
 ACE_Time_Value timer_interval(1,0);
 CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
+int NUM_ITERATIONS = 100;
 
 RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("hi:nt:?"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:hi:k:nt:?"));
     int opt;
     int use_gateway = 1;
 
@@ -33,6 +35,9 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
     {
       switch (opt)
       {
+      case 'd':
+        TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+        break;
       case 'i':
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
@@ -42,6 +47,9 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
                                                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN(0);
         }
+        break;
+      case 'k':
+        NUM_ITERATIONS = atoi(get_opt.opt_arg ());
         break;
       case 'n':
         use_gateway = 0;
@@ -123,10 +131,6 @@ int main(int argc, ACE_TCHAR** argv)
     PushSupplier_impl push_supplier(orb.in());
     if (push_supplier.init(channel.in() ACE_ENV_ARG_PARAMETER) == -1)
       return -1;
-
-    RtecEventComm::PushSupplier_var
-      supplier = push_supplier._this();
-
 
     orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
 

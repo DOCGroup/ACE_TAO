@@ -4,6 +4,7 @@
 #include "Update_Manager.h"
 #include "AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            UpdateableHandler,
@@ -57,7 +58,7 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler ACE_ENV_ARG_
   memcpy(&mgr, object_id->get_buffer(), sizeof(mgr));
   memcpy(&id, object_id->get_buffer()+sizeof(mgr), sizeof(id));
 
-  ACE_DEBUG((LM_DEBUG, "%d\n", id));
+  TAO_FTRTEC::Log(3, "%d\n", id);
 
   (mgr->*handler)(id);
 
@@ -71,7 +72,7 @@ void UpdateableHandler::set_update (
                                     CORBA::SystemException
                                     ))
 {
-  ACE_DEBUG((LM_DEBUG,"Received reply from "));
+  TAO_FTRTEC::Log(3,"Received reply from ");
   dispatch(&Update_Manager::handle_reply ACE_ENV_ARG_PARAMETER);
 }
 void UpdateableHandler::set_update_excep (
@@ -82,7 +83,7 @@ void UpdateableHandler::set_update_excep (
   CORBA::SystemException
   ))
 {
-  ACE_DEBUG((LM_DEBUG, "Received Exception from"));
+  TAO_FTRTEC::Log(3, "Received Exception from");
   ACE_TRY {
     excep_holder->raise_set_update();
     ACE_TRY_CHECK;

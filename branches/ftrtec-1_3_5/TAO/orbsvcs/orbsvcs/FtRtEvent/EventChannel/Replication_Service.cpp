@@ -4,6 +4,7 @@
 #include "AMI_Replication_Strategy.h"
 #include "Basic_Replication_Strategy.h"
 #include "FTEC_ORBInitializer.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Replication_Service,
@@ -115,24 +116,31 @@ namespace FTRTEC
       ACE_ENV_ARG_PARAMETER);
   }
 
+  void Replication_Service::add_member(const FTRT::ManagerInfo & info,
+                                       CORBA::ULong object_group_ref_version
+                                       ACE_ENV_ARG_DECL)
+  {
+    replication_strategy->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+  }
+
   int  Replication_Service::acquire_read (void)
   {
     int r =  replication_strategy->acquire_read();
-    ACE_DEBUG((LM_DEBUG, "Read Lock acquired %d\n", r));
+    TAO_FTRTEC::Log(3, "Read Lock acquired %d\n", r);
     return r;
   }
 
   int  Replication_Service::acquire_write (void)
   {
     int r= replication_strategy->acquire_write();
-    ACE_DEBUG((LM_DEBUG, "Write Lock acqured %d\n", r));
+    TAO_FTRTEC::Log(3, "Write Lock acqured %d\n", r);
     return r;
   }
 
   int  Replication_Service::release (void)
   {
     int r= replication_strategy->release();
-    ACE_DEBUG((LM_DEBUG, "Lock Released %d\n", r));
+    TAO_FTRTEC::Log(3, "Lock Released %d\n", r);
     return r;
   }
 

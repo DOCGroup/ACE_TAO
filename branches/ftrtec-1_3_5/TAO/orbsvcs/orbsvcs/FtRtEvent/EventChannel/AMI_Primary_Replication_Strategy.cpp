@@ -9,6 +9,8 @@
 #include "create_persistent_poa.h"
 #include "Update_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
+#include "ObjectGroupManagerHandler.h"
+#include "tao/Utils/Implicit_Deactivator.h"
 
 ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
@@ -55,12 +57,12 @@ int AMI_Primary_Replication_Strategy::svc()
     ACE_TRY_CHECK;
 
     PortableServer::POA_var
-      root_poa =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA"
+      root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // create POAManager
-    mgr_ = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    mgr_ = root_poa_->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 
@@ -68,7 +70,7 @@ int AMI_Primary_Replication_Strategy::svc()
     ACE_TRY_CHECK;
 
     PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
-      root_poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
+      root_poa_->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK
 
@@ -77,7 +79,7 @@ int AMI_Primary_Replication_Strategy::svc()
     policy_list[0] = PortableServer::IdUniquenessPolicy::_duplicate(
         id_uniqueness_policy.in()
       );
-    poa_ = create_persistent_poa(root_poa, mgr_, "AMI_Update", policy_list
+    poa_ = create_persistent_poa(root_poa_, mgr_, "AMI_Update", policy_list
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -173,3 +175,50 @@ AMI_Primary_Replication_Strategy::replicate_request(
    }
 
 }
+
+void 
+AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+                                             CORBA::ULong object_group_ref_version
+                                             ACE_ENV_ARG_DECL)
+{
+  ACE_Auto_Event event;
+  const FtRtecEventChannelAdmin::EventChannelList& backups =
+     GroupInfoPublisher::instance()->backups();
+
+  size_t num_backups = backups.length();
+  ObjectGroupManagerHandler add_member_handler(event, num_backups+1);
+  // The extra one is to prevent the event been signaled prematurely.
+
+  PortableServer::ObjectId_var oid =
+    root_poa_->activate_object(&add_member_handler ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO::Utils::Implicit_Deactivator deactivator(&add_member_handler);
+
+  CORBA::Object_var obj = 
+    root_poa_->id_to_reference(oid.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  FTRT::AMI_ObjectGroupManagerHandler_var handler = 
+    FTRT::AMI_ObjectGroupManagerHandler::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+
+  for (unsigned i = 0; i < num_backups; ++i) {
+    ACE_TRY {
+      backups[i].in()->sendc_add_member(handler.in(),
+                                        info,
+                                        object_group_ref_version 
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    ACE_CATCHALL {
+      add_member_handler.add_member_excep(NULL);
+    }
+    ACE_ENDTRY;
+  }
+  // decrement the number of members so the event can be signaled once 
+  // all replys have been received.
+  add_member_handler.add_member_excep(NULL);
+
+  event.wait();
+}
+

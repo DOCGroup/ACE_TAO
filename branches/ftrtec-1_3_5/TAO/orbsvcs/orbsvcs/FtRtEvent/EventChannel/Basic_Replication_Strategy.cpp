@@ -4,6 +4,7 @@
 #include "GroupInfoPublisher.h"
 #include "FTEC_Event_Channel.h"
 #include "Request_Context_Repository.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
@@ -20,7 +21,7 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
     FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG((LM_DEBUG, "check_validity : sequence no = %d\n", sequence_num_));
+    TAO_FTRTEC::Log(1 , "check_validity : sequence no = %d\n", sequence_num_);
 
     if (this->sequence_num_ == 0) {
       // this is the first set_update received from the primary
@@ -60,7 +61,7 @@ Basic_Replication_Strategy::replicate_request(
     if (info_publisher->is_primary())
       this->sequence_num_++;
 
-    ACE_DEBUG((LM_DEBUG, "replicate_request : sequence no = %d\n", sequence_num_));
+    TAO_FTRTEC::Log(1, "replicate_request : sequence no = %d\n", sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -87,6 +88,14 @@ Basic_Replication_Strategy::replicate_request(
     ACE_THROW(FTRT::TransactionDepthTooHigh());
 }
 
+void 
+Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+                                       CORBA::ULong object_group_ref_version
+                                       ACE_ENV_ARG_DECL_NOT_USED)
+{
+  FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();
+  successor->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+}
 
 int  Basic_Replication_Strategy::acquire_read (void)
 {

@@ -11,6 +11,7 @@
 #include "../Utils/resolve_init.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            IOGR_Maker,
@@ -235,7 +236,7 @@ IOGR_Maker::set_ref_version(CORBA::ULong version)
 CORBA::ULong
 IOGR_Maker::increment_ref_version()
 {
-  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1));
+  TAO_FTRTEC::Log(1, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1);
   return ++ft_tag_component_.object_group_ref_version;
 }
 
