@@ -429,16 +429,16 @@ sub create_kit () {
     system ("$exec_prefix" .
             "/bin/rm -f ACE.zip ACE-lib.zip; " .
             "$find $release_files $release_filter | " .
-            "$egrep $binfiles | " .
+            "$egrep $bin_files | " .
             "zip ACE.zip -q9@ &&" .
             "$find $release_files $release_filter | " .
-            "$egrep -v $binfiles | " .
+            "$egrep -v $bin_files | " .
             "zip ACE.zip -qlg9@ &&" .
             "$find $release_lib_files $release_filter | " .
-            "$egrep $binfiles | " .
+            "$egrep $bin_files | " .
             "zip ACE-lib.zip -q9@ &&" .
             "$find $release_lib_files $release_filter | " .
-            "$egrep -v $binfiles | " .
+            "$egrep -v $bin_files | " .
             "zip ACE-lib.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE.tar.gz && " .
