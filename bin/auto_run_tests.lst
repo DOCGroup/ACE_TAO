@@ -190,17 +190,18 @@ TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 
-TAO/orbsvcs/tests/Notify/Basic/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/Notify/Blocking/run_test.pl
-TAO/orbsvcs/tests/Notify/Discarding/run_test.pl
-TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl
-TAO/orbsvcs/tests/Notify/Ordering/run_test.pl
-TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl
-TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl
-TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl
-TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl
-TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST
+TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST
 
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
