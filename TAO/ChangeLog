@@ -1,3 +1,15 @@
+Tue Mar 16 15:35:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        
+          Added check for array of typedef'd (w)string, in which case
+          the slice type must be TAO_(W)String_Manager, instead of the
+          typedef name. Thanks to Thomas Groth <groth.th@nord-com.net>
+          for sending in an example IDL file.
+          
+        * tests/IDL_Test/array.idl:
+        
+          Added the example IDL above to the test IDL file.
 
 Tue Mar 16 14:01:18 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
 
