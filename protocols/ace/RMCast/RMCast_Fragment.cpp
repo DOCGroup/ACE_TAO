@@ -40,9 +40,9 @@ ACE_RMCast_Fragment::data (ACE_RMCast::Data &received_data)
 
   // We must leave room for the header
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int ACE_RMCAST_WRITEV_MAX = IOV_MAX - 2;
+  const int ACE_RMCAST_WRITEV_MAX = ACE_IOV_MAX - 2;
 #else
-  const int ACE_RMCAST_WRITEV_MAX = IOV_MAX - 1;
+  const int ACE_RMCAST_WRITEV_MAX = ACE_IOV_MAX - 1;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
 
   // Assume the header will be included on each fragment, so readuce

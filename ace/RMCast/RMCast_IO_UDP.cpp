@@ -135,7 +135,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
       // object, all we need is some sort of validation strategy, a
       // different one for the receiver and another one for the
       // sender.
- 
+
 #if 0
       if (type == ACE_RMCast::MT_ACK
           || type == ACE_RMCast::MT_JOIN
@@ -167,7 +167,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
       if ((proxy = allocate_and_bind_proxy(module,from_address)) == 0)
         return 0;
     }
-  
+
   // Have the proxy process the message and do the right thing.
   if (proxy->receive_message (buffer, r) != 0)
     {
@@ -253,7 +253,7 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
   ACE_OS::memcpy (header + 1 + 2 * sizeof(ACE_UINT32),
                   &tmp, sizeof(ACE_UINT32));
 
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 1;
 
   iov[0].iov_base = header;
