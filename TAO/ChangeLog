@@ -1,3 +1,15 @@
+Thu Jun 24 14:21:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset_Manager.cpp:
+          Make formatting of a debug message the same as the others in TAO
+
+        * tao/IIOP_Transport.h:
+        * tao/ORB_Core.h:
+        * tao/orbconf.h:
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Connector.h:
+          Small doxygen tag fixes
+
 Thu Jun 24 13:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/AMH_Single_Threaded/run_test.pl:
