@@ -117,7 +117,7 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::hash (const char *str, unsigned in
      18,  0, 18, 18, 18, 18, 18, 18,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *
@@ -548,7 +548,8 @@ POA_CORBA::DomainManager::DomainManager (void)
 }
 
 POA_CORBA::DomainManager::DomainManager (const DomainManager& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_CORBA::DomainManager::~DomainManager (void)
@@ -973,7 +974,7 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::hash (const char *str, unsign
      22,  0, 22, 22, 22, 22, 22, 22,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[str[(int) len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *
