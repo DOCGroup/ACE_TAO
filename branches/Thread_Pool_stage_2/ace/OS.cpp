@@ -2714,7 +2714,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
         || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
     {
+#     if defined (ACE_CONFIG_LINUX_H)
+      // LinuxThreads do not have support for PTHREAD_SCOPE_PROCESS.
+      int scope = PTHREAD_SCOPE_SYSTEM;
+#     else /* ACE_CONFIG_LINUX_H */
       int scope = PTHREAD_SCOPE_PROCESS;
+#     endif /* ACE_CONFIG_LINUX_H */
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
         scope = PTHREAD_SCOPE_SYSTEM;
 
@@ -3184,7 +3189,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
           || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
         {
+#         if defined (ACE_CONFIG_LINUX_H)
+          // LinuxThreads do not have support for PTHREAD_SCOPE_PROCESS.
+          int scope = PTHREAD_SCOPE_SYSTEM;
+#         else /* ACE_CONFIG_LINUX_H */
           int scope = PTHREAD_SCOPE_PROCESS;
+#         endif /* ACE_CONFIG_LINUX_H */
           if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
             scope = PTHREAD_SCOPE_SYSTEM;
 
