@@ -1,21 +1,34 @@
+Wed Feb 24 13:54:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-minimal.h: changed #include protection to
+          ACE_CONFIG_MINIMAL_H, so that this config can be #included
+          by others.
+
+        * ace/OS.{h,cpp},Thread_Manager.h: moved ACE_Thread_Control and
+          ACE_Thread_Exit class definitions from Thread_Manager.h to OS.h,
+          so that Task.h no longer needs to be #included by OS.cpp.
+
+        * ace/OS.cpp: protected #include of Containers_T.h with
+          defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION).
+
 Wed Feb 24 05:30:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Queue_T.i (dequeue): Replaced the improper
- 	  self-recursive call to dequeue() with dequeue_head().  Thanks to
- 	  Marc Engel <engelm@tlse.sofreavia.fr> for reporting this.
+        * ace/Message_Queue_T.i (dequeue): Replaced the improper
+          self-recursive call to dequeue() with dequeue_head().  Thanks to
+          Marc Engel <engelm@tlse.sofreavia.fr> for reporting this.
 
 Tue Feb 23 20:58:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Make sure to do the right thang if we're compiling the
- 	  ACE recursive thread mutexes on platforms that lack threading.
+        * ace/OS.i: Make sure to do the right thang if we're compiling the
+          ACE recursive thread mutexes on platforms that lack threading.
 
-	* ace/Service_Object: Added a new ACE_Service_Object constructor
- 	  that takes an ACE_Reactor * and passes this down to the
- 	  ACE_Event_Handler base class.
+        * ace/Service_Object: Added a new ACE_Service_Object constructor
+          that takes an ACE_Reactor * and passes this down to the
+          ACE_Event_Handler base class.
 
-	* ace/Event_Handler: Added a new ACE_Event_Handler constructor
- 	  that takes an ACE_Reactor * and an int priority that default to
- 	  the right values.
+        * ace/Event_Handler: Added a new ACE_Event_Handler constructor
+          that takes an ACE_Reactor * and an int priority that default to
+          the right values.
 
 Tue Feb 23 21:53:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -28,33 +41,33 @@ Tue Feb 23 21:53:32 1999  David L. Levine  <levine@cs.wustl.edu>
 Tue Feb 23 20:28:45 1999  Marina Spivak  <marina@cs.wustl.edu>
 
         * ace/SString.{h,i,cpp}: Added a private member <buf_len_> to the
- 	  ACE_CString class to keep track of the size of data buffer, and
- 	  avoid unnecessary memory reallocations.  Updated class methods
- 	  to use buf_len_.
+          ACE_CString class to keep track of the size of data buffer, and
+          avoid unnecessary memory reallocations.  Updated class methods
+          to use buf_len_.
 
 Tue Feb 23 19:54:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/POSIX_Asynch_IO.h:
         * ace/POSIX_Asynch_IO.cpp:
-	  Fixed the potential dominance warnings in POSIX
- 	  implementation. Updated the documentation.
+          Fixed the potential dominance warnings in POSIX
+          implementation. Updated the documentation.
 
 Tue Feb 23 18:11:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-        
-	* examples/DLL/DLL.dsw:
-	  examples/DLL/Main.dsp:
-	  examples/DLL/Newsweek.dsp:
-	  examples/DLL/Today.dsp:
-	  Added extra include and linker options to the projects.
 
-	* tests/DLL_Test:
-	  Added OBJ_PREFIX to cater to the problem which arose due to the fact
-	  that the .o is produced under the .obj directory on SunOS.
+        * examples/DLL/DLL.dsw:
+          examples/DLL/Main.dsp:
+          examples/DLL/Newsweek.dsp:
+          examples/DLL/Today.dsp:
+          Added extra include and linker options to the projects.
 
-	* tests/run_tests.sh:
+        * tests/DLL_Test:
+          Added OBJ_PREFIX to cater to the problem which arose due to the fact
+          that the .o is produced under the .obj directory on SunOS.
+
+        * tests/run_tests.sh:
           tests/run_tests.bat:
           Made an entry for DLL_Test.
-	
+
 Tue Feb 23 16:54:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.i (recursive_mutex_trylock and recursive_mutex_lock):
