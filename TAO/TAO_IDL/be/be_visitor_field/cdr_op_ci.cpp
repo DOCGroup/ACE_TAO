@@ -24,8 +24,8 @@
 #include "be_visitor_structure/cdr_op_ci.h"
 #include "be_visitor_union/cdr_op_ci.h"
 
-ACE_RCSID (be_visitor_field, 
-           cdr_op_ci, 
+ACE_RCSID (be_visitor_field,
+           cdr_op_ci,
            "$Id$")
 
 // **********************************************
@@ -97,8 +97,8 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick
   // use later on.
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
@@ -271,7 +271,7 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -286,8 +286,9 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->is_defined ())
         {
-          *os << "_tao_aggregate." << f->local_name () 
-              << ".in ()->marshal (strm)";
+          *os << "CORBA::Object::marshal (_tao_aggregate."
+              << f->local_name ()
+              << ".in (),strm)" << be_nl;
         }
       else
         {
@@ -341,8 +342,9 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->is_defined ())
         {
-          *os << "_tao_aggregate." << f->local_name () 
-              << ".in ()->marshal (strm)";
+          *os << "CORBA::Object::marshal (_tao_aggregate."
+              << f->local_name ()
+              << ".in (), strm)" << be_nl;
         }
       else
         {
@@ -379,7 +381,7 @@ be_visitor_field_cdr_op_ci::visit_valuetype (be_valuetype *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_valuetype - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -910,8 +912,8 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
   // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.

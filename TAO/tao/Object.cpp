@@ -104,6 +104,23 @@ CORBA::Object::_tao_any_destructor (void *x)
   CORBA::release (tmp);
 }
 
+/*static*/ CORBA::Boolean
+CORBA::Object::marshal (CORBA::Object_ptr x,
+                        TAO_OutputCDR &cdr)
+{
+  if (x == 0)
+    {
+      // NIL objrefs ... marshal as empty type hint, no elements.
+      cdr.write_ulong (1);
+      cdr.write_char ('\0');
+      cdr.write_ulong (0);
+      return (CORBA::Boolean) cdr.good_bit ();
+    }
+
+  return x->marshal (cdr);
+}
+
+
 TAO_Abstract_ServantBase*
 CORBA::Object::_servant (void) const
 {
