@@ -24,10 +24,8 @@ OBJFILES = \
 
 LFLAGS = \
 <%foreach(libpaths)%>
-	-j"<%libpath%>\$(CONFIG_SUBDIR)" -j"<%libpath%>" \
 	-L"<%libpath%>\$(CONFIG_SUBDIR)" -L"<%libpath%>" \
 <%endfor%>
-	-j$(CORE_BINDIR) \
 	-L$(CORE_BINDIR)
 
 LIBFILES = \
@@ -44,8 +42,8 @@ IDLFILES = \
         <%idl_file%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-<%if(resource_files)%>
 
+<%if(resource_files)%>
 RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.res<%endfor%>
 <%endif%>
 
