@@ -1,3 +1,12 @@
+Mon Jul  6 15:46:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/decode.cpp: 
+	  Strings contain a nested CDR with the bounds for it, the
+	  demarshalling code in that case was invoking the TypeCode
+	  constructor with the wrong parameters, hence the bounds were
+	  invalid.  The problem only shows up now because we were ignoring
+	  the bounds in previous releases.
+
 Mon Jul 06 15:13:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/compat/initguid.h: Reordered some stuff.

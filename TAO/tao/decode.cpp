@@ -308,14 +308,42 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                       {
                         // bounded string. Create a TypeCode. If it is does not
                         // have a parent, then the application must free it.
+
+                        // allocate a new TypeCode
+#if 1
+			// This may produce a memory leak, because
+			// callers are sloppy about removing this
+			// objects.
                         CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         // Bounded string. Save the bounds
                         _oc_bounded_string [1] = (CORBA::Long) bound;
-                        // allocate a new TypeCode
+			*tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
+						    8,
+						    ACE_reinterpret_cast(char*,_oc_bounded_string),
+						    CORBA::B_FALSE, 0);
+#elif 0
+			// This one fails because we are passing the
+			// parent but the buffer (_oc_bounded_string) is
+			// not pointing to the parent CDR stream
+			// (hence no sharing) and the length is wrong
+			// (should be 8 not bounds).
+                        CORBA::Long _oc_bounded_string [] =
+                        {TAO_ENCAP_BYTE_ORDER, 0};
+                        // Bounded string. Save the bounds
+                        _oc_bounded_string [1] = (CORBA::Long) bound;
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     bound, (char *) &_oc_bounded_string,
                                                     CORBA::B_FALSE, parent);
+#else
+			// This depends on the fact that <stream> is 
+			// actually pointing to the parent CDR stream,
+			// it is untested.
+                        *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
+                                                    8,
+						    stream->rd_ptr () - 8,
+                                                    CORBA::B_FALSE, parent);
+#endif
                       }
                   }
               }
