@@ -736,7 +736,9 @@ ACE_InputCDR::read_string (char *&x)
   this->read_ulong (len);
   if (len > 0)
     {
-      ACE_NEW_RETURN (x, ACE_CDR::Char[len], 0);
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::Char[len],
+                      0);
       if (this->read_char_array (x, len))
         return 1;
       delete [] x;
@@ -774,7 +776,9 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   this->read_ulong (len);
   if (this->good_bit())
     {
-      ACE_NEW_RETURN (x, ACE_CDR::WChar[len], 0);
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::WChar[len],
+                      0);
       if (this->read_wchar_array (x, len))
         return 1;
 

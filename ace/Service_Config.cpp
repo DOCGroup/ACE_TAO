@@ -73,8 +73,9 @@ ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
 {
   if (ACE_Service_Config::static_svcs_ == 0)
-    ACE_NEW_RETURN (ACE_Service_Config::static_svcs_, ACE_STATIC_SVCS, 0);
-
+    ACE_NEW_RETURN (ACE_Service_Config::static_svcs_,
+                    ACE_STATIC_SVCS,
+                    0);
   return ACE_Service_Config::static_svcs_;
 }
 
@@ -514,11 +515,12 @@ ACE_Service_Config::load_static_svcs (void)
 
       ACE_Service_Type *sr;
 
-      ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_,
-                                            stp,
-                                            0,
-                                            ssd->active_), -1);
-
+      ACE_NEW_RETURN (sr,
+                      ACE_Service_Type (ssd->name_,
+                                        stp,
+                                        0,
+                                        ssd->active_),
+                      -1);
       if (ACE_Service_Repository::instance ()->insert (sr) == -1)
         return -1;
     }

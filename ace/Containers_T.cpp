@@ -32,7 +32,8 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
   : top_ (0),
     size_ (size)
 {
-  ACE_NEW (this->stack_, T[size]);
+  ACE_NEW (this->stack_,
+           T[size]);
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 }
 
@@ -41,7 +42,8 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
   : top_ (s.top_),
     size_ (s.size_)
 {
-  ACE_NEW (this->stack_, T[s.size_]);
+  ACE_NEW (this->stack_,
+           T[s.size_]);
 
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 
@@ -1486,8 +1488,8 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
       if (this->max_size_ < bs.cur_size_)
         {
           delete [] this->search_structure_;
-          ACE_NEW (this->search_structure_, ACE_TYPENAME
-                   ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
+          ACE_NEW (this->search_structure_,
+                   ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
           this->max_size_ = bs.cur_size_;
         }
 

@@ -99,8 +99,9 @@ ACE_UPIPE_Stream::send (const char *buffer,
   ACE_TRACE ("ACE_UPIPE_Stream::send");
 
   ACE_Message_Block *mb_p;
-  ACE_NEW_RETURN (mb_p, ACE_Message_Block (n), -1);
-
+  ACE_NEW_RETURN (mb_p,
+                  ACE_Message_Block (n),
+                  -1);
   mb_p->copy (buffer, n);
   return this->stream_.put (mb_p, timeout) == -1 ? -1 : (int) n;
 }

@@ -559,7 +559,9 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
       this->eback_saved_ = newBuffer;
     }
   else
-    ACE_NEW_RETURN (this->eback_saved_, char[streambuf_size_], 0);
+    ACE_NEW_RETURN (this->eback_saved_,
+                    char[streambuf_size_],
+                    0);
 
   this->gptr_saved_ = this->eback_saved_ + _gptr;
   this->egptr_saved_ = this->eback_saved_ + _egptr;
@@ -606,7 +608,9 @@ ACE_Streambuf::reset_put_buffer (char *newBuffer,
       this->pbase_saved_ = newBuffer;
     }
   else
-    ACE_NEW_RETURN (this->pbase_saved_, char[streambuf_size_], 0);
+    ACE_NEW_RETURN (this->pbase_saved_,
+                    char[streambuf_size_],
+                    0);
 
   this->pptr_saved_ = this->pbase_saved_ + _pptr;
   this->epptr_saved_ = this->pbase_saved_ + streambuf_size_;

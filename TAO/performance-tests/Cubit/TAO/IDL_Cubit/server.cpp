@@ -15,7 +15,7 @@ main (int argc, char *argv[])
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
+                                              priority);
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -41,11 +41,10 @@ main (int argc, char *argv[])
     {
       int ret = cubit_server.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (ret == -1)
-        {
-          return -1;
-          ACE_TRY_CHECK;
-        }
+        return -1;
+
       cubit_server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -62,7 +61,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
 
-//  ACE_END_TEST;
+  //  ACE_END_TEST;
 
   return 0;
 }

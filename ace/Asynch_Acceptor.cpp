@@ -411,7 +411,9 @@ ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
 {
   // Default behavior
   HANDLER *handler = 0;
-  ACE_NEW_RETURN (handler, HANDLER, 0);
+  ACE_NEW_RETURN (handler,
+                  HANDLER,
+                  0);
   return handler;
 }
 

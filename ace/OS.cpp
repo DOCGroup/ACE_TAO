@@ -1848,9 +1848,9 @@ ACE_TSS_Cleanup::instance (void)
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
       if (ACE_TSS_Cleanup::instance_ == 0)
-        {
-          ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
-        }
+        ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_,
+                        ACE_TSS_Cleanup,
+                        0);
     }
 
   return ACE_TSS_Cleanup::instance_;
@@ -2004,11 +2004,14 @@ ACE_TSS_Cleanup::tss_keys ()
 
   if (ts_keys == 0)
     {
-      ACE_NEW_RETURN (ts_keys, ACE_TSS_Keys, 0);
+      ACE_NEW_RETURN (ts_keys,
+                      ACE_TSS_Keys,
+                      0);
       // Store the dynamically allocated pointer in thread-specific
       // storage.
       if (ACE_OS::thr_setspecific (in_use_,
-            ACE_reinterpret_cast (void *, ts_keys)) == -1)
+            ACE_reinterpret_cast (void *,
+                                  ts_keys)) == -1)
         {
           delete ts_keys;
           return 0; // Major problems, this should *never* happen!
@@ -2087,15 +2090,19 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN (ts_storage, void*[ACE_TSS_THREAD_KEYS_MAX], 0);
+        ACE_NEW_RETURN (ts_storage,
+                        void*[ACE_TSS_THREAD_KEYS_MAX],
+                        0);
 
         // Zero the entire TSS array.  Do it manually instead of using
-        // memset, for optimum speed.  Though, memset may be faster :-)
+        // memset, for optimum speed.  Though, memset may be faster
+        // :-)
         void **tss_base_p = ts_storage;
-        for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
-          {
-            *tss_base_p = 0;
-          }
+
+        for (u_int i = 0;
+             i < ACE_TSS_THREAD_KEYS_MAX;
+             ++i)
+          *tss_base_p++ = 0;
       }
 
      // Store the pointer in thread-specific storage.  It gets deleted
@@ -4193,7 +4200,9 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf, char[length], -1);
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -4237,7 +4246,9 @@ ACE_TRACE ("readv");
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf, char[length], -1);
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_OS::read_n (handle, buf, length);
@@ -6277,7 +6288,9 @@ ACE_OS_Object_Manager::instance (void)
     {
       ACE_OS_Object_Manager *instance_pointer;
 
-      ACE_NEW_RETURN (instance_pointer, ACE_OS_Object_Manager, 0);
+      ACE_NEW_RETURN (instance_pointer,
+                      ACE_OS_Object_Manager,
+                      0);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;

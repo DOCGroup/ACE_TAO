@@ -28,8 +28,9 @@ ACE_Token_Invariant_Manager::instance (void)
 
       if (instance_ == 0)
         {
-          ACE_NEW_RETURN (instance_, ACE_Token_Invariant_Manager, 0);
-
+          ACE_NEW_RETURN (instance_,
+                          ACE_Token_Invariant_Manager,
+                          0);
           // Register for destruction with ACE_Object_Manager.
           ACE_Object_Manager::at_exit (instance_);
         }
@@ -160,8 +161,9 @@ ACE_Token_Invariant_Manager::get_mutex (const char *token_name,
     {
       ACE_Mutex_Invariants *new_invariant;
 
-      ACE_NEW_RETURN (new_invariant, ACE_Mutex_Invariants, -1);
-
+      ACE_NEW_RETURN (new_invariant,
+                      ACE_Mutex_Invariants,
+                      -1);
       if (mutex_collection_.bind (name, new_invariant) == -1)
         {
           delete new_invariant;
@@ -187,8 +189,9 @@ ACE_Token_Invariant_Manager::get_rwlock (const char *token_name,
     {
       ACE_RWLock_Invariants *new_invariant;
 
-      ACE_NEW_RETURN (new_invariant, ACE_RWLock_Invariants, -1);
-
+      ACE_NEW_RETURN (new_invariant,
+                      ACE_RWLock_Invariants,
+                      -1);
       if (rwlock_collection_.bind (name, new_invariant) == -1)
         return -1;
 

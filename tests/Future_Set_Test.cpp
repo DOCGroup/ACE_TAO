@@ -588,9 +588,9 @@ main (int, ASYS_TCHAR *[])
       fname.get (name);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) result(%u) name %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) name %s\n"),
                   count,
-                  (u_int) name));
+                  name));
     }
 
   if (fseta.is_empty ())
