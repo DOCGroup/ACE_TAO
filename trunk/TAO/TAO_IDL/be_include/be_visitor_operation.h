@@ -58,7 +58,7 @@
 #include "be_visitor_operation/ami_ch.h"
 #include "be_visitor_operation/ami_cs.h"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"
-#include "be_visitor_operation/ami_handler_skeleton_cs.h"
+#include "be_visitor_operation/ami_handler_reply_stub_operation_cs.h"
 #include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 
 #if 0

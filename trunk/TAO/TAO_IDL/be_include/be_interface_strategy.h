@@ -128,51 +128,6 @@ protected:
   // The type of strategy
 };
 
-// @@ Michael: Deprecated due to new AMI design
-#if 0
-class be_interface_prefix_suffix_strategy
-  : public be_interface_strategy
-{
-public:
-  // begin overridden methods.
-  be_interface_prefix_suffix_strategy (be_interface *node,
-                                       Strategy_Kind strategy_type,
-                                       const char *prefix,
-                                       const char *suffix);
-
-  virtual ~be_interface_prefix_suffix_strategy ();
-
-  const char * local_name (void);
-  // return the local name
-
-  virtual const char *full_name (void);
-  // return the stringified full name
-
-  virtual const char *flat_name (void);
-  // return the flattened full scoped name.
-
-  virtual const char *repoID (void);
-  // retrieve the repository ID.
-
-  virtual const char *full_skel_name (void);
-  // retrieve the fully scoped skel class name.
-
-  virtual const char *full_coll_name (int);
-  // retrieve the fully qualified collocated class name
-
-  virtual const char *local_coll_name (int);
-  // retrieve the fully qualified collocated class name.
-
-  // end of overridden methods
-protected:
-
-  const char *prefix_;
-  // The prefix to the interface
-
-  const char *suffix_;
-  // The suffix to the interface
-};
-#endif /* 0 */
 
 
 class be_interface_default_strategy
