@@ -1,3 +1,11 @@
+Tue Jul 25 11:05:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+
+	  Fixed include paths for link libraries in the release
+	  versions.
+
 Tue Jul 25 08:21:03 2000  Chad Elliott  <elliott_c@ociweb.com>
         * rules.tao.GNU
           Backed out my change until I figure out why it doesn't
