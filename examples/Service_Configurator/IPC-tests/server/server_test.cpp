@@ -34,6 +34,11 @@ main (int argc, char *argv[])
                        "%p\n"),
                       -1);
 
+  // This makes the README demo even easier (for sighup).
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("pid = %d\n"),
+              ACE_OS::getpid ()));
+
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
