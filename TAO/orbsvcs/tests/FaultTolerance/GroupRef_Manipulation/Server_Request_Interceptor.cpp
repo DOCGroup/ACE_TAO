@@ -100,7 +100,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
       if (group_component.object_group_ref_version != 5)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error occureed \n"));
+                      "(%P|%t) Error occurred \n"));
         }
 
     }
@@ -159,7 +159,7 @@ Server_Request_Interceptor::receive_request (
       if (group_component.object_group_ref_version != 5)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error occureed \n"));
+                      "(%P|%t) Error occurred \n"));
         }
 
     }
