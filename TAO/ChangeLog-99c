@@ -1,3 +1,6 @@
+Sun Feb  7 22:31:01 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * IIOP_ORB.cpp, poa declared twice.
+
 Sun Feb  7 21:35:17 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * Stub.i - added initialization for type_id
 	  from arg repository_id.
