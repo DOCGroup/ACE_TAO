@@ -210,7 +210,7 @@ public:
   size_t hash (void) const;
   // Returns the hash value.
 
-  int operator != (const Hash_Addr &);
+  virtual int operator != (const Hash_Addr &);
   // Overload the inequality operator...
 
 private:
