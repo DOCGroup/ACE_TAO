@@ -24,3 +24,35 @@ implement a component and a system using CCM.
 Currently, we define the equivelent interfaces for both the client
 side and server side (servants and executors) manually because both
 the IDL3 and CCIDL compilers are under development.
+
+To implement a component, here's what you need to do.
+
+1. Define the component, as in hello.idl which defines the client-view
+   of the component.  This view is equivalent to the interfaces
+   defined in helloC.idl (for component unawared client.)
+
+2. Define how the component should be implemented, as in hello.cidl.
+   CIDL compiler should generate the executor definitions as in
+   helloE.idl.
+
+3. CIDL also generate the component-specific skeleton (container?)
+   implementations as in HelloSkel.xxx.  These skeleton
+   implementations determine how the component should be activated,
+   how to manage the servant lifecycle, their OID and such.
+
+4. If a component implementation needs to support more advanced
+   features, such as transactional behavior, the developer needs to
+   "extend" the executor definitions by inheriting from other
+   components callback interfaces, such as SessionSynchronization.
+   We don't have an example here because we want to keep this example
+   as simple as possible.
+
+5. Component executors are implemention by implementing the desired
+   executor definition.
+
+6. Packaging and deploying the component....  This example only shows
+   how to deploy a single component implementation.  The servant
+   skeletons can either be packaged with the component implementation
+   in a single DLL, or be packaged in a separate DLL which, in turn,
+   can be deployed with the component implementation together as an
+   assembly, or be put in some sort of repository.
