@@ -2,6 +2,7 @@
 //
 // $Id$
 
+
 #include "IORInfo.h"
 #include "PolicyC.h"
 #include "IOPC.h"
@@ -9,10 +10,9 @@
 
 ACE_RCSID (tao, IORInfo, "$Id$")
 
-
 TAO_IORInfo::TAO_IORInfo (TAO_ORB_Core *orb_core,
-			  TAO_MProfile &mp,
-			  CORBA::PolicyList *policy_list)
+                          TAO_MProfile &mp,
+                          CORBA::PolicyList *policy_list)
   : orb_core_ (orb_core),
     mp_ (mp),
     policy_list_ (policy_list)
@@ -25,7 +25,7 @@ TAO_IORInfo::~TAO_IORInfo (void)
 
 CORBA::Policy_ptr
 TAO_IORInfo::get_effective_policy (CORBA::PolicyType type,
-				   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the policy list supplied by the POA.
@@ -34,12 +34,12 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type,
   for (CORBA::ULong i = 0; i < policy_count; ++i)
     {
       CORBA::PolicyType pt =
-	(*(this->policy_list_))[i]->policy_type (
+        (*(this->policy_list_))[i]->policy_type (
           TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       if (pt == type)
-	return CORBA::Policy::_duplicate ((*(this->policy_list_))[i]);
+        return CORBA::Policy::_duplicate ((*(this->policy_list_))[i]);
     }
 
   // TODO: Now check the global ORB policies.
@@ -47,12 +47,12 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type,
 
   ACE_THROW_RETURN (CORBA::INV_POLICY (TAO_OMG_VMCID | 2,
                                        CORBA::COMPLETED_NO),
-		    CORBA::Policy::_nil ());
+                    CORBA::Policy::_nil ());
 }
 
 void
 TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component,
-				CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles.
@@ -85,12 +85,12 @@ TAO_IORInfo::add_ior_component_to_profile (
       TAO_Profile *profile = this->mp_.get_profile (i);
 
       if (profile->tag () == profile_id)
-	{
-	  profile->add_tagged_component (component, ACE_TRY_ENV);
+        {
+          profile->add_tagged_component (component, ACE_TRY_ENV);
           ACE_CHECK;
 
           found_profile = 1;
-	}
+        }
     }
 
   // According to the Portable Interceptor specification, we're

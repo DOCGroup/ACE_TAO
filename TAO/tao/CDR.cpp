@@ -41,7 +41,9 @@
 # include "tao/CDR.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, CDR, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)

@@ -2,9 +2,12 @@
 
 
 
+
 #include "DII_Reply_Dispatcher.h"
 
+
 ACE_RCSID(DynamicInterface, DII_Reply_Dispatcher, "$Id$")
+
 
 
 #include "Request.h"
@@ -20,8 +23,15 @@ TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
   : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
-    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-                0,
+    db_ (sizeof buf_,
+         ACE_Message_Block::MB_DATA,
+         this->buf_,
+         orb_core->message_block_buffer_allocator (),
+         orb_core->locking_strategy (),
+         ACE_Message_Block::DONT_DELETE,
+         orb_core->message_block_dblock_allocator ()),
+    reply_cdr_ (&db_,
+                ACE_Message_Block::DONT_DELETE,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
@@ -44,8 +54,11 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 {
   this->reply_status_ = params.reply_status_;
 
-  // Steal the buffer so that no copying is done.
-  this->reply_cdr_.steal_from (params.input_cdr_);
+  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
+  ACE_Data_Block *db =
+      this->reply_cdr_.clone_from (params.input_cdr_);
+
+  ACE_UNUSED_ARG (db);
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.

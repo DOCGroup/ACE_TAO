@@ -16,6 +16,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Connection_Handler.inl"
@@ -201,6 +202,12 @@ TAO_UIOP_Connection_Handler::fetch_handle (void)
   return this->get_handle ();
 }
 
+int
+TAO_UIOP_Connection_Handler::resume_handler (void)
+{
+  return TAO_RESUMES_CONNECTION_HANDLER;
+}
+
 
 int
 TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
@@ -224,43 +231,22 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
 
 
 int
-TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
-{
-  return this->handle_input_i (h);
-}
-
-
-int
-TAO_UIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                             ACE_Time_Value *max_wait_time)
+TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   this->pending_upcalls_++;
 
-  // Call the transport read the message
-  int result = this->transport ()->read_process_message (max_wait_time);
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->fetch_handle ());
 
-  // Now the message has been read
-  if (result == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("UIOP_Connection_Handler::read_message \n")));
-
-    }
+  int retval =
+    this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
   if (--this->pending_upcalls_ <= 0)
-    result = -1;
+    retval = -1;
 
-  if (result == 0 || result == -1)
-    {
-      return result;
-    }
-
-  return 0;
+  return retval;
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

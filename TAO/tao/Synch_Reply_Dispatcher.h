@@ -66,13 +66,6 @@ protected:
   IOP::ServiceContextList &reply_service_info_;
 
 private:
-  //  TAO_GIOP_Message_State message_state_;
-  // All the state required to receive the input...
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Reply_despatcher) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
-
   /// Flag that indicates the reply  has been received.
   int reply_received_;
 
@@ -82,6 +75,20 @@ private:
   /// Save the wait strategy to signal the waiting threads (if
   /// appropriate).
   TAO_Wait_Strategy *wait_strategy_;
+
+  /* @@todo: At some point of time we are going to get to a situation
+     where TAO has huge stack sizes. Need to think on how we would
+     deal with that. One idea would be to push these things on TSS as
+     this is created by the thread on a per invocation basis. Post 1.2
+     would be a nice time for that I guess
+  */
+
+  /// The buffer that is used to initialise the data block
+  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// datablock that is created on teh stack to initialise the CDR
+  /// stream underneath.
+  ACE_Data_Block db_;
 
   /// CDR stream which has the reply information that needs to be
   /// demarshalled by the stubs

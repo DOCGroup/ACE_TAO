@@ -43,10 +43,6 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   this->request_id_ = request_id;
   this->rd_ = rd;
 
-  // If there was a previous reply, cleanup its state first.
-  //  if (this->message_state_.message_size != 0)
-  // this->message_state_.reset (0);
-
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
 }
@@ -86,32 +82,6 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // Returns 1 on success, -1 on failure.
   return rd->dispatch_reply (params);
 }
-
-/*TAO_GIOP_Message_State *
-TAO_Exclusive_TMS::get_message_state (void)
-{
-  if (this->rd_ != 0)
-    {
-      TAO_GIOP_Message_State* rd_message_state = this->rd_->message_state ();
-      if (rd_message_state == 0)
-        {
-          // The Reply Dispatcher does not have one (the Asynch guys
-          // don't) so go ahead and pass yours.
-          return &this->message_state_;
-        }
-      // @@ TODO: it would seem like the "Right Thing"[tm] to do here
-      // is to return rd_message_state, but when Michael changed this
-      // stuff originally he left that out.  I hesitate to make the
-      // change on this revision, too many changes at the same time.
-    }
-  return &this->message_state_;
-}
-
-void
-TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
-{
-}
-*/
 
 int
 TAO_Exclusive_TMS::idle_after_send (void)

@@ -19,15 +19,18 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Exception.h"
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "ace/Strategies.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "Incoming_Message_Queue.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -38,6 +41,7 @@ class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
 
 class TAO_Queued_Message;
+class TAO_Resume_Handle;
 
 class TAO_Export TAO_Synch_Refcountable : private ACE_Refcountable
 {
@@ -72,7 +76,7 @@ protected:
  *
  * <H3>The outgoing data path:</H3>
  *
- * One of the responsabilities of the TAO_Transport class is to send
+ * One of the responsibilities of the TAO_Transport class is to send
  * out GIOP messages as efficiently as possible.  In most cases
  * messages are put out in FIFO order, the transport object will put
  * out the message using a single system call and return control to
@@ -129,15 +133,71 @@ protected:
  * - A per-transport 'send strategy' to choose between blocking on
  *   write, blocking on the reactor or blockin on leader/follower.
  * - A per-message 'waiting object'
- * - A per-meessage timeout
+ * - A per-message timeout
  *
  * The Transport object provides a single method to send messages
  * (send_message ()).
  *
  * <H3>The incoming data path:</H3>
  *
- * @todo Document the incoming data path design forces.
+ * One of the main responsibilities of the transport is to read and
+ * process the incoming GIOP message as quickly and efficiently as
+ * possible. There are other forces that needs to be given due
+ * consideration. They are
+ *  - Multiple threads should  be able to tarverse along the same data
+ *    path but should not be able to read from the same handle at the
+ *    same time ie. the handle should not be shared between threads at
+ *    any instant.
+ *  - Reads on the handle could give one or more messages.
+ *  - Minimise locking and copying overhead when trying to attack the
+ *    above.
  *
+ * <H3> Parsing messages (GIOP) & processing the message:</H3>
+ *
+ * The messages should be checked for validity and the right
+ * information should be sent to the higher layer for processing. The
+ * process of doing a sanity check and preparing the messages for the
+ * higher layers of the ORB are done by the messaging protocol.
+ *
+ * <H3> Design forces and Challenges </H3>
+ *
+ * To keep things as efficient as possible for medium sized requests,
+ * it would be good to minimise data copying and locking along the
+ * incoming path ie. from the time of reading the data from the handle
+ * to the application. We achieve this by creating a buffer on stack
+ * and reading the data from the handle into the buffer. We then pass
+ * the same data block (the buffer is encapsulated into a data block)
+ * to the higher layers of the ORB. The problems stem from the
+ * following
+ *  (a) Data is bigger than the buffer that we have on stack
+ *  (b) Transports like TCP do not guarentee availability of the whole
+ *      chunk of data in one shot. Data could trickle in byte by byte.
+ *  (c) Single read gives multiple messages
+ *
+ * We solve the problems as follows
+ *
+ *  (a) First do a read with the buffer on stack. Query the underlying
+ *      messaging object whether the message has any incomplete
+ *      portion. If so, we just grow the buffer for the missing size
+ *      and read the rest of the message. We free the handle and then
+ *      send the message to the higher layers of the ORB for
+ *      processing.
+ *
+ *   (b) If we block (ie. if we receive a EWOULDBLOCK) while trying to
+ *       do the above (ie. trying to read after growing the buffer
+ *       size) we put the message in a queue and return back to the
+ *       reactor. The reactor would call us back when the handle
+ *       becomes read ready.
+ *
+ *   (c) If we get multiple messages (possible if the client connected
+ *       to the server sends oneways or AMI requests), we parse and
+ *       split the messages. Every message is put in the queue. Once
+ *       the messages are queued, the thread picks up one message to
+ *       send to the higher layers of the ORB. Before doing that, if
+ *       it finds more messages, it sends a notify to the reactor
+ *       without resuming the handle. The next thread picks up a
+ *       message from the queue and processes that. Once the queue
+ *       is drained the last thread resumes the handle.
  *
  * <B>See Also:</B>
  *
@@ -451,6 +511,30 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
+  /// Callback to read incoming data
+  /**
+   * The ACE_Event_Handler adapter invokes this method as part of its
+   * handle_input() operation.
+   *
+   * @todo: the method name is confusing! Calling it handle_input()
+   * would probably make things easier to understand and follow!
+   *
+   * Once a complete message is read the Transport class delegates on
+   * the Messaging layer to invoke the right upcall (on the server) or
+   * the TAO_Reply_Dispatcher (on the client side).
+   *
+   * @param max_wait_time In some cases the I/O is synchronous, e.g. a
+   * thread-per-connection server or when Wait_On_Read is enabled.  In
+   * those cases a maximum read time can be specified.
+   *
+   * @param block Is deprecated and ignored.
+   *
+   */
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
+
+
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
   /**
@@ -501,29 +585,6 @@ public:
                             int is_synchronous = 1,
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
-  /// Callback to read incoming data
-  /**
-   * The ACE_Event_Handler adapter invokes this method as part of its
-   * handle_input() operation.
-   *
-   * @todo: the method name is confusing! Calling it handle_input()
-   * would probably make things easier to understand and follow!
-   *
-   * Once a complete message is read the Transport class delegates on
-   * the Messaging layer to invoke the right upcall (on the server) or
-   * the TAO_Reply_Dispatcher (on the client side).
-   *
-   * @param max_wait_time In some cases the I/O is synchronous, e.g. a
-   * thread-per-connection server or when Wait_On_Read is enabled.  In
-   * those cases a maximum read time can be specified.
-   *
-   * @param block Is deprecated and ignored.
-   *
-   */
-  // @@ lockme
-  virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
-                                    int block = 0) = 0;
-
 protected:
   /// Register the handler with the reactor.
   /**
@@ -547,6 +608,53 @@ protected:
    * resources associated with the handler association.
    */
   virtual void transition_handler_state_i (void) = 0;
+
+
+  /// Called by the handle_input_i  (). This method is used to parse
+  /// message read by the handle_input_i () call. It also decides
+  /// whether the message  needs consolidation before processing.
+  int parse_consolidate_messages (ACE_Message_Block &bl,
+                                  TAO_Resume_Handle &rh,
+                                  ACE_Time_Value *time = 0);
+
+
+  /// Method does parsing of the message if we have a fresh message in
+  /// the <message_block> or just returns if we have read part of the
+  /// previously stored message.
+  int parse_incoming_messages (ACE_Message_Block &message_block);
+
+  /// Return if we have any missing data in the queue of messages
+  /// or determine if we have more information left out in the
+  /// presently read message to make it complete.
+  size_t missing_data (ACE_Message_Block &message_block);
+
+  /// Consolidate the currently read message or consolidate the last
+  /// message in the queue. The consolidation of the last message in
+  /// the queue is done by calling consolidate_message_queue ().
+  virtual int consolidate_message (ACE_Message_Block &incoming,
+                                   ssize_t missing_data,
+                                   TAO_Resume_Handle &rh,
+                                   ACE_Time_Value *max_wait_time);
+
+  /// First consolidate the message queue.  If the message is still not
+  /// complete, try to read from the handle again to make it
+  /// complete. If these dont help put the message back in the queue
+  /// and try to check the queue if we have message to process. (the
+  /// thread  needs to do some work anyway :-))
+  int consolidate_message_queue (ACE_Message_Block &incoming,
+                                 ssize_t missing_data,
+                                 TAO_Resume_Handle &rh,
+                                 ACE_Time_Value *max_wait_time);
+
+  /// Called by parse_consolidate_message () if we have more messages
+  /// in one read. Queue up the messages and try to process one of
+  /// them, atleast at the head of them.
+  int consolidate_extra_messages (ACE_Message_Block &incoming,
+                                  TAO_Resume_Handle &rh);
+
+  /// Process the message by sending it to the higher layers of the
+  /// ORB.
+  int process_parsed_messages (TAO_Queued_Data *qd);
 
 public:
   /// Method for the connection handler to signify that it
@@ -700,6 +808,11 @@ private:
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
+  /// Process the message that is in the head of the incoming queue.
+  /// If there are more messages in the queue, this method sends a
+  /// notify () to the reactor to send a next thread along.
+  int process_queue_head (TAO_Resume_Handle &rh);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
@@ -746,6 +859,9 @@ protected:
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
+
+  /// Queue of the incoming messages..
+  TAO_Incoming_Message_Queue incoming_message_queue_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
