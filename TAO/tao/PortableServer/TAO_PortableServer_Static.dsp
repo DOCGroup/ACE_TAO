@@ -96,10 +96,6 @@ SOURCE=.\ImplRepoS_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_ActivatorS_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImR_LocatorS_T.cpp
 # End Source File
 # End Group
@@ -217,18 +213,6 @@ SOURCE=.\ImplRepoS.h
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS_T.h
 # End Source File
 # Begin Source File
 
@@ -387,14 +371,6 @@ SOURCE=.\ImplRepoC.cpp
 # Begin Source File
 
 SOURCE=.\ImplRepoS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS.cpp
 # End Source File
 # Begin Source File
 

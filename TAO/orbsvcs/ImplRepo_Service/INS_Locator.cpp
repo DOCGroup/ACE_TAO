@@ -10,19 +10,17 @@
  */
 //=============================================================================
 
-#include "Locator.h"
-#include "ImR_Activator_i.h"
+#include "INS_Locator.h"
+#include "ImR_Locator_i.h"
 
-ImR_Locator::ImR_Locator (ImR_Activator_i *repo)
-  :  repo_ (repo)
+INS_Locator::INS_Locator (ImR_Locator_i* loc)
+  :  imr_locator_ (loc)
 {
 }
 
 char *
-ImR_Locator::locate (const char *object_key
-                     ACE_ENV_ARG_DECL)
+INS_Locator::locate (const char* object_key ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
-  ACE_CString key (object_key);
-  return this->repo_->find_ior (key ACE_ENV_ARG_PARAMETER);
+  return this->imr_locator_->find_ior (object_key ACE_ENV_ARG_PARAMETER);
 }

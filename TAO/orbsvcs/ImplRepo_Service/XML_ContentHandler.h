@@ -208,14 +208,14 @@ public:
   ACE_CString location_;
 
   // Checks to see if that particular entry exists.
-  int found_server_entry_;
-  int command_line_entry_;
-  int working_dir_entry_;
-  int environment_vars_entry_;
-  int activation_entry_;
-  int server_object_ior_entry_;
-  int location_entry_;
-  int startup_value_;
+  bool found_server_entry_;
+  bool command_line_entry_;
+  bool working_dir_entry_;
+  bool environment_vars_entry_;
+  bool activation_entry_;
+  bool server_object_ior_entry_;
+  bool location_entry_;
+  bool startup_value_;
 };
 
 #endif /* XML_CONTENTHANDLER_H */
