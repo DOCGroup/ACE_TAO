@@ -1,3 +1,11 @@
+Sun Jan 30 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * include/makeinclude/*.bor:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Removed support for PASCAL, this was used for BCB4 which is already
+          not supported already for a long time
+
 Sat Jan 29 23:55:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Misc/test_read_buffer.cpp:
