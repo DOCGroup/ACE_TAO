@@ -54,7 +54,7 @@ main (int, ASYS_TCHAR *argv[])
               ASYS_TEXT (args.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < args.argc (); i++)
+  for (size_t i = 0; i < args.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%d) %s\n"),
                 i,

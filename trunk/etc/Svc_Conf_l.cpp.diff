@@ -205,10 +205,10 @@
   case 22:
 ***************
 *** 925,927 ****
-  		      }
+  { ACE_YY_NEW_FILE; ace_yyterminate(); }
 ! 	ACE_YY_BREAK
   case 25:
 --- 925,927 ----
-  		      }
+  { ACE_YY_NEW_FILE; ace_yyterminate(); }
 ! //	ACE_YY_BREAK
   case 25:
