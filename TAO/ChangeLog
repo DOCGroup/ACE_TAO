@@ -18,6 +18,8 @@ Mon Mar  3 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Mar  3 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
 
           Fixed the lhs of a constant assignment for octets and

@@ -214,7 +214,7 @@ AST_Expression::AST_Expression (unsigned long ulv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (NULL)
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -247,7 +247,7 @@ AST_Expression::AST_Expression (double dv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
-    pd_v2 (NULL),
+    pd_v2 (0),
     pd_n (0)
 {
   this->fill_definition_details ();
@@ -299,7 +299,7 @@ AST_Expression::AST_Expression (unsigned char ov)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (NULL)
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -345,6 +345,11 @@ AST_Expression::AST_Expression (char *sv)
 }
 
 AST_Expression::~AST_Expression (void)
+{
+}
+
+AST_Expression::AST_ExprValue::AST_ExprValue (void)
+  : tdef (0)
 {
 }
 
@@ -2095,7 +2100,12 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
       return 0;
     }
 
-  return this->coerce (t);
+  if (d != 0 && d->node_type () == AST_Decl::NT_typedef)
+    {
+      this->pd_ev->tdef = d;
+    }
+
+  return this->coerce (t);;
 }
 
 // Coerce "this" to the ExprType required. Returns a copy of the
@@ -2781,3 +2791,4 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
 {
   this->pd_n = new_n;
 }
+
