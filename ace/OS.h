@@ -2469,13 +2469,14 @@ class ACE_Export ACE_U_LongLong
 {
 public:
   // = Initialization and termination methods.
-  ACE_U_LongLong (u_long lo = 0x0, u_long hi = 0x0);
+  ACE_U_LongLong (const u_long lo = 0x0, const u_long hi = 0x0);
   ACE_U_LongLong (const ACE_U_LongLong &);
   ACE_U_LongLong &operator= (const ACE_U_LongLong &);
   ~ACE_U_LongLong (void);
 
   // = Overloaded relation operators.
   int operator== (const ACE_U_LongLong &) const;
+  int operator!= (const ACE_U_LongLong &) const;
   int operator< (const ACE_U_LongLong &) const;
   int operator<= (const ACE_U_LongLong &) const;
   int operator> (const ACE_U_LongLong &) const;
@@ -2483,7 +2484,7 @@ public:
 
   ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
   ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-  u_long operator/ (u_long) const;
+  u_long operator/ (const u_long) const;
 
   ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
   ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
@@ -2495,8 +2496,8 @@ public:
   u_long hi (void) const;
   u_long lo (void) const;
 
-  void hi (u_long hi);
-  void lo (u_long lo);
+  void hi (const u_long hi);
+  void lo (const u_long lo);
 
   ACE_ALLOC_HOOK_DECLARE;
 
