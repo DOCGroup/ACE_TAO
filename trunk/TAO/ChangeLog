@@ -1,3 +1,10 @@
+Mon May 10 10:00:23 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
+	  The Auto_Functor class does not use simulated exceptions, move
+	  that code into the functor.
+
 Mon May  9 13:47:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/AMI_Buffering_Admin.cpp:
