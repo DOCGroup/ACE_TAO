@@ -1,3 +1,8 @@
+Wed Nov 13 06:27:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Fixed a compile
+	  error.
+
 Tue Nov 12 14:34:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Connector.cpp:
