@@ -1,3 +1,8 @@
+Tue Sep 15 16:58:18 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* include/makeinclude/platform_chorus_ghs.GNU: Changed the
+	  MVME_DIR to /project/doc/mvme/mvme177.
+
 Tue Sep 15 16:34:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (gethrtime): added high-res timer support with
