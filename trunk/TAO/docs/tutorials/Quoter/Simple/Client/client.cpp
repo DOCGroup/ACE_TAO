@@ -60,7 +60,7 @@ int main (int argc, char* argv[])
     // Finally destroy the ORB
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (CORBA::Exception &) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;

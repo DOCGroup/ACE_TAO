@@ -1,5 +1,7 @@
 // $Id$
+
 //===========================================================================
+//
 // = FILENAME 
 //     server.cpp
 // 
@@ -9,11 +11,11 @@
 //          
 // = AUTHOR
 //     Priyanka Gontla
+//
 //============================================================================
 
 #include "Stock_Factory_i.h"
-#include <iostream.h>
-
+#include <iostream>
 
 int 
 main (int argc, char* argv[])
@@ -79,13 +81,13 @@ main (int argc, char* argv[])
     // Stringify all the object referencs.
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     
-    orb-> run ();
+    orb->run ();
     
     // Destroy POA, waiting until the destruction terminates.
     root_poa->destroy (1, 1);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (CORBA::Exception &) {
     std::cerr << "CORBA exception raised !" << std::endl;
   }
   return 0;
