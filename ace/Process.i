@@ -370,4 +370,15 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   return -1;
 }
 
+ACE_INLINE
+ACE_Managed_Process::~ACE_Managed_Process (void)
+{
+}
+
+ACE_INLINE void
+ACE_Managed_Process::unmanage (void)
+{
+  delete this;
+}
+
 #endif /* ACE_HAS_WINCE */
