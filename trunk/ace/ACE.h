@@ -548,6 +548,9 @@ private:
 
   static size_t pagesize_;
   // Size of a VM page.
+
+  static u_long crctab[];
+  // CRC table.
 };
 
 #include "ace/ACE.i"
