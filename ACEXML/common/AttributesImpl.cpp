@@ -97,13 +97,13 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
   return -1;
 }
 
-ACEXML_INLINE size_t
+size_t
 ACEXML_AttributesImpl::getLength (void)
 {
   return this->attrs_.size ();
 }
 
-ACEXML_INLINE  const ACEXML_Char *
+const ACEXML_Char *
 ACEXML_AttributesImpl::getLocalName (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -112,7 +112,7 @@ ACEXML_AttributesImpl::getLocalName (size_t index)
 }
 
 
-ACEXML_INLINE const ACEXML_Char *
+const ACEXML_Char *
 ACEXML_AttributesImpl::getQName (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -120,7 +120,7 @@ ACEXML_AttributesImpl::getQName (size_t index)
   return 0;
 }
 
-ACEXML_INLINE const ACEXML_Char *
+const ACEXML_Char *
 ACEXML_AttributesImpl::getType (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -152,7 +152,7 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
 }
 
 
-ACEXML_INLINE const ACEXML_Char *
+const ACEXML_Char *
 ACEXML_AttributesImpl::getURI (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -161,7 +161,7 @@ ACEXML_AttributesImpl::getURI (size_t index)
 }
 
 
-ACEXML_INLINE const ACEXML_Char *
+const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -191,7 +191,7 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
   return 0;
 }
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setAttribute (size_t index,
                                      const ACEXML_Char *uri,
                                      const ACEXML_Char *localName,
@@ -213,7 +213,7 @@ ACEXML_AttributesImpl::setAttribute (size_t index,
 }
 
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setLocalName (size_t index,
                                      const ACEXML_Char *localName)
 {
@@ -225,7 +225,7 @@ ACEXML_AttributesImpl::setLocalName (size_t index,
   return -1;
 }
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setQName (size_t index,
                                  const ACEXML_Char *qName)
 {
@@ -238,7 +238,7 @@ ACEXML_AttributesImpl::setQName (size_t index,
 }
 
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setURI (size_t index,
                                const ACEXML_Char *uri)
 {
@@ -250,7 +250,7 @@ ACEXML_AttributesImpl::setURI (size_t index,
   return -1;
 }
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setType (size_t index,
                                 const ACEXML_Char *type)
 {
@@ -262,7 +262,7 @@ ACEXML_AttributesImpl::setType (size_t index,
   return -1;
 }
 
-ACEXML_INLINE int
+int
 ACEXML_AttributesImpl::setValue (size_t index,
                                  const ACEXML_Char *value)
 {
