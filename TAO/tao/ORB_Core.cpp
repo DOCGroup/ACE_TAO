@@ -854,7 +854,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           FILE* output_stream = ACE_OS::fopen (file_name, "a");
 
-          ACE_LOG_MSG->msg_ostream (output_stream);
+          ACE_LOG_MSG->msg_ostream (output_stream, 1);
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -874,7 +874,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           if (!output_stream->bad ())
             {
-              ACE_LOG_MSG->msg_ostream (output_stream);
+              ACE_LOG_MSG->msg_ostream (output_stream, 1);
             }
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
