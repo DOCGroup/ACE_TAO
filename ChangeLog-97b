@@ -1,3 +1,11 @@
+Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-sunos5.4.*: Solaris 2.4 doesn't support the ualarm()
+ 	  call unless you use the (broken) /usr/ucb/cc compiler.  Here's a
+ 	  patch for $ACE_ROOT/ace/config-sunos5.4-sunc++-4.x.h to fix the
+ 	  problem.  Thanks to Caleb Epstein
+ 	  <epstein_caleb_unix@jpmorgan.com> for reporting this.
+
 Thu Nov 13 19:25:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
