@@ -14,22 +14,21 @@ ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
 // Are we running verbosely?
 static int verbose = 0;
 
-static int 
+static void
 run_server (ACE_THR_FUNC server,
             ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_THREADS)
-              // Spawn a new thread and run the new connection in that thread of
-              // control using the <server> function as the entry point.
-              if (ACE_Thread_Manager::instance ()->spawn (server,
-                                                          (void *) handle,
-                                                          THR_DETACHED) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "(%P|%t) %p\n",
-                                   "spawn"),
-                          1);
+  // Spawn a new thread and run the new connection in that thread of
+  // control using the <server> function as the entry point.
+  if (ACE_Thread_Manager::instance ()->spawn (server,
+                                              (void *) handle,
+                                              THR_DETACHED) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) %p\n",
+                "spawn"));
 #else
-              (*server) ((void *) handle);
+  (*server) ((void *) handle);
 #endif /* ACE_HAS_THREADS */
 }
 

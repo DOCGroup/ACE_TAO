@@ -17,9 +17,9 @@ class Handler;
 class Handler_Factory
 {
   // = TITLE
-  //   Creates oneway or twoway handlers.
+  //   Creates the oneway or twoway handlers.
 public:
-  Handler_Factory (u_short port);
+  Handler_Factory (int argc, char *argv[]);
   // Constructor.
 
   ~Handler_Factory (void);
@@ -29,6 +29,9 @@ public:
   // Run the main event loop.
 
 private:
+  int parse_args (int argc, char *argv[]);
+  // Parse the command-line arguments.
+
   int init_acceptors (void);
   // Initialize the acceptors.
 
@@ -38,14 +41,19 @@ private:
   // Factory that creates the right kind of <Handler>.
 
   // = Factory functions.
-  static Handler *make_twoway_handler (ACE_HANDLE);
+  static Handler *make_twoway_handler (ACE_HANDLE,
+                                       int verbose);
   // Create a twoway handler.
 
-  static Handler *make_oneway_handler (ACE_HANDLE);
+  static Handler *make_oneway_handler (ACE_HANDLE,
+                                       int verbose);
   // Create a oneway handler.
 
   u_short port_;
   // Port number we're listening on.
+
+  int verbose_;
+  // Are we running in verbose mode?
 
   ACE_SOCK_Acceptor twoway_acceptor_;
   // Twoway acceptor factory.
@@ -66,6 +74,12 @@ protected:
   Handler (ACE_HANDLE handle, int verbose = 0);
   // Constructor.
 
+  int parse_header_and_allocate_buffer (char *&buf,
+                                        ACE_INT32 *len);
+  // Implement the generic code that's called from any of the subclass
+  // <run> methods to get the header and the buffer to read the data.
+  // This method factors out common code.
+
   virtual int run (void) = 0;
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
@@ -73,7 +87,7 @@ protected:
   virtual int svc (void);
   // Template method entry point into the handler task.
 
-  void print_results (void);
+  void print_results (void) = 0;
   // Print the results.
 
   int verbose_;
@@ -84,12 +98,6 @@ protected:
 
   size_t message_count_;
   // Number of messages received.
-
-  ACE_INT32 len_;
-  // Max length of buffers sent by the user.
-
-  void *buf_;
-  // Pointer to the buffer that we read into.
 
   ACE_Profile_Timer timer_;
   // Keeps track of how much time we're using.
@@ -103,6 +111,7 @@ public:
   Twoway_Handler (ACE_HANDLE handle, int verbose = 0);
   // Constructor.
 
+private:
   virtual int run (void);
   // Template Method hook called by <svc>.
 };
@@ -114,8 +123,12 @@ public:
   Oneway_Handler (ACE_HANDLE handle, int verbose = 0);
   // Constructor.
 
+private:
   virtual int run (void);
   // Template Method hook called by <svc>.
+
+  void print_results (void) = 0;
+  // Print the results.
 };
 
 Handler::Handler (ACE_HANDLE handle,
@@ -146,44 +159,7 @@ Handler::open (void *)
               cli_addr.get_host_name (),
               cli_addr.get_port_number (),
               this->peer ().get_handle ()));
-
-  if (this->peer ().recv_n ((void *) &this->len_,
-                            sizeof (ACE_INT32)) != sizeof (ACE_INT32))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n failed"),
-                      -1);
-  else
-    {
-      this->len_ = ntohl (this->len_);
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) reading messages of size %d\n",
-                  this->len_));
-      ACE_ALLOCATOR_RETURN (this->buf_,
-                            ACE_OS::malloc (this->len_),
-                            -1);
-    }
   return 0;
-}
-
-void
-Handler::print_results (void)
-{
-  ACE_Profile_Timer::ACE_Elapsed_Time et;
-  this->timer_.elapsed_time (et);
-
-  ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
-	      et.real_time,
-	      et.user_time,
-	      et.system_time));
-
-  ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\t messages = %d\n\t\t total bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
-	      this->message_count_,
-              this->total_bytes_,
-	      (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),
-	      ((et.user_time + et.system_time) / (double) this->message_count_) * ACE_ONE_SECOND_IN_USECS));
 }
 
 int
@@ -192,13 +168,45 @@ Handler::svc (void)
   // Timer logic.
   this->timer_.start ();
 
-  if (this->run () == -1)
-    return -1;
+  // Invoke the hook method to run the specific test.
+  int result = this->run ();
 
   this->timer_.stop ();
 
   this->print_results ();
-  ACE_OS::free (this->buf_);
+
+  return result;
+}
+
+int
+Handler::parse_header_and_allocate_buffer (ACE_INT32 *len,
+                                           char *&buf)
+{
+
+  ssize_t result = this->peer ().recv_n ((void *) len,
+                                         sizeof (ACE_INT32));
+
+  if (result == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P|%t) connected closed\n"));
+      return 0;
+    }
+  else if (result == -1 || result != sizeof (ACE_INT32))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) %p\n",
+                       "recv_n failed"),
+                      -1);
+  else
+    {
+      *len = ntohl (*len);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) reading messages of size %d\n",
+                  *len));
+      ACE_NEW_RETURN (buf,
+                      char[*len],
+                      -1);
+    }
   return 0;
 }
 
@@ -217,11 +225,21 @@ Twoway_Handler::run (void)
 
   for (;;)
     {
-      ssize_t r_bytes = this->peer ().recv (this->buf_, this->len_);
+      ACE_INT32 len = 0;
+      char *buf;
+
+      if (parse_header_and_allocate_buffer (buf,
+                                            &len) <= 0)
+        return -1;
+
+      ssize_t r_bytes = this->peer ().recv (buf,
+                                            len);
       
       if (r_bytes == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "recv"));
           break;
         }
       else if (r_bytes == 0)
@@ -231,18 +249,21 @@ Twoway_Handler::run (void)
           break;
         }
       else if (this->verbose_ 
-               && ACE::write_n (ACE_STDOUT, this->buf_, r_bytes) != r_bytes)
+               && ACE::write_n (ACE_STDOUT,
+                                this->buf_,
+                                r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
-      else if (this->peer ().send_n (this->buf_, r_bytes) != r_bytes)
+      else if (this->peer ().send_n (this->buf_,
+                                     r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "send_n"));
-
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
     }
+
   return 0;
 }
 
@@ -250,6 +271,26 @@ Oneway_Handler::Oneway_Handler (ACE_HANDLE handle,
                                 int verbose)
   : Handler (handle, verbose)
 {
+}
+
+void
+Oneway_Handler::print_results (void)
+{
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+  this->timer_.elapsed_time (et);
+
+  ACE_DEBUG ((LM_DEBUG,
+	      ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
+	      et.real_time,
+	      et.user_time,
+	      et.system_time));
+
+  ACE_DEBUG ((LM_DEBUG,
+	      ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
+	      this->message_count_,
+              this->total_bytes_,
+	      (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),
+	      ((et.user_time + et.system_time) / (double) this->message_count_) * ACE_ONE_SECOND_IN_USECS));
 }
 
 // Function entry point into the oneway server task.
@@ -261,11 +302,19 @@ Oneway_Handler::run (void)
 
   for (;;)
     {
-      ssize_t r_bytes = this->peer ().recv (this->buf_, this->len_);
+      ACE_INT32 len = 0;
+      char *buf;
+
+      if (parse_header_and_allocate_buffer (buf, &len) <= 0)
+        return -1;
+
+      ssize_t r_bytes = this->peer ().recv (buf, len);
       
       if (r_bytes == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "recv"));
           break;
         }
       else if (r_bytes == 0)
@@ -275,7 +324,9 @@ Oneway_Handler::run (void)
           break;
         }
       else if (this->verbose_ 
-               && ACE::write_n (ACE_STDOUT, this->buf_, r_bytes) != r_bytes)
+               && ACE::write_n (ACE_STDOUT,
+                                this->buf_,
+                                r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
@@ -289,17 +340,19 @@ Oneway_Handler::run (void)
 // Create a twoway handler.
 
 Handler *
-Handler_Factory::make_twoway_handler (ACE_HANDLE handle)
+Handler_Factory::make_twoway_handler (ACE_HANDLE handle,
+                                      int verbose)
 {
-  return new Twoway_Handler (handle);
+  return new Twoway_Handler (handle, verbose);
 }
 
 // Create a oneway handler.
 
 Handler *
-Handler_Factory::make_oneway_handler (ACE_HANDLE handle)
+Handler_Factory::make_oneway_handler (ACE_HANDLE handle,
+                                      int verbose)
 {
-  return new Oneway_Handler (handle);
+  return new Oneway_Handler (handle, verbose);
 }
 
 int
@@ -345,7 +398,8 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
   Handler *handler;
   
   ACE_ALLOCATOR_RETURN (handler,
-                        (*handler_factory) (new_stream.get_handle ()),
+                        (*handler_factory) (new_stream.get_handle (),
+                                            this->verbose_),
                         -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -365,9 +419,31 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
 #endif /* ACE_HAS_THREADS */
 }
 
-Handler_Factory::Handler_Factory (u_short port)
-  : port_ (port)
+int
+Handler_Factory::parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt getopt (argc, argv, "p:v", 1);
 
+  for (int c; (c = getopt ()) != -1; )
+    switch (c)
+      {
+      case 'p':
+        this->port_ = ACE_OS::atoi (getopt.optarg);
+        break;
+      case 'v':
+        this->verbose_ = 1;
+        break;
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) usage: %n [-p <port>] [-v]"),
+                          -1);
+      }
+  return 0;
+}
+
+Handler_Factory::Handler_Factory (int argc, char *argv[])
+  : port_ (ACE_DEFAULT_PORT),
+    verbose_ (0)
 {
 }
 
@@ -388,8 +464,10 @@ Handler_Factory::handle_events (void)
   fd_set handles;
   
   FD_ZERO (&handles);
-  FD_SET (this->twoway_acceptor_.get_handle (), &handles);
-  FD_SET (this->oneway_acceptor_.get_handle (), &handles);
+  FD_SET (this->twoway_acceptor_.get_handle (),
+          &handles);
+  FD_SET (this->oneway_acceptor_.get_handle (),
+          &handles);
 
   // Performs the iterative server activities.
 
@@ -405,17 +483,20 @@ Handler_Factory::handle_events (void)
                                    timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n", "select"));
+                    "(%P|%t) %p\n",
+                    "select"));
       else if (result == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) select timed out\n"));
       else 
         {
-          if (FD_ISSET (this->twoway_acceptor_.get_handle (), &temp))
+          if (FD_ISSET (this->twoway_acceptor_.get_handle (),
+                        &temp))
             this->create_handler (this->twoway_acceptor_,
                                   &Handler_Factory::make_twoway_handler,
                                   "twoway");
-          if (FD_ISSET (this->oneway_acceptor_.get_handle (), &temp))
+          if (FD_ISSET (this->oneway_acceptor_.get_handle (),
+                        &temp))
             this->create_handler (this->oneway_acceptor_,
                                   &Handler_Factory::make_oneway_handler,
                                   "oneway");
@@ -429,9 +510,7 @@ Handler_Factory::handle_events (void)
 int
 main (int argc, char *argv[])
 {
-  u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-
-  Handler_Factory server (port);
+  Handler_Factory server (argc, argv);
 
   return server.handle_events ();
 }

@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for IPC_SAP test
 #----------------------------------------------------------------------------
@@ -13,6 +13,7 @@ INFO  = README
 BIN   = CPP-inclient \
 	CPP-unclient \
 	CPP-inserver \
+	CPP-inserver-fancy \
 	CPP-inserver-poll \
 	CPP-unserver \
 	FD-unclient \
