@@ -42,7 +42,7 @@ Wed Dec 10 16:39:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.h:
 
 	  Improved documentation of some class members.
-	
+
 	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
 
 	  Cosmetic change.
