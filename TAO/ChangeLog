@@ -1,9 +1,15 @@
+Fri Dec  5 10:30:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1639_Regression/struct_client.cpp:
+          Removed non portable streaming of the exception to fix compile
+          problem in our msvc6 build.
+
 Thu Dec  4 14:15:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (unique_label_values):
 
           Assigned a struct literal to a local struct variable instead
-          of initializing each member individually. This enables 
+          of initializing each member individually. This enables
           TypeCodeFactory to build when ACE_LACKS_LONGLONG_T is defined,
           since the struct contains all the IDL basic types that are
           legal for union discriminators, including longlong. Thanks
