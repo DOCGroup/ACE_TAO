@@ -115,6 +115,8 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif
 
+#if defined (WINDOWS) || defined (linux)
+
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
@@ -133,4 +135,6 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   load_list[0].value = load;
 
   return load_list._retn ();
+
+#endif  /* WINDOWS || linux */
 }
