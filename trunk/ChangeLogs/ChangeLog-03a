@@ -1,3 +1,9 @@
+Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
+	  casts so that the arguments passed to printf() will match the
+	  format specifier types.	
+
 Sat Mar 17 18:02:28 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Fixed settings for exceptions and
