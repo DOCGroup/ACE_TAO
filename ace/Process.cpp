@@ -538,15 +538,14 @@ ACE_Process_Old::ACE_Process_Old (char *argv[],
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
-  : command_line_buf_ (0),
-    inherit_environment_ (ie),
+  : inherit_environment_ (ie),
 #if defined (ACE_WIN32)
+    environment_inherited_ (0),
+    set_handles_called_ (0),
     handle_inheritence_ (TRUE),
     creation_flags_ (0),
-    set_handles_called_ (0),
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
-    environment_inherited_ (0),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
@@ -554,6 +553,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* ACE_WIN32 */
     environment_buf_index_ (0),
     environment_argv_index_ (0),
+    command_line_buf_ (0),
     command_line_argv_calculated_ (0)
 {
   ACE_NEW (command_line_buf_, char[cobl]);
