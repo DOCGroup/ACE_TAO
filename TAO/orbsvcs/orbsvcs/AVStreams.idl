@@ -82,37 +82,36 @@ module AVStreams
   interface Basic_StreamCtrl 
   {
     // Empty flowSpec => apply operation to all flows
-    void stop(in flowSpec the_spec) raises (noSuchFlow);
-    void start(in flowSpec the_spec) raises (noSuchFlow);
-    void destroy(in flowSpec the_spec) raises (noSuchFlow);
+    void stop (in flowSpec the_spec) raises (noSuchFlow);
+    void start (in flowSpec the_spec) raises (noSuchFlow);
+    void destroy (in flowSpec the_spec) raises (noSuchFlow);
     
-    boolean modify_QoS(inout streamQoS new_qos,
+    boolean modify_QoS (inout streamQoS new_qos,
                        in flowSpec the_spec)
       raises (noSuchFlow, QoSRequestFailed);
 
     // Called by StreamEndPoint when something goes wrong
     // with a flow
-    oneway void push_event(
-                           in streamEvent the_event);
+    oneway void push_event (in streamEvent the_event);
     
-    void set_FPStatus(in flowSpec the_spec,
+    void set_FPStatus (in flowSpec the_spec,
                       in string fp_name,		// Only SFP1.0 currently 
                       // specified
                       in any fp_settings)		// Currently SFP accepts 
       // SFPStatus structure
       raises (noSuchFlow, FPError);
     
-    Object get_flow_connection(in string flow_name) 
+    Object get_flow_connection (in string flow_name) 
       raises (noSuchFlow, notSupported);
     
-    void set_flow_connection(in string flow_name,
+    void set_flow_connection (in string flow_name,
                              in Object flow_connection)
       raises (noSuchFlow, notSupported);
   };
 
   interface Negotiator
   {
-    boolean negotiate(in Negotiator remote_negotiator,
+    boolean negotiate (in Negotiator remote_negotiator,
                       in streamQoS qos_spec);
   };
 
