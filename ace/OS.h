@@ -5135,17 +5135,13 @@ public:
   /// This method computes the smallest integral value not less than x.
   static double ceil (double x);
 
-# if !defined (ACE_LACKS_ENV)
   static char *getenv (const char *symbol);
 #   if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
   static wchar_t *getenv (const wchar_t *symbol);
 #   endif /* ACE_HAS_WCHAR && ACE_WIN32 */
-
   static int putenv (const ACE_TCHAR *string);
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
   static ACE_TCHAR *getenvstrings (void);
-
-# endif /* ACE_LACKS_ENV */
 
   static int getopt (int argc,
                      char *const *argv,

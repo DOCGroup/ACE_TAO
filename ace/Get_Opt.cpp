@@ -104,11 +104,9 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
 
-#if !defined (ACE_LACKS_ENV)
   // First check to see if POSIXLY_CORRECT was set.
-  if (ACE_OS::getenv (ACE_TEXT ("POSIXLY_CORRECT")))
+  if (ACE_OS::getenv (ACE_TEXT ("POSIXLY_CORRECT")) != 0)
     this->ordering_ = REQUIRE_ORDER;
-#endif /* ACE_LACKS_ENV */
 
   // Now, check to see if any or the following were passed at
   // the begining of optstring: '+' same as POSIXLY_CORRECT;

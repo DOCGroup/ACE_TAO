@@ -1,3 +1,10 @@
+Fri Dec 28 13:41:23 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.{h,i,cpp} (putenv,getenv,strenvdup,getenvstrings): 
+	* ace/Get_Opt.cpp (ACE_Get_Opt): Remoed the #idndef (ACE_LACKS_ENV)
+	  from Get_Opt.cpp and move this into OS.i where it belongs!
+  	  Thanks to Venkita and Don Hinton for reporting this.
+
 Fri Dec 28 19:56:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/test_naming.cpp:
