@@ -20,7 +20,7 @@
 
 // Just need to mix-in RefCounter
 class Value2_impl : public virtual OBV_OBV_FactoryTest::Value2,
-                    public virtual CORBA_DefaultValueRefCountBase
+                    public virtual CORBA::DefaultValueRefCountBase
 {
   // = TITLE
   //   Value2 implementation
@@ -53,7 +53,7 @@ public:
 
 public:
 
-  virtual CORBA_ValueBase* create_for_unmarshal (void);
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
 
 };
 

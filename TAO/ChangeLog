@@ -1,3 +1,9 @@
+Sat Feb 22 08:40:11 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Factory/FactoryC_impl.h:
+
+	  "CORBA_" -> "CORBA::".
+
 Fri Feb 21 13:40:41 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IOPC.cpp:
