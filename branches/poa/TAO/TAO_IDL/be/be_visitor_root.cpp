@@ -107,7 +107,7 @@ int be_visitor_root_ci::visit_root (be_root *node)
   return 0;
 }
 
-int be_visitor_root_ci::visit_sequence (be_sequence *node)
+int be_visitor_root_ci::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -151,7 +151,7 @@ int be_visitor_root_cs::visit_root (be_root *node)
   return 0;
 }
 
-int be_visitor_root_cs::visit_sequence (be_sequence *node)
+int be_visitor_root_cs::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -198,7 +198,7 @@ int be_visitor_root_sh::visit_root (be_root *node)
   return 0;
 }
 
-int be_visitor_root_sh::visit_sequence (be_sequence *node)
+int be_visitor_root_sh::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -242,7 +242,7 @@ int be_visitor_root_si::visit_root (be_root *node)
   return 0;
 }
 
-int be_visitor_root_si::visit_sequence (be_sequence *node)
+int be_visitor_root_si::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -286,7 +286,7 @@ int be_visitor_root_ss::visit_root (be_root *node)
   return 0;
 }
 
-int be_visitor_root_ss::visit_sequence (be_sequence *node)
+int be_visitor_root_ss::visit_sequence (be_sequence *)
 {
   return 0;
 }

@@ -227,7 +227,7 @@ be_visitor_sequence_base_ch::visit_sequence (be_sequence *node)
 
 // helper
 int
-be_visitor_sequence_base_ch::visit_node (be_type * /* node */)
+be_visitor_sequence_base_ch::visit_node (be_type *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -235,7 +235,7 @@ be_visitor_sequence_base_ch::visit_node (be_type * /* node */)
 }
 
 int
-be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
+be_visitor_sequence_base_ch::visit_interface (be_interface *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -243,7 +243,7 @@ be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
 }
 
 int
-be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -251,7 +251,7 @@ be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_base_ch::visit_string (be_string * /* node */)
+be_visitor_sequence_base_ch::visit_string (be_string * )
 {
   // NO-OP, we have ad-hoc classes from strings.
   return 0;
@@ -342,7 +342,7 @@ be_visitor_sequence_elemtype::visit_sequence (be_sequence *node)
 
 // helper
 int
-be_visitor_sequence_elemtype::visit_node (be_type *node)
+be_visitor_sequence_elemtype::visit_node (be_type *)
 {
   TAO_OutStream &os = this->stream ();
 
@@ -354,7 +354,7 @@ be_visitor_sequence_elemtype::visit_node (be_type *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_interface (be_interface *node)
+be_visitor_sequence_elemtype::visit_interface (be_interface *)
 {
   TAO_OutStream &os = this->stream ();
 
@@ -366,7 +366,7 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream &os = this->stream ();
 
@@ -378,7 +378,7 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_string (be_string * /*node*/)
+be_visitor_sequence_elemtype::visit_string (be_string *)
 {
   TAO_OutStream &os = this->stream ();
 
