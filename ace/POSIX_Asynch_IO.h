@@ -243,7 +243,7 @@ public:
   ACE_HANDLE handle (void) const;
 
 protected:
-  ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_read,
@@ -335,7 +335,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
                                         size_t bytes_to_write,
@@ -410,7 +410,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
-  ACE_POSIX_Asynch_Read_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_read,
@@ -514,7 +514,7 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_File factory.
-  ACE_POSIX_Asynch_Write_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
@@ -618,7 +618,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Accept factory.
-  ACE_POSIX_Asynch_Accept_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Accept_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
@@ -785,7 +785,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Connect factory.
-  ACE_POSIX_Asynch_Connect_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Connect_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE  connect_handle,
                                    const void* act,
                                    ACE_HANDLE  event,
@@ -970,7 +970,7 @@ public:
   u_long flags (void) const;
 
 protected:
-  ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Transmit_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
                                          ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1143,7 +1143,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
                                        size_t bytes_to_write,
@@ -1276,7 +1276,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Dgram factory.
-  ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_read,
