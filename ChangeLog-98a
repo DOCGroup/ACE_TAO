@@ -1,3 +1,10 @@
+Wed Dec  3 10:29:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/ACE.cpp: 
+	  Use ACE_UINT32 to compute the 32-bit CRC, on Alphas (and
+	  probably other 64 bit machines) u_long seems to be longer than
+	  that.
+
 Wed Dec 03 07:39:15 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux.GNU:
