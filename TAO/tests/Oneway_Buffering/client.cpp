@@ -269,7 +269,7 @@ configure_policies (CORBA::ORB_ptr orb,
   flusher =
     Test::Oneway_Buffering::_narrow (object.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-    
+
   return 0;
 }
 
@@ -295,6 +295,8 @@ run_progress_test (Test::Oneway_Buffering_ptr oneway_buffering,
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
+  for (int j = 0; j != PAYLOAD_LENGTH; ++j)
+    payload[j] = CORBA::Octet(j % 256);
 
   for (int i = 0; i != progress_test_iterations; ++i)
     {
@@ -338,7 +340,7 @@ run_message_count (CORBA::ORB_ptr orb,
   buffering_constraint.message_bytes = 0;
   buffering_constraint.timeout = 0;
 
-  Test::Oneway_Buffering_var flusher;  
+  Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
                         oneway_buffering, flusher.out (),
@@ -350,6 +352,8 @@ run_message_count (CORBA::ORB_ptr orb,
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
+  for (int j = 0; j != PAYLOAD_LENGTH; ++j)
+    payload[j] = CORBA::Octet(j % 256);
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -438,7 +442,7 @@ run_timeout (CORBA::ORB_ptr orb,
   buffering_constraint.message_bytes = 0;
   buffering_constraint.timeout = TIMEOUT_MILLISECONDS * 10000;
 
-  Test::Oneway_Buffering_var flusher;  
+  Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
                         oneway_buffering, flusher.out (),
@@ -450,6 +454,8 @@ run_timeout (CORBA::ORB_ptr orb,
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
+  for (int j = 0; j != PAYLOAD_LENGTH; ++j)
+    payload[j] = CORBA::Octet(j % 256);
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -513,7 +519,7 @@ run_timeout (CORBA::ORB_ptr orb,
             }
         }
     }
-  
+
   int progress_test_failed =
     run_progress_test (oneway_buffering,
                        flusher.in (),
@@ -540,7 +546,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
   buffering_constraint.message_bytes = BUFFER_SIZE;
   buffering_constraint.timeout = 0;
 
-  Test::Oneway_Buffering_var flusher;  
+  Test::Oneway_Buffering_var flusher;
   int test_failed =
     configure_policies (orb, buffering_constraint,
                         oneway_buffering, flusher.out (),
@@ -552,6 +558,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
+  for (int j = 0; j != PAYLOAD_LENGTH; ++j)
+    payload[j] = CORBA::Octet(j % 256);
 
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)

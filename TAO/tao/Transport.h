@@ -600,6 +600,10 @@ public:
                       const ACE_Message_Block *message_block,
                       ACE_Time_Value *max_wait_time);
 
+  /// Send a message block chain, assuming the lock is held
+  int send_message_block_chain_i (const ACE_Message_Block *message_block,
+                                  size_t &bytes_transferred,
+                                  ACE_Time_Value *max_wait_time);
   /// Cache management
   void mark_invalid (void);
 
@@ -625,6 +629,22 @@ private:
 
   /// Implement drain_queue() assuming the lock is held
   int drain_queue_i (void);
+
+  /// Check if there are messages pending in the queue
+  /**
+   * This version assumes that the lock is already held.  Use with
+   * care!
+   *
+   * @return 1 if the queue is empty
+   */
+  int queue_is_empty_i (void);
+
+  /// This class needs special access to drain_queue_i() and
+  /// queue_is_empty_i()
+  friend class TAO_Block_Flushing_Strategy; 
+
+  /// A helper routine used in drain_queue_i()
+  int drain_queue_helper (int &iovcnt, iovec iov[]);
 
   /// Cleanup the queue.
   /**
@@ -697,7 +717,7 @@ protected:
   TAO_Queued_Message *tail_;
 
   /// The queue will start draining no later than <queing_deadline_>
-  /// *if* the deadline is 
+  /// *if* the deadline is
   ACE_Time_Value current_deadline_;
 
   /// Lock that insures that activities that *might* use handler-related

@@ -24,7 +24,6 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
 int
 Client_Task::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
   Test::Payload payload (this->event_size_);
   payload.length (this->event_size_);
 
@@ -72,7 +71,6 @@ Client_Task::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }
 

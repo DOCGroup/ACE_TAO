@@ -7,5 +7,5 @@ interface test
   void method (in unsigned long request_number,
                out unsigned long reply_number);
 
-  oneway void shutdown ();
+  void shutdown ();
 };
