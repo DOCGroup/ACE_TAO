@@ -1,3 +1,9 @@
+Thu Jul 20 23:04:30 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp
+	* ace/OS_String.inl
+	  Added pace functionality.
+
 Thu Jul 20 18:28:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SV_Message_Queue: Made the get_id() method const.  Thanks
@@ -18,7 +24,7 @@ Thu Jul 20 11:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	static casted both fields of ACE_MAX in method <clear_cache>.
 	Thanks to David Levine <levine@cs.wustl.edu> for pointing this
 	out. Also changed ssize_t to size_t in the cast.
-	
+
 Thu Jul 20 08:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Rearranged some code so that the operator *=
@@ -36,7 +42,7 @@ Wed Jul 19 19:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Utility_T.cpp: Rectified a typo made in method
 	<clear_cache>.
-	
+
 Wed Jul 19 17:12:50 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS.h
@@ -154,7 +160,7 @@ Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
 
 Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-        * include/makeinclude/warpepr_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
           Added -DPACE_HAS_ALL_POSIX_FUNCS to the pace flag.
 
 	* ace/OS.h:
