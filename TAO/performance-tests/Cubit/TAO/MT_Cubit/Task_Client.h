@@ -43,7 +43,8 @@
 #endif /* CHORUS_MVME */
 
 // FUZZ: disable check_for_math_include
-#if defined(ACE_HAS_EXCEPTIONS) && !defined (__KCC) && !defined (__xlC__)
+#if defined(ACE_HAS_EXCEPTIONS) && !defined (__KCC) && !defined (__xlC__) && \
+    (!defined __GNUG__ || !defined (DIGITAL_UNIX))
   // Some plaforms define an exception structure in math.h...
 # if defined (__GNUG__)
     // And some compilers have this workaround.  Disable it with this
