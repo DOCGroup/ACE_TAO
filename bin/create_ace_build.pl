@@ -36,6 +36,8 @@ use File::Find ();
 use File::Basename;
 use FileHandle;
 use File::stat;
+use File::Copy;
+
 
 $usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] [-nompc] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
@@ -85,10 +87,8 @@ print "Creating or updating builds in $starting_dir\n";
 
 sub backup_and_copy_changed {
   my($real, $linked) = @_;
+
   my($status_real) = stat($real);
-  if (! $status_real) {
-    die "ERROR: is_changed() real $real not exist.\n";
-  }
   my($status_linked) = stat($linked);
 
   if ($status_linked->mtime > $status_real->mtime) {
@@ -107,7 +107,7 @@ sub backup_and_copy_changed {
   }
   return 0;
 }
-  
+
 sub cab_link {
   my($real,$linked,$build_regex) = @_;
 
@@ -118,12 +118,26 @@ sub cab_link {
     push(@nlinks, $fixed);
 
     my($curdir) = "$starting_dir/" . dirname($linked);
+    if (! -d $curdir) {
+      die "ERROR: Dir not found: $curdir\n";
+    }
     $status = chdir($curdir);
     if (! $status) {
        die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
     
     my($base_linked) = basename($linked);
+
+    if (! -e $real) {
+       ## This should never happen, but there appears to be a bug
+       ## with the underlying win32 apis on Windows Server 2003.
+       ## Long paths will cause an error which perl will ignore.
+       ## Unicode versions of the apis seem to work fine. 
+       ## To experiment try Win32 _fullpath() and CreateHardLink with
+       ## long paths. 
+       print "ERROR : Skipping $real.\n";
+       return;
+    }
 
     if (-e $base_linked) {
       if (! backup_and_copy_changed($real, $base_linked)) {
@@ -133,6 +147,11 @@ sub cab_link {
 
     print "link $real $linked\n" if $verbose;
     $status = link ($real, $base_linked);
+    if (! $status) {
+      ## Once again, this happens for long paths on Win2003
+      print "ERROR: Can't link $real\n";
+      return;
+    }
     chdir($starting_dir);
   } else {
     print "$symlink $real $linked\n" if $verbose;
