@@ -1,3 +1,12 @@
+Tue Nov  4 18:13:52 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel): 
+	Initialized act pointer variable to 0, which was causing 
+	core dump in linux.  In general, all pointers should be 
+	initialized.  This should have been warned by the compiler.
+	Thanks to Sandro Doro <doros@aureus.sublink.org> for 
+	pointing this out.
+
 Tue Nov  4 11:14:35 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
         * ace/Containers.cpp: Fixed some stylistic ambiguities.
