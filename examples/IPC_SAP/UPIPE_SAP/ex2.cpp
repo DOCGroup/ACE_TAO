@@ -175,9 +175,3 @@ main (int, char *[])
                      0);
 }
 #endif /* ACE_HAS_THREADS */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr <char>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr <char>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
