@@ -1,3 +1,16 @@
+Fri Dec 14 12:18:51 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBALOC_Parser.cpp (parse_string_count_helper):
+
+	  No need to pass the string in by reference.
+
+	  Simplified some "if" blocks.
+
+	  Fixed problem where an UIOP addr was not properly counted,
+	  eventually resulting in a CORBA::TRANSIENT exception.  Thanks
+	  again to Jessie Ragsdale for confirming that the previous fix
+	  wasn't enough for the UIOP case.
+
 Fri Dec 14 07:17:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test/server.cpp:
