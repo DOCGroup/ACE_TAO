@@ -1,3 +1,7 @@
+Wed Nov 26 17:09:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp (log): Fixed a compile error with VC6.
+
 Wed Nov 26 12:10:22 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS_NS_signal.h: Put the typedef for ACE_SIGNAL_C_FUNC inside
