@@ -11,6 +11,7 @@
 
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/ORB_Core.h"
+#include "tao/CDR.h"
 #include "ace/Dynamic_Service.h"
 
 
@@ -36,7 +37,7 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::tao_marshal (
     (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (cdr << this->attributes_.id ())
     && (cdr << this->attributes_.name ())
-    && (cdr << *(this->content_type_.in ()));
+    && (cdr << *this->content_type_);
 }
 
 template <typename StringType, class RefCountPolicy>
@@ -67,8 +68,8 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::equal_i (
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->content_type_->equal (rhs_content_type.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+  return (*this->content_type_)->equal (rhs_content_type.in ()
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 template <typename StringType, class RefCountPolicy>
@@ -102,7 +103,7 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::equivalent_i (
         tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      return *(this->content_type_)->equivalent (rhs_content_type.in ()
+      return (*this->content_type_)->equivalent (rhs_content_type.in ()
                                                  ACE_ENV_ARG_PARAMETER);
     }
   else if (ACE_OS::strcmp (this_id, tc_id) != 0)
@@ -138,7 +139,7 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::get_compact_typecode_i (
     }
 
   CORBA::TypeCode_var compact_content_type =
-    *(this->content_type_)->get_compact_typecode (
+    (*this->content_type_)->get_compact_typecode (
       ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
