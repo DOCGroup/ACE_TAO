@@ -124,7 +124,7 @@ public:
 
   ssize_t send (const iovec *buffers,
                 int buffer_count,
-                int *number_of_bytes_sent,
+                size_t &number_of_bytes_sent,
                 int flags,
                 const ACE_Addr &addr,
                 ACE_OVERLAPPED *overlapped,
@@ -134,8 +134,8 @@ public:
 
   ssize_t recv (iovec *buffers,
                 int buffer_count,
-                int *number_of_bytes_recvd,
-                int flags,
+                size_t &number_of_bytes_recvd,
+                int &flags,
                 ACE_Addr &addr,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
