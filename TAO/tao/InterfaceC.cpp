@@ -163,7 +163,7 @@ CORBA::DefinitionKind CORBA_IRObject::def_kind (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -221,7 +221,7 @@ void CORBA_IRObject::destroy (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -360,7 +360,7 @@ char * CORBA_Contained::id (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -419,7 +419,7 @@ void CORBA_Contained::id (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -478,7 +478,7 @@ char * CORBA_Contained::name (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -537,7 +537,7 @@ void CORBA_Contained::name (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -596,7 +596,7 @@ char * CORBA_Contained::version (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -655,7 +655,7 @@ void CORBA_Contained::version (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -714,7 +714,7 @@ CORBA_Container_ptr CORBA_Contained::defined_in (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -772,7 +772,7 @@ char * CORBA_Contained::absolute_name (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -830,7 +830,7 @@ CORBA_Repository_ptr CORBA_Contained::containing_repository (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -933,7 +933,7 @@ CORBA_Contained::Description * CORBA_Contained::describe (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -994,7 +994,7 @@ void CORBA_Contained::move (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2174,7 +2174,7 @@ CORBA_Contained_ptr CORBA_Container::lookup (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2241,7 +2241,7 @@ CORBA_ContainedSeq * CORBA_Container::contents (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2311,7 +2311,7 @@ CORBA_ContainedSeq * CORBA_Container::lookup_name (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2588,7 +2588,7 @@ CORBA_Container::DescriptionSeq * CORBA_Container::describe_contents (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2657,7 +2657,7 @@ CORBA_ModuleDef_ptr CORBA_Container::create_module (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2728,7 +2728,7 @@ CORBA_ConstantDef_ptr CORBA_Container::create_constant (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2800,7 +2800,7 @@ CORBA_StructDef_ptr CORBA_Container::create_struct (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2872,7 +2872,7 @@ CORBA_UnionDef_ptr CORBA_Container::create_union (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2944,7 +2944,7 @@ CORBA_EnumDef_ptr CORBA_Container::create_enum (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3015,7 +3015,7 @@ CORBA_AliasDef_ptr CORBA_Container::create_alias (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3086,7 +3086,7 @@ CORBA_InterfaceDef_ptr CORBA_Container::create_interface (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3163,7 +3163,7 @@ CORBA_ValueDef_ptr CORBA_Container::create_value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3240,7 +3240,7 @@ CORBA_ValueBoxDef_ptr CORBA_Container::create_value_box (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3311,7 +3311,7 @@ CORBA_ExceptionDef_ptr CORBA_Container::create_exception (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3452,7 +3452,7 @@ CORBA::TypeCode_ptr CORBA_IDLType::type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3618,7 +3618,7 @@ CORBA_Contained_ptr CORBA_Repository::lookup_id (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3683,7 +3683,7 @@ CORBA_PrimitiveDef_ptr CORBA_Repository::get_primitive (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3748,7 +3748,7 @@ CORBA_StringDef_ptr CORBA_Repository::create_string (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3813,7 +3813,7 @@ CORBA_WstringDef_ptr CORBA_Repository::create_wstring (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3879,7 +3879,7 @@ CORBA_SequenceDef_ptr CORBA_Repository::create_sequence (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3946,7 +3946,7 @@ CORBA_ArrayDef_ptr CORBA_Repository::create_array (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4013,7 +4013,7 @@ CORBA_FixedDef_ptr CORBA_Repository::create_fixed (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4277,7 +4277,7 @@ CORBA::TypeCode_ptr CORBA_ConstantDef::type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4335,7 +4335,7 @@ CORBA_IDLType_ptr CORBA_ConstantDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4394,7 +4394,7 @@ void CORBA_ConstantDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4454,7 +4454,7 @@ CORBA_Any * CORBA_ConstantDef::value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4513,7 +4513,7 @@ void CORBA_ConstantDef::value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4829,7 +4829,7 @@ CORBA_StructMemberSeq * CORBA_StructDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -4888,7 +4888,7 @@ void CORBA_StructDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5025,7 +5025,7 @@ CORBA::TypeCode_ptr CORBA_UnionDef::discriminator_type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5083,7 +5083,7 @@ CORBA_IDLType_ptr CORBA_UnionDef::discriminator_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5142,7 +5142,7 @@ void CORBA_UnionDef::discriminator_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5202,7 +5202,7 @@ CORBA_UnionMemberSeq * CORBA_UnionDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5261,7 +5261,7 @@ void CORBA_UnionDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5399,7 +5399,7 @@ CORBA_EnumMemberSeq * CORBA_EnumDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5458,7 +5458,7 @@ void CORBA_EnumDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5594,7 +5594,7 @@ CORBA_IDLType_ptr CORBA_AliasDef::original_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5653,7 +5653,7 @@ void CORBA_AliasDef::original_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5789,7 +5789,7 @@ CORBA::PrimitiveKind CORBA_PrimitiveDef::kind (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5922,7 +5922,7 @@ CORBA::ULong CORBA_StringDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -5981,7 +5981,7 @@ void CORBA_StringDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-     CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+     CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6115,7 +6115,7 @@ CORBA::ULong CORBA_WstringDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6174,7 +6174,7 @@ void CORBA_WstringDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6308,7 +6308,7 @@ CORBA::UShort CORBA_FixedDef::digits (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6367,7 +6367,7 @@ void CORBA_FixedDef::digits (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6426,7 +6426,7 @@ CORBA::Short CORBA_FixedDef::scale (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6485,7 +6485,7 @@ void CORBA_FixedDef::scale (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6619,7 +6619,7 @@ CORBA::ULong CORBA_SequenceDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6678,7 +6678,7 @@ void CORBA_SequenceDef::bound (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6737,7 +6737,7 @@ CORBA::TypeCode_ptr CORBA_SequenceDef::element_type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6795,7 +6795,7 @@ CORBA_IDLType_ptr CORBA_SequenceDef::element_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-     CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+     CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6854,7 +6854,7 @@ void CORBA_SequenceDef::element_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -6988,7 +6988,7 @@ CORBA::ULong CORBA_ArrayDef::length (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-     CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+     CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7047,7 +7047,7 @@ void CORBA_ArrayDef::length (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7106,7 +7106,7 @@ CORBA::TypeCode_ptr CORBA_ArrayDef::element_type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7163,7 +7163,7 @@ CORBA_IDLType_ptr CORBA_ArrayDef::element_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7222,7 +7222,7 @@ void CORBA_ArrayDef::element_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7356,7 +7356,7 @@ CORBA::TypeCode_ptr CORBA_ExceptionDef::type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7415,7 +7415,7 @@ CORBA_StructMemberSeq * CORBA_ExceptionDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7474,7 +7474,7 @@ void CORBA_ExceptionDef::members (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7674,7 +7674,7 @@ CORBA::TypeCode_ptr CORBA_AttributeDef::type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7732,7 +7732,7 @@ CORBA_IDLType_ptr CORBA_AttributeDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7791,7 +7791,7 @@ void CORBA_AttributeDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7850,7 +7850,7 @@ CORBA::AttributeMode CORBA_AttributeDef::mode (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -7909,7 +7909,7 @@ void CORBA_AttributeDef::mode (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -8711,7 +8711,7 @@ CORBA::TypeCode_ptr CORBA_OperationDef::result (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -8769,7 +8769,7 @@ CORBA_IDLType_ptr CORBA_OperationDef::result_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -8828,7 +8828,7 @@ void CORBA_OperationDef::result_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -8888,7 +8888,7 @@ CORBA_ParDescriptionSeq * CORBA_OperationDef::params (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -8947,7 +8947,7 @@ void CORBA_OperationDef::params (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9006,7 +9006,7 @@ CORBA::OperationMode CORBA_OperationDef::mode (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9065,7 +9065,7 @@ void CORBA_OperationDef::mode (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9125,7 +9125,7 @@ CORBA_ContextIdSeq * CORBA_OperationDef::contexts (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9184,7 +9184,7 @@ void CORBA_OperationDef::contexts (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9244,7 +9244,7 @@ CORBA_ExceptionDefSeq * CORBA_OperationDef::exceptions (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -9303,7 +9303,7 @@ void CORBA_OperationDef::exceptions (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10158,7 +10158,7 @@ CORBA_InterfaceDefSeq * CORBA_InterfaceDef::base_interfaces (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10217,7 +10217,7 @@ void CORBA_InterfaceDef::base_interfaces (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10277,7 +10277,7 @@ CORBA::Boolean CORBA_InterfaceDef::is_a (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10682,7 +10682,7 @@ CORBA_InterfaceDef::FullInterfaceDescription * CORBA_InterfaceDef::describe_inte
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10745,7 +10745,7 @@ CORBA_AttributeDef_ptr CORBA_InterfaceDef::create_attribute (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -10821,7 +10821,7 @@ CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11297,7 +11297,7 @@ CORBA::TypeCode_ptr CORBA_ValueMemberDef::type (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11355,7 +11355,7 @@ CORBA_IDLType_ptr CORBA_ValueMemberDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11414,7 +11414,7 @@ void CORBA_ValueMemberDef::type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11473,7 +11473,7 @@ CORBA::Visibility CORBA_ValueMemberDef::access (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11532,7 +11532,7 @@ void CORBA_ValueMemberDef::access (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11666,7 +11666,7 @@ CORBA_InterfaceDef_ptr CORBA_ValueDef::supported_interface (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11725,7 +11725,7 @@ void CORBA_ValueDef::supported_interface (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11785,7 +11785,7 @@ CORBA_InitializerSeq * CORBA_ValueDef::initializers (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11844,7 +11844,7 @@ void CORBA_ValueDef::initializers (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11903,7 +11903,7 @@ CORBA_ValueDef_ptr CORBA_ValueDef::base_value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -11962,7 +11962,7 @@ void CORBA_ValueDef::base_value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12022,7 +12022,7 @@ CORBA_ValueDefSeq * CORBA_ValueDef::abstract_base_values (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12081,7 +12081,7 @@ void CORBA_ValueDef::abstract_base_values (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12140,7 +12140,7 @@ CORBA::Boolean CORBA_ValueDef::is_abstract (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12199,7 +12199,7 @@ void CORBA_ValueDef::is_abstract (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12258,7 +12258,7 @@ CORBA::Boolean CORBA_ValueDef::is_custom (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12317,7 +12317,7 @@ void CORBA_ValueDef::is_custom (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12376,7 +12376,7 @@ CORBA::Boolean CORBA_ValueDef::is_truncatable (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12435,7 +12435,7 @@ void CORBA_ValueDef::is_truncatable (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -12495,7 +12495,7 @@ CORBA::Boolean CORBA_ValueDef::is_a (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13066,7 +13066,7 @@ CORBA_ValueDef::FullValueDescription * CORBA_ValueDef::describe_value (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13129,7 +13129,7 @@ CORBA_ValueMemberDef_ptr CORBA_ValueDef::create_value_member (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13202,7 +13202,7 @@ CORBA_AttributeDef_ptr CORBA_ValueDef::create_attribute (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13278,7 +13278,7 @@ CORBA_OperationDef_ptr CORBA_ValueDef::create_operation (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13521,7 +13521,7 @@ CORBA_IDLType_ptr CORBA_ValueBoxDef::original_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -13580,7 +13580,7 @@ void CORBA_ValueBoxDef::original_type_def (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);

@@ -1522,11 +1522,15 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList &svc_ctx,
   out_stream << svc_ctx;
   out_stream << request_id;
 
+  // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
+  if (response_flags == 131)
+    out_stream << CORBA::Any::from_octet (1);
+
   // Sync scope - ignored by server if request is not oneway.
-  if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-      response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-      response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-      response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     out_stream << CORBA::Any::from_octet (0);
 
@@ -1561,11 +1565,15 @@ TAO_GIOP::write_request_header_lite (const IOP::ServiceContextList &,
 {
   out_stream << request_id;
 
+  // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
+  if (response_flags == 131)
+    out_stream << CORBA::Any::from_octet (1);
+
   // Sync scope - ignored by server if request is not oneway.
-  if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-      response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-      response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-      response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     out_stream << CORBA::Any::from_octet (0);
 
