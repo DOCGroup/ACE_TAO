@@ -11942,8 +11942,10 @@ ACE_OS::setuid (uid_t uid)
   ACE_TRACE ("ACE_OS::setuid");
 # if defined (VXWORKS) || defined (ACE_PSOS)
   // setuid() is not supported:  just one user anyways
+  ACE_UNUSED_ARG (uid);
   return 0;
 # elif defined (ACE_WIN32) || defined(CHORUS)
+  ACE_UNUSED_ARG (uid);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::setuid (uid), int,  -1);

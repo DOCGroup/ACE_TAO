@@ -1,3 +1,9 @@
+Thu Aug 19 10:53:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (setuid): added ACE_UNUSED_ARG (uid) for VxWorks,
+          pSOS, WIN32, and Chorus.  Thanks to Garry Brother
+          <gmbroth@ncsc.mil> for reporting this.
+
 Thu Aug 19 10:04:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU: added
