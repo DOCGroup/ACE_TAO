@@ -6,11 +6,12 @@
 #include "IFR_Service_Utils.h"
 
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           UnionDef_i, 
+ACE_RCSID (IFRService,
+           UnionDef_i,
            "$Id$")
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
@@ -118,7 +119,7 @@ TAO_UnionDef_i::discriminator_type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "disc_path",
                                             disc_path);
 
-  TAO_IDLType_i *impl = 
+  TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (disc_path,
                                             this->repo_);
 
@@ -146,7 +147,7 @@ TAO_UnionDef_i::discriminator_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "disc_path",
                                             disc_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (disc_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -179,7 +180,7 @@ TAO_UnionDef_i::discriminator_type_def_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *disc_path = 
+  char *disc_path =
     TAO_IFR_Service_Utils::reference_to_path (discriminator_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
