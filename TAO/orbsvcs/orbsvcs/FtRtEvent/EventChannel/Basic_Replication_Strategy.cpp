@@ -51,6 +51,8 @@ Basic_Replication_Strategy::replicate_request(
   ACE_UNUSED_ARG(rollback);
   ACE_UNUSED_ARG(oid);
 
+  FTRTEC_TRACE("Basic_Replication_Strategy::replicate_request");
+
   FTRT::TransactionDepth transaction_depth =
     Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -70,13 +72,12 @@ Basic_Replication_Strategy::replicate_request(
     ACE_CHECK;
 
     if (transaction_depth > 1) {
-      successor->set_update(state
-        ACE_ENV_ARG_PARAMETER);
+      successor->set_update(state ACE_ENV_ARG_PARAMETER);
+      TAO_FTRTEC::Log(3, "synchronous update complete\n");
     }
     else {
       ACE_TRY {
-        successor->oneway_set_update(state
-          ACE_ENV_ARG_PARAMETER);
+        successor->oneway_set_update(state ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
       ACE_CATCHANY {
