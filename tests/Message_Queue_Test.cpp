@@ -21,6 +21,11 @@
 #include "ace/Message_Queue.h"
 #include "ace/Synch.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 typedef ACE_Message_Queue <ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;

@@ -102,11 +102,21 @@ ACE_Time_Value::operator FILETIME () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
   ULARGE_INTEGER _100ns;
- _100ns.QuadPart = ((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
-                    this->tv_.tv_usec * 10) + ACE_Time_Value::FILETIME_to_timval_skew;
+  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
+		      this->tv_.tv_usec * 10) +
+		     ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
-  file_time.dwLowDateTime = _100ns.LowPart;
-  file_time.dwHighDateTime = _100ns.HighPart;
+
+#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#define LOWPART(x) x.u.LowPart
+#define HIGHPART(x) x.u.HighPart
+#else
+#define LOWPART(x) x.LowPart
+#define HIGHPART(x) x.HighPart
+#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+
+  file_time.dwLowDateTime = LOWPART(_100ns);
+  file_time.dwHighDateTime = HIGHPART(_100ns);
 
   return file_time;
 }
@@ -299,12 +309,12 @@ ACE_OS::uname (struct utsname *name)
     TCHAR processor[bufsize] = __TEXT ("Unknown");
     TCHAR subtype[bufsize] = __TEXT ("Unknown");
 
-#if defined (__BORLANDC__)
-    // Some changes should be made in winbase.h...
-    switch (sinfo.s.wProcessorArchitecture)
+#if defined(__BORLANDC__)
+#define PROCARCH(x) x.wProcessorArchitecture
 #else
-    switch (sinfo.wProcessorArchitecture)
-#endif /* __BORLAND__ */
+#define PROCARCH(x) x.s.wProcessorArchitecture
+#endif /* defined(__BORLANDC__) */
+    switch (PROCARCH(sinfo))
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
       ACE_OS::strcpy (processor, __TEXT ("Intel"));

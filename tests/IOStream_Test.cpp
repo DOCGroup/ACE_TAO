@@ -24,6 +24,11 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/IOStream.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;

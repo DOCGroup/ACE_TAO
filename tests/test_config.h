@@ -15,6 +15,11 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
+/* Borland C++ Builder stuff */
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+#include <condefs.h>
+#endif
+
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
 #include "ace/OS.h"

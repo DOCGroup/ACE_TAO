@@ -22,6 +22,11 @@
 #include "test_config.h"
 #include "ace/Mem_Map.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static const int LINE_LENGTH = 10;
 static const int NUM_LINES = 15;
 

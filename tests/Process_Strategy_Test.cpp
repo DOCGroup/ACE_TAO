@@ -48,6 +48,11 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 

@@ -22,6 +22,11 @@
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
 static ACE_Reactor *the_reactor;

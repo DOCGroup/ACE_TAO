@@ -29,6 +29,11 @@
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 template <class T> void
 randomize_array (T array[], size_t size)
 {

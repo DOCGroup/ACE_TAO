@@ -25,6 +25,11 @@
 #include "ace/Select_Reactor.h"
 #include "test_config.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>

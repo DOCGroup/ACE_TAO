@@ -33,6 +33,11 @@
 #include "ace/Strategies.h"
 #include "ace/Task.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static int iterations = 10;
 
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>

@@ -24,6 +24,11 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
 
