@@ -1,3 +1,9 @@
+Wed Oct 18 09:45:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.h :
+	* ace/Cached_Connect_Strategy_T.cpp: Added some fixes provided by
+	  Edan Ayal <edana@bandwiz.com>.
+
 Tue Oct 17 23:35:33 2000  David L. Levine <levine@cs.wustl.edu>
 
         * Don't use ACE_TSS_EMULATION by default with LynxOS 3.1.0
