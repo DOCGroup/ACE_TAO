@@ -1,3 +1,12 @@
+Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.i: only specialize ACE_Hash_Addr<ACE_INET_Addr>
+          with ACE inlining enabled, to avoid link collision with the
+          instantiation in ORB.cpp
+
+        * tao/CDR.cpp (TAO_OuputCDR ctors): rearranged initializations
+          to match declaration order.
+
 Mon Mar 30 10:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Implemented new classes to manipulate CDR streams, this classes
