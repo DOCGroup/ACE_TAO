@@ -9,7 +9,7 @@
 //    Timeprobe_Test.cpp
 //
 // = DESCRIPTION
-//      This is a simple test of Timeprobes.
+//      This is a simple test of ACE Timeprobes.
 //
 // = AUTHOR
 //    Irfan Pyarali

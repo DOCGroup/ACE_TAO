@@ -131,7 +131,6 @@ private:
   ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &);
 };
 
-
 class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
   // = TITLE

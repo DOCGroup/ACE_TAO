@@ -281,26 +281,27 @@ public:
   // of g++ couldn't grok this code without it.
 
 private:
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  void at_pop(int apply = 1);
+#if !defined (ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  void at_pop (int apply = 1);
   // Pop an At_Thread_Exit from at thread termination list, apply the at
   // if apply is true.
 
-  void at_push(ACE_At_Thread_Exit* cleanup, int is_owner = 0);
+  void at_push (ACE_At_Thread_Exit* cleanup,
+                int is_owner = 0);
   // Push an At_Thread_Exit to at thread termination list and set the
   // ownership of at.
 
-  void do_at_exit();
+  void do_at_exit (void);
   // Run the AT_Thread_Exit hooks.
 
-  void terminate();
+  void terminate (void);
   // terminate realize the cleanup process to thread termination
 
-  ACE_Log_Msg* log_msg_;
+  ACE_Log_Msg *log_msg_;
   // Thread_Descriptor is the ownership of ACE_Log_Msg if log_msg_!=0
   // This can occur because ACE_TSS_cleanup was executed before terminate.
 
-  ACE_At_Thread_Exit* at_exit_list_;
+  ACE_At_Thread_Exit *at_exit_list_;
   // The AT_Thread_Exit list
 #endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
