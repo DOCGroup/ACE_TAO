@@ -88,13 +88,30 @@ public:
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *sync_scope (void) const;
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
@@ -108,13 +125,30 @@ private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *client_priority_;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *sync_scope_;
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
   TAO_Buffering_Constraint_Policy *buffering_constraint_;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -151,13 +185,30 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *sync_scope (void) const;
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 private:
   TAO_Policy_Manager_Impl impl_;
@@ -189,13 +240,30 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *sync_scope (void) const;
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -230,13 +298,30 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *sync_scope (void) const;
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

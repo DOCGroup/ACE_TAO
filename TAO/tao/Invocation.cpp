@@ -98,7 +98,8 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if (TAO_HAS_CORBA_MESSAGING == 0)
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 0)
 
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->profile_ = this->stub_->profile_in_use ();
@@ -185,7 +186,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
         return this->profile_;
     }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 0 */
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 0 */
 
 }
 
@@ -240,7 +241,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // have the protocol) then we give it another profile to try.
   // So the invocation Object should handle policy decisions.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->stub_->relative_roundtrip_timeout ();
 
@@ -253,7 +255,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       timeout_policy->set_time_value (this->max_wait_time_value_);
       this->max_wait_time_ = &this->max_wait_time_value_;
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
   // Loop until a connection is established or there aren't any more
@@ -900,14 +903,16 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
 
   if (ssp)
     {
       this->sync_scope_ = ssp->synchronization ();
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 }
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)

@@ -13,7 +13,7 @@
 #include "tao/TAOS.i"
 #endif /* !defined INLINE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 // skeleton constructor
 POA_TAO::ClientPriorityPolicy::ClientPriorityPolicy (void)
@@ -116,6 +116,10 @@ TAO::PrioritySpecification POA_TAO::_tao_direct_collocated_ClientPriorityPolicy:
     );
 
 }
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 // skeleton constructor
 POA_TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (void)
@@ -225,4 +229,4 @@ TAO::BufferingConstraint POA_TAO::_tao_direct_collocated_BufferingConstraintPoli
 
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

@@ -26,7 +26,9 @@
 
 ACE_RCSID(tao, MessagingS, "$Id$")
 
-  POA_Messaging::RebindPolicy::RebindPolicy (void)
+#if (TAO_HAS_REBIND_POLICY == 1)
+
+POA_Messaging::RebindPolicy::RebindPolicy (void)
 {
 }
 
@@ -137,7 +139,9 @@ POA_Messaging::RebindPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_REBIND_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 POA_Messaging::SyncScopePolicy::SyncScopePolicy (void)
 {
@@ -251,7 +255,9 @@ POA_Messaging::SyncScopePolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
 
 POA_Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 {
@@ -364,8 +370,6 @@ POA_Messaging::RequestPriorityPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
-
 POA_Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 {
 }
@@ -477,7 +481,9 @@ POA_Messaging::ReplyPriorityPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
 
 POA_Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 {
@@ -590,7 +596,9 @@ POA_Messaging::RequestStartTimePolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
 POA_Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 {
@@ -703,7 +711,9 @@ POA_Messaging::RequestEndTimePolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
 
 POA_Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 {
@@ -816,7 +826,9 @@ POA_Messaging::ReplyStartTimePolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
 POA_Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 {
@@ -929,7 +941,9 @@ POA_Messaging::ReplyEndTimePolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
 
 POA_Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 {
@@ -1045,7 +1059,9 @@ POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 POA_Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 {
@@ -1161,7 +1177,9 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
 POA_Messaging::RoutingPolicy::RoutingPolicy (void)
 {
@@ -1276,7 +1294,9 @@ POA_Messaging::RoutingPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
 
 POA_Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 {
@@ -1391,7 +1411,9 @@ POA_Messaging::MaxHopsPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
 
 POA_Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 {
@@ -1506,7 +1528,7 @@ POA_Messaging::QueueOrderPolicy::_dispatch (
                                                    ACE_TRY_ENV);
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
 

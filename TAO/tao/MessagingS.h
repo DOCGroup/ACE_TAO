@@ -33,6 +33,9 @@
 
 TAO_NAMESPACE  POA_Messaging
 {
+
+#if (TAO_HAS_REBIND_POLICY == 1)
+
   class RebindPolicy;
   typedef RebindPolicy *RebindPolicy_ptr;
   class TAO_Export RebindPolicy : public virtual POA_CORBA::Policy,
@@ -154,6 +157,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_REBIND_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   class SyncScopePolicy;
   typedef SyncScopePolicy *SyncScopePolicy_ptr;
   class TAO_Export SyncScopePolicy : public virtual POA_CORBA::Policy,
@@ -271,6 +278,10 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
 
   class RequestPriorityPolicy;
   typedef RequestPriorityPolicy *RequestPriorityPolicy_ptr;
@@ -514,6 +525,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+
   class RequestStartTimePolicy;
   typedef RequestStartTimePolicy *RequestStartTimePolicy_ptr;
   class TAO_Export RequestStartTimePolicy : public virtual POA_CORBA::Policy,
@@ -634,6 +649,10 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
   class RequestEndTimePolicy;
   typedef RequestEndTimePolicy *RequestEndTimePolicy_ptr;
@@ -756,6 +775,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+
   class ReplyStartTimePolicy;
   typedef ReplyStartTimePolicy *ReplyStartTimePolicy_ptr;
   class TAO_Export ReplyStartTimePolicy : public virtual POA_CORBA::Policy,
@@ -876,6 +899,10 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
   class ReplyEndTimePolicy;
   typedef ReplyEndTimePolicy *ReplyEndTimePolicy_ptr;
@@ -998,6 +1025,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+
   class RelativeRequestTimeoutPolicy;
   typedef RelativeRequestTimeoutPolicy *RelativeRequestTimeoutPolicy_ptr;
   class TAO_Export RelativeRequestTimeoutPolicy : public virtual POA_CORBA::Policy,
@@ -1116,6 +1147,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
   class TAO_Export RelativeRoundtripTimeoutPolicy : public virtual POA_CORBA::Policy,
@@ -1233,6 +1268,10 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
   class RoutingPolicy;
   typedef RoutingPolicy *RoutingPolicy_ptr;
@@ -1355,6 +1394,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+
   class MaxHopsPolicy;
   typedef MaxHopsPolicy *MaxHopsPolicy_ptr;
   class TAO_Export MaxHopsPolicy : public virtual POA_CORBA::Policy,
@@ -1476,6 +1519,10 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
+
   class QueueOrderPolicy;
   typedef QueueOrderPolicy *QueueOrderPolicy_ptr;
   class TAO_Export QueueOrderPolicy : public virtual POA_CORBA::Policy,
@@ -1596,6 +1643,8 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
 

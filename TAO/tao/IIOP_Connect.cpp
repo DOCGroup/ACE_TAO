@@ -17,8 +17,6 @@
 
 ACE_RCSID(tao, IIOP_Connect, "$Id$")
 
-
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_IIOP_Connect_Timeprobe_Description[] =
@@ -104,7 +102,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
       ACE_NEW (this->acceptor_factory_,
                TAO_GIOP_Message_Acceptors (orb_core));
     }
-        
+
 }
 
 TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
@@ -287,7 +285,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                       this->orb_core_,
                                                       this->transport_.message_state_,
                                                       max_wait_time);
-  
+
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -326,7 +324,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   // Reset the message state.
   this->transport_.message_state_.reset (0);
-  result = 
+  result =
     this->acceptor_factory_->process_client_message (this->transport (),
                                                      this->orb_core_,
                                                      input_cdr,
@@ -462,7 +460,8 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
   ACE_Time_Value *max_wait_time = 0;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->orb_core_->stubless_relative_roundtrip_timeout ();
 
@@ -476,7 +475,8 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
       timeout_policy->set_time_value (max_wait_time_value);
       max_wait_time = &max_wait_time_value;
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages (max_wait_time);
@@ -551,7 +551,7 @@ TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
 }
 
 
- 
+
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

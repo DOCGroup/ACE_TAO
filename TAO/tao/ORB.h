@@ -620,10 +620,12 @@ public:
   // references available via the initial references mechanism.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   // ----------------------------------------------------------------

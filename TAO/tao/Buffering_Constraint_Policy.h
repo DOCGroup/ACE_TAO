@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 #include "tao/TAOS.h"
 
@@ -94,7 +94,7 @@ private:
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_BUFFERING_CONSTRAINT_POLICY_H */

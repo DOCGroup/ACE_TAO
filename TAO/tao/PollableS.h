@@ -23,7 +23,7 @@
 
 #include "tao/PollableC.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_POLLER == 1)
 
 #include "tao/POA_CORBA.h"
 
@@ -237,7 +237,7 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 #include "ace/post.h"
 #endif /* ifndef */
