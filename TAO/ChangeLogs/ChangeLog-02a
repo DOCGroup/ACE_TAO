@@ -1,6 +1,12 @@
+Tue May  9 20:00:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+	  Removed unused variable TAO_OutStream *os from some 
+	  several functions in the file.
+
 Tue May  9 13:33:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* * TAO_IDL/be/be_visitor_factory.cpp be/be_visitor_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp be/be_visitor_valuetype.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
