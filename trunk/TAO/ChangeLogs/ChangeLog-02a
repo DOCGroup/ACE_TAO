@@ -6,6 +6,8 @@ Tue Dec  5 15:47:23 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/Strategies/UIOP_Profile.cpp (encode_endpoints)
 	* tao/Strategies/SHMIOP_Profile.h (encode_endpoints)
 	* tao/Strategies/SHMIOP_Profile.cpp (encode_endpoints)
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h (encode_endpoints)
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints)
 	* tao/PortableServer/RT_Acceptor_Filters.cpp (fill_mprofile):
 
 	  Added error checking.
