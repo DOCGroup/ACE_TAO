@@ -1,3 +1,11 @@
+Fri Nov 19 02:21:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Configuration.h:
+        * ace/Configuration.cpp:
+          Altered the Unicode macros used so it compiles in the two
+          Unicode configurations.  Thanks to Ruibiao Qiu 
+          <ruibiao@arl.wustl.edu> for noticing this.
+
 Thu Nov 18 22:49:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.lst: DISABLED Process_Manager_Test
