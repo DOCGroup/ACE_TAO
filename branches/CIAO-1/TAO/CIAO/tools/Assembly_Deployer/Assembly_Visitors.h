@@ -74,20 +74,30 @@ namespace CIAO
     /// Destructor
     virtual ~Assembly_Builder_Visitor (void);
 
-    virtual int visit_Container (Assembly_Placement::Container *c);
+    virtual int visit_Container (Assembly_Placement::Container *c
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    virtual int visit_hostcollocation (Assembly_Placement::hostcollocation *hc);
+    virtual int visit_hostcollocation (Assembly_Placement::hostcollocation *hc
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    virtual int visit_processcollocation (Assembly_Placement::processcollocation *pc);
+    virtual int visit_processcollocation (Assembly_Placement::processcollocation *pc
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    virtual int visit_homeplacement (Assembly_Placement::homeplacement *hp);
+    virtual int visit_homeplacement (Assembly_Placement::homeplacement *hp
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    virtual int visit_componentinstantiation (Assembly_Placement::componentinstantiation *ci);
+    virtual int visit_componentinstantiation (Assembly_Placement::componentinstantiation *ci
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     Components::Deployment::Container_ptr
     get_current_container (void);
 
   protected:
+    /// Registering a component using the info specified in @c i .
+    void register_component (Assembly_Placement::componentinstantiation::Register_Info *i,
+                             Components::CCMObject_ptr c
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
     /// Current Component Server.
     Components::Deployment::ComponentServer_var compserv_;
 
@@ -99,8 +109,9 @@ namespace CIAO
     /// container.)
     Components::Deployment::Container_var container_;
 
-    /// Current Component Home.
-    Components::CCMHome_var home_;
+    /// Current Component Home.  We only support keyless home
+    /// operations for now.
+    Components::KeylessCCMHome_var home_;
 
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;

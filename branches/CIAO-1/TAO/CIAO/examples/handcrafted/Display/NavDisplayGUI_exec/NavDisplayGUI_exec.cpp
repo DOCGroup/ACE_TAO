@@ -38,22 +38,25 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
   //ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
 
   // Refresh position
-  /*HUDisplay::position_var loc
+  HUDisplay::position_var loc
     = this->context_->get_connection_GPSLocation (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long position = loc->pos (ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;*/
+  CORBA::Long lx = loc->posx (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::Long ly = loc->posy (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   mutex_.acquire();
 
-  loc_.x_ += dx_;
-  loc_.y_ += dy_;
+  loc_.x_ = lx % 500;
+  loc_.y_ = ly % 300;
 
-  if(loc_.x_ > 500) dx_ = -1;
-  if(loc_.x_ < 10) dx_ = 1;
-  if(loc_.y_ > 300) dy_ = -1;
-  if(loc_.y_ < 10) dy_ = 1;
+//   if(loc_.x_ > 500) dx_ = -1;
+//   if(loc_.x_ < 10) dx_ = 1;
+//   if(loc_.y_ > 300) dy_ = -1;
+//   if(loc_.y_ < 10) dy_ = 1;
 
   this->unit_.setLocation(loc_);
 

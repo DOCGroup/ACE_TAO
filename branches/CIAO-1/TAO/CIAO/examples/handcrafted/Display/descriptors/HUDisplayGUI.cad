@@ -12,7 +12,7 @@
       <fileinarchive name="GPS.csd"/>
     </componentfile>
     <componentfile id="com-NavDisplay">
-      <fileinarchive name="NavDisplay.csd"/>
+      <fileinarchive name="NavDisplayGUI.csd"/>
     </componentfile>
   </componentfiles>
 

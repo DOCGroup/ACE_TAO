@@ -36,9 +36,7 @@ CIAO_GLUE_HUDisplay::RateGen_Context::push_Pulse (HUDisplay::tick_ptr ev
        ++iter)
     {
       ACE_Active_Map_Manager<HUDisplay::tickConsumer_var>::ENTRY &entry = *iter;
-      HUDisplay::tickConsumer_var c
-        = HUDisplay::tickConsumer::_narrow (entry.int_id_.in ());
-      c->push_tick (ev
+      entry.int_id_->push_tick (ev
                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -54,9 +52,13 @@ CIAO_GLUE_HUDisplay::RateGen_Context::subscribe_Pulse (HUDisplay::tickConsumer_p
   if (CORBA::is_nil (c))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
+  HUDisplay::tickConsumer_var sub = HUDisplay::tickConsumer::_duplicate (c);
+
   ACE_Active_Map_Manager_Key key;
-  this->ciao_publishes_Pulse_map_.bind (c,
+  this->ciao_publishes_Pulse_map_.bind (sub.in (),
                                         key);
+
+  sub._retn ();                 // Release ownership.
 
   ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
   return retv._retn ();

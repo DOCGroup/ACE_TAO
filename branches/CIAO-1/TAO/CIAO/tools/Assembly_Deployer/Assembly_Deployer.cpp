@@ -1,6 +1,7 @@
 // $Id$
 
 #include "CCM_DeploymentC.h"
+#include "Assembly_ServiceC.h"
 #include "Client_init.h"
 #include "ace/Get_Opt.h"
 
@@ -62,9 +63,13 @@ main (int argc, char *argv[])
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      CIAO::Assembly_Service_var as_svc
+        = CIAO::Assembly_Service::_narrow (tmp.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ::Components::Deployment::AssemblyFactory_var factory =
-          ::Components::Deployment::AssemblyFactory::_narrow(tmp.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+          as_svc->get_assemblyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -100,6 +105,9 @@ main (int argc, char *argv[])
 
       factory->destroy (ck.in ()
                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      as_svc->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -45,7 +45,10 @@ namespace CIAO_GLUE_HUDisplay
 
     ~position_Servant ();
 
-    virtual CORBA::Long pos (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long posx (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Long posy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // get_component implementation.

@@ -8,6 +8,7 @@
  */
 
 #include "Assembly_Impl.h"
+#include "Assembly_Service_Impl.h"
 #include "CIAO_ServersC.h"
 #include "Server_init.h"
 #include "tao/IORTable/IORTable.h"
@@ -138,7 +139,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (assembly_factory_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to activate ComponentServer object\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Unable to activate AssemblyFactory object\n"), -1);
 
 
       CORBA::String_var str = orb->object_to_string (assembly_factory_obj.in ()
@@ -162,6 +163,37 @@ main (int argc, char *argv[])
           adapter->bind ("AssemblyFactory", str.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      // Now create the assembly service object
+      CIAO::Assembly_Service_Impl *service_servant;
+      ACE_NEW_RETURN (service_servant,
+                      CIAO::Assembly_Service_Impl (orb.in (),
+                                                   poa.in (),
+                                                   assembly_factory_obj.in ()),
+                      -1);
+
+      safe_servant = service_servant;
+
+      PortableServer::ObjectId_var as_oid
+        = poa->activate_object (service_servant
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      obj = poa->id_to_reference (as_oid
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CIAO::Assembly_Service_var service_obj =
+        CIAO::Assembly_Service::_narrow (obj
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (service_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, "Unable to activate Assembly_Service object\n"), -1);
+
+
+      str = orb->object_to_string (service_obj.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 
       write_IOR (str.in ());
       ACE_DEBUG ((LM_INFO, "Assembly_Manager IOR: %s\n", str.in ()));

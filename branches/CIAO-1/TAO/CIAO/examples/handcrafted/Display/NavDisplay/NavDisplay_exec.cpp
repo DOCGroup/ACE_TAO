@@ -28,10 +28,14 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
   if (CORBA::is_nil (loc.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-  CORBA::Long position = loc->pos (ACE_ENV_ARG_PARAMETER);
+  CORBA::Long x = loc->posx (ACE_ENV_ARG_PARAMETER) % 500;
+  ACE_CHECK;
+  CORBA::Long y = loc->posy (ACE_ENV_ARG_PARAMETER) % 300;
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: %d\n", position));
+  ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: (%d, %d)\n",
+              x,
+              y));
 }
 
 // Operations from Components::SessionComponent

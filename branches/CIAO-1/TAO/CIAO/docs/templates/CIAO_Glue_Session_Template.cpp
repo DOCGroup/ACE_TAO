@@ -132,9 +132,14 @@ void
   if (CORBA::is_nil (c))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
+  [eventtype]Consumer_var sub
+    = [eventtype]Consumer::_duplicate (c);
+
   ACE_Active_Map_Manager_Key key;
-  this->ciao_publishes_[publish name]_map_.bind (c,
+  this->ciao_publishes_[publish name]_map_.bind (sub.in (),
                                                  key);
+
+  sub._retn ();                 // Release ownership to map.
 
   ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
   return retv._retn ();
@@ -214,9 +219,14 @@ void
   if (CORBA::is_nil (c))
     ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
 
+  [uses type]_var conn
+    = [uses type]::_duplicate (c);
+
   ACE_Active_Map_Manager_Key key;
-  this->ciao_muses_[receptacle name]_.bind (c,
+  this->ciao_muses_[receptacle name]_.bind (conn.in (),
                                             key);
+
+  conn._retn ();                // Releases ownership to the map.
 
   ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
   return retv._retn ();

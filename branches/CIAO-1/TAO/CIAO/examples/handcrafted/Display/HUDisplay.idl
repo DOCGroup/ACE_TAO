@@ -40,7 +40,8 @@ module HUDisplay
    */
   interface position
   {
-    long pos ();
+    long posx ();
+    long posy ();
   };
 };
 

@@ -13,11 +13,15 @@ project(Assembly_Manager): ciao_server, acexml {
     ../XML_Helpers/Cascadable_DocHandler.cpp
     ../XML_Helpers/Assembly_Spec.cpp
     ../XML_Helpers/Assembly_Handlers.cpp
+    Assembly_Service_Impl.cpp
+    Assembly_ServiceC.cpp
+    Assembly_ServiceS.cpp
   }
 }
 
 project(Assembly_Deployer) : ciao_server {
   Source_Files {
     Assembly_Deployer.cpp
+    Assembly_ServiceC.cpp
   }
 }

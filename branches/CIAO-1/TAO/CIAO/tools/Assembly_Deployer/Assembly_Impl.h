@@ -136,7 +136,8 @@ namespace CIAO
     /// Components::Deployment::Assembly defined attributes/operations.
 
     virtual void build (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CreateFailure));
 
     virtual void tear_down (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -147,6 +148,26 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
+    /**
+     * Connection establishment helper functions
+     */
+    /// @{
+    void make_connection (Assembly_Connection::Connect_Info *info
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Object_ptr
+    resolve_interface (Assembly_Connection::IF_Resolver_Info *info
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    Components::CCMObject_ptr
+    resolve_component (Assembly_Connection::IF_Resolver_Info *info
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    Components::CCMHome_ptr
+    resolve_home (Assembly_Connection::IF_Resolver_Info *info
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    Components::EventConsumerBase_ptr
+    resolve_consumer (Assembly_Connection::IF_Resolver_Info *info
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    /// @}
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 

@@ -47,7 +47,11 @@ namespace MyImpl
     // Operations from HUDisplay::position
 
     virtual CORBA::Long
-    pos (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    posx (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Long
+    posy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
@@ -73,7 +77,8 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
-    CORBA::Long position_;
+    CORBA::Long positionx_;
+    CORBA::Long positiony_;
 
     /// Copmponent specific context
     HUDisplay::CCM_GPS_Context_var context_;

@@ -14,6 +14,9 @@
     <componentfile id="com-NavDisplay">
       <fileinarchive name="NavDisplay.csd"/>
     </componentfile>
+    <componentfile id="com-NavDisplayGUI">
+      <fileinarchive name="NavDisplayGUI.csd"/>
+    </componentfile>
   </componentfiles>
 
   <partitioning>
@@ -39,6 +42,13 @@
         <componentinstantiation id="a_NavDisplay"/>
       </homeplacement>
 
+    <processcollocation>
+      <homeplacement id="a_NavDisplayGUIHome">
+        <componentfileref idref="com-NavDisplayGUI"/>
+        <componentinstantiation id="a_NavDisplayGUI"/>
+      </homeplacement>
+      <destination>Remote</destination>
+    </processcollocation>
   </partitioning>
 
   <connections>
@@ -69,6 +79,28 @@
       <usesport>
         <usesidentifier>GPSLocation</usesidentifier>
         <componentinstantiationref idref="a_NavDisplay"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>MyLocation</providesidentifier>
+        <componentinstantiationref idref="a_GPS"/>
+      </providesport>
+    </connectinterface>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>Refresh</consumesidentifier>
+        <componentinstantiationref idref="a_NavDisplayGUI"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>Ready</publishesidentifier>
+        <componentinstantiationref idref="a_GPS"/>
+      </publishesport>
+    </connectevent>
+
+    <connectinterface>
+      <usesport>
+        <usesidentifier>GPSLocation</usesidentifier>
+        <componentinstantiationref idref="a_NavDisplayGUI"/>
       </usesport>
       <providesport>
         <providesidentifier>MyLocation</providesidentifier>

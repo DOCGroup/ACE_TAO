@@ -68,3 +68,15 @@ project (RateGen_client) : ciao_client {
   }
 }
 
+
+project (controller) : ciao_client {
+  exename = controller
+  depends += RateGen_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    controller.cpp
+  }
+}
