@@ -17,7 +17,7 @@ PACE_INLINE
 void
 pace_clearerr (FILE * stream)
 {
-  clearerr (s);
+  clearerr (stream);
   return;
 }
 
@@ -371,16 +371,11 @@ pace_rewind (FILE * stream)
 
 PACE_INLINE
 int
-pace_sprintf (char * buf,
-              const char * format,
-              ... )
+pace_sprintf (char * buf, const char * format, ... )
 {
   va_list ap;
-  va_start (ap,
-            format);
-  vsprintf (buf,
-            format,
-            ap);
+  va_start (ap, format);
+  vsprintf (buf, format, ap);
   va_end (ap);
   return 0;
 }
@@ -389,8 +384,8 @@ PACE_INLINE
 void
 pace_setbuf (FILE * stream, char * buf)
 {
- return setbuf (stream,
-                buf);
+  setbuf (stream, buf);
+  return;
 }
 
 PACE_INLINE
@@ -411,8 +406,7 @@ PACE_INLINE
 int
 pace_ungetc (int c, FILE * stream)
 {
- return tmpnam (c,
-                stream);
+ return ungetc (c, stream);
 }
 
 PACE_INLINE
@@ -421,10 +415,5 @@ pace_vsprintf (char * buffer,
                const char * format,
                va_list argptr)
 {
-  return vsprintf (buffer,
-                   format,
-                   argptr);
+  return vsprintf (buffer, format, argptr);
 }
-
-
-
