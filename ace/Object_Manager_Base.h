@@ -27,6 +27,7 @@
 #include "ace/OS_Export.h"
 #include "ace/Cleanup.h"
 #include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/os_signal.h"
 //#include "ace/OS_NS_netdb.h"
 //#include "ace/OS_NS_unistd.h"
 //#include "ace/OS_NS_time.h"
@@ -221,10 +222,13 @@ public:
   /// Destructor.
   ~ACE_OS_Object_Manager (void);
 
-private:
   /// Accessor to singleton instance.
   static ACE_OS_Object_Manager *instance (void);
 
+  /// For <ACE_OS::atexit> support.
+  int at_exit (ACE_EXIT_HOOK func);
+
+private:
   /// Singleton instance pointer.
   static ACE_OS_Object_Manager *instance_;
 
@@ -246,9 +250,6 @@ private:
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
-  /// For <ACE_OS::atexit> support.
-  int at_exit (ACE_EXIT_HOOK func);
 
   /// For use by init () and fini (), to consolidate error reporting.
   static void print_error_message (u_int line_number, const ACE_TCHAR *message);

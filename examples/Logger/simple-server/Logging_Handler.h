@@ -26,6 +26,7 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/os_include/os_netdb.h"
 
 class Logging_Handler : public ACE_Event_Handler
   // = TITLE

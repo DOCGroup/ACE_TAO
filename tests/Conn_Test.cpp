@@ -36,6 +36,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_sys_wait.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(tests, Conn_Test, "$Id$")
 

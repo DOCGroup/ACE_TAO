@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
+#include "ace/os_include/os_netdb.h"
 
 // This constructor takes a message of sorted login names and loads up
 // the symbol table on the server's side.  It assumes that the number

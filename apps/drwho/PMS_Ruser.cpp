@@ -7,6 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
+#include "ace/os_include/os_netdb.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on

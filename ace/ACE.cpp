@@ -24,6 +24,7 @@
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_TLI.h"
 
 ACE_RCSID(ace, ACE, "$Id$")
 

@@ -6,6 +6,7 @@
 #include "ace/SString.h"
 #include "ace/Synch_Traits.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_assert.h"
 
 ACE_RCSID(Map_Manager, test_hash_map_manager, "$Id$")
 

@@ -13,6 +13,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (ace,
 	   MEM_Addr,
