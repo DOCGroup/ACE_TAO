@@ -1,3 +1,8 @@
+Wed Aug 13 20:27:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/tests.mpc:
+          Added Multihomed_INET_Addr_Test.
+
 Wed Aug 13 18:35:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Kokyu/tests/DSRT_MIF/MIF.cpp:
