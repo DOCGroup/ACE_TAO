@@ -1,3 +1,8 @@
+Mon Apr 13 19:12:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/DEV_Connector.i (ACE_DEV_Connector): 
+	* ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
+
 Mon Apr 13 18:05:26 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/Thread_Manager_Test.cpp: Disabled the suspend/resume action
