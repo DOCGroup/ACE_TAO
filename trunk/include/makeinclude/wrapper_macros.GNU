@@ -3,8 +3,10 @@
 #----------------------------------------------------------------------------
 #
 #  ACE supports the following flags.  They can be enabled either on
-#  the command line, e.g., make purify=1, or added to your
-#  platform_macros.GNU.  debug=1 is enabled in the platform files
+#  the command line, e.g., "make purify=1", or added to your
+#  platform_macros.GNU.  To disable the option, set the flag to null,
+#  e.g., "make debug=".  Some flags support setting to 0 disable,
+#  e.g., "make debug=0".  debug=1 is enabled in the platform files
 #  that are released with ACE.
 #
 #  Please note that the effects of a flag may be platform specific.
@@ -22,9 +24,11 @@
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.
 #  quantify         Quantify all executables.
+#  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
+#  static_libs      Build shared libraries. Ignored if shared_libs_only is set.
+#  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
+#                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
-#  shared_libs_only Only build shared libraries.  Ignore if no SHLIBs are
-#                     specified by the  Makefile, as in performance-tests/Misc.
 #
 #  The following describes the ACE wrapper macros:
 #
@@ -71,6 +75,11 @@
 #      Platform-dependent macro definitions
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
+
+#### Default to building shared libraries only.  Set it here to give the
+#### platform a chance to override.
+shared_libs = 1
+static_libs = 0
 
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
@@ -137,6 +146,12 @@ ifneq ($(profile),)
   CCFLAGS += $(PCCFLAGS)
 endif # profile
 
+ifeq ($(shared_libs),0)
+  override shared_libs =
+endif # shared_libs
+ifeq ($(static_libs),0)
+  override static_libs =
+endif # static_libs
 
 ifeq ($(shared_libs_only),0)
   override shared_libs_only =
@@ -146,28 +161,46 @@ ifeq ($(static_libs_only),0)
 endif # static_libs_only
 
 ifdef shared_libs_only
-  ifeq ($(SHLIB),)
-    #### Makefile only specifies static libs, so only build static libs.
-  else
-    #### Don't build static objects:
-    BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
-    LIB           =
-    ifeq ($(BIN),)
-      OBJDIRS     = .shobj
-    endif # BIN
-  endif # SHLIB
-else
-ifdef static_libs_only
-  #### Don't build shared objects:
-  BUILD           = $(VLIB) $(VBIN)
-  OBJDIRS         = .obj
-  PIC             =
-  SHLIB           =
-  SOEXT           = o
-  VSHDIR          = .obj/
-  VLDLIBS         = $(LDLIBS:%.so=%.o)
-endif # static_libs_only
+  override shared_libs = 1
+  override static_libs =
 endif # shared_libs_only
+ifdef static_libs_only
+  override shared_libs =
+  override static_libs = 1
+endif # static_libs_only
+
+ifdef shared_libs
+  ifdef static_libs
+    #### Build both shared and static libs.
+  else # ! static_libs
+    #### Build shared libs only.
+    ifeq ($(SHLIB),)
+      #### Makefile only specifies static libs, so only build static libs.
+    else # ! SHLIB
+      #### Don't build static libs.
+      BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
+      LIB           =
+      ifeq ($(BIN),)
+        #### No executables are being built, so don't create .obj/.
+        OBJDIRS     = .shobj
+      endif # BIN
+    endif # ! SHLIB
+  endif # ! static_libs
+else # ! shared_libs
+  ifdef static_libs
+    #### Don't build shared libs.
+    BUILD           = $(VLIB) $(VBIN)
+    OBJDIRS         = .obj
+    PIC             =
+    SHLIB           =
+    SOEXT           = o
+    VSHDIR          = .obj/
+    VLDLIBS         = $(LDLIBS:%.so=%.o)
+  else # ! static_libs
+    #### Don't build any libs.
+    BUILD           = $(VBIN)
+  endif # ! static_libs
+endif # ! shared_libs
 
 ifdef SHLIBA
   VLDLIBS := $(LDLIBS) -lACEshr $(LIBS)

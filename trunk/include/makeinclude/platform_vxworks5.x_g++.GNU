@@ -11,7 +11,8 @@
 
 debug = 1
 optimize = 1
-static_libs_only = 1
+shared_libs =
+static_libs = 1
 
 
 #### BEGIN CPU-specific settings

@@ -2,7 +2,8 @@
 # LynxOS with g++
 
 debug = 1
-static_libs_only = 1
+shared_libs =
+static_libs = 1
 
 CC              = gcc
 CXX             = g++
