@@ -1,3 +1,19 @@
+Wed Sep 12 16:29:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Leader_Follower.cpp (wait_for_event): If the follower times
+	  out, we set the state in the LF_Event to indicate an error. 
+
+	* tao/LF_Event.h:
+	* tao/LF_Event.cpp:
+	* tao/LF_Event.inl: Added a new private method that allows setting
+	  the state without holding the lock. Moreover, before we signal
+	  the follower in state_changed () we check whether the LF_Event
+	  has reached a final state or not. Further, we also check whether
+	  we have a valid follower_ pointer before we signal the
+	  follower. This fix should fix the problems MT_Timeout tests. The 
+	  problem was that the leader thread was processing the followers
+	  reply when the follower timedout. 
+
 Wed Sep 12 12:33:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:

@@ -10,6 +10,22 @@ TAO_LF_Event::bind (TAO_LF_Follower *follower)
 }
 
 ACE_INLINE int
+TAO_LF_Event::is_state_final (void)
+{
+  if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
+      this->state_ == TAO_LF_Event::LFS_FAILURE)
+    return 1;
+
+  return 0;
+}
+
+ACE_INLINE void
+TAO_LF_Event::set_state (int new_state)
+{
+  this->state_ = new_state;
+}
+
+ACE_INLINE int
 TAO_LF_Event::unbind (void)
 {
   if (this->follower_ == 0)
