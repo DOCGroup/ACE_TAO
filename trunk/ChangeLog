@@ -1,3 +1,11 @@
+Fri Jan 23 09:41:11 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Reverted my change from Tue Jan 20 14:11:48 2004.  While the
+          generated vcproj loads properly, the project does not link
+          properly.
+
 Fri Jan 23 15:04:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
