@@ -50,8 +50,7 @@ Connection_Handler::Connection_Handler (void)
 }
 
 Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
-  : remote_addr_ (pci.remote_port_, pci.host_[0] == '\0' ? ACE_DEFAULT_SERVER_HOST : pci.host_),
-    local_addr_ (pci.local_port_),
+  : local_addr_ (pci.local_port_),
     connection_id_ (pci.connection_id_),
     total_bytes_ (0),
     state_ (Connection_Handler::IDLE),
@@ -59,6 +58,10 @@ Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
     max_timeout_ (pci.max_retry_timeout_),
     event_channel_ (pci.event_channel_)
 {
+  if (ACE_OS::strlen (pci.host_) > 0)
+    this->remote_addr_.set (pci.remote_port_, pci.host_);
+  else
+    this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
   // Set the priority of the Proxy.
   this->priority (int (pci.priority_));
 }
