@@ -19,7 +19,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
   return 0;
 }
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 
 /************************************************************/
 
