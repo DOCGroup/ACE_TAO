@@ -8,6 +8,9 @@ Thu May 21 17:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
           in class header because the clone () method needs the ctor
           inlined, and it's too difficult to get it right with macros.
 
+        * tests/SString_Test.cpp (main): added ACE_ASSERT with s4 in
+          it, because it was unused otherwise.
+
 Thu May 21 15:28:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Modified to write output from tests into
