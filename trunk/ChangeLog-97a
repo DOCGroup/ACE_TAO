@@ -1,3 +1,11 @@
+Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
+
+        * apps/JAWS/stress_testing/http_tester.cpp : Removed usage
+          of pow (), and changed method of calculating throughput/latency
+          to use straight multiplication instead of pow (). Updated
+          Makefile to not link -lm.
+
+
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
 	* tests/Process_Strategy_Test.cpp: Fixed #define typo.
