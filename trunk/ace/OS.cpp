@@ -248,7 +248,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = long ((long (_100ns.QuadPart) % long (10000 * 1000)) / 10);
+  this->tv_.tv_usec = (long) ((_100ns.LowPart % (DWORD) (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -262,16 +262,8 @@ ACE_Time_Value::operator FILETIME () const
                      ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
 
-# if defined(__BORLANDC__)
-#   define LOWPART(x) x.u.LowPart
-#   define HIGHPART(x) x.u.HighPart
-# else
-#   define LOWPART(x) x.LowPart
-#   define HIGHPART(x) x.HighPart
-# endif /* defined(__BORLANDC__) */
-
-  file_time.dwLowDateTime = LOWPART(_100ns);
-  file_time.dwHighDateTime = HIGHPART(_100ns);
+  file_time.dwLowDateTime = _100ns.LowPart;
+  file_time.dwHighDateTime = _100ns.HighPart;
 
   return file_time;
 }
