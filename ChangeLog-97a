@@ -21,6 +21,9 @@ Tue Jan 28 09:13:00 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Naming_Context.cpp (both constructors): reordered
 	  initializers to match declaration order.
 
+	* include/makeinclude/platform_sunos5_g++.GNU: removed
+	  -fno-strict-prototypes because it's not needed with SunOS 5.5.1.
+
 Mon Jan 27 21:33:00 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests/Naming_Test.cpp (main): Made modifications to the test to
