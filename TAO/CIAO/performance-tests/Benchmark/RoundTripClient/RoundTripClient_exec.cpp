@@ -69,7 +69,7 @@ MyImpl::RoundTripClient_exec_i::start ()
   for (int i=0; i < 100; i++)
     lt->makeCall (test_data);
 
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::ccm_activate: warmed up the system\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::start: warmed up the system\n"));
 
   ACE_Sample_History history (niterations);
 
