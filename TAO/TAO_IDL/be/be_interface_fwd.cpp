@@ -276,14 +276,14 @@ be_interface_fwd::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ (" << this->name () << "::_nil ())" << nl;
+  *ci << "  " << ": ptr_ (" << this->name () << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // the additional ptr () member function. This member function must be
@@ -304,7 +304,7 @@ be_interface_fwd::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "  : ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -516,7 +516,7 @@ be_interface_fwd::gen_out_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_ptr &p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = " << this->name () << "::_nil ();\n";
@@ -528,7 +528,7 @@ be_interface_fwd::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
     "_var &p) // constructor from _var" << nl;
-  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
@@ -541,7 +541,7 @@ be_interface_fwd::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (p.ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &

@@ -643,7 +643,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // now generate the class definition
       os->indent ();
-      *os << "class " << node->local_name ();
+      *os << "class " << idl_global->export_macro ()
+	  << " " << node->local_name ();
 
       if (node->n_inherits () > 0)  // node interface inherits from other
                                     // interfaces
@@ -675,7 +676,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // we do not inherit from anybody, hence we do so from the base
           // CORBA::Object class
-          *os << ": public virtual CORBA::Object" << be_nl;
+          *os << " : public virtual CORBA::Object" << be_nl;
         }
 
       // generate the body
@@ -702,8 +703,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
       // the _is_a method
       os->indent ();
-      *os << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
-          << "CORBA::Environment &env);"
+      *os << "virtual CORBA::Boolean _is_a ("
+	  << "const CORBA::Char *type_id, " << be_idt << be_idt_nl
+          << "CORBA::Environment &env" << be_uidt_nl
+	  << ");" << be_uidt_nl
 	  << "virtual const char* "
 	  << "_interface_repository_id (void) const;" << be_uidt_nl;
 
@@ -711,9 +714,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // us
       *os << "protected:" << be_idt_nl
 	  << node->local_name () << " (void); // default constructor" << be_nl
-          << node->local_name () << " (STUB_Object *objref, "
-          << "TAO_ServantBase *_tao_servant = 0, "
-          << "CORBA::Boolean _tao_collocated = 0);" << be_nl
+          << node->local_name ()
+	  << " (STUB_Object *objref, " << be_idt << be_idt_nl
+          << "TAO_ServantBase *_tao_servant = 0, " << be_nl
+          << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
+	  << ");" << be_uidt_nl
           << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
@@ -784,7 +789,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   *os << node->name () << "::" << node->local_name () <<
     " (STUB_Object *objref, TAO_ServantBase *_tao_servant, "
       << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
-  *os << "\t: CORBA_Object (objref, _tao_servant, _tao_collocated)" << be_nl;
+  *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
@@ -945,10 +950,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   os->indent ();
   *os << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
-  *os << "\treturn 1; // success using local knowledge\n";
+  *os << "  return 1; // success using local knowledge\n";
   os->decr_indent ();
   *os << "else" << be_nl;
-  *os << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
+  *os << "  return this->CORBA_Object::_is_a (value, env); // remote call\n";
   os->decr_indent ();
   *os << "}\n\n";
 
@@ -1036,7 +1041,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "_ptr;" << be_nl;
 
   // now generate the class definition
-  *os << "class " << namebuf << " : ";
+  *os << "class " << idl_global->export_macro ()
+      << " " << namebuf << " : ";
   if (node->n_inherits () > 0)  // this interface inherits from other interfaces
     {
       be_interface *intf; // inherited interface
@@ -1282,7 +1288,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << node->full_skel_name () << "_ptr\t_tao_impl = ("
+  *os << node->full_skel_name () << "_ptr  _tao_impl = ("
       << node->full_skel_name () << "_ptr) _tao_object_reference;"
       << be_nl;
   *os << "CORBA::Boolean _tao_retval;" << be_nl;
@@ -1376,7 +1382,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->decr_indent ();
   *os << "}\n";
   *os << "else" << be_nl;
-  *os << "\tskel (req, this, context, env);\n";
+  *os << "  skel (req, this, context, env);\n";
   os->decr_indent ();
   *os << "}\n\n";
 
@@ -1456,7 +1462,7 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
   *os << "class " << idl_global->export_macro ()
       << " " << node->local_coll_name ();
   os->incr_indent ();
-  *os << ": public virtual " << node->name ();
+  *os << " : public virtual " << node->name ();
 
   // generate base classes if any
   if (node->n_inherits () > 0)

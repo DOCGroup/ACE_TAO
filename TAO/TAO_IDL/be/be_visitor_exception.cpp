@@ -273,7 +273,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->indent ();
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
-      *os << "\t: CORBA_UserException (CORBA::TypeCode::_duplicate ("
+      *os << "  : CORBA_UserException (CORBA::TypeCode::_duplicate ("
           << node->tc_name () << "))\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
@@ -290,7 +290,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &_tao_excp)" << be_nl;
-      *os << "\t:CORBA_UserException (" <<
+      *os << "  :CORBA_UserException (" <<
         "CORBA::TypeCode::_duplicate (_tao_excp._type ()))" << be_nl;
       *os << "{\n";
       os->incr_indent ();
@@ -356,7 +356,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
             }
           delete visitor;
 
-          *os << "\t: CORBA_UserException "
+          *os << "  : CORBA_UserException "
               << " (CORBA::TypeCode::_duplicate (" << node->tc_name ()
               << "))" << be_nl;
           *os << "{\n";
@@ -389,10 +389,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID () <<
         "\", exc->_id ())) // same type" << be_nl;
-      *os << "\treturn ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
+      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
         be_nl;
       *os << "else" << be_nl;
-      *os << "\treturn 0;\n";
+      *os << "  return 0;\n";
       os->decr_indent ();
       *os << "}\n\n";
 
@@ -454,7 +454,6 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
-  os->indent ();
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     *os << node->local_name ();
   else

@@ -791,14 +791,14 @@ be_array::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ ((" << this->name () << "_slice *)0)" << nl;
+  *ci << "  " << ": ptr_ ((" << this->name () << "_slice *)0)" << nl;
   *ci << "{}\n\n";
 
   // constr from a _slice *
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_slice *p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // copy constructor (deep copy)
@@ -1044,7 +1044,7 @@ be_array::gen_out_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () << "_slice *&p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = 0;\n";
@@ -1056,7 +1056,7 @@ be_array::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
     "_var &p) // constructor from _var" << nl;
-  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << this->name () << "_free (this->ptr_);" << nl;
@@ -1069,7 +1069,7 @@ be_array::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (p.ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &
@@ -1249,8 +1249,8 @@ be_array::gen_forany_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ ((" << this->name () << "_slice *)0)," << nl;
-  *ci << "\t  nocopy_ (0)" << nl;
+  *ci << "  " << ": ptr_ ((" << this->name () << "_slice *)0)," << nl;
+  *ci << "    nocopy_ (0)" << nl;
   *ci << "{}\n\n";
 
   // constr from a _slice *
@@ -1258,8 +1258,8 @@ be_array::gen_forany_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_slice *p, " <<
     "CORBA::Boolean nocopy)" << nl;
-  *ci << "\t: ptr_ (p)," << nl;
-  *ci << "\t  nocopy_ (nocopy)" << nl;
+  *ci << "  : ptr_ (p)," << nl;
+  *ci << "    nocopy_ (nocopy)" << nl;
   *ci << "{}\n\n";
 
   // copy constructor (deep copy)

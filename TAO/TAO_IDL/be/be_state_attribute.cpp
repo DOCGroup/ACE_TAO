@@ -192,7 +192,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
               // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+              *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &_tao_base_" << attr->local_name () <<
                 "); // ORB does not own" << nl;
 #endif
@@ -290,7 +290,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -415,7 +415,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -538,7 +538,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -735,7 +735,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
                     // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+              *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
 #endif
@@ -805,7 +805,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
               // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+              *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", " << attr->local_name () <<
                 "); // ORB does not own" << nl;
             }
@@ -889,7 +889,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
               // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+              *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
 #endif
@@ -1065,7 +1065,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
                     // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+              *os << "CORBA::Any    any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
 #endif

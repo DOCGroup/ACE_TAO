@@ -668,10 +668,10 @@ be_operation::gen_server_skeletons (void)
   else
     {
       // define an NVList to hold arguments
-      *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
+      *ss << "CORBA::NVList_ptr  nvlist;" << nl;
       // define a variable that will eventually point to our
       // implementation object
-      *ss << intf->full_skel_name () << "_ptr \t impl = ("
+      *ss << intf->full_skel_name () << "_ptr impl = ("
 	  << intf->full_skel_name () << "_ptr) _tao_object_reference;"
 	  << nl;
 

@@ -1547,10 +1547,10 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl
           << "if (!this->" << ub->local_name () << "_) // does not exist"
           << be_nl
-          << "\tthis->" << ub->local_name ()
+          << "  this->" << ub->local_name ()
           << "_ = new CORBA::String_var (val);" << be_nl
           << "else" << be_nl
-          << "\t*this->" << ub->local_name () << "_ = val;";
+          << "  *this->" << ub->local_name () << "_ = val;";
     }
   else
     {
@@ -1585,10 +1585,10 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl
           << "if (!this->" << ub->local_name () << "_) // does not exist"
           << be_nl
-          << "\tthis->" << ub->local_name ()
+          << "  this->" << ub->local_name ()
           << "_ = new CORBA::String_var (val);" << be_nl
           << "else" << be_nl
-          << "\t*this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+          << "  *this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
     }
   else
     {
@@ -1623,10 +1623,10 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl
           << "if (!this->" << ub->local_name () << "_) // does not exist"
           << be_nl
-          << "\tthis->" << ub->local_name ()
+          << "  this->" << ub->local_name ()
           << "_ = new CORBA::String_var (val);" << be_nl
           << "else" << be_nl
-          << "\t*this->" << ub->local_name () << "_ = val;";
+          << "  *this->" << ub->local_name () << "_ = val;";
     }
   else
     {
