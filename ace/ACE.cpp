@@ -105,6 +105,7 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (reactor);
 
+  eh->reactor (reactor);
   return thr_mgr->spawn (&ACE::read_adapter, (void *) eh, flags);
 #else
   // Keep compilers happy.
@@ -133,6 +134,7 @@ ACE::read_adapter (void *args)
     continue;
 
   this_ptr->handle_close (handle, ACE_Event_Handler::READ_MASK);
+  this_ptr->reactor ()->notify ();
 
   return 0;
 }
