@@ -1,3 +1,12 @@
+Sun Nov 28 18:09:49 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* m4/acinclude.m4 (ACE_USE_TEMP_FILE):
+
+	  Check that the source directory is not the current directory
+	  before moving a file in the current directory out of the way.
+	  Previously an attempt to move the same file out of the way was
+	  performed to twice.
+
 Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
