@@ -29,7 +29,7 @@ typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
 class TAO_Trader_Base;
 
 // Cludge to avoid template instantiation in the executable.
-class TAO_Trader_Factory
+class TAO_ORBSVCS_Export TAO_Trader_Factory
 {
 public:
 
@@ -44,7 +44,7 @@ public:
 #endif /* ACE_HAS_THREADS */
 };
 
-class TAO_Export TAO_Trader_Base : public TAO_Lockable
+class TAO_ORBSVCS_Export TAO_Trader_Base : public TAO_Lockable
   //
   // = TITLE
   //     TAO_Trader inherits from this "helper" class.
