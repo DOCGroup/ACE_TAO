@@ -72,17 +72,10 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::~ACE_Timeprobe_Ex (void)
 {
-#if defined (ACE_HAS_BROKEN_DES_ARRAY_FREE)
-  ACE_DES_ARRAY_FREE ( (this->timeprobes_),
-                      this->max_size_,
-                      this->allocator ()->free,
-                      ACE_timeprobe_t);
-#else
   ACE_DES_ARRAY_FREE ((ACE_timeprobe_t *) (this->timeprobes_),
                       this->max_size_,
                       this->allocator ()->free,
                       ACE_timeprobe_t);
-#endif
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
@@ -158,22 +151,10 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
          // Iterates over the array explicitly calling the destructor for
          // each probe instance, then deallocates the memory
 
-         // There is a compiler bug for VxWorks (gcc version 2.96-PentiumIII-991112 Tornado 2)
-         // which cannot handle the cast for timeprobes_addr()
-#if defined (ACE_HAS_BROKEN_DES_ARRAY_FREE)
-         ACE_DES_ARRAY_FREE (
-                             (this->timeprobes_),
+         ACE_DES_ARRAY_FREE ((ACE_timeprobe_t *)(this->timeprobes_),
                              this->max_size_,
                              this->allocator ()->free,
                              ACE_timeprobe_t);
-#else
-         ACE_DES_ARRAY_FREE ((ACE_timeprobe_t *)
-                             (this->timeprobes_),
-                             this->max_size_,
-                             this->allocator ()->free,
-                             ACE_timeprobe_t);
-#endif
-
       }
       this->timeprobes_ = temp;
       this->max_size_ = size;
