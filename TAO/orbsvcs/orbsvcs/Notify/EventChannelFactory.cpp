@@ -192,6 +192,8 @@ template class TAO_NS_Seq_Worker_T<TAO_NS_EventChannel>;
 
 template class TAO_NS_Container_T <TAO_NS_EventChannel>;
 
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_EventChannel
                               , CosNotifyChannelAdmin::EventChannel
@@ -201,5 +203,7 @@ template class TAO_NS_Container_T <TAO_NS_EventChannel>;
 
 
 #pragma instantiate TAO_NS_Container_T <TAO_NS_EventChannel>
+
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

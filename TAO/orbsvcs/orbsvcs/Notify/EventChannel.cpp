@@ -384,6 +384,9 @@ template class TAO_NS_Seq_Worker_T<TAO_NS_SupplierAdmin>;
 template class TAO_NS_Container_T <TAO_NS_ConsumerAdmin>;
 template class TAO_NS_Container_T <TAO_NS_SupplierAdmin>;
 
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_ConsumerAdmin>;
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_SupplierAdmin>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
@@ -400,5 +403,8 @@ template class TAO_NS_Container_T <TAO_NS_SupplierAdmin>;
 
 #pragma instantiate TAO_NS_Container_T <TAO_NS_ConsumerAdmin>
 #pragma instantiate TAO_NS_Container_T <TAO_NS_SupplierAdmin>
+
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_ConsumerAdmin>
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_SupplierAdmin>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
