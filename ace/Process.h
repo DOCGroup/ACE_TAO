@@ -32,7 +32,11 @@ public:
   { 
     DEFAULT_COMMAND_LINE_BUF_LEN = 1024,
     // UNIX process creation flags.
+#if defined (ACE_WIN32)
+    NO_EXEC = 0
+#else
     NO_EXEC = 1
+#endif /* ACE_WIN32 */
   };
 
   ACE_Process_Options (int inherit_environment = 1,
