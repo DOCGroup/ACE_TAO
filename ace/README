@@ -80,7 +80,6 @@ ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
 ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
-ACE_HAS_RTLD_LAZY_V			Explicit dynamic linking permits "lazy" symbol resolution
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SIGINFO_T			Platform supports SVR4 extended signals
@@ -386,36 +385,6 @@ ACE_HAS_PRUSAGE_T:
   HPUX:
      don't set
   
-
-ACE_HAS_RTLD_LAZY_V:
---------------------
-
-  Used in:
-     ace/OS.h
-
-  Notes:
-     if not defined, does a:
-     #defines RTLD_LAZY 1.
-     This is the mode argument passed to dlopen(path,mode), used in
-     libsrc/Service_Configurator/Parse_Node.i
-
-  Solaris:
-     dlopen() is one of a family of routines that give  the  user
-     direct  access  to  the  dynamic  linking  facilities.  (SEE
-     SunOS 5.3 Linker and Libraries Manual ).  These routines are
-     made  available  via the library loaded when the option -ldl
-     is passed to the link-editor.
-
-     These routines are available to dynamically  linked  execut-
-     ables ONLY.
-
-  HPUX:
-     don't set.
-     look into:
-     shl_load( ), shl_definesym( ), shl_findsym( ), shl_gethandle( ), 
-     shl_getsymbols( ), shl_unload( ), shl_get( )(3X) 
-     - explicit load of shared libraries
-
 
 ACE_HAS_SEMUN:
 --------------

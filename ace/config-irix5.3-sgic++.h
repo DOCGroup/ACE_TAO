@@ -64,9 +64,6 @@
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS 
 
-// Explicit dynamic linking permits "lazy" symbol resolution.
-#define ACE_HAS_RTLD_LAZY_V 
-
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T 
 
