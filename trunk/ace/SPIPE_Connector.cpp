@@ -15,21 +15,21 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 // Creates a Local ACE_SPIPE.
 
 ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
-					  const ACE_SPIPE_Addr &remote_sap,
-					  ACE_Time_Value *timeout,
-					  const ACE_Addr & local_sap,
-					  int reuse_addr,
-					  int flags,
-					  int perms,
+                                          const ACE_SPIPE_Addr &remote_sap,
+                                          ACE_Time_Value *timeout,
+                                          const ACE_Addr & local_sap,
+                                          int reuse_addr,
+                                          int flags,
+                                          int perms,
             LPSECURITY_ATTRIBUTES sa,
             int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::ACE_SPIPE_Connector");
   if (this->connect (new_io, remote_sap, timeout, local_sap,
-		     reuse_addr, flags, perms, sa, pipe_mode) == -1
+                     reuse_addr, flags, perms, sa, pipe_mode) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("address %s, %p\n"),
-	       remote_sap.get_path_name (), ACE_LIB_TEXT ("ACE_SPIPE_Connector")));
+               remote_sap.get_path_name (), ACE_LIB_TEXT ("ACE_SPIPE_Connector")));
 }
 
 void
@@ -67,19 +67,19 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   // We need to allow for more than one attempt to connect,
   // calculate the absolute time at which we give up.
   ACE_Time_Value absolute_time;
-  if (timeout != 0) 
+  if (timeout != 0)
     absolute_time = ACE_OS::gettimeofday () + *timeout;
 
   // Loop until success or failure.
-  for (;;) 
+  for (;;)
     {
       handle = ACE_OS::open (remote_sap.get_path_name(), flags, perms, sa);
-      if (handle != ACE_INVALID_HANDLE) 
+      if (handle != ACE_INVALID_HANDLE)
         // Success!
         break;
 
       // Check if we have a busy pipe condition.
-      if (::GetLastError() != ERROR_PIPE_BUSY) 
+      if (::GetLastError() != ERROR_PIPE_BUSY)
         // Nope, this is a failure condition.
         break;
 
@@ -88,21 +88,21 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
       DWORD time_out_value;
 
       // Check if we are to block until we connect.
-      if (timeout == 0) 
+      if (timeout == 0)
         // Wait for as long as it takes.
         time_out_value = NMPWAIT_WAIT_FOREVER;
-      else 
+      else
         {
           // Calculate the amount of time left to wait.
           ACE_Time_Value relative_time (absolute_time - ACE_OS::gettimeofday ());
           // Check if we have run out of time.
-          if (relative_time <= ACE_Time_Value::zero) 
+          if (relative_time <= ACE_Time_Value::zero)
             {
               // Mimick the errno value returned by
               // ACE_Handle_Ops::handle_timed_open.
-              if (*timeout == ACE_Time_Value::zero) 
+              if (*timeout == ACE_Time_Value::zero)
                 errno = EWOULDBLOCK;
-              else 
+              else
                 errno = ETIMEDOUT;
               // Exit the connect loop with the failure.
               break;
@@ -113,7 +113,8 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
         }
 
       // Wait for the named pipe to become available.
-      ::WaitNamedPipe (remote_sap.get_path_name (), time_out_value);
+      ::WaitNamedPipe (ACE_TEXT_ALWAYS_CHAR (remote_sap.get_path_name ()),
+                       time_out_value);
 
       // Regardless of the return value, we'll do one more attempt to
       // connect to see if it is now available and to return
@@ -121,16 +122,16 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
     }
 
   // Set named pipe mode if we have a valid handle.
-  if (handle != ACE_INVALID_HANDLE) 
+  if (handle != ACE_INVALID_HANDLE)
     {
       // Check if we are changing the pipe mode from the default.
-      if (pipe_mode != (PIPE_READMODE_BYTE | PIPE_WAIT)) 
+      if (pipe_mode != (PIPE_READMODE_BYTE | PIPE_WAIT))
         {
           DWORD dword_pipe_mode = pipe_mode;
           if (!::SetNamedPipeHandleState (handle,
                                           &dword_pipe_mode,
                                           0,
-                                          0)) 
+                                          0))
             {
               // We were not able to put the pipe into the requested
               // mode.
