@@ -72,7 +72,7 @@ public:
    */
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
-            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
+            int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 

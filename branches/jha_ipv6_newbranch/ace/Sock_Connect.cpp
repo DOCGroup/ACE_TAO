@@ -212,11 +212,11 @@ get_windows_version()
 
 int
 ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
-                ACE_UINT32 ip_addr)
+                             ACE_UINT32 ip_addr)
 {
   ACE_TRACE ("ACE_Sock_Connect::bind_port");
 
-  ACE_INET_Addr addr((u_short)0,ip_addr);;
+  ACE_INET_Addr addr ((u_short)0, ip_addr);
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
@@ -1061,14 +1061,14 @@ ACE_Sock_Connect::ipv6_enabled (void)
           // create a PF_INET6 socket and see if it fails.
           ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
           if (s == ACE_INVALID_HANDLE)
-	    {
-	      ACE_Sock_Connect::ipv6_enabled_ = 0;
-	    }
-	  else
-	    {
-	      ACE_Sock_Connect::ipv6_enabled_ = 1;
-	      ACE_OS::closesocket (s);
-	    }
+            {
+              ACE_Sock_Connect::ipv6_enabled_ = 0;
+            }
+          else
+            {
+              ACE_Sock_Connect::ipv6_enabled_ = 1;
+              ACE_OS::closesocket (s);
+            }
         }
     }
 
