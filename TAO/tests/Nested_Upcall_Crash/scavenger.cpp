@@ -15,6 +15,8 @@ parse_args (int argc, char *argv[]);
 int
 main (int argc, char *argv[])
 {
+  int ret_val = 0;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -77,25 +79,24 @@ main (int argc, char *argv[])
 
       while(1)
       {
-        peer->noop(ACE_ENV_SINGLE_ARG_PARAMETER);
+        peer->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
-      /* ANY STATEMENT FROM HERE EXHIBITS A WARNING IN TRU 64
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;*/
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      ret_val = 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return ret_val;
 }
 
 int
