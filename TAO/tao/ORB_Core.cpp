@@ -305,8 +305,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
       ////////////////////////////////////////////////////////////////
-      if (arg_shifter.cur_arg_strncasecmp
-          ("-ORBDaemon") != -1)
+      if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
         {
           // Be a daemon
           this->svc_config_argv_[this->svc_config_argc_++] =
@@ -315,18 +314,27 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp
-               ("-ORBSkipServiceConfigOpen") != -1)
+               ("-ORBSkipServiceConfigOpen") == 0)
         {
-          arg_shifter.consume_arg ();
-
           skip_service_config_open = 1;
+
+          arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") != -1)
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") == 0)
         {
           // @@ This will have to change since gioplite
           // will be considered as an alternate ORB
           // messaging protocols.
           giop_lite = 1;
+
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
+        {
+          // later, replace all of these
+          // warning this turns on a daemon
+          ACE::debug (1);
+          TAO_orbdebug = 1;
 
           arg_shifter.consume_arg ();
         }
@@ -361,16 +369,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         {
           TAO_debug_level =
             ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBDebug")))
-        {
-          // later, replace all of these
-          // warning this turns on a daemon
-          ACE::debug (1);
-          TAO_orbdebug = 1;
 
           arg_shifter.consume_arg ();
         }
