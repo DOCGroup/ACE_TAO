@@ -1,3 +1,11 @@
+Wed Aug 25 16:47:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+          Removed an unused arg and some commented-out code.
+
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+	  Fixed a const char*/char* compile error on MSVC.
+
 Wed Aug 25 16:20:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence.cpp:
