@@ -197,15 +197,25 @@ ACE_TP_Reactor::mask_ops (ACE_HANDLE handle,
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
           ace_mon, this->token_, -1));
 
-  int result = this->bit_ops (handle, mask,
-                              this->suspend_set_,
-                              ops);
-  if (result < 0)
-    return result;
+  int result = 0;
 
-  return this->bit_ops (handle, mask,
-                        this->wait_set_,
-                        ops);
+  // If it looks like the handle isn't suspended, then
+  // set the ops on the wait_set_, otherwise set the suspend_set_.
+
+  if (this->suspend_set_.rd_mask_.is_set (handle) == 0
+      && this->suspend_set_.wr_mask_.is_set (handle) == 0
+      && this->suspend_set_.ex_mask_.is_set (handle) == 0)
+
+    result = this->bit_ops (handle, mask,
+                            this->wait_set_,
+                            ops);
+  else
+
+    result = this->bit_ops (handle, mask,
+                            this->suspend_set_,
+                            ops);
+
+  return result;
 }
 
 void
