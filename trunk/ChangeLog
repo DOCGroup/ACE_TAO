@@ -75,31 +75,34 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm
         * bin/MakeProjectCreator/templates/bor.mpd
         * bin/MakeProjectCreator/templates/vc7.mpd
-        
-          SSL now works in a more normal MPC feature fashion similar to all 
-        the other feature-based libraries. I removed the hard-coded ssl logic 
-        from some of the mpd files that still had it. A side-effect of the new 
-        way, is that you must now define an SSL_ROOT environment variable 
-        that the openssl.mpb feature will now use to locate the openssl libraries. 
-        
-          There were some problems with the existing vc7.mpd template. 
-        I've improved the template, and also added support for lots of new 
-        settings in the corresponding .mpt files. (Although I haven't used them yet.) 
-        I'll probably use this to enable some of the new features in vc71 that 
-        help track down problems that typically only show up in release mode. 
-        
-          The creation of workspaces for vc71 did not correctly set 
-        dependencies between projects.
-        
-          I added an allow_duplicates() method to the WorkspaceCreator. 
-        A warning will always be generated if a workspace contains duplicate 
-        project names, and now the vc6/7/71 creators will abort creation of these 
-        invalid workspaces. I suggest that any future WorkspaceCreator subclasses 
-        that generate IDE projects, override allow_duplicates() to return 0. 
-        
-          Renamed the gperf_exe to gperf. This was named as a special hack 
-        for vc6 that is now unnecessary. We had already renamed other similar 
-        projects, but missed this one.
+
+        SSL now works in a more normal MPC feature fashion similar to all
+	the other feature-based libraries. I removed the hard-coded ssl
+	logic from some of the mpd files that still had it. A side-effect
+	of the new way, is that you must now define an SSL_ROOT
+	environment variable that the openssl.mpb feature will now use to
+	locate the openssl libraries.
+
+        There were some problems with the existing vc7.mpd template.  I've
+	improved the template, and also added support for lots of new
+	settings in the corresponding .mpt files. (Although I haven't used
+	them yet.)  I'll probably use this to enable some of the new
+	features in vc71 that help track down problems that typically only
+	show up in release mode.
+
+        The creation of workspaces for vc71 did not correctly set
+	dependencies between projects.
+
+        I added an allow_duplicates() method to the WorkspaceCreator.  A
+	warning will always be generated if a workspace contains duplicate
+	project names, and now the vc6/7/71 creators will abort creation
+	of these invalid workspaces. I suggest that any future
+	WorkspaceCreator subclasses that generate IDE projects, override
+	allow_duplicates() to return 0.
+
+        Renamed the gperf_exe to gperf. This was named as a special hack
+	for vc6 that is now unnecessary. We had already renamed other
+	similar projects, but missed this one.
 
 Fri Aug 22 15:28:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
