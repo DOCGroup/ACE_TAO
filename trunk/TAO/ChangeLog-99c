@@ -1,3 +1,9 @@
+Wed May 26 14:03:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed build options for
+	  newly added template files.
+
 Wed May 26 14:05:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
