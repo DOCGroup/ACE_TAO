@@ -37,7 +37,7 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates : public TAO_Notify_Method_Request_Updates_Base
-                                                        ,public TAO_Notify_Method_Request
+                                                        ,public TAO_Notify_Method_Request_Queueable
 {
 public:
   /// Constuctor
@@ -65,7 +65,7 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy : public TAO_Notify_Method_Request_Updates_No_Copy_Base
-                                                                ,public TAO_Notify_Method_Request_No_Copy
+                                                                ,public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
@@ -75,7 +75,7 @@ public:
   ~TAO_Notify_Method_Request_Updates_No_Copy ();
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);

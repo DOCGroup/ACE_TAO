@@ -151,7 +151,7 @@ TAO_Notify_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request_Base & request ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request & request ACE_ENV_ARG_DECL)
 {
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }

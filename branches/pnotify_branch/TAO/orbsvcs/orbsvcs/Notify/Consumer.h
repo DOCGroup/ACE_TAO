@@ -29,8 +29,8 @@
 
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_Proxy;
+class TAO_Notify_Method_Request_Event_Queueable;
 class TAO_Notify_Method_Request_Event;
-class TAO_Notify_Method_Request_Event_Base;
 /**
  * @class TAO_Notify_Consumer
  *
@@ -50,7 +50,7 @@ public:
     DISPATCH_DISCARD, // discard this message
     DISPATCH_FAIL};   // discard all messages and disconnect consumer
 
-  typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event *> Request_Queue;
+  typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
 public:
   /// Constuctor
@@ -66,7 +66,7 @@ public:
   virtual TAO_Notify_Proxy* proxy (void);
 
   /// Dispatch Event to consumer
-  void deliver (TAO_Notify_Method_Request_Event_Base * request ACE_ENV_ARG_DECL);
+  void deliver (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL) = 0;
@@ -105,7 +105,7 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
 protected:
-  DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event_Base * request);
+  DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 
   /**
    * \brief Attempt to dispatch event from a queue.
@@ -121,13 +121,13 @@ protected:
     Request_Queue & requests,
     ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon);
 
-  void enqueue_request(TAO_Notify_Method_Request_Event_Base * request ACE_ENV_ARG_DECL);
+  void enqueue_request(TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL);
 
   /// Add request to a queue if necessary.
   /// Overridden by sequence consumer to "always" put incoming events into the queue.
   /// @returns true the request has been enqueued; false the request should be handled now.
   virtual bool enqueue_if_necessary(
-    TAO_Notify_Method_Request_Event_Base * request
+    TAO_Notify_Method_Request_Event * request
     ACE_ENV_ARG_DECL);
 
   // Dispatch updates

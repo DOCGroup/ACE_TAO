@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #include "tao/debug.h"
-#include "../Method_Request_Dispatch_Base.h"
+#include "../Method_Request_Dispatch.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_StructuredProxyPushSupplier.inl"
@@ -36,7 +36,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch_Base & request ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {

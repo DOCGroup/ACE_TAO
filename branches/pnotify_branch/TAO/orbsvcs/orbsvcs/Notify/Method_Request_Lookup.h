@@ -20,38 +20,63 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "Method_Request.h"
+#include "Method_Request_Event.h"
+#include "ProxySupplier.h"
 #include "ProxyConsumer.h"
 #include "Consumer_Map.h"
-//#include "Method_Request_Lookup_T.h"
-#include "Method_Request_Lookup_Base.h"
 
-class TAO_Notify_ProxyConsumer;
-#if 0
-typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event_var
-                                       , TAO_Notify_ProxyConsumer_Guard
-                                       , const TAO_Notify_Event_var&
-                                       , TAO_Notify_ProxyConsumer*>  TAO_Notify_Method_Request_Lookup_Base;
-#endif
+class TAO_Notify_Event;
 
 /**
  * @class TAO_Notify_Method_Request_Lookup
  *
- * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
+ * @brief
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
-  : public TAO_Notify_Method_Request_Lookup_Base
-  , public TAO_Notify_Method_Request
+  : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
+  , public TAO_Notify_Method_Request_Event
+{
+public:
+  /// Destructor
+  virtual ~TAO_Notify_Method_Request_Lookup ();
+
+protected:
+  /// Constuctor
+  TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
+
+  /// Execute the dispatch operation.
+  int execute_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  ///= TAO_ESF_Worker method
+  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
+
+protected:
+
+  /// The Proxy
+  TAO_Notify_ProxyConsumer* proxy_consumer_;
+};
+
+/***************************************************************/
+
+/**
+ * @class TAO_Notify_Method_Request_Lookup_Queueable
+ *
+ * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
+  : public TAO_Notify_Method_Request_Lookup
+  , public TAO_Notify_Method_Request_Queueable
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Lookup (
+  TAO_Notify_Method_Request_Lookup_Queueable (
     const TAO_Notify_Event_var& event,
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Lookup ();
+  ~TAO_Notify_Method_Request_Lookup_Queueable ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
@@ -63,13 +88,6 @@ private:
 
 /*****************************************************************************************************************************/
 
-#if 0
-typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event*
-                                       , TAO_Notify_ProxyConsumer*
-                                       , const TAO_Notify_Event*
-                                       , TAO_Notify_ProxyConsumer*>  TAO_Notify_Method_Request_Lookup_No_Copy_Base;
-#endif
-
 /**
  * @class TAO_Notify_Method_Request_Lookup_No_Copy
  *
@@ -77,8 +95,8 @@ typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event*
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
-  : public TAO_Notify_Method_Request_Lookup_Base
-  , public TAO_Notify_Method_Request_No_Copy
+  : public TAO_Notify_Method_Request_Lookup
+  , public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
@@ -93,7 +111,7 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

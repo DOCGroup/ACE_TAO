@@ -57,7 +57,7 @@ public:
   /// Add request to a queue if necessary.
   /// for Sequence it's always necessary.
   virtual bool enqueue_if_necessary(
-    TAO_Notify_Method_Request_Event_Base * request
+    TAO_Notify_Method_Request_Event * request
     ACE_ENV_ARG_DECL);
 
   virtual bool dispatch_from_queue (

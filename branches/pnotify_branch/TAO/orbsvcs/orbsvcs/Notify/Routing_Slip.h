@@ -31,7 +31,7 @@
 // Forward declarations of classes/pointers/collections
 // referenced from this header
 class TAO_Notify_EventChannelFactory;
-class TAO_Notify_Method_Request;
+class TAO_Notify_Method_Request_Queueable;
 
 namespace TAO_NOTIFY
 {

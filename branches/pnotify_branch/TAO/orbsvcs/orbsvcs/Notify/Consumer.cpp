@@ -87,15 +87,15 @@ TAO_Notify_Consumer::resume (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_Notify_Consumer::enqueue_request (
-  TAO_Notify_Method_Request_Event_Base * request
+  TAO_Notify_Method_Request_Event * request
   ACE_ENV_ARG_DECL)
 {
-  const TAO_Notify_Event * pevent = request->event ()->copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   TAO_Notify_Event_Copy_var event (pevent);
-  TAO_Notify_Method_Request_Event * queue_entry;
+  TAO_Notify_Method_Request_Event_Queueable * queue_entry;
   ACE_NEW_THROW_EX (queue_entry,
-    TAO_Notify_Method_Request_Event (*request, event),
+    TAO_Notify_Method_Request_Event_Queueable (*request, event),
     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
@@ -110,7 +110,7 @@ TAO_Notify_Consumer::enqueue_request (
 }
 
 bool
-TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event_Base * request ACE_ENV_ARG_DECL)
+TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), false);
   if (! this->pending_events_->is_empty ())
@@ -120,12 +120,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event_Base 
         ACE_static_cast (int, this->proxy ()->id ()),
         request->sequence ()
           ));
-      const TAO_Notify_Event * pevent = request->event ()->copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER);
+      const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (false);
       TAO_Notify_Event_Copy_var event (pevent);
-      TAO_Notify_Method_Request_Event * queue_entry;
+      TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
-        TAO_Notify_Method_Request_Event (*request, event),
+        TAO_Notify_Method_Request_Event_Queueable (*request, event),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
       this->pending_events_->enqueue_tail (queue_entry);
@@ -139,12 +139,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event_Base 
         ACE_static_cast (int, this->proxy ()->id ()),
         request->sequence ()
         ));
-      const TAO_Notify_Event * pevent = request->event ()->copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER);
+      const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (false);
       TAO_Notify_Event_Copy_var event (pevent);
-      TAO_Notify_Method_Request_Event * queue_entry;
+      TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
-        TAO_Notify_Method_Request_Event (*request, event),
+        TAO_Notify_Method_Request_Event_Queueable (*request, event),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
       this->pending_events_->enqueue_tail (queue_entry);
@@ -155,7 +155,7 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event_Base 
 }
 
 void
-TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event_Base * request ACE_ENV_ARG_DECL)
+TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL)
 {
   // Increment reference counts (safely) to prevent this object and its proxy
   // from being deleted while the push is in progress.
@@ -220,7 +220,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event_Base * request ACE
 }
 
 TAO_Notify_Consumer::DispatchStatus
-TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event_Base * request)
+TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
   ACE_TRY_NEW_ENV
@@ -390,7 +390,7 @@ bool
 TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon)
 {
   bool result = true;
-  TAO_Notify_Method_Request_Event * request;
+  TAO_Notify_Method_Request_Event_Queueable * request;
   if (requests.dequeue_head (request) == 0)
   {
     ace_mon.release ();
