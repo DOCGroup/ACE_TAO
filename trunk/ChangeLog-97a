@@ -18,6 +18,12 @@ Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/config-vxworks*.h: removed #include of vxWorks.h because
 	  its no longer necessary with the TimeValue.h merged into OS.h.
 
+	* ace/High_Res_Timer.cpp (elapsed_time): added cast to
+	  initialization of nseconds to avoid compiler warning from
+	  MSVC 4.1 about narrowing from unsigned __int64.
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
+	  reporting this.
+
 Mon Mar 31 22:36:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (process_directives): Return -1 if
