@@ -34,25 +34,27 @@
 class ACE_Export ACE_Init_ACE
 {
 public:
-  /// Returns 0 on success, -1 on failure, and 1 if it had already been called.
   /**
-   * This class implements the fucntions for the initialization and
+   * This class implements the functions for the initialization and
    * shutting down ACE.  These functions are called only once per ACE
    * invokation.
+   * @return Returns 0 on success, -1 on failure, and 1 if it had already been
+   * called.
    */
   static int init (void);
 
-  /// Returns 0 on success, -1 on failure, and 1 if it had already been called.
   /**
    * Shut down ACE library services.  Can be called only once per
    * program invocation.
+   * @return Returns 0 on success, -1 on failure, and 1 if it had already been
+   * called.
    */
   static int fini (void);
 
 private:
   /**
-   * Counter to match <init>/<fini> calls.  <init> must increment it;
-   * <fini> must decrement it.  <fini> then does nothing until it
+   * Counter to match <init()>/<fini()> calls.  <init()> must increment it;
+   * <fini()> must decrement it.  <fini()> then does nothing until it
    * reaches 0.
    */
   static unsigned int init_fini_count_;

@@ -55,7 +55,7 @@ public:
   /// Returns the value as type T.
   operator T (void);
 
-  /// The constructor, read <varname> from the enviroment, using
+  /// The constructor, read <varname> from the environment, using
   /// <vardefault> as its value if it is not defined.
   void open (const ACE_TCHAR *varname, const T &defval);
 

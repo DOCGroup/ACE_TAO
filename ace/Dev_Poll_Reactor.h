@@ -718,7 +718,7 @@ public:
   virtual int resume_handlers (void);
 
   /// Does the reactor allow the application to resume the handle on
-  /// its own, i.e. can it pass on the control of handle resumption to
+  /// its own, i.e., can it pass on the control of handle resumption to
   /// the application.
   virtual int resumable_handler (void);
 

@@ -326,7 +326,7 @@ public:
   /**
    * Returns (in <buf>) the next position in the buffer aligned to
    * <size>, it advances the Message_Block wr_ptr past the data
-   * (i.e. <buf> + <size>). If necessary it grows the Message_Block
+   * (i.e., <buf> + <size>). If necessary it grows the Message_Block
    * buffer.  Sets the good_bit to 0 and returns a -1 on failure.
    */
   int adjust (size_t size,
@@ -804,7 +804,7 @@ public:
   /**
    * Returns (in <buf>) the next position in the buffer aligned to
    * <size>, it advances the Message_Block rd_ptr past the data
-   * (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
+   * (i.e., <buf> + <size>).  Sets the good_bit to 0 and returns a -1
    * on failure.
    */
   int adjust (size_t size,

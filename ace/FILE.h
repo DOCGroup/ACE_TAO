@@ -43,13 +43,13 @@
 class ACE_Export ACE_FILE_Info
 {
 public:
-  /// mode of file
+  /// Mode of file
   mode_t mode_;
 
-  /// no of links
+  /// No of links
   nlink_t nlink_;
 
-  /// size of file
+  /// Size of file
   off_t size_;
 };
 

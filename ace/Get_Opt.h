@@ -122,7 +122,7 @@ public:
    *                      @c EOF is returned as soon as a non-option argument
    *                      is found. @c opt_ind() will return the index of the
    *                      next @a argv element so the program can continue
-   *                      processing the rest of the @ argv elements.
+   *                      processing the rest of the @a argv elements.
    *                      @arg PERMUTE_ARGS (default) means the @a argv
    *                      elements are reordered dynamically (permuted) so
    *                      that all options appear first.  When the last

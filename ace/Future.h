@@ -69,7 +69,7 @@ template <class T>
 class ACE_Future_Observer
 {
 public:
-  // = Destructor
+  /// Destructor
   virtual ~ACE_Future_Observer (void);
 
   /// Called by the ACE_Future in which we are subscribed to when
@@ -80,7 +80,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 protected:
 
-  // = Constructor
+  /// Constructor
   ACE_Future_Observer (void);
 };
 
@@ -116,7 +116,7 @@ private:
            ACE_Time_Value *tv) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e. the <ACE_Future_Rep>).
+   * Attaches the specified observer to a subject (i.e., the <ACE_Future_Rep>).
    * The update method of the specified subject will be invoked with a copy of
    * the written-to <ACE_Future> as input when the result gets set.
    *
@@ -127,7 +127,7 @@ private:
                ACE_Future<T> &caller);
 
   /**
-   * Detaches the specified observer from a subject (i.e. the <ACE_Future_Rep>).
+   * Detaches the specified observer from a subject (i.e., the <ACE_Future_Rep>).
    * The update method of the specified subject will not be invoked when the
    * <ACE_Future_Rep>s result gets set.  Returns 1 if the specified observer was
    * actually attached to the subject prior to this call and 0 if was not.
@@ -303,7 +303,7 @@ public:
   int ready (void) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e. the <ACE_Future>).
+   * Attaches the specified observer to a subject (i.e., the <ACE_Future>).
    * The update method of the specified subject will be invoked with a copy of
    * the associated <ACE_Future> as input when the result gets set.  If the
    * result is already set when this method gets invoked, then the update
@@ -315,7 +315,7 @@ public:
   int attach (ACE_Future_Observer<T> *observer);
 
   /**
-   * Detaches the specified observer from a subject (i.e. the <ACE_Future_Rep>).
+   * Detaches the specified observer from a subject (i.e., the <ACE_Future_Rep>).
    * The update method of the specified subject will not be invoked when the
    * <ACE_Future_Reps> result gets set.  Returns 1 if the specified observer
    * was actually attached to the subject prior to this call and 0 if was not.

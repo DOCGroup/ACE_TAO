@@ -47,20 +47,19 @@ public:
 
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
 
+  /// Constructor.
   ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
                             int delete_cleanup_strategy = 0);
-
-  // Constructor.
 
   /// Destructor.
   ~ACE_Pair_Caching_Utility (void);
 
+  /**
+   * Purge entries from the <container>. The Cleanup_Strategy will do the actual
+   * job of cleanup once the entries to be cleaned up are decided.
+   */
   int clear_cache (CONTAINER &container,
                    double purge_percent);
-
-  // Purge entries from the <container>. The Cleanup_Strategy will do
-  // the actual job of cleanup once the entries to be cleaned up are
-  // decided.
 
 protected:
 
@@ -106,10 +105,9 @@ public:
   typedef ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
 
+  /// Constructor.
   ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
                                           int delete_cleanup_strategy = 0);
-
-  // Constructor.
 
   /// Destructor.
   ~ACE_Recyclable_Handler_Caching_Utility (void);
@@ -167,10 +165,9 @@ public:
   typedef ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
 
+  /// Constructor.
   ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
                                                      int delete_cleanup_strategy = 0);
-
-  // Constructor.
 
   /// Destructor.
   ~ACE_Refcounted_Recyclable_Handler_Caching_Utility (void);
@@ -303,7 +300,7 @@ public:
   /**
    * Purge entries from the <container>. The Cleanup_Strategy will do
    * the actual job of cleanup once the entries to be cleaned up are
-   * decided. NOte: Here it is a no-op.
+   * decided. Note: Here it is a no-op.
    */
   int clear_cache (CONTAINER &container,
                    double purge_percent);

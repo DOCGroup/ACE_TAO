@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  @author Gerhard Lenzer
- @  @author Douglas C. Schmidt
+ *  @author Douglas C. Schmidt
  */
 //=============================================================================
 

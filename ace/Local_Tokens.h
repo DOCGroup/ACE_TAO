@@ -69,7 +69,7 @@
  *
  * @brief Not a public interface.
  *
- * Constant definitions and typdefs for Token library.  Mostly,
+ * Constant definitions and typedefs for Token library.  Mostly,
  * this class is necessary to fight the compiler with order of
  * declaration errors.
  */
@@ -108,39 +108,47 @@ public:
   /// Null constructor.
   ACE_TPQ_Entry (void);
 
-  /// Construction.
+  /// Constructor.
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
                  const ACE_TCHAR *client_id);
 
   /// Copy constructor.
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
-  /// Death.
+  /// Destructor.
   ~ACE_TPQ_Entry (void);
 
   /// Copy operator use by the queue.
   void operator= (const ACE_TPQ_Entry &rhs);
 
-  // = Set/get top of the queue.
+  /// Get top of the queue.
   ACE_Token_Proxy *proxy (void) const;
+
+  /// Set top of the queue.
   void proxy (ACE_Token_Proxy *);
 
-  // = Delta/get nesting level of the entry.
+  /// Get nesting level of the entry.
   int nesting_level (void) const;
+
+  /// Delta nesting level of the entry.
   void nesting_level (int delta);
 
-  // = Set/get client_id of the entry.
+  /// Get client_id of the entry.
   const ACE_TCHAR *client_id (void) const;
+
+  /// Set client_id of the entry.
   void client_id (const ACE_TCHAR *);
 
-  /// Returns 1 if <id> == client id.  Does not check for <id> == 0.
+  /// Returns 1 if @a id == client id.  Does not check for @a id == 0.
   int equal_client_id (const ACE_TCHAR *id);
 
   /// One method for arg and sleep_hook.
   void set (void (*sleep_hook)(void *));
 
-  // = Set/get sleep hook of the entry.
+  /// Set sleep hook of the entry.
   void sleep_hook (void (*sh)(void *));
+
+  /// Get sleep hook of the entry.
   PTVF sleep_hook (void) const;
 
   /// Call the sleep hook function or method passing arg.
@@ -156,8 +164,10 @@ public:
   /// Pointer to next in list.
   ACE_TPQ_Entry *next_;
 
-  // = Get/set whether this client is blocked waiting for a token.
+  /// Get whether this client is blocked waiting for a token.
   int waiting (void) const;
+
+  /// Set whether this client is blocked waiting for a token.
   void waiting (int w);
 
 private:
@@ -228,9 +238,11 @@ private:
 
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
+
   /// Proxy.
-  /// Client_id.
   const ACE_Token_Proxy *proxy_;
+
+  /// Client_id.
   const ACE_TCHAR *client_id_;
 };
 
@@ -247,7 +259,7 @@ class ACE_Token_Proxy_Queue;
 class ACE_Export ACE_TPQ_Iterator
 {
 public:
-  /// Construction.
+  /// Constructor.
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
 
   /// Destructor.
@@ -289,10 +301,10 @@ class ACE_Export ACE_Token_Proxy_Queue
 public:
   friend class ACE_TPQ_Iterator;
 
-  /// Construction.
+  /// Constructor.
   ACE_Token_Proxy_Queue (void);
 
-  /// Destructor
+  /// Destructor.
   ~ACE_Token_Proxy_Queue (void);
 
   /**
@@ -312,7 +324,7 @@ public:
   /// Remove the top waiter.
   void dequeue (void);
 
-  /// Remove the waiter whose proxy ref matches remove_me.
+  /// Remove the waiter whose proxy ref matches @a remove_me.
   void remove (const ACE_TPQ_Entry *remove_me);
 
   /// The number of waiters.
@@ -322,13 +334,13 @@ public:
   void dump (void) const;
 
 protected:
-  /**
-   * Head.
-   * Tail.
-   * Size.
-   */
+  /// Head.
   ACE_TPQ_Entry *head_;
+
+  /// Tail.
   ACE_TPQ_Entry *tail_;
+
+  /// Size.
   int size_;
 };
 
@@ -341,7 +353,7 @@ protected:
  * Not a public interface.
  * Currently, I don't see a reason for providing an abstract
  * interface at this level of the library.  As of yet, no one
- * uses <ACE_Tokens< derivatives through this abstract interface
+ * uses <ACE_Tokens> derivatives through this abstract interface
  * except for <ACE_Token_Manager>.  It only uses the statistical
  * methods which are shared by all Tokens.  For that reason, it
  * still makes since to have a common base class.  However,
@@ -481,10 +493,10 @@ class ACE_Local_Mutex;
 class ACE_Export ACE_Mutex_Token : public ACE_Tokens
 {
 public:
-  /// life
+  /// Constructor
   ACE_EXPLICIT ACE_Mutex_Token (const ACE_TCHAR* name);
 
-  /// death
+  /// Destructor
   virtual ~ACE_Mutex_Token (void);
 
   // = Synchronization operations.
@@ -503,7 +515,7 @@ public:
                        int ignore_deadlock,
                        int notify);
 
-  /// same as acquire, but fails if would block
+  /// Same as acquire, but fails if would block
   virtual int tryacquire (ACE_TPQ_Entry *caller);
 
   /**
@@ -576,10 +588,10 @@ private:
 class ACE_Export ACE_RW_Token : public ACE_Tokens
 {
 public:
-  /// Life.
+  /// Constructor.
   ACE_EXPLICIT ACE_RW_Token (const ACE_TCHAR* name);
 
-  /// Death.
+  /// Destructor.
   virtual ~ACE_RW_Token (void);
 
   // = Synchronization operations.
@@ -591,14 +603,14 @@ public:
    * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
    * the reason.  If errnum == EWOULDBLOCK, and notify == 1,
    * <ACE_Token_Proxy::sleep_hook> has been called on the current
-   * owner of the token.  If ignore_deadlock is passed as 1 and errnum
-   * == EDEADLK, then deadlock was detected via ace_token_manager.
+   * owner of the token.  If @a ignore_deadlock is passed as 1 and errnum
+   * == EDEADLK, then deadlock was detected via ACE_Token_Manager.
    */
   virtual int acquire (ACE_TPQ_Entry *caller,
                        int ignore_deadlock,
                        int notify);
 
-  /// same as acquire except fails on would block
+  /// Same as acquire except fails on would block
   virtual int tryacquire (ACE_TPQ_Entry *caller);
 
   /**
@@ -651,7 +663,7 @@ public:
   virtual int is_owner (const ACE_TCHAR *id);
 
 protected:
-  /// the number of waiting writers.
+  /// The number of waiting writers.
   int num_writers_;
 
   /// ACE_Mutex_Token used to lock internal data structures.
@@ -682,7 +694,7 @@ public:
   /// Copy construction.
   ACE_Token_Name (const ACE_Token_Name &rhs);
 
-  /// Death.
+  /// Destructor.
   virtual ~ACE_Token_Name (void);
 
   /// Copy.
@@ -691,10 +703,10 @@ public:
   /// Comparison.
   int operator== (const ACE_Token_Name &rhs) const;
 
-  /// Token name.
+  /// Get the token name.
   const ACE_TCHAR *name (void) const;
 
-  /// Token name.
+  /// Set the token name.
   void name (const ACE_TCHAR *new_name);
 
   /// Dump the state of the class.
@@ -741,13 +753,14 @@ public:
   /// Construction.
   ACE_Token_Proxy (void);
 
-  /// Death.
+  /// Destructor.
   virtual ~ACE_Token_Proxy (void);
 
   /**
-   * <name> is the string uniquely identifying the token.
-   * <ignore_deadlock> can be 1 to disable deadlock notifications.
-   * <debug> prints debug messages.
+   * Open the <ACE_Token>/
+   * @arg name The string uniquely identifying the token.
+   * @arg ignore_deadlock Can be 1 to disable deadlock notifications.
+   * @arg debug Prints debug messages.
    */
   virtual int open (const ACE_TCHAR *name,
                     int ignore_deadlock = 0,
@@ -767,8 +780,7 @@ public:
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
-  /// Calls renew on the token.  Blocks the calling thread if would
-  /// block.
+  /// Calls renew on the token.  Blocks the calling thread if would block.
   virtual int renew (int requeue_position = -1,
                      ACE_Synch_Options &options =
                      ACE_Synch_Options::defaults);
@@ -840,7 +852,7 @@ public:
   /// waiters list and given the token.
   virtual void token_acquired (ACE_TPQ_Entry *);
 
-  /// the client id of the current token holder
+  /// The client id of the current token holder
   virtual const ACE_TCHAR *owner_id (void);
 
   /// Return a dynamically allocated clone of the derived class.
@@ -897,7 +909,7 @@ public:
   /// Construction.
   ACE_Null_Token (void);
 
-  /// Destructor
+  /// Destructor.
   ~ACE_Null_Token (void);
 #endif /* ACE_LACKS_INLINE_FUNCTION */
 
@@ -956,9 +968,10 @@ class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
 {
 public:
   /**
-   * <token_name> uniquely id's the token.
-   * <ignore_deadlock> will allow deadlock to occur (useful for
-   * testing).  <debug> prints a bunch of messages.
+   * Constructor.
+   * @arg token_name Uniquely id's the token.
+   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @arg debug Prints a bunch of messages.
    */
   ACE_Local_Mutex (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
@@ -1009,9 +1022,10 @@ public:
   // = Initialization and termination.
 
   /**
-   * <token_name> uniquely id's the token.
-   * <ignore_deadlock> will allow deadlock to occur (useful for
-   * testing).  <debug> prints a bunch of messages.
+   * Constructor.
+   * @arg token_name Uniquely id's the token.
+   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @arg debug Prints a bunch of messages.
    */
   ACE_Local_RLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
@@ -1065,9 +1079,10 @@ public:
   // = Initialization and termination.
 
   /**
-   * <token_name> uniquely id's the token.
-   * <ignore_deadlock> will allow deadlock to occur (useful for
-   * testing).  <debug> prints a bunch of messages.
+   * Constructor.
+   * @arg token_name Uniquely id's the token.
+   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @arg debug Prints a bunch of messages.
    */
   ACE_Local_WLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
