@@ -1,3 +1,16 @@
+Sun Dec  7 10:50:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/Metrics.dsp:
+        * orbsvcs/orbsvcs/RTCORBAEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEventLog.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+
+          For the above projects that had RTTI turned on for some configurations,
+          turned it on for all configurations.
+
 Sun Dec  7 10:24:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_IORA.cpp:
