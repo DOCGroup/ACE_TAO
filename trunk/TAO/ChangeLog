@@ -1,3 +1,33 @@
+Thu Mar 17 13:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+          Initialise pointer with 0
+
+        * tao/WCharSeqC.{h,cpp,inl}:
+        * tao/WCharSeqS.h:
+        * tao/WCharSeqA.cpp:
+        * tao/AnySeqC.{h,cpp,inl}:
+        * tao/AnySeqS.h:
+        * tao/AnySeqA.cpp:
+        * tao/BooleanSeqC.{h,cpp,inl}:
+        * tao/BooleanSeqS.h:
+        * tao/BooleanSeqA.cpp:
+        * tao/BoundsC.{h,cpp,inl}:
+        * tao/BoundsA.cpp:
+        * tao/CharSeqC.{h,cpp,inl}:
+        * tao/CharSeqA.cpp:
+        * tao/CharSeqS.h:
+        * tao/DoubleSeqC.{h,cpp,inl}:
+        * tao/DoubleSeqA.cpp:
+        * tao/DoubleSeqS.h:
+        * tao/CurrentC.{h,cpp,inl}:
+        * tao/CurrentA.cpp:
+          Regenerated
+
+        * tao/Connector_Registry.cpp:
+        * tao/default_resource.cpp:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
 Wed Mar 16 14:37:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * orbsvcs/orbsvcs/Shutdown_Utilities.cpp
