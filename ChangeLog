@@ -1,3 +1,9 @@
+Tue Aug 17 09:43:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+
+          Removed DOS style linefeeds.
+
 Tue Aug 17 08:49:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * ace/OS_NS_String.cpp:
