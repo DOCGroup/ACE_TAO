@@ -1,4 +1,3 @@
-#include "ace_pch.h"
 //$Id$
 
 #include "ace/QtReactor.h"
