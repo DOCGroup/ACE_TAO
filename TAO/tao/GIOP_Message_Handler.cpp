@@ -15,12 +15,13 @@
 ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
 
 TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
-                                                    TAO_GIOP_Message_Base *base)
+                                                    TAO_GIOP_Message_Base *base,
+                                                    size_t input_cdr_size)
   : mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
-    message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
-    supp_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    message_size_ (input_cdr_size),
+    current_buffer_ (orb_core->create_input_cdr_data_block (input_cdr_size)),
+    supp_buffer_ (orb_core->create_input_cdr_data_block (input_cdr_size)),
     message_state_ (orb_core),
     orb_core_ (orb_core)
 {

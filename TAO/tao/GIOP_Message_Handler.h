@@ -68,7 +68,8 @@ class TAO_GIOP_Message_Handler
 public:
   /// Ctor
   TAO_GIOP_Message_Handler (TAO_ORB_Core *orb_core,
-                            TAO_GIOP_Message_Base *base);
+                            TAO_GIOP_Message_Base *base,
+                            size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Read the message from the transport in to the
   /// <current_buffer_>. This method delegates responsibility of

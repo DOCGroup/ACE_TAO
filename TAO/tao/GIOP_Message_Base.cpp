@@ -17,9 +17,11 @@
 
 ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
 
-TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core)
+TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
+                                              size_t input_cdr_size)
   : message_handler_ (orb_core,
-		      this),
+                      this,
+                      input_cdr_size),
     output_ (0),
     cdr_buffer_alloc_ (orb_core->resource_factory ()->output_cdr_buffer_allocator ()),
     cdr_dblock_alloc_ (orb_core->resource_factory ()->output_cdr_dblock_allocator ()),
