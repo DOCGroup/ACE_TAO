@@ -96,7 +96,10 @@ public:
   int cdr_allocator_source (void);
 
   // = Resource Retrieval
+#if 0
+  // @@@todo: Need to go at a later date
   virtual int use_tss_resources (void) const;
+#endif /*if 0*/
   virtual int use_locked_data_blocks (void) const;
   virtual ACE_Reactor *get_reactor (void);
   virtual void reclaim_reactor (ACE_Reactor *);
@@ -138,10 +141,6 @@ protected:
                                   const ACE_TCHAR* option_value);
 
 protected:
-
-  /// Flag indicating whether resources should be global or
-  /// thread-specific.
-  int use_tss_resources_;
 
   /// The type of data blocks that the ORB should use
   int use_locked_data_blocks_;

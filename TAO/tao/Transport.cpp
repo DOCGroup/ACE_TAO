@@ -700,15 +700,15 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   ACE_Data_Block db (sizeof (buf),
                      ACE_Message_Block::MB_DATA,
                      buf,
-                     this->orb_core_->message_block_buffer_allocator (),
+                     this->orb_core_->input_cdr_buffer_allocator (),
                      this->orb_core_->locking_strategy (),
                      ACE_Message_Block::DONT_DELETE,
-                     this->orb_core_->message_block_dblock_allocator ());
+                     this->orb_core_->input_cdr_dblock_allocator ());
 
   // Create a message block
   ACE_Message_Block message_block (&db,
                                    ACE_Message_Block::DONT_DELETE,
-                                   this->orb_core_->message_block_msgblock_allocator ());
+                                   this->orb_core_->input_cdr_msgblock_allocator ());
 
 
   // Align the message block
@@ -762,7 +762,9 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
     }
 
   // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
+  // @@todo: Not teh right allocator......
+  TAO_Queued_Data qd (&message_block,
+                      this->orb_core_->input_cdr_buffer_allocator ());
 
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
@@ -1334,7 +1336,10 @@ TAO_Queued_Data *
 TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
 {
   // Get an instance of TAO_Queued_Data
-  TAO_Queued_Data *qd = TAO_Queued_Data::get_queued_data ();
+  // @@ todo: Are we using the right allocator? May be not. We need to
+  // see how to have a general purpose allocator.
+  TAO_Queued_Data *qd =
+    TAO_Queued_Data::get_queued_data (this->orb_core_->input_cdr_buffer_allocator ());
 
   // Get the flag for the details of the data block...
   ACE_Message_Block::Message_Flags flg = incoming.self_flags ();
@@ -1351,12 +1356,12 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
       // on an 8 byte boundary. Hence create a data block for more
       // than the actual length
       ACE_Data_Block *db =
-        this->orb_core_->data_block_for_message_block (incoming.length ()+
-                                                       ACE_CDR::MAX_ALIGNMENT);
+        this->orb_core_->create_input_cdr_data_block (incoming.length ()+
+                                                      ACE_CDR::MAX_ALIGNMENT);
 
       // Get the allocator..
       ACE_Allocator *alloc =
-        this->orb_core_->message_block_msgblock_allocator ();
+        this->orb_core_->input_cdr_msgblock_allocator ();
 
       // Make message block..
       ACE_Message_Block mb (db,

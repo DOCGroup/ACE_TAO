@@ -335,12 +335,6 @@ the ORB.
    </TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBGIOPlite</CODE></TD>
-    <TD><A name="-ORBGIOPlite"></a> This option has been
-        deprecated. Please see
-        <i>$TAO_ROOT/docs/pluggable_messaging.html </i> for more details. </TD>
-  </TR>
-  <TR>
     <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
     <TD><A name="-ORBDottedDecimalAddresses"></a> Use the dotted decimal
         notation for addresses. This option helps to work around
@@ -387,20 +381,13 @@ the ORB.
 
   <TR>
     <TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
-    <TD><A name=-ORBResources>Control the use of thread specific resources
-        in the ORB.
-        If (<em>which</em> = <code>global</code>) then the
-        same set of resources are shared by all the threads
-        that use that ORB.
-        If (<em>which</em> = <code>tss</code>) then each that
-        uses that ORB gets its own set of resources.
-
-        <P><B>NOTE:</B> This option has almost negligible effect on the
-    ORB. The right type of resources are selected by the ORB during
-    runtime. For example the memory for the output datapath always
-    defaults to TSS. If the message needs queuing the ORB decides to
-    use global memory. The option would be deprecated in the future
-    versions of TAO. </P>
+    <TD><A name=-ORBResources> <FONT COLOR=RED>This option is
+    <STRONG>deprecated</STRONG>, since this option has almost
+    negligible effect on the ORB</FONT>. The right type of resources
+    are selected by the ORB during runtime. For example the memory for
+    the output datapath always defaults to TSS. The inour data path
+    always defaults to stack for small messages and global pool for
+    larger messages. There was no effect with the use of this option. 
     </TD>
   </TR>
 
@@ -443,14 +430,13 @@ would load all the options listed within "".
   </TR>
   <TR>
     <TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
-    <TD>Specify whether each thread uses a global
-        (<em>which</em> = <code>global</code>) or a thread-specific
-        (<em>which</em> = <code>tss</code>) instance for the resources it
-        returns. The default is <CODE>global</CODE>.
-        <B>NOTE:</B> This option controls the default value for
-        the ORB option of the same name. The note in the ORB option
-        also applies to this case too. </A>.
-    </TD>
+        <TD><A name=-ORBResources> <FONT COLOR=RED>This option is
+    <STRONG>deprecated</STRONG>, since this option has almost
+    negligible effect on the ORB</FONT>. The right type of resources
+    are selected by the ORB during runtime. For example the memory for
+    the output datapath always defaults to TSS. The inour data path
+    always defaults to stack for small messages and global pool for
+    larger messages. There was no effect with the use of this option.
   </TR>
   <TR>
     <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>

@@ -1502,7 +1502,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {
   // Get a node for the queue..
   TAO_Queued_Data *qd =
-    TAO_Queued_Data::get_queued_data ();
+    TAO_Queued_Data::get_queued_data (this->orb_core_->input_cdr_buffer_allocator ());
 
   // @@todo: We have a similar method in Transport.cpp. Need to see how
   // we can factor them out..
@@ -1512,11 +1512,11 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
   // bytes. As we may not know how many bytes will be lost, we will
   // allocate ACE_CDR::MAX_ALIGNMENT extra.
   ACE_Data_Block *db =
-    this->orb_core_->data_block_for_message_block (sz +
-                                                   ACE_CDR::MAX_ALIGNMENT);
+    this->orb_core_->create_input_cdr_data_block (sz +
+                                                  ACE_CDR::MAX_ALIGNMENT);
 
   ACE_Allocator *alloc =
-    this->orb_core_->message_block_msgblock_allocator ();
+    this->orb_core_->input_cdr_msgblock_allocator ();
 
   ACE_Message_Block mb (db,
                         0,
