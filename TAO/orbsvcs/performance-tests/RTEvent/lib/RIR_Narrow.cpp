@@ -12,7 +12,7 @@
 #include "RIR_Narrow.h"
 #include "tao/Environment.h"
 
-template<class Interface> RIR_Narrow<Interface>::Interface_ptr
+template<class Interface> ACE_TYPENAME RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
                                 const char *object_id
                                 ACE_ENV_ARG_DECL)
