@@ -1,3 +1,9 @@
+Wed Jun 21 13:15:47 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/stdio.inl (pace_setbuf):
+
+	  Altered return value and fixed typos.
+
 Tue Jun 20 15:39:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/compiler.h:
@@ -7,12 +13,12 @@ Tue Jun 20 15:39:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 Tue Jun 20 15:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/mman.h:
-	* pace/posix/socket.h:	
+	* pace/posix/socket.h:
 	* pace/posix/stat.h:
 	* pace/posix/termios.h:
 	* pace/posix/times.h:
 	* pace/posix/types.h:
-	* pace/posix/utsname.h:	
+	* pace/posix/utsname.h:
 	* pace/posix/in.h:
 	* pace/posix/inet.h:
 	* pace/posix/aio.h:
@@ -48,12 +54,12 @@ Tue Jun 20 15:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 Tue Jun 20 15:14:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:
-	* pace/sys/socket.h:	
+	* pace/sys/socket.h:
 	* pace/sys/stat.h:
 	* pace/sys/termios.h:
 	* pace/sys/times.h:
 	* pace/sys/types.h:
-	* pace/sys/utsname.h:	
+	* pace/sys/utsname.h:
 	* pace/netinet/in.h:
 	* pace/arpa/inet.h:
 	* pace/aio.h:
@@ -108,12 +114,12 @@ Mon Jun 19 05:03:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 Mon Jun 19 04:34:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:
-	* pace/sys/socket.h:	
+	* pace/sys/socket.h:
 	* pace/sys/stat.h:
 	* pace/sys/termios.h:
 	* pace/sys/times.h:
 	* pace/sys/types.h:
-	* pace/sys/utsname.h:	
+	* pace/sys/utsname.h:
 	* pace/netinet/in.h:
 	* pace/arpa/inet.h:
 	* pace/aio.h:
@@ -140,7 +146,7 @@ Mon Jun 19 04:34:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/time.h:
 	* pace/unistd.h:
 	* pace/utime.h:
-	* pace/wait.h:	
+	* pace/wait.h:
 
 	  Altered these files #ifdef macro to PACE_FILE_H_INDIRECT so that the
 	  implementation pace/posix/*.h files didn't conflict with the preprocessor
@@ -166,12 +172,12 @@ Mon Jun 19 03:57:37 2000  Luther J Baker  <luther@cs.wustl.edu>
 Sat Jun 17 17:24:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:
-	* pace/sys/socket.h:	
+	* pace/sys/socket.h:
 	* pace/sys/stat.h:
 	* pace/sys/termios.h:
 	* pace/sys/times.h:
 	* pace/sys/types.h:
-	* pace/sys/utsname.h:	
+	* pace/sys/utsname.h:
 	* pace/netinet/in.h:
 	* pace/arpa/inet.h:
 
@@ -204,23 +210,23 @@ Sat Jun 17 16:46:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/time.h:
 	* pace/unistd.h:
 	* pace/utime.h:
-	* pace/wait.h:	
+	* pace/wait.h:
 
 	  Altered these "root" files to include the correct
 	  subdirectory/file.
 
 Fri Jun 16 17:47:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/pace/config/features.h	
+	* pace/pace/config/features.h
 
 	  Added to the repository to isolate user defined features.
 	  (ie: PACE_HAS_INLINE)
 
 	* pace/pace/config/compiler.h
 
-	  Added *hack* to cover PACE_INLINE to static, inline 
+	  Added *hack* to cover PACE_INLINE to static, inline
 	  or (blank) expansion depending on the compiler.
-	
+
 	* pace/pace/config/platform.h
 	* pace/pace/config/config.h
 	* pace/pace/config/utility.h
@@ -269,7 +275,7 @@ Fri Jun 16 14:11:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	  Added all .h files to posix directory. The implementation
 	  specific .h files are simply lumped together into one large
-	  directory while the original interface files are still 
+	  directory while the original interface files are still
 	  found in the similarly names sunos directory.
 
 	  SunOS dirs (sys, netinet, arpa) ==> PACE implementation dir
@@ -299,7 +305,7 @@ Mon Jun 12 17:23:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 Mon Jun 12 15:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/compiler.h:
-	  
+
 	  Deprecated PACE_HAS_CPLUSPLUS.
 	  Current PACE_CPLUSPLUS
 
@@ -326,7 +332,7 @@ Fri Jun  9 14:05:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/config/config.h:
 
 	  Moved PACE_HAS_INLINE from compiler.h to config.h.
-	
+
 	  Deprecated macros. Left in but I will removed the
 	  deprecated macros once I change the code to use the
 	  current macros.
@@ -367,10 +373,10 @@ Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 	* pace/pace/arpa/*.h:
 	* pace/pace/netinet/*.h:
 	* pace/pace/sys/*.h:
-          Modifying .h files to remove any path in front of .inl files. 
+          Modifying .h files to remove any path in front of .inl files.
 
 	* pace/pace/posix/*.c:
-          Modifying .c files to remove any path in front of .inl files. 
+          Modifying .c files to remove any path in front of .inl files.
 
 	* pace/pace/posix/time.inl
           Changed PACE_SETERNNO to PACE_SET_ERRNO
@@ -378,7 +384,7 @@ Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 Thu Jun  8 15:03:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/pace/Makefile:
-          Added support for PACE_SYSNAME to determine appropriate platform 
+          Added support for PACE_SYSNAME to determine appropriate platform
           subdirectory for VPATH and INCLDIRS.
 
 Thu Jun  8 14:44:39 2000  Luther J Baker  <luther@cs.wustl.edu>
@@ -388,7 +394,7 @@ Thu Jun  8 14:44:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* ../pace/sunos/README
 	* ../pace/sunos
 	* ../pace/emulation
-	 
+
 	  Removed from reposistory.
 
 	* ../pace/linux/TODO
@@ -408,9 +414,9 @@ Thu Jun  8 14:44:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 Thu Jun  8 12:09:56 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/pace/sunos/*.{c,inl}:
-          Removed files and put them in the posix subdirectory. 
+          Removed files and put them in the posix subdirectory.
 	* pace/pace/linux/*.{c,inl}:
-          Removed files and put them in the posix subdirectory. 
+          Removed files and put them in the posix subdirectory.
 	* pace/pace/posix/*.{c,inl}:
           Added files from the linux/sunos subdirectories. (The files
           were identical from both directories aside from the $Id$ macro,
@@ -448,7 +454,7 @@ Mon Jun  5 17:22:23 2000  Luther J Baker  <luther@cs.wustl.edu>
 Mon Jun  5 17:19:30 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/THANKS:
-	  
+
 	  Added John Heitmann, Andrew Gilpin and Darrell Brunsch.
 	  Note: names and email addresses are nicely accesible
 	  from this alphabetical file.
@@ -468,9 +474,9 @@ Mon Jun  5 17:04:36 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 Mon Jun  5 16:47:32 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* [inl,c]
-	 
+
 	  Moved files from root directory to pace/sunos.
-	
+
 	* aio, dirent, fcntl, grp, in, inet, mman, mqueue,
 	  netdb, pthread, pwd, sched, semaphore, setjmp,
 	  signal, socket, stat, stdio, stdlib, string,
@@ -485,7 +491,7 @@ Mon Jun  5 15:23:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 	  Added to repository.
 
 	* /pace/emulation
-	* /pace/emulation/README	
+	* /pace/emulation/README
 
 	  Removed from repository.
 
@@ -497,8 +503,8 @@ Fri Jun 02 16:55:10 2000    <luther@cs.wustl.edu>
 	  Added to repository. Naming consistency with other
 	  ACE libraries. Also removed pre-compiled header
 	  option as well as separate directories for debug
-	  and release versions of software. 
-	
+	  and release versions of software.
+
 	* ACE_wrappers/pace/pace/pace_lib.dsp
 
 	  Removed from repository. Naming consistency.
@@ -523,13 +529,13 @@ Thu Jun  1 17:18:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* ACE_wrappers/pace/pace/vxworks/README
 
 	  Added to repository to keep the directories visible.
-	  
+
 
 Thu Jun 01 16:50:48 2000    <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace/pace/pace.dsw
 	* ACE_wrappers/pace/pace/pace_lib.dsp
-	  
+
 	  Added to the repository.
 
 Tue May 30 16:54:06 2000  Luther J Baker  <luther@cs.wustl.edu>
