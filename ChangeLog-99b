@@ -1,3 +1,13 @@
+Thu Jul 08 14:56:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.{h,i} (ACE_U_LongLong): added operators
+          that take ACE_UINT32 arguments corresponding to each of
+          the operators that take ACE_U_LongLong & arguments.  This
+          solves some more overload resolution ambiguities.
+
+        * ace/Stats.cpp: changed comparisons of ACE_U_LongLong with
+          ints to unsigned ints, to avoid overload resolution ambiguity.
+
 Thu Jul 08 14:29:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (gethrtime): cast ts.tv_nsec explicitly to
