@@ -1,3 +1,17 @@
+Thu Feb 17 12:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Reimplemented id_to_servant (). Previously this called the servant
+          retention strategy which looked if there was a default servant. Now
+          the POA calls the request processing strategy, the AOM version calls
+          the servant retention where the retain looks in the AOM and the non
+          retain throws a wrong policy. The default servant version just looks
+          if there is a default servant, the servant manager version also
+          calls the servant retention version. This way the get_servant_i on
+          the POA can be protected again.
+
 Thu Feb 17 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * release.pl:
