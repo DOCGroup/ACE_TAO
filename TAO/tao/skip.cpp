@@ -120,8 +120,10 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
+#if 0
   // Typecode to be decoded.
   CORBA::TypeCode_ptr *tcp;
+#endif /* 0 */
 
   // Typecode kind.
   CORBA::ULong kind;
