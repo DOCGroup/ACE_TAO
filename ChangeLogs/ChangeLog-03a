@@ -1,9 +1,31 @@
+Fri Sep 13 08:57:03 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added the ability to modify template and project variable
+          assignments from the command line.  Also added rules to process
+          idl files and place the output in the directory relative to the
+          specified idl file.
+
+          Modified to not add duplicates to file lists.
+
 Thu Sep 12 17:18:43 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch.{h,cpp}: Only define the recursive condition support if
-	  we're running on Win32.  Hopefully, this will be generalized for
- 	  VxWorks at some point.  Thanks to Rob Andzik
- 	  <andzik@rtlogic.com> for reporting this.
+        * ace/Synch.{h,cpp}: Only define the recursive condition support if
+          we're running on Win32.  Hopefully, this will be generalized for
+          VxWorks at some point.  Thanks to Rob Andzik
+          <andzik@rtlogic.com> for reporting this.
 
 Thu Sep 12 19:29:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -12,36 +34,36 @@ Thu Sep 12 19:29:41 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Sep 12 17:38:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.h:
-	* ace/Malloc_T.i (release): Added an extra argument (with default
-	  value) to release so that we could decrease the refcount and
-	  release the backing store if needed atomically (while holding the
-	  lock.)  This was causing a race condition when removing mmap
-	  files used by MEM_Stream's.
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.i (release): Added an extra argument (with default
+          value) to release so that we could decrease the refcount and
+          release the backing store if needed atomically (while holding the
+          lock.)  This was causing a race condition when removing mmap
+          files used by MEM_Stream's.
 
-	* ace/Memory_Pool.h:
-	* ace/Memory_Pool.i:
-	* ace/Memory_Pool.cpp: Changed the release method to take an extra
-	  argument so that we can control whether we want to perform
-	  cleanup on backing store or not.
+        * ace/Memory_Pool.h:
+        * ace/Memory_Pool.i:
+        * ace/Memory_Pool.cpp: Changed the release method to take an extra
+          argument so that we can control whether we want to perform
+          cleanup on backing store or not.
 
-	* ace/MEM_SAP.cpp (close_shm_malloc): Changed to use the extended
-	  release method to remove the shared_memory.
+        * ace/MEM_SAP.cpp (close_shm_malloc): Changed to use the extended
+          release method to remove the shared_memory.
 
-	* ace/MEM_IO.cpp: When sending/receiving data reactively, make
-	  sure we don't even try if the socket is not valid.
+        * ace/MEM_IO.cpp: When sending/receiving data reactively, make
+          sure we don't even try if the socket is not valid.
 
 Thu Sep 12 08:39:46 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Synch.h (class ACE_recursive_mutex_state): Changed "HANDLE" to
-	  "ACE_HANDLE" to avoid problems with VxWorks.  Thanks to Rob
- 	  Andzik <andzik@rtlogic.com> and Don Hinton <dhinton@ieee.org>
- 	  for reporting this.
+        * ace/Synch.h (class ACE_recursive_mutex_state): Changed "HANDLE" to
+          "ACE_HANDLE" to avoid problems with VxWorks.  Thanks to Rob
+          Andzik <andzik@rtlogic.com> and Don Hinton <dhinton@ieee.org>
+          for reporting this.
 
 Thu Sep 12 17:36:36 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/wrapper_macros.GNU: Use awk instead of
-	  perl to determine the ACE major, minor, and beta versions.
+        * include/makeinclude/wrapper_macros.GNU: Use awk instead of
+          perl to determine the ACE major, minor, and beta versions.
 
 Thu Sep 12 12:02:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -50,16 +72,16 @@ Thu Sep 12 12:02:31 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Sep 11 08:44:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* Our thoughts and prayers go out to the victims of 9/11/01 on the
-	  anniversary of this terrible tragedy.
+        * Our thoughts and prayers go out to the victims of 9/11/01 on the
+          anniversary of this terrible tragedy.
 
 Wed Sep 11 13:03:48 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/Select_Reactor_Base.cpp:
-	  Check the suspend mask before completely forgetting about a
-	  handle, otherwise things do not work correctly with TP_Reactors
-	  and multiply-registered handlers.  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1306
+        * ace/Select_Reactor_Base.cpp:
+          Check the suspend mask before completely forgetting about a
+          handle, otherwise things do not work correctly with TP_Reactors
+          and multiply-registered handlers.  This fixes:
+            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1306
 
 Tue Sep 10 17:46:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -77,15 +99,15 @@ Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
         * ace/Obstack_T.h:
 
           Obstack is no longer restricted to fixed-size chunks. Chunk size
- 	  is increased by a power of two if we run out of memory in a
- 	  chunk. Added implementation of unwind operations. Stack can be
- 	  unwound by giving the address of an object on the stack. Fixed a
- 	  couple of bugs in the existing implementation when used with
- 	  WCHAR. We were incrementing the pointers by sizeof (CHAR) as
- 	  well as multiplying by sizeof (CHAR) to get the number of bytes
- 	  to be copied. This improvement doesn't deal with the alignment
- 	  issues as it requires a change in Obchunk which is postponed
- 	  till ACE 5.2.3 is released.
+          is increased by a power of two if we run out of memory in a
+          chunk. Added implementation of unwind operations. Stack can be
+          unwound by giving the address of an object on the stack. Fixed a
+          couple of bugs in the existing implementation when used with
+          WCHAR. We were incrementing the pointers by sizeof (CHAR) as
+          well as multiplying by sizeof (CHAR) to get the number of bytes
+          to be copied. This improvement doesn't deal with the alignment
+          issues as it requires a change in Obchunk which is postponed
+          till ACE 5.2.3 is released.
 
         * tests/Obstack_Test.cpp:
 
@@ -94,22 +116,22 @@ Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Sep 10 12:32:33 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/Connector.cpp:
-	  Be more informative in error messages, at least report in what
-	  library, class and function was the error detected.  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1304
+        * ace/Connector.cpp:
+          Be more informative in error messages, at least report in what
+          library, class and function was the error detected.  This fixes:
+            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1304
 
 Tue Sep 10 12:28:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/Connector.cpp:
-	  Be more paranoid about using AST's returned from cleanup_AST()
-	  and always check the return value of that function.  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1303
+        * ace/Connector.cpp:
+          Be more paranoid about using AST's returned from cleanup_AST()
+          and always check the return value of that function.  This fixes:
+            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1303
 
 Mon Sep  9 16:44:00 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* THANKS: Surprise, surprise, Gautam Thaker'ss name was not there
-	  in the THANKS file. So added it.
+        * THANKS: Surprise, surprise, Gautam Thaker'ss name was not there
+          in the THANKS file. So added it.
 
 Mon Sep  9 16:57:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -121,33 +143,33 @@ Mon Sep  9 16:57:41 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Sep 09 11:37:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (cond_timedwait): Changed to pass absolute time when
-	  using emulated semaphore on WinCE.  Thanks to Herbert Wang
-	  <herbert@nowsol.com> for reporting this.
+        * ace/OS.cpp (cond_timedwait): Changed to pass absolute time when
+          using emulated semaphore on WinCE.  Thanks to Herbert Wang
+          <herbert@nowsol.com> for reporting this.
 
-	* ace/Thread_Manager.cpp (join): This function was not cropping
-	  the thread return status when a thread had already exited when
-	  we called and its Thread_Descriptor had been moved to
-	  terminated_thr_list_.  Thanks to Roger Weeks
-	  <rogerw@firstlogic.com> for reporting the problem.
+        * ace/Thread_Manager.cpp (join): This function was not cropping
+          the thread return status when a thread had already exited when
+          we called and its Thread_Descriptor had been moved to
+          terminated_thr_list_.  Thanks to Roger Weeks
+          <rogerw@firstlogic.com> for reporting the problem.
 
 Mon Sep  9 00:12:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/Makefile.dirs:
-	* examples/Makefile:
-	* tests/Makefile:
-	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make
-	  variable.
+        * ace/Makefile.dirs:
+        * examples/Makefile:
+        * tests/Makefile:
+          Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make
+          variable.
 
 Sat Sep  7 23:22:20 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* bin/make_release: The tar ball that is put out during the
-	  release, is copied now to the the previous_versions directory
-	  with the appopriate version information. This should work right
-	  since this was tested against a local repo.
+        * bin/make_release: The tar ball that is put out during the
+          release, is copied now to the the previous_versions directory
+          with the appopriate version information. This should work right
+          since this was tested against a local repo.
 
-	  Thanks to Preston A. Elder <prez@gentoo.org>  for motivating
-	  this change.
+          Thanks to Preston A. Elder <prez@gentoo.org>  for motivating
+          this change.
 
 Sat Sep  7 18:03:21 2002  Steve Huston  <shuston@riverace.com>
 
@@ -179,15 +201,15 @@ Wed Sep  4 17:31:24 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Sep  4 20:59:40 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_irix5.2.GNU:
-	* include/makeinclude/platform_m88k.GNU:
-	* include/makeinclude/platform_netbsd.GNU:
-	* include/makeinclude/platform_qnx_neutrino.GNU:
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
-	* include/makeinclude/platform_sco-nothread.GNU:
-	  Instead of setting -fno-implicit-templates,
-	  use $(TEMPLATES_FLAG).  Include platform_g++.GNU to get the
-	  correct value of $(TEMPLATES_FLAG).
+        * include/makeinclude/platform_irix5.2.GNU:
+        * include/makeinclude/platform_m88k.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_sco-nothread.GNU:
+          Instead of setting -fno-implicit-templates,
+          use $(TEMPLATES_FLAG).  Include platform_g++.GNU to get the
+          correct value of $(TEMPLATES_FLAG).
 
 Wed Sep  4 16:31:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -195,13 +217,13 @@ Wed Sep  4 16:31:29 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Sep  4 20:08:54 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
-	* ace/Framework_Component.cpp (close):
+        * ace/Framework_Component.cpp (close):
 
-	  Delete each component explicitely instead of calling
-	  close_singleton () to avoid a memory leak.  The dtor calls
-	  close_singleton () anyway.  Thanks Vladimir Chovanec
-	  <Vladimir CHOVANEC@asset.sk> for reporting the leak and
-	  suggesting the fix.
+          Delete each component explicitely instead of calling
+          close_singleton () to avoid a memory leak.  The dtor calls
+          close_singleton () anyway.  Thanks Vladimir Chovanec
+          <Vladimir CHOVANEC@asset.sk> for reporting the leak and
+          suggesting the fix.
 
 Tue Sep 03 22:59:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -227,21 +249,21 @@ Tue Sep 03 22:40:22 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Sep  3 17:12:59 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.cpp (num_processors_online):
+        * ace/OS.cpp (num_processors_online):
 
-	  Fixed ACE_TRACE macro.
+          Fixed ACE_TRACE macro.
 
 Tue Sep  3 16:38:47 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
 
-	  Atomic_Op.cpp is no longer a template source file.  Moved it to
-	  the "Source Files" folder.
+          Atomic_Op.cpp is no longer a template source file.  Moved it to
+          the "Source Files" folder.
 
-	* ace/Synch.cpp (ACE_Mutex):
+        * ace/Synch.cpp (ACE_Mutex):
 
-	  Fixed "unused 'mode' argument" warning.
+          Fixed "unused 'mode' argument" warning.
 
 Tue Sep  3 15:54:33 2002  Christopher Kohlhoff <chris@kohlhoff.com>
 
@@ -283,22 +305,22 @@ Tue Sep  3 15:54:33 2002  Christopher Kohlhoff <chris@kohlhoff.com>
 
 Tue Sep  3 15:40:39 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tests/XtReactor_Test.cpp (sock_callback):
+        * tests/XtReactor_Test.cpp (sock_callback):
 
-	  Removed this unused static function.
+          Removed this unused static function.
 
-	* tests/TkReactor_Test.cpp (sock_callback):
+        * tests/TkReactor_Test.cpp (sock_callback):
 
-	  Likewise.
+          Likewise.
 
-	  (ACE_TMAIN):
+          (ACE_TMAIN):
 
-	  Fixed "deprecated conversion from string constant to char *"
-	  warning.
+          Fixed "deprecated conversion from string constant to char *"
+          warning.
 
 Tue Sep  3 15:16:03 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Fixed a typo!
+        * bin/auto_run_tests.lst: Fixed a typo!
 
 Mon Sep  2 16:48:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -348,22 +370,22 @@ Mon Sep  2 14:07:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Mon Sep  2 10:00:40 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* ace/Timer_List_T.cpp (get_first_i): Fixes fuzz errors.
+        * ace/Timer_List_T.cpp (get_first_i): Fixes fuzz errors.
 
 Sun Sep 01 08:18:37 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Task.cpp (svc_run):
+        * ace/Task.cpp (svc_run):
           The latest version of the Borland compiler doesn't like the
           static cast, so only do the static cast when the compiler
           version is smaller than 0x570
 
-	* ace/Handle_Set.cpp:
+        * ace/Handle_Set.cpp:
           When using Borland on Linux, we don't have fds_bits, but we have
           __fds_bits.
 
 Sun Sep 01 07:57:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-win32-borland.h:
+        * ace/config-win32-borland.h:
         * ace/config-borland-common.h:
           Improved Borland config files for Kylix support.
 
@@ -378,21 +400,21 @@ Sun Sep 01 07:25:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Aug 31 14:57:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* THANKS: Added Cemal Yilmaz <cyilmaz@cs.umd.edu> to the hall of
-	  fame.
+        * THANKS: Added Cemal Yilmaz <cyilmaz@cs.umd.edu> to the hall of
+          fame.
 
 Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* ace/OS.i (ctime_r): This fixes a problem on Linux for the call
-	  to ::ctime_r where the pointer returned (result) is the same as
-	  the pointer (buf) passed in, causing the buffer to get clobbed
-	  if strsncpy is used subsequently to move the result back to the
-	  caller's buffer.
+        * ace/OS.i (ctime_r): This fixes a problem on Linux for the call
+          to ::ctime_r where the pointer returned (result) is the same as
+          the pointer (buf) passed in, causing the buffer to get clobbed
+          if strsncpy is used subsequently to move the result back to the
+          caller's buffer.
 
-	* tests/OS_Test.cpp: Added a test for ACE_OS::ctime_r ().
+        * tests/OS_Test.cpp: Added a test for ACE_OS::ctime_r ().
 
-	  Thanks to Michael Searles <msearles@base16.com> for providing
-	  this patch.
+          Thanks to Michael Searles <msearles@base16.com> for providing
+          this patch.
 
 Sat Aug 31 17:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -410,35 +432,35 @@ Sat Aug 31 17:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Aug 31 10:32:38 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Future.cpp (set): Removed a stray reference to "iterator"
-	  and replaced the for loop with a while loop.  Thanks to Craig
- 	  Rodrigues for reporting this.
+        * ace/Future.cpp (set): Removed a stray reference to "iterator"
+          and replaced the for loop with a while loop.  Thanks to Craig
+          Rodrigues for reporting this.
 
 Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
-	                      Gary Duzan  <gduzan@bbn.com>
+                              Gary Duzan  <gduzan@bbn.com>
 
-	* include/makeinclude/rules.nested.GNU: Rewritten by Gary Duzan.
-	  If a list of directories is specified with DIRS= for a recursive
-	  make, make will halt immediately and propagate a non-zero
-	  return code to the shell if an error is encountered in a
-	  subdirectory.  The present behavior does not propagate any
-	  errors to make if there is an error in a subdirectory.  If make -k
-	  is specified, make will keep on going even if it encounters an
-	  error in a subdirectory, but it will also propagate a non-zero
-	  return code to make when the make finishes.  The current behavior
-	  is to keep on going if an error is encountered in a subdirectory,
-	  but NOT propagate a non-zero return code upon termination of make.
+        * include/makeinclude/rules.nested.GNU: Rewritten by Gary Duzan.
+          If a list of directories is specified with DIRS= for a recursive
+          make, make will halt immediately and propagate a non-zero
+          return code to the shell if an error is encountered in a
+          subdirectory.  The present behavior does not propagate any
+          errors to make if there is an error in a subdirectory.  If make -k
+          is specified, make will keep on going even if it encounters an
+          error in a subdirectory, but it will also propagate a non-zero
+          return code to make when the make finishes.  The current behavior
+          is to keep on going if an error is encountered in a subdirectory,
+          but NOT propagate a non-zero return code upon termination of make.
 
-	* ace/Makefile.dirs: (Added) Specifies the DIRS= list of directories
-	  to invoke recursive makes on.
+        * ace/Makefile.dirs: (Added) Specifies the DIRS= list of directories
+          to invoke recursive makes on.
 
-	* ace/Makefile.ace: (Added).  This builds libACE, like the old Makefile
-	  did.
+        * ace/Makefile.ace: (Added).  This builds libACE, like the old Makefile
+          did.
 
-	* ace/Makefile: Invoke Makefile.ace first, then Makefile,dirs.  It
-	  was necessary to split apart the DIRS= rule from the part of the
-	  Makefile which builds libACE in order to have parallel makes (-j 2)
-	  work on recursive makes.
+        * ace/Makefile: Invoke Makefile.ace first, then Makefile,dirs.  It
+          was necessary to split apart the DIRS= rule from the part of the
+          Makefile which builds libACE in order to have parallel makes (-j 2)
+          work on recursive makes.
 
 Fri Aug 30 17:34:00 2002  Justin Michel <michel_j@ociweb.com>
 
@@ -493,30 +515,30 @@ Thu Aug 29 15:18:31 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Aug 29 15:03:23 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/README:
+        * ace/README:
 
-	  Documented ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS macro.
+          Documented ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS macro.
 
-	* ace/config-win32-msvc-6.h
-	  (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS):
+        * ace/config-win32-msvc-6.h
+          (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS):
 
-	  MSVC++ 6 does not correctly handle exceptions thrown from
-	  functions/methods that do not list them in the exception
-	  specification.  In particular, the unexpected exception handler
-	  is not invoked.
+          MSVC++ 6 does not correctly handle exceptions thrown from
+          functions/methods that do not list them in the exception
+          specification.  In particular, the unexpected exception handler
+          is not invoked.
 
 Thu Aug 29 06:12:56 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Future.cpp (set): Fixed the loop code so it's possible for
-	  the observer object to be deleted or detached in its update()
- 	  operation.  Thanks to Tomer Amiaz <Tomer@bandwiz.com> for this
- 	  fix.
+        * ace/Future.cpp (set): Fixed the loop code so it's possible for
+          the observer object to be deleted or detached in its update()
+          operation.  Thanks to Tomer Amiaz <Tomer@bandwiz.com> for this
+          fix.
 
 Thu Aug 29 09:40:20 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/Transcode.h:
-	* ACEXML/parser/parser/Parser.h: Fixed incorrect usage of Doxygen
-	  tag.  Thanks to Johnny for pointing this out.
+        * ACEXML/common/Transcode.h:
+        * ACEXML/parser/parser/Parser.h: Fixed incorrect usage of Doxygen
+          tag.  Thanks to Johnny for pointing this out.
 
 Thu Aug 29 12:20:17 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -582,9 +604,9 @@ Wed Aug 28 22:42:41 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Aug 28 19:56:16 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/ACE-subsets.html: Updated the document to point to the
-	  soreduce tool and to remove the discussion of PACE.  Thanks to
-	  Chumsu Kim <chskim@add.re.kr> for motivating this.
+        * docs/ACE-subsets.html: Updated the document to point to the
+          soreduce tool and to remove the discussion of PACE.  Thanks to
+          Chumsu Kim <chskim@add.re.kr> for motivating this.
 
 Wed Aug 28 14:24:36 2002  Steve Huston  <shuston@riverace.com>
 
@@ -609,12 +631,12 @@ Wed Aug 28 11:21:04 2002  Chad Elliott  <elliott_c@ociweb.com>
 Wed Aug 28 06:18:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace: Removed the config-sunos5.8-sunc++-5.4.h file since these
-	  changes should go in the config-sunos5.8.h file rather than
-	  a special file.  Thanks to Steve Huston for noticing this.
+          changes should go in the config-sunos5.8.h file rather than
+          a special file.  Thanks to Steve Huston for noticing this.
 
-	* include/makeincludes: Removed the platform_sunos5_sunc++5.4.GNU
-	  file since it's no different from the platform_sunos5_sunc++.GNU
-	  file.  Thanks to Steve Huston for noticing this.
+        * include/makeincludes: Removed the platform_sunos5_sunc++5.4.GNU
+          file since it's no different from the platform_sunos5_sunc++.GNU
+          file.  Thanks to Steve Huston for noticing this.
 
 Wed Aug 28 06:12:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -636,39 +658,39 @@ Tue Aug 27 19:09:17 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Aug 27 17:00:20 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Signal.cpp: Fixed the ACE_Sig_Action constructors so that
-	  it doesn't break out of the loop just because a signal handler
- 	  failed.  Thanks to Marcel Loose <loose@astron.nl> for reporting
- 	  this.
+        * ace/Signal.cpp: Fixed the ACE_Sig_Action constructors so that
+          it doesn't break out of the loop just because a signal handler
+          failed.  Thanks to Marcel Loose <loose@astron.nl> for reporting
+          this.
 
 Tue Aug 27 19:03:05 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added $TAO_ROOT/tests/ORB_shutdown test
-	  to the daily builds.
+        * bin/auto_run_tests.lst: Added $TAO_ROOT/tests/ORB_shutdown test
+          to the daily builds.
 
 Tue Aug 27 18:52:59 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* ace/Select_Reactor_T.cpp (wait_for_multiple_events): Normally,
-	  select() will reset the bits in dispatch_set so that only those
-	  filed descriptors that are ready will have bits set.  However,
-	  when an error occurs, the bit set remains as it was when the
-	  select call was first made.  Thus, we now have a dispatch_set
-	  that has every file descriptor that was originally waited for,
-	  which is not correct.  We must clear all the bit sets because we
-	  have no idea if any of the file descriptors is ready.
+        * ace/Select_Reactor_T.cpp (wait_for_multiple_events): Normally,
+          select() will reset the bits in dispatch_set so that only those
+          filed descriptors that are ready will have bits set.  However,
+          when an error occurs, the bit set remains as it was when the
+          select call was first made.  Thus, we now have a dispatch_set
+          that has every file descriptor that was originally waited for,
+          which is not correct.  We must clear all the bit sets because we
+          have no idea if any of the file descriptors is ready.
 
-	  Thanks to Jody Hagins <jody@atdesk.com> and Carlos O'Ryan
-	  <coryan@atdesk.com> for reporting this problem and proving the
-	  patches.
+          Thanks to Jody Hagins <jody@atdesk.com> and Carlos O'Ryan
+          <coryan@atdesk.com> for reporting this problem and proving the
+          patches.
 
 Tue Aug 27 15:56:10 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-sunos5.8-sunc++-5.4.h:
-	* include/makeinclude/platform_sunos5_sunc++5.4.GNU:
+        * ace/config-sunos5.8-sunc++-5.4.h:
+        * include/makeinclude/platform_sunos5_sunc++5.4.GNU:
 
-	  Solaris 8 + SunC++ SPRO 5.4 platform configuration files.
-	  Thanks to Serge Kolgan <skolgan@objectsciences.com> for
-	  contributing these files.
+          Solaris 8 + SunC++ SPRO 5.4 platform configuration files.
+          Thanks to Serge Kolgan <skolgan@objectsciences.com> for
+          contributing these files.
 
 Tue Aug 27 17:25:39 2002  Steve Huston  <shuston@riverace.com>
 
@@ -756,7 +778,7 @@ Tue Aug 27 13:28:17 2002  Steve Huston  <shuston@riverace.com>
         * tests/CDR_Test.cpp:
         * tests/Message_Block_Test.cpp:
         * tests/Message_Queue_Notifications_Test.cpp:
-	* tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
         * tests/Proactor_Scatter_Gather_Test.cpp:
         * tests/Proactor_Test.cpp:
         * tests/Semaphore_Test.cpp:
@@ -779,9 +801,9 @@ Tue Aug 27 13:28:17 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Aug 27 11:08:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Pair_T.{h,i}: Added support for operator== to the ACE_Pair
-	  can be used in maps, etc.  Thanks to Gonzalo Diethelm
- 	  <gonzalo.diethelm@aditiva.com> for this addition.
+        * ace/Pair_T.{h,i}: Added support for operator== to the ACE_Pair
+          can be used in maps, etc.  Thanks to Gonzalo Diethelm
+          <gonzalo.diethelm@aditiva.com> for this addition.
 
 Tue Aug 27 06:45:58 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -802,17 +824,17 @@ Tue Aug 27 10:09:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 26 17:33:54 2002  Ossama Othman  <ossama@uci.edu>
 
-	* bin/msvc_auto_compile.pl (Build_Core):
+        * bin/msvc_auto_compile.pl (Build_Core):
 
-	  Build the Messaging, PortableGroup and CosLoadBalancing
-	  libraries in a specific order.  CosLoadBalancing depends on the
-	  first two.  Fixes automated Win32 static builds.
+          Build the Messaging, PortableGroup and CosLoadBalancing
+          libraries in a specific order.  CosLoadBalancing depends on the
+          first two.  Fixes automated Win32 static builds.
 
 Mon Aug 26 17:14:20 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tests/TkReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
 
-	  Fixed a number of warnings.
+          Fixed a number of warnings.
 
 Mon Aug 26 18:21:34 UTC 2002  Justin Michel  <michel_j@ociweb.com>
 
@@ -899,20 +921,20 @@ Sat Aug 24 16:41:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sat Aug 24 12:01:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.h: #undef the atop macro so that it won't break the new
-	  ACE_OS::atop() method on FreeBSD.  Thanks to Russell Carter
- 	  <rcarter@pinyon.org> and Christophe Juniet
- 	  <cjuniet@entreview.com> for this report.
+        * ace/OS.h: #undef the atop macro so that it won't break the new
+          ACE_OS::atop() method on FreeBSD.  Thanks to Russell Carter
+          <rcarter@pinyon.org> and Christophe Juniet
+          <cjuniet@entreview.com> for this report.
 
-	* ace/config-lynxos.h: Added some #defines for LynxOS 4.0.  We'll
-	  leave these comments out for now until we figure out how to add
- 	  them without breaking earlier versions of LynxOS.  Thanks to
- 	  Umberto Mascia <u.mascia@pxl.it> for reporting this.
+        * ace/config-lynxos.h: Added some #defines for LynxOS 4.0.  We'll
+          leave these comments out for now until we figure out how to add
+          them without breaking earlier versions of LynxOS.  Thanks to
+          Umberto Mascia <u.mascia@pxl.it> for reporting this.
 
-	* docs/tutorials/015/Protocol_Stream.h (class Protocol_Stream):
-	  Changed a comment to say "server-side applications" rather than
-	  "client-side applications."  Thanks to Mark Xu <ltxd@371.net>
-	  for reporting this.
+        * docs/tutorials/015/Protocol_Stream.h (class Protocol_Stream):
+          Changed a comment to say "server-side applications" rather than
+          "client-side applications."  Thanks to Mark Xu <ltxd@371.net>
+          for reporting this.
 
 Fri Aug 23 18:20:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -946,8 +968,8 @@ Fri Aug 23 18:20:31 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Aug 23 16:59:51 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/svcconf-convert.pl: Fixed regex to handle empty option
-	  strings in static/dynamic entries correctly.
+        * bin/svcconf-convert.pl: Fixed regex to handle empty option
+          strings in static/dynamic entries correctly.
 
 Fri Aug 23 16:25:47 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -965,18 +987,18 @@ Fri Aug 23 16:25:47 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Fri Aug 23 08:40:38 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-qnx-rtp.h: Added some new #defines so ACE will
-	  compile on QNX 6.2.  Thanks to Leen Van Kampen
- 	  <leen.van.kampen@nl.vanderlande.com> for reporting this.
+        * ace/config-qnx-rtp.h: Added some new #defines so ACE will
+          compile on QNX 6.2.  Thanks to Leen Van Kampen
+          <leen.van.kampen@nl.vanderlande.com> for reporting this.
 
-	* ace/Task.cpp (svc_run): Added a #ifdef for _MSC_VER <= 1200
-	  since there are complaints about reinterpret_cast from int to
- 	  unsigned long.  Thanks to Espen Harlinn
- 	  <espen.harlinn@seamos.no> for this fix.
+        * ace/Task.cpp (svc_run): Added a #ifdef for _MSC_VER <= 1200
+          since there are complaints about reinterpret_cast from int to
+          unsigned long.  Thanks to Espen Harlinn
+          <espen.harlinn@seamos.no> for this fix.
 
 Fri Aug 23 13:04:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp: Some minor cosmetic changes.
+        * ace/Service_Config.cpp: Some minor cosmetic changes.
 
 Fri Aug 23 07:16:13 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -994,9 +1016,9 @@ Fri Aug 23 06:07:38 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Thu Aug 22 21:27:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS_String.cpp (strtok_r_emulation): Applied the patch Frank
-	  Kuhlman <kuhlmann@materna.de> submitted in [Bug 1272] which
-	  resolved an overrun error.
+        * ace/OS_String.cpp (strtok_r_emulation): Applied the patch Frank
+          Kuhlman <kuhlmann@materna.de> submitted in [Bug 1272] which
+          resolved an overrun error.
 
 Thu Aug 22 21:20:01 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1010,12 +1032,12 @@ Thu Aug 22 21:20:01 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Thu Aug 22 19:14:44 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.i (fgetwc, ungetwc):
+        * ace/OS.i (fgetwc, ungetwc):
 
-	  These functions are supposed to return WEOF on error, not -1 as
-	  their ACE_OS wrappers were doing.  Corrects a warning about
-	  initialization of a negative value to "wint_t", which is an
-	  unsigned integer on some platforms (e.g. GNU libc).
+          These functions are supposed to return WEOF on error, not -1 as
+          their ACE_OS wrappers were doing.  Corrects a warning about
+          initialization of a negative value to "wint_t", which is an
+          unsigned integer on some platforms (e.g. GNU libc).
 
 Thu Aug 15 10:43:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1075,8 +1097,8 @@ Wed Aug 21 17:48:29 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Aug 22 18:10:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* bin/nightlybuilds/builds.lst: Move RedHat_Static build
-	  to new scoreboard.
+        * bin/nightlybuilds/builds.lst: Move RedHat_Static build
+          to new scoreboard.
 
 Thu Aug 22 01:32:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1101,19 +1123,19 @@ Thu Aug 22 01:16:16 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Wed Aug 21 22:22:42 2002  Ossama Othman  <ossama@uci.edu>
 
-	* bin/msvc_auto_compile.pl (Build_Core):
+        * bin/msvc_auto_compile.pl (Build_Core):
 
-	  Removed "LoadBalancing_Static.dsp" from the list of static
-	  library projects to build.  That MSVC++ project was for the old
-	  load balancer, and no longer exists.
+          Removed "LoadBalancing_Static.dsp" from the list of static
+          library projects to build.  That MSVC++ project was for the old
+          load balancer, and no longer exists.
 
 Thu Aug 22 03:50:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* bin/performance_stats.sh:
-	* bin/footprint_stats.sh: Calculate value of DATE
-	  inside these scripts instead of passing it in as the
-	  third parameter.  This will make it easier to make
-	  an autobuild script around this.
+        * bin/performance_stats.sh:
+        * bin/footprint_stats.sh: Calculate value of DATE
+          inside these scripts instead of passing it in as the
+          third parameter.  This will make it easier to make
+          an autobuild script around this.
 
 Wed Aug 21 20:40:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1146,10 +1168,10 @@ Wed Aug 21 20:40:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Wed Aug 21 17:02:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS_String.cpp: Changed to enabled wchar version of
-	  strtok_r_emulation when both ACE_HAS_WCHAR and ACE_LACKS_WCSTOK
-	  are both defined (instead of ACE_HAS_REENTRANT_FUNCTIONS.)
-	  Thanks to Brian Appel <bappel@integ.com> for reporting this.
+        * ace/OS_String.cpp: Changed to enabled wchar version of
+          strtok_r_emulation when both ACE_HAS_WCHAR and ACE_LACKS_WCSTOK
+          are both defined (instead of ACE_HAS_REENTRANT_FUNCTIONS.)
+          Thanks to Brian Appel <bappel@integ.com> for reporting this.
 
 Wed Aug 21 12:41:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1164,8 +1186,8 @@ Wed Aug 21 12:41:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Aug 21 11:57:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/msvc_auto_compile.pl: Added ACEXML/apps to the list of
-	  compiled ACE directories.
+        * bin/msvc_auto_compile.pl: Added ACEXML/apps to the list of
+          compiled ACE directories.
 
 Wed Aug 21 11:15:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1177,10 +1199,10 @@ Wed Aug 21 11:15:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Aug 21 11:04:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Object_Manager.cpp (init): Changed to return failure (-1) if
-	  ACE_Object_Manager fail to acquire the TSS ACE_Log_Msg instance
-	  for whatever reason.  Thanks to Jeremy Altavilla
-	  <jeremya@artifact-entertainment.com> for suggesting the fix.
+        * ace/Object_Manager.cpp (init): Changed to return failure (-1) if
+          ACE_Object_Manager fail to acquire the TSS ACE_Log_Msg instance
+          for whatever reason.  Thanks to Jeremy Altavilla
+          <jeremya@artifact-entertainment.com> for suggesting the fix.
 
 Wed Aug 21 07:43:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1236,59 +1258,59 @@ Tue Aug 20 14:19:55 2002  Jaiganesh@doc  <bugzilla@cs.wustl.edu>
 
 Fri Aug 16 10:25:07 2002  Ossama Othman  <ossama@uci.edu>
 
-	* include/makeinclude/ace_flags.bor:
+        * include/makeinclude/ace_flags.bor:
 
-	  Corrected CosLoadBalancing library related variables.  They
-	  were still setup for use with the old load balancer prototype.
+          Corrected CosLoadBalancing library related variables.  They
+          were still setup for use with the old load balancer prototype.
 
 Fri Aug 16 11:15:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_aiosig_ace.cpp: Added
-	  #include "ace/Log_Msg.h" so things will compile.  Thanks to
- 	  Victor Poznyak <VPoznyak@Webley.COM> for reporting this and
- 	  Alexander Libman <alexl@aurema.com> for suggesting the fix.
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp: Added
+          #include "ace/Log_Msg.h" so things will compile.  Thanks to
+          Victor Poznyak <VPoznyak@Webley.COM> for reporting this and
+          Alexander Libman <alexl@aurema.com> for suggesting the fix.
 
 Thu Aug 15 15:22:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw: Re-added Thread_Manager_Test.dsp into this
-	  workspace.  It got accidentally removed when someone merged a
-	  branch into the main trunk.  Thanks to Ronald Berger
-	  <ronald.berger@wpafb.af.mil> for noticing this.
+        * tests/tests.dsw: Re-added Thread_Manager_Test.dsp into this
+          workspace.  It got accidentally removed when someone merged a
+          branch into the main trunk.  Thanks to Ronald Berger
+          <ronald.berger@wpafb.af.mil> for noticing this.
 
 Mon Aug 12 10:17:55 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a type where
-	  "manipulated" was spelled "maniputated".  Thanks to
+        * ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a type where
+          "manipulated" was spelled "maniputated".  Thanks to
           Eric Newton <ecn@metaslash.com> for reporting this.
 
-	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
-	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
-	  reporting this.
+        * PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
+          "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
+          reporting this.
 
 Fri Aug  9 12:13:21 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
-	* bin/nightlybuilds/builds.1st:
-	  Moved the Debian_Core builds to the new scoreboard.
-	  Thanks to CRaig Rodrigues <crodrigu@bbn.com> for the fix.
+        * bin/nightlybuilds/builds.1st:
+          Moved the Debian_Core builds to the new scoreboard.
+          Thanks to CRaig Rodrigues <crodrigu@bbn.com> for the fix.
 
 Fri Aug  9 09:24:08 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Time_Value.{inl,cpp}: Make sure to normalize the set() methods...
-	  Thanks to Francois <francois@vibes.net> for reporting this.  This
-	  fixes BugID 1275.
+        * ace/Time_Value.{inl,cpp}: Make sure to normalize the set() methods...
+          Thanks to Francois <francois@vibes.net> for reporting this.  This
+          fixes BugID 1275.
 
 Thu Aug  8 23:11:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/rules.nested.GNU: Reverted this change "Thu
-	  Aug  8 18:28:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
-	  since it would break our daily builds.
+        * include/makeinclude/rules.nested.GNU: Reverted this change "Thu
+          Aug  8 18:28:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
+          since it would break our daily builds.
 
 Thu Aug  8 18:28:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/rules.nested.GNU: If we fail during a recursive
-	  make, exit with error code 1.  This makes it easier to detect errors
-	  in automated builds.  Thanks to Gary Duzan <gduzan@bbn.com> for showing
-	  inspiring the fix.
+        * include/makeinclude/rules.nested.GNU: If we fail during a recursive
+          make, exit with error code 1.  This makes it easier to detect errors
+          in automated builds.  Thanks to Gary Duzan <gduzan@bbn.com> for showing
+          inspiring the fix.
 
 Wed Aug  7 12:39:31 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1307,23 +1329,23 @@ Wed Aug  7 12:39:31 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Aug  4 16:47:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Framework_Component_DLL.cpp: Added a missing template
-	  instantiation. It was caught only in SunCC53 builds.
+        * tests/Framework_Component_DLL.cpp: Added a missing template
+          instantiation. It was caught only in SunCC53 builds.
 
 Sun Aug  4 16:01:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Do not the Stack_Recursion tests in
-	  single threaded  builds.
+        * bin/auto_run_tests.lst: Do not the Stack_Recursion tests in
+          single threaded  builds.
 
 Sat Aug 03 17:57:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/ace_dll.dsp: Removed the Hash_Map_Manager_rt.cpp from the
-	  project file.
+        * ace/ace_dll.dsp: Removed the Hash_Map_Manager_rt.cpp from the
+          project file.
 
 Sat Aug 03 15:42:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.dsp: Made sure that it
-	  builds only in MFC debug builds.
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.dsp: Made sure that it
+          builds only in MFC debug builds.
 
 Sat Aug  3 14:56:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1348,17 +1370,17 @@ Sat Aug  3 19:53:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Aug  3 12:36:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_rt.h:
-	* ace/Hash_Map_Manager_rt.cpp:
-	* ace/Hash_Map_Manager_rt.i: Removed these files from the main
-	  trunk. They shouldnt have been there in the first place.
+        * ace/Hash_Map_Manager_rt.h:
+        * ace/Hash_Map_Manager_rt.cpp:
+        * ace/Hash_Map_Manager_rt.i: Removed these files from the main
+          trunk. They shouldnt have been there in the first place.
 
 Fri Aug  2 22:00:26 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* examples/Log_Msg/Log_Msg_MFC/*: Added example to show how
-	  to send ACE_DEBUG output to the Microsoft Visual Studio debugger console.
-	  Thanks to Don Hinton <dhinton@ieee.org> and
-	  Chris Hafey <chafey@stentor.com> for help with this.
+        * examples/Log_Msg/Log_Msg_MFC/*: Added example to show how
+          to send ACE_DEBUG output to the Microsoft Visual Studio debugger console.
+          Thanks to Don Hinton <dhinton@ieee.org> and
+          Chris Hafey <chafey@stentor.com> for help with this.
 
 Fri Aug  2 13:10:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1416,14 +1438,14 @@ Fri Aug  2 16:06:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug  2 07:54:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Malloc.cpp: Rearranged member initialization list in the
-	  constructor of ACE_Malloc_Stats, to fix warnings with explicit
-	  template builds.
+        * ace/Malloc.cpp: Rearranged member initialization list in the
+          constructor of ACE_Malloc_Stats, to fix warnings with explicit
+          template builds.
 
 Thu Aug 01 13:40:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp: Changed the usage of ASYS_TEXT to
-	  ACE_TEXT.  Should fix most of the compile errors with g++.
+        * tests/Malloc_Test.cpp: Changed the usage of ASYS_TEXT to
+          ACE_TEXT.  Should fix most of the compile errors with g++.
 
 Thu Aug  1 12:14:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1433,24 +1455,24 @@ Thu Aug  1 12:14:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Aug  1 11:13:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Malloc_Allocator.h:
-	* ace/Malloc_Allocator.cpp: Removed the declaration and definition
-	  of ACE_Malloc_Stats since they are not needed in this
-	  translation unit.
+        * ace/Malloc_Allocator.h:
+        * ace/Malloc_Allocator.cpp: Removed the declaration and definition
+          of ACE_Malloc_Stats since they are not needed in this
+          translation unit.
 
-	* ace/Malloc.h:
-	* ace/Malloc.cpp: Retained the definition if ACE_Malloc_Stats here
-	  (yes, there were two declarations) and added the definition and
-	  template instantiation for ACE_Atomic_Op used by
-	  ACE_Alloc_Stats. This should fix the erros showing up on the
-	  scoreboard explicit template builds which has
-	  ACE_HAS_MALLOC_STATS turned on.
+        * ace/Malloc.h:
+        * ace/Malloc.cpp: Retained the definition if ACE_Malloc_Stats here
+          (yes, there were two declarations) and added the definition and
+          template instantiation for ACE_Atomic_Op used by
+          ACE_Alloc_Stats. This should fix the erros showing up on the
+          scoreboard explicit template builds which has
+          ACE_HAS_MALLOC_STATS turned on.
 
 Thu Aug  1 09:08:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Block.h: Made the non-static duplicate() and release()
-	  methods virtual so they can be overridden by subclasses.  Thanks
- 	  to Brian Raven <brianr@liffe.com> for this suggestion.
+        * ace/Message_Block.h: Made the non-static duplicate() and release()
+          methods virtual so they can be overridden by subclasses.  Thanks
+          to Brian Raven <brianr@liffe.com> for this suggestion.
 
 Thu Aug 01 15:24:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1487,9 +1509,9 @@ Thu Aug 01 07:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jul 31 23:39:27 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* etc/*.doxygen: Change DOT_PATH from /usr/local/bin/ to
-	  empty, forcing doxygen to look for the dot program in PATH.
-	  This eliminates warnings in the Doxygen nightly build.
+        * etc/*.doxygen: Change DOT_PATH from /usr/local/bin/ to
+          empty, forcing doxygen to look for the dot program in PATH.
+          This eliminates warnings in the Doxygen nightly build.
 
 Wed Jul 31 12:23:47 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1501,7 +1523,7 @@ Wed Jul 31 12:23:47 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Jul 31 11:34:58 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/index.html: Added a link to ACEXML document.
+        * docs/index.html: Added a link to ACEXML document.
 
 Wed Jul 31 10:47:54 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1539,9 +1561,9 @@ Wed Jul 31 07:40:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 30 15:45:23 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/SOCK_Dgram.h: Fixed the comment for send(), which had a
-	  cut and paste error.  Thanks to Jeff Wilson
- 	  <wilsonj@cs.ecs.baylor.edu> for reporting this.
+        * ace/SOCK_Dgram.h: Fixed the comment for send(), which had a
+          cut and paste error.  Thanks to Jeff Wilson
+          <wilsonj@cs.ecs.baylor.edu> for reporting this.
 
 Tue Jul 30 14:09:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1551,79 +1573,79 @@ Tue Jul 30 14:09:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Jul 30 09:07:29 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Parse_Node.h:
-	* ace/Parse_Node.cpp:
+        * ace/Parse_Node.h:
+        * ace/Parse_Node.cpp:
 
-	  Unexported all classes in this file.  They are only meant for
-	  internal use by ACE's Service Configurator.  Updated Doxygen
-	  comments accordingly.
+          Unexported all classes in this file.  They are only meant for
+          internal use by ACE's Service Configurator.  Updated Doxygen
+          comments accordingly.
 
-	  (apply, symbol, open_dll):
+          (apply, symbol, open_dll):
 
-	  These methods now accept a "yyerrno" reference argument to allow
-	  for modification of the error count in a reentrant manner.
+          These methods now accept a "yyerrno" reference argument to allow
+          for modification of the error count in a reentrant manner.
 
-	* ace/Svc_Conf.h:
+        * ace/Svc_Conf.h:
 
-	  Removed "ace_yyerrno" and "ace_yylineno" global variables.
-	  Local ones are now used.
+          Removed "ace_yyerrno" and "ace_yylineno" global variables.
+          Local ones are now used.
 
-	  Altered signature of ace_yyerror() function to accept two
-	  additional parameters, yyerrno and yylineno.  Addresses a race
-	  condition.
+          Altered signature of ace_yyerror() function to accept two
+          additional parameters, yyerrno and yylineno.  Addresses a race
+          condition.
 
-	* ace/Svc_Conf.y:
+        * ace/Svc_Conf.y:
 
-	  Removed all remnants of the global "yyerrno" and "yylineno"
-	  variables.  Only the reentrant versions are used now.
+          Removed all remnants of the global "yyerrno" and "yylineno"
+          variables.  Only the reentrant versions are used now.
 
-	  Pass the "yyerrno" variable as a parameter to all functions that
-	  read or modify the parse error count.  Addresses several race
-	  conditions.
+          Pass the "yyerrno" variable as a parameter to all functions that
+          read or modify the parse error count.  Addresses several race
+          conditions.
 
-	  Fixed call to ACE_Location_Node::handle().  This method no
-	  longer exists.  The correct call is ACE_Location_Node::dll().
-	  For some reason, Svc_Conf_y.cpp (a generated file!!!) was
-	  "fixed" but the parser grammar file was never fixed.
+          Fixed call to ACE_Location_Node::handle().  This method no
+          longer exists.  The correct call is ACE_Location_Node::dll().
+          For some reason, Svc_Conf_y.cpp (a generated file!!!) was
+          "fixed" but the parser grammar file was never fixed.
 
-	* ace/Svc_Conf.l:
+        * ace/Svc_Conf.l:
 
-	  Removed all remnants of the global "yylineno" variable.  Only
-	  the reentrant version is used now.
+          Removed all remnants of the global "yylineno" variable.  Only
+          the reentrant version is used now.
 
-	* ace/Service_Config.cpp (process_directives_i):
+        * ace/Service_Config.cpp (process_directives_i):
 
-	  Removed initialization of "ace_yyerrno" and "ace_yylineno"
-	  global variables.  They no longer exist.  Poof!
+          Removed initialization of "ace_yyerrno" and "ace_yylineno"
+          global variables.  They no longer exist.  Poof!
 
-	  Reverted my previous change.  The above changes obviate the need
-	  to take into account the global parse error count.
+          Reverted my previous change.  The above changes obviate the need
+          to take into account the global parse error count.
 
-	* ace/Makefile:
+        * ace/Makefile:
 
-	  Tweaked Svc_Conf_y.cpp and Svc_Conf_l.cpp generation rules so
-	  that yyerrno and yylineno are not prepended with an "ace_".
-	  That is no longer needed.
+          Tweaked Svc_Conf_y.cpp and Svc_Conf_l.cpp generation rules so
+          that yyerrno and yylineno are not prepended with an "ace_".
+          That is no longer needed.
 
-	* etc/Svc_Conf_y.cpp.diff:
+        * etc/Svc_Conf_y.cpp.diff:
 
-	  Regenerated this patch against parsers generated by the latest
-	  GNU Bison (1.35).
+          Regenerated this patch against parsers generated by the latest
+          GNU Bison (1.35).
 
-	* etc/Svc_Conf_l.cpp.diff:
+        * etc/Svc_Conf_l.cpp.diff:
 
-	  Regenerated this patch to pull in new changes to Svc_Conf_l.cpp.
+          Regenerated this patch to pull in new changes to Svc_Conf_l.cpp.
 
 Tue Jul 30 10:06:04 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp: Moved a stray colon until *after*
-	  the #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT) check.  Thanks
- 	  to Alan Tanga <stang1@lucent.com> for reporting this.
+        * ace/Thread_Manager.cpp: Moved a stray colon until *after*
+          the #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT) check.  Thanks
+          to Alan Tanga <stang1@lucent.com> for reporting this.
 
-	* ace/POSIX_Proactor.cpp (delete_result_aiocb_list): Moved
-	  the definition of size_t ai out of the for loops to avoid
- 	  problems on older C++ compilers.  Thanks to George Varsamis
- 	  <gv@prismtechnologies.com> for reporting this.
+        * ace/POSIX_Proactor.cpp (delete_result_aiocb_list): Moved
+          the definition of size_t ai out of the for loops to avoid
+          problems on older C++ compilers.  Thanks to George Varsamis
+          <gv@prismtechnologies.com> for reporting this.
 
 Tue Jul 30 08:14:34 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1648,12 +1670,12 @@ Tue Jul 30 08:14:34 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Jul 30 06:50:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Dynamic_Service.cpp: Moved ACE_Dynamic_Service::instance()
-	  from the .i file into the .cpp file and added a #include of
- 	  "ace/Service_Object.h" to the .cpp file so the complete type of
- 	  ACE_Service_Object would be available to the HP/UX C++ compiler.
-  	  Thanks to Torsten Kuepper <Torsten.Kuepper@nokia.com> for
- 	  reporting this.
+        * ace/Dynamic_Service.cpp: Moved ACE_Dynamic_Service::instance()
+          from the .i file into the .cpp file and added a #include of
+          "ace/Service_Object.h" to the .cpp file so the complete type of
+          ACE_Service_Object would be available to the HP/UX C++ compiler.
+          Thanks to Torsten Kuepper <Torsten.Kuepper@nokia.com> for
+          reporting this.
 
 Tue Jul 30 07:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1664,13 +1686,13 @@ Tue Jul 30 07:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 29 14:47:46 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Service_Config.cpp (process_directives_i):
+        * ace/Service_Config.cpp (process_directives_i):
 
-	  In addition to the thread-safe yyerrno variable, check the
- 	  global ace_yyerrno variable when determining if errors have
- 	  occurred when processing Service Configurator directives.
-  	  Thanks to Doug for tracking down the problem and suggesting a
- 	  fix and to Denginere <denginere@hotmail.com> for reporting this.
+          In addition to the thread-safe yyerrno variable, check the
+          global ace_yyerrno variable when determining if errors have
+          occurred when processing Service Configurator directives.
+          Thanks to Doug for tracking down the problem and suggesting a
+          fix and to Denginere <denginere@hotmail.com> for reporting this.
 
 Mon Jul 29 17:30:27 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1685,10 +1707,10 @@ Mon Jul 29 07:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul 28 17:17:50 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/ACE-subsets.html: Updated the breakdown of files to
-	  each subset component so it's consistent with the
- 	  $ACE_ROOT/Makefile.  Thanks to Ruslan Zasukhin
- 	  <sunshine@public.kherson.ua> for reporting this.
+        * docs/ACE-subsets.html: Updated the breakdown of files to
+          each subset component so it's consistent with the
+          $ACE_ROOT/Makefile.  Thanks to Ruslan Zasukhin
+          <sunshine@public.kherson.ua> for reporting this.
 
 Sun Jul 28 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1709,10 +1731,10 @@ Sat Jul 27 17:35:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sat Jul 27 16:20:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Changed
-	  the code to be more resilient against errors that occur during
- 	  parsing of the svc.conf file.  Thanks to Denginere
- 	  <denginere@hotmail.com> for motivating this change.
+        * examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Changed
+          the code to be more resilient against errors that occur during
+          parsing of the svc.conf file.  Thanks to Denginere
+          <denginere@hotmail.com> for motivating this change.
 
 Sat Jul 27 15:50:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1734,8 +1756,8 @@ Sat Jul 27 15:50:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul 26 21:00:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Fixed a unused variable warning in g++
-	  builds.
+        * ace/TP_Reactor.cpp: Fixed a unused variable warning in g++
+          builds.
 
 Fri Jul 26 20:08:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1747,10 +1769,10 @@ Fri Jul 26 20:08:41 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Jul 26 15:52:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Fixed a problem with handle_event
-	  (ACE_Time_Value &). It should be calling the TP_Reactor's
-	  handle_event () instead of Select_Reactor's. This should fix
-	  [BUGID 1257].
+        * ace/TP_Reactor.cpp: Fixed a problem with handle_event
+          (ACE_Time_Value &). It should be calling the TP_Reactor's
+          handle_event () instead of Select_Reactor's. This should fix
+          [BUGID 1257].
 
 Fri Jul 26 10:11:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1768,11 +1790,11 @@ Fri Jul 26 10:11:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Jul 26 06:40:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS_String.inl: Added casts of the input parameter to
-	  (unsigned char) for the ace_isprint() and ace_isspace() methods
- 	  on ACE_OS_String to prevent problems with MSVC++ 7.0.  Thanks to
- 	  Colin Weaver <colin.weaver@invensys.com> for suggesting this
- 	  fix.
+        * ace/OS_String.inl: Added casts of the input parameter to
+          (unsigned char) for the ace_isprint() and ace_isspace() methods
+          on ACE_OS_String to prevent problems with MSVC++ 7.0.  Thanks to
+          Colin Weaver <colin.weaver@invensys.com> for suggesting this
+          fix.
 
 Fri Jul 26 10:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1787,11 +1809,11 @@ Fri Jul 26 10:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 25 22:58:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Synch.cpp: Removed explicit instantiation of
-	  ACE_Condition<ACE_Recursive_Thread_Mutex> since a template
-	  specialization exists. This was causing a compile error when
-	  explicit template instantiations were used with
-	  g++-2.95.3.
+        * ace/Synch.cpp: Removed explicit instantiation of
+          ACE_Condition<ACE_Recursive_Thread_Mutex> since a template
+          specialization exists. This was causing a compile error when
+          explicit template instantiations were used with
+          g++-2.95.3.
 
 Thu Jul 25 11:32:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1882,12 +1904,12 @@ Wed Jul 24 07:45:43 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Jul 23 21:46:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process_Mutex.h:
-	* ace/Process_Mutex.cpp: Disallowed anonymous Process_Mutex by
-	  invoking this->unique_name() to create a temporary name if
-	  there's no mutex name passed to the constructor.  Thanks John
-	  Michael Zorko <j.zorko@att.net> for reporting this problem on
-	  Mac OSX and submitting the patch.
+        * ace/Process_Mutex.h:
+        * ace/Process_Mutex.cpp: Disallowed anonymous Process_Mutex by
+          invoking this->unique_name() to create a temporary name if
+          there's no mutex name passed to the constructor.  Thanks John
+          Michael Zorko <j.zorko@att.net> for reporting this problem on
+          Mac OSX and submitting the patch.
 
 Tue Jul 23 13:08:27 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1913,9 +1935,9 @@ Tue Jul 23 09:48:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jul 22 22:30:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/XML_Common.dsp: Added the macro definition
-	  ACEXML_HAS_DLL=1 to the release configuration to resolve a
-	  nightly biuld problem.
+        * ACEXML/common/XML_Common.dsp: Added the macro definition
+          ACEXML_HAS_DLL=1 to the release configuration to resolve a
+          nightly biuld problem.
 
 Mon Jul 22 18:28:48 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1961,15 +1983,15 @@ Mon Jul 22 16:39:21 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 22 15:13:38 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/Atomic_Op.h:
-	* ace/Atomic_Op.i:
-	  Fixed bug 1253, add missing copy constructor.
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+          Fixed bug 1253, add missing copy constructor.
 
 Mon Jul 22 13:25:29 2002  Stephen Torri <storri@cs.wustl.edu>
 
-	* ace/streams.h: Fixed _MSC_VER compiler warning messages stating
-	  concern about using MSC_VER without assurance that the macro
-	  was defined.
+        * ace/streams.h: Fixed _MSC_VER compiler warning messages stating
+          concern about using MSC_VER without assurance that the macro
+          was defined.
 
 Mon Jul 22 12:20:21 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1977,13 +1999,13 @@ Mon Jul 22 12:20:21 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Mon Jul 22 09:19:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Aded Kew Whitney and Colin Weaver to the hall of fame.
+        * THANKS: Aded Kew Whitney and Colin Weaver to the hall of fame.
 
 Sat Jul 20 08:53:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SOCK_Dgram.cpp (set_nic): Moved the #endif for
-	  ACE_WIN32 *ahead* of the set_options() call.  Thanks to Joe
- 	  Hayes <Joe.Hayes@lmco.com> for reporting this.
+        * ace/SOCK_Dgram.cpp (set_nic): Moved the #endif for
+          ACE_WIN32 *ahead* of the set_options() call.  Thanks to Joe
+          Hayes <Joe.Hayes@lmco.com> for reporting this.
 
 Fri Jul 19 14:42:37 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2041,7 +2063,7 @@ Thu Jul 18 08:39:08 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Jul 18 06:17:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Doug turns 40 today.  Fortunately, 40 Octal is only 32 Decimal ;-).
+        * Doug turns 40 today.  Fortunately, 40 Octal is only 32 Decimal ;-).
 
 Wed Jul 17 15:18:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2088,20 +2110,20 @@ Wed Jul 17 11:34:28 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Jul 17 03:50:56 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
-	* ace/ACE.cpp:
-	* ace/OS.{h,i,cpp}:
-	* ace/OS_Dirent.inl:
-	* ace/OS_Memory.h
-	* ace/OS_String.inl:
-	* ace/Thread_Manager.cpp:
-	* ace/WFMO_Reactor.cpp:
-	* ace/config-all.h:
-	* ace/config-win32-borland.h:
-	* ace/config-win32-msvc-5.h:
-	* ace/config-win32-msvc-6.h:
-	* include/makeinclude/wrapper_macros.GNU:
+        * ace/ACE.cpp:
+        * ace/OS.{h,i,cpp}:
+        * ace/OS_Dirent.inl:
+        * ace/OS_Memory.h
+        * ace/OS_String.inl:
+        * ace/Thread_Manager.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/config-all.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-6.h:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Removed PACE.
+          Removed PACE.
 
 Tue Jul 16 14:19:37 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2117,13 +2139,13 @@ Tue Jul 16 14:19:37 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 15 21:23:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Message_Block.i (base): Fixed a warning in TRU 64 builds.
+        * ace/Message_Block.i (base): Fixed a warning in TRU 64 builds.
 
 Mon Jul 15 18:56:47 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/String_Base.cpp (substring): Changed "nil" to "nill" to
-	  avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
- 	  Zasukhin <sunshine@public.kherson.ua> for reporting this.
+        * ace/String_Base.cpp (substring): Changed "nil" to "nill" to
+          avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
+          Zasukhin <sunshine@public.kherson.ua> for reporting this.
 
 Mon Jul 15 15:18:33 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2167,41 +2189,41 @@ Mon Jul 15 15:18:33 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 15 09:26:17 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SString.cpp (substring): Changed "nil" to "nill" to
-	  avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
- 	  Zasukhin <sunshine@public.kherson.ua> for reporting this.
+        * ace/SString.cpp (substring): Changed "nil" to "nill" to
+          avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
+          Zasukhin <sunshine@public.kherson.ua> for reporting this.
 
 Mon Jul 15 10:14:44 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* bin/MakeProjectCreator/README:
-	  Fixed typo
+        * bin/MakeProjectCreator/README:
+          Fixed typo
 
 Sun Jul 14 20:14:16 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* FAQ: Fixed the use of "*.ps.gz" files.  Thanks to
-	  Carol Hunsicker <carol.hunsicker@lmco.com> for pointing this
- 	  out.
+        * FAQ: Fixed the use of "*.ps.gz" files.  Thanks to
+          Carol Hunsicker <carol.hunsicker@lmco.com> for pointing this
+          out.
 
 Sun Jul 14 01:55:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Message_Block.i (reset_allocators): Reset the allocators in
-	  the chain if the message block is chained.
+        * ace/Message_Block.i (reset_allocators): Reset the allocators in
+          the chain if the message block is chained.
 
 Sun Jul 14 01:43:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Message_Block.h:
-	* ace/Message_Block.i: Added two methods viz. reset_allocators ()
-	  and access_allocators () to ACE_Message_Block.
+        * ace/Message_Block.h:
+        * ace/Message_Block.i: Added two methods viz. reset_allocators ()
+          and access_allocators () to ACE_Message_Block.
 
 Sat Jul 13 17:29:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/fuzz.pl: Removed the word "warning" from a print statement,
-	  since our scoreboard scripts seems to catch that as a warning.
+        * bin/fuzz.pl: Removed the word "warning" from a print statement,
+          since our scoreboard scripts seems to catch that as a warning.
 
 Sat Jul 13 13:31:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the Stack_Recursion test to the
-	  daily  builds.
+        * bin/auto_run_tests.lst: Added the Stack_Recursion test to the
+          daily  builds.
 
 Fri Jul 12 20:28:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -2218,9 +2240,9 @@ Fri Jul 12 20:28:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Fri Jul 12 17:55:08 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/String_Base.i:
-	  Fixed rfind() to check for pos == npos also, that solved the
-	  regression test failures.
+        * ace/String_Base.i:
+          Fixed rfind() to check for pos == npos also, that solved the
+          regression test failures.
 
 Fri Jul 12 16:03:22 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2258,14 +2280,14 @@ Fri Jul 12 12:15:49 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Jul 11 21:09:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile.bor: Added a new BUILD target called "nightlybuild" to
-	  simplify nightlybuild script.
+        * Makefile.bor: Added a new BUILD target called "nightlybuild" to
+          simplify nightlybuild script.
 
 Thu Jul 11 20:42:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (creat): The Win32 implementation of this function was
-	  broken.  Thanks to Marvin Greenberg <mgreenberg@dctd.saic.com>
-	  for submitting the fix.
+        * ace/OS.i (creat): The Win32 implementation of this function was
+          broken.  Thanks to Marvin Greenberg <mgreenberg@dctd.saic.com>
+          for submitting the fix.
 
 Thu Jul 11 18:37:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -2399,10 +2421,10 @@ Thu Jul 11 08:34:22 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Jul 10 11:46:02 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added tests/AMH_Exception and examples/AMH/Sink_Server as tests
-	  for AMH
+          Added tests/AMH_Exception and examples/AMH/Sink_Server as tests
+          for AMH
 
 Wed Jul 10 13:31:49 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2443,9 +2465,9 @@ Tue Jul  9 23:24:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Jul  9 16:24:46 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Containers_T.cpp: Fixed inconsistent initializer order for
-	  ACE_Fixed_Stack and ACE_Bounded_Stack.  Thanks to Michael
- 	  Searles <msearles@base16.com> for reporting this.
+        * ace/Containers_T.cpp: Fixed inconsistent initializer order for
+          ACE_Fixed_Stack and ACE_Bounded_Stack.  Thanks to Michael
+          Searles <msearles@base16.com> for reporting this.
 
 Tue Jul  9 11:10:38 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2617,19 +2639,19 @@ Fri Jul  5 10:30:44 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Thu Jul  4 11:27:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* Happy 226th Birthday USA!
+        * Happy 226th Birthday USA!
 
 Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
-	  the operators were missing explicit declarations in the header
-	  file (they were anyway defined in the inlined files) which
-	  created problems in builds where inlining was diabled. Please
-	  see
+        * ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
+          the operators were missing explicit declarations in the header
+          file (they were anyway defined in the inlined files) which
+          created problems in builds where inlining was diabled. Please
+          see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
-	  more details. Thanks to Marina Spivak <marina@atdesk.com> for
-	  reporting this.
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
+          more details. Thanks to Marina Spivak <marina@atdesk.com> for
+          reporting this.
 
 Fri Jul  5 18:44:39 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2659,7 +2681,7 @@ Wed Jul  3 11:09:31 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Jul 02 21:43:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/XMLFilterImpl.h: One more pre/post mismatch.
+        * ACEXML/common/XMLFilterImpl.h: One more pre/post mismatch.
 
 Tue Jul  2 16:58:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -2669,10 +2691,10 @@ Tue Jul  2 16:58:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Jul 02 16:35:19 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/Attributes.h:
-	* ACEXML/common/Locator.h: Fixed mismatched pre/post inclusions.
+        * ACEXML/common/Attributes.h:
+        * ACEXML/common/Locator.h: Fixed mismatched pre/post inclusions.
 
-	* ACEXML/parser/parser/Parser.cpp: Fixed compilation errors.
+        * ACEXML/parser/parser/Parser.cpp: Fixed compilation errors.
 
 Tue Jul  2 11:53:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -2788,6 +2810,6 @@ Mon Jul  1 21:59:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
-	  value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
- 	  for this fix.
+        * ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
+          value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
+          for this fix.

@@ -31,6 +31,8 @@ sub new {
   my($template) = shift;
   my($ti)       = shift;
   my($relative) = shift;
+  my($addtemp)  = shift;
+  my($addproj)  = shift;
   my($progress) = shift;
   my($type)     = shift;
   my($self)     = Parser::new($class);
@@ -45,6 +47,8 @@ sub new {
   $self->{'include_path'}  = $inc;
   $self->{'current_input'} = "";
   $self->{'progress'}      = $progress;
+  $self->{'addtemp'}       = $addtemp;
+  $self->{'addproj'}       = $addproj;
 
   return $self;
 }
@@ -322,6 +326,18 @@ sub get_current_input {
 sub get_progress_callback {
   my($self) = shift;
   return $self->{'progress'};
+}
+
+
+sub get_addtemp {
+  my($self) = shift;
+  return $self->{'addtemp'};
+}
+
+
+sub get_addproj {
+  my($self) = shift;
+  return $self->{'addproj'};
 }
 
 

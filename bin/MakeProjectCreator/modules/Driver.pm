@@ -30,7 +30,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 1.1,
+                         'version'  => 1.2,
                          'types'    => {},
                          'creators' => \@creators,
                          'signif'   => 3,
@@ -49,15 +49,16 @@ sub usageAndExit {
   if (defined $line) {
     print STDERR "$line\n";
   }
+  my($spaces) = (" " x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
                "Usage: $base [-global <file>] [-include <directory>]\n" .
-               (" " x (length($base) + 8)) .
-               "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
-               (" " x (length($base) + 8)) . "[-template <file>] " .
+               $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
+               $spaces . "[-template <file>] " .
                "[-dynamic_only] [-static_only]\n" .
-               (" " x (length($base) + 8)) . "[-relative NAME=VAR] " .
-               "[-noreldefs]\n" .
-               (" " x (length($base) + 8)) . "[-type <";
+               $spaces . "[-relative NAME=VAR] [-noreldefs]\n" .
+               $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
+               $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
+               $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
   for(my $i = 0; $i <= $#keys; $i++) {
@@ -67,28 +68,40 @@ sub usageAndExit {
     }
   }
   print STDERR ">]\n" .
-               (" " x (length($base) + 8)) . "[files]\n\n";
+               $spaces . "[files]\n\n";
 
   my($default) = lc(substr($self->{'default'}, 0, $self->{'signif'}));
   print STDERR
-"       -global       Specifies the global input file.  Values stored\n" .
-"                     within this file are applied to all projects.\n" .
-"       -include      Specifies a directory to search when looking for base\n" .
-"                     projects, template input files and templates.  This\n" .
-"                     option can be used multiple times to add directories.\n" .
-"       -ti           Specifies the template input file (with no extension)\n" .
-"                     for the specific type as shown above\n" .
-"                     (ex. -ti dll_exe:vc8exe)\n" .
-"       -template     Specifies the template name (with no extension).\n" .
-"       -dynamic_only Specifies that only dynamic projects will be generated.\n" .
-"       -static_only  Specifies that only static projects will be generated.\n" .
-"       -relative     Any \$() variable in an mpc that is matched to NAME\n" .
-"                     is replaced by VAR only if VAR can be made into a\n" .
-"                     relative path based on the current working directory.\n" .
-"       -noreldefs    Do not try to generate default relative definitions.\n" .
-"       -type         Specifies the type of project file to generate.  This\n" .
-"                     option can be used multiple times to generate multiple\n" .
-"                     types.  If -type is not used, it defaults to '$default'.\n";
+"       -global         Specifies the global input file.  Values stored\n" .
+"                       within this file are applied to all projects.\n" .
+"       -include        Specifies a directory to search when looking for base\n" .
+"                       projects, template input files and templates.  This\n" .
+"                       option can be used multiple times to add directories.\n" .
+"       -ti             Specifies the template input file (with no extension)\n" .
+"                       for the specific type as shown above\n" .
+"                       (ex. -ti dll_exe:vc8exe)\n" .
+"       -template       Specifies the template name (with no extension).\n" .
+"       -dynamic_only   Specifies that only dynamic projects will be generated.\n" .
+"       -static_only    Specifies that only static projects will be generated.\n" .
+"       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
+"                       is replaced by VAR only if VAR can be made into a\n" .
+"                       relative path based on the current working directory.\n" .
+"       -noreldefs      Do not try to generate default relative definitions.\n" .
+"       -value_template This option allows modification of a template input\n" .
+"                       name value pair.  Use += to add VAL to the NAME's\n" .
+"                       value.  Use -= to subtract and = to override the value.\n" .
+"                       It is important to note that this will only modify\n" .
+"                       existing template input name value pairs and can not\n" .
+"                       be used to introduce new name value pairs.\n" .
+"       -value_project  This option allows modification of a project variable\n" .
+"                       assignment .  Use += to add VAL to the NAME's value.\n" .
+"                       Use -= to subtract and = to override the value.\n" .
+"                       This can be used to introduce new name value pairs to\n" .
+"                       a project.  However, it must be a valid project\n" .
+"                       assignment.\n" .
+"       -type           Specifies the type of project file to generate.  This\n" .
+"                       option can be used multiple times to generate multiple\n" .
+"                       types.  If -type is not used, it defaults to '$default'.\n";
 
   exit(0);
 }
@@ -129,6 +142,8 @@ sub run {
   my($signif)     = $self->{'signif'};
   my(%relative)   = ();
   my($reldefs)    = 1;
+  my(%addtemp)    = ();
+  my(%addproj)    = ();
 
   ## Dynamically load in each perl module and set up
   ## the type tags and project creators
@@ -221,6 +236,64 @@ sub run {
         }
       }
     }
+    elsif ($arg eq '-value_template') {
+      $i++;
+      my($value) = $args[$i];
+      if (!defined $value) {
+        $self->usageAndExit("-value_template requires a variable assignment argument");
+      }
+      else {
+        if ($value =~ /(\w+)\s*([\-+]?=)\s*(.*)/) {
+          my($name) = $1;
+          my($op)   = $2;
+          my($val)  = $3;
+          $val =~ s/^\s+//;
+          $val =~ s/\s+$//;
+          if ($op eq "+=") {
+            $op = 1;
+          }
+          elsif ($op eq "-=") {
+            $op = -1;
+          }
+          else {
+            $op = 0;
+          }
+          $addtemp{$name} = [$op, $val];
+        }
+        else {
+          $self->usageAndExit("Invalid option to -value_template");
+        }
+      }
+    }
+    elsif ($arg eq '-value_project') {
+      $i++;
+      my($value) = $args[$i];
+      if (!defined $value) {
+        $self->usageAndExit("-value_project requires a variable assignment argument");
+      }
+      else {
+        if ($value =~ /(\w+)\s*([\-+]?=)\s*(.*)/) {
+          my($name) = $1;
+          my($op)   = $2;
+          my($val)  = $3;
+          $val =~ s/^\s+//;
+          $val =~ s/\s+$//;
+          if ($op eq "+=") {
+            $op = 1;
+          }
+          elsif ($op eq "-=") {
+            $op = -1;
+          }
+          else {
+            $op = 0;
+          }
+          $addproj{$name} = [$op, $val];
+        }
+        else {
+          $self->usageAndExit("Invalid option to -value_project");
+        }
+      }
+    }
     elsif ($arg eq '-dynamic_only') {
       $static  = 0;
       $dynamic = 1;
@@ -273,6 +346,7 @@ sub run {
     foreach my $name (@generators) {
       my($generator) = $name->new($global, \@include, $template,
                                   \%ti, $dynamic, $static, \%relative,
+                                  \%addtemp, \%addproj,
                                   (-t 1 ? \&progress : undef));
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";

@@ -78,9 +78,12 @@ sub new {
   my($dynamic)   = shift;
   my($static)    = shift;
   my($relative)  = shift;
+  my($addtemp)   = shift;
+  my($addproj)   = shift;
   my($progress)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
+                                $addtemp, $addproj,
                                 $progress, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
@@ -94,6 +97,7 @@ sub new {
   $self->{'lib_template_input'}    = undef;
   $self->{'dll_template_input'}    = undef;
   $self->{'idl_defaulted'}         = 0;
+  $self->{'source_defaulted'}      = 0;
   $self->{'writing_type'}          = 0;
   $self->{'want_dynamic_projects'} = $dynamic;
   $self->{'want_static_projects'}  = $static;
@@ -164,16 +168,42 @@ sub parse_line {
           ## Fill in all the default values
           $self->generate_defaults();
 
-          ## End of project; Write out the file.
-          $self->write_project();
-
-          foreach my $key (keys %{$self->{'valid_components'}}) {
-            delete $self->{$key};
+          ## Perform any additions, subtractions
+          ## or overrides for the project values.
+          my($addproj) = $self->get_addproj();
+          foreach my $ap (keys %$addproj) {
+            if (defined $validNames{$ap}) {
+              my($val) = $$addproj{$ap};
+              if ($$val[0] > 0) {
+                $self->process_assignment_add($ap, $$val[1]);
+              }
+              elsif ($$val[0] < 0) {
+                $self->process_assignment_sub($ap, $$val[1]);
+              }
+              else {
+                $self->process_assignment($ap, $$val[1]);
+              }
+            }
+            else {
+              $errorString = "ERROR: Invalid " .
+                             "assignment modification name: $ap";
+              $status = 0;
+            }
           }
-          $self->{'assign'} = {};
+
+          if ($status) {
+            ## End of project; Write out the file.
+            $self->write_project();
+
+            foreach my $key (keys %{$self->{'valid_components'}}) {
+              delete $self->{$key};
+            }
+            $self->{'assign'} = {};
+          }
         }
-        $self->{$typecheck}      = 0;
-        $self->{'idl_defaulted'} = 0;
+        $self->{$typecheck}         = 0;
+        $self->{'idl_defaulted'}    = 0;
+        $self->{'source_defaulted'} = 0;
       }
       else {
         ## Project Beginning
@@ -538,6 +568,20 @@ sub read_template_input {
 }
 
 
+sub already_added {
+  my($self)  = shift;
+  my($array) = shift;
+  my($name)  = shift;
+
+  foreach my $file (@$array) {
+    if ($file eq $name) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
 sub add_idl_generated {
   my($self)    = shift;
   my($tag)     = shift;
@@ -556,7 +600,10 @@ sub add_idl_generated {
         my($file) = $i;
         $file =~ s/\.idl$//;
         foreach my $ending (@{$self->{'skeleton_endings'}}) {
-          push(@added, "$file$ending$wanted");
+          my($created) = "$file$ending$wanted";
+          if (!$self->already_added($array, $created)) {
+            push(@added, $created);
+          }
         }
       }
       ## Put the generated files at the front
@@ -699,7 +746,9 @@ sub sift_files {
         }
 
         if (!$exclude) {
-          push(@$array, $file);
+          if (!$self->already_added($array, $file)) {
+            push(@$array, $file);
+          }
         }
         last;
       }
@@ -713,7 +762,9 @@ sub sift_files {
     foreach my $save (@saved) {
       my($file) = $self->escape_regex_special($save);
       if ($pjname =~ /$file/ || $file =~ /$pjname/) {
-        push(@$array, $file);
+        if (!$self->already_added($array, $file)) {
+          push(@$array, $file);
+        }
       }
     }
   }
@@ -750,7 +801,9 @@ sub generate_default_components {
                   $self->sift_files(\@gen, $exts, $pchh, $pchc, $tag, \@built);
                 }
                 else {
-                  push(@built, $file);
+                  if (!$self->already_added(\@built, $file)) {
+                    push(@built, $file);
+                  }
                 }
               }
               $$comps{$comp} = \@built;
@@ -781,17 +834,22 @@ sub generate_default_components {
             my(@copy)  = @$array;
             my(@exts)  = $self->generated_source_extensions($tag);
 
+            $self->{'source_defaulted'} = 1;
             @$array = ();
             foreach my $file (@copy) {
               my($found) = 0;
               foreach my $ext (@exts) {
                 if ($file =~ /$ext$/) {
+                  ## No need to check for previously added files
+                  ## here since there are none.
                   push(@front, $file);
                   $found = 1;
                   last;
                 }
               }
               if (!$found) {
+                ## No need to check for previously added files
+                ## here since there are none.
                 push(@$array, $file);
               }
             }
@@ -920,13 +978,12 @@ sub add_source_corresponding_component_files {
         my($c) = $cpp;
         $c =~ s/\.[^\.]+$//;
         foreach my $file (@$array) {
-          my($w)     = $file;
           my($added) = $c;
-          if ($w =~ /(\.[^\.]+)$/) {
+          if ($file =~ /(\.[^\.]+)$/) {
             $added .= $1;
           }
 
-          if ($added eq $w) {
+          if ($added eq $file) {
             $found = 1;
             last;
           }
@@ -939,8 +996,11 @@ sub add_source_corresponding_component_files {
             $ext =~ s/\\//g;
 
             ## If the file is readable
-            if (-r "$c$ext") {
-              push(@$array, "$c$ext");
+            my($file) = "$c$ext";
+            if (-r $file) {
+              if (!$self->already_added($array, $file)) {
+                push(@$array, $file);
+              }
               $added = 1;
               last;
             }
@@ -956,7 +1016,11 @@ sub add_source_corresponding_component_files {
                   if ($c =~ /^$idl$ending$/) {
                     my($ext) = $$vc{$tag}->[0];
                     $ext =~ s/\\//g;
-                    push(@$array, "$c$ext");
+                    my($file) = "$c$ext";
+                    if (!$self->already_added($array, $file)) {
+                      push(@$array, $file);
+                    }
+                    $added = 1;
                     last;
                   }
                 }
@@ -1008,7 +1072,7 @@ sub generate_defaults {
         my($comps) = $$names{$name};
         foreach my $comp (keys %$comps) {
           my($array) = $$comps{$comp};
-          if (!defined $$array[0]) {
+          if (!defined $$array[0] || $self->{'source_defaulted'}) {
             $self->generate_default_components(\@files, $tag);
           }
         }
