@@ -1,3 +1,9 @@
+Thu Sep 25 17:06:42 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i - ACE_OS::cond_timedwait - HP's threads return
+	  EAGAIN on timeout from pthread_cond_timedwait, so adjust that
+	  to ETIME.
+
 Thu Sep 25 15:25:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.cpp,OS.cpp: moved socket_init to Object_Manager
