@@ -1169,8 +1169,20 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
         * docs/Options.html: Added documentation for new
           -ORBScopePolicy option.
 
-        * $ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
-          were not defined for NT.  Added them.
+        * $ACE_ROOT/ace/OS.h: 
+
+          - THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM were not defined
+            for NT.  Added them.
+
+          - Moved the following definitions of VxWorks around such
+            that these defines are available even when PACE is not
+            used.
+
+            THR_INHERIT_SCHED
+            THR_EXPLICIT_SCHED
+            THR_SCHED_IO
+            THR_SCOPE_SYSTEM
+            THR_SCOPE_PROCESS
 
         * $ACE_ROOT/ace/OS.cpp: LinuxThreads do not have support for
           PTHREAD_SCOPE_PROCESS; only PTHREAD_SCOPE_SYSTEM is
