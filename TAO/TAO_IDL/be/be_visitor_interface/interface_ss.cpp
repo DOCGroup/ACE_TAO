@@ -393,23 +393,23 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 //   {
 //     *os << "void " << full_skel_name
-// 	<< "::_interface_skel (" << be_idt << be_idt_nl
-// 	<< "TAO_ServerRequest & server_request, " << be_nl
-// 	<< "void * /* servant_upcall */," << be_nl
-// 	<< "void * servant" << be_nl
-// 	<< "ACE_ENV_ARG_DECL" << be_uidt_nl
-// 	<< ")" << be_uidt_nl;
+//      << "::_interface_skel (" << be_idt << be_idt_nl
+//      << "TAO_ServerRequest & server_request, " << be_nl
+//      << "void * /* servant_upcall */," << be_nl
+//      << "void * servant" << be_nl
+//      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+//      << ")" << be_uidt_nl;
 //     *os << "{" << be_idt_nl;
 //     *os << "TAO_IFR_Client_Adapter * const adapter =" << be_idt_nl
-// 	<< "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
-// 	<< be_idt << be_idt_nl
-// 	<< "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
-// 	<< ");" << be_uidt_nl << be_uidt_nl;
+//      << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
+//      << be_idt << be_idt_nl
+//      << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
+//      << ");" << be_uidt_nl << be_uidt_nl;
 //     *os << "if (adapter == 0)" << be_idt_nl
-// 	<< "{" << be_idt_nl
-// 	<< "ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1," << be_nl
-// 	<< "                              CORBA::COMPLETED_NO));" << be_uidt_nl
-// 	<< "}" << be_uidt_nl << be_nl;
+//      << "{" << be_idt_nl
+//      << "ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1," << be_nl
+//      << "                              CORBA::COMPLETED_NO));" << be_uidt_nl
+//      << "}" << be_uidt_nl << be_nl;
 
 //     Identifier rt_name (ACE_OS::strdup (" CORBA::InterfaceDef"));
 //     UTL_ScopedName rt_scoped_name (&rt_name, 0);
@@ -497,58 +497,58 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 //     *os << ", TAO::SArg_Traits< ";
 //     op_visitor.gen_arg_template_param_name (&get_interface,
-// 					    &rt,
-// 					    os);
+//                                          &rt,
+//                                          os);
 //     *os << ">::ret_arg_type ret_arg =" << be_idt_nl;
 
 //     if (be_global->gen_thru_poa_collocation ())
 //       {
-// 	*os << "TAO::Portable_Server::get_ret_arg< ";
+//      *os << "TAO::Portable_Server::get_ret_arg< ";
 
-// 	op_visitor.gen_arg_template_param_name (&get_interface,
-// 						&rt,
-// 						os);
+//      op_visitor.gen_arg_template_param_name (&get_interface,
+//                                              &rt,
+//                                              os);
 
-// 	// ------
-// 	// Because of MSVC++ 6's lack of template typedef support,
-// 	// explicitly specify the return value type for the argument
-// 	// selection function template.
-// 	/**
-// 	 * @todo Remove this code once we drop support for MSVC++ 6,
-// 	 *       and update tao/PortableServer/get_arg.h"
-// 	 *       accordingly.
-// 	 */
-// 	*os << ", TAO::SArg_Traits< ";
-// 	op_visitor.gen_arg_template_param_name (&get_interface,
-// 						&rt,
-// 						os);
-// 	*os << ">::ret_arg_type";
-// 	// ------
+//      // ------
+//      // Because of MSVC++ 6's lack of template typedef support,
+//      // explicitly specify the return value type for the argument
+//      // selection function template.
+//      /**
+//       * @todo Remove this code once we drop support for MSVC++ 6,
+//       *       and update tao/PortableServer/get_arg.h"
+//       *       accordingly.
+//       */
+//      *os << ", TAO::SArg_Traits< ";
+//      op_visitor.gen_arg_template_param_name (&get_interface,
+//                                              &rt,
+//                                              os);
+//      *os << ">::ret_arg_type";
+//      // ------
 
-// 	*os << "> (" << be_idt_nl
-// 	    << "server_request.operation_details ()," << be_nl
-// 	    << "args);" << be_uidt;
+//      *os << "> (" << be_idt_nl
+//          << "server_request.operation_details ()," << be_nl
+//          << "args);" << be_uidt;
 //       }
 //     else
 //       {
-// 	*os << "retval.arg ()";
+//      *os << "retval.arg ()";
 //       }
- 
+
 //     *os << be_uidt_nl;
 
 //     *os << "TAO_OutputCDR & out = *server_request.outgoing ();"
-// 	<< be_nl << be_nl
-// 	<< "CORBA::Boolean const result =" << be_idt_nl
-// 	<< "adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
-// 	<< "out," << be_nl
-// 	<< "ret_arg" << be_uidt_nl
-// 	<< ");" << be_uidt << be_uidt_nl << be_nl
-// 	<< "adapter->dispose (ret_arg);" << be_nl << be_nl;
+//      << be_nl << be_nl
+//      << "CORBA::Boolean const result =" << be_idt_nl
+//      << "adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
+//      << "out," << be_nl
+//      << "ret_arg" << be_uidt_nl
+//      << ");" << be_uidt << be_uidt_nl << be_nl
+//      << "adapter->dispose (ret_arg);" << be_nl << be_nl;
 
 //     *os << "if (result == 0)" << be_idt_nl
-// 	<< "{" << be_idt_nl
-// 	<< "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-// 	<< "}" << be_uidt;
+//      << "{" << be_idt_nl
+//      << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+//      << "}" << be_uidt;
 
 //     this->generate_send_reply (os);
 
@@ -886,7 +886,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" 
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
       << be_nl << be_nl
       << "CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"

@@ -160,7 +160,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   // parentage interface.
   if (node->has_mixed_parentage ())
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "virtual void _add_ref (void);";
     }
 
