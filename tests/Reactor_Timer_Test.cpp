@@ -79,7 +79,8 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long current_count = ACE_reinterpret_cast (long, arg);
+  long current_count = ACE_static_cast (long,
+                          ACE_reinterpret_cast (size_t, arg));
   if (current_count >= 0)
     ACE_ASSERT (current_count == count);
 
@@ -129,7 +130,7 @@ test_registering_all_handlers (void)
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
-  for (u_long i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (&rt[i], 
@@ -155,7 +156,7 @@ test_registering_one_handler (void)
   done = 0;
   count = 0;
 
-  for (u_long i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (&rt[0],
@@ -181,7 +182,7 @@ test_canceling_odd_timers (void)
   count = 1;
   odd = 1;
 
-  for (u_long i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                           (const void *) i,

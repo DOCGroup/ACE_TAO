@@ -255,7 +255,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
-  int n_iterations = DEFAULT_ITERATIONS;
+  size_t n_iterations = DEFAULT_ITERATIONS;
 
   u_int i;
 

@@ -276,7 +276,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
       ACE_OS::memcpy (this->received_.rd_ptr () + offset,
                       mb->rd_ptr (),
                       payload_size);
-      this->received_bytes_ += payload_size;
+      this->received_bytes_ += ACE_static_cast (ACE_UINT32, payload_size);
       offset += payload_size;
     }
 
@@ -288,7 +288,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
       fragment_size += payload_size;
       ACE_OS::memcpy (this->received_.rd_ptr () + offset,
                       i->rd_ptr (), payload_size);
-      this->received_bytes_ += payload_size;
+      this->received_bytes_ += ACE_static_cast (ACE_UINT32, payload_size);
       offset += payload_size;
     }
 
