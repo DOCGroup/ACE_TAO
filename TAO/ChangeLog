@@ -1,3 +1,19 @@
+Sun Apr  6 17:37:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/AMI/client.cpp:
+
+	  Modified code to make it possible to change the number of iterations
+	  in 3 separate loops and in correctness checks by changing one 
+	  constant at the top of the file.
+
+        * tests/Portable_Interceptors/Benchmark/server.cpp:
+        * tests/Portable_Interceptors/Dynamic/server.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/server.cpp:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+
+	  Added default IOR filename.
+
 Sun Apr  6 15:04:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.cpp:
