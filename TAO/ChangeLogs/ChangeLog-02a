@@ -1,3 +1,9 @@
+Mon Apr 29 06:41:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/DIOP_Connector.cpp: Fixed a typo. This was
+	  causing all the tests linking in the Strategies libraries to
+	  fail in our daily builds.
+
 Mon Apr 29 08:17:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAOACE.dsw:
