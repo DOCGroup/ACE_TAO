@@ -12,7 +12,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
     // Override the template value for optimize.  Building the exe
     // with optimization turned on doesn't seem to work (at least not with
     // vc6 or vc71).
-    // optimize =
+    optimize =
   }
 
   verbatim(gnuace, local) {
@@ -47,7 +47,7 @@ project(TAO_IDL_BE) : acelib, core, tao_output, crosscompile {
     // Override the template value for optimize.  Building the backend
     // with optimization turned on doesn't seem to work (at least not with
     // vc6 or vc71).
-    // optimize =
+    optimize =
   }
 
   Source_Files {
