@@ -71,6 +71,13 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
       // Create an address to bind the socket to.
       ACE_INET_Addr local;
 
+#if defined (linux)
+      local = this->mcast_addr_;
+#else /* linux */
+      if (local.set (this->mcast_addr_.get_port_number ()) == -1)
+        return -1;
+#endif /* linux */
+
       if (ACE_SOCK_Dgram::shared_open (local,
                                        protocol_family) == -1)
         return -1;
