@@ -46,13 +46,6 @@ public:
   // The Svc_Handler callbacks.
   virtual int svc (void);
 
-public:
-  static ACE_Atomic_Op <ACE_Thread_Mutex, u_short> waiting_;
-  // How many connections are we waiting for.
-
-  static u_short connection_count_;
-  // How many connections are currently open
-
 private:
   ACE_TCHAR name_[MAXPATHLEN];
   u_short connection_;

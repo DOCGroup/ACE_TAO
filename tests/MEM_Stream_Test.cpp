@@ -26,6 +26,7 @@
 #include "ace/Connector.h"
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Singleton.h"
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
@@ -40,11 +41,20 @@ static int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-ACE_Atomic_Op <ACE_Thread_Mutex, u_short> Echo_Handler::waiting_ = NO_OF_CONNECTION;
-u_short Echo_Handler::connection_count_ = 0;
+typedef ACE_Atomic_Op <ACE_Thread_Mutex, u_short> WaitingCounter;
+typedef ACE_Singleton <WaitingCounter, ACE_Thread_Mutex> Waiting;
+
+// Number of connections that are currently open
+static u_short connection_count = 0;
 
 typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
 typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
+
+static void reset_handler (void)
+{
+  (*Waiting::instance ()) = NO_OF_CONNECTION;
+  connection_count = 0;
+}
 
 int
 Echo_Handler::open (void *)
@@ -55,17 +65,10 @@ Echo_Handler::open (void *)
 
 Echo_Handler::Echo_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH> (thr_mgr),
-    connection_ (++Echo_Handler::connection_count_)
+    connection_ (++connection_count)
 {
   ACE_OS::sprintf (this->name_, ACE_TEXT ("Connection %d --> "),
                    this->connection_);
-}
-
-void
-Echo_Handler::reset_handler (void)
-{
-  Echo_Handler::waiting_ = NO_OF_CONNECTION;
-  Echo_Handler::connection_count_ = 0;
 }
 
 int
@@ -101,7 +104,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask mask)
 {
   // Reduce count.
-  this->waiting_--;
+  (*Waiting::instance ())--;
 
 #if 1
   if (client_strategy != ACE_MEM_IO::Reactive)
@@ -110,7 +113,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
 #endif /* tests */
 
   // If no connections are open.
-  if (this->waiting_ == 0)
+  if ((*Waiting::instance ()) == 0)
     ACE_Reactor::instance ()->end_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -250,8 +253,6 @@ int test_multithreaded (ACE_MEM_Addr &server_addr)
 {
   ACE_DEBUG ((LM_DEBUG, "Testing Multithreaded MEM_Stream\n\n"));
 
-  Echo_Handler::reset_handler ();
-
   client_strategy = ACE_MEM_IO::MT;
   ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
   ACE_Creation_Strategy<Echo_Handler> create_strategy;
@@ -317,9 +318,13 @@ main (int, ACE_TCHAR *[])
   unsigned short port = 0;
   ACE_MEM_Addr server_addr (port);
 
+  reset_handler ();
+
   test_reactive (server_addr);
 
   ACE_Reactor::instance ()->reset_event_loop ();
+
+  reset_handler ();
 
   test_multithreaded (server_addr);
 
@@ -333,6 +338,7 @@ main (int, ACE_TCHAR *[])
 template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>;
 template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, u_short>;
+template class ACE_Singleton<ACE_Atomic_Op<ACE_Thread_Mutex, u_short>,ACE_Thread_Mutex>;
 template class ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Creation_Strategy<Echo_Handler>;
 template class ACE_Reactive_Strategy<Echo_Handler>;
@@ -344,6 +350,7 @@ template class ACE_Thread_Strategy<Echo_Handler>;
 #pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>
 #pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_short>
+#pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_Thread_Mutex, u_short>,ACE_Thread_Mutex>
 #pragma instantiate ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<Echo_Handler>
 #pragma instantiate ACE_Reactive_Strategy<Echo_Handler>
