@@ -1,12 +1,15 @@
 Tue Jun  9 14:59:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/OS.cpp:  Made it so both Borland and Microsoft use the 
-	  x.wProcessorArchitecture structure for system info.
+        * ace/OS.cpp:  Made it so both Borland and Microsoft use the
+          x.wProcessorArchitecture structure for system info.
 
 Tue Jun 09 14:35:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Tokens_Test.cpp,UPIPE_SAP_Test.cpp: only need the
           template instantiations with Borland C++.
+
+        * bin/make_release: create version diffs, in background,
+          when creating releases.
 
 Tue Jun 09 12:50:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
