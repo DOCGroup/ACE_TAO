@@ -10,7 +10,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Object_Creation_And_Registration
+DIRS  = Object_Creation_And_Registration \
+	Demux
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

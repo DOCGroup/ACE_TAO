@@ -22,7 +22,7 @@ LSRC = $(PROG_SRCS)
 FILE_SVR_OBJS = FooC.o FooS.o server.o Foo_i.o
 FILE_CLT_OBJS = FooC.o FooS.o client.o
 
-BIN = server client
+BIN_UNCHECKED = server client
 
 TAO_IDLFLAGS += -Ge 1
 
@@ -59,6 +59,11 @@ else # ! ACE_HAS_GNUG_PRE_2_8  &&  ! ghs
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

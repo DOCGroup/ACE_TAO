@@ -20,7 +20,9 @@ BIN2 = Trading_Service
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN2)
+  endif # minimum_corba
 endif # Trader
 
 #--------------------------------------------------------------------------

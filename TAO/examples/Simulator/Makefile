@@ -8,9 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Event_Supplier \
-	DOVEMIB \
-        DOVEBrowser
+DIRS  =	Event_Supplier
+
+#	DOVEMIB
+#        DOVEBrowser
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

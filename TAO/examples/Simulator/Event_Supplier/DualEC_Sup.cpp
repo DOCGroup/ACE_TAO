@@ -359,7 +359,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
         if ((nav_iter.next (nav)) && (nav) && (*nav))
           {
-            any.replace (_tc_Navigation, *nav, 0, ACE_TRY_ENV);
+            any <<= *nav;
 
             // Sleep briefly to avoid too much livelock (a little is good).
             ACE_OS::sleep (sup->nav_pause_);
@@ -441,7 +441,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
         if ((weap_iter.next (weap)) && (weap) && (*weap))
           {
-            any.replace (_tc_Weapons, *weap, 0, ACE_TRY_ENV);
+            any <<= *weap;
 
             // Sleep briefly to avoid too much livelock (a little is good).
             ACE_OS::sleep (sup->weap_pause_);

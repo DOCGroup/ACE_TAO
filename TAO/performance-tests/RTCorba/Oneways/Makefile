@@ -10,7 +10,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = 
+DIRS  = Reliable
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -22,14 +22,6 @@ endif
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(corba_messaging),1)
-
-# No Buffered Oneways without CORBA Messaging
-  DIRS += Reliable
-
-endif # corba_messaging
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU

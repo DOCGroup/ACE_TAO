@@ -23,7 +23,10 @@ DIRS  = Simple_Naming \
         Time \
         Event \
 	CosEvent \
-	Concurrency
+	Concurrency \
+	ImplRepo \
+	Trading \
+	AVStreams
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -35,20 +38,6 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(minimum_corba),0)
-
-# ImplRepo uses AdapterActivator which is disabled when compiling with
-# minimum CORBA support.
-  DIRS += ImplRepo
-
-# Trader uses DynAny which is disabled when compiling with minimum
-# CORBA support.  LifeCycle and AV depend on Trader so don't build
-# them either.
-  DIRS += Trading #AVStreams
-
-endif # minimum_corba
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU

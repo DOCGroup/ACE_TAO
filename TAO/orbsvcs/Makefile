@@ -17,6 +17,10 @@ DIRS  = orbsvcs \
         Time_Service \
         CosEvent_Service \
         Concurrency_Service \
+	ImplRepo_Service \
+        LifeCycle_Service \
+	Logging_Service \
+	Trading_Service \
         tests \
         examples
 
@@ -30,20 +34,6 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(minimum_corba),0)
-
-# ImplRepo uses AdapterActivator which is disabled when compiling with
-# minimum CORBA support
-  DIRS += ImplRepo_Service
-
-# Trader uses DynAny which is disabled when compiling with minimum
-# CORBA support.  LifeCycle, Logging_Service, and AV depend on Trader
-# so don't build them either.
-  DIRS += LifeCycle_Service Logging_Service Trading_Service
-
-endif # minimum_corba
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU

@@ -23,10 +23,10 @@
 
 #include "timeS.h"
 
-class Time_impl : public virtual POA_Time 
-{ 
+class Time_impl : public virtual POA_Time
+{
 public:
-  virtual TimeOfDay get_gmt (CORBA::Environment &) 
+  virtual TimeOfDay get_gmt (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
