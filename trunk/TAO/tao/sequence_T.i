@@ -69,7 +69,7 @@ TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
 template <class T> ACE_INLINE void
 TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 {
-  delete [] buffer;
+  delete[] buffer;
 }
 
 // ***************************************************
@@ -106,15 +106,15 @@ TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i) const
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T *
-TAO_Bounded_Sequence<T,MAX>::allocbuf (CORBA::ULong size)
+TAO_Bounded_Sequence<T,MAX>::allocbuf (CORBA::ULong)
 {
-  return new T[size];
+  return new T[MAX];
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE void
 TAO_Bounded_Sequence<T,MAX>::freebuf (T *buffer)
 {
-  delete [] buffer;
+  delete[] buffer;
 }
 
 // *************************************************************
