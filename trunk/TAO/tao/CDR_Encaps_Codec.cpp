@@ -154,12 +154,15 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       CORBA::TypeCode_var tc = data.type ();
 
       TAO_InputCDR input (data._tao_get_cdr (),
-                          data._tao_byte_order ());
+                          data._tao_byte_order (),
+                          this->major_,
+                          this->minor_,
+                          this->orb_core_);
 
       TAO_Marshal_Object::perform_append (tc.in (),
                                           &input,
                                           &cdr
-                                           ACE_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // TAO extension: replace the contents of the octet sequence with
