@@ -691,7 +691,7 @@ sub update_html ($$)
     ### Print link to new scoreboard
 
     print $indexhtml "<h2>Some nightly builds have been moved to the ";
-    print $indexhtml "<A HREF=\"http://doc.ece.uci.edu/scoreboard\">New";
+    print $indexhtml "<A HREF=\"http://doc.ece.uci.edu/scoreboard\">New ";
     print $indexhtml "Scoreboard</A>.  Don't forget to check it out.</h2><HR>\n";
 
     ### Print tables (first the empty one)
