@@ -1,3 +1,12 @@
+Thu Sep  2 07:24:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/core.mpb:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Switch the borland template over to use the INSTALL_THIS_TARGET
+          template value instead of a 'verbatim' section to do the same
+          thing.
+
 Thu Sep  2 09:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
@@ -11,42 +20,42 @@ Thu Sep  2 07:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep  1 17:16:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Reverse_Lock_T.inl:
-	* ace/Typed_SV_Message.inl: Added #include "ace/config-all.h" to get
-	  missing macros (ACE_NOTSUP_RETURN, ACE_TRACE).
+        * ace/Reverse_Lock_T.inl:
+        * ace/Typed_SV_Message.inl: Added #include "ace/config-all.h" to get
+          missing macros (ACE_NOTSUP_RETURN, ACE_TRACE).
 
-	* apps/JAWS/clients/Caching/http_client.cpp:
-	* apps/JAWS/clients/Caching/http_handler.cpp:
-	* apps/JAWS/server/HTTP_Response.cpp:
-	* apps/JAWS/server/HTTP_Server.{h cpp}:
-	* apps/JAWS/server/IO.cpp:
-	* apps/JAWS3/jaws3/Task_Timer.cpp: Add missing includes.
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/JAWS/server/HTTP_Server.{h cpp}:
+        * apps/JAWS/server/IO.cpp:
+        * apps/JAWS3/jaws3/Task_Timer.cpp: Add missing includes.
 
 Wed Sep  1 12:32:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl (mutex_init):
+        * ace/OS_NS_Thread.inl (mutex_init):
 
           Explicitly cast the unused returned value of an
           ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
           operand of comma has no effect" warning exhibited by GNU g++
-	  3.4.x.  Thanks to Bogdan Jeram <bjeram at eso dot org> for
-	  reporting the warning.
+          3.4.x.  Thanks to Bogdan Jeram <bjeram at eso dot org> for
+          reporting the warning.
 
 Wed Sep  1 11:35:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Removed ACE_UINT64_FORMAT_SPECIFIER autoheader template.  It
-	  is now defined within ACE_CHECK_FORMAT_SPECIFIERS.
+          Removed ACE_UINT64_FORMAT_SPECIFIER autoheader template.  It
+          is now defined within ACE_CHECK_FORMAT_SPECIFIERS.
 
-	* m4/platforms.m4:
+        * m4/platforms.m4:
 
-	  Added new macro ACE_CHECK_FORMAT_SPECIFIERS, which is used to
-	  define preprocessor macros that overide the defaults provided
-	  for size_t, ssize_t, ACE_INT64, and ACE_UINT64 *printf format
-	  specifiers.  I don't think autoconf feature tests are possible,
-	  especially if we ever hope to support cross compilation, but at
-	  least this pulls everything into one place.
+          Added new macro ACE_CHECK_FORMAT_SPECIFIERS, which is used to
+          define preprocessor macros that overide the defaults provided
+          for size_t, ssize_t, ACE_INT64, and ACE_UINT64 *printf format
+          specifiers.  I don't think autoconf feature tests are possible,
+          especially if we ever hope to support cross compilation, but at
+          least this pulls everything into one place.
 
 Wed Sep  1 12:52:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 

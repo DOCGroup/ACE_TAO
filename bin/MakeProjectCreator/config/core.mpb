@@ -2,11 +2,7 @@
 // $Id$
 
 project {
-  verbatim(borland, macros) {
-    INSTALL_THIS_TARGET = 1
-  }
-
-  specific(automake) {
+  specific {
     INSTALL_THIS_TARGET = 1
   }
 }
