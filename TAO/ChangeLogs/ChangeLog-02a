@@ -1,3 +1,9 @@
+Wed Feb 23 20:36:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/README: Updated this file to include brief descriptions of 
+	  all tests in the subdirectories.  Thanks to Rick Hess
+ 	  <rick.hess@lmco.com> for reporting this.
+
 Wed Feb 23 14:42:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/IDL_Test/Makefile:

@@ -1,6 +1,6 @@
-This test is a test case for one of the problems that was reported by
-the DOORS team at Lucent. The test is aimed at testing the following
-scenario. 
+This test evalutes ORB fault tolerance support, based on one of the
+problems that was reported by the DOORS team at Lucent. The test is
+aimed at testing the following scenario.
 
 1. We will have three copies of the same server running. Let me call
 them as ref1, ref2 & ref3.
