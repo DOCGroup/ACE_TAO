@@ -229,12 +229,12 @@ public:
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.
 
-  virtual int expire (void);
+  /* virtual */ int expire (void);
   // Run the <functor> for all timers whose values are <=
   // <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
   // the number of timers canceled.
 
-  virtual ACE_Time_Value gettimeofday (void);
+  /* virtual */ ACE_Time_Value gettimeofday (void);
   // Returns the current time of day.  This allows different
   // implementations of the timer queue to use special high resolution
   // timers.
@@ -281,7 +281,7 @@ public:
   // after it is returned by a method like remove_first ()
 
 protected:
-  virtual void upcall (TYPE &type,
+  /* virtual */ void upcall (TYPE &type,
                        const void *act,
                        const ACE_Time_Value &cur_time);
   // This method will call the <functor> with the <type>, <act> and
