@@ -1,3 +1,9 @@
+Mon Feb  7 21:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynStruct_i.cpp:
+          Removed not used variable and replaced ACE cast macros with their
+          C++ version
+
 Mon Feb  7 13:24:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Remote_Invocation.cpp:
