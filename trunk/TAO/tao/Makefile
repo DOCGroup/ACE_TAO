@@ -18,7 +18,7 @@ PUB_HDRS = Align CDR GIOP IIOP_Object IIOP_ORB Connect Params \
 
 ORBCORE_SRCS = \
 	Any \
-	CORBA \
+	CORBA_Cls \
 	Exception \
 	NVList \
 	Object \
