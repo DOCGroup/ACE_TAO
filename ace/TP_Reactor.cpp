@@ -430,6 +430,12 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
   return 0;
 }
 
+int
+ACE_TP_Reactor::resumable_handler (void)
+{
+  return 1;
+}
+
 
 ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
 {

@@ -267,6 +267,13 @@ ACE_Reactor::reset_reactor_event_loop (void)
   // Resets the <ACE_Reactor::end_event_loop_> static so that the
   // <run_event_loop> method can be restarted.
 
+
+int
+ACE_Reactor::resumable_handler (void)
+{
+  return this->implementation ()->resumable_handler ();
+}
+
 void
 ACE_Reactor::dump (void) const
 {
@@ -274,4 +281,3 @@ ACE_Reactor::dump (void) const
 
   implementation_->dump ();
 }
-
