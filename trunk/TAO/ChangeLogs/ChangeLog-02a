@@ -1,3 +1,14 @@
+Thu May 17 23:15:29 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h (scenario_):
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp (receive_request_service_contexts):
+
+	  Added a field used to keep track of the scenario count.  It is
+	  used to get around the inability to call
+	  RequestInfo::arguments() in the
+	  receive_request_service_contexts() a interception point.  This
+	  allows the test to finally run to completion.
+
 Thu May 17 22:29:08 2001  Ossama Othman  <ossama@uci.edu>
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
