@@ -117,7 +117,7 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int handle_signals = 1);
+                        int mask_signals = 1);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor_T (size_t size,
@@ -126,7 +126,7 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int handle_signals = 1);
+                        int mask_signals = 1);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t max_number_of_handles = DEFAULT_SIZE,
@@ -624,9 +624,11 @@ protected:
   // This flag is used to keep track of whether we are actively handling
   // events or not.
 
-  int handle_signals_;
-  // If 0 then the Reactor will make no attempts to protect itself
-  // against signals or to dispatch them.
+  int mask_signals_;
+  // If 0 then the Reactor will not mask the signals during the event
+  // dispatching.  This is useful for applications that do not
+  // register any signal handlers and want to reduce the overhead
+  // introduce by the kernel level locks required to change the mask.
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))
