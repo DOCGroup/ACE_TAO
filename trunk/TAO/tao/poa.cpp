@@ -4,7 +4,7 @@
 // All Rights Reserved
 //
 // POA initialisation -- both anonymous and (for system bootstrapping) 
-// named BOAs.
+// named POAs.
 //
 // XXX at this time, there's a strong linkage between this code and
 // the modules knowing about IIOP.  In the future, a looser coupling
@@ -27,14 +27,14 @@
 #include "tao/corba.h"
 
 // {A201E4C8-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_BOA,
+DEFINE_GUID (IID_POA,
 0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98) ;
 
 #if !defined (__ACE_INLINE__) 
 #  include "poa.i"
 #endif
 
-// CORBA_POA::init() is used in get_boa() and get_named_boa() in order
+// CORBA_POA::init() is used in get_poa() and get_named_poa() in order
 // to initialize the OA.  It was originally part of ROA, and may no
 // longer be useful.
 CORBA::POA_ptr
@@ -139,7 +139,7 @@ CORBA_POA::get_key (CORBA::Object_ptr,
 void
 CORBA_POA::please_shutdown (CORBA::Environment &env)
 {
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, poa_mon, lock_));
 
   env.clear ();
   do_exit_ = CORBA::B_TRUE;
@@ -149,7 +149,7 @@ CORBA_POA::please_shutdown (CORBA::Environment &env)
 void
 CORBA_POA::clean_shutdown (CORBA::Environment &env)
 {
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, poa_mon, lock_));
 
   env.clear ();
 
@@ -187,7 +187,7 @@ CORBA_POA::register_dir (dsi_handler handler,
 // such bindings are /etc/services (for TCP) and /etc/rpc (for ONC
 // RPC) .  The name of a POA is only guaranteed to be unique within
 // the domain of a single system, as a rule; two hosts would have
-// distinct "king" BOAs.
+// distinct "king" POAs.
 //
 // For network endpoints, most such names are manually administered.
 // Some other namespaces (AF_UNIX filesystem names for example) have a
@@ -200,7 +200,7 @@ CORBA_POA::register_dir (dsi_handler handler,
 // not know specifically about the Internet ORB !!
 
 CORBA::POA_ptr
-CORBA_POA::get_named_boa (CORBA::ORB_ptr orb,
+CORBA_POA::get_named_poa (CORBA::ORB_ptr orb,
                           CORBA::String name,
                           CORBA::Environment &env) 
 {
@@ -219,9 +219,9 @@ CORBA_POA::get_named_boa (CORBA::ORB_ptr orb,
         // POA initialization with name specified; it'll come from
         // /etc/services if it's not a port number.
 
-        ACE_INET_Addr boa_name (name, (ACE_UINT32) INADDR_ANY);
+        ACE_INET_Addr poa_name (name, (ACE_UINT32) INADDR_ANY);
 
-        tcp_oa = CORBA::POA::init (orb, boa_name, env);
+        tcp_oa = CORBA::POA::init (orb, poa_name, env);
 
         if (env.exception () != 0) 
           return 0;
@@ -241,7 +241,7 @@ CORBA_POA::get_named_boa (CORBA::ORB_ptr orb,
 // a short lifespan, namely that of the process acquiring this POA.
 
 CORBA::POA_ptr
-CORBA_POA::get_boa (CORBA::ORB_ptr orb,
+CORBA_POA::get_poa (CORBA::ORB_ptr orb,
 		    CORBA::Environment &env) 
 {
   env.clear ();
@@ -436,7 +436,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
 ULONG __stdcall
 CORBA_POA::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, poa_mon, com_lock_, 0));
   return ++refcount_;
 }
 
@@ -444,7 +444,7 @@ ULONG __stdcall
 CORBA_POA::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, poa_mon, com_lock_, 0));
 
     if (--refcount_ != 0)
       return refcount_;
@@ -460,7 +460,7 @@ CORBA_POA::QueryInterface (REFIID riid,
 {
   *ppv = 0;
 
-  if (IID_BOA == riid
+  if (IID_POA == riid
       || IID_IUnknown == riid)
     *ppv = this;
 

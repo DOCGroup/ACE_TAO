@@ -857,8 +857,8 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
       // done.
       val = ACE::get_flags (handle);
 
-      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-        // Set the descriptor into non-blocking mode if it's not
+      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+        // Set the handle into non-blocking mode if it's not
         // already in it.
         ACE::set_flags (handle, ACE_NONBLOCK);
       return 1;
@@ -876,7 +876,7 @@ ACE::leave_recv_timedwait (ACE_HANDLE handle,
                            int val)
 {
   if (timeout != 0 
-      && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+      && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
     {
       // We need to stash errno here because ACE::clr_flags() may
       // reset it.
@@ -904,7 +904,7 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   handle_set.set_bit (handle);
 
   // On timed writes we always go into select(); only if the
-  // descriptor is available for writing within the specified amount
+  // handle is available for writing within the specified amount
   // of time do we put it in non-blocking mode
 
   switch (ACE_OS::select (int (handle) + 1,
@@ -919,8 +919,8 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
       // done.
       val = ACE::get_flags (handle);
 
-      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-        // Set the descriptor into non-blocking mode if it's not
+      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+        // Set the handle into non-blocking mode if it's not
         // already in it.
         ACE::set_flags (handle, ACE_NONBLOCK);
       return 1;
@@ -938,7 +938,7 @@ ACE::leave_send_timedwait (ACE_HANDLE handle,
                            int val)
 {
   if (timeout != 0
-      && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+      && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
     {
       // We need to stash errno here because ACE::clr_flags() may
       // reset it.
@@ -1892,7 +1892,7 @@ ACE::sock_error (int error)
       return "address family not supported";
       /* NOTREACHED */
     case WSAEMFILE:
-      return "no file descriptors available";
+      return "no file handles available";
       /* NOTREACHED */
     case WSAENOBUFS:
       return "no buffer space available";
@@ -1907,7 +1907,7 @@ ACE::sock_error (int error)
       return "socket type not supported for address family";
       /* NOTREACHED */
     case WSAENOTSOCK:
-      return "descriptor is not a socket";
+      return "handle is not a socket";
       /* NOTREACHED */
     case WSAEWOULDBLOCK:
       return "socket marked as non-blocking and SO_LINGER set not 0";
@@ -2032,7 +2032,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
           continue;
         }
 
-      if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_UP) == 0)
+      if (ACE_BIT_DISABLED (flags.ifr_flags, IFF_UP))
         {
           ACE_ERROR ((LM_ERROR, "%p\n",
                      "ACE::get_bcast_addr: Network interface is not up"));
@@ -2148,7 +2148,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
 #endif /* __SVR4 */
 }
 
-// Routine to return a descriptor from which ioctl() requests can be
+// Routine to return a handle from which ioctl() requests can be
 // made.
 
 ACE_HANDLE

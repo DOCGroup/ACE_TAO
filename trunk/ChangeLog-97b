@@ -1,5 +1,23 @@
 Fri Oct 24 17:39:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/ACE.cpp: Changed all the ACE_BIT_ENABLED () == 0 macros to
+ 	  ACE_BIT_DISABLED() since the logic is clearer.
+
+	* ace/SOCK_Acceptor.cpp (shared_accept): Improved the handling of
+ 	  timed accepts.  The original implementation was prone to race
+ 	  conditions if there were multiple processes all doing timed
+ 	  connects on the *same acceptor socket*!  That's because select()
+ 	  and accept() are not performed atomically.  Now, we're smarted
+ 	  about handling this...
+
+	* tests/Conn_Test.cpp: Simplified the shutdown logic, which
+ 	  appeared to have race conditions.
+
+	* tests/Conn_Test.cpp: Modified this test to spawn off a number of
+ 	  server processes, all of which will listen for connections on
+ 	  the same acceptor port.  This demonstrates a useful idiom for
+ 	  writing connection-oriented concurrent server pools.
+
 	* netsvcs/lib/Server_Logging_Handler_T: Fixed this code so that if
  	  we're on an HP/UX that has broken templates we don't use the
  	  Base_Optimizer.  Thanks to Per Andersson for providing this fix.

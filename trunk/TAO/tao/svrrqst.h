@@ -30,11 +30,11 @@
 #endif
 
 class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
-{
   // = TITLE
   // XXX this is currently in an intermediate state; this is not
   // supposed to be IIOP-specific, or to expose quite so many
   // implementation details, but right now it is.
+{
 public:
   virtual void __stdcall params (CORBA::NVList_ptr list,
 				 CORBA::Environment &env) = 0;
@@ -77,13 +77,15 @@ public:
 };
 
 class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
+  // = TITLE
+  // @@ Please comment me.
 {
 public:
   // Constructor, destructor
 
   IIOP_ServerRequest (CDR *msg,
 		      CORBA::ORB_ptr the_orb,
-		      CORBA::POA_ptr the_boa);
+		      CORBA::POA_ptr the_poa);
 
   virtual ~IIOP_ServerRequest (void);
 
@@ -94,7 +96,7 @@ public:
   void __stdcall result (CORBA::Any_ptr value,
 			 CORBA::Environment &env);
 
-  void __stdcall exception (CORBA::ExceptionType	type,
+  void __stdcall exception (CORBA::ExceptionType type,
 			    CORBA::Any_ptr value,
 			    CORBA::Environment &env);
 
@@ -133,7 +135,7 @@ private:
 
   CORBA::ORB_ptr orb_;
 
-  CORBA::POA_ptr boa_;
+  CORBA::POA_ptr poa_;
 };
 
 #endif /* TAO_SVRRQST_H */
