@@ -12,49 +12,25 @@ $status = 0;
 
 $iorfile1 = PerlACE::LocalFile ("test1.ior");
 $iorfile2 = PerlACE::LocalFile ("test2.ior");
-$server_conf = PerlACE::LocalFile ("server.conf");
 
 unlink $iorfile1;
 unlink $iorfile2;
 
-print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
-
-
-# CORBA priorities 37, 45 and 50, etc. are for the SCHED_OTHER class on
-# Solaris.  May need to use different values for other platforms
-# depending on their native priorities scheme, i.e., based on the
-# available range.
-
 $server_args =
-    "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf $server_conf "
-   ."-p 37 -w 51 ";
-
-$client_args =
-    "-n file://$iorfile1 -o file://$iorfile2 "
-   ."-a 37 -b 45 -c 56";
+    "-b bands.unix";
 
 if ($^O eq "MSWin32") {
     $server_args =
-        "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf $server_conf "
-        ."-p 1 -w 7 ";
-
-    $client_args =
-        "-n file://$iorfile1 -o file://$iorfile2 "
-       ."-a 1 -b 4 -c 6 ";
+        "-b bands.nt";
 }
 
 if ($^O eq "dec_osf") {
     $server_args =
-        "-n $iorfile1 -o $iorfile2 -b bands.tru64 -ORBSvcConf $server_conf "
-       ."-p 20 -w 34 ";
-
-    $client_args =
-        "-n file://$iorfile1 -o file://$iorfile2 "
-       ."-a 23 -b 28 -c 34 ";
+        "-b bands.tru64";
 }
 
 $SV = new PerlACE::Process ("server", $server_args);
-$CL = new PerlACE::Process ("client", $client_args);
+$CL = new PerlACE::Process ("client");
 
 $SV->Spawn ();
 
