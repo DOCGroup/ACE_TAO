@@ -1,11 +1,29 @@
+Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Just added the 700th non-DOC group individual who has contributed
+	  to ACE+TAO over the years.  In the last year, we've gone from
+ 	  400 to 700 contributors, which is great!
+
+	* tests/CDR_File_Test.cpp (main): Fixed a signed/unsigned warning
+	  and removed the unreferenced argc/argv parameters.
+
+	* tests{run_tests.lst,Makefile}: Added the new ACE_Log_Msg.cpp
+	  test.
+
+	* tests: Added a new test called Log_Msg_Test.cpp.  This exercises
+	  the many features of the ACE_Log_Msg class.
+
+	* tests/Object_Manager_Test.cpp (main): Just reformatted some
+	  stuff.
+
 Thu Sep  2 14:42:31 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Cached_Accept_Conn_Test.cpp: Repositioned
 	  ACE_HAS_BROKEN_EXTENDED_TEMPLATES macro before the inclusion of
-	  the header since thats where the typedefs had been shifted.
-	  Also, to keep both gcc2.7.3 and sunCC5.0 w.o debugging symbols 
-	  happy it was necessary to move the definitions of
-	  <Accept_Startegy> methods before the instantiations.
+ 	  the header since thats where the typedefs had been shifted.
+  	  Also, to keep both gcc2.7.3 and sunCC5.0 w.o debugging symbols
+ 	  happy it was necessary to move the definitions of
+ 	  <Accept_Startegy> methods before the instantiations.
 
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
