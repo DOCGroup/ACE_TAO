@@ -44,7 +44,7 @@ ACE_ARGV::string_to_array (void)
   if (this->buf_ == 0)
     return;
 
- char *cp = this->buf_;
+ ASYS_TCHAR *cp = this->buf_;
 
  // First pass: count arguments.
 
@@ -52,7 +52,7 @@ ACE_ARGV::string_to_array (void)
  while (*cp != '\0' && *cp != '#')
    {
      // Skip whitespace..
-     while (isspace (*cp))
+     while (ACE_OS::ace_isspace (*cp))
        cp++;
      
      // Increment count and move to next whitespace..
@@ -62,7 +62,7 @@ ACE_ARGV::string_to_array (void)
      // Grok quotes....
      if (*cp == '\'' || *cp == '"')
        {
-	 char quote = *cp;
+	 ASYS_TCHAR quote = *cp;
 	 
 	 // Scan past the string..
 	 for (cp++; *cp != '\0' && *cp != quote; cp++)
@@ -72,7 +72,7 @@ ACE_ARGV::string_to_array (void)
 	 if (*cp == '\0')
 	   {
 	     ACE_ERROR ((LM_ERROR, 
-			 "unmatched %c detected\n", quote));
+			 ASYS_TEXT ("unmatched %c detected\n"), quote));
 	     this->argc_--;
 	     break;
 	   } 
@@ -80,28 +80,28 @@ ACE_ARGV::string_to_array (void)
 	   cp++;
        }
      else // Skip over non-whitespace....
-       while (*cp != '\0' && !isspace (*cp))
+       while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
 	 cp++;
    }
  
  // Second pass: copy arguments..
- char arg[BUFSIZ];
+ ASYS_TCHAR arg[BUFSIZ];
  
  // Make a new argv vector of argc + 1 elements.
- ACE_NEW (this->argv_, char *[this->argc_ + 1]);
+ ACE_NEW (this->argv_, ASYS_TCHAR *[this->argc_ + 1]);
  
- char *ptr = this->buf_;
+ ASYS_TCHAR *ptr = this->buf_;
 
  for (size_t i = 0; i < this->argc_; i++)
    {
      // Skip whitespace..
-     while (isspace (*ptr))
+     while (ACE_OS::ace_isspace (*ptr))
        ptr++;
      
      // Copy next argument and move to next whitespace..
      if (*ptr == '\'' || *ptr == '"')
        {
-	 char quote = *ptr++;
+	 ASYS_TCHAR quote = *ptr++;
 	 
 	 for (cp = arg; 
 	      *ptr != '\0' && *ptr != quote; 
@@ -116,7 +116,7 @@ ACE_ARGV::string_to_array (void)
      else
        {
 	 for (cp = arg; 
-	      *ptr && !isspace (*ptr); 
+	      *ptr && !ACE_OS::ace_isspace (*ptr); 
 	      ptr++, cp++)
 	   if (unsigned (cp - arg) < sizeof arg)
 	     *cp = *ptr;
@@ -124,10 +124,13 @@ ACE_ARGV::string_to_array (void)
        }
      
      // Check for environment variable substitution here.
+#if !defined (ACE_HAS_WINCE)
+     // WinCE doesn't have environment variables so we just skip it.
      if (this->substitute_env_args_)
        ACE_ALLOCATOR (this->argv_[i],
                       ACE::strenvdup (arg));
      else
+#endif /* !ACE_HAS_WINCE */
        ACE_ALLOCATOR (this->argv_[i], 
                       ACE_OS::strdup (arg));
    }
@@ -136,7 +139,7 @@ ACE_ARGV::string_to_array (void)
 }
 
 
-ACE_ARGV::ACE_ARGV (const char buf[],
+ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
 		    int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (TO_PTR_ARRAY),
@@ -145,20 +148,20 @@ ACE_ARGV::ACE_ARGV (const char buf[],
     buf_ (0),
     length_ (0)
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV char[] to char *[]");
+  ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR[] to ASYS_TCHAR *[]");
 
   if (buf == 0 || buf[0] == 0)
     return;
 
   // Make an internal copy of the string
-  ACE_NEW (this->buf_, char[ACE_OS::strlen (buf) + 1]);
+  ACE_NEW (this->buf_, ASYS_TCHAR[ACE_OS::strlen (buf) + 1]);
   ACE_OS::strcpy (this->buf_, buf);
 
   // Create this->argv_ 
   this->string_to_array ();
 }
 
-ACE_ARGV::ACE_ARGV (char *argv[],
+ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
 		    int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (TO_STRING),
@@ -167,7 +170,7 @@ ACE_ARGV::ACE_ARGV (char *argv[],
     buf_ (0),
     length_ (0)
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV char*[] to char[]");
+  ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] to ASYS_TCHAR[]");
 
   if (argv == 0 || argv[0] == 0)
     return;
@@ -178,7 +181,7 @@ ACE_ARGV::ACE_ARGV (char *argv[],
 
   for (int i = 0; argv[i] != 0; i++)
     {
-      char *temp;
+      ASYS_TCHAR *temp;
 
       // Account for environment variables.
       if (this->substitute_env_args_
@@ -195,14 +198,14 @@ ACE_ARGV::ACE_ARGV (char *argv[],
   // Step through all argv params and copy each one into buf; separate
   // each param with white space.
 
-  ACE_NEW (this->buf_, char[buf_len + 1]);
+  ACE_NEW (this->buf_, ASYS_TCHAR[buf_len + 1]);
 
-  char *end = this->buf_;
+  ASYS_TCHAR *end = this->buf_;
   int j;
 
   for (j = 0; argv[j] != 0; j++)
     {
-      char *temp;
+      ASYS_TCHAR *temp;
 
       // Account for environment variables.
       if (this->substitute_env_args_
@@ -237,7 +240,7 @@ ACE_ARGV::ACE_ARGV (int substitute_env_args)
 }
 
 int
-ACE_ARGV::add (const char *next_arg)
+ACE_ARGV::add (const ASYS_TCHAR *next_arg)
 {
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
@@ -245,8 +248,8 @@ ACE_ARGV::add (const char *next_arg)
     return -1;
 
   // Put the new argument at the end of the queue
-  if (this->queue_.enqueue_tail ((char *) next_arg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Can't add more to ARGV queue"), -1);
+  if (this->queue_.enqueue_tail ((ASYS_TCHAR *) next_arg) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Can't add more to ARGV queue")), -1);
 
   this->length_ += ACE_OS::strlen (next_arg);
 
@@ -297,13 +300,13 @@ ACE_ARGV::create_buf_from_queue (void)
 
   delete [] this->buf_;
 
-  ACE_NEW_RETURN (this->buf_, char[this->length_ + this->argc_], -1);
+  ACE_NEW_RETURN (this->buf_, ASYS_TCHAR[this->length_ + this->argc_], -1);
 
   // Get an iterator over the queue
-  ACE_Unbounded_Queue_Iterator<char *> iter (this->queue_);
+  ACE_Unbounded_Queue_Iterator<ASYS_TCHAR *> iter (this->queue_);
 
-  char **arg;
-  char *ptr = this->buf_;
+  ASYS_TCHAR **arg;
+  ASYS_TCHAR *ptr = this->buf_;
   size_t len;
   int more = 0;
 
@@ -334,11 +337,11 @@ ACE_ARGV::create_buf_from_queue (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<char *>;
-template class ACE_Unbounded_Queue_Iterator<char *>;
-template class ACE_Node<char *>;
+template class ACE_Unbounded_Queue<ASYS_TCHAR *>;
+template class ACE_Unbounded_Queue_Iterator<ASYS_TCHAR *>;
+template class ACE_Node<ASYS_TCHAR *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<char *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<char *>
-#pragma instantiate ACE_Node<char *>
+#pragma instantiate ACE_Unbounded_Queue<ASYS_TCHAR *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ASYS_TCHAR *>
+#pragma instantiate ACE_Node<ASYS_TCHAR *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

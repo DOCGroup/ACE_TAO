@@ -1424,6 +1424,17 @@ ACE_OS::strtod (const char *s, char **endptr)
 #endif /* ACE_HAS_WINCE */
 }
 
+ACE_INLINE int
+ACE_OS::ace_isspace (const char s)
+{
+#if !defined (ACE_HAS_WINCE)
+  return isspace (s);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINCE */
+}
+
 ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
@@ -6322,7 +6333,6 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
 #endif /* ACE_HAS_UALARM */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 {
@@ -6353,6 +6363,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
 ACE_OS::dlerror (void)
 {
@@ -6447,7 +6458,21 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
-#endif /* ! ACE_HAS_WINCE */
+#else /* !ACE_HAS_WINCE */
+// UNDER_CE
+ACE_INLINE wchar_t *
+ACE_OS::dlerror (void)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+ACE_INLINE void *
+ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbolname)
+{
+  // ACE_TRACE ("ACE_OS::dlsym");
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+}
+#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE void
 ACE_OS::exit (int status)
@@ -8394,13 +8419,12 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
   return ::wcstol (s, ptr, base);
 }
 
-/*
 ACE_INLINE int
-ACE_OS::isspace (wint_t c)
+ACE_OS::ace_isspace (wchar_t c)
 {
-ACE_OSCALL_RETURN (::iswspace (c), int, -1);
+  return iswspace (c);
 }
-*/
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE wchar_t *

@@ -35,7 +35,7 @@ extern "C"
 
 struct ACE_Static_Svc_Descriptor
 {
-  char *name_;
+  ASYS_TCHAR *name_;
   // Name of the service.
 
   int type_;
@@ -91,17 +91,17 @@ public:
                       int signum = SIGHUP);
   // Initialize the Service Repository.
 
-  ACE_Service_Config (const char program_name[], 
+  ACE_Service_Config (const ASYS_TCHAR program_name[], 
                       LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.
 
-  static int open (const char program_name[],
+  static int open (const ASYS_TCHAR program_name[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.  Returns
   // -1 on failure and 0 otherwise.
 
   static int open (int argc,
-                   char *argv[],
+                   ASYS_TCHAR *argv[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
@@ -218,18 +218,18 @@ public:
 
   // = Member functions used by various other parts
   //   of the Service Configurator class category.
-  static int initialize (const ACE_Service_Type *, char parameters[]);
+  static int initialize (const ACE_Service_Type *, ASYS_TCHAR parameters[]);
   // Dynamically link the shared object file and retrieve
   // a pointer to the designated shared object in this file.
 
-  static int initialize (const char svc_name[], char parameters[]);
+  static int initialize (const ASYS_TCHAR svc_name[], ASYS_TCHAR parameters[]);
   // Initialize and activate a statically <svc_name> service.
 
-  static int resume (const char svc_name[]);
+  static int resume (const ASYS_TCHAR svc_name[]);
   // Resume a <svc_name> that was previously suspended or has not yet
   // been resumed (e.g., a static service).
 
-  static int suspend (const char svc_name[]);
+  static int suspend (const ASYS_TCHAR svc_name[]);
   // Suspend <svc_name>.  Note that this will not unlink the service
   // from the daemon if it was dynamically linked, it will mark it
   // as being suspended in the Service Repository and call the
@@ -237,7 +237,7 @@ public:
   // A service can be resumed later on by calling the RESUME()
   // member function...
 
-  static int remove (const char svc_name[]);
+  static int remove (const ASYS_TCHAR svc_name[]);
   // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
@@ -255,7 +255,7 @@ protected:
   // Process service configuration requests as indicated in the
   // <service_config_file>.  Returns -1 if errors occur, else 0.
 
-  static void parse_args (int, char *argv[]);
+  static void parse_args (int, ASYS_TCHAR *argv[]);
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
   // program name.
@@ -271,7 +271,7 @@ public:
   // Handles signals to trigger reconfigurations.
 
 private:
-  static const char *service_config_file_;
+  static const ASYS_TCHAR *service_config_file_;
   // Name of service configuration file.
 
   static LPCTSTR logger_key_;

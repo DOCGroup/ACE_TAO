@@ -19,7 +19,7 @@ ACE_Service_Type::dump (void) const
   ACE_TRACE ("ACE_Service_Type::dump");
 }
 
-ACE_Service_Type::ACE_Service_Type (const char *n,
+ACE_Service_Type::ACE_Service_Type (const ASYS_TCHAR *n,
 				    ACE_Service_Type_Impl *t,
 				    const ACE_SHLIB_HANDLE h,
 				    int active)
@@ -38,7 +38,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
   this->type_->fini ();
   if (this->handle_ != 0)
     ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
-  delete [] (char *) this->name_;
+  delete [] (ASYS_TCHAR *) this->name_;
 }
 
 void

@@ -64,7 +64,7 @@ ACE_Token_Manager::instance (void)
 
 void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
-                              const char *token_name)
+                              const ASYS_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Manager::get");
   // Hmm.  I think this makes sense.  We perform our own locking here
@@ -171,7 +171,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
               if (debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%s owns %s and is waiting for %s.\n",
+                              ASYS_TEXT ("%s owns %s and is waiting for %s.\n"),
                               e->client_id (),
                               token->name (),
                               twf->name ()));
@@ -188,7 +188,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
 
 
 ACE_Tokens *
-ACE_Token_Manager::token_waiting_for (const char *client_id)
+ACE_Token_Manager::token_waiting_for (const ASYS_TCHAR *client_id)
 {
   COLLECTION_ITERATOR iterator (collection_);
   for (COLLECTION_ENTRY *temp = 0;
@@ -226,8 +226,8 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
         // we did not find one in the collection
         {
           errno = ENOENT;
-          ACE_ERROR ((LM_ERROR, "Token Manager could not release %s:%d\n",
-                      token->name (), token->type ()));
+          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Token Manager could not release %s:%d\n"),
+                      ASYS_MULTIBYTE_STRING (token->name ()), token->type ()));
           // @@ bad
         }
       else

@@ -78,7 +78,7 @@ ACE_Task<ACE_SYNCH_USE>::sibling (void)
     return this->mod_->sibling (this);
 }
 
-template<ACE_SYNCH_DECL> const char *
+template<ACE_SYNCH_DECL> const ASYS_TCHAR *
 ACE_Task<ACE_SYNCH_USE>::name (void) const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::name");

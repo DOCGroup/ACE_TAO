@@ -65,14 +65,14 @@ public:
   };
 
   // = Initialization and termination methods.
-  ACE_Service_Type (const char *n, 
+  ACE_Service_Type (const ASYS_TCHAR *n, 
 		      ACE_Service_Type_Impl *o, 
 		      const ACE_SHLIB_HANDLE handle, 
 		      int active);
   ~ACE_Service_Type (void);
 			 
-  const char *name (void) const;
-  void name (const char *);
+  const ASYS_TCHAR *name (void) const;
+  void name (const ASYS_TCHAR *);
 
   const ACE_Service_Type_Impl *type (void) const;
   void type (const ACE_Service_Type_Impl *, 
@@ -93,7 +93,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const char *name_;   
+  const ASYS_TCHAR *name_;   
   // Humanly readible name of svc.
 
   const ACE_Service_Type_Impl *type_;

@@ -36,24 +36,24 @@ class ACE_Export ACE_Service_Type_Impl
 public:
   // = Initialization and termination methods.
   ACE_Service_Type_Impl (void *object, 
-			 const char *s_name, 
+			 const ASYS_TCHAR *s_name, 
 			 u_int flags = 0);
   virtual ~ACE_Service_Type_Impl (void);
 
   // = Pure virtual interface (must be defined by the subclass).
   virtual int suspend (void) const = 0;
   virtual int resume (void) const = 0;
-  virtual int init (int argc, char *argv[]) const = 0;
+  virtual int init (int argc, ASYS_TCHAR *argv[]) const = 0;
   virtual int fini (void) const;
-  virtual int info (char **str, size_t len) const = 0;
+  virtual int info (ASYS_TCHAR **str, size_t len) const = 0;
 
   void *object (void) const;
   // The pointer to the service.
 
-  const char *name (void) const;
+  const ASYS_TCHAR *name (void) const;
   // Get the name of the service.
 
-  void name (const char *);
+  void name (const ASYS_TCHAR *);
   // Set the name of the service.
 
   void dump (void) const;
@@ -63,7 +63,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  const char *name_;
+  const ASYS_TCHAR *name_;
   // Name of the service.
 
   void *obj_;
@@ -82,15 +82,15 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 public:
   // = Initialization method.
   ACE_Service_Object_Type (void *so,
-			   const char *name, 
+			   const ASYS_TCHAR *name, 
 			   u_int flags = 0);
 
   // = Implement the hooks for <ACE_Service_Objects>.
   virtual int suspend (void) const;
   virtual int resume (void) const;
-  virtual int init (int argc, char *argv[]) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]) const;
   virtual int fini (void) const;
-  virtual int info (char **str, size_t len) const;
+  virtual int info (ASYS_TCHAR **str, size_t len) const;
 };
 
 class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
@@ -101,15 +101,15 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 public:
   // = Initialization method.
   ACE_Module_Type (void *m, // Really an <ACE_Module> *.
-		   const char *identifier, 
+		   const ASYS_TCHAR *identifier, 
 		   u_int flags = 0);
 
   // = Implement the hooks for <ACE_Modules>.
   virtual int suspend (void) const;
   virtual int resume (void) const;
-  virtual int init (int argc, char *argv[]) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]) const;
   virtual int fini (void) const;
-  virtual int info (char **str, size_t len) const;
+  virtual int info (ASYS_TCHAR **str, size_t len) const;
 
   // Get/set the link pointer.
   ACE_Module_Type *link (void) const;
@@ -134,15 +134,15 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 public:
   // = Initialization method.
   ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
-		   const char *identifier, 
+		   const ASYS_TCHAR *identifier, 
 		   u_int flags = 0);
 
   // = Implement the hooks for <ACE_Streams>.
   virtual int suspend (void) const;
   virtual int resume (void) const;
-  virtual int init (int argc, char *argv[]) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]) const;
   virtual int fini (void) const;
-  virtual int info (char **str, size_t len) const;
+  virtual int info (ASYS_TCHAR **str, size_t len) const;
 
   int push (ACE_Module_Type *new_module);
   // Add a new <ACE_Module> to the top of the <ACE_Stream>.
@@ -150,7 +150,7 @@ public:
   int remove (ACE_Module_Type *module);
   // Search for <module> and remove it from the <ACE_Stream>.
 
-  ACE_Module_Type *find (const char *mod_name) const;
+  ACE_Module_Type *find (const ASYS_TCHAR *mod_name) const;
   // Locate the <ACE_Module> with <mod_name>.
 
   void dump (void) const;

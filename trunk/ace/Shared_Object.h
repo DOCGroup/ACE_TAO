@@ -26,13 +26,13 @@ class ACE_Export ACE_Shared_Object
   //     Provide the abstract base class used to access dynamic
   //     linking facilities.
 public:
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Initializes object when dynamic linking occurs.
 
   virtual int fini (void);
   // Terminates object when dynamic unlinking occurs.
 
-  virtual int info (char **info_string, size_t length = 0) const;
+  virtual int info (ASYS_TCHAR **info_string, size_t length = 0) const;
   // Returns information on active object.
 
   virtual ~ACE_Shared_Object (void);

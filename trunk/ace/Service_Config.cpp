@@ -55,7 +55,7 @@ int ACE_Service_Config::signum_ = SIGHUP;
 LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 
 // Name of the service configuration file.
-const char *ACE_Service_Config::service_config_file_ = ACE_DEFAULT_SVC_CONF;
+const ASYS_TCHAR *ACE_Service_Config::service_config_file_ = ASYS_TEXT (ACE_DEFAULT_SVC_CONF);
 
 // The ACE_Service_Manager static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.
@@ -133,7 +133,7 @@ ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
 // ACE_Reactor, and unlinking it if necessary.
 
 int
-ACE_Service_Config::remove (const char svc_name[])
+ACE_Service_Config::remove (const ASYS_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::remove");
   return ACE_Service_Repository::instance ()->remove (svc_name);
@@ -146,7 +146,7 @@ ACE_Service_Config::remove (const char svc_name[])
 // resumed later on by calling the RESUME() member function...
 
 int
-ACE_Service_Config::suspend (const char svc_name[])
+ACE_Service_Config::suspend (const ASYS_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::suspend");
   return ACE_Service_Repository::instance ()->suspend (svc_name);
@@ -156,7 +156,7 @@ ACE_Service_Config::suspend (const char svc_name[])
 // been resumed (e.g., a static service).
 
 int
-ACE_Service_Config::resume (const char svc_name[])
+ACE_Service_Config::resume (const ASYS_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::resume");
   return ACE_Service_Repository::instance ()->resume (svc_name);
@@ -189,7 +189,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 
   if (ACE_Reactor::instance ()->register_handler (ACE_Service_Config::signum_,
                                                   ACE_Service_Config::signal_handler_) == -1)
-    ACE_ERROR ((LM_ERROR, "can't register signal handler\n"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 
@@ -197,10 +197,10 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 // ACE_Service_Config.
 
 void
-ACE_Service_Config::parse_args (int argc, char *argv[])
+ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
-  ACE_Get_Opt getopt (argc, argv, "bdf:k:ns:", 1); // Start at argv[1]
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("bdf:k:ns:"), 1); // Start at argv[1]
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -230,12 +230,12 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
           if (ACE_Reactor::instance ()->register_handler
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
-            ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
+            ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot obtain signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
         }
       default:
-        ACE_ERROR ((LM_ERROR, "%c is not a ACE_Service_Config option\n", c));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%c is not a ACE_Service_Config option\n"), c));
         break;
       }
 }
@@ -243,8 +243,8 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 // Initialize and activate a statically linked service.
 
 int
-ACE_Service_Config::initialize (const char svc_name[],
-                                char *parameters)
+ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
+                                ASYS_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -254,10 +254,10 @@ ACE_Service_Config::initialize (const char svc_name[],
 
   if (ACE_Service_Repository::instance ()->find (svc_name,
                                                  (const ACE_Service_Type **) &srp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%s not found\n"), svc_name), -1);
 
   else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "static initialization failed, %p\n",
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("static initialization failed, %p\n"),
                        svc_name), -1);
   else
     {
@@ -271,7 +271,7 @@ ACE_Service_Config::initialize (const char svc_name[],
 
 int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                char parameters[])
+                                ASYS_TCHAR parameters[])
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -279,10 +279,10 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening dynamic service %s\n"), sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "insertion failed, %p\n", sr->name ()), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("insertion failed, %p\n"), sr->name ()), -1);
 
   else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "dynamic initialization failed for %s\n",
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("dynamic initialization failed for %s\n"),
                       sr->name ()), -1);
   else
     return 0;
@@ -296,7 +296,7 @@ ACE_Service_Config::process_directives (void)
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
 
-  FILE *fp = ACE_OS::fopen (ACE_Service_Config::service_config_file_, "r");
+  FILE *fp = ACE_OS::fopen (ACE_Service_Config::service_config_file_, ASYS_TEXT ("r"));
 
   if (fp == 0)
     {
@@ -371,7 +371,7 @@ ACE_Service_Config::load_static_svcs (void)
 // Performs an open without parsing command-line arguments.
 
 int
-ACE_Service_Config::open (const char program_name[],
+ACE_Service_Config::open (const ASYS_TCHAR program_name[],
                           LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::open");
@@ -399,7 +399,7 @@ ACE_Service_Config::open (const char program_name[],
     return -1;
   else
     {
-      ACE_DEBUG ((LM_STARTUP, "starting up daemon %n\n"));
+      ACE_DEBUG ((LM_STARTUP, ASYS_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -420,7 +420,7 @@ ACE_Service_Config::open (const char program_name[],
     }
 }
 
-ACE_Service_Config::ACE_Service_Config (const char program_name[],
+ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
                                         LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
@@ -429,7 +429,7 @@ ACE_Service_Config::ACE_Service_Config (const char program_name[],
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
-    ACE_ERROR ((LM_ERROR, "%p\n", program_name));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), program_name));
 }
 
 // Signal handling API to trigger dynamic reconfiguration.
@@ -441,7 +441,7 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
 
   if (ACE_Service_Config::signum_ != sig)
     ACE_ERROR ((LM_ERROR,
-                "error, signal %S does match %S\n",
+                ASYS_TEXT ("error, signal %S does match %S\n"),
                 sig, ACE_Service_Config::signum_));
 
   if (ACE_Service_Config::debug_)
@@ -579,7 +579,7 @@ ACE_Service_Config::reconfig_occurred (int config_occurred)
   ACE_Service_Config::reconfig_occurred_ = config_occurred;
 }
 
-// Become a daemon (i.e., run as a "background" process).
+// Become a daemon (i.e., run as a ASYS_TEXT ("background") process).
 
 int
 ACE_Service_Config::start_daemon (void)

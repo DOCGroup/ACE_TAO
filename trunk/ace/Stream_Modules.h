@@ -38,8 +38,8 @@ public:
   virtual int svc (void);
 
   // = Dynamic linking hooks 
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **info_string, size_t length) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
   void dump (void) const;
@@ -73,8 +73,8 @@ public:
   virtual int svc (void);
 
   // = Dynamic linking hooks 
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **info_string, size_t length) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
   void dump (void) const;
@@ -109,8 +109,8 @@ public:
   virtual int svc (void);
 
   // = Dynamic linking hooks
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **info_string, size_t length) const;
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
   void dump (void) const;

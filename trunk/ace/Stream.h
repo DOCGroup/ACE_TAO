@@ -84,7 +84,7 @@ public:
   // Return the top module on the stream (right below the stream
   // head).
 
-  int remove (const char *mod, int flags = M_DELETE);
+  int remove (const ASYS_TCHAR *mod, int flags = M_DELETE);
   // Remove the named module <mod> from the stream.  This bypasses the
   // strict LIFO ordering of push() and pop().
 
@@ -94,7 +94,7 @@ public:
   ACE_Module<ACE_SYNCH_USE> *tail (void);	
   // Return current stream tail.
 
-  ACE_Module<ACE_SYNCH_USE> *find (const char *mod); 
+  ACE_Module<ACE_SYNCH_USE> *find (const ASYS_TCHAR *mod); 
   // Find a particular ACE_Module.
 
   int link (ACE_Stream<ACE_SYNCH_USE> &);

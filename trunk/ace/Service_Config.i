@@ -8,7 +8,7 @@
 
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
-                          char *argv[], 
+                          ASYS_TCHAR *argv[], 
                           LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::open");
