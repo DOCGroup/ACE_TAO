@@ -1,26 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    corbacom.i
-//
-// = DESCRIPTION
-//    CORBA C/C++/COM mapping for Win32
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//     and
-//     Aniruddha Gokhale
-//
-// ============================================================================
-
-
-// =methods of class CORBA::NamedValue
-
 // constructor
 ACE_INLINE
 CORBA_NamedValue::CORBA_NamedValue (void)
