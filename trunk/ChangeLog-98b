@@ -1,57 +1,61 @@
+Tue Sep 01 20:59:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (ts_object): commented test appearing after the #endif.
+
 Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/XtReactor_Test.cpp: Added a new version that should work
-	  on Linux.  Thanks to Eric Newton for this fix.
+        * tests/XtReactor_Test.cpp: Added a new version that should work
+          on Linux.  Thanks to Eric Newton for this fix.
 
 Tue Sep  1 19:40:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/XtReactor_Test.cpp: 
-	  If ACE_LACKS_MOTIF is defined the test can use Athena
-	  Widgets. Thanks to Eric C. Newton <ecn@smart.net> for
-	  contributing this example.
+        * tests/XtReactor_Test.cpp:
+          If ACE_LACKS_MOTIF is defined the test can use Athena
+          Widgets. Thanks to Eric C. Newton <ecn@smart.net> for
+          contributing this example.
 
 Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_malloc.cpp (spawn): Fixed a minor
- 	  problem with conversions from const char * literals to char *'s.
-  	  Thanks to John Mulhern for reporting this problem.
+        * examples/Shared_Malloc/test_malloc.cpp (spawn): Fixed a minor
+          problem with conversions from const char * literals to char *'s.
+          Thanks to John Mulhern for reporting this problem.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-in{server,client}.cpp: Fixed all
- 	  uses of void *request with char *request to stop ANSI C++
- 	  compilers from complaining.  Thanks to John Mulhern for
- 	  reporting this problem.
+        * examples/IPC_SAP/SOCK_SAP/CPP-in{server,client}.cpp: Fixed all
+          uses of void *request with char *request to stop ANSI C++
+          compilers from complaining.  Thanks to John Mulhern for
+          reporting this problem.
 
 Tue Sep 01 16:22:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Filecache.cpp (init and ~ACE_Filecache_Object): Changed
- 	  SUCCESS to ACE_SUCCESS.
+        * ace/Filecache.cpp (init and ~ACE_Filecache_Object): Changed
+          SUCCESS to ACE_SUCCESS.
 
 Tue Sep 1 13:54:10 PDT 1998  James C. Hu <jxh@entera.com>
 
-	* ace/Message_Block.h:
-	* ace/Message_Block.i: Added a space () method that reports
-	  the amount of space remaining in the message block.
+        * ace/Message_Block.h:
+        * ace/Message_Block.i: Added a space () method that reports
+          the amount of space remaining in the message block.
 
 Tue Sep 1 3:50:39 US/Central 1998  James CE Johnson <jcej@lads.com>
 
-	* etc/tutorials/006/client_handler.cpp
-	  etc/tutorials/006/client_handler.h
-	  etc/tutorials/006/page04.html
-	  etc/tutorials/006/page05.html
+        * etc/tutorials/006/client_handler.cpp
+          etc/tutorials/006/client_handler.h
+          etc/tutorials/006/page04.html
+          etc/tutorials/006/page05.html
 
-	  Added a close() method to Client_Handler so that it will be closed
-	  properly when the svc() method exits.
+          Added a close() method to Client_Handler so that it will be closed
+          properly when the svc() method exits.
 
-	* etc/tutorials/007/client_handler.cpp
-	  etc/tutorials/007/client_handler.h
-	  etc/tutorials/007/page05.html
-	  etc/tutorials/007/page06.html
-	  etc/tutorials/007/page09.html
+        * etc/tutorials/007/client_handler.cpp
+          etc/tutorials/007/client_handler.h
+          etc/tutorials/007/page05.html
+          etc/tutorials/007/page06.html
+          etc/tutorials/007/page09.html
 
-	  Added Client_Handler::close() that will be called when Client_Handler::svc()
-	  exits in the thread-per-connection model.
-	  Thread_Pool::svc() now calls the handler's handle_close() method to
-	  properly shut down the handler if handle_input() fails.
+          Added Client_Handler::close() that will be called when Client_Handler::svc()
+          exits in the thread-per-connection model.
+          Thread_Pool::svc() now calls the handler's handle_close() method to
+          properly shut down the handler if handle_input() fails.
 
 Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
 
@@ -78,27 +82,27 @@ Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
           ace/Token_Request_Reply.h
           ace/UPIPE_Stream.cpp
           ace/config-psos-diab.h
-          ace/config-psos-tm.h: 
+          ace/config-psos-tm.h:
 
-          pSOS port of ACE for the Diab 4.2 and Trimedia cross compilers. 
+          pSOS port of ACE for the Diab 4.2 and Trimedia cross compilers.
           Thanks to Jin Lu of Philips Research for completing the ACE pSOS port
-          on the Trimedia cross compiler and contributing the changes back to 
+          on the Trimedia cross compiler and contributing the changes back to
           the ACE distribution.
 
 Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-linux-common.h,
-	  ace/config-sco-5.0.0-mit-pthread.h,
-	  ace/config-sco-5.0.0.h,
-	  ace/README:
-	  ACE_HAS_LONG_FDMASK macro has been changed to
- 	  ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
- 	  to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
- 	  this.
+        * ace/config-linux-common.h,
+          ace/config-sco-5.0.0-mit-pthread.h,
+          ace/config-sco-5.0.0.h,
+          ace/README:
+          ACE_HAS_LONG_FDMASK macro has been changed to
+          ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
+          to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
+          this.
 
-	* TAO/utils/catior/catior.cpp: Replaced the use of
- 	  CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
- 	  CORBA spec.
+        * TAO/utils/catior/catior.cpp: Replaced the use of
+          CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
+          CORBA spec.
 
 Tue Sep 01 10:21:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
