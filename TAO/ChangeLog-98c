@@ -1,5 +1,10 @@
 Tue Dec  1 10:12:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  Use an ACE_INET_Addr in recvfrom(); a plain ACE_Addr produces
+	  problems on NT. Thanks to Dave Meyer <dmeyer@std.saic.com> for
+	  reporting this and providing the fix.
+
 	* tao/Typecode.cpp: 
 	  The size for a TypeCode field was not computed properly (it
 	  should be sizeof(TypeCode_ptr)).

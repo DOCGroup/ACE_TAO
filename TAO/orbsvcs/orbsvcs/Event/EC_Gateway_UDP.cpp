@@ -356,8 +356,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 {
   // Use ULong so the alignment is right.
   CORBA::ULong header[2];
-  ACE_Addr from;
-
+  ACE_INET_Addr from;
   ssize_t n = dgram.recv (header, sizeof(header), from, MSG_PEEK);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
