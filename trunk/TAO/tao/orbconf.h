@@ -690,18 +690,20 @@ enum MCAST_SERVICEID
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_QUEUE_ORDER_POLICY */
 
-// To explicitly disable CLIENT_PRIORITY_POLICY support uncomment the following
-// #define TAO_HAS_CLIENT_PRIORITY_POLICY 0
+// CLIENT_PRIORITY_POLICY has been deprecated!  It is disabled by
+// default.  It's functionality is replaced by RTCORBA policies, see
+// TAO's RTCORBA documentation for more details.  
+//
+//To explicitly enable CLIENT_PRIORITY_POLICY support uncomment the
+//following #define TAO_HAS_CLIENT_PRIORITY_POLICY 1
+//
+// RTCORBA policies and CLIENT_PRIORITY_POLICY are mutually exclusive,
+// i.e., if you enable CLIENT_PRIORITY_POLICY, RTCORBA policies will have no
+// effect.
 
 // Default CLIENT_PRIORITY_POLICY settings
 #if !defined (TAO_HAS_CLIENT_PRIORITY_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_CLIENT_PRIORITY_POLICY 1
-#  else
 #    define TAO_HAS_CLIENT_PRIORITY_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_CLIENT_PRIORITY_POLICY */
 
 // To explicitly disable BUFFERING_CONSTRAINT_POLICY support uncomment the following

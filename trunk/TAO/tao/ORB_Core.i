@@ -542,8 +542,43 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
 
+ACE_INLINE TAO_Endpoint_Selector_Factory *
+TAO_ORB_Core::endpoint_selector_factory (void)
+{
+  return this->endpoint_selector_factory_;
+}
 
+ACE_INLINE TAO_Invocation_Endpoint_Selector *
+TAO_ORB_Core::default_endpoint_selector (void)
+{
+  return this->default_endpoint_selector_;
+}
+  
 #if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE TAO_Invocation_Endpoint_Selector *
+TAO_ORB_Core::protocol_endpoint_selector (void)
+{
+  return this->protocol_endpoint_selector_;
+}
+
+ACE_INLINE TAO_Invocation_Endpoint_Selector *
+TAO_ORB_Core::priority_endpoint_selector (void)
+{
+  return this->priority_endpoint_selector_;
+}
+
+ACE_INLINE TAO_Invocation_Endpoint_Selector *
+TAO_ORB_Core::priority_protocol_selector (void)
+{
+  return this->priority_protocol_selector_;
+}
+
+ACE_INLINE TAO_Invocation_Endpoint_Selector *
+TAO_ORB_Core::client_priority_policy_selector (void)
+{
+  return this->client_priority_policy_selector_;
+}
 
 ACE_INLINE TAO_Priority_Mapping_Manager *
 TAO_ORB_Core::priority_mapping_manager (void)

@@ -1,22 +1,21 @@
 // $Id$
 
 #include "tao/Invocation.h"
-#include "tao/Stub.h"
 #include "tao/Principal.h"
+#include "tao/Stub.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/Object_KeyC.h"
-#include "tao/Endpoint.h"
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Bind_Dispatcher_Guard.h"
-
+#include "tao/Endpoint.h"
 #include "tao/RT_Policy_i.h"
+
 #include "tao/Messaging_Policy_i.h"
-#include "tao/Client_Priority_Policy.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/ORB_Core.h"
 
@@ -72,6 +71,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // supported, it's done by creating a thread internally to make the
 // call.  That is less disruptive (and error prone) in general than
 // restructuring an ORB core in terms of asynchrony.
+// ****************************************************************
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
@@ -88,127 +88,19 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                  orb_core->to_unicode ()),
     orb_core_ (orb_core),
     transport_ (0),
+    endpoint_selector_ (0),
+    is_selector_initialized_ (0),
     profile_ (0),
     endpoint_ (0),
     max_wait_time_ (0),
     ior_info_ (),
+    rt_context_initialized_ (0),
     restart_flag_ (0)
 {
 }
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-}
-
-void
-TAO_GIOP_Invocation::select_endpoint_based_on_policy
-(CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 0)
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  this->profile_ = this->stub_->profile_in_use ();
-  this->endpoint_ = this->profile_->endpoint ();
-
-#else
-
-  TAO_Client_Priority_Policy *policy =
-    this->stub_->client_priority ();
-
-  // Automatically release the policy
-  CORBA::Object_var auto_release = policy;
-
-  if (policy == 0)
-    // Policy is not set.
-    {
-      this->profile_ = this->stub_->profile_in_use ();
-      this->endpoint_ = this->profile_->endpoint ();
-    }
-  else
-    // Policy is set.
-    {
-      TAO::PrioritySpecification priority_spec =
-        policy->priority_specification (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      TAO::PrioritySelectionMode mode = priority_spec.mode;
-
-      // Don't care about priority.
-      if (mode == TAO::USE_NO_PRIORITY)
-        {
-          this->profile_ = this->stub_->profile_in_use ();
-          this->endpoint_ = profile_->endpoint ();
-        }
-      else
-        {
-          // Care about priority.
-
-          // Determine  priority range used to select the profile.
-          CORBA::Short min_priority;
-          CORBA::Short max_priority;
-
-          if (mode == TAO::USE_PRIORITY_RANGE)
-            {
-              min_priority = priority_spec.min_priority;
-              max_priority = priority_spec.max_priority;
-            }
-          else
-            // mode == TAO::USE_THREAD_PRIORITY
-            {
-              if (this->orb_core_->get_thread_priority (min_priority) == -1)
-                ACE_THROW (CORBA::DATA_CONVERSION (1,
-                                                   CORBA::COMPLETED_NO));
-              max_priority = min_priority;
-            }
-          if (TAO_debug_level > 3)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
-                        min_priority,
-                        max_priority));
-
-          // Select profile/endpoint satisfying the priority range.
-          // We start the search from <profile_in_use>.
-          // @@ Optimization: if this->profile_ != 0, we can start the
-          // search from this->profile_.
-          TAO_MProfile& mprofile = this->stub_->base_profiles ();
-          this->endpoint_ = 0;
-
-          for (TAO_PHandle i = mprofile.get_current_handle ();
-               i < mprofile.profile_count ();
-               ++i)
-            {
-              TAO_Profile *profile = mprofile.get_profile (i);
-
-              // Check if this profile contains any endpoints of the
-              // right priority.
-              for (TAO_Endpoint *endp = profile->endpoint ();
-                   endp != 0;
-                   endp = endp->next ())
-                {
-                  CORBA::Short priority = endp->priority ();
-                  if (priority >= min_priority
-                      && priority <= max_priority)
-                    {
-                      this->profile_ = profile;
-                      this->endpoint_ = endp;
-                      break;
-                    }
-                }
-
-              if (this->endpoint_ != 0)
-                break;
-            }
-
-          // We were not able to find profile with the endpoint of the
-          // right priority.
-          if (this->endpoint_ == 0)
-            ACE_THROW (CORBA::INV_POLICY ());
-        }
-    }
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 0 */
-
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -254,13 +146,14 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   if (conn_reg == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  // @@ It seems like this is the right spot to re-order the profiles
-  // based on the policies in the ORB.
-  // IMHO the connector registry only finds one
-  // connector for the given policies, if the connector is not
-  // available (say the user wants an ATM connection, but we don't
-  // have the protocol) then we give it another profile to try.
-  // So the invocation Object should handle policy decisions.
+  // Initialize endpoint selection strategy.
+  if (!this->is_selector_initialized_)
+    {
+      this->orb_core_->endpoint_selector_factory ()->get_selector (this,
+                                                                   ACE_TRY_ENV);
+      ACE_CHECK;
+      this->is_selector_initialized_ = 1;
+    }
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -284,110 +177,23 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // @@ Marina: IMHO, the filling up of the service context list should
-  // be going in to the prepare_header () method. The prepare_header
-  // () should be calling the right messaging protocol loaded to set
-  // the IOP::ServiceContext. If you move it there, this place would
-  // be less crowded. - Bala
-  //
-  // @@ RT CORBA Policies processing code.  This is a temporary location
-  // for this code until more of it is accumulated.  It will likely be
-  // factored into separate method(s)/split/moved to different
-  // locations within this method/<prepare_header>.  (Marina)
-
-  // RTCORBA::PriorityModelPolicy related processing.
-  // @@ This processing isn't necessary for Locate Requests, since they
-  // do not have Service Context Lists.  However, since this method is
-  // called from TAO_GIOP_Locate_Request_Invocation::start, the
-  // processing does happen for Locate Requests.  It works, but we are
-  // losing some performance ...
-  TAO_PriorityModelPolicy *priority_model_policy =
-    this->stub_->exposed_priority_model ();
-
-  // Auto cleanup of policy.
-  CORBA::Object_var priority_release = priority_model_policy;
-
-  if (priority_model_policy != 0)
-    {
-      if (priority_model_policy->get_priority_model ()
-          == RTCORBA::CLIENT_PROPAGATED)
-        {
-          // Encapsulate the priority of the current thread into
-          // request's service context list.
-
-          RTCORBA::Priority thread_priority;
-
-          if (this->orb_core_->get_thread_priority (thread_priority) == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (1,
-                                               CORBA::COMPLETED_NO));
-
-          TAO_OutputCDR cdr;
-          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-               == 0)
-              || (cdr << thread_priority) == 0)
-            ACE_THROW (CORBA::MARSHAL ());
-
-          IOP::ServiceContextList &context_list =
-            this->service_info ();
-
-          CORBA::ULong l = context_list.length ();
-          context_list.length (l + 1);
-          context_list[l].context_id = IOP::RTCorbaPriority;
-
-          // Make a *copy* of the CDR stream...
-          CORBA::ULong length = cdr.total_length ();
-          context_list[l].context_data.length (length);
-          CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
-
-          for (const ACE_Message_Block *i = cdr.begin ();
-               i != 0;
-               i = i->cont ())
-            {
-              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-              buf += i->length ();
-            }
-        }
-    }
-  else
-    {
-      // The Object does not contain PriorityModel policy in its IOR.
-      // We must be talking to a non-RT ORB.  Do nothing special -
-      // just proceed with the regular invocation.
-    }
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   // Loop until a connection is established or there aren't any more
   // profiles to try.
   for (;;)
     {
-      // Check whether any of the services that are loaded wants to
-      // select the profile.
-      // @@ IMHO, the selection of profiles has become *too*
-      // complicated. I am going to increase the complication by
-      // adding another call. This becomes important for FT service
-      // whose profile selection are done elsewhere. At this point I
-      // am just going to call the right call that would select the
-      // profile. IMHO, the RT guys should do this too ie. move the
-      // profile selection elsewhere. It is becoming hard to read the
-      // code that does profile selection.
+      // Allow loaded services to select the profile.
       if (this->stub_->service_profile_selection ())
         {
-          // @@ This is something a bit crazy again. We are setting
-          // this at too many places.. Result, confusion.
           this->profile_ = this->stub_->profile_in_use ();
           this->endpoint_ = this->profile_->endpoint ();
         }
       else
         {
-          // Select the profile for this invocation if the loaded
-          // services have nothing to say on profile selection.
-          this->select_endpoint_based_on_policy (ACE_TRY_ENV);
+          // If loaded services have nothing to say on
+          // profile/endpoint selection, let the strategy do the work.
+          this->endpoint_selector_->select_endpoint (this, ACE_TRY_ENV);
           ACE_CHECK;
         }
-
 
       // Get the transport object.
       if (this->transport_ != 0)
@@ -424,14 +230,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
               CORBA::COMPLETED_NO));
         }
 
-      // Try moving to the next profile and starting over, if that
-      // fails then we must raise the TRANSIENT exception.
-      if (this->stub_->next_profile_retry () == 0)
-        ACE_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::_tao_minor_code (
-            TAO_INVOCATION_CONNECT_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_NO));
+      // Try another profile/endpoint.
+      this->endpoint_selector_->next (this, ACE_TRY_ENV);
+      ACE_CHECK;
 
       countdown.update ();
     }
@@ -439,7 +240,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // Obtain unique request id from the RMS.
   this->op_details_.request_id (
         this->transport_->tms ()->request_id ());
-
 }
 
 void
@@ -456,6 +256,10 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
                                          this->service_info (),
                                          this->restart_flag_,
                                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->add_rt_service_context (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // The target specification mode
   if (this->stub_->addressing_mode () ==
@@ -557,14 +361,10 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
       return TAO_INVOKE_RESTART;
     }
 
+  // Indicate that the endpoint/profile was used successfully.
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  // @@ Preserve semantics for the case when no ClientPriorityPolicy
-  // is set/used.  For the case when it is, we don't want to set
-  // anything because usage cases of various profiles based on
-  // priorities aren't fully supported by MProfiles & friends (yet).
-  if (this->stub_->profile_in_use () == this->profile_)
-    this->stub_->set_valid_profile ();
+  this->endpoint_selector_->success (this);
 
   return TAO_INVOKE_OK;
 }
@@ -590,13 +390,7 @@ TAO_GIOP_Invocation::close_connection (void)
   this->endpoint_ = 0;
   this->profile_ = 0;
 
-  // @@ Get rid of any forwarding profiles and reset
-  //    the profile list to point to the first profile!
-  // FRED For now we will not deal with recursive forwards!
-
-  this->stub_->reset_profiles ();
-  // sets the forwarding profile to 0 and deletes the old one;
-  // rewinds the profiles list back to the first one.
+  this->endpoint_selector_->close_connection (this);
 
   return TAO_INVOKE_RESTART;
 }
@@ -617,70 +411,22 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   CORBA::Object_var object = 0;
 
   if ( (inp_stream >> object.inout ()) == 0)
-    {
-      // @@ Why whould we want to close this connection?
-      //    this->transport_->close_connection ();
-
-      // @@ If a forward exception or a LOCATION_FORWARD reply is sent
-      //    then the request couldn't have completed. But we need to
-      //    re-validate this to ensure "at most once" semantics.
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         TAO_INVOKE_EXCEPTION);
-    }
 
   // The object pointer has to be changed to a TAO_Stub pointer
-  // in order to extract the profile.
-
+  // in order to obtain the profiles.
   TAO_Stub *stubobj = object->_stubobj ();
 
   if (stubobj == 0)
-    {
-      // @@ Why whould we want to close this connection?
-      //    this->transport_->close_connection ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      TAO_INVOKE_EXCEPTION);
 
-      // @@ If a forward exception or a LOCATION_FORWARD reply is sent
-      //    then the request couldn't have completed. But we need to
-      //    re-validate this to ensure "at most once" semantics.
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  // Make a copy of the IIOP profile in the forwarded objref,
-  // reusing memory where practical.  Then delete the forwarded
-  // objref, retaining only its profile list (mprofiles).
-  //
-  // @@ add and use a "forward count", to prevent loss of data
-  // in forwarding chains during concurrent calls -- only a
-  // forward that's a response to the current forward_profile should
-  // be recorded here. (This is just an optimization, and is not
-  // related to correctness.)
-
-  // New for Multiple profile.  Get the MProfile list from the
-  // forwarded object refererence
-
-  this->stub_->add_forward_profiles (stubobj->base_profiles ());
-  // store the new profile list and set the first forwarding profile
-  // note: this has to be and is thread safe.
-  // @@ TAO_Stub::add_forward_profiles() already makes a copy of the
-  //    MProfile, so do not make a copy here.
-
-  // @@ Why do we clear the environment?
-  // ACE_TRY_ENV.clear ();
-
-  // We may not need to do this since TAO_GIOP_Invocations
-  // get created on a per-call basis. For now we'll play it safe.
-
-  if (this->stub_->next_profile () == 0)
-    ACE_THROW_RETURN (
-        CORBA::TRANSIENT (
-            CORBA_SystemException::_tao_minor_code (
-                TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-                errno
-              ),
-            CORBA::COMPLETED_NO
-          ),
-        TAO_INVOKE_EXCEPTION
-      );
+  // Modify the state as appropriate to include new forwarding profiles.
+  this->endpoint_selector_->forward (this,
+                                     stubobj->base_profiles (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
 }
@@ -730,6 +476,71 @@ TAO_GIOP_Invocation::create_ior_info (void)
   return mprofile.get_current_handle ();
 }
 
+void 
+TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
+                                             &ACE_TRY_ENV)
+{
+  // RTCORBA-specific processing.
+  // If invocation target supports RTCORBA::CLIENT_PROPAGATED priority
+  // model, we must add IOP::RTCorbaPriority service context to the
+  // list. 
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // This function may get called multiple times, but we only need to
+  // perform the processing once.
+  if (this->rt_context_initialized_)
+    return;
+
+  if (this->endpoint_selection_state_.priority_model_policy_)
+    {
+      if (this->endpoint_selection_state_.priority_model_policy_->
+          get_priority_model () == RTCORBA::CLIENT_PROPAGATED)
+        {
+          // Encapsulate the priority of the current thread into
+          // a service context.
+          TAO_OutputCDR cdr;
+          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+               == 0)
+              || (cdr << this->endpoint_selection_state_.client_priority_) 
+              == 0)
+            ACE_THROW (CORBA::MARSHAL ());
+
+          IOP::ServiceContextList &context_list =
+            this->service_info ();
+
+          CORBA::ULong l = context_list.length ();
+          context_list.length (l + 1);
+          context_list[l].context_id = IOP::RTCorbaPriority;
+
+          // Make a *copy* of the CDR stream...
+          CORBA::ULong length = cdr.total_length ();
+          context_list[l].context_data.length (length);
+          CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
+
+          for (const ACE_Message_Block *i = cdr.begin ();
+               i != 0;
+               i = i->cont ())
+            {
+              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              buf += i->length ();
+            }
+        }
+    }
+  else
+    {
+      // The Object does not contain PriorityModel policy in its IOR.
+      // We must be talking to a non-RT ORB.  Do nothing.
+    }
+
+  this->rt_context_initialized_ = 1;
+
+#else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+}
+
 // ****************************************************************
 
 TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
@@ -750,6 +561,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
+  ACE_CHECK;
   this->rd_.reply_received () = 0;
 }
 
@@ -1476,15 +1288,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  // @@ Preserve semantics for the case when no ClientPriorityPolicy
-  // is set/used.  For the case when it is, we don't want to set
-  // anything because usage cases of various profiles based on
-  // priorities aren't fully supported by MProfiles & friends (yet).
-  if (this->stub_->profile_in_use () == this->profile_)
-    this->stub_->set_valid_profile ();
+  this->endpoint_selector_->success (this);
 
   // Wait for the reply.
-
   int reply_error =
     this->transport_->wait_strategy ()->wait (this->max_wait_time_,
                                               this->rd_.reply_received ());
@@ -1524,16 +1330,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       // NOTREACHED
 
     case TAO_GIOP_OBJECT_FORWARD:
-      // When ClientPriorityPolicy is not set/used, behave normally.
-      if (this->stub_->profile_in_use () == this->profile_)
-        return this->location_forward (this->inp_stream (),
-                                       ACE_TRY_ENV);
-      else
-        // else, don't change profile structures - we are not ready
-        // to handle location forwards with priority profiles yet (not enough
-        // support from MProfiles ...)
-        return TAO_INVOKE_RESTART;
-      // NOTREACHED
+      return this->location_forward (this->inp_stream (),
+                                     ACE_TRY_ENV);
     case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
       {
         // What else do we do??

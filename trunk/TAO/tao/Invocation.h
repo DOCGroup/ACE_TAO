@@ -41,11 +41,10 @@
 #include "tao/TAOC.h"
 #include "tao/operation_details.h"
 #include "tao/target_specification.h"
+#include "tao/Invocation_Endpoint_Selectors.h"
 
 struct TAO_Exception_Data;
-class TAO_Profile;
 class TAO_Transport;
-class TAO_Endpoint;
 
 enum TAO_Invoke_Status
 {
@@ -72,6 +71,13 @@ class TAO_Export TAO_GIOP_Invocation
   //     to the remote server, builds the CDR stream for the Request,
   //     send the CDR stream and expects the response and interprets
   //     the incoming CDR stream.
+
+  friend class TAO_Endpoint_Selector_Factory;
+  friend class TAO_Default_Endpoint_Selector;
+  friend class TAO_Priority_Endpoint_Selector;
+  friend class TAO_Protocol_Endpoint_Selector;
+  friend class TAO_Priority_Protocol_Selector;
+  friend class TAO_Client_Priority_Policy_Selector;
 
 public:
   TAO_GIOP_Invocation (TAO_Stub *data,
@@ -106,13 +112,6 @@ public:
 
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
-
-  void select_endpoint_based_on_policy (CORBA_Environment &ACE_TRY_ENV
-                                       = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Select the endpoint (and profile) we will use to in this
-  // invocation, based on TAO::Client_Priority_Policy.)  I think this
-  // function may be more appropriate in TAO_Stub class.
 
   //  CORBA::Boolean restart_flag (void);
   void restart_flag (CORBA::Boolean flag);
@@ -154,6 +153,12 @@ protected:
   // Create the IOP::IOR info. We will create the info atmost
   // once. This method will not work for RTCorba - Bala
 
+  void add_rt_service_context (CORBA_Environment &ACE_TRY_ENV =
+                               TAO_default_environment ());
+  // Add RT-related context to the service context list if the
+  // invocation target supports RTCORBA::CLIENT_PROPAGATED priority
+  // model. 
+
 protected:
   TAO_Stub *stub_;
   // The object on which this invocation is going.
@@ -176,8 +181,24 @@ protected:
   TAO_Transport *transport_;
   // This invocation is using this transport, may change...
 
+  TAO_Invocation_Endpoint_Selector *endpoint_selector_;
+  // Strategy for making decisions about which endpoint/profile to use
+  // for invocation.
+
+  int is_selector_initialized_;
+  // Flag indicating whether <endpoint_selector_> has been
+  // initialized. 
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_Endpoint_Selection_State endpoint_selection_state_;
+  // Store information used by <endpoint_selector_> for making
+  // endpoint selection decisions.
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   TAO_Profile *profile_;
-  // This invocation is this profile.
+  // This invocation is using this profile.
 
   TAO_Endpoint *endpoint_;
   // This invocation is using this endpoint from <profile_>.
@@ -193,6 +214,12 @@ protected:
   // info. The exception that the client receives is
   // LOC_NEEDS_ADDRESSING_MODE. If we receive an exception we will
   // fill up this data atmost *once* and send it to the server.
+
+  int rt_context_initialized_;
+  // Flag indicating whether RTCORBA-specific service context list
+  // processing has taken place.  This is needed because
+  // <prepare_header> may get called multiple times, but we only need
+  // to do the service context list processing once.
 
   CORBA::Boolean restart_flag_;
   // This flag is turned on when the previous invocation on an

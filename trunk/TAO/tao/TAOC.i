@@ -320,6 +320,31 @@ TAO::ClientPriorityPolicy_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::PrioritySpecification &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.mode) &&
+    (strm << _tao_aggregate.min_priority) &&
+    (strm << _tao_aggregate.max_priority)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecification &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.mode) &&
+    (strm >> _tao_aggregate.min_priority) &&
+    (strm >> _tao_aggregate.max_priority)
+  )
+    return 1;
+  else
+    return 0;
+
+}
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -634,32 +659,6 @@ TAO::BufferingConstraintPolicy_out::operator-> (void)
 
 
 #endif /* end #if !defined */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::PrioritySpecification &_tao_aggregate)
-{
-  if (
-    (strm << _tao_aggregate.mode) &&
-    (strm << _tao_aggregate.min_priority) &&
-    (strm << _tao_aggregate.max_priority)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecification &_tao_aggregate)
-{
-  if (
-    (strm >> _tao_aggregate.mode) &&
-    (strm >> _tao_aggregate.min_priority) &&
-    (strm >> _tao_aggregate.max_priority)
-  )
-    return 1;
-  else
-    return 0;
-
-}
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::BufferingConstraint &_tao_aggregate)
 {
