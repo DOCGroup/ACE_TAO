@@ -116,11 +116,28 @@ TAO_Notify_EventTypeSeq::init (TAO_Notify_EventTypeSeq& seq_added, TAO_Notify_Ev
         }
       else // sequence being added does not have *
         {
-          this->reset ();   // take away the * from this object.
-          this->insert_seq (seq_added); // insert the sequence being added as the new list of types.
+          if (!seq_added.is_empty ()) // if sequence being added is non empty
+            {
+              this->reset ();   // take away the * from this object.
+              this->insert_seq (seq_added); // insert the sequence being added as the new list of types.
 
-          seq_remove.reset ();   // reset all that is being removed.
-          seq_remove.insert (special); // remove *
+              seq_remove.reset ();   // reset all that is being removed.
+              seq_remove.insert (special); // remove *
+            }
+          else // nothing is being added
+            {
+              if (seq_remove.find (special) == 0) // we're removing everything
+                {
+                  this->reset ();
+                  seq_remove.reset ();   // reset all that is being removed.
+                  seq_remove.insert (special); // remove *
+                }
+              else if (!seq_remove.is_empty ())
+                {
+                  // if we're currently subscribed for everything and did not added anything, we can't remove something.
+                  seq_remove.reset ();
+                }
+            }
         }
     }
   else // if this object does not have the special type.

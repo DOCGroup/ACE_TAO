@@ -11,8 +11,8 @@
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify, 
-           TAO_CosNotify_Service, 
+ACE_RCSID (Notify,
+           TAO_CosNotify_Service,
            "$Id$")
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
@@ -93,6 +93,12 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
 
           properties->asynch_updates (1);
         }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NoUpdates")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          properties->updates (0);
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
         {
           task_per_proxy = 1;
@@ -128,14 +134,14 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
       // Set the per ProxyConsumer QoS
       {
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, dispatching_threads + listener_threads);
+        this->set_threads (qos, source_threads); // lookup thread per proxy doesn't make sense.
         properties->default_proxy_consumer_qos_properties (qos);
       }
 
       // Set the per ProxySupplier QoS
       {
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, source_threads); // lookup thread per proxy doesn't make sense.
+        this->set_threads (qos, dispatching_threads + listener_threads);
         properties->default_proxy_supplier_qos_properties (qos);
       }
     }

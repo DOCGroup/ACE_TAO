@@ -37,7 +37,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer 
+class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosEventChannelAdmin::ProxyPushConsumer>
 {
  friend class TAO_Notify_Builder;
@@ -50,9 +50,6 @@ public:
 
   /// Release
   virtual void release (void);
-
-  /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
