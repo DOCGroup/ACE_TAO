@@ -1,3 +1,22 @@
+Mon Dec  8 18:50:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+          Cosmetic changes to source code.
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+          In generating the operation string name passed to the
+          TAO::Invocation_Adapter constructor in stub code, changed
+          the call to get the operation node's local name from
+          local_name() to original_local_name(). This call returns a
+          string without the '_cxx_' prepended (if any) that would
+          occur if the operation name clashes with a C++ keyword. The
+          name string must be passed to the transport without the
+          prefix so it can be language independent, and for this
+          reason it will also be stored in the operation table on the
+          skeleton side in the same way (without the prefix).
+
 Mon Dec  8 12:49:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/PSS/PSS.mpc:

@@ -515,7 +515,8 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  *os << node->local_name () << "\"," << be_nl
+  // original_local_name() strips off the leading '_cxx_' if any.
+  *os << node->original_local_name () << "\"," << be_nl
       << tmp_len << "," << be_nl
       << "this->the" << intf->base_proxy_broker_name () << "_";
 

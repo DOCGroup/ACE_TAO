@@ -1285,7 +1285,6 @@ AST_Decl::compute_local_name (const char *prefix,
 // prefix to the all the reserved keywords. But when we invoke the
 // operation remotely, we should be sending only the name with out
 // "_cxx_" prefix.
-
 void
 AST_Decl::original_local_name (Identifier *local_name)
 {
