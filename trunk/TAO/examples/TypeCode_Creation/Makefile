@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = test
 IDL_SRC = testC.cpp
-BIN = create_tc
+BIN_UNCHECKED = create_tc
 
 LDLIBS = -lTAO_TypeCodeFactory -lTAO_IFR_Client -lTAO
 
@@ -30,6 +30,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN=$(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -454,6 +454,432 @@ CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
                     0);
 }
 
+// ****************************************************************
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_struct_tc (
+    const char *id,
+    const char *name,
+    const CORBA_StructMemberSeq & members,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_struct_tc (id,
+                                    name,
+                                    members,
+                                    ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_union_tc (
+    const char *id,
+    const char *name,
+    CORBA::TypeCode_ptr discriminator_type,
+    const CORBA_UnionMemberSeq & members,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_union_tc (id,
+                                   name,
+                                   discriminator_type,
+                                   members,
+                                   ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_enum_tc (
+    const char *id,
+    const char *name,
+    const CORBA_EnumMemberSeq & members,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_enum_tc (id,
+                                  name,
+                                  members,
+                                  ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_alias_tc (
+    const char *id,
+    const char *name,
+    CORBA::TypeCode_ptr original_type,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_alias_tc (id,
+                                   name,
+                                   original_type,
+                                   ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_exception_tc (
+    const char *id,
+    const char *name,
+    const CORBA_StructMemberSeq & members,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_exception_tc (id,
+                                       name,
+                                       members,
+                                       ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_interface_tc (
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_interface_tc (id,
+                                       name,
+                                       ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_string_tc (
+    CORBA::ULong bound,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_string_tc (bound,
+                                    ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_wstring_tc (
+    CORBA::ULong bound,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_wstring_tc (bound,
+                                     ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_fixed_tc (
+    CORBA::UShort digits,
+    CORBA::UShort scale,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_fixed_tc (digits,
+                                   scale,
+                                   ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_sequence_tc (
+    CORBA::ULong bound,
+    CORBA::TypeCode_ptr element_type,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_sequence_tc (bound,
+                                      element_type,
+                                      ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_array_tc (
+    CORBA::ULong length,
+    CORBA::TypeCode_ptr element_type,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_array_tc (length,
+                                   element_type,
+                                   ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_value_tc (
+    const char *id,
+    const char *name,
+    CORBA::ValueModifier type_modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    const CORBA_ValueMemberSeq & members,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_value_tc (id,
+                                   name,
+                                   type_modifier,
+                                   concrete_base,
+                                   members,
+                                   ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_value_box_tc (
+    const char *id,
+    const char *name,
+    CORBA::TypeCode_ptr boxed_type,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_value_box_tc (id,
+                                       name,
+                                       boxed_type,
+                                       ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_native_tc (
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_native_tc (id,
+                                    name,
+                                    ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_recursive_tc (
+    const char *id,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_recursive_tc (id,
+                                       ACE_TRY_ENV);              
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_abstract_interface_tc (
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_abstract_interface_tc (id,
+                                                name,
+                                                ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+CORBA_ORB::create_local_interface_tc (
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_local_interface_tc (id,
+                                             name,
+                                             ACE_TRY_ENV);
+}
+
+// ****************************************************************
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA_Object_ptr
@@ -1519,432 +1945,6 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
                                                                 val,
                                                                 ACE_TRY_ENV);
 }
-
-// ****************************************************************
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_struct_tc (
-    const char *id,
-    const char *name,
-    const CORBA_StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_struct_tc (id,
-                                    name,
-                                    members,
-                                    ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_union_tc (
-    const char *id,
-    const char *name,
-    CORBA::TypeCode_ptr discriminator_type,
-    const CORBA_UnionMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_union_tc (id,
-                                   name,
-                                   discriminator_type,
-                                   members,
-                                   ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_enum_tc (
-    const char *id,
-    const char *name,
-    const CORBA_EnumMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_enum_tc (id,
-                                  name,
-                                  members,
-                                  ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_alias_tc (
-    const char *id,
-    const char *name,
-    CORBA::TypeCode_ptr original_type,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_alias_tc (id,
-                                   name,
-                                   original_type,
-                                   ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_exception_tc (
-    const char *id,
-    const char *name,
-    const CORBA_StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_exception_tc (id,
-                                       name,
-                                       members,
-                                       ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_interface_tc (
-    const char *id,
-    const char *name,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_interface_tc (id,
-                                       name,
-                                       ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_string_tc (
-    CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_string_tc (bound,
-                                    ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_wstring_tc (
-    CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_wstring_tc (bound,
-                                     ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_fixed_tc (
-    CORBA::UShort digits,
-    CORBA::UShort scale,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_fixed_tc (digits,
-                                   scale,
-                                   ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_sequence_tc (
-    CORBA::ULong bound,
-    CORBA::TypeCode_ptr element_type,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_sequence_tc (bound,
-                                      element_type,
-                                      ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_array_tc (
-    CORBA::ULong length,
-    CORBA::TypeCode_ptr element_type,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_array_tc (length,
-                                   element_type,
-                                   ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_value_tc (
-    const char *id,
-    const char *name,
-    CORBA::ValueModifier type_modifier,
-    CORBA::TypeCode_ptr concrete_base,
-    const CORBA_ValueMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_value_tc (id,
-                                   name,
-                                   type_modifier,
-                                   concrete_base,
-                                   members,
-                                   ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_value_box_tc (
-    const char *id,
-    const char *name,
-    CORBA::TypeCode_ptr boxed_type,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_value_box_tc (id,
-                                       name,
-                                       boxed_type,
-                                       ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_native_tc (
-    const char *id,
-    const char *name,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_native_tc (id,
-                                    name,
-                                    ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_recursive_tc (
-    const char *id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_recursive_tc (id,
-                                       ACE_TRY_ENV);              
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_abstract_interface_tc (
-    const char *id,
-    const char *name,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_abstract_interface_tc (id,
-                                                name,
-                                                ACE_TRY_ENV);
-}
-
-CORBA::TypeCode_ptr 
-CORBA_ORB::create_local_interface_tc (
-    const char *id,
-    const char *name,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_TypeCodeFactory_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  return adapter->create_local_interface_tc (id,
-                                             name,
-                                             ACE_TRY_ENV);
-}
-
-// ****************************************************************
 
 // Destringify OMG-specified "IOR" string.
 //
