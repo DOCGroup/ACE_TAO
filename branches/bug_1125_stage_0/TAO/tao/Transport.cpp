@@ -612,6 +612,8 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
 
   ACE_ASSERT (n == 0);
 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Going to queue and leave \n"));
   // Till this point we shouldnt have any copying and that is the
   // point anyway. Now, remove the node from the list
   synch_message.remove_from_list (this->head_,
@@ -639,6 +641,9 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     this->orb_core ()->flushing_strategy ();
 
   (void) flushing_strategy->schedule_output (this);
+
+  // @@todo: Not sure at this point what will happen if the transport
+  // get destroyed in between...
 
   return 1;
 }
@@ -1110,6 +1115,12 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       return this->send_synchronous_message_i (message_block,
                                                max_wait_time);
     }
+  else if (write_semantics == TAO_Transport::TAO_REPLY)
+    {
+      return this->send_reply_message_i (message_block,
+                                         max_wait_time);
+    }
+
 
   // Let's figure out if the message should be queued without trying
   // to send first:

@@ -45,8 +45,6 @@ TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message (void)
 {
   // @@ Use a pool for these guys!
   delete[] this->buffer_;
-  this->is_heap_created_ = 0;
-  this->allocator_ = 0;
 }
 
 size_t
@@ -168,5 +166,11 @@ TAO_Asynch_Queued_Message::destroy (void)
         {
           delete this;
         }
+
+      // Are these needed? Cannot have them in the destructor since
+      // the ACE_DES_FREE macro first calls the decstructor :(.
+      // this->is_heap_created_ = 0;
+      // this->allocator_ = 0;
     }
+
 }
