@@ -131,67 +131,6 @@ BE_abort (void)
   ACE_OS::exit (1);
 }
 
-// ac must be passed in by reference, because it is also
-// passed by reference to ORB_init, which may modify it.
-// After BE_ifr_init returns to main() the modified argc
-// must be passed to DRV_parse_args().
-TAO_IFR_BE_Export int
-BE_ifr_init (int &ac,
-             char *av[])
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      be_global->orb (CORBA::ORB_init (ac,
-                                       av,
-                                       0
-                                       ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var object =
-        be_global->orb ()->resolve_initial_references ("InterfaceRepository"
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (object.in ()))
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("Null objref from resolve_initial_references\n")
-            ),
-            -1
-          );
-        }
-
-      CORBA::Repository_var repo = 
-        CORBA::Repository::_narrow (object.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (repo.in ()))
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("CORBA::Repository::_narrow failed\n")
-            ),
-            -1
-          );
-        }
-
-      be_global->repository (repo._retn ());
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_ifr_init"));
-
-      return 1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
 void
 BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -224,6 +163,44 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
   be_global->holding_scope (scope);
 }
 
+int
+BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CORBA::Object_var object =
+    be_global->orb ()->resolve_initial_references ("InterfaceRepository"
+                                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (object.in ()))
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("Null objref from resolve_initial_references\n")
+        ),
+        -1
+      );
+    }
+
+  CORBA::Repository_var repo = 
+    CORBA::Repository::_narrow (object.in ()
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (repo.in ()))
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("CORBA::Repository::_narrow failed\n")
+        ),
+        -1
+      );
+    }
+
+  be_global->repository (repo._retn ());
+
+  return 0;
+}
+
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IFR_BE_Export void
 BE_produce (void)
@@ -231,8 +208,16 @@ BE_produce (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-//      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
+      int status = BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
+      if (status != 0)
+        {
+          return;
+        }
+
+//      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
+//      ACE_TRY_CHECK;
 
       // Get the root node.
       AST_Decl *d = idl_global->root ();

@@ -23,11 +23,13 @@
 #include "TAO_IDL_BE_Export.h"
 #include "idl_bool.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/SString.h"
 
 class be_interface;
 class be_interface_fwd;
 class UTL_String;
 class AST_PredefinedType;
+class AST_Generator;
 
 // Defines a class containing all back end global data.
 
@@ -425,6 +427,25 @@ public:
   idl_bool gen_anyop_files (void) const;
   void gen_anyop_files (idl_bool val);
   // Accessors for the member.
+  
+  ACE_CString spawn_options (void);
+  // Command line passed to ACE_Process::spawn. Different
+  // implementations in IDL and IFR backends.
+  
+  void parse_args (long &i, char **av);
+  // Parse args that affect the backend.
+  
+  void prep_be_arg (char *s);
+  // Special BE arg call factored out of DRV_args.
+  
+  void arg_post_proc (void);
+  // Checks made after parsing args.
+  
+  void usage (void) const;
+  // Display usage of BE-specific options.
+  
+  AST_Generator *generator_init (void);
+  // Create an AST node generator.
 
 private:
   size_t changing_standard_include_files_;

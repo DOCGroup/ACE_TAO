@@ -25,10 +25,13 @@
 #include "tao/ORB.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "ace/Containers.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class AST_Generator;
 
 // Defines a class containing all back end global data.
 
@@ -50,19 +53,15 @@ public:
   // Data accessors.
 
   idl_bool removing (void) const;
-
   void removing (idl_bool value);
 
   CORBA::ORB_ptr orb (void) const;
-
   void orb (CORBA::ORB_ptr orb);
 
   CORBA::Repository_ptr repository (void) const;
-
   void repository (CORBA::Repository_ptr repo);
 
   CORBA::ModuleDef_ptr holding_scope (void) const;
-
   void holding_scope (CORBA::ModuleDef_ptr scope);
 
   const char *holding_scope_name (void) const;
@@ -70,16 +69,35 @@ public:
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
 
   const char *filename (void) const;
-
   void filename (char *fname);
 
   idl_bool enable_locking (void) const;
-
   void enable_locking (idl_bool value);
 
   idl_bool do_included_files (void) const;
-
   void do_included_files (idl_bool val);
+  
+  ACE_CString orb_args (void) const;
+  void orb_args (const ACE_CString& args);
+  
+  ACE_CString spawn_options (void);
+  // Command line passed to ACE_Process::spawn. Different
+  // implementations in IDL and IFR backends.
+
+  void parse_args (long &i, char **av);
+  // Parse args that affect the backend.
+  
+  void prep_be_arg (char *s);
+  // Special BE arg call factored out of DRV_args.
+  
+  void arg_post_proc (void);
+  // Checks made after parsing args.
+  
+  void usage (void) const;
+  // Display usage of BE-specific options.
+  
+  AST_Generator *generator_init (void);
+  // Create an AST node generator.
 
 private:
   idl_bool removing_;
@@ -109,6 +127,9 @@ private:
 
   idl_bool do_included_files_;
   // Option to process included IDL files.
+  
+  ACE_CString orb_args_;
+  //Holder for -ORB args saved and passed to DRV_fork.
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

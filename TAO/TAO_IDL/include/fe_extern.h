@@ -71,8 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Declares all global functions for the FE
 
-TAO_IDL_FE_Export void
-FE_init (void);
+TAO_IDL_FE_Export void FE_init (void);
+TAO_IDL_FE_Export void FE_populate (void);
 
 class File;
 

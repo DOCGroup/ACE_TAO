@@ -372,9 +372,6 @@ public:
   virtual long             compile_flags (void);        // What flags are on?
   virtual void             set_compile_flags (long);    // Turn some on or off
 
-  virtual const char       *be (void);                  // Get BE to use
-  virtual void             set_be (const char *);       // Set it
-
   virtual char             *local_escapes (void);       // Get local escapes
   virtual void             set_local_escapes (const char *);// Set it
 
@@ -531,6 +528,9 @@ public:
                                    AST_Component::port_description &pd);
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
+  
+  int check_gperf (void);
+  // Currently called only from IDL backend, but could be useful elsewhere.
 
 private:
   // Data
@@ -549,7 +549,6 @@ private:
   const char                 *pd_prog_name;          // Argv[0]
   const char                 *pd_cpp_location;       // Where to find CPP
   long                       pd_compile_flags;       // Compile flags
-  const char                 *pd_be;                 // BE name to use
   char                       *pd_local_escapes;      // Trapdoor argument
   UTL_Indenter               *pd_indent;             // Indent object
                                                      // as its being built
