@@ -1,9 +1,19 @@
+Wed Apr  2 12:44:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/rules.lib.GNU:
+
+          Added an AREXTRA macro that allows the user to add arbitrary text
+          at the end of the ar command.  HP-UX aCC defines AR in a way that
+          causes build errors.  AREXTRA is used to fix this build problem
+          and doesn't affect any other platform.
+
 Wed Apr  2 10:17:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
 
           Factored the dynamic and static accessors into this class from
-          WorkspaceCreator.pm                                           
+          WorkspaceCreator.pm.
 
         * bin/MakeProjectCreator/modules/Options.pm:
 
