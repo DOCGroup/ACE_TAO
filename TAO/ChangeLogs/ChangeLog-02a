@@ -1,3 +1,12 @@
+Mon May 14 10:44:02 2001  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+
+          Added the -D (defines names for the preprocessor) option
+          to the usage message. It was already implemented. Thanks
+          to Philippe Merle <Philippe.Merle@lifl.fr> for asking
+          about this feature in tao_ifr.
+
 Mon May 14 07:06:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp: Added a #include. This should fix
