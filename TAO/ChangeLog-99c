@@ -1,3 +1,54 @@
+Sat Dec 12 15:15:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/append.cpp:
+	* tao/Any.cpp:
+	* tao/CDR_Interpreter.cpp:
+	* tao/Connector_Registry.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/default_client.cpp:
+	* tao/default_resource.cpp:
+	* tao/default_server.cpp:
+	* tao/DomainS.cpp:
+	* tao/decode.cpp:
+	* tao/Environment.cpp:
+	* tao/Exception.cpp:
+	* tao/GIOP.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/Invocation.cpp:
+	* tao/MessagingS_T.i:
+	* tao/NVList.cpp:
+	* tao/Operation_Table.cpp:
+	* tao/Object.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Pluggable.cpp:
+	* tao/POA.cpp:
+	* tao/POAS.cpp:
+	* tao/Pool_Per_Endpoint.cpp:
+	* tao/Reactor_Per_Priority.cpp:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Request.cpp: -> assert changed
+	* tao/Servant_Base.cpp:
+	* tao/skip.cpp:
+	* tao/Stub.cpp:
+	* tao/Stub.i:
+	* tao/TAO.cpp:
+	* tao/TAO_Mux_Strategy:
+	* tao/Typecode.cpp:
+	* tao/Valuebase.cpp:
+	* tao/Wait_Strategy.cpp:
+	  Added ASYS_TEXT macros to make the statements WCHAR compliant.
+	  Also replaced naked 'assert' calls with ACE_ASSERT macros. 
+	* tao/tao_ce.{dsp, dsw}:
+	  Added the WinCE workspace for tao.
+
 Sat Dec 11 21:34:40 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
@@ -5,8 +56,8 @@ Sat Dec 11 21:34:40 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wus
 
 Sat Dec 11 18:56:24 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Removed possibly
-          uninitialized variable use from display_server_information ().
+	* orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Removed possibly
+	  uninitialized variable use from display_server_information ().
 
 Sat Dec 11 14:33:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
