@@ -1,3 +1,18 @@
+Wed Jun 23 15:50:53 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+
+	  Added a '-*- C++ -*-' to force C++ mode when editing in Emacs.
+
+	* tao/UIOP_Acceptor.cpp:
+
+	  Cosmetic updates.
+
+	* tao/IIOP_Connector.cpp (make_profile): 
+	* tao/UIOP_Connector.cpp (make_profile):
+
+	  Comment updates.  No code changes.
+	
 Wed Jun 23 15:08:04 1999  Mike Moran  <mm4@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Simple_Dynamic.cpp: 
