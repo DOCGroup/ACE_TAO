@@ -5,9 +5,12 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 #include "ace/Auto_Ptr.h"
+
+ACE_RCSID(ImplRepo_Service, ImplRepo_i, "$Id$")
 
 // Conversion
 ImplementationRepository::ActivationMode convert (Server_Info::ActivationMode mode)
@@ -306,7 +309,6 @@ ImplRepo_i::start_server_i (const char *server,
             (CORBA::string_dup ("No startup information")));
           ACE_CHECK;
         }
-
 
       if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
@@ -671,9 +673,13 @@ ImplRepo_i::server_is_running (const char *server,
   TAO_MProfile mp;
   TAO_ObjectKey objkey;
 
-  // Use a Null filter, all the profiles in the ImR are valid, no
+  // Use a default acceptor filter, all the profiles in the ImR are valid, no
   // matter what the server has.
-  registry->make_mprofile (objkey, mp, 0);
+  TAO_Acceptor_Filter *filter = 0;
+  TAO_Default_Acceptor_Filter default_filter;
+  filter = &default_filter;
+
+  registry->make_mprofile (objkey, mp, filter);
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
@@ -728,7 +734,9 @@ ImplRepo_i::server_is_shutting_down (const char *server,
 
 
 int
-ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
+ImplRepo_i::init (int argc, 
+                  char **argv, 
+                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
@@ -809,7 +817,9 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       retval = OPTIONS::instance()->parse_args (argc, argv);
 
       if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
       ACE_NEW_RETURN (this->forwarder_impl_,
                       IMR_Forwarder (this->orb_.in (),

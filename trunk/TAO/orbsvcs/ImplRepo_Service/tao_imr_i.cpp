@@ -732,43 +732,70 @@ TAO_IMR_Op_IOR::run (void)
       if (CORBA::is_nil (this->implrepo_)
           || !this->implrepo_->_stubobj ()
           || !this->implrepo_->_stubobj ()->profile_in_use ())
-        ACE_ERROR_RETURN ((LM_ERROR, "Invalid Implementation Repository IOR\n"), -1);
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR, 
+              ACE_TEXT ("Invalid Implementation Repository IOR\n")
+            ), 
+            -1
+          );
+        }
 
       CORBA::String_var imr_str =
         this->implrepo_->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      char *pos = ACE_OS::strstr (imr_str.inout (), "://");
+      char *pos = ACE_OS::strstr (imr_str.inout (), 
+                                  "://");
 
-      pos = ACE_OS::strchr (pos + 3,
-                            this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
+      pos = 
+        ACE_OS::strchr (
+            pos + 3,
+            this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ()
+          );
 
       if (pos)
-        *(pos + 1) = 0;  // Crop the string
+        {
+          *(pos + 1) = 0;  // Crop the string
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, 
+                             "Could not parse IMR IOR\n"), 
+                            -1);
+        }
 
       ACE_TString ior (imr_str.in ());
 
       // Add the key
       ior += this->server_name_;
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n", ior.c_str ()));
+      ACE_DEBUG ((LM_DEBUG, 
+                  "%s\n", 
+                  ior.c_str ()));
 
       if (this->filename_.length () > 0)
         {
-          FILE *file = ACE_OS::fopen (this->filename_.c_str (), "w");
+          FILE *file = ACE_OS::fopen (this->filename_.c_str (), 
+                                      "w");
+
           if (file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Error: Unable to open %s for writing: %p\n",
-                               this->filename_.c_str ()), -1);
-          ACE_OS::fprintf (file, "%s", ior.c_str ());
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Error: Unable to open %s for writing: %p\n",
+                                 this->filename_.c_str ()), 
+                                -1);
+            }
+
+          ACE_OS::fprintf (file, 
+                           "%s", 
+                           ior.c_str ());
           ACE_OS::fclose (file);
         }
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Ior");
       return -1;
     }
   ACE_ENDTRY;
