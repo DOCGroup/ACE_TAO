@@ -1208,6 +1208,9 @@ AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
 
 AH_TEMPLATE([ACE_LACKS_SYSCALL],[Platform doesn't have syscall() prototype])
 
+AH_TEMPLATE([ACE_LACKS_SYS_SELECT_H],
+[Platform lacks <sys/select.h> header file])
+
 AH_TEMPLATE([ACE_LACKS_SYS_TYPES_H],[Platform lacks <sys/types.h> header file])
 
 AH_TEMPLATE([ACE_LACKS_T_ERRNO],[Header files lack t_errno for TLI])

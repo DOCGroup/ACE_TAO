@@ -549,8 +549,12 @@ AC_CHECK_HEADER([sys/procfs.h],
      ])
   ],)
 
-AC_CHECK_HEADER([sys/select.h],
+AC_CHECK_HEADER([select.h],
   [AC_DEFINE([ACE_HAS_SELECT_H])])
+
+AC_CHECK_HEADER([sys/select.h],
+  [],
+  [AC_DEFINE([ACE_LACKS_SYS_SELECT_H])])
 
 AC_CHECK_HEADER([netinet/tcp.h],
   [],
@@ -4799,7 +4803,7 @@ ACE_CONVERT_WARNINGS_TO_ERRORS([
 #ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
 #endif
-#ifdef ACE_HAS_SELECT_H
+#ifndef ACE_LACKS_SYS_SELECT_H
 # include <sys/select.h>
 #endif
      ]], [[
@@ -4824,7 +4828,7 @@ dnl Now check if select will actually take int* arguments
 #ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
 #endif
-#ifdef ACE_HAS_SELECT_H
+#ifndef ACE_LACKS_SYS_SELECT_H
 # include <sys/select.h>
 #endif
         ]],
@@ -4900,7 +4904,7 @@ ACE_CACHE_CHECK([if select takes a const fifth argument],
 #ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
 #endif
-#ifdef ACE_HAS_SELECT_H
+#ifndef ACE_LACKS_SYS_SELECT_H
 # include <sys/select.h>
 #endif
       ]], [[
