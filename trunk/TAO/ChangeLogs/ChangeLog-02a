@@ -1,3 +1,10 @@
+Wed Mar  7 08:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * utils/wxNamingViewer/wxNamingViewer.dsp:
+
+          Changed the configuration names so they don't show up in
+          the nightly builds.
+
 Wed Mar 07 08:01:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Stub.cpp (~TAO_Stub):
