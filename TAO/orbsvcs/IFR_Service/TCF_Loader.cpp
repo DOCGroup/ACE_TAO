@@ -51,21 +51,12 @@ TCF_Loader::create_object (CORBA::ORB_ptr orb,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "create_object()");
+                           "TCF_Loader::create_object");
     }
   ACE_ENDTRY;
   return CORBA::Object::_nil ();
 }
 
 // ****************************************************************
-
-#if 0
-ACE_STATIC_SVC_DEFINE (TCF_Loader,
-                       ACE_TEXT ("TAO_Object_Loader"),
-                       ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TCF_Loader),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-                       0)
-#endif /* 0 */
 
 ACE_FACTORY_DEFINE (TCF, TCF_Loader)
