@@ -1,3 +1,9 @@
+Thu May 20 14:34:59 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: with Green Hills only, added
+          ACE_LACKS_ACE_IOSTREAM.  ACE's IOStream_Test never halts
+          when built with Green Hills 1.8.9.
+
 Thu May 20 14:21:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i: (t_getname): fixed comment after #endif, to
