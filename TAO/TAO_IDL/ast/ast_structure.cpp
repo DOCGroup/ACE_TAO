@@ -162,6 +162,12 @@ AST_Structure::in_recursion (AST_Type *node)
 
           AST_Type *type = field->field_type ();
 
+          if (type->node_type () == AST_Decl::NT_typedef)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              type = td->primitive_base_type ();
+            }
+
           if (type == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -548,7 +554,7 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
   o << "}";
 }
 
-// This serves for interfaces, valuetypes, components and eventtypes.
+// This serves for structs and unions.
 void
 AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                                         UTL_Scope *s)
