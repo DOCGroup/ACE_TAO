@@ -674,7 +674,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.39 1999/07/03 22:45:51 parsons Exp $
+/*  $Id: idl.ll,v 1.40 1999/07/13 00:20:05 parsons Exp $
 
 COPYRIGHT
 
@@ -1482,7 +1482,7 @@ case 76:
 TAO_YY_RULE_SETUP
 #line 301 "fe/idl.ll"
 ;
-	TAO_YY_BREAK
+  break;
 case 77:
 TAO_YY_RULE_SETUP
 #line 302 "fe/idl.ll"
@@ -1499,7 +1499,7 @@ case 79:
 TAO_YY_RULE_SETUP
 #line 307 "fe/idl.ll"
 TAO_YY_ECHO;
-	TAO_YY_BREAK
+  break;
 case TAO_YY_STATE_EOF(INITIAL):
 	tao_yyterminate();
 
