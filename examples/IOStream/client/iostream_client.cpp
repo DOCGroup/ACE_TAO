@@ -10,7 +10,7 @@ ACE_RCSID(client, iostream_client, "$Id$")
 // ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 // classes, which mimic a C++ iostream.
 
-int 
+int
 main (int argc, char *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
@@ -29,7 +29,7 @@ main (int argc, char *argv[])
                       -1);
 
   // Buffer up some things to send to the server.
-  server << "1 2.3 testing" << endl;	
+  server << "1 2.3 testing" << endl;
 
   int i;
   float f;
@@ -58,6 +58,8 @@ main (int argc, char *argv[])
                        "close"),
                       -1);
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
   return 0;
