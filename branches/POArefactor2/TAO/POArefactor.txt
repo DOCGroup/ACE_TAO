@@ -1,3 +1,9 @@
+Wed Nov 24 19:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+          Fixed bug in locate_servant, first call find_servant on the POA,
+          this will update the poa_current_impl with the needed info
+
 Wed Nov 24 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Environment.{h,i,cpp}:
