@@ -52,24 +52,41 @@ public:
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager (void);
 
-  /// Look up a mutex based on its name.
-  TAO_RT_Mutex *find_mutex (const char *name);
+  RTCORBA::Mutex_ptr create_mutex (CORBA::Environment
+                                   &ACE_TRY_ENV =
+                                   TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Register a mutex based on its name.
-  int register_mutex (const char *name,
-                      TAO_RT_Mutex *mutex);
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex,
+                      CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Unregister a mutex based on its name
-  void unregister_mutex (const char *name);
+  RTCORBA::Mutex_ptr create_named_mutex (const char *name,
+                                         CORBA::Boolean_out created_flag,
+                                         CORBA::Environment
+                                         &ACE_TRY_ENV =
+                                         TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name,
+                                       CORBA::Environment &ACE_TRY_ENV =
+                                       TAO_default_environment () )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RTCORBA::RTORB::MutexNotFound
+                     ));
+
+private:
 
   /// Hash map for named RT Mutexes
-  ACE_Hash_Map_Manager_Ex<const char *,
-                          TAO_RT_Mutex *,
-                          ACE_Hash<const char *>,
-                          ACE_Equal_To<const char *>,
-                          TAO_SYNCH_MUTEX> mutex_map_;
+  ACE_Hash_Map_Manager_Ex<
+    ACE_CString,
+    RTCORBA::Mutex_var,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> map_;
+
+  TAO_SYNCH_MUTEX lock_;
 };
 
 /**

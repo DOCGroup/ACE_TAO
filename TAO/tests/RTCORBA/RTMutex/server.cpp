@@ -159,10 +159,6 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
 
         larry_mutex2->unlock (ACE_TRY_ENV);
         ACE_TRY_CHECK;
-
-        rt_orb->destroy_mutex (larry_mutex2.in (),
-                               ACE_TRY_ENV);
-        ACE_TRY_CHECK;
       }
 
       // test opening the mutex
@@ -183,9 +179,6 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         ACE_TRY_CHECK;
 
         larry_mutex3->unlock (ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-
-        rt_orb->destroy_mutex (larry_mutex3.in (), ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
 

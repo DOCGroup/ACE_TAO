@@ -51,6 +51,9 @@ public:
   /// Constructor.
   TAO_RT_Mutex (void);
 
+  /// Destructor.
+  virtual ~TAO_RT_Mutex (void);
+
   /// Acquire the lock.
   virtual void lock (CORBA::Environment &ACE_TRY_ENV =
                      TAO_default_environment ())
@@ -61,20 +64,19 @@ public:
                        TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Acquire the lock, but only wait up to <max_wait> time.  Note
-  //that this operation may not be available on all OS platforms, so
-  //if you're interested in writing maximally portable programs avoid
-  //using this operation in your program designs.
+  /**
+   * Acquire the lock, but only wait up to <max_wait> time.  Note
+   * that this operation may not be available on all OS platforms, so
+   * if you're interested in writing maximally portable programs avoid
+   * using this operation in your program designs.
+   */
   virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait,
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_RT_Mutex (void);
+  /// Returns the name of the mutex.
+  virtual const char *name (void) const;
 
 protected:
   /// Synchronization lock.
@@ -95,19 +97,15 @@ class TAO_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex (const char *name,
-                      TAO_Named_RT_Mutex_Manager &mutex_mgr);
+  TAO_Named_RT_Mutex (const char *name);
 
-  /// Destructor.
-  virtual ~TAO_Named_RT_Mutex (void);
+  /// Returns the name of the mutex.
+  virtual const char *name (void) const;
 
 protected:
-  // Don't allow unnamed named mutexes
-  TAO_Named_RT_Mutex (void);
 
-  char *name_;
-
-  TAO_Named_RT_Mutex_Manager &mutex_mgr_;
+  /// My name.
+  ACE_CString name_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

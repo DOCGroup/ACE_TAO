@@ -32,43 +32,64 @@ TAO_RT_Mutex::unlock (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::Boolean
 TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
-                        CORBA::Environment &/*ACE_TRY_ENV*/)
+                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  int result;
+
   if (wait_time == 0)
-    // no wait
-    return this->mu_.tryacquire () != -1;
+    {
+      // No wait.
+      result = this->mu_.tryacquire ();
+    }
   else
     {
       // Wait for the specified amount of time before giving up.
       // (wait_time units are 100ns.  See TimeBase.pidl)
-
       TimeBase::TimeT seconds = wait_time / 10000000u;
       TimeBase::TimeT microseconds = (wait_time % 10000000u) / 10;
 
       ACE_Time_Value relative_time (ACE_U64_TO_U32 (seconds),
                                     ACE_U64_TO_U32 (microseconds));
 
-      ACE_Time_Value absolute_time = relative_time + ACE_OS::gettimeofday ();
+      ACE_Time_Value absolute_time =
+        relative_time +
+        ACE_OS::gettimeofday ();
 
-      return this->mu_.acquire (absolute_time) != -1;
+      result = this->mu_.acquire (absolute_time);
+    }
+
+  // Check result.
+  if (result == 0 )
+    return 1;
+  else
+  if (result == -1
+      && (errno == EBUSY || errno == ETIMEDOUT))
+    return 0;
+  else
+    {
+      // Some really bad error.
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 }
 
-TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name,
-                                        TAO_Named_RT_Mutex_Manager &mutex_mgr)
-  : name_ (CORBA::string_dup (name)),
-    mutex_mgr_ (mutex_mgr)
+const char *
+TAO_RT_Mutex::name (void) const
+{
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
+  : name_ (name)
 {
 }
 
-TAO_Named_RT_Mutex::~TAO_Named_RT_Mutex (void)
+const char *
+TAO_Named_RT_Mutex::name (void) const
 {
-  // Since the last reference to this mutex is being destroyed,
-  // unregister ourself from the mutex manager
-  this->mutex_mgr_.unregister_mutex (name_);
-
-  CORBA::string_free (name_);
+  return this->name_.c_str ();
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
