@@ -22,6 +22,13 @@ OBJFILES = \
 	$(OBJDIR)\SHMIOP_Acceptor.obj \
 	$(OBJDIR)\SHMIOP_Connection_Handler.obj \
 	$(OBJDIR)\SHMIOP_Endpoint.obj \
+	$(OBJDIR)\DIOP_Factory.obj \
+	$(OBJDIR)\DIOP_Profile.obj \
+	$(OBJDIR)\DIOP_Transport.obj \
+	$(OBJDIR)\DIOP_Connector.obj \
+	$(OBJDIR)\DIOP_Acceptor.obj \
+	$(OBJDIR)\DIOP_Connection_Handler.obj \
+	$(OBJDIR)\DIOP_Endpoint.obj \
 	$(OBJDIR)\TAO_Strategies_Internal.obj \
 	$(OBJDIR)\uiop_endpoints.obj \
 	$(OBJDIR)\advanced_resource.obj \

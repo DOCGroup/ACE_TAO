@@ -5,14 +5,17 @@
  *
  *  $Id$
  *
- *  @author Originally by Chris Cleeland as DIOP_Connect.h
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 // ===================================================================
 
 #ifndef TAO_DIOP_CONNECTION_HANDLER_H
 #define TAO_DIOP_CONNECTION_HANDLER_H
 #include "ace/pre.h"
+
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
 #include "ace/Reactor.h"
 
@@ -28,7 +31,7 @@
 #include "DIOP_Transport.h"
 //#include "tao/DIOPC.h"
 #include "ace/SOCK_Dgram.h"
-#include "diop_export.h"
+#include "strategies_export.h"
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -43,7 +46,7 @@ class TAO_Pluggable_Messaging;
  *
  */
 
-class TAO_DIOP_Export TAO_DIOP_Properties
+class TAO_Strategies_Export TAO_DIOP_Properties
 {
 
 public:
@@ -66,7 +69,7 @@ public:
  */
 
 
-class TAO_DIOP_Export TAO_DIOP_Connection_Handler : public TAO_DIOP_SVC_HANDLER,
+class TAO_Strategies_Export TAO_DIOP_Connection_Handler : public TAO_DIOP_SVC_HANDLER,
                                                public TAO_Connection_Handler
 {
 
@@ -184,6 +187,8 @@ private:
 #if defined (__ACE_INLINE__)
 #include "DIOP_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_DIOP_CONNECTION_HANDLER_H */

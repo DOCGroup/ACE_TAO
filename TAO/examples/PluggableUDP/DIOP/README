@@ -1,6 +1,9 @@
 DIOP - UDP Based Pluggable Protocol
 ===================================
 
+NOTE: The file that were in this directory have been moved to
+      $TAO_ROOT/tao/Strategies/.
+
 This directory contains all of the code needed to use the UDP
 Pluggable Protocol (DIOP).  It is work-in-progress that when complete
 will be integrated with the other standard pluggable protocols in

@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
- *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 // ===================================================================
 
@@ -15,17 +14,20 @@
 #define TAO_DIOP_TRANSPORT_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "ace/SOCK_Stream.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
-#include "diop_export.h"
+#include "strategies_export.h"
 
 // Forward decls.
 class TAO_DIOP_Connection_Handler;
@@ -48,7 +50,7 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
  *
  */
 
-class TAO_DIOP_Export TAO_DIOP_Transport : public TAO_Transport
+class TAO_Strategies_Export TAO_DIOP_Transport : public TAO_Transport
 {
 public:
 
@@ -139,6 +141,8 @@ private:
 #if defined (__ACE_INLINE__)
 #include "DIOP_Transport.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_DIOP_TRANSPORT_H */

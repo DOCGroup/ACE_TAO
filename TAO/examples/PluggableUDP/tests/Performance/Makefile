@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_DIOP -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_Strategies -lTAO_PortableServer -lTAO
 
 IDL_FILES = UDP
 IDL_SRC = UDPC.cpp UDPS.cpp
