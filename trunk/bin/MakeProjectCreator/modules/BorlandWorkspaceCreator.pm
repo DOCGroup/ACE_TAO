@@ -63,7 +63,7 @@ sub write_project_targets {
   my($crlf)   = $self->crlf();
 
   foreach my $project (@$list) {
-    my($dir)    = dirname($project);
+    my($dir)    = $self->mpc_dirname($project);
     my($chdir)  = 0;
     my($back)   = '';
 
