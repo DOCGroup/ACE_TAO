@@ -33,9 +33,7 @@ USELIB("..\ace\aced.lib");
 // Simple map manager.
 typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> MAP;
 
-//
 // Displaying the contents of a map manager.
-//
 
 void
 display_map (MAP &map)
@@ -67,18 +65,18 @@ display_map (MAP &map)
                     entry.int_id_));
       }
 
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("\n")));
   }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\n")));
 }
 
-//
 // Test for map manager.
-//
 
 void
-map_test ()
+map_test (void)
 {
   // Map of size 3.
   MAP map (3);
@@ -125,9 +123,7 @@ map_test ()
     {
       MAP::ENTRY &entry = *iter;
       if (entry.int_id_ == 1)
-        {
-          map.unbind (1);
-        }
+        map.unbind (1);
     }
 
     display_map (map);
@@ -142,9 +138,7 @@ map_test ()
       {
         MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 0)
-          {
-            map.unbind (0);
-          }
+          map.unbind (0);
       }
 
     display_map (map);
@@ -159,9 +153,7 @@ map_test ()
       {
         MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 2)
-          {
-            map.unbind (2);
-          }
+          map.unbind (2);
       }
 
     display_map (map);
@@ -185,9 +177,7 @@ map_test ()
 // Simple active map manager.
 typedef ACE_Active_Map_Manager<int> ACTIVE_MAP;
 
-//
 // Displaying the contents of an active map manager.
-//
 
 void
 display_map (ACTIVE_MAP &map)
@@ -204,7 +194,8 @@ display_map (ACTIVE_MAP &map)
                     entry.int_id_));
       }
 
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("\n")));
   }
 
   {
@@ -219,18 +210,18 @@ display_map (ACTIVE_MAP &map)
                     entry.int_id_));
       }
 
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("\n")));
   }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\n")));
 }
 
-//
 // Test for active map manager.
-//
 
 void
-active_map_test ()
+active_map_test (void)
 {
   // Map of size 3.
   ACTIVE_MAP map (3);
@@ -278,9 +269,7 @@ active_map_test ()
     {
       ACTIVE_MAP::ENTRY &entry = *iter;
       if (entry.int_id_ == 1)
-        {
-          map.unbind (keys[1]);
-        }
+        map.unbind (keys[1]);
     }
 
     display_map (map);
@@ -295,9 +284,7 @@ active_map_test ()
       {
         ACTIVE_MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 0)
-          {
-            map.unbind (keys[0]);
-          }
+          map.unbind (keys[0]);
       }
 
     display_map (map);
@@ -312,9 +299,7 @@ active_map_test ()
       {
         ACTIVE_MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 2)
-          {
-            map.unbind (keys[2]);
-          }
+          map.unbind (keys[2]);
       }
 
     display_map (map);
@@ -341,10 +326,12 @@ main (int, ASYS_TCHAR *)
   ACE_START_TEST (ASYS_TEXT ("Lazy_Map_Manager_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nMap Manager...\n\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\nMap Manager...\n\n")));
   map_test ();
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nActive Map Manager...\n\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\nActive Map Manager...\n\n")));
   active_map_test ();
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);

@@ -1,3 +1,11 @@
+Thu Sep  9 08:46:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Lazy_Map_Manager_Test.cpp (main): ACEified this a bit.
+
+	* Updated the ACE-mail.html file to put the *-request addresses
+	  first.  Thanks to Lorin Hochstein <lmh@xiphos.ca> for this
+ 	  suggestion.
+
 Wed Sep 08 23:01:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/Timer_Service.h: Added
