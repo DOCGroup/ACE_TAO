@@ -41,7 +41,7 @@ class FTEC_Gateway_ProxyPushSupplier
 public:
   FTEC_Gateway_ProxyPushSupplier(FTEC_Gateway_Impl* impl);
   ~FTEC_Gateway_ProxyPushSupplier();
-	// = The RtecEventChannelAdmin::ProxyPushSupplier methods...
+  // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
@@ -143,7 +143,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
     ACE_CHECK_RETURN(0);
 
     // create a USER_ID IdAssignmentPolicy object
-    PortableServer::IdAssignmentPolicy_var assign = 
+    PortableServer::IdAssignmentPolicy_var assign =
       root_poa->create_id_assignment_policy(PortableServer::USER_ID
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
@@ -180,15 +180,15 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
     activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
     ++oid[9];
-    activate_object_with_id(impl_->consumer_admin.out(), 
-                            impl_->poa, 
-                            &impl_->consumer_admin_servant, 
+    activate_object_with_id(impl_->consumer_admin.out(),
+                            impl_->poa,
+                            &impl_->consumer_admin_servant,
                             oid ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
     ++oid[9];
-    activate_object_with_id(impl_->supplier_admin.out(), 
-                            impl_->poa, 
-                            &impl_->supplier_admin_servant, 
+    activate_object_with_id(impl_->supplier_admin.out(),
+                            impl_->poa,
+                            &impl_->supplier_admin_servant,
                             oid ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
@@ -257,14 +257,14 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
   PortableServer::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, PortableServer::ObjectId*, CORBA::NO_MEMORY());
-  
+
   PortableServer::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
-  activate_object_with_id(result, impl_->poa, 
-                         &impl_->proxy_supplier_servant, 
+  activate_object_with_id(result, impl_->poa,
+                         &impl_->proxy_supplier_servant,
                          local_oid ACE_ENV_ARG_PARAMETER);
   return result;
 }
@@ -287,14 +287,14 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, PortableServer::ObjectId*, CORBA::NO_MEMORY());
-  
+
   PortableServer::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
-  activate_object_with_id(result, impl_->poa, 
-                          &impl_->proxy_consumer_servant, 
+  activate_object_with_id(result, impl_->poa,
+                          &impl_->proxy_consumer_servant,
                           local_oid ACE_ENV_ARG_PARAMETER);
   return result;
 }
@@ -303,13 +303,13 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 PortableServer::ObjectId**
 get_remote_oid_ptr(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
 {
-  PortableServer::Current_var current = 
+  PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb,
     "POACurrent"
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  PortableServer::ObjectId_var object_id = 
+  PortableServer::ObjectId_var object_id =
     current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -398,11 +398,11 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
   ACE_CHECK;
 
   if (CORBA::is_nil(impl_->push_handler.in())) {
-    impl_->push_handler = impl_->push_handler_servant._this();      
+    impl_->push_handler = impl_->push_handler_servant._this();
   }
 
   impl_->ftec->sendc_push (impl_->push_handler.in(),
-                           **oid_ptr, 
+                           **oid_ptr,
                            data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

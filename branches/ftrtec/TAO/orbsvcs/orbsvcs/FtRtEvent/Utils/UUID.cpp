@@ -1,7 +1,7 @@
 //$Id$
 #include "UUID.h"
 
-ACE_RCSID (Utils, 
+ACE_RCSID (Utils,
            UUID,
            "$Id$")
 #if !defined(__ACE_INLINE__)
