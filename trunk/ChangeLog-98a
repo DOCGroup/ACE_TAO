@@ -1,3 +1,8 @@
+Mon Dec 22 07:03:13 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/IOStream_Test.cpp (spawn): changed printout from
+          "Process_Mutex_Test-children" to "IOStream_Test-children".
+
 Mon Dec 22 03:08:22 1997    <nw1@DINGO>
 
 	* ace/OS.i: Modified ACE_OS::cond_* for WinCE.
