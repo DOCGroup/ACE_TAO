@@ -1,3 +1,25 @@
+Thu Nov 13 19:56:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ASNMP/tests/Octet_Test.cpp:
+          Added #include OS_NS_string.h.
+
+        Thanks to Olli Savia <ops@iki.fi> for the following fixes need to
+        complile ACE on LynxOS.
+
+        * ace/Base_Thread_Adapter.cpp:
+          Added #include OS_NS_Thread.h if ACE_HAS_TSS_EMULATION is defined.
+
+        * ace/OS_NS_stdlib.cpp:
+          Added #include OS_NS_stdio.h and OS_NS_sys_stat.h if
+          ACE_LAKCS_MKTEMP is defined.
+
+        * ace/OS_NS_strings.cpp:
+          Added #include OS_NS_ctype.h if ACE_LACKS_STRCASECMP is defined.
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_WCHAR_H, ACE_LACKS_REGEX_H, and
+          ACE_LACKS_TCP_NODELAY.
+
 Thu Nov 13 12:54:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

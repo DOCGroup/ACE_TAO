@@ -8,6 +8,10 @@ ACE_RCSID(ace, Base_Thread_Adapter, "$Id$")
 # include "ace/Base_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_HAS_TSS_EMULATION)
+#  include "ace/OS_NS_Thread.h"
+#endif /* ACE_HAS_TSS_EMULATION */
+
 ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = 0;
 ACE_INHERIT_LOG_MSG_HOOK  ACE_Base_Thread_Adapter::inherit_log_msg_hook_ = 0;
 ACE_CLOSE_LOG_MSG_HOOK    ACE_Base_Thread_Adapter::close_log_msg_hook_ = 0;
