@@ -3,7 +3,6 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CPR_Handler.h"
@@ -12,15 +11,11 @@
 #include "Process_Element.h"
 #include "Process_Basic_Type.h"
 
-#include <iostream>
-
-using std::cerr;
-using std::endl;
-
 BEGIN_DEPLOYMENT_NAMESPACE
 
 /// handle the package configuration and populate it
-void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration &pc)
+void PC_Handler::process_PackageConfiguration
+                    (::Deployment::PackageConfiguration &pc)
 {
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
@@ -28,13 +23,13 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
     {
       XStr node_name (node->getNodeName());
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:PackageConfiguration")))
+                    (ACE_TEXT ("Deployment:PackageConfiguration")))
         {
         }
-      else if (process_string(this->iter_, node_name, "label", pc.label))
+      else if (process_string (this->iter_, node_name, "label", pc.label))
         {
         }
-      else if (process_string(this->iter_, node_name, "UUID", pc.UUID))
+      else if (process_string (this->iter_, node_name, "UUID", pc.UUID))
         {
         }
       else if (process_sequence_remote
