@@ -36,17 +36,20 @@ class TAO_ORBSVCS_Export TAO_Naming_Context : public POA_CosNaming::NamingContex
 public:
 
   // = Initialization and termination methods.
-  TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
-  // Constructor - initialize <impl_> with a concrete implementation.
+  TAO_Naming_Context (void);
+  // Constructor.
 
   ~TAO_Naming_Context (void);
   // destructor.
+
+  void impl (TAO_Naming_Context_Impl *impl);
+  // Initialize <impl_> with a concrete implementation.
 
   // = CosNaming::NamingContext idl interface methods.
 
   virtual void bind (const CosNaming::Name &n,
                      CORBA::Object_ptr obj,
-                     CORBA::Environment &IT_env);
+                     CORBA::Environment &ACE_TRY_ENV);
   // Create a binding for name <n> and object <obj> in the naming
   // context.  Compound names are treated as follows: ctx->bind (<c1;
   // c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
@@ -57,7 +60,7 @@ public:
 
   virtual void rebind (const CosNaming::Name &n,
                        CORBA::Object_ptr obj,
-                       CORBA::Environment &IT_env);
+                       CORBA::Environment &ACE_TRY_ENV);
   // This is similar to <bind> operation above, except for when the
   // binding for the specified name already exists in the specified
   // context.  In that case, the existing binding is replaced with the
@@ -65,20 +68,20 @@ public:
 
   virtual void bind_context (const CosNaming::Name &n,
                              CosNaming::NamingContext_ptr nc,
-                             CORBA::Environment &IT_env);
+                             CORBA::Environment &ACE_TRY_ENV);
   // This is the version of <bind> specifically for binding naming
   // contexts, so that they will participate in name resolution when
   // compound names are passed to be resolved.
 
   virtual void rebind_context (const CosNaming::Name &n,
                                CosNaming::NamingContext_ptr nc,
-                               CORBA::Environment &IT_env);
+                               CORBA::Environment &ACE_TRY_ENV);
   // This is a version of <rebind> specifically for naming contexts,
   // so that they can participate in name resolution when compound
   // names are passed.
 
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n,
-                                     CORBA::Environment &IT_env);
+                                     CORBA::Environment &ACE_TRY_ENV);
   // Return object reference that is bound to the name.  Compound name
   // resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
   // ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
@@ -86,25 +89,25 @@ public:
   // for "narrowing" the object to the appropriate type.
 
   virtual void unbind (const CosNaming::Name &n,
-                       CORBA::Environment &IT_env);
+                       CORBA::Environment &ACE_TRY_ENV);
   // Remove the name binding from the context.  When compound names
   // are used, unbind is defined as follows: ctx->unbind (<c1; c2;
   // cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
 
   virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment
-                                                    &IT_env);
+                                                    &ACE_TRY_ENV);
   // This operation returns a new naming context implemented by the
   // same naming server in which the operation was invoked.  The
   // context is not bound.
 
   virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n,
-                                                         CORBA::Environment &IT_env);
+                                                         CORBA::Environment &ACE_TRY_ENV);
   // This operation creates a new context and binds it to the name
   // supplied as an argument.  The newly-created context is
   // implemented by the same server as the context in which it was
   // bound (the name argument excluding the last component).
 
-  virtual void destroy (CORBA::Environment &IT_env);
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV);
   // Delete the naming context.  NOTE: the user should <unbind> any
   // bindings in which the given context is bound to some names before
   // invoking <destroy> operation on it.
@@ -113,7 +116,7 @@ public:
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out bl,
                      CosNaming::BindingIterator_out bi,
-                     CORBA::Environment &IT_env);
+                     CORBA::Environment &ACE_TRY_ENV);
   // Returns at most the requested number of bindings <how_many> in
   // <bl>.  If the naming context contains additional bindings, they
   // are returned with a BindingIterator.  In the naming context does
@@ -144,7 +147,7 @@ public:
 
   virtual void bind (const CosNaming::Name &n,
                      CORBA::Object_ptr obj,
-                     CORBA::Environment &IT_env) = 0;
+                     CORBA::Environment &ACE_TRY_ENV) = 0;
   // Create a binding for name <n> and object <obj> in the naming
   // context.  Compound names are treated as follows: ctx->bind (<c1;
   // c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
@@ -155,7 +158,7 @@ public:
 
   virtual void rebind (const CosNaming::Name &n,
                        CORBA::Object_ptr obj,
-                       CORBA::Environment &IT_env) = 0;
+                       CORBA::Environment &ACE_TRY_ENV) = 0;
   // This is similar to <bind> operation above, except for when the
   // binding for the specified name already exists in the specified
   // context.  In that case, the existing binding is replaced with the
@@ -163,20 +166,20 @@ public:
 
   virtual void bind_context (const CosNaming::Name &n,
                              CosNaming::NamingContext_ptr nc,
-                             CORBA::Environment &IT_env) = 0;
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
   // This is the version of <bind> specifically for binding naming
   // contexts, so that they will participate in name resolution when
   // compound names are passed to be resolved.
 
   virtual void rebind_context (const CosNaming::Name &n,
                                CosNaming::NamingContext_ptr nc,
-                               CORBA::Environment &IT_env) = 0;
+                               CORBA::Environment &ACE_TRY_ENV) = 0;
   // This is a version of <rebind> specifically for naming contexts,
   // so that they can participate in name resolution when compound
   // names are passed.
 
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n,
-                                     CORBA::Environment &IT_env) = 0;
+                                     CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return object reference that is bound to the name.  Compound name
   // resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
   // ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
@@ -184,25 +187,25 @@ public:
   // for "narrowing" the object to the appropriate type.
 
   virtual void unbind (const CosNaming::Name &n,
-                       CORBA::Environment &IT_env) = 0;
+                       CORBA::Environment &ACE_TRY_ENV) = 0;
   // Remove the name binding from the context.  When compound names
   // are used, unbind is defined as follows: ctx->unbind (<c1; c2;
   // cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
 
   virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment
-                                                    &IT_env) = 0;
+                                                    &ACE_TRY_ENV) = 0;
   // This operation returns a new naming context implemented by the
   // same naming server in which the operation was invoked.  The
   // context is not bound.
 
   virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n,
-                                                         CORBA::Environment &IT_env) = 0;
+                                                         CORBA::Environment &ACE_TRY_ENV) = 0;
   // This operation creates a new context and binds it to the name
   // supplied as an argument.  The newly-created context is
   // implemented by the same server as the context in which it was
   // bound (the name argument excluding the last component).
 
-  virtual void destroy (CORBA::Environment &IT_env) = 0;
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV) = 0;
   // Delete the naming context.  NOTE: the user should <unbind> any
   // bindings in which the given context is bound to some names before
   // invoking <destroy> operation on it.
@@ -211,7 +214,7 @@ public:
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
                      CosNaming::BindingIterator_out &bi,
-                     CORBA::Environment &IT_env) = 0;
+                     CORBA::Environment &ACE_TRY_ENV) = 0;
   // Returns at most the requested number of bindings <how_many> in
   // <bl>.  If the naming context contains additional bindings, they
   // are returned with a BindingIterator.  In the naming context does
