@@ -19,27 +19,30 @@ ACE_RCSID(ace, Hash_Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Cache_Map_Manager)
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> 
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::ACE_Hash_Cache_Map_Manager (size_t size,
-                                                                                                                           ACE_Allocator *alloc,
-                                                                                                                           CACHING_STRATEGY *caching_s,
-                                                                                                                           int delete_caching_strategy)
-  : ACE_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, CACHING_STRATEGY, ATTRIBUTES> (size,
-                                                                                                                                                                                                alloc,
-                                                                                                                                                                                                caching_s,
-                                                                                                                                                                                                delete_caching_strategy)
+#define T_1 class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES
+#define T_2 KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES
+
+template <T_1> 
+ACE_Hash_Cache_Map_Manager<T_2>::ACE_Hash_Cache_Map_Manager (size_t size,
+                                                             ACE_Allocator *alloc,
+                                                             CACHING_STRATEGY *caching_s,
+                                                             int delete_caching_strategy)
+  : ACE_HCMM_BASE (size,
+                   alloc,
+                   caching_s,
+                   delete_caching_strategy)
 {
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Hash_Cache_Map_Manager (void)
+template <T_1>
+ACE_Hash_Cache_Map_Manager<T_2>::~ACE_Hash_Cache_Map_Manager (void)
 {
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>:: bind (const KEY &key,
-                                                                                                     const VALUE &value,
-                                                                                                     ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::CACHE_ENTRY *&entry)
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>:: bind (const KEY &key,
+                                        const VALUE &value,
+                                        ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
 {
   // Insert a entry which has the <key> and the <cache_value> which is
   // the combination of the <value> and the attributes of the caching
@@ -72,10 +75,10 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
   return bind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                                                                                      const VALUE &value,
-                                                                                                      ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::CACHE_ENTRY *&entry)
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
+                                         const VALUE &value,
+                                         ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -110,10 +113,10 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
   return rebind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
-                                                                                                       VALUE &value,
-                                                                                                       ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::CACHE_ENTRY *&entry)
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
+                                          VALUE &value,
+                                          ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_->attributes ());
@@ -153,9 +156,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
   return trybind_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
-                                                                                                    ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::CACHE_ENTRY *&entry)
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
+                                       ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
 {
   // Lookup the key and populate the <value>.
   int find_result = this->map_.find (key,
@@ -179,8 +182,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
   return find_result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::unbind (ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::CACHE_ENTRY *entry)
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::unbind (ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *entry)
 {
   // Remove the entry from the cache.
   int unbind_result = this->map_.unbind (entry);
@@ -198,5 +201,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 
   return unbind_result;
 }
+
+#undef T_1
+#undef T_2
 
 #endif /* ACE_HASH_CACHE_MAP_MANAGER_T_C */
