@@ -1,4 +1,54 @@
+Fri May  2 14:57:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Map_Manager.cpp: Added a no-op destructor to ACE_Map_Entry
+ 	  just to keep some compilers happy.  Thanks to Chuck Gehr for
+ 	  reporting this.
+
+	* ace/config-osf1-4.0.h: Added 
+	
+	  #define ACE_LACKS_IOSTREAM_FX
+	  #define ACE_LACKS_LINEBUFFERED_STREAMBUF
+	  #define ACE_LACKS_SIGNED_CHAR
+
+	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
+ 	  this.
+
+	* ace/Timer_{Wheel,Heap,List}_T.h: Fixed a typo in all these
+	  classes that was failing to put the keyword "class" after
+	  "friend."  Also, replaced the use of the typedef with the
+	  expanded name of the class to work around problems with DEC
+	  C++.  Thanks to James CE Johnson <jjohnson@lads.com> for
+	  reporting this. 
+
+	* ace/Set: Added a find() method that will return the "ith"
+ 	  element in the set.
+
+	* ace/Set: Added copy constructors and assignment operators to all
+ 	  the ACE_*_Set classes.
+
+	* ace/Set.cpp: Changed the implementation of ACE_Unbounded_Set to
+ 	  use a dummy node and a circular list.  This improves performance
+ 	  and also makes it possible to implement "queue" semantics for
+ 	  inserting at the tail of the set.
+
+	* ace/config-osf1-4.0.h: Added the ACE_HAS_STRING_CLASS macro.
+	  Thanks to James CE Johnson <jcej@lads.com> for this.
+
+	* ace/IOStream: Added the ACE_HAS_STRING_CLASS macro to
+	  replace the nasty #ifdefs we had previously.  Thanks to
+	  James CE Johnson <jcej@lads.com> for this.
+
+	* ace/config*.g++: Added ACE_HAS_STRING_CLASS for all the GNU 
+	  compilers and Win32.
+
+	* ace/config-mvs.h: Added a new version that contains support for
+ 	  IBM OS/390 r2.  Thanks to Chuck Gehr for this.
+
 Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: removed
+	  specializations of ACE Guards because they're in libGateway.
+	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this problem.
 
 	* examples/ASX/Event_Server/Transceiver/{Makefile,transceiver.cpp}:
 	  added template specializations to transceiver.cpp so that it no
@@ -21,24 +71,6 @@ Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: changed some fprintf print specifiers to avoid
 	  g++ warnings about printing pointer values.
-
-Thu May  1 10:16:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/config-osf1-4.0.h: Added 
-	
-	  #define ACE_LACKS_IOSTREAM_FX
-	  #define ACE_LACKS_LINEBUFFERED_STREAMBUF
-	  #define ACE_LACKS_SIGNED_CHAR
-
-	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
- 	  this.
-
-	* ace/Timer_{Wheel,Heap,List}_T.h: Fixed a typo in all these
-	  classes that was failing to put the keyword "class" after
-	  "friend."  Also, replaced the use of the typedef with the
-	  expanded name of the class to work around problems with DEC
-	  C++.  Thanks to James CE Johnson <jjohnson@lads.com> for
-	  reporting this. 
 
 Thu May 01 00:05:59 1997    <irfan@TWOSTEP>
 

@@ -14,6 +14,7 @@
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 #define ACE_HAS_STREAMS
+#define ACE_HAS_STRING_CLASS
 
 // They forgot a const in the prototype of putmsg and putpmsg...
 #define ACE_LACKS_CONST_STRBUF_PTR
