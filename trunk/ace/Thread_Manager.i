@@ -189,7 +189,7 @@ ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::flag");
-  return ACE_dynamic_cast (ACE_Thread_Descriptor *, this->next_);
+  return ACE_static_cast (ACE_Thread_Descriptor *, this->next_);
 }
 
 // Set the exit status.
