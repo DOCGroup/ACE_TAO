@@ -190,7 +190,7 @@ be_interface::full_coll_name (void)
 const char*
 be_interface::local_coll_name (void) const
 {
-  
+
   if (this->local_coll_name_ == 0)
     ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
@@ -230,12 +230,12 @@ be_interface::ami_handler_local_name (void)
 
 // Generate collocated local and full names for the arbitrary local
 // name under the scope of this interface. Usefull to generate AMI
-// Handlers. 
+// Handlers.
 int
-be_interface::compute_coll_names (const char *local_name, 
+be_interface::compute_coll_names (const char *local_name,
                                   char *&coll_local_name,
                                   char *&coll_full_name)
-  
+
 {
   const char collocated[] = "_tao_collocated_";
   const char poa[] = "POA_";
@@ -705,7 +705,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());\n"; 
+  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";

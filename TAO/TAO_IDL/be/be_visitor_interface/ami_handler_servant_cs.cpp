@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -92,23 +92,23 @@ be_visitor_interface_ami_handler_servant_cs::visit_interface (be_interface *node
     {
       // we are outermost. So the POA_ prefix is prepended to our name
       *os << node->ami_handler_full_skel_name () << "::POA_"
-	  << node->ami_handler_local_name () << " ("
-	  << "const POA_" << node->ami_handler_local_name () << "& rhs)";
+          << node->ami_handler_local_name () << " ("
+          << "const POA_" << node->ami_handler_local_name () << "& rhs)";
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
       *os << node->ami_handler_full_skel_name () << "::"
-	  << node->ami_handler_local_name () << " (const "
-	  << node->ami_handler_local_name () << "& rhs)";
+          << node->ami_handler_local_name () << " (const "
+          << node->ami_handler_local_name () << "& rhs)";
     }
   *os << be_idt_nl
       << ": ";
   if (node->traverse_inheritance_graph
       (be_interface::copy_ctor_helper, os) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "be_visitor_interface_ami_handler_servant_cs::visit_interface - "
-		       " copy ctor generation failed\n"), -1);
+                       "be_visitor_interface_ami_handler_servant_cs::visit_interface - "
+                       " copy ctor generation failed\n"), -1);
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}\n" << be_nl;
 
@@ -131,7 +131,7 @@ be_visitor_interface_ami_handler_servant_cs::visit_interface (be_interface *node
 
 
   // @@ Michael
-  /* 
+  /*
   // generate code for elements in the scope (e.g., operations)
   if (this->visit_scope (node) == -1)
     {

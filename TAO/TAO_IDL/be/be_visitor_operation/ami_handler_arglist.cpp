@@ -16,13 +16,13 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>  
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -40,7 +40,7 @@ be_visitor_operation_ami_handler_arglist::be_visitor_operation_ami_handler_argli
 {
 }
 
-// Visit the scope and its elements. 
+// Visit the scope and its elements.
 // This implementation is the same as
 // <be_visitor_scope::visit_scope>. The variation is that it calls the
 // <post_process>  only if the return value of the <accept> is 1. We
@@ -50,7 +50,7 @@ be_visitor_operation_ami_handler_arglist::be_visitor_operation_ami_handler_argli
 int
 be_visitor_operation_ami_handler_arglist::visit_scope (be_scope *node)
 {
-  // Proceed if the number of members in our scope is greater than 0. 
+  // Proceed if the number of members in our scope is greater than 0.
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
@@ -83,7 +83,7 @@ be_visitor_operation_ami_handler_arglist::visit_scope (be_scope *node)
           this->ctx_->node (bd);
           this->elem_number_++;
 
-          // Do any pre processing using the next item info. 
+          // Do any pre processing using the next item info.
           if (this->pre_process (bd) == -1)
             {
               delete si;
@@ -106,7 +106,7 @@ be_visitor_operation_ami_handler_arglist::visit_scope (be_scope *node)
           // Do any post processing using this item info.
           if (visitor_result == 1)
             this->post_process (bd);
-          
+
           // Next argument.
           si->next ();
         } // end of while loop
@@ -124,11 +124,11 @@ int
 be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << " (" << be_idt << be_idt << be_nl;
 
   // First argument is a the return value of the operation.
-  
+
   // Indent.
   os->indent ();
 
@@ -142,9 +142,9 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
-  
+
   // Grab the visitor.
-  
+
   be_visitor_context ctx = *this->ctx_;
 
   // Set the state.
@@ -163,7 +163,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
     }
   delete visitor;
   visitor = 0;
-  
+
   if (result_printed)
     *os << ", " << be_nl;
 
@@ -179,9 +179,9 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-  
+
   // Generate the CORBA::Environment parameter for the alternative
-  // mapping.  
+  // mapping.
   if (!idl_global->exception_support ())
     {
       // If the operation node has parameters, then we need to insert
@@ -189,7 +189,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
       // @@ Fix this.
       // if (result_printed || args_printed)
       //  *os << "," << be_nl;
-      
+
       os->indent ();
 
       switch (this->ctx_->state ())
@@ -202,7 +202,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
               << be_uidt;
           break;
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
-          // Last argument - is always CORBA::Environment. 
+          // Last argument - is always CORBA::Environment.
           *os << "CORBA::Environment &ACE_TRY_ENV";
           break;
         }

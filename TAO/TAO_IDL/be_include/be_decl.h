@@ -78,7 +78,7 @@ public:
   char* compute_flatname (const char *prefix, const char *suffix);
   // Both the arguments should be non-null!!!. Applies prefix and
   // suffix to the local name and makes a flat name.
-  
+
   const char *repoID (void);
   // retrieve the repository ID.
 
@@ -87,11 +87,11 @@ public:
 
   char *compute_repoID (const char *prefix, const char *suffix);
   // Apply the prefix and suffix to the local name and compute the
-  // repoID.  Both the parameters should be non-null. 
+  // repoID.  Both the parameters should be non-null.
 
   int compute_ami_handler_name (const char *name,
                                 char *&ami_handler_name);
-  // Computes the name of the corresponding AMI handler out of a 
+  // Computes the name of the corresponding AMI handler out of a
   // given name. The name might contain POA_ at the beginning
   // and might possibly have many scope levels.
 

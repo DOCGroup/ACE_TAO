@@ -303,7 +303,7 @@ int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *)
   // If we use it in conjunction with AMI Reply Handlers we do
   // not want to generate declarations for IN arguments
   if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
+      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS)
     return 0;
 
   switch (this->direction ())

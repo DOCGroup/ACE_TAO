@@ -59,7 +59,7 @@ int be_visitor_args_ami_handler_compiled_marshal_cs::visit_argument (be_argument
   // inout parameters. Let this visitor deal with the type
 
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
- 
+
   //TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGS_DEMARSHAL_CS)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
