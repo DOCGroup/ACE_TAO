@@ -717,13 +717,11 @@ TAO_Stub::sync_scope (void)
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 
-
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 CORBA::Policy_ptr
 TAO_Stub::connection_timeout (void)
 {
   CORBA::Policy_var p;
-
-#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -756,12 +754,10 @@ TAO_Stub::connection_timeout (void)
     p = this->orb_core_->get_default_policies ()->get_cached_policy (
           TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
 
-#endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
-
   return p._retn ();
 }
 
-
+#endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)

@@ -1,3 +1,8 @@
+Tue Apr 30 23:06:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Stub.cpp (TAO_Stub): Fixed compile errors in minimum corba
+	  builds.
+
 Wed May  1 02:46:59 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Add .in() parameters
