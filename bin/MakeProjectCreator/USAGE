@@ -17,6 +17,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
               [-exclude <directories>] [-name_modifier <pattern>]
+              [-apply_project]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
@@ -50,6 +51,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -name_modifier  Modify output names.  The pattern passed to this
                        parameter will have the '*' portion replaced with the
                        actual output name.  Ex. *_Static
+       -apply_project  When used in conjunction with -name_modifier, it applies
+                       the name modifier to the project name also.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
@@ -114,6 +117,11 @@ project name.  Thus, passing -name_modifier '*_Static' to mwc.pl will result
 in all workspace and project names ending in _Static. (Ex. ACE_Static.dsw,
 ACE_Static.dsp, etc.)
 
+The -apply_project option, when used in conjunction with the -name_modifier
+option, causes MPC to apply the name modifier to the project name in
+addition to the workspace and project file names.  This option has no effect
+outside the scope of the -name_modifier option.
+
 The -noreldefs option says not to generate default relative definitions for
 ACE_ROOT and TAO_ROOT (which would come from environment variables).
 
@@ -156,6 +164,7 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
               [-exclude <directories>] [-name_modifier <pattern>]
+              [-apply_project]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
@@ -189,6 +198,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -name_modifier  Modify output names.  The pattern passed to this
                        parameter will have the '*' portion replaced with the
                        actual output name.  Ex. *_Static
+       -apply_project  When used in conjunction with -name_modifier, it applies
+                       the name modifier to the project name also.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.

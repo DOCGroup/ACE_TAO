@@ -30,7 +30,7 @@ sub completion_command {
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
                "value_template value_project make_coexistence " .
-               "hierarchy exclude name_modifier)/' " .
+               "hierarchy exclude name_modifier apply_project)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -72,11 +72,15 @@ sub options {
   my($static)     = ($defaults ? 0 : undef);
   my($recurse)    = ($defaults ? 0 : undef);
   my($makeco)     = ($defaults ? 0 : undef);
+  my($applypj)    = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
     my($arg) = $args[$i];
-    if ($arg eq '-complete') {
+    if ($arg eq '-apply_project') {
+      $applypj = 1;
+    }
+    elsif ($arg eq '-complete') {
       print $self->completion_command($name, $types) . "\n";
       return undef;
     }
@@ -311,6 +315,7 @@ sub options {
                   'hierarchy'     => $hierarchy,
                   'exclude'       => \@exclude,
                   'name_modifier' => $nmodifier,
+                  'apply_project' => $applypj,
                  );
 
   return \%options;
