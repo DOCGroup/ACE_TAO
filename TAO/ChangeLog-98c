@@ -1,3 +1,64 @@
+Tue Apr 29 11:52:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/any.hh: Moved CORBA_Any_ptr declaration to orb.hh.
+
+	* IIOP/lib/boa.{hh,cpp}: Renamed BOA to CORBA_BOA. The CORBA_BOA class
+	maintains a pointer to an abstract TAO_ObjectTable class. Concrete
+	classes inheriting from TAO_ObjectTable will provide strategies
+	for lookup.
+
+	Added virtual functions to do dispatch based on object key. In
+	addition, added a lookup method based on object key that delegates
+	the task of looking the object to the object table it maintains.
+
+	Changed the signature of typedef CORBA_BOA::dsi_handler to be pointer to
+	member function of class CORBA_BOA. Eventually, this will point to
+	the dispatch method of class CORBA_BOA.
+
+	Moved "struct Dispatch_Context" from roa.hh to boa.hh since we
+	want BOA to be a full fledged OA eventually and not remain an
+	abstract class as it is now. All other OA's such as ROA inherit
+	from BOA and only add extra functionality.
+
+	* IIOP/lib/connect.cpp: There was a syntax error (missing comma)
+	in one of the ACE_DEBUG statements which has been fixed.
+
+	* IIOP/lib/corbacom.{hh,cpp}: Added class CORBA_String_var as well
+	as the CORBA compliant CORBA_string_dup.
+
+	* IIOP/lib/except.hh: Moved CORBA_Exception_ptr declaration to orb.hh.
+
+	* IIOP/lib/object.hh: Added an abstract class
+	TAO_Operation_Table. CORBA_Object maintains a pointer to this
+	abstract class. The IDL compiler will eventually generate concrete
+	classes that employ different lookup strategies for operation name
+	lookup.
+
+	* IIOP/lib/orb.hh: Added forward declarations to all CORBA_*
+	classes. In addition, moved all the CORBA_*_ptr declarations here.
+
+	* IIOP/lib/orbobj.{hh,cpp}: Added the CORBA compliant BOA_init
+	method to class CORBA_ORB. Users can now pass arguments to
+	BOA_init. Eventually, we want to make this method return any of
+	the specialized OA's depending on the arguments. Right now, we get
+	a pointer to the ROA. 
+
+	* IIOP/lib/params.{hh,i}: Added some more methods and enum
+	declarations to the ROA_PARAMS singleton. 
+
+	* IIOP/lib/principa.hh: Moved the CORBA_Principal_ptr declaration
+	to orb.hh.
+
+	* IIOP/lib/roa.{hh,cpp}: Moved some functionality to boa.hh. ROA
+	is now only a specialized form of BOA.
+
+	* IIOP/lib/stub.hh: Moved the typedef for "skeleton" to orb.hh.
+
+	* IIOP/lib/svrrqst.{hh,cpp}: Had to rename BOA to CORBA_BOA.
+
+	* IIOP/lib/typecode.hh: Moved the CORBA_TypeCode_ptr declaration
+	to orb.hh.
+
 Tue Apr 22 23:30:19 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/connect.cpp (open): Added log message.
