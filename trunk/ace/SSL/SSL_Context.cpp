@@ -138,6 +138,11 @@ ACE_SSL_Context::ssl_library_fini (void)
 int
 ACE_SSL_Context::set_mode (int mode)
 {
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                            ace_ssl_mon,
+                            *ACE_Static_Object_Lock::instance (),
+                            -1));
+
   if (this->context_ != 0)
     return -1;
 
