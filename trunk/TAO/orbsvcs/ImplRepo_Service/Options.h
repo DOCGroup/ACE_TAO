@@ -76,7 +76,7 @@ private:
   void print_usage (void) const;
 
   /// Initialize file persistence.
-  int initialize_file_persistence (ACE_TCHAR *filename);
+  int initialize_file_persistence (const ACE_TCHAR *filename);
 
   /// Initialize Registry persistence.
   int initialize_registry_persistence (void);
@@ -85,7 +85,7 @@ private:
   int initialize_non_persistence (void);
 
   /// Run a service command.
-  int run_service_command (ACE_TCHAR *command);
+  int run_service_command (const ACE_TCHAR *command);
 
   /// Loads ORB options from the registry
   int load_registry_options (ACE_ARGV &orb_options);

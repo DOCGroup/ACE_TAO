@@ -62,7 +62,7 @@ RND_Driver::run (int argc, char *argv[])
 
       while (arg_shifter.is_anything_left ())
         {
-          char *arg = arg_shifter.get_current ();
+          const char *arg = arg_shifter.get_current ();
 
           if (ACE_OS::strcasecmp (arg, "-suppliers") == 0)
             {
@@ -70,7 +70,7 @@ RND_Driver::run (int argc, char *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  char* opt = arg_shifter.get_current ();
+                  const char* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nsuppliers_ = n;
@@ -83,7 +83,7 @@ RND_Driver::run (int argc, char *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  char* opt = arg_shifter.get_current ();
+                  const char* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nconsumers_ = n;
@@ -96,7 +96,7 @@ RND_Driver::run (int argc, char *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  char* opt = arg_shifter.get_current ();
+                  const char* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 0)
                     this->max_recursion_ = n;

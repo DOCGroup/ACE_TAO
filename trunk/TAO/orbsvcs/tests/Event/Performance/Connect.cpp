@@ -39,7 +39,7 @@ EC_Connect::parse_args (int& argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, "-connection_order") == 0)
         {
@@ -47,7 +47,7 @@ EC_Connect::parse_args (int& argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "consumers") == 0)
                 this->order_ = 0;
               else if (ACE_OS::strcasecmp (opt, "suppliers") == 0)
