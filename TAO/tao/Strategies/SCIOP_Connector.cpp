@@ -277,7 +277,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
           ACE_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "connection to <%s:%d> failed (%p)\n",
-                      iiop_endpoint->host (), iiop_endpoint->port (),
+                      sciop_endpoint->host (), sciop_endpoint->port (),
                       "errno"));
         }
 
