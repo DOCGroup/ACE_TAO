@@ -80,7 +80,7 @@ protected:
   TAO_NS_EventChannel *ec_;
 
   /// The Proxy Container.
-  TAO_NS_Proxy_Container *proxy_container_;;
+  TAO_NS_Proxy_Container *proxy_container_;
 
   /// The types that we've subscribed our proxy objects with the event manager.
   TAO_NS_EventTypeSeq subscribed_types_;
