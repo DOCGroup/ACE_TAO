@@ -6,9 +6,9 @@
   </head>
 
   <body>
-    <h1 align="center"> Deployment And Configuration Engine (DAnCE)
+    <h3 align="center"> Deployment And Configuration Engine (DAnCE)
     <br/>Release Notes
-    </h1>
+    </h3>
 
     <b>D</b>eployment <b>An</b>d <b>C</b>onfiguration <b>E</b>ngine
     <b>(DAnCE)</b> is an implementation of the run-time infrastructure
@@ -29,16 +29,18 @@
     href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>) is used as the
     underlying CCM implementation in the current release, though again
     we are interested in generalizing it for other CCM implementations
-    in future work.
+    in future work. <P>
 
-    <h2>D&amp;C XML Schema Handling</h2>
+<HR><P>
+
+    <h3>D&amp;C XML Schema Handling</h3>
 
     <p> The XML handlers shipped with DAnCE are capable of handling
     almost all elements that are defined in the D&amp;C schema.  In
     this context, handling refers to reading the XML tags and
     converting them to the equivalent in-memory IDL-based data
     structures defined by the specifications. Some D&amp;C elements are
-    however not handled, however, including:
+    not handled, however, including:
     
     <ul>
       <li>
@@ -46,26 +48,26 @@
         element that is composed of many sub-elements. Currently, DAnCE only
         parses a subset of the sub-elements of <code>Deployment:Any</code>.
         Specifically, DAnCE supports all the basic data types defined as part
-        of <code>Deployment:Any</code>, and doesn't understand any complex types.
+        of <code>Deployment:Any</code>, and doesn't understand any complex types.<P>
       </li>
       <li>
         <b><code>xmi:Extension</code></b> &mdash; This element 
         allows the augmention of the standard D&amp;C schema with user-defined
         elements. Currently DAnCE doesn't support user-defined extensions to
-        the schema.
+        the schema.<P>
       </li>
       <li>
         <b><code>Deployment:Requirement</code></b> &mdash; This element is
         allows the description of requirements of component-based
         applications. Since handling this description requires interaction with the
         <code>TargetManager</code> interface (which is not yet
-        supported), support for <code>Deployment:Requirement</code> is not present. 
+        supported), support for <code>Deployment:Requirement</code> is not present.<P>
       </li>
       <li>
         <b><code>Deployment:ComponentPropertyDescription</code></b> &mdash;
         This element is used to specify default values for attributes of
         component. DAnCE doesn't support setting the values for attributes
-        of components using this tag.
+        of components using this tag.<P>
       </li>
       <li>
         <b><code>Deployment:ComponentExternalPortEndpoint,
@@ -75,20 +77,22 @@
         or connections between component ports and external connection
         endpoints. These features are needed to support assemblies of
         components. DAnCE doesn't support yet hierarchical assemblies, i.e.,
-        creation of assemblies which can themselves contain sub-assemblies.
+        creation of assemblies which can themselves contain sub-assemblies.<P>
       </li>
       <li>
         <b><code>Deployment:PlanPropertyMapping</code></b> &mdash; This
         element is used to delegate property mapping between a component's
         external properties to properties of subcomponents that actually
         implement the behavior of the larger component. Since DAnCE
-        doesn't support hierarchical assemblies, this tag is not yet supported.
+        doesn't support hierarchical assemblies, this tag is not yet supported.<P>
       </li>
     </ul>
     We plan to support these features in future versions of DAnCE.
     </p>
 
-    <h2>D&amp;C Management Interfaces</h2> <p> The D&amp;C specification
+<HR><P>
+
+    <h3>D&amp;C Management Interfaces</h3> <p> The D&amp;C specification
     defines a set of standard CORBA interfaces that are used to perform
     the deployment of component-based applications. These interfaces depend
     on the in-memory IDL data structures that are built by DAnCE's XML
@@ -98,26 +102,26 @@
       <li>
         <b><code>RepositoryManager</code></b> &mdash; Only the
         <code>installPackage()</code> and <code>findPackageByName()</code>
-        operations of this interface are implemented.
+        operations of this interface are implemented.<P>
       </li>
       <li>
         <b><code>TargetManager</code></b> &mdash; This interface has not
         been implemented at all. Implementation of this interface is 
-        planned for the future.
+        planned for the future.<P>
       </li>
       <li>
         <b><code>ExecutionManager</code></b> &mdash; All operations defined
-        in this interface are implemented.
+        in this interface are implemented.<P>
       </li>
       <li>
         <b><code>DomainApplicationManager, DomainApplication</code></b>
         &mdash; All operations except <code>getApplications()</code>
-        operation of DomainApplicationManager are implemented.
+        operation of DomainApplicationManager are implemented.<P>
       </li>
       <li>
         <b><code>NodeManager, NodeApplicationManager,
         NodeApplication</code></b> &mdash; All operations defined in these
-        interfaces are implemented.
+        interfaces are implemented.<P>
       </li>
     </ul>
     We plan to finish implementing the unsupported features in future versions of DAnCE.    
