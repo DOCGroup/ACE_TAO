@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Obstack.i
+// Obchunk.i
 
 ACE_INLINE
 ACE_Obchunk::~ACE_Obchunk (void)

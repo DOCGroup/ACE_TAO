@@ -1,3 +1,37 @@
+Wed Jun 13 10:22:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Conf_l.cpp: Need to read the sizeof (ACE_TCHAR) of bytes
+	  to handle UNICODE svc.conf correctly.
+
+	* ace/Svc_Conf.h: Changed the macro ACE_YY_INPUT to handle
+	  ACE_TCHAR instead of char.  Thanks to Allen Kelly
+	  <akelly@postx.com> for sending the patches.
+
+	* ace/Obstack_T.{h,i,cpp}: Templatized ACE_Obstack on the char
+	  type it handles.
+
+	* ace/Obchunk.{h,i,cpp}: New files containing the non-template
+	  class ACE_Obchunk.
+
+	* ace/Obstack.{h,cpp}: All the class definitions were moved to
+	  Obchunk.* and Obstack_T.*.  These files typedef'ed
+	  ACE_Obstack_T<char> to ACE_Obstack for backward compatibility.
+
+	* ace/Obstack.i: Removed file.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	* ace/Makefile: Added Obchunk and Obstack_T.
+
+	* ace/Service_Config.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* ace/Svc_Conf.h: Changed ACE_Obstack to ACE_Obstack_T<ACE_TCHAR>
+	  to handle UNICODE files when needed.
+
+	* ace/Configuration.cpp (set_string_value): When storing wchar
+	  strings, the datasize passed to RegSetValueEx is the total size
+	  in bytes, not the string length.
+
 Wed Jun 13 08:42:31 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/ace_flags.bor:

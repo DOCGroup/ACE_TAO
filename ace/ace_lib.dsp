@@ -549,6 +549,10 @@ SOURCE=.\NT_Service.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Obchunk.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Manager.cpp
 # End Source File
 # Begin Source File
@@ -1549,11 +1553,19 @@ SOURCE=.\NT_Service.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Obchunk.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Manager.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Obstack.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obstack_T.h
 # End Source File
 # Begin Source File
 
@@ -2533,6 +2545,10 @@ SOURCE=.\Obstack.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Obstack_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS.i
 # End Source File
 # Begin Source File
@@ -3065,6 +3081,11 @@ SOURCE=.\Message_Queue_T.cpp
 # Begin Source File
 
 SOURCE=.\Module.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obstack_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
