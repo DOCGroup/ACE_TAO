@@ -800,6 +800,7 @@ Sean Boudreau <seanb@qnx.com>
 Shalini Yajnik <shalini@research.bell-labs.com>
 Matt Thompson <thompsom@stoner.com>
 Peter C Chien <peter@nowsol.com>
+Bruce Alderson <balderso@triant.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
