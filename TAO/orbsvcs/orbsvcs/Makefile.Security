@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Security
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -1,4 +1,12 @@
-Wed Feb 27 14.30:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+Wed Feb 27 15:20:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* tao/Messaging/Messaging.cpp:
+	  Added code to check for exceptions.
+
+	* orbsvcs/orbsvcs/Makefile.Security:
+	  Added code to link to the new Messaging library.
+
+Wed Feb 27 14:30:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* tests/Two_Objects/Makefile:
 	* tao/Makefile:
