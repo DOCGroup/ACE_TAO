@@ -43,7 +43,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 endif # trader
 # end of the trading service stuff
 
-BIN = client server Factory_Finder Generic_Factory 
+BIN = client server Factory_Finder Generic_Factory
 
 # The following lines tell the souce code that the trading
 # service is available.
@@ -61,7 +61,7 @@ IDL_SRC	= \
 	QuoterC.cpp QuoterS.cpp
 
 CLIENT_SRCS = \
-	client.cpp 
+	client.cpp
 
 SERVER_SRCS = \
 	server.cpp Quoter_Impl.cpp
@@ -70,18 +70,18 @@ FACTORY_FINDER_SRCS = \
 	Factory_Finder.cpp Factory_Finder_Impl.cpp
 
 GENERIC_FACTORY_SRCS = \
-	Generic_Factory.cpp Generic_Factory_Impl.cpp 
+	Generic_Factory.cpp Generic_Factory_Impl.cpp
 
 
 LSRC= \
 	$(IDL_SRC) $(CLIENT_SRCS) $(SERVER_SRCS) \
 	$(FACTORY_FINDER_SRCS) $(GENERIC_FACTORY_SRCS)
 
-COMMON_OBJS = QuoterC.o QuoterS.o 
-CLIENT_OBJS = $(COMMON_OBJS) client.o 
-SERVER_OBJS = $(COMMON_OBJS) server.o Quoter_Impl.o 
-FACTORY_FINDER_OBJS = $(COMMON_OBJS) Factory_Finder.o Factory_Finder_Impl.o 
-GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o 
+COMMON_OBJS = QuoterC.o QuoterS.o
+CLIENT_OBJS = $(COMMON_OBJS) client.o
+SERVER_OBJS = $(COMMON_OBJS) server.o Quoter_Impl.o
+FACTORY_FINDER_OBJS = $(COMMON_OBJS) Factory_Finder.o Factory_Finder_Impl.o
+GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o
 
 ifdef trader
 
@@ -112,9 +112,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
 	-I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
 realclean: clean
-	-/bin/rm -rf QuoterC.* QuoterS.*
+	-/bin/rm -rf QuoterC.* QuoterS.* QuoterS_T.*
 
-$(IDL_SRC): Quoter.idl 
+$(IDL_SRC): Quoter.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl Quoter.idl -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 .PRECIOUS: $(IDL_SRC)

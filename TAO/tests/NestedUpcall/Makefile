@@ -45,7 +45,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs 
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS: ReactorC.h ReactorC.i ReactorC.cpp
 .PRECIOUS: ReactorS.h ReactorS.i ReactorS.cpp
@@ -59,7 +59,7 @@ NestedUpCalls_Test: $(addprefix $(VDIR),$(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf ReactorS.* ReactorC.*
+	-/bin/rm -rf ReactorC.* ReactorS.* ReactorS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
