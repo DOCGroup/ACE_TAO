@@ -1,3 +1,8 @@
+Wed Nov  5 23:45:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_sys_socket.inl:
+          Fixed FUZZ error.
+
 Wed Nov  5 18:16:40 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/ARGV.i: Added #include "ace/Global_Macros.h" to find ACE_TRACE.
