@@ -1,3 +1,20 @@
+Thu Jan  6 11:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Adapter.{h,cpp}:
+        * tao/Adapter_Factory.{h,cpp}:
+        * tao/Adapter_Registry.{h,cpp}:
+          Moved TAO_Adapter_Registry and TAO_Adapter_Factory to its own file
+
+        * tao/ORB_Core.{h,cpp}:
+        * tao/Internal.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/PortableServer/Object_Adapter.h:
+          Updated includes because of change above
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Added new files above
+
 Thu Jan  6 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Checkin of separate footprint issue. This has no influence at the
