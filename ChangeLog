@@ -1,3 +1,9 @@
+Sat Jun 19 11:23:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/minimumTAO.html:
+
+	  This document doesn't belong in ACE. Moving it to TAO/docs.
+
 Sat Jun 19 13:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Signals/SigInfo.cpp:
