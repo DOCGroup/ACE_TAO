@@ -1,54 +1,60 @@
+Thu May 11 08:35:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+          The name of one of the libraries was wrong in the release build.
+
 Thu May 11 09:36:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp:
-	  Suppress generation of Any operators automatically when
-	  typecode generation is suppressed with -St, since the
-	  >>= operator uses the typecode. The use of -St along was
-	  generating incompilable code.
+        * TAO_IDL/driver/drv_args.cpp:
+          Suppress generation of Any operators automatically when
+          typecode generation is suppressed with -St, since the
+          >>= operator uses the typecode. The use of -St along was
+          generating incompilable code.
 
 Thu May 11 09:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/ami_test_i.cpp,
-	  tests/AMI/ami_test_i.h: Added the user exception DidTheRightThing to 
-	  the trow spec of the servant implementation. This fixed bug 521.
-	  The problem was that the servant implementation did not enumerate the
-	  exception in the throw spec. The server raised the system exception
-	  instead of the given user exception, which lead at the client to the
-	  conclusion that it demarshalled the exception wrongly.
-	  The compilers should have complained about throwing an user exception when only 
-	  system exceptions were allowed in the throw spec.
+        * tests/AMI/ami_test_i.cpp,
+          tests/AMI/ami_test_i.h: Added the user exception DidTheRightThing to
+          the trow spec of the servant implementation. This fixed bug 521.
+          The problem was that the servant implementation did not enumerate the
+          exception in the throw spec. The server raised the system exception
+          instead of the given user exception, which lead at the client to the
+          conclusion that it demarshalled the exception wrongly.
+          The compilers should have complained about throwing an user exception when only
+          system exceptions were allowed in the throw spec.
 
 Thu May 11 02:28:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Active_Object_Map.cpp
-	* tao/Active_Object_Map.h
-	* tao/Active_Object_Map.i
-	* tao/POA.cpp
-	* tao/POA.h
-	* tao/POA.i
-	* tao/POA.pidl
+        * tao/Active_Object_Map.cpp
+        * tao/Active_Object_Map.h
+        * tao/Active_Object_Map.i
+        * tao/POA.cpp
+        * tao/POA.h
+        * tao/POA.i
+        * tao/POA.pidl
 
-	  The POA now has support for the new RT POA interfaces and it can
-	  associate priorities with servants.
+          The POA now has support for the new RT POA interfaces and it can
+          associate priorities with servants.
 
 Thu May 11 01:53:49 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO.pidl
-	* tao/TAOC.cpp
-	* tao/Messaging.pidl
-	* tao/MessagingC.cpp
+        * tao/TAO.pidl
+        * tao/TAOC.cpp
+        * tao/Messaging.pidl
+        * tao/MessagingC.cpp
 
-	  tests/Timed_Buffered_Test was failing because of this change:
+          tests/Timed_Buffered_Test was failing because of this change:
 
-	    Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+            Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	  SYNC_DELAYED_BUFFERING has the value -1; -1 and 255
-	  (TAO_TWOWAY_RESPONSE_FLAG) are the same for octets.  Hence the
-	  server started sending unexpected replies to the client causing
-	  problems.  Previously, TAO_TWOWAY_RESPONSE_FLAG was 131 and
-	  hence there was no conflicts.  I changed SYNC_DELAYED_BUFFERING
-	  to have the value -2.  It only took two whole days to figure
-	  this out ;-)
+          SYNC_DELAYED_BUFFERING has the value -1; -1 and 255
+          (TAO_TWOWAY_RESPONSE_FLAG) are the same for octets.  Hence the
+          server started sending unexpected replies to the client causing
+          problems.  Previously, TAO_TWOWAY_RESPONSE_FLAG was 131 and
+          hence there was no conflicts.  I changed SYNC_DELAYED_BUFFERING
+          to have the value -2.  It only took two whole days to figure
+          this out ;-)
 
 Wed May 10 23:24:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
