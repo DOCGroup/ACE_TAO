@@ -32,10 +32,10 @@ the Data_Block.
    strategy. 
  */</font>
 <font color=#008888>Data_Block::Data_Block</font> (Unit_Of_Work * _data)
-: ACE_Data_Block (0, <font color=#008888>ACE_Message_Block::MB_DATA</font>, 0, 0, new Lock (), 0, 0)
-,data_ (_data)
+        : ACE_Data_Block (0, <font color=#008888>ACE_Message_Block::MB_DATA</font>, 0, 0, new Lock (), 0, 0)
+         ,data_ (_data)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Data_Block ctor for 0x%x\n</font>", (void *) this, (void *) data_));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Data_Block ctor for 0x%x\n</font>", (void *) this, (void *) data_));
 }
 
 <font color=red>/*
@@ -46,9 +46,9 @@ the Data_Block.
  */</font>
 <font color=#008888>Data_Block::~Data_Block</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Data_Block dtor for 0x%x\n</font>", (void *) this, (void *) data_));
-  ((Lock *) locking_strategy ())->destroy ();
-  delete data_;
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Data_Block dtor for 0x%x\n</font>", (void *) this, (void *) data_));
+    ((Lock *) locking_strategy ())->destroy ();
+    delete data_;
 }
 
 <font color=red>/*
@@ -56,53 +56,36 @@ the Data_Block.
  */</font>
 Unit_Of_Work *<font color=#008888>Data_Block::data</font> (void)
 {
-  return this->data_;
+    return this->data_;
 }
 
 Data_Block:: <font color=#008888>Lock::Lock</font> (void)
-:destroy_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Lock ctor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Lock ctor\n</font>", (void *) this));
 }
 
 Data_Block:: <font color=#008888>Lock::~Lock</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Lock dtor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Lock dtor\n</font>", (void *) this));
 }
 
 <font color=red>/*
-   Set our destroy_ flag so that the next lock release will cause us to  be
-   deleted. 
+   Delete ourselves to prevent any memory leak
  */</font>
 int <font color=#008888>Data_Block::Lock</font>::destroy (void)
 {
-  ++destroy_;
-  return (0);
-}
-
-<font color=red>/*
-   Mutexes have acquire() and release() methods.  We've overridden the latter
-   so that when the object we're protecting goes away, we can make ourselves go 
-   away after the lock is released. 
- */</font>
-int <font color=#008888>Data_Block::Lock</font>::release (void)
-{
-  int rval = <font color=#008888>inherited::release</font> ();
-  if (destroy_)
-  {
     delete this;
-  }
-  return rval;
+    return (0);
 }
 
 <font color=red>/*
    Create an baseclass unit of work when we instantiate a hangup message. 
  */</font>
 <font color=#008888>Message_Block::Message_Block</font> (void)
-:ACE_Message_Block (new Data_Block (new Unit_Of_Work ()))
+        :ACE_Message_Block (new Data_Block (new Unit_Of_Work ()))
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block ctor for shutdown\n</font>", (void *) this));
-  this->msg_type (MB_HANGUP);
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block ctor for shutdown\n</font>", (void *) this));
+    this->msg_type (MB_HANGUP);
 }
 
 <font color=red>/*
@@ -110,30 +93,15 @@ int <font color=#008888>Data_Block::Lock</font>::release (void)
    that data. 
  */</font>
 <font color=#008888>Message_Block::Message_Block</font> (Unit_Of_Work * _data)
-:ACE_Message_Block (new Data_Block (_data))
+        :ACE_Message_Block (new Data_Block (_data))
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block ctor for 0x%x\n</font>", (void *) this, (void *) _data));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block ctor for 0x%x\n</font>", (void *) this, (void *) _data));
 }
 
 <font color=#008888>Message_Block::~Message_Block</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block dtor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Message_Block dtor\n</font>", (void *) this));
 }
 </PRE>
-<HR WIDTH="100%">
-<P>
-I hope that wasn't too confusing.  The locking strategy can be a bit
-daunting at times.  The worst problem  is dealing with the fact
-that the lock is held while the object being guarded by the lock is
-being destroyed.  But the only object that has a reference to the
-(dynamically created) lock object is the very thing being deleted.  We 
-would be in a world of hurt if the lock's release() method had not
-been created virtual!  By simply overridding that method we can get
-ourselves out of a nasty situation.
-<P>
-The rest of the code is pretty cut and dried.  We could have had the
-hangup indicator create a data block with a null unit of work but it's 
-more orthgonal for the thread pool if we always have a valid pointer.
-<P>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>

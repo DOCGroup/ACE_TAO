@@ -68,13 +68,13 @@ Simple, cheap, effective.
 class mld
 {
 public:
-  mld (void);
-   ~mld (void);
+    mld (void);
+    ~mld (void);
 
-  static int value (void);
+    static int value (void);
 
 protected:
-  static ACE_Atomic_Op &lt; ACE_Mutex, int >counter_;
+    static ACE_Atomic_Op &lt; ACE_Mutex, int >counter_;
 };
 
 <font color=red>// ================================================</font>
@@ -106,18 +106,18 @@ ACE_Atomic_Op &lt; ACE_Mutex, int ><font color=#008888>mld::counter_</font> (0);
 <font color=red>// Increment the counter when a new mld is created...</font>
 <font color=#008888>mld::mld</font> (void)
 {
-  ++counter_;
+    ++counter_;
 }
 
 <font color=red>// and decrement it when the object is destructed.</font>
 <font color=#008888>mld::~mld</font> (void)
 {
-  --counter_;
+    --counter_;
 }
 
 int <font color=#008888>mld::value</font> (void)
 {
-  return counter_.value ();
+    return counter_.value ();
 }
 </PRE>
 <P><HR WIDTH="100%">

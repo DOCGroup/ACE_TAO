@@ -64,25 +64,25 @@ cpp file as with task.
 class Unit_Of_Work
 {
 public:
-  Unit_Of_Work (void);
+    Unit_Of_Work (void);
 
     virtual ~ Unit_Of_Work (void);
 
-  <font color=red>// Display the object instance value</font>
-  void who_am_i (void);
+        <font color=red>// Display the object instance value</font>
+    void who_am_i (void);
 
-  <font color=red>// The baseclass can override this to show it's "<font color=green>type name</font>"</font>
-  virtual void what_am_i (void);
+        <font color=red>// The baseclass can override this to show it's "<font color=green>type name</font>"</font>
+    virtual void what_am_i (void);
 
-  <font color=red>// This is where you do application level logic.  It will be</font>
-  <font color=red>// called once for each thread pool it passes through.  It</font>
-  <font color=red>// would typically implement a state machine and execute a</font>
-  <font color=red>// different state on each call.</font>
-  virtual int process (void);
+        <font color=red>// This is where you do application level logic.  It will be</font>
+        <font color=red>// called once for each thread pool it passes through.  It</font>
+        <font color=red>// would typically implement a state machine and execute a</font>
+        <font color=red>// different state on each call.</font>
+    virtual int process (void);
 
-  <font color=red>// This is called by the last Task in the series (see task.h)</font>
-  <font color=red>// in case our process() didn't get through all of it's states.</font>
-  virtual int fini (void);
+        <font color=red>// This is called by the last Task in the series (see task.h)</font>
+        <font color=red>// in case our process() didn't get through all of it's states.</font>
+    virtual int fini (void);
 
 protected:
     ACE_Atomic_Op &lt; ACE_Mutex, int >state_;
@@ -96,20 +96,20 @@ protected:
 class Work : public Unit_Of_Work
 {
 public:
-  Work (void);
+    Work (void);
 
     Work (int message);
 
     virtual ~ Work (void);
 
-  void what_am_i (void);
+    void what_am_i (void);
 
-  int process (void);
+    int process (void);
 
-  int fini (void);
+    int fini (void);
 
 protected:
-  int message_;
+    int message_;
     MLD;
 };
 
@@ -126,14 +126,14 @@ protected:
    Initialize the state to zero 
  */</font>
 <font color=#008888>Unit_Of_Work::Unit_Of_Work</font> (void)
-: state_ (0)
+        : state_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work ctor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work ctor\n</font>", (void *) this));
 }
 
 <font color=#008888>Unit_Of_Work::~Unit_Of_Work</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work dtor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work dtor\n</font>", (void *) this));
 }
 
 <font color=red>/*
@@ -141,7 +141,7 @@ protected:
  */</font>
 void <font color=#008888>Unit_Of_Work::who_am_i</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work instance\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Unit_Of_Work instance\n</font>", (void *) this));
 }
 
 <font color=red>/*
@@ -149,7 +149,7 @@ void <font color=#008888>Unit_Of_Work::who_am_i</font> (void)
  */</font>
 void <font color=#008888>Unit_Of_Work::what_am_i</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x I am a Unit_Of_Work object\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x I am a Unit_Of_Work object\n</font>", (void *) this));
 }
 
 <font color=red>/*
@@ -157,7 +157,7 @@ void <font color=#008888>Unit_Of_Work::what_am_i</font> (void)
  */</font>
 int <font color=#008888>Unit_Of_Work::process</font> (void)
 {
-  return -1;
+    return -1;
 }
 
 <font color=red>/*
@@ -165,16 +165,16 @@ int <font color=#008888>Unit_Of_Work::process</font> (void)
  */</font>
 int <font color=#008888>Unit_Of_Work::fini</font> (void)
 {
-  return -1;
+    return -1;
 }
 
 <font color=red>/*
    Default constructor has no "<font color=green>message number</font>" 
  */</font>
 <font color=#008888>Work::Work</font> (void)
-:message_ (-1)
+        :message_ (-1)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work ctor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work ctor\n</font>", (void *) this));
 }
 
 <font color=red>/*
@@ -182,14 +182,14 @@ int <font color=#008888>Unit_Of_Work::fini</font> (void)
    you ask. 
  */</font>
 <font color=#008888>Work::Work</font> (int message)
-: message_ (message)
+        : message_ (message)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work ctor for message %d\n</font>", (void *) this, message_));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work ctor for message %d\n</font>", (void *) this, message_));
 }
 
 <font color=#008888>Work::~Work</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work dtor\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Work dtor\n</font>", (void *) this));
 }
 
 <font color=red>/*
@@ -197,7 +197,7 @@ int <font color=#008888>Unit_Of_Work::fini</font> (void)
  */</font>
 void <font color=#008888>Work::what_am_i</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x I am a Work object for message %d\n</font>", (void *) this, message_));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x I am a Work object for message %d\n</font>", (void *) this, message_));
 }
 
 <font color=red>/*
@@ -206,23 +206,23 @@ void <font color=#008888>Work::what_am_i</font> (void)
  */</font>
 int <font color=#008888>Work::process</font> (void)
 {
-  switch (++state_)
-  {
-  case 1:
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage One\n</font>", (void *) this));
-    break;
-  case 2:
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage Two\n</font>", (void *) this));
-    break;
-  case 3:
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage Three\n</font>", (void *) this));
-    break;
-  default:
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x No work to do in state %d\n</font>",
-                (void *) this, state_.value ()));
-    break;
-  }
-  return (0);
+    switch (++state_)
+    {
+        case 1:
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage One\n</font>", (void *) this));
+            break;
+        case 2:
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage Two\n</font>", (void *) this));
+            break;
+        case 3:
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x Stage Three\n</font>", (void *) this));
+            break;
+        default:
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x No work to do in state %d\n</font>",
+                        (void *) this, state_.value ()));
+            break;
+    }
+    return (0);
 }
 
 <font color=red>/*
@@ -232,14 +232,14 @@ int <font color=#008888>Work::process</font> (void)
  */</font>
 int <font color=#008888>Work::fini</font> (void)
 {
-  while (state_.value () &lt; 3)
-  {
-    if (this->process () == -1)
+    while (state_.value () &lt; 3)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>process</font>"), -1);
+        if (this->process () == -1)
+        {
+            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>process</font>"), -1);
+        }
     }
-  }
-  return (0);
+    return (0);
 }
 </PRE>
 <HR>
