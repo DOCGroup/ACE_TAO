@@ -1,3 +1,8 @@
+Sat Apr  7 11:58:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/client.dsp:
+	* tests/BiDirectional/server.dsp: Fixed a link error.
+
 Fri Apr  6 18:05:50 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/Leader_Follower.i:
