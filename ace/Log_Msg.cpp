@@ -1833,8 +1833,9 @@ void
 ACE_Log_Msg_Attributes::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
                                       void *&attr)
 {
+  void *p_attr = attr;
   ACE_Log_Msg_Attributes *attributes =
-    ACE_static_cast (ACE_Log_Msg_Attributes*,attr);
+    ACE_static_cast (ACE_Log_Msg_Attributes*, p_attr);
 
   attributes->inherit_log_msg (thr_desc);
   delete attributes;
