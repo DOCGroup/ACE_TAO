@@ -111,8 +111,8 @@ ACE_Timer_Queue::dump (void) const
 
 ACE_Timer_Queue::ACE_Timer_Queue (ACE_Upcall_Strategy *upcall_strategy)
   : gettimeofday_ (ACE_OS::gettimeofday),
-    timer_skew_ (0, ACE_TIMER_SKEW),
-    upcall_strategy_ (upcall_strategy)
+    upcall_strategy_ (upcall_strategy),
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
