@@ -55,13 +55,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::ACE_Timer_Heap_T (size_t size,
   ACE_NEW (this->heap_, (ACE_Timer_Node_T<TYPE, FUNCTOR> *[size]));
 
   // Create the parallel 
-  ACE_NEW (this->timer_ids_, int[size]);
+  ACE_NEW (this->timer_ids_, long[size]);
 
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
   // array.
   for (size_t i = 0; i < size; i++)
-    this->timer_ids_[i] = -((int) (i + 1));
+    this->timer_ids_[i] = -((long) (i + 1));
 
   if (preallocate)
     {
@@ -112,7 +112,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::pop_freelist (void)
 {
   ACE_TRACE ("ACE_Timer_Heap::pop_freelist");
 
-  int new_id = this->timer_ids_freelist_;
+  int new_id = (int) this->timer_ids_freelist_;
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
   this->timer_ids_freelist_ = -this->timer_ids_[this->timer_ids_freelist_];
@@ -229,7 +229,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::remove (size_t index)
       
       // If the <moved_node->time_value_> is great than or equal its
       // parent it needs be moved down the heap.
-      int parent = ACE_HEAP_PARENT (index);
+      size_t parent = ACE_HEAP_PARENT (index);
 
       if (moved_node->timer_value_ >= this->heap_[parent]->timer_value_)
         this->reheap_down (moved_node, index, ACE_HEAP_LCHILD (index));
@@ -326,20 +326,20 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::grow_heap (void)
 
   // Grow the array of timer ids.
 
-  int *new_timer_ids = 0;
+  long *new_timer_ids = 0;
 
-  ACE_NEW (new_timer_ids, int[new_size]);
+  ACE_NEW (new_timer_ids, long[new_size]);
 
   ACE_OS::memcpy (new_timer_ids, 
 		  this->timer_ids_, 
-		  max_size_ * sizeof (int));
+		  max_size_ * sizeof (long));
 
   delete [] timer_ids_;
   this->timer_ids_ = new_timer_ids;
 
   // and add the new elements to the end of the "freelist"
   for (size_t i = this->max_size_; i < new_size; i++)
-    this->timer_ids_[i] = -((int) (i + 1));
+    this->timer_ids_[i] = -((long) (i + 1));
 
    // Grow the preallocation array (if using preallocation)
   if (this->preallocated_nodes_ != 0)
