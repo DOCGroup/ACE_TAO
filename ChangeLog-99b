@@ -1,3 +1,9 @@
+Mon Jun 21 23:27:01 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * ace/SString.h: Added ACE_TString typdef that is either a 
+          ACE_CString or ACE_WString, depending on whether UNICODE
+          is defined.
+
 Mon Jun 21 23:22:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Misc/test_trace.cpp: Improved this test so it will
@@ -9,9 +15,9 @@ Mon Jun 21 23:22:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Jun 21 14:17:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Stats.h:
-	* ace/Stats.cpp:
-	  Added new class to keep latency and throughput statistics.
+        * ace/Stats.h:
+        * ace/Stats.cpp:
+          Added new class to keep latency and throughput statistics.
 
 Mon Jun 21 13:24:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
