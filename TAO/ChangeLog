@@ -1,3 +1,10 @@
+Sun Dec  7 18:44:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+
+	  Add needed #includes due to the split up in IOP_IOR.pidl
+
 Sun Dec  7 18:32:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:

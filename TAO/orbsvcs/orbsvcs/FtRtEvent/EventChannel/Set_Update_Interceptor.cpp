@@ -3,6 +3,7 @@
 #include "Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
 #include "Request_Context_Repository.h"
+#include "tao/IOP_IORA.h"
 
 ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,
