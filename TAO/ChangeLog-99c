@@ -1,3 +1,24 @@
+Mon Sep 20 08:39:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/Options.html: Updated the documentation to describe the
+	  new -ORBNodelay option that toggles TCP_NODELAY.
+
+	* tao/ORB_Core.cpp (init): Added support for the new -ORBNodelay
+	  option, which makes it possible to enable/disable TCP_NODELAY
+ 	  via the -ORB commandline options.  Thanks to John Masiyowski
+ 	  <jmasiyowski@fallschurch.esys.com> for suggesting this.
+
+	* tao/params: Added support for nodelay() so that we can set
+ 	  TCP_NODELAY via the ORB options.  Thanks to John Masiyowski
+ 	  <jmasiyowski@fallschurch.esys.com> for suggesting this.
+	
+	* tao/params.cpp (TAO_ORB_Parameters): Initialized some fields
+	  as follows:
+
+	  cdr_default_size_ (0),
+	  cdr_max_exp_size_ (0),
+	  cdr_linear_chunk_ (0),
+
 Sun Sep 19 17:50:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (run):

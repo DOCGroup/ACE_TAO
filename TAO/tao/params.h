@@ -140,6 +140,10 @@ public:
   void sock_sndbuf_size (int);
   // Set/Get the size to be used for a socket's send buffer.
 
+  int nodelay (void) const;
+  void nodelay (int);
+  // Set/Get the status of whether to use TCP_NODELAY or not.
+
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
   // Octet sequences are marshalled without doing any copies, we
@@ -233,6 +237,9 @@ private:
 
   int sock_sndbuf_size_;
   // Size to be used for a socket's send buffer.
+
+  int nodelay_;
+  // 1 if we're using TCP_NODELAY and 0 otherwise.
 
   int cdr_default_size_;
   // Default size for CDR buffers.
