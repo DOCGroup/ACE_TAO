@@ -71,7 +71,7 @@ private:
   };
 
   TAO_Marshal_Object_Entry mobj_table_[CORBA::TC_KIND_COUNT];
-  // A table of specialized marshal objects indexed by the _kind field
+  // A table of specialized marshal objects indexed by the kind_ field
 
 #if 0
   // define data members that are instances of various Marshal_Object classes

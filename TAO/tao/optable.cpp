@@ -71,18 +71,19 @@ TAO_Dynamic_Hash_OpTable::find (const CORBA::String &opname,
 }
 
 // Linear search strategy
-TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize)
+TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db,
+                                        CORBA::ULong dbsize)
   : next_ (0),
     tablesize_ (dbsize),
     tbl_ (new TAO_Linear_OpTable_Entry[dbsize])
 {
-  // the job of the constructor is to go thru each entry of the database and
-  // bind the operation name to its corresponding skeleton
+  // The job of the constructor is to go thru each entry of the
+  // database and bind the operation name to its corresponding
+  // skeleton.
+
   for (CORBA::ULong i=0; i < dbsize; i++)
-    {
-      // XXXASG: what happens if bind fails ???
-      (void)this->bind (db[i].opname_, db[i].skel_ptr_);
-    }
+    // XXXASG: what happens if bind fails ???
+    (void)this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
 TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
@@ -103,6 +104,7 @@ TAO_Linear_OpTable::bind (const CORBA::String &opname,
       this->next_++;
       return 0; // success
     }
+
   return -1; // error
 }
 
@@ -113,11 +115,15 @@ TAO_Linear_OpTable::find (const CORBA::String &opname,
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
   for (CORBA::ULong i = 0; i < this->next_; i++)
-    if (!ACE_OS::strncmp (this->tbl_[i].opname_, opname, ACE_OS::strlen (opname)))
+
+    if (ACE_OS::strncmp (this->tbl_[i].opname_,
+                         opname,
+                         ACE_OS::strlen (opname)) == 0)
       {
         skel_ptr = this->tbl_[i].skel_ptr_;
         return 0; // success
       }
+
   return -1;  // not found
 }
 
@@ -143,13 +149,12 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
     tablesize_ (dbsize),
     tbl_ (new TAO_Active_Demux_OpTable_Entry[dbsize])
 {
-  // the job of the constructor is to go thru each entry of the database and
-  // bind the operation name to its corresponding skeleton
+  // The job of the constructor is to go thru each entry of the
+  // database and bind the operation name to its corresponding
+  // skeleton.
   for (CORBA::ULong i=0; i < dbsize; i++)
-    {
-      // XXXASG: what happens if bind fails ???
-      (void)this->bind (db[i].opname_, db[i].skel_ptr_);
-    }
+    // XXXASG: what happens if bind fails ???
+    (void) this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
 TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
@@ -166,10 +171,8 @@ TAO_Active_Demux_OpTable::bind (const CORBA::String &opname,
   if (i < this->tablesize_)
     {
       if (this->tbl_[i].skel_ptr_ != 0)
-	{
-	  // overwriting previous one
-	  return 1;
-	}
+        // overwriting previous one
+        return 1;
       else
 	{
 	  this->tbl_[i].skel_ptr_ = skel_ptr;

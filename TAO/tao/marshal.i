@@ -138,15 +138,14 @@ TAO_Marshal_WString::~TAO_Marshal_WString (void)
 {
 }
 
-// factory method
-//
-// Based on the kind of the typecode, return the appropriate marshal object
+// Factory method that returns the appropriate marshal object based on
+// the kind of the typecode.
 ACE_INLINE TAO_Marshal_Object * 
 TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
-                                         CORBA::Environment &env)
+                                          CORBA::Environment &env)
 {
-  if (tc && tc->_kind >= 0 && tc->_kind < CORBA::TC_KIND_COUNT)
-    return this->mobj_table_[tc->_kind].obj_;
+  if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
+    return this->mobj_table_[tc->kind_].obj_;
   else
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -191,7 +190,7 @@ TAO_Marshal_ObjRef::deep_copy (CORBA::TypeCode_ptr,
 			       CORBA::Environment &)
 {
   *(CORBA::Object_ptr *) dest = CORBA::Object::_duplicate (*(CORBA::Object_ptr *)
-							 source); 
+                                                           source); 
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 

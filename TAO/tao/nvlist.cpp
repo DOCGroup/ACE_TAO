@@ -6,19 +6,6 @@
 //
 // Implementation of Named Value List
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "ace/Synch_T.h"
-
-#include "tao/orb.h"
-#include "tao/any.h"
-#include "tao/except.h"
-#include "tao/nvlist.h"
-#endif
-
 #include "tao/corba.h"
 
 // COM's IUnknown support
@@ -30,7 +17,7 @@ DEFINE_GUID (IID_CORBA_NamedValue,
 ULONG __stdcall
 CORBA_NamedValue::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
  
   return refcount_++;
 }
@@ -39,7 +26,7 @@ ULONG __stdcall
 CORBA_NamedValue::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 
@@ -97,7 +84,7 @@ DEFINE_GUID (IID_CORBA_NVList,
 ULONG __stdcall
 CORBA_NVList::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
  
   return refcount_++;
 }
@@ -106,7 +93,7 @@ ULONG __stdcall
 CORBA_NVList::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 
@@ -151,13 +138,13 @@ CORBA::is_nil (CORBA::NVList_ptr nvl)
 
 CORBA_NVList::~CORBA_NVList (void)
 {
-  for (u_int i = 0; i < _len; i++)
-    (&_values[i])->~CORBA_NamedValue ();
+  for (u_int i = 0; i < len_; i++)
+    (&values_[i])->~CORBA_NamedValue ();
 
-  if (_values)
-    ACE_OS::free ((char *)_values);
-  _values = 0;
-  _len = _max = 0;
+  if (values_)
+    ACE_OS::free ((char *)values_);
+  values_ = 0;
+  len_ = max_ = 0;
 }
 
 CORBA::NamedValue_ptr
@@ -174,34 +161,34 @@ CORBA_NVList::add_value (const CORBA::Char *name,
       return 0;
     }
 
-  // We track "_len" and "_max" like sequences do; mixing the
+  // We track "len_" and "max_" like sequences do; mixing the
   // "add_arg" and nvlist[i] style accessors produces undefined
   // behaviour.
-  u_int len = _len++;
+  u_int len = len_++;
 
   // Extend the array with an _initialized_ element ... relying on
   // zeroed memory to be sufficiently initialized.
   //
   // XXX report malloc failures as errors -- how?
 
-  if (_values == 0) 
+  if (values_ == 0) 
     {
-      _values = (CORBA::NamedValue_ptr)
-        calloc (_len, sizeof (CORBA::NamedValue));
-      _max = _len;
+      values_ = (CORBA::NamedValue_ptr)
+        calloc (len_, sizeof (CORBA::NamedValue));
+      max_ = len_;
     } 
-  else if (len >= _max) 
+  else if (len >= max_) 
     {
-      _values = (CORBA::NamedValue_ptr) ACE_OS::realloc ((char *)_values,
-                                                        sizeof (CORBA::NamedValue) * _len);
-      (void) ACE_OS::memset (&_values[_max], 0,
-                             sizeof (_values[_max]) * (_len - _max));
-      _max = _len;
+      values_ = (CORBA::NamedValue_ptr) ACE_OS::realloc ((char *)values_,
+                                                        sizeof (CORBA::NamedValue) * len_);
+      (void) ACE_OS::memset (&values_[max_], 0,
+                             sizeof (values_[max_]) * (len_ - max_));
+      max_ = len_;
     }
-  assert (_values != 0);
+  assert (values_ != 0);
 
-  _values[len]._flags = flags;
-  _values[len]._name = CORBA::string_copy (name);
+  values_[len]._flags = flags;
+  values_[len]._name = CORBA::string_copy (name);
 
   if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
     // IN_COPY_VALUE means that the parameter is not "borrowed" by
@@ -210,7 +197,7 @@ CORBA_NVList::add_value (const CORBA::Char *name,
     // Initialize the newly allocated memory using a copy
     // constructor that places the new "Any" value at just the right
     // place, and makes a "deep copy" of the data.
-    (void) new (&_values[len]._any) CORBA::Any (value);
+    (void) new (&values_[len]._any) CORBA::Any (value);
   else 
     // The normal behaviour for parameters is that the ORB "borrows"
     // their memory for the duration of calls.
@@ -224,8 +211,8 @@ CORBA_NVList::add_value (const CORBA::Char *name,
     // application-allocated memory.  It needs at least a "send the
     // response now" call.
     //
-    (void) new (&_values[len]._any) CORBA::Any (value.type (),
+    (void) new (&values_[len]._any) CORBA::Any (value.type (),
                                                 (void *)value.value (), CORBA::B_FALSE);
 
-  return &_values[len];
+  return &values_[len];
 }

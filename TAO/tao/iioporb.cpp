@@ -7,47 +7,10 @@
 // This includes objref stringification/destringification for IIOP
 // object references.
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/stub.h"
-#include "tao/cdr.h"
-#include "tao/iioporb.h"
-#include "tao/iiopobj.h"
-#endif
-
 #include "tao/corba.h"
 
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
-static const char xchars [] = "0123456789abcdef";
-
-#if !defined (__ACE_INLINE__)
-#  include "iioporb.i"
-#endif /* __ACE_INLINE__ */
-
-//
-// hex conversion utilities
-//
-static inline char
-nibble2hex (u_int n)
-{
-  return xchars [n & 0x0f];
-}
-
-static inline u_char
-hex2byte (char c)
-{
-  if (isdigit (c))
-    return (u_char) (c - '0');
-  else if (islower (c))
-    return (u_char) (10 + c - 'a');
-  else
-    return (u_char) (10 + c - 'A');
-}
 
 // Objref stringification
 
@@ -69,6 +32,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // ORB implementations ...
 
       u_char *bytes;
+      // @@ Is BUFSIZ the right size here?
       u_char buf [BUFSIZ];
       CDR cdr (buf, sizeof buf, MY_BYTE_SEX);
 
@@ -96,8 +60,8 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
            len--;
            bytes++)
         {
-          *cp++ = nibble2hex ((*bytes) >> 4);
-          *cp++ = nibble2hex (*bytes);
+          *cp++ = ACE::nibble2hex ((*bytes) >> 4);
+          *cp++ = ACE::nibble2hex (*bytes);
         }
 
       *cp = 0;
@@ -157,8 +121,8 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
           // which is why buf is exactly two characters bigger than
           // that ... saves coding a test here.
           *cp++ = '\\';
-          *cp++ = nibble2hex (*byte & 0x0f);
-          *cp++ = nibble2hex ((*byte >> 4) & 0x0f);
+          *cp++ = ACE::nibble2hex (*byte & 0x0f);
+          *cp++ = ACE::nibble2hex ((*byte >> 4) & 0x0f);
 	}
       if (cp >= &buf [BUFSIZ])
         {
@@ -197,8 +161,8 @@ ior_string_to_object (CORBA::String str,
       if (!(isxdigit (tmp [0]) && isxdigit (tmp [1])))
         break;
 
-      byte = (u_char) (hex2byte (tmp [0]) << 4);
-      byte |= hex2byte (tmp [1]);
+      byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
+      byte |= ACE::hex2byte (tmp [1]);
 
       buffer [len++] = byte;
       tmp += 2;
@@ -331,8 +295,8 @@ iiop_string_to_object (CORBA::String string,
 
   while ((cp = ACE_OS::strchr ((char *)data->profile.object_key.buffer, '\\')) != 0)
     {
-      *cp = (CORBA::Char) (hex2byte ((char) cp [1]) << 4);
-      *cp |= (CORBA::Char) hex2byte ((char) cp [2]);
+      *cp = (CORBA::Char) (ACE::hex2byte ((char) cp [1]) << 4);
+      *cp |= (CORBA::Char) ACE::hex2byte ((char) cp [2]);
       cp++;
 
       size_t len = ACE_OS::strlen (cp);
@@ -386,9 +350,7 @@ IIOP_ORB::QueryInterface (REFIID riid,
       || IID_IUnknown == riid)
     *ppv = this;
 
-  //
   // XXX gotta aggregate ...
-  //
 
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);

@@ -19,24 +19,7 @@
 //
 // ============================================================================
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/giop.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
-
-#if     defined (HAVE_WIDEC_H)
-#               include <widec.h>
-#else
-extern "C"
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* HAVE_WIDEC_H */
 
 extern CORBA::TypeCode TC_opaque;
 
@@ -45,7 +28,6 @@ extern CORBA::TypeCode TC_opaque;
 // the TypeCode interpreter is used to recursively encode its
 // components.  "context" is the marshaling stream on which to encode
 // the data value.
-//
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
@@ -59,7 +41,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
 
-  switch (tc->_kind)
+  switch (tc->kind_)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -141,7 +123,7 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
 
     // Switch on the data type and handle the cases for primitives
     // here for efficiency rather than calling.
-    switch (elem_tc->_kind)
+    switch (elem_tc->kind_)
       {
       case CORBA::tk_null:
       case CORBA::tk_void:
@@ -219,11 +201,11 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
   tc2 = *(CORBA::TypeCode_ptr *) data;  // the data has to be a TypeCode_ptr
 
   // encode the "kind" field of the typecode
-  continue_encoding = stream->put_ulong ((CORBA::ULong) tc2->_kind);
+  continue_encoding = stream->put_ulong ((CORBA::ULong) tc2->kind_);
   if (continue_encoding == CORBA::B_TRUE)
     {
       // now encode the parameters, if any
-      switch (tc2->_kind)
+      switch (tc2->kind_)
         {
           // Most TypeCodes have empty parameter lists
         default:
@@ -232,7 +214,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // A few have "simple" parameter lists
         case CORBA::tk_string:
         case CORBA::tk_wstring:
-          continue_encoding = stream->put_ulong (tc2->_length);
+          continue_encoding = stream->put_ulong (tc2->length_);
           break;
 
           // Indirected typecodes can't occur at "top level" like
@@ -254,10 +236,10 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
         case CORBA::tk_alias:
         case CORBA::tk_except:
           {
-            continue_encoding = stream->put_ulong (tc2->_length);
+            continue_encoding = stream->put_ulong (tc2->length_);
 
-            for (u_int i = 0; i < tc2->_length && continue_encoding; i++)
-              continue_encoding = stream->put_octet (tc2->_buffer [i]);
+            for (u_int i = 0; i < tc2->length_ && continue_encoding; i++)
+              continue_encoding = stream->put_octet (tc2->buffer_ [i]);
           }
         }
     }
@@ -437,7 +419,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 		  if (env.exception () == 0)
 		    {
 		      data = ptr_align_binary (data, alignment);
-		      switch (param->_kind)
+		      switch (param->kind_)
 			{
 			case CORBA::tk_null:
 			case CORBA::tk_void:
@@ -781,7 +763,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                       if (env.exception () == 0)
                         {
                           value = (char *) seq->buffer;
-                          switch (tc2->_kind)
+                          switch (tc2->kind_)
                             {
                             case CORBA::tk_null:
                             case CORBA::tk_void:
@@ -955,7 +937,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
           size = tc2->size (env);
           if (env.exception () == 0)
             {
-              switch (tc2->_kind)
+              switch (tc2->kind_)
                 {
                 case CORBA::tk_null:
                 case CORBA::tk_void:
@@ -1111,7 +1093,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
     {
     // switch on the data type and handle the cases for primitives here for
     // efficiency rather than calling
-    switch (tc2->_kind)
+    switch (tc2->kind_)
       {
       case CORBA::tk_null:
       case CORBA::tk_void:
@@ -1212,7 +1194,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
 		  if (env.exception () == 0)
 		    {
 		      data = ptr_align_binary (data, alignment);
-		      switch (param->_kind){
+		      switch (param->kind_){
 		      case CORBA::tk_null:
 		      case CORBA::tk_void:
 			break;
@@ -1315,7 +1297,7 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       if (env.exception () == 0)
         {
           // get the actual length of the string
-	  CORBA::ULong len = wslen ((CORBA::WChar *) str);
+	  CORBA::ULong len = ACE_OS::strlen ((CORBA::WChar *) str);
 
           // if it is an unbounded string or if the length is less than the
           // bounds for an unbounded string

@@ -1,8 +1,71 @@
-Sun Nov 09 10:18:06 1997  David L. Levine  <levine@cs.wustl.edu>
+Sun Nov  9 13:03:37 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-        * tao/connect.cpp: fixed RCS keyword (Id instead of id).
+	* tao: Removed the svc.conf.eg file since it was out of date.
 
-Sun Nov  9 02:03:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+	* tao/svrrqst: Removed the #include for svrrqst.i since we don't
+ 	  need any inline functions now.
+
+	* tao/tao_internals: Removed the #include for tao_internals.i
+ 	  since we don't need any inline functions now.
+
+	* tao/varout.h: Cleaned up the programming style.
+
+	* tao: Continued to replace all fields with names _foo to foo_.
+
+	* tao/iioporb.cpp: Move the hex routines into ACE since they are
+ 	  more general.
+
+	* tao/iioporb.cpp: Removed the inclusion of iioporb.i since it is
+ 	  already included in corba.h.
+
+	* tao: Replaced all uses of ACE_Thread_Mutex with ACE_SYNCH_MUTEX
+ 	  since this is portable...
+
+	* tao/iiopobj.cpp: Removed the inclusion of iiopobj.i since it is
+ 	  already included in corba.h.
+
+	* tao/giop.cpp: Moved several large inlined methods into the *.cpp
+ 	  file.
+
+	* tao/giop: Removed the enormous (and unused) incoming_message()
+ 	  method.
+
+	* tao/giop.cpp: Removed the inclusion of giop.i since that is
+ 	  handled in corba.h.
+
+	* tao: Removed the factories.i and factories.cpp files since they
+ 	  don't seem to be used by anything.
+
+	* tao/{corbacom,except}.*: Changed SYSEX to the more politically
+	  correct TAO_SYSTEM_EXCEPTION.
+
+	* tao: Replaced all uses of wslen() and wscpy() with the
+ 	  corresponding ACE_OS wide string functions.
+
+	* tao/orbconf.h: Removed all the HAVE_WIDEC_H stuff.  This should
+	  be handed by ACE.
+
+	* tao/connect.i: Removed the template instantiations since they
+ 	  were commented out and didn't appear to be used.
+
+	* tao/connect.cpp: connect.i was already being included in corba.h,
+	  so don't include it again.
+
+	* tao/client_factory.cpp: Moved inlined constructor/destructor
+	  from the *.i file into the *.cpp file.
+
+	* tao/cdr.cpp (CDR): Moved a bunch of absurdly long inlined methods
+	  from the *.i file into the *.cpp file.
+	  
+	* tao/any.cpp (CORBA_Any): refcount_ has previously been
+	  uninitialized.  I gave it a value of 1.
+
+	* tao/any.cpp (CORBA_Any): Moved the initialization into the
+ 	  base/member section, where it belongs.
+
+	* tao/any.h: Corrected a spelling mistake in an enumeral and
+ 	  upper-cased the minor codes for exceptional returns.  Are these
+ 	  actually used anywhere?
 
 	* tao: Removed all the unnecessary #if 0 ... #endif header files.
   	  I don't know why there were still there.
@@ -20,6 +83,10 @@ Sun Nov  9 02:03:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/{debug.h,orbconf.h}: Removed the DECLARED_STRERROR macro
  	  since ACE handles this.
+
+Sun Nov 09 10:18:06 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/connect.cpp: fixed RCS keyword (Id instead of id).
 
 Sat Nov 08 23:23:41 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

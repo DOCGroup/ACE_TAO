@@ -3,17 +3,6 @@
 // All Rights Reserved
 //
 // Implementation of Dynamic Invocation Interface
-//
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/stub.h"
-#include "tao/cdr.h"
-#include "tao/nvlist.h"
-#endif /* 0 */
 
 #include "tao/corba.h"
 
@@ -24,7 +13,7 @@ DEFINE_GUID (IID_CORBA_Request,
 ULONG __stdcall
 CORBA_Request::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
  
   return refcount_++;
 }
@@ -33,7 +22,7 @@ ULONG __stdcall
 CORBA_Request::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 

@@ -22,7 +22,7 @@ ACE_INLINE ACE_Svc_Export CORBA::String
 CORBA::string_alloc (CORBA::ULong len)
 {
   // allocate 1 + strlen to accomodate the null terminating character
-  return new CORBA::Char [(size_t)(len + 1)];
+  return new CORBA::Char[size_t (len + 1)];
 }
 
 ACE_INLINE ACE_Svc_Export CORBA::String
@@ -51,9 +51,7 @@ ACE_INLINE
 CORBA::String_var::~String_var (void)
 {
   if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-    }
+    CORBA::string_free (this->ptr_);
 }
 
 ACE_INLINE 
@@ -65,7 +63,7 @@ CORBA::String_var::String_var (char *p)
 
 ACE_INLINE
 CORBA::String_var::String_var (const char *p)
-  : ptr_ (CORBA::string_dup ((char *)p))
+  : ptr_ (CORBA::string_dup ((char *) p))
 {
 }
 
@@ -128,10 +126,6 @@ CORBA::String_var::_retn (void)
   this->ptr_ = 0;
   return temp;
 }
-
-// ----------------------------------------------------------------------
-// String_out type
-// ----------------------------------------------------------------------
 
 ACE_INLINE
 CORBA::String_out::String_out (char *&s)

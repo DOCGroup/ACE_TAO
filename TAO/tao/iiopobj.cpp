@@ -8,21 +8,7 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/stub.h"
-#include "tao/iiopobj.h"
-#endif /* 0 */
-
 #include "tao/corba.h"
-
-#if !defined (__ACE_INLINE__)
-#  include "iiopobj.i"
-#endif /* __ACE_INLINE__ */
 
 IIOP::Profile::Profile (const IIOP::Profile &src)
   : iiop_version (src.iiop_version),
@@ -139,7 +125,7 @@ DEFINE_GUID (IID_IIOP_Object,
 ULONG __stdcall
 IIOP_Object::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->IUnknown_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->IUnknown_lock_, 0));
 
   return ++this->refcount_;
 }
@@ -148,7 +134,7 @@ ULONG __stdcall
 IIOP_Object::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->IUnknown_lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->IUnknown_lock_, 0));
 
     ACE_ASSERT (this != 0);
 

@@ -59,7 +59,8 @@ struct TAO_IOP_Tagged_Profile
   TAO_opaque profile_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_IOP_Tagged_Profile> TAO_IOP_Tagged_Profile_Sequence;
+typedef CORBA_SEQUENCE <TAO_IOP_Tagged_Profile> 
+        TAO_IOP_Tagged_Profile_Sequence;
 
 struct TAO_IOP_IOR 
   // = TITLE
@@ -127,7 +128,6 @@ enum
   MY_MINOR = 0 
 };
 
-
 enum TAO_GIOP_MsgType 
   // = DESCRIPTION
   // All GIOP messages include a header and message type.
@@ -160,8 +160,8 @@ struct TAO_GIOP_MessageHeader
 typedef CORBA::ULong TAO_GIOP_ServiceID;
 
 enum
-// = TITLE
-// Values for TAO_GIOP_ServiceID
+  // = TITLE
+  // Values for TAO_GIOP_ServiceID
 {
   TAO_GIOP_TransactionService = 0
 
@@ -185,10 +185,10 @@ extern CORBA::TypeCode TC_ServiceContextList;
 
 class TAO_GIOP_RequestHeader 
   // = TITLE
-  // This class embodies the header of a GIOP request.
+  //   This class embodies the header of a GIOP request.
   //
   // = NOTES
-  // This used to be a <struct>, which is why everything is public.
+  //   This used to be a <struct>, which is why everything is public.
 {
 public:
   TAO_GIOP_RequestHeader (void);
@@ -246,7 +246,7 @@ struct TAO_GIOP_ReplyHeader
 
 struct TAO_GIOP_CancelRequestHeader 
   // = DESCRIPTION
-  // Cancellation -- applies both to Requests and LocateRequests.
+  //   Cancellation -- applies both to Requests and LocateRequests.
 {
   CORBA::ULong request_id;      
   // Unique identifier of the request being cancelled
@@ -254,7 +254,7 @@ struct TAO_GIOP_CancelRequestHeader
 
 struct TAO_GIOP_LocateRequestHeader 
   // = DESCRIPTION
-  // Location service support
+  //   Location service support
 {
   CORBA::ULong request_id;
   TAO_opaque object_key;
@@ -370,14 +370,6 @@ public:
                                        CDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
   
-#if 0
-  static int incoming_message (ACE_SOCK_Stream &peer,
-                               TAO_GIOP_ForwardFunc check_forward,
-                               TAO_GIOP_RequestHandler handle_request,
-                               void *context,
-                               CORBA::Environment &env);
-#endif /* 0 */
-
   static CORBA::Boolean send_request (TAO_SVC_HANDLER *&handler,
                                       CDR &stream);
   // Send message, returns TRUE if success, else FALSE.
