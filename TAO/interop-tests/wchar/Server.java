@@ -55,7 +55,7 @@ public class Server
                 poa.servant_to_reference( servant );
 
             PrintWriter pw =
-                new PrintWriter( new FileWriter( args[ 0 ] ));
+                new PrintWriter( new FileWriter( iorfile ));
 
             // print stringified object reference to file
             pw.println( orb.object_to_string( obj ));

@@ -120,6 +120,38 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
   ws->st_any <<= ref_.get_wstring(key);
   return ws;
 }
+CORBA::Boolean
+interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
+                                              CORBA::Short key
+                                              ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
+{
+  for (CORBA::ULong i = 0; i < test.length(); i++)
+    {
+      if (!this->wstruct_to_server(test[i], key))
+        return false;
+    }
+
+  return true;
+}
+
+interop::wstructseq *
+interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
+                                                ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC (( CORBA::SystemException ))
+{
+  interop::wstructseq_var wsListI = new interop::wstructseq();
+  wsListI->length(5);
+
+  for (CORBA::ULong i = 0; i < wsListI->length(); i++)
+    {
+      wsListI[i].st_char = this->wchar_from_server(key);
+      wsListI[i].st_string = this->wstring_from_server(key);
+      ref_.assign_warray (key, wsListI[i].st_array);
+      wsListI[i].st_any <<= CORBA::wstring_dup(L"");
+    }
+  return wsListI._retn();
+}
 
 CORBA::Boolean
 interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
@@ -134,7 +166,8 @@ interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
     return this->wstring_to_server (test.u_string(),key);
   case interop::is_warray :
     return this->warray_to_server (test.u_array(),key);
-  default:;
+  default:
+    /*return 0*/;
   }
   return 0;
 }
