@@ -1,3 +1,17 @@
+Wed Apr 18 10:28:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp: Added an extra check for errno ==
+	  EAGAIN. After a read, if the errno is set to EAGAIN, a value of
+	  0 was returned to the reactor. This was because errno values of
+	  EAGAIN and EWOULDBLOCK are same. This made the reactor call the
+	  handle_input () again and again. Every call would return a 0
+	  with errno set to EAGAIN. Thanks to Jody Hagins
+	  <jody@atdesk.com>for coming up with a test case that
+	  demonstrated the problem. Need to check the test case in with
+	  some modifications. 
+	
+	* tao/GIOP_Message_Base.cpp: Made some cosmetic fixes.
+	
 Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_be_visitor_union/union_cs.cpp:
@@ -12,7 +26,7 @@ Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Apr 18 09:44:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Leader_Follwer.h: Added TAO_Export macros. Looks to me that
+	* tao/Leader_Follower.h: Added TAO_Export macros. Looks to me that
 	  this should take care of link errors on Win32.
 
 Wed Apr 18 08:49:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
