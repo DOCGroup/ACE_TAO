@@ -615,9 +615,7 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>;
   template class ACE_Vector<ACE_CString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>
 # pragma ACE_Vector<ACE_CString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
