@@ -389,7 +389,6 @@ TAO_DynAny_i::destroy (CORBA::Environment &)
   // @@ It is possible that we should set a flag to raise
   // CORBA::OBJECT_NOT_EXIST if any method is invoked after this
   // call.
-  this->_remove_ref ();
 }
 
 

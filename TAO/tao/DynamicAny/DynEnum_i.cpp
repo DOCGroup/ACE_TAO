@@ -293,8 +293,6 @@ TAO_DynEnum_i::destroy (CORBA::Environment &)
         CORBA::SystemException
       ))
 {
-  // Freeing the top level is all we have to do.
-  delete this;
 }
 
 DynamicAny::DynAny_ptr

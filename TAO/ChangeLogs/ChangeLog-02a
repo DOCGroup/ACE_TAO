@@ -1,133 +1,147 @@
+Sun Nov 26 13:34:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+          The destroy() methods should not release or delete the object,
+          as they are local interfaces now, and their memory is managed
+          via the stock reference counting for object references.
+          This fixes some of the problems in the dynamic any test, but it
+          still left some other problems exposed.
+
 Sun Nov 26 01:07:11 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
 
-	  Made definition of the destructor for the proxy broker at the
-	  same time of the declaration.
-	  The only reason why this was done was to fix some weird link
-	  problem that gcc-2.72 was having with the current implementation.
+          Made definition of the destructor for the proxy broker at the
+          same time of the declaration.
+          The only reason why this was done was to fix some weird link
+          problem that gcc-2.72 was having with the current implementation.
 
 Sat Nov 25 21:28:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/Basic/Simple.{h,cpp}:
-	* orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/Simple.{h,cpp}:
+        * orbsvcs/tests/Notify/Basic/Makefile:
 
-	  Added simple test to show how to use Anys in Notify Service.
+          Added simple test to show how to use Anys in Notify Service.
 
 Sat Nov 25 21:09:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.cpp:
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.inl:
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Connect.cpp:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Connect.cpp:
-	* tao/Strategies/SHMIOP_Connect.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed an FMR
-	  problem. The problem was the wrong order in which we were
-	  destroying the handlers and purging the handler from the cache
-	  map. We need to purgethe handler first and then destroy the
-	  handlers.
+        * tao/Connection_Cache_Manager.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.inl:
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Connect.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connect.cpp:
+        * tao/Strategies/SHMIOP_Connect.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed an FMR
+          problem. The problem was the wrong order in which we were
+          destroying the handlers and purging the handler from the cache
+          map. We need to purgethe handler first and then destroy the
+          handlers.
 
 Sat Nov 25 20:59:07 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
-	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
-	* orbsvcs/examples/Notify/Filter/Filter.{h,cpp}:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/examples/Notify/Filter/Filter.{h,cpp}:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
 
-	  Fixed incorrect procedure to destroy event channel.
-	  Thanks to Walt Corey<wcorey@ibm.net> for reporting this problem.
+          Fixed incorrect procedure to destroy event channel.
+          Thanks to Walt Corey<wcorey@ibm.net> for reporting this problem.
 
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/README:
-	  Fixed typo in instructions.
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/README:
+          Fixed typo in instructions.
 
 Sat Nov 25 15:06:16 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	  Defererence _var of pname to pointer via .in () operator.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+          Defererence _var of pname to pointer via .in () operator.
 
 Fri Nov 24 19:21:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
 
-	  Minor Aesthetic fixes for the generated code.
+          Minor Aesthetic fixes for the generated code.
 
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
 
-	  Added implementation of the default ctor, that was chopped away
-	  while fixing the indentation.
+          Added implementation of the default ctor, that was chopped away
+          while fixing the indentation.
 
 Fri Nov 24 17:14:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp
-	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
-	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp
 
-	  Changes to keep the indentation of generated code from
-	  growing with each interface.
+          Changes to keep the indentation of generated code from
+          growing with each interface.
 
 Fri Nov 24 16:55:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
 
-	  Added generation of the default constructor to avoid problem
-	  with older compiler (like gcc272).
+          Added generation of the default constructor to avoid problem
+          with older compiler (like gcc272).
 
-	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
 
-	  Made some cosmetic changes in the generated code.
+          Made some cosmetic changes in the generated code.
 
-	* tao/Object_Proxy_Broker.cpp:
-	* tao/Object_Proxy_Broker.h:
-	* tao/Object_Proxy_Impl.cpp:
-	* tao/Object_Proxy_Impl.h:
-	* tao/Remote_Object_Proxy_Impl.cpp:
-	* tao/Remote_Object_Proxy_Impl.h:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+        * tao/Object_Proxy_Broker.cpp:
+        * tao/Object_Proxy_Broker.h:
+        * tao/Object_Proxy_Impl.cpp:
+        * tao/Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Impl.cpp:
+        * tao/Remote_Object_Proxy_Impl.h:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
 
-	  Added declaration and implementation of default constructor
-	  to fix the problem with some older compiler (like gcc272).
+          Added declaration and implementation of default constructor
+          to fix the problem with some older compiler (like gcc272).
 
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.cpp:
 
-	  Substituted  any use of TAO_Collocated_Object with
-	  CORBA::Object, in fact in the new collocation scheme
-	  TAO_Collocated_Object is not used anymore.
+          Substituted  any use of TAO_Collocated_Object with
+          CORBA::Object, in fact in the new collocation scheme
+          TAO_Collocated_Object is not used anymore.
 
 Fri Nov 24 12:17:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Multiple/Multiple_Impl.cpp:
-	  Fix throw specs.
+        * tests/Multiple/Multiple_Impl.cpp:
+          Fix throw specs.
 
         * tests/Nested_Event_Loop/server.bor:
         * tests/Nested_Event_Loop/client.bor:
@@ -136,10 +150,10 @@ Fri Nov 24 12:17:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Nov 24 14:07:13 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	  Changed CosProperty_Hash_Key::pname_ to an _var type to fix a
-	  small memory leak. Thanks to Greg Hall greg.j.hall@boeing.com
-	  for providing the fix.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+          Changed CosProperty_Hash_Key::pname_ to an _var type to fix a
+          small memory leak. Thanks to Greg Hall greg.j.hall@boeing.com
+          for providing the fix.
 
 Thu Nov 23 18:21:13 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

@@ -520,14 +520,13 @@ TAO_DynSequence_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   for (CORBA::ULong i = 0;
        i < this->da_members_.size ();
        i++)
-    if (!CORBA::is_nil (this->da_members_[i].in ()))
-      {
-        this->da_members_[i]->destroy (ACE_TRY_ENV);
-        ACE_CHECK;
-      }
-
-  // Free the top level
-  delete this;
+    {
+      if (!CORBA::is_nil (this->da_members_[i].in ()))
+        {
+          this->da_members_[i]->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+    }
 }
 
 DynamicAny::DynAny_ptr

@@ -675,9 +675,6 @@ TAO_DynUnion_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   this->discriminator_->destroy (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Free the top level
-  delete this;
 }
 
 DynamicAny::DynAny_ptr
