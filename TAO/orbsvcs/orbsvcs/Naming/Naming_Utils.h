@@ -104,7 +104,13 @@ class TAO_ORBSVCS_Export TAO_Naming_Client
   //    access to a <NamingContext>.
   //
   // = DESCRIPTION
-  //    @@ Matt, please fill in here...
+  //    This class takes an ORB reference and contacts the
+  //    NamingService naming context object under that.  It also
+  //    defines the operator-> so that <NamingContext> functions like
+  //    <resolve>, etc. can be called on a <NameServer> object.
+  //    This class is intended to simplify programs that want to play
+  //    the role of a Naming Service clients.
+
 public:
   // = Initialization and termination methods.
 
@@ -121,8 +127,6 @@ public:
 
   ~TAO_Naming_Client (void);
   // Destructor.
-
-  // @@ Matt, please add other methods here...
 
   CosNaming::NamingContext_ptr operator-> (void) const;
   // Returns a <NamingContext_ptr>.

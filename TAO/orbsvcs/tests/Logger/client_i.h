@@ -19,6 +19,8 @@
 //
 // ============================================================================
 
+// @@ Add the guard against multiple inclusions.
+
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"

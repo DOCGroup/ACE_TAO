@@ -9,7 +9,8 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Logger:SERVER\n\n"));
-  TAO_TRY
+
+   TAO_TRY
     {
       if (log_server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
@@ -32,6 +33,7 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
+
   return 0;
 }
 
