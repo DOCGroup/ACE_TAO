@@ -522,7 +522,7 @@ Client_i::print_latency_stats (void)
                   this->high_priority_client_->get_high_priority_latency (),
                   this->high_priority_client_->get_high_priority_jitter (),
                   this->low_priority_client_[0]->get_low_priority_latency (),
-                  this->low_priority_client_[0]->get_low_priority_jitter ());
+                  this->low_priority_client_[0]->get_low_priority_jitter ()));
       // output_latency ();
 #endif /* !VXWORKS && !CHORUS */
     }
