@@ -119,21 +119,21 @@ public:
    * This method is only used by the TAO_PG_ObjectGroupManager class
    * when ObjectGroupManager::remove_member() is explicitly called.
    */
-  void delete_member (CORBA::ULong group_id,
+  void delete_member (PortableGroup::ObjectGroupId group_id,
                       const PortableGroup::Location & location
                       ACE_ENV_ARG_DECL);
 
-  /// Verify that the MinimumNumberMembers criterion is satisfied.
+  /// Verify that the MinimumNumberReplicas criterion is satisfied.
   /**
    * If the current number of members in the given object group is
-   * less than the MinimumNumberMembers criterion in effect for that
+   * less than the MinimumNumberReplicas criterion in effect for that
    * group, the infrastructure will attempt create and add more
    * members to the group by invoking any unused application-supplied
    * GenericFactorys.
    */
   void check_minimum_number_members (
     PortableGroup::ObjectGroup_ptr object_group,
-    CORBA::ULong group_id,
+    PortableGroup::ObjectGroupId group_id,
     const char * type_id
     ACE_ENV_ARG_DECL);
 
@@ -154,7 +154,7 @@ public:
                      PortableGroup::InvalidCriteria,
                      PortableGroup::InvalidProperty,
                      PortableGroup::CannotMeetCriteria,
-		     PortableGroup::MemberAlreadyPresent));
+         PortableGroup::MemberAlreadyPresent));
 
 private:
 
@@ -169,20 +169,12 @@ private:
          TAO_PG_Factory_Set & factory_set
          ACE_ENV_ARG_DECL);
 
-  /// Get a new ObjectId to be used when creating a new ObjectGroup.
-  /**
-   * An ObjectId created by this method will never be reused within
-   * the scope of a given ReplicationManager.  A value suitable for
-   * use in a map association <ext_id> is also returned.
-   */
-  void get_ObjectId (CORBA::ULong fcid,
-                     PortableServer::ObjectId_out oid);
 
   /// Process criteria to be applied to the object group being
   /// created.
   /**
-   * Only the MemberShipStyle, Factories, InitialNumberMembers and
-   * MinimumNumberMembers criteria/properties are defined by the
+   * Only the MemberShipStyle, Factories, InitialNumberReplicas and
+   * MinimumNumberReplicas criteria/properties are defined by the
    * PortableGroup IDL.  Other services that implement the
    * GenericFactory interface, such as load balancing and fault
    * tolerance, may choose to support more.
@@ -203,6 +195,10 @@ private:
 
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
+
+  /// The GroupCreationId that will be assigned to the next object
+  /// group that is created.
+//  PortableGroup::ObjectGroupId next_group_id_;
 
   /// Reference to the ObjectGroup map.
   TAO_PG_ObjectGroupManager & object_group_manager_;
@@ -233,6 +229,8 @@ private:
    * Balancer.
    */
   CORBA::ULong next_fcid_;
+
+  const char * domain_id_;
 
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).

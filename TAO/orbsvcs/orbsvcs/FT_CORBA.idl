@@ -81,7 +81,7 @@ module FT
   const FaultMonitoringGranularityValue LOC = 1;
   const FaultMonitoringGranularityValue LOC_AND_TYPE = 2;
   typedef FactoryInfos FactoriesValue;
-  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short InitialNumberMembersValue;
   typedef unsigned short MinimumNumberReplicasValue;
 
   struct FaultMonitoringIntervalAndTimeoutValue {
