@@ -1259,8 +1259,15 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const char *s, char **ptr, int base)
 {
-  // ACE_TRACE ("ACE_OS::strtol");
+  // ACE_TRACE ("ACE_OS::strtoul");
   return ::strtoul (s, ptr, base);
+}
+
+ACE_INLINE double
+ACE_OS::strtod (const char *s, char **endptr)
+{
+  // ACE_TRACE ("ACE_OS::strtod");
+  return ::strtod (s, endptr);
 }
 
 ACE_INLINE long

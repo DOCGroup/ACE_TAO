@@ -4533,9 +4533,11 @@ public:
   static long strtol (const char *s,
                       char **ptr,
                       int base);
-  static u_long strtoul(const char *s,
-                        char **ptr,
-                        int base);
+  static u_long strtoul (const char *s,
+                         char **ptr,
+                         int base);
+  static double strtod (const char *s,
+                        char **endptr);
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
   // = These go here since they are needed for TAO.
