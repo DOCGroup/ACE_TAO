@@ -11,6 +11,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/RT_Policy_i.h"
+#include "tao/Base_Connection_Property.h"
 
 ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
 
