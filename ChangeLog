@@ -1,3 +1,8 @@
+Wed Dec  4 21:18:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor_Timer_Test.cpp: Fix incorrect use of pointer-integer
+          casting. Log pointers with %@, not %x.
+
 Wed Dec  4 21:11:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Set all the default options and values
