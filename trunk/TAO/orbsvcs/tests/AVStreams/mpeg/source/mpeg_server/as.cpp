@@ -73,7 +73,7 @@ static int CmdRead(char *buf, int psize)
   if (res == 0) return (1);
   if (res == -1) {
     fprintf(stderr, "AS error on read cmdSocket, size %d", psize);
-    perror("");
+   ACE_OS::perror ("");
     return (-1);
   }
   return 0;
@@ -83,8 +83,8 @@ static void CmdWrite(char *buf, int size)
 {
   int res = wait_write_bytes(serviceSocket, buf, size);
   if (res == -1) {
-    if (errno != EPIPE) perror("AS writes to serviceSocket");
-    exit(errno != EPIPE);
+    if (errno != EPIPE)ACE_OS::perror ("AS writes to serviceSocket");
+    ACE_OS::exit (errno != EPIPE);
   }
 }
 
@@ -126,7 +126,7 @@ static int INITaudio(void)
     write_string(serviceSocket, errmsg);
     return(1);
   }
-  memcpy(&audioPara, &para.para, sizeof(audioPara));
+  ACE_OS::memcpy (&audioPara, &para.para, sizeof(audioPara));
   /*
   fprintf(stderr, "Client Audio para: encode %d, ch %d, sps %d, bps %d.\n",
 	  para.para.encodeType, para.para.channels,
@@ -134,7 +134,7 @@ static int INITaudio(void)
    */
   audioFile[para.nameLength] = 0;
   {
-    int len = strlen(audioFile);
+    int len =ACE_OS::strlen (audioFile);
     if (strncasecmp("LiveAudio", audioFile, 9) &&
 	strcasecmp(".au", audioFile+len-3)) {
       char errmsg[128];
@@ -165,7 +165,7 @@ static int INITaudio(void)
     if (fd == -1)
     {
       fprintf(stderr, "AS error on opening audio file %s", audioFile);
-      perror("");
+     ACE_OS::perror ("");
       failureType = 0;
       goto failure;
     }
@@ -239,10 +239,10 @@ static int send_packet(int firstSample, int samples)
   }
   else {
     lseek(fd, offset, SEEK_SET);
-    while ((len = read(fd, buf, size)) == -1) {
+    while ((len = ACE_OS::read (fd, buf, size)) == -1) {
       if (errno == EINTR)
 	continue;   /* interrupted */
-      perror("AS error on read audio file");
+     ACE_OS::perror ("AS error on read audio file");
       return(-1);
     }
     if (len < audioPara.bytesPerSample) {
@@ -262,12 +262,12 @@ static int send_packet(int firstSample, int samples)
   }
   segsize = sizeof(*pktbuf) + len;
   if (conn_tag != 0) {
-    while ((sentsize = write(audioSocket, (char *)pktbuf, segsize)) == -1) {
+    while ((sentsize = ACE_OS::write (audioSocket, (char *)pktbuf, segsize)) == -1) {
       if (errno == EINTR) /* interrupted */
 	continue;
       if (errno == ENOBUFS) {
 	if (resent) {
-	  perror("AS Warning, pkt discarded because");
+	 ACE_OS::perror ("AS Warning, pkt discarded because");
 	  break;
 	}
 	else {
@@ -281,7 +281,7 @@ static int send_packet(int firstSample, int samples)
 		firstSample, samples);
 	perror("");
       }
-      exit((errno != EPIPE));
+      ACE_OS::exit ((errno != EPIPE));
     }
   }
   else {
@@ -292,7 +292,7 @@ static int send_packet(int firstSample, int samples)
 		firstSample, samples);
 	perror("");
       }
-      exit((errno != EPIPE));
+      ACE_OS::exit ((errno != EPIPE));
      }
   }
   if (sentsize < segsize) {
@@ -441,7 +441,7 @@ static int PLAYaudio(void)
     {
       if (errno == EINTR)
         continue;
-      perror("AS error on select reading or writing");
+     ACE_OS::perror ("AS error on select reading or writing");
       return(-1);
     }
     if (FD_ISSET(serviceSocket, &read_mask)){  /* STOP, SPEED, or CLOSE*/
@@ -487,7 +487,7 @@ static int PLAYaudio(void)
           if (result != 0)
             return result;
 	  /*
-	  CmdWrite(AUDIO_STOP_PATTERN, strlen(AUDIO_STOP_PATTERN));
+	  CmdWrite(AUDIO_STOP_PATTERN,ACE_OS::strlen (AUDIO_STOP_PATTERN));
 	  */
 	  if (live_source) {
 	    StopPlayLiveAudio();
@@ -515,17 +515,17 @@ static int PLAYaudio(void)
 	  len = wait_read_bytes(audioSocket, (char *)fbpara, sizeof(*fbpara));
 	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
-	    perror("AS read1 FB");
+	   ACE_OS::perror ("AS read1 FB");
 	    return(-1);
 	  }
 	}
 	else { /* discard mode packet stream, read the whole packet */
-	  len = read(audioSocket, (char *)fbpara,  FBBUF_SIZE);
+	  len = ACE_OS::read (audioSocket, (char *)fbpara,  FBBUF_SIZE);
 	}
 	if (len == -1) {
 	  if (errno == EINTR) continue; /* interrupt */
 	  else {
-	    if (errno != EPIPE && errno != ECONNRESET) perror("AS failed to read() fbmsg header");
+	    if (errno != EPIPE && errno != ECONNRESET)ACE_OS::perror ("AS failed to ACE_OS::read () fbmsg header");
 	    break;
 	  }
 	}
@@ -533,7 +533,7 @@ static int PLAYaudio(void)
       }
       if (len < sizeof(*fbpara)) {
 	if (len > 0) fprintf(stderr,
-			 "AS warn read() len %dB < sizeof(*fbpara) %dB\n",
+			 "AS warn ACE_OS::read () len %dB < sizeof(*fbpara) %dB\n",
 			 len, sizeof(*fbpara));
 	continue;
       }
@@ -551,7 +551,7 @@ static int PLAYaudio(void)
 				bytes);
 	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
-	    perror("AS read2 FB");
+	   ACE_OS::perror ("AS read2 FB");
 	    return(-1);
 	  }
 	  len += sizeof(*fbpara);
@@ -626,8 +626,8 @@ static void on_exit_routine(void)
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
       struct hostent *hp;
-      time_t val = time(NULL);
-      char * buf = ctime(&start_time);
+      time_t val =ACE_OS::time (NULL);
+      char * buf = ACE_OS::ctime (&start_time);
 
       hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
@@ -653,7 +653,7 @@ int AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   if (max_pkt_size < 0) max_pkt_size = -max_pkt_size;
   else if (max_pkt_size == 0) max_pkt_size = 1024 * 1024;
   
-  start_time = time(NULL);
+  start_time =ACE_OS::time (NULL);
   
   atexit(on_exit_routine);
 
@@ -664,18 +664,18 @@ int AudioServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
                        "(%P|%t) AudioServer: "),
                       result);
 
-  fbpara = (AudioFeedBackPara *)malloc(FBBUF_SIZE);
+  fbpara = (AudioFeedBackPara *)ACE_OS::malloc(FBBUF_SIZE);
   if (fbpara == NULL) {
-    perror("AS failed to allocate mem for fbpara");
+   ACE_OS::perror ("AS failed to allocate mem for fbpara");
     return (-1);
   }
 
   databuf_size = max_pkt_size - sizeof(*pktbuf);
   if (databuf_size > DATABUF_SIZE) databuf_size = DATABUF_SIZE;
   
-  pktbuf = (AudioPacket *)malloc(sizeof(*pktbuf) + databuf_size);
+  pktbuf = (AudioPacket *)ACE_OS::malloc(sizeof(*pktbuf) + databuf_size);
   if (pktbuf == NULL) {
-    perror("AS failed to allocate mem for pktbuf");
+   ACE_OS::perror ("AS failed to allocate mem for pktbuf");
     return(-1);
   }
 

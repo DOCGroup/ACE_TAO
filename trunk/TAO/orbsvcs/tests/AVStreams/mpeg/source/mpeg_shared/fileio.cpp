@@ -59,7 +59,7 @@ int StatFile(char *filename, struct StatBuf * sb)
   sb->mode = statbuf.st_mode;
   sb->size = statbuf.st_size;
   
-  strcpy(sb->ctime, ctime(&(statbuf.st_ctime)));
+  strcpy(sb->ctime, ACE_OS::ctime (&(statbuf.st_ctime)));
   sb->ctime[strlen(sb->ctime)-1] = 0;  /* remove CR */
 
   if ((pw = getpwuid(statbuf.st_uid)) == NULL)
@@ -91,7 +91,7 @@ void read_bytes(int s, char * buf, int size)
   
   for (;;)
   {
-    val = read(s, ptr, remain);
+    val = ACE_OS::read (s, ptr, remain);
     
     if (val == -1 && (errno == EINTR || errno == EAGAIN | errno == EWOULDBLOCK))
     {   /* interrupted or need to wait, try again */
@@ -101,13 +101,13 @@ void read_bytes(int s, char * buf, int size)
     }
     if (val == -1)
     {
-      perror("Error -- Read from socket");
-      exit(1);
+     ACE_OS::perror ("Error -- Read from socket");
+      ACE_OS::exit (1);
     }
     if (val == 0) /* EOF encountered */
     {
       fprintf(stderr, "Error -- EOF reached while trying to read %d bytes.\n", size);
-      exit(1);
+      ACE_OS::exit (1);
     }
     ptr += val;
     remain -= val;
@@ -115,14 +115,14 @@ void read_bytes(int s, char * buf, int size)
     {
       fprintf(stderr, "Error: read too much from socket, %d out of %d bytes.\n",
 	      size-remain, size);
-      exit(1);
+      ACE_OS::exit (1);
     }
     if (remain == 0)
       break;
   }
 }
 
-int wait_read_bytes(int s, char *buf, int size)
+int wait_read_bytes (int s, char *buf, int size)
 {
   int val, remain = size;
   char * ptr = buf;
@@ -131,7 +131,7 @@ int wait_read_bytes(int s, char *buf, int size)
   
   for (;;)
   {
-    val = read(s, ptr, remain);
+    val = ACE_OS::read (s, ptr, remain);
     
     if (val == -1 && (errno == EINTR || errno == EAGAIN | errno == EWOULDBLOCK))
     {   /* interrupted or need to wait, try again */
@@ -142,7 +142,7 @@ int wait_read_bytes(int s, char *buf, int size)
     if (val == -1)
     {
       /*
-      perror("Error -- wait_read from socket");
+     ACE_OS::perror ("Error -- wait_read from socket");
       */
       return -1;
     }
@@ -150,7 +150,7 @@ int wait_read_bytes(int s, char *buf, int size)
     {
       /*
       fprintf(stderr, "Warn pid %d -- EOF on wait_read %d bytes.\n",
-	      getpid(), size);
+	     ACE_OS::getpid (), size);
       */
       return 0;
     }
@@ -213,7 +213,7 @@ int time_read_bytes(int s, char * buf, int size)
 
     if (!(FD_ISSET(s, &read_mask))) continue;
     
-    val = read(s, ptr, 1);
+    val = ACE_OS::read (s, ptr, 1);
     
     if (val == -1 && (errno == EINTR))
     {   /* interrupted or need to wait, try again */
@@ -222,7 +222,7 @@ int time_read_bytes(int s, char * buf, int size)
     }
     if (val == -1)
     {
-      perror("Error -- time_read_bytes() from socket");
+     ACE_OS::perror ("Error -- time_read_bytes() from socket");
       return -1;
     }
     if (val == 0) /* EOF encountered */
@@ -250,12 +250,12 @@ int time_read_bytes(int s, char * buf, int size)
 void write_bytes(int sock, char * data, int len)
 {
   while (len > 0) {
-    int res = write(sock, data, len);
+    int res = ACE_OS::write (sock, data, len);
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
-      fprintf(stderr, "Error pid %d", getpid());
-      perror(" -- failed to write all bytes to socket");
-      exit(1);
+      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+     ACE_OS::perror (" -- failed to write all bytes to socket");
+      ACE_OS::exit (1);
     }
     len -= res;
     data += res;
@@ -266,11 +266,11 @@ int time_write_bytes(int sock, char * data, int plen)
 {
   int len = plen;
   while (len > 0) {
-    int res = write(sock, data, len);
+    int res = ACE_OS::write (sock, data, len);
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
-      fprintf(stderr, "Error pid %d", getpid());
-      perror(" -- failed to time_write all bytes to socket");
+      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+     ACE_OS::perror (" -- failed to time_write all bytes to socket");
       return -1;
     }
     len -= res;
@@ -283,12 +283,12 @@ int wait_write_bytes(int sock, char * data, int plen)
 {
   int len = plen;
   while (len > 0) {
-    int res = write(sock, data, len);
+    int res = ACE_OS::write (sock, data, len);
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
       /*
-      fprintf(stderr, "Error pid %d", getpid());
-      perror(" -- failed to wait_write all bytes to socket");
+      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+     ACE_OS::perror (" -- failed to wait_write all bytes to socket");
       */
       return -1;
     }
@@ -402,7 +402,7 @@ int time_write_int(int sock, int data)
 
 void write_string(int sock, char *data)
 {
-  int len = strlen(data);
+  int len =ACE_OS::strlen (data);
   
   write_int(sock, len);
   write_bytes(sock, data, len);

@@ -40,14 +40,14 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
   if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) 
     return 0; // failure
 
-  memcpy(&(this->audio_global_->audioPara), &para.para, sizeof(this->audio_global_->audioPara));
+  ACE_OS::memcpy (&(this->audio_global_->audioPara), &para.para, sizeof(this->audio_global_->audioPara));
   /*
   fprintf(stderr, "Client Audio para: encode %d, ch %d, sps %d, bps %d.\n",
 	  para.para.encodeType, para.para.channels,
 	  para.para.samplesPerSecond, para.para.bytesPerSample);
    */
   {
-    int len = strlen(this->audio_global_->audioFile);
+    int len =ACE_OS::strlen (this->audio_global_->audioFile);
     if (strncasecmp("LiveAudio", this->audio_global_->audioFile, 9) &&
 	strcasecmp(".au", this->audio_global_->audioFile+len-3))
       {

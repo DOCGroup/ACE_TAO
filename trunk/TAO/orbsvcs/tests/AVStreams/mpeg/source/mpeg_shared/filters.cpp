@@ -231,12 +231,12 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend up stat to % items",
 	      f->statsize);
-      perror("");
-      exit(1);
+     ACE_OS::perror ("");
+      ACE_OS::exit (1);
     }
     memset((char *)(f->stat) + sizeof(int) * oldsize, 0,
 	   sizeof(int) * (f->statsize - oldsize));
-    memcpy(f->stat, oldstat, oldsize * sizeof(int));
+    ACE_OS::memcpy (f->stat, oldstat, oldsize * sizeof(int));
   }
   else if (value < f->min) {
     int * oldstat = f->stat;
@@ -247,11 +247,11 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend down stat to % items",
 	      f->statsize);
-      perror("");
-      exit(1);
+     ACE_OS::perror ("");
+      ACE_OS::exit (1);
     }
     memset(f->stat, 0, sizeof(int) * (f->statsize - oldsize));
-    memcpy((char *)(f->stat) + sizeof(int) * (f->statsize - oldsize),
+    ACE_OS::memcpy ((char *)(f->stat) + sizeof(int) * (f->statsize - oldsize),
 	   oldstat, sizeof(int) * oldsize);
     f->med += f->statsize - oldsize;
   }

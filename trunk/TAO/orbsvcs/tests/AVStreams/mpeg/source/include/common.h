@@ -357,8 +357,12 @@ typedef struct
 // to terminate the event loop
 #define CmdExit  34
 
+
 // cmd sent by Java GUI to Controller process
 #define CmdJINIT 35
+
+#define EXIT 36
+#define DECODED 37
 
 /* CTR-VS */
 

@@ -129,7 +129,7 @@ Audio_Data_Handler::handle_input (ACE_HANDLE fd)
       len = wait_read_bytes(this->audio_global_->audioSocket, (char *)this->audio_global_->fbpara, sizeof(*(this->audio_global_->fbpara)));
       if (len == 0) return(1); /* connection broken */
       else if (len < 0) { /* unexpected error */
-        perror("AS read1 FB");
+       ACE_OS::perror ("AS read1 FB");
         return(-1);
       }
     }
@@ -139,7 +139,7 @@ Audio_Data_Handler::handle_input (ACE_HANDLE fd)
     if (len == -1) {
       if (errno == EINTR) continue; /* interrupt */
       else {
-        if (errno != EPIPE && errno != ECONNRESET) perror("AS failed to read() fbmsg header");
+        if (errno != EPIPE && errno != ECONNRESET)ACE_OS::perror ("AS failed to ACE_OS::read () fbmsg header");
         break;
       }
     }
@@ -155,7 +155,7 @@ Audio_Data_Handler::handle_input (ACE_HANDLE fd)
 
   if (len < sizeof(*this->audio_global_->fbpara)) {
     if (len > 0) fprintf(stderr,
-			 "AS warn read() len %dB < sizeof(*this->audio_global_->fbpara) %dB\n",
+			 "AS warn ACE_OS::read () len %dB < sizeof(*this->audio_global_->fbpara) %dB\n",
 			 len, sizeof(*this->audio_global_->fbpara));
     // continue;
     // simulate the continue ??
@@ -175,7 +175,7 @@ Audio_Data_Handler::handle_input (ACE_HANDLE fd)
                             bytes);
       if (len == 0) return(1); /* connection broken */
       else if (len < 0) { /* unexpected error */
-        perror("AS read2 FB");
+       ACE_OS::perror ("AS read2 FB");
         return(-1);
       }
       len += sizeof(*this->audio_global_->fbpara);

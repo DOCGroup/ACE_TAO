@@ -61,11 +61,11 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
     VIDEO_SINGLETON::instance ()->pattern[0] = 'I';
     VIDEO_SINGLETON::instance ()->pattern[1] = 0;
     VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->verticalSize * VIDEO_SINGLETON::instance ()->horizontalSize * 3;
-    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
+    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
                                           VIDEO_SINGLETON::instance ()->packetBufSize);
     if (VIDEO_SINGLETON::instance ()->packet == NULL)	
       {
-        perror ("Error: VS error on malloc VIDEO_SINGLETON::instance ()->packet buffer");
+        perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
         exit (1);
       }
     VIDEO_SINGLETON::instance ()->packet = (VideoPacket *) ((char *)VIDEO_SINGLETON::instance ()->packet + sizeof (VideoMessage));
@@ -426,7 +426,7 @@ Video_Control_Play_State::speed (const Video_Control::SPEEDpara &para)
 
   for (int i=0; i<para.sendPattern.length (); i++)
     VIDEO_SINGLETON::instance ()->sendPattern [i] = para.sendPattern [i];
-  //  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
+  //  ACE_OS::memcpy (VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
 
   Video_Timer_Global::TimerSpeed ();
   VIDEO_SINGLETON::instance ()->play_send ();

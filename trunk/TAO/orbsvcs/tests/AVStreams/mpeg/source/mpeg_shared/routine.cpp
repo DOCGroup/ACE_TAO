@@ -61,6 +61,8 @@ ACE_RCSID(mpeg_shared, routine, "$Id$")
 #define BLOCK_NUM 5
 #define DELTA_MSEC 20
 
+union semun sem_union;
+
 int get_hostname(char *name, int len)
 {
 #ifdef __svr4__
@@ -139,8 +141,8 @@ void usleep(unsigned int usec)
   val.tv_usec = usec % 1000000;
   if (select(0, NULL, NULL, NULL, &val) == -1 && errno != 4)
   {
-    perror("sleep with select");
-    exit(1);
+   ACE_OS::perror ("sleep with select");
+    ACE_OS::exit (1);
   }
 }
 #endif
@@ -157,14 +159,14 @@ void beep(void)
 
 void remove_shmem_id(int id)
 {
-  shmctl(id, IPC_RMID, NULL);
+ ACE_OS::shmctl (id, IPC_RMID, NULL);
 #if 0
   /* weird also on some sunOs4 machines */
   /* weird, HPUX always report error on this operation */
   if (errno)
   {
     fprintf(stderr, "shmctl shm_id:%d to IPC_RMID error:", id);
-    perror("");
+   ACE_OS::perror ("");
   }
 #endif
 }
@@ -174,35 +176,35 @@ char * creat_shared_mem_id(int size, int * id)
   char * shm;
   int shm_id;
   
-  shm_id = shmget(IPC_PRIVATE, size, IPC_CREAT | 0666);
+  shm_id = ACE_OS::shmget (IPC_PRIVATE, size, IPC_CREAT | 0666);
   if (shm_id == -1)
   {
-    shm_id = shmget(IPC_PRIVATE, 0, IPC_CREAT | 0666);
+    shm_id = ACE_OS::shmget (IPC_PRIVATE, 0, IPC_CREAT | 0666);
     if (shm_id == -1)
     {
-      perror("Shared MEM shmget1 error");
-      exit(1);
+     ACE_OS::perror ("Shared MEM shmget1 error");
+      ACE_OS::exit (1);
     }
     else
     {
       if (shmctl(shm_id, IPC_RMID, NULL) == -1)
       {
-        perror("Shared MEM shmctl error");
-        exit(1);
+       ACE_OS::perror ("Shared MEM shmctl error");
+        ACE_OS::exit (1);
       }
-      shm_id = shmget(IPC_PRIVATE, 0, IPC_CREAT | 0666);
+      shm_id = ACE_OS::shmget (IPC_PRIVATE, 0, IPC_CREAT | 0666);
       if (shm_id == -1)
       {
-        perror("Shared MEM shmget2 error");
-        exit(1);
+       ACE_OS::perror ("Shared MEM shmget2 error");
+        ACE_OS::exit (1);
       }
     }
   }
   shm = (char *)shmat(shm_id, (char *)0, 0);
   if ((int)shm == -1)
   {
-    perror("Shared MEM shmat error");
-    exit(1);
+   ACE_OS::perror ("Shared MEM shmat error");
+    ACE_OS::exit (1);
   }
   *id = shm_id;
   return shm;
@@ -218,7 +220,7 @@ char * creat_shared_mem(int size)
 
 void remove_shared_mem(char *ptr)
 {
-  shmdt(ptr);
+  ACE_OS::shmdt (ptr);
 }
 
 #define SEM_NUM 6
@@ -232,13 +234,13 @@ void enter_cs(int semaphore_id)
   sop.sem_num = semaphore_id;
   sop.sem_op = -1;
   sop.sem_flg = 0;
-  while (semop(semId, &sop, 1) == -1)
+  while (ACE_OS::semop(semId, &sop, 1) == -1)
   {
     if (errno == EINTR)
       continue;
-    fprintf(stderr, "semop(enter_cs) error: pid=%d", getpid());
-    perror("");
-    exit(1);
+    fprintf(stderr, "semop(enter_cs) error: pid=%d",ACE_OS::getpid ());
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
 }
 
@@ -248,13 +250,13 @@ void leave_cs(int semaphore_id)
   sop.sem_num = semaphore_id;
   sop.sem_op = 1;
   sop.sem_flg = 0;
-  while (semop(semId, &sop, 1) == -1)
+  while (ACE_OS::semop(semId, &sop, 1) == -1)
   {
     if (errno == EINTR)
       continue;
-    fprintf(stderr, "semop(leave_cs) error, pid=%d", getpid());
-    perror("");
-    exit(1);
+    fprintf(stderr, "semop(leave_cs) error, pid=%d",ACE_OS::getpid ());
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
 }
 
@@ -264,26 +266,26 @@ int creat_semaphore(void)
   int sem_val;
   int semaphore_id;
   if (semId == -1) {
-    semId = semget(IPC_PRIVATE, SEM_NUM, IPC_CREAT | 0666);
+    semId = ACE_OS::semget (IPC_PRIVATE, SEM_NUM, IPC_CREAT | 0666);
     if (semId == -1) {
-      perror("Semaphore semget error");
-      exit(1);
+     ACE_OS::perror ("Semaphore semget error");
+      ACE_OS::exit (1);
     }
-    masterPid = getpid();
+    masterPid =ACE_OS::getpid ();
     nextSem = 0;
   }
-  else if (masterPid != getpid()) {
+  else if (masterPid !=ACE_OS::getpid ()) {
     fprintf(stderr, "Error: this creat_semaphore() assumes semaphores are allocated\n");
     fprintf(stderr, "  only in single process %d, while current pid=%d\n",
-	    masterPid, getpid());
-    exit(1);
+	    masterPid,ACE_OS::getpid ());
+    ACE_OS::exit (1);
   }
   semaphore_id = nextSem ++;
   if (semaphore_id >= SEM_NUM) {
     fprintf(stderr, "Error: all of %d semaphores used up.\n", SEM_NUM);
-    exit(1);
+    ACE_OS::exit (1);
   }
-  sem_val = semctl(semId, semaphore_id, GETVAL, 0);
+  sem_val = ACE_OS::semctl (semId, semaphore_id, GETVAL, sem_union);
 /*
    fprintf(stderr, "Initial semaphore value: %d\n", sem_val);
 */
@@ -294,12 +296,13 @@ int creat_semaphore(void)
 
 void delete_semaphore()
 {
-  if (masterPid == getpid() && semId >= 0) {
-    semctl(semId, 0, IPC_RMID, 0);
+  if (masterPid ==ACE_OS::getpid () && semId >= 0) {
+	sem_union.val = 0;
+    ACE_OS::semctl (semId, 0, IPC_RMID, sem_union);
   } else {
-    if (masterPid != getpid())
+    if (masterPid !=ACE_OS::getpid ())
     fprintf(stderr, "Pid %d not supposed to remove semId created by pid %d\n",
-	    getpid(), masterPid);
+	   ACE_OS::getpid (), masterPid);
     else
     fprintf(stderr, "The semaphore has been deleted.\n");
   }
@@ -309,12 +312,13 @@ void delete_semaphore()
 void remove_semaphore(int sid)
 {
   return;
-  //  semctl(semId, semaphore_id, IPC_RMID, 0);
+  //  ACE_OS::semctl (semId, semaphore_id, IPC_RMID, 0);
 }
 
 void remove_all_semaphores (void)
 {
-  semctl(semId,0, IPC_RMID, 0);
+	sem_union.val = 0;
+  ACE_OS::semctl (semId,0, IPC_RMID, sem_union);
   return;
 }
 
@@ -322,27 +326,30 @@ int get_semval(int sid)
 {
   int val, val1 = 0;
   errno = 0;
-  val = semctl(semId, sid, GETVAL, 0);
+	sem_union.val = 0;
+  val = ACE_OS::semctl (semId, sid, GETVAL, sem_union);
   if (val == -1) {
-    perror("getting value of a semaphore");
-    exit(1);
+   ACE_OS::perror ("getting value of a semaphore");
+    ACE_OS::exit (1);
   }
   /*
   if (val == 0) {
-    fprintf(stderr, "pid %d to call semctl(%d, 0, GETZCNT)\n", getpid(), sid);
-    val = semctl(semId, 0, GETZCNT, 0);
+    fprintf(stderr, "pid %d to call ACE_OS::semctl (%d, 0, GETZCNT)\n",ACE_OS::getpid (), sid);
+	sem_union.val = 0;
+    val = ACE_OS::semctl (semId, 0, GETZCNT, 0);
     if (val == -1) {
-      perror("getting semzcnt of a semaphore");
-      exit(1);
+     ACE_OS::perror ("getting semzcnt of a semaphore");
+      ACE_OS::exit (1);
     }
     
-    fprintf(stderr, "pid %d to call semctl(%d, 0, GETNCNT)\n", getpid(), sid);
+    fprintf(stderr, "pid %d to call ACE_OS::semctl (%d, 0, GETNCNT)\n",ACE_OS::getpid (), sid);
     usleep(10000000);
-    val1 = semctl(semId, sid, GETNCNT, 0);
+	sem_union.val = 0;
+    val1 = ACE_OS::semctl (semId, sid, GETNCNT, sem_union);
     if (val1 == -1) {
-      perror("getting semncnt of a semaphore");
+     ACE_OS::perror ("getting semncnt of a semaphore");
     }
-    fprintf(stderr, "pid %d to called semctl(GETNCNT)\n", getpid());
+    fprintf(stderr, "pid %d to called ACE_OS::semctl (GETNCNT)\n",ACE_OS::getpid ());
     
     fprintf(stderr, "Semval val %d, val1 %d\n", val, val1);
     return (0-(val + val1));
@@ -366,7 +373,7 @@ void get_full_path(char *filename, char * buffer, int bufsize)
     if (env != NULL)
     {
       strncpy(path, env, MAXPATHLEN);
-      strncat(path, filename+1, MAXPATHLEN - strlen(path));
+      strncat(path, filename+1, MAXPATHLEN -ACE_OS::strlen (path));
     }
     else
       strncpy(path, filename, MAXPATHLEN);
@@ -380,7 +387,7 @@ void get_full_path(char *filename, char * buffer, int bufsize)
     {
       path[MAXPATHLEN-4] = 0;
       strcat(path, "/");
-      strncat(path, filename, MAXPATHLEN - strlen(path));
+      strncat(path, filename, MAXPATHLEN -ACE_OS::strlen (path));
     }
   }
   path[MAXPATHLEN-1] = 0;
@@ -401,14 +408,14 @@ void setsignal(int sig, void (func)(int))
   sv.sv_flags   = 0;
   if (sigvector (sig, &sv, (struct sigvec *) NULL) == -1) {
     fprintf(stderr, "sigvector(%d) error", sig);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
 #elif defined(__svr4__) || defined(IRIX)
   if (sigset(sig, func) == SIG_ERR)  {
     fprintf(stderr, "sigset(%d,func) error", sig);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
 #elif defined(sun) || defined(FreeBSD) || defined(ULTRIX) || defined(LINUX)
   {
@@ -423,21 +430,21 @@ void setsignal(int sig, void (func)(int))
     //    act.sa_mask = 0;
     if (!sigaction(sig, &act, NULL)) return;
     fprintf(stderr, "sigaction(%d,...) error", sig);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
   /*
   if (signal(sig, func) == SIG_ERR) {
     fprintf(stderr, "signal(%d,func) error", sig);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
   */
 #else
   fprintf(stderr,
 	  "Error: code for setsignal(%d,func) is missing in source/mpeg_shared/routine.cpp\n",
 	  sig);
-  exit(1);
+  ACE_OS::exit (1);
 #endif
 }
 
@@ -454,7 +461,7 @@ int SetRTpriority(char *msg, int pri)
     if (rtprio(0, 127 - pri) == -1)
     {
       fprintf(stderr, "%s fails to be set to RT priority %d", msg, 127 - pri);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     return 0;
@@ -465,7 +472,7 @@ int SetRTpriority(char *msg, int pri)
     strcpy(pci.pc_clname, "RT");
     if (priocntl(P_PID, P_MYID, PC_GETCID, (char *)&pci) == -1) {
       fprintf(stderr, "%s priocntl(PC_GETCID) failed for RT pri %d", msg, pri);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     pcp.pc_cid = pci.pc_cid;
@@ -474,7 +481,7 @@ int SetRTpriority(char *msg, int pri)
     rtp->rt_tqnsecs = 10000000;  /* 10 (ten) milliseconds */
     if (priocntl(P_PID, P_MYID, PC_SETPARMS, (char *)&pcp) == -1) {
       fprintf(stderr, "%s priocntl(PC_SETPARMS) failed for RT pri %d", msg, pri);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     return 0;
@@ -487,7 +494,7 @@ int SetRTpriority(char *msg, int pri)
 #ifdef _HPUX_SOURCE
     if (rtprio(0, RTPRIO_RTOFF) == -1) {
       fprintf(stderr, "%s fails to be set to RTPRIO_RTOFF", msg);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     return 0;
@@ -498,7 +505,7 @@ int SetRTpriority(char *msg, int pri)
     strcpy(pci.pc_clname, "TS");
     if (priocntl(P_PID, P_MYID, PC_GETCID, (char *)&pci) == -1) {
       fprintf(stderr, "%s priocntl(PC_GETCID) failed for TS priority", msg);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     pcp.pc_cid = pci.pc_cid;
@@ -506,7 +513,7 @@ int SetRTpriority(char *msg, int pri)
     tsp->ts_upri = 0;
     if (priocntl(P_PID, P_MYID, PC_SETPARMS, (char *)&pcp) == -1) {
       fprintf(stderr, "%s priocntl(PC_SETPARMS) failed for TS priority", msg);
-      perror("");
+     ACE_OS::perror ("");
       return -1;
     }
     return 0;
