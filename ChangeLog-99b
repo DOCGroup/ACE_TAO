@@ -1,3 +1,10 @@
+Thu Jul  8 23:15:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	
+	  Merging the "ami_phase3" branch on to the main branch. Change
+	  was done to the CDR_Stream{h,i} files  to add the method
+	  <byte_order> to the CDR class. Other than that, no change was
+	  done to ACE.
+
 Thu Jul 08 22:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: changed the perl magic that
