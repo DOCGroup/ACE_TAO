@@ -87,6 +87,7 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   (void) ACE_OS::memset ((void *) &this->inet_addr_,
                          0,
                          sizeof this->inet_addr_);
+  this->inet_addr_.sin_family = AF_INET;
 }
 
 int
@@ -235,6 +236,7 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
+  this->inet_addr_.sin_family = AF_INET;
 
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
@@ -393,6 +395,7 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
   this->ACE_Addr::base_set (AF_INET, len);
   ACE_OS::memcpy ((void *) &this->inet_addr_,
                   (void *) addr, len);
+  this->inet_addr_.sin_family = AF_INET;
   return 0;
 }
 
@@ -405,6 +408,7 @@ ACE_INET_Addr::set_addr (void *addr, int len)
   this->ACE_Addr::base_set (AF_INET, len);
   ACE_OS::memcpy ((void *) &this->inet_addr_,
                   (void *) addr, len);
+  this->inet_addr_.sin_family = AF_INET;
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
@@ -426,7 +430,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
-		ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
@@ -504,7 +508,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
     {
 #if defined (VXWORKS)
       ACE_UNUSED_ARG (len);
-      int error = 
+      int error =
         ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
                          hostname);
       if (error == OK)
@@ -532,7 +536,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
 #else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
-      hostent *hp = 
+      hostent *hp =
         ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
                                  a_len,
                                  this->addr_type_,
@@ -580,7 +584,7 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
 
   // And copy it over, if successful
   if (result == 0)
-    ACE_OS_String::strcpy (hostname, 
+    ACE_OS_String::strcpy (hostname,
                            ACE_Ascii_To_Wide (char_hostname).wchar_rep ());
 
   return result;
