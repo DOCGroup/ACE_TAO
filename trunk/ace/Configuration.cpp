@@ -772,7 +772,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
   DWORD len = ACE_static_cast (DWORD, value.length () + 1);
   len *= sizeof (ACE_TCHAR);
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
-                                       name,
+                                       t_name,
                                        0,
                                        REG_SZ,
                                        (BYTE *) value.fast_rep (),
@@ -801,7 +801,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
 
   int errnum;
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
-                                        name,
+                                        t_name,
                                         0,
                                         REG_DWORD,
                                         (BYTE *) &value,
@@ -830,7 +830,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
 
   int errnum;
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
-                                        name,
+                                        t_name,
                                         0,
                                         REG_BINARY,
                                         (BYTE *) data,
@@ -862,7 +862,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   DWORD buffer_length = 0;
   DWORD type;
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
-                                          name,
+                                          t_name,
                                           0,
                                           &type,
                                           (BYTE *) 0,
@@ -886,7 +886,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
 
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
-                                          name,
+                                          t_name,
                                           0,
                                           &type,
                                           (BYTE *) buffer.get (),
@@ -917,7 +917,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
   DWORD length = sizeof (value);
   DWORD type;
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
-                                          name,
+                                          t_name,
                                           0,
                                           &type,
                                           (BYTE *) &value,
@@ -955,7 +955,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   DWORD buffer_length = 0;
   DWORD type;
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
-                                          name,
+                                          t_name,
                                           0,
                                           &type,
                                           (BYTE *) 0,
@@ -976,7 +976,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   ACE_NEW_RETURN (data, BYTE[length], -1);
 
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
-                                          name,
+                                          t_name,
                                           0,
                                           &type,
                                           (BYTE *) data,
@@ -1049,7 +1049,7 @@ ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_K
     return -1;
 
   int errnum;
-  if ((errnum = ACE_TEXT_RegDeleteValue (base_key, name)) != ERROR_SUCCESS)
+  if ((errnum = ACE_TEXT_RegDeleteValue (base_key, t_name)) != ERROR_SUCCESS)
     {
       errno = errnum;
       return -1;
@@ -1904,7 +1904,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry;
-  ACE_Configuration_ExtId item_name (name);
+  ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
@@ -1963,7 +1963,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry;
-  ACE_Configuration_ExtId item_name (name);
+  ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
@@ -2013,7 +2013,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry;
-  ACE_Configuration_ExtId item_name (name);
+  ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
@@ -2200,7 +2200,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
     return -1;    // section does not exist
 
   // Find it
-  ACE_Configuration_ExtId ValueExtId (name);
+  ACE_Configuration_ExtId ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;  // value does not exist
@@ -2230,7 +2230,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
     return -1;    // section does not exist
 
   // Find it
-  ACE_Configuration_ExtId ValueExtId (name);
+  ACE_Configuration_ExtId ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;
