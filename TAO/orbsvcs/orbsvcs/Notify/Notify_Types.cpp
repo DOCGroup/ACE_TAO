@@ -24,7 +24,7 @@ TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char*
 
 TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
-  // @@ need the dups??!!
+  // @@ Check it these dups are indeed required.
   this->event_type_.type_name = CORBA::string_dup (event_type.type_name.in ());
   this->event_type_.domain_name = CORBA::string_dup (event_type.domain_name.in ());
   this->recompute_hash ();
