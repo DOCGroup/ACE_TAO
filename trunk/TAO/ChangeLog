@@ -1,3 +1,11 @@
+Thu Mar 31 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+          Generate the dynamic_cast in one line
+
+        * tao/PortableServer/PolicyS.cpp:
+          Regenerated
+
 Thu Mar 31 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
