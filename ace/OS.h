@@ -2197,6 +2197,12 @@ protected:
   int ref_count_;
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
+
+  int important_writer_;
+  // indicate that a reader is trying to upgrade
+
+  ACE_cond_t waiting_important_writer_;
+  // condition for the upgrading reader
 };
 # elif defined (ACE_HAS_STHREADS)
 #   include /**/ <synch.h>
