@@ -10,7 +10,6 @@ Fri May 26 12:23:55 2000  Ossama Othman  <ossama@uci.edu>
 
 	  *sigh* These files also needed to include "ace/Log_Msg.h."
 
->>>>>>> 4.566
 Fri May 26 12:13:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Singleton.cpp:
