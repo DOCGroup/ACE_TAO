@@ -1,3 +1,19 @@
+Tue Jun 22 15:18:46 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* examples/Quoter/run_test.pl:
+	* examples/Simple/bank/run_test.pl:
+	* examples/Simple/grid/run_test.pl:
+	* examples/Simple/time/run_test.pl:
+	* examples/Simple/time-date/run_test.pl:
+	* orbsvcs/tests/AVStreams/benchmarks/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test2.pl:
+	* orbsvcs/tests/EC_Basic/run_test.pl:
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl: Updated the tests to
+	  reflect new guidelines concerning timeouts and blocking.
+
 Tue Jun 22 15:11:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/BCast.cpp:
