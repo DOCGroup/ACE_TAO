@@ -857,8 +857,8 @@ class ACE_Export ACE_Null_Mutex_Guard
   //     an ACE_Null_Mutex.
   //
   // = DESCRIPTION
-  //     This should be a specialization of ACE_Guard, but compiler
-  //     bugs preclude this...
+  //     This class is obsolete and should be replaced by
+  //     ACE_Guard<ACE_Null_Mutex>. 
 public:
   ACE_Null_Mutex_Guard (ACE_Null_Mutex &);
   ~ACE_Null_Mutex_Guard (void);
@@ -1160,8 +1160,8 @@ class ACE_Export ACE_Thread_Mutex_Guard
   //     an <ACE_Thread_Mutex>.
   //
   // = DESCRIPTION
-  //     This should be a specialization of <ACE_Guard>, but compiler
-  //     bugs in older C++ compilers preclude this...
+  //     This class is obsolete and should be replaced by
+  //     ACE_Guard<ACE_Thread_Mutex>. 
 public:
   ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m, int block = 1);
   // Implicitly and automatically acquire the lock.
