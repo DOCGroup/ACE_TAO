@@ -48,6 +48,8 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
+	$(OBJDIR)\Collocation_Resolver.obj \
+	$(OBJDIR)\Default_Collocation_Resolver.obj \
 	$(OBJDIR)\Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Connection_handler.obj \
 	$(OBJDIR)\Connector_Impl.obj \

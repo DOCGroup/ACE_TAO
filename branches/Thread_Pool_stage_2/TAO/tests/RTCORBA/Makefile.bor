@@ -6,6 +6,7 @@ DIRS = \
 	Banded_Connections \
 	Client_Propagated \
 	Client_Protocol \
+	Collocation \
 	Destroy_Thread_Pool \
 	Explicit_Binding \
 	Linear_Priority \

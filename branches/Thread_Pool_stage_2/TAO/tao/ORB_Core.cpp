@@ -2828,29 +2828,40 @@ TAO_ORB_Core_instance (void)
 
 
 int
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
+TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object,
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
 
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
-      stub->servant_orb_var ()->orb_core () != 0 &&
-      stub->servant_orb_var ()->orb_core ()->collocation_resolver ().is_collocated (object))
+      stub->servant_orb_var ()->orb_core () != 0)
     {
-      switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
-        {
-        case THRU_POA:
-          return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
+      TAO_ORB_Core *orb_core =
+        stub->servant_orb_var ()->orb_core ();
 
-        case DIRECT:
-          {
-            /////////////////////////////////////////////////////////////
-            // If the servant is null and you are collocated this means
-            // that the POA policy NON-RETAIN is set, and with that policy
-            // using the DIRECT collocation strategy is just insane.
-            /////////////////////////////////////////////////////////////
-            ACE_ASSERT (object->_servant () != 0);
-            return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
-          }
+      int collocated =
+        orb_core->collocation_resolver ().is_collocated (object,
+                                                         ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (collocated)
+        {
+          switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
+            {
+            case THRU_POA:
+              return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
+
+            case DIRECT:
+              {
+                /////////////////////////////////////////////////////////////
+                // If the servant is null and you are collocated this means
+                // that the POA policy NON-RETAIN is set, and with that policy
+                // using the DIRECT collocation strategy is just insane.
+                /////////////////////////////////////////////////////////////
+                ACE_ASSERT (object->_servant () != 0);
+                return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
+              }
+            }
         }
     }
 

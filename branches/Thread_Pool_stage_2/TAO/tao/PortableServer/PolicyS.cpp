@@ -125,16 +125,16 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"copy", 	&POA_CORBA_Policy::copy_skel},
+      {"copy",  &POA_CORBA_Policy::copy_skel},
       {"_is_a",  &POA_CORBA_Policy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_CORBA_Policy::destroy_skel},
+      {"destroy",       &POA_CORBA_Policy::destroy_skel},
       {"",0},{"",0},
       {"_interface",  &POA_CORBA_Policy::_interface_skel},
       {"",0},{"",0},
       {"_non_existent",  &POA_CORBA_Policy::_non_existent_skel},
       {"",0},{"",0},
-      {"_get_policy_type", 	&POA_CORBA_Policy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_CORBA_Policy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -552,7 +552,8 @@ POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::select_proxy (
   )
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object);
+    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
