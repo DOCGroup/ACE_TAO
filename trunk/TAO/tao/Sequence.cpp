@@ -12,6 +12,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "Exception.h"
 
 ACE_RCSID (tao,
            Sequence,
@@ -57,7 +58,13 @@ check_bounds(
                     "Access error in TAO_Sequence file=%s, line=%u, "
                     "idx=%u, max=%u\n",
                  ACE_TEXT_CHAR_TO_TCHAR (filename), lineno, tao_idx, tao_max));
-  }
+    }
+
+#if defined (ACE_HAS_EXCEPTIONS)
+  ACE_THROW (CORBA::BAD_PARAM ());
+#elif
+  ACE_OS::abort ();
+#endif /*ACE_HAS_EXCEPTIONS*/
 }
 
 // *************************************************************
@@ -179,7 +186,7 @@ TAO_Unbounded_String_Sequence::operator= (
 TAO_SeqElem_String_Manager
 TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   char ** const tmp =
     ACE_reinterpret_cast (char ** ACE_CAST_CONST,
                           this->buffer_);
@@ -484,7 +491,7 @@ TAO_Unbounded_WString_Sequence::operator= (
 TAO_SeqElem_WString_Manager
 TAO_Unbounded_WString_Sequence::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   CORBA::WChar ** const tmp =
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           this->buffer_);
