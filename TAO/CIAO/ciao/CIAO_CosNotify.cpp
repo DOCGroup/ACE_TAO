@@ -76,7 +76,7 @@ namespace CIAO
 
     if (CORBA::is_nil (notify_config))
       {
-        ACE_THROW ((CORBA::BAD_PARAM ()));
+        ACE_THROW (CORBA::BAD_PARAM ());
       }
 
     CosNotifyFilter::Filter_var filter =
@@ -166,7 +166,7 @@ namespace CIAO
 
     if (CORBA::is_nil (notify_config))
       {
-        ACE_THROW ((CORBA::BAD_PARAM ()));
+        ACE_THROW (CORBA::BAD_PARAM ());
       }
 
     CosNotifyFilter::Filter_var filter =
@@ -303,6 +303,8 @@ namespace CIAO
   void
   CosNotifyServiceConsumer_impl::push_structured_event (
       const CosNotification::StructuredEvent& event)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     CosEventComm::Disconnected))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "CosNotifyServiceConsumer_impl::push_structured_event\n"));

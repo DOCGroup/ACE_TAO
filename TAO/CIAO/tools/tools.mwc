@@ -2,4 +2,7 @@
 // $Id$
 
 workspace {
+  exclude {
+    Simple_Component_Server
+  } 
 }

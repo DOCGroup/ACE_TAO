@@ -8,7 +8,7 @@
 
 #include "SatelliteC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Streams.h"
+#include <iostream>
 
 char *satellite_ior_ = 0;
 
@@ -80,7 +80,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Who is the culprit \n");
-      cerr << "Uncaught CORBA exception" << endl;
+      std::cerr << "Uncaught CORBA exception" << std::endl;
       return 1;
     }
   ACE_ENDTRY;

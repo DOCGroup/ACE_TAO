@@ -70,7 +70,7 @@ namespace CIAO
 
     if (CORBA::is_nil (rt_config))
       {
-        ACE_THROW ((CORBA::BAD_PARAM ()));
+        ACE_THROW (CORBA::BAD_PARAM ());
       }
 
     RtecEventChannelAdmin::SupplierQOS_var qos =
@@ -126,7 +126,7 @@ namespace CIAO
 
     if (CORBA::is_nil (rt_config))
       {
-        ACE_THROW ((CORBA::BAD_PARAM ()));
+        ACE_THROW (CORBA::BAD_PARAM ());
       }
 
     RtecEventChannelAdmin::ConsumerQOS_var qos =
@@ -215,6 +215,8 @@ namespace CIAO
 
   void
   RTEventServiceSupplier_impl::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((
+		     CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
@@ -231,6 +233,7 @@ namespace CIAO
 
   void
   RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
 

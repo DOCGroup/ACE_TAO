@@ -1,10 +1,16 @@
 project(ServerActivator): ciao_server, iortable {
+
+  libs += CIAO_XML_Helpers CIAO_Events
+
   Source_Files {
     ServerActivator.cpp
   }
 }
 
 project(ServerActivator_test_client) : ciao_server {
+
+  libs += CIAO_XML_Helpers CIAO_Events
+
   Source_Files {
     ServerActivator_test_client.cpp
   }

@@ -16,6 +16,9 @@ project(Assembly_Manager): ciao_server, acexml, iortable, rtcorba {
 }
 
 project(Assembly_Deployer) : ciao_server {
+
+  libs += CIAO_XML_Helpers CIAO_Events
+
   Source_Files {
     Assembly_ServiceC.cpp
     Assembly_Deployer.cpp

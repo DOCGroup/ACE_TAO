@@ -1,12 +1,18 @@
 // $Id$
 
 project(ComponentServer): ciao_server, iortable {
+
+  libs += CIAO_XML_Helpers CIAO_Events
+
   Source_Files {
     ComponentServer.cpp
   }
 }
 
 project(ComponentServer_test_client) : ciao_server {
+
+  libs += CIAO_XML_Helpers CIAO_Events
+
   Source_Files {
     ComponentServer_test_client.cpp
   }
