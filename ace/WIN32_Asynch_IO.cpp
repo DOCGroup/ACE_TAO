@@ -2352,13 +2352,11 @@ ACE_WIN32_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::open\n"));
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::open");
 
   // if we are already opened,
   // we could not create a new handler without closing the previous
-  if (this->flg_open_ != 0)
+  if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::open:")
                        ACE_LIB_TEXT ("connector already open \n")),
@@ -2374,7 +2372,7 @@ ACE_WIN32_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
   //if (result == -1)
   //  return result;
 
-  this->flg_open_ = 1;
+  this->flg_open_ = true;
 
   return 0;
 }
@@ -2388,98 +2386,78 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                    int priority,
                                    int signal_number)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect\n"));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::connect");
 
+  if (!this->flg_open_)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect")
+                       ACE_LIB_TEXT ("connector was not opened before\n")),
+                      -1);
+
+  // Common code for both WIN and WIN32.
+  // Create future Asynch_Connect_Result
+  ACE_WIN32_Asynch_Connect_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Connect_Result (this->handler_proxy_,
+                                                   connect_handle,
+                                                   act,
+                                                   this->win32_proactor_->get_handle (),
+                                                   priority,
+                                                   signal_number),
+                  -1);
+
+  int rc = connect_i (result,
+                      remote_sap,
+                      local_sap,
+                      reuse_addr);
+
+  // update handle
+  connect_handle = result->connect_handle ();
+
+  if (rc != 0)
+    return post_result (result, true);
+
+  //  Enqueue result we will wait for completion
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
-
-    if (this->flg_open_ == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect")
-                         ACE_LIB_TEXT ("connector was not opened before\n")),
-                        -1);
-
-    // Common code for both WIN and WIN32.
-    // Create future Asynch_Connect_Result
-    ACE_WIN32_Asynch_Connect_Result *result = 0;
-    ACE_NEW_RETURN (result,
-                    ACE_WIN32_Asynch_Connect_Result (this->handler_proxy_,
-                                                     connect_handle,
-                                                     act,
-                                                     this->win32_proactor_->get_handle (),
-                                                     priority,
-                                                     signal_number),
-                    -1);
-
-    int rc = connect_i (result,
-                        remote_sap,
-                        local_sap,
-                        reuse_addr);
-
-    // update handle
-    connect_handle = result->connect_handle ();
-
-    if (rc != 0)
-      return post_result (result, 1);
-
-    //  Enqueue result we will wait for completion
 
     if (this->result_map_.bind (connect_handle, result) == -1)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect:")
-                    ACE_LIB_TEXT ("result map binding failed\n")));
+                    ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect: %p\n"),
+                    ACE_LIB_TEXT ("bind")));
         result->set_error (EFAULT);
-        return post_result (result, 1);
+        return post_result (result, true);
       }
-
-    this->task_lock_count_++;
   }
 
   ACE_Asynch_Pseudo_Task & task =
     this->win32_proactor_->get_asynch_pseudo_task ();
 
-  int rc_task = task.register_io_handler (connect_handle,
-                                          this,
-                                          ACE_Event_Handler::CONNECT_MASK,
-                                          0);  // not to suspend after register
-
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
-
-    this->task_lock_count_--;
-
-    int post_enable = 1;
-
-    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
-        this->task_lock_count_ == 0)  // task is closing
+  if (-1 == task.register_io_handler (connect_handle,
+                                      this,
+                                      ACE_Event_Handler::CONNECT_MASK,
+                                      0))  // not to suspend after register
+    {
+      result = 0;
       {
-        post_enable = 0;
-        task.unlock_finish ();
-      }
-
-    if (rc_task < 0)
-      {
-        ACE_WIN32_Asynch_Connect_Result *result = 0;
-
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
         this->result_map_.unbind (connect_handle, result);
-
-        if (result != 0)
-          {
-            result->set_error (EFAULT);
-
-            return post_result (result, post_enable);
-          }
       }
-  }
+      if (result != 0)
+        {
+          result->set_error (EFAULT);
+          this->post_result (result, true);
+        }
+    }
 
   return 0;
 }
 
 int ACE_WIN32_Asynch_Connect::post_result (ACE_WIN32_Asynch_Connect_Result * result,
-                                           int post_enable)
+                                           bool post_enable)
 {
-  if (this->flg_open_ != 0 && post_enable != 0)
+  if (this->flg_open_ && post_enable)
     {
       if (this->win32_proactor_ ->post_completion (result) == 0)
         return 0;
@@ -2500,7 +2478,7 @@ int ACE_WIN32_Asynch_Connect::post_result (ACE_WIN32_Asynch_Connect_Result * res
    return -1;
 }
 
-//@@ New method connect_i
+// connect_i
 //  return code :
 //   -1   errors  before  attempt to connect
 //    0   connect started
@@ -2515,26 +2493,23 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
   result->set_bytes_transferred (0);
 
   ACE_HANDLE handle = result->connect_handle ();
-
   if (handle == ACE_INVALID_HANDLE)
     {
       int protocol_family = remote_sap.get_type ();
-
       handle = ACE_OS::socket (protocol_family,
                                SOCK_STREAM,
                                0);
 
       // save it
       result->connect_handle (handle);
-
       if (handle == ACE_INVALID_HANDLE)
         {
           result->set_error (errno);
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: ")
-                             ACE_LIB_TEXT (" ACE_OS::socket failed\n")),
-                            -1);
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
+              ACE_LIB_TEXT ("socket")),
+             -1);
         }
 
       // Reuse the address
@@ -2548,11 +2523,11 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
                               sizeof one) == -1)
         {
           result->set_error (errno);
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: ")
-                             ACE_LIB_TEXT (" ACE_OS::setsockopt failed\n")),
-                            -1);
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
+              ACE_LIB_TEXT ("setsockopt")),
+             -1);
         }
     }
 
@@ -2560,35 +2535,34 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
     {
       sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int size = local_sap.get_size ();
-
       if (ACE_OS::bind (handle, laddr, size) == -1)
         {
            result->set_error (errno);
-
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
-                              ACE_LIB_TEXT ("ACE_OS::bind")),
-                             -1);
+           ACE_ERROR_RETURN
+             ((LM_ERROR,
+               ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
+               ACE_LIB_TEXT ("bind")),
+              -1);
         }
     }
 
   // set non blocking mode
-
   if (ACE::set_flags (handle, ACE_NONBLOCK) != 0)
     {
       result->set_error (errno);
-
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: ")
-                         ACE_LIB_TEXT (" ACE::set_flags failed\n")),
-                        -1);
+      ACE_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
+          ACE_LIB_TEXT ("set_flags")),
+         -1);
     }
 
   for (;;)
     {
-      int rc = ACE_OS::connect (handle,
-                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
-                                remote_sap.get_size ());
+      int rc = ACE_OS::connect
+        (handle,
+         reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
+         remote_sap.get_size ());
 
       if (rc < 0)  // failure
         {
@@ -2607,7 +2581,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
 }
 
 
-//@@ New method cancel_uncompleted
+// cancel_uncompleted
 // It performs cancellation of all pending requests
 //
 // Parameter flg_notify can be
@@ -2620,14 +2594,14 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
 //
 
 int
-ACE_WIN32_Asynch_Connect::cancel_uncompleted (int flg_notify, ACE_Handle_Set & set)
+ACE_WIN32_Asynch_Connect::cancel_uncompleted (bool flg_notify,
+                                              ACE_Handle_Set &set)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::cancel_uncompleted\n"));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::cancel_uncompleted");
 
   int retval = 0;
 
   MAP_MANAGER::ITERATOR iter (result_map_);
-
   MAP_MANAGER::ENTRY *   me = 0;
 
   set.reset ();
@@ -2652,118 +2626,83 @@ ACE_WIN32_Asynch_Connect::cancel_uncompleted (int flg_notify, ACE_Handle_Set & s
 int
 ACE_WIN32_Asynch_Connect::cancel (void)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::cancel\n"));
-
-  //We are not really ACE_WIN32_Asynch_Operation
-  //so we could not call ::aiocancel ()
-  // or just write
-  //return ACE_WIN32_Asynch_Operation::cancel ();
-  //We delegate real cancelation to cancel_uncompleted (1)
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::cancel");
 
   int rc = -1 ;  // ERRORS
 
   ACE_Handle_Set set;
-
+  int num_cancelled = 0;
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    int num_cancelled = cancel_uncompleted (flg_open_, set);
-
-    if (num_cancelled == 0)
-       rc = 1;        // AIO_ALLDONE
-    else if (num_cancelled > 0)
-       rc = 0;        // AIO_CANCELED
-
-    if (this->flg_open_ == 0)
-       return rc;
-
-    this->task_lock_count_++;
+    num_cancelled = cancel_uncompleted (flg_open_, set);
   }
+  if (num_cancelled == 0)
+    rc = 1;        // AIO_ALLDONE
+  else if (num_cancelled > 0)
+    rc = 0;        // AIO_CANCELED
+
+  if (!this->flg_open_)
+    return rc;
 
   ACE_Asynch_Pseudo_Task & task =
     this->win32_proactor_->get_asynch_pseudo_task ();
 
-  int rc_task = task.remove_io_handler (set);
-
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
-
-    this->task_lock_count_--;
-
-    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
-        this->task_lock_count_ == 0)  // task is closing
-       task.unlock_finish ();
-  }
-
+  task.remove_io_handler (set);
   return rc;
 }
 
 int
 ACE_WIN32_Asynch_Connect::close (void)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::close\n"));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::close");
 
   ACE_Handle_Set set;
-
+  int num_cancelled = 0;
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    int num_cancelled = cancel_uncompleted (flg_open_, set);
-
-    if (num_cancelled == 0 || this->flg_open_ == 0)
-      {
-        this->flg_open_ = 0;
-        return 0;
-      }
-
-    this->task_lock_count_++;
+    num_cancelled = cancel_uncompleted (flg_open_, set);
   }
+  if (num_cancelled == 0 || this->flg_open_ == 0)
+    {
+      this->flg_open_ = false;
+      return 0;
+    }
 
   ACE_Asynch_Pseudo_Task & task =
     this->win32_proactor_->get_asynch_pseudo_task ();
 
-  int rc_task = task.remove_io_handler (set);
-
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
-
-    this->task_lock_count_--;
-
-    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
-        this->task_lock_count_ == 0)  // task is closing
-       task.unlock_finish ();
-
-    this->flg_open_ = 0;
-  }
-
+  task.remove_io_handler (set);
   return 0;
 }
 
 int
 ACE_WIN32_Asynch_Connect::handle_exception (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::handle_exception\n"));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::handle_exception");
   return handle_output (fd);
 }
 
 int
 ACE_WIN32_Asynch_Connect::handle_input (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::handle_input\n"));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::handle_input");
   return handle_output (fd);
 }
 
 int
 ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::handle_output\n"));
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::handle_output");
 
   ACE_WIN32_Asynch_Connect_Result* result = 0;
 
-  if (this->result_map_.unbind (fd, result) != 0) // not found
-    return -1;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+    if (this->result_map_.unbind (fd, result) != 0) // not found
+      return -1;
+  }
 
   int sockerror  = 0 ;
   int lsockerror = sizeof sockerror;
@@ -2791,38 +2730,19 @@ ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
 int
 ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
-  ACE_TRACE(ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::handle_close\n"));
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+  ACE_TRACE ("ACE_WIN32_Asynch_Connect::handle_close");
 
   ACE_Asynch_Pseudo_Task & task =
          this->win32_proactor_->get_asynch_pseudo_task ();
-
-  if (task.is_active () == 0)  // task is closing
-    {
-      if (this->flg_open_ != 0)  // we are open
-        {
-          this->flg_open_ = 0;
-
-          // it means other thread is waiting for reactor token_
-          if (this->task_lock_count_ > 0)
-            task.lock_finish ();
-        }
-
-      ACE_Handle_Set set;
-      this->cancel_uncompleted (0, set);
-
-      return 0;
-    }
-
-  // remove_io_handler() contains flag DONT_CALL
-  // so it is save
   task.remove_io_handler (fd);
 
   ACE_WIN32_Asynch_Connect_Result* result = 0;
 
-  if (this->result_map_.unbind (fd, result) != 0) // not found
-    return -1;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+    if (this->result_map_.unbind (fd, result) != 0) // not found
+      return -1;
+  }
 
   result->set_bytes_transferred (0);
   result->set_error (ERROR_OPERATION_ABORTED);
