@@ -41,7 +41,7 @@ unlink $ns_ior;
 $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Server".$EXE_EXT,
+                       "Naming_Service".$EXE_EXT,
                        " -o $ns_ior ");
 
 if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
