@@ -1,6 +1,7 @@
 // $Id$
 
 // This is the equivalent interface definitions for Hello.idl.
+//       tao_idl -I ../../.. -I ../../../.. -Sc helloC.idl
 
 #include "ciao/CIAO_Component.pidl"
 
@@ -11,9 +12,9 @@ interface Hello
   string sayhello (in string username);
 };
 
-interface HelloWorld :
-  ::Components::CCMObject,
-  Hello
+interface HelloWorld
+  : ::Components::CCMObject,
+    Hello
 {
 };
 
@@ -26,7 +27,7 @@ interface HelloHomeImplicit
   : ::Components::KeylessCCMHome
 {
   HelloWorld create ()
-    raises (::Components:CreateFailure)
+    raises (::Components::CreateFailure)
     ;
 };
 
