@@ -76,6 +76,7 @@ public:
 
   void foo (CORBA::Long result,
             CORBA::Long out_l,
+            const char* in_str,
             CORBA::Environment&)
     {
       if (debug)
@@ -172,6 +173,7 @@ main (int argc, char *argv[])
                     
           ami_test_var->sendc_foo (the_handler_var.in (),
                                    l,
+                                   "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -211,6 +213,7 @@ main (int argc, char *argv[])
    
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
+                                              "Let's talk AMI.",
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
