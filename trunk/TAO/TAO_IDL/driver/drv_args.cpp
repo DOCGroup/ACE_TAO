@@ -572,13 +572,24 @@ DRV_check_gperf (void)
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
   if (idl_global->gperf_path () == 0)
+    // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+    idl_global->gperf_path (ACE_GPERF);
+#else
     idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
 
   // If we have absolute path for the <gperf> rather than just the
   // executable name <gperf>, make sure the file exists
   // firsts. Otherwise just call <gperf>. Probably PATH is set
   // correctly to take care of this.
+
+  // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
+#else
   if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
+#endif /* ACE_GPERF */
     {
       // It is absolute path. Check the existance, permissions and
       // the modes.
@@ -586,7 +597,13 @@ DRV_check_gperf (void)
                           F_OK | X_OK) == -1)
         // Problem with the file. No point in having the absolute
         // path. Swith to "gperf".
+        // If ACE_GPERF is defined then use that gperf program
+        //instead of "gperf."
+#if defined (ACE_GPERF)
+        idl_global->gperf_path (ACE_GPERF);
+#else
         idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
     }
 
   // Just call gperf in silent mode. It will come and immly exit.
