@@ -73,7 +73,6 @@ project (CIAO_Server) :taolib_with_idl {
     DaemonS.cpp
     HomeRegistrarC.cpp
     HomeRegistrarS.cpp
-    Assembly_Impl.cpp
     ComponentInstallation_Impl.cpp
     ComponentServer_Impl.cpp
     Container_Base.cpp
