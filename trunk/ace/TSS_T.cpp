@@ -29,15 +29,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TSS)
 template <class TYPE>
 ACE_TSS<TYPE>::~ACE_TSS (void)
 {
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   // We can't call <ACE_OS::thr_keyfree> until *all* of the threads
   // that are using that key have done an <ACE_OS::thr_key_detach>.
   // Otherwise, we'll end up with "dangling TSS pointers."
-  ACE_OS::thr_key_detach (this->key_, this);
-#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
-
-  // Should we do any memory management of <type_> for non-threaded 
-  // cases. 
+  ACE_OS::thr_key_detach (this);
 }
 
 template <class TYPE> TYPE *

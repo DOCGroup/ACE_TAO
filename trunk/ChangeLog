@@ -1,3 +1,14 @@
+Wed Aug 18 21:02:34 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/TSS_T.cpp:
+          Revert TSS leak fix (temporarily, I hope)
+          until I can find and eliminate the hang.
+
+
+
 Wed Aug 18 15:07:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * bin/msvc_static_compile.pl:
