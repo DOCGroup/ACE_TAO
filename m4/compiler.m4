@@ -272,7 +272,6 @@ changequote([, ])dnl
          ACE_CXXFLAGS="$ACE_CXXFLAGS"
          DCXXFLAGS="$DCXXFLAGS -g"
          OCXXFLAGS="$OCXXFLAGS -O"
-         LDFLAGS="$LDFLAGS -xildoff"
          ;;
      esac
      ;;
