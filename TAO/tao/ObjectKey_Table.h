@@ -35,9 +35,9 @@ namespace TAO
   class ObjectKey;
 
   /**
-   * @class ObjectKey_Table
+   * @class Less_Than_ObjectKey
    *
-   * @brief: Compares the length and then the contents of ObjectKeys.
+   * @brief Compares the length and then the contents of ObjectKeys.
    *
    * Should have been a specialization of the functor
    * ACE_Less_Than<sequence<CORBA::Octet>>. But that will not work
@@ -69,13 +69,13 @@ namespace TAO
    * to bind () will return a pointer which is expected to be cached
    * by the client/caller and use the pointer in every invocation.
    *
-   * @NOTE: This class uses the ACE_RB_Tree to maintain the table of
+   * @note This class uses the ACE_RB_Tree to maintain the table of
    * ObjectKeys. The RB_Tree has good insertion and lookup
    * properties. Its Iteration properties are not that good, but we
    * dont need to do much iteration unless we are closing down the
    * table.
    *
-   * @NOTE: The reasons to use RB_Tree are its good dynamic
+   * @note The reasons to use RB_Tree are its good dynamic
    * properties. We should try to strategize the class to use either a
    * Hash_Map or a RB_Tree based on some runtime option. For that we
    * need an adapter class in ACE, like an ACE_Lock_Adapter class. We

@@ -50,7 +50,7 @@ namespace TAO
    *
    * This class is the base of the invocation object hiererachy. This
    * hierarchy is classified  based on the type of invocation and the
-   * mode of invocation. One of the objects from the hiererachy is
+   * mode of invocation. One of the objects from the hierarchy is
    * created on the stack for every invocation.
    *
    * In addition this class encapsulates the essential details that
@@ -113,15 +113,15 @@ namespace TAO
 
   protected:
     /**
-     * @param otarget, The original target on which this invocation
+     * @param otarget The original target on which this invocation
      * was started.
      *
-     * @param target, the target on which this invocation is flowing
+     * @param target the target on which this invocation is flowing
      * ie. the effective target
      *
-     * @param op, operation details of the invocation on @a target
+     * @param op operation details of the invocation on @a target
      *
-     * @param response_Expected, flag to indicate whether the
+     * @param response_expected flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
      */
     Invocation_Base (CORBA::Object_ptr otarget,
@@ -181,7 +181,7 @@ namespace TAO
     virtual Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Return the list of exceptions declared  as a ExceptionList
+    /// Return the list of exceptions declared as a ExceptionList
     Dynamic::ExceptionList *exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

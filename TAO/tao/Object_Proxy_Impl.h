@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  This files contains the proxy definition of the interface that
- *  all the Object proxy have to imlements.
+ *  all the Object proxy have to implement.
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
