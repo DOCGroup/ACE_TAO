@@ -386,7 +386,7 @@ Peer_Handler::handle (void) const
 void
 Peer_Handler::handle (ACE_HANDLE handle)
 {
-  return this->stream_.set_handle (handle);
+  this->stream_.set_handle (handle);
 }
 
 // We've been removed from the Reactor.
