@@ -500,7 +500,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
   size_t available_space = total_size - space_in_use;
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
-    ACE_ERROR_RETURN ((LM_ERROR, "Buffer too small\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
     
   int close_accept_handle = 0;
   // If the <accept_handle> is invalid, we will create a new socket
@@ -1004,7 +1004,7 @@ ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
 				const ACE_INET_Addr &local_address)
 {
   // Default behavior is to print out the addresses. 
-  char local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
+  ASYS_TCHAR local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
   if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain local_address's address string")));
   
