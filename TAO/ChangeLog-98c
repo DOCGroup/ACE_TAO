@@ -1,3 +1,9 @@
+Tue Dec  9 21:48:52 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	  The sequence test is not running right now, I'm commenting it
+	  out until we can make it work properly.
+
 Tue Dec  9 18:02:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orb_core.cpp: The moral of this changelog entry is to be
