@@ -22,10 +22,9 @@ ACE_INET_Addr::addr_to_string (ASYS_TCHAR s[],
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
-  size_t total_len =
-    ACE_OS::strlen (ipaddr_format == 0 ?
-                    this->get_host_name () :
-                    this->get_host_addr ())
+  size_t total_len = (ipaddr_format == 0 ?
+                      ACE_OS::strlen (this->get_host_name ()) :
+                      ACE_OS::strlen (this->get_host_addr ()))
     + ACE_OS::strlen ("65536") // Assume the max port number.
     + sizeof (':')
     + sizeof ('\0'); // For trailing '\0'.
@@ -34,11 +33,11 @@ ACE_INET_Addr::addr_to_string (ASYS_TCHAR s[],
     return -1;
   else
     {
-      ACE_OS::sprintf (s, 
+      ACE_OS::sprintf (s,
                        ASYS_TEXT ("%s:%d"),
-                       ASYS_WIDE_STRING (ipaddr_format == 0 
-                                         ? this->get_host_name ()
-                                         : this->get_host_addr ()),
+                       (ipaddr_format == 0
+                        ? this->get_host_name ()
+                        : ASYS_WIDE_STRING (this->get_host_addr ())),
                        this->get_port_number ());
       return 0;
     }
