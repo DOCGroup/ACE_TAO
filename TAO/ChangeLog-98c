@@ -12,6 +12,16 @@ Tue Nov 11 01:16:07 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
+	* orbsvcs/bin/Logger/ior_multicast.h: 
+	* orbsvcs/bin/Logger/ior_multicast.cpp: 
+	* orbsvcs/bin/Logger/clnt.cpp: 
+	* orbsvcs/bin/Logger/clnt.cpp: 
+	* orbsvcs/bin/Logger/svr.cpp: 
+	* orbsvcs/bin/Logger/Makefile: 
+	Added multicast resolution of the logger service example.
+
+Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
 	* tao/orbobj.cpp (resolve_name_service): changed macro for default
  	multicast port.  
 	- Added support for multicast mechanism to resolve the name
