@@ -85,7 +85,7 @@ namespace ACE
 
     enum
       {
-        PING_BUFFER_SIZE = (1024 * 2),
+        PING_BUFFER_SIZE = (1024 * 2)
       };
 
     static ACE_Time_Value const time_default_;
