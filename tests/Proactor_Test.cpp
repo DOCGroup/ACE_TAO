@@ -1166,15 +1166,18 @@ Sender::initiate_write_stream (void)
 
   // No need to allocate +1 for proper printing - the memory includes it already
   ACE_NEW_RETURN (mb1,
-                  ACE_Message_Block (complete_message, complete_message_length),
+                  ACE_Message_Block ((char *)complete_message,
+                                     complete_message_length),
                   -1);
 
   ACE_NEW_RETURN (mb2,
-                  ACE_Message_Block (complete_message, complete_message_length),
+                  ACE_Message_Block ((char *)complete_message,
+                                     complete_message_length),
                   -1);
 
   ACE_NEW_RETURN (mb3,
-                  ACE_Message_Block (complete_message, complete_message_length),
+                  ACE_Message_Block ((char *)complete_message,
+                                     complete_message_length),
                   -1);
 
   mb1->wr_ptr (complete_message_length);
