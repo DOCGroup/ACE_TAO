@@ -16,26 +16,13 @@ project(BMDisplay_stub): ciao_client {
   }
 }
 
-project(BMDisplay_svnt) : ciao_server {
+project(BMDisplay_svnt) : ciao_servant {
   depends += BasicSP_svnt BMDisplay_stub
   sharedname  = BMDisplay_svnt
   libs    += BMDisplay_stub BasicSP_stub BasicSP_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export -Wb,export_include=BMDisplay_svnt_export.h
   dllflags = BMDISPLAY_SVNT_BUILD_DLL
-
-  Source_Files {
-    BMDisplayEC.cpp
-    BMDisplayS.cpp
-  }
-
-  Define_Custom(CIDL) {
-    automatic = 1
-    command = ..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" --
-    inputext    = cidl
-    source_outputext = _svnt.cpp
-    generic_outputext = E.idl
-  }
 
   CIDL_Files {
     BMDisplay.cidl
@@ -46,12 +33,14 @@ project(BMDisplay_svnt) : ciao_server {
   }
 
   Source_Files {
+    BMDisplayEC.cpp
+    BMDisplayS.cpp
     BMDisplay_svnt.cpp
   }
 }
 
 
-project(BMDisplay_exec) : ciao_server {
+project(BMDisplay_exec) : ciao_component {
   depends   += BMDisplay_svnt
   sharedname = BMDisplay_exec
   libs      += BMDisplay_stub BMDisplay_svnt BasicSP_stub BasicSP_svnt

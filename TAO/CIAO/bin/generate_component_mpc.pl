@@ -88,7 +88,7 @@ if (defined $opt_i) {
 if (! defined $opt_n) {
     $component_def =
 '
-project('."$com_name".'_exec) : ciao_server {
+project('."$com_name".'_exec) : ciao_component {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
@@ -126,13 +126,17 @@ project('."$com_name".'_stub): ciao_client {'."
   }
 }
 
-project('."$com_name".'_svnt) : ciao_server {
+project('."$com_name".'_svnt) : ciao_servant {
   depends += '."$svnt_depend $com_name".'_stub
   sharedname  = '."$com_name".'_svnt
   libs    += '."$com_name".'_stub'." $lib_depend
   $lib_paths".'
   idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,export_include='."$com_name".'_svnt_export.h
   dllflags = '."$UCOM_NAME".'_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    '."$com_name".'.cidl
+  }
 
   IDL_Files {
     '."$com_name".'E.idl
