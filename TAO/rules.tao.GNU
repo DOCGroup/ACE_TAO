@@ -102,7 +102,7 @@ ifeq ($(smart_proxies),1)
   CPPFLAGS += -DTAO_HAS_SMART_PROXIES=1
 else  # smart_proxies
   override smart_proxies = 0
-  CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
+  # CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
 endif # smart_proxies
 
 ifeq (1,$(CROSS-COMPILE))
