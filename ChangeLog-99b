@@ -1,3 +1,8 @@
+Thu May 06 12:23:51 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (recvv, sendv): Added code to make these functions work
+          on Win32 w/ Winsock 1.1.
+
 Wed May 05 15:10:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added ACE_U_ONE_SECOND_IN_*SECS.  They're typed
