@@ -49,7 +49,7 @@ namespace CIAO
     }
 
     /// handle the DeploymentPlan type and populate the IDL structure
-    void Plan_Handler::process_plan 
+    void Plan_Handler::process_plan
          (Deployment::DeploymentPlan& plan)
     {
       for (DOMNode* node = this->iter_->nextNode();
@@ -58,7 +58,7 @@ namespace CIAO
         {
           XStr node_name (node->getNodeName ());
 
-          if (node_name == XStr 
+          if (node_name == XStr
                (ACE_TEXT ("Deployment:DeploymentPlan")))
             {
             }
@@ -70,7 +70,7 @@ namespace CIAO
               node_name, "realizes", plan.realizes,
               this, &Plan_Handler::process_ccd,
               this->id_map_));
-          
+
           /*
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
@@ -136,7 +136,7 @@ namespace CIAO
     }
 
     /// handle label attribute
-    void Plan_Handler::process_label 
+    void Plan_Handler::process_label
        (const XMLCh* label,
         Deployment::DeploymentPlan& plan)
     {
@@ -156,7 +156,7 @@ namespace CIAO
       plan.dependsOn.length (i + 1);
       node = iter->nextNode();
       DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-      CORBA::String_var value (XMLString::transcode 
+      CORBA::String_var value (XMLString::transcode
            (text->getNodeValue()));
       plan.dependsOn[i].requiredType = value.in ();
     }
@@ -303,7 +303,7 @@ namespace CIAO
             }
           else if (length > 1)
             {
-              this->process_attributes_for_ccd 
+              this->process_attributes_for_ccd
                    (named_node_map, doc, iter,
                     plan.realizes);
             }
@@ -335,7 +335,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_rdd 
+    void Plan_Handler::process_rdd
        (DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::ResourceDeploymentDescription& rdd)
@@ -367,10 +367,10 @@ namespace CIAO
               iter->previousNode();
               return;
             }
-        }  
+        }
     }
 
-    void Plan_Handler::process_irdd 
+    void Plan_Handler::process_irdd
        (DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::InstanceResourceDeploymentDescription &irdd)
@@ -480,7 +480,7 @@ namespace CIAO
       return;
     }
 
-    void Plan_Handler::process_add 
+    void Plan_Handler::process_add
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::ArtifactDeploymentDescription& add)
@@ -520,12 +520,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (add.execParameter.length ());
                   add.execParameter.length (i + 1);
                   if (length == 1)
                     {
-                      Property_Handler::process_Property 
+                      Property_Handler::process_Property
                          (iter,
                           add.execParameter[i]);
                     }
@@ -543,12 +543,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (add.deployRequirement.length ());
                   add.deployRequirement.length (i + 1);
                   if (length == 1)
                     {
-                      Requirement_Handler::process_Requirement 
+                      Requirement_Handler::process_Requirement
                          (iter,
                           add.deployRequirement[i]);
                     }
@@ -566,7 +566,7 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (add.deployedResource.length ());
                   add.deployedResource.length (i + 1);
                   if (length == 1)
@@ -587,7 +587,7 @@ namespace CIAO
               iter->previousNode();
               return;
             }
-        }  
+        }
     }
 
     void Plan_Handler::process_rdd_req_name
@@ -750,7 +750,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_idd 
+    void Plan_Handler::process_idd
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::InstanceDeploymentDescription& idd)
@@ -784,12 +784,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (idd.configProperty.length ());
                   idd.configProperty.length (i + 1);
                   if (length == 1)
                     {
-                      Property_Handler::process_Property 
+                      Property_Handler::process_Property
                          (iter,
                           idd.configProperty[i]);
                     }
@@ -934,7 +934,7 @@ namespace CIAO
       return;
     }
 
-    void Plan_Handler::process_mdd 
+    void Plan_Handler::process_mdd
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::MonolithicDeploymentDescription& mdd)
@@ -962,12 +962,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (mdd.deployRequirement.length ());
                   mdd.deployRequirement.length (i + 1);
                   if (length == 1)
                     {
-                      Requirement_Handler::process_Requirement 
+                      Requirement_Handler::process_Requirement
                          (iter,
                           mdd.deployRequirement[i]);
                     }
@@ -985,12 +985,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (mdd.execParameter.length ());
                   mdd.execParameter.length (i + 1);
                   if (length == 1)
                     {
-                      Property_Handler::process_Property 
+                      Property_Handler::process_Property
                          (iter,
                           mdd.execParameter[i]);
                     }
@@ -1126,7 +1126,7 @@ namespace CIAO
           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
             {
               id_map_.bind (aceattrnodevalue, value);
-              Requirement_Handler::process_Requirement 
+              Requirement_Handler::process_Requirement
                   (iter,
                    plan_req);
             }
@@ -1169,7 +1169,7 @@ namespace CIAO
                                                0,
                                                true);
               href_iter->nextNode ();
-              Requirement_Handler::process_Requirement 
+              Requirement_Handler::process_Requirement
                   (href_iter,
                    plan_req);
             }
@@ -1310,7 +1310,7 @@ namespace CIAO
       return;
     }
 
-    void Plan_Handler::process_ccd 
+    void Plan_Handler::process_ccd
        (DOMNodeIterator* iter,
         Deployment::ComponentInterfaceDescription& cid)
     {
@@ -1513,7 +1513,7 @@ namespace CIAO
       return doc;
     }
 
-    void Plan_Handler::process_pspr 
+    void Plan_Handler::process_pspr
        (DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::PlanSubcomponentPropertyReference& pspr)
@@ -1549,7 +1549,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_pspe 
+    void Plan_Handler::process_pspe
        (DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::PlanSubcomponentPortEndpoint& pspe)
@@ -1623,7 +1623,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_ppm 
+    void Plan_Handler::process_ppm
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::PlanPropertyMapping& ppm)
@@ -2013,7 +2013,7 @@ namespace CIAO
       return;
     }
 
-    void Plan_Handler::process_crdd 
+    void Plan_Handler::process_crdd
        (DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::ConnectionResourceDeploymentDescription& crdd)
@@ -2051,7 +2051,7 @@ namespace CIAO
               iter->previousNode();
               return;
             }
-        }  
+        }
     }
 
     void Plan_Handler::process_crdd_res_name
@@ -2084,7 +2084,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_pcd 
+    void Plan_Handler::process_pcd
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::PlanConnectionDescription& pcd)
@@ -2112,12 +2112,12 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (pcd.deployRequirement.length ());
                   pcd.deployRequirement.length (i + 1);
                   if (length == 1)
                     {
-                      Requirement_Handler::process_Requirement 
+                      Requirement_Handler::process_Requirement
                          (iter,
                           pcd.deployRequirement[i]);
                     }
@@ -2135,7 +2135,7 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (pcd.deployedResource.length ());
                   pcd.deployedResource.length (i + 1);
                   if (length == 1)
@@ -2157,7 +2157,7 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-                  CORBA::ULong i 
+                  CORBA::ULong i
                     (pcd.internalEndpoint.length ());
                   pcd.internalEndpoint.length (i + 1);
                   if (length == 1)
@@ -2178,7 +2178,7 @@ namespace CIAO
               iter->previousNode();
               return;
             }
-        }  
+        }
     }
 
     void Plan_Handler::process_attributes_for_pcd
@@ -2270,7 +2270,7 @@ namespace CIAO
                       plan.implementation[x].artifactRef[y] = orig_value;
                     }
                 }
-            }  
+            }
         }
    }
 
@@ -2316,7 +2316,7 @@ namespace CIAO
                       instanceRef = orig_value;
                     }
                 }
-            }  
+            }
         }
     }
 
@@ -2342,7 +2342,7 @@ namespace CIAO
                       instanceRef = orig_value;
                     }
                 }
-            }  
+            }
         }
     }
 
