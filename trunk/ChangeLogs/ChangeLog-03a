@@ -1,3 +1,11 @@
+Mon Oct 30 00:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Was a bit overzealous on a previous [] to * change,
+          so switched one back to [] to remove a segfault
+          with the strncmp section.
+
 Sun Oct 29 23:46:54 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
