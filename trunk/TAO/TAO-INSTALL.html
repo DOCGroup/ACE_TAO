@@ -86,10 +86,8 @@ up ACE</A> before building TAO.
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
 <CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5 Project files
 are set up to work in this configuration. If you move it, then make
-sure you change the project file to look for the include and library
-files in the correct place.  If you are using <A 
-HREF="#taoace">TAOACE.dsw</A> then you shouldn't need to worry about 
-this.</P>
+sure you change the project files to look for the include and library
+files in the correct place.</P>
 
 <OL>
   <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
@@ -106,9 +104,11 @@ this.</P>
 <H4><A NAME="taoace">TAOACE.dsw</A></H4>
 
 <P>TAOACE.dsw is a Visual C++ 5 workspace that loads the projects 
-ACE, TAO, TAO_IDL (the compiler), and orbsvcs.  The dependencies are 
-set up to correctly between the projects so for example, ACE will 
-be built automatically when TAO is built.</P>
+ACE, TAO, TAO_IDL (the compiler), orbsvcs, and the Naming Service.  
+The dependencies are set up to correctly between the projects so for 
+example, ACE will be built automatically when TAO is built.  An easy
+way to compile everything is to just compile the debug or release 
+version of the Naming Service.</P>
 
 <H4>Visual C++ 4.x</H4>
 
@@ -124,6 +124,13 @@ be built automatically when TAO is built.</P>
        and build both client and server. <P>
 </OL>
 
+<H4>Changing Include Paths</H4>
+
+<P>If you prefer <code>#include &lt;corba.h&gt;</code> over <code> #include 
+&lt;tao/corba.h&gt;</code> then you will need to change your Project Settings 
+to also contain the <code>TAO/tao</code> directory.  You'll find this in the
+C/C++ settings under Input.</P>
+
 <HR>
 <H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
@@ -132,48 +139,54 @@ Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
 <P>Each IDL file generates .h, .i and .cpp files. Here is an example of
 adding an IDL file named foobar.idl into a VC project.
 <OL>
-<LI>
-Create/open the workspace. Create server project and client project if
-you haven't had them ready. Add the IDL file &lt;foobar.idl> and other
-non-IDL generated files into both client and server projects.</LI>
+  <LI>Create/open the workspace. Create server project and client project if
+      you haven't had them ready. Add the IDL file &lt;foobar.idl&gt and other
+      non-IDL generated files into both client and server projects.</LI>
 
-<LI>
-Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and foobarS.cpp
-into the server project and foobarC.h, foobarC.i, and foobarC.cpp into
-the client project.</LI>
+  <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and 
+      foobarS.cpp into the server project and foobarC.h, foobarC.i, and 
+	  foobarC.cpp into the client project.</LI>
 
-<LI>
-Now open the project setting window (Project -> Setting... or just press
-Alt-F7.) Select the IDL files in both client and server projects. Choose
-to set the setting for "All Configuration." Make sure the "Exclude from
-build" under the "General" tab is unchecked.</LI>
+  <LI>Now open the project setting window (Project -> Setting... or just 
+      press Alt-F7.) Select the IDL files in both client and server projects. 
+	  Choose to set the setting for "All Configuration." Make sure the 
+	  "Exclude from build" under the "General" tab is unchecked.</LI>
 
-<LI>
-Click on the "Custom Build" tab. Add this entry as the build command for
-IDL files:</LI>
+  <LI>Click on the "Custom Build" tab. Add this entry as the build command 
+      for IDL files:<BR><BR>
 
-<PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
-Notice that your absolute path to TAO_IDL may vary.
-<LI>
-Now add the following entries as "Output file(s)."</LI>
+      <PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
+      Notice that your absolute path to TAO_IDL may vary. </LI>
 
-<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.h
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.i
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.cpp
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.h
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.i
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.cpp</PRE>
-Add only one entry in each line.
-<LI>
-We are all set. Click OK.</LI>
+  <LI>Now add the following entries as "Output file(s)."<BR><BR>
 
-<LI>
-Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to server
-project.</LI>
+      <PRE>
+      $(InputName)S.h
+      $(InputName)C.h
+      $(InputName)C.i
+      $(InputName)C.cpp
+      $(InputName)S.i
+      $(InputName)S.cpp
+      $(InputName)S_T.h
+      $(InputName)S_T.i
+      $(InputName)S_T.cpp
+      </PRE>
+      Add only one entry in each line. </LI>
+  
+  <LI>You might also want to add the TAO_IDL compiler in as a dependency here
+      if you update TAO often.  That way, if the compiler is changed, the
+	  IDL files are recompiled automatically in the next build.</LI>
+
+  <LI>We are all set. Click OK.</LI>
+
+  <LI>Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to 
+      server project.</LI>
 </OL>
-Notice that these procedures only setup the IDL compiler to perform correctly.
 
-<P>p.s. If anyone knows how to set a default setting in VC so we don't
+<p>Notice that these procedures only setup the IDL compiler to perform 
+correctly. </p>
+
+<P>P.S. If anyone knows how to set a default setting in VC so we don't
 need to perform these procedures every time a new project gets set up,
 please let us know. Thanks.
 
