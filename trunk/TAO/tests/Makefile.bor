@@ -50,6 +50,7 @@ DIRS = \
 	Policies \
         Portable_Interceptors \
         QtTests \
+	Reliable_Oneways \
 	RTCORBA \
 	Server_Leaks \
         Single_Read \
