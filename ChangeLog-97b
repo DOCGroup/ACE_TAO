@@ -1,3 +1,19 @@
+Tue Nov 11 13:19:46 1997  Torbjorn Lindgren  <tl@funcom.com>
+
+	* include/makeinclude/rules.local.GNU: Fixed so that the ACE
+	makefiles doesn't create circular symlinks (happens if
+	something fails when building libACE.* with "make -k", or when
+	doing parallel builds). It's now possible to do parallel
+	builds of libACE.* without having to clean up a mess afterwards.
+
+	* include/makeinclude/platform_irix6.x-sgic++.GNU: Removed
+	.so build with links instead (ace/apps/examples/tests and my own
+	programs all work well with this, and the manual seems to suggest
+	that it hasn't ever been necessary on this platform)
+
+	* ace/config-irix6.x-sgic++-nothreads.h: Added
+	ACE_HAS_XPG4_MULTIBYTE_CHAR for SGI IRIX 6.[2-5].
+
 Tue Nov 11 04:50:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* examples/Reactor/Multicast/server.cpp (handle_timeout): Fixed a
