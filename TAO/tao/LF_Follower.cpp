@@ -1,27 +1,27 @@
 // -*- C++ -*-
 // $Id$
 
-#include "tao/Follower.h"
+#include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Follower.inl"
+# include "tao/LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Follower, "$Id$")
+ACE_RCSID(tao, LF_Follower, "$Id$")
 
-TAO_Follower::TAO_Follower (TAO_Leader_Follower &leader_follower)
+TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
   : leader_follower_ (leader_follower)
   , condition_ (leader_follower.lock ())
 {
 }
 
-TAO_Follower::~TAO_Follower (void)
+TAO_LF_Follower::~TAO_LF_Follower (void)
 {
 }
 
 int
-TAO_Follower::signal (void)
+TAO_LF_Follower::signal (void)
 {
   // We *must* remove ourselves from the list of followers, otherwise
   // we could get signalled twice: to wake up as a follower and as the
@@ -34,3 +34,13 @@ TAO_Follower::signal (void)
 
   return this->condition_.signal ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Intrusive_List_Node<TAO_LF_Follower>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Intrusive_List_Node<TAO_LF_Follower>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

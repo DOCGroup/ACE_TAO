@@ -138,8 +138,8 @@ ORB_CORE_FILES = \
   LF_Strategy_Complete.cpp \
   Leader_Follower.cpp \
   Leader_Follower_Flushing_Strategy.cpp \
-  Follower.cpp \
-  Follower_Auto_Ptr.cpp \
+  LF_Follower.cpp \
+  LF_Follower_Auto_Ptr.cpp \
   LF_Follower_Auto_Adder.cpp \
   Reactor_Registry.cpp \
   Single_Reactor.cpp \

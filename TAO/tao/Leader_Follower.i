@@ -154,13 +154,13 @@ TAO_Leader_Follower::is_client_leader_thread (void) const
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::add_follower (TAO_Follower *follower)
+TAO_Leader_Follower::add_follower (TAO_LF_Follower *follower)
 {
   this->follower_set_.push_back (follower);
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::remove_follower (TAO_Follower *follower)
+TAO_Leader_Follower::remove_follower (TAO_LF_Follower *follower)
 {
   this->follower_set_.remove (follower);
 }

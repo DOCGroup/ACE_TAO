@@ -13,7 +13,7 @@
 #define TAO_LEADER_FOLLOWER_H
 #include "ace/pre.h"
 
-#include "tao/Follower.h"
+#include "tao/LF_Follower.h"
 #include "tao/ORB_Core.h"
 #include "ace/Intrusive_List.h"
 
@@ -62,7 +62,8 @@ public:
    * @param max_wait_time Limit the time spent on the loop
    *
    * @todo Document this better, split the Follower code to the
-   * TAO_Follower class, we probably don't need the transport object.
+   * TAO_LF_Follower class, we probably don't need the transport
+   * object.
    */
   int wait_for_event (TAO_LF_Event *event,
                       TAO_Transport *transport,
@@ -112,10 +113,10 @@ public:
    */
   //@{
   /// Allocate a new follower to the caller.
-  TAO_Follower *allocate_follower (void);
+  TAO_LF_Follower *allocate_follower (void);
 
   /// The caller has finished using a follower.
-  void release_follower (TAO_Follower *);
+  void release_follower (TAO_LF_Follower *);
   //@}
 
   /** @name Follower Set Operations
@@ -123,10 +124,10 @@ public:
    */
   //@{
   /// Add a new follower to the set
-  void add_follower (TAO_Follower *follower);
+  void add_follower (TAO_LF_Follower *follower);
 
   /// Removes a follower from the leader-follower set
-  void remove_follower (TAO_Follower *follower);
+  void remove_follower (TAO_LF_Follower *follower);
 
   /// Checks if there are any followers available
   /**
@@ -194,7 +195,7 @@ private:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
   /// Implement the Leader/Followers set using an intrusive list
-  typedef ACE_Intrusive_List<TAO_Follower> Follower_Set;
+  typedef ACE_Intrusive_List<TAO_LF_Follower> Follower_Set;
   Follower_Set follower_set_;
 
   /// Use a free list to allocate and release Follower objects

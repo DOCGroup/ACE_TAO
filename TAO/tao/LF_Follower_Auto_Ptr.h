@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Follower_Auto_Ptr.h
+ *  @file LF_Follower_Auto_Ptr.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_FOLLOWER_AUTO_PTR_H
-#define TAO_FOLLOWER_AUTO_PTR_H
+#ifndef TAO_LF_FOLLOWER_AUTO_PTR_H
+#define TAO_LF_FOLLOWER_AUTO_PTR_H
 #include "ace/pre.h"
 
 #include "tao/orbconf.h"
@@ -21,13 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Follower;
+class TAO_LF_Follower;
 
 /**
- * @brief Implement an auto_ptr-like class for the TAO_Followers
+ * @brief Implement an auto_ptr-like class for the TAO_LF_Followers
  * allocated via a TAO_Leader_Follower set.
  *
- * The Leader/Follower set is a factory for TAO_Follower objects
+ * The Leader/Follower set is a factory for TAO_LF_Follower objects
  */
 class TAO_Export TAO_LF_Follower_Auto_Ptr
 {
@@ -39,21 +39,21 @@ public:
   ~TAO_LF_Follower_Auto_Ptr (void);
 
   /// Implement the smart pointer methods
-  TAO_Follower *get (void);
-  TAO_Follower *operator->(void);
-  operator TAO_Follower *(void);
+  TAO_LF_Follower *get (void);
+  TAO_LF_Follower *operator->(void);
+  operator TAO_LF_Follower *(void);
 
 private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 
   /// The follower
-  TAO_Follower *follower_;
+  TAO_LF_Follower *follower_;
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Follower_Auto_Ptr.inl"
+# include "tao/LF_Follower_Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif  /* TAO_FOLLOWER_AUTO_PTR_H */
+#endif  /* TAO_LF_FOLLOWER_AUTO_PTR_H */

@@ -2,8 +2,8 @@
 
 #include "tao/Leader_Follower.h"
 #include "tao/Resource_Factory.h"
-#include "tao/Follower.h"
-#include "tao/Follower_Auto_Ptr.h"
+#include "tao/LF_Follower.h"
+#include "tao/LF_Follower_Auto_Ptr.h"
 #include "tao/LF_Follower_Auto_Adder.h"
 #include "tao/LF_Event.h"
 #include "tao/LF_Event_Binder.h"
@@ -22,7 +22,8 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
   while (!this->follower_free_list_.empty ())
     {
-      TAO_Follower *follower = this->follower_free_list_.pop_front ();
+      TAO_LF_Follower *follower =
+        this->follower_free_list_.pop_front ();
       delete follower;
     }
   // Hand the reactor back to the resource factory.
@@ -30,17 +31,17 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
   this->reactor_ = 0;
 }
 
-TAO_Follower *
+TAO_LF_Follower *
 TAO_Leader_Follower::allocate_follower (void)
 {
   if (!this->follower_free_list_.empty ())
     return this->follower_free_list_.pop_front ();
 
-  return new TAO_Follower (*this);
+  return new TAO_LF_Follower (*this);
 }
 
 void
-TAO_Leader_Follower::release_follower (TAO_Follower *follower)
+TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 {
   this->follower_free_list_.push_front (follower);
 }
@@ -48,7 +49,7 @@ TAO_Leader_Follower::release_follower (TAO_Follower *follower)
 int
 TAO_Leader_Follower::elect_new_leader_i (void)
 {
-  TAO_Follower* follower =
+  TAO_LF_Follower* follower =
     this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
@@ -441,12 +442,10 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Intrusive_List<TAO_Follower>;
-template class ACE_Intrusive_List_Node<TAO_Follower>;
+template class ACE_Intrusive_List<TAO_LF_Follower>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Intrusive_List<TAO_Follower>
-#pragma instantiate ACE_Intrusive_List_Node<TAO_Follower>
+#pragma instantiate ACE_Intrusive_List<TAO_LF_Follower>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

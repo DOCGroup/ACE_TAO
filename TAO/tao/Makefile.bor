@@ -77,8 +77,8 @@ OBJFILES = \
 	$(OBJDIR)\Fault_Tolerance_Service.obj \
 	$(OBJDIR)\FILE_Parser.obj \
 	$(OBJDIR)\Flushing_Strategy.obj \
-	$(OBJDIR)\Follower.obj \
-	$(OBJDIR)\Follower_Auto_Ptr.obj \
+	$(OBJDIR)\LF_Follower.obj \
+	$(OBJDIR)\LF_Follower_Auto_Ptr.obj \
 	$(OBJDIR)\LF_Follower_Auto_Adder.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \

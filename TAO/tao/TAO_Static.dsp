@@ -475,7 +475,15 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.h
 # End Source File
 # Begin Source File
 
@@ -1183,7 +1191,15 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 
@@ -1843,7 +1859,15 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
