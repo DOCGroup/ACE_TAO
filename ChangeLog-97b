@@ -1,3 +1,16 @@
+Thu Oct 16 02:07:54 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Priority_Reactor_Test.h: Changed 
+	
+	  class Read_Handler : public ACE_Svc_Handler<<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
+
+	  to 
+
+	  class Read_Handler : public ACE_Svc_Handler<<ACE_SOCK_STREAM, ACE_SYNCH>
+
+	  and the same for the Write_Handler.  Thanks to the ever vigilant
+ 	  Stephen Coy <stevec@magna.com.au> for reporting this.
+
 Thu Oct 16 01:18:48 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/SV_Semaphore_Simple.cpp (name_2_key): Explicitly cast the
