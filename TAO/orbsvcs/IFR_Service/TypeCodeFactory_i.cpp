@@ -274,9 +274,9 @@ TAO_TypeCodeFactory_i::create_exception_tc (
       // Get the first member which is a string..
       IR::StructMember struct_member = members[index];
 
-      cdr << struct_member.name.in ();
+      cdr << struct_member.name;
 
-      cdr << struct_member.type.in ();
+      cdr << struct_member.type;
     }
 
   CORBA::TypeCode_ptr exception_typecode = 
