@@ -74,6 +74,10 @@ SOURCE=.\Gateway.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Proxy_Handler.cpp
 # End Source File
 # Begin Source File
