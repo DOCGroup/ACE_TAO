@@ -117,7 +117,7 @@ How to Run:
 2. Start the Component servier with the config file and the
    NameService IOR we stored in the previous step:
 
-   w:\ACE_wrappers\bin\CIAO_single_com_server -ORBInitRef \
+   w:\ACE_wrappers\bin\Simple_Component_Server -ORBInitRef \
          NameService=file://w:\ior -i config -o ior
 
    The component server we use here will create the HomeFinder IOR.
