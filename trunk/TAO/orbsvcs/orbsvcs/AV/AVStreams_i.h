@@ -92,7 +92,9 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 };
 
-class TAO_ORBSVCS_Export TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl, public virtual TAO_Basic_StreamCtrl
+class TAO_ORBSVCS_Export TAO_StreamCtrl 
+  : public virtual POA_AVStreams::StreamCtrl, 
+    public virtual TAO_Basic_StreamCtrl
 {
 public:
   // Constructor
@@ -324,7 +326,8 @@ public:
   virtual ~TAO_Server_StreamEndPoint (void);
 };
 
-class TAO_ORBSVCS_Export TAO_VDev : public virtual POA_AVStreams::VDev
+class TAO_ORBSVCS_Export TAO_VDev 
+  : public virtual POA_AVStreams::VDev
 // = DESCRIPTION
 //    Implements the VDev interface. One of these is created per connection,
 //    and represents device-specific parameters
@@ -377,7 +380,7 @@ class TAO_ORBSVCS_Export TAO_VDev : public virtual POA_AVStreams::VDev
 };
 
 class TAO_ORBSVCS_Export TAO_MMDevice 
-  : public POA_AVStreams::MMDevice
+  : public virtual POA_AVStreams::MMDevice
 // = DESCRIPTION
 //     Implements a factory to create Endpoints and VDevs
 {
