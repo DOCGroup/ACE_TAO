@@ -72,6 +72,21 @@ sub DESTROY
 
 ### Some Accessors
 
+sub Normalize_Executable_Name
+{
+    my $executable = shift;
+
+    my $basename = basename ($executable);
+    my $dirname = dirname ($executable). '/';
+
+    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
+
+    $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
+
+    return $executable;
+}
+
+
 sub Executable
 {
     my $self = shift;

@@ -169,6 +169,18 @@ sub IgnoreExeSubDir
 
 # Spawn the process and continue;
 
+sub Normalize_Executable_Name
+{
+    my $executable = shift;
+
+    my $basename = basename ($executable);
+    my $dirname = dirname ($executable). '/';
+
+    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename;
+
+    return $executable;
+}
+
 sub Spawn ()
 {
     my $self = shift;
