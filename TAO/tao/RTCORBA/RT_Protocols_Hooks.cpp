@@ -1,12 +1,14 @@
-
 #include "RT_Protocols_Hooks.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "RT_Policy_i.h"
+#include "Priority_Mapping_Manager.h"
+#include "RT_Stub.h"
 
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
 #include "tao/MProfile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -14,8 +16,6 @@
 #include "tao/Transport_Acceptor.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Policy_Set.h"
-#include "Priority_Mapping_Manager.h"
-#include "RT_Stub.h"
 #include "tao/IIOP_Transport.h"
 
 #include "ace/Dynamic_Service.h"

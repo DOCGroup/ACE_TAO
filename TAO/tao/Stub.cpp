@@ -148,6 +148,23 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   this->orb_core_->reset_service_profile_flags ();
 }
 
+CORBA::Boolean
+TAO_Stub::service_profile_selection (void)
+{
+  // @@todo: This method is deprecated. Needs to be removed after
+  //         1.2.1 goes out.
+  TAO_Profile *profile = 0;
+
+  this->orb_core_->service_profile_selection (this->base_profiles_,
+                                              profile);
+  if (profile)
+    {
+      this->set_profile_in_use_i (profile);
+      return 1;
+    }
+
+  return 0;
+}
 
 int
 TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
@@ -220,7 +237,6 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
   // Error, there was no match
   return -1;
 }
-
 
 const TAO::ObjectKey &
 TAO_Stub::object_key (void) const

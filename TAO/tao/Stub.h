@@ -24,9 +24,7 @@
 
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
-#include "tao/ORB_Core.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
-
 
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
@@ -280,6 +278,9 @@ public:
 
   /// Make a call on to services to see whether they have some
   /// preferences on selecting the right profiles.
+  /**
+   * @todo Deprecated.  Remove after TAO 1.2.1 is released.
+   */
   CORBA::Boolean service_profile_selection (void);
 
   /**
@@ -346,6 +347,11 @@ private:
                             ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+private:
+
+  // = Disallow copy construction and assignment.
+  ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
 
 protected:
   /// Automatically manage the ORB_Core reference count
@@ -419,15 +425,6 @@ protected:
   /// Forwarded IOR info
   IOP::IOR *forwarded_ior_info_;
 
-  // = Disallow copy constructor and assignment operator.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
-
-#if defined (__GNUG__)
-  // G++ (even 2.6.3) stupidly thinks instances can't be created.
-  // This de-warns.
-  friend class everyone_needs_a_friend;
-#endif /* __GNUG__ */
 };
 
 // Define a TAO_Stub auto_ptr class.
