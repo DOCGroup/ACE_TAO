@@ -29,16 +29,16 @@ sub project_file_name {
 
 sub get_dll_exe_template_input_file {
   my($self) = shift;
-  return "ghsexe";  
+  return "ghsexe";
 }
- 
- 
+
+
 sub get_dll_template_input_file {
   my($self) = shift;
-  return "ghsdll";  
+  return "ghsdll";
 }
- 
- 
+
+
 sub get_template {
   my($self) = shift;
   return "ghs";
