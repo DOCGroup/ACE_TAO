@@ -3674,6 +3674,26 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 
 }
 
+TAO_POA_Policies::~TAO_POA_Policies (void)
+{
+  for (CORBA::ULong i = 0;
+       i < this->client_exposed_fixed_policies_.length ();
+       ++i)
+    {
+      ACE_TRY_NEW_ENV
+        {
+          this->client_exposed_fixed_policies_[i]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA_Policies::~TAO_POA_Policies");
+        }
+      ACE_ENDTRY;
+    }
+}
+
 void
 TAO_POA_Policies::parse_policies (const CORBA::PolicyList &policies,
                                   CORBA::Environment &ACE_TRY_ENV)
@@ -3845,6 +3865,24 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       this->server_priority_ =
         priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
+
+      return;
+    }
+
+  RTCORBA::ClientProtocolPolicy_var client_protocol
+    = RTCORBA::ClientProtocolPolicy::_narrow (policy,
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (client_protocol.in ()))
+    {
+      CORBA::ULong current_length =
+        this->client_exposed_fixed_policies_.length ();
+
+      this->client_exposed_fixed_policies_.length (current_length + 1);
+
+      this->client_exposed_fixed_policies_[current_length] =
+        client_protocol->copy (ACE_TRY_ENV);
 
       return;
     }
