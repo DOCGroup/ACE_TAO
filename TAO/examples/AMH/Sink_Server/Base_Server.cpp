@@ -17,6 +17,8 @@ Base_Server::Base_Server (int* argc, char **argv)
   this->ior_output_file_ = ACE_const_cast (char*, "test.ior");
 }
 
+// @@ Mayur, empty parameter lists should be denoted with "(void)",
+//    not "()".  Again, this is detailed in the guidelines.
 Base_Server::~Base_Server ()
 {
   ACE_TRY_NEW_ENV
@@ -33,7 +35,6 @@ Base_Server::~Base_Server ()
                            "Exception caught while destroying Base_Server \n");
     }
   ACE_ENDTRY;
-
 }
 
 int
@@ -172,6 +173,8 @@ Base_Server::register_servant (AMH_Servant *servant)
   ACE_ENDTRY;
 }
 
+// @@ Mayur, empty parameter lists should be denoted with "(void)",
+//    not "()".  Again, this is detailed in the guidelines.
 void
 Base_Server::run_event_loop ()
 {
@@ -181,17 +184,38 @@ Base_Server::run_event_loop ()
       ACE_Time_Value period (0, 11000);
       while (1)
         {
+          // @@ Mayur, where's the work_pending() call?
+          //
+          // @@ Mayur, you're missing the ACE_ENV_ARG_PARAMETER macro
+          //    in the below perform_work() call.  The ACE_TRY_CHECK
+          //    below is useless without it.
           this->orb_->perform_work (&period);
           ACE_TRY_CHECK;
         }
+      // @@ Mayur, why is this redundant ACE_TRY_CHECK here?
       ACE_TRY_CHECK;
     }
+  // @@ Mayur, please put these on separate lines.  It's less
+  //    confusing, and is our convention.  Why don't you at least
+  //    print the exception?  You just ignore it.  For example:
+  //
+  //      ACE_CATCHANY
+  //        {
+  //           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+  //                                "Caught exception");
+  //        }
+  //      ACE_ENDTRY;
   ACE_CATCHANY {} ACE_ENDTRY;
 }
 
 int
 Base_Server::write_ior_to_file (CORBA::String_var ior)
 {
+  // @@ Mayur, what use is there in passing the CORBA::String_var by
+  //    value?  It just needless incurs additional memory
+  //    allocations.  Just pass the contents of the String_var (a
+  //    const char *) via the ".in()" accessor.
+
   // If the ior_output_file exists, output the ior to it
   FILE *output_file =
     ACE_OS::fopen (this->ior_output_file_, "w");
