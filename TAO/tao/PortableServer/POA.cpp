@@ -3742,7 +3742,7 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   if (interceptor_count == 0)
     return;
 
-  TAO_IORInfo * tao_info;
+  TAO_IORInfo *tao_info = 0;
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (this),
                     CORBA::NO_MEMORY (

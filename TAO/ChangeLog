@@ -1,3 +1,10 @@
+Mon May 26 12:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Fixed uninitialized parameter warning. Thanks to
+          W.M. van den Boogaard <wim.vd.boogaard@meco.nl> for reporting
+          this.
+
 Sun May 25 12:51:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * taoconfig.mk:
