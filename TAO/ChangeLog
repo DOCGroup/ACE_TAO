@@ -1,3 +1,9 @@
+Sat Mar  6 09:09:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Per_Connection_Handler.cpp:
+
+	  Fixed a warning in g++ builds.
+
 Fri Mar  5 23:31:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
