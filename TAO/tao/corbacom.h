@@ -156,9 +156,11 @@ struct CORBA_SEQUENCE
   u_int length;
 #endif /* SIZEOF_LONG */
   T *buffer;
+  Boolean release; // Only here to make it compliant with IDL-generated layout
+  
 
   CORBA_SEQUENCE (void)
-    : maximum (0), length (0), buffer (0) { }
+    : maximum (0), length (0), buffer (0), release(CORBA::B_FALSE) { }
 
   // XXX destructor should free buffer, elements!!
   ~CORBA_SEQUENCE (void) { }
@@ -654,9 +656,6 @@ public:
 };
 
 typedef CORBA::OctetSeq TAO_opaque;
-typedef CORBA::OctetSeq TAO_ObjectKey;
-typedef TAO_ObjectKey  *TAO_ObjectKey_ptr;
-
 extern CORBA::TypeCode TC_opaque;
 
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,

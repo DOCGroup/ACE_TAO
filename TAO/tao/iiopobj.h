@@ -211,7 +211,7 @@ public:
   TAO_HRESULT  QueryInterface (REFIID type_id,
                                void **ppv);
 
-  virtual TAO_ObjectKey_ptr key (CORBA::Environment &env);
+  virtual TAO::ObjectKey_ptr key (CORBA::Environment &env);
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 

@@ -1,3 +1,23 @@
+Wed Dec 17 02:11:11 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	* tao/orbobj.h: 
+	* tao/orbobj.cpp: 
+	* tao/objkeyC.i: 
+	* tao/objkeyC.h: 
+	* tao/object.h: 
+	* tao/iiopobj.h: 
+	* tao/iiopobj.cpp: 
+	* tao/decode.cpp: 
+	* tao/corbacom.h: 
+	* tao/corba.h: 
+	* tao/any.cpp: 
+	All affected by changes to support interfaces required by the new
+ 	POA, specifically CORBA::Object::key() and
+ 	CORBA::ORB::key_to_object().  It does not compile now, and seems
+ 	as if it's simply an ordering problem of header files.
+
 Mon Dec 15 19:39:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO_IDL/be/Makefile: 
