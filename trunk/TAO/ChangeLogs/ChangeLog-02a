@@ -1,3 +1,8 @@
+Sun Jun 18 10:58:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/LongUpcalls/Makefile:
+          Fixed typo in the last commit.
+
 Sun Jun 18 03:18:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
@@ -45,111 +50,111 @@ Sun Jun 18 03:18:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sun Jun 18 00:01:28 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Encodable.h
-	* tao/Policy_Factory.h
-	* tao/Profile.cpp
-	* tao/RT_Policy_i.cpp
-	* tao/RT_Policy_i.h
-	* tao/Stub.cpp
-	* tao/Stub.h:
+        * tao/Encodable.h
+        * tao/Policy_Factory.h
+        * tao/Profile.cpp
+        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h
+        * tao/Stub.cpp
+        * tao/Stub.h:
 
-	  Code review.  Left a bunch of @@ comments for Angelo.
+          Code review.  Left a bunch of @@ comments for Angelo.
 
 Sat Jun 17 23:02:34 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/Exposed_Policies/Counter.idl
-	* tests/Exposed_Policies/Counter_i.cpp
-	* tests/Exposed_Policies/Counter_i.h
-	* tests/Exposed_Policies/README
-	* tests/Exposed_Policies/client.cpp
-	* tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/Counter.idl
+        * tests/Exposed_Policies/Counter_i.cpp
+        * tests/Exposed_Policies/Counter_i.h
+        * tests/Exposed_Policies/README
+        * tests/Exposed_Policies/client.cpp
+        * tests/Exposed_Policies/server.cpp:
 
-	  Code review.  Left a bunch of @@ comments for Angelo.
+          Code review.  Left a bunch of @@ comments for Angelo.
 
 Sat Jun 17 20:57:52 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
-	  Out parameter <b> wasn't initialized if the method returned 0.
-	  This fixes bug [BUGID:596] reported by Joachim Achtzehnter.
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
+          Out parameter <b> wasn't initialized if the method returned 0.
+          This fixes bug [BUGID:596] reported by Joachim Achtzehnter.
 
 Sat Jun 17 15:18:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp ast/ast_string.cpp:
-	* TAO_IDL/be/be_string.cpp:
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_array/array.cpp:
-	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/ast/ast_expression.cpp ast/ast_string.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
 
-	  Minor changes to get rid of warnings in BCB, mostly
-	  signed/unsigned comparisons.
+          Minor changes to get rid of warnings in BCB, mostly
+          signed/unsigned comparisons.
 
 Sat Jun 17 09:44:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Asynch_Reply_Dispatcher.h:
-	  The inline file should be included inside the #if TAO_HAS_AMI
-	  protections
+        * tao/Asynch_Reply_Dispatcher.h:
+          The inline file should be included inside the #if TAO_HAS_AMI
+          protections
 
-	* tests/LongUpcalls/Makefile:
-	  We don't want to use the -GC flag unless AMI is enabled.
+        * tests/LongUpcalls/Makefile:
+          We don't want to use the -GC flag unless AMI is enabled.
 
 Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
-	  Added missing file Policy_Factory.cpp.
+          Added missing file Policy_Factory.cpp.
 
         * orbsvcs/orbsvcs/Makefile.bor:
-	* orbsvcs/orbsvcs/LoadBalancing.bor:
-	* orbsvcs/LoadBalancer/Makefile.bor:
-	* orbsvcs/Makefile.bor:
-	  Added new LoadBalancing orbsvcs library.
+        * orbsvcs/orbsvcs/LoadBalancing.bor:
+        * orbsvcs/LoadBalancer/Makefile.bor:
+        * orbsvcs/Makefile.bor:
+          Added new LoadBalancing orbsvcs library.
 
 Fri Jun 16 23:18:21 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
 
-	  Added missing TAO_ENV_ARG_DEFN macro.  This fixes a compile
-	  error that occured due to the fact that a CORBA Environment
-	  variable wasn't declared (nor should one be) when exception
-	  support was enabled.
+          Added missing TAO_ENV_ARG_DEFN macro.  This fixes a compile
+          error that occured due to the fact that a CORBA Environment
+          variable wasn't declared (nor should one be) when exception
+          support was enabled.
 
 Fri Jun 16 18:41:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence_T.h:
-	* tao/Sequence_T.i:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
 
-	  If X is a string, wstring, or object reference, the
-	  spec says that, if X is a member of a structured
-	  type (struct, sequence, union or array), then
-	  assigning that member to X_var must result in copy
-	  semantics. This was not the case in TAO for object
-	  references. So a new cast operator was added to
-	  TAO_Object_Manager<T> which casts to const T_var,
-	  prompting the T_var lhs to use operator= (const T_var &),
-	  which makes a copy. Thanks to Greg Hall
-	  <Greg.Hall@Australia.Boeing.com> for reporting this bug.
+          If X is a string, wstring, or object reference, the
+          spec says that, if X is a member of a structured
+          type (struct, sequence, union or array), then
+          assigning that member to X_var must result in copy
+          semantics. This was not the case in TAO for object
+          references. So a new cast operator was added to
+          TAO_Object_Manager<T> which casts to const T_var,
+          prompting the T_var lhs to use operator= (const T_var &),
+          which makes a copy. Thanks to Greg Hall
+          <Greg.Hall@Australia.Boeing.com> for reporting this bug.
 
 Fri Jun 16 15:00:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -159,11 +164,11 @@ Fri Jun 16 15:00:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Jun 16 15:01:02 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing.dsp:
-	* orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
 
-	  Updated MSVC++ project files to use new ReplicaLocator files
-	  instead of the now non-existestent DSI_ForwardingProxy files.
+          Updated MSVC++ project files to use new ReplicaLocator files
+          instead of the now non-existestent DSI_ForwardingProxy files.
 
 Fri Jun 16 14:37:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -408,7 +413,7 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Changed <_tao_encode> method implementation for the
           client exposed policies.
-	  // @@ Angelo, changed why? to do what?
+          // @@ Angelo, changed why? to do what?
 
         * TAO/tests/Exposed_Policies/client.cpp:
         * TAO/tests/Exposed_Policies/Client.dsp:
@@ -424,16 +429,16 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * TAO/tests/Exposed_Policies/Server.dsp:
 
           Added files for testing the client exposed policies.
-	  // @@ Angelo,
-	  // 1) I do not see an entry/mentioning of removing
-	  tests/ExposedPolicies directory (the one you replaced with the files
-	  above, nor do I see any entries about removing
-	  tests/ExposedPolicies/Client and Server subdirectories (the
-	  change you made a while back).  It is important to document not
-	  only what you add/change, but also what you remove! 2) when you
-	  write the names of files you modified/added/removed in TAO, the
-	  pathname must be relative to the ACE_wrappers/TAO directory.
-	  Please remove the extra 'TAO' for the files above.
+          // @@ Angelo,
+          // 1) I do not see an entry/mentioning of removing
+          tests/ExposedPolicies directory (the one you replaced with the files
+          above, nor do I see any entries about removing
+          tests/ExposedPolicies/Client and Server subdirectories (the
+          change you made a while back).  It is important to document not
+          only what you add/change, but also what you remove! 2) when you
+          write the names of files you modified/added/removed in TAO, the
+          pathname must be relative to the ACE_wrappers/TAO directory.
+          Please remove the extra 'TAO' for the files above.
 
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -699,7 +704,7 @@ Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Added methods to get client exposed policies, and added
           member variable to cache those client exposed policies.
-	  // @@ Angelo, please list the names of methods/variables added.
+          // @@ Angelo, please list the names of methods/variables added.
 
 Thu Jun 15 12:43:44 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -776,7 +781,7 @@ Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Added comment about current assumption of
           all profiles having the same policies.  Based on this assumption,
-	  only one policy list is shared by all profiles,
+          only one policy list is shared by all profiles,
           and its lifecycle is managed by the TAO_MProfile.
 
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -896,7 +901,7 @@ Mon Jun 12 12:00:14 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Moved <create_policy_list> implementation so that no problem
           occurs when inlining is enabled.
-	  // @@ Angelo, moved <create_policy_list> where?
+          // @@ Angelo, moved <create_policy_list> where?
 
 Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
