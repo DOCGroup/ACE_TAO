@@ -1,8 +1,11 @@
 // SPIPE_Acceptor.cpp
 // $Id$
 
-#include "ace/SPIPE_Acceptor.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/SPIPE_Acceptor.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 

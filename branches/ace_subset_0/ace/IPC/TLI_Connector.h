@@ -15,8 +15,11 @@
 #define ACE_TLI_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/TLI_Stream.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/TLI_Stream.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -118,7 +121,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.i"
+#include "ace/IPC/TLI_Connector.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

@@ -1,10 +1,13 @@
 // $Id$
 
-#include "ace/SV_Semaphore_Simple.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/SV_Semaphore_Simple.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SV_Semaphore_Simple.i"
+#include "ace/IPC/SV_Semaphore_Simple.i"
 #endif
 
 ACE_RCSID(ace, SV_Semaphore_Simple, "$Id$")
@@ -107,8 +110,12 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
   : key_ (k)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
+#ifdef ACE_SUBSET_0
   if (this->open (k, flags, initial_value, n, perms) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
+#else
+  this->open (k, flags, initial_value, n, perms);
+#endif
 }
 
 // Convert name to key.  This function is used internally to create keys
@@ -164,6 +171,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                                                   int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
+#ifdef ACE_SUBSET_0
   if (this->open (name,
                   flags,
                   initial_value,
@@ -172,6 +180,13 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+#else
+  this->open (name,
+                  flags,
+                  initial_value,
+                  n,
+                  perms);
+#endif
 }
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)

@@ -3,7 +3,7 @@
 
 // TLI.i
 
-#include "ace/TLI.h"
+#include "ace/IPC/TLI.h"
 
 ACE_INLINE
 int 

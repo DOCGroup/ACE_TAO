@@ -1,10 +1,10 @@
 // SPIPE_Stream.cpp
 // $Id$
 
-#include "ace/SPIPE_Stream.h"
+#include "ace/IPC/SPIPE_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE_Stream.i"
+#include "ace/IPC/SPIPE_Stream.i"
 #endif
 
 ACE_RCSID(ace, SPIPE_Stream, "$Id$")

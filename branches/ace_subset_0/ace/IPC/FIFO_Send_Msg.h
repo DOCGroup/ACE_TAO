@@ -15,7 +15,7 @@
 #define ACE_FIFO_SEND_MSG_H
 #include "ace/pre.h"
 
-#include "ace/FIFO_Send.h"
+#include "ace/IPC/FIFO_Send.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -73,7 +73,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Send_Msg.i"
+#include "ace/IPC/FIFO_Send_Msg.i"
 #endif
 
 #include "ace/post.h"

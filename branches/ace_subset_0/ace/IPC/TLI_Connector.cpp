@@ -1,15 +1,15 @@
 // TLI_Connector.cpp
 // $Id$
 
-#include "ace/Handle_Set.h"
-#include "ace/TLI_Connector.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/IPC/TLI_Connector.h"
 
 ACE_RCSID(ace, TLI_Connector, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.i"
+#include "ace/IPC/TLI_Connector.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)

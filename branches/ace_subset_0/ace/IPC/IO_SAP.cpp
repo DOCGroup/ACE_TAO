@@ -1,11 +1,15 @@
 // IO_SAP.cpp
 // $Id$
 
-#include "ace/IO_SAP.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/IO_SAP.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/IO_SAP.i"
+#include "ace/IPC/IO_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, IO_SAP, "$Id$")
@@ -21,6 +25,7 @@ ACE_IO_SAP::ACE_IO_SAP (void)
   ACE_TRACE ("ACE_IO_SAP::ACE_IO_SAP");
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_IO_SAP::dump (void) const
 {
@@ -31,6 +36,7 @@ ACE_IO_SAP::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Cache for the process ID.
 pid_t ACE_IO_SAP::pid_ = 0;

@@ -1,7 +1,10 @@
 // $Id$
 
-#include "ace/TLI_Acceptor.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/TLI_Acceptor.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, TLI_Acceptor, "$Id$")
 

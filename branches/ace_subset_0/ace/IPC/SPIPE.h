@@ -15,13 +15,13 @@
 #define ACE_SPIPE_H
 #include "ace/pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "ace/Sockets/IPC_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SPIPE_Addr.h"
+#include "ace/IPC/SPIPE_Addr.h"
 
 /**
  * @class ACE_SPIPE
@@ -93,7 +93,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE.i"
+#include "ace/IPC/SPIPE.i"
 #endif
 
 #include "ace/post.h"

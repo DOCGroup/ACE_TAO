@@ -15,7 +15,7 @@
 #define ACE_FIFO_SEND_H
 #include "ace/pre.h"
 
-#include "ace/FIFO.h"
+#include "ace/IPC/FIFO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +59,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Send.i"
+#include "ace/IPC/FIFO_Send.i"
 #endif
 
 #include "ace/post.h"

@@ -1,11 +1,14 @@
 // SV_Shared_Memory.cpp
 // $Id$
 
-#include "ace/SV_Shared_Memory.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/SV_Shared_Memory.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Shared_Memory.i"
+#include "ace/IPC/SV_Shared_Memory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SV_Shared_Memory, "$Id$")
@@ -48,10 +51,16 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
 					    int flags)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
+
+#ifdef ACE_SUBSET_0
   if (this->open_and_attach (external_id, sz, create,
 			     perms, virtual_addr, flags) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
 		ACE_LIB_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+#else
+  this->open_and_attach (external_id, sz, create,
+			     perms, virtual_addr, flags);
+#endif
 }
 
 // The "do nothing" constructor.
@@ -77,7 +86,11 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (ACE_HANDLE int_id,
     size_ (0)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
+#ifdef ACE_SUBSET_0
   if (this->attach (0, flags) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
 		ACE_LIB_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+#else
+  this->attach (0, flags);
+#endif
 }

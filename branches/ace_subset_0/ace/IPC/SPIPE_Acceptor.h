@@ -15,14 +15,14 @@
 #define ACE_SPIPE_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/SPIPE_Stream.h"
+#include "ace/IPC/SPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_WIN32)
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 #endif /* ACE_WIN32 */
 
 /**

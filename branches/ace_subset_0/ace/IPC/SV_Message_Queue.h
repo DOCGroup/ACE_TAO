@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SV_Message.h"
+#include "ace/IPC/SV_Message.h"
 
 /**
  * @class ACE_SV_Message_Queue
@@ -88,7 +88,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SV_Message_Queue.i"
+#include "ace/IPC/SV_Message_Queue.i"
 #endif
 
 #include "ace/post.h"

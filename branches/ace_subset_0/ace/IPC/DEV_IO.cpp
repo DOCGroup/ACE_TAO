@@ -1,11 +1,14 @@
 // DEV_IO.cpp
 // $Id$
 
-#include "ace/DEV_IO.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/DEV_IO.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV_IO.i"
+#include "ace/IPC/DEV_IO.i"
 #endif
 
 ACE_RCSID(ace, DEV_IO, "$Id$")

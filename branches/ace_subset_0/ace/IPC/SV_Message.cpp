@@ -1,10 +1,10 @@
 // SV_Message.cpp
 // $Id$
 
-#include "ace/SV_Message.h"
+#include "ace/IPC/SV_Message.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Message.i"
+#include "ace/IPC/SV_Message.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SV_Message, "$Id$")

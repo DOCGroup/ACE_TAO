@@ -15,13 +15,13 @@
 #define ACE_SPIPE_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/SPIPE.h"
+#include "ace/IPC/SPIPE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SPIPE_Addr.h"
+#include "ace/IPC/SPIPE_Addr.h"
 
 /**
  * @class ACE_SPIPE_Stream
@@ -140,7 +140,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE_Stream.i"
+#include "ace/IPC/SPIPE_Stream.i"
 #endif
 
 #include "ace/post.h"

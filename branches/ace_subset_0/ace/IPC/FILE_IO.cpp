@@ -1,17 +1,21 @@
 // FILE_IO.cpp
 // $Id$
 
-#include "ace/FILE_IO.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/FILE_IO.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE_IO.i"
+#include "ace/IPC/FILE_IO.i"
 #endif
 
 ACE_RCSID(ace, FILE_IO, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_IO)
 
+#ifdef ACE_SUBSET_0
 void
 ACE_FILE_IO::dump (void) const
 {
@@ -21,6 +25,7 @@ ACE_FILE_IO::dump (void) const
   this->addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Simple-minded do nothing constructor.
 

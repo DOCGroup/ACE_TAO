@@ -15,14 +15,14 @@
 #define ACE_UPIPE_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/UPIPE_Stream.h"
+#include "ace/IPC/UPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/SPIPE_Stream.h"
+#include "ace/Threads/Synch.h"
+#include "ace/IPC/SPIPE_Stream.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -104,7 +104,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/UPIPE_Connector.i"
+#include "ace/IPC/UPIPE_Connector.i"
 #endif
 
 #endif /* ACE_HAS_THREADS */

@@ -15,8 +15,8 @@
 #define ACE_XTI_ATM_MCAST_H
 #include "ace/pre.h"
 
-#include "ace/TLI_Connector.h"
-#include "ace/ATM_Addr.h"
+#include "ace/IPC/TLI_Connector.h"
+#include "ace/ATM/ATM_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -121,7 +121,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/XTI_ATM_Mcast.i"
+#include "ace/IPC/XTI_ATM_Mcast.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_XTI_ATM */

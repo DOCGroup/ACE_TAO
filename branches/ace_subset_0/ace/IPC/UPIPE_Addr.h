@@ -16,7 +16,7 @@
 #define ACE_UPIPE_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/SPIPE_Addr.h"
+#include "ace/IPC/SPIPE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

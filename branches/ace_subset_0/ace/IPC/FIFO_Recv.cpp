@@ -1,17 +1,21 @@
 // FIFO_Recv.cpp
 // $Id$
 
-#include "ace/FIFO_Recv.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/FIFO_Recv.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Recv.i"
+#include "ace/IPC/FIFO_Recv.i"
 #endif
 
 ACE_RCSID(ace, FIFO_Recv, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv)
 
+#ifdef ACE_SUBSET_0
 void
 ACE_FIFO_Recv::dump (void) const
 {
@@ -21,6 +25,7 @@ ACE_FIFO_Recv::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("aux_handle_ = %d"), this->aux_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 int 
 ACE_FIFO_Recv::close (void)
@@ -73,10 +78,18 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
 
+#ifdef ACE_SUBSET_0
   if (this->ACE_FIFO_Recv::open (fifo_name,
 				 flags,
 				 perms,
 				 persistent,
                                  sa) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO_Recv")));
+#else
+  this->ACE_FIFO_Recv::open (fifo_name,
+				 flags,
+				 perms,
+				 persistent,
+                                 sa);
+#endif
 }

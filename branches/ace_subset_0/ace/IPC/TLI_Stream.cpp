@@ -3,14 +3,14 @@
 /* Defines the member functions for the base class of the ACE_TLI_Stream
    abstraction. */
 
-#include "ace/TLI_Stream.h"
+#include "ace/IPC/TLI_Stream.h"
 
 ACE_RCSID(ace, TLI_Stream, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI_Stream.i"
+#include "ace/IPC/TLI_Stream.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Stream)

@@ -3,7 +3,7 @@
 
 // SV_Shared_Memory.i
 
-#include "ace/SV_Shared_Memory.h"
+#include "ace/IPC/SV_Shared_Memory.h"
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::round_up (size_t len)

@@ -2,10 +2,10 @@
 // $Id$
 
 
-#include "ace/DEV.h"
+#include "ace/IPC/DEV.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV.i"
+#include "ace/IPC/DEV.i"
 #endif
 
 ACE_RCSID(ace, DEV, "$Id$")

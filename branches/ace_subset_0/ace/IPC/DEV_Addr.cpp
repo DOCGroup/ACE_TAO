@@ -1,11 +1,14 @@
 // DEV_Addr.cpp
 // $Id$
 
-#include "ace/DEV_Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/DEV_Addr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/DEV_Addr.i"
+#include "ace/IPC/DEV_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV_Addr, "$Id$")

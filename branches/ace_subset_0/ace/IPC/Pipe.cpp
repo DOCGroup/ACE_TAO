@@ -1,9 +1,12 @@
 // $Id$
 
-#include "ace/Pipe.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/Pipe.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Connector.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Pipe.i"
@@ -11,6 +14,7 @@
 
 ACE_RCSID(ace, Pipe, "$Id$")
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Pipe::dump (void) const
 {
@@ -21,7 +25,7 @@ ACE_Pipe::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
+#endif
 int
 ACE_Pipe::open (int buffer_size)
 {
@@ -130,6 +134,8 @@ ACE_Pipe::open (int buffer_size)
 #endif /* __QNX__ */
 
 #else  /* ! ACE_WIN32 && ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
+
+#ifdef ACE_SUBSET_0
   if (ACE_OS::socketpair (AF_UNIX,
                           SOCK_STREAM,
                           0,
@@ -138,6 +144,13 @@ ACE_Pipe::open (int buffer_size)
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("socketpair")),
                       -1);
+#else 
+  ACE_OS::socketpair (AF_UNIX,
+                          SOCK_STREAM,
+                          0,
+                          this->handles_);
+#endif /* ACE_SUBSET_0 */
+
 # if defined (ACE_LACKS_SOCKET_BUFSIZ)
   ACE_UNUSED_ARG (buffer_size);
 # else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
@@ -199,9 +212,14 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
 {
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
+
+#ifdef ACE_SUBSET_0
   if (this->open (handles) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_Pipe::ACE_Pipe")));
+#else
+  this->open (handles);
+#endif
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read,

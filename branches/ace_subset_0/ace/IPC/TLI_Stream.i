@@ -3,7 +3,7 @@
 
 // TLI_Stream.i
 
-#include "ace/TLI_Stream.h"
+#include "ace/IPC/TLI_Stream.h"
 
 ACE_INLINE
 ssize_t

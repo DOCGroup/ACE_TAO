@@ -384,6 +384,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_number,
                  host_name,
                  1,
@@ -400,6 +402,12 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                 ACE_TEXT_CHAR_TO_TCHAR ((host_name == 0) ?
                                         "<unknown>" : host_name)));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
+#else /* ACE_SUBSET_0 */
+  this->set (port_number,
+                 host_name,
+                 1,
+                 address_family);
+#endif /* ACE_SUBSET_0 */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -501,10 +509,15 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  this->set (port_number, inet_address);  
+#endif
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
@@ -517,11 +530,18 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_name,
                  host_name,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  this->set (port_name,
+                 host_name,
+                 protocol);
+#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -532,11 +552,18 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_name,
                  host_name,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  this->set (port_name,
+                 host_name,
+                 protocol);
+#endif
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -550,11 +577,18 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_name,
                  inet_address,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  this->set (port_name,
+                 inet_address,
+                 protocol);
+#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -565,11 +599,18 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+
+#ifdef ACE_SUBSET_0
   if (this->set (port_name,
                  inet_address,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  this->set (port_name,
+                 inet_address,
+                 protocol);
+#endif
 }
 #endif /* ACE_HAS_WCHAR */
 

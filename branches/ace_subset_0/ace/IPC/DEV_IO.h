@@ -16,13 +16,13 @@
 #define ACE_DEV_IO_H
 #include "ace/pre.h"
 
-#include "ace/DEV.h"
+#include "ace/IPC/DEV.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/DEV_Addr.h"
+#include "ace/IPC/DEV_Addr.h"
 
 /**
  * @class ACE_DEV_IO
@@ -127,7 +127,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV_IO.i"
+#include "ace/IPC/DEV_IO.i"
 #endif
 
 #include "ace/post.h"

@@ -20,7 +20,7 @@
 #define ACE_IOSTREAM_T_H
 #include "ace/pre.h"
 
-#include "ace/IOStream.h"
+#include "ace/IPC/IOStream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,8 +28,8 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/INET_Addr.h"
-#include "ace/Handle_Set.h"
+#include "ace/IPC/INET_Addr.h"
+#include "ace/OS/Handle_Set.h"
 
 #if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
@@ -274,11 +274,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/IOStream_T.i"
+#include "ace/IPC/IOStream_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/IOStream_T.cpp"
+#include "ace/IPC/IOStream_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

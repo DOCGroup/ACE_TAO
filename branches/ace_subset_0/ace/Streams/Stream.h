@@ -21,10 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/IO_Cntl_Msg.h"
-#include "ace/Message_Block.h"
-#include "ace/Time_Value.h"
-#include "ace/Module.h"
+#include "ace/Utils/IO_Cntl_Msg.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/Timer/Time_Value.h"
+#include "ace/Streams/Module.h"
 
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
@@ -217,11 +217,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Stream.i"
+#include "ace/Streams/Stream.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Stream.cpp"
+#include "ace/Streams/Stream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -15,7 +15,7 @@
 #define ACE_FIFO_RECV_MSG_H
 #include "ace/pre.h"
 
-#include "ace/FIFO_Recv.h"
+#include "ace/IPC/FIFO_Recv.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -74,7 +74,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Recv_Msg.i"
+#include "ace/IPC/FIFO_Recv_Msg.i"
 #endif
 
 #include "ace/post.h"

@@ -1,10 +1,10 @@
 // SPIPE_Addr.cpp
 // $Id$
 
-#include "ace/SPIPE_Addr.h"
+#include "ace/IPC/SPIPE_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE_Addr.i"
+#include "ace/IPC/SPIPE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Addr, "$Id$")

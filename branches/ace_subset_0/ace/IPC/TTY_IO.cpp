@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/TTY_IO.h"
+#include "ace/IPC/TTY_IO.h"
 
 ACE_RCSID(ace, TTY_IO, "TTY_IO.cpp,v 4.18 1999/06/02 21:20:14 nanbor Exp")
 

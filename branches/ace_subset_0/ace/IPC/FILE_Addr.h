@@ -15,13 +15,13 @@
 #define ACE_FILE_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Flag_Manip.h"
+#include "ace/Utils/Flag_Manip.h"
 
 /**
  * @class ACE_FILE_Addr
@@ -78,7 +78,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_Addr.i"
+#include "ace/IPC/FILE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

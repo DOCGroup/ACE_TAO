@@ -16,7 +16,7 @@
 #define ACE_IOSTREAM_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -506,7 +506,7 @@ typedef ostream& (*__omanip_)(ostream&);
 #define GETPUT_SIG_SET(MT)      GET_SIG_SET(MT) PUT_SIG_SET(MT)
 
 // Include the templates here.
-#include "ace/IOStream_T.h"
+#include "ace/IPC/IOStream_T.h"
 #endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
 #include "ace/post.h"

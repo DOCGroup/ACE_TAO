@@ -1,11 +1,14 @@
 // FIFO_Recv_Msg.cpp
 // $Id$
 
-#include "ace/FIFO_Recv_Msg.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/FIFO_Recv_Msg.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Recv_Msg.i"
+#include "ace/IPC/FIFO_Recv_Msg.i"
 #endif
 
 ACE_RCSID(ace, FIFO_Recv_Msg, "$Id$")
@@ -52,10 +55,18 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg");
 
+#ifdef ACE_SUBSET_0
   if (this->ACE_FIFO_Recv_Msg::open (fifo_name,
 				     flags,
 				     perms,
 				     persistent,
                                      sa) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO_Recv_Msg")));
+#else
+  this->ACE_FIFO_Recv_Msg::open (fifo_name,
+				     flags,
+				     perms,
+				     persistent,
+                                     sa);
+#endif
 }

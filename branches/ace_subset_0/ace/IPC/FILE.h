@@ -14,13 +14,13 @@
 #define ACE_FILE_H
 #include "ace/pre.h"
 
-#include "ace/IO_SAP.h"
+#include "ace/IPC/IO_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FILE_Addr.h"
+#include "ace/IPC/FILE_Addr.h"
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -133,7 +133,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE.i"
+#include "ace/IPC/FILE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

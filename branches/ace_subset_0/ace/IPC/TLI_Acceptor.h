@@ -15,14 +15,14 @@
 #define ACE_TLI_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/TLI.h"
+#include "ace/IPC/TLI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
-#include "ace/TLI_Stream.h"
+#include "ace/Timer/Time_Value.h"
+#include "ace/IPC/TLI_Stream.h"
 
 #if defined (ACE_HAS_TLI)
 

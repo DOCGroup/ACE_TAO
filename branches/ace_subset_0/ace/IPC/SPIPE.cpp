@@ -1,10 +1,10 @@
 // SPIPE.cpp
 // $Id$
 
-#include "ace/SPIPE.h"
+#include "ace/IPC/SPIPE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE.i"
+#include "ace/IPC/SPIPE.i"
 #endif
 
 ACE_RCSID(ace, SPIPE, "$Id$")

@@ -14,13 +14,13 @@
 #define ACE_FILE_IO_H
 #include "ace/pre.h"
 
-#include "ace/FILE.h"
+#include "ace/IPC/FILE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FILE_Addr.h"
+#include "ace/IPC/FILE_Addr.h"
 
 // Used in the FILE_IO.h file...
 #include "ace/ACE.h"
@@ -153,7 +153,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE_IO.i"
+#include "ace/IPC/FILE_IO.i"
 #endif /* !defined (ACE_LACKS_INLINE_FUNCTIONS) */
 
 #include "ace/post.h"

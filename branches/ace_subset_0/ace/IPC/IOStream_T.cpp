@@ -3,7 +3,7 @@
 #ifndef ACE_IOSTREAM_T_C
 #define ACE_IOSTREAM_T_C
 
-#include "ace/IOStream_T.h"
+#include "ace/IPC/IOStream_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@ ACE_RCSID(ace, IOStream_T, "$Id$")
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && __GNUG__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IOStream_T.i"
+#include "ace/IPC/IOStream_T.i"
 #endif /* !__ACE_INLINE__ */
 
 // We will be given a STREAM by the iostream object which creates us.
