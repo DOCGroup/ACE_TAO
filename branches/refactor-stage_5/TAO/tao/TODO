@@ -43,3 +43,5 @@
 . Remove all workarounds for older SUNCC compilers.
 
 . Memory leaks with Transport, run valgrind in Param_Test
+
+. Move traits classes in the header file to the cpp file.
