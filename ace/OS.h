@@ -3003,7 +3003,7 @@ struct msghdr
 
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
-#   define ACE_SELF (-1)
+#   define ACE_SELF (0)
 typedef int ACE_pri_t;
 
 // Dynamic loading-related types - used for dlopen and family.
