@@ -1,3 +1,10 @@
+Thu May 31 02:54:43 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerInterceptorAdapter.h:
+
+	  Fixed problem where the contents of this header were not
+	  visible.
+
 Thu May 31 02:42:44 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PolicyC.cpp:
