@@ -1,3 +1,10 @@
+Tue Jun  1 09:37:20 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * removed the explicit instantiation of ACE_Node<ACE_CString>,
+          ACE_Unbounded_Set<ACE_CString> and
+          ACE_Unbounded_Set_Iterator<ACE_CString> from params.cpp.  These
+          are already instantiated in Service_Config.cpp.
+
 Tue Jun  1 06:51:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Policy.pidl: Removed a stray '_' at the end of the file.
