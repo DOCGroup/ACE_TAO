@@ -278,7 +278,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
 {
 
   int cnt_bits = sizeof (long) * 8 - this->spoke_bits_;
-  int max_cnt = (1 << cnt_bits) - 1;
+  long max_cnt = ((long)1 << cnt_bits) - 1;
   if (spoke == this->spoke_count_)
     --max_cnt; // Because -1 is used as a special invalid timer_id.
 
@@ -341,7 +341,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
           next_cnt = 0;
           for (; n != root; n = n->get_next ())
             {
-              int tmp = n->get_timer_id () >> this->spoke_bits_;
+              long tmp = n->get_timer_id () >> this->spoke_bits_;
               if (tmp > cnt && (tmp < next_cnt || next_cnt == 0))
                 next_cnt = tmp;
             }
