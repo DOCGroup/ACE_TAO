@@ -165,6 +165,9 @@ endif
 ifneq (,$(findstring  RTSchedEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSchedEvent
 endif
+ifneq (,$(findstring  RTKokyuEvent, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.RTKokyuEvent
+endif
 ifneq (,$(findstring  RTCORBAEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTCORBAEvent
 endif
