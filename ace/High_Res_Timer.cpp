@@ -87,6 +87,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
               break;
             }
 #else
+          double mhertz = 1;
           double bmips = 1;
           ACE_TCHAR arg[128];
 
@@ -117,6 +118,14 @@ ACE_High_Res_Timer::get_cpuinfo (void)
                   supported = 1;
                   // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" recognized Pentium Pro/II chip...")));
                 }
+            }
+          else if (::sscanf (buf, "cpu MHz : %lf\n", &mhertz) == 1)
+            {
+              if (supported)
+                {
+                  scale_factor = (ACE_UINT32) (mhertz + 0.5);
+                }
+              break;
             }
           else if (::sscanf (buf, "bogomips : %lf\n", &bmips) == 1
                    || ::sscanf (buf, "BogoMIPS : %lf\n", &bmips) == 1)
