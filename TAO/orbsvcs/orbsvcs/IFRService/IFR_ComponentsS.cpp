@@ -1043,7 +1043,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::EventDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -2914,7 +2914,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::Container::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -3534,7 +3534,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::ModuleDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -4166,7 +4166,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::Repository::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -5355,7 +5355,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::ProvidesDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -7126,7 +7126,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::UsesDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -8626,7 +8626,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::EventPortDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -9216,7 +9216,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::EmitsDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -9812,7 +9812,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::PublishesDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -10408,7 +10408,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::ConsumesDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -14102,7 +14102,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::ComponentDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -14783,7 +14783,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::FactoryDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -15440,7 +15440,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::FinderDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -19233,7 +19233,7 @@ CORBA::Boolean POA_CORBA::ComponentIR::HomeDef::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
