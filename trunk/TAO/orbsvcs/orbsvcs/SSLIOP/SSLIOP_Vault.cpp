@@ -22,7 +22,7 @@ TAO_SSLIOP_password_callback (char *buf,
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
 
-  const char *password = ACE_static_cast (const char *, userdata);
+  const char *password = ACE_static_cast (char *, userdata);
 
   int pwlen = -1;
 
@@ -291,7 +291,7 @@ TAO_SSLIOP_Vault::make_X509 (const SSLIOP::File &certificate)
                          ACE_const_cast (char *, password));
     }
 
-  (void) ACE_OS::close (f);
+  (void) ACE_OS::fclose (f);
 
   return x;
 }
@@ -351,7 +351,7 @@ TAO_SSLIOP_Vault::make_RSA (const SSLIOP::File &key)
                                   ACE_const_cast (char *, password));
     }
 
-  (void) ACE_OS::close (f);
+  (void) ACE_OS::fclose (f);
 
   return r;
 }
