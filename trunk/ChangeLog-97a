@@ -1,3 +1,9 @@
+Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: removed
+	  specializations of ACE Guards because they're in libGateway.
+	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this problem.
+
 Thu May  1 10:16:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-osf1-4.0.h: Added 
