@@ -16,10 +16,8 @@
 //    are prime.
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
-//    John Tucker <jtucker@infoglide.com>,
-//    and Per Andersson <pera@ipso.se>
+//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu>, and Per Andersson <pera@ipso.se>
 //
 // ============================================================================
 
@@ -37,9 +35,9 @@
 ACE_RCSID(tests, Future_Set_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
+  USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
-#endif /* defined (__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -47,15 +45,6 @@ typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
 
 // A counter for the tasks..
 static ATOMIC_INT task_count (0);
-
-// A counter for the futures..
-static ATOMIC_INT future_count (0);
-
-// A counter for the capsules..
-static ATOMIC_INT capsule_count (0);
-
-// A counter for the method requests...
-static ATOMIC_INT method_request_count (0);
 
 class Prime_Scheduler : public ACE_Task_Base
 {
@@ -73,7 +62,7 @@ class Prime_Scheduler : public ACE_Task_Base
 public:
   // = Initialization and termination methods.
   Prime_Scheduler (const ASYS_TCHAR *,
-             Prime_Scheduler * = 0);
+                   Prime_Scheduler * = 0);
   // Constructor.
 
   virtual int open (void *args = 0);
@@ -144,13 +133,13 @@ Method_Request_work::Method_Request_work (Prime_Scheduler *new_Prime_Scheduler,
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Method_Request_work created\n")));
+              ASYS_TEXT ("(%t) Method_Request_work created\n")));
 }
 
 Method_Request_work::~Method_Request_work (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Method_Request_work will be deleted.\n")));
+              ASYS_TEXT ("(%t) Method_Request_work will be deleted.\n")));
 }
 
 int
@@ -159,7 +148,7 @@ Method_Request_work::call (void)
   // Dispatch the Servant's operation and store the result into the
   // Future.
   return this->future_result_.set (this->scheduler_->work_i
- (this->param_,
+                                   (this->param_,
                                     this->count_));
 }
 
@@ -186,13 +175,13 @@ Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Method_Request_name created\n")));
+              ASYS_TEXT ("(%t) Method_Request_name created\n")));
 }
 
 Method_Request_name::~Method_Request_name (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Method_Request_name will be deleted.\n")));
+              ASYS_TEXT ("(%t) Method_Request_name will be deleted.\n")));
 }
 
 int
@@ -235,7 +224,7 @@ Method_Request_end::call (void)
 
 // Constructor
 Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
-                      Prime_Scheduler *new_scheduler)
+                                  Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
   ACE_NEW (this->name_,
@@ -243,7 +232,7 @@ Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
   ACE_OS::strcpy ((ASYS_TCHAR *) this->name_,
                   newname);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Prime_Scheduler %s created\n"),
+              ASYS_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
 
@@ -252,7 +241,7 @@ Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
 Prime_Scheduler::~Prime_Scheduler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Prime_Scheduler %s will be destroyed\n"),
+              ASYS_TEXT ("(%t) Prime_Scheduler %s will be destroyed\n"),
               this->name_));
   delete [] this->name_;
 }
@@ -264,7 +253,7 @@ Prime_Scheduler::open (void *)
 {
   task_count++;
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Prime_Scheduler %s open\n"),
+              ASYS_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
   // Become an Active Object.
   return this->activate (THR_BOUND | THR_DETACHED);
@@ -276,7 +265,7 @@ int
 Prime_Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) Prime_Scheduler %s close\n"),
+              ASYS_TEXT ("(%t) Prime_Scheduler %s close\n"),
               this->name_));
   task_count--;
   return 0;
@@ -294,7 +283,7 @@ Prime_Scheduler::svc (void)
       auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) calling method request\n")));
+                  ASYS_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
         break;
@@ -341,7 +330,7 @@ Prime_Scheduler::name (void)
 
       // @@ What happens if new fails here?
       this->activation_queue_.enqueue
- (new Method_Request_name (this,
+        (new Method_Request_name (this,
                                   new_future));
       return new_future;
     }
@@ -358,7 +347,7 @@ Prime_Scheduler::work (u_long newparam,
     ACE_Future<u_long> new_future;
 
     this->activation_queue_.enqueue
- (new Method_Request_work (this,
+      (new Method_Request_work (this,
                                 newparam,
                                 newcount,
                                 new_future));
@@ -496,52 +485,50 @@ main (int, ASYS_TCHAR *[])
   ACE_Future_Set<const ASYS_TCHAR *> fsetname;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) initializing future sets with non-blocking call\n")));
+              ASYS_TEXT ("(%t) initializing future sets with non-blocking call\n")));
 
   for (int i = 0; i < n_loops; i++)
     {
       // Spawn off the methods, which run in a separate thread as
       // active object invocations.
-      ACE_Future<u_long> andres_work = andres->work (9013);
-      fseta.insert (andres_work);
+      fresulta = andres->work (9013);
+      fresultb = peter->work (9013);
+      fresultc = helmut->work (9013);
+      fresultd = matias->work (9013);
+      fname = andres->name ();
 
-      ACE_Future<u_long> peter_work = peter->work (9013);
-      fsetb.insert (peter_work);
-
-      ACE_Future<u_long> helmut_work = helmut->work (9013);
-      fsetc.insert (helmut_work);
-
-      ACE_Future<u_long> matias_work = matias->work (9013);
-      fsetd.insert (matias_work);
-
-      ACE_Future<const ASYS_TCHAR*> andres_name = andres->name ();
-      fsetname.insert (andres_name);
+      fseta.insert (fresulta);
+      fsetb.insert (fresultb);
+      fsetc.insert (fresultc);
+      fsetd.insert (fresultd);
+      fsetname.insert (fname);
     }
+
 
   // See if the result is available...
 
-  if (! fseta.is_empty ())
+  if (!fseta.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set a is not empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set a is not empty.....\n")));
 
-  if (! fsetb.is_empty ())
+  if (!fsetb.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set b is not empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set b is not empty.....\n")));
 
-  if (! fsetc.is_empty ())
+  if (!fsetc.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set c is not empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set c is not empty.....\n")));
 
-  if (! fsetd.is_empty ())
+  if (!fsetd.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set d is not empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set d is not empty.....\n")));
 
-  if (! fsetname.is_empty ())
+  if (!fsetname.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set name is not empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set name is not empty.....\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) non-blocking calls done... now blocking...\n")));
+              ASYS_TEXT ("(%t) non-blocking calls done... now blocking...\n")));
 
   // Save the result of fresulta.
 
@@ -550,97 +537,85 @@ main (int, ASYS_TCHAR *[])
   u_long resultc = 0;
   u_long resultd = 0;
 
-  u_int count;
-
-  for (count = 0;
-       fseta.next_readable (fresulta);
-       )
+  u_int count = 0;
+  while (fseta.next_readable (fresulta))
     {
       fresulta.get (resulta);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) result (%u) a %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) a %u\n"),
                   count,
                   (u_int) resulta));
     }
 
-  for (count = 0;
-       fsetb.next_readable (fresultb);
-       )
+  count = 0;
+  while (fsetb.next_readable (fresultb))
     {
       fresultb.get (resultb);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) result (%u) b %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) b %u\n"),
                   count,
                   (u_int) resultb));
     }
 
-  for (count = 0;
-       fsetc.next_readable (fresultc);
-       )
+  count = 0;
+  while (fsetc.next_readable (fresultc))
     {
       fresultc.get (resultc);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) result (%u) c %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) c %u\n"),
                   count,
                   (u_int) resultc));
     }
 
-  for (count = 0;
-       fsetd.next_readable (fresultd);
-       )
+  count = 0;
+  while (fsetd.next_readable (fresultd))
     {
       fresultd.get (resultd);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) result (%u) d %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) d %u\n"),
                   count,
                   (u_int) resultd));
     }
 
   const ASYS_TCHAR *name;
-
-  for (count = 0;
-       fsetname.next_readable (fname);
-       )
+  count = 0;
+  while (fsetname.next_readable (fname))
     {
       fname.get (name);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" (%t) result (%u) name %u\n"),
+                  ASYS_TEXT ("(%t) result(%u) name %u\n"),
                   count,
                   (u_int) name));
     }
 
   if (fseta.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set a is empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set a is empty.....\n")));
 
   if (fsetb.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set b is empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set b is empty.....\n")));
 
   if (fsetc.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set c is empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set c is empty.....\n")));
 
   if (fsetd.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set d is empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set d is empty.....\n")));
 
   if (fsetname.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT (" (%t) wow.. set name is empty.....\n")));
+                ASYS_TEXT ("(%t) wow.. set name is empty.....\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) task_count %d future_count %d ")
-              ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
-              task_count.value (),
-              future_count.value (),
-              capsule_count.value (),
-              method_request_count.value ()));
+              ASYS_TEXT ("(%t) task_count %d\n"),
+              task_count.value () ));
 
   // Close things down.
   andres->end ();
@@ -651,15 +626,8 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) task_count %d future_count %d ")
-              ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
-              task_count.value (),
-              future_count.value (),
-              capsule_count.value (),
-              method_request_count.value ()));
-
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("No it did not crash the program.\n")));
+              ASYS_TEXT ("(%t) task_count %d\n"),
+              task_count.value () ));
 
   ACE_OS::sleep (5);
 
