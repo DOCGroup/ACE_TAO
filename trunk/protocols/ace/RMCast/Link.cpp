@@ -156,7 +156,7 @@ namespace ACE_RMCast
     size_t size (0), capacity (8192);
     char* data = reinterpret_cast<char*> (operator new (capacity));
 
-    auto_ptr<char> holder (data); // This is wicked.
+    ACE_Auto_Ptr<char> holder (data); // This is wicked.
 
     while (true)
     {

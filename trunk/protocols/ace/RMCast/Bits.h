@@ -23,8 +23,6 @@ namespace ACE_RMCast
   typedef ACE_Guard<Mutex> Lock;
   typedef ACE_Condition<Mutex> Condition;
 
-  using ::auto_ptr; // ACE auto_ptr.
-
   // tmp
   //
   //using std::cerr;
