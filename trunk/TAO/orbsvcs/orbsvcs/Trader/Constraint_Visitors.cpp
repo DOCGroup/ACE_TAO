@@ -15,7 +15,7 @@
 
 #include "Constraint_Visitors.h"
 #include "Constraint_Nodes.h"
-//#include "Trader_T.h"
+#include "Trader_T.h"
 
 ACE_RCSID(Trader, Constraint_Visitors, "$Id$")
 
