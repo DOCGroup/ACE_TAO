@@ -1,3 +1,13 @@
+Mon Nov 29 16:36:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h (ACE_MALLOC_PADDING): Changed the default value of
+	  ACE_MALLOC_PADDING to 16 to avoid some some alignment problem.
+
+	  Fixed the padding size calculation in ACE_Malloc_Header.
+
+	* tests/Malloc_Test.cpp (main): Added some debug printout which is
+	  commented out for now (they are not used for regular test.)
+
 Mon Nov 29 14:34:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/config-win32-borland.h:
