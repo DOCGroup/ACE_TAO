@@ -23,7 +23,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS.h"
-#include "tao/Timeprobe.h"
 #include "tao/corba.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"

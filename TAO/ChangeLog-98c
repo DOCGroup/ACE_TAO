@@ -1,3 +1,25 @@
+Sat Jun 27 00:27:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/{RT_Task.cpp, Event_Channel.cpp,
+ 	  ReactorTask.cpp, Dispatching_Modules.cpp}: Moved the
+ 	  ACE_TIMEPROBE_EVENT_DESCRIPTIONS use inside 
+	  #if defined (ACE_ENABLE_TIMEPROBES). This will help prevent
+	  compiler warnings when time probes are not used. Also, added a
+	  semi-colon at the end of the ACE_TIMEPROBE_EVENT_DESCRIPTIONS line.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp, 
+	  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp,
+	  orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp,
+	  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+
+	  Removed extra include of Timeprobe.h
+
+	* Added the following comment to all uses of enums for time
+	  probes. This way it should be easy (relatively) to find a unique
+	  starting key for the next set of descriptions.
+
+	  // Timeprobe description table start key
+	
 Sat Jun 27 01:06:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Commented out unused.

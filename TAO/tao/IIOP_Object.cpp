@@ -32,6 +32,7 @@ static const char *TAO_IIOP_Object_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_END,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
@@ -39,11 +40,11 @@ enum
   TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description,
-                                  TAO_IIOP_OBJECT_DO_STATIC_CALL_START)
+                                  TAO_IIOP_OBJECT_DO_STATIC_CALL_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 int
 IIOP::Profile::set (const char *h,

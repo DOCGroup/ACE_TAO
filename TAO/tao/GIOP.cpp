@@ -74,6 +74,7 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_GIOP_SEND_REQUEST_START = 100,
   TAO_GIOP_SEND_REQUEST_END,
 
@@ -93,11 +94,11 @@ enum
   TAO_GIOP_INVOCATION_START_REQUEST_HDR
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
-                                  TAO_GIOP_SEND_REQUEST_START)
+                                  TAO_GIOP_SEND_REQUEST_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
