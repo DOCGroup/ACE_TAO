@@ -1168,7 +1168,7 @@ public:
   /// Prefix advance.
   ACE_Unbounded_Set_Iterator<T>& operator++ (void);
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the internal element <this> is pointing to.
   T& operator* (void);
 
   /// Check if two iterators point to the same position
@@ -1609,6 +1609,9 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
+  /// Returns a reference to the internal element <this> is pointing to.
+  T& operator* (void);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -1628,7 +1631,7 @@ private:
  * that allows duplicates.  This class template requires that <
  * operator semantics be defined for the parameterized type <T>, but
  * does not impose any restriction on how that ordering operator is
- * implemented. 
+ * implemented.
  */
 template <class T>
 class ACE_Ordered_MultiSet
