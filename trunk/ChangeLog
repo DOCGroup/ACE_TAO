@@ -1,3 +1,8 @@
+Sat May 01 13:17:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TMCast/MTQueue.hpp:
+          Fixed unused parameter warnings
+
 Sat May 01 12:58:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/LogManager.h:
