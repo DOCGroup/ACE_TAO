@@ -1,3 +1,8 @@
+Sun Feb 22 22:14:08 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
+
+	* tao/giop.cpp (invoke): Created my own temporary variable in
+ 	order to de-warn on g++ and Sun CC.
+
 Sun Feb 22 20:12:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs/orbsvcs.dsp: Adapted chages to the directory

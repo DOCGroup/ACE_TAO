@@ -835,7 +835,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_GIOP_MsgType m = TAO_GIOP::recv_request (this->handler_,
+  TAO_SVC_HANDLER *handler = this->handler_;
+  TAO_GIOP_MsgType m = TAO_GIOP::recv_request (handler,
                                                this->stream_, env);
   switch (m)
     {
