@@ -237,25 +237,28 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
   // If MASK is 0 then block all signals!
   if (mask == 0)
     {
-#if 0
-      ACE_Sig_Set smask (1);
-#endif
-
-
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-      ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) ACE_Object_Manager::default_mask (), (sigset_t *)
+      ACE_OS::sigprocmask (SIG_BLOCK,
+                           (sigset_t *) ACE_Object_Manager::default_mask (),
+                           (sigset_t *)
                            this->omask_);
 #else
-      ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) ACE_Object_Manager::default_mask (), (sigset_t *)
+      ACE_OS::thr_sigsetmask (SIG_BLOCK,
+                              (sigset_t *) ACE_Object_Manager::default_mask (),
+                              (sigset_t *)
                               this->omask_);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-    ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
+    ACE_OS::sigprocmask (SIG_BLOCK,
+                         (sigset_t *) *mask,
+                         (sigset_t *)
                          this->omask_);
 #else
-  ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
+  ACE_OS::thr_sigsetmask (SIG_BLOCK,
+                          (sigset_t *) *mask,
+                          (sigset_t *)
                           this->omask_);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 }
