@@ -1,3 +1,8 @@
+Mon May 28 13:31:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Updated with the new files.
+
 Mon May 28 13:09:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
