@@ -1,3 +1,12 @@
+Tue Mar 15 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_Gateway/test_dsi.cpp:
+          When receiving a shutdown, first forward it to the real server
+          and after that shutdown our orb.
+
+        * tests/DSI_Gateway/test_i.cpp:
+          Initialise pointer with 0
+
 Mon Mar 14 12:22:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Callback_Quoter/Callback_Quoter.mpc:
