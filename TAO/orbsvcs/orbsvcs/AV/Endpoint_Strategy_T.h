@@ -71,6 +71,8 @@ protected:
 
   PortableServer::POA_var poa_;
 
+  CORBA::Object_var media_ctrl_obj_;
+
 };
 // ----------------------------------------------------------------------
 
@@ -215,8 +217,14 @@ protected:
   /// The virtual device
   T_VDev *vdev_;
 
+  /// Virtual device CORBA object reference
+  CORBA::Object_var vdev_obj_;
+
   /// Media controller
   T_MediaCtrl *media_ctrl_;
+
+  // Media controller CORBA object reference
+  CORBA::Object_var media_ctrl_obj_;
 
   /// pid of this process
   pid_t pid_;

@@ -100,8 +100,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       // Save the object reference, so that create_A can return it
       this->vdev_ = vdev->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      vdev->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -137,16 +135,11 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
       // Associate the media controller object reference with the vdev, as per the OMG spec
       CORBA::Any anyval;
-      CORBA::Object_var media_ctrl_obj
+      media_ctrl_obj_
         = media_ctrl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      media_ctrl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      CORBA::String_var str = this->orb_->object_to_string (media_ctrl_obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-
-      anyval <<= str.in();
+      anyval <<= media_ctrl_obj_.in();
 
       ACE_TRY_CHECK;
 
@@ -242,8 +235,8 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                        "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"),
                       -1);
 
-  stream_endpoint = this->stream_endpoint_a_;
-  vdev = this->vdev_;
+  stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_ );
+  vdev = AVStreams::VDev::_duplicate( this->vdev_ );
   return 0;
 
 }
@@ -261,15 +254,8 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
       if (this->make_stream_endpoint (stream_endpoint_a) == -1)
         return -1;
 
-//      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_a
-//                                                                            ACE_ENV_ARG_PARAMETER);
-//      ACE_TRY_CHECK;
-//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_A::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
-
       // Save the object references, so that create_a can return them
       this->stream_endpoint_a_ = stream_endpoint_a->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      stream_endpoint_a->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -320,14 +306,8 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
       if (this->make_stream_endpoint (stream_endpoint_b) == -1)
         return -1;
-//      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_b
-//                                                                       ACE_ENV_ARG_PARAMETER);
-//      ACE_TRY_CHECK;
-//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_B::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
 
       this->stream_endpoint_b_ = stream_endpoint_b->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      stream_endpoint_b->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -353,6 +333,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                       -1);
 
   stream_endpoint = this->stream_endpoint_b_;
+  this->vdev_->_add_ref();
   vdev = this->vdev_;
   return 0;
 
@@ -537,7 +518,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Object_ptr vdev_obj = CORBA::Object::_nil ();
   ACE_TRY
     {
       char vdev_name [BUFSIZ];
@@ -554,26 +534,24 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (AC
 
       // make the media controller a property of the vdev
       CORBA::Any media_ctrl_property;
-      CORBA::Object_var media_ctrl_obj =
+      media_ctrl_obj_ =
         this->media_ctrl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      media_ctrl_property <<= this->orb_->object_to_string (media_ctrl_obj.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+
       this->vdev_->define_property ("Related_MediaCtrl",
-                                    media_ctrl_property
+                                    media_ctrl_obj_.in()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      vdev_obj = this->vdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      vdev_obj_ = this->vdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      this->vdev_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
       ACE_TRY_EX (bind)
         {
           // Register the vdev with the naming server.
           this->naming_context_->bind (this->vdev_name_,
-                                       vdev_obj
+                                       vdev_obj_.in()
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bind);
         }
@@ -582,7 +560,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (AC
           // If the object was already there, replace the older reference
           // with this one
           this->naming_context_->rebind (this->vdev_name_,
-                                         vdev_obj
+                                         vdev_obj_.in()
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -667,9 +645,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
     {
       stream_endpoint_obj = this->stream_endpoint_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      this->stream_endpoint_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      //  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+
       // Create a name for the video control object
       // subclasses can define their own name for the streamendpoint
       // Register the stream endpoint object with the naming server.
