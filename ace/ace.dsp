@@ -453,6 +453,10 @@ SOURCE=.\Naming_Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Manager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Obstack.cpp
 # End Source File
 # Begin Source File
@@ -1086,6 +1090,10 @@ SOURCE=.\Name_Space.h
 # Begin Source File
 
 SOURCE=.\Naming_Context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Manager.h
 # End Source File
 # Begin Source File
 
