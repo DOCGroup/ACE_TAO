@@ -124,10 +124,6 @@ public:
 
   int handle_input (ACE_HANDLE);
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
-
-  ACE_Event_Handler::Reference_Count remove_reference (void);
-
   int notifies_;
 };
 
@@ -158,22 +154,6 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
   if (this->notifies_ == 0)
     delete this;
 
-  return 0;
-}
-
-ACE_Event_Handler::Reference_Count
-Simple_Event_Handler::add_reference (void)
-{
-  // This should not get called.
-  ACE_ASSERT (0);
-  return 0;
-}
-
-ACE_Event_Handler::Reference_Count
-Simple_Event_Handler::remove_reference (void)
-{
-  // This should not get called.
-  ACE_ASSERT (0);
   return 0;
 }
 
