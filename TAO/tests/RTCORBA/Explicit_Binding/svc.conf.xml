@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/RTCORBA/Explicit_Binding/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  -->
- <!--  $Id$ -->
- <!--  -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
-</ACE_Svc_Conf>

@@ -1,9 +1,0 @@
-#
-# Makefile for building the Log tests
-# $Id$
-#
-
-DIRS = \
-	Basic_Log_Test
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
