@@ -231,48 +231,48 @@ Options::parse_args (int argc, char *argv[])
 	       ACE_Thread::getconcurrency ()));
   else if (this->verbose ())
     ACE_DEBUG ((LM_INFO,
-		  "%8d = total iterations\n"
-		  "%8d = logical connections\n"
-		  "%8d = physical connections\n"
-		  "%8d = thread count\n"
-		  "%8d = low water mark\n"
-		  "%8d = high water mark\n"
-		  "%8d = message_size\n"
-		  "%8d = initial queue length\n"
-		  "%8d = consecutive ports\n"
-		  "%8d = calculated checksum\n"
-		  "%8d = perform xdr conversion\n"
-		  "%8d = zero-copy driver\n"
-		  "%8d = free dynamic memory\n"
-		  "%8d = print summary only\n"
-		  "%8d = eager exit\n"
-		  "%8d = UDP\n"
-		  "%8d = send ack\n"
-		  "%8d = THR_DETACHED\n"
-		  "%8d = THR_BOUND\n"
-		  "%8d = THR_NEW_LWP\n"
-		  "%8d = sleep time\n",
-		  this->iterations (),
-		  this->logical_connections (),
-		  this->physical_connections (),
-		  this->thr_count (),
-		  this->low_water_mark (),
-		  this->high_water_mark (),
-		  this->msg_size (),
-		  this->initial_queue_length (),
-		  this->consecutive_ports (),
-		  this->do_checksum () != 0,
-		  this->do_xdr() != 0,
-		  this->do_zero_copy () != 0,
-		  this->do_delete () != 0,
-		  this->do_print_summary () != 0,
-		  this->do_eager_exit () != 0,
-		  this->do_udp () != 0,
-		  this->do_ack () != 0,
-		  (this->t_flags () & THR_DETACHED) != 0,
-		  (this->t_flags () & THR_BOUND) != 0,
-		  (this->t_flags () & THR_NEW_LWP) != 0,
-	       this->sleep_time ()));
+                "%8d = total iterations\n"
+                "%8d = logical connections\n"
+                "%8d = physical connections\n"
+                "%8d = thread count\n"
+                "%8d = low water mark\n"
+                "%8d = high water mark\n"
+                "%8d = message_size\n"
+                "%8d = initial queue length\n"
+                "%8d = consecutive ports\n"
+                "%8d = calculated checksum\n"
+                "%8d = perform xdr conversion\n"
+                "%8d = zero-copy driver\n"
+                "%8d = free dynamic memory\n"
+                "%8d = print summary only\n"
+                "%8d = eager exit\n"
+                "%8d = UDP\n"
+                "%8d = send ack\n"
+                "%8d = THR_DETACHED\n"
+                "%8d = THR_BOUND\n"
+                "%8d = THR_NEW_LWP\n"
+                "%8d = sleep time\n",
+                this->iterations (),
+                this->logical_connections (),
+                this->physical_connections (),
+                this->thr_count (),
+                this->low_water_mark (),
+                this->high_water_mark (),
+                this->msg_size (),
+                this->initial_queue_length (),
+                this->consecutive_ports (),
+                this->do_checksum () != 0,
+                this->do_xdr() != 0,
+                this->do_zero_copy () != 0,
+                this->do_delete () != 0,
+                this->do_print_summary () != 0,
+                this->do_eager_exit () != 0,
+                this->do_udp () != 0,
+                this->do_ack () != 0,
+                (this->t_flags () & THR_DETACHED) != 0,
+                (this->t_flags () & THR_BOUND) != 0,
+                (this->t_flags () & THR_NEW_LWP) != 0,
+                this->sleep_time ()));
 }
 
 void
@@ -281,10 +281,8 @@ Options::print_results (void)
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   this->_itimer.elapsed_time (et);
 
-#if defined (ACE_HAS_PRUSAGE_T)
   ACE_Profile_Timer::Rusage rusage;
   this->_itimer.elapsed_rusage (rusage);
-#endif /* ACE_HAS_PRUSAGE_T */
 
   size_t total    = this->count ();
   double nbytes   = total * this->msg_size ();
@@ -303,89 +301,140 @@ Options::print_results (void)
     {
 #if defined (ACE_HAS_PRUSAGE_T)
       ACE_DEBUG ((LM_INFO,
-		    "\n%8d PEs\n"
-		    "%8.2f Mbit/sec\n"
-		    "%8d (voluntary context switches)\n"
-		    "%8d (involuntary context switches)\n"
-		    "%8d (total context switches)\n"
-		    "%8d.%d sec (wait-cpu time)\n"
-		    "%8d.%d sec (user lock wait sleep time)\n"
-		    "%8d.%d sec (all other sleep time)\n"
-		    "%8d (major page faults)\n"
-		    "%8d (minor page faults)\n"
-		    "%8d (number of LWPs)\n",
-		    this->thr_count (),
-		    (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
-		    rusage.pr_vctx,
-		    rusage.pr_ictx,
-		    rusage.pr_vctx + rusage.pr_ictx,
-		    rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
-		    rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
-		    rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
-		    rusage.pr_majf,
-		    rusage.pr_minf,
-		 ACE_Thread::getconcurrency ()));
+                  "\n%8d PEs\n"
+                  "%8.2f Mbit/sec\n"
+                  "%8d (voluntary context switches)\n"
+                  "%8d (involuntary context switches)\n"
+                  "%8d (total context switches)\n"
+                  "%8d.%d sec (wait-cpu time)\n"
+                  "%8d.%d sec (user lock wait sleep time)\n"
+                  "%8d.%d sec (all other sleep time)\n"
+                  "%8d (major page faults)\n"
+                  "%8d (minor page faults)\n"
+                  "%8d (number of LWPs)\n",
+                  this->thr_count (),
+                  (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
+                  rusage.pr_vctx,
+                  rusage.pr_ictx,
+                  rusage.pr_vctx + rusage.pr_ictx,
+                  rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
+                  rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
+                  rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
+                  rusage.pr_majf,
+                  rusage.pr_minf,
+                  ACE_Thread::getconcurrency ()));
 #else
       // need to write dump ops for rusage...
+      ACE_DEBUG ((LM_INFO,
+                  "\n%8d PEs\n"
+                  "%8.2f Mbit/sec\n"
+                  "%8d (voluntary context switches)\n"
+                  "%8d (involuntary context switches)\n"
+                  "%8d (total context switches)\n"
+                  "%8d.%d sec (user time)\n"
+                  "%8d.%d sec (system time)\n"
+                  "%8d (major page faults)\n"
+                  "%8d (minor page faults)\n"
+                  "%8d (number of LWPs)\n",
+                  this->thr_count (),
+                  (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
+                  rusage.ru_nvcsw,
+                  rusage.ru_nivcsw,
+                  rusage.ru_nvcsw + rusage.ru_nivcsw,
+                  rusage.ru_utime.tv_sec, rusage.ru_utime.tv_usec / 1000000,
+                  rusage.ru_stime.tv_sec, rusage.ru_stime.tv_usec / 1000000,
+                  rusage.ru_majflt,
+                  rusage.ru_minflt,
+                  ACE_Thread::getconcurrency ()));
+
 #endif /* ACE_HAS_PRUSAGE_T */
     }
   else
     {
       ACE_DEBUG ((LM_INFO,
-		    "\ntotal work = %d\n"
-		    "(Only interpret the next two statistics for throughput tests)\n"
-		    "%f bytes in %.2f real seconds = %.2f Mbit/sec\n"
-		    "%f bytes in %.2f CPU seconds = %.2f Mbit/sec\n",
-		    total,
-		    nbytes, et.real_time, (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
-		 nbytes, cpu_time, (nbytes / cpu_time) * 8.0 / 1024.0 / 1024.0));
+                  "\ntotal work = %d\n"
+                  "(Only interpret the next two statistics for throughput tests)\n"
+                  "%f bytes in %.2f real seconds = %.2f Mbit/sec\n"
+                  "%f bytes in %.2f CPU seconds = %.2f Mbit/sec\n",
+                  total,
+                  nbytes, et.real_time, (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
+                  nbytes, cpu_time, (nbytes / cpu_time) * 8.0 / 1024.0 / 1024.0));
 
 #if defined (ACE_HAS_PRUSAGE_T)
       ACE_DEBUG ((LM_INFO,
-		    "%8d = lwpid\n"
-		    "%8d = lwp count\n"
-		    "%8d = minor page faults\n"
-		    "%8d = major page faults\n"
-		    "%8d = input blocks\n"
-		    "%8d = output blocks\n"
-		    "%8d = messages sent\n"
-		    "%8d = messages received\n"
-		    "%8d = signals received\n"
-		    "%8ds, %dms = wait-cpu (latency) time\n"
-		    "%8ds, %dms = user lock wait sleep time\n"
-		    "%8ds, %dms = all other sleep time\n"
-		    "%8d = voluntary context switches\n"
-		    "%8d = involuntary context switches\n"
-		    "%8d = total context switches\n"
-		    "%8d = system calls\n"
-		    "%8d = chars read/written\n"
-		    "%8d = number of LWPs\n"
-		    "---------------------\n"
-		    "real time   = %.3f\n"
-		    "user time   = %.3f\n"
-		    "system time = %.3f\n"
-		    "---------------------\n",
-		    rusage.pr_lwpid,
-		    rusage.pr_count,
-		    rusage.pr_minf,
-		    rusage.pr_majf,
-		    rusage.pr_inblk,
-		    rusage.pr_oublk,
-		    rusage.pr_msnd,
-		    rusage.pr_mrcv,
-		    rusage.pr_sigs,
-		    rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
-		    rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
-		    rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
-		    rusage.pr_vctx,
-		    rusage.pr_ictx,
-		    rusage.pr_vctx + rusage.pr_ictx,
-		    rusage.pr_sysc,
-		    rusage.pr_ioch,
-		    ACE_Thread::getconcurrency (),
-		 et.real_time, et.user_time, et.system_time));
+                  "%8d = lwpid\n"
+                  "%8d = lwp count\n"
+                  "%8d = minor page faults\n"
+                  "%8d = major page faults\n"
+                  "%8d = input blocks\n"
+                  "%8d = output blocks\n"
+                  "%8d = messages sent\n"
+                  "%8d = messages received\n"
+                  "%8d = signals received\n"
+                  "%8ds, %dms = wait-cpu (latency) time\n"
+                  "%8ds, %dms = user lock wait sleep time\n"
+                  "%8ds, %dms = all other sleep time\n"
+                  "%8d = voluntary context switches\n"
+                  "%8d = involuntary context switches\n"
+                  "%8d = total context switches\n"
+                  "%8d = system calls\n"
+                  "%8d = chars read/written\n"
+                  "%8d = number of LWPs\n"
+                  "---------------------\n"
+                  "real time   = %.3f\n"
+                  "user time   = %.3f\n"
+                  "system time = %.3f\n"
+                  "---------------------\n",
+                  rusage.pr_lwpid,
+                  rusage.pr_count,
+                  rusage.pr_minf,
+                  rusage.pr_majf,
+                  rusage.pr_inblk,
+                  rusage.pr_oublk,
+                  rusage.pr_msnd,
+                  rusage.pr_mrcv,
+                  rusage.pr_sigs,
+                  rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
+                  rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
+                  rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
+                  rusage.pr_vctx,
+                  rusage.pr_ictx,
+                  rusage.pr_vctx + rusage.pr_ictx,
+                  rusage.pr_sysc,
+                  rusage.pr_ioch,
+                  ACE_Thread::getconcurrency (),
+                  et.real_time, et.user_time, et.system_time));
 #else
       // need to write dump ops for rusage...
+      ACE_DEBUG ((LM_INFO,
+                  "%8d = minor page faults\n"
+                  "%8d = major page faults\n"
+                  "%8d = input blocks\n"
+                  "%8d = output blocks\n"
+                  "%8d = messages sent\n"
+                  "%8d = messages received\n"
+                  "%8d = signals received\n"
+                  "%8d = voluntary context switches\n"
+                  "%8d = involuntary context switches\n"
+                  "%8d = total context switches\n"
+                  "%8d = number of LWPs\n"
+                  "---------------------\n"
+                  "real time   = %.3f\n"
+                  "user time   = %.3f\n"
+                  "system time = %.3f\n"
+                  "---------------------\n",
+                  rusage.ru_minflt,
+                  rusage.ru_majflt,
+                  rusage.ru_inblock,
+                  rusage.ru_oublock,
+                  rusage.ru_msgsnd,
+                  rusage.ru_msgrcv,
+                  rusage.ru_nsignals,
+                  rusage.ru_nvcsw,
+                  rusage.ru_nivcsw,
+                  rusage.ru_nvcsw + rusage.ru_nivcsw,
+                  ACE_Thread::getconcurrency (),
+                  et.real_time, et.user_time, et.system_time));
 #endif /* ACE_HAS_PRUSAGE_T */
     }
   if (options.do_eager_exit ())
@@ -403,5 +452,3 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, size_t>
 #endif /* ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
