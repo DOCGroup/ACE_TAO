@@ -244,24 +244,21 @@ The first patch is for the GNU assembler, gas.  It is only necessary
 on Alphas, and only when <code>-g</code> is used.  If you don't want
 to patch the assembler, you can enable the SUPPRESS_DASH_G option in
 the <code>platform_linux.GNu</code>.  Otherwise, this patch can be
-applied to the binutils gas source.  Then, rebuild and install as.<p>
+applied to the binutils gas source.  Then, rebuild and install as.
+The file to be patched is binutils-2.8.1/gas/config/tc-alpha.h:<p>
 
 <pre>
---- ecoff.c.ORIGINAL	Mon May 26 12:32:47 1997
-+++ ecoff.c	Thu Jan 15 09:21:08 1998
-@@ -769,7 +769,11 @@
-    can't be represented (assuming there are strings &gt; 4096 bytes).  */
+--- tc-alpha.h.orig	Mon May 26 12:32:38 1997
++++ tc-alpha.h	Sat Feb 28 06:45:41 1998
+@@ -25,6 +25,8 @@
 
- #ifndef PAGE_SIZE
--#define PAGE_SIZE 4096		/* size of varray pages */
-+// Thu Jan 15 09:21:03 CST 1998  David L. Levine  &lt;levine@cs.wustl.edu&gt;
-+// Raised PAGE_SIZE to 8192 from 4096 to avoid "String too big"
-+// errors on Linux/Alpha, with -g.  The OS page size is 8192, so this
-+// should be OK.
-+#define PAGE_SIZE 8192		/* size of varray pages */
- #endif
+ #define TARGET_ARCH			bfd_arch_alpha
 
- #define PAGE_USIZE ((unsigned long) PAGE_SIZE)
++#define PAGE_SIZE 8192
++
+ #define TARGET_FORMAT (OUTPUT_FLAVOR == bfd_target_ecoff_flavour	\
+ 		       ? "ecoff-littlealpha"				\
+ 		       : OUTPUT_FLAVOR == bfd_target_elf_flavour	\
 </pre><p>
 
 In addition, you'll need to patch
@@ -274,7 +271,7 @@ to avoid compilation errors:<p>
 @@ -41,9 +41,14 @@
  #undef __FDMASK
  #define	__FDMASK(d)	(1UL &lt;&lt; ((d) % __NFDBITS))
- 
+
 +#if defined (__KERNEL__)
  typedef struct fd_set {
  	unsigned long fds_bits [__FDSET_LONGS];
@@ -283,7 +280,7 @@ to avoid compilation errors:<p>
 +#include &lt;gnu/types.h&gt;
 +typedef __fd_set __kernel_fd_set;
 +#endif /* ! __KERNEL__ */
- 
+
  /* Type of a signal handler.  */
  typedef void (*__kernel_sighandler_t)(int);
 </pre><p>
@@ -1090,7 +1087,7 @@ CPU = I80486
 include $(ACE_ROOT)/include/makeinclude/platform_NTvxworks5.x_g++.GNU
 </pre>
 
-    (But, I guess the PATH+= line is superfluous based on the PATH as shown 
+    (But, I guess the PATH+= line is superfluous based on the PATH as shown
     previously).
 
     Finally, create a
@@ -1119,13 +1116,13 @@ include $(ACE_ROOT)/include/makeinclude/platform_NTvxworks5.x_g++.GNU
         cd $ACE_ROOT/ace; make
         </pre>
 
-  <li>To build $ACE_ROOT/tests, I had to use the <code>make.exe</code> in the 
+  <li>To build $ACE_ROOT/tests, I had to use the <code>make.exe</code> in the
     <code>/gnuwin32/b18/H-i386-cygwin32/bin</code> directory as I couldn't get
     make shipped with Tornado to run ace_ld and I couldn't figure out any
     other work around.<p>
 
     <pre>
-    cd $ACE_ROOT/tests; /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    cd $ACE_ROOT/tests; /gnuwin32/b18/H-i386-cygwin32/bin/make
     </pre>
 
   Also, running the tests works as already documented.
@@ -1145,14 +1142,14 @@ include $(ACE_ROOT)/include/makeinclude/platform_NTvxworks5.x_g++.GNU
     <pre>
     CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
     cd $TAO_ROOT/orbsvcs/orbsvcs
-    /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    /gnuwin32/b18/H-i386-cygwin32/bin/make
     </pre>
 
   <li>Build $TAO_ROOT/tao
     <pre>
     CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
     cd $TAO_ROOT/tao
-    /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    /gnuwin32/b18/H-i386-cygwin32/bin/make
     </pre>
 
   <li>Build $TAO_ROOT/tests
