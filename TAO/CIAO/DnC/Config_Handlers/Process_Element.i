@@ -1,6 +1,7 @@
-//==================================================================
+// -*-C++-*-
+//=====================================================================
 /**
- *  @file Process_Element.h
+ *  @file Process_Element.i
  *
  *  $Id$
  *
@@ -8,29 +9,19 @@
  */
 //=====================================================================
 
-#ifndef PROCESS_ELEMENT_H
-#define PROCESS_ELEMENT_H
-
-DOMDocument* create_document (const char *url);
-
-/*
- *  For non-static process functions.  The function prototype should be:
- *
- *  void OBJECT::process_function (DOMDocument*, DOMNodeIterator*, DATA&);
- *
- */
+#include "Process_Element.i"
 
 template <typename VALUE, typename DATA, typename OBJECT>
-inline void process_element_attributes(DOMNamedNodeMap* named_node_map,
-                                       DOMDocument* doc,
-                                       DOMNodeIterator* iter,
-                                       VALUE value,
-                                       DATA& data,
-                                       OBJECT& obj,
-                                       void (OBJECT::*func)(DOMDocument*,
-                                                            DOMNodeIterator*,
-                                                            DATA&),
-                                       ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+void process_element_attributes(DOMNamedNodeMap* named_node_map,
+                                DOMDocument* doc,
+                                DOMNodeIterator* iter,
+                                VALUE value,
+                                DATA& data,
+                                OBJECT& obj,
+                                void (OBJECT::*func)(DOMDocument*,
+                                                     DOMNodeIterator*,
+                                                     DATA&),
+                                ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
 {
   // the number of attributes
   int length = named_node_map->getLength();
@@ -91,16 +82,16 @@ inline void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
 // This function only works for calling static process_ methods
 template <typename DATA, typename VALUE, typename OBJECT>
-inline void process_element (DOMNode* node,
-                             DOMDocument* doc,
-                             DOMNodeIterator* iter,
-                             DATA& data,
-                             VALUE val,
-                             OBJECT& obj,
-                             void (OBJECT::*func)(DOMDocument*,
-                                                  DOMNodeIterator*,
-                                                  DATA&),
-                             ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+void process_element (DOMNode* node,
+                      DOMDocument* doc,
+                      DOMNodeIterator* iter,
+                      DATA& data,
+                      VALUE val,
+                      OBJECT& obj,
+                      void (OBJECT::*func)(DOMDocument*,
+                                           DOMNodeIterator*,
+                                           DATA&),
+                      ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
 {
   // fetch attributes
   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -121,15 +112,15 @@ inline void process_element (DOMNode* node,
 
 // This function only works for calling static process_ methods
 template <typename SEQUENCE, typename DATA, typename OBJECT>
-inline void process_sequential_element (DOMNode* node,
-                                        DOMDocument* doc,
-                                        DOMNodeIterator* iter,
-                                        SEQUENCE& seq,
-                                        OBJECT& obj,
-                                        void (OBJECT::*func)(DOMDocument*,
-                                                             DOMNodeIterator*,
-                                                             DATA&),
-                                        ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+void process_sequential_element (DOMNode* node,
+                                 DOMDocument* doc,
+                                 DOMNodeIterator* iter,
+                                 SEQUENCE& seq,
+                                 OBJECT& obj,
+                                 void (OBJECT::*func)(DOMDocument*,
+                                                      DOMNodeIterator*,
+                                                      DATA&),
+                                 ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
 {
   if (node->hasAttributes ())
     {
@@ -141,5 +132,3 @@ inline void process_sequential_element (DOMNode* node,
       process_element(node, doc, iter, seq[i], i, obj, func, id_map);
     }
 }
-
-#endif // PROCESS_ELEMENT_H
