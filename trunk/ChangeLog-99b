@@ -1,3 +1,7 @@
+Sat May 22 16:36:14 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ACE version 4.6.40 released.
+
 Sat May 22 14:53:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Filecache.cpp: snagged another "template <>".
