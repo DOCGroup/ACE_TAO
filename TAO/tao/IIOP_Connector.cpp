@@ -124,6 +124,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
       ACE_INET_Addr dest;
       ACE_Unbounded_Stack<ACE_INET_Addr> dests;
 
+      size_t num_connections;
+
       char *nextptr = 0;
       char *where = 0;
       for (where = ACE::strsplit_r (preconnections, ",", nextptr);
@@ -163,7 +165,7 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
       // Create an array of addresses from the stack, as well as an
       // array of eventual handlers.
-      size_t num_connections = dests.size ();
+      num_connections = dests.size ();
       ACE_INET_Addr *remote_addrs = 0;
       TAO_Client_Connection_Handler **handlers = 0;
       char *failures = 0;
@@ -199,11 +201,39 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
             {
               handlers[index]->idle ();
               successes++;
+
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) Preconnection <%s:%d> "
+                              "succeeded.\n",
+                              remote_addrs[index].get_host_name (),
+                              remote_addrs[index].get_port_number ()));
+                }
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) Preconnection <%s:%d> failed.\n",
+                              remote_addrs[index].get_host_name (),
+                              remote_addrs[index].get_port_number ()));
+                }
             }
         }
-    }
 
-  ACE_OS::free (preconnections);
+      ACE_OS::free (preconnections);
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) IIOP preconnections: %d successes and "
+                      "%d failures.\n",
+                      successes,
+                      num_connections - successes));
+        }
+    }
 
   return successes;
 }
