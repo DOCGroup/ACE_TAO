@@ -1,0 +1,9 @@
+// $Id$
+
+#ifndef METRICS_FRAME_MANAGER_I
+#define METRICS_FRAME_MANAGER_I
+
+
+
+#endif /* METRICS_FRAME_MANAGER_I */
+

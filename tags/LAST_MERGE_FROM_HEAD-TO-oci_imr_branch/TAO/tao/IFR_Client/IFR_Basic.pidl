@@ -1,0 +1,427 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO_IFR_Client
+//
+// = FILENAME
+//   IFR_Basic.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in IFR_BasicC.{h,i,cpp}.
+//   The original file Interface.idl was split into four pieces, to
+//   keep the generated files to a manageable size and reduce build
+//   time. This IDL file contains the concrete base interfaces of
+//   the IFR, except for fixed types, valuetypes and CORBA components.
+//
+//   The command used to generate code from this IDL file is:
+//
+//     tao_idl -Ge 1 -I.. \
+//          -Wb,export_macro=TAO_IFR_Client_Export \
+//          -Wb,export_include=ifr_client_export.h \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Basic.pidl
+//
+//   Only the stub files are used in the TAO_IFR_Client library. The
+//   skeleton files can be deleted from this directory.
+//
+//   No patching of the generated stub files is necessary.
+//
+//   To generate the skeleton files for the IFR Service, the command is:
+//
+//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Basic.pidl
+//
+//   The only modification necessary to the skelton files is to 
+//   change
+//
+//   #include "IFR_BasicC.h"
+//
+//   to
+//
+//   #include "tao/IFR_Client/IFR_BasicC.h"
+//
+//   in IFR_BasicS.h. The stub files may be deleted from the IFRService
+//   directory.
+//
+// ================================================================
+
+#ifndef _IFR_BASIC_IDL_
+#define _IFR_BASIC_IDL_
+
+#include "IFR_Base.pidl"
+
+module CORBA 
+{
+  typeprefix CORBA "omg.org";
+
+  interface PrimitiveDef;
+  interface StringDef;
+  interface SequenceDef;
+  interface ArrayDef;
+  interface WstringDef;
+  interface FixedDef;
+
+  enum PrimitiveKind 
+  {
+    pk_null, 
+    pk_void, 
+    pk_short, 
+    pk_long, 
+    pk_ushort, 
+    pk_ulong,
+    pk_float, 
+    pk_double, 
+    pk_boolean, 
+    pk_char, 
+    pk_octet,
+    pk_any, 
+    pk_TypeCode, 
+    pk_Principal, 
+    pk_string, 
+    pk_objref,
+    pk_longlong, 
+    pk_ulonglong, 
+    pk_longdouble,
+    pk_wchar, 
+    pk_wstring, 
+    pk_value_base
+  };
+
+  interface Repository : Container 
+  {
+    // read interface
+    Contained lookup_id (
+        in RepositoryId search_id
+      );
+    TypeCode get_canonical_typecode (
+        in TypeCode tc
+      );
+    PrimitiveDef get_primitive (
+        in PrimitiveKind kind
+      );
+    // write interface
+    StringDef create_string (
+        in unsigned long bound
+      );
+    WstringDef create_wstring (
+        in unsigned long bound
+      );
+    SequenceDef create_sequence (
+        in unsigned long bound,
+        in IDLType element_type
+      );
+    ArrayDef create_array (
+        in unsigned long length,
+        in IDLType element_type
+      );
+    FixedDef create_fixed (
+        in unsigned short digits,
+        in short scale
+      );
+  };
+
+  interface ModuleDef : Container, Contained 
+  {
+  };
+
+  struct ModuleDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+  };
+
+  interface ConstantDef : Contained 
+  {
+    readonly attribute TypeCode type;
+    attribute IDLType type_def;
+    attribute any value;
+  };
+
+  struct ConstantDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+    any value;
+  };
+
+  interface StructDef : TypedefDef, Container 
+  {
+    attribute StructMemberSeq members;
+  };
+
+  interface UnionDef : TypedefDef, Container 
+  {
+    readonly attribute TypeCode discriminator_type;
+    attribute IDLType discriminator_type_def;
+    attribute UnionMemberSeq members;
+  };
+
+  interface EnumDef : TypedefDef 
+  {
+    attribute EnumMemberSeq members;
+  };
+
+  interface AliasDef : TypedefDef 
+  {
+    attribute IDLType original_type_def;
+  };
+
+  interface NativeDef : TypedefDef 
+  {
+  };
+
+  interface PrimitiveDef: IDLType 
+  {
+    readonly attribute PrimitiveKind kind;
+  };
+
+  interface StringDef : IDLType 
+  {
+    attribute unsigned long bound;
+  };
+
+  interface WstringDef : IDLType 
+  {
+    attribute unsigned long bound;
+  };
+
+  interface SequenceDef : IDLType 
+  {
+    attribute unsigned long bound;
+    readonly attribute TypeCode element_type;
+    attribute IDLType element_type_def;
+  };
+
+  interface ArrayDef : IDLType 
+  {
+  attribute unsigned long length;
+  readonly attribute TypeCode element_type;
+  attribute IDLType element_type_def;
+  };
+
+  interface ExceptionDef : Contained, Container 
+  {
+    readonly attribute TypeCode type;
+    attribute StructMemberSeq members;
+  };
+
+  typedef sequence <ExceptionDef> ExceptionDefSeq;
+
+  enum AttributeMode 
+  {
+    ATTR_NORMAL, 
+    ATTR_READONLY
+  };
+
+  interface AttributeDef : Contained 
+  {
+    readonly attribute TypeCode type;
+    attribute IDLType type_def;
+    attribute AttributeMode mode;
+  };
+
+  struct AttributeDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+    AttributeMode mode;
+  };
+
+  struct ExtAttributeDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+    AttributeMode mode;
+    ExcDescriptionSeq get_exceptions;
+    ExcDescriptionSeq put_exceptions;
+  };
+
+  interface ExtAttributeDef : AttributeDef 
+  {
+    // read/write interface
+    attribute ExcDescriptionSeq get_exceptions;
+    attribute ExcDescriptionSeq set_exceptions;
+    // read interface
+    ExtAttributeDescription describe_attribute ();
+  };
+
+  enum OperationMode 
+  {
+    OP_NORMAL, 
+    OP_ONEWAY
+  };
+
+// Already defined in corbafwd.h, included from orb.idl
+/*
+  enum ParameterMode 
+  {
+    PARAM_IN, 
+    PARAM_OUT, 
+    PARAM_INOUT
+  };
+*/
+  struct ParameterDescription 
+  {
+    Identifier name;
+    TypeCode type;
+    IDLType type_def;
+    ParameterMode mode;
+  };
+
+  typedef sequence <ParameterDescription> ParDescriptionSeq;
+  typedef Identifier ContextIdentifier;
+  typedef sequence <ContextIdentifier> ContextIdSeq;
+
+  interface OperationDef : Contained 
+  {
+    readonly attribute TypeCode result;
+    attribute IDLType result_def;
+    attribute ParDescriptionSeq params;
+    attribute OperationMode mode;
+    attribute ContextIdSeq contexts;
+    attribute ExceptionDefSeq exceptions;
+  };
+
+  struct OperationDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode result;
+    OperationMode mode;
+    ContextIdSeq contexts;
+    ParDescriptionSeq parameters;
+    ExcDescriptionSeq exceptions;
+  };
+
+  typedef sequence <RepositoryId> RepositoryIdSeq;
+  typedef sequence <OperationDescription> OpDescriptionSeq;
+  typedef sequence <AttributeDescription> AttrDescriptionSeq;
+  typedef sequence <ExtAttributeDescription> ExtAttrDescriptionSeq;
+
+  interface InterfaceDef : Container, 
+			   Contained, 
+			   IDLType 
+  {
+    // read/write interface
+    attribute InterfaceDefSeq base_interfaces;
+    // read interface
+    boolean is_a (
+        in RepositoryId interface_id
+      );
+
+    struct FullInterfaceDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      AttrDescriptionSeq attributes;
+      RepositoryIdSeq base_interfaces;
+      TypeCode type;
+    };
+
+    FullInterfaceDescription describe_interface ();
+
+    // write interface
+    AttributeDef create_attribute (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in IDLType type,
+        in AttributeMode mode
+      );
+    OperationDef create_operation (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in IDLType result,
+        in OperationMode mode,
+        in ParDescriptionSeq params,
+        in ExceptionDefSeq exceptions,
+        in ContextIdSeq contexts
+      );
+  };
+
+  struct InterfaceDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    RepositoryIdSeq base_interfaces;
+  };
+
+  interface InterfaceAttrExtension 
+  {
+    // read interface
+    struct ExtFullInterfaceDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      ExtAttrDescriptionSeq attributes;
+      RepositoryIdSeq base_interfaces;
+      TypeCode type;
+    };
+
+    ExtFullInterfaceDescription describe_ext_interface ();
+
+    // write interface
+    ExtAttributeDef create_ext_attribute (
+	in RepositoryId id,
+	in Identifier name,
+	in VersionSpec version,
+	in IDLType type,
+	in AttributeMode mode,
+	in ExceptionDefSeq get_exceptions,
+	in ExceptionDefSeq set_exceptions
+      );
+  };
+
+  interface ExtInterfaceDef : InterfaceDef,
+			      InterfaceAttrExtension 
+  {
+  };
+
+  interface AbstractInterfaceDef : InterfaceDef 
+  {
+  };
+
+  interface ExtAbstractInterfaceDef : AbstractInterfaceDef,
+				      InterfaceAttrExtension 
+  {
+  };
+
+  interface LocalInterfaceDef : InterfaceDef 
+  {
+  };
+
+  interface ExtLocalInterfaceDef : LocalInterfaceDef,
+				   InterfaceAttrExtension 
+  {
+  };
+};
+
+#endif /* _IFR_BASIC_IDL_ */

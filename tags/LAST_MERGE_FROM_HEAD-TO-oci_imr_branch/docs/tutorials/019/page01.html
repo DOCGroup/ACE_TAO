@@ -1,0 +1,62 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 019</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 019</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Sharing your Memories</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+      Did you ever wish you could read someone's mind?  Or that they could
+      read yours?
+    <p>
+      Well, we won't be doing that here but we'll try to get close by
+      letting your code do something similar:  Shared Memory.
+    <p>
+      What we're going to do is ask the operating system to set
+      aside a part of RAM that we can share with another process.  By
+      doing this, we can allow our applications to swap data very
+      efficiently.
+    <p>
+      Along the way, we'll have to come up with some sort of
+      coordination betweent the processes.  That is the most
+      difficult part of a shared memory system.  In the tutorial we're
+      just going to take a simplistic approach (eg -- busy loop) but
+      real-world applications will need to take a serious look at
+      process-level synch mechanisms such as ACE_*_Semaphore.
+    <P>
+      Caveat:  I've barely begun to use shared memory
+      myself.  This tutorial and the next are very simple-minded and
+      primitive.  Anyone who wants to provide more realistic
+      replacements is encouraged to drop me a note
+      (<A HREF="mailto:jcej@lads.com">jcej@lads.com</A>).
+<P>
+A tutorial wouldn't be complete without Kirthika's abstract:
+<UL>
+This tutorial shows how to use memory as a shared resource between the
+client and server processes. ACE_Shared_Memory_SV has been used for
+creating
+the shared memory segment. Two different approaches have been used. One
+uses the malloc () method to allocate memory while the other uses the
+placement new expression (C++) of allocating a memory chunk in advance
+and using it on demand.
+<P>
+The server has a string of alphabets from a-z which are converted to
+uppercase
+by the client proving that the same memory locations are being shared
+between
+the two processes. The syncronisation between the server and client is
+done
+using the ACE_OS::sleep () instead of a semaphore/mutexes with the aim
+of keeping our first dive into shared memory usage simple and easy to
+fathom.
+</UL>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>
+

@@ -1,0 +1,46 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/OBV/TC_Alignment
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//    IDL description of the TypeCode alignment Test interface for valuetypes
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
+
+module obvmod
+{
+  valuetype tcOffset1
+  {
+    public long mem;
+  };
+
+  valuetype tcOffset003
+  {
+    public long mem;
+  };
+
+  valuetype tcOffset00005
+  {
+    public long mem;
+  };
+
+  valuetype tcOffset0000007
+  {
+    public long mem;
+  };
+};
+
+interface test
+{
+  any get_value (in long type);
+  oneway void shutdown ();
+};

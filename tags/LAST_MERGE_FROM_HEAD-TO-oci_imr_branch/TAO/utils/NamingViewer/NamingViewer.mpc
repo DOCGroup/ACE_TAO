@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project : namingexe, mfc {
+  exename    = NamingViewer
+  pch_header = StdAfx.h
+  pch_source = StdAfx.cpp
+
+  specific(em3, nmake, vc6) {
+    subsystem = windows
+  }
+  specific(vc7, vc71) {
+    subsystem = 2
+  }
+
+  Resource_Files {
+    NamingViewer.rc
+    res/NamingViewer.ico
+    res/NamingViewer.rc2
+  }
+}

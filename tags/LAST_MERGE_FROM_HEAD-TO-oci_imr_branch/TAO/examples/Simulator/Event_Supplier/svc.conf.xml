@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!-- Converted from ./examples/Simulator/Event_Supplier/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <static id="Server_Strategy_Factory" params=" -ORBdemuxstrategy dynamic -ORBtablesize 128"/>
+</ACE_Svc_Conf>

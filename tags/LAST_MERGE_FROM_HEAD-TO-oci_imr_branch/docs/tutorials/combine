@@ -1,0 +1,171 @@
+eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+
+#
+# This perl script will combine a set of files into one or more HTML pages.
+#
+# The file fooNN.html will be created by combining the files:
+#    fooNN.hdr
+#    fooNN.pre
+#    fooNN.bdy
+#    fooNN.pst
+#
+# Where NN is a 2-digit number.  If fooNN.hdr does not exist, the file 'hdr'
+# will be used.  If any of the other file-parts don't exist, they will be
+# ignored.
+#
+# Usage:
+#    combine *.html
+#    combine *.pre
+#
+# Input files:
+#
+#
+#     hdr
+#      If no *.hdr exists for the current page, this is used.  You will typically
+#      use this to add <TITLE> and such to each page created.
+#
+#     *.hdr
+#      You can override the generic hdr you create by creating one for
+#      a specific page.
+#
+#    *.pre
+#      Prefix files.  Their content is included after the hdr.
+#
+#    *.bdy
+#      Body files follow prefix.  You generally use the links file to create
+#      links between source-code and a bdy filename.  The bdy files are
+#      examined and "fontified" (think emacs).
+#
+#     bodies
+#      The list of files to use for the body of the HTML pages generated
+#
+#    *.pst
+#      Post files.  This content follows the bdy content.
+#
+#    *.html    
+#      These are the output.  If they exist before you run combine, they
+#      will be overwritten.
+#
+use File::Copy;
+
+%format = ();
+
+$PAGE=0;
+
+open(LINKS,"<bodies") || die("No 'bodies' file found!");
+while( ($file = <LINKS>) ) {
+
+	chomp($file);
+
+        next if( $file =~ /^#/ || $file eq '' );
+
+	if( $file =~ /^.*=/ ) {
+		($var,$value) = split(/=/,$file);
+		if( $var =~ /PAGE/ ) {
+			$PAGE = $value + 0;
+		}
+		next;
+	}
+
+  $body{$PAGE++} = "$file";
+}
+close(LINKS);
+
+foreach $file (@ARGV) {
+  ($base = $file) =~ s/.html$//;
+   $base =~ s/.pre$//;
+
+  open(FILE,">$base.html") || die;
+  select(FILE);
+  $| = 1;
+
+  print FILE '<!-- $Id$ -->' . "\n";
+
+  # .hdr has the HTML header, title, etc...
+  if( -f "$base.hdr" ) {
+	copy("$base.hdr",\*FILE);
+  }
+  elsif( -f "hdr" ) {
+	copy("hdr",\*FILE);
+  }
+  # .pre has the discussion of what you'll see on this page
+  if( -f "$base.pre" ) {
+	copy("$base.pre",\*FILE);
+  }
+  # .bdy is the body of the page
+  if( -f "$base.bdy" ) {
+	&addFile("$base.bdy");
+  }
+
+  ($num = $base) =~ s/[A-z]//g;
+   $num += 0;
+
+  if( -f "$body{$num}" || "$body{$num}" =~ /\s/ ) {
+	&addFile("$body{$num}");
+  }
+  # .pst summarizes what was seen
+  if( -f "$base.pst" ) {
+	copy("$base.pst",\*FILE);
+  }
+  # .ftr follows the footer to show "continue to next page" stuff
+  if( -f "$base.ftr" ) {
+	copy("$base.ftr",\*FILE);
+  }
+  else {
+	++$num;
+	$base =~ s/[0-9]//g;
+	$next = sprintf("$base%02.2d",$num);
+	print FILE "<P><HR WIDTH=\"100%\">\n";
+	print FILE "<CENTER>[<A HREF=\"../online-tutorials.html\">Tutorial Index</A>] ";
+	if( $file ne $ARGV[$#ARGV] ) {
+	  print FILE "[<A HREF=\"$next.html\">Continue This Tutorial</A>]";
+	}
+	print FILE "</CENTER>\n";
+  }
+  print FILE "\n";
+  close(FILE);
+}
+
+sub addFile {
+	local($file) = @_;
+
+        local(@file) = split(/\s+/,$file);
+
+        foreach $file (@file)
+          {
+               if( $#file > 0 )
+                 {
+                   print FILE "<HR width=50%><P><center>$file</center><HR width=50%>\n";
+                 }
+               print FILE "<PRE>\n" ;
+               open(INPUT,"<$file") || die "Cannot open $file for read\n";
+               # Do some substitutes on each line to try and get the output to
+               # look like it does in fontified emacs.
+               while( <INPUT> )
+               {
+                  s/</\&lt;/g;
+                  if( m,include\s+"ace/.*\.h", ) {
+                    s,(ace/.*\.h),<A HREF="../../../$1">$1</A>,;
+                    s,\#\s*include,<font color=blue>$&</font>,;
+                  }
+                  else
+                  {
+                    s,\#(\s*)(e?l?if !?defined|pragma|ifn?def|define)(\W*)([\w\.]+),<font color=blue>\#$1$2</font>$3<font color=purple>$4</font>,;
+                    s,\#\s*(include|endif),<font color=blue>$&</font>,;
+                    s,"([^"]+)","<font color=green>$1</font>",g;
+                    s,//.*$,<font color=red>$&</font>,;
+                    s,/\*,<font color=red>$&,;
+                    s,\*/,$&</font>,;
+                    s,\w+::\~?\w+,<font color=\#008888>$&</font>,;
+                  }
+                  s/[ \t]+$//;
+                  s/\t/  /g;
+                  print FILE $_;
+               }
+               print FILE "</PRE>\n";
+          }
+}

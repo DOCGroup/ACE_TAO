@@ -1,0 +1,28 @@
+//
+// $Id$
+//
+
+module Test
+{
+  interface Receiver {
+
+    /// Receive a call and  send back the number of calls received..
+    long  receive_call ();
+
+    /// Get the number of calls that every thread would make...
+    long get_call_count ();
+
+  };
+
+  interface Sender {
+
+    /// Ping message..
+    void ping ();
+
+    /// Number of active objects trying to use this interface
+    oneway void active_objects (in short ao);
+
+    /// Send a ready message
+    oneway void send_ready_message (in Receiver callback);
+    };
+};
