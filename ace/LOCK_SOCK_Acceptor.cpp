@@ -19,4 +19,10 @@ ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
                         reset_new_handle);
 }
 
+template <class ACE_LOCK> ACE_LOCK &
+ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::lock (void)
+{
+  return this->lock_;
+}
+
 #endif /* LOCK_SOCK_ACCEPTOR_CPP */
