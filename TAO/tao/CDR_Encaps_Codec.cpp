@@ -324,6 +324,9 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 
           ptrdiff_t offset =
             ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+          if (offset < 0)
+            offset += ACE_CDR::MAX_ALIGNMENT;
+
           mb.rd_ptr (offset);
           mb.wr_ptr (offset + size);
 
