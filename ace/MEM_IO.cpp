@@ -88,6 +88,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   return buf->size ();
 }
 
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 int
 ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 {
@@ -303,6 +304,7 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 
   return buf->size ();
 }
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 
 void
 ACE_MEM_IO::dump (void) const
@@ -326,11 +328,13 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
                       ACE_Reactive_MEM_IO (),
                       -1);
       break;
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
     case ACE_MEM_IO::MT:
       ACE_NEW_RETURN (this->deliver_strategy_,
                       ACE_MT_MEM_IO (),
                       -1);
       break;
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
     default:
       return -1;
     }
