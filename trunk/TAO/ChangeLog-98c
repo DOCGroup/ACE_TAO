@@ -1,3 +1,7 @@
+Mon Jul 21 15:08:36 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO version 0.0.7, released Mon Jul 21 15:08:36 1997.
+
 Mon Jul 21 12:06:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/object.cpp: removed the #include of object.i since it will
