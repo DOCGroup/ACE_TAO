@@ -162,12 +162,21 @@ TAO_GIOP_Message_NonReactive_Handler::read_message (TAO_Transport *transport,
 
       // @@ Do we need to check for errno != EWOULDBLOCK?? and errno ==
       // @@ ECONNRESET. Does such things make sense here??
-      if (bytes == -1 && errno == EAGAIN)
-        return 0;
+      if (bytes == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+        {
+          bytes = 0;
+          continue;
+        }
+
+      if (bytes == 0)
+        return -1;
+
 
       if (bytes == 0 ||
           bytes == -1)
-        return -1;
+      {
+         return -1;
+      }
 
       buf += bytes;
     }
