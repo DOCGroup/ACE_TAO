@@ -1,3 +1,8 @@
+Mon Mar  4 14:43:11 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
+	  Update dependencies
+
 Mon Mar 04 17:29:25 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
