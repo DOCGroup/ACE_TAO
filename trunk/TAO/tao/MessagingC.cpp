@@ -1360,7 +1360,7 @@ TAO_NAMESPACE_END
 
 // ****************************************************************
 
-//#if defined(TAO_HAS_AMI_CALLBACK)
+#if defined(TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 // *************************************************************
 // Messaging::ExceptionHolder::_tao_seq_Octet
@@ -1797,7 +1797,7 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 }
 
 
-//#endif /* TAO_HAS_AMI_CALLBACK */
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
 
 #if defined(TAO_HAS_AMI_POLLER)
 
