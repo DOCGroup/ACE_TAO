@@ -704,7 +704,7 @@ Client::svc (void)
   // any further.
   this->ts_->barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Everyone's done, here I go!!\n"));
+              "(%t; %D) Everyone's done, here I go!!\n"));
   if (this->ts_->oneway_ == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) **** USING ONEWAY CALLS ****\n"));
@@ -795,9 +795,12 @@ Client::cube_octet (void)
     }
   TAO_CATCHANY
     {
+
+      ACE_OS::fprintf (stderr, "%s:%d, errno: %d\n", __FILE__, __LINE__, errno); // ????
+
       TAO_TRY_ENV.print_exception ("call to cube_octet()\n");
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s: Call failed\n",
+                         "(%t; %D) %s: Call failed\n",
                          TAO_TRY_ENV.exception ()),
                         -1);
     }
@@ -1128,7 +1131,7 @@ Client::do_test (void)
           }
 
     } /* end of for () */
-  ACE_DEBUG ((LM_DEBUG, "(%t) do_test executed %u iterations\n", i));
+  ACE_DEBUG ((LM_DEBUG, "(%t; %D) do_test executed %u iterations\n", i));
 
   return 0;
 }
