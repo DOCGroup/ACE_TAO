@@ -24,11 +24,11 @@ Time_Client_i::run (int argc,
   if (client.init (argc, argv) == -1)
     return -1;
 
-  TAO_TRY 
+  ACE_TRY_NEW_ENV 
     {
       //Make the RMI.
-      CORBA::Long timedate = client->time (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Long timedate = client->time (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       // Print out value
       char *ascii_timedate =
@@ -39,15 +39,16 @@ Time_Client_i::run (int argc,
                   ascii_timedate));
 
       if (client.shutdown () == 1)
-        client->shutdown (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        client->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("\tException");
+      ACE_TRY_ENV.print_exception ("\tException");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  
 
   return 0;
 }
