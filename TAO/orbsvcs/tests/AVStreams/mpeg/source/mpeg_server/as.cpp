@@ -400,7 +400,7 @@ static int PLAYaudio(void)
   
   for (;;)
   {
-    struct fd_set read_mask, write_mask;
+    fd_set read_mask, write_mask;
     struct timeval tval;
     unsigned curTime = get_usec();
     
@@ -622,7 +622,7 @@ static void on_exit_routine(void)
   /*
   fprintf(stderr, "An AS session terminated\n");
   */
-  if (getpeername(serviceSocket,
+  if (ACE_OS::getpeername(serviceSocket,
                   (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
@@ -630,7 +630,7 @@ static void on_exit_routine(void)
       time_t val =ACE_OS::time (NULL);
       char * buf = ACE_OS::ctime (&start_time);
 
-      hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
+      hp = ACE_OS::gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
       printf("%s: %s %3dm%02ds %dB %s\n",
              buf,
