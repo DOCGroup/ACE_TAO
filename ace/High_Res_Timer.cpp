@@ -59,12 +59,12 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
-  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 # elif defined (ghs) || defined (__GNUG__)
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
-  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 # endif /* ! ACE_WIN32 && ! ghs && ! __GNUG__ */
 #elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
   defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS) || \
@@ -76,8 +76,60 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 #else
   // Don't convert at all, by default.  Application code may have to
   // override this using a call to global_scale_factor ().
-  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 #endif /* ACE_WIN32 */
+
+ACE_UINT32
+ACE_High_Res_Timer::global_scale_factor ()
+{
+#if defined (ACE_HAS_PENTIUM) && \
+    ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
+     defined (ghs) || defined (__GNUG__))
+  // Check if the global scale factor needs to be set, and do if so.
+  if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+    {
+      // Grab ACE's static object lock.  This doesn't have anything to
+      // do with static objects; it's just a convenient lock to use.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      // Double check
+      if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+        {
+#         if defined (ACE_WIN32)
+            ACE_High_Res_Timer::global_scale_factor (
+              ACE_High_Res_Timer::get_registry_scale_factor ());
+#         elif defined (linux)
+            // Get the BogoMIPS from /proc.
+            FILE *cpuinfo;
+            if ((cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r")))
+              {
+                char buf[128];
+                while (ACE_OS::fgets (buf, sizeof buf, cpuinfo))
+                  {
+                    ACE_UINT32 whole, fractional;
+                    if (::sscanf (buf, "BogoMIPS : %d.%d\n",
+                                  &whole, &fractional) == 2 ||
+                        ::sscanf (buf, "bogomips : %d.%d\n",
+                                  &whole, &fractional) == 2)
+                      {
+                        ACE_High_Res_Timer::global_scale_factor (whole);
+                        break;
+                      }
+                  }
+                ACE_OS::fclose (cpuinfo);
+              }
+#         endif /* ! ACE_WIN32 && ! linux */
+
+          if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+            // Failed to retrieve CPU speed from system, so calculate it.
+            ACE_High_Res_Timer::calibrate ();
+        }
+    }
+#endif /* ACE_HAS_PENTIUM && ((WIN32 && ! WINCE) || ghs || __GNUG__) */
+
+  return global_scale_factor_;
+}
 
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
 {
@@ -85,29 +137,8 @@ ACE_High_Res_Timer::ACE_High_Res_Timer (void)
 
   this->reset ();
 
-#if defined (ACE_HAS_PENTIUM) && \
-    ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ghs) || defined (__GNUG__))
-  // Check if the global scale factor needs to be set, and do if so.
-  if (ACE_High_Res_Timer::global_scale_factor_ == 1)
-    {
-      // Grab ACE's static object lock.  This doesn't have anything to
-      // do with static objects; it's just a convenient lock to use.
-      ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                         *ACE_Static_Object_Lock::instance ()));
-
-      // Double check
-      if (ACE_High_Res_Timer::global_scale_factor_ == 1)
-        {
-#         if defined (ACE_WIN32)
-            ACE_High_Res_Timer::global_scale_factor (
-              ACE_High_Res_Timer::get_registry_scale_factor ());
-#         else  /* ! ACE_WIN32 */
-            ACE_High_Res_Timer::calibrate ();
-#         endif /* ! ACE_WIN32 */
-        }
-    }
-#endif /* ACE_HAS_PENTIUM && ((WIN32 && ! WINCE) || ghs || __GNUG__) */
+  // Make sure that the global scale factor is set.
+  (void) global_scale_factor ();
 }
 
 ACE_UINT32
@@ -156,7 +187,7 @@ ACE_High_Res_Timer::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nglobal_scale_factor_: %u\n"),
-             global_scale_factor_));
+             global_scale_factor ()));
 #if defined (ACE_LACKS_LONGLONG_T)
   ACE_DEBUG ((LM_DEBUG,
              ASYS_TEXT ("start_.hi (): %u; start_.lo (): %u;\n"
@@ -206,11 +237,11 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
   u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor_ * 1000u /
-                                global_scale_factor_);
+                                global_scale_factor () * 1000u /
+                                global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor_);
+  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
 
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
@@ -245,11 +276,11 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
   u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor_ * 1000u /
-                                global_scale_factor_);
+                                global_scale_factor () * 1000u /
+                                global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor_);
+  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
 
   // Total nanoseconds in a single 64-bit value.
   nanoseconds = useconds * 1000u + nseconds;
