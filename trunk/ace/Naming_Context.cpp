@@ -37,17 +37,17 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                           size_t length) const
 {
   ACE_TRACE ("ACE_Naming_Context::info");
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf, "%s\t#%s\n",
                    "ACE_Naming_Context",
                    "Proxy for making calls to a Name Server");
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 int
