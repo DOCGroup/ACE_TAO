@@ -1,3 +1,9 @@
+Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added definitions of ACE_SHLIB_HANDLE and
+	  ACE_DEFAULT_SHLIB_MODE on platforms other that
+	  ACE_HAS_SVR4_DYNAMIC_LINKING and hpux.
+
 Fri Jun 27 13:10:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* ace: Changed the name of config-vxworks5.2-g++.h to
