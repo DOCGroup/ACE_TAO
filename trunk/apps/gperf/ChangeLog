@@ -1,3 +1,8 @@
+Wed Sep 16 18:18:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Makefile: Changed CFLAGS to CCFLAGS to make aCC happy on
+ 	  HP/UX.  Thanks to John Mulhern for reporting this.
+
 Tue Sep 15 18:14:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/test-6.exp (Usage): Fixed the usage so diff should no
