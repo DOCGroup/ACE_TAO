@@ -5,9 +5,9 @@ Wed Jun 14 18:15:43 2000  Ossama Othman  <ossama@uci.edu>
 	  Check if ucontext_t gets defined by including <signal.h>, if the
 	  check in <ucontext.h> fails.  Some platforms define ucontext_t
 	  in <sys/ucontext.h>, but ACE doesn't explicitly include that
-	  header.  However, it is very likely that <signal.h> does.  This
-	  should fix a configuration problem that was occuring on FreeBSD
-	  4.0.
+	  header.  However, it is very likely that <signal.h> does, either
+	  directly or indirectly.  This should fix a configuration problem
+	  that was occuring on FreeBSD 4.0.
 
 Wed Jun 14 17:54:18 2000  Ossama Othman  <ossama@uci.edu>
 
