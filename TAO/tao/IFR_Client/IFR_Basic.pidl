@@ -58,6 +58,8 @@
 
 module CORBA 
 {
+  typeprefix CORBA "omg.org";
+
   interface PrimitiveDef;
   interface StringDef;
   interface SequenceDef;

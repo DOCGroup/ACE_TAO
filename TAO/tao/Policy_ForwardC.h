@@ -88,7 +88,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<Policy, tao_Policy_life> Policy_var;
   typedef TAO_Objref_Out_T<Policy, tao_Policy_life> Policy_out;
   
-  struct tao_Policy_life
+  struct TAO_Export tao_Policy_life
   {
     static Policy_ptr tao_duplicate (Policy_ptr);
     static void tao_release (Policy_ptr);
@@ -99,7 +99,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_Policy_cast
+  struct TAO_Export tao_Policy_cast
   {
     static Policy_ptr tao_narrow (
         CORBA::Object_ptr

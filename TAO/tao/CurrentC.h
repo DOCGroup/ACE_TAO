@@ -70,7 +70,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<Current, tao_Current_life> Current_var;
   typedef TAO_Objref_Out_T<Current, tao_Current_life> Current_out;
   
-  struct tao_Current_life
+  struct TAO_Export tao_Current_life
   {
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
@@ -81,7 +81,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_Current_cast
+  struct TAO_Export tao_Current_cast
   {
     static Current_ptr tao_narrow (
         CORBA::Object_ptr

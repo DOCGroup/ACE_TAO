@@ -26,18 +26,17 @@
 #define _TAO_IDL_ORIG_IMPLREPOC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "portableserver_export.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portableserver_export.h"
-
-#include "tao/Exception.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
 #include "tao/Remote_Object_Proxy_Impl.h"
+#include "tao/VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -69,90 +68,41 @@ TAO_NAMESPACE  ImplementationRepository
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___PTR_CH_
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ODDS_N_ENDS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ODDS_N_ENDS_CH_
   
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___VAR_CH_
+  struct tao_ServerObject_life;
+  typedef TAO_Objref_Var_T<ServerObject, tao_ServerObject_life> ServerObject_var;
+  typedef TAO_Objref_Out_T<ServerObject, tao_ServerObject_life> ServerObject_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_PortableServer_Export ServerObject_var : public TAO_Base_var
+  struct TAO_PortableServer_Export tao_ServerObject_life
   {
-  public:
-    ServerObject_var (void); // default constructor
-    ServerObject_var (ServerObject_ptr p) : ptr_ (p) {} 
-    ServerObject_var (const ServerObject_var &); // copy constructor
-    ~ServerObject_var (void); // destructor
-    
-    ServerObject_var &operator= (ServerObject_ptr);
-    ServerObject_var &operator= (const ServerObject_var &);
-    ServerObject_ptr operator-> (void) const;
-    
-    operator const ServerObject_ptr &() const;
-    operator ServerObject_ptr &();
-    // in, inout, out, _retn 
-    ServerObject_ptr in (void) const;
-    ServerObject_ptr &inout (void);
-    ServerObject_ptr &out (void);
-    ServerObject_ptr _retn (void);
-    ServerObject_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ServerObject_ptr tao_duplicate (ServerObject_ptr);
     static void tao_release (ServerObject_ptr);
     static ServerObject_ptr tao_nil (void);
-    static ServerObject_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ServerObject_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ServerObject_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ServerObject_var (const TAO_Base_var &rhs);
-    ServerObject_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_PortableServer_Export ServerObject_out
+  struct TAO_PortableServer_Export tao_ServerObject_cast
   {
-  public:
-    ServerObject_out (ServerObject_ptr &);
-    ServerObject_out (ServerObject_var &);
-    ServerObject_out (const ServerObject_out &);
-    ServerObject_out &operator= (const ServerObject_out &);
-    ServerObject_out &operator= (const ServerObject_var &);
-    ServerObject_out &operator= (ServerObject_ptr);
-    operator ServerObject_ptr &();
-    ServerObject_ptr &ptr (void);
-    ServerObject_ptr operator-> (void);
-  
-  private:
-    ServerObject_ptr &ptr_;
+    static ServerObject_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_
@@ -211,7 +161,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -565,9 +515,25 @@ TAO_NAMESPACE  ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class EnvironmentVariable_var;
+  struct EnvironmentVariable;
+  
+  typedef
+    TAO_Var_Var_T<
+        EnvironmentVariable
+      >
+    EnvironmentVariable_var;
+  
+  typedef
+    TAO_Out_T<
+        EnvironmentVariable,
+        EnvironmentVariable_var
+      >
+    EnvironmentVariable_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export EnvironmentVariable
   {
@@ -579,67 +545,12 @@ TAO_NAMESPACE  ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_PortableServer_Export EnvironmentVariable_var
-  {
-  public:
-    EnvironmentVariable_var (void);
-    EnvironmentVariable_var (EnvironmentVariable *);
-    EnvironmentVariable_var (const EnvironmentVariable_var &);
-    ~EnvironmentVariable_var (void);
-    
-    EnvironmentVariable_var &operator= (EnvironmentVariable *);
-    EnvironmentVariable_var &operator= (const EnvironmentVariable_var &);
-    EnvironmentVariable *operator-> (void);
-    const EnvironmentVariable *operator-> (void) const;
-    
-    operator const EnvironmentVariable &() const;
-    operator EnvironmentVariable &();
-    operator EnvironmentVariable &() const;
-    
-    // Variable-size types only.
-    operator EnvironmentVariable *&();
-    
-    // in, inout, out, _retn 
-    const EnvironmentVariable &in (void) const;
-    EnvironmentVariable &inout (void);
-    EnvironmentVariable *&out (void);
-    EnvironmentVariable *_retn (void);
-    EnvironmentVariable *ptr (void) const;
-  
-  private:
-    EnvironmentVariable *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_PortableServer_Export EnvironmentVariable_out
-  {
-  public:
-    EnvironmentVariable_out (EnvironmentVariable *&);
-    EnvironmentVariable_out (EnvironmentVariable_var &);
-    EnvironmentVariable_out (const EnvironmentVariable_out &);
-    EnvironmentVariable_out &operator= (const EnvironmentVariable_out &);
-    EnvironmentVariable_out &operator= (EnvironmentVariable *);
-    operator EnvironmentVariable *&();
-    EnvironmentVariable *&ptr (void);
-    EnvironmentVariable *operator-> (void);
-    
-  private:
-    EnvironmentVariable *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const EnvironmentVariable_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentVariable;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:368
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:367
   
   typedef char * Address;
   typedef CORBA::String_var Address_var;
@@ -650,175 +561,48 @@ TAO_NAMESPACE  ImplementationRepository
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Address;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_
-  
-  class TAO_PortableServer_Export _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void);
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        EnvironmentVariable *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (
-        const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs
-      );
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &operator= (
-        const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void);
-    
-    // = Accessors.
-    EnvironmentVariable &operator[] (CORBA::ULong i);
-    const EnvironmentVariable &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static EnvironmentVariable *allocbuf (CORBA::ULong size);
-    static void freebuf (EnvironmentVariable *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    EnvironmentVariable *get_buffer (CORBA::Boolean orphan = 0);
-    const EnvironmentVariable *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        EnvironmentVariable *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class EnvironmentList;
-  class EnvironmentList_var;
   
-  // *************************************************************
-  // ImplementationRepository::EnvironmentList
-  // *************************************************************
+  typedef
+    TAO_VarSeq_Var_T<
+        EnvironmentList,
+        ImplementationRepository::EnvironmentVariable
+      >
+    EnvironmentList_var;
   
-  class TAO_PortableServer_Export EnvironmentList : public 
+  typedef
+    TAO_Seq_Out_T<
+        EnvironmentList,
+        EnvironmentList_var,
+        ImplementationRepository::EnvironmentVariable
+      >
+    EnvironmentList_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<EnvironmentVariable>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_PortableServer_Export EnvironmentList
+    : public
+        TAO_Unbounded_Sequence<
+            ImplementationRepository::EnvironmentVariable
+          >
   {
   public:
     EnvironmentList (void);
     EnvironmentList (CORBA::ULong max);
     EnvironmentList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        EnvironmentVariable *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        EnvironmentVariable* buffer, 
         CORBA::Boolean release = 0
       );
     EnvironmentList (const EnvironmentList &);
     ~EnvironmentList (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef EnvironmentList_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class ImplementationRepository::EnvironmentList_var
-  // *************************************************************
-  
-  class TAO_PortableServer_Export EnvironmentList_var
-  {
-  public:
-    EnvironmentList_var (void);
-    EnvironmentList_var (EnvironmentList *);
-    EnvironmentList_var (const EnvironmentList_var &);
-    ~EnvironmentList_var (void);
-    
-    EnvironmentList_var &operator= (EnvironmentList *);
-    EnvironmentList_var &operator= (const EnvironmentList_var &);
-    EnvironmentList *operator-> (void);
-    const EnvironmentList *operator-> (void) const;
-    
-    operator const EnvironmentList &() const;
-    operator EnvironmentList &();
-    operator EnvironmentList &() const;
-    
-    // Variable-size base types only.
-    operator EnvironmentList *&();
-    
-    EnvironmentVariable & operator[] (CORBA::ULong index);
-    const EnvironmentVariable & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const EnvironmentList &in (void) const;
-    EnvironmentList &inout (void);
-    EnvironmentList *&out (void);
-    EnvironmentList *_retn (void);
-    EnvironmentList *ptr (void) const;
-  
-  private:
-    EnvironmentList *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_PortableServer_Export EnvironmentList_out
-  {
-  public:
-    EnvironmentList_out (EnvironmentList *&);
-    EnvironmentList_out (EnvironmentList_var &);
-    EnvironmentList_out (const EnvironmentList_out &);
-    EnvironmentList_out &operator= (const EnvironmentList_out &);
-    EnvironmentList_out &operator= (EnvironmentList *);
-    operator EnvironmentList *&();
-    EnvironmentList *&ptr (void);
-    EnvironmentList *operator-> (void);
-    EnvironmentVariable & operator[] (CORBA::ULong index);
-  
-  private:
-    EnvironmentList *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const EnvironmentList_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -844,9 +628,25 @@ TAO_NAMESPACE  ImplementationRepository
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ActivationMode;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class StartupOptions_var;
+  struct StartupOptions;
+  
+  typedef
+    TAO_Var_Var_T<
+        StartupOptions
+      >
+    StartupOptions_var;
+  
+  typedef
+    TAO_Out_T<
+        StartupOptions,
+        StartupOptions_var
+      >
+    StartupOptions_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export StartupOptions
   {
@@ -861,69 +661,30 @@ TAO_NAMESPACE  ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_PortableServer_Export StartupOptions_var
-  {
-  public:
-    StartupOptions_var (void);
-    StartupOptions_var (StartupOptions *);
-    StartupOptions_var (const StartupOptions_var &);
-    ~StartupOptions_var (void);
-    
-    StartupOptions_var &operator= (StartupOptions *);
-    StartupOptions_var &operator= (const StartupOptions_var &);
-    StartupOptions *operator-> (void);
-    const StartupOptions *operator-> (void) const;
-    
-    operator const StartupOptions &() const;
-    operator StartupOptions &();
-    operator StartupOptions &() const;
-    
-    // Variable-size types only.
-    operator StartupOptions *&();
-    
-    // in, inout, out, _retn 
-    const StartupOptions &in (void) const;
-    StartupOptions &inout (void);
-    StartupOptions *&out (void);
-    StartupOptions *_retn (void);
-    StartupOptions *ptr (void) const;
-  
-  private:
-    StartupOptions *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_PortableServer_Export StartupOptions_out
-  {
-  public:
-    StartupOptions_out (StartupOptions *&);
-    StartupOptions_out (StartupOptions_var &);
-    StartupOptions_out (const StartupOptions_out &);
-    StartupOptions_out &operator= (const StartupOptions_out &);
-    StartupOptions_out &operator= (StartupOptions *);
-    operator StartupOptions *&();
-    StartupOptions *&ptr (void);
-    StartupOptions *operator-> (void);
-    
-  private:
-    StartupOptions *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const StartupOptions_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StartupOptions;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class ServerInformation_var;
+  struct ServerInformation;
+  
+  typedef
+    TAO_Var_Var_T<
+        ServerInformation
+      >
+    ServerInformation_var;
+  
+  typedef
+    TAO_Out_T<
+        ServerInformation,
+        ServerInformation_var
+      >
+    ServerInformation_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export ServerInformation
   {
@@ -937,234 +698,52 @@ TAO_NAMESPACE  ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_PortableServer_Export ServerInformation_var
-  {
-  public:
-    ServerInformation_var (void);
-    ServerInformation_var (ServerInformation *);
-    ServerInformation_var (const ServerInformation_var &);
-    ~ServerInformation_var (void);
-    
-    ServerInformation_var &operator= (ServerInformation *);
-    ServerInformation_var &operator= (const ServerInformation_var &);
-    ServerInformation *operator-> (void);
-    const ServerInformation *operator-> (void) const;
-    
-    operator const ServerInformation &() const;
-    operator ServerInformation &();
-    operator ServerInformation &() const;
-    
-    // Variable-size types only.
-    operator ServerInformation *&();
-    
-    // in, inout, out, _retn 
-    const ServerInformation &in (void) const;
-    ServerInformation &inout (void);
-    ServerInformation *&out (void);
-    ServerInformation *_retn (void);
-    ServerInformation *ptr (void) const;
-  
-  private:
-    ServerInformation *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_PortableServer_Export ServerInformation_out
-  {
-  public:
-    ServerInformation_out (ServerInformation *&);
-    ServerInformation_out (ServerInformation_var &);
-    ServerInformation_out (const ServerInformation_out &);
-    ServerInformation_out &operator= (const ServerInformation_out &);
-    ServerInformation_out &operator= (ServerInformation *);
-    operator ServerInformation *&();
-    ServerInformation *&ptr (void);
-    ServerInformation *operator-> (void);
-    
-  private:
-    ServerInformation *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ServerInformation_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformation;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_
-  
-  class TAO_PortableServer_Export _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void);
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        ServerInformation *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (
-        const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs
-      );
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &operator= (
-        const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void);
-    
-    // = Accessors.
-    ServerInformation &operator[] (CORBA::ULong i);
-    const ServerInformation &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static ServerInformation *allocbuf (CORBA::ULong size);
-    static void freebuf (ServerInformation *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    ServerInformation *get_buffer (CORBA::Boolean orphan = 0);
-    const ServerInformation *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        ServerInformation *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class ServerInformationList;
-  class ServerInformationList_var;
   
-  // *************************************************************
-  // ImplementationRepository::ServerInformationList
-  // *************************************************************
+  typedef
+    TAO_VarSeq_Var_T<
+        ServerInformationList,
+        ImplementationRepository::ServerInformation
+      >
+    ServerInformationList_var;
   
-  class TAO_PortableServer_Export ServerInformationList : public 
+  typedef
+    TAO_Seq_Out_T<
+        ServerInformationList,
+        ServerInformationList_var,
+        ImplementationRepository::ServerInformation
+      >
+    ServerInformationList_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<ServerInformation>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_PortableServer_Export ServerInformationList
+    : public
+        TAO_Unbounded_Sequence<
+            ImplementationRepository::ServerInformation
+          >
   {
   public:
     ServerInformationList (void);
     ServerInformationList (CORBA::ULong max);
     ServerInformationList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        ServerInformation *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ServerInformation* buffer, 
         CORBA::Boolean release = 0
       );
     ServerInformationList (const ServerInformationList &);
     ~ServerInformationList (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef ServerInformationList_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class ImplementationRepository::ServerInformationList_var
-  // *************************************************************
-  
-  class TAO_PortableServer_Export ServerInformationList_var
-  {
-  public:
-    ServerInformationList_var (void);
-    ServerInformationList_var (ServerInformationList *);
-    ServerInformationList_var (const ServerInformationList_var &);
-    ~ServerInformationList_var (void);
-    
-    ServerInformationList_var &operator= (ServerInformationList *);
-    ServerInformationList_var &operator= (const ServerInformationList_var &);
-    ServerInformationList *operator-> (void);
-    const ServerInformationList *operator-> (void) const;
-    
-    operator const ServerInformationList &() const;
-    operator ServerInformationList &();
-    operator ServerInformationList &() const;
-    
-    // Variable-size base types only.
-    operator ServerInformationList *&();
-    
-    ServerInformation & operator[] (CORBA::ULong index);
-    const ServerInformation & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const ServerInformationList &in (void) const;
-    ServerInformationList &inout (void);
-    ServerInformationList *&out (void);
-    ServerInformationList *_retn (void);
-    ServerInformationList *ptr (void) const;
-  
-  private:
-    ServerInformationList *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_PortableServer_Export ServerInformationList_out
-  {
-  public:
-    ServerInformationList_out (ServerInformationList *&);
-    ServerInformationList_out (ServerInformationList_var &);
-    ServerInformationList_out (const ServerInformationList_out &);
-    ServerInformationList_out &operator= (const ServerInformationList_out &);
-    ServerInformationList_out &operator= (ServerInformationList *);
-    operator ServerInformationList *&();
-    ServerInformationList *&ptr (void);
-    ServerInformationList *operator-> (void);
-    ServerInformation & operator[] (CORBA::ULong index);
-  
-  private:
-    ServerInformationList *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ServerInformationList_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -1172,174 +751,75 @@ TAO_NAMESPACE  ImplementationRepository
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationList;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/interface_fwd_ch.cpp:53
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ODDS_N_ENDS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ODDS_N_ENDS_CH_
   
   class ServerInformationIterator;
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_
-  
   typedef ServerInformationIterator *ServerInformationIterator_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_
+  struct tao_ServerInformationIterator_life;
+  typedef TAO_Objref_Var_T<ServerInformationIterator, tao_ServerInformationIterator_life> ServerInformationIterator_var;
+  typedef TAO_Objref_Out_T<ServerInformationIterator, tao_ServerInformationIterator_life> ServerInformationIterator_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_PortableServer_Export ServerInformationIterator_var : public TAO_Base_var
+  struct TAO_PortableServer_Export tao_ServerInformationIterator_life
   {
-  public:
-    ServerInformationIterator_var (void); // default constructor
-    ServerInformationIterator_var (ServerInformationIterator_ptr p) : ptr_ (p) {} 
-    ServerInformationIterator_var (const ServerInformationIterator_var &); // copy constructor
-    ~ServerInformationIterator_var (void); // destructor
-    
-    ServerInformationIterator_var &operator= (ServerInformationIterator_ptr);
-    ServerInformationIterator_var &operator= (const ServerInformationIterator_var &);
-    ServerInformationIterator_ptr operator-> (void) const;
-    
-    operator const ServerInformationIterator_ptr &() const;
-    operator ServerInformationIterator_ptr &();
-    // in, inout, out, _retn 
-    ServerInformationIterator_ptr in (void) const;
-    ServerInformationIterator_ptr &inout (void);
-    ServerInformationIterator_ptr &out (void);
-    ServerInformationIterator_ptr _retn (void);
-    ServerInformationIterator_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ServerInformationIterator_ptr tao_duplicate (ServerInformationIterator_ptr);
     static void tao_release (ServerInformationIterator_ptr);
     static ServerInformationIterator_ptr tao_nil (void);
-    static ServerInformationIterator_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ServerInformationIterator_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ServerInformationIterator_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ServerInformationIterator_var (const TAO_Base_var &rhs);
-    ServerInformationIterator_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_PortableServer_Export ServerInformationIterator_out
+  struct TAO_PortableServer_Export tao_ServerInformationIterator_cast
   {
-  public:
-    ServerInformationIterator_out (ServerInformationIterator_ptr &);
-    ServerInformationIterator_out (ServerInformationIterator_var &);
-    ServerInformationIterator_out (const ServerInformationIterator_out &);
-    ServerInformationIterator_out &operator= (const ServerInformationIterator_out &);
-    ServerInformationIterator_out &operator= (const ServerInformationIterator_var &);
-    ServerInformationIterator_out &operator= (ServerInformationIterator_ptr);
-    operator ServerInformationIterator_ptr &();
-    ServerInformationIterator_ptr &ptr (void);
-    ServerInformationIterator_ptr operator-> (void);
-  
-  private:
-    ServerInformationIterator_ptr &ptr_;
+    static ServerInformationIterator_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___PTR_CH_
+#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ODDS_N_ENDS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ODDS_N_ENDS_CH_
   
   class Administration;
   typedef Administration *Administration_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___VAR_CH_
+  struct tao_Administration_life;
+  typedef TAO_Objref_Var_T<Administration, tao_Administration_life> Administration_var;
+  typedef TAO_Objref_Out_T<Administration, tao_Administration_life> Administration_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_PortableServer_Export Administration_var : public TAO_Base_var
+  struct TAO_PortableServer_Export tao_Administration_life
   {
-  public:
-    Administration_var (void); // default constructor
-    Administration_var (Administration_ptr p) : ptr_ (p) {} 
-    Administration_var (const Administration_var &); // copy constructor
-    ~Administration_var (void); // destructor
-    
-    Administration_var &operator= (Administration_ptr);
-    Administration_var &operator= (const Administration_var &);
-    Administration_ptr operator-> (void) const;
-    
-    operator const Administration_ptr &() const;
-    operator Administration_ptr &();
-    // in, inout, out, _retn 
-    Administration_ptr in (void) const;
-    Administration_ptr &inout (void);
-    Administration_ptr &out (void);
-    Administration_ptr _retn (void);
-    Administration_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Administration_ptr tao_duplicate (Administration_ptr);
     static void tao_release (Administration_ptr);
     static Administration_ptr tao_nil (void);
-    static Administration_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Administration_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Administration_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Administration_var (const TAO_Base_var &rhs);
-    Administration_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_PortableServer_Export Administration_out
+  struct TAO_PortableServer_Export tao_Administration_cast
   {
-  public:
-    Administration_out (Administration_ptr &);
-    Administration_out (Administration_var &);
-    Administration_out (const Administration_out &);
-    Administration_out &operator= (const Administration_out &);
-    Administration_out &operator= (const Administration_var &);
-    Administration_out &operator= (Administration_ptr);
-    operator Administration_ptr &();
-    Administration_ptr &ptr (void);
-    Administration_ptr operator-> (void);
-  
-  private:
-    Administration_ptr &ptr_;
+    static Administration_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CH_
@@ -1506,7 +986,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1940,90 +1420,7 @@ TAO_NAMESPACE  ImplementationRepository
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Administration;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_
-  
-  class ServerInformationIterator;
-  typedef ServerInformationIterator *ServerInformationIterator_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_PortableServer_Export ServerInformationIterator_var : public TAO_Base_var
-  {
-  public:
-    ServerInformationIterator_var (void); // default constructor
-    ServerInformationIterator_var (ServerInformationIterator_ptr p) : ptr_ (p) {} 
-    ServerInformationIterator_var (const ServerInformationIterator_var &); // copy constructor
-    ~ServerInformationIterator_var (void); // destructor
-    
-    ServerInformationIterator_var &operator= (ServerInformationIterator_ptr);
-    ServerInformationIterator_var &operator= (const ServerInformationIterator_var &);
-    ServerInformationIterator_ptr operator-> (void) const;
-    
-    operator const ServerInformationIterator_ptr &() const;
-    operator ServerInformationIterator_ptr &();
-    // in, inout, out, _retn 
-    ServerInformationIterator_ptr in (void) const;
-    ServerInformationIterator_ptr &inout (void);
-    ServerInformationIterator_ptr &out (void);
-    ServerInformationIterator_ptr _retn (void);
-    ServerInformationIterator_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static ServerInformationIterator_ptr tao_duplicate (ServerInformationIterator_ptr);
-    static void tao_release (ServerInformationIterator_ptr);
-    static ServerInformationIterator_ptr tao_nil (void);
-    static ServerInformationIterator_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
-      );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ServerInformationIterator_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ServerInformationIterator_var (const TAO_Base_var &rhs);
-    ServerInformationIterator_var &operator= (const TAO_Base_var &rhs);
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_PortableServer_Export ServerInformationIterator_out
-  {
-  public:
-    ServerInformationIterator_out (ServerInformationIterator_ptr &);
-    ServerInformationIterator_out (ServerInformationIterator_var &);
-    ServerInformationIterator_out (const ServerInformationIterator_out &);
-    ServerInformationIterator_out &operator= (const ServerInformationIterator_out &);
-    ServerInformationIterator_out &operator= (const ServerInformationIterator_var &);
-    ServerInformationIterator_out &operator= (ServerInformationIterator_ptr);
-    operator ServerInformationIterator_ptr &();
-    ServerInformationIterator_ptr &ptr (void);
-    ServerInformationIterator_ptr operator-> (void);
-  
-  private:
-    ServerInformationIterator_ptr &ptr_;
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR_CH_
@@ -2084,7 +1481,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2514,7 +1911,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, Implementat
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoC.i"
@@ -2530,3 +1927,4 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, Implementat
 
 #include "ace/post.h"
 #endif /* ifndef */
+

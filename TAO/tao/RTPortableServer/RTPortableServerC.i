@@ -26,12 +26,5 @@
 #if !defined (_RTPORTABLESERVER_POA___CI_)
 #define _RTPORTABLESERVER_POA___CI_
 
-ACE_INLINE
-CORBA::Boolean
-RTPortableServer::POA::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

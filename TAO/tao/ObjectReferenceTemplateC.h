@@ -119,10 +119,20 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ObjectReferenceFactory;
   struct tao_ObjectReferenceFactory_life;
-  typedef TAO_Value_Var_T<ObjectReferenceFactory, tao_ObjectReferenceFactory_life> ObjectReferenceFactory_var;
-  typedef TAO_Value_Out_T<ObjectReferenceFactory, tao_ObjectReferenceFactory_life> ObjectReferenceFactory_out;
+  typedef 
+    TAO_Value_Var_T<
+        ObjectReferenceFactory, 
+        tao_ObjectReferenceFactory_life
+      > 
+    ObjectReferenceFactory_var;
+  typedef 
+    TAO_Value_Out_T<
+        ObjectReferenceFactory, 
+        tao_ObjectReferenceFactory_life
+      > 
+    ObjectReferenceFactory_out;
   
-  struct tao_ObjectReferenceFactory_life
+  struct TAO_Export tao_ObjectReferenceFactory_life
   {
     static void tao_add_ref (ObjectReferenceFactory *);
     static void tao_remove_ref (ObjectReferenceFactory *);
@@ -192,7 +202,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Value_Var_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_var;
   typedef TAO_Value_Out_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_out;
   
-  struct tao_ObjectReferenceTemplate_life
+  struct TAO_Export tao_ObjectReferenceTemplate_life
   {
     static void tao_add_ref (ObjectReferenceTemplate *);
     static void tao_remove_ref (ObjectReferenceTemplate *);

@@ -19,12 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
-#ifndef _TAO_IDL_IMR_ACTIVATORC_H_
-#define _TAO_IDL_IMR_ACTIVATORC_H_
+#ifndef _TAO_IDL_ORIG_IMR_ACTIVATORC_H_
+#define _TAO_IDL_ORIG_IMR_ACTIVATORC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -58,14 +57,18 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1002
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "ImR_ActivatorC.i"
@@ -81,3 +84,4 @@
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -26,12 +26,5 @@
 #if !defined (_CORBA_TYPECODEFACTORY___CI_)
 #define _CORBA_TYPECODEFACTORY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

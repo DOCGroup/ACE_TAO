@@ -98,7 +98,7 @@ TAO_NAMESPACE  RTCORBA
   // End TAO-specific
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::Short NativePriority;
   typedef CORBA::Short_out NativePriority_out;
@@ -109,7 +109,7 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NativePriority;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
@@ -122,15 +122,15 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short minPriority = 0;
+  const RTCORBA::Priority minPriority = 0;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short maxPriority = 32767;
+  const RTCORBA::Priority maxPriority = 32767;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::Long NetworkPriority;
   typedef CORBA::Long_out NetworkPriority_out;
@@ -141,7 +141,7 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NetworkPriority;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::ULong ThreadpoolId;
   typedef CORBA::ULong_out ThreadpoolId_out;
@@ -152,9 +152,22 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolId;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class ThreadpoolLane_var;
+  struct ThreadpoolLane;
+  
+  typedef
+    TAO_Fixed_Var_T<
+        ThreadpoolLane
+      >
+    ThreadpoolLane_var;
+  
+  typedef
+    ThreadpoolLane &
+    ThreadpoolLane_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_RTCORBA_Export ThreadpoolLane
   {
@@ -167,225 +180,52 @@ TAO_NAMESPACE  RTCORBA
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_RTCORBA_Export ThreadpoolLane_var
-  {
-  public:
-    ThreadpoolLane_var (void);
-    ThreadpoolLane_var (ThreadpoolLane *);
-    ThreadpoolLane_var (const ThreadpoolLane_var &);
-    // Fixed-size types only.
-    ThreadpoolLane_var (const ThreadpoolLane &);
-    ~ThreadpoolLane_var (void);
-    
-    ThreadpoolLane_var &operator= (ThreadpoolLane *);
-    ThreadpoolLane_var &operator= (const ThreadpoolLane_var &);
-    
-    // Fixed-size types only.
-    ThreadpoolLane_var &operator= (const ThreadpoolLane &);
-    
-    ThreadpoolLane *operator-> (void);
-    const ThreadpoolLane *operator-> (void) const;
-    
-    operator const ThreadpoolLane &() const;
-    operator ThreadpoolLane &();
-    operator ThreadpoolLane &() const;
-    
-    // in, inout, out, _retn 
-    const ThreadpoolLane &in (void) const;
-    ThreadpoolLane &inout (void);
-    ThreadpoolLane &out (void);
-    ThreadpoolLane _retn (void);
-    ThreadpoolLane *ptr (void) const;
-  
-  private:
-    ThreadpoolLane *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:105
-  
-  typedef ThreadpoolLane &ThreadpoolLane_out;
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLane;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CH_
-  
-  class TAO_RTCORBA_Export _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void);
-    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        ThreadpoolLane *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (
-        const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &operator= (
-        const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void);
-    
-    // = Accessors.
-    ThreadpoolLane &operator[] (CORBA::ULong i);
-    const ThreadpoolLane &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static ThreadpoolLane *allocbuf (CORBA::ULong size);
-    static void freebuf (ThreadpoolLane *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    ThreadpoolLane *get_buffer (CORBA::Boolean orphan = 0);
-    const ThreadpoolLane *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        ThreadpoolLane *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_THREADPOOLLANES_CH_)
-#define _RTCORBA_THREADPOOLLANES_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class ThreadpoolLanes;
-  class ThreadpoolLanes_var;
   
-  // *************************************************************
-  // RTCORBA::ThreadpoolLanes
-  // *************************************************************
+  typedef
+    TAO_FixedSeq_Var_T<
+        ThreadpoolLanes,
+        ThreadpoolLane
+      >
+    ThreadpoolLanes_var;
   
-  class TAO_RTCORBA_Export ThreadpoolLanes : public 
+  typedef
+    TAO_Seq_Out_T<
+        ThreadpoolLanes,
+        ThreadpoolLanes_var,
+        ThreadpoolLane
+      >
+    ThreadpoolLanes_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<ThreadpoolLane>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_RTCORBA_Export ThreadpoolLanes
+    : public
+        TAO_Unbounded_Sequence<
+            ThreadpoolLane
+          >
   {
   public:
     ThreadpoolLanes (void);
     ThreadpoolLanes (CORBA::ULong max);
     ThreadpoolLanes (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        ThreadpoolLane *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ThreadpoolLane* buffer, 
         CORBA::Boolean release = 0
       );
     ThreadpoolLanes (const ThreadpoolLanes &);
     ~ThreadpoolLanes (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef ThreadpoolLanes_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_THREADPOOLLANES___VAR_CH_)
-#define _RTCORBA_THREADPOOLLANES___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class RTCORBA::ThreadpoolLanes_var
-  // *************************************************************
-  
-  class TAO_RTCORBA_Export ThreadpoolLanes_var
-  {
-  public:
-    ThreadpoolLanes_var (void);
-    ThreadpoolLanes_var (ThreadpoolLanes *);
-    ThreadpoolLanes_var (const ThreadpoolLanes_var &);
-    
-    // Fixed-size base types only.
-    ThreadpoolLanes_var (const ThreadpoolLanes &);
-    
-    ~ThreadpoolLanes_var (void);
-    
-    ThreadpoolLanes_var &operator= (ThreadpoolLanes *);
-    ThreadpoolLanes_var &operator= (const ThreadpoolLanes_var &);
-    
-    // Fixed-size base types only.
-    ThreadpoolLanes_var &operator= (const ThreadpoolLanes &);
-    
-    ThreadpoolLanes *operator-> (void);
-    const ThreadpoolLanes *operator-> (void) const;
-    
-    operator const ThreadpoolLanes &() const;
-    operator ThreadpoolLanes &();
-    operator ThreadpoolLanes &() const;
-    ThreadpoolLane & operator[] (CORBA::ULong index);
-    const ThreadpoolLane & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const ThreadpoolLanes &in (void) const;
-    ThreadpoolLanes &inout (void);
-    ThreadpoolLanes *&out (void);
-    ThreadpoolLanes *_retn (void);
-    ThreadpoolLanes *ptr (void) const;
-  
-  private:
-    ThreadpoolLanes *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_THREADPOOLLANES___OUT_CH_)
-#define _RTCORBA_THREADPOOLLANES___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_RTCORBA_Export ThreadpoolLanes_out
-  {
-  public:
-    ThreadpoolLanes_out (ThreadpoolLanes *&);
-    ThreadpoolLanes_out (ThreadpoolLanes_var &);
-    ThreadpoolLanes_out (const ThreadpoolLanes_out &);
-    ThreadpoolLanes_out &operator= (const ThreadpoolLanes_out &);
-    ThreadpoolLanes_out &operator= (ThreadpoolLanes *);
-    operator ThreadpoolLanes *&();
-    ThreadpoolLanes *&ptr (void);
-    ThreadpoolLanes *operator-> (void);
-    ThreadpoolLane & operator[] (CORBA::ULong index);
-  
-  private:
-    ThreadpoolLanes *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ThreadpoolLanes_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -395,7 +235,7 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong PRIORITY_MODEL_POLICY_TYPE = 40U;
+  const CORBA::PolicyType PRIORITY_MODEL_POLICY_TYPE = 40U;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/enum_ch.cpp:57
@@ -414,90 +254,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityModel;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_PRIORITYMODELPOLICY___PTR_CH_)
-#define _RTCORBA_PRIORITYMODELPOLICY___PTR_CH_
+#if !defined (_RTCORBA_PRIORITYMODELPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_PRIORITYMODELPOLICY__ODDS_N_ENDS_CH_
   
   class PriorityModelPolicy;
   typedef PriorityModelPolicy *PriorityModelPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYMODELPOLICY___VAR_CH_)
-#define _RTCORBA_PRIORITYMODELPOLICY___VAR_CH_
+  struct tao_PriorityModelPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        PriorityModelPolicy,
+        tao_PriorityModelPolicy_life
+      >
+    PriorityModelPolicy_var;
   
-  class TAO_RTCORBA_Export PriorityModelPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        PriorityModelPolicy,
+        tao_PriorityModelPolicy_life
+      >
+    PriorityModelPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_PriorityModelPolicy_life
   {
-  public:
-    PriorityModelPolicy_var (void); // default constructor
-    PriorityModelPolicy_var (PriorityModelPolicy_ptr p) : ptr_ (p) {} 
-    PriorityModelPolicy_var (const PriorityModelPolicy_var &); // copy constructor
-    ~PriorityModelPolicy_var (void); // destructor
-    
-    PriorityModelPolicy_var &operator= (PriorityModelPolicy_ptr);
-    PriorityModelPolicy_var &operator= (const PriorityModelPolicy_var &);
-    PriorityModelPolicy_ptr operator-> (void) const;
-    
-    operator const PriorityModelPolicy_ptr &() const;
-    operator PriorityModelPolicy_ptr &();
-    // in, inout, out, _retn 
-    PriorityModelPolicy_ptr in (void) const;
-    PriorityModelPolicy_ptr &inout (void);
-    PriorityModelPolicy_ptr &out (void);
-    PriorityModelPolicy_ptr _retn (void);
-    PriorityModelPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static PriorityModelPolicy_ptr tao_duplicate (PriorityModelPolicy_ptr);
     static void tao_release (PriorityModelPolicy_ptr);
     static PriorityModelPolicy_ptr tao_nil (void);
-    static PriorityModelPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        PriorityModelPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    PriorityModelPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PriorityModelPolicy_var (const TAO_Base_var &rhs);
-    PriorityModelPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYMODELPOLICY___OUT_CH_)
-#define _RTCORBA_PRIORITYMODELPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export PriorityModelPolicy_out
+  struct TAO_RTCORBA_Export tao_PriorityModelPolicy_cast
   {
-  public:
-    PriorityModelPolicy_out (PriorityModelPolicy_ptr &);
-    PriorityModelPolicy_out (PriorityModelPolicy_var &);
-    PriorityModelPolicy_out (const PriorityModelPolicy_out &);
-    PriorityModelPolicy_out &operator= (const PriorityModelPolicy_out &);
-    PriorityModelPolicy_out &operator= (const PriorityModelPolicy_var &);
-    PriorityModelPolicy_out &operator= (PriorityModelPolicy_ptr);
-    operator PriorityModelPolicy_ptr &();
-    PriorityModelPolicy_ptr &ptr (void);
-    PriorityModelPolicy_ptr operator-> (void);
-  
-  private:
-    PriorityModelPolicy_ptr &ptr_;
+    static PriorityModelPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY_CH_
@@ -551,7 +354,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -561,10 +364,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     PriorityModelPolicy (void);
     virtual ~PriorityModelPolicy (void);
-    
-    friend class _TAO_PriorityModelPolicy_Remote_Proxy_Impl;
-    friend class _TAO_PriorityModelPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_PriorityModelPolicy_Direct_Proxy_Impl;
   
   private:
     PriorityModelPolicy (const PriorityModelPolicy &);
@@ -581,93 +380,56 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong THREADPOOL_POLICY_TYPE = 41U;
+  const CORBA::PolicyType THREADPOOL_POLICY_TYPE = 41U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_THREADPOOLPOLICY___PTR_CH_)
-#define _RTCORBA_THREADPOOLPOLICY___PTR_CH_
+#if !defined (_RTCORBA_THREADPOOLPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_THREADPOOLPOLICY__ODDS_N_ENDS_CH_
   
   class ThreadpoolPolicy;
   typedef ThreadpoolPolicy *ThreadpoolPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_THREADPOOLPOLICY___VAR_CH_)
-#define _RTCORBA_THREADPOOLPOLICY___VAR_CH_
+  struct tao_ThreadpoolPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ThreadpoolPolicy,
+        tao_ThreadpoolPolicy_life
+      >
+    ThreadpoolPolicy_var;
   
-  class TAO_RTCORBA_Export ThreadpoolPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ThreadpoolPolicy,
+        tao_ThreadpoolPolicy_life
+      >
+    ThreadpoolPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_ThreadpoolPolicy_life
   {
-  public:
-    ThreadpoolPolicy_var (void); // default constructor
-    ThreadpoolPolicy_var (ThreadpoolPolicy_ptr p) : ptr_ (p) {} 
-    ThreadpoolPolicy_var (const ThreadpoolPolicy_var &); // copy constructor
-    ~ThreadpoolPolicy_var (void); // destructor
-    
-    ThreadpoolPolicy_var &operator= (ThreadpoolPolicy_ptr);
-    ThreadpoolPolicy_var &operator= (const ThreadpoolPolicy_var &);
-    ThreadpoolPolicy_ptr operator-> (void) const;
-    
-    operator const ThreadpoolPolicy_ptr &() const;
-    operator ThreadpoolPolicy_ptr &();
-    // in, inout, out, _retn 
-    ThreadpoolPolicy_ptr in (void) const;
-    ThreadpoolPolicy_ptr &inout (void);
-    ThreadpoolPolicy_ptr &out (void);
-    ThreadpoolPolicy_ptr _retn (void);
-    ThreadpoolPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ThreadpoolPolicy_ptr tao_duplicate (ThreadpoolPolicy_ptr);
     static void tao_release (ThreadpoolPolicy_ptr);
     static ThreadpoolPolicy_ptr tao_nil (void);
-    static ThreadpoolPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ThreadpoolPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ThreadpoolPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ThreadpoolPolicy_var (const TAO_Base_var &rhs);
-    ThreadpoolPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_THREADPOOLPOLICY___OUT_CH_)
-#define _RTCORBA_THREADPOOLPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export ThreadpoolPolicy_out
+  struct TAO_RTCORBA_Export tao_ThreadpoolPolicy_cast
   {
-  public:
-    ThreadpoolPolicy_out (ThreadpoolPolicy_ptr &);
-    ThreadpoolPolicy_out (ThreadpoolPolicy_var &);
-    ThreadpoolPolicy_out (const ThreadpoolPolicy_out &);
-    ThreadpoolPolicy_out &operator= (const ThreadpoolPolicy_out &);
-    ThreadpoolPolicy_out &operator= (const ThreadpoolPolicy_var &);
-    ThreadpoolPolicy_out &operator= (ThreadpoolPolicy_ptr);
-    operator ThreadpoolPolicy_ptr &();
-    ThreadpoolPolicy_ptr &ptr (void);
-    ThreadpoolPolicy_ptr operator-> (void);
-  
-  private:
-    ThreadpoolPolicy_ptr &ptr_;
+    static ThreadpoolPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_THREADPOOLPOLICY_CH_)
 #define _RTCORBA_THREADPOOLPOLICY_CH_
@@ -711,7 +473,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -721,10 +483,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     ThreadpoolPolicy (void);
     virtual ~ThreadpoolPolicy (void);
-    
-    friend class _TAO_ThreadpoolPolicy_Remote_Proxy_Impl;
-    friend class _TAO_ThreadpoolPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_ThreadpoolPolicy_Direct_Proxy_Impl;
   
   private:
     ThreadpoolPolicy (const ThreadpoolPolicy &);
@@ -739,97 +497,59 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolPolicy;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_PROTOCOLPROPERTIES___PTR_CH_)
-#define _RTCORBA_PROTOCOLPROPERTIES___PTR_CH_
+#if !defined (_RTCORBA_PROTOCOLPROPERTIES__ODDS_N_ENDS_CH_)
+#define _RTCORBA_PROTOCOLPROPERTIES__ODDS_N_ENDS_CH_
   
   class ProtocolProperties;
   typedef ProtocolProperties *ProtocolProperties_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PROTOCOLPROPERTIES___VAR_CH_)
-#define _RTCORBA_PROTOCOLPROPERTIES___VAR_CH_
+  struct tao_ProtocolProperties_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ProtocolProperties,
+        tao_ProtocolProperties_life
+      >
+    ProtocolProperties_var;
   
-  class TAO_RTCORBA_Export ProtocolProperties_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ProtocolProperties,
+        tao_ProtocolProperties_life
+      >
+    ProtocolProperties_out;
+  
+  struct TAO_RTCORBA_Export tao_ProtocolProperties_life
   {
-  public:
-    ProtocolProperties_var (void); // default constructor
-    ProtocolProperties_var (ProtocolProperties_ptr p) : ptr_ (p) {} 
-    ProtocolProperties_var (const ProtocolProperties_var &); // copy constructor
-    ~ProtocolProperties_var (void); // destructor
-    
-    ProtocolProperties_var &operator= (ProtocolProperties_ptr);
-    ProtocolProperties_var &operator= (const ProtocolProperties_var &);
-    ProtocolProperties_ptr operator-> (void) const;
-    
-    operator const ProtocolProperties_ptr &() const;
-    operator ProtocolProperties_ptr &();
-    // in, inout, out, _retn 
-    ProtocolProperties_ptr in (void) const;
-    ProtocolProperties_ptr &inout (void);
-    ProtocolProperties_ptr &out (void);
-    ProtocolProperties_ptr _retn (void);
-    ProtocolProperties_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ProtocolProperties_ptr tao_duplicate (ProtocolProperties_ptr);
     static void tao_release (ProtocolProperties_ptr);
     static ProtocolProperties_ptr tao_nil (void);
-    static ProtocolProperties_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ProtocolProperties_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ProtocolProperties_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ProtocolProperties_var (const TAO_Base_var &rhs);
-    ProtocolProperties_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PROTOCOLPROPERTIES___OUT_CH_)
-#define _RTCORBA_PROTOCOLPROPERTIES___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export ProtocolProperties_out
+  struct TAO_RTCORBA_Export tao_ProtocolProperties_cast
   {
-  public:
-    ProtocolProperties_out (ProtocolProperties_ptr &);
-    ProtocolProperties_out (ProtocolProperties_var &);
-    ProtocolProperties_out (const ProtocolProperties_out &);
-    ProtocolProperties_out &operator= (const ProtocolProperties_out &);
-    ProtocolProperties_out &operator= (const ProtocolProperties_var &);
-    ProtocolProperties_out &operator= (ProtocolProperties_ptr);
-    operator ProtocolProperties_ptr &();
-    ProtocolProperties_ptr &ptr (void);
-    ProtocolProperties_ptr operator-> (void);
-  
-  private:
-    ProtocolProperties_ptr &ptr_;
+    static ProtocolProperties_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
   
   class TAO_RTCORBA_Export ProtocolProperties
     : public virtual CORBA::Object
-    , public TAO_Encodable
   {
   public:
     typedef ProtocolProperties_ptr _ptr_type;
@@ -857,7 +577,7 @@ TAO_NAMESPACE  RTCORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -872,10 +592,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     ProtocolProperties (void);
     virtual ~ProtocolProperties (void);
-    
-    friend class _TAO_ProtocolProperties_Remote_Proxy_Impl;
-    friend class _TAO_ProtocolProperties_ThruPOA_Proxy_Impl;
-    friend class _TAO_ProtocolProperties_Direct_Proxy_Impl;
   
   private:
     ProtocolProperties (const ProtocolProperties &);
@@ -890,9 +606,25 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolProperties;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class Protocol_var;
+  struct Protocol;
+  
+  typedef
+    TAO_Var_Var_T<
+        Protocol
+      >
+    Protocol_var;
+  
+  typedef
+    TAO_Out_T<
+        Protocol,
+        Protocol_var
+      >
+    Protocol_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_RTCORBA_Export Protocol
   {
@@ -905,234 +637,52 @@ TAO_NAMESPACE  RTCORBA
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_RTCORBA_Export Protocol_var
-  {
-  public:
-    Protocol_var (void);
-    Protocol_var (Protocol *);
-    Protocol_var (const Protocol_var &);
-    ~Protocol_var (void);
-    
-    Protocol_var &operator= (Protocol *);
-    Protocol_var &operator= (const Protocol_var &);
-    Protocol *operator-> (void);
-    const Protocol *operator-> (void) const;
-    
-    operator const Protocol &() const;
-    operator Protocol &();
-    operator Protocol &() const;
-    
-    // Variable-size types only.
-    operator Protocol *&();
-    
-    // in, inout, out, _retn 
-    const Protocol &in (void) const;
-    Protocol &inout (void);
-    Protocol *&out (void);
-    Protocol *_retn (void);
-    Protocol *ptr (void) const;
-  
-  private:
-    Protocol *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_RTCORBA_Export Protocol_out
-  {
-  public:
-    Protocol_out (Protocol *&);
-    Protocol_out (Protocol_var &);
-    Protocol_out (const Protocol_out &);
-    Protocol_out &operator= (const Protocol_out &);
-    Protocol_out &operator= (Protocol *);
-    operator Protocol *&();
-    Protocol *&ptr (void);
-    Protocol *operator-> (void);
-    
-  private:
-    Protocol *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const Protocol_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Protocol;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_
-  
-  class TAO_RTCORBA_Export _TAO_Unbounded_Sequence_RTCORBA_ProtocolList
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void);
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        Protocol *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (
-        const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &operator= (
-        const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void);
-    
-    // = Accessors.
-    Protocol &operator[] (CORBA::ULong i);
-    const Protocol &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static Protocol *allocbuf (CORBA::ULong size);
-    static void freebuf (Protocol *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    Protocol *get_buffer (CORBA::Boolean orphan = 0);
-    const Protocol *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        Protocol *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_PROTOCOLLIST_CH_)
-#define _RTCORBA_PROTOCOLLIST_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class ProtocolList;
-  class ProtocolList_var;
   
-  // *************************************************************
-  // RTCORBA::ProtocolList
-  // *************************************************************
+  typedef
+    TAO_VarSeq_Var_T<
+        ProtocolList,
+        Protocol
+      >
+    ProtocolList_var;
   
-  class TAO_RTCORBA_Export ProtocolList : public 
+  typedef
+    TAO_Seq_Out_T<
+        ProtocolList,
+        ProtocolList_var,
+        Protocol
+      >
+    ProtocolList_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_RTCORBA_ProtocolList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<Protocol>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_RTCORBA_Export ProtocolList
+    : public
+        TAO_Unbounded_Sequence<
+            Protocol
+          >
   {
   public:
     ProtocolList (void);
     ProtocolList (CORBA::ULong max);
     ProtocolList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        Protocol *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        Protocol* buffer, 
         CORBA::Boolean release = 0
       );
     ProtocolList (const ProtocolList &);
     ~ProtocolList (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef ProtocolList_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PROTOCOLLIST___VAR_CH_)
-#define _RTCORBA_PROTOCOLLIST___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class RTCORBA::ProtocolList_var
-  // *************************************************************
-  
-  class TAO_RTCORBA_Export ProtocolList_var
-  {
-  public:
-    ProtocolList_var (void);
-    ProtocolList_var (ProtocolList *);
-    ProtocolList_var (const ProtocolList_var &);
-    ~ProtocolList_var (void);
-    
-    ProtocolList_var &operator= (ProtocolList *);
-    ProtocolList_var &operator= (const ProtocolList_var &);
-    ProtocolList *operator-> (void);
-    const ProtocolList *operator-> (void) const;
-    
-    operator const ProtocolList &() const;
-    operator ProtocolList &();
-    operator ProtocolList &() const;
-    
-    // Variable-size base types only.
-    operator ProtocolList *&();
-    
-    Protocol & operator[] (CORBA::ULong index);
-    const Protocol & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const ProtocolList &in (void) const;
-    ProtocolList &inout (void);
-    ProtocolList *&out (void);
-    ProtocolList *_retn (void);
-    ProtocolList *ptr (void) const;
-  
-  private:
-    ProtocolList *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PROTOCOLLIST___OUT_CH_)
-#define _RTCORBA_PROTOCOLLIST___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_RTCORBA_Export ProtocolList_out
-  {
-  public:
-    ProtocolList_out (ProtocolList *&);
-    ProtocolList_out (ProtocolList_var &);
-    ProtocolList_out (const ProtocolList_out &);
-    ProtocolList_out &operator= (const ProtocolList_out &);
-    ProtocolList_out &operator= (ProtocolList *);
-    operator ProtocolList *&();
-    ProtocolList *&ptr (void);
-    ProtocolList *operator-> (void);
-    Protocol & operator[] (CORBA::ULong index);
-  
-  private:
-    ProtocolList *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ProtocolList_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -1142,93 +692,56 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong SERVER_PROTOCOL_POLICY_TYPE = 42U;
+  const CORBA::PolicyType SERVER_PROTOCOL_POLICY_TYPE = 42U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY__ODDS_N_ENDS_CH_
   
   class ServerProtocolPolicy;
   typedef ServerProtocolPolicy *ServerProtocolPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_
+  struct tao_ServerProtocolPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ServerProtocolPolicy,
+        tao_ServerProtocolPolicy_life
+      >
+    ServerProtocolPolicy_var;
   
-  class TAO_RTCORBA_Export ServerProtocolPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ServerProtocolPolicy,
+        tao_ServerProtocolPolicy_life
+      >
+    ServerProtocolPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_ServerProtocolPolicy_life
   {
-  public:
-    ServerProtocolPolicy_var (void); // default constructor
-    ServerProtocolPolicy_var (ServerProtocolPolicy_ptr p) : ptr_ (p) {} 
-    ServerProtocolPolicy_var (const ServerProtocolPolicy_var &); // copy constructor
-    ~ServerProtocolPolicy_var (void); // destructor
-    
-    ServerProtocolPolicy_var &operator= (ServerProtocolPolicy_ptr);
-    ServerProtocolPolicy_var &operator= (const ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_ptr operator-> (void) const;
-    
-    operator const ServerProtocolPolicy_ptr &() const;
-    operator ServerProtocolPolicy_ptr &();
-    // in, inout, out, _retn 
-    ServerProtocolPolicy_ptr in (void) const;
-    ServerProtocolPolicy_ptr &inout (void);
-    ServerProtocolPolicy_ptr &out (void);
-    ServerProtocolPolicy_ptr _retn (void);
-    ServerProtocolPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ServerProtocolPolicy_ptr tao_duplicate (ServerProtocolPolicy_ptr);
     static void tao_release (ServerProtocolPolicy_ptr);
     static ServerProtocolPolicy_ptr tao_nil (void);
-    static ServerProtocolPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ServerProtocolPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ServerProtocolPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ServerProtocolPolicy_var (const TAO_Base_var &rhs);
-    ServerProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export ServerProtocolPolicy_out
+  struct TAO_RTCORBA_Export tao_ServerProtocolPolicy_cast
   {
-  public:
-    ServerProtocolPolicy_out (ServerProtocolPolicy_ptr &);
-    ServerProtocolPolicy_out (ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_out (const ServerProtocolPolicy_out &);
-    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_out &);
-    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_out &operator= (ServerProtocolPolicy_ptr);
-    operator ServerProtocolPolicy_ptr &();
-    ServerProtocolPolicy_ptr &ptr (void);
-    ServerProtocolPolicy_ptr operator-> (void);
-  
-  private:
-    ServerProtocolPolicy_ptr &ptr_;
+    static ServerProtocolPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY_CH_
@@ -1272,7 +785,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -1282,10 +795,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     ServerProtocolPolicy (void);
     virtual ~ServerProtocolPolicy (void);
-    
-    friend class _TAO_ServerProtocolPolicy_Remote_Proxy_Impl;
-    friend class _TAO_ServerProtocolPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_ServerProtocolPolicy_Direct_Proxy_Impl;
   
   private:
     ServerProtocolPolicy (const ServerProtocolPolicy &);
@@ -1302,93 +811,56 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong CLIENT_PROTOCOL_POLICY_TYPE = 43U;
+  const CORBA::PolicyType CLIENT_PROTOCOL_POLICY_TYPE = 43U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY__ODDS_N_ENDS_CH_
   
   class ClientProtocolPolicy;
   typedef ClientProtocolPolicy *ClientProtocolPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_
+  struct tao_ClientProtocolPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ClientProtocolPolicy,
+        tao_ClientProtocolPolicy_life
+      >
+    ClientProtocolPolicy_var;
   
-  class TAO_RTCORBA_Export ClientProtocolPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ClientProtocolPolicy,
+        tao_ClientProtocolPolicy_life
+      >
+    ClientProtocolPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_ClientProtocolPolicy_life
   {
-  public:
-    ClientProtocolPolicy_var (void); // default constructor
-    ClientProtocolPolicy_var (ClientProtocolPolicy_ptr p) : ptr_ (p) {} 
-    ClientProtocolPolicy_var (const ClientProtocolPolicy_var &); // copy constructor
-    ~ClientProtocolPolicy_var (void); // destructor
-    
-    ClientProtocolPolicy_var &operator= (ClientProtocolPolicy_ptr);
-    ClientProtocolPolicy_var &operator= (const ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_ptr operator-> (void) const;
-    
-    operator const ClientProtocolPolicy_ptr &() const;
-    operator ClientProtocolPolicy_ptr &();
-    // in, inout, out, _retn 
-    ClientProtocolPolicy_ptr in (void) const;
-    ClientProtocolPolicy_ptr &inout (void);
-    ClientProtocolPolicy_ptr &out (void);
-    ClientProtocolPolicy_ptr _retn (void);
-    ClientProtocolPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ClientProtocolPolicy_ptr tao_duplicate (ClientProtocolPolicy_ptr);
     static void tao_release (ClientProtocolPolicy_ptr);
     static ClientProtocolPolicy_ptr tao_nil (void);
-    static ClientProtocolPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ClientProtocolPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ClientProtocolPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ClientProtocolPolicy_var (const TAO_Base_var &rhs);
-    ClientProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export ClientProtocolPolicy_out
+  struct TAO_RTCORBA_Export tao_ClientProtocolPolicy_cast
   {
-  public:
-    ClientProtocolPolicy_out (ClientProtocolPolicy_ptr &);
-    ClientProtocolPolicy_out (ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_out (const ClientProtocolPolicy_out &);
-    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_out &);
-    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_out &operator= (ClientProtocolPolicy_ptr);
-    operator ClientProtocolPolicy_ptr &();
-    ClientProtocolPolicy_ptr &ptr (void);
-    ClientProtocolPolicy_ptr operator-> (void);
-  
-  private:
-    ClientProtocolPolicy_ptr &ptr_;
+    static ClientProtocolPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY_CH_
@@ -1432,7 +904,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -1442,10 +914,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     ClientProtocolPolicy (void);
     virtual ~ClientProtocolPolicy (void);
-    
-    friend class _TAO_ClientProtocolPolicy_Remote_Proxy_Impl;
-    friend class _TAO_ClientProtocolPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_ClientProtocolPolicy_Direct_Proxy_Impl;
   
   private:
     ClientProtocolPolicy (const ClientProtocolPolicy &);
@@ -1462,93 +930,56 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong PRIVATE_CONNECTION_POLICY_TYPE = 44U;
+  const CORBA::PolicyType PRIVATE_CONNECTION_POLICY_TYPE = 44U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY__ODDS_N_ENDS_CH_
   
   class PrivateConnectionPolicy;
   typedef PrivateConnectionPolicy *PrivateConnectionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_
+  struct tao_PrivateConnectionPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        PrivateConnectionPolicy,
+        tao_PrivateConnectionPolicy_life
+      >
+    PrivateConnectionPolicy_var;
   
-  class TAO_RTCORBA_Export PrivateConnectionPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        PrivateConnectionPolicy,
+        tao_PrivateConnectionPolicy_life
+      >
+    PrivateConnectionPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_PrivateConnectionPolicy_life
   {
-  public:
-    PrivateConnectionPolicy_var (void); // default constructor
-    PrivateConnectionPolicy_var (PrivateConnectionPolicy_ptr p) : ptr_ (p) {} 
-    PrivateConnectionPolicy_var (const PrivateConnectionPolicy_var &); // copy constructor
-    ~PrivateConnectionPolicy_var (void); // destructor
-    
-    PrivateConnectionPolicy_var &operator= (PrivateConnectionPolicy_ptr);
-    PrivateConnectionPolicy_var &operator= (const PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_ptr operator-> (void) const;
-    
-    operator const PrivateConnectionPolicy_ptr &() const;
-    operator PrivateConnectionPolicy_ptr &();
-    // in, inout, out, _retn 
-    PrivateConnectionPolicy_ptr in (void) const;
-    PrivateConnectionPolicy_ptr &inout (void);
-    PrivateConnectionPolicy_ptr &out (void);
-    PrivateConnectionPolicy_ptr _retn (void);
-    PrivateConnectionPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static PrivateConnectionPolicy_ptr tao_duplicate (PrivateConnectionPolicy_ptr);
     static void tao_release (PrivateConnectionPolicy_ptr);
     static PrivateConnectionPolicy_ptr tao_nil (void);
-    static PrivateConnectionPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        PrivateConnectionPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    PrivateConnectionPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PrivateConnectionPolicy_var (const TAO_Base_var &rhs);
-    PrivateConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export PrivateConnectionPolicy_out
+  struct TAO_RTCORBA_Export tao_PrivateConnectionPolicy_cast
   {
-  public:
-    PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &);
-    PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_out (const PrivateConnectionPolicy_out &);
-    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_out &);
-    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_out &operator= (PrivateConnectionPolicy_ptr);
-    operator PrivateConnectionPolicy_ptr &();
-    PrivateConnectionPolicy_ptr &ptr (void);
-    PrivateConnectionPolicy_ptr operator-> (void);
-  
-  private:
-    PrivateConnectionPolicy_ptr &ptr_;
+    static PrivateConnectionPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY_CH_
@@ -1582,7 +1013,7 @@ TAO_NAMESPACE  RTCORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -1592,10 +1023,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     PrivateConnectionPolicy (void);
     virtual ~PrivateConnectionPolicy (void);
-    
-    friend class _TAO_PrivateConnectionPolicy_Remote_Proxy_Impl;
-    friend class _TAO_PrivateConnectionPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_PrivateConnectionPolicy_Direct_Proxy_Impl;
   
   private:
     PrivateConnectionPolicy (const PrivateConnectionPolicy &);
@@ -1610,90 +1037,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PrivateConnectionPolicy;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___PTR_CH_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___PTR_CH_
+#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_)
+#define _RTCORBA_TCPPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_
   
   class TCPProtocolProperties;
   typedef TCPProtocolProperties *TCPProtocolProperties_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CH_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CH_
+  struct tao_TCPProtocolProperties_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        TCPProtocolProperties,
+        tao_TCPProtocolProperties_life
+      >
+    TCPProtocolProperties_var;
   
-  class TAO_RTCORBA_Export TCPProtocolProperties_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        TCPProtocolProperties,
+        tao_TCPProtocolProperties_life
+      >
+    TCPProtocolProperties_out;
+  
+  struct TAO_RTCORBA_Export tao_TCPProtocolProperties_life
   {
-  public:
-    TCPProtocolProperties_var (void); // default constructor
-    TCPProtocolProperties_var (TCPProtocolProperties_ptr p) : ptr_ (p) {} 
-    TCPProtocolProperties_var (const TCPProtocolProperties_var &); // copy constructor
-    ~TCPProtocolProperties_var (void); // destructor
-    
-    TCPProtocolProperties_var &operator= (TCPProtocolProperties_ptr);
-    TCPProtocolProperties_var &operator= (const TCPProtocolProperties_var &);
-    TCPProtocolProperties_ptr operator-> (void) const;
-    
-    operator const TCPProtocolProperties_ptr &() const;
-    operator TCPProtocolProperties_ptr &();
-    // in, inout, out, _retn 
-    TCPProtocolProperties_ptr in (void) const;
-    TCPProtocolProperties_ptr &inout (void);
-    TCPProtocolProperties_ptr &out (void);
-    TCPProtocolProperties_ptr _retn (void);
-    TCPProtocolProperties_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static TCPProtocolProperties_ptr tao_duplicate (TCPProtocolProperties_ptr);
     static void tao_release (TCPProtocolProperties_ptr);
     static TCPProtocolProperties_ptr tao_nil (void);
-    static TCPProtocolProperties_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        TCPProtocolProperties_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    TCPProtocolProperties_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    TCPProtocolProperties_var (const TAO_Base_var &rhs);
-    TCPProtocolProperties_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CH_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export TCPProtocolProperties_out
+  struct TAO_RTCORBA_Export tao_TCPProtocolProperties_cast
   {
-  public:
-    TCPProtocolProperties_out (TCPProtocolProperties_ptr &);
-    TCPProtocolProperties_out (TCPProtocolProperties_var &);
-    TCPProtocolProperties_out (const TCPProtocolProperties_out &);
-    TCPProtocolProperties_out &operator= (const TCPProtocolProperties_out &);
-    TCPProtocolProperties_out &operator= (const TCPProtocolProperties_var &);
-    TCPProtocolProperties_out &operator= (TCPProtocolProperties_ptr);
-    operator TCPProtocolProperties_ptr &();
-    TCPProtocolProperties_ptr &ptr (void);
-    TCPProtocolProperties_ptr operator-> (void);
-  
-  private:
-    TCPProtocolProperties_ptr &ptr_;
+    static TCPProtocolProperties_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES_CH_
@@ -1853,7 +1243,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -1863,10 +1253,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     TCPProtocolProperties (void);
     virtual ~TCPProtocolProperties (void);
-    
-    friend class _TAO_TCPProtocolProperties_Remote_Proxy_Impl;
-    friend class _TAO_TCPProtocolProperties_ThruPOA_Proxy_Impl;
-    friend class _TAO_TCPProtocolProperties_Direct_Proxy_Impl;
   
   private:
     TCPProtocolProperties (const TCPProtocolProperties &);
@@ -1881,90 +1267,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TCPProtocolProperties;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___PTR_CH_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___PTR_CH_
+#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_)
+#define _RTCORBA_GIOPPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_
   
   class GIOPProtocolProperties;
   typedef GIOPProtocolProperties *GIOPProtocolProperties_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CH_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CH_
+  struct tao_GIOPProtocolProperties_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        GIOPProtocolProperties,
+        tao_GIOPProtocolProperties_life
+      >
+    GIOPProtocolProperties_var;
   
-  class TAO_RTCORBA_Export GIOPProtocolProperties_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        GIOPProtocolProperties,
+        tao_GIOPProtocolProperties_life
+      >
+    GIOPProtocolProperties_out;
+  
+  struct TAO_RTCORBA_Export tao_GIOPProtocolProperties_life
   {
-  public:
-    GIOPProtocolProperties_var (void); // default constructor
-    GIOPProtocolProperties_var (GIOPProtocolProperties_ptr p) : ptr_ (p) {} 
-    GIOPProtocolProperties_var (const GIOPProtocolProperties_var &); // copy constructor
-    ~GIOPProtocolProperties_var (void); // destructor
-    
-    GIOPProtocolProperties_var &operator= (GIOPProtocolProperties_ptr);
-    GIOPProtocolProperties_var &operator= (const GIOPProtocolProperties_var &);
-    GIOPProtocolProperties_ptr operator-> (void) const;
-    
-    operator const GIOPProtocolProperties_ptr &() const;
-    operator GIOPProtocolProperties_ptr &();
-    // in, inout, out, _retn 
-    GIOPProtocolProperties_ptr in (void) const;
-    GIOPProtocolProperties_ptr &inout (void);
-    GIOPProtocolProperties_ptr &out (void);
-    GIOPProtocolProperties_ptr _retn (void);
-    GIOPProtocolProperties_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static GIOPProtocolProperties_ptr tao_duplicate (GIOPProtocolProperties_ptr);
     static void tao_release (GIOPProtocolProperties_ptr);
     static GIOPProtocolProperties_ptr tao_nil (void);
-    static GIOPProtocolProperties_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        GIOPProtocolProperties_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    GIOPProtocolProperties_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    GIOPProtocolProperties_var (const TAO_Base_var &rhs);
-    GIOPProtocolProperties_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CH_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export GIOPProtocolProperties_out
+  struct TAO_RTCORBA_Export tao_GIOPProtocolProperties_cast
   {
-  public:
-    GIOPProtocolProperties_out (GIOPProtocolProperties_ptr &);
-    GIOPProtocolProperties_out (GIOPProtocolProperties_var &);
-    GIOPProtocolProperties_out (const GIOPProtocolProperties_out &);
-    GIOPProtocolProperties_out &operator= (const GIOPProtocolProperties_out &);
-    GIOPProtocolProperties_out &operator= (const GIOPProtocolProperties_var &);
-    GIOPProtocolProperties_out &operator= (GIOPProtocolProperties_ptr);
-    operator GIOPProtocolProperties_ptr &();
-    GIOPProtocolProperties_ptr &ptr (void);
-    GIOPProtocolProperties_ptr operator-> (void);
-  
-  private:
-    GIOPProtocolProperties_ptr &ptr_;
+    static GIOPProtocolProperties_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES_CH_
@@ -1998,7 +1347,7 @@ TAO_NAMESPACE  RTCORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -2008,10 +1357,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     GIOPProtocolProperties (void);
     virtual ~GIOPProtocolProperties (void);
-    
-    friend class _TAO_GIOPProtocolProperties_Remote_Proxy_Impl;
-    friend class _TAO_GIOPProtocolProperties_ThruPOA_Proxy_Impl;
-    friend class _TAO_GIOPProtocolProperties_Direct_Proxy_Impl;
   
   private:
     GIOPProtocolProperties (const GIOPProtocolProperties &);
@@ -2026,90 +1371,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_GIOPProtocolProperties;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___PTR_CH_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___PTR_CH_
+#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_)
+#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_
   
   class UnixDomainProtocolProperties;
   typedef UnixDomainProtocolProperties *UnixDomainProtocolProperties_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CH_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CH_
+  struct tao_UnixDomainProtocolProperties_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        UnixDomainProtocolProperties,
+        tao_UnixDomainProtocolProperties_life
+      >
+    UnixDomainProtocolProperties_var;
   
-  class TAO_RTCORBA_Export UnixDomainProtocolProperties_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        UnixDomainProtocolProperties,
+        tao_UnixDomainProtocolProperties_life
+      >
+    UnixDomainProtocolProperties_out;
+  
+  struct TAO_RTCORBA_Export tao_UnixDomainProtocolProperties_life
   {
-  public:
-    UnixDomainProtocolProperties_var (void); // default constructor
-    UnixDomainProtocolProperties_var (UnixDomainProtocolProperties_ptr p) : ptr_ (p) {} 
-    UnixDomainProtocolProperties_var (const UnixDomainProtocolProperties_var &); // copy constructor
-    ~UnixDomainProtocolProperties_var (void); // destructor
-    
-    UnixDomainProtocolProperties_var &operator= (UnixDomainProtocolProperties_ptr);
-    UnixDomainProtocolProperties_var &operator= (const UnixDomainProtocolProperties_var &);
-    UnixDomainProtocolProperties_ptr operator-> (void) const;
-    
-    operator const UnixDomainProtocolProperties_ptr &() const;
-    operator UnixDomainProtocolProperties_ptr &();
-    // in, inout, out, _retn 
-    UnixDomainProtocolProperties_ptr in (void) const;
-    UnixDomainProtocolProperties_ptr &inout (void);
-    UnixDomainProtocolProperties_ptr &out (void);
-    UnixDomainProtocolProperties_ptr _retn (void);
-    UnixDomainProtocolProperties_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static UnixDomainProtocolProperties_ptr tao_duplicate (UnixDomainProtocolProperties_ptr);
     static void tao_release (UnixDomainProtocolProperties_ptr);
     static UnixDomainProtocolProperties_ptr tao_nil (void);
-    static UnixDomainProtocolProperties_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        UnixDomainProtocolProperties_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    UnixDomainProtocolProperties_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    UnixDomainProtocolProperties_var (const TAO_Base_var &rhs);
-    UnixDomainProtocolProperties_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CH_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export UnixDomainProtocolProperties_out
+  struct TAO_RTCORBA_Export tao_UnixDomainProtocolProperties_cast
   {
-  public:
-    UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_ptr &);
-    UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_var &);
-    UnixDomainProtocolProperties_out (const UnixDomainProtocolProperties_out &);
-    UnixDomainProtocolProperties_out &operator= (const UnixDomainProtocolProperties_out &);
-    UnixDomainProtocolProperties_out &operator= (const UnixDomainProtocolProperties_var &);
-    UnixDomainProtocolProperties_out &operator= (UnixDomainProtocolProperties_ptr);
-    operator UnixDomainProtocolProperties_ptr &();
-    UnixDomainProtocolProperties_ptr &ptr (void);
-    UnixDomainProtocolProperties_ptr operator-> (void);
-  
-  private:
-    UnixDomainProtocolProperties_ptr &ptr_;
+    static UnixDomainProtocolProperties_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_
@@ -2185,7 +1493,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -2195,10 +1503,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     UnixDomainProtocolProperties (void);
     virtual ~UnixDomainProtocolProperties (void);
-    
-    friend class _TAO_UnixDomainProtocolProperties_Remote_Proxy_Impl;
-    friend class _TAO_UnixDomainProtocolProperties_ThruPOA_Proxy_Impl;
-    friend class _TAO_UnixDomainProtocolProperties_Direct_Proxy_Impl;
   
   private:
     UnixDomainProtocolProperties (const UnixDomainProtocolProperties &);
@@ -2213,90 +1517,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UnixDomainProtocolProperties;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___PTR_CH_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___PTR_CH_
+#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_)
+#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__ODDS_N_ENDS_CH_
   
   class SharedMemoryProtocolProperties;
   typedef SharedMemoryProtocolProperties *SharedMemoryProtocolProperties_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CH_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CH_
+  struct tao_SharedMemoryProtocolProperties_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        SharedMemoryProtocolProperties,
+        tao_SharedMemoryProtocolProperties_life
+      >
+    SharedMemoryProtocolProperties_var;
   
-  class TAO_RTCORBA_Export SharedMemoryProtocolProperties_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        SharedMemoryProtocolProperties,
+        tao_SharedMemoryProtocolProperties_life
+      >
+    SharedMemoryProtocolProperties_out;
+  
+  struct TAO_RTCORBA_Export tao_SharedMemoryProtocolProperties_life
   {
-  public:
-    SharedMemoryProtocolProperties_var (void); // default constructor
-    SharedMemoryProtocolProperties_var (SharedMemoryProtocolProperties_ptr p) : ptr_ (p) {} 
-    SharedMemoryProtocolProperties_var (const SharedMemoryProtocolProperties_var &); // copy constructor
-    ~SharedMemoryProtocolProperties_var (void); // destructor
-    
-    SharedMemoryProtocolProperties_var &operator= (SharedMemoryProtocolProperties_ptr);
-    SharedMemoryProtocolProperties_var &operator= (const SharedMemoryProtocolProperties_var &);
-    SharedMemoryProtocolProperties_ptr operator-> (void) const;
-    
-    operator const SharedMemoryProtocolProperties_ptr &() const;
-    operator SharedMemoryProtocolProperties_ptr &();
-    // in, inout, out, _retn 
-    SharedMemoryProtocolProperties_ptr in (void) const;
-    SharedMemoryProtocolProperties_ptr &inout (void);
-    SharedMemoryProtocolProperties_ptr &out (void);
-    SharedMemoryProtocolProperties_ptr _retn (void);
-    SharedMemoryProtocolProperties_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static SharedMemoryProtocolProperties_ptr tao_duplicate (SharedMemoryProtocolProperties_ptr);
     static void tao_release (SharedMemoryProtocolProperties_ptr);
     static SharedMemoryProtocolProperties_ptr tao_nil (void);
-    static SharedMemoryProtocolProperties_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        SharedMemoryProtocolProperties_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    SharedMemoryProtocolProperties_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    SharedMemoryProtocolProperties_var (const TAO_Base_var &rhs);
-    SharedMemoryProtocolProperties_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CH_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export SharedMemoryProtocolProperties_out
+  struct TAO_RTCORBA_Export tao_SharedMemoryProtocolProperties_cast
   {
-  public:
-    SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_ptr &);
-    SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_var &);
-    SharedMemoryProtocolProperties_out (const SharedMemoryProtocolProperties_out &);
-    SharedMemoryProtocolProperties_out &operator= (const SharedMemoryProtocolProperties_out &);
-    SharedMemoryProtocolProperties_out &operator= (const SharedMemoryProtocolProperties_var &);
-    SharedMemoryProtocolProperties_out &operator= (SharedMemoryProtocolProperties_ptr);
-    operator SharedMemoryProtocolProperties_ptr &();
-    SharedMemoryProtocolProperties_ptr &ptr (void);
-    SharedMemoryProtocolProperties_ptr operator-> (void);
-  
-  private:
-    SharedMemoryProtocolProperties_ptr &ptr_;
+    static SharedMemoryProtocolProperties_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_
@@ -2393,7 +1660,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -2403,10 +1670,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     SharedMemoryProtocolProperties (void);
     virtual ~SharedMemoryProtocolProperties (void);
-    
-    friend class _TAO_SharedMemoryProtocolProperties_Remote_Proxy_Impl;
-    friend class _TAO_SharedMemoryProtocolProperties_ThruPOA_Proxy_Impl;
-    friend class _TAO_SharedMemoryProtocolProperties_Direct_Proxy_Impl;
   
   private:
     SharedMemoryProtocolProperties (const SharedMemoryProtocolProperties &);
@@ -2421,9 +1684,22 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SharedMemoryProtocolProperties;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class PriorityBand_var;
+  struct PriorityBand;
+  
+  typedef
+    TAO_Fixed_Var_T<
+        PriorityBand
+      >
+    PriorityBand_var;
+  
+  typedef
+    PriorityBand &
+    PriorityBand_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_RTCORBA_Export PriorityBand
   {
@@ -2435,225 +1711,52 @@ TAO_NAMESPACE  RTCORBA
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_RTCORBA_Export PriorityBand_var
-  {
-  public:
-    PriorityBand_var (void);
-    PriorityBand_var (PriorityBand *);
-    PriorityBand_var (const PriorityBand_var &);
-    // Fixed-size types only.
-    PriorityBand_var (const PriorityBand &);
-    ~PriorityBand_var (void);
-    
-    PriorityBand_var &operator= (PriorityBand *);
-    PriorityBand_var &operator= (const PriorityBand_var &);
-    
-    // Fixed-size types only.
-    PriorityBand_var &operator= (const PriorityBand &);
-    
-    PriorityBand *operator-> (void);
-    const PriorityBand *operator-> (void) const;
-    
-    operator const PriorityBand &() const;
-    operator PriorityBand &();
-    operator PriorityBand &() const;
-    
-    // in, inout, out, _retn 
-    const PriorityBand &in (void) const;
-    PriorityBand &inout (void);
-    PriorityBand &out (void);
-    PriorityBand _retn (void);
-    PriorityBand *ptr (void) const;
-  
-  private:
-    PriorityBand *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:105
-  
-  typedef PriorityBand &PriorityBand_out;
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBand;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_
-  
-  class TAO_RTCORBA_Export _TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void);
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        PriorityBand *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (
-        const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs
-      );
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &operator= (
-        const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void);
-    
-    // = Accessors.
-    PriorityBand &operator[] (CORBA::ULong i);
-    const PriorityBand &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static PriorityBand *allocbuf (CORBA::ULong size);
-    static void freebuf (PriorityBand *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    PriorityBand *get_buffer (CORBA::Boolean orphan = 0);
-    const PriorityBand *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        PriorityBand *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_PRIORITYBANDS_CH_)
-#define _RTCORBA_PRIORITYBANDS_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class PriorityBands;
-  class PriorityBands_var;
   
-  // *************************************************************
-  // RTCORBA::PriorityBands
-  // *************************************************************
+  typedef
+    TAO_FixedSeq_Var_T<
+        PriorityBands,
+        PriorityBand
+      >
+    PriorityBands_var;
   
-  class TAO_RTCORBA_Export PriorityBands : public 
+  typedef
+    TAO_Seq_Out_T<
+        PriorityBands,
+        PriorityBands_var,
+        PriorityBand
+      >
+    PriorityBands_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<PriorityBand>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_RTCORBA_Export PriorityBands
+    : public
+        TAO_Unbounded_Sequence<
+            PriorityBand
+          >
   {
   public:
     PriorityBands (void);
     PriorityBands (CORBA::ULong max);
     PriorityBands (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        PriorityBand *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        PriorityBand* buffer, 
         CORBA::Boolean release = 0
       );
     PriorityBands (const PriorityBands &);
     ~PriorityBands (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef PriorityBands_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYBANDS___VAR_CH_)
-#define _RTCORBA_PRIORITYBANDS___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class RTCORBA::PriorityBands_var
-  // *************************************************************
-  
-  class TAO_RTCORBA_Export PriorityBands_var
-  {
-  public:
-    PriorityBands_var (void);
-    PriorityBands_var (PriorityBands *);
-    PriorityBands_var (const PriorityBands_var &);
-    
-    // Fixed-size base types only.
-    PriorityBands_var (const PriorityBands &);
-    
-    ~PriorityBands_var (void);
-    
-    PriorityBands_var &operator= (PriorityBands *);
-    PriorityBands_var &operator= (const PriorityBands_var &);
-    
-    // Fixed-size base types only.
-    PriorityBands_var &operator= (const PriorityBands &);
-    
-    PriorityBands *operator-> (void);
-    const PriorityBands *operator-> (void) const;
-    
-    operator const PriorityBands &() const;
-    operator PriorityBands &();
-    operator PriorityBands &() const;
-    PriorityBand & operator[] (CORBA::ULong index);
-    const PriorityBand & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const PriorityBands &in (void) const;
-    PriorityBands &inout (void);
-    PriorityBands *&out (void);
-    PriorityBands *_retn (void);
-    PriorityBands *ptr (void) const;
-  
-  private:
-    PriorityBands *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYBANDS___OUT_CH_)
-#define _RTCORBA_PRIORITYBANDS___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_RTCORBA_Export PriorityBands_out
-  {
-  public:
-    PriorityBands_out (PriorityBands *&);
-    PriorityBands_out (PriorityBands_var &);
-    PriorityBands_out (const PriorityBands_out &);
-    PriorityBands_out &operator= (const PriorityBands_out &);
-    PriorityBands_out &operator= (PriorityBands *);
-    operator PriorityBands *&();
-    PriorityBands *&ptr (void);
-    PriorityBands *operator-> (void);
-    PriorityBand & operator[] (CORBA::ULong index);
-  
-  private:
-    PriorityBands *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const PriorityBands_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -2663,93 +1766,56 @@ TAO_NAMESPACE  RTCORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong PRIORITY_BANDED_CONNECTION_POLICY_TYPE = 45U;
+  const CORBA::PolicyType PRIORITY_BANDED_CONNECTION_POLICY_TYPE = 45U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__ODDS_N_ENDS_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__ODDS_N_ENDS_CH_
   
   class PriorityBandedConnectionPolicy;
   typedef PriorityBandedConnectionPolicy *PriorityBandedConnectionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_
+  struct tao_PriorityBandedConnectionPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        PriorityBandedConnectionPolicy,
+        tao_PriorityBandedConnectionPolicy_life
+      >
+    PriorityBandedConnectionPolicy_var;
   
-  class TAO_RTCORBA_Export PriorityBandedConnectionPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        PriorityBandedConnectionPolicy,
+        tao_PriorityBandedConnectionPolicy_life
+      >
+    PriorityBandedConnectionPolicy_out;
+  
+  struct TAO_RTCORBA_Export tao_PriorityBandedConnectionPolicy_life
   {
-  public:
-    PriorityBandedConnectionPolicy_var (void); // default constructor
-    PriorityBandedConnectionPolicy_var (PriorityBandedConnectionPolicy_ptr p) : ptr_ (p) {} 
-    PriorityBandedConnectionPolicy_var (const PriorityBandedConnectionPolicy_var &); // copy constructor
-    ~PriorityBandedConnectionPolicy_var (void); // destructor
-    
-    PriorityBandedConnectionPolicy_var &operator= (PriorityBandedConnectionPolicy_ptr);
-    PriorityBandedConnectionPolicy_var &operator= (const PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_ptr operator-> (void) const;
-    
-    operator const PriorityBandedConnectionPolicy_ptr &() const;
-    operator PriorityBandedConnectionPolicy_ptr &();
-    // in, inout, out, _retn 
-    PriorityBandedConnectionPolicy_ptr in (void) const;
-    PriorityBandedConnectionPolicy_ptr &inout (void);
-    PriorityBandedConnectionPolicy_ptr &out (void);
-    PriorityBandedConnectionPolicy_ptr _retn (void);
-    PriorityBandedConnectionPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static PriorityBandedConnectionPolicy_ptr tao_duplicate (PriorityBandedConnectionPolicy_ptr);
     static void tao_release (PriorityBandedConnectionPolicy_ptr);
     static PriorityBandedConnectionPolicy_ptr tao_nil (void);
-    static PriorityBandedConnectionPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        PriorityBandedConnectionPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    PriorityBandedConnectionPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PriorityBandedConnectionPolicy_var (const TAO_Base_var &rhs);
-    PriorityBandedConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export PriorityBandedConnectionPolicy_out
+  struct TAO_RTCORBA_Export tao_PriorityBandedConnectionPolicy_cast
   {
-  public:
-    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &);
-    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_out (const PriorityBandedConnectionPolicy_out &);
-    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_out &);
-    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_out &operator= (PriorityBandedConnectionPolicy_ptr);
-    operator PriorityBandedConnectionPolicy_ptr &();
-    PriorityBandedConnectionPolicy_ptr &ptr (void);
-    PriorityBandedConnectionPolicy_ptr operator-> (void);
-  
-  private:
-    PriorityBandedConnectionPolicy_ptr &ptr_;
+    static PriorityBandedConnectionPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_
@@ -2793,7 +1859,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -2803,10 +1869,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     PriorityBandedConnectionPolicy (void);
     virtual ~PriorityBandedConnectionPolicy (void);
-    
-    friend class _TAO_PriorityBandedConnectionPolicy_Remote_Proxy_Impl;
-    friend class _TAO_PriorityBandedConnectionPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_PriorityBandedConnectionPolicy_Direct_Proxy_Impl;
   
   private:
     PriorityBandedConnectionPolicy (const PriorityBandedConnectionPolicy &);
@@ -2821,90 +1883,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBandedConnectionPolicy;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_CURRENT___PTR_CH_)
-#define _RTCORBA_CURRENT___PTR_CH_
+#if !defined (_RTCORBA_CURRENT__ODDS_N_ENDS_CH_)
+#define _RTCORBA_CURRENT__ODDS_N_ENDS_CH_
   
   class Current;
   typedef Current *Current_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_CURRENT___VAR_CH_)
-#define _RTCORBA_CURRENT___VAR_CH_
+  struct tao_Current_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        Current,
+        tao_Current_life
+      >
+    Current_var;
   
-  class TAO_RTCORBA_Export Current_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        Current,
+        tao_Current_life
+      >
+    Current_out;
+  
+  struct TAO_RTCORBA_Export tao_Current_life
   {
-  public:
-    Current_var (void); // default constructor
-    Current_var (Current_ptr p) : ptr_ (p) {} 
-    Current_var (const Current_var &); // copy constructor
-    ~Current_var (void); // destructor
-    
-    Current_var &operator= (Current_ptr);
-    Current_var &operator= (const Current_var &);
-    Current_ptr operator-> (void) const;
-    
-    operator const Current_ptr &() const;
-    operator Current_ptr &();
-    // in, inout, out, _retn 
-    Current_ptr in (void) const;
-    Current_ptr &inout (void);
-    Current_ptr &out (void);
-    Current_ptr _retn (void);
-    Current_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
     static Current_ptr tao_nil (void);
-    static Current_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Current_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Current_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Current_var (const TAO_Base_var &rhs);
-    Current_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_CURRENT___OUT_CH_)
-#define _RTCORBA_CURRENT___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export Current_out
+  struct TAO_RTCORBA_Export tao_Current_cast
   {
-  public:
-    Current_out (Current_ptr &);
-    Current_out (Current_var &);
-    Current_out (const Current_out &);
-    Current_out &operator= (const Current_out &);
-    Current_out &operator= (const Current_var &);
-    Current_out &operator= (Current_ptr);
-    operator Current_ptr &();
-    Current_ptr &ptr (void);
-    Current_ptr operator-> (void);
-  
-  private:
-    Current_ptr &ptr_;
+    static Current_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_CURRENT_CH_)
 #define _RTCORBA_CURRENT_CH_
@@ -2959,7 +1984,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -2969,10 +1994,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     Current (void);
     virtual ~Current (void);
-    
-    friend class _TAO_Current_Remote_Proxy_Impl;
-    friend class _TAO_Current_ThruPOA_Proxy_Impl;
-    friend class _TAO_Current_Direct_Proxy_Impl;
   
   private:
     Current (const Current &);
@@ -2987,90 +2008,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_MUTEX___PTR_CH_)
-#define _RTCORBA_MUTEX___PTR_CH_
+#if !defined (_RTCORBA_MUTEX__ODDS_N_ENDS_CH_)
+#define _RTCORBA_MUTEX__ODDS_N_ENDS_CH_
   
   class Mutex;
   typedef Mutex *Mutex_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_MUTEX___VAR_CH_)
-#define _RTCORBA_MUTEX___VAR_CH_
+  struct tao_Mutex_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        Mutex,
+        tao_Mutex_life
+      >
+    Mutex_var;
   
-  class TAO_RTCORBA_Export Mutex_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        Mutex,
+        tao_Mutex_life
+      >
+    Mutex_out;
+  
+  struct TAO_RTCORBA_Export tao_Mutex_life
   {
-  public:
-    Mutex_var (void); // default constructor
-    Mutex_var (Mutex_ptr p) : ptr_ (p) {} 
-    Mutex_var (const Mutex_var &); // copy constructor
-    ~Mutex_var (void); // destructor
-    
-    Mutex_var &operator= (Mutex_ptr);
-    Mutex_var &operator= (const Mutex_var &);
-    Mutex_ptr operator-> (void) const;
-    
-    operator const Mutex_ptr &() const;
-    operator Mutex_ptr &();
-    // in, inout, out, _retn 
-    Mutex_ptr in (void) const;
-    Mutex_ptr &inout (void);
-    Mutex_ptr &out (void);
-    Mutex_ptr _retn (void);
-    Mutex_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Mutex_ptr tao_duplicate (Mutex_ptr);
     static void tao_release (Mutex_ptr);
     static Mutex_ptr tao_nil (void);
-    static Mutex_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Mutex_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Mutex_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Mutex_var (const TAO_Base_var &rhs);
-    Mutex_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_MUTEX___OUT_CH_)
-#define _RTCORBA_MUTEX___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export Mutex_out
+  struct TAO_RTCORBA_Export tao_Mutex_cast
   {
-  public:
-    Mutex_out (Mutex_ptr &);
-    Mutex_out (Mutex_var &);
-    Mutex_out (const Mutex_out &);
-    Mutex_out &operator= (const Mutex_out &);
-    Mutex_out &operator= (const Mutex_var &);
-    Mutex_out &operator= (Mutex_ptr);
-    operator Mutex_ptr &();
-    Mutex_ptr &ptr (void);
-    Mutex_ptr operator-> (void);
-  
-  private:
-    Mutex_ptr &ptr_;
+    static Mutex_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_MUTEX_CH_)
 #define _RTCORBA_MUTEX_CH_
@@ -3135,7 +2119,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -3145,10 +2129,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     Mutex (void);
     virtual ~Mutex (void);
-    
-    friend class _TAO_Mutex_Remote_Proxy_Impl;
-    friend class _TAO_Mutex_ThruPOA_Proxy_Impl;
-    friend class _TAO_Mutex_Direct_Proxy_Impl;
   
   private:
     Mutex (const Mutex &);
@@ -3163,90 +2143,53 @@ TAO_NAMESPACE  RTCORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Mutex;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTCORBA_RTORB___PTR_CH_)
-#define _RTCORBA_RTORB___PTR_CH_
+#if !defined (_RTCORBA_RTORB__ODDS_N_ENDS_CH_)
+#define _RTCORBA_RTORB__ODDS_N_ENDS_CH_
   
   class RTORB;
   typedef RTORB *RTORB_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_RTORB___VAR_CH_)
-#define _RTCORBA_RTORB___VAR_CH_
+  struct tao_RTORB_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        RTORB,
+        tao_RTORB_life
+      >
+    RTORB_var;
   
-  class TAO_RTCORBA_Export RTORB_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        RTORB,
+        tao_RTORB_life
+      >
+    RTORB_out;
+  
+  struct TAO_RTCORBA_Export tao_RTORB_life
   {
-  public:
-    RTORB_var (void); // default constructor
-    RTORB_var (RTORB_ptr p) : ptr_ (p) {} 
-    RTORB_var (const RTORB_var &); // copy constructor
-    ~RTORB_var (void); // destructor
-    
-    RTORB_var &operator= (RTORB_ptr);
-    RTORB_var &operator= (const RTORB_var &);
-    RTORB_ptr operator-> (void) const;
-    
-    operator const RTORB_ptr &() const;
-    operator RTORB_ptr &();
-    // in, inout, out, _retn 
-    RTORB_ptr in (void) const;
-    RTORB_ptr &inout (void);
-    RTORB_ptr &out (void);
-    RTORB_ptr _retn (void);
-    RTORB_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static RTORB_ptr tao_duplicate (RTORB_ptr);
     static void tao_release (RTORB_ptr);
     static RTORB_ptr tao_nil (void);
-    static RTORB_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        RTORB_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    RTORB_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    RTORB_var (const TAO_Base_var &rhs);
-    RTORB_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTCORBA_RTORB___OUT_CH_)
-#define _RTCORBA_RTORB___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTCORBA_Export RTORB_out
+  struct TAO_RTCORBA_Export tao_RTORB_cast
   {
-  public:
-    RTORB_out (RTORB_ptr &);
-    RTORB_out (RTORB_var &);
-    RTORB_out (const RTORB_out &);
-    RTORB_out &operator= (const RTORB_out &);
-    RTORB_out &operator= (const RTORB_var &);
-    RTORB_out &operator= (RTORB_ptr);
-    operator RTORB_ptr &();
-    RTORB_ptr &ptr (void);
-    RTORB_ptr operator-> (void);
-  
-  private:
-    RTORB_ptr &ptr_;
+    static RTORB_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_RTORB_CH_)
 #define _RTCORBA_RTORB_CH_
@@ -3548,7 +2491,7 @@ TAO_NAMESPACE  RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -3558,10 +2501,6 @@ TAO_NAMESPACE  RTCORBA
   protected:
     RTORB (void);
     virtual ~RTORB (void);
-    
-    friend class _TAO_RTORB_Remote_Proxy_Impl;
-    friend class _TAO_RTORB_ThruPOA_Proxy_Impl;
-    friend class _TAO_RTORB_Direct_Proxy_Impl;
   
   private:
     RTORB (const RTORB &);
@@ -3812,7 +2751,7 @@ TAO_RTCORBA_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "RTCORBAC.i"

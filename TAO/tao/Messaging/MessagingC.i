@@ -54,17 +54,10 @@ Messaging::ReplyHandler::ReplyHandler (
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
 
-ACE_INLINE
-CORBA::Boolean
-Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:242
 
 #if defined (__ACE_INLINE__)
 
@@ -95,5 +88,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &
   );
-
 

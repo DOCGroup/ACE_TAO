@@ -573,14 +573,23 @@ be_interface:: gen_var_out_seq_decls (void)
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
       << "typedef " << lname << " *" << lname << "_ptr;" << be_nl
-      << "struct tao_" << lname << "_life;" << be_nl
-      << "typedef TAO_Objref_Var_T<" << lname << ", tao_" 
-      << lname << "_life> " << lname << "_var;" << be_nl
-      << "typedef TAO_Objref_Out_T<" << lname << ", tao_" 
-      << lname << "_life> " << lname << "_out;";
+      << "struct tao_" << lname << "_life;" << be_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl
+      << lname << "_var;" << be_uidt_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl
+      << lname << "_out;" << be_uidt;
 
   *os << be_nl << be_nl
-      << "struct tao_" << lname << "_life" << be_nl
+      << "struct " << be_global->stub_export_macro () 
+      << " tao_" << lname << "_life" << be_nl
       << "{" << be_idt_nl
       << "static " << lname << "_ptr tao_duplicate (" 
       << lname << "_ptr);" << be_nl
@@ -595,7 +604,8 @@ be_interface:: gen_var_out_seq_decls (void)
   if (! this->is_abstract ())
     {
       *os << be_nl << be_nl
-          << "struct tao_" << lname << "_cast" << be_nl
+          << "struct " << be_global->stub_export_macro () 
+          << " tao_" << lname << "_cast" << be_nl
           << "{" << be_idt_nl
           << "static " << lname << "_ptr tao_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr"

@@ -309,14 +309,23 @@ be_valuetype:: gen_var_out_seq_decls (void)
   const char *lname = this->local_name ();
 
   *os << "class " << lname << ";" << be_nl
-      << "struct tao_" << lname << "_life;" << be_nl
-      << "typedef TAO_Value_Var_T<" << lname << ", tao_" 
-      << lname << "_life> " << lname << "_var;" << be_nl
-      << "typedef TAO_Value_Out_T<" << lname << ", tao_" 
-      << lname << "_life> " << lname << "_out;";
+      << "struct tao_" << lname << "_life;" << be_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl
+      << lname << "_var;" << be_uidt_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl 
+      << lname << "_out;" << be_uidt;
 
   *os << be_nl << be_nl
-      << "struct tao_" << lname << "_life" << be_nl
+      << "struct " << be_global->stub_export_macro () 
+      << " tao_" << lname << "_life" << be_nl
       << "{" << be_idt_nl
       << "static void tao_add_ref (" 
       << lname << " *);" << be_nl

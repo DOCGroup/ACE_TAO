@@ -26,12 +26,5 @@
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___CI_)
 #define _MESSAGING_SYNCSCOPEPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-Messaging::SyncScopePolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

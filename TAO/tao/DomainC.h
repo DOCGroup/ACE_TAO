@@ -73,7 +73,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<DomainManager, tao_DomainManager_life> DomainManager_var;
   typedef TAO_Objref_Out_T<DomainManager, tao_DomainManager_life> DomainManager_out;
   
-  struct tao_DomainManager_life
+  struct TAO_Export tao_DomainManager_life
   {
     static DomainManager_ptr tao_duplicate (DomainManager_ptr);
     static void tao_release (DomainManager_ptr);
@@ -84,7 +84,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_DomainManager_cast
+  struct TAO_Export tao_DomainManager_cast
   {
     static DomainManager_ptr tao_narrow (
         CORBA::Object_ptr
@@ -339,7 +339,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_var;
   typedef TAO_Objref_Out_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_out;
   
-  struct tao_ConstructionPolicy_life
+  struct TAO_Export tao_ConstructionPolicy_life
   {
     static ConstructionPolicy_ptr tao_duplicate (ConstructionPolicy_ptr);
     static void tao_release (ConstructionPolicy_ptr);
@@ -350,7 +350,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_ConstructionPolicy_cast
+  struct TAO_Export tao_ConstructionPolicy_cast
   {
     static ConstructionPolicy_ptr tao_narrow (
         CORBA::Object_ptr

@@ -149,7 +149,7 @@ template <typename T, typename T_life>
 TAO_Objref_Out_T<T, T_life>::TAO_Objref_Out_T (
     const TAO_Objref_Out_T<T, T_life> & p
   )
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p.ptr_))
+  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
 {
 }
 

@@ -35,7 +35,6 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 
-
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -50,7 +49,7 @@
 int CORBA::TypeCodeFactory::_tao_class_id = 0;
 
 CORBA::TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_duplicate (
+CORBA::tao_TypeCodeFactory_life::tao_duplicate (
     CORBA::TypeCodeFactory_ptr p
   )
 {
@@ -58,7 +57,7 @@ tao_CORBA_TypeCodeFactory_duplicate (
 }
 
 void
-tao_CORBA_TypeCodeFactory_release (
+CORBA::tao_TypeCodeFactory_life::tao_release (
     CORBA::TypeCodeFactory_ptr p
   )
 {
@@ -66,15 +65,24 @@ tao_CORBA_TypeCodeFactory_release (
 }
 
 CORBA::TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_nil (
+CORBA::tao_TypeCodeFactory_life::tao_nil (
     void
   )
 {
   return CORBA::TypeCodeFactory::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_TypeCodeFactory_life::tao_marshal (
+    CORBA::TypeCodeFactory_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_narrow (
+CORBA::tao_TypeCodeFactory_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -83,7 +91,7 @@ tao_CORBA_TypeCodeFactory_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_TypeCodeFactory_upcast (
+CORBA::tao_TypeCodeFactory_cast::tao_upcast (
     void *src
   )
 {
@@ -92,205 +100,32 @@ tao_CORBA_TypeCodeFactory_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_TypeCodeFactory_marshal (
-    CORBA::TypeCodeFactory_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::TypeCodeFactory_var
-// *************************************************************
-
-CORBA::TypeCodeFactory_var::TypeCodeFactory_var (void)
-  : ptr_ (TypeCodeFactory::_nil ())
-{}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::TypeCodeFactory_var::TypeCodeFactory_var (const ::CORBA::TypeCodeFactory_var &p)
-  : TAO_Base_var (),
-    ptr_ (TypeCodeFactory::_duplicate (p.ptr ()))
-{}
-
-CORBA::TypeCodeFactory_var::~TypeCodeFactory_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::TypeCodeFactory_var &
-CORBA::TypeCodeFactory_var::operator= (TypeCodeFactory_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::TypeCodeFactory_var &
-CORBA::TypeCodeFactory_var::operator= (const ::CORBA::TypeCodeFactory_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::TypeCodeFactory::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::TypeCodeFactory_var::operator const ::CORBA::TypeCodeFactory_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::TypeCodeFactory_var::operator ::CORBA::TypeCodeFactory_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr &
-CORBA::TypeCodeFactory_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr &
-CORBA::TypeCodeFactory_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::TypeCodeFactory::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::TypeCodeFactory_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::TypeCodeFactory::_nil ();
-  return val;
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::tao_duplicate (TypeCodeFactory_ptr p)
-{
-  return ::CORBA::TypeCodeFactory::_duplicate (p);
-}
-
-void
-CORBA::TypeCodeFactory_var::tao_release (TypeCodeFactory_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::tao_nil (void)
-{
-  return ::CORBA::TypeCodeFactory::_nil ();
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::TypeCodeFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::TypeCodeFactory_var::tao_upcast (void *src)
-{
-  TypeCodeFactory **tmp =
-    ACE_static_cast (TypeCodeFactory **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::TypeCodeFactory_out
-// *************************************************************
-
-CORBA::TypeCodeFactory_out::TypeCodeFactory_out (TypeCodeFactory_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::TypeCodeFactory::_nil ();
-}
-
-CORBA::TypeCodeFactory_out::TypeCodeFactory_out (TypeCodeFactory_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::TypeCodeFactory::_nil ();
-}
-
-CORBA::TypeCodeFactory_out::TypeCodeFactory_out (const ::CORBA::TypeCodeFactory_out &p)
-  : ptr_ (ACE_const_cast (TypeCodeFactory_out &, p).ptr_)
-{}
-
-::CORBA::TypeCodeFactory_out &
-CORBA::TypeCodeFactory_out::operator= (const ::CORBA::TypeCodeFactory_out &p)
-{
-  this->ptr_ = ACE_const_cast (TypeCodeFactory_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::TypeCodeFactory_out &
-CORBA::TypeCodeFactory_out::operator= (const ::CORBA::TypeCodeFactory_var &p)
-{
-  this->ptr_ = ::CORBA::TypeCodeFactory::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::TypeCodeFactory_out &
-CORBA::TypeCodeFactory_out::operator= (TypeCodeFactory_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::TypeCodeFactory_out::operator ::CORBA::TypeCodeFactory_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr &
-CORBA::TypeCodeFactory_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::TypeCodeFactory,
+        CORBA::tao_TypeCodeFactory_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::TypeCodeFactory,
+        CORBA::tao_TypeCodeFactory_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::TypeCodeFactory, \
+        CORBA::tao_TypeCodeFactory_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::TypeCodeFactory, \
+        CORBA::tao_TypeCodeFactory_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::TypeCodeFactory::TypeCodeFactory (void)
 {}
@@ -382,6 +217,12 @@ void *CORBA::TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
 const char* CORBA::TypeCodeFactory::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/TypeCodeFactory:1.0";
+}
+
+CORBA::Boolean
+CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -497,7 +338,9 @@ TAO::Any_Impl_T<CORBA::TypeCodeFactory>::demarshal_value (TAO_InputCDR &)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>;
+  template class TAO::Any_Impl_T<CORBA::TypeCodeFactory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>
+# pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory, CORBA::TypeCodeFactory_var>
+# pragma instantiate TAO::Any_Impl_T<CORBA::TypeCodeFactory>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
