@@ -93,7 +93,7 @@ module Deployment {
   };
 
   interface NodeManager {
-    void joinDomain (in Domain domain, in TargetManager manager, in Logger log);
+    void joinDomain (in Domain ciao_domain, in TargetManager manager, in Logger log);
     void leaveDomain ();
     NodeApplicationManager preparePlan (in DeploymentPlan plan)
       raises (StartError, PlanError);
