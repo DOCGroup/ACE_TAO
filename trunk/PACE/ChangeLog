@@ -1,3 +1,14 @@
+Mon Jul 17 13:07:50 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/aio.h (pace_aio_cancel):
+	* pace/posix/aio.inl (pace_aio_cancel):
+	* pace/win32/aio.inl (pace_aio_cancel):
+	* pace/mman.h:
+	* pace/posix/mman.inl:
+	* pace/win32/mman.inl:
+
+	  Substituted PACE_HANDLE for ints that were file descriptors.
+	
 Mon Jul 17 12:49:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:
@@ -8,6 +19,10 @@ Mon Jul 17 12:49:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* docs/PACE_POSIX_support.txt:
 
 	  Updated.
+
+	* pace/win32/dirent.inl
+
+	  Uses the new PACE_HANDLE.
 
 Mon Jul 17 12:27:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 

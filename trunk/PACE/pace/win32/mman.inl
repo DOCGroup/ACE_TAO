@@ -38,7 +38,7 @@ pace_mmap (void * addr,
            size_t len,
            int prot,
            int flags,
-           int fildes,
+           PACE_HANDLE fildes,
            pace_off_t off)
 {
   return mmap ((char *) addr, len, prot, flags, fildes, off);
