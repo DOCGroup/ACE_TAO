@@ -1,3 +1,15 @@
+Thu Sep  2 08:56:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	  Added << and >> operators for ACE_CDR::Char. These are not
+	  to be used by TAO or the IDL compiler, they are solely for
+	  use with the ACE library, so that 1-byte values can be
+	  streamed without using the CORBAisms to_char and from_char.
+	  Otherwise, if a 1-byte value were on the rhs of a CDR operator,
+	  the compiler will probably promote the operator to the one
+	  using ACE_CDR::Short, which is not at all what we want.
+
 Wed Sep  1 21:37:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Makefile (BIN): Added the new CDR_File_Test.cpp to
