@@ -85,9 +85,7 @@ namespace CIAO
     // Iterate through the array, pushing the event to each consumer.
     for (size_t iter = 0; iter != end; ++iter)
       {
-        // @@ George, is this required? Since the push_event () is
-        // going to make a copy, why would this be required?
-        ev->_add_ref ();
+        ev->_add_ref (); // Is this needed or not?
         this->consumer_array_[iter]->push_event (
           ev
           ACE_ENV_ARG_PARAMETER);

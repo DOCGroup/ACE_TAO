@@ -42,26 +42,26 @@ namespace CIAO
 
     virtual void connect_event_supplier (
         CIAO::Supplier_Config_ptr supplier_config
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     virtual void connect_event_consumer (
         CIAO::Consumer_Config_ptr consumer_config
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     virtual void disconnect_event_consumer (
         const char * connection_id
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         Components::InvalidName,
         Components::InvalidConnection));
 
     virtual void disconnect_event_supplier (
-        ACE_ENV_SINGLE_ARG_DECL)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         Components::InvalidName,
@@ -69,7 +69,7 @@ namespace CIAO
 
     virtual void push_event (
         Components::EventBase * ev
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
@@ -112,30 +112,30 @@ namespace CIAO
     virtual ~Direct_Consumer_Config_impl (void);
 
     virtual void consumer_id (const char * consumer_id
-                              ACE_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void supplier_id (const char * supplier_id
                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
+    virtual void consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual Components::EventConsumerBase_ptr consumer (ACE_ENV_SINGLE_ARG_DECL)
+    virtual Components::EventConsumerBase_ptr consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // @@ george, probably this should be const'ified?
-    virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
+    virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -171,16 +171,16 @@ namespace CIAO
 
     virtual ~Direct_Supplier_Config_impl (void);
 
-    void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
+    void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    char * supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    char * supplier_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
+    EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
