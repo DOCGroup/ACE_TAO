@@ -70,8 +70,3 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
