@@ -30,11 +30,11 @@ class Event_Channel;
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
   // = TITLE
-  //     Connection_Handler contains info about connection state and
-  //     addressing. 
+  //     <Connection_Handler> contains info about connection state and
+  //     addressing.
   //
   // = DESCRIPTION
-  //     The Connection_Handler classes process events sent to the
+  //     The <Connection_Handler> classes process events sent to the
   //     Event Channel from Suppliers and forward them to Consumers.
 public:
   Connection_Handler (void);
@@ -44,18 +44,18 @@ public:
   // Real constructor.
 
   virtual int open (void * = 0);
-  // Initialize and activate a single-threaded Connection_Handler (called by
-  // ACE_Connector::handle_output()).
+  // Initialize and activate a single-threaded <Connection_Handler>
+  // (called by <ACE_Connector::handle_output>).
 
-  ACE_INET_Addr &remote_addr (void);
+  const ACE_INET_Addr &remote_addr (void);
   // Returns the peer's routing address.
 
-  ACE_INET_Addr &local_addr (void);
+  const ACE_INET_Addr &local_addr (void);
   // Returns our local address.
 
-  // = Set/get routing id.
-  ACE_INT32 id (void);
-  void id (ACE_INT32);
+  // = Set/get connection id.
+  CONNECTION_ID connection_id (void);
+  void connection_id (CONNECTION_ID);
 
   // = The current state of the Connection_Handler.
   enum State
@@ -97,19 +97,14 @@ public:
   // Perform Connection_Handler termination.
 
 protected:
-  enum
-  {
-    MAX_RETRY_TIMEOUT = 300 // 5 minutes is the maximum timeout.
-  };
-
   ACE_INET_Addr remote_addr_;
   // Address of peer.
 
   ACE_INET_Addr local_addr_;
   // Address of us.
 
-  ACE_INT32 id_;  
-  // The assigned routing ID of this entry.
+  CONNECTION_ID connection_id_;  
+  // The assigned connection ID of this entry.
 
   size_t total_bytes_;
   // The total number of bytes sent/received on this proxy.
@@ -143,7 +138,8 @@ class Connection_Handler_Factory
   //     <Thr_Supplier_Handler>).
 public:
   Connection_Handler *make_connection_handler (const Connection_Config_Info &);
-  // Make the appropriate type of <Connection_Handler>.
+  // Make the appropriate type of <Connection_Handler>, based on the
+  // <Connection_Config_Info> parameter.
 };
 
 #endif /* _CONNECTION_HANDLER */

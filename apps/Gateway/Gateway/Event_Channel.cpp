@@ -21,8 +21,8 @@ Event_Channel::compute_performance_statistics (void)
   ACE_DEBUG ((LM_DEBUG, "(%t) doing the performance timeout here...\n"));
   CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
-  // If we've got a ACE_Thread Manager then use it to suspend all the
-  // threads.  This will enable us to get an accurate count.
+  // If we've got a <ACE_Thread_Manager> then use it to suspend all
+  // the threads.  This will enable us to get an accurate count.
 
   if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
@@ -50,7 +50,8 @@ Event_Channel::compute_performance_statistics (void)
 	total_bytes_in += connection_handler->total_bytes ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) after %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) after %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
 	      Options::instance ()->performance_window (),
 	      total_bytes_in,
 	      total_bytes_out));
@@ -82,6 +83,7 @@ int
 Event_Channel::handle_timeout (const ACE_Time_Value &,
 				   const void *)
 {
+  // This is called periodically to compute performance statistics.
   return this->compute_performance_statistics ();
 }
 
@@ -90,11 +92,11 @@ Event_Channel::handle_timeout (const ACE_Time_Value &,
 
 int
 Event_Channel::put (ACE_Message_Block *event,
-			ACE_Time_Value *)
+                    ACE_Time_Value *)
 {
   // We got a valid event, so determine its virtual forwarding
   // address, which is stored in the first of the two event blocks,
-  // which are chained together by this->recv().
+  // which are chained together by <ACE::recv>.
 
   Event_Key *forwarding_addr = (Event_Key *) event->rd_ptr ();
 
@@ -125,7 +127,7 @@ Event_Channel::put (ACE_Message_Block *event,
 	  // At this point, we should assign a thread-safe locking
 	  // strategy to the Message_Block is we're running in a
 	  // multi-threaded configuration.
-	  // data->locking_strategy (MB_Locking_Strategy::instance ());
+          data->locking_strategy (MB_Locking_Strategy::instance ());
 
 	  for (Connection_Handler **connection_handler = 0;
 	       dsi.next (connection_handler) != 0;
@@ -226,10 +228,8 @@ Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_
 {
   // Skip over proxies with deactivated handles.
   if (connection_handler->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Make sure to close down peer to reclaim descriptor.
-      connection_handler->peer ().close ();
-    }
+    // Make sure to close down peer to reclaim descriptor.
+    connection_handler->peer ().close ();
 
   if (connection_handler->state () != Connection_Handler::DISCONNECTING)
     {
@@ -251,7 +251,8 @@ Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_
 void
 Event_Channel::initiate_connector (void)
 {
-  if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
+  if (Options::instance ()->enabled
+      (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
     {
       CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
@@ -273,7 +274,7 @@ Event_Channel::initiate_connector (void)
 // Initiate passive acceptor to wait for Consumer and Supplier Peers
 // to accept.
 
-void
+int
 Event_Channel::initiate_acceptors (void)
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
@@ -281,16 +282,20 @@ Event_Channel::initiate_acceptors (void)
       (Options::instance ()->consumer_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-		"cannot register acceptor"));
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                       "cannot register acceptor"),
+                       -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
       && this->supplier_acceptor_.open
       (Options::instance ()->supplier_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-		"cannot register acceptor"));
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                       "cannot register acceptor"),
+                      -1);
+
+  return 0;
 }
 
 // This method gracefully shuts down all the Handlers in the
@@ -359,25 +364,29 @@ int
 Event_Channel::find_proxy (ACE_INT32 connection_id,
 			       Connection_Handler *&connection_handler)
 {
-  return this->connection_map_.find (connection_id, connection_handler);
+  return this->connection_map_.find (connection_id,
+                                     connection_handler);
 }
 
 int
 Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 {
-  int result = this->connection_map_.bind (connection_handler->id (), connection_handler);
+  int result = this->connection_map_.bind (connection_handler->id (),
+                                           connection_handler);
 
   switch (result)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) bind failed for connection %d\n",
-			 connection_handler->id ()), -1);
+			 connection_handler->id ()),
+                        -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) duplicate connection %d, already bound\n",
-			 connection_handler->id ()), -1);
+			 connection_handler->id ()),
+                        -1);
       /* NOTREACHED */
     case 0:
       // Success.
@@ -385,7 +394,9 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
       /* NOTREACHED */
     default:
       ACE_ERROR_RETURN ((LM_DEBUG,
-			 "(%t) invalid result %d\n", result), -1);
+			 "(%t) invalid result %d\n",
+                         result),
+                        -1);
       /* NOTREACHED */
     }
 
@@ -404,19 +415,24 @@ Event_Channel::subscribe (const Event_Key &event_addr,
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) bind failed for connection %d\n",
-			 event_addr.connection_id_), -1);
+			 event_addr.connection_id_),
+                        -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_DEBUG,
 			 "(%t) duplicate consumer map entry %d, "
-			 "already bound\n", event_addr.connection_id_), -1);
+			 "already bound\n",
+                         event_addr.connection_id_),
+                        -1);
       /* NOTREACHED */
     case 0:
       // Success.
       return 0;
     default:
       ACE_ERROR_RETURN ((LM_DEBUG,
-			 "(%t) invalid result %d\n", result), -1);
+			 "(%t) invalid result %d\n",
+                         result),
+                        -1);
       /* NOTREACHED */
     }
 
@@ -426,7 +442,7 @@ Event_Channel::subscribe (const Event_Key &event_addr,
 int
 Event_Channel::open (void *)
 {
-  // Ignore SIPPIPE so each Consumer_Handler can handle it.
+  // Ignore <SIGPIPE> so each <Consumer_Handler> can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
@@ -434,7 +450,8 @@ Event_Channel::open (void *)
   this->initiate_connector ();
 
   // Passively initiate Peer acceptor.
-  this->initiate_acceptors ();
+  if (this->initiate_acceptors () == -1)
+    return -1;
 
   // If we're not running reactively, then we need to make sure that
   // <ACE_Message_Block> reference counting operations are
@@ -451,6 +468,7 @@ Event_Channel::open (void *)
 
       Options::instance ()->locking_strategy (la);
     }
+
   return 0;
 }
 

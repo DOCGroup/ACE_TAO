@@ -12,8 +12,8 @@ Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
 }
 
 // This method should be called only when the Consumer shuts down
-// unexpectedly.  This method simply marks the Connection_Handler as having
-// failed so that handle_close () can reconnect.
+// unexpectedly.  This method simply marks the Connection_Handler as
+// having failed so that handle_close () can reconnect.
 
 int 
 Consumer_Handler::handle_input (ACE_HANDLE)
@@ -27,17 +27,20 @@ Consumer_Handler::handle_input (ACE_HANDLE)
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Peer has failed unexpectedly for Consumer_Handler %d\n",
-			this->id ()), -1);
+			this->id ()), 
+                        -1);
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Peer has shutdown unexpectedly for Consumer_Handler %d\n",
-			this->id ()), -1);
+			this->id ()), 
+                        -1);
       /* NOTREACHED */
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Consumer is erroneously sending input to Consumer_Handler %d\n",
-			this->id ()), -1);
+			this->id ()), 
+                        -1);
       /* NOTREACHED */
     }
 }
@@ -102,7 +105,7 @@ Consumer_Handler::send (ACE_Message_Block *event)
   else // if (n == length)
     {
       // The whole event is sent, we now decrement the reference count
-      // (which deletes itself with it reaches 0.
+      // (which deletes itself with it reaches 0).
       event->release ();
       errno = 0;
     }
@@ -121,6 +124,7 @@ Consumer_Handler::handle_output (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) in handle_output on handle %d\n", 
 	      this->get_handle ()));
+
   // The list had better not be empty, otherwise there's a bug!
 
   if (this->msg_queue ()->dequeue_head 
@@ -368,8 +372,9 @@ Supplier_Handler::handle_input (ACE_HANDLE)
   switch (this->recv (forward_addr))
     {
     case 0:
-      // Note that a peer should never initiate a shutdown by closing
-      // the connection.  Instead, it should reconnect.
+      // Note that a peer shouldn't initiate a shutdown by closing the
+      // connection.  Therefore, the peer must have crashed, so we'll
+      // need to bail out here and let the higher layers reconnect.
       this->state (Connection_Handler::FAILED);
       ACE_ERROR_RETURN ((LM_ERROR, 
 			"(%t) Peer has closed down unexpectedly for Input Connection_Handler %d\n", 
@@ -388,6 +393,7 @@ Supplier_Handler::handle_input (ACE_HANDLE)
         }
       /* NOTREACHED */
     default:
+      // Route messages to Consumers.
       return this->forward (forward_addr);
     }
 }
@@ -401,7 +407,6 @@ Supplier_Handler::forward (ACE_Message_Block *forward_addr)
   return this->event_channel_->put (forward_addr);
 }
 
-#if defined (ACE_HAS_THREADS)
 Thr_Consumer_Handler::Thr_Consumer_Handler (const Connection_Config_Info &pci)
   : Consumer_Handler (pci)
 {
@@ -471,13 +476,14 @@ Thr_Consumer_Handler::open (void *)
 int 
 Thr_Consumer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
-  // Perform non-blocking enqueue.
+  // Perform non-blocking enqueue, i.e., if <msg_queue> is full
+  // *don't* block!
   return this->msg_queue ()->enqueue_tail 
     (mb, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-// Transmit events to the peer (note simplification resulting from
-// threads...)
+// Transmit events to the peer.  Note the simplification resulting
+// from the use of threads, compared with the Reactive solution.
 
 int 
 Thr_Consumer_Handler::svc (void)
@@ -487,7 +493,7 @@ Thr_Consumer_Handler::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) Thr_Consumer_Handler's handle = %d\n", 
-		 this->peer ().get_handle ()));
+                  this->peer ().get_handle ()));
 
       // Since this method runs in its own thread it is OK to block on
       // output.
@@ -496,16 +502,20 @@ Thr_Consumer_Handler::svc (void)
 	   this->msg_queue ()->dequeue_head (mb) != -1; 
 	   )
 	if (this->send (mb) == -1)
-	  ACE_ERROR ((LM_ERROR, "(%t) %p\n", "send failed"));
+	  ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "send failed"));
 
       ACE_ASSERT (errno == ESHUTDOWN);
 
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) shutting down threaded Consumer_Handler %d on handle %d\n", 
-		  this->id (), this->get_handle ()));
+		  this->id (),
+                  this->get_handle ()));
 
       this->peer ().close ();
 
+      // Re-establish the connection, using expoential backoff.
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
 	   this->event_channel_->initiate_connection_connection (this) == -1; )
@@ -571,7 +581,8 @@ Thr_Supplier_Handler::svc (void)
 
       // Since this method runs in its own thread and processes events
       // for one connection it is OK to call down to the
-      // <Supplier_Handler::handle_input> method, which blocks on input.
+      // <Supplier_Handler::handle_input> method, which blocks on
+      // input.
 
       while (this->Supplier_Handler::handle_input () != -1)
 	continue;
@@ -586,6 +597,7 @@ Thr_Supplier_Handler::svc (void)
       // Deactivate the queue while we try to get reconnected.
       this->msg_queue ()->deactivate ();
 
+      // Re-establish the connection, using expoential backoff.
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
 	   this->event_channel_->initiate_connection_connection (this) == -1; )
@@ -599,5 +611,3 @@ Thr_Supplier_Handler::svc (void)
     }
   ACE_NOTREACHED(return 0);
 }
-
-#endif /* ACE_HAS_THREADS */

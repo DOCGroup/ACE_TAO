@@ -42,6 +42,7 @@ int
 Event_Forwarding_Discriminator_Iterator::next (Consumer_Dispatch_Set *&cds)
 {
   ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *> *temp;
+
   if (this->map_iter_.next (temp) == 0)
     return 0;
   else

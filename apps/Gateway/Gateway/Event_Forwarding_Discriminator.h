@@ -40,8 +40,8 @@ public:
 
 public:
   ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, ACE_Null_Mutex> map_;
-  // Map that associates Event Addrs (external ids) with Consumer_Dispatch_Set *'s
-  // <internal IDs>.
+  // Map that associates <Event_Key>s (external ids) with
+  // <Consumer_Dispatch_Set> *'s <internal IDs>.
 };
 
 class Event_Forwarding_Discriminator_Iterator
