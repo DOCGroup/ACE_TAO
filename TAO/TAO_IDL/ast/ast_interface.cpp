@@ -1144,48 +1144,71 @@ AST_Interface::inherited_name_clash ()
       while (!(parent1_members->is_done ()))
         {
           parent1_member = parent1_members->item ();
-          Identifier *pid1 = parent1_member->local_name ();
+          AST_Decl::NodeType nt1 = parent1_member->node_type ();
 
-          for (int j = i + 1; j < this->pd_n_inherits_flat; j++)
-            {
-              UTL_ScopeActiveIterator *parent2_members =
-                new UTL_ScopeActiveIterator (DeclAsScope (pd_inherits_flat[j]),
-                                             UTL_Scope::IK_decls);
+          // Only these member types may cause a clash with other
+          // parents' member of the same type.
+          if (nt1 == AST_Decl::NT_op || nt1 == AST_Decl::NT_attr)
+            { 
+              Identifier *pid1 = parent1_member->local_name ();
 
-              while (!(parent2_members->is_done ()))
+              for (int j = i + 1; j < this->pd_n_inherits_flat; j++)
                 {
-                  parent2_member = parent2_members->item ();
-                  Identifier *pid2 = parent2_member->local_name ();
+                  UTL_ScopeActiveIterator *parent2_members =
+                    new UTL_ScopeActiveIterator (
+                        DeclAsScope (pd_inherits_flat[j]),
+                                     UTL_Scope::IK_decls
+                      );
 
-                  if (pid1->compare (pid2) == I_TRUE)
+                  while (!(parent2_members->is_done ()))
                     {
-                      idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                                  this,
-                                                  parent1_member,
-                                                  parent2_member);
-                    }
-                  else if (pid1->case_compare_quiet (pid2) == I_TRUE)
-                    {                          
-                      if (idl_global->case_diff_error ())
-                        {
-                          idl_global->err ()->error3 (UTL_Error::EIDL_NAME_CASE_ERROR,
+                      parent2_member = parent2_members->item ();
+                      AST_Decl::NodeType nt2 = 
+                        parent2_member->node_type ();
+
+                      // Only these member types may cause a clash
+                      // with other parents' member of the same type.
+                      if (nt2 == AST_Decl::NT_op || nt2 == AST_Decl::NT_attr)
+                        { 
+                          Identifier *pid2 = parent2_member->local_name ();
+
+                          if (pid1->compare (pid2) == I_TRUE)
+                            {
+                              idl_global->err ()->error3 (
+                                                      UTL_Error::EIDL_REDEF,
                                                       this,
                                                       parent1_member,
-                                                      parent2_member);
+                                                      parent2_member
+                                                    );
+                            }
+                          else if (pid1->case_compare_quiet (pid2) == I_TRUE)
+                            {                          
+                              if (idl_global->case_diff_error ())
+                                {
+                                  idl_global->err ()->error3 (
+                                      UTL_Error::EIDL_NAME_CASE_ERROR,
+                                      this,
+                                      parent1_member,
+                                      parent2_member
+                                    );
+                                }
+                              else
+                                {
+                                  idl_global->err ()->warning3 (
+                                      UTL_Error::EIDL_NAME_CASE_WARNING,
+                                      this,
+                                      parent1_member,
+                                      parent2_member
+                                    );
+                                }
+                            }
                         }
-                      else
-                        {
-                          idl_global->err ()->warning3 (UTL_Error::EIDL_NAME_CASE_WARNING,
-                                                        this,
-                                                        parent1_member,
-                                                        parent2_member);
-                        }
+
+                      parent2_members->next ();
                     }
 
-                  parent2_members->next ();
+                  delete parent2_members;
                 }
-
-              delete parent2_members;
             }
 
           parent1_members->next ();
