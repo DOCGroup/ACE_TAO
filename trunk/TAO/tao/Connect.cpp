@@ -40,7 +40,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
                                   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
-  : TAO_SVC_HANDLER (t, 0, 0)
+  : parent_ (0),
+    TAO_SVC_HANDLER (t, 0, 0)
 {
   // Grab the singleton...at some later point in time we can provide
   // an argumented CTOR to have per-instance parameters.
@@ -103,6 +104,31 @@ TAO_Server_Connection_Handler::open (void*)
 }
 
 int
+TAO_Server_Connection_Handler::activate (long flags,
+                                         int n_threads,
+                                         int force_active,
+                                         long priority,
+                                         int grp_id,
+                                         ACE_Task_Base *task,
+                                         ACE_hthread_t thread_handles[],
+                                         void *stack[],
+                                         size_t stack_size[],
+                                         ACE_thread_t  thread_names[])
+{
+  this->parent_ = TAO_ORB_Core_instance ();
+  return TAO_SVC_HANDLER::activate (flags,
+                                    n_threads,
+                                    force_active,
+                                    priority,
+                                    grp_id,
+                                    task,
+                                    thread_handles,
+                                    stack,
+                                    stack_size,
+                                    thread_names);
+}
+
+int
 TAO_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
@@ -122,6 +148,10 @@ TAO_Server_Connection_Handler::svc (void)
   // turned into an active object.  Presumably, activation spawns a
   // thread with this method as the "worker function".
   int result = 0;
+
+  // Inheriting the ORB_Core stuff from the parent thread.
+
+  TAO_ORB_Core_instance ()->root_poa (this->parent_->root_poa ());
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
