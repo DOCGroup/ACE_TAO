@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "SSLIOP_Current_Impl.h"
 
@@ -11,6 +9,9 @@ ACE_RCSID (TAO_SSLIOP,
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "SSLIOP_X509.h"
+#include "SSLIOP_ReceivedCredentials.h"
 
 #include <openssl/x509.h>
 
@@ -85,8 +86,9 @@ TAO_SSLIOP_Current_Impl::get_attributes (
           // @@ This code should be refactored.  The same operations
           //    are done in this->get_peer_certificate.
 
-          X509 *cert = ::SSL_get_peer_certificate (this->ssl_);
-          if (cert == 0)
+          TAO_SSLIOP_X509_var cert =
+            ::SSL_get_peer_certificate (this->ssl_);
+          if (cert.ptr () == 0)
             {
               // An error occurred, so do not include this attribute
               // in the AttributeList.  Drop the length to its
@@ -97,14 +99,13 @@ TAO_SSLIOP_Current_Impl::get_attributes (
             }
 
           // Get the size of the ASN.1 encoding.
-          int cert_length = ::i2d_X509 (cert, 0);
+          int cert_length = ::i2d_X509 (cert.in (), 0);
           if (cert_length <= 0)
             {
               // An error occurred, so do not include this attribute
               // in the AttributeList.  Drop the length to its
               // previous value.
               // @@ Not exactly exception-safe.  C'est la vie.
-              ::X509_free (cert);
               attribute_list->length (j);
               continue;
             }
@@ -116,11 +117,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
 
           // Convert from the internal X509 representation to the DER
           // encoding representation.
-          (void) ::i2d_X509 (cert, &buffer);
-
-          // Release the X509 certificate since it has already been
-          // copied to the octet sequence.
-          ::X509_free (cert);
+          (void) ::i2d_X509 (cert.in (), &buffer);
         }
     }
 
@@ -132,12 +129,24 @@ TAO_SSLIOP_Current_Impl::received_credentials (
     TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+  TAO_SSLIOP_X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+  if (cert.ptr () == 0)
+    ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
+                      SecurityLevel2::ReceivedCredentials::_nil ());
+
+  TAO_SSLIOP_ReceivedCredentials *c = 0;
+  ACE_NEW_THROW_EX (c,
+                    TAO_SSLIOP_ReceivedCredentials (cert.in ()),
+                    CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    SecurityLevel2::ReceivedCredentials::_nil ());
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (SecurityLevel2::ReceivedCredentials::_nil ());
+
+  SecurityLevel2::ReceivedCredentials_var creds = c;
+
+  return creds._retn ();
 }
 
 void
@@ -147,12 +156,12 @@ TAO_SSLIOP_Current_Impl::get_peer_certificate (
   if (this->ssl_ == 0)
     return;
 
-  X509 *cert = ::SSL_get_peer_certificate (this->ssl_);
-  if (cert == 0)
+  TAO_SSLIOP_X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+  if (cert.ptr () == 0)
     return;
 
   // Get the size of the ASN.1 encoding.
-  int cert_length = ::i2d_X509 (cert, 0);
+  int cert_length = ::i2d_X509 (cert.in (), 0);
   if (cert_length <= 0)
     return;
 
@@ -162,11 +171,7 @@ TAO_SSLIOP_Current_Impl::get_peer_certificate (
 
   // Convert from the internal X509 representation to the DER encoding
   // representation.
-  (void) ::i2d_X509 (cert, &buffer);
-
-  // Release the X509 certificate since it has already been copied to
-  // the ASN_1_Cert.
-  ::X509_free (cert);
+  (void) ::i2d_X509 (cert.in (), &buffer);
 }
 
 void
