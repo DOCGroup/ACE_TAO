@@ -6197,15 +6197,18 @@ void *ACE_OS_Object_Manager::preallocated_object[
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 {
-  // If Instance_ was not 0, then another ACE_OS_Object_Manager has
-  // already been instantiated.  Because this might be the non-static
-  // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER), use it and leak
-  // the old one.  We can't destroy it, because the application might
-  // be using some of its resources, via static constructors.
+  // If instance_ was not 0, then another ACE_OS_Object_Manager has
+  // already been instantiated (it is likely to be one initialized by way
+  // of library/DLL loading).  Let this one go through construction in
+  // case there really is a good reason for it (like, ACE is a static/archive
+  // library, and this one is the non-static instance (with
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, or the user has a good reason for
+  // creating a separate one) but the original one will be the one retrieved
+  // from calls to ACE_Object_Manager::instance().
 
-  // Store the address of the instance so that instance () doesn't
-  // allocate a new one when called.
-  instance_ = this;
+  // Be sure that no further instances are created via instance ().
+  if (instance_ == 0)
+    instance_ = this;
 
   init ();
 }
