@@ -1,14 +1,31 @@
+Sat Feb 14 18:28:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Fixed a problem with the
+ 	  ACE_SOCK_Dgram_Mcast subscription method.  Originally, each time
+ 	  the ACE_SOCK_Dgram_Mcast subscribe() method was invoked, it
+ 	  created a new socket, did appropriate setsockopt calls
+ 	  (e.g. SO_USEPORT), did a bind() to that socket, and then did the
+ 	  setsockopt call that actually joins the mcast group.  The
+ 	  problem with this was that is wasn't possible to a single socket
+ 	  to subscribe to more than one multicast group.  Multiple calls
+ 	  to ACE_SOCK_Dgram_Mcast.subscribe() didn't work because the new
+ 	  socket descriptor that was issued didn't listen to the old
+ 	  multicast group(s).  The fix was to change the subscribe()
+ 	  method to only create, set up, and bind the socket if
+ 	  get_handle() == ACE_INVALID_HANDLE.  Thanks to Dave Meyer
+ 	  <dmeyer@std.saic.com> for reporting this.
+
 Sat Feb 14 03:29:50 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* ace/ACE.cpp (set_handle_limit): Fixed a couple of bugs setting
- 	the maximum number of file descriptors.  If we use setrlimit, we
- 	should first get the hard limit before calling it, or we get an
- 	EINVAL for trying to set a hard limit of 0 and a soft limit
- 	greater than that.  Also, for -1 the call was not setting the
- 	limit to the maximum allowable.
+ 	  the maximum number of file descriptors.  If we use setrlimit, we
+ 	  should first get the hard limit before calling it, or we get an
+ 	  EINVAL for trying to set a hard limit of 0 and a soft limit
+ 	  greater than that.  Also, for -1 the call was not setting the
+ 	  limit to the maximum allowable.
 	
 	* ace/OS.h (ACE_MAX_DGRAM_SIZE): Moved the #define
- 	ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
+	  ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
 
 Fri Feb 13 19:25:55 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
