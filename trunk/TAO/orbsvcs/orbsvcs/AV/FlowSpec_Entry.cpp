@@ -250,7 +250,6 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
           cstring[colon_pos] = ';';
         return cstring.rep ();
       }
-      break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
     }
@@ -336,7 +335,6 @@ TAO_Forward_FlowSpec_Entry::role (void)
     default:
       return TAO_AV_INVALID_ROLE;
     }
-  return TAO_AV_INVALID_ROLE;
 }
 
 char *
@@ -450,7 +448,6 @@ TAO_Reverse_FlowSpec_Entry::role (void)
     default:
       return TAO_AV_INVALID_ROLE;
     }
-  return TAO_AV_INVALID_ROLE;
 }
 
 int
