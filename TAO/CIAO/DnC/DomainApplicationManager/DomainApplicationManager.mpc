@@ -3,6 +3,7 @@
 
 project (DomainApplicationManager): taolib, ciao_deployment_stub, ciao_deployment_svnt {
   requires += dnc
+  after += Config_Handlers
   
   sharedname = DomainApplicationManager
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL

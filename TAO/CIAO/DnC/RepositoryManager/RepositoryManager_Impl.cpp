@@ -28,8 +28,12 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  // i am here.
-  ACE_DEBUG((LM_DEBUG, "\ni am here\n"));
+  DOMDocument* doc = CIAO::Config_Handler::Utils::create_document (location);
+  CIAO::Config_Handler::PC_Handler pc_handler (doc,
+                                               DOMNodeFilter::SHOW_ELEMENT |
+                                               DOMNodeFilter::SHOW_TEXT);
+  pc_handler.process_PackageConfiguration (this->pc_);
+  Deployment::DnC_Dump::dump (this->pc_);
 }
 
 void
