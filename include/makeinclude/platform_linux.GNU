@@ -71,21 +71,19 @@ ifeq ($(implicit_templates),)
   else
     ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
       implicit_templates = 1
-    endif
-    ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
-      implicit_templates = 1
+    else
+      ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
+        implicit_templates = 1
+      else
+        implicit_templates = 0
+      endif
     endif
   endif
 endif
 
 # User didn't specify and we couldn't guess if this version of the compiler
-# works fine with implicit template instantiation. Turn if off. This could
-# as well go into the previous check but GNU Make conditionals are lame.
+# works fine with implicit template instantiation. Turn if off.
 #
-ifeq ($(implicit_templates),)
-  implicit_templates = 0
-endif
-
 ifeq ($(implicit_templates),0)
   ifeq ($(IMPLICIT_TEMPLATES_FLAG),) # Turn on flags if none is speficied.
     IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
