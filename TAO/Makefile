@@ -11,11 +11,16 @@
 INFO	= README \
 	  VERSION
 
-DIRS	= IIOP
+DIRS	= docs \
+	  TAO_IDL \
+	  tao \
+	  tests
+
 
 CLONE	= Makefile \
-	  IIOP \
-	  TAO_IDL
+	  TAO_IDL \
+	  tao \
+	  tests \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -40,11 +45,13 @@ clone:
 RELEASE_FILES = TAO/ChangeLog \
 		TAO/COPYING \
 		TAO/COPYING.sun \
-		TAO/IIOP \
+		TAO/docs \
 		TAO/LICENSE.sun \
 		TAO/Makefile \
 		TAO/README \
 		TAO/README.sun \
+		TAO/tao \
+		TAO/tests \
 		TAO/VERSION
 
 #### If creating the "official" TAO release:
