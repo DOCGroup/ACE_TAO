@@ -154,8 +154,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
       // the task should set the handler to the appropriate next step
       result = task->put (mb);
 
-      if (result == 0)
+      if (result == 0 || result == -3)
         handler = mb->io_handler ();
+      else handler = 0;
 
       if (result == 1 || result == 2)
         {
@@ -165,19 +166,31 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // We need a way to destroy all the handlers created by the
           // Asynch_Acceptor.  Figure this out later.
           handler = waiter->wait_for_completion (waiter_index);
-          result = (handler == 0) ? -1 : 0;
+          if (handler == 0) 
+            {
+              JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, bad proactor");
+              // Proactor failed
+              result = -1;
+              break;
+            }
         }
 
       if (result < 0)
         {
-          // something wrong.
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, negative result");
-          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
-          if (result > -2 && handler)
+          if (result == -1)
+            ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
+
+          if (handler)
             handler->done ();
+
           handler = 0;
-          JAWS_IO_Handler **ioh = waiter->find (waiter_index);
-          *ioh = 0;
+          if (result == -2)
+            {
+              JAWS_IO_Handler **ioh = waiter->find (waiter_index);
+              *ioh = 0;
+              result = 0;
+            }
           break;
         }
 
@@ -186,6 +199,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
       mb = handler->message_block ();
       task = handler->task ();
+      result = 0;
     }
   while (result == 0);
 

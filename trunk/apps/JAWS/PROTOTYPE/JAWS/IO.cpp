@@ -280,6 +280,8 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
                               unsigned int initial_data_length,
                               unsigned int entire_length)
 {
+  JAWS_TRACE ("JAWS_Asynch_IO::receive_file");
+
   ioh->idle ();
 
   JAWS_Asynch_IO_Handler *aioh =
@@ -334,6 +336,8 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                const char *trailer,
                                unsigned int trailer_size)
 {
+  JAWS_TRACE ("JAWS_Asynch_IO::transmit_file");
+
   ioh->idle ();
 
   JAWS_Asynch_IO_Handler *aioh =
@@ -350,7 +354,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
       ACE_Message_Block trailer_mb (trailer, trailer_size);
 
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer
-        (&header_mb, header_size, &trailer_mb, trailer_size);
+        (header_mb.duplicate (), header_size, trailer_mb.duplicate (), trailer_size);
 
       ACE_Asynch_Transmit_File tf;
 

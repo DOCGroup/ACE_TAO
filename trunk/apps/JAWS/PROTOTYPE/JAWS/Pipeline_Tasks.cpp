@@ -23,22 +23,23 @@ int
 JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  JAWS_IO_Handler *ioh = db->io_handler ();
 
   // guarantee the handler remains for the duration of this call
-  db->io_handler ()->acquire ();
+  ioh->acquire ();
 
   int status = this->handle_put (db, tv);
 
   if (status != -1 && status != 2)
     {
-      JAWS_Pipeline_Handler *task = db->io_handler ()->task ();
+      JAWS_Pipeline_Handler *task = ioh->task ();
       JAWS_Pipeline_Handler *next
         = ACE_dynamic_cast (JAWS_Pipeline_Handler *, task->next ());
 
-      db->io_handler ()->task (next);
+      ioh->task (next);
     }
 
-  db->io_handler ()->release ();
+  ioh->release ();
 
   return status;
 }
@@ -174,7 +175,7 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
 int
 JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
-  JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
+  JAWS_TRACE ("JAWS_Pipeline_Done_Task::put");
 
   JAWS_Data_Block *data = ACE_dynamic_cast (JAWS_Data_Block *, mb);
 
