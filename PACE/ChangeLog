@@ -1,3 +1,12 @@
+Fri Jun  9 12:20:23 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/types.h:
+
+	  These are posix types in pace wrappers.
+	  They are macro definitions. The actual types are not
+	  available until the appropriate file is included.
+	  Thus, I didn't put them into pace/sys/types.h.
+
 Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/tests/{Makefile,Posix_SP_Test.c}:
