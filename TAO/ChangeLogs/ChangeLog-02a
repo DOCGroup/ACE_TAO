@@ -1,3 +1,12 @@
+Sun Apr  1 21:50:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	* orbsvcs/examples/Security/Send_File/Makefile: Regenreated
+	  dependencies.  
+
+	* ChangeLog : Made cosmetic fixes. Changed the formats of many
+	  logs 
+
 Sun Apr  1 19:35:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
@@ -39,7 +48,7 @@ Sun Apr  1 20:43:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
         * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
 
-        More ACE_TRY_ENV Fuzz script errors.
+          More ACE_TRY_ENV Fuzz script errors.
 
 Sun Apr  1 18:35:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -53,8 +62,8 @@ Sun Apr  1 18:18:45 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
         * docs/tutorials/Quoter/On_Demand_Activation/index.html:
         * docs/tutorials/Quoter/Simple/Persistent/index.html:
         * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
-        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html: Changed
-        ~schmidt/ACE_wrappers links to point to relative files
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html: Changed 
+          ~schmidt/ACE_wrappers links to point to relative files
 
 Sun Apr  1 17:44:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -84,23 +93,23 @@ Sun Apr  1 17:44:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Sun Apr  1 18:47:32 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        *examples/Logging/Logging_Service.cpp
-        *examples/Logging/Logging_Test_i.cpp
-        *examples/Load_Balancing_persistent/Identity_i.cpp
-        *examples/Load_Balancing/Identity_i.cpp
-        *examples/Load_Balancing/Load_Balancer_i.cpp
-        *examples/Simulator/Event_Supplier/DualEC_Sup.cpp
-        *examples/Simulator/Event_Supplier/Event_Con.cpp
-        *examples/Simple/grid/Grid_Client_i.cpp
-        *examples/Simple/grid/Grid_i.cpp
-        *examples/Simple/chat/server.cpp
-        *examples/Simple/chat/Server_i.cpp
-        *examples/Simple/bank/Bank_Client_i.cpp
-        *examples/Persistent_Grid/Grid_Client_i.cpp
-        *examples/Persistent_Grid/Persistent_Client_i.cpp
-        *examples/Persistent_Grid/Simple_util.cpp
+        * examples/Logging/Logging_Service.cpp
+        * examples/Logging/Logging_Test_i.cpp
+        * examples/Load_Balancing_persistent/Identity_i.cpp
+        * examples/Load_Balancing/Identity_i.cpp
+        * examples/Load_Balancing/Load_Balancer_i.cpp
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+        * examples/Simulator/Event_Supplier/Event_Con.cpp
+        * examples/Simple/grid/Grid_Client_i.cpp
+        * examples/Simple/grid/Grid_i.cpp
+        * examples/Simple/chat/server.cpp
+        * examples/Simple/chat/Server_i.cpp
+        * examples/Simple/bank/Bank_Client_i.cpp
+        * examples/Persistent_Grid/Grid_Client_i.cpp
+        * examples/Persistent_Grid/Persistent_Client_i.cpp
+        * examples/Persistent_Grid/Simple_util.cpp
 
-        Fix ACE_TRY_ENV Fuzz script errors.
+          Fix ACE_TRY_ENV Fuzz script errors.
 
 Sun Apr  1 16:06:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -166,20 +175,20 @@ Sun Apr  1 14:56:14 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
         * docs/tutorials/Quoter/RT_Event_Service/index.html:
         * docs/tutorials/Quoter/On_Demand_Activation/index.html:
         * docs/tutorials/Quoter/Naming_Service/index.html: Thanks to John
-        Ashmun <John.ASHMUN@esca.com> for these proof-read pages.
+          Ashmun <John.ASHMUN@esca.com> for these proof-read pages.
 
 Sun Apr  1 13:56:20 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-        * docs/tutorials/Quoter/Event_Service/index.html: Thanks to John
-        Ashmun <John.ASHMUN@esca.com> for this proof-read page. The
-        tutorial, now, doesn't mention the ec.conf file any longer;
-        defaults work best.
+        * docs/tutorials/Quoter/Event_Service/index.html: Thanks to John 
+          Ashmun <John.ASHMUN@esca.com> for this proof-read page. The
+          tutorial, now, doesn't mention the ec.conf file any longer;
+          defaults work best.
 
 Thu Mar 29 15:36:38 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
         * docs/tutorials/Quoter/AMI/index.html: Thanks to John Ashmun
-        <John.ASHMUN@esca.com> for this proof-read page. Plus some sanity
-        checks on all the links.
+          <John.ASHMUN@esca.com> for this proof-read page. Plus some sanity
+          checks on all the links.
 
 Sun Apr  1 16:51:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
