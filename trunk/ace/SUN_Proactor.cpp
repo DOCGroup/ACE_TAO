@@ -90,7 +90,7 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                                        int &error_status,
                                        int &return_status)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, 0);  
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, 0));
 
   size_t ai;
   error_status = -1;
