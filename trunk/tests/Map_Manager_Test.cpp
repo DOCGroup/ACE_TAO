@@ -474,7 +474,7 @@ run_test (void (*ptf) (size_t, size_t),
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("time per call = %f usecs\n"),
-              (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / ACE_timer_t (iterations)) * 1000000));
 }
 
 int
