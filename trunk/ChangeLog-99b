@@ -1,23 +1,32 @@
+Mon Apr 26 23:55:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Reverse_Lock): Removed constructor that
+	  created the lock.  There were two reasons for this: (a) it was
+	  unrealistic that the reverse lock would own and create the
+	  regular lock and (b) this constructor made it impossible that
+	  ACE_Reverse_Lock can be used with ACE_Lock (the abstract
+	  class).  Thanks to Carlos for pointing this out.
+
 Mon Apr 26 21:43:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile.am (pkginclude_HEADERS, libACE_IPC_la_SOURCES): 
+	* ace/Makefile.am (pkginclude_HEADERS, libACE_IPC_la_SOURCES):
 
 	  Added ATM_Addr sources to these variables.
 
-	* ace/Makefile.am (EXTRA_libACE_la_SOURCES): 
+	* ace/Makefile.am (EXTRA_libACE_la_SOURCES):
 
 	  Accidentally removed this variable.  It is needed for
 	  conditionally built sources, such as `gethrtime.cpp'.
 
-	* tests/Makefile.am: 
+	* tests/Makefile.am:
 
 	  Added newly added tests to the list of test programs to be built.
 	  Changed "noinst_PROGRAMS" variable to "check_PROGRAMS" so that
 	  tests only get built when a `make check' is issued by the user.
-	
+
 Mon Apr 26 19:29:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Reverse_Lock_Test.cpp (main): 
+	* tests/Reverse_Lock_Test.cpp (main):
 
 	  ACE_START_TEST macro had "Thread_Mutex_Test" instead of
 	  "Reverse_Lock_Test."

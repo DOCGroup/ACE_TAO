@@ -124,10 +124,6 @@ public:
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock);
   // Constructor. All locking requests will be forwarded to <lock>.
 
-  ACE_Reverse_Lock (void);
-  // Constructor. Since no lock is provided by the user, one will be
-  // created internally.
-
   virtual ~ACE_Reverse_Lock (void);
   // Destructor. If <lock_> was not passed in by the user, it will be
   // deleted.
