@@ -40,6 +40,9 @@ Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/ORB.cpp (wstring_copy): changed null check at beginning
           from "if (*str)" to "if (!str)".
 
+        * tao/Sequence_T.cpp (allocbuf): added missing ; at end of
+          ACE_NEW_RETURN statement.
+
         * TAO_IDL/fe/Makefile,lex.yy.cpp,lex.yy.cpp.diff:  replaced
           #includes of standard headers with #include of OS.h so that
           ace/config.h is #included first.  The allows config.h to
