@@ -344,7 +344,7 @@ ACE_Connector<SVH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   else // Somethings gone wrong, so close down...
     {
 #if defined (ACE_WIN32)
-      ACE_DEBUG ((LM_DEBUG, "errno %d; Sleeping to retry get_remote_addr\n", errno));
+      // ACE_DEBUG ((LM_DEBUG, "errno %d; Sleeping to retry get_remote_addr\n", errno));
       // Win32 (at least prior to Windows 2000) has a timing problem.
       // If you check to see if the connection has completed too fast,
       // it will fail - so wait 35 milliseconds to let it catch up.
@@ -463,7 +463,7 @@ ACE_Connector<SVH, PR_CO_2>::connect_i (SVH *&sh,
           // non-blocking semantics then register ourselves with the
           // ACE_Reactor so that it will call us back when the
           // connection is complete or we timeout, whichever comes
-          // first...  
+          // first...
           int result;
 
           if (sh_copy == 0)

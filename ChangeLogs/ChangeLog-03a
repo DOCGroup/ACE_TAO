@@ -1,3 +1,8 @@
+Fri May 10 18:15:10 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Connector.cpp (handle_output): Removed unnecessary debug
+	  statement.
+
 Thu May  9 20:02:10 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/ACE-bug-process.html: Fixed a typo in the hostname of

@@ -1,3 +1,10 @@
+Fri May 10 18:16:50 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Linear_Priority/client.cpp (validate_connection):
+	  Added calls to _validate_connection() to make sure that we give
+	  enough time for connections to setup.  This way we can avoid
+	  transient exceptions and unnecessary test failures.
+
 Fri May 10 01:46:16 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
