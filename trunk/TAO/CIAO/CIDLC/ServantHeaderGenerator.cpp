@@ -841,7 +841,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       // Component context class closer.
       os << "};";
@@ -1475,7 +1475,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       // Component servant class closer.
       os << "};";
@@ -2076,7 +2076,7 @@ ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
 {}
 
 void
-ServantHeaderEmitter::pre (TranslationUnit& u)
+ServantHeaderEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
 
@@ -2240,7 +2240,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 }
 
 void
-ServantHeaderEmitter::post (TranslationUnit& u)
+ServantHeaderEmitter::post (TranslationUnit&)
 {
   if (file_.empty ()) return;
 
