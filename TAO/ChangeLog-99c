@@ -1,3 +1,16 @@
+Wed Aug  4 16:57:45 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.i:Made changes to theses files to compile on NT.
+	
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:Added files of Interface Repo to these
+	  project files. 
+	
+	* tao/orbconf.h: Added a definition for the interface
+	  repository. The files can be compiled by uncommenting the
+	  #define for the interface repository.
+
 Wed Aug  4 15:57:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.h:
