@@ -8,8 +8,7 @@
 ACE_RCSID(ace, Basic_Types, "$Id$")
 
 #if defined (ACE_LACKS_LONGLONG_T)
-#include "ace/SString.h"
-#include <math.h>
+#include "ace/Log_Msg.h"
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
@@ -24,39 +23,84 @@ ACE_U_LongLong::output (FILE *file) const
 }
 
 
-ACE_CString
-ACE_U_LongLong::as_string (u_int base,
+ACE_TCHAR *
+ACE_U_LongLong::as_string (ACE_TCHAR *output,
+                           u_int base,
                            u_int uppercase) const
 {
-  ACE_TCHAR output[32];
-  u_int index = 0;
-
   if (*this == 0)
     {
-      output[index] = '0';
-      index++;
+      ACE_OS::strcpy(output, "0");
     }
   else
     {
-      double val = *this / 1.0;
-      while (val > 0)
+      switch(base)
         {
-          double orig = val;
-          val = floor(val / base);
-          u_int digit = u_int(orig - (val * base));
-          output[index] = (digit < 10 ? '0' + digit :
-                              (uppercase ? 'A' : 'a') + digit - 10);
-          index++;
-        }
-      for (u_int i = 0; i < (index / 2); i++)
-        {
-          ACE_TCHAR t = output[i];
-          output[i] = output[(index - 1) - i];
-          output[(index - 1) - i] = t;
+          case 8:
+            {
+              u_int index = 0;
+              int bshift = 31;
+              while(bshift >= 1)
+                {
+                  u_int sval = (this->h_ () >> bshift) & 7;
+                  if (sval > 0 || index != 0)
+                    {
+                      output[index] = sval + '0';
+                      index++;
+                    }
+                  bshift -= 3;
+                }
+              bshift = 30;
+              while(bshift >= 0)
+                {
+                  u_int sval = (this->l_ () >> bshift) & 7;
+                  // Combine the last bit of hi with the first 3-bit digit
+                  if (bshift == 30)
+                    {
+                      sval |= (this->h_ () & 1) << 2;
+                    }
+                  if (sval > 0 || index != 0)
+                    {
+                      output[index] = sval + '0';
+                      index++;
+                    }
+                  bshift -= 3;
+                }
+              output[index] = '\0';
+              break;
+            }
+          case 10:
+            {
+              ACE_OS::sprintf(output, "%.0f", *this / 1.0);
+              break;
+            }
+          case 16:
+            {
+              if (this->h_ () != 0)
+                {
+                  ACE_OS::sprintf(output,
+                                  (uppercase ? "%lX%0*lX" : "%lx%0*lx"),
+                                  this->h_ (), 2 * sizeof this->l_ (),
+                                  this->l_ ());
+                }
+              else
+                {
+                  ACE_OS::sprintf(output,
+                                  (uppercase ? "%lX" : "%lx"), this->l_ ());
+
+                }
+              break;
+            }
+          default:
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_LIB_TEXT ("Unsupported base = %u\n"), base));
+              output[0] = '\0';
+            }
         }
     }
-  output[index] = '\0';
-  return ACE_CString (output);
+
+  return output;
 }
 
 
@@ -65,18 +109,19 @@ ostream&
 operator<< (ostream& os, const ACE_U_LongLong& ll)
 {
   ios::fmtflags flags = os.setf(0);
+  char buffer[32];
 
   if ((flags & ios::oct) != 0)
     {
-      os << ll.as_string (8).c_str ();
+      os << ll.as_string (buffer, 8);
     }
   else if ((flags & ios::hex) != 0)
     {
-      os << ll.as_string (16, (flags & ios::uppercase)).c_str ();
+      os << ll.as_string (buffer, 16, (flags & ios::uppercase));
     }
   else
     {
-      os << ll.as_string ().c_str ();
+      os << ll.as_string (buffer);
     }
   return os;
 }
