@@ -255,11 +255,7 @@ FT_RequestDurationPolicy_ptr FT_RequestDurationPolicy::_unchecked_narrow (
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::FT::RequestDurationPolicy (stub), FT_RequestDurationPolicy::_nil ());
-      #if (TAO_HAS_SMART_PROXIES == 1)
-        return TAO_FT_RequestDurationPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else
         return default_proxy;
-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
   else
     return
@@ -517,11 +513,7 @@ FT_HeartbeatPolicy_ptr FT_HeartbeatPolicy::_unchecked_narrow (
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::FT::HeartbeatPolicy (stub), FT_HeartbeatPolicy::_nil ());
-      #if (TAO_HAS_SMART_PROXIES == 1)
-        return TAO_FT_HeartbeatPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else
         return default_proxy;
-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
   else
     return
@@ -710,11 +702,7 @@ FT_HeartbeatEnabledPolicy_ptr FT_HeartbeatEnabledPolicy::_unchecked_narrow (
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::FT::HeartbeatEnabledPolicy (stub), FT_HeartbeatEnabledPolicy::_nil ());
-      #if (TAO_HAS_SMART_PROXIES == 1)
-        return TAO_FT_HeartbeatEnabledPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else
         return default_proxy;
-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
   else
     return
