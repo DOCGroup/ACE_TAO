@@ -1,3 +1,20 @@
+Wed Oct 27 06:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Changed made by Bala
+
+        * tao/PortableServer/Activation_Strategy.h:
+        * tao/PortableServer/Id_Uniqueness_Strategy.cpp
+          Removed variable name
+
+        * tao/PortableServer/Id_Assignment_Strategy.cpp:
+          Layout changed
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+          Bala added some comments to address
+
+        * tao/PortableServer/Object_Adapter.h:
+          Cleanup of includes
+
 Tue Oct 26 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Request_Processing_Strategy.cpp:
