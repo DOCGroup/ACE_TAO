@@ -1,3 +1,8 @@
+Thu Jan  8 20:30:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Advanced/ch_8_and_10/icp.cpp:
+	  Fixed compile error in BCB build.
+
 Thu Jan  8 20:09:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
