@@ -1,3 +1,10 @@
+Fri Jan 02 08:47:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Map_Manager.{h,cpp}: Added a new class ACE_Map_Iterator_Base
+ 	  to abstract out most common functionalities from
+	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.  Added some
+	  missing functions to both iterator classes.
+
 Fri Jan  2 08:51:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Options.h: Changed DEFAULT_TIMEOUT
