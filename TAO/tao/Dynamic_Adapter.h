@@ -50,30 +50,30 @@ public:
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
                                       const char *op
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
-  virtual CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx);
+  virtual CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx) = 0;
 
-  virtual CORBA::Boolean request_is_nil (CORBA::Request_ptr req);
+  virtual CORBA::Boolean request_is_nil (CORBA::Request_ptr req) = 0;
 
-  virtual CORBA::Boolean server_request_is_nil (CORBA::ServerRequest_ptr req);
+  virtual CORBA::Boolean server_request_is_nil (CORBA::ServerRequest_ptr req) = 0;
 
-  virtual void context_release (CORBA::Context_ptr ctx);
+  virtual void context_release (CORBA::Context_ptr ctx) = 0;
 
-  virtual void request_release (CORBA::Request_ptr req);
+  virtual void request_release (CORBA::Request_ptr req) = 0;
 
-  virtual void server_request_release (CORBA::ServerRequest_ptr req);
+  virtual void server_request_release (CORBA::ServerRequest_ptr req) = 0;
 
   // CORBA::ORB::create_exception_list.
   virtual void create_exception_list (CORBA::ExceptionList_ptr &
-                                      ACE_ENV_ARG_DECL_NOT_USED);
+                                      ACE_ENV_ARG_DECL_NOT_USED) = 0;
 };
 
 #include "ace/post.h"

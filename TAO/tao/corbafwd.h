@@ -890,6 +890,7 @@ TAO_NAMESPACE CORBA
     tk_local_interface    = 33,
     tk_component          = 34,
     tk_home               = 35,
+    tk_event              = 36,
 
     // This symbol is not defined by CORBA 2.0.  It's used to speed up
     // dispatch based on TCKind values, and lets many important ones
