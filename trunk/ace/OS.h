@@ -922,14 +922,14 @@ extern "C" pthread_t pthread_self (void);
 // overlap or are otherwise confused.  This is an attempt to start
 // straightening them out.
 #if defined (ACE_HAS_PTHREADS_1003_DOT_1C)    /* POSIX.1C threads (pthreads) */
-// POSIX.1C threads implies pthread_sigmask()
-#ifndef ACE_HAS_PTHREAD_SIGMASK
-#define ACE_HAS_PTHREAD_SIGMASK
-#endif
-// ... and 2-parameter asctime_r and ctime_r
-#ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#endif
+  // POSIX.1C threads implies pthread_sigmask()
+# if !defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (__Lynx__)
+#   define ACE_HAS_PTHREAD_SIGMASK
+# endif /* ! ACE_HAS_PTHREAD_SIGMASK && ! __Lynx__ */
+  // ... and 2-parameter asctime_r and ctime_r
+# ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+# endif
 #endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
 
 #if (ACE_NTRACE == 1)
