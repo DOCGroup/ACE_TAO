@@ -1,3 +1,12 @@
+Tue Feb 13 09:48:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+	  (cube_any, cube_any_struct):
+
+	  Call delete() on the returned Any once it is no longer needed.
+	  This fixes a memory leak.  The caller is responsible for
+	  storage.
+
 Tue Feb 13 11:25:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Makefile:
