@@ -20,6 +20,9 @@ Sun Feb 22 21:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/Svc_Conf_y.cpp.diff: regenerated for latest Svc_Conf_y.cpp.
 
+        * ACE-INSTALL.html,include/makeinclude/platform_lynxos.GNU: moved
+          LynxOS installation info from its platform file to ACE-INSTALL.html.
+
 Sun Feb 22 21:26:19 1998  James CE Johnson <jcej@chiroptera.tragus.org>
 
         * tests/IOStream_Test.cpp (server): break out of while loop if
