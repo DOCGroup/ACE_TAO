@@ -1,5 +1,5 @@
-#ifndef TAO_unbounded_value_sequence_hpp
-#define TAO_unbounded_value_sequence_hpp
+#ifndef guard_unbounded_value_sequence_hpp
+#define guard_unbounded_value_sequence_hpp
 /**
  * @file
  *
@@ -23,9 +23,11 @@ class unbounded_value_sequence
 {
 public:
   typedef T value_type;
-  typedef details::unbounded_allocation_traits<T,true> allocation_traits;
-  typedef details::value_traits<T,true> element_traits;
-  typedef details::generic_sequence<T, allocation_traits, element_traits> implementation_type;
+  typedef T const const_value_type;
+
+  typedef details::unbounded_allocation_traits<value_type,true> allocation_traits;
+  typedef details::value_traits<value_type,true> element_traits;
+  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline unbounded_value_sequence()
     : impl_()
@@ -36,7 +38,7 @@ public:
   inline unbounded_value_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      T * data,
+      value_type * data,
       CORBA::Boolean release = false)
     : impl_(maximum, length, data, release)
   {}
@@ -53,7 +55,7 @@ public:
   inline void length(CORBA::ULong length) {
     impl_.length(length);
   }
-  inline T const & operator[](CORBA::ULong i) const {
+  inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
   }
   inline value_type & operator[](CORBA::ULong i) {
@@ -62,23 +64,23 @@ public:
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      T * data,
+      value_type * data,
       CORBA::Boolean release = false) {
     impl_.replace(maximum, length, data, release);
   }
-  inline T const * get_buffer() const {
+  inline value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  inline T * get_buffer(CORBA::Boolean orphan = false) {
+  inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
   inline void swap(unbounded_value_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-  static T * allocbuf(CORBA::ULong maximum) {
+  static value_type * allocbuf(CORBA::ULong maximum) {
     return implementation_type::allocbuf(maximum);
   }
-  static void freebuf(T * buffer) {
+  static void freebuf(value_type * buffer) {
     implementation_type::freebuf(buffer);
   }
 
@@ -88,5 +90,5 @@ private:
 
 } // namespace TAO
 
-#endif // TAO_unbounded_string_sequence_hpp
+#endif // guard_unbounded_string_sequence_hpp
 

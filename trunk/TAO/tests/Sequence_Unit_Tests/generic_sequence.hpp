@@ -1,5 +1,5 @@
-#ifndef guard_TAO_generic_sequence_hpp
-#define guard_TAO_generic_sequence_hpp
+#ifndef guard_generic_sequence_hpp
+#define guard_generic_sequence_hpp
 /**
  * @file
  *
@@ -95,7 +95,7 @@ public:
   generic_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      T * data,
+      value_type * data,
       CORBA::Boolean release)
     : maximum_(maximum)
     , length_(length)
@@ -185,14 +185,14 @@ public:
   void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      T * data,
+      value_type * data,
       CORBA::Boolean release)
   {
     generic_sequence tmp(maximum, length, data, release);
     swap(tmp);
   }
 
-  T const * get_buffer() const
+  value_type const * get_buffer() const
   {
     if (buffer_ == 0)
     {
@@ -201,7 +201,7 @@ public:
     return buffer_;
   }
 
-  T * get_buffer(CORBA::Boolean orphan)
+  value_type * get_buffer(CORBA::Boolean orphan)
   {
     if (orphan && !release_)
     {
@@ -231,12 +231,12 @@ public:
     std::swap(release_, rhs.release_);
   }
 
-  static T * allocbuf(CORBA::ULong maximum)
+  static value_type * allocbuf(CORBA::ULong maximum)
   {
     return allocation_traits::allocbuf(maximum);
   }
 
-  static void freebuf(T * buffer)
+  static void freebuf(value_type * buffer)
   {
     allocation_traits::freebuf(buffer);
   }
@@ -251,4 +251,4 @@ private:
 } // namespace details
 } // namespace CORBA
 
-#endif // guard_TAO_generic_sequence_hpp
+#endif // guard_generic_sequence_hpp

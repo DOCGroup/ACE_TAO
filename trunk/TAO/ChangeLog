@@ -1,3 +1,16 @@
+Sat Sep 25 09:54:29 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/value_traits.hpp:
+	  Add a const_value_type typedef, just like the string_traits
+	  have.
+
+	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
+	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Always use "value_type" in favor of "T"
+	  Introduce "const_value_type" to all sequences.
+
 Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
          This is the merge of changes to the Implementation Repository into the
