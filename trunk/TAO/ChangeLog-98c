@@ -1,3 +1,9 @@
+Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
+          warning for using TAO_TRY_ENV with no TAO_CHECK_ENV.Thanks to
+	  David for reporting this.
+
 Mon Oct 19 15:37:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
