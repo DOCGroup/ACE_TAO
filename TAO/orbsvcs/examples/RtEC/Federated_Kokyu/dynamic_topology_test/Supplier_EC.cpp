@@ -32,7 +32,7 @@
 
 namespace
 {
-  int config_run = 0;
+  int mode_switch = -1; //default to random switching
   ACE_CString sched_type = "rms";
   ACE_CString ior_output_filename;
   FILE * ior_output_file;
@@ -243,7 +243,7 @@ public:
 
     Mode_Handler *mode_handler;
     ACE_NEW(mode_handler,
-            Mode_Handler(-1)); //mode switch immediately
+            Mode_Handler(mode_switch)); //mode switch immediately
     Supplier *supplier_impl1_1;
     Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
@@ -493,9 +493,9 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:o:i:");
+  ACE_Get_Opt get_opts (argc, argv, "s:o:i:m:");
   int c;
-  //these used for handline '-i':
+  //these used for handling '-i':
   const char* input_file;
   size_t len;
   char *filename;
@@ -524,6 +524,10 @@ int parse_args (int argc, char *argv[])
       case 's':
         sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
+      case 'm':
+        mode_switch = ACE_OS::atoi(get_opts.opt_arg());
+        ACE_DEBUG((LM_DEBUG,"Setting mode switch to %i\n",mode_switch));
+        break;
 
       case '?':
       default:
@@ -531,8 +535,11 @@ int parse_args (int argc, char *argv[])
                            "Usage:  %s -s <rms|muf|edf>"
                            " [-o iorfile]"
                            " [-i consumer_ec_ior]"
+                           " [-m mode]"
                            "\n"
-                           "For multiple consumers, specify -i multiple times\n",
+                           "For multiple consumers, specify -i multiple times\n"
+                           "Mode is number of iterations before going to FT mode;"
+                             "-1 randomly switches modes\n",
                            argv [0]),
                           -1);
       }

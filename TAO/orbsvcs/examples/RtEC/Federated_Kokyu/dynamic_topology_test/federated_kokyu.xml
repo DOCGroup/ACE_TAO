@@ -5,6 +5,7 @@
     <EVENT name="START_SERVICE" id="0" />
     <EVENT name="DEADLINE_MISSED" id="1" />
     <EVENT name="STOP_SERVICE" id="2" />
+    <EVENT name="FUTURE_EVENT" id="3" />
   </FAMILY>
   <FAMILY name="MAIN_GROUP" id="2">
     <EVENT name="START" id="0"/>

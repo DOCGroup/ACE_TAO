@@ -39,7 +39,7 @@ public:
   virtual ~Dynamic_Supplier(void);
 
   ///Overrides Supplier::timeout_occurred()
-  virtual void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL);
 
 protected:
   RtecEventComm::EventSourceID norm_type2_;
