@@ -1,6 +1,5 @@
 // $Id$
-
-// FaCE.cpp : Defines the entry point for the application.
+// FUZZ: disable check_for_tchar
 
 #include "FaCE.h"
 

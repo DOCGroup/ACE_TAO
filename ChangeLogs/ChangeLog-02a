@@ -1,3 +1,15 @@
+Sun Mar 31 01:18:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * apps/FaCE_OS.h:
+        * apps/FaCE.cpp:
+        * apps/Main.cpp:
+          Added "// FUZZ: disable check_for_tchar" as the code is only and
+          specifically for the WinCE.  Thanks to Nanbor Wang for help.
+
+        * apps/CE_ARGV.H:
+        * apps/CE_ARGV.CPP:
+          Minor lower/upper case change in the include statement.
+
 Sat Mar 30 22:19:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ace/OS.h:
