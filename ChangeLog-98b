@@ -1,3 +1,9 @@
+Thu Dec 31 13:25:53 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/019/server[2].cpp: 
+	Test that the segment was created.  If it already existed, the
+	malloc() will return 0 and we'll crash.
+
 Thu Dec 31 12:10:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/RB_Tree_Test.cpp: 
