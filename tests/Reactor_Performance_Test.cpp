@@ -42,7 +42,11 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 // Number of client (user) threads
-static int opt_nconnections = 20;
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINNT4)
+static int opt_nconnections = 5;
+#else /* ACE_WIN32 && !ACE_HAS_WINNT4 */
+static int opt_nconnections = 5;
+#endif /* ACE_WIN32 && !ACE_HAS_WINNT4 */
 
 // Number of data exchanges
 static int opt_nloops = 200;
