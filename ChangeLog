@@ -1,3 +1,8 @@
+Thu Aug 19 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * PROBLEM-REPORT-FORM:
+          Ask for the default.features file used by MPC.
+
 Wed Aug 18 21:02:34 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.h:
