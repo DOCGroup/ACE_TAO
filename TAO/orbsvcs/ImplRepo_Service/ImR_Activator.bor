@@ -11,14 +11,14 @@ NAME = ImR_Activator
 OBJFILES = \
 	$(OBJDIR)\ImR_Activator.obj \
 	$(OBJDIR)\ImR_Activator_i.obj \
-        $(OBJDIR)\Iterator.obj \
-        $(OBJDIR)\Locator.obj \
-        $(OBJDIR)\Options.obj \
+   $(OBJDIR)\Iterator.obj \
+   $(OBJDIR)\Locator.obj \
+   $(OBJDIR)\Options.obj \
 	$(OBJDIR)\Server_Info.obj \
 	$(OBJDIR)\Server_Repository.obj \
 	$(OBJDIR)\Repository_Configuration.obj \
-        $(OBJDIR)\XML_ContentHandler.obj \
-        $(OBJDIR)\NT_Service.obj
+   $(OBJDIR)\XML_ContentHandler.obj \
+   $(OBJDIR)\NT_Service.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
@@ -27,21 +27,23 @@ CFLAGS = \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_IORTABLE_CFLAGS) \
-	$(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_VALUETYPE_CFLAGS) \
+   $(TAO_SVC_UTILS_CFLAGS) \
+   $(TAO_VALUETYPE_CFLAGS) \
 	$(TAO_IORINTERCEPTOR_CFLAGS) \
+   $(TAO_STRATEGIES_CFLAGS) \
 	$(TAO_ORT_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
-        $(ACE_XML_LIB) \
-        $(ACE_XML_PARSER_LIB) \
+   $(ACE_XML_LIB) \
+   $(ACE_XML_PARSER_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_IORTABLE_LIB) \
 	$(TAO_SVC_UTILS_LIB) \
 	$(TAO_VALUETYPE_LIB) \
 	$(TAO_IORINTERCEPTOR_LIB) \
+   $(TAO_STRATEGIES_LIB) \
 	$(TAO_ORT_LIB)
 
 CPPDIR = .
