@@ -233,9 +233,8 @@ ACE_Thread_Descriptor::dump (void) const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
-  :
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-    log_msg_ (0),
+#if !defined (ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  : log_msg_ (0),
     at_exit_list_ (0),
     terminated_ (0)
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
