@@ -1,3 +1,7 @@
+Mon Jun 14 09:58:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated Barry Hoggard's CORBA page URL.
+
 Mon Jun 14 07:17:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: fixed typo: exceptions.
