@@ -26,8 +26,8 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (ACE_HAS_TSS_EMULATION)
-  // Allocate the main thread's TSS.
-  ACE_TSS_Emulation::tss_allocate ();
+  // Initialize the main thread's TS storage.
+  ACE_TSS_Emulation::tss_open (ts_storage_);
 #endif /* ACE_HAS_TSS_EMULATION */
 }
 
@@ -36,18 +36,19 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_Cleanup_Info info;
 
   // This call closes and deletes all ACE library services and
-  // singletons.
+  // singletons.  This closes the ACE_Thread_Manager, which cleans
+  // up all running threads.
   ACE_Service_Config::close ();
 
-  // Close the Log_Msg instance.
-  ACE_Log_Msg::close ();
+  // Close the main thread's TSS, including its Log_Msg instance.
+  ACE_OS::cleanup_tss ();
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.  Before starting, mark this object as being
   // destroyed - then if during the course of shutting things down,
   // some object tries to register, it won't be.
   shutting_down_ = 1;
-  ACE_Trace::stop_tracing();
+  ACE_Trace::stop_tracing ();
   while (registered_objects_ &&
          registered_objects_->dequeue_head (info) != -1)
     {
@@ -66,8 +67,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 # endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_TSS_EMULATION)
-  // Delete the main thread's TSS.
-  ACE_TSS_Emulation::tss_deallocate ();
+  // Close the thread's local TS storage.
+  ACE_TSS_Emulation::tss_close (ts_storage_);
 #endif /* ACE_HAS_TSS_EMULATION */
 }
 
