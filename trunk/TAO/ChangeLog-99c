@@ -1,3 +1,10 @@
+Sun Dec 12 18:00:48 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Added missing ACE_CHECK_RETURN call after call to
+	  ACE_NEW_THROW_EX.
+
 Sun Dec 12 15:32:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/params.h:
