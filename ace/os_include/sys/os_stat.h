@@ -75,7 +75,7 @@ extern "C"
 #  endif /* ACE_HAS_WINCE */
 
 #if !defined (S_IFLNK)
-#define S_IFLNK S_IFREG
+#define S_IFLNK 0xA000
 #endif /* S_IFLNK */
 
 #endif /* ACE_LACKS_MODE_MASKS */
