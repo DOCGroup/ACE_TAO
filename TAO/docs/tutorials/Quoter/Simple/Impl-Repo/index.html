@@ -12,15 +12,15 @@
 
     <h3>Implementation Repository</h3>
     <P> In the previous example, the client must contact the server
-      atleast once. If the server has been moved to a different host or
-      port or if the server is down, binding between the client and
+      at least once. If the server has been moved to a different host or
+      port, or if the server is down, binding between the client and
       the server fails. Indirect binding through an external location
       broker like the Implementation Repository solves this problem. 
     </P>
     <P>An implementation repository maintains a data structure known
       as a server table to keep track of the servers. It maintains a 
       registry of known servers, records which server is currently 
-      running on which host and at which port number and starts
+      running on which host and at which port number, and starts
       servers on demand if they are registered to do so. 
     </P>
     <P> When a server
@@ -35,7 +35,7 @@
       information of the actual server. The client now sends the
       request to the actual server. 
     </P>
-    <P>In this example, lets proceed to modify our previous stock
+    <P>In this example, let's proceed to modify our previous stock
       factory example to support indirect binding through an
       implementation repository. 
     </P>
@@ -67,13 +67,13 @@
     
     <H3>Testing</H3>
     <P>To test your changes, you need to run three programs. The first
-      step would be to startup the Implementation Repository provided 
-      with TAO. We need to dump the IOR of the ImplRepo_Service to a file
+      step is to start up the Implementation Repository provided 
+      with TAO. We need to dump the IOR of the ImplRepo_Service to a file,
       so that we can use it later to use the implementation repository
       for the initial service. 
     </P>
     <PRE>
-       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
 
           TAO Implementation Repository
     </PRE>
@@ -92,14 +92,14 @@
 
           Successfully registered server <childPOA>
     </PRE>
-    <P> We use the <CODE>-ORBInitRef</CODE> option to the IOR in 
-      <CODE>implrepo.ior</CODE> file and the <CODE>-ORBUseIMR</CODE> 
+    <P> We specify the <CODE>-ORBInitRef</CODE> option to use the IOR in 
+      the <CODE>implrepo.ior</CODE> file and the <CODE>-ORBUseIMR</CODE> 
       option to tell the server to use the IMR for notification of its
       startup and shutdown. 
     </P>
-    <P>The next step would be to generate a simple IOR for our server
+    <P>The next step is to generate a simple IOR for our server
       to be used with the IMR, using the
-      <CODE>ior</CODE> option and write it to <CODE>stock_factory.ior</CODE>. 
+      <CODE>ior</CODE> option, and write it to <CODE>stock_factory.ior</CODE>. 
      
     </P>
     <PRE>
@@ -109,7 +109,7 @@
          iioploc://1.1@doc.ece.uci.edu:2690/childPOA
     </PRE>
     <P> From now, the implementation repository is all set to keep
-      track of our server and do the needful on a method invocaation
+      track of our server and do the needful on a method invocation
       on our server.
     </P>
     <P> Now, execute the client as usual.
@@ -120,7 +120,7 @@
        The price of a stock in "Microsoft, Inc." is $91
        The price of a stock in "RedHat, Inc." is $210
     </PRE>
-    <P> For testing the persistency of the POA, lets shutdown the
+    <P> For testing the persistency of the POA, let's shut down the
       server and then run the client.
     </P>
     <PRE>
@@ -136,21 +136,21 @@
     </PRE>
     <H3>More Reading</H3>
     <P>More information on Implementation Repository is 
-     <A	HREF="../../../../implrepo/index.html">here</A>.  
+     <A	HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/implrepo/index.html">here</A>.  
     </P>
       <P>The <A HREF="http://www.triodia.com/staff/michi-henning.html">Henning</A> and <A HREF="http://www.iona.com/hyplan/vinoski/">Vinoski</A> 
       <A HREF="http://www.iona.com/hyplan/vinoski/#book">CORBA book</A> discusses POA policies in detail.  Likewise, 
       the Schmidt and Vinoski 
       <A HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">columns</A> in C++ Report also include several articles about the POA.  Finally,
       the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> 
-      distribution includes <A HREF="../../../../../examples/POA">examples</A> that illustrate how
+      distribution includes <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/examples/POA">examples</A> that illustrate how
       to use the POA policies.
     </P>
     <hr>
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
 <!-- Created: Wed Mar 29 17:35:30 PST 2000 -->
 <!-- hhmts start -->
-Last modified: Fri May 12 12:32:03 PDT 2000
+Last modified: Sun Apr  1 14:59:29 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>
