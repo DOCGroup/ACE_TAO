@@ -1,3 +1,8 @@
+Mon Jul 20 17:30:49 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Changed
+	the absolute path for gperf to $ACE/bin. 
+
 Mon Jul 20 16:55:54 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (copy_ctor_helper):
