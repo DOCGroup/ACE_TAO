@@ -94,11 +94,6 @@ LIB32=link.exe -lib
 SOURCE=.\ImplRepoS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -130,14 +125,6 @@ SOURCE=.\ImplRepoS_T.i
 # Begin Source File
 
 SOURCE=.\Key_Adapters.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.i
 # End Source File
 # Begin Source File
 
@@ -226,14 +213,6 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\Key_Adapters.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.h
 # End Source File
 # Begin Source File
 
@@ -374,10 +353,6 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.cpp
 # End Source File
 # Begin Source File
 
