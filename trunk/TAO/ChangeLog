@@ -1,3 +1,14 @@
+Mon Feb  7 13:24:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Remote_Invocation.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+
+          In order to ensure that request headers are not translated, I
+          added a new transport method, clear_translators() that is called
+          by TAO_Remote_Invocation::write_header. This is necesssary to
+          avoid problems brought on by reusing CDR streams.
+
 Mon Feb  7 08:49:46 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
@@ -10,9 +21,9 @@ Mon Feb  7 08:49:46 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/DynamicAny/DynSequence_i.cpp:
         * tao/DynamicAny/DynStruct_i.cpp:
         * tao/DynamicAny/DynUnion_i.cpp:
-        
+
           Fixed various minor problems overlooked in
-          
+
           Sun Feb  6 19:46:23 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Feb  7 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
