@@ -1,3 +1,49 @@
+Thu May 27 12:28:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/[IU]IOP_Profile.cpp (parse_string, to_string):
+
+	  Updated URL style object reference parsing and creation methods
+	  to conform to the "iioploc" BNF specification.  All URL style
+	  object references will be of the form:
+
+	    protocol://V.v@addr1,...,W.w@addrN/object_key
+
+	  The version prefix (e.g. "V.v@") is optional.  All endpoints and 
+	  preconnects specified with the "-ORBendpoint" and
+	  "-ORBpreconnect" command line options should be of the above
+	  form (without the object key).
+
+	  NOTE: The UIOP URL style object reference uses a vertical bar
+	  "|" to delimit where the object key begins.  This is needed to
+	  avoid any ambiguities caused by the fact that UIOP endpoints can 
+	  have forward slashes "/" in them.  The use of the vertical bar
+	  "|" as an object key delimiter for UIOP may change in the
+	  future.
+
+	* tao/Pluggable.cpp (make_mprofile):
+	* tao/params.cpp (parse_endpoint):
+
+	  Updated to support the new URL style endpoints as specified by
+	  the "iioploc" BNF specification.
+
+	* tao/Acceptor_Registry.cpp (open):
+	* tao/[IU]IOP_Connector.cpp (preconnect):
+
+	  Corrected a problem where the protocol version was not removed
+	  from the endpoint string prior to passing it to the appropriate
+	  acceptor/connector.
+
+	* tao/Pluggable.h:
+	* tao/[IU]IOP_Connector.{h,cpp}:
+
+	  Added "object_key_delimiter ()" method.  This method is used
+	  when parsing URL style IORs during MProfile creation.
+	
+	* tao/ORB_Core.cpp (init):
+
+	  Fixed the "-ORBpreconnect" option so that the preconnect strings
+	  get added to the preconnect set, not the endpoint set.
+
 Thu May 27 11:55:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
