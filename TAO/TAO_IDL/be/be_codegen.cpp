@@ -1436,6 +1436,23 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
+
+  // This will get smarter and more selective at some point.
+  if (be_global->any_support ())
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Impl_T.h");
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Basic_Impl_T.h");
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Special_Basic_Impl_T.h");
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Dual_Impl_T.h");
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Special_Impl_T.h");
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Any_Array_Impl_T.h");
+    }
 }
 
 void
