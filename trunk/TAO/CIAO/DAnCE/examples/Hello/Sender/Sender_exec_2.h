@@ -7,38 +7,41 @@
  */
 //============================================================
 
-#ifndef SENDER_EXEC_H
-#define SENDER_EXEC_H
+#ifndef SENDER_EXEC_2_H
+#define SENDER_EXEC_2_H
 
 #include "SwapExecC.h"
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
-#include "ace/DLL.h"
-#include "ciao/CCM_EventC.h"
 
 namespace Sender_Impl
 {
-  class SENDER_EXEC_Export Sender_exec_i :
+  class SenderSwap_exec_i;
+
+
+  class SENDER_EXEC_Export Sender_exec_2_i :
       public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
 
   public:
     /// Default constructor.
-    Sender_exec_i ()
+    Sender_exec_2_i ()
         : message_(CORBA::string_dup ("Default Message"))
     {
     }
 
     /// Secondary construction.
-    Sender_exec_i (const char* local_message)
+    Sender_exec_2_i (const char* local_message,
+                     SenderSwap_exec_i *e)
       : message_ (CORBA::string_dup (local_message))
+      , base_exec_ (e)
     {
     }
 
     /// Default destructor.
-    virtual ~Sender_exec_i ();
+    virtual ~Sender_exec_2_i ();
 
     /// Operation to set the value of the attribute
     virtual void local_message (const char * local_message
@@ -90,6 +93,11 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
+    void swap_exec (SenderSwap_exec_i *p)
+    {
+      this->base_exec_ = p;
+    }
+
   protected:
     /// Copmponent specific context
     Sender_Exec_Context_var context_;
@@ -97,18 +105,16 @@ namespace Sender_Impl
   private:
     CORBA::String_var message_;
 
-    friend class Message_Impl;
+    SenderSwap_exec_i *base_exec_;
+
+    friend class Message_Impl_2;
   };
 
-
-  //
-  //
-  //
-  class Message_Impl : public virtual Hello::CCM_ReadMessage,
+  class Message_Impl_2 : public virtual Hello::CCM_ReadMessage,
                        public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Message_Impl (Sender_exec_i& component)
+    Message_Impl_2 (Sender_exec_2_i& component)
         : component_ (component)
     {
     }
@@ -118,77 +124,12 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-    Sender_exec_i& component_;
-  };
-
-  class SenderSwap_exec_i;
-
-
-  typedef ::Components::EnterpriseComponent_ptr (*ExecFactory) (SenderSwap_exec_i *);
-
-  /**
-   * @class Sender_exec_i
-   *
-   * Sender executor implementation class.
-   */
-
-  class SENDER_EXEC_Export SenderSwap_exec_i :
-      public virtual CIAO::Swap_Exec,
-      public virtual TAO_Local_RefCounted_Object
-  {
-  public:
-    SenderSwap_exec_i ();
-
-    ~SenderSwap_exec_i ();
-
-    virtual ::Components::EnterpriseComponent_ptr
-    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::EnterpriseComponent_ptr
-    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    void  consumers (::Components::ConsumerDescriptions *p)
-    {
-      this->consumers_ = p;
-    }
-
-    ::Components::ConsumerDescriptions *consumers (void)
-    {
-      return this->consumers_._retn ();
-    }
-
-  protected:
-    int count_;
-
-    ::Components::ConsumerDescriptions_var consumers_;
-  };
-
-  class SENDER_EXEC_Export SenderHome_exec_i :
-    public virtual SenderHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
-  {
-  public:
-    /// Default ctor.
-    SenderHome_exec_i ();
-
-    /// Default dtor.
-    virtual ~SenderHome_exec_i ();
-
-    // Implicit home operations.
-
-    virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
-
-
+    Sender_exec_2_i& component_;
   };
 
 }
 
-extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createSenderHome_Impl (void);
+extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */
