@@ -52,8 +52,8 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-      << "const " << node->name () << " &_tao_union)" << be_nl
+  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &, "
+      << "const " << node->name () << " &)" << be_nl
       << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
       << "}\n\n";
@@ -78,8 +78,8 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
-      << node->name () << " &_tao_union)" << be_nl
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << node->name () << " &)" << be_nl
       << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
       << "}\n\n";
