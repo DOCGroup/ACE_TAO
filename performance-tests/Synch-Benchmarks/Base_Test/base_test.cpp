@@ -2,8 +2,11 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Log_Msg.h"
 #include "Baseline_Test.h"
+
+# if defined (ACE_HAS_THREADS)
+
+#include "ace/Log_Msg.h"
 
 class ACE_Svc_Export Baseline_Base_Test : public Baseline_Test_Base
 {
@@ -55,3 +58,5 @@ Baseline_Base_Test::test_try_lock ()
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Base_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Base_Test)
+
+#endif  /* ACE_HAS_THREADS */

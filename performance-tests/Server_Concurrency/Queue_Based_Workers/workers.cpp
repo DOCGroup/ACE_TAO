@@ -43,12 +43,12 @@ Message_Block::Message_Block (ACE_Data_Block *data_block,
 {
 }
 
-typedef ACE_Task<ACE_MT_SYNCH> TASK;
+typedef ACE_Task<ACE_SYNCH> TASK;
 
 class Worker_Task : public TASK
 {
 public:
-  Worker_Task (ACE_Message_Queue<ACE_MT_SYNCH> *mq);
+  Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
   int svc (void);
 
   size_t messages_dequeued_;
@@ -60,11 +60,11 @@ public:
 class IO_Task : public TASK
 {
 public:
-  IO_Task (ACE_Message_Queue<ACE_MT_SYNCH> *mq);
+  IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
   int svc (void);
 };
 
-Worker_Task::Worker_Task (ACE_Message_Queue<ACE_MT_SYNCH> *mq)
+Worker_Task::Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
   : TASK (0, mq),
     messages_dequeued_ (0)
 {
@@ -158,7 +158,7 @@ Worker_Task::svc (void)
   return 0;
 }
 
-IO_Task::IO_Task (ACE_Message_Queue<ACE_MT_SYNCH> *mq)
+IO_Task::IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
   : TASK (0, mq)
 {
 }
@@ -299,7 +299,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       data_block->duplicate ();
     }
 
-  ACE_Message_Queue<ACE_MT_SYNCH> message_queue;
+  ACE_Message_Queue<ACE_SYNCH> message_queue;
 
   // Workers.
   Worker_Task **workers = 0;

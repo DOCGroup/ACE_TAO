@@ -1,13 +1,19 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
-#include "ace/Service_Repository.h"
+
+#include "Performance_Test.h"
+
+# if defined (ACE_HAS_THREADS)
 
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
-#include "Performance_Test.h"
 
-ACE_RCSID(Synch_Benchmarks, Performance_Test, "$Id$")
+#include "ace/Service_Repository.h"
+
+ACE_RCSID (Perf_Test,
+           Performance_Test,
+           "$Id$")
 
 Performance_Test::Performance_Test (void)
   : n_lwps_ (0),
@@ -111,3 +117,5 @@ Performance_Test::valid_test_object (Benchmark_Base *bb)
 }
 
 ACE_SVC_FACTORY_DEFINE (Performance_Test)
+
+#endif  /* ACE_HAS_THREADS */

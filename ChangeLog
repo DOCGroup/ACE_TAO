@@ -1,3 +1,22 @@
+Wed May 12 21:26:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+
+	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Fixes
+	  single-threaded build compile-time errors.
+
+	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:
+	* performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
+	* performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.h:
+
+	  #ifdef out the code if ACE_HAS_THREADS is not defined.  This
+	  code is only meant to be used when multithreading support in ACE
+	  is enabled.  Fixes single-threaded build compile-time errors.
+
 Wed May 12 20:13:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Local_Tokens.cpp:

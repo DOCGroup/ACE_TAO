@@ -6,6 +6,8 @@
 
 #include "Synch_Lib/Benchmark_Base.h"
 
+#if defined (ACE_HAS_THREADS)
+
 class ACE_Svc_Export Performance_Test : public Benchmark_Method_Base
 {
 public:
@@ -21,5 +23,7 @@ private:
 };
 
 ACE_SVC_FACTORY_DECLARE (Performance_Test)
+
+#endif  /* ACE_HAS_THREADS */
 
 #endif /* ACE_PERFORMANCE_TEST_H */
