@@ -1456,7 +1456,7 @@ protected:
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
 };
-#elif ! (defined (ACE_HAS_STHREADS) || defined (ACE_HAS_WTHREADS))
+#elif !defined (ACE_HAS_STHREADS) || !defined (ACE_HAS_WTHREADS)
 #include <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */
