@@ -11,23 +11,23 @@
 class TAO{
 public:
 
-#if !defined (_TAO__TAO__SEQ_OBJECTKEY_CH_)
-#define _TAO__TAO__SEQ_OBJECTKEY_CH_
+#if !defined (_TAO__TAO_SEQ_OCTET_CH_)
+#define _TAO__TAO_SEQ_OCTET_CH_
 
   // *************************************************************
-  // class _tao__seq_ObjectKey
+  // class _tao_seq_Octet
   // *************************************************************
   
-  class _tao__seq_ObjectKey
+  class _tao_seq_Octet
   {
   public:
-    _tao__seq_ObjectKey (void); // default constructor
-    _tao__seq_ObjectKey (CORBA::ULong max);
-    _tao__seq_ObjectKey (CORBA::ULong max, CORBA::ULong length, 
+    _tao_seq_Octet (void); // default constructor
+    _tao_seq_Octet (CORBA::ULong max);
+    _tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, 
     	CORBA::Octet *value, CORBA::Boolean release=CORBA::B_FALSE);
-    _tao__seq_ObjectKey(const _tao__seq_ObjectKey &); // copy constructor
-    ~_tao__seq_ObjectKey (void);
-    _tao__seq_ObjectKey &operator= (const _tao__seq_ObjectKey &);
+    _tao_seq_Octet(const _tao_seq_Octet &); // copy constructor
+    ~_tao_seq_Octet (void);
+    _tao_seq_Octet &operator= (const _tao_seq_Octet &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -41,84 +41,90 @@ public:
     CORBA::Octet *buffer_;
     CORBA::Boolean release_;
   };
-  typedef _tao__seq_ObjectKey* _tao__seq_ObjectKey_ptr;
-  static CORBA::TypeCode_ptr _tc__tao__seq_ObjectKey;
+  typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
+  static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_TAO__TAO__SEQ_OBJECTKEY___VAR_CH_)
-#define _TAO__TAO__SEQ_OBJECTKEY___VAR_CH_
+#if !defined (_TAO__TAO_SEQ_OCTET___VAR_CH_)
+#define _TAO__TAO_SEQ_OCTET___VAR_CH_
 
 // *************************************************************
-  // class TAO::_tao__seq_ObjectKey_var
+  // class TAO::_tao_seq_Octet_var
   // *************************************************************
 
-  class _tao__seq_ObjectKey_var
+  class _tao_seq_Octet_var
   {
   public:
-    _tao__seq_ObjectKey_var (void); // default constructor
-    _tao__seq_ObjectKey_var (_tao__seq_ObjectKey *);
-    _tao__seq_ObjectKey_var (const _tao__seq_ObjectKey_var &); // copy constructor
-    ~_tao__seq_ObjectKey_var (void); // destructor
+    _tao_seq_Octet_var (void); // default constructor
+    _tao_seq_Octet_var (_tao_seq_Octet *);
+    _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
+    ~_tao_seq_Octet_var (void); // destructor
     
-    _tao__seq_ObjectKey_var &operator= (_tao__seq_ObjectKey *);
-    _tao__seq_ObjectKey_var &operator= (const _tao__seq_ObjectKey_var &);
-    _tao__seq_ObjectKey *operator-> (void);
-    const _tao__seq_ObjectKey *operator-> (void) const;
+    _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
+    _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
+    _tao_seq_Octet *operator-> (void);
+    const _tao_seq_Octet *operator-> (void) const;
     
-    operator const _tao__seq_ObjectKey &() const;
-    operator _tao__seq_ObjectKey &();
-    operator _tao__seq_ObjectKey &() const;
+    operator const _tao_seq_Octet &() const;
+    operator _tao_seq_Octet &();
+    operator _tao_seq_Octet &() const;
     CORBA::Octet &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const _tao__seq_ObjectKey &in (void) const;
-    _tao__seq_ObjectKey &inout (void);
-    _tao__seq_ObjectKey *&out (void);
-    _tao__seq_ObjectKey *_retn (void);
-    _tao__seq_ObjectKey *ptr (void) const;
+    const _tao_seq_Octet &in (void) const;
+    _tao_seq_Octet &inout (void);
+    _tao_seq_Octet *&out (void);
+    _tao_seq_Octet *_retn (void);
+    _tao_seq_Octet *ptr (void) const;
 
   private:
-    _tao__seq_ObjectKey *ptr_;
+    _tao_seq_Octet *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_TAO__TAO__SEQ_OBJECTKEY___OUT_CH_)
-#define _TAO__TAO__SEQ_OBJECTKEY___OUT_CH_
+#if !defined (_TAO__TAO_SEQ_OCTET___OUT_CH_)
+#define _TAO__TAO_SEQ_OCTET___OUT_CH_
 
-  class _tao__seq_ObjectKey_out
+  class _tao_seq_Octet_out
   {
   public:
-    _tao__seq_ObjectKey_out (_tao__seq_ObjectKey *&);
-    _tao__seq_ObjectKey_out (_tao__seq_ObjectKey_var &);
-    _tao__seq_ObjectKey_out (_tao__seq_ObjectKey_out &);
-    _tao__seq_ObjectKey_out &operator= (_tao__seq_ObjectKey_out &);
-    _tao__seq_ObjectKey_out &operator= (_tao__seq_ObjectKey *);
-    operator _tao__seq_ObjectKey *&();
-    _tao__seq_ObjectKey *&ptr (void);
-    _tao__seq_ObjectKey *operator-> (void);
+    _tao_seq_Octet_out (_tao_seq_Octet *&);
+    _tao_seq_Octet_out (_tao_seq_Octet_var &);
+    _tao_seq_Octet_out (_tao_seq_Octet_out &);
+    _tao_seq_Octet_out &operator= (_tao_seq_Octet_out &);
+    _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
+    operator _tao_seq_Octet *&();
+    _tao_seq_Octet *&ptr (void);
+    _tao_seq_Octet *operator-> (void);
     CORBA::Octet &operator[] (CORBA::ULong index);
     
   private:
-    _tao__seq_ObjectKey *&ptr_;
+    _tao_seq_Octet *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const _tao__seq_ObjectKey_var &);
+    void operator= (const _tao_seq_Octet_var &);
   };
 
 
 #endif // end #if !defined
 
-  typedef ACE_NESTED_CLASS (TAO,_tao__seq_ObjectKey) ObjectKey;
-  typedef ACE_NESTED_CLASS (TAO,_tao__seq_ObjectKey_var) ObjectKey_var;
-  typedef ACE_NESTED_CLASS (TAO,_tao__seq_ObjectKey_out) ObjectKey_out;
+  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet) ObjectKey;
+  typedef ObjectKey *ObjectKey_ptr; // cjc
+  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet_var) ObjectKey_var;
+  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet_out) ObjectKey_out;
 
   static CORBA::TypeCode_ptr _tc_ObjectKey;
 
 };
+
+
+#if defined (__ACE_INLINE__)
+#include "objkeyC.i"
+#endif // defined INLINE
 
 
 #endif // if !defined

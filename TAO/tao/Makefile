@@ -9,19 +9,11 @@ LIBNAME  = libTAO
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-# These are components that are only headers and must be installed
-CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
-CORBA_SRCS = any corbacom except nvlist object orbobj poa \
-	     principa request svrrqst typecode
+# These are headers for things which are exported and must be
+# installed.  (Currently not used).
+PUB_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
+	   default_client default_server server_factory client_factory orb_core
 
-# These are components that are only headers and must be installed
-OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
-              default_client default_server server_factory client_factory orb_core
-
-OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst typecode marshal \
-              default_client default_server server_factory client_factory orb_core
-
-# These are components that are either header & source or source-only
 ORBCORE_SRCS = \
 	any \
 	corbacom \
@@ -44,6 +36,7 @@ ORBCORE_SRCS = \
 	deep_free \
 	default_client \
 	default_server \
+	objkeyC \
 	encode \
 	giop \
 	iiopobj \
@@ -88,11 +81,13 @@ BUILD	= $(VSHLIB) $(VLIB) $(VBIN)
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #	Local targets (and local hacks)
