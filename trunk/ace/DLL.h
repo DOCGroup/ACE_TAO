@@ -77,7 +77,7 @@ public:
   // If <symbol_name> is in the symbol table of the DLL a pointer to
   // the <symbol_name> is returned.  Otherwise, returns 0.
 
-  char *error (void);
+  ASYS_TCHAR *error (void);
   // Returns a pointer to a string explaining why <symbol> or <open>
   // failed.
 

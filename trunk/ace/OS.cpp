@@ -4021,7 +4021,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
       startup_info.cb = sizeof startup_info;
 
       if (::CreateProcess (0,
-                           (LPTSTR) ACE_WIDE_STRING (buf),
+                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
@@ -4032,7 +4032,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            &process_info))
 #   else
       if (::CreateProcess (0,
-                           (LPTSTR) buf,
+                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE
@@ -5185,19 +5185,19 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 # endif /* ACE_LACKS_DIFFTIME */
 
-# if defined (ACE_HAS_WINCE)
-wchar_t *
-ACE_OS::ctime (const time_t *t)
-{
-  wchar_t buf[26];              // 26 is a "magic number" ;)
-  return ACE_OS::ctime_r (t, buf, 26);
-}
-
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 wchar_t *
 ACE_OS::ctime_r (const time_t *clock,
                  wchar_t *buf,
                  int buflen)
 {
+#if !defined (ACE_HAS_WINCE)
+  wchar_t *result;
+  ACE_OSCALL (::_wctime (clock), wchar_t *, 0, result);
+  if (result != 0)
+    ::wcsncpy (buf, result, buflen);
+  return buf;
+#else
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
     return 0;
@@ -5229,8 +5229,9 @@ ACE_OS::ctime_r (const time_t *clock,
                    systime.wSecond,
                    systime.wYear);
   return buf;
+#endif /* ACE_HAS_WINCE */
 }
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 # if !defined (ACE_HAS_WINCE)
 time_t

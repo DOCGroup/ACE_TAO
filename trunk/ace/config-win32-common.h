@@ -272,6 +272,10 @@ typedef unsigned __int64 ACE_UINT64;
         #define NOMINMAX
 #endif /* NOMINMAX */
 
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
+#defined UNICODE
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
+
 #if defined (_UNICODE)
         #if !defined (UNICODE)
                  #define UNICODE         /* UNICODE is used by Windows headers */

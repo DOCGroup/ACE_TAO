@@ -27,13 +27,13 @@ public:
   void say_hello (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Hello\n"));
+                  ASYS_TEXT ("Hello\n")));
     }
 
   void say_next (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "How are you?\n"));
+                  ASYS_TEXT ("How are you?\n")));
     }
 };
 

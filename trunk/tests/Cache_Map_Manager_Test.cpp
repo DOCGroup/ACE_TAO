@@ -193,7 +193,7 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
 static void
 find_test_cache (MAP_CACHE &cache)
 {
-  ACE_DEBUG ((LM_DEBUG, "find\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
 
   size_t total_entries = cache.current_size ();
 
@@ -210,17 +210,17 @@ find_test_cache (MAP_CACHE &cache)
       ACE_ASSERT (j == key);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "%d  ",
+		  ASYS_TEXT ("%d  "),
 		  j));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 }
 
-static void 
+static void
 find_test_hash_cache (HASH_MAP_CACHE &cache)
 {
-  ACE_DEBUG ((LM_DEBUG, "find\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
 
   size_t total_entries = cache.current_size ();
 
@@ -237,14 +237,14 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
       ACE_ASSERT (j == key);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "%d  ",
+		  ASYS_TEXT ("%d  "),
 		  j));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 }
 
-static void 
+static void
 purge_test_cache (MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
@@ -267,11 +267,11 @@ purge_test_cache (MAP_CACHE &cache)
   ACE_ASSERT (cache.current_size () == resultant_size);
 }
 
-static void 
+static void
 purge_test_hash_cache (HASH_MAP_CACHE &cache)
 {
-  
-  
+
+
   // Get the number of entries in the container.
   size_t current_map_size = cache.current_size ();
 
@@ -307,7 +307,7 @@ functionality_test_cache (void)
     {
       int result = cache.bind (i, j);
       ACE_ASSERT (result != -1);
-      ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
 		  i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
@@ -317,14 +317,14 @@ functionality_test_cache (void)
   run_reverse_iterator_cache (cache);
 
   find_test_cache (cache);
-  
+
   ACE_DEBUG ((LM_DEBUG,
-	     "Number of entries in cache before purging : %d\n", 
-	     cache.current_size ()));	  
+              ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
+              cache.current_size ()));
   purge_test_cache (cache);
   ACE_DEBUG ((LM_DEBUG,
-	      "Number of entries in cache after purging : %d\n", 
-	      cache.current_size ()));	  
+	      ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
+	      cache.current_size ()));
 
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
@@ -346,7 +346,7 @@ functionality_test_hash_cache (void)
       int result = cache.bind (i, j);
       ACE_ASSERT (result != -1);
       ACE_DEBUG ((LM_DEBUG,
-		  "keys[%d]=%d value=[%d]=%d\n",
+		  ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
 		  i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
@@ -358,11 +358,11 @@ functionality_test_hash_cache (void)
   find_test_hash_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Number of entries in cache before purging : %d\n", 
-	      cache.current_size ()));		   
+	      ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
+	      cache.current_size ()));
   purge_test_hash_cache (cache);
   ACE_DEBUG ((LM_DEBUG,
-	      "Number of entries in cache after purging : %d\n", 
+	      ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
 	      cache.current_size ()));
 
   run_iterator_hash_cache (cache);
@@ -370,9 +370,9 @@ functionality_test_hash_cache (void)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "r:i:f:p:");
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("r:i:f:p:"));
 
   int c;
 
@@ -380,26 +380,26 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-	iterations = atoi (get_opt.optarg);
+	iterations = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'f':
-	no_of_lookups = atoi (get_opt.optarg);
+	no_of_lookups = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'r':
-	randomize_lookups = atoi (get_opt.optarg);
+	randomize_lookups = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'p':
-	purge_percent = atoi (get_opt.optarg);
+	purge_percent = ACE_OS::atoi (get_opt.optarg);
 	break;
       case '?':
       case 'h':
       default:
 	ACE_ERROR ((LM_ERROR,
-		    "usage: %s "
-		    "[-r (randomize lookups)] "
-		    "[-i (iterations)] "
-		    "[-p (purge percent)] "
-		    "[-f (number of lookups)] \n",
+		    ASYS_TEXT ("usage: %s ")
+		    ASYS_TEXT ("[-r (randomize lookups)] ")
+		    ASYS_TEXT ("[-i (iterations)] ")
+		    ASYS_TEXT ("[-p (purge percent)] ")
+		    ASYS_TEXT ("[-f (number of lookups)] \n"),
 		    argv[0]));
 	return -1;
       }

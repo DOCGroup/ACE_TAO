@@ -110,9 +110,9 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n"
-                         "   [-e max_entries] [-u try update] "
-                         "[-n iteration_count] [-f for FIFO threads]\n")));
+              ASYS_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n")
+              ASYS_TEXT ("   [-e max_entries] [-u try update] ")
+              ASYS_TEXT ("[-n iteration_count] [-f for FIFO threads]\n")));
   ACE_OS::exit (1);
 }
 
@@ -295,11 +295,11 @@ Time_Calculation ::print_stats (void)
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("\n"
-                             "\treal_time\t = %0.06f ms, \n"
-                             "\tuser_time\t = %0.06f ms, \n"
-                             "\tsystem_time\t = %0.06f ms, \n"
-                             "\t%0.00f calls/second\n"),
+                  ASYS_TEXT ("\n")
+                  ASYS_TEXT ("\treal_time\t = %0.06f ms, \n")
+                  ASYS_TEXT ("\tuser_time\t = %0.06f ms, \n")
+                  ASYS_TEXT ("\tsystem_time\t = %0.06f ms, \n")
+                  ASYS_TEXT ("\t%0.00f calls/second\n"),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
                   elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
@@ -311,7 +311,7 @@ Time_Calculation ::print_stats (void)
     }
   else
     ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                ASYS_TEXT ("\tNo time stats printed.  Zero iterations or error ocurred.\n")));
 }
 
 static int

@@ -7945,7 +7945,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 }
 
 #if !defined (ACE_HAS_WINCE)
-ACE_INLINE char *
+ACE_INLINE ASYS_TCHAR *
 ACE_OS::dlerror (void)
 {
   ACE_TRACE ("ACE_OS::dlerror");
@@ -7954,10 +7954,11 @@ ACE_OS::dlerror (void)
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
-  static char buf[128];
+  static ASYS_TCHAR buf[128];
 #   if defined (ACE_HAS_PHARLAP)
   ACE_OS::sprintf (buf, "error code %d", GetLastError());
 #   else
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM,
                   NULL,
                   ::GetLastError (),
@@ -7965,6 +7966,15 @@ ACE_OS::dlerror (void)
                   buf,
                   sizeof buf,
                   NULL);
+#else
+  FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
+                 NULL,
+                 ::GetLastError (),
+                 0,
+                 buf,
+                 sizeof buf / sizeof ASYS_TCHAR,
+                 NULL);
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 #   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
@@ -10378,6 +10388,19 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 # endif /* ACE_HAS_UNICODE */
 }
 
+ACE_INLINE size_t
+ACE_OS::strspn (const wchar_t *s, const wchar_t *t)
+{
+#if !defined (ACE_HAS_WINCE)
+  ACE_TRACE ("ACE_OS::strspn");
+  return ::wcsspn (s, t);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (t);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
+}
+
 ACE_INLINE int
 ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
 {
@@ -10704,6 +10727,20 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
   return ::wcstol (s, ptr, base);
 }
 
+ACE_INLINE unsigned long
+ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
+{
+  ACE_TRACE ("ACE_OS::strtoul");
+  return ::wcstoul (s, ptr, base);
+}
+
+ACE_INLINE double
+ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
+{
+  ACE_TRACE ("ACE_OS::strtod");
+  return ::wcstod (s, endptr);
+}
+
 ACE_INLINE int
 ACE_OS::ace_isspace (wchar_t c)
 {
@@ -10811,6 +10848,20 @@ ACE_OS::getenv (const wchar_t *symbol)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #   endif /* ACE_HAS_WINCE */
+}
+
+ACE_INLINE int
+ACE_OS::putenv (const wchar_t *string)
+{
+  ACE_TRACE ("ACE_OS::putenv");
+  // VxWorks declares ::putenv with a non-const arg.
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS)
+  ACE_OSCALL_RETURN (::_wputenv ((wchar_t *) string), int, -1);
+#else
+  // @@ WinCE and pSOS don't have the concept of environment variables.
+  ACE_UNUSED_ARG (string);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_WINCE && ! ACE_PSOS */
 }
 
 ACE_INLINE int
@@ -10938,6 +10989,21 @@ ACE_OS::perror (const wchar_t *s)
 }
 
 
+// Here are functions that CE doesn't support at all.
+// Notice that some of them might have UNICODE version.
+ACE_INLINE wchar_t *
+ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
+{
+#if !defined (ACE_HAS_WINCE)
+  ACE_TRACE ("ACE_OS::fgets");
+  ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
+#else
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_UNUSED_ARG (fp);
+#endif /* ACE_HAS_WINCE */
+}
+
 ACE_INLINE int
 ACE_OS::system (const wchar_t *command)
 {
@@ -10997,6 +11063,15 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #   else
   return ::_wgetcwd (buf, size);
 #   endif /* ACE_HAS_WINCE */
+}
+
+ACE_INLINE int
+ACE_OS::mkfifo (const wchar_t *file, mode_t mode)
+{
+  // ACE_TRACE ("ACE_OS::mkfifo");
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (-1);
 }
 # endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
@@ -11756,6 +11831,25 @@ ACE_OS::strenvdup (const char *str)
     return ACE_OS::strdup (str);
 #endif /* ACE_HAS_WINCE */
 }
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strenvdup (const wchar_t *str)
+{
+#if defined (ACE_HAS_WINCE)
+     // WinCE doesn't have environment variables so we just skip it.
+  return ACE_OS::strdup (str);
+#else
+  wchar_t *temp = 0;
+
+  if (str[0] == '$'
+      && (temp = ACE_OS::getenv (&str[1])) != 0)
+    return ACE_OS::strdup (temp);
+  else
+    return ACE_OS::strdup (str);
+#endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 ACE_INLINE
 ACE_OS_WString::~ACE_OS_WString (void)

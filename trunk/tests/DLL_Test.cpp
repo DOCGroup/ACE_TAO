@@ -83,12 +83,12 @@ Hello *get_hello (void)
 typedef Hello *(*TC) (void);
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST ("DLL_Test");
+  ACE_START_TEST (ASYS_TEXT ("DLL_Test"));
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
@@ -98,7 +98,7 @@ main (int argc, char *argv[])
   int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       ASYS_TEXT ("%p\n"),
 		       dll.error ()),
                       -1);
 
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
   TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       ASYS_TEXT ("%p\n"),
 		       dll.error ()),
                       -1);
 

@@ -30,7 +30,7 @@ USELIB("..\ace\aced.lib");
 
 typedef int DATA;
 
-int main (int, char *[])
+int main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Collection_Test"));
 
@@ -48,7 +48,7 @@ int main (int, char *[])
            iterator != unbounded_set.end ();
            ++iterator)
         {
-          ACE_DEBUG ((LM_DEBUG, "%d\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
                       (*iterator)));
         }
     }
@@ -59,7 +59,7 @@ int main (int, char *[])
         {
           DATA *data = 0;
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, "%d\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
                       (*data)));
           iterator.advance ();
         }
@@ -99,7 +99,7 @@ int main (int, char *[])
            i != array1.size ();
            ++i)
         {
-          ACE_DEBUG ((LM_DEBUG, "%d\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
                       array1[i]));
           ACE_ASSERT (array1[i] == 4);
         }
@@ -111,7 +111,7 @@ int main (int, char *[])
         {
           DATA *data = 0;
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, "%d\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
                       (*data)));
           ACE_ASSERT (*data == 4);
           iterator.advance ();

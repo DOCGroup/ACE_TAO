@@ -125,8 +125,8 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 
   if (this->open (reactor, mask, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-                "ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -153,8 +153,9 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 
   if (this->open (thr_mgr, thr_flags, n_threads, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-                "ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE

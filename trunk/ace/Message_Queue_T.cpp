@@ -756,7 +756,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
   if (result < 0)
     return result;
 
-  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::PENDING) 
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::PENDING)
       && this->pending_head_
       && this->pending_tail_)
     {
@@ -783,7 +783,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->pending_tail_ = 0;
     }
 
-  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::LATE) 
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::LATE)
       && this->late_head_
       && this->late_tail_)
     {
@@ -813,7 +813,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->late_tail_ = 0;
     }
 
-  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::BEYOND_LATE) 
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::BEYOND_LATE)
       && this->beyond_late_head_
       && this->beyond_late_tail_)
     {
@@ -1470,8 +1470,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
         case ACE_Dynamic_Message_Strategy::PENDING:
           // if we got here, something is *seriously* wrong with the queue
           ACE_ERROR_RETURN((LM_ERROR,
-                            ASYS_TEXT ("Unexpected message priority status "
-                                       "[%d] (expected LATE or BEYOND_LATE)"),
+                            ASYS_TEXT ("Unexpected message priority status ")
+                            ASYS_TEXT ("[%d] (expected LATE or BEYOND_LATE)"),
                             (int) current_status),
                            -1);
         default:

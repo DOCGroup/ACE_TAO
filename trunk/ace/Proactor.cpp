@@ -179,9 +179,9 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
                                                                                -1);
   if (asynch_timer == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_Proactor_Handle_Timeout_Upcall::timeout:"
-                       "create_asynch_timer failed"),
+                       ASYS_TEXT ("%N:%l:(%P | %t):%p\n"),
+                       ASYS_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
+                       ASYS_TEXT ("create_asynch_timer failed")),
                       -1);
 
   // Post a completion.
@@ -511,8 +511,8 @@ ACE_Proactor::close (void)
   // Close the implementation.
   if (this->implementation ()->close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_Proactor::close:implementation couldnt be closed"),
+                       ASYS_TEXT ("%N:%l:(%P | %t):%p\n"),
+                       ASYS_TEXT ("ACE_Proactor::close:implementation couldnt be closed")),
                       -1);
 
   // Delete the implementation.

@@ -76,7 +76,8 @@ ACE_DLL::open (const char *dll_filename,
     return result;
 
   // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
+  this->handle_ = ACE_OS::dlopen (ASYS_ONLY_MULTIBYTE_STRING (dll_pathname),
+                                  open_mode);
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -117,7 +118,7 @@ ACE_DLL::close (void)
 
 // This method is used on error in an library operation.
 
-char *
+ASYS_TCHAR *
 ACE_DLL::error (void)
 {
   return ACE_OS::dlerror ();

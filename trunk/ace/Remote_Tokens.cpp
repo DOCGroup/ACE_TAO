@@ -102,7 +102,7 @@ ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy (void)
 }
 
 int
-ACE_Remote_Token_Proxy::open (const char *name,
+ACE_Remote_Token_Proxy::open (const ASYS_TCHAR *name,
 			      int ignore_deadlock,
 			      int debug)
 {
@@ -125,7 +125,8 @@ ACE_Remote_Token_Proxy::initiate_connection (void)
   if (token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, "ACE_Remote_Token_Proxy not open.\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("ACE_Remote_Token_Proxy not open.\n")), -1);
     }
 
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
@@ -211,8 +212,8 @@ ACE_Remote_Token_Proxy::acquire (int notify,
 
 	default :
 	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "(%t) %p shadow acquire failed\n",
-			     "ACE_Remote_Token_Proxy"),
+			     ASYS_TEXT ("(%t) %p shadow acquire failed\n"),
+			     ASYS_TEXT ("ACE_Remote_Token_Proxy")),
 			    -1);
 	}
     }
@@ -220,8 +221,8 @@ ACE_Remote_Token_Proxy::acquire (int notify,
   ACE_Token_Request request (token_->type (),
 			     this->type (),
 			     ACE_Token_Request::ACQUIRE,
-			     this->name (),
-			     this->client_id (),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->name ()),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->client_id ()),
 			     options);
 
   request.notify (notify);
@@ -271,8 +272,8 @@ ACE_Remote_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
   ACE_Token_Request request (token_->type (),
 			     this->type (),
 			     ACE_Token_Request::RELEASE,
-			     this->name (),
-			     this->client_id (),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->name ()),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->client_id ()),
 			     ACE_Synch_Options::synch);
 
   return this->request_reply (request,
@@ -293,15 +294,15 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
 	return -1;
       else if (debug_)
 	ACE_DEBUG ((LM_DEBUG,
-		    "(%t) shadow: renew would block. owner %s.\n",
+		    ASYS_TEXT ("(%t) shadow: renew would block. owner %s.\n"),
 		    this->token_->owner_id ()));
     }
 
   ACE_Token_Request request (token_->type (),
 			     this->type (),
 			     ACE_Token_Request::RENEW,
-			     this->name (),
-			     this->client_id (),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->name ()),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->client_id ()),
 			     options);
 
   request.requeue_position (requeue_position);
@@ -316,8 +317,8 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
         ACE_Token_Proxy::release ();
       }
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p error on remote renew, releasing shadow mutex.\n",
-                         "ACE_Remote_Token_Proxy"), -1);
+                         ASYS_TEXT ("%p error on remote renew, releasing shadow mutex.\n"),
+                         ASYS_TEXT ("ACE_Remote_Token_Proxy")), -1);
     }
   else
     {
@@ -337,8 +338,8 @@ ACE_Remote_Token_Proxy::release (ACE_Synch_Options &options)
   ACE_Token_Request request (token_->type (),
 			     this->type (),
 			     ACE_Token_Request::RELEASE,
-			     this->name (),
-			     this->client_id (),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->name ()),
+			     ASYS_ONLY_MULTIBYTE_STRING (this->client_id ()),
 			     options);
 
   int result = this->request_reply (request, options);
@@ -349,7 +350,7 @@ ACE_Remote_Token_Proxy::release (ACE_Synch_Options &options)
   // If race conditions exist such that we are no longer the owner,
   // this release will perform a remove.
   if (ACE_Token_Proxy::release () == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) shadow: release failed\n"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) shadow: release failed\n")));
 
   return result;
 }
@@ -371,7 +372,7 @@ ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
   // ACE_Token_Proxy::token_acquired (vp);
 }
 
-const char*
+const ASYS_TCHAR*
 ACE_Remote_Token_Proxy::owner_id (void)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
@@ -386,8 +387,8 @@ ACE_Remote_Token_Proxy::dump (void) const
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Tokens::dump:\n")
-			" ignore_shadow_deadlock_ = %d\n",
-			ignore_shadow_deadlock_));
+              ASYS_TEXT (" ignore_shadow_deadlock_ = %d\n"),
+              ignore_shadow_deadlock_));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -433,4 +434,3 @@ template class ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>;
 #pragma instantiate ACE_TSS <ACE_SOCK_Stream>
 #pragma instantiate ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

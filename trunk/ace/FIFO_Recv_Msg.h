@@ -32,14 +32,14 @@ public:
   ACE_FIFO_Recv_Msg (void);
   // Default constructor.
 
-  ACE_FIFO_Recv_Msg (const char *rendezvous,
+  ACE_FIFO_Recv_Msg (const ASYS_TCHAR *rendezvous,
                      int flags = O_CREAT | O_RDONLY,
                      int perms = ACE_DEFAULT_FILE_PERMS,
                      int persistent = 1,
                      LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a record-oriented named pipe for reading.
 
-  int open (const char *rendezvous,
+  int open (const ASYS_TCHAR *rendezvous,
             int flags = O_CREAT | O_RDONLY,
             int perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,

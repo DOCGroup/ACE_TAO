@@ -272,7 +272,7 @@ ACE_Stats::print_summary (const u_int precision,
 #if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
                        ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
-                       ASYS_TEXT (strerror (overflow_)));
+                       ASYS_WIDE_STRING (strerror (overflow_)));
 #else
       // WinCE doesn't have strerror ;(
       ACE_OS::fprintf (file,
@@ -542,12 +542,12 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 }
 
 void
-ACE_Throughput_Stats::dump_results (const char* msg,
+ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
                                     ACE_UINT32 sf)
 {
   if (this->samples_count_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s : no data collected\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s : no data collected\n")));
       return;
     }
 
@@ -572,7 +572,7 @@ ACE_Throughput_Stats::dump_results (const char* msg,
   double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s latency: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2)\n",
+              ASYS_TEXT ("%s latency: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2)\n"),
               msg, l_min, l_avg, l_max, l_dev));
 
   double seconds =
@@ -586,7 +586,7 @@ ACE_Throughput_Stats::dump_results (const char* msg,
   double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s throughput: %.2f (events/second)\n",
+              ASYS_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
 
 #if 0

@@ -11,20 +11,20 @@
 ACE_RCSID(ace, Token_Collection, "$Id$")
 
 ACE_Token_Collection::ACE_Token_Collection (int debug,
-					    const char *name)
+					    const ASYS_TCHAR *name)
 : debug_ (debug)
 {
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
 
   if (name == 0)
-    name = "no name";
+    name = ASYS_TEXT ("no name");
 
   int n = ACE_OS::strlen (name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
     n = ACE_MAXTOKENNAMELEN - 1;
 
-  ACE_OS::strncpy (this->name_, (char *) name, n);
+  ACE_OS::strncpy (this->name_, ACE_const_cast (ASYS_TCHAR*, name), n);
   this->name_[ACE_MAXTOKENNAMELEN - 1] = '\0';
 }
 
@@ -44,12 +44,12 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
   ACE_Token_Proxy *temp = new_token.clone ();
 
   if (collection_.bind (name, temp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "bind failed\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("bind failed\n")), -1);
   return 0;
 }
 
 int
-ACE_Token_Collection::extract (const char *token_name, ACE_Token_Proxy *&proxy)
+ACE_Token_Collection::extract (const ASYS_TCHAR *token_name, ACE_Token_Proxy *&proxy)
 {
   ACE_TRACE ("ACE_Token_Collection::extract");
   TOKEN_NAME name (token_name);
@@ -57,7 +57,7 @@ ACE_Token_Collection::extract (const char *token_name, ACE_Token_Proxy *&proxy)
 }
 
 ACE_Token_Proxy *
-ACE_Token_Collection::is_member (const char *token_name)
+ACE_Token_Collection::is_member (const ASYS_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");
   TOKEN_NAME name (token_name);
@@ -106,7 +106,7 @@ ACE_Token_Collection::acquire (int notify,
 }
 
 int
-ACE_Token_Collection::acquire (const char *token_name,
+ACE_Token_Collection::acquire (const ASYS_TCHAR *token_name,
 			       int notify,
 			       void (*sleep_hook)(void *),
 			       ACE_Synch_Options &options)
@@ -125,7 +125,7 @@ ACE_Token_Collection::acquire (const char *token_name,
 
 
 int
-ACE_Token_Collection::tryacquire (const char *token_name,
+ACE_Token_Collection::tryacquire (const ASYS_TCHAR *token_name,
 				  void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
@@ -186,7 +186,7 @@ ACE_Token_Collection::renew (int requeue_position,
 }
 
 int
-ACE_Token_Collection::renew (const char *token_name,
+ACE_Token_Collection::renew (const ASYS_TCHAR *token_name,
 			     int requeue_position,
 			     ACE_Synch_Options &options)
 {
@@ -199,8 +199,8 @@ ACE_Token_Collection::renew (const char *token_name,
 
   // Did we find it?
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p %s\n",
-		       "not in collection ",
+    ACE_ERROR_RETURN ((LM_DEBUG, ASYS_TEXT ("%p %s\n"),
+		       ASYS_TEXT ("not in collection "),
 		       token_name), -1);
   // perform the operation
   return temp->renew (requeue_position, options);
@@ -227,7 +227,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
 }
 
 int
-ACE_Token_Collection::release (const char *token_name,
+ACE_Token_Collection::release (const ASYS_TCHAR *token_name,
 			       ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::release");
@@ -268,7 +268,7 @@ ACE_Token_Collection::clone (void) const
 
 // This method doesn't mean anything for a collection.
 ACE_Tokens *
-ACE_Token_Collection::create_token (const char *)
+ACE_Token_Collection::create_token (const ASYS_TCHAR *)
 {
   ACE_TRACE ("ACE_Token_Collection::create_token");
   return (ACE_Tokens *) 0;
@@ -280,7 +280,7 @@ ACE_Token_Collection::dump (void) const
   ACE_TRACE ("ACE_Token_Collection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Collection::dump:\n")
-			" debug_ = %d\n", debug_));
+              ASYS_TEXT (" debug_ = %d\n"), debug_));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection_\n")));
   collection_.dump ();
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("base:\n")));
@@ -301,4 +301,3 @@ template class ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

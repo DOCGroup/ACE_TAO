@@ -357,7 +357,7 @@ performance_consumer (void * args)
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, "%6u, %6u, %f",
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%6u, %6u, %f"),
               local_count,
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
@@ -415,7 +415,7 @@ performance_producer (void *args)
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, "%6u, %6u, %f, ",
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%6u, %6u, %f, "),
               local_count,
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
@@ -465,35 +465,35 @@ run_performance_test (u_int min_load,
     {
     case BEST:
       ACE_DEBUG ((LM_INFO,
-                  "\n\nenqueued, best static time, best static avg, "
-                  "dequeued, best static time, best static avg, "
-                  "enqueued, best deadline time, best deadline avg, "
-                  "dequeued, best deadline time, best deadline avg, "
-                  "enqueued, best laxity time, best laxity avg, "
-                  "dequeued, best laxity time, best laxity avg\n"));
+                  ASYS_TEXT ("\n\nenqueued, best static time, best static avg, ")
+                  ASYS_TEXT ("dequeued, best static time, best static avg, ")
+                  ASYS_TEXT ("enqueued, best deadline time, best deadline avg, ")
+                  ASYS_TEXT ("dequeued, best deadline time, best deadline avg, ")
+                  ASYS_TEXT ("enqueued, best laxity time, best laxity avg, ")
+                  ASYS_TEXT ("dequeued, best laxity time, best laxity avg\n")));
       break;
     case WORST:
       ACE_DEBUG ((LM_INFO,
-                  "\n\nenqueued, worst static time, worst static avg, "
-                  "dequeued, worst static time, worst static avg, "
-                  "enqueued, worst deadline time, worst deadline avg, "
-                  "dequeued, worst deadline time, worst deadline avg, "
-                  "enqueued, worst laxity time, worst laxity avg, "
-                  "dequeued, worst laxity time, worst laxity avg\n"));
+                  ASYS_TEXT ("\n\nenqueued, worst static time, worst static avg, ")
+                  ASYS_TEXT ("dequeued, worst static time, worst static avg, ")
+                  ASYS_TEXT ("enqueued, worst deadline time, worst deadline avg, ")
+                  ASYS_TEXT ("dequeued, worst deadline time, worst deadline avg, ")
+                  ASYS_TEXT ("enqueued, worst laxity time, worst laxity avg, ")
+                  ASYS_TEXT ("dequeued, worst laxity time, worst laxity avg\n")));
 
       break;
     case RANDOM:
       ACE_DEBUG ((LM_INFO,
-                  "\n\nenqueued, random static time, random static avg, "
-                  "dequeued, random static time, random static avg, "
-                  "enqueued, random deadline time, random deadline avg, "
-                  "dequeued, random deadline time, random deadline avg, "
-                  "enqueued, random laxity time, random laxity avg, "
-                  "dequeued, random laxity time, random laxity avg\n"));
+                  ASYS_TEXT ("\n\nenqueued, random static time, random static avg, ")
+                  ASYS_TEXT ("dequeued, random static time, random static avg, ")
+                  ASYS_TEXT ("enqueued, random deadline time, random deadline avg, ")
+                  ASYS_TEXT ("dequeued, random deadline time, random deadline avg, ")
+                  ASYS_TEXT ("enqueued, random laxity time, random laxity avg, ")
+                  ASYS_TEXT ("dequeued, random laxity time, random laxity avg\n")));
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "unknown test type %d",
+                         ASYS_TEXT ("unknown test type %d"),
                          test_type),
                         -1);
     }
@@ -598,7 +598,7 @@ run_performance_test (u_int min_load,
                 // This should only happen for a *very* large messages
                 // relative to the system's representation size.
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Insufficient range of random numbers"),
+                                   ASYS_TEXT ("Insufficient range of random numbers")),
                                   -1);
               shuffle_index = random_int % load;
 
@@ -617,7 +617,7 @@ run_performance_test (u_int min_load,
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "unknown test type %d",
+                             ASYS_TEXT ("unknown test type %d"),
                              test_type),
                             -1);
         }
@@ -637,7 +637,7 @@ run_performance_test (u_int min_load,
 
       // Add a comma delimiter for most recent outputs.
       ACE_DEBUG ((LM_INFO,
-                  ", "));
+                  ASYS_TEXT (", ")));
 
       // Run the performance test producer and consumer on the
       // deadline queue.
@@ -648,7 +648,7 @@ run_performance_test (u_int min_load,
 
       // Add a comma delimiter for most recent outputs.
       ACE_DEBUG ((LM_INFO,
-                  ", "));
+                  ASYS_TEXT (", ")));
 
       // Run the performance test producer and consumer on the laxity
       // queue.
@@ -659,7 +659,7 @@ run_performance_test (u_int min_load,
 
       // Move to the next line of output.
       ACE_DEBUG ((LM_INFO,
-                  "\n"));
+                  ASYS_TEXT ("\n")));
 
       delete [] time_offsets;
 
@@ -693,15 +693,15 @@ main (int, ASYS_TCHAR *[])
   {
     if (ACE_OS::last_error () == EPERM)
       ACE_DEBUG ((LM_MAX,
-                  "user is not superuser, "
-                  "so remain in time-sharing class\n"));
+                  ASYS_TEXT ("user is not superuser, ")
+                  ASYS_TEXT ("so remain in time-sharing class\n")));
     else if (ACE_OS::last_error () == ENOTSUP)
       ACE_DEBUG ((LM_MAX,
-                  "process scope scheduling is not available, "
-                  "so remain in time-sharing class\n"));
+                  ASYS_TEXT ("process scope scheduling is not available, ")
+                  ASYS_TEXT ("so remain in time-sharing class\n")));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%n: ACE_OS::sched_params failed\n%a"),
+                         ASYS_TEXT ("%n: ACE_OS::sched_params failed\n%a")),
                         -1);
   }
 

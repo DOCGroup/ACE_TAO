@@ -412,7 +412,7 @@
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #   define ASYS_TCHAR wchar_t
-#   define ASYS_TEXT(STRING)   _TEXT(STRING)
+#   define ASYS_TEXT(STRING)   __TEXT (STRING)
 # else
 #   define ASYS_TCHAR char
 #   define ASYS_TEXT(STRING)   STRING
@@ -5139,7 +5139,7 @@ public:
   static int dlclose (ACE_SHLIB_HANDLE handle);
   // WinCE only supports UNICODE, so we don't need these functions.
 # if !defined (ACE_HAS_WINCE)
-  static char *dlerror (void);
+  static ASYS_TCHAR *dlerror (void);
   static ACE_SHLIB_HANDLE dlopen (const char *filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
@@ -5380,12 +5380,12 @@ public:
   static char *ctime_r (const time_t *clock,
                         char *buf,
                         int buflen);
-# else
-  static wchar_t *ctime (const time_t *t);
+# endif /* !ACE_HAS_WINCE */
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   static wchar_t *ctime_r (const time_t *clock,
                            wchar_t *buf,
                            int buflen);
-# endif /* !ACE_HAS_WINCE */
+# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
   static size_t strftime (char *s,
                           size_t maxsize,
                           const char *format,
@@ -6024,6 +6024,9 @@ public:
                           const wchar_t *t);
   static int strcmp (const wchar_t *s,
                      const wchar_t *t);
+  static size_t strspn (const wchar_t *string,
+                        const wchar_t *charset);
+  static wchar_t *strenvdup (const wchar_t *str);
 # endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
@@ -6085,6 +6088,11 @@ public:
   static long strtol (const wchar_t *s,
                       wchar_t **ptr,
                       int base);
+  static u_long strtoul (const wchar_t *s,
+                         wchar_t **ptr,
+                         int base);
+  static double strtod (const wchar_t *s,
+                        wchar_t **endptr);
   static int ace_isspace (wchar_t c);
 
 #   if defined (ACE_WIN32)
@@ -6109,9 +6117,9 @@ public:
 #     endif /* 0 */
   // the following three are newly added for CE.
   // but they can also be use on Win32.
-  //   static char *fgets (wchar_t *buf,
-  //                       int size,
-  //                       FILE *fp);
+  static wchar_t *fgets (wchar_t *buf,
+                         int size,
+                         FILE *fp);
   static int fprintf (FILE *fp,
                       const wchar_t *format,
                       ...);
@@ -6131,6 +6139,7 @@ public:
                    struct stat *);
   static int truncate (const wchar_t *filename,
                        off_t length);
+  static int putenv (const wchar_t *str);
   static wchar_t *getenv (const wchar_t *symbol);
   static int system (const wchar_t *s);
   static int hostname (wchar_t *name,
@@ -6148,6 +6157,8 @@ public:
   static int chdir (const wchar_t *path);
   static wchar_t *getcwd (wchar_t *,
                           size_t);
+  static int mkfifo (const wchar_t *file,
+                          mode_t mode = ACE_DEFAULT_FILE_PERMS);
 #   endif /* ACE_WIN32 */
 # endif /* ACE_HAS_UNICODE */
 

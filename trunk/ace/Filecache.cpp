@@ -645,7 +645,7 @@ int
 ACE_Filecache_Object::error_i (int error_value, const char *s)
 {
   s = s;
-  ACE_ERROR ((LM_ERROR, "%p.\n", s));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p.\n"), s));
   this->error_ = error_value;
   return error_value;
 }

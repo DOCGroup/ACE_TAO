@@ -144,8 +144,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tre
   else if (! (x->left()))
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("\nerror: x->left () is a null pointer in "
-                           "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
+                ASYS_TEXT ("\nerror: x->left () is a null pointer in ")
+                ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   else
     {
       ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
@@ -183,8 +183,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree
   else if (! (x->right()))
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("\nerror: x->right () is a null pointer "
-                           "in ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                ASYS_TEXT ("\nerror: x->right () is a null pointer ")
+                ASYS_TEXT ("in ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   else
     {
       ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
@@ -384,8 +384,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_N
           // If we got here, something is drastically wrong!
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("\nerror: parent's parent is null in "
-                                 "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rebalance\n")));
+                      ASYS_TEXT ("\nerror: parent's parent is null in ")
+                      ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rebalance\n")));
           return;
         }
 
@@ -582,8 +582,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
             // If there is already a right subtree, complain.
             ACE_ERROR_RETURN ((LM_ERROR,
                                ASYS_TEXT ("%p\n"),
-                               ASYS_TEXT ("\nright subtree already present in "
-                                          "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                               ASYS_TEXT ("\nright subtree already present in ")
+                               ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                               0);
           else
             {
@@ -614,8 +614,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
             // If there is already a left subtree, complain.
             ACE_ERROR_RETURN ((LM_ERROR,
                                ASYS_TEXT ("%p\n"),
-                               ASYS_TEXT ("\nleft subtree already present in "
-                                          "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                               ASYS_TEXT ("\nleft subtree already present in ")
+                               ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                               0);
           else
             {
@@ -693,8 +693,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
               // If there is already a right subtree, complain.
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ASYS_TEXT ("%p\n"),
-                                 ASYS_TEXT ("\nright subtree already present in "
-                                            "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                                 ASYS_TEXT ("\nright subtree already present in ")
+                                 ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                                 -1);
             }
           else
@@ -725,8 +725,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
             // If there is already a left subtree, complain.
             ACE_ERROR_RETURN ((LM_ERROR,
                                ASYS_TEXT ("%p\n"),
-                               ASYS_TEXT ("\nleft subtree already present in "
-                                          "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                               ASYS_TEXT ("\nleft subtree already present in ")
+                               ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                               -1);
           else
             {

@@ -98,8 +98,8 @@ ACE_Log_Record::round_up (void)
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
-  int len = (sizeof *this - MAXLOGMSGLEN)
-    + (ACE_OS::strlen (this->msg_data_) + 1);
+  int len = (sizeof (*this) - sizeof (this->msg_data_))
+    + (sizeof (ASYS_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
   this->length_ = 1 + ((len + ACE_Log_Record::ALIGN_WORDB - 1)
