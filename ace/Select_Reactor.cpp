@@ -112,13 +112,11 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
       errno = ERANGE;
       return -1;
     }
-#if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   // Increase the number of handles if <size> is greater than the
   // current limit.
   if (size < (size_t) ACE::max_handles ())
     return ACE::set_handle_limit (size);
   else
-#endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */
     return 0;
 }
 

@@ -6,6 +6,9 @@ Compiling
 
 Makefiles are provided. Use make to compile.
 
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
 server:
 -------
 
@@ -33,15 +36,12 @@ client:
 <port_num> is the port number of the high priority servant. The low
 priority servant is assumed to be at (port_num+1).
 
-
 <server_hostname> is the hostname of the server.
-
 
 Based on the server_hostname and the port_num, the client constructs
 the IOR's for the high priority servant and the low priority servant.
 
 <num_calls> is the number of CORBA twoway calls to be made
-
 
 <num_threads> is the total number of concurrent clients to be
 created. One of these clients will be a high priority client (and thus
@@ -50,7 +50,6 @@ low priority.
 
 The high priority client makes requests at 20Hz, and the low priority
 clients make requests at 10Hz.
-
 
 Results
 -------

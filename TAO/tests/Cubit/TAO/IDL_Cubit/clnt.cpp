@@ -20,7 +20,7 @@
 #include "ace/Profile_Timer.h"
 #include "clnt.h"
 
-// constructor
+// Constructor.
 
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ ("factory"),
@@ -38,7 +38,8 @@ Cubit_Client::Cubit_Client (void)
 {
 }
 
-// simple function that returns the substraction of 117 from the parameter.
+// Simple function that returns the substraction of 117 from the
+// parameter.
 
 int
 Cubit_Client::func (u_int i)
@@ -489,7 +490,7 @@ Cubit_Client::run (void)
 	  elapsed_time.user_time /= this->call_count_;
 	  elapsed_time.system_time /= this->call_count_;
 
-	  tmp = 1000/(elapsed_time.real_time + elapsed_time.user_time + elapsed_time.system_time);
+	  tmp = 1000 / (elapsed_time.real_time + elapsed_time.user_time + elapsed_time.system_time);
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "cube average call:\n\treal_time\t= %0.06f ms, \n\t"
@@ -597,11 +598,9 @@ Cubit_Client::init (int argc, char **argv)
 
   // Parse command line and verify parameters.
   if (this->parse_args () == -1)
-    {
-      return 1;
-    }
+    return -1;
 
-  // retrieve the ORB
+  // Retrieve the ORB.
   this->orb_ptr_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
@@ -610,14 +609,14 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("ORB initialization");
-      return 1;
+      return -1;
     }
 
   if (this->cubit_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%s: must specify an object reference using -k <key>\n",
 		       this->argv_[0]),
-		      1);
+		      -1);
 
   // Retrieve a factory objref.
   this->objref_ = Cubit_Factory::_bind (this->hostname_,
@@ -628,7 +627,7 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("Cubit_Factory::_bind");
-      return 1;
+      return -1;
     }
 
   if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
@@ -637,7 +636,7 @@ Cubit_Client::init (int argc, char **argv)
                        this->cubit_factory_key_,
                        this->hostname_,
                        this->portnum_),
-                      1);
+                      -1);
 
   // Narrow the CORBA::Object reference to the stub object, checking
   // the type along the way using _is_a.  There is really no need to
@@ -649,7 +648,7 @@ Cubit_Client::init (int argc, char **argv)
   if (this->factory_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to narrow object reference to a Cubit_Factory_ptr.\n"),
-		      1);
+		      -1);
 
   // Now retrieve the Cubit obj ref corresponding to the key.
   this->cubit_ = this->factory_->make_cubit (this->cubit_key_, this->env_);
@@ -657,13 +656,13 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("string2object");
-      return 1;
+      return -1;
     }
 
   if (CORBA::is_nil (this->cubit_))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "null cubit objref returned by factory\n"),
-                      1);
+                      -1);
 
   return 0;
 }
@@ -675,7 +674,7 @@ main (int argc, char **argv)
 {
   Cubit_Client cubit_client;
  
-  if (cubit_client.init (argc, argv) != 0)
+  if (cubit_client.init (argc, argv) == -1)
     return 1;
   else
     return cubit_client.run ();
