@@ -1,3 +1,9 @@
+Tue Oct 14 22:44:43 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/simple_client.cpp: 
+	* examples/handcrafted/Hello/client.cpp: Added the missing streams
+	  header file.
+
 Tue Oct 14 17:18:43 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/Makefile.alt: added alternative (to mpc) means of 

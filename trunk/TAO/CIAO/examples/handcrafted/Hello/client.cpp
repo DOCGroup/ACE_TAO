@@ -2,6 +2,7 @@
 
 #include "helloC.h"
 #include "ace/Read_Buffer.h"
+#include "ace/streams.h"
 
 int
 invoke (CORBA::Object_ptr obj,
