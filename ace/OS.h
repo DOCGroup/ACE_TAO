@@ -1852,26 +1852,16 @@ struct stat
 #       define ACE_THR_PRI_OTHER_DEF (ACE_THR_PRI_OTHER_MIN + (ACE_THR_PRI_OTHER_MAX - ACE_THR_PRI_OTHER_MIN)/2)
 #     endif
 
-#     if !defined (ACE_HAS_TID_T)
-typedef pthread_t tid_t;
-#     endif /* ACE_HAS_TID_T */
-
-// Typedefs to help compatibility with Windows NT and Pthreads.
-#     if defined (ACE_HAS_PTHREAD_T)
-typedef pthread_t ACE_hthread_t;
-#     else /* ACE_HAS_PTHREAD_T */
-typedef tid_t ACE_hthread_t;
-#     endif /* ACE_HAS_PTHREAD_T */
-
-// Make it easier to write portable thread code.
-typedef pthread_t ACE_thread_t;
+      // Typedefs to help compatibility with Windows NT and Pthreads.
+      typedef pthread_t ACE_hthread_t;
+      typedef pthread_t ACE_thread_t;
 
 #     if defined (ACE_HAS_TSS_EMULATION)
-typedef pthread_key_t ACE_OS_thread_key_t;
-typedef u_long ACE_thread_key_t;
-#else
-typedef pthread_key_t ACE_thread_key_t;
-#     endif /* ACE_HAS_PTHREAD_T */
+        typedef pthread_key_t ACE_OS_thread_key_t;
+        typedef u_long ACE_thread_key_t;
+#     else  /* ! ACE_HAS_TSS_EMULATION */
+        typedef pthread_key_t ACE_thread_key_t;
+#     endif /* ! ACE_HAS_TSS_EMULATION */
 
 #     if !defined (ACE_LACKS_COND_T)
  typedef pthread_mutex_t ACE_mutex_t;
@@ -5513,7 +5503,7 @@ public:
   // This is used to map an actor's id into a KnCap for killing and
   // waiting actors.
 #endif /* CHORUS */
-  
+
 # if defined (ACE_WIN32)
   static int socket_initialized_;
   // Keeps track of whether we've already initialized WinSock...
