@@ -7427,12 +7427,11 @@ ACE_OS::execvp (const char *file, char *const argv[])
 #endif /* ACE_WIN32 */
 }
 
-// @@ WinCE progress.  #error "here"
-
 ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 {
   // ACE_TRACE ("ACE_OS::fdopen");
+#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -7457,6 +7456,12 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 #else
   ACE_OSCALL_RETURN (::fdopen (handle, mode), FILE *, 0);
 #endif /* ACE_WIN32 */
+#else  /* ! ACE_HAS_WINCE */
+  // @@ this function has to be implemented???
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -7534,7 +7539,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::dup (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::dup");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_HANDLE new_fd;
   if (::DuplicateHandle(::GetCurrentProcess (),
                         handle,
@@ -7550,6 +7555,9 @@ ACE_OS::dup (ACE_HANDLE handle)
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 */
@@ -7611,7 +7619,7 @@ ACE_OS::gethrtime (void)
 //   const ACE_Time_Value now = ACE_OS::gettimeofday ();
 //   return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
 // # endif /* ACE_HAS_PENTIUM || __alpha */
-#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
+#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_WINCE)
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
   // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
@@ -7852,7 +7860,7 @@ ACE_OS::sigaction (int signum,
   // ACE_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
     return 0;
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   struct sigaction sa;
 
   if (osa == 0)
@@ -7860,7 +7868,10 @@ ACE_OS::sigaction (int signum,
 
   osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (CHORUS)
+#elif defined (CHORUS) || defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (signum);
+  ACE_UNUSED_ARG (nsa);
+  ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined(ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sigaction (signum, (struct sigaction*) nsa, osa), int, -1);
@@ -7873,11 +7884,17 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   // ACE_TRACE ("ACE_OS::getcwd");
+#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
   return ::_getcwd (buf, size);
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_WIN32 */
+#else /* ! ACE_HAS_WINCE */
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -7979,6 +7996,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
 ACE_INLINE int
 ACE_OS::mkdir (const char *path, mode_t mode)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::mkdir");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
@@ -7990,13 +8008,25 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* VXWORKS */
+#else
+  // @@ WinCE doesn't have the concept of environment variables.
+  ACE_UNUSED_ARG (path);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
 {
   // ACE_TRACE ("ACE_OS::getenv");
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
+#else
+  // @@ WinCE doesn't have the concept of environment variables.
+  ACE_UNUSED_ARG (symbol);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -8004,7 +8034,13 @@ ACE_OS::putenv (const char *string)
 {
   // ACE_TRACE ("ACE_OS::putenv");
   // VxWorks declares ::putenv with a non-const arg.
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
+#else
+  // @@ WinCE doesn't have the concept of environment variables.
+  ACE_UNUSED_ARG (string);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE
@@ -8240,9 +8276,15 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::hostname");
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
+#else
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (maxnamelen);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE ACE_HANDLE
@@ -8309,7 +8351,13 @@ ACE_INLINE int
 ACE_OS::unlink (const wchar_t *path)
 {
   // ACE_TRACE ("ACE_OS::unlink");
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
+#else
+  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
+                        int, -1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE ACE_SHLIB_HANDLE
@@ -8324,61 +8372,109 @@ ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
 ACE_INLINE wchar_t *
 ACE_OS::getenv (const wchar_t *symbol)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::getenv");
   ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+#else
+  ACE_UNUSED_ARG (symbol);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
+#if !defined (ACE_HAS_WINCE) 
   // ACE_TRACE ("ACE_OS::access");
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
+#else
+  // @@ There should be a Win32 API that can do this.
+  ACE_UNUSED_ARG (path);
+  ACE_UNUSED_ARG (amode);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);
+#else
+  // @@ Should be able to emulate this using Win32 APIS.
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::stat (const wchar_t *file, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::stat");
+#if !defined (ACE_HAS_WINCE)
 #if defined (__BORLANDC__)
   ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
 #else
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
 #endif /* __BORLANDC__ */
+#else
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (stp);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::system (const wchar_t *command)
 {
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wsystem (command), int, -1);
+#else
+  // @@ Should be able to emulate this using Win32 APIS.
+  ACE_UNUSED_ARG (command);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::mktemp");
+#if !defined (ACE_HAS_WINCE)
   return ::_wmktemp (s);
+#else
+  // @@ Should be able to emulate this using Win32 APIS.
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::mkdir");
+#if !defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (mode);
 
   ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
+#else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, NULL),
+                                          ace_result_),
+                        int, -1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::chdir");
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
+#else
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINCE */
 }
 
 #endif /* ACE_WIN32 */

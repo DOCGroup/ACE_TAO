@@ -557,6 +557,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 
 // The following *printf functions aren't inline because
 // they use varargs.
+#if !defined (ACE_HAS_WINCE)
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
@@ -592,6 +593,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
+#endif /* ! ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_UNICODE)
 #if defined (ACE_WIN32)
@@ -841,7 +843,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       return -1;
     }
 
-#elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
       sched_params.quantum () != ACE_Time_Value::zero)
@@ -2304,6 +2306,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
+#if !defined (ACE_HAS_WINCE)
       (void) ::DuplicateHandle (::GetCurrentProcess (),
                                 cwin_thread->m_hThread,
                                 ::GetCurrentProcess (),
@@ -2311,7 +2314,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 0,
                                 TRUE,
                                 DUPLICATE_SAME_ACCESS);
-
+#endif /* ! ACE_HAS_WINCE */
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
@@ -2929,6 +2932,8 @@ ACE_OS::socket_fini (void)
 #endif /* ACE_WIN32 */
   return 0;
 }
+
+////     #error "here"
 
 #if defined (ACE_LACKS_SYS_NERR)
 int sys_nerr = ERRMAX + 1;

@@ -81,6 +81,7 @@
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_EXEC
+#define ACE_LACKS_MKTEMP
 
 // temporary workspace
 class ostream;                  // Fake a ostream for now.
@@ -88,5 +89,9 @@ class ostream;                  // Fake a ostream for now.
 #define  FILE  void             // Try to map FILE* to HANDLE
 typedef long off_t;
 #define stderr 0
+
+#define SEEK_SET FILE_BEGIN
+#define SEEK_CUR FILE_CURRENT
+#define SEEK_END FILE_END
 
 #endif /* ACE_CONFIG_WINCE_H */
