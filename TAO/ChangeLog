@@ -1,3 +1,13 @@
+Wed Jan  5 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueFactory.{h,cpp,inl}:
+        * tao/Valuetype/ValueFactory_Map.{h,cpp,inl}:
+        * tao/Valuetype/Value_VarOut_T.{h,cpp,inl}:
+          Removed inl file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_client.{h,cpp,i}:
