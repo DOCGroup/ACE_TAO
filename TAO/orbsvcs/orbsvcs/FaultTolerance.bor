@@ -40,7 +40,7 @@ CPPDIR = .;FaultTolerance
 IDLDIR = .
 
 INCDIR_NAME = orbsvcs\FaultTolerance
-INCLUDES = FaultTolerance\*.h FaultTolerance\*.i
+INCLUDES = FaultTolerance\*.h FaultTolerance\*.inl
 
 LIBFILES = \
 	$(ACE_LIB) \
