@@ -15,7 +15,7 @@
 extern int buffer;
 extern ACE_Svc_Export int synch_count;
 
-#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> MT_INT;
 
@@ -38,7 +38,7 @@ private:
   int thr_id_;
   static MT_INT thread_id_;
 };
-#endif /* ACE_HAS_PTHREADS || VXWORKS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 
 class ACE_Svc_Export Benchmark : public ACE_Service_Object
   // TITLE
