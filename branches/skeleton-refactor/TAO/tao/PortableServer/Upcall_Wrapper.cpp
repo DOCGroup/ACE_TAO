@@ -22,7 +22,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 
-bool
+void
 TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              TAO::Argument * args[],
                              size_t nargs,
@@ -34,12 +34,15 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              , CORBA::TypeCode_ptr * exceptions
                              , size_t nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+                             ACE_ENV_ARG_DECL
                              )
 {
-  if (!this->pre_upcall (server_request.incoming (),
-                         args,
-                         nargs))
-    return false;
+  this->pre_upcall (server_request.incoming (),
+                    args,
+                    nargs
+                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -63,19 +66,33 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Don't bother performing the upcall if an interceptor caused a
+      // location forward.
       if (!interceptor_adapter.location_forwarded ())
         {
 #endif /* TAO_HAS_INTERCEPTORS */
 
           // The actual upcall.
           command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK_RETURN (false);
+          TAO_INTERCEPTOR_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
         }
 
+      // Do not execute the send_reply() interception point if an
+      // interceptor caused a location forward.  The send_other()
+      // interception point should already have been executed by the
+      // ServerRequestInterceptor_Adapter object.
+      //
+      // It should actually be safe to call this interception point,
+      // regardless, since the interceptor flow stack should have been
+      // emptied by the send_other() interception point.  Note that
+      // we'd still need to avoid resetting the reply status to
+      // SUCCESSFUL, however.
       if (!interceptor_adapter.location_forwarded ())
         {
+          // No location forward by interceptors and successful upcall.
+
           request_info.reply_status (PortableInterceptor::SUCCESSFUL);
           interceptor_adapter.send_reply (&request_info
                                           ACE_ENV_ARG_PARAMETER);
@@ -119,22 +136,34 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-  server_request.init_reply ();
+  if (server_request.response_expected ()
+      && !server_request.sync_with_server ())
+    {
+      server_request.init_reply ();
+    }
 
-  return 
-    TAO_INTERCEPTOR (interceptor_adapter.location_forwarded () ||)
-    this->post_upcall (server_request.outgoing (),
-                       args,
-                       nargs);
+#if TAO_HAS_INTERCEPTORS == 1
+  // Don't bother marshaling inout/out/return values if an interceptor
+  // caused a location forward.
+  if (!interceptor_adapter.location_forwarded ())
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+    {
+      this->post_upcall (server_request.outgoing (),
+                         args,
+                         nargs
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
-bool
+void
 TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
                                  TAO::Argument ** args,
-                                 size_t nargs)
+                                 size_t nargs
+                                 ACE_ENV_ARG_DECL)
 {
   // Demarshal the operation "in" and "inout" arguments, if any.
 
@@ -147,25 +176,22 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
   TAO::Argument ** const begin = args + 1;  // Skip the return value.
   TAO::Argument ** const end   = args + nargs;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   for (TAO::Argument ** i = begin; i != end; ++i)
     {
       if (!(*i)->demarshal (cdr))
         {
           TAO_InputCDR::throw_skel_exception (errno
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+          ACE_CHECK;
         }
     }
-
-  return true;
 }
 
-bool
+void
 TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
                                   TAO::Argument ** args,
-                                  size_t nargs)
+                                  size_t nargs
+                                  ACE_ENV_ARG_DECL)
 {
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
@@ -173,17 +199,13 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
   TAO::Argument ** const begin = args;
   TAO::Argument ** const end   = args + nargs;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   for (TAO::Argument ** i = begin; i != end; ++i)
     {
       if (!(*i)->marshal (cdr))
         {
           TAO_OutputCDR::throw_skel_exception (errno
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+          ACE_CHECK;
         }
     }
-
-  return true;
 }

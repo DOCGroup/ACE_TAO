@@ -51,10 +51,6 @@ namespace TAO
   {
   public:
 
-    /// Constructor.
-    Upcall_Wrapper ();
-
-
     /**
      * @note The TAO::Argument corresponding to the return value is
      *       always the first element in the array, regardless of
@@ -79,7 +75,7 @@ namespace TAO
      * @param nexceptions    The number of exceptions in the operation
      *                       user exception array.
      */
-    bool upcall (TAO_ServerRequest & server_request,
+    void upcall (TAO_ServerRequest & server_request,
                  TAO::Argument * args[],
                  size_t nargs,
                  TAO::Upcall_Command & command
@@ -90,7 +86,8 @@ namespace TAO
                  , CORBA::TypeCode_ptr * exceptions
                  , size_t nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                 );
+
+                 ACE_ENV_ARG_DECL);
 
   private:
 
@@ -100,18 +97,20 @@ namespace TAO
      * Perform pre-upcall operations, including operation @c IN and
      * @c INOUT argument demarshaling.
      */
-    bool pre_upcall (TAO_InputCDR & cdr,
+    void pre_upcall (TAO_InputCDR & cdr,
                      TAO::Argument ** args,
-                     size_t nargs);
+                     size_t nargs
+                     ACE_ENV_ARG_DECL);
 
     /// Perform post-upcall operations.
     /**
      * Perform post-upcall operations, including operation @c INOUT
      * and @c OUT argument marshaling.
      */
-    bool post_upcall (TAO_OutputCDR & cdr,
+    void post_upcall (TAO_OutputCDR & cdr,
                       TAO::Argument ** args,
-                      size_t nargs);
+                      size_t nargs
+                      ACE_ENV_ARG_DECL);
 
   };
 
