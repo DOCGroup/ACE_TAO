@@ -3,9 +3,9 @@
 #include "quoter_server.h"
 
 Quoter_Server::Quoter_Server (void)
-  :num_of_objs_ (1),
-   use_naming_service_ (1),
-   ior_output_file_ (0)
+  : num_of_objs_ (1),
+    use_naming_service_ (1),
+    ior_output_file_ (0)
 {
 }
 
@@ -56,8 +56,8 @@ Quoter_Server::init (int argc,
                     char** argv,
                     CORBA::Environment& env)
 {
-  // Call the init of TAO_ORB_Manager to create a child POA
-  // under the root POA.
+  // Call the init of TAO_ORB_Manager to create a child POA under the
+  // root POA.
   this->init_child_poa (argc,
                         argv,
                         "child_poa",
@@ -91,8 +91,8 @@ Quoter_Server::init (int argc,
   return 0;
 }
 
-// Initialisation of Naming Service and register IDL_Quoter Context and
-// Quoter_factory object.
+// Initialisation of Naming Service and register IDL_Quoter Context
+// and Quoter_factory object.
 
 int
 Quoter_Server::init_naming_service (CORBA::Environment& env)
@@ -104,10 +104,12 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
 
     CORBA::Object_var naming_obj = 
       orb_ptr->resolve_initial_references ("NameService");
+
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
          -1);
+
     CosNaming::NamingContext_var naming_context = 
       CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
@@ -119,6 +121,7 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
     CosNaming::Name quoter_context_name (1);
     quoter_context_name.length (1);
     quoter_context_name[0].id = CORBA::string_dup ("IDL_Quoter");
+
     this->quoter_context_ =
       naming_context->bind_new_context (quoter_context_name,
                                     env);
@@ -159,9 +162,6 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
   TAO_ENDTRY;
   
   return 0;
-
-  
-
 }
 
 int
@@ -196,9 +196,9 @@ Quoter_Server::~Quoter_Server (void)
       this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       // Destroy all the POAs.
-//      this->root_poa_->destroy (CORBA::B_TRUE,
-//                                CORBA::B_TRUE,
-//                                TAO_TRY_ENV);
+      //      this->root_poa_->destroy (CORBA::B_TRUE,
+      //                                CORBA::B_TRUE,
+      //                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
@@ -220,15 +220,15 @@ main (int argc, char *argv[])
   Quoter_Server quoter_server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t IDL_Quoter:SERVER \n \n"));
+              "\n\tIDL_Quoter:SERVER \n \n"));
   TAO_TRY
     {
       if (quoter_server.init (argc,argv,TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-         quoter_server.run (TAO_TRY_ENV);
-         TAO_CHECK_ENV;
+          quoter_server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
   TAO_CATCH (CORBA::SystemException, sysex)
