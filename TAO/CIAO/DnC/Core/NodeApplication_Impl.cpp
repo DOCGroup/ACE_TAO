@@ -26,6 +26,7 @@ finishLaunch (const Deployment::Connections & providedReference,
 }
 
 void
+CIAO::NodeApplication_Impl::
 start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::StartError))
