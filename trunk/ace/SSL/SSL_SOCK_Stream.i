@@ -3,8 +3,6 @@
 
 // SOCK_Stream.i
 
-#if defined (ACE_HAS_SSL)
-
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
@@ -284,4 +282,3 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 
 
 
-#endif /* ACE_HAS_SSL */

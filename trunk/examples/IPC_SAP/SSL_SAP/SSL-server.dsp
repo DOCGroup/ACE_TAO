@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\SSL_server"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\SSLIOP" /I "..\..\..\OpenSSL\openssl-0.9.5a\inc32" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "ACE_HAS_SSL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /X /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -47,7 +47,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ACE_SSLd.lib aced.lib libeay32.lib ssleay32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL" /libpath:"..\..\..\OpenSSL\openssl-0.9.5a\out32dll"
+# ADD LINK32 ACE_SSLd.lib aced.lib libeay32.lib ssleay32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
 # Begin Target
 
 # Name "SSL_server - Win32 Debug"

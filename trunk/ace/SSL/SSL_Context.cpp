@@ -19,8 +19,6 @@
 
 #include "ace/SSL/SSL_Context.h"
 
-#if defined (ACE_HAS_SSL)
-
 #include "ace/SSL/sslconf.h"
 
 #if !defined(__ACE_INLINE__)
@@ -388,5 +386,3 @@ template class ACE_Singleton<ACE_SSL_Context,ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<ACE_SSL_Context,ACE_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif	/* ACE_HAS_SSL */
