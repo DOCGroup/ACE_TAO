@@ -130,14 +130,15 @@ test_i::start_test (CORBA::ULong iterations
 }
 
 void
-test_i::end_test (ACE_ENV_SINGLE_ARG_DECL)
+test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->test_end_ =
     ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nTotal invocations expected / received / missed = %d / %d / %d\n",
+              "\nTotal invocations expected / received / missed = "
+              "%d / %d / %d\n",
               this->iterations_,
               this->number_of_invocations_received_,
               this->iterations_ - this->number_of_invocations_received_));
