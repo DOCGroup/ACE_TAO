@@ -120,7 +120,8 @@ TAO_CORBA_IRObject_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 18,
       HASH_VALUE_RANGE = 14,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 10
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -975,7 +976,8 @@ TAO_CORBA_Contained_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 20
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -1014,7 +1016,7 @@ TAO_CORBA_Contained_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -4088,7 +4090,8 @@ TAO_CORBA_Container_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 6,
       MAX_HASH_VALUE = 38,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 2
+      DUPLICATES = 2,
+      WORDLIST_SIZE = 28
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -4133,7 +4136,7 @@ TAO_CORBA_Container_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -9694,7 +9697,8 @@ TAO_CORBA_IDLType_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 18,
       HASH_VALUE_RANGE = 14,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 11
     };
 
   static const class TAO_operation_db_entry  wordlist[] =

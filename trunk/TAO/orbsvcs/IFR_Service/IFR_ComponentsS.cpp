@@ -119,7 +119,8 @@ TAO_IR_ComponentRepository_Perfect_Hash_OpTable::lookup (const char *str, unsign
       MIN_HASH_VALUE = 8,
       MAX_HASH_VALUE = 65,
       HASH_VALUE_RANGE = 58,
-      DUPLICATES = 2
+      DUPLICATES = 2,
+      WORDLIST_SIZE = 40
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -176,7 +177,7 @@ TAO_IR_ComponentRepository_Perfect_Hash_OpTable::lookup (const char *str, unsign
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -1224,7 +1225,8 @@ TAO_IR_ProvidesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 21
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -1264,7 +1266,7 @@ TAO_IR_ProvidesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -1902,7 +1904,8 @@ TAO_IR_UsesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -1943,7 +1946,7 @@ TAO_IR_UsesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -2821,7 +2824,8 @@ TAO_IR_EventDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -2862,7 +2866,7 @@ TAO_IR_EventDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -3764,7 +3768,8 @@ TAO_IR_EmitsDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -3805,7 +3810,7 @@ TAO_IR_EmitsDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -4206,7 +4211,8 @@ TAO_IR_PublishesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -4247,7 +4253,7 @@ TAO_IR_PublishesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -4648,7 +4654,8 @@ TAO_IR_ConsumesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -4689,7 +4696,7 @@ TAO_IR_ConsumesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -5090,7 +5097,8 @@ TAO_IR_ComponentDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 107,
       HASH_VALUE_RANGE = 104,
-      DUPLICATES = 14
+      DUPLICATES = 14,
+      WORDLIST_SIZE = 58
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -5172,7 +5180,7 @@ TAO_IR_ComponentDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -9283,7 +9291,8 @@ TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 31,
       HASH_VALUE_RANGE = 28,
-      DUPLICATES = 4
+      DUPLICATES = 4,
+      WORDLIST_SIZE = 22
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -9324,7 +9333,7 @@ TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -10226,7 +10235,8 @@ TAO_IR_FactoryDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 10
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 31
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -10728,7 +10738,8 @@ TAO_IR_FinderDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 10
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 31
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -11230,7 +11241,8 @@ TAO_IR_HomeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 90,
       HASH_VALUE_RANGE = 87,
-      DUPLICATES = 9
+      DUPLICATES = 9,
+      WORDLIST_SIZE = 53
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -11306,7 +11318,7 @@ TAO_IR_HomeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
