@@ -1,0 +1,95 @@
+project(Abandoned): aceexe {
+  Source_Files {
+    Abandoned.cpp
+  }
+}
+
+project(APC): aceexe {                                
+  Source_Files {
+    APC.cpp
+  }
+}
+
+project(Console_Input): aceexe {                                
+  Source_Files {
+    Console_Input.cpp
+  }
+}
+
+project(Directory_Changes): aceexe {                                
+  Source_Files {
+    Directory_Changes.cpp
+  }
+}
+
+project(Exceptions): aceexe {                                
+  Source_Files {
+    Exceptions.cpp
+  }
+}
+
+project(Handle_Close): aceexe {                                
+  Source_Files {
+    Handle_Close.cpp
+  }
+}
+
+project(Multithreading): aceexe {                                
+  Source_Files {
+    Multithreading.cpp
+  }
+}
+
+project(Network_Events): aceexe {                                
+  Source_Files {
+    Network_Events.cpp
+  }
+}
+
+project(Prerun_State_Changes): aceexe {                                
+  Source_Files {
+    Prerun_State_Changes.cpp
+  }
+}
+
+project(Registration): aceexe {                                
+  Source_Files {
+    Registration.cpp
+  }
+}
+
+project(Registry_Changes): aceexe {                                
+  Source_Files {
+    Registry_Changes.cpp
+  }
+}
+
+project(Removals): aceexe {                                
+  Source_Files {
+    Removals.cpp
+  }
+}
+
+project(Suspended_Removals): aceexe {                                
+  Source_Files {
+    Suspended_Removals.cpp
+  }
+}
+
+project(Talker): aceexe {                                
+  Source_Files {
+    Talker.cpp
+  }
+}
+
+project(Timeouts): aceexe {                                
+  Source_Files {
+    Timeouts.cpp
+  }
+}
+
+project(Window_Messages): aceexe {                                
+  Source_Files {
+    Window_Messages.cpp
+  }
+}

@@ -1,0 +1,22 @@
+// The global features file contains the default feature settings.
+// By default, if a feature isn't listed here then it is enabled.
+// If it is listed, then the value assigned to the feature is enterpreted
+// as a boolean value.  You really shouldn't have to edit this file except
+// to change the defaults.  If you want to override these values you can do
+// one of two things.
+//
+// 1) Create a default.features in this directory with the features you
+//    want enabled or disabled.
+// 2) Create a feature file anywhere you like with the features you want and
+//    use the -feature_file option to specify where it is located.
+//
+// This file is somewhat akin to the platform_macros.GNU file in that build
+// settings can be set here.
+
+// By default we disable these.
+ssl           = 0
+qos           = 0
+rapi          = 0
+fl_reactor    = 0
+repo          = 0
+minimum_corba = 0
