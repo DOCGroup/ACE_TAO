@@ -18,17 +18,89 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
   this->reactor_ = 0;
 }
 
+TAO_Leader_Follower::TAO_Follower_Node::TAO_Follower_Node (TAO_SYNCH_CONDITION* follower_ptr)
+  : follower_ (follower_ptr),
+    next_ (0)
+{
+
+}
+
+TAO_Leader_Follower::TAO_Follower_Queue::TAO_Follower_Queue (void)
+  : head_ (0),
+    tail_ (0)
+{
+
+}
+
+int
+TAO_Leader_Follower::TAO_Follower_Queue::insert (TAO_Follower_Node* node)
+{
+  TAO_Follower_Node* curr = 0;
+
+  // Check if there is already an existing entry
+  for (curr = this->head_;
+       curr != 0 && curr != node;
+       curr = curr->next_)
+    ;
+  // An entry exists already in the queue
+  if (curr == node)
+    return 1;
+  else
+    {
+      // Add the node to the tail and modify the pointers
+      TAO_Follower_Node* temp = this->tail_;
+      this->tail_ = node;
+      if (this->head_ == 0)
+        this->head_ = this->tail_;
+      else
+        temp->next_ = this->tail_;
+    }
+  return 0;
+}
+
+int
+TAO_Leader_Follower::TAO_Follower_Queue::remove (TAO_Follower_Node* node)
+{
+  TAO_Follower_Node* prev = 0;
+  TAO_Follower_Node* curr = 0;
+
+  // No followers in queue, return
+  if (this->head_ == 0)
+    return -1;
+
+  for (curr = this->head_;
+       curr != 0 && curr != node;
+       curr = curr->next_)
+    {
+      prev = curr;
+    }
+
+  // Entry not found in the queue
+  if (curr == 0)
+    return -1;
+  // Entry found at the head of the queue
+  else if (prev == 0)
+    this->head_ = this->head_->next_;
+  else
+    prev->next_ = curr->next_;
+  // Entry at the tail
+  if (curr->next_ == 0)
+    this->tail_ = prev;
+
+  return 0;
+}
+
+
 TAO_SYNCH_CONDITION*
 TAO_Leader_Follower::get_next_follower (void)
 {
-  ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION *> iterator (
-    this->follower_set_);
-
-  if (iterator.first () == 0)
-    // means set is empty
+  // If the queue is empty return
+  if (this->follower_set_.is_empty())
     return 0;
 
-  TAO_SYNCH_CONDITION *cond = *iterator;
+  TAO_Follower_Node* next_follower = this->follower_set_.head_;
+
+  TAO_SYNCH_CONDITION *cond = next_follower->follower_;
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
@@ -43,7 +115,7 @@ TAO_Leader_Follower::get_next_follower (void)
   // The follower may not be there if the reply is received while the
   // consumer is not yet waiting for it (i.e. it send the request but
   // has not blocked to receive the reply yet)
-  (void) this->remove_follower (cond); // Ignore errors..
+  (void) this->remove_follower (next_follower); // Ignore errors..
 
   return cond;
 }
@@ -153,17 +225,3 @@ TAO_Leader_Follower::reset_client_thread (void)
       this->orb_core_->reactor ()->end_reactor_event_loop ();
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<TAO_SYNCH_CONDITION*>;
-template class ACE_Unbounded_Set<TAO_SYNCH_CONDITION*>;
-template class ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<TAO_SYNCH_CONDITION*>
-#pragma instantiate ACE_Unbounded_Set<TAO_SYNCH_CONDITION*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION*>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
