@@ -1,7 +1,7 @@
 //
 // $Id$
 //
-#include <iostream.h>
+#include "ace/streams.h"
 #include "ace/ACE.h"
 #include "orbsvcs/LoggerC.h"
 #include "logger_i.h"
