@@ -1969,12 +1969,25 @@ typedef struct
   };
 } ACE_mutex_t;
 
-#if !defined (ACE_HAS_WINCE)
+// Wrapper for NT Events.
+typedef HANDLE ACE_event_t;
+
+//@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
+//   semaphore simulation on WinNT.  It should be
+//   changed to ACE_USES_HAS_WINCE at some later point.
+#if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
 #else
 
+// Semaphore simulation for Windows CE.
+typedef struct
+{
+  ACE_mutex_t lock_;
+  ACE_event_t count_nonzero_;
+  u_int       count_;
+} ACE_sema_t;
 
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
 // These need to be different values, neither of which can be 0...
 #  define USYNC_THREAD 1
@@ -2577,9 +2590,6 @@ struct t_discon { };
 struct t_unitdata { };
 struct t_uderr { };
 struct netbuf { };
-
-// Wrapper for NT Events.
-typedef HANDLE ACE_event_t;
 
 // This is for file descriptors.
 typedef HANDLE ACE_HANDLE;
@@ -4256,7 +4266,8 @@ public:
   // = A set of wrappers for semaphores.
   static int sema_destroy (ACE_sema_t *s);
   static int sema_init (ACE_sema_t *s,
-                        u_int count, int type = USYNC_THREAD,
+                        u_int count,
+                        int type = USYNC_THREAD,
                         LPCTSTR name = 0,
                         void *arg = 0,
                         int max = 0x7fffffff,
