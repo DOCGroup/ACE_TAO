@@ -22,7 +22,14 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Functor.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/LoadBalancingC.h"
+
+
+/// Forward declarations.
+class TAO_LB_ObjectGroup_Map;
+
 
 /**
  * @class TAO_LB_PropertyManager
@@ -163,7 +170,9 @@ public:
   /// Return the initial number of replicas for the given object
   /// group.
   LoadBalancing::InitialNumberReplicas
-    initial_number_replicas (CORBA::Object_ptr object_group) const;
+    initial_number_replicas (const char *type_id,
+                             const LoadBalancing::Criteria &the_criteria,
+                             CORBA::Environment &ACE_TRY_ENV) const;
 
   /// Return the minimum number of replicas for the given object
   /// group.
@@ -173,7 +182,9 @@ public:
   /// Return the sequence FactoryInfos associated with the given
   /// object group.
   LoadBalancing::FactoryInfos *
-    factory_infos (CORBA::Object_ptr object_group) const;
+    factory_infos (const char *type_id,
+                   const LoadBalancing::Criteria &the_criteria,
+                   CORBA::Environment &ACE_TRY_ENV) const;
 
   //@}
 
@@ -201,11 +212,6 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
 };
-
-
-/// Property sequence equality operator.
-CORBA::Boolean operator== (const LoadBalancing::Properties &lhs,
-                           const LoadBalancing::Properties &rhs);
 
 
 #include "ace/post.h"

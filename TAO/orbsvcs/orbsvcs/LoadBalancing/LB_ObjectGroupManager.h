@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "LB_ObjectGroup_Map.h"
+#include "LB_Location_Map.h"
 
 /// Forward declarations.
 class TAO_LB_PropertyManager;

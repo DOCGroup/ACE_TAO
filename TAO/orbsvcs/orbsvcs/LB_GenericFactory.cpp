@@ -17,7 +17,8 @@ TAO_LB_GenericFactory::TAO_LB_GenericFactory (
   : poa_ (),
     property_manager_ (property_manager),
     object_group_map_ (object_group_map),
-    next_fcid_ (0)
+    next_fcid_ (0),
+    lock_ ()
 {
 }
 
@@ -42,24 +43,24 @@ TAO_LB_GenericFactory::create_object (
 
   // Make sure the criteria for the object group being created are
   // valid.
-  this->property_manager_.validate_properties (the_criteria, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+//   this->property_manager_.process_criteria (the_criteria, ACE_TRY_ENV);
+//   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Extract the initial number of replicas to create.
   LoadBalancing::InitialNumberReplicas initial_number_replicas =
-    this->property_manager_.get_initial_number_replicas (type_id,
-                                                         the_criteria,
-                                                         ACE_TRY_ENV);
+    this->property_manager_.initial_number_replicas (type_id,
+                                                     the_criteria,
+                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Extract the factory information for each of the replicas.
-  LoadBalancing::FactoryInfos factory_infos =
-    this->property_manager_.get_factory_infos (type_id,
-                                               the_criteria,
-                                               ACE_TRY_ENV);
+  LoadBalancing::FactoryInfos_var factory_infos =
+    this->property_manager_.factory_infos (type_id,
+                                           the_criteria,
+                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::ULong factory_infos_count = factory_infos.length ();
+  CORBA::ULong factory_infos_count = factory_infos->length ();
 
   // If the number of factories is less than the initial number of
   // replicas, then the desired number of replicas cannot possibly be
@@ -81,7 +82,16 @@ TAO_LB_GenericFactory::create_object (
   // entry.
   object_group_entry->type_id = CORBA::string_dup (type_id);
 
-  CORBA::ULong fcid = this->next_fcid_;
+  CORBA::ULong fcid = 0;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      CORBA::Object::_nil ());
+
+    fcid = this->next_fcid_;
+  }
 
   // The ObjectId for the newly created object group is comprised
   // solely of the FactoryCreationId.
@@ -101,8 +111,10 @@ TAO_LB_GenericFactory::create_object (
 
 //   if (this->property_manager_.infrastructure_controlled_membership ())
 //     {
-//       this->populate_object_group (object_group_entry, ACE_TRY_ENV);
-//       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->populate_object_group (object_group_entry,
+                               factory_infos.in (),
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 //     }
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
@@ -135,9 +147,16 @@ TAO_LB_GenericFactory::create_object (
   // No longer need to protect the allocated ObjectGroup_Map entry.
   (void) safe_object_group_entry.release ();
 
-  // Object group was successfully created.  Increment the next
-  // FactoryCreationId in preparation for the next object group.
-  this->next_fcid_++;
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      CORBA::Object::_nil ());
+
+    // Object group was successfully created.  Increment the next
+    // FactoryCreationId in preparation for the next object group.
+    this->next_fcid_++;
+  }
 
   return object_group._retn ();
 }
@@ -216,11 +235,13 @@ TAO_LB_GenericFactory::poa (PortableServer::POA_ptr p)
 void
 TAO_LB_GenericFactory::populate_object_group (
   TAO_LB_ObjectGroup_Map_Entry *object_group_entry,
+  const LoadBalancing::FactoryInfos &factory_infos,
   CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::ULong factory_infos_count = factory_infos.length ();
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
     {
-      LoadBalancing::FactoryInfo &factory_info =
+      const LoadBalancing::FactoryInfo &factory_info =
         factory_infos[j];
 
       LoadBalancing::GenericFactory_ptr factory =

@@ -26,15 +26,17 @@
 #include "orbsvcs/LoadBalancingC.h"
 
 #include "LB_ReplicaInfo.h"
+#include "LB_Location_Hash.h"
+#include "LB_Location_Equal_To.h"
 
 
 /// Location hash map.
 typedef ACE_Hash_Map_Manager_Ex<
   LoadBalancing::Location,
   TAO_LB_ReplicaInfo_Set,
-  ACE_Hash<LoadBalancing::Location>,
-  ACE_Equal_To<LoadBalancing::Location>,
-  TAO_SYNCH_MUTEX> TAO_LB_ObjectGroup_Map;
+  TAO_LB_Location_Hash,
+  TAO_LB_Location_Equal_To,
+  TAO_SYNCH_MUTEX> TAO_LB_Location_Map;
 
 #include "ace/post.h"
 
