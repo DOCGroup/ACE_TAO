@@ -75,7 +75,7 @@ get_object_id(CORBA::Any_var a
   FtRtecEventChannelAdmin::ObjectId* object_id;
   FtRtecEventChannelAdmin::ObjectId_var result;
 
-  if ((*a >>= object_id) ==0)
+  if ((a >>= object_id) ==0)
     ACE_THROW_RETURN(CORBA::NO_MEMORY(), result);
 
 
@@ -195,7 +195,7 @@ Request_Context_Repository::get_sequence_number(ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Any_var a = pic->get_slot(seq_num_slot ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   FTRT::SequenceNumber result  = 0;
-  *a >>= result;
+  a >>= result;
   return result;
 }
 
@@ -207,7 +207,7 @@ Request_Context_Repository::get_sequence_number(
   CORBA::Any_var a = ri->get_slot(seq_num_slot ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   FTRT::SequenceNumber result  = 0;
-  *a >>= result;
+  a >>= result;
   return result;
 }
 
