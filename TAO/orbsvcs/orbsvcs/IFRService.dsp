@@ -475,10 +475,6 @@ SOURCE=.\IFRService\IFR_Service_Utils.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IFRService\ifrservice_export.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IFRService\InterfaceDef_i.h
 # End Source File
 # Begin Source File
