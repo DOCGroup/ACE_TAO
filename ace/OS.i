@@ -49,17 +49,20 @@ typedef char *ACE_SOCKOPT_TYPE1;
 typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
-#if defined (ACE_LACKS_SETREUID_PROTOTYPE)
+#if !defined (_BSD_SOURCE) && \
+    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
+# if defined (ACE_LACKS_SETREUID_PROTOTYPE)
 extern "C" {
 extern int setreuid (uid_t ruid, uid_t euid);
 }
-#endif /* ACE_LACKS_SETREUID_PROTOTYPE */
+# endif /* ACE_LACKS_SETREUID_PROTOTYPE */
 
-#if defined (ACE_LACKS_SETREGID_PROTOTYPE)
+# if defined (ACE_LACKS_SETREGID_PROTOTYPE)
 extern "C" {
 extern int setregid (gid_t rgid, gid_t egid);
 }
-#endif /* ACE_LACKS_SETREGID_PROTOTYPE */
+# endif /* ACE_LACKS_SETREGID_PROTOTYPE */
+#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
 
 #if defined (ACE_LACKS_WRITEV)
 extern "C" ACE_Export int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
