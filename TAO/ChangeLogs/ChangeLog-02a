@@ -1,3 +1,9 @@
+Sat Jan  8 12:13:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	  Fixed some uninitialized declarations. Reported by
+	  g++ David Levine.
+
 Sat Jan  8 03:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
  
 	* TAO/docs/releasenotes/index.html
