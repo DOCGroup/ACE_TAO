@@ -41,7 +41,8 @@ IR_Helper::IR_Helper (char *server_name,
 {
   const char *exception_message = "Null Message";
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       exception_message = "While read_ir_ior";
       this->read_ir_ior (ACE_TRY_ENV);

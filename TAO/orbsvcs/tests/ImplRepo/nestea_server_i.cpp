@@ -67,18 +67,18 @@ Nestea_Server_i::parse_args (void)
 }
 
 int
-Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &TAO_IN_ENV)
+Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 {
   char poa_name[] = "nestea_server";
 
-  TAO_TRY 
+  ACE_TRY 
     {
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
-      if (this->orb_manager_.init_child_poa (argc, argv, poa_name, TAO_TRY_ENV) == -1)
+      if (this->orb_manager_.init_child_poa (argc, argv, poa_name, ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     
       this->argc_ = argc;
       this->argv_ = argv;
@@ -93,8 +93,8 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &TAO_IN_ENV)
       CORBA::String_var server_str  =
         this->orb_manager_.activate_under_child_poa ("server",
                                                      this->server_impl_,
-                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
         {
@@ -113,19 +113,19 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &TAO_IN_ENV)
 
       CORBA::Object_var server_obj =
         this->orb_manager_.child_poa ()->id_to_reference (id.in (),
-                                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
         {
-          this->ir_helper_->change_object (server_obj, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->ir_helper_->change_object (server_obj, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
        
       server_str =
         this->orb_manager_.orb ()->object_to_string (server_obj.in (),
-                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in ()));
@@ -136,42 +136,46 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &TAO_IN_ENV)
           ACE_OS::fclose (this->ior_output_file_);
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Nestea_i::init");
-      TAO_RETHROW_RETURN (-1);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Nestea_i::init");
+      ACE_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Nestea_Server_i::run (CORBA::Environment& env)
+Nestea_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       if (this->use_ir_ == 1)
         {
-          this->ir_helper_->notify_startup (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->ir_helper_->notify_startup (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
-      this->orb_manager_.run (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->orb_manager_.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
         {
-          this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->ir_helper_->notify_shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Nestea_Server_i::run");
-      return -1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Nestea_i::run");
+      ACE_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
