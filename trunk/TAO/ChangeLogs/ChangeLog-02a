@@ -1,3 +1,12 @@
+Tue Oct  2 11:26:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/Security/Send_File/server_key.pem: 
+	* orbsvcs/examples/Security/Send_File/server_cert.pem: 
+	* orbsvcs/examples/Security/Send_File/client_key.pem: 
+	* orbsvcs/examples/Security/Send_File/client_cert.pem: 
+	* orbsvcs/examples/Security/Send_File/cacert.pem:
+	  Regenerated as the previous ones have expired.
+	
 Tue Oct  2 12:13:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: If the read message is less than the
