@@ -12,7 +12,10 @@
 
 #ifndef ACE_REACTOR_TIMER_INTERFACE_H
 #define ACE_REACTOR_TIMER_INTERFACE_H
+
 #include /**/ "ace/pre.h"
+
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,4 +52,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_REACTOR_TIMER_INTERFACE_H */
