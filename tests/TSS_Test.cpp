@@ -38,23 +38,18 @@ static const int ITERATIONS = 100;
 #endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.
-ACE_MT (ACE_Thread_Mutex Errno::lock_);
 int Errno::flags_;
+#if defined (ACE_HAS_THREADS)
+ACE_Thread_Mutex *Errno::lock_ = 0;
+#endif /* ACE_HAS_THREADS */
 
 // This is our thread-specific error handler...
 // See comment below about why it's dynamically allocated.
 static ACE_TSS<Errno> *tss_error;
 
 #if defined (ACE_HAS_THREADS)
-// Serializes output via cout.
-static ACE_Thread_Mutex cout_lock;
-
-typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
-#else
-// Serializes output via cout.
-static ACE_Null_Mutex cout_lock;
-
-typedef ACE_Guard<ACE_Null_Mutex> GUARD;
+  // Serializes output via cout.
+  static ACE_Thread_Mutex cout_lock;
 #endif /* ACE_HAS_THREADS */
 
 extern "C" void
@@ -94,7 +89,7 @@ worker (void *c)
     {
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
         {
-	  ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
+          ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
                       "ACE_OS::thr_keycreate"));
           break;
         }
@@ -104,18 +99,18 @@ worker (void *c)
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -129,16 +124,16 @@ worker (void *c)
       (*tss_error)->flags (count);
 
       {
-	// Use the guard to serialize access
-	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
-	ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
+        // Use the guard to serialize access
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
+        ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
       key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
         {
-	  ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
+          ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
                       "ACE_OS::thr_keycreate"));
           break;
         }
@@ -148,18 +143,18 @@ worker (void *c)
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
     }
 
   return 0;
@@ -187,6 +182,7 @@ main (int, char *[])
   ACE_START_TEST ("TSS_Test");
 
 #if defined (ACE_HAS_THREADS)
+  Errno::allocate_lock ();
 
   const u_int threads = ACE_MAX_THREADS;
 
@@ -226,18 +222,20 @@ main (int, char *[])
       // Wait for all the threads to reach their exit point and then join
       // with all the exiting threads.
       for (u_int i = 0;
-	   i < threads;
-	   i++)
-	if (ACE_Thread::join (thread_handles[i]) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+           i < threads;
+           i++)
+        if (ACE_Thread::join (thread_handles[i]) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
 #endif /* VXWORKS */
 
   delete [] thread_handles;
 
   delete tss_error;
+
+  Errno::deallocate_lock ();
 #else
   ACE_ERROR ((LM_ERROR,
-	      "threads are not supported on this platform\n"));
+              "threads are not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
