@@ -59,7 +59,8 @@ enum Option_Type
   MUTE         = 0100000000,    // Dont print the warnings.
   SKIPCLASS    = 0200000000,    // Skip the class definition part in the output while in C++ mode.
   SKIPSTRINGH  = 0400000000,    // Skip including the header file string.h.
-  BINARYSEARCH = 01000000000    // Generates Binary Search code.
+  BINARYSEARCH = 01000000000,   // Generates Binary Search code.
+  LINEARSEARCH = 02000000000    // Generates Linear Search code.
 };
 
 // Define some useful constants (these don't really belong here, but
