@@ -144,7 +144,7 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
     }
   // Just check that the information is consistent.
   RtecScheduler::Dependency_Set& deps = rt_info_[handle]->dependencies;
-  for (int i = 0; i < deps.length (); ++i)
+  for (CORBA::ULong i = 0; i < deps.length (); ++i)
     {
       if (deps[i].rt_info == dependency
 	  && deps[i].number_of_calls == number_of_calls)
