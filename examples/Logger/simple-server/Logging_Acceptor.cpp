@@ -3,6 +3,7 @@
 #include "Logging_Acceptor.h"
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
+#include "ace/WFMO_Reactor.h"
 
 // Initialize peer_acceptor object.
 
@@ -56,7 +57,23 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
 
   // Accept the connection from a client client daemon.
 
-  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor ()->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
+                                   0, // remote address
+                                   0, // timeout
+                                   1, // restart
+                                   reset_new_handle  // reset new handler
+                                   ) == -1
       || svc_handler->open () == -1)
     {
       svc_handler->close ();

@@ -3,6 +3,7 @@
 
 
 #include "ace/Get_Opt.h"
+#include "ace/WFMO_Reactor.h"
 
 ACE_INLINE
 Handle_R_Stream::Handle_R_Stream (void)
@@ -83,7 +84,23 @@ Handle_R_Stream::handle_input (int)
   char buf[BUFSIZ];
   int  bytes;
 
-  if (this->accept (this->new_remote_stream) == -1)
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (ACE_Reactor::instance ()->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  if (this->accept (this->new_remote_stream, // stream
+                    0, // remote address
+                    0, // timeout
+                    1, // restart
+                    reset_new_handle  // reset new handler
+                    ) == -1)
     return -1;
   else
     ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %d\n",
