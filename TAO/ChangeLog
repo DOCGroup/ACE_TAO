@@ -1,3 +1,10 @@
+Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp: Fixed Release
+	  configurations.  Include paths, library paths, and library lists
+	  were missing somwhow.
+
 Wed Oct 23 11:21:50 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Abstract_Interface/Abstract_Interface_Client.dsp:
