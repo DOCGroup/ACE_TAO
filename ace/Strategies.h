@@ -102,12 +102,16 @@ public:
 
   virtual int recycle_state (const void *recycling_act,
                              ACE_Recyclable_State new_state) = 0;
+
   virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const = 0;
   // Get/Set <recycle_state>.
 
   virtual int mark_as_closed (const void *recycling_act) = 0;
   // Mark as closed.
 
+  virtual int mark_as_closed_i (const void *recycling_act) = 0;
+  // Mark as closed.(non-locking version)
+  
   virtual int cleanup_hint (const void *recycling_act) = 0;
   // Cleanup as hint.
 
