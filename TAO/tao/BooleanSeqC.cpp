@@ -1,4 +1,4 @@
-// -*- C++ -*-
+    // -*- C++ -*-
 //
 // $Id$
 
@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:323
+// be\be_codegen.cpp:323
 
 
 #include "BooleanSeqC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -49,8 +49,8 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_BOOLEANSEQ_CS_)
 #define _CORBA_BOOLEANSEQ_CS_
@@ -103,24 +103,24 @@ void CORBA::BooleanSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_BooleanSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f426f), 
-  ACE_NTOHL (0x6f6c6561), 
-  ACE_NTOHL (0x6e536571), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f426f),
+  ACE_NTOHL (0x6f6c6561),
+  ACE_NTOHL (0x6e536571),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/BooleanSeq:1.0
     11,
-  ACE_NTOHL (0x426f6f6c), 
-  ACE_NTOHL (0x65616e53), 
+  ACE_NTOHL (0x426f6f6c),
+  ACE_NTOHL (0x65616e53),
   ACE_NTOHL (0x65710000),  // name = BooleanSeq
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -146,7 +146,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_BooleanSeq_CPP_
 #define _TAO_CDR_OP_CORBA_BooleanSeq_CPP_
@@ -157,13 +157,13 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       return strm.write_boolean_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-  
+
   return 0;
 }
 
@@ -173,7 +173,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -183,28 +183,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       return strm.read_boolean_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
+
     }
-  
+
   return 0;
 }
 
 #endif /* _TAO_CDR_OP_CORBA_BooleanSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_root/root.cpp:1712
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

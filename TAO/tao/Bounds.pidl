@@ -10,7 +10,7 @@
  * following command:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1 -GT -GA
+ *        -o orig -Gp -Gd -Ge 1 -GT -GA -Sc
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -20,7 +20,6 @@
  * and then:
  *
  * cp orig/BoundsC.{h,i,cpp} .
- * patch < diffs/Bounds.diff
  *
  * The code left in BoundsC.{h,i,cpp} is ready for use.
  *

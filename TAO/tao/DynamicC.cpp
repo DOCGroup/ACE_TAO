@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "DynamicC.h"
@@ -40,7 +40,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -49,7 +49,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CS_)
 #define _DYNAMIC_PARAMETERLIST_CS_
@@ -102,7 +102,7 @@ void Dynamic::ParameterList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Dynamic_ParameterList[] =
 {
@@ -205,7 +205,7 @@ namespace Dynamic
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Dynamic_ContextList[] =
 {
@@ -265,7 +265,7 @@ namespace Dynamic
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CS_)
 #define _DYNAMIC_EXCEPTIONLIST_CS_
@@ -318,7 +318,7 @@ void Dynamic::ExceptionList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Dynamic_ExceptionList[] =
 {
@@ -363,7 +363,7 @@ namespace Dynamic
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Dynamic_RequestContext[] =
 {
@@ -425,7 +425,7 @@ namespace Dynamic
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_CPP_
 #define _TAO_CDR_OP_Dynamic_ParameterList_CPP_
@@ -497,7 +497,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_CPP_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_CPP_
@@ -569,7 +569,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

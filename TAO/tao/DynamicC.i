@@ -26,39 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_Dynamic_ParameterList_I_
-#define _TAO_CDR_OP_Dynamic_ParameterList_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const Dynamic::ParameterList &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    Dynamic::ParameterList &
-  );
-
-#endif /* _TAO_CDR_OP_Dynamic_ParameterList_I_ */
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_Dynamic_ExceptionList_I_
-#define _TAO_CDR_OP_Dynamic_ExceptionList_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const Dynamic::ExceptionList &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    Dynamic::ExceptionList &
-  );
-
-#endif /* _TAO_CDR_OP_Dynamic_ExceptionList_I_ */
-

@@ -26,30 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:70
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const IOP::Encoding &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.format) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.major_version)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor_version));
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    IOP::Encoding &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.format) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.major_version)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor_version));
-}
-
