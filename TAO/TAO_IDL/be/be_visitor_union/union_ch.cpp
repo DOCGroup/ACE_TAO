@@ -157,8 +157,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os->decr_indent ();
       *os << "private:\n";
       os->incr_indent ();
-      *os << bt->nested_type_name (node) << " disc_;" << be_nl; // emit the
-                                                 // ACE_NESTED_CLASS macro
+      *os << bt->nested_type_name (node) << " disc_;" << be_nl;
+      *os << bt->nested_type_name (node) << " holder_;" << be_nl;
+      // Emit the ACE_NESTED_CLASS macro.
 
       // the members are inside of a union
       *os << "union" << be_nl;

@@ -75,9 +75,87 @@ int be_visitor_union_ci::visit_union (be_union *node)
       *os << "// returns pointer to the discriminant" << be_nl;
       *os << "ACE_INLINE void *" << be_nl
           << node->name () << "::_discriminant (void)" << be_nl
-          << "{" << be_idt_nl
-          << "return &this->disc_;" << be_uidt_nl
-          << "}\n\n";
+          << "{" << be_idt_nl;
+
+      if (node->has_duplicate_case_labels ())
+        {
+          // If there are duplicate case labels, we may have to
+          // modify what this generated function returns, so that
+          // the ORB function that called it can find a match with
+          // the value found in the typecode.
+          *os << "switch (this->disc_)" << be_idt_nl;
+          *os << "{" << be_idt_nl;
+
+          AST_Decl *d;
+          be_union_branch *ub;
+          UTL_ScopeActiveIterator *si = 
+            new UTL_ScopeActiveIterator (node,
+                                         UTL_Scope::IK_decls);
+
+          while (!si->is_done())
+            {
+              d = si->item ();
+              ub = be_union_branch::narrow_from_decl (d);
+              AST_UnionLabel *ul = ub->label (0);
+
+			        if (ul->label_kind () == AST_UnionLabel::UL_label)
+				        {
+                  // Map the actual discriminant value to the value
+                  // of the first value encountered for that member,
+                  // because that is the value that will be found in
+                  // the typecode.
+                  for (unsigned int i = 0; i < ub->label_list_length (); i++)
+                    {
+                      *os << "case ";
+                      ub->gen_label_value (os, i);
+                      *os << ":" << be_idt_nl;
+                      *os << "this->holder_ = ";
+                      ub->gen_label_value (os, 0);
+                      *os << ";" << be_nl;
+                      *os << "break;" << be_uidt_nl;
+                    }
+                }
+                  
+              si->next ();
+            }
+
+          delete si;
+
+          *os << "default:" << be_idt_nl;
+
+          be_union::DefaultValue dv;
+          if (node->default_value (dv) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_union_ci::"
+                                 "visit_union - "
+                                 "computing default value failed\n"),
+                                -1);
+            }
+
+          // If we have an implicit or explicit default case, we must
+          // set the return value to some legal default value.
+          // Otherwise, we do nothing - this case will not be reached,
+          // but it makes some comilers happy to have it there.
+          if ((dv.computed_ != 0))
+            {
+              *os << "this->holder_ = ";
+              ub->gen_default_label_value (os, node);
+              *os << ";" << be_nl;
+            }
+
+          *os << "break;" << be_uidt << be_uidt_nl;
+
+          *os << "}" << be_uidt_nl << be_nl;
+          *os << "return &this->holder_;" << be_uidt_nl;
+        }
+      // If there are no duplicate case labels, this sufficient.
+      else
+        {
+          *os << "return &this->disc_;" << be_uidt_nl;
+        }
+
+      *os << "}\n\n";
 
       // the discriminant type may have to be defined here if it was an enum
       // declaration inside of the union statement.

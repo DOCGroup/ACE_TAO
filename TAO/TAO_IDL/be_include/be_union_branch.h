@@ -58,10 +58,6 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
-  // Accessor/mutator for the member
-  idl_bool tc_generated (void);
-  void tc_generated (idl_bool val);
-
   // Narrowing
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);
@@ -69,10 +65,6 @@ public:
 protected:
   virtual int compute_size_type (void);
   // compute the size type if it is unknown
-
-  idl_bool tc_generated_;
-  // To keep typecode from being generated more than once in
-  // unions with multiple case labels for a single member.
 };
 
 #endif

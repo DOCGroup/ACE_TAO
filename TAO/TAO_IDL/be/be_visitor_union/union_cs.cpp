@@ -141,7 +141,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
           ub->gen_default_label_value (os, node);
         }
 
-      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
+      *os << ";";
+
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
