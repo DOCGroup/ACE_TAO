@@ -1,3 +1,9 @@
+Tue Jan 29 20:47:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* docs/exceptions.html: Document the new ACE_ENV_ macros.
+
+        * bin/subst_env.pl: Transform to ACE_ENV_ instead of TAO_ENV_.
+
 Tue Jan 29 08:39:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/CORBA_macros.h:
