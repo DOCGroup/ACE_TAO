@@ -236,9 +236,9 @@ all: idl_stubs
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 <%endif%>
-<%if(idl_files)%>
 
 realclean: clean <%compclean%>
+<%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 
