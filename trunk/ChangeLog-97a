@@ -33,6 +33,9 @@ Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* platform_vxworks5.x_g{++,hs}.GNU: renamed 5.x instead of 5.2.
 
+	* netsvcs/lib/Token_Handler.cpp: reordered initializers to match
+	  declaration order.
+
 Fri Jun 27 13:10:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* ace: Changed the name of config-vxworks5.2-g++.h to
