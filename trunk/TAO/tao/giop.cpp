@@ -252,7 +252,7 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
   dump_msg ("send", (const u_char *) close_message, TAO_GIOP_HEADER_LEN);
 
   handler->peer ().send (close_message, TAO_GIOP_HEADER_LEN);
-  int which = handler->peer ().get_handle ();
+  ACE_HANDLE which = handler->peer ().get_handle ();
   handler->close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG,
@@ -282,7 +282,7 @@ send_error (TAO_Client_Connection_Handler *&handler)
 {
   dump_msg ("send", (const u_char *) error_message, TAO_GIOP_HEADER_LEN);
   handler->peer ().send (error_message, TAO_GIOP_HEADER_LEN);
-  int which = handler->peer ().get_handle ();
+  ACE_HANDLE which = handler->peer ().get_handle ();
   handler->close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) aborted socket %d\n", which));
