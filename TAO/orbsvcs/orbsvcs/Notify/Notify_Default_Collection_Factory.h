@@ -19,9 +19,10 @@
 
 #ifndef NOTIFY_DEFAULT_COLLECTION_FACTORY_H
 #define NOTIFY_DEFAULT_COLLECTION_FACTORY_H
+
 #include "ace/pre.h"
-#include "Notify_Collection_Factory.h"
 #include "notify_export.h"
+#include "Notify_Collection_Factory.h"
 #include "Notify_Listeners.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,15 +1,11 @@
 // $Id$
-#include "orbsvcs/ESF/ESF_Worker.h"
+
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Notify_Event_Manager.h"
-#include "Notify_EventChannel_i.h"
-#include "Notify_Event_Map.h"
-#include "Notify_Event_Processor.h"
-#include "Notify_Worker_Task.h"
-#include "Notify_Update_Dispatch_Command.h"
 #include "Notify_Factory.h"
+#include "Notify_Worker_Task.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
-#include "Notify_Event.h"
+#include "Notify_Update_Dispatch_Command.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Notify_Event_Manager.i"

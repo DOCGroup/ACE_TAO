@@ -25,10 +25,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
-#include "Notify_Collection.h"
 #include "notify_export.h"
 #include "Notify_Listeners.h"
+#include "Notify_Collection.h"
+
+//#include "Notify_Listeners.h"
+//#include "orbsvcs/ESF/ESF_Worker.h"
+//
 
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_Event;
