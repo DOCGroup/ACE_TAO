@@ -66,24 +66,27 @@ namespace TAO
     {
       (void) this->imr_notify_shutdown ();
 
-      PortableServer::POA_var poa =
-        this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
-
-      if (!tao_poa)
+      if (this->server_object_)
         {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
+          PortableServer::POA_var poa =
+            this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
+
+          if (!tao_poa)
+            {
+              ACE_THROW (CORBA::OBJ_ADAPTER ());
+            }
+
+          PortableServer::ObjectId_var id =
+            tao_poa->servant_to_id_i (this->server_object_
+                                      ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          tao_poa->active_policy_strategies().servant_retention_strategy()->deactivate_object (id.in() ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
-
-      PortableServer::ObjectId_var id =
-        tao_poa->servant_to_id_i (this->server_object_
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      tao_poa->active_policy_strategies().servant_retention_strategy()->deactivate_object (id.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
     void

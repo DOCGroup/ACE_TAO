@@ -1,5 +1,10 @@
 Tue Nov  2 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PortableServer/Lifespan_Strategy.cpp (notify_shutdown):
+          Only deactive the server_object when it is available
+
+Tue Nov  2 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/PortableServer/POA.cpp:
           Fixed bug in parse_key
 
