@@ -370,23 +370,24 @@ dnl line, then "no_x" is set to "yes."
   ])
 AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 
-#AC_ARG_WITH([tao],
-# AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
-#              [
-#               case "${withval}" in
-#                yes)
-#                  ace_user_with_tao=yes
-#                  ;;
-#                no)
-#                  ;;
-#                *)
-#                  AC_MSG_ERROR([bad value ${withval} for --with-tao])
-#                  ;;
-#               esac
-#              ],
-#              [
-#               ace_user_with_tao=yes
-#              ])
+ AC_ARG_WITH([tao],
+  AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
+  [
+   case "${withval}" in
+    yes)
+      ace_user_with_tao=yes
+      ;;
+    no)
+      ace_user_with_tao=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${withval} for --with-tao])
+      ;;
+   esac
+  ],
+  [
+   ace_user_with_tao=yes
+  ])
 
  AC_ARG_WITH([tli-device],
   AS_HELP_STRING(--with-tli-device(=DEV),device for TCP on TLI [[/dev/tcp]]),
