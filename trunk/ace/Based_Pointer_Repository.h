@@ -18,6 +18,8 @@
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
 
+#include "ace/OS.h"                  // Need ACE_Export
+
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
 
