@@ -1,3 +1,20 @@
+Thu Sep 24 09:17:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Containers_T.h: Added #include "ace/Containers.h" - AIX xlC
+	  needs this when instantiating templates.
+
+	* ace/OS.i: Fixed comments that referenced ACE_HAS_DCE[_DRAFT4]_THREADS
+
+	* ace/Thread_Manager.cpp: Changed occurrences of
+	  ACE_HAS_DCE_DRAFT4_THREADS to ACE_HAS_PTHREADS_DRAFT4.  Corrected
+	  a call to pthread_detach.  Changed a couple of calls to
+	  pthread_detach on HP-UX 10.x to duplicate the thread handle before
+	  the call because pthread_detach on HP-UX 10.x clears the handle
+	  and it was still needed.
+	  On AIX, xlC doesn't match the call to
+	  ACE_Thread::join(ACE_hthread_t, void ** = 0) correctly when the
+	  second arg is specified.  So call the 3-arg variety on AIX, knowing
+	  that the second arg is ignored underneath on pthreads.
 
 Wed Sep 23 22:13:04 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
