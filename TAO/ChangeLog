@@ -1,3 +1,10 @@
+Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/TAO_RTScheduler.dsp:	
+
+	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
+	  to run time type identifcation problem.
+		
 Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Distributable_Thread.cpp:
@@ -6,14 +13,21 @@ Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/RTScheduling/Current.cpp: 
 
 	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
-	  Template  and RH73 GCC32 NoInterceptorsNoExceptions builds.
+	  Template and RH73 GCC32 NoInterceptorsNoExceptions builds. Used
+	  ACE_ENV_ARG_DECL_NOT_USED instead of ACE_ENV_ARG_DECL in
+	  methods, in the corresponding .cpp files, that did not use the
+	  env argument, to fix unused parameter errors and warnings.
 	  
 Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Current.cpp: 
 	 
 	  Fixed compile errors in Debian SingleThreaded and RH73 GCC32
-	  NoInterceptorsNoExceptions builds.
+	  NoInterceptorsNoExceptions. The error was caused due to the
+	  missing env argument parameter in the
+	  TAO_RTScheduler_Current::lookup (...) method. This prevented the
+	  RTScheduler Initializer from creating an instance of the current
+	  object.
 	
 Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
@@ -21,8 +35,9 @@ Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/RTScheduling/Current.h:
 	* tao/RTScheduling/Current.cpp: 
 	  
-	  Fixed compile errors and warnings in Debian SingleThreaded
-	  build.
+	  Fixed compile errors and warnings in Debian SingleThreaded build
+	  caused by the usage of ACE_Thread_Mutex. This was replaced with
+	  TAO_SYNCH_MUTEX.
 
 Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
@@ -34,7 +49,10 @@ Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/RTScheduling/RTScheduler_Initializer.cpp:
 	
 	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
-	  Template build.
+	  Template build caused by missing return statements in functions
+	  returning non-void. Also moved the creation of an instance of
+	  TAO_RT_Current from TAO_RTSceduler_Current constructor to a
+	  method init. 
 	
 Mon Jun 30 12:19:22 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
