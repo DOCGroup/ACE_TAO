@@ -215,13 +215,13 @@ Consumer_Handler::init (int argc, char **argv)
 		       "register_handler for SIGINT"),
 		      -1);
 
- if( this->reactor_used ()->register_handler
+ /*if( this->reactor_used ()->register_handler
       (SIGWINCH,
        consumer_signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "register_handler for SIGWINCH"),
-		      -1);
+		      -1);*/
   TAO_TRY
     {
       // Retrieve the ORB.
