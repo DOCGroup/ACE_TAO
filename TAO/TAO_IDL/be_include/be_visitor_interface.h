@@ -70,10 +70,10 @@
 #include "be_visitor_interface/direct_proxy_impl_ss.h"
 
 // AMH
-//#include "be_visitor_interface/amh_ch.h"
+#include "be_visitor_interface/amh_ch.h"
+#include "be_visitor_interface/amh_sh.h"
+#include "be_visitor_interface/amh_ss.h"
 #include "be_visitor_interface/amh_rh_sh.h"
 #include "be_visitor_interface/amh_rh_ss.h"
-//#include "be_visitor_interface/amh_sh.h"
-//#include "be_visitor_interface/amh_ss.h"
 
 #endif /* _BE_VISITOR_INTERFACE_H */

@@ -1,3 +1,41 @@
+Tue Jan 15 16:22:48 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Use a local interface for the AMH_*ResponseHandler, that
+	  generates *exactly* the right code for the *C.{h,i,cpp} files.
+	  We need different visitors for the implementation class on the
+	  *S.{h,i,cpp} files.
+
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	  Enable compilation of AMH visitors by default.
+	  
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	  Improved generated AMH code.  For starters the IDL compiler does
+	  not crash while generating AMH code :-)  But the generated code
+	  does not compile yet.
+	  Mayur and myself factored out the shared code between the
+	  skeleton source visitors (*S.cpp files) for AMH and non-AMH
+	  interfaces.
+	  Also stopped the system from generating any AMH classes for
+	  implied AMH or AMI classes.
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Fixed warnings.
+
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+	  Updated dependencies.
+
 Tue Jan 15 15:55:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.Security (IDL_FILES):

@@ -71,7 +71,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       
       // Create the ResponseHandler class
       be_interface *response_handler = this->create_response_handler (node); 
-      if (response_handler)
+      if (response_handler != 0)
         {
           response_handler->set_defined_in (node->defined_in ());
           
@@ -80,14 +80,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
           
           // Remember from whom we were cloned
           response_handler->original_interface (node);
-
-          // We don't need any code-generation in the client source files:
-          response_handler->cli_stub_gen (I_TRUE);
-          response_handler->cli_stub_any_op_gen (I_TRUE);
-          response_handler->cli_stub_cdr_op_gen (I_TRUE);
-          response_handler->cli_inline_gen (I_TRUE);
-          response_handler->cli_inline_cdr_op_gen (I_TRUE);
-          response_handler->cli_inline_cdr_decl_gen (I_TRUE);
         }
       else
         {
@@ -120,7 +112,7 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
                       0,          // number of inherited
                       0,          // list of ancestors
                       0,          // number of ancestors
-                      0,          // local
+                      1,          // local
                       0);         // non-abstract
 
   response_handler->set_name (utl_class_name);
@@ -360,7 +352,92 @@ be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
   return 0;
 }
 
+int
+be_visitor_amh_pre_proc::visit_scope (be_scope *node)
+{
+  // proceed if the number of members in our scope is greater than 0
+  if (node->nmembers () > 0)
+    {
+      int number_of_elements = 0;
 
+      {
+        // initialize an iterator to iterate thru our scope
+        UTL_ScopeActiveIterator *si;
+        ACE_NEW_RETURN (si,
+                        UTL_ScopeActiveIterator (node,
+                                                 UTL_Scope::IK_decls),
+                        -1);
+
+        while (!si->is_done ())
+          {
+            number_of_elements++;
+            si->next ();
+          }
+        delete si;
+      }
+
+      AST_Decl **elements = new AST_Decl *[number_of_elements];
+
+      {
+        int position = 0;
+        // initialize an iterator to iterate thru our scope
+        UTL_ScopeActiveIterator *si;
+        ACE_NEW_RETURN (si,
+                        UTL_ScopeActiveIterator (node,
+                                                 UTL_Scope::IK_decls),
+                        -1);
+
+        while (!si->is_done ())
+          {
+            elements[position++] = si->item ();
+            si->next ();
+          }
+        delete si;
+      }
+
+
+      int elem_number = 0;
+
+      // continue until each element is visited
+      while (elem_number < number_of_elements)
+        {
+          AST_Decl *d = elements[elem_number];
+          if (!d)
+            {
+              delete [] elements;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "bad node in this scope\n"), -1);
+
+            }
+
+          be_decl *bd = be_decl::narrow_from_decl (d);
+
+          // set the scope node as "node" in which the code is being
+          // generated so that elements in the node's scope can use it
+          // for code generation
+          this->ctx_->scope (node->decl ());
+
+          // set the node to be visited
+          this->ctx_->node (bd);
+          elem_number++;
+
+
+          // Send the visitor.
+          if (bd == 0 ||  bd->accept (this) == -1)
+            {
+              delete [] elements;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "codegen for scope failed\n"), -1);
+
+            }
+        } // end of while loop
+      delete [] elements;
+    } // end of if
+
+  return 0;
+}
 
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
