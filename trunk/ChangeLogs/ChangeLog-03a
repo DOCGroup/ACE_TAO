@@ -1,3 +1,10 @@
+Sun Feb 11 10:15:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+        * ace/QoS/Makefile.bor:
+        * include/makeinclude/ace_flags.bor:
+          Added build support for QoS library with Borland compiler.
+
 Sat Feb 10 15:29:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Message_Block.h:
