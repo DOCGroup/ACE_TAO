@@ -31,6 +31,7 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb)
 {
   Kokyu::DSRT_ConfigInfo config;
 
+  Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
   kokyu_dispatcher_ =
     Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::
     create_DSRT_dispatcher (config);
