@@ -78,7 +78,6 @@
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_MSGBUF_T
 // lacks mqueue mgr or speed-up named sem by shm emulation
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
