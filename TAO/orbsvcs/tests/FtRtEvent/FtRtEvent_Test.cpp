@@ -12,7 +12,7 @@
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
 ACE_RCSID (FtRtEvent,
-           FtRtEvent_Test_Base,
+           FtRtEvent_Test,
            "$Id$")
 
 FtRtEvent_Test_Base::FtRtEvent_Test_Base()
