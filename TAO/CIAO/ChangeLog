@@ -1,3 +1,29 @@
+Fri Jun  4 11:37:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed a bug in code generation for the port table population
+          method check in with
+          
+          Thu Jun  3 12:35:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+ 
+          and changed code generation of facet servant classes to be
+          a template class with a dummy argument. Immediately below
+          the declaration, we generate a typedef to the actual
+          facet servant class name, using int as the template argument.
+          Because the facet servant class name is based only on the
+          underlying interface type, this change prevents link errors
+          when components in other translation units use the same
+          interface type for a facet, since the compiler will use
+          only one symbol for all the template instantiations, and
+          it is legal to typedef something more than once if it is
+          aliased to the same type. Finally, added checks to ensure
+          that the facet servant class is generated only once in
+          each translation unit, by allowing the underlying interface
+          AST node to be traversed by the facet class code emitter 
+          only once.
+
 Fri Jun  4 11:40:18 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/Config_Handlers/DnC_Dump.cpp: 
