@@ -1,7 +1,9 @@
 Wed May 13 18:46:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp: Added profile timing
-	  to the server so we can compute socket performance metrics.
+	* examples/IPC_SAP/SOCK_SAP/CPP-{inserver,inclient}.cpp: Added
+	  profile timing to the server so we can compute socket
+	  performance metrics.  Also generalized the tests so we can
+	  experiment with both oneway and twoway calls.
 
 Wed May 13 19:20:27 1998  James C Hu  <jxh@cs.wustl.edu>
 
