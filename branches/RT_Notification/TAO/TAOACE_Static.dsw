@@ -600,6 +600,27 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RT_Notification LIB"=.\orbsvcs\orbsvcs\RT_Notification_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTPortableServer_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "SSLIOP_Static"=.\orbsvcs\orbsvcs\SSLIOP_Static.dsp - Package Owner=<4>
 
 Package=<5>

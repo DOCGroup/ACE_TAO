@@ -1035,6 +1035,27 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RT_Notification DLL"=.\orbsvcs\orbsvcs\RT_Notification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTPortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "SSLIOP"=.\orbsvcs\orbsvcs\SSLIOP.dsp - Package Owner=<4>
 
 Package=<5>
