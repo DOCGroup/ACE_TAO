@@ -392,6 +392,36 @@ module PortableServer
       Object id_to_reference(in ObjectId oid)
         raises (ObjectNotActive, WrongPolicy);
 
+      //--------------------------------------------------
+      //
+      // RT Corba operations
+      //
+      //--------------------------------------------------
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+      Object create_reference_with_priority (in CORBA::RepositoryId intf,
+                                             in RTCORBA::Priority priority)
+        raises (WrongPolicy);
+
+      Object create_reference_with_id_and_priority (in PortableServer::ObjectId oid,
+                                                    in CORBA::RepositoryId intf,
+                                                    in RTCORBA::Priority priority)
+        raises (WrongPolicy);
+
+      ObjectId activate_object_with_priority (in PortableServer::Servant p_servant,
+                                              in RTCORBA::Priority priority)
+        raises (ServantAlreadyActive, WrongPolicy);
+
+      void activate_object_with_id_and_priority (in PortableServer::ObjectId oid,
+                                                 in PortableServer::Servant p_servant,
+                                                 in RTCORBA::Priority priority)
+        raises (ServantAlreadyActive,
+                ObjectAlreadyActive,
+                WrongPolicy);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
     };
 
 
