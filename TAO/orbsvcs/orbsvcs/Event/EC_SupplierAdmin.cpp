@@ -40,7 +40,7 @@ TAO_EC_SupplierAdmin::_default_POA (CORBA::Environment&)
 
 void
 TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
-				 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
       ACE_Lock, ace_mon, *this->lock_,
@@ -61,7 +61,7 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
 
 void
 TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
       ACE_Lock, ace_mon, *this->lock_,
@@ -82,7 +82,7 @@ TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
 
 void
 TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
-				 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
       ACE_Lock, ace_mon, *this->lock_,
@@ -95,7 +95,7 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
 
 void
 TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
       ACE_Lock, ace_mon, *this->lock_,
@@ -123,6 +123,7 @@ TAO_EC_SupplierAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
         {
           (*i)->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+          (*i)->_decr_refcnt ();
         }
       ACE_CATCHANY
         {
@@ -130,6 +131,7 @@ TAO_EC_SupplierAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
         }
       ACE_ENDTRY;
     }
+  this->all_consumers_.reset ();
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr

@@ -49,17 +49,14 @@ public:
   TAO_EC_ProxyPushSupplier_Set_Immediate (void);
   // Constructor.
 
+  // = Read the descriptions in EC_ProxyPushSupplier_Set
   virtual int busy (void);
   virtual int idle (void);
-  // The implementation of this methods is provided by derived
-  // classes, that provide appropiate locking.
-
   virtual void connected (TAO_EC_ProxyPushSupplier*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushSupplier*,
                              CORBA::Environment&);
-  // Used to inform the EC that a Supplier has connected or
-  // disconnected from it.
+  virtual void shutdown (CORBA::Environment&);
 
 private:
   ACE_LOCK lock_;
@@ -94,6 +91,7 @@ public:
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushSupplier*,
                              CORBA::Environment&);
+  virtual void shutdown (CORBA::Environment&);
 
 protected:
   virtual void execute_delayed_operations (void);

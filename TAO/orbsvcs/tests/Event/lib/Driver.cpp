@@ -532,7 +532,7 @@ EC_Driver::build_consumer_qos (
 }
 
 void
-EC_Driver::connect_suppliers (CORBA::Environment &TAO_IN_ENV)
+EC_Driver::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->event_channel_->for_suppliers (ACE_TRY_ENV);
@@ -661,7 +661,7 @@ EC_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (TAO_IN_ENV);
+      this->suppliers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -671,7 +671,7 @@ EC_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (TAO_IN_ENV);
+      this->consumers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -932,8 +932,12 @@ EC_Driver::cleanup_tasks (void)
   if (this->tasks_ != 0)
     {
       for (int i = 0; i != this->n_suppliers_; ++i)
-        delete this->tasks_[i];
+        {
+          delete this->tasks_[i];
+          this->tasks_[i] = 0;
+        }
       delete[] this->tasks_;
+      this->tasks_ = 0;
     }
 }
 
@@ -943,8 +947,12 @@ EC_Driver::cleanup_suppliers (void)
   if (this->suppliers_ != 0)
     {
       for (int i = 0; i != this->n_suppliers_; ++i)
-        delete this->suppliers_[i];
+        {
+          delete this->suppliers_[i];
+          this->suppliers_[i] = 0;
+        }
       delete[] this->suppliers_;
+      this->suppliers_ = 0;
     }
 }
 
@@ -954,8 +962,12 @@ EC_Driver::cleanup_consumers (void)
   if (this->consumers_ != 0)
     {
       for (int i = 0; i != this->n_consumers_; ++i)
-        delete this->consumers_[i];
+        {
+          delete this->consumers_[i];
+          this->consumers_[i] = 0;
+        }
       delete[] this->consumers_;
+      this->consumers_ = 0;
     }
 }
 

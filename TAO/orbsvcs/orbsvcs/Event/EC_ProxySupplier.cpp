@@ -78,6 +78,8 @@ TAO_EC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   consumer->disconnect_push_consumer (ACE_TRY_ENV);
+
+  this->_decr_refcnt ();
 }
 
 void
