@@ -66,12 +66,12 @@ public:
   // these numbers in alphanumeric form and <subscribe> will convert
   // them into numbers via <ACE_OS::atoi>.
 
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-		 const ACE_Connect_QoS_Params &qos_params,
-                 int reuse_addr = 1,
-                 const ASYS_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,
-                 int protocol = 0);
+  ACE_HANDLE subscribe (const ACE_INET_Addr &mcast_addr,
+                        const ACE_Connect_QoS_Params &qos_params,
+                        int reuse_addr = 1,
+                        const ASYS_TCHAR *net_if = 0,
+                        int protocol_family = PF_INET,
+                        int protocol = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network
   // interface device driver is instructed to accept datagrams with
@@ -82,7 +82,8 @@ public:
   // The <net_if> interface is hardware specific, e.g., use "netstat
   // -i" to find whether your interface is, such as "le0" or something
   // else.  If net_if == 0, <subscribe> uses the default mcast
-  // interface.  Returns: -1 on error, else 0.
+  // interface.  Returns: an <ACE_HANDLE> to the newly created
+  // multipoint socket on success or ACE_INVALID_HANDLE on failure.
   // 
   // Note that some platforms, such as pSoS, support only number, not
   // names, for network interfaces.  For these platforms, just give
