@@ -24,6 +24,38 @@
 #include "helloCS.h"
 #include "helloEC.h"
 
+class CIAO_HelloWorld_Context :
+  public virtual CCM_HelloWorld_Context,
+  public virtual ::Components::SessionContext
+{
+  // Operations for HellowWorld attributes, event source, and
+  // receptable defined in CCM_HelloWorld_Context.
+
+  // Operations for ::Components::CCMContext
+  virtual ::Components::Principal_ptr get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::CCMHome_ptr get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean get_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState));
+  virtual ::Components::Transaction::UserTransaction_ptr get_user_transaction (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState));
+  virtual CORBA::Boolean is_caller_in_role (const char * role
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState));
+
+
+  // Operations for ::Components::SessionContext interface
+  virtual CORBA::Object_ptr get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState));
+};
+
 class CIAO_HelloWorld_Servant
   : public virtual POA_HelloWorld,
   // @@ Perhaps we could implement a common component servant class
@@ -39,6 +71,7 @@ public:
   ~CIAO_HelloWorld_Servant (void);
 
   // Operations for supported interfaces.
+  // Explicit opereations and attribute operations.
   virtual char * sayhello (const char * username
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -169,4 +202,42 @@ protected:
 
   // My Run-time Context.
   CCM_HelloWorld_Context_var context_;
+};
+
+
+class CIAO_HelloHome_Servant
+{
+public:
+  // Ctor.
+  CIAO_HelloHome_Servant (CCM_HelloWorld_ptr exe);
+
+  // Dtor.
+  ~CIAO_HelloHome_Servant (void);
+
+  // User defined and inherited operations
+  // (Factories, Finders, and explicit operations.)
+
+  // Operations for KeylessHome interface
+  virtual ::Components::CCMObject_ptr create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CreateFailure));
+
+  // Operations for Implicit Home interface
+  virtual ::HelloWorld_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CreateFailure));
+
+  // Operations for CCMHome interface
+  virtual ::CORBA::IRObject_ptr get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::CORBA::IRObject_ptr get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void remove_component (Components::CCMObject_ptr comp
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::RemoveFailure));
+
+protected:
+  // My Executor.
+  CCM_HelloWorld_var executor_;
 };
