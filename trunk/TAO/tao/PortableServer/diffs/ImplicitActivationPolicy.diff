@@ -1,5 +1,5 @@
---- orig/ImplicitActivationPolicyC.h	2004-11-17 09:22:00.456534400 +0100
-+++ ImplicitActivationPolicyC.h	2004-11-17 09:22:11.171942400 +0100
+--- orig/ImplicitActivationPolicyC.h	2005-02-18 11:19:44.977499200 +0100
++++ ImplicitActivationPolicyC.h	2005-02-18 11:19:48.592697600 +0100
 @@ -96,6 +96,7 @@
      NO_IMPLICIT_ACTIVATION
    };
@@ -29,28 +29,28 @@
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:958
+ // be\be_codegen.cpp:961
  
---- orig/ImplicitActivationPolicyC.cpp	2004-11-17 09:22:00.456534400 +0100
-+++ ImplicitActivationPolicyC.cpp	2004-11-17 09:22:11.332172800 +0100
-@@ -45,6 +45,8 @@
+--- orig/ImplicitActivationPolicyC.cpp	2005-02-18 11:19:44.977499200 +0100
++++ ImplicitActivationPolicyC.cpp	2005-02-18 11:19:48.602712000 +0100
+@@ -44,6 +44,8 @@
  // TAO_IDL - Generated from
- // be\be_visitor_arg_traits.cpp:64
+ // be\be_visitor_arg_traits.cpp:66
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
  // Arg traits specializations.
  namespace TAO
  {
-@@ -260,3 +262,5 @@
+@@ -253,3 +255,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ImplicitActivationPolicyA.cpp	2004-11-17 09:22:00.476563200 +0100
-+++ ImplicitActivationPolicyA.cpp	2004-11-17 09:22:11.392259200 +0100
-@@ -33,6 +33,8 @@
+--- orig/ImplicitActivationPolicyA.cpp	2005-02-18 11:19:44.977499200 +0100
++++ ImplicitActivationPolicyA.cpp	2005-02-18 11:19:48.612726400 +0100
+@@ -35,6 +35,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:295
  
@@ -59,7 +59,7 @@
  static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
  {
    TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -259,3 +261,5 @@
+@@ -261,3 +263,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

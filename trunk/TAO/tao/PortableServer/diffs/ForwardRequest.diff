@@ -1,5 +1,5 @@
---- orig/ForwardRequestC.h	2005-01-27 13:51:06.723408000 +0100
-+++ ForwardRequestC.h	2005-01-27 13:53:01.788864000 +0100
+--- orig/ForwardRequestC.h	2005-02-18 11:19:47.210710400 +0100
++++ ForwardRequestC.h	2005-02-18 11:19:49.133475200 +0100
 @@ -66,6 +66,8 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
@@ -9,17 +9,17 @@
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:48
  
-@@ -158,6 +160,8 @@
+@@ -160,6 +162,8 @@
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:958
+ // be\be_codegen.cpp:961
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  #if defined (__ACE_INLINE__)
  #include "ForwardRequestC.inl"
  #endif /* defined INLINE */
---- orig/ForwardRequestC.cpp	2005-01-27 13:51:06.723408000 +0100
-+++ ForwardRequestC.cpp	2005-01-27 13:52:38.184923200 +0100
+--- orig/ForwardRequestC.cpp	2005-02-18 11:19:47.210710400 +0100
++++ ForwardRequestC.cpp	2005-02-18 11:19:49.143489600 +0100
 @@ -43,6 +43,8 @@
  #include "ForwardRequestC.inl"
  #endif /* !defined INLINE */
@@ -27,18 +27,18 @@
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
  // TAO_IDL - Generated from
- // be\be_visitor_arg_traits.cpp:64
+ // be\be_visitor_arg_traits.cpp:66
  
-@@ -294,3 +296,5 @@
+@@ -279,3 +281,5 @@
  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ForwardRequestA.cpp	2005-01-27 13:51:06.723408000 +0100
-+++ ForwardRequestA.cpp	2005-01-27 13:52:23.373625600 +0100
-@@ -29,6 +29,8 @@
- #include "tao/Typecode.h"
+--- orig/ForwardRequestA.cpp	2005-02-18 11:19:47.210710400 +0100
++++ ForwardRequestA.cpp	2005-02-18 11:19:49.153504000 +0100
+@@ -31,6 +31,8 @@
+ #include "tao/Any.h"
  #include "tao/Any_Dual_Impl_T.h"
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
@@ -46,7 +46,7 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_exception/any_op_cs.cpp:50
  
-@@ -129,3 +131,5 @@
+@@ -131,3 +133,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

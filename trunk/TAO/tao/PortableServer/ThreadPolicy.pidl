@@ -17,6 +17,7 @@
 #ifndef _PORTABLESERVER_THREAD_POLICY_IDL_
 #define _PORTABLESERVER_THREAD_POLICY_IDL_
 
+///FUZZ: disable check_for_include/
 #include <tao/Policy.pidl>
 
 #pragma prefix "omg.org"

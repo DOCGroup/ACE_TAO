@@ -150,7 +150,7 @@ CORBA::Exception *PortableServer::Current::NoContext::_alloc (void)
 CORBA::Exception *
 PortableServer::Current::NoContext::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableServer::Current::NoContext (*this),
@@ -308,11 +308,11 @@ PortableServer::Current::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -324,11 +324,11 @@ const char* PortableServer::Current::_interface_repository_id (void) const
 CORBA::Boolean
 PortableServer::Current::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
