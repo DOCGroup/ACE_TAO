@@ -1,10 +1,19 @@
+Wed Jun 23 11:24:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_macros.h:
+
+	  Missed one static_cast<> reversion in the Win32 case.  See the
+	  "Tue Jun 22 12:33:49 2004  Ossama Othman
+	  <ossama@dre.vanderbilt.edu>" ChangeLog entry for details.
+
 Wed Jun 23 12:18:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/String_Base.{h inl}: Added new method, fast_clear(), which
 	  sets the string length to 0. Doesn't release string-allocated
 	  memory, but if the memory was externally supplied, it is no
 	  longer referenced from the string object. Thanks to
-	  Sergei Kuchin <skuchin@mqsoftware.com> for contributing this method.
+	  Sergei Kuchin <skuchin@mqsoftware.com> for contributing this
+	  method.
 
 	* tests/SString_Test.cpp: Added smoke test for fast_clear().
 
