@@ -18,7 +18,7 @@
 //    using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
 //
 // = AUTHOR
-//    Nanbor Wang <nw1@cs.wustl.edu>
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -34,6 +34,8 @@ ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const char * executable = "MORE.COM";
+static char *rendezvous_dir = "c:/temp";
+static char *rendezvous_pfx = "imore";
 #else
 static const char * executable = "more"; // I like less better.
 static char *rendezvous_dir = "/tmp";
@@ -220,7 +222,12 @@ main (int argc, char *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
 
     options.command_line (executable);
-    new_process.spawn (options);
+    if (new_process.spawn (options) == -1)
+      {
+        int error = ACE_OS::last_error ();
+        ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
+                           "test_more", error), -1);
+      }
   }
 
   // write file to ACE_STDOUT.
@@ -231,14 +238,18 @@ main (int argc, char *argv[])
   ACE_OS::close (ACE_STDOUT);
 #else
   // We can only pass a file handler directly to child process
-  // otherwise "more" doesn't act quite the way we want.  What do you
-  // expect?  It's just Billy boy's toy.  Nonetheless, if your child
-  // processes don't need to interact with the terminal, we can use
-  // the exact code for Unixes on NT.
+  // otherwise "more" doesn't act quite the way we want.  Nonetheless,
+  // if your child process don't need to interact with the terminal,
+  // we can use the exact code for Unixes on NT.
   ACE_Process_Options options;
   options.command_line (executable);
   options.set_handles (infile);
-  new_process.spawn (options);
+  if (new_process.spawn (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
+                         "test_more", error), -1);
+    }
 #endif /* ! ACE_WIN32 */
 
   // Wait till we are done.
