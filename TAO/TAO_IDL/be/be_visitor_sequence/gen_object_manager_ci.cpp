@@ -265,3 +265,5 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
   return 0;
 }
 
+
+
