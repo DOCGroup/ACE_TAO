@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Reply_Handler.h"
+#include "Client_Task.h"
 #include "tao/Messaging.h"
 #include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
@@ -148,6 +149,12 @@ main (int argc, char *argv[])
                             1);
         }
 
+      Client_Task client_task (orb.in ());
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+        }
+
       if (run_message_count_test)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -198,6 +205,8 @@ main (int argc, char *argv[])
                       "ERROR: No test was configured\n"));
         }
 
+      client_task.thr_mgr ()->wait ();
+      
       ami_buffering->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -302,6 +311,8 @@ run_progress_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
                    CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG, "Liveness test\n"));
+
   int test_failed = 0;
 
   // Get back in sync with the server...
