@@ -2597,8 +2597,12 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current_pt
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::Current::NoContext &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current::NoContext &);
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::POAManager_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POAManager_ptr &);
