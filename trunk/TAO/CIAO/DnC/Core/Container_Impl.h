@@ -66,7 +66,7 @@ namespace CIAO
 
     /// Get the containing POA.  This operation does *not*
     /// increase the reference count of the POA.
-    virtual PortCableServer::POA_ptr _default_POA (void);
+    virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the container with a name.
     int init (const Components::ConfigValues &options
