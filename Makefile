@@ -98,7 +98,7 @@ RELEASE_LIB_FILES = \
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
   TIMESTAMP = (lynx -dump ACE-INSTALL.html > ACE-INSTALL; \
-		CHANGELOG='ChangeLog'; export CHANGELOG; \
+                CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; s/$$/\\\n  /g'`; cd ACE_wrappers; \
@@ -113,7 +113,8 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                 'BEGIN {($$message = \
                            $$ENV{"DATE"} . "  " . \
                            $$ENV{"SIGNATURE"} . "  <" . \
-                           $$ENV{"LOGNAME"} . "\@cs.wustl.edu>\n\n\t* " . \
+                           $$ENV{"LOGNAME"} . \
+                           "\@cs.wustl.edu>\n\n        * " . \
                            $$ENV{"ACE_VERSION"} . "\n"); \
                         $$message_printed = 0;} \
                  while (<>) { \
@@ -121,9 +122,9 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                    print; } ' $$CHANGELOG; \
               echo $$ACE_VERSION | perl -ne ' \
                ($$version = $$_) =~ s/ACE version ([\d\.]+).*\n/$$1/; \
-	         ($$major, $$minor, $$beta) = split /\./, $$version; \
+                 ($$major, $$minor, $$beta) = split /\./, $$version; \
                  print "// \$$Id\$$\n" . \
-	               "// This is an automatically generated file.\n\n" . \
+                       "// This is an automatically generated file.\n\n" . \
                        "\#define ACE_MAJOR_VERSION ($${major}u)\n" . \
                        "\#define ACE_MINOR_VERSION ($${minor}u)\n" . \
                        "\#define ACE_BETA_VERSION ($${beta}u)\n" . \
