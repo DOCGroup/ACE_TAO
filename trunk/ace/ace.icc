@@ -7,6 +7,7 @@ include "ace_vacpp_options.icc"
 
 group OS_FILES =
   "Basic_Types.cpp",
+  "Time_Value.cpp",
   "OS.cpp",
   "OS_Dirent.cpp",
   "OS_Memory.cpp",
@@ -18,10 +19,12 @@ group OS_FILES =
   "OS_Log_Msg_Attributes.cpp",
   "Thread_Hook.cpp",
   "Sched_Params.cpp",
-  "Handle_Set.cpp"
+  "Handle_Set.cpp",
+  "Copy_Disabled.cpp"
 
 group OS_INCLUDES =
   "Basic_Types.h",
+  "Time_Value.h",
   "OS.h",
   "OS_Dirent.h",
   "OS_Memory.h",
@@ -33,14 +36,15 @@ group OS_INCLUDES =
   "OS_Log_Msg_Attributes.h",
   "Thread_Hook.h",
   "Sched_Params.h",
-  "Handle_Set.h"
+  "Handle_Set.h",
+  "Copy_Disabled.h"
 
 group UTILS_FILES =
   "ACE.cpp",
   "Active_Map_Manager.cpp",
   "Arg_Shifter.cpp",
   "ARGV.cpp",
-  "Basic_Stats.cpp",
+  "Argv_Type_Converter.cpp",
   "Capabilities.cpp",
   "Connection_Recycling_Strategy.cpp",
   "Containers.cpp",
@@ -49,7 +53,6 @@ group UTILS_FILES =
   "Dirent.cpp",
   "Dirent_Selector.cpp",
   "Dynamic.cpp",
-  "Dynamic_Service_Base.cpp",
   "Flag_Manip.cpp",
   "Framework_Component.cpp",
   "Functor.cpp",
@@ -57,30 +60,19 @@ group UTILS_FILES =
   "Handle_Ops.cpp",
   "Hash_Map_Manager.cpp",
   "Hashable.cpp",
-  "High_Res_Timer.cpp",
   "Init_ACE.cpp",
   "Lib_Find.cpp",
-  "Malloc_Instantiations.cpp",
   "Message_Block.cpp",
   "Method_Request.cpp",
   "Notification_Strategy.cpp",
   "Object_Manager.cpp",
-  "Profile_Timer.cpp",
   "Recyclable.cpp",
   "Refcountable.cpp",
   "Registry.cpp",
   "Sample_History.cpp",
   "SString.cpp",
   "Stats.cpp",
-  "String_Base_Const.cpp",
-  "System_Time.cpp",
-  "Time_Request_Reply.cpp",
-  "Timeprobe.cpp",
-  "Timer_Hash.cpp",
-  "Timer_Heap.cpp",
-  "Timer_List.cpp",
-  "Timer_Queue.cpp",
-  "Timer_Wheel.cpp"
+  "String_Base_Const.cpp"
 //  #### NOTE:  see below for Filecache.
 
 group UTILS_INCLUDES =
@@ -88,7 +80,7 @@ group UTILS_INCLUDES =
   "Active_Map_Manager.h",
   "Arg_Shifter.h",
   "ARGV.h",
-  "Basic_Stats.h",
+  "Argv_Type_Converter.h",
   "Capabilities.h",
   "Connection_Recycling_Strategy.h",
   "Containers.h",
@@ -97,7 +89,6 @@ group UTILS_INCLUDES =
   "Dirent.h",
   "Dirent_Selector.h",
   "Dynamic.h",
-  "Dynamic_Service_Base.h",
   "Flag_Manip.h",
   "Framework_Component.h",
   "Functor.h",
@@ -112,22 +103,13 @@ group UTILS_INCLUDES =
   "Method_Request.h",
   "Notification_Strategy.h",
   "Object_Manager.h",
-  "Profile_Timer.h",
   "Recyclable.h",
   "Refcountable.h",
   "Registry.h",
   "Sample_History.h",
   "SString.h",
   "Stats.h",
-  "String_Base_Const.h",
-  "System_Time.h",
-  "Time_Request_Reply.h",
-  "Timeprobe.h",
-  "Timer_Hash.h",
-  "Timer_Heap.h",
-  "Timer_List.h",
-  "Timer_Queue.h",
-  "Timer_Wheel.h"
+  "String_Base_Const.h"
 //  #### NOTE:  see below for Filecache.
 
 group LOGGING_FILES =
@@ -189,10 +171,13 @@ group THREADS_INCLUDES =
   "Token.h"
 
 group DEMUX_FILES =
+  "Dev_Poll_Reactor.cpp",
   "Event_Handler.cpp",
   "FlReactor.cpp",
   "Msg_WFMO_Reactor.cpp",
   "POSIX_Proactor.cpp",
+  "POSIX_CB_Proactor.cpp",
+  "WIN32_Proactor.cpp",
   "Priority_Reactor.cpp",
   "Proactor.cpp",
   "Reactor.cpp",
@@ -206,10 +191,13 @@ group DEMUX_FILES =
   "QtReactor.cpp"
 
 group DEMUX_INCLUDES =
+  "Dev_Poll_Reactor.h",
   "Event_Handler.h",
   "FlReactor.h",
   "Msg_WFMO_Reactor.h",
   "POSIX_Proactor.h",
+  "POSIX_CB_Proactor.h",
+  "WIN32_Proactor.h",
   "Priority_Reactor.h",
   "Proactor.h",
   "Reactor.h",
@@ -226,13 +214,15 @@ group CONNECTION_FILES =
   "Asynch_IO.cpp",
   "Asynch_IO_Impl.cpp",
   "Asynch_Pseudo_Task.cpp",
-  "POSIX_Asynch_IO.cpp"
+  "POSIX_Asynch_IO.cpp",
+  "WIN32_Asynch_IO.cpp"
 
 group CONNECTION_INCLUDES =
   "Asynch_IO.h",
   "Asynch_IO_Impl.h",
   "Asynch_Pseudo_Task.h",
-  "POSIX_Asynch_IO.h"
+  "POSIX_Asynch_IO.h",
+  "WIN32_Asynch_IO.h"
 
 group SOCKETS_FILES =
   "Addr.cpp",
@@ -380,6 +370,7 @@ group IPC_INCLUDES =
 
 group SVCCONF_FILES =
   "DLL.cpp",
+  "Dynamic_Service_Base.cpp",
   "Parse_Node.cpp",
   "Service_Config.cpp",
   "Service_Manager.cpp",
@@ -394,6 +385,7 @@ group SVCCONF_FILES =
 
 group SVCCONF_INCLUDES =
   "DLL.h",
+  "Dynamic_Service_Base.h",
   "Parse_Node.h",
   "Service_Config.h",
   "Service_Manager.h",
@@ -424,9 +416,11 @@ group MEMORY_FILES =
   "Malloc.cpp",
   "PI_Malloc.cpp",
   "Malloc_Allocator.cpp",
+  "Malloc_Instantiations.cpp",
   "Mem_Map.cpp",
   "Memory_Pool.cpp",
   "Obchunk.cpp",
+  "Obstack.cpp",
   "Read_Buffer.cpp",
   "Shared_Memory.cpp",
   "Shared_Memory_MM.cpp",
@@ -445,6 +439,32 @@ group MEMORY_INCLUDES =
   "Shared_Memory.h",
   "Shared_Memory_MM.h",
   "Shared_Memory_SV.h"
+
+group TIMER_FILES =
+  "Basic_Stats.cpp",
+  "High_Res_Timer.cpp",
+  "Profile_Timer.cpp",
+  "System_Time.cpp",
+  "Time_Request_Reply.cpp",
+  "Timeprobe.cpp",
+  "Timer_Hash.cpp",
+  "Timer_Heap.cpp",
+  "Timer_List.cpp",
+  "Timer_Queue.cpp",
+  "Timer_Wheel.cpp"
+
+group TIMER_INCLUDES =
+  "Basic_Stats.h",
+  "High_Res_Timer.h",
+  "Profile_Timer.h",
+  "System_Time.h",
+  "Time_Request_Reply.h",
+  "Timeprobe.h",
+  "Timer_Hash.h",
+  "Timer_Heap.h",
+  "Timer_List.h",
+  "Timer_Queue.h",
+  "Timer_Wheel.h"
 
 group TOKEN_FILES =
   "Local_Tokens.cpp",
@@ -492,6 +512,7 @@ group TEMPLATE_FILES =
            "Auto_IncDec_T.cpp",
            "Auto_Ptr.cpp",
            "Based_Pointer_T.cpp",
+           "Bound_Ptr.cpp",
            "Connector.cpp",
            "Containers_T.cpp",
            "Cache_Map_Manager_T.cpp",
@@ -513,6 +534,7 @@ group TEMPLATE_FILES =
            "Hash_Cache_Map_Manager_T.cpp",
            "IOStream_T.cpp",
            "Intrusive_List.cpp",
+           "Intrusive_List_Node.cpp",
            "LOCK_SOCK_Acceptor.cpp",
            "Local_Name_Space_T.cpp",
            "Malloc_T.cpp",
@@ -522,6 +544,7 @@ group TEMPLATE_FILES =
            "Message_Block_T.cpp",
            "Message_Queue_T.cpp",
            "Module.cpp",
+           "Obstack_T.cpp",
            "Pair_T.cpp",
            "Refcounted_Auto_Ptr.cpp",
            "RB_Tree.cpp",
@@ -544,7 +567,8 @@ group TEMPLATE_FILES =
            "Timer_Queue_T.cpp",
            "Timer_Wheel_T.cpp",
            "Typed_SV_Message.cpp",
-           "Typed_SV_Message_Queue.cpp"
+           "Typed_SV_Message_Queue.cpp",
+           "Vector_T.cpp"
 
 option
     PlatformOptions,
@@ -574,6 +598,7 @@ option
                     SVCCONF_INCLUDES,
                     STREAMS_INCLUDES,
                     MEMORY_INCLUDES,
+                    TIMER_INCLUDES,
                     TOKEN_INCLUDES,
                     OTHER_INCLUDES,
                     "config.h",
@@ -595,6 +620,7 @@ option
                 SVCCONF_FILES,
                 STREAMS_FILES,
                 MEMORY_FILES,
+                TIMER_FILES,
                 TOKEN_FILES,
                 OTHER_FILES
 

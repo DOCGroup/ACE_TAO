@@ -4,6 +4,22 @@ Fri Apr 26 16:36:52 2002  Steve Huston  <shuston@riverace.com>
           "ace/Log_Record.h" to pick up ACE_Log_Record declaration.
           Fixes compile error on HP-UX.
 
+Fri Apr 26 15:10:21 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp:
+        * ace/Sock_Connect.cpp: Moved ACE_Auto_Array_Ptr<> and
+          ACE_Auto_Basic_Array_Ptr<> instantiations from ACE.cpp to
+          Sock_Connect where they are now used. Also added MACOSX to the
+          platforms that get them instantiated.
+          Added include of OS.h in Sock_Connect.cpp to pick up the ifreq
+          stuff portably.
+
+        * ace.icc: Added Time_Value, Copy_Disabled, Argv_Type_Converter,
+          Dev_Poll_Reactor, POSIX_CB_Proactor, WIN32_Proactor,
+          WIN32_Asynch_IO, Obstack, Vector_T.
+          Added the new group TIMER_FILES (and TIMER_INCLUDES) to parallel
+          the TIMER_FILES in ace/Makefile.
+
 Fri Apr 26 14:05:49 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.i:
