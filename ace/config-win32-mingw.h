@@ -43,6 +43,20 @@
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
+#define ACE_LACKS_DIRENT_H
+#define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_SYS_RESOURCE_H
+#define ACE_LACKS_SYS_WAIT_H
+#define ACE_LACKS_DLFCN_H
+#define ACE_LACKS_SYS_MMAN_H
+#define ACE_LACKS_SYS_UIO_H
+#define ACE_LACKS_SYS_SOCKET_H
+#define ACE_LACKS_NETINET_IN_H
+#define ACE_LACKS_NETDB_H
+#define ACE_LACKS_NET_IF_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_SEM_H
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
