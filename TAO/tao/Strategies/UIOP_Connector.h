@@ -111,14 +111,11 @@ protected:
 
 private:
 
-<<<<<<< UIOP_Connector.h
-=======
   /// Return the remote endpoint, a helper function
   TAO_UIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
 
->>>>>>> 1.14.2.3
   /// Our connect strategy
   TAO_UIOP_CONNECT_STRATEGY connect_strategy_;
 
