@@ -1,4 +1,7 @@
-// $Id$
+// file      : CIDLC/ServantHeaderGenerator.hpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef SERVANT_HEADER_GENERATOR_HPP
 #define SERVANT_HEADER_GENERATOR_HPP
 

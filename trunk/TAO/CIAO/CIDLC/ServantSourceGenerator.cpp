@@ -1,4 +1,7 @@
-// $Id$
+// file      : CIDLC/ServantSourceGenerator.cpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
 #include "ServantSourceGenerator.hpp"
 
 #include "CCF/CIDL/SyntaxTree.hpp"
@@ -7,6 +10,7 @@
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
 #include "Literals.hpp"
+#include "TypeNameEmitter.hpp"
 
 #include <ostream>
 #include <sstream>
@@ -33,152 +37,6 @@ namespace
 
     return os.str ();
   }
-
-  // Generates the name of an operation's return type.
-  //
-  //
-  class ReturnTypeNameEmitter : public SourceEmitterBase,
-                                public Traversal::Void,
-                                public Traversal::Boolean,
-                                public Traversal::Long,
-                                public Traversal::String,
-                                public Traversal::LocalInterfaceDecl
-  {
-  public:
-    ReturnTypeNameEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (VoidPtr const&)
-    {
-      os << "void";
-    }
-
-    virtual void
-    traverse (BooleanPtr const&)
-    {
-      os << "::CORBA::Boolean";
-    }
-
-    virtual void
-    traverse (LongPtr const&)
-    {
-      os << "::CORBA::Long";
-    }
-
-    virtual void
-    traverse (StringPtr const&)
-    {
-      os << "char *";
-    }
-
-    virtual void
-    traverse (LocalInterfaceDeclPtr const& i)
-    {
-      os << i->name () << "_ptr";
-    }
-  };
-
-  // Generates the typename of an IN argument.
-  //
-  //
-  class INArgTypeNameEmitter : public SourceEmitterBase,
-                               public Traversal::Boolean,
-                               public Traversal::Long,
-                               public Traversal::String
-  {
-  public:
-    INArgTypeNameEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (BooleanPtr const&)
-    {
-      os << "::CORBA::Boolean";
-    }
-
-    virtual void
-    traverse (LongPtr const&)
-    {
-      os << "::CORBA::Long";
-    }
-
-    virtual void
-    traverse (StringPtr const&)
-    {
-      os << "const char *";
-    }
-  };
-
-  // Generates the typename of an OUT argument.
-  //
-  //
-  class OUTArgTypeNameEmitter : public SourceEmitterBase,
-                                public Traversal::Boolean,
-                                public Traversal::Long,
-                                public Traversal::String
-  {
-  public:
-    OUTArgTypeNameEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (BooleanPtr const&)
-    {
-      os << "::CORBA::Boolean_out";
-    }
-
-    virtual void
-    traverse (LongPtr const&)
-    {
-      os << "::CORBA::Long_out";
-    }
-
-    virtual void
-    traverse (StringPtr const&)
-    {
-      os << "::CORBA::String_out";
-    }
-  };
-
-  // Generates the typename of an INOUT argument.
-  //
-  //
-  class INOUTArgTypeNameEmitter : public SourceEmitterBase,
-                                  public Traversal::Boolean,
-                                  public Traversal::Long,
-                                  public Traversal::String
-  {
-  public:
-    INOUTArgTypeNameEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (BooleanPtr const&)
-    {
-      os << "::CORBA::Boolean &";
-    }
-
-    virtual void
-    traverse (LongPtr const&)
-    {
-      os << "::CORBA::Long &";
-    }
-
-    virtual void
-    traverse (StringPtr const&)
-    {
-      os << "char *&";
-    }
-  };
 
   // Generates an argument's identifier.
   //
@@ -2692,7 +2550,7 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   component.add_scope_delegate (&publishes_emitter);
 
   Traversal::FileScope fs;
-  NamespaceEmitter m (os, declarations_);;
+  NamespaceEmitter m (os, declarations_);
 
   fs.add_scope_delegate (&m);
 
