@@ -151,13 +151,35 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
       AST_Type *rt = node->return_type ();
       bt = be_type::narrow_from_decl (rt);
+      AST_Decl::NodeType bnt = bt->base_node_type ();
 
-      if (bt->base_node_type () == AST_Decl::NT_enum)
+      if (bnt == AST_Decl::NT_enum)
         {
-          *os << "(" << bt->name () << ")";
+          // The enum is a unique type, so we must cast.
+          *os << "(" << bt->name () << ")0);";
+        }
+      else if (bnt == AST_Decl::NT_struct || bnt == AST_Decl::NT_union)
+        {
+          be_decl *bd = be_decl::narrow_from_decl (bt);
+
+          if (bd->size_type () == be_decl::FIXED)
+            {
+              // For a fixed size struct or union the return value
+              // is not a pointer, so we call the default constructor
+              // and return the result.
+              *os << bt->name () << " ());";
+            }
+          else
+            {
+              *os << "0);";
+            }
+        }
+      else
+        {
+          *os << "0);";
         }
       
-      *os << "0);" << be_nl << be_nl
+      *os << be_nl << be_nl
           << "return ";
     }
   else
