@@ -1,3 +1,8 @@
+Thu Apr 15 12:56:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/UIOP_Acceptor.cpp:
+          Added include of tao/CDR.h
+
 Thu Apr 15 12:51:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORTable/IORTableC.h:
