@@ -5,6 +5,16 @@
 // 5.2/5.3 platforms using one of these compilers:
 // 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
 // 2) The GreenHills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
+//    NOTE:  if you're using GreenHills 1.8.9, you'll have to
+//           uncomment the #define ACE_HAS_STANDARD_CPP_LIBRARY 1
+//           line below!  Or, use an ace/config.h that looks like:
+//
+// #ifndef ACE_CONFIG_H
+// // ACE_CONFIG_H is defined by the following #included header.
+//
+// #include "ace/config-vxworks5.x.h"
+// #define ACE_HAS_STANDARD_CPP_LIBRARY 1
+// #endif /* ACE_CONFIG_H */
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
