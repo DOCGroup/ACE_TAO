@@ -1,3 +1,8 @@
+Fri Sep 04 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.i: Here, we should use ASYS_INLINE which is always
+	  defined as inline on most platforms.
+
 Fri Sep  4 14:16:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config: Changed the default value of
