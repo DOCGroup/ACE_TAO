@@ -1,3 +1,9 @@
+Thu Jan 04 17:07:48 2001  Luther Baker  <luther@cs.wustl.edu>
+
+ 	* ace/ace_dll.dsp
+
+ 	  Consistent typography (win32 specific backslash).
+
 Thu Jan  4 15:34:14 2001  Luther J Baker  <luther@cs.wustl.edu>
 
  	* ace/ace_dll.dsp
