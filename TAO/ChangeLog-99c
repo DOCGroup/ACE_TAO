@@ -1,3 +1,9 @@
+Wed Mar 31 06:58:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_to_service): Fixed a couple mistakes in
+ 	  this function that were causing it to fail on errors.  Thanks to
+ 	  Mike Mazurek <mmazurek@std.saic.com> for reporting this.
+
 Wed Mar 31 03:24:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAS.{h,cpp}:

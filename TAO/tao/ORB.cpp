@@ -659,7 +659,7 @@ CORBA_ORB::multicast_query (char *buf,
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACE_ERROR_RETURN ((LM_ERROR,
 		       "acceptor.open () || "
 		       "acceptor.get_local_addr () failed"),
 		      -1);
@@ -731,11 +731,9 @@ CORBA_ORB::multicast_query (char *buf,
 
   // Start listening.
   if (acceptor.accept (stream, 0, &tv) == -1)
-    if (TAO_debug_level > 0)
-      ACE_ERROR_RETURN ((LM_DEBUG,
-			 "multicast_query : Unable to accept\n"),
-			0);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "multicast_query : Unable to accept\n"),
+                      -1);
   // Receive the IOR.
   n_bytes = stream.recv (buf,
                          BUFSIZ,
@@ -746,14 +744,9 @@ CORBA_ORB::multicast_query (char *buf,
 
   // Check for errors.
   if (n_bytes == -1)
-    {
-      if (TAO_debug_level > 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Error reading IIOP multicast response!\n"),
-			  -1);
-      return -1;
-    }
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error reading IIOP multicast response!\n"),
+                      -1);
   // Null terminate message.
   buf[n_bytes] = 0;
 
@@ -762,7 +755,6 @@ CORBA_ORB::multicast_query (char *buf,
 		"%s; Service resolved to ior: <%s>\n",
 		__FILE__,
 		buf));
-
   return 0;
 }
 
@@ -794,7 +786,8 @@ CORBA_ORB::multicast_to_service (const char * service_name,
 
       // Convert IOR to an object reference.
       CORBA_Object_ptr objectified_ior =
-	this->string_to_object ((CORBA::String) buf, env);
+	this->string_to_object ((CORBA::String) buf,
+                                env);
 
       // Check for errors.
       if (env.exception () == 0)
