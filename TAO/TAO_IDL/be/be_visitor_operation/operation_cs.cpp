@@ -693,7 +693,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       else
         *os << "\"_get_\"";
     }
-  
+
   *os << "\"" << node->original_local_name ()
       << "\"," << be_nl
       << "istub->orb_core ()" << be_uidt_nl
