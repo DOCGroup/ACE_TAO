@@ -13,6 +13,7 @@ MAKEFILE = Makefile.tests
 DIRS_PARALLEL = 1
 
 BIN =   \
+        aix_hack_for_main \
 	Bound_Ptr_Test \
         Bug_1576_Regression_Test \
 	Config_Test \
