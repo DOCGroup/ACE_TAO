@@ -1,3 +1,40 @@
+Thu Jul 30 14:56:59 1998  Gonzalo A. Diethelm  <gonzo@cs.wustl.edu>
+
+	* ace/ACE.h: 
+	* ace/ACE.cpp: 
+	* ace/Event_Handler.h: 
+	* ace/Event_Handler.cpp: 
+	Moved the following static functions:
+	
+	  register_stdin_handler
+	  remove_stdin_handler
+	  read_adapter
+
+	from class ACE to class ACE_Event_Handler. That breaks a
+	dependency from ACE to higher-level classes.
+
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: 
+	* netsvcs/clients/Naming/Client/Client_Test.cpp: 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: 
+	* examples/Timer_Queue/Async_Timer_Queue_Test.dsp: 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp: 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.dsp: 
+	* examples/Reactor/Ntalker/ntalker.cpp: 
+	* examples/Reactor/Misc/test_demuxing.cpp: 
+	* examples/Reactor/Misc/notification.cpp: 
+	* examples/Connection/blocking/SPIPE-connector.cpp: 
+	* examples/ASX/UPIPE_Event_Server/event_server.cpp: 
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: 
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp: 
+	* apps/Gateway/Peer/Peer.cpp: 
+	* apps/Gateway/Gateway/Gateway.cpp: 
+	All these were modified by the above change.
+
+	* ace/OS.h: 
+	* ace/OS.i: 
+	Added a strnew function that works as strdup but uses new instead
+	of malloc to allocate memory.
+
 Thu Jul 30 16:54:20 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.26 released.

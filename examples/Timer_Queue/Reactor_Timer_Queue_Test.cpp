@@ -182,9 +182,9 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 
   ACE_Reactor::instance ()->set_timer_queue (&timer_queue_);
 
-  ACE::register_stdin_handler (&thandler_,
-                               ACE_Reactor::instance (),
-                               ACE_Thread_Manager::instance ());
+  ACE_Event_Handler::register_stdin_handler (&thandler_,
+                               			ACE_Reactor::instance (),
+                               			ACE_Thread_Manager::instance ());
 
   // print the menu of options.
   this->display_menu ();

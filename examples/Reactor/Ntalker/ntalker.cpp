@@ -165,9 +165,9 @@ Handler::Handler (u_short udp_port,
                 "%p\n",
                 "can't register with Reactor\n"));
   // Register the STDIN handler.
-  else if (ACE::register_stdin_handler (this,
-                                        ACE_Reactor::instance (),
-                                        ACE_Thread_Manager::instance ()) == -1)
+  else if (ACE_Event_Handler::register_stdin_handler (this,
+                                        		ACE_Reactor::instance (),
+                                        		ACE_Thread_Manager::instance ()) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "register_stdin_handler"));

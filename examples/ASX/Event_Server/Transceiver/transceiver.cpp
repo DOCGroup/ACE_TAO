@@ -155,9 +155,9 @@ Event_Transceiver::Event_Transceiver (int argc, char *argv[])
       // We need to register <this> here before we're connected since
       // otherwise <get_handle> will return the connection socket
       // handle for the peer.
-      else if (ACE::register_stdin_handler (this,
-                                            ACE_Reactor::instance (),
-                                            ACE_Thread_Manager::instance ()) == -1)
+      else if (ACE_Event_Handler::register_stdin_handler (this,
+							  ACE_Reactor::instance (),
+							  ACE_Thread_Manager::instance ()) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "register_stdin_handler"));
