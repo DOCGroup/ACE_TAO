@@ -1,3 +1,19 @@
+Sat Sep 28 22:16:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+
+	  When parsing a #pragma version directive, added a check and remove
+	  for a trailing space that the SunCC preprocessor puts there for 
+	  some reason. This trailing space interferes with the check for a
+	  valid version number. Thanks to Andrew T. Finnell 
+	  <andrew@activesol.net> for reporting the bug.
+
+	* TAO_IDL/ast/ast_decl.cpp (compute_repoID):
+
+	  Fixed some mistakes in computing the prefix and version when 
+	  computing the repository ID.
+
 Sat Sep 28 18:29:12 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
