@@ -11,8 +11,8 @@
 INFO  = README
 
 DIRS  = Synch-Benchmarks \
-	Misc
-#	UDP
+	Misc \
+	UDP
 
 # The following directory isn't compiled by default since haven't
 # finished integrating it into ACE...
