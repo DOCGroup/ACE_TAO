@@ -21,8 +21,8 @@ main (int argc, char* argv [])
                       test_impl,
                       -1);
 
-      int something =  28;
-      foo_i->bar ((CORBA::VoidData)something);
+      int something = 28;
+      foo_i->bar ((CORBA::VoidData) &something);
     }
   ACE_CATCHANY
     {
