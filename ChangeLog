@@ -1,10 +1,12 @@
 Sun Jan 23 13:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
+
           Default rtti to 1 instead of 0, we now use dynamic_cast in the
           ACE library itself, TAO requires RTTI, so changed the default
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
+
           Simplified this file by using ?=
 
 Sun Jan 23 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -36,7 +38,8 @@ Sun Jan 23 12:39:20 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ace_qtreactor.mpc:
         * ace/ace_flreactor.mpc:
         * ace/ace.mpc:
-        Added missing Id strings.
+          
+	  Added missing Id strings.
 
 Sun Jan 23 02:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -144,7 +147,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb:
         * bin/MakeProjectCreator/config/tao_flresource.mpb:
         * bin/MakeProjectCreator/config/tao_flreactor.mpb:
-        Adapted to new naming.
+
+          Adapted to new naming.
 
         Sun Jan  9 01:13:42 2005  Marek Brudka  <mbrudka@aster.pl>
 
@@ -152,10 +156,13 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/TkReactor.cpp (Module):
         * ace/FlReactor.h (Module):
         * ace/FlReactor.cpp (Module):
-        Removed factory methods for loading reactor from shared library.
+
+          Removed factory methods for loading reactor from shared
+	  library.
 
         * bin/MakeProjectCreator/config/global.features (Module):
-        Disabled by defult tao_flreactor and tao_tkreactor features.
+	
+          Disabled by defult tao_flreactor and tao_tkreactor features. 
 
         Mon Jan  3 22:48:32 2005  Marek Brudka  <mbrudka@aster.pl>
 
@@ -163,7 +170,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ace_tkreactor.mpc (Module):
         * ace/ace_qtreactor.mpc (Module):
         * ace/ace_flreactor.mpc (Module):
-        Removed ace_*reactor required features.
+	
+          Removed ace_*reactor required features.
 
         Tue Dec 14 00:09:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -171,83 +179,109 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
         * ACE-INSTALL.html (Module):
-        Modified base projects to enable FlReactor compilation for Windows.
+        
+	  Modified base projects to enable FlReactor compilation for
+	  Windows. 
 
         Mon Dec 13 01:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
         * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
-        Removed nice feature inheritance and reentered a workaround related with
-        "verbatim" section bug in MPC.
+	
+          Removed nice feature inheritance and reentered a workaround
+	  related with "verbatim" section bug in MPC.
 
         Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
-        Removed explicite dependencies of TAO_Strategies on TAO_TkReactor.
+	
+          Removed explicite dependencies of TAO_Strategies on
+	  TAO_TkReactor. 
 
         * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
-        Creating base project for using TAO_TkReactor library.
+
+          Creating base project for using TAO_TkReactor library.
 
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
-        Removed dependency on tao_tkreactor.
+	 
+          Removed dependency on tao_tkreactor.
 
         * tests/TkReactor_Test.cpp (Module):
         * bin/MakeProjectCreator/config/ace_tk.mpb (Module):
         * ace/config-doxygen.h (Module):
-        Removed ACE_HAS_TK macros.
+	
+          Removed ACE_HAS_TK macros.
+	
         * ace/TkReactor.h (Module):
         * ace/TkReactor.cpp (Module):
-        Removed ACE_HAS_TK macros. Created factory method TkReactor in dll.
+        
+	  Removed ACE_HAS_TK macros. Created factory method TkReactor in
+	  dll.
 
         Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/FlReactor_Test.cpp (Module):
-        Removed ACE_HAS_FL macros.
+	
+          Removed ACE_HAS_FL macros.
 
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
-        Removed explicite dependence of TAO_Strategies on TAO_FlReactor.
+	
+          Removed explicite dependence of TAO_Strategies on
+	  TAO_FlReactor.
 
         * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
-        Creating base project for using TAO_FlReactor library.
+	
+          Creating base project for using TAO_FlReactor library.
 
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
-        Removed ACE_HAS_FL macros.
+	
+          Removed ACE_HAS_FL macros.
 
         * ace/config-doxygen.h (Module):
-        Removed ACE_HAS_FL macros.
+	
+          Removed ACE_HAS_FL macros.
         * ace/FlReactor.h (Module):
         * ace/FlReactor.cpp (Module):
-        Removed ACE_HAS_FL macros. Created factory method for instantinating FlReactor from dll.
+	
+          Removed ACE_HAS_FL macros. Created factory method for
+	  instantinating FlReactor from dll.
 
         Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * .cvsignore:
-        Made cvs more silent on executables.
+
+          Made cvs more silent on executables.
 
         * tests/tests.mpc (Module):
-        Introduced new dependencies on ace_flreactor and ace_tkreactor for
-        specific reactors tests.
+	
+          Introduced new dependencies on ace_flreactor and ace_tkreactor
+	  for specific reactors tests.
 
         * include/makeinclude/platform_sunos5_sunc++.GNU (Module):
-        Replaced ace_with_x11 by x11 feature.
+	
+          Replaced ace_with_x11 by x11 feature.
 
         * include/makeinclude/wrapper_macros.GNU (Module):
-        Modified documentation about features.
-        Removed rules for an unknown gtk_reactor.
-        Modified statements related with new naming schema and feature definitions.
+	
+          Modified documentation about features. Removed rules for an
+	  unknown gtk_reactor. Modified statements related with new naming
+	  schema and feature definitions.
 
         * bin/MakeProjectCreator/config/global.features (Module):
-        Grouped and commented features related with GUI reactors.
+	
+          Grouped and commented features related with GUI reactors.
 
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
-        Created temporary dependence on tao_tk(fl)reactors. To be removed when TAO
-        is separated from Tk and Fl Reactors.
+	
+          Created temporary dependence on tao_tk(fl)reactors. To be
+	  removed when TAO is separated from Tk and Fl Reactors.
 
         * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
         * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
-        Created dummy projects to tao_*reactors. Will be handy when TAO is separated
-        from Tk and Fl Reactors.
+	
+          Created dummy projects to tao_*reactors. Will be handy when TAO
+	  is separated from Tk and Fl Reactors.
 
         * bin/MakeProjectCreator/config/tao_xtreactor.mpb (Module):
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb (Module):
@@ -255,10 +289,12 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_tkreactor.mpb (Module):
         * bin/MakeProjectCreator/config/ace_qtreactor.mpb (Module):
         * bin/MakeProjectCreator/config/ace_flreactor.mpb (Module):
-        Unified derivation and naming schema.
+	
+          Unified derivation and naming schema.
 
         * bin/MakeProjectCreator/config/ace_fltk.mpb (Module):
-        Replaced this file by ace_fl.mpb
+	
+          Replaced this file by ace_fl.mpb
 
         * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
         * bin/MakeProjectCreator/config/ace_x11.mpb (Module):
@@ -268,114 +304,146 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
         * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
         * bin/MakeProjectCreator/config/ace_athena.mpb (Module):
-        Replaced ace_with_* features by * features to unify naming schema.
-        Removed unnecessary definitions (includes,flags,libraries).
-        Introduced unified derivation schema.
+	
+          Replaced ace_with_* features by * features to unify naming
+	  schema. Removed unnecessary definitions
+	  (includes,flags,libraries). Introduced unified derivation
+	  schema. 
 
         * ace/ace_xtreactor.mpc (Module):
         * ace/ace_tkreactor.mpc (Module):
         * ace/ace_qtreactor.mpc (Module):
         * ace/ace_flreactor.mpc (Module):
-        Added header files. Created new dependencies.
+
+          Added header files. Created new dependencies.
 
         * ace/TkReactor.h (Module):
         * ace/FlReactor.h (Module):
-        Used new export macros.
+	
+          Used new export macros.
 
         * ace/ACE_TkReactor_export.h (Module):
         * ace/ACE_FlReactor_export.h (Module):
-        Created export macros for these GUI reactors. Will be handy in future ..
+
+          Created export macros for these GUI reactors. Will be handy in
+	  future.
 
         * ACE-INSTALL.html (Module):
-        Rewrote documentation related with GUI reactors.
+	
+          Rewrote documentation related with GUI reactors.
 
         Fri Dec 10 23:53:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Module):
-        Removed xt_reactor feature.
+	
+          Removed xt_reactor feature.
+	
         * ACE-INSTALL.html (Module):
-        Modified documentation related to QtReactor and XtReactor.
+	
+          Modified documentation related to QtReactor and XtReactor.
 
         Fri Dec 10 22:57:22 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtReactor_Test.cpp (Message):
-        Removed unnecesary log about lack of Qt support.
+  
+          Removed unnecesary log about lack of Qt support.
 
         Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Message):
-        Disabled by default ace_With_xt and ace_with_x11.
+	
+          Disabled by default ace_With_xt and ace_with_x11.
 
         * include/makeinclude/wrapper_macros.GNU (Module):
-        Replace qt_rector variables by qt, as MPC currently uses qt feature.
+	
+          Replace qt_rector variables by qt, as MPC currently uses qt
+	  feature.
 
         Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * examples/Misc/.cvsignore (Module):
-        Created few ignores to make cvs silent.
+	
+          Created few ignores to make cvs silent.
 
         Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/.cvsignore (Module):
-        Created few ignores to make cvs silent.
+	
+          Created few ignores to make cvs silent.
 
         * ace/ace_xtreactor.mpc (Module):
 
         * ace/config-tandem.h (Module):
         * ace/config-doxygen.h (Module):
         * ace/XtReactor.cpp (Module):
-        Removed ACE_HAS_XT macros.
+	
+          Removed ACE_HAS_XT macros.
 
         * ace/XtReactor.h (Module):
-        Removed ACE_HAS_XT macros and applied export macros for ACE_XtReactor.
+	
+          Removed ACE_HAS_XT macros and applied export macros for
+	  ACE_XtReactor.
 
         * ace/README (Module):
-        Removed notice on ACE_HAS_XT.
+	
+          Removed notice on ACE_HAS_XT.
 
         * ace/ACE_XtReactor_export.h (Module):
-        Create export macros for XtReactor. Please, do not ask if anyone needs these macros
-        under Windows. Probably no, but they are present here to remain consistent with
-        the rest of ACE.
+	
+          Create export macros for XtReactor. Please, do not ask if anyone
+	  needs these macros under Windows. Probably no, but they are
+	  present here to remain consistent with the rest of ACE.
 
         * tests/tests.mpc (Module):
-        Created two project XtReactor_Tests for Athena widgets and Motif.
-        Removed XtReactor_Test.
+	
+          Created two project XtReactor_Tests for Athena widgets and
+	  Motif. Removed XtReactor_Test.
 
         * tests/XtReactor_Test.cpp (Module):
         * tests/XtMotifReactor_Test.cpp (Module):
         * tests/XtAthenaReactor_Test.cpp (Module):
-        XtReactor_Test was splitted into separate test for Athena widgets and Motif,
-        hence they depend on distinct libraries. Removed ACE_HAS_XT and ACE_LACKS_MOTIF
-        macros, as they are not needed now.
+	
+          XtReactor_Test was splitted into separate test for Athena
+	  widgets and Motif, hence they depend on distinct
+	  libraries. Removed ACE_HAS_XT and ACE_LACKS_MOTIF macros, as
+	  they are not needed now. 
 
         * examples/Misc/test_XtReactor2.cpp (Module):
         * examples/Misc/test_XtReactor1.cpp (Module):
-        Removed ACE_HAS_XT macros.
+
+          Removed ACE_HAS_XT macros.
 
         * examples/Misc/Misc.mpc (Module):
-        Added dependencies on ace_xtreactor and ace_motif.
+	
+          Added dependencies on ace_xtreactor and ace_motif.
 
         * bin/MakeProjectCreator/config/tao_xtreactor.mpb (Module):
         * bin/MakeProjectCreator/config/ace_xtreactor.mpb (Module):
-        Created base projects for applications using ACE/TAO_XtReactor
-        libraries.
+	
+          Created base projects for applications using ACE/TAO_XtReactor
+	  libraries. 
 
         * bin/MakeProjectCreator/config/global.features (Module):
-        By default ace_with_x11, ace_withxt, ace_with_motif, ace_with_athena features
-        are not avalaible.
+	
+          By default ace_with_x11, ace_withxt, ace_with_motif,
+	  ace_with_athena features are not avalaible.
 
         * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
         * bin/MakeProjectCreator/config/ace_x11.mpb (Module):
-        Transformed features into projects with explicit requirements.
+	
+          Transformed features into projects with explicit requirements. 
 
         * bin/MakeProjectCreator/config/ace_motif.mpb (Module):
-        Created base project for motif/lestif  library.
+	
+          Created base project for motif/lestif  library.
 
         * bin/MakeProjectCreator/config/ace_athena.mpb (Module):
-        Created base project for athena widgets library.
+	
+          Created base project for athena widgets library.
 
         * ACE-INSTALL.html (Module):
-        Modified section on QtReactor and added section on XtReactor.
+	
+          Modified section on QtReactor and added section on XtReactor. 
 
         Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -383,16 +451,18 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/QtReactor_export.h (Module):
         * ace/QtReactor.h (Module):
         * ace/ACE_QtReactor_export.h (Module):
-        Change QtReactor_export.h into ACE_QtReactor_export.h to avoid possible,
-        though not very probably name conflict and remain consistent
-        with TAO_QtReact_export.
+
+          Change QtReactor_export.h into ACE_QtReactor_export.h to avoid
+	  possible, though not very probably name conflict and remain
+	  consistent with TAO_QtReact_export.
 
         Tue Dec  7 00:23:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/ace_qtreactor.mpc (Module):
         * ace/QtReactor_export.h (Module):
         * ace/QtReactor.h (Module):
-        Created and applied export macros for ACE_QtReactor library.
+	 
+          Created and applied export macros for ACE_QtReactor library.
 
         Sun Dec  5 23:18:29 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -400,54 +470,82 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * include/makeinclude/platform_linux_pgi.GNU (Module):
         * include/makeinclude/platform_linux_icc.GNU (Module):
         * include/makeinclude/platform_linux.GNU (Module):
-        Removed unnecessary ACE_HAS_QT and make options regarding qt. All those things
-        are now set up by MPC.
+	
+          Removed unnecessary ACE_HAS_QT and make options regarding
+	  qt. All those things are now set up by MPC.
+	
         * tests/tests.mpc (Module):
-        Removed explicit dependency on qt. It is ensured now by qt base project.
+	
+          Removed explicit dependency on qt. It is ensured now by qt base
+	  project. 
+	
         * tests/QtReactor_Test.h (Module):
         * tests/QtReactor_Test.cpp (Module):
-        Removed ACE_HAS_QT section as MPC manages now configuration.
+	
+          Removed ACE_HAS_QT section as MPC manages now configuration.
+	
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb (Module):
-        Removed tao_qtreactor as it seems to be redundant with qt=1. I'm not sure if this.
+
+          Removed tao_qtreactor as it seems to be redundant with qt=1. I'm
+	  not sure if this.
+	
         * bin/MakeProjectCreator/config/ace_qt.mpb (Module):
-        Removed ace_qtreactor as it seems to be redundant with qt=1. I'm not sure if this.
+        
+	  Removed ace_qtreactor as it seems to be redundant with qt=1. I'm
+	  not sure if this.
+	
         * ace/config-win32-msvc.h (Module):
-        Removed sections related with ACE_HAS_QT and QT_DLL definition. It is manged now by MPC.
+          
+	  Removed sections related with ACE_HAS_QT and QT_DLL
+	  definition. It is manged now by MPC. 
+	
         * ace/config-doxygen.h (Module):
-        Removed ACE_HAS_QT as it is ACE_QtReactor compiles now alway if qt option is set.
+        
+	  Removed ACE_HAS_QT as it is ACE_QtReactor compiles now alway if
+	  qt option is set. 
+	
         * ace/README (Module):
-        Removed paragraph on ACE_HAS_QT.
+        
+	  Removed paragraph on ACE_HAS_QT.
+	
         * ace/QtReactor.h (Module):
         * ace/QtReactor.cpp (Module):
-        Removed code compiled conditionally on ACE_HAS_QT predicate. Compilation is now managed by MPC.
+        
+	  Removed code compiled conditionally on ACE_HAS_QT
+	  predicate. Compilation is now managed by MPC. 
 
         Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/RMCast/.cvsignore (Module):
         * ace/.cvsignore (Module):
         * tests/.cvsignore (Module):
-        Added linux executables to prevent cvs warnings
+
+          Added linux executables to prevent cvs warnings.
 
         Sat Dec  4 16:02:30 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/qt_reactor.mpb (Module):
-        This base project is no necessary now.
+	
+          This base project is no necessary now.
 
         Sat Dec  4 15:51:01 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/ace_qtreactor.mpb (Module):
         * ace/ace_qtreactor.mpc (Module):
-        Removed depracated qt_moc project.
+	
+          Removed depracated qt_moc project.
 
         Sat Dec  4 15:49:03 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ACE-INSTALL.html (Module):
-        Added paragraph on building ACE_QtLibrary.
+	
+          Added paragraph on building ACE_QtLibrary.
 
         Sat Dec  4 14:28:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Module):
-        Added comment about -features option.
+	
+          Added comment about -features option.
 
         Fri Dec  3 23:10:39 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -477,8 +575,10 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_qt.mpb (Modified):
         * ace/ace.mwc (Modified):
         * ace/ace.mpc (Modified):
-        Initial changes related with the separation of reactors into distinct libraries.
-        Many thanks to Raphael Bossek <raphael.bossek@gmx.de> for this patch.
+
+         Initial changes related with the separation of reactors into
+	  distinct libraries.  Many thanks to Raphael Bossek
+	  <raphael.bossek@gmx.de> for this patch.
 
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
