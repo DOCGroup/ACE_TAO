@@ -1,3 +1,18 @@
+Fri Jul  2 13:20:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        
+          Put back the code using mkstemp() (for platforms that support
+          it) to generate unique and secure temporary file names. This
+          code was removed in
+          
+          Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          For platforms that do not support mkstemp(), we now use ACE's
+          uuid generator to generate a suffix for the base names of the
+          needed temporary files.
+
 Fri Jul  2 16:11:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:

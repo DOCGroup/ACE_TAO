@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
+#include "ace/UUID.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -664,12 +665,30 @@ void
 DRV_pre_proc (const char *myfile)
 {
   const char* tmpdir = idl_global->temp_dir ();
+  static const char temp_file_extension[] = ".cpp";
+  
+  // If ACE_LACKS_MKSTEMP is defined, we use ACE's uuid generator
+  // to create a unique id to append to tao_idl*_template to get
+  // unique temporary file names.
+  size_t uuid_len = 0;
+
+#ifdef ACE_LACKS_MKSTEMP
 
   static const char tao_idlf_template[] = "tao-idlf_";
   static const char tao_idli_template[] = "tao-idli_";
-  static const char temp_file_extension[] = ".cpp";
+  
+  // The generated string format has 32 characters and 4 dashes.
+  uuid_len = 36;
+  
+#else
 
-  const size_t tlen = ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
+  static const char tao_idlf_template[] = "tao-idlf_XXXXXX";
+  static const char tao_idli_template[] = "tao-idli_XXXXXX";
+
+#endif  /* ACE_LACKS_MKSTEMP */
+
+  size_t tlen =
+    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension) + uuid_len;
 
   // Prevent a buffer overrun.
   if (tlen + sizeof (tao_idlf_template) > sizeof (tmp_file)
@@ -686,21 +705,63 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcpy (tmp_file,  tmpdir);
   ACE_OS::strcpy (tmp_ifile, tmpdir);
 
+#ifdef ACE_LACKS_MKSTEMP
+
+  ACE_CString ftmpl (tao_idlf_template);
+  ACE_CString itmpl (tao_idli_template);
+
+  // Append temporary filename template to temporary directory.
+  ACE_OS::strcat (tmp_file,  ftmpl.substr (0, 9).c_str ());
+  ACE_OS::strcat (tmp_ifile, itmpl.substr (0, 9).c_str ());
+  
+  ACE_Utils::UUID* uuid = 
+    ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+    
+  const char *suffix = uuid->to_string ()->c_str ();
+    
+  ACE_OS::strcat (tmp_file, suffix);
+  ACE_OS::strcat (tmp_ifile, suffix);
+  
+  delete uuid;
+  
+  char * t_file  = tmp_file;
+  char * t_ifile = tmp_ifile;
+
+#else
+
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
   
-  // Append 6 random digits to the end of the temporary filename
-  // to ensure uniqueness.
-  char digits[7];
-  ACE_OS::sprintf (digits, "%6.6d", rand ());
-  digits[6] = '\0';
-  
-  ACE_OS::strcat (tmp_file, digits);
-  ACE_OS::strcat (tmp_ifile, digits);
-  
-  char * t_file  = tmp_file;
-  char * t_ifile = tmp_ifile;
+  int tf_fd = ACE_OS::mkstemp (tmp_file);
+  int ti_fd = ACE_OS::mkstemp (tmp_ifile);
+
+  if (tf_fd == -1 || ti_fd == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s: Unable to create temporary file: %m\n",
+                  idl_global->prog_name ()));
+
+      return;
+    }
+
+  static char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
+  static char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
+
+  // Append C++ source file extension.  Temporary files will be renamed
+  // to these filenames.
+  ACE_OS::strcpy (tmp_cpp_file,  tmp_file);
+  ACE_OS::strcpy (tmp_cpp_ifile, tmp_ifile);
+  ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
+  ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
+
+  char * t_file  = tmp_cpp_file;
+  char * t_ifile = tmp_cpp_ifile;
+
+#endif  /* ACE_LACKS_MKSTEMP */
+
+  // Rename temporary files so that they have extensions accepted
+  // by the preprocessor.
 
   UTL_String *tmp = 0;
 
