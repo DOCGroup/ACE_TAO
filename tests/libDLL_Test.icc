@@ -19,8 +19,8 @@ option
            source platformLinkLibs
         }
 if $__TOS_AIX__ {
-        run after targets( TargetName ) "ar -r -u libDLL_Test.a shr.o"
-        run cleanup targets ( TargetName ) "rm -rf libDLL_Test.a"
+        run after "ar -r -u libDLL_Test.a shr.o"
+        run cleanup "rm -rf libDLL_Test.a", "rm -rf shr.o"
 }
 
     }
