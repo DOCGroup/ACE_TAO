@@ -6,6 +6,11 @@ Tue Aug 11 16:18:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* include/idl_global.h
 	* util/utl_global.cpp
 	
+	Added options to <tao_idl> to make the file names of the
+	IDL-generated stubs and skeletons optional.
+
+	The following optins have been added.
+		
 	= File name endings for all the IDL generated header files,
 	  stub files, skeleton files and inline files. 
 
