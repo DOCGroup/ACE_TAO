@@ -1,5 +1,5 @@
 /**
- * @file Setup_SyncScope.inl
+ * @file SyncScope_Setup.inl
  *
  * $Id$
  *
