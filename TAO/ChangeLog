@@ -1,3 +1,10 @@
+Wed Dec 24 08:29:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Valuetype/AbstractBase_T.cpp:
+
+	  Fixed a compilation errors in builds where exceptions are turned
+	  off. 
+
 Wed Dec 24 08:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableInterceptor.pidl:
