@@ -95,11 +95,15 @@ void Client_Handler::destroy (void)
 
 /*
   As mentioned in the header, the typical way to close an object in a
-  threaded context is to invoke it's close() method.  We use the
-  destroy() method to clean up after ourselves.
+  threaded context is to invoke it's close() method.
 */
 int Client_Handler::close(u_long flags)
 {
+    /*
+      We use the destroy() method to clean up after ourselves.
+      That will take care of removing us from the reactor and then
+      freeing our memory.
+    */
     this->destroy();
     
 	/*
