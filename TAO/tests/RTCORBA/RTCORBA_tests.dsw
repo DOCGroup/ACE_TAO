@@ -99,6 +99,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Linear_Priority Client"=.\Linear_Priority\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Linear_Priority Server"=.\Linear_Priority\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT_Client_Protocol_Priority Client"=.\MT_Client_Protocol_Priority\client.dsp - Package Owner=<4>
 
 Package=<5>
