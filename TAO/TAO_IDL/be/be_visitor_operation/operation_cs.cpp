@@ -839,7 +839,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "_tao_call.sync_scope ();";
       break;
     default:
-      *os << "TAO::SYNC_WITH_TARGET;";
+      *os << "131;" << be_nl;
+      *os << "// Tremporary hack until GIOP 1.2 is implemented." << be_nl;
     }
 
   *os << be_nl
