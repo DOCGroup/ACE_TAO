@@ -841,8 +841,7 @@ public:
 private:
 
   /// Helper method to get collocated servant
-  TAO_ServantBase *get_collocated_servant (TAO_Stub *stub,
-                                           const TAO_MProfile &mp
+  TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp
                                            ACE_ENV_ARG_DECL);
 
 private:

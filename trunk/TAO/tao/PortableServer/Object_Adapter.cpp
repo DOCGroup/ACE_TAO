@@ -805,8 +805,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   ACE_TRY
     {
       TAO_ServantBase *sb =
-        this->get_collocated_servant (stub,
-                                      mp
+        this->get_collocated_servant (mp
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -853,8 +852,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
   ACE_TRY
     {
       TAO_ServantBase *sb =
-        this->get_collocated_servant (stub,
-                                      mp
+        this->get_collocated_servant (mp
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -883,8 +881,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 }
 
 TAO_ServantBase *
-TAO_Object_Adapter::get_collocated_servant (TAO_Stub *stub,
-                                            const TAO_MProfile &mp
+TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
                                             ACE_ENV_ARG_DECL)
 {
   for (TAO_PHandle j = 0;

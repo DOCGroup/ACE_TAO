@@ -1,3 +1,9 @@
+Tue Jul 22 17:36:29 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\Object_Adapter (get_collocated_servant): 
+
+	  Stub parameter no longer needed.
+
 Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\Object_Adapter.cpp: 
