@@ -1,9 +1,24 @@
+Mon Jan 12 13:05:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/OctetSeqA.cpp:
+	* tao/OctetSeqA.h:
+	* tao/OctetSeqC.cpp:
+	* tao/OctetSeqC.h:
+	* tao/OctetSeqC.i:
+
+	  Regenerated the files since the last checkin was not addressing
+	  things in a right manner.
+	
+	* tao/diffs/OctetSeq.diff:
+
+	  Updated the diffs.
+
 Mon Jan 12 15:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/OctetSeqA.h:
 	  Added missing pre/post includes and TAO_Export macro to export the
 	  methods. Thanks to Heiko Bachmann <h.bachmann@unicontrol.de> for
-	  reporting thisl
+	  reporting this.
 
 Mon Jan 12 01:20:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

@@ -30,7 +30,51 @@
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from 
+
+// ======== Handcrafted
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_CORBA_OctetSeq[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  31,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4f63),
+  ACE_NTOHL (0x74657453),
+  ACE_NTOHL (0x65713a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+    9,
+  ACE_NTOHL (0x4f637465),
+  ACE_NTOHL (0x74536571),
+  ACE_NTOHL (0x0),  // name = OctetSeq
+    CORBA::tk_sequence, // typecode kind
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_octet,
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_OctetSeq (
+    CORBA::tk_alias,
+    sizeof (_oc_CORBA_OctetSeq),
+    (char *) &_oc_CORBA_OctetSeq,
+    0,
+    sizeof (CORBA::OctetSeq)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_OctetSeq =
+    &_tc_TAO_tc_CORBA_OctetSeq;
+}
+
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -88,6 +132,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -102,5 +148,4 @@ CORBA::Boolean operator>>= (
         CORBA::OctetSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
