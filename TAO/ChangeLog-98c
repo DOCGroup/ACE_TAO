@@ -1,3 +1,62 @@
+Fri Sep  4 16:44:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/RtecUDPAdmin.idl: 
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.h: 
+	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.i: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/tests/EC_Mcast/sample.cfg: 
+	* orbsvcs/tests/EC_Mcast/README: 
+	  New implementation of the EC_Mcast test, the test can now handle
+	  multiple processes, each process joins several multicast groups
+	  and push events to a (potentially different) set of multicast
+	  groups.  Since the configuration is more complicated a sample
+	  file is included.
+	  The test is prepared to support several interesting features,
+	  such as:
+	    + Dynamic changes in the multicast group joined.
+	    + Handle OS limitations wrt the maximum number of mcast groups
+	      per socket.
+	    + Support different mappings for the type->mcast group
+	      relation (currently the event type *is* the multicast
+	      group).
+	  The current implementation also offers the initial interfaces to
+	  observe changes in the subcription and/or publication list of a
+	  *remote* event channel, this will enable the automation and
+	  optimization of the local publication list (there is no sense in
+	  sending an event if nobody is currently interested).
+
+	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
+	* orbsvcs/orbsvcs/Event_Utilities.i: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp: 
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp: 
+	  Added a new IDL structure to represent the Event Header, this
+	  will let us factor out the minimum information needed to
+	  transmit QoS and subscription/publication info.
+  	  I also normalized some of the field names in the RtecEventComm
+	  structures.
+
 Fri Sep  4 16:22:17 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Added macro VX_VME_INIT 

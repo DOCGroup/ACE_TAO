@@ -18,14 +18,6 @@ module RtecEventComm {
   //   Users willing to implement their own marshalling may use a
   //   sequence of octet.
 
-#if 0
-  union EventData switch(long) {
-  case 1: double dval;
-  case 2: string sval;
-  case 3: sequence<octet> bval;
-  default: long lval;
-  };
-#else
   typedef sequence<octet> EventPayload;
   struct EventData {
     long x;
@@ -44,12 +36,41 @@ module RtecEventComm {
     any any_value;
 #endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
   };
-#endif
 
   typedef TimeBase::TimeT Time;
 
   typedef long EventSourceID;
   typedef long EventType;
+
+  struct EventHeader
+  {
+    // = TITLE
+    //   The Event Header
+    //
+    // = DESCRIPTION
+    //   Each event carries some information to do filtering,
+    //   correlation, etc.
+    EventType type;
+    // The event type.
+    // This may be different from the discriminator in the EventData
+    // union above, the motivation is to allow filtering by data
+    // contents: different event types are assigned to different data
+    // contents though they use the same discriminator.
+
+    EventSourceID source;
+    // Some way to identify the supplier.
+
+    long ttl;
+    // The "Time To Live" count, each time an EC process the event it
+    // decreases the TTL field, when it gets to zero the message is no
+    // longer forwarded.
+
+    Time creation_time;
+    Time ec_recv_time;
+    Time ec_send_time;
+    // Some timestamps, they actually belong in the payload, for some
+    // kind of measument event.
+  };
 
   struct Event
   {
@@ -60,29 +81,9 @@ module RtecEventComm {
     //   Events are represented by this structure, it is simply a
     //   header,data pair. 
     // 
+    EventHeader header;
 
-    EventType type_;
-    // The event type.
-    // This may be different from the discriminator in the EventData
-    // union above, the motivation is to allow filtering by data
-    // contents: different event types are assigned to different data
-    // contents though they use the same discriminator.
-
-    EventSourceID source_;
-    // Some way to identify the supplier.
-
-    long ttl_;
-    // The "Time To Live" count, each time an EC process the event it
-    // decreases the TTL field, when it gets to zero the message is no
-    // longer forwarded.
-
-    Time creation_time_;
-    Time ec_recv_time_;
-    Time ec_send_time_;
-    // Some timestamps, they actually belong in the payload, for some
-    // kind of measument event.
-
-    EventData data_;
+    EventData data;
     // The event payload.
   };
   typedef sequence<Event> EventSet;

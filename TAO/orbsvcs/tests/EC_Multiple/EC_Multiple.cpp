@@ -119,9 +119,6 @@ print_priority_info (const char *const name)
 #endif /* ACE_HAS_PTHREADS_STD */
 }
 
-
-
-
 int
 Test_ECG::run (int argc, char* argv[])
 {
@@ -926,16 +923,16 @@ Test_ECG::push_consumer (void *consumer_cookie,
     {
       const RtecEventComm::Event& e = events[i];
 
-      if (e.type_ == ACE_ES_EVENT_SHUTDOWN)
+      if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           this->shutdown_consumer (ID);
           continue;
         }
 
       ACE_hrtime_t s;
-      ORBSVCS_Time::TimeT_to_hrtime (s, e.creation_time_);
+      ORBSVCS_Time::TimeT_to_hrtime (s, e.header.creation_time);
       ACE_hrtime_t nsec = arrival - s;
-      if (this->local_source (e.source_))
+      if (this->local_source (e.header.source))
         {
           int& count = this->stats_[ID].lcl_count_;
 
@@ -1004,16 +1001,14 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
       shutdown.length (1);
       RtecEventComm::Event& s = shutdown[0];
 
-      s.source_ = 0;
-      s.ttl_ = 1;
+      s.header.source = 0;
+      s.header.ttl = 1;
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (s.creation_time_, t);
-      s.ec_recv_time_ = ORBSVCS_Time::zero;
-      s.ec_send_time_ = ORBSVCS_Time::zero;
-      s.data_.x = 0;
-      s.data_.y = 0;
-      s.type_ = ACE_ES_EVENT_SHUTDOWN;
+      ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
+      s.header.ec_recv_time = ORBSVCS_Time::zero;
+      s.header.ec_send_time = ORBSVCS_Time::zero;
+      s.header.type = ACE_ES_EVENT_SHUTDOWN;
       consumer->push (shutdown, _env);
     }
 }
@@ -1483,22 +1478,22 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
   for (u_int i = 0; i < events.length (); ++i)
     {
       const RtecEventComm::Event& e = events[i];
-      if (e.type_ != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+      if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         continue;
 
       // ACE_DEBUG ((LM_DEBUG, "Test_Supplier - timeout (%t)\n"));
 
       RtecEventComm::Event& s = sent[i];
-      s.source_ = this->supplier_id_;
-      s.ttl_ = 1;
+      s.header.source = this->supplier_id_;
+      s.header.ttl = 1;
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (s.creation_time_, t);
-      s.ec_recv_time_ = ORBSVCS_Time::zero;
-      s.ec_send_time_ = ORBSVCS_Time::zero;
+      ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
+      s.header.ec_recv_time = ORBSVCS_Time::zero;
+      s.header.ec_send_time = ORBSVCS_Time::zero;
 
-      s.data_.x = 0;
-      s.data_.y = 0;
+      s.data.x = 0;
+      s.data.y = 0;
 
       this->message_count_--;
 
@@ -1513,11 +1508,11 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
       if (this->message_count_ % 2 == 0)
         {
           // Generate an A event...
-          s.type_ = this->event_a_;
+          s.header.type = this->event_a_;
         }
       else
         {
-          s.type_ = this->event_b_;
+          s.header.type = this->event_b_;
         }
     }
   this->test_->push_supplier (this->cookie_,

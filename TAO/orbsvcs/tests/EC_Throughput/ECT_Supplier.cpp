@@ -199,28 +199,28 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
         {
           RtecEventComm::EventSet event (1);
           event.length (1);
-          event[0].source_ = supplier->supplier_id ();
-          event[0].ttl_ = 1;
+          event[0].header.source = supplier->supplier_id ();
+          event[0].header.ttl = 1;
 
           ACE_hrtime_t t = ACE_OS::gethrtime ();
-          ORBSVCS_Time::hrtime_to_TimeT (event[0].creation_time_, t);
-          event[0].ec_recv_time_ = ORBSVCS_Time::zero;
-          event[0].ec_send_time_ = ORBSVCS_Time::zero;
+          ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
+          event[0].header.ec_recv_time = ORBSVCS_Time::zero;
+          event[0].header.ec_send_time = ORBSVCS_Time::zero;
 
           if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
-            event[0].type_ = ACE_ES_EVENT_SHUTDOWN;
+            event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
           else if (i % 2 == 0)
-            event[0].type_ = this->event_a_;
+            event[0].header.type = this->event_a_;
           else
-            event[0].type_ = this->event_b_;
+            event[0].header.type = this->event_b_;
 
-          event[0].data_.x = 0;
-          event[0].data_.y = 0;
+          event[0].data.x = 0;
+          event[0].data.y = 0;
 
           // We use replace to minimize the copies, this should result
           // in just one memory allocation;
-          event[0].data_.payload.replace (this->event_size_,
-                                          &mb);
+          event[0].data.payload.replace (this->event_size_,
+					 &mb);
 
           supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
           TAO_CHECK_ENV;

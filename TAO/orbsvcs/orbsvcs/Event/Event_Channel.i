@@ -154,15 +154,15 @@ operator == (const RtecEventComm::Event &event1,
 	     const RtecEventComm::Event &event2)
 {
   // Check if the sources are equal.  0 is a wildcard.
-  if ((event1.source_ != 0)
-      && (event2.source_ != 0)
-      && (event1.source_ != event2.source_))
+  if ((event1.header.source != 0)
+      && (event2.header.source != 0)
+      && (event1.header.source != event2.header.source))
     return 0;
 
   // Check if the types are equal.  ACE_ES_EVENT_ANY is a wildcard.
-  if ((event1.type_ != ACE_ES_EVENT_ANY) &&
-      (event2.type_ != ACE_ES_EVENT_ANY) &&
-      (event1.type_ != event2.type_))
+  if ((event1.header.type != ACE_ES_EVENT_ANY) &&
+      (event2.header.type != ACE_ES_EVENT_ANY) &&
+      (event1.header.type != event2.header.type))
     return 0;
 
   return 1;
@@ -559,7 +559,7 @@ ACE_ES_Dependency_Iterator::parse (void)
       if (rt_info_ == 0)
 	rt_info_ = rep_[x].rt_info;
 
-      switch (rep_[x].event.type_)
+      switch (rep_[x].event.header.type)
 	{
 	case ACE_ES_CONJUNCTION_DESIGNATOR:
 	  n_conjunctions_++;
