@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, notify, naming {
+project : orbsvcsexe, notification, naming {
 }

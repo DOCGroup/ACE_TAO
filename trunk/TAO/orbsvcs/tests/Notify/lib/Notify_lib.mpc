@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NotifyTests_Lib): orbsvcslib, notify, naming {
+project(NotifyTests_Lib): orbsvcslib, notification, naming {
   sharedname = NotifyTests
   dynamicflags = TAO_NOTIFY_TEST_BUILD_DLL
 }

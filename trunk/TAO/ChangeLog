@@ -1,62 +1,83 @@
+Fri Mar  5 12:09:11 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
+        * orbsvcs/examples/Log/Notify/Log_Notify.mpc:
+        * orbsvcs/examples/Notify/Filter/Notify_Filter.mpc:
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+        * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
+        * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+
+          Switch to using the notification base project instead of notify. 
+          The notify base project only inherited from notification and
+          provided nothing else.
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Fixed this mpc file.  It previously produced a project file for a
+          dynamic library that wouldn't compile anyway.
+
 Thu Mar  4 17:24:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any_Impl.cpp (_remove_ref ()):
+        * tao/Any_Impl.cpp (_remove_ref ()):
 
-	  Scope the lock before calling delete. 
-	
-	* tao/Any_Unknown_IDL_Type.cpp:
+          Scope the lock before calling delete.
 
-	  Use delete to remove the message block. We used new to create
-	  it. 
+        * tao/Any_Unknown_IDL_Type.cpp:
+
+          Use delete to remove the message block. We used new to create
+          it.
 
 Thu Mar  4 16:48:20 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
 
-	  Forced the user to specify the 'RTP/UDP' protocol string as
-	  'RTP_UDP' at the command line. This was required to fix the
-	  run-time error caused when executing the auto_run_tests.pl. This
-	  script was mis-interpreting the '/' in RTP/UDP as a dir
-	  delimiter. This should fix the run-time errors on all the
-	  builds.
+          Forced the user to specify the 'RTP/UDP' protocol string as
+          'RTP_UDP' at the command line. This was required to fix the
+          run-time error caused when executing the auto_run_tests.pl. This
+          script was mis-interpreting the '/' in RTP/UDP as a dir
+          delimiter. This should fix the run-time errors on all the
+          builds.
 
 Thu Mar 04 09:45:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Added dependencies for ACEXML and ACEXML parser.
+          Added dependencies for ACEXML and ACEXML parser.
 
 Wed Mar  3 17:49:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Notify/Basic/Makefile:
-	* orbsvcs/tests/Notify/Discarding/Makefile:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
-	* orbsvcs/tests/Notify/Ordering/Makefile:
-	* orbsvcs/tests/Notify/RT_lib/Makefile:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
-	* orbsvcs/tests/Notify/Test_Filter/Makefile:
-	* orbsvcs/tests/Notify/lib/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
-	* orbsvcs/tests/Property/Makefile:
-	* orbsvcs/tests/Redundant_Naming/Makefile:
-	* orbsvcs/tests/Sched/Makefile:
-	* orbsvcs/tests/Sched_Conf/Makefile:
-	* orbsvcs/tests/Simple_Naming/Makefile:
-	* orbsvcs/tests/Time/Makefile:
-	* performance-tests/POA/Demux/Makefile:
-	* utils/nslist/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Redundant_Naming/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Sched_Conf/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/Time/Makefile:
+        * performance-tests/POA/Demux/Makefile:
+        * utils/nslist/Makefile:
 
-	  The orbsvcs_component check were screwed up in all of the above
-	  files.  
+          The orbsvcs_component check were screwed up in all of the above
+          files.
 
-	  I did manage to locate Thomas Lockhart's bug report listing out
-	  many of the above files. Thanks to him for identifying the
-	  problem. 
+          I did manage to locate Thomas Lockhart's bug report listing out
+          many of the above files. Thanks to him for identifying the
+          problem.
 
 Wed Mar  3 13:32:52 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -65,71 +86,71 @@ Wed Mar  3 13:32:52 2004  Dale Wilson  <wilson_d@ociweb.com>
 
 Wed Mar  3 12:30:33 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile: 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
 
-	  Modified the Makefile to link ACE_QoS lib only when rapi=1.
+          Modified the Makefile to link ACE_QoS lib only when rapi=1.
 
 Wed Mar  3 10:55:13 2004  David Smith  <dts@prismtechnologies.com>
 
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
 
-	  Fixed compile problem with aCC 3.37.
+          Fixed compile problem with aCC 3.37.
 
 Tue Mar  2 21:15:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/Security/Conformance.html:
-	* docs/Security/Download.html:
-	* docs/Security/FAQ.html:
-	* docs/Security/SSLIOP-INSTALL.html:
-	* docs/Security/SSLIOP-USAGE.html:
-	* docs/Security/SSLIOP.html:
-	* docs/Security/Security_Service.html:
-	* docs/Security/index.html:
-	* docs/Security/Templates:
-	* docs/Security/fireworks:
-	* docs/Security/images:
+        * docs/Security/Conformance.html:
+        * docs/Security/Download.html:
+        * docs/Security/FAQ.html:
+        * docs/Security/SSLIOP-INSTALL.html:
+        * docs/Security/SSLIOP-USAGE.html:
+        * docs/Security/SSLIOP.html:
+        * docs/Security/Security_Service.html:
+        * docs/Security/index.html:
+        * docs/Security/Templates:
+        * docs/Security/fireworks:
+        * docs/Security/images:
 
-	  Documentation for TAO's SSLIOP pluggable protocol and Security
-	  Service.
+          Documentation for TAO's SSLIOP pluggable protocol and Security
+          Service.
 
 Tue Mar  2 19:57:30 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
 
-	  Added the Receiver_Callback::handle_destroy method to shutdown
-	  the receiver when the stream was destroyed.
+          Added the Receiver_Callback::handle_destroy method to shutdown
+          the receiver when the stream was destroyed.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
 
-	  Set the QoS Params in Sender::fill_qos to Diffserv_Codepoint if
-	  rapi=0. Else the QoS Params are set to the intserv values. This
-	  ensures that when rapi=0 and the modify_qos method is called
-	  then the diffserv codepoint is set for all the frames sent..
+          Set the QoS Params in Sender::fill_qos to Diffserv_Codepoint if
+          rapi=0. Else the QoS Params are set to the intserv values. This
+          ensures that when rapi=0 and the modify_qos method is called
+          then the diffserv codepoint is set for all the frames sent..
 
-	  Added the graceful shutdown of the process when all frames were
-	  sent.
+          Added the graceful shutdown of the process when all frames were
+          sent.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
 
-	  Modified to include details of diffserv testing.
+          Modified to include details of diffserv testing.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
 
-	  Modified to specify transport protocols and debug levels from
-	  the command line.
+          Modified to specify transport protocols and debug levels from
+          the command line.
 
-	* orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
 
-	  Added the compilation of Simple_Two_Stage_With_QoS test.
+          Added the compilation of Simple_Two_Stage_With_QoS test.
 
 Tue Mar  2 13:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Transport.cpp (drain_queue_helper):
+        * tao/Transport.cpp (drain_queue_helper):
 
-	  Check for EAGAIN in addition to EWOULDBLOCK. POSIX conformant
-	  implementations can use either EWOULDBLOCK or EAGAIN. Thanks to
-	  Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing this out.
+          Check for EAGAIN in addition to EWOULDBLOCK. POSIX conformant
+          implementations can use either EWOULDBLOCK or EAGAIN. Thanks to
+          Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing this out.
 
 Tue Mar  2 07:43:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -153,7 +174,7 @@ Tue Mar  2 13:59:33 2004  David Smith  <dts@prismtechnologies.com>
         * tao/Any_Dual_Impl_T.cpp:
 
           Fixed compile problem with aCC 3.37. Thanks to Kris Dekeyser
-	  <Kris.Dekeyser@lms.be> for pointing  this out.
+          <Kris.Dekeyser@lms.be> for pointing  this out.
 
 Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -208,7 +229,7 @@ Sun Feb 29 17:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sun Feb 29 17:07:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Miop/McastHello/Makefile:
+        * orbsvcs/tests/Miop/McastHello/Makefile:
         * orbsvcs/tests/Security/Big_Request/Makefile:
         * orbsvcs/tests/ior_corbaname/Makefile:
 
@@ -271,7 +292,7 @@ Sun Feb 29 10:15:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/Makefile*:
         * performance-tests/Makefile*:
 
-    	  Regenerated dependencies using old g++-dep script.
+          Regenerated dependencies using old g++-dep script.
 
 Sun Feb 29 10:34:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -307,7 +328,7 @@ Sun Feb 29 08:28:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/Makefile*:
 
-  	  Regenerated dependencies using old g++-dep script.
+          Regenerated dependencies using old g++-dep script.
 
 Sun Feb 29 08:26:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -558,8 +579,8 @@ Sat Feb 21 09:36:45 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * tao/Codeset_Manager.cpp (TAO_Codeset_Item): Replaced
           delete [] this->name_ with ACE_OS::free (this->name_) since
- 	  this->name_ was allocated by ACE_OS::strdup().  Thanks to
- 	  Olivier Brunet <o.brunet@free.fr> for reporting this.
+          this->name_ was allocated by ACE_OS::strdup().  Thanks to
+          Olivier Brunet <o.brunet@free.fr> for reporting this.
 
 Sat Feb 21 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -804,7 +825,7 @@ Thu Feb 19 13:34:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Feb 18 13:58:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-  	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
 
           Fixed remaining compilation errors on Borland. Thanks to Johnny
           for pointing this out.
@@ -835,7 +856,7 @@ Wed Feb 18 10:55:36 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Wed Feb 18 10:47:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
 
           Fixed compilation errors on Borland. Thanks to Johnny for pointing
           it out.
