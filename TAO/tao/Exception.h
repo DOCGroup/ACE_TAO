@@ -107,6 +107,16 @@ namespace CORBA
   {
   public:
 
+    /// Copy constructor.
+    Exception (const Exception &src);
+
+    /// Assignment operator.
+    Exception & operator = (const Exception & src);
+
+    /// Construct from a respository id.
+    Exception (const char *repository_id,
+               const char *local_name);
+
     /// Destructor.
     virtual ~Exception (void);
 
@@ -179,16 +189,6 @@ namespace CORBA
 
     /// Default constructor.
     Exception (void);
-
-    /// Copy constructor.
-    Exception (const Exception &src);
-
-    /// Assignment operator.
-    Exception & operator = (const Exception & src);
-
-    /// Construct from a respository id.
-    Exception (const char *repository_id,
-               const char *local_name);
 
   private:
 
