@@ -1,3 +1,8 @@
+Mon Mar  8 20:32:35 2004  Olli Savia  <ops@iki.fi>
+
+	* ACE-INSTALL.html
+          Updated LynxOS section.
+
 Mon Mar  8 20:21:15 2004  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h
