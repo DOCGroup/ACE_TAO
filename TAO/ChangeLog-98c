@@ -1,3 +1,9 @@
+Mon Jan  5 11:50:00 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_attribute.cpp: Code generated for setting the
+	attribute value (in the server skeleton) had some undefined symbol
+	errors as well as the create_list parameter was wrong.
+
 Mon Jan 05 09:53:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbacom.{h,cpp},encode.cpp: replaced defined (VXWORKS) &&
