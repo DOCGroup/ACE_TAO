@@ -242,7 +242,7 @@ class ACE_New_Allocator : public ACE_Allocator
 {
 public:
   virtual void *malloc (size_t nbytes); 
-  vritual void *calloc (size_t nbytes, char initial_value = '\0');
+  virtual void *calloc (size_t nbytes, char initial_value = '\0');
   virtual void free (void *ptr);
   virtual int remove (void);
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
