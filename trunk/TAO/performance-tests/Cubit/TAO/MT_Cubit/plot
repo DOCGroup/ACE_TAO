@@ -10,7 +10,7 @@ open (HIGH_LATENCY, "> h")  ||  die "$0: unable to open \"h\"";
 open (LOW_LATENCY, "> l")  ||  die "$0: unable to open \"l\"";
 
 while (<>) {
-  if (/(\d+) +(\d+) +(\d+) +(\d+) +(\d+)/) {
+  if (/([\d\.]+) +([\d\.]+) +([\d\.]+) +([\d\.]+) +([\d\.]+)/) {
     $low_priority_threads = $1;
     $high_latency = $2;
     $high_jitter = $3;
