@@ -94,20 +94,20 @@ TAO_Default_Reactor::~TAO_Default_Reactor (void)
 int
 TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table)
 {
-  
+
   ACE_CString object_id;
   ACE_CString ior;
-  
+
   if (ACE_OS::strtok (init_ref.rep (),"=") == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to parse -ORBInitRef parameter\n"),
 		      -1);
-  
+
   // Parse the InitRef to set the object ID and the IOR.
   object_id.set (ACE_OS::strtok (init_ref.rep (), "="), 1);
   ior.set (ACE_OS::strtok(0,"="), 1);
-  
-  // Add the objectID-IOR to the table and return the status.  
+
+  // Add the objectID-IOR to the table and return the status.
   return table.add_ior (object_id, ior);
 
 }
@@ -167,10 +167,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   ACE_NEW_RETURN (ior_lookup_table,
 		  TAO_IOR_LookupTable,
 		  -1);
-  
+
   // List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref;
-  
+
   // Name Service port #.
   u_short ns_port = 0;
 
@@ -234,6 +234,17 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           ACE::debug (1);
           TAO_orbdebug = 1;
           arg_shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcmp (current_arg, "-ORBdebuglevel") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next())
+            {
+              TAO_debug_level =
+                ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
         {
@@ -437,7 +448,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
-      
+
       else if (ACE_OS::strcmp (current_arg, "-ORBInitRef") == 0)
         {
           arg_shifter.consume_arg ();
@@ -463,7 +474,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else
         arg_shifter.ignore_arg ();
     }
-  
+
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
