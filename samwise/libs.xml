@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<libs>
+    <order>ACE TAOIDL TAO</order>
+    <namespace name="ACE">
+        <lib name="ACE" include="/" link="/ace/" base="ACE" />
+        <lib name="SSL" include="/" link="/ace/SSL/" base="ACE_SSL" />
+        <lib name="QoS" include="/" link="/ace/QoS/" base="ACE_QoS" />
+        <lib name="RMCast" include="/" link="/ace/RMCast/" base="ACE_RMCast" />
+    </namespace>
+    <namespace name="TAOIDL">
+        <lib name="Front_End" include="/TAO/TAO_IDL/include /TAO/TAO_IDL/fe" link="/TAO/TAO_IDL/" base="TAO_IDL_FE" />
+        <lib name="Back_End" include="/TAO/TAO_IDL/include /TAO/TAO_IDL/be /TAO/TAO_IDL/be_include" link="/TAO/TAO_IDL/" base="TAO_IDL_BE" />
+    </namespace>
+    <namespace name="TAO">
+        <lib name="TAO" include="/TAO/" link="/TAO/tao/" base="TAO" />
+        <lib name="PortableServer" include="/TAO/" link="/TAO/tao/PortableServer/" base="TAO_PortableServer" />
+        <lib name="BiDirGIOP" include="/TAO/" link="/TAO/tao/BiDir_GIOP/" base="TAO_BiDirGIOP" />
+        <lib name="DynamicAny" include="/TAO/" link="/TAO/tao/DynamicAny/" base="TAO_DynamicAny" />
+        <lib name="DynamicInterface" include="/TAO/" link="/TAO/tao/DynamicInterface/" base="TAO_DynamicInterface" />
+        <lib name="IORManip" include="/TAO/" link="/TAO/tao/IORManipulation/" base="TAO_IORManip" />
+        <lib name="RTCORBA" include="/TAO/" link="/TAO/tao/RTCORBA/" base="TAO_RTCORBA" />
+        <lib name="RTPortableServer" include="/TAO/" link="/TAO/tao/RTPortableServer/" base="TAO_RTPortableServer" />
+        <lib name="SmartProxies" include="/TAO/" link="/TAO/tao/SmartProxies/" base="TAO_SmartProxies" />
+        <lib name="Strategies" include="/TAO/" link="/TAO/tao/Strategies/" base="TAO_Strategies" />
+        <lib name="IORTable" include="/TAO/" link="/TAO/tao/IORTable/" base="TAO_IORTable" />
+        <lib name="IFR_Client" include="/TAO/" link="/TAO/tao/IFR_Client/" base="TAO_IFR_Client" />
+        <lib name="AVStreams" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_AV" />
+        <lib name="CosLifeCycle" include="/TAO/orbsvcs/ /TAO/orbsvcs/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosLifeCycle" />
+        <lib name="CosNaming" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosNaming" />
+        <lib name="RTEvent" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_RTEvent" />
+        <lib name="RTOldEvent" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_RTOLDEvent" />
+        <lib name="RTSched" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_RTSched" />
+        <lib name="RTSchedEvent" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_RTSchedEvent" />
+        <lib name="Security" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_Security" />
+        <lib name="SSLIOP" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_SSLIOP" />
+        <lib name="SvcUtils" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_Svc_Utils" />
+        <lib name="TypeCodeFactory" include="/TAO/" link="/TAO/orbsvcs/IFR_Service/" base="TAO_TypeCodeFactory" />
+        <lib name="CosConcurrency" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosConcurrency" />
+        <lib name="CosEvent" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosEvent" />
+        <lib name="CosNotification" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosNotification" />
+        <lib name="CosProperty" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosProperty" />
+        <lib name="CosTime" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosTime" />
+        <lib name="CosTrading" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_CosTrading" />
+        <lib name="FaultTolerance" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_Fault_Tolerance" />
+        <lib name="LoadBalancing" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_LoadBalancing" />
+        <lib name="DsLogAdmin" include="/TAO/orbsvcs/" link="/TAO/orbsvcs/orbsvcs/" base="TAO_DsLogAdmin" />
+    </namespace>
+</libs>
