@@ -608,7 +608,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // Merge policies from the ORB level.
   this->validator ().merge_policies (policies.policies (),
                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  ACE_CHECK;
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
