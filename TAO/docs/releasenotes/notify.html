@@ -1619,6 +1619,15 @@ This is used to signal the peer.
 
 </TR>
 
+<TR>
+<TD>-Skip_Priority_Levels_Check</TD>
+
+<TD>
+Skip the check for multiple priority levels.
+</TD>
+
+</TR>
+
 </TABLE>
 <p>
 See the *.conf files in <a href="../../orbsvcs/tests/Notify/Lanes" >Lanes </a>
@@ -1693,10 +1702,10 @@ QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
 [-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
 |
 
--ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+-Lanes lane_count [-Lane priority static_threads dynamic_threads]*
 
 <p><b>Example : </b>: static Command_Builder "EventChannel -Set_QoS -ThreadPool Threads 2 -Priority 2"
-<br><b>Example : </b>: static Command_Builder "EventChannel -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+<br><b>Example : </b>: static Command_Builder "EventChannel -Set_QoS -Lanes  2 -Lane 10 1 0 -Lane 30 2 1"
 
 <hr>
 
@@ -1777,10 +1786,10 @@ QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
 [-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
 |
 
--ThreadPoolLane  lane_count [-Lane priority static_threads dynamic_threads]*
+-Lanes  lane_count [-Lane priority static_threads dynamic_threads]*
 
 <p><b>Example : </b>: static Command_Builder "ConsumerAdmin -Set_Qos -ThreadPool Threads 2 -Priority 2"
-<br><b>Example : </b>: static Command_Builder "ConsumerAdmin -Set_Qos -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+<br><b>Example : </b>: static Command_Builder "ConsumerAdmin -Set_Qos -Lanes  2 -Lane 10 1 0 -Lane 30 2 1"
 
 <hr>
 <h3>Target Object : <b> SupplierAdmin </b></h3>
@@ -1860,10 +1869,10 @@ QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
 [-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
 |
 
--ThreadPoolLane  lane_count [-Lane priority static_threads dynamic_threads]*
+-Lanes  lane_count [-Lane priority static_threads dynamic_threads]*
 
 <p><b>Example : </b>: static Command_Builder "SupplierAdmin -Set_Qos -ThreadPool Threads 2 -Priority 2"
-<br><b>Example : </b>: static Command_Builder "SupplierAdmin -Set_Qos -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+<br><b>Example : </b>: static Command_Builder "SupplierAdmin -Set_Qos -Lanes  2 -Lane 10 1 0 -Lane 30 2 1"
 
 <hr>
 <h3>Target Object : <b> PeriodicConsumer </b></h3>
@@ -2021,10 +2030,10 @@ QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
 [-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
 |
 
--ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+-Laness lane_count [-Lane priority static_threads dynamic_threads]*
 
 <p><b>Example : </b>: static Command_Builder "PeriodicConsumer -Set_QoS -ThreadPool Threads 2 -Priority 2"
-<br><b>Example : </b>: static Command_Builder "PeriodicConsumer -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+<br><b>Example : </b>: static Command_Builder "PeriodicConsumer -Set_QoS -Lanes  2 -Lane 10 1 0 -Lane 30 2 1"
 
 <hr>
 <h3>Target Object : <b> PeriodicSupplier </b></h3>
@@ -2203,10 +2212,10 @@ QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
 [-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
 |
 
--ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+-Laness lane_count [-Lane priority static_threads dynamic_threads]*
 
 <p><b>Example : </b>: static Command_Builder "PeriodicSupplier -Set_QoS -ThreadPool Threads 2 -Priority 2"
-<br><b>Example : </b>: static Command_Builder "PeriodicSupplier -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+<br><b>Example : </b>: static Command_Builder "PeriodicSupplier -Set_QoS -Lanes  2 -Lane 10 1 0 -Lane 30 2 1"
 
 <hr>
 
