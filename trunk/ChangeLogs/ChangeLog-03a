@@ -1,24 +1,4 @@
-Thu Nov 16 17:55:18 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
-
-	* apps/JAWS/clients/Blobby/Blob.{h,cpp}:
-	* apps/JAWS/clients/Blobby/Blob_handler.{h,cpp}:
-	* apps/drwho/Rwho_DB_Manager.h:
-	* apps/drwho/Multicast_Manager.{.h,cpp}:
-	* apps/drwho/Options.{h,cpp}:
-	  Follow const correctness to make suncc5 happy.
-
-	* examples/IOStream/server/iostream_server.h 
-	  Use ACE_HAS_TEMPLATE_TYPEDEFS rather than ACE_HAS_TYPENAME_KEYWORD
-	  Thanks to Steve Huston <shuston@riverace.com> for the fix.
-
-Thu Nov 16 15:31:20 2000  Carlos O'Ryan  <coryan@uci.edu>
-
-        * include/makeinclude/platform_linux_kcc.GNU:
-          Builds with static libraries under Linux/KCC were failing due to
-          some magical -Bstatic options in the configuration file.  When
-          the options are removed the problem went away.
-
-Thu Nov 16 15:17:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+Thu Nov 16 16:14:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
         * html/doxygen.css:
@@ -67,6 +47,33 @@ Thu Nov 16 15:17:18 2000  Carlos O'Ryan  <coryan@uci.edu>
         * bin/vendor.fmt:
           Remove old scripts used in man page and html document
           generation. We do everything with doxygen now.
+
+Thu Nov 16 17:55:18 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+        * apps/JAWS/clients/Blobby/Blob.{h,cpp}:
+        * apps/JAWS/clients/Blobby/Blob_handler.{h,cpp}:
+        * apps/drwho/Rwho_DB_Manager.h:
+        * apps/drwho/Multicast_Manager.{.h,cpp}:
+        * apps/drwho/Options.{h,cpp}:
+          Follow const correctness to make suncc5 happy.
+
+        * examples/IOStream/server/iostream_server.h
+          Use ACE_HAS_TEMPLATE_TYPEDEFS rather than ACE_HAS_TYPENAME_KEYWORD
+          Thanks to Steve Huston <shuston@riverace.com> for the fix.
+
+Thu Nov 16 15:31:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Builds with static libraries under Linux/KCC were failing due to
+          some magical -Bstatic options in the configuration file.  When
+          the options are removed the problem went away.
+
+Thu Nov 16 15:31:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Builds with static libraries under Linux/KCC were failing due to
+          some magical -Bstatic options in the configuration file.  When
+          the options are removed the problem went away.
 
 Thu Nov 16 15:09:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
