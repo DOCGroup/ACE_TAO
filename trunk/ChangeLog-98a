@@ -1,5 +1,20 @@
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
+	* tests/test_config.h: Removed code for
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
+ 	  necessary.
+
+	* ace/stdcpp.h: Removed code for
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
+ 	  necessary.
+
+	* ace/config-vxworks5.x-g++.h: Removed
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  This flag is no longer
+ 	  required.
+
+	* ace/IOStream_T.cpp: Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+ 	  from #if defined.
+
         * ACE: Removed the explicit iostream.h inclusion from these:
 
 	  examples/ASX/UPIPE_Event_Server/event_server.cpp
