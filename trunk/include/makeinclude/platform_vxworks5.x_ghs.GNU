@@ -27,12 +27,12 @@
 #### WIND_BASE = /project/doc/wind
 #### WIND_HOST_TYPE = sun4-solaris2
 ####
-#### ifeq (,$(findstring /project/doc/green,$PATH))
-####   PATH +=:/project/doc/green
+#### ifeq (,$(findstring /project/doc/wind/green,$PATH))
+####   PATH +=:/project/doc/wind/green
 #### endif # PATH
 ####
 #### CPU = 86
-#### GHS = /project/doc/green/vx$(CPU)
+#### GHS = /project/doc/wind/green/vx$(CPU)
 #### include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_ghs.GNU
 
 VXWORKS = 1
@@ -54,7 +54,7 @@ ifeq ($(CPU),86)
   # archive symbol table.
   RANLIB = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ranlib386
   ifndef GHS
-    GHS = /project/doc/green/vx$(CPU)
+    GHS = /project/doc/wind/green/vx$(CPU)
   endif # GHS
   LIBS += $(GHS)/libedgnoe.a
 else
