@@ -35,7 +35,4 @@ extern TAO_Export u_int TAO_debug_level;
 // debug messages on (1) or off (0)
 extern TAO_Export u_int TAO_orbdebug;
 
-// set by getopt
-extern TAO_Export char *TAO_debug_filter;
-
 #endif /* TAO_DEBUG_H */

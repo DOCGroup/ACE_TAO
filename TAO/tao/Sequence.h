@@ -335,6 +335,7 @@ template<class T> class TAO_Unbounded_Sequence;
 // The template itself requires this file so every user of the
 // template should also see the specialization.
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> : public TAO_Unbounded_Base_Sequence
 {
   // = TITLE
@@ -358,7 +359,7 @@ public:
                           CORBA::ULong length,
                           CORBA::Octet *data,
                           CORBA::Boolean release = 0);
-  ~TAO_Unbounded_Sequence (void);
+  virtual ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
@@ -445,5 +446,7 @@ extern TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
 #if defined (__ACE_INLINE__)
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
+
+#include "tao/Sequence_T.h"
 
 #endif /* TAO_SEQUENCE_H */

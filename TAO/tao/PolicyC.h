@@ -14,7 +14,6 @@
 #include "tao/CurrentC.h"
 #include "tao/CDR.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 class TAO_Export CORBA_PolicyError : public CORBA::UserException
 {

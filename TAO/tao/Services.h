@@ -19,7 +19,6 @@
 #define TAO_SERVICES_H
 
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -31,11 +30,11 @@ struct TAO_Export CORBA_ServiceDetail
 
 #if !defined (_CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CH_)
 #define _CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CH_
-  
+
   // *************************************************************
   // _tao_seq_Octet
   // *************************************************************
-  
+
   class  _tao_seq_Octet : public TAO_Unbounded_Sequence<CORBA::Octet>
   {
     public:
@@ -49,7 +48,7 @@ struct TAO_Export CORBA_ServiceDetail
                       );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
-      
+
 #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
                       CORBA::ULong length,
@@ -65,11 +64,11 @@ struct TAO_Export CORBA_ServiceDetail
 
 #if !defined (_CORBA_SERVICEDETAIL__TAO_SEQ_OCTET___VAR_CH_)
 #define _CORBA_SERVICEDETAIL__TAO_SEQ_OCTET___VAR_CH_
-  
+
   // *************************************************************
   // class CORBA::ServiceDetail::_tao_seq_Octet_var
   // *************************************************************
-  
+
   class  _tao_seq_Octet_var
     {
     public:
@@ -77,12 +76,12 @@ struct TAO_Export CORBA_ServiceDetail
       _tao_seq_Octet_var (_tao_seq_Octet *);
       _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
       ~_tao_seq_Octet_var (void); // destructor
-      
+
       _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
       _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
       _tao_seq_Octet *operator-> (void);
       const _tao_seq_Octet *operator-> (void) const;
-      
+
       operator const _tao_seq_Octet &() const;
       operator _tao_seq_Octet &();
       operator _tao_seq_Octet &() const;
@@ -93,7 +92,7 @@ struct TAO_Export CORBA_ServiceDetail
       _tao_seq_Octet *&out (void);
       _tao_seq_Octet *_retn (void);
       _tao_seq_Octet *ptr (void) const;
-      
+
     private:
       _tao_seq_Octet *ptr_;
     };
@@ -136,12 +135,12 @@ class  CORBA_ServiceDetail_var
   CORBA_ServiceDetail_var (CORBA_ServiceDetail *);
   CORBA_ServiceDetail_var (const CORBA_ServiceDetail_var &); // copy constructor
   ~CORBA_ServiceDetail_var (void); // destructor
-  
+
   CORBA_ServiceDetail_var &operator= (CORBA_ServiceDetail *);
   CORBA_ServiceDetail_var &operator= (const CORBA_ServiceDetail_var &);
   CORBA_ServiceDetail *operator-> (void);
   const CORBA_ServiceDetail *operator-> (void) const;
-  
+
   operator const CORBA_ServiceDetail &() const;
   operator CORBA_ServiceDetail &();
   operator CORBA_ServiceDetail &() const;
@@ -151,7 +150,7 @@ class  CORBA_ServiceDetail_var
   CORBA_ServiceDetail *&out (void);
   CORBA_ServiceDetail *_retn (void);
   CORBA_ServiceDetail *ptr (void) const;
-  
+
  private:
   CORBA_ServiceDetail *ptr_;
 };
@@ -167,7 +166,7 @@ class  CORBA_ServiceDetail_out
   operator CORBA_ServiceDetail *&();
   CORBA_ServiceDetail *&ptr (void);
   CORBA_ServiceDetail *operator-> (void);
-  
+
  private:
   CORBA_ServiceDetail *&ptr_;
   // assignment from T_var not allowed
@@ -176,17 +175,17 @@ class  CORBA_ServiceDetail_out
 
 struct  CORBA_ServiceInformation
 {
-  
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CH_
-  
+
   class _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (void); // Default constructor.
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum,
@@ -196,7 +195,7 @@ struct  CORBA_ServiceInformation
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (const _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption & rhs);
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption &operator= (const _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption &rhs);
       virtual ~_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (void); // Dtor.
-      
+
       // = Accessors.
       CORBA::ULong &operator[] (CORBA::ULong i);
       const CORBA::ULong &operator[] (CORBA::ULong i) const;
@@ -206,7 +205,7 @@ struct  CORBA_ServiceInformation
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       CORBA::ULong *get_buffer (CORBA::Boolean orphan = 0);
       const CORBA::ULong *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -214,19 +213,19 @@ struct  CORBA_ServiceInformation
                     CORBA::ULong *data,
                     CORBA::Boolean release);
     };
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-  
+
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CH_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CH_
-  
+
   // *************************************************************
   // _tao_seq_ServiceOption
   // *************************************************************
-  
+
   class  _tao_seq_ServiceOption : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption
@@ -248,18 +247,18 @@ struct  CORBA_ServiceInformation
     };
   typedef _tao_seq_ServiceOption *_tao_seq_ServiceOption_ptr;
   static CORBA::TypeCode_ptr _tc__tao_seq_ServiceOption;
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION___VAR_CH_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION___VAR_CH_
 
   // *************************************************************
   // class CORBA::ServiceInformation::_tao_seq_ServiceOption_var
   // *************************************************************
-  
+
   class  _tao_seq_ServiceOption_var
     {
     public:
@@ -271,7 +270,7 @@ struct  CORBA_ServiceInformation
       _tao_seq_ServiceOption_var &operator= (const _tao_seq_ServiceOption_var &);
       _tao_seq_ServiceOption *operator-> (void);
       const _tao_seq_ServiceOption *operator-> (void) const;
-      
+
       operator const _tao_seq_ServiceOption &() const;
       operator _tao_seq_ServiceOption &();
       operator _tao_seq_ServiceOption &() const;
@@ -286,14 +285,14 @@ struct  CORBA_ServiceInformation
     private:
       _tao_seq_ServiceOption *ptr_;
     };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION___OUT_CH_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION___OUT_CH_
-  
+
   class  _tao_seq_ServiceOption_out
     {
     public:
@@ -306,28 +305,28 @@ struct  CORBA_ServiceInformation
       _tao_seq_ServiceOption *&ptr (void);
       _tao_seq_ServiceOption *operator-> (void);
       CORBA::ServiceOption &operator[] (CORBA::ULong index);
-      
+
     private:
       _tao_seq_ServiceOption *&ptr_;
       // assignment from T_var not allowed
       void operator= (const _tao_seq_ServiceOption_var &);
     };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   _tao_seq_ServiceOption service_options;
-  
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CH_
-  
+
   class _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (void); // Default constructor.
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum,
@@ -346,7 +345,7 @@ struct  CORBA_ServiceInformation
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       CORBA_ServiceDetail *get_buffer (CORBA::Boolean orphan = 0);
       const CORBA_ServiceDetail *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -354,18 +353,18 @@ struct  CORBA_ServiceInformation
                     CORBA_ServiceDetail *data,
                     CORBA::Boolean release);
     };
-  
+
 #endif /* end #if !defined */
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-  
+
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CH_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CH_
-  
+
   // *************************************************************
   // _tao_seq_ServiceDetail
   // *************************************************************
-  
+
   class  _tao_seq_ServiceDetail : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail
@@ -387,17 +386,17 @@ struct  CORBA_ServiceInformation
     };
   typedef _tao_seq_ServiceDetail *_tao_seq_ServiceDetail_ptr;
   static CORBA::TypeCode_ptr _tc__tao_seq_ServiceDetail;
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL___VAR_CH_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL___VAR_CH_
-  
+
   // *************************************************************
   // class CORBA::ServiceInformation::_tao_seq_ServiceDetail_var
   // *************************************************************
-  
+
   class  _tao_seq_ServiceDetail_var
     {
     public:
@@ -466,12 +465,12 @@ class  CORBA_ServiceInformation_var
   CORBA_ServiceInformation_var (CORBA_ServiceInformation *);
   CORBA_ServiceInformation_var (const CORBA_ServiceInformation_var &); // copy constructor
   ~CORBA_ServiceInformation_var (void); // destructor
-  
+
   CORBA_ServiceInformation_var &operator= (CORBA_ServiceInformation *);
   CORBA_ServiceInformation_var &operator= (const CORBA_ServiceInformation_var &);
   CORBA_ServiceInformation *operator-> (void);
   const CORBA_ServiceInformation *operator-> (void) const;
-  
+
   operator const CORBA_ServiceInformation &() const;
   operator CORBA_ServiceInformation &();
   operator CORBA_ServiceInformation &() const;
@@ -481,7 +480,7 @@ class  CORBA_ServiceInformation_var
   CORBA_ServiceInformation *&out (void);
   CORBA_ServiceInformation *_retn (void);
   CORBA_ServiceInformation *ptr (void) const;
-  
+
  private:
   CORBA_ServiceInformation *ptr_;
 };
@@ -494,11 +493,11 @@ class  CORBA_ServiceInformation_out
   CORBA_ServiceInformation_out (const CORBA_ServiceInformation_out &);
   CORBA_ServiceInformation_out &operator= (const CORBA_ServiceInformation_out &);
   CORBA_ServiceInformation_out &operator= (CORBA_ServiceInformation *);
-  
+
   operator CORBA_ServiceInformation *&();
   CORBA_ServiceInformation *&ptr (void);
   CORBA_ServiceInformation *operator-> (void);
-  
+
  private:
   CORBA_ServiceInformation *&ptr_;
   // assignment from T_var not allowed

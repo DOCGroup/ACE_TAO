@@ -34,7 +34,6 @@
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
