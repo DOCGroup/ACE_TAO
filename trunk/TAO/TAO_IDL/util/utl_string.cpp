@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_string.cc	1.20% %92/06/10% Sun Microsystems"
-
 // utl_string.cc - Implementation of quick and dirty TEMPORARY String
 //		   for IDL compiler
 

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 #define _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 
-#pragma ident "%@(#)AST_ConcreteType.h	1.37% %92/06/10% Sun Microsystems"
-
 // Class for all concrete types
 //
 // This is useful to group together IDL types other than objects

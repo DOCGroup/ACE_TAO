@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)drv_args.cc	1.16% %92/06/10% Sun Microsystems"
-
 // drv_args.c - Argument parsing for IDL compiler main driver
 
 #include	"idl.h"

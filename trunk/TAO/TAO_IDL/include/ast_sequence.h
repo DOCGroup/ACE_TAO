@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_SEQUENCE_AST_SEQUENCE_HH
 #define _AST_SEQUENCE_AST_SEQUENCE_HH
 
-#pragma ident "%@(#)AST_Sequence.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of sequence declaration:
 //
 // A sequence is a combination of a maximum size and a base type

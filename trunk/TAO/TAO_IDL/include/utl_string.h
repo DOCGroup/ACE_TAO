@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
-#pragma ident "%@(#)utl_string.h	1.21% %92/06/10% Sun Microsystems"
-
 // utl_string.hh - contains a quick and dirty TEMPORARY string implementation
 
 /*

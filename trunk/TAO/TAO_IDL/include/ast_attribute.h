@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 #define _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 
-#pragma ident "%@(#)AST_Attribute.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of attribute declaration:
 //
 // An attribute is a field with a readonly property

@@ -50,8 +50,6 @@
  *======================================================================
  */
 
-#pragma ident "%@(#)utl_idlist.cc	1.34% %92/06/10% Sun Microsystems"
-
 // utl_idlist.cc
 //
 // Implementation of a list of utl_string nodes

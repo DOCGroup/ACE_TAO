@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)fe_init.cc	1.21% %92/06/10% Sun Microsystems"
-
 /*
  * fe_init.cc - Initialize the FE
  *

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_LABELLIST_UTL_LABELLIST_HH
 #define _UTL_LABELLIST_UTL_LABELLIST_HH
 
-#pragma ident "%@(#)utl_labellist.hh	1.27% %92/06/10% Sun Microsystems"
-
 // utl_labellist.hh
 //
 // List of AST_UnionBranch nodes

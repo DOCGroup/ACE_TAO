@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ENUM_AST_ENUM_HH
 #define _AST_ENUM_AST_ENUM_HH
 
-#pragma ident "%@(#)AST_Enum.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of enum:
 
 /*

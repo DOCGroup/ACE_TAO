@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef	_IDL_NARROW_IDL_NARROW_HH
 #define	_IDL_NARROW_IDL_NARROW_HH
 
-#pragma ident "%@(#)idl_narrow.hh	1.1% %92/06/12% Sun Microsystems"
-
 // idl_narrow.hh
 //
 // Implement IDL narrowing mechanism. Not intended to be read by humans..

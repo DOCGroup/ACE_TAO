@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_STACK_UTL_STACK_HH
 #define _UTL_STACK_UTL_STACK_HH
 
-#pragma ident "%@(#)utl_stack.hh	1.36% %92/06/10% Sun Microsystems"
-
 // utl_stack.hh - Defines the UTL_ScopeStack class - a stack of scopes
 //
 // UTL_ScopeStack implements scope nesting

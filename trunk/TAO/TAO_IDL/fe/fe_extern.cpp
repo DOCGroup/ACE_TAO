@@ -80,7 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 extern int yyparse();
-extern File * yyin;
+extern FILE * yyin;
 
 int
 FE_yyparse()
@@ -95,7 +95,7 @@ FE_yyparse()
 void
 FE_set_yyin(File * f)
 {
-  yyin = f;
+  yyin = (FILE*)f;
 }
 
 /*

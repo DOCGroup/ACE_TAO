@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_error.cc	1.18% %92/06/10% Sun Microsystems"
-
 // utl_error.cc - Implementation of error reporting object for IDL
 //		  compiler program
 
@@ -146,6 +144,7 @@ error_string(UTL_Error::ErrorCode c)
   case UTL_Error::EIDL_BACK_END:
     return GTDEVEL("back end: ");
   }
+  return NULL;
 }
 
 // Print out an error message header on cerr
@@ -193,6 +192,7 @@ exprtype_to_string(AST_Expression::ExprType t)
   case AST_Expression::EV_none:
     return "none";
   }
+  return NULL;
 }
 
 /*

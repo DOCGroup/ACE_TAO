@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARRAY_AST_ARRAY_HH
 #define _AST_ARRAY_AST_ARRAY_HH
 
-#pragma ident "%@(#)AST_Array.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of array declaration:
 //
 // An array is a combination of a list of dimensions and a base type

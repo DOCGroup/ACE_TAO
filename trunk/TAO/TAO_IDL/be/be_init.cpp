@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)BE_init.cc	1.16% %92/06/10% Sun Microsystems"
-
 // BE_init.cc - Initialization for dummy BE
 
 #include	"idl.h"

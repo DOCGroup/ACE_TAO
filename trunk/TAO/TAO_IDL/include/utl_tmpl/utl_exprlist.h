@@ -53,8 +53,6 @@
 #ifndef _UTL_EXPRLIST_UTL_EXPRLIST_HH
 #define _UTL_EXPRLIST_UTL_EXPRLIST_HH
 
-#pragma ident "%@(#)utl_exprlist.hh	1.23% %92/06/10% Sun Microsystems"
-
 // utl_exprlist.hh
 //
 // List of strings

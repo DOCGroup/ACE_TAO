@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)drv_private.cc	1.50% %92/09/30% Sun Microsystems"
-
 // drv_global.cc - Global variables for IDL compiler driver program
 
 #include	"idl.h"

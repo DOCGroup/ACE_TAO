@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _GLOBAL_EXTERN_GLOBAL_EXTERN_HH
 #define _GLOBAL_EXTERN_GLOBAL_EXTERN_HH
 
-#pragma ident "%@(#)global_extern.hh	1.18% %92/06/10% Sun Microsystems"
-
 // global_extern.hh - Global data for the IDL compiler
 
 extern	IDL_GlobalData	*idl_global;	// Contains all "global" data

@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_predefined_type.cc	1.47% %92/06/11% Sun Microsystems"
-
 /*
  * ast_predefined_type.cc - Implementation of class AST_PredefinedType
  *

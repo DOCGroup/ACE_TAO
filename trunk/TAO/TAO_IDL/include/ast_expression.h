@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXPRESSION_AST_EXPRESSION_HH
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
-#pragma ident "%@(#)AST_Expression.h	1.39% %92/06/10% Sun Microsystems"
-
 // Representation of expression values
 
 /*

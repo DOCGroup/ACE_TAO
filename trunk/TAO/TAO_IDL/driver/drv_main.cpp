@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)drv_main.cc	1.16% %92/06/10% Sun Microsystems"
-
 /*
 ** drv_main.cc - Main program for IDL compiler driver
 **

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_ERROR_UTL_ERROR_HH
 #define _UTL_ERROR_UTL_ERROR_HH
 
-#pragma ident "%@(#)utl_error.hh	1.41% %92/06/10% Sun Microsystems"
-
 // utl_error.hh
 //
 // Defines error codes and error handling class for UTL

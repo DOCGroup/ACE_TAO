@@ -157,7 +157,7 @@ be_decl::compute_fullname (void)
 
       this->fullname_ = new char [namelen+1];
       first = I_TRUE;
-      second - I_FALSE;
+      second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ())) 
         {
@@ -177,7 +177,7 @@ be_decl::compute_fullname (void)
             }
           i->next ();
         }
-      delete i;
+	  delete i;
     }
   return;
 }
@@ -333,7 +333,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
   static char buf [MAXNAMELEN];
   long slen;
-  int i,j;
+  int i;
 
   slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
@@ -366,7 +366,6 @@ int
 be_decl::gen_var_defn (void)
 {
   TAO_OutStream *ch; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
   char namebuf [MAXNAMELEN];  // names
 
@@ -559,7 +558,6 @@ int
 be_decl::gen_var_impl (void)
 {
   TAO_OutStream *ci; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
   char fname [MAXNAMELEN];  // to hold the full and
   char lname [MAXNAMELEN];  // local _var names
@@ -1260,7 +1258,6 @@ int
 be_decl::gen_out_defn (void)
 {
   TAO_OutStream *ch; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
   char namebuf [MAXNAMELEN];  // to hold the _out name
 
@@ -1378,7 +1375,6 @@ int
 be_decl::gen_out_impl (void)
 {
   TAO_OutStream *ci; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
   char fname [MAXNAMELEN];  // to hold the full and
   char lname [MAXNAMELEN];  // local _out names

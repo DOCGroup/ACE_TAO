@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)DRV_init.cc	1.16% %92/06/10% Sun Microsystems"
-
 // DRV_init.cc - Initialization for IDL compiler driver program
 
 #include	"idl.h"

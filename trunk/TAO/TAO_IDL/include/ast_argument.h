@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARGUMENT_AST_ARGUMENT_HH
 #define _AST_ARGUMENT_AST_ARGUMENT_HH
 
-#pragma ident "%@(#)AST_Argument.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of argument to operation:
 //
 // An argument is a field with a direction attached

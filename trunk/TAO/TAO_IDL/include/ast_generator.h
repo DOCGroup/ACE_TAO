@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_GENERATOR_AST_GENERATOR_HH
 #define _AST_GENERATOR_AST_GENERATOR_HH
 
-#pragma ident "%@(#)AST_Generator.h	1.22% %92/06/10% Sun Microsystems"
-
 // ast_generator.h
 //
 // Defines base class for generators

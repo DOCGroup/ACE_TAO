@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)be_generator.cc	1.19% %92/06/10% Sun Microsystems"
-
 // be_generator.cc
 //
 // Implementation of BE generator class

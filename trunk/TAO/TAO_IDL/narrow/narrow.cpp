@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)nr_narrowk.cc	1.1% %92/06/15% Sun Microsystems"
-
 #include	"idl.h"
 #include	"idl_extern.h"
 

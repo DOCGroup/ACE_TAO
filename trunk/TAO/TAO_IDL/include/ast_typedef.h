@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPEDEF_AST_TYPEDEF_HH
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
-#pragma ident "%@(#)AST_Typedef.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of typedef declaration
 //
 // A typedef declaration is a renaming of a base type

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
-#pragma ident "%@(#)AST_Structure.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of structure:
 //
 // NOTE: add(AST_ConcreteType *) is defined here because a structure

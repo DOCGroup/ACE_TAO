@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_INTERFACE_HEADER_FE_INTERFACE_HH
 #define _FE_INTERFACE_HEADER_FE_INTERFACE_HH
 
-#pragma ident "%@(#)FE_InterfaceHeader.h	1.32% %92/06/10% Sun Microsystems"
-
 // FE_InterfaceHeader
 //
 // Internal class for FE to describe interface headers

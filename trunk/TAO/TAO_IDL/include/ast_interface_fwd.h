@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
-#pragma ident "%@(#)AST_InterfaceFwd.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of a forward interface declaration
 
 /*

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ENUM_VAL_AST_ENUM_VAL_HH
 #define _AST_ENUM_VAL_AST_ENUM_VAL_HH
 
-#pragma ident "%@(#)AST_EnumVal.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of enumerator in enum:
 //
 // An enumerator is a constant of type unsigned long

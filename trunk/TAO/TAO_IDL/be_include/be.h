@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _BE_BE_HH
 #define _BE_BE_HH
 
-#pragma ident "%@(#)be.h	1.19% %92/06/10% Sun Microsystems"
-
 // be.h
 //
 

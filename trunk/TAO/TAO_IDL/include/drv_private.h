@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _DRV_PRIVATE_DRV_PRIVATE_HH
 #define _DRV_PRIVATE_DRV_PRIVATE_HH
 
-#pragma ident "%@(#)drv_private.hh	1.17% %92/06/10% Sun Microsystems"
-
 // drv_private.hh - Define data and functions which are private to
 //		    the DRV but which must be accessible througout the DRV
 

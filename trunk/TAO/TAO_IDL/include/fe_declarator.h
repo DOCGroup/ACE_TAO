@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_DECLARATOR_FE_DECLARATOR_HH
 #define _FE_DECLARATOR_FE_DECLARATOR_HH
 
-#pragma ident "%@(#)FE_Declarator.h	1.30% %92/06/10% Sun Microsystems"
-
 // FE_Declarator.h
 //
 // FE internal class for storing interim declaration statements

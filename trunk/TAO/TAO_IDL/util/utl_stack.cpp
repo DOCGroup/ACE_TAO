@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_stack.cc	1.36% %92/06/10% Sun Microsystems"
-
 /*
  * utl_stack.cc - Implementation of class UTL_ScopeStack
  */

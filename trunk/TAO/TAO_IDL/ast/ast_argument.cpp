@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_argument.cc	1.46% %92/06/11% Sun Microsystems"
-
 /*
  * ast_argument.cc - Implementation of class AST_Argument.cc
  *
@@ -95,6 +93,7 @@ direction_to_string(AST_Argument::Direction d)
   case AST_Argument::dir_INOUT:
     return "inout";
   }
+  return NULL;
 }
 
 /*

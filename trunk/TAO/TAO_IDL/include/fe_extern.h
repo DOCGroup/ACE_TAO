@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_EXTERN_FE_EXTERN_HH
 #define _FE_EXTERN_FE_EXTERN_HH
 
-#pragma ident "%@(#)fe_extern.h	1.40% %92/06/10% Sun Microsystems"
-
 // fe_extern.hh
 //
 // Declares all global functions for the FE

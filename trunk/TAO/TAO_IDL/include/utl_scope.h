@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_SCOPE_UTL_SCOPE_HH
 #define _UTL_SCOPE_UTL_SCOPE_HH
 
-#pragma ident "%@(#)utl_scope.hh	1.37% %92/06/10% Sun Microsystems"
-
 // UTL_Scope - Provide scoping mechanism
 //
 // This is the base class for name scoping. Each entity which can

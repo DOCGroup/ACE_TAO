@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_NAMELIST_UTL_NAMELIST_HH
 #define _UTL_NAMELIST_UTL_NAMELIST_HH
 
-#pragma ident "%@(#)utl_namelist.hh	1.33% %92/06/10% Sun Microsystems"
-
 // utl_namelist.hh
 //
 // List of UTL_ScopedName nodes

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXTERN_AST_EXTERN_HH
 #define _AST_EXTERN_AST_EXTERN_HH
 
-#pragma ident "%@(#)ast_extern.h	1.40% %92/06/10% Sun Microsystems"
-
 // ast_extern.hh
 //
 // Declares all global functions for the AST

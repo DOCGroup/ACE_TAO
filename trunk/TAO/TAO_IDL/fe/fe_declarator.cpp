@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)fe_declarator.cc	1.30% %92/06/10% Sun Microsystems"
-
 /*
  * fe_declarator.cc - Implementation of FE private declaration
  *		      statement class

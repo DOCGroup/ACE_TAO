@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_DEFINES_IDL_DEFINES_HH
 #define _IDL_DEFINES_IDL_DEFINES_HH
 
-#pragma ident "%@(#)idl_defines.hh	1.15% %92/06/10% Sun Microsystems"
-
 /*
  * idl_defines.hh - Defines global compiler flags
  */

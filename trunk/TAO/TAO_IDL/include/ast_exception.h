@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXCEPTION_AST_EXCEPTION_HH
 #define _AST_EXCEPTION_AST_EXCEPTION_HH
 
-#pragma ident "%@(#)AST_Exception.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of exception
 //
 // NOTE: An exception is not a type according to the CORBAS 1.1
