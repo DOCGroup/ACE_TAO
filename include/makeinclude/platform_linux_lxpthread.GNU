@@ -1,5 +1,4 @@
 # For pthreads support on Linux, you need
-# -D_MIT_POSIX_THREADS 
 # -D_POSIX_THREADS
 # -D_POSIX_THREAD_SAFE_FUNCTIONS 
 # in the CXX command line. Also, add -lpthreads to the LIBS.
@@ -8,7 +7,7 @@
 # Jan Rychter <jwr@icm.edu.pl>
 
 CC              = gcc -w
-CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
+CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -ldl -lpthread -lstdc++
