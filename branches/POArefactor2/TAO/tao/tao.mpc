@@ -85,7 +85,10 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Object.cpp
       LocalObject.cpp
       ObjectIdListC.cpp
+      ObjectIdListA.cpp
       ORB.cpp
+      orb_typesA.cpp
+      orb_typesC.cpp
       Policy_ForwardC.cpp
       Policy_ForwardA.cpp
       PolicyC.cpp
@@ -127,6 +130,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       RequestInfo_Util.cpp
       ClientRequestInterceptor_Adapter.cpp
       PI_ForwardC.cpp
+      PI_ForwardA.cpp
       PortableInterceptorC.cpp
       PortableInterceptorA.cpp
       PICurrent.cpp
