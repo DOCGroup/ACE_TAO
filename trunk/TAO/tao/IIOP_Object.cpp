@@ -129,28 +129,21 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
 {
   // Set up an IIOP Profile to hold the host name.
 
-  if (addr.get_ip_address () == INADDR_ANY)
-    {
-      // Special case.
-      char temphost[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (temphost, sizeof temphost) != 0)
-        return -1;
-      else
-        return this->set (temphost,
-                          addr.get_port_number (),
-                          key,
-                          &addr);
-    }
+  char temphost[MAXHOSTNAMELEN + 1];
+  if (addr.get_host_name (temphost, sizeof temphost) != 0)
+    return -1;
   else
     {
-      const char *tempaddr = addr.get_host_name ();
-      if (tempaddr == 0)
-        return -1;
+      const char *host = 0;
+      if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
+        host = addr.get_host_addr ();
       else
-        return this->set (tempaddr,
-                          addr.get_port_number (),
-                          key,
-                          &addr);
+        host = temphost;
+
+      return this->set (host,
+                        addr.get_port_number (),
+                        key,
+                        &addr);
     }
 }
 
@@ -160,28 +153,21 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
 {
   // Set up an IIOP Profile to hold the host name.
 
-  if (addr.get_ip_address () == INADDR_ANY)
-    {
-      // Special case.
-      char temphost[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (temphost, sizeof temphost) != 0)
-        return -1;
-      else
-        return this->set (temphost,
-                          addr.get_port_number (),
-                          key,
-                          &addr);
-    }
+  char temphost[MAXHOSTNAMELEN + 1];
+  if (addr.get_host_name (temphost, sizeof temphost) != 0)
+    return -1;
   else
     {
-      const char *tempaddr = addr.get_host_name ();
-      if (tempaddr == 0)
-        return -1;
+      const char *host = 0;
+      if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
+        host = addr.get_host_addr ();
       else
-        return this->set (tempaddr,
-                          addr.get_port_number (),
-                          key,
-                          &addr);
+        host = temphost;
+
+      return this->set (host,
+                        addr.get_port_number (),
+                        key,
+                        &addr);
     }
 }
 

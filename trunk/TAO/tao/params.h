@@ -117,6 +117,11 @@ public:
   // The ORB will use a modified version of IIOP that minimizes the
   // header size. By default we use the standard IIOP protocol.
 
+  int use_dotted_decimal_addresses (void) const;
+  void use_dotted_decimal_addresses (int);
+  // The ORB will use the dotted decimal notation for addresses. By
+  // default we use the full ascii names.
+
 private:
   ACE_INET_Addr addr_;
   // host + port number we are listening on
@@ -154,6 +159,9 @@ private:
 
   int use_IIOP_lite_protocol_;
   // For selecting a liteweight IIOP protocol.
+
+  int use_dotted_decimal_addresses_;
+  // For selecting a address notation
 };
 
 typedef enum
