@@ -5,3 +5,11 @@ i.e. ACE_HAS_QT since this example does not relyes on Qt Reactor and
 communicates with GUI part using QApplication::postMessage() and
 simple Command Pattern based framework.  But be sure that QTDIR
 environment variable is pointed to your Qt installation directory.
+
+If you need to build this component, make sure you have the necessary
+Qt libraries/tools installed, and define
+
+qt = 1
+
+in $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features before
+creating the workspace/project for this example.

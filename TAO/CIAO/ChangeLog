@@ -1,3 +1,8 @@
+Sun Jul 06 19:41:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/Display/NavDisplayGUI_exec/README: Documented how
+	  one can generate a project that work for this component.
+
 Thu Jul 03 16:04:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CCM_Core.mpc: Fixed compilation errors by
