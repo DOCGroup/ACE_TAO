@@ -928,7 +928,7 @@ extern "C" pthread_t pthread_self (void);
 #if (ACE_NTRACE == 1)
 #define ACE_TRACE(X)
 #else
-#define ACE_TRACE(X) ACE_Trace ____ (ASYS_TEXT (X), __LINE__, ASYS_TEXT (__FILE__)
+#define ACE_TRACE(X) ACE_Trace ____ (ASYS_TEXT (X), __LINE__, ASYS_TEXT (__FILE__))
 #endif /* ACE_NTRACE */
 
 #if !defined (ACE_HAS_WINCE)
