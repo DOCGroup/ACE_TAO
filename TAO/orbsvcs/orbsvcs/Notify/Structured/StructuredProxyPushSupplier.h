@@ -42,7 +42,7 @@ TAO_NS_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
  *
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>,  public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_StructuredProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
 {
   friend class TAO_NS_Builder;
 
@@ -56,7 +56,7 @@ public:
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// Release
   virtual void release (void);
 
   /// = Servant methods

@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Types.h"
 #include "ace/Atomic_Op.h"
+#include "Object.h"
 
 /**
  * @class TAO_NS_ID_Factory
@@ -37,10 +37,10 @@ public:
   /// Destructor
   ~TAO_NS_ID_Factory ();  
 
-  TAO_NS_Object_Id id (void);
+  TAO_NS_Object::ID id (void);
 
 private:
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, TAO_NS_Object_Id> seed_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, TAO_NS_Object::ID> seed_;
 };
 
 

@@ -16,39 +16,57 @@
 ACE_RCSID(RT_Notify, TAO_NS_Object, "$Id$")
 
 TAO_NS_Object::TAO_NS_Object (void)
-  :event_manager_ (0), admin_properties_ (0), id_ (0), poa_ (0), worker_task_ (0), own_worker_task_ (0), proxy_poa_ (0), own_proxy_poa_ (0), shutdown_ (0)
+  : event_manager_ (0)
+  , admin_properties_ (0)
+  , id_ (0)
+  , poa_ (0)
+  , proxy_poa_ (0)
+  , own_proxy_poa_ (0)
+  , object_poa_ (0)
+  , own_object_poa_ (0)
+  , worker_task_ (0)
+  , own_worker_task_ (0)
+  , shutdown_ (0)
 {
-  if (TAO_debug_level > 1 )
+  if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
 }
 
 TAO_NS_Object::~TAO_NS_Object ()
 {
-  if (TAO_debug_level > 1 )
+  if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
 }
 
 void
-TAO_NS_Object::init (TAO_NS_POA_Helper* poa, TAO_NS_POA_Helper* proxy_poa, TAO_NS_Worker_Task* worker_task)
+TAO_NS_Object::init (TAO_NS_Object* parent)
 {
-  poa_ = poa;
-  proxy_poa_ = proxy_poa;
-  worker_task_ = worker_task;
+  this->event_manager_ = parent->event_manager_;
+  this->admin_properties_ = parent->admin_properties_;
+
+  this->poa_ = parent->poa_;
+  this->object_poa_ = parent->object_poa_;
+  this->proxy_poa_ = parent->proxy_poa_;
+  this->worker_task_ = parent->worker_task_;
 
   if (this->worker_task_)
     this->worker_task_->_incr_refcnt ();
+
+  // Pass  QoS
+  parent->qos_properties_.transfer (this->qos_properties_);
+  this->qos_changed (this->qos_properties_);
 }
 
 CORBA::Object_ptr
-TAO_NS_Object::activate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
-  return poa_->activate (this->servant (), id_ ACE_ENV_ARG_PARAMETER);
+  return this->poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  poa_->deactivate (id_ ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -74,14 +92,14 @@ TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Object_ptr
 TAO_NS_Object::ref (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return poa_->id_to_reference (id_ ACE_ENV_ARG_PARAMETER);
+  return this->poa_->id_to_reference (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_NS_Object::shutdown_worker_task (void)
 {
   // Only do this if we are the owner.
-  if (own_worker_task_ == 1)
+  if (this->own_worker_task_ == 1)
     {
       this->worker_task_->shutdown (); // the worker deletes itself when its <close> hook is eventually called.
     }
@@ -93,11 +111,44 @@ TAO_NS_Object::shutdown_worker_task (void)
 void
 TAO_NS_Object::shutdown_proxy_poa (void)
 {
-  if (own_proxy_poa_ == 1)
+  if (this->own_proxy_poa_ == 1)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      delete proxy_poa_;
+      ACE_TRY_NEW_ENV
+        {
+          this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          delete this->proxy_poa_;
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 2)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "Proxy shutdown error (%P|%t)\n");
+        }
+      ACE_ENDTRY;
+    }
+}
+
+void
+TAO_NS_Object::shutdown_object_poa (void)
+{
+  if (this->own_object_poa_ == 1)
+    {
+      ACE_TRY_NEW_ENV
+        {
+          this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          delete this->object_poa_;
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 2)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "Proxy shutdown error (%P|%t)\n");
+        }
+      ACE_ENDTRY;
     }
 }
 
@@ -125,9 +176,9 @@ TAO_NS_Object::worker_task (TAO_NS_Worker_Task* worker_task)
 }
 
 void
-TAO_NS_Object::proxy_poa (TAO_NS_POA_Helper* proxy_poa)
+TAO_NS_Object::proxy_poa_own (TAO_NS_POA_Helper* proxy_poa)
 {
-  // shutdown current poa.
+  // shutdown current proxy poa.
   this->shutdown_proxy_poa ();
 
   this->proxy_poa_ = proxy_poa;
@@ -137,78 +188,54 @@ TAO_NS_Object::proxy_poa (TAO_NS_POA_Helper* proxy_poa)
 }
 
 void
+TAO_NS_Object::object_poa_own (TAO_NS_POA_Helper* object_poa)
+{
+  // shutdown current object poa.
+  this->shutdown_object_poa ();
+
+  // shutdown current object poa
+  this->object_poa_ = object_poa;
+
+  // claim ownership.
+  this->own_object_poa_ = 1;
+}
+
+void
 TAO_NS_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
 {
   CosNotification::PropertyErrorSeq err_seq;
 
-  TAO_NS_QoSProperties qos_properties;
+  TAO_NS_QoSProperties new_qos_properties;
 
-  qos_properties.init (qos, err_seq);
+  if (new_qos_properties.init (qos, err_seq) == -1)
+    ACE_THROW (CORBA::INTERNAL ());
 
   // Apply the appropriate concurrency QoS
-  if (qos_properties.thread_pool ().is_valid ())
+  if (new_qos_properties.thread_pool ().is_valid ())
     {
-      if (qos_properties.thread_pool ().value ().static_threads == 0)
-        this->apply_reactive_concurrency (ACE_ENV_SINGLE_ARG_PARAMETER);
+      if (new_qos_properties.thread_pool ().value ().static_threads == 0)
+        TAO_NS_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
       else
-        this->apply_thread_pool_concurrency (qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
+        TAO_NS_PROPERTIES::instance()->builder()->
+          apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
     }
-  else if (qos_properties.thread_pool_lane ().is_valid ())
-    this->apply_lane_concurrency (qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
+  else if (new_qos_properties.thread_pool_lane ().is_valid ())
+    TAO_NS_PROPERTIES::instance()->builder()->
+      apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Update the Thread Task's QoS properties..
-  this->worker_task_->update_qos_properties (qos_properties);
+  this->worker_task_->update_qos_properties (new_qos_properties);
 
   // Inform subclasses of QoS changed.
-  this->qos_changed (qos_properties);
+  this->qos_changed (new_qos_properties);
 
   // Init the the overall QoS on this object.
-  if (this->qos_properties_.init (qos, err_seq) == 1) // Unsupported Property
+  if (new_qos_properties.copy (this->qos_properties_) == -1)
+    ACE_THROW (CORBA::INTERNAL ());
+
+  if (err_seq.length () > 0) // Unsupported Property
     ACE_THROW (CosNotification::UnsupportedQoS (err_seq));
-}
-
-void
-TAO_NS_Object::apply_reactive_concurrency (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_NS_Reactive_Task* worker_task;
-
-  ACE_NEW_THROW_EX (worker_task,
-                    TAO_NS_Reactive_Task (),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  worker_task->init (this->admin_properties_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->worker_task_own (worker_task);
-
-  this->worker_task_->_decr_refcnt ();
-}
-
-void
-TAO_NS_Object::apply_thread_pool_concurrency (const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
-{
-  TAO_NS_ThreadPool_Task* worker_task;
-
-  ACE_NEW_THROW_EX (worker_task,
-                    TAO_NS_ThreadPool_Task (),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  worker_task->init (tp_params, this->admin_properties_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->worker_task_own (worker_task);
-
-  this->worker_task_->_decr_refcnt ();
-}
-
-void
-TAO_NS_Object::apply_lane_concurrency (const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/ ACE_ENV_ARG_DECL)
-{
-  // No lane support
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CosNotification::QoSProperties*

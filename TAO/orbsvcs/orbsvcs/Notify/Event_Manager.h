@@ -19,9 +19,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Types.h"
-#include "EventTypeSeq.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+class TAO_NS_ProxySupplier;
+class TAO_NS_ProxyConsumer;
+class TAO_NS_EventTypeSeq;
+
+template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
+typedef TAO_NS_Event_Map_T<TAO_NS_ProxySupplier, TAO_SYNCH_RW_MUTEX> TAO_NS_Consumer_Map;
+typedef TAO_NS_Event_Map_T<TAO_NS_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_NS_Supplier_Map;
 
 /**
  * @class TAO_NS_Event_Manager

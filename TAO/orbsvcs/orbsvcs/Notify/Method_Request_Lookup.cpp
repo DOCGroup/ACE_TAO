@@ -9,15 +9,12 @@
 ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Lookup, "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "Event_Map_T.h"
+#include "Consumer_Map.h"
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
 #include "Proxy.h"
 #include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
+#include "SupplierAdmin.h"
 
 TAO_NS_Method_Request_Lookup::TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map)
   : TAO_NS_Method_Request_Event (event), proxy_consumer_ (proxy_consumer), map_ (map),
@@ -42,7 +39,12 @@ TAO_NS_Method_Request_Lookup::execute (ACE_ENV_SINGLE_ARG_DECL)
   if (this->proxy_consumer_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_Admin* parent = this->proxy_consumer_->supplier_admin ();
+
+  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_,
+                                                              parent->filter_admin (),
+                                                              parent->filter_operator ()
+                                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",this->proxy_consumer_ , val));

@@ -10,11 +10,6 @@ ACE_RCSID(Notify, TAO_NS_Peer, "$id$")
 
 #include "tao/debug.h"
 #include "Proxy.h"
-#include "Proxy.h"
-#include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
 
 TAO_NS_Peer::TAO_NS_Peer (void)
 {

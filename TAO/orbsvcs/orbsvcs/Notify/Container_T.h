@@ -19,57 +19,29 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Container.h"
-#include "Object_T.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
-
-/**
- * @class TAO_NS_Container_T
- *
- * @brief
- *
- */
-template <class OBJECT>
-class TAO_Notify_Export TAO_NS_Object_Find_Worker_T : public TAO_ESF_Worker<OBJECT>
-{
-  typedef TAO_ESF_Proxy_Collection<OBJECT> COLLECTION;
-
-public:
-  /// Constructor
-  TAO_NS_Object_Find_Worker_T (TAO_NS_Object_Id id);
-
-  /// Find
-  OBJECT* find (COLLECTION* collection ACE_ENV_ARG_DECL);
-
-protected:
-  ///= TAO_ESF_Worker method
-  void work (OBJECT* object ACE_ENV_ARG_DECL);
-
-  /// The id we're looking for.
-  TAO_NS_Object_Id id_;
-
-  /// The result
-  OBJECT* result_;
-};
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 /**
  * @class TAO_NS_Container_T
  *
  * @brief A template class that manages a collection.
- * TYPE = type of collection, OBJECT = the object, PARENT = parent of object (grandparent of TYPE)
+ * TYPE = type of collection
  *
  */
-template <class TYPE, class OBJECT, class PARENT>
-class TAO_Notify_Export TAO_NS_Container_T : public virtual TAO_NS_Object_T<OBJECT, PARENT>, public virtual TAO_NS_Container
+template <class TYPE>
+class TAO_Notify_Export TAO_NS_Container_T
 {
-  typedef TAO_NS_Object_Find_Worker_T<TYPE> FIND_WORKER;
+  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
+ public:
 
-public:
   /// Constuctor
   TAO_NS_Container_T (void);
 
   /// Destructor
   virtual ~TAO_NS_Container_T ();
+
+  /// Init this object.
+  void init (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Insert object to this container.
   virtual void insert (TYPE* type ACE_ENV_ARG_DECL);
@@ -77,18 +49,13 @@ public:
   /// Remove type from container_
   virtual void remove (TYPE* type ACE_ENV_ARG_DECL);
 
-  /// Find the Type.
-  TYPE* find (TAO_NS_Object_Id id ACE_ENV_ARG_DECL);
-
-  /// Init this object.
-  void init_collection (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Shutdown
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Collection
+  COLLECTION* collection (void);
 
 protected:
-  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
-
   /// The collection data structure that we add objects to.
   COLLECTION* collection_;
 };

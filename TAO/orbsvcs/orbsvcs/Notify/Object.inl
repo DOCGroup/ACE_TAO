@@ -19,6 +19,12 @@ TAO_NS_Object::poa (void)
 }
 
 ACE_INLINE TAO_NS_POA_Helper*
+TAO_NS_Object::object_poa (void)
+{
+  return this->object_poa_;
+}
+
+ACE_INLINE TAO_NS_POA_Helper*
 TAO_NS_Object::proxy_poa (void)
 {
   return this->proxy_poa_;
