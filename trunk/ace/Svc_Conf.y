@@ -9,9 +9,9 @@
 ACE_RCSID(ace, Svc_Conf_y, "$Id$")
 
 // Prototypes.
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                     ACE_Static_Node *svc_type);
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                     const char *svc_name);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
@@ -153,7 +153,7 @@ module
       if ($<static_node_>1 != 0)
         {
           ACE_ARGV args (ASYS_WIDE_STRING ($<static_node_>1->parameters ()));
-          ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
+          ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1);
 
           if (mt->init (args.argc (), args.argv ()) == -1
               || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
@@ -167,26 +167,26 @@ module
     }
   | static
     {
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
         yyerrno++;
     }
   | suspend
     {
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0)
         mt->suspend ();
     }
   | resume
     {
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0)
         mt->resume ();
     }
   | remove
     {
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0
           && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
         {
@@ -303,8 +303,8 @@ yyerror (const char *s)
 // record.
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec,
-            const char *svc_name)
+ace_get_module (ACE_Static_Node *str_rec,
+                const char *svc_name)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -324,8 +324,8 @@ get_module (ACE_Static_Node *str_rec,
 }
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec,
-            ACE_Static_Node *svc_type)
+ace_get_module (ACE_Static_Node *str_rec,
+                ACE_Static_Node *svc_type)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();

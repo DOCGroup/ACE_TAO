@@ -13,9 +13,9 @@ char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 ACE_RCSID(ace, Svc_Conf_y, "$Id$")
 
 /* Prototypes.*/
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                     ACE_Static_Node *svc_type);
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                     const char *svc_name);
 
 #define ACE_YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = '\0', ace_yytext)
@@ -267,8 +267,8 @@ ace_yyerror (const char *s)
 // record.
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec,
-            const char *svc_name)
+ace_get_module (ACE_Static_Node *str_rec,
+                const char *svc_name)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -288,8 +288,8 @@ get_module (ACE_Static_Node *str_rec,
 }
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec,
-            ACE_Static_Node *svc_type)
+ace_get_module (ACE_Static_Node *str_rec,
+                ACE_Static_Node *svc_type)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -806,7 +806,7 @@ case 25:
       if (ace_yyvsp[0].static_node_ != 0)
         {
           ACE_ARGV args (ASYS_WIDE_STRING (ace_yyvsp[0].static_node_->parameters ()));
-          ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_);
+          ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_);
 
           if (mt->init (args.argc (), args.argv ()) == -1
               || ((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->push (mt) == -1)
@@ -822,7 +822,7 @@ break;
 case 26:
 #line 169 "Svc_Conf.y"
 {
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
+      ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
 
       if (((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->push (mt) == -1)
         ace_yyerrno++;
@@ -831,7 +831,7 @@ break;
 case 27:
 #line 176 "Svc_Conf.y"
 {
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
+      ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
         mt->suspend ();
     }
@@ -839,7 +839,7 @@ break;
 case 28:
 #line 182 "Svc_Conf.y"
 {
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
+      ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
         mt->resume ();
     }
@@ -847,7 +847,7 @@ break;
 case 29:
 #line 188 "Svc_Conf.y"
 {
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
+      ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0
           && ((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->remove (mt) == -1)
         {
