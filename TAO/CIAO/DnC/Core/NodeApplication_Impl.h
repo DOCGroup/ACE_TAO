@@ -116,21 +116,31 @@ namespace CIAO
                        Deployment::InstallationFailure,
                        Components::InvalidConfiguration));
 
-    // Should I also remove the components here? Any way thats one todo!
+    /**
+     * @@Note: I don't know how to remove a home right now.
+     *         I assume that user will only call remove instead.
+     *         This is true at least for DnC run time.
+     *
+     * Right now, in this implementation I assumpe that there will be
+     * same number of homes as the components even if the components
+     * are of the same type. I don't think that we have the modeling
+     * side support of this either. So bear me if you think I avoid
+     * the real thinking for easiness.
+     */
     virtual void remove_home (const char * comp_ins_name
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
-
-    virtual ::Components::CCMHomes *
-    get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Remove everything inside including all components and homes.
     // User must be sure that no connection is active before calling this!!
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
+
+    virtual ::Components::CCMHomes *
+    get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ This interface is supposed to be used by NodeApplicationManager
     //   to set objref of NAM. Some pre-configuration might happen as well.
@@ -167,6 +177,16 @@ namespace CIAO
 				   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::RemoveFailure));
+
+    // This function is a helper for start call.
+    typedef void (Components::CCMObject::*Funct_Ptr)
+      (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+    virtual void start_i (Funct_Ptr functor
+			  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Deployment::StartError));
+
 
     // To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -205,7 +225,7 @@ namespace CIAO
     // This will be needed in the case when component/home run in different thread
     // TAO_SYNCH_MUTEX lock_;
 
-    //============Not Implemented==========================================
+    //======================================================
 
     // Note: only the NodeApplication really holds the home/component
     //       -->No duplicated() when returning these.
