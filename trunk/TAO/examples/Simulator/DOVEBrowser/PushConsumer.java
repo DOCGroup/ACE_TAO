@@ -147,8 +147,8 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_.value); 
 	
 	
-	
-	RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_); 
+	// @@ Carlos please help me to set the right boolean value
+	RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_, false); 
 	
 	
 	// The channel administrator is the event channel we got from the invocation
