@@ -1,3 +1,9 @@
+Fri Jun  8 07:38:59 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Connection_Purging/README:
+
+          Added a readme for the Connection_Purging test.
+
 Fri Jun  8 06:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/run_test.pl: Removed some extraneous
