@@ -291,7 +291,7 @@ Options::shared_client_test (u_short port,
   ACE_INT32 len = htonl (this->message_len ());
 
   // Allocate the transmit buffer.
-  void *buf;
+  char *buf;
   ACE_NEW_RETURN (buf,
                   char[len],
                   0);

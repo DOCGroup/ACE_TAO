@@ -131,6 +131,9 @@ public:
   Options (void);
   // Constructor.
 
+  ~Options (void);
+  // Destructor.
+
   int parse_args (int argc, char *argv[]);
   // Parse the command-line arguments.
 
@@ -170,6 +173,10 @@ int
 Options::reply_message_len (void) const
 {
   return this->reply_message_len_;
+}
+
+Options::~Options (void)
+{
 }
 
 Options::Options (void)
