@@ -1,3 +1,29 @@
+Fri Mar  1 07:56:43 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/Makefile:
+	  Add new RTEvent directory to the Makefile.
+
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/run_dispatching.sh:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/driver.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.dispatching_reactive.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.dispatching_rtcorba.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.dispatching_threaded.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_null.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_per_supplier.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/run_supplier_filtering.sh:
+	  The Colocated Latency test was greatly expanded to search for
+	  priority inversions, however, it turns out that this is not a
+	  good configuration for that benchmark.
+	  A new series of tests, with better code re-use (among other
+	  coding practice improvements) is being developed under the
+	  RTEvent directory.  The current tests are saved for historical
+	  reasons, but will soon be removed.
+
 Fri Mar  1 07:47:07 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
