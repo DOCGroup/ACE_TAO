@@ -726,10 +726,14 @@ public:
                             const ACE_TCHAR* name);
 
 private:
+  /// <sub_section> may not contain path separators
+  int open_simple_section (const ACE_Configuration_Section_Key &base,
+                            const ACE_TCHAR *sub_section,
+                            int create, ACE_Configuration_Section_Key &result);
   /// Adds a new section
-  int add_section (const ACE_Configuration_Section_Key& base,
-                   const ACE_TCHAR* sub_section,
-                   ACE_Configuration_Section_Key& result);
+  int add_section (const ACE_Configuration_Section_Key &base,
+                   const ACE_TCHAR *sub_section,
+                   ACE_Configuration_Section_Key &result);
 
   /// Helper for the <open> method.
   int create_index (void);

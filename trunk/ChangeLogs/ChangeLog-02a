@@ -1,3 +1,17 @@
+Tue Jun 11 19:05:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.h: Added a default constructor for 
+	  ACE_SOCK_Dgram_Mcast.
+
+	* tests/Config_Test.cpp (test): Added tests for the following capability.
+	  Thanks to Eugene Alterman <eugalt@myrealbox.com> for
+ 	  contributing these tests.
+	
+	* ace/Configuration.{h,cpp}: Added support for a new open_simple_section()
+	  method that does not allow path key separators.  Thanks to
+ 	  Eugene Alterman <eugalt@myrealbox.com> for contributing this
+ 	  patch.
+
 Tue Jun 11 20:02:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp (ACE_DLL_Handle::error()): Change to a
