@@ -27,7 +27,7 @@
 #endif 
 
 const char *iorFile = "file://test.ior";
-int niter = 10000;
+int niter = 10;
 int SIZE_BLOCK= 256;
 
 class Client

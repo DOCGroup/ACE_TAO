@@ -10,7 +10,7 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 }
 
 void
-Simple_Server_i::sendCharSeq (const Char_Seq & /*charSeq*/, CORBA::Environment&)
+Simple_Server_i::sendCharSeq (const Char_Seq &, CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple_Server_count++;
@@ -18,7 +18,7 @@ Simple_Server_i::sendCharSeq (const Char_Seq & /*charSeq*/, CORBA::Environment&)
 }
 
 void
-Simple_Server_i::sendOctetSeq (const Octet_Seq & /*octetSeq*/, CORBA::Environment&)
+Simple_Server_i::sendOctetSeq (const Octet_Seq &, CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple_Server_count++;
@@ -26,7 +26,7 @@ Simple_Server_i::sendOctetSeq (const Octet_Seq & /*octetSeq*/, CORBA::Environmen
 }
 
 CORBA::Long
-Simple_Server_i::get_number (CORBA::Long /*num*/, 
+Simple_Server_i::get_number (CORBA::Long, 
                              CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
