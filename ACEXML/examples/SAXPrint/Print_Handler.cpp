@@ -151,12 +151,15 @@ ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
 }
 
 void
-ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char *,
-                                          const ACEXML_Char *,
+ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char * prefix,
+                                          const ACEXML_Char * uri,
                                           ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event startPrefixMapping () ***************\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
 }
 
 // *** Methods inherit from ACEXML_DTDHandler.

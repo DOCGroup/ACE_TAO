@@ -55,7 +55,7 @@ ACEXML_Attribute::uri (void) const
 ACEXML_INLINE void
 ACEXML_Attribute::uri (const ACEXML_Char *uri)
 {
-  delete this->uri_;
+  delete[] this->uri_;
   this->uri_ = ACE::strnew (uri);
 }
 
@@ -68,7 +68,7 @@ ACEXML_Attribute::localName (void) const
 ACEXML_INLINE void
 ACEXML_Attribute::localName (const ACEXML_Char *localName)
 {
-  delete this->localName_;
+  delete[] this->localName_;
   this->localName_ = ACE::strnew (localName);
 }
 
@@ -81,7 +81,7 @@ ACEXML_Attribute::qName (void) const
 ACEXML_INLINE void
 ACEXML_Attribute::qName (const ACEXML_Char *qName)
 {
-  delete this->qName_;
+  delete[] this->qName_;
   this->qName_ = ACE::strnew (qName);
 }
 
@@ -94,7 +94,7 @@ ACEXML_Attribute::type (void) const
 ACEXML_INLINE void
 ACEXML_Attribute::type (const ACEXML_Char *type)
 {
-  delete this->type_;
+  delete[] this->type_;
   this->type_ = ACE::strnew (type);
 }
 
@@ -107,7 +107,7 @@ ACEXML_Attribute::value (void) const
 ACEXML_INLINE void
 ACEXML_Attribute::value (const ACEXML_Char *value)
 {
-  delete this->value_;
+  delete[] this->value_;
   this->value_ = ACE::strnew (value);
 }
 
