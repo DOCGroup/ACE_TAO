@@ -69,9 +69,6 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#define ACE_HAS_REENTRANT_FUNCTIONS
-
 // Platform has terminal ioctl flags like TCGETS and TCSETS.
 #define ACE_HAS_TERM_IOCTLS
 
@@ -158,7 +155,7 @@
 // Platform supports XPG4 wide characters
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Comment out the following eight defines if you want to disable threading. */
+/* Comment out the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 	#define ACE_MT_SAFE 1
@@ -178,6 +175,9 @@
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
 
 /* End of threading #defines */
 
