@@ -29,7 +29,6 @@
 #include "SSL_SOCK.h"
 #include "SSL_Context.h"
 
-#include "ace/Reactor.h"
 #include "ace/SOCK_Stream.h"
 
 
@@ -44,13 +43,12 @@
  * Since SSL is record-oriented, some additional steps must be taken
  * to make the ACE_SSL_SOCK_Stream interact properly with the
  * Reactor (if one is used) when performing non-blocking IO.  In
- * particular, an ACE_Event_Handler must be set using the
- * ACE_SSL_SOCK_Stream::handler() method, in addition to the Reactor
- * within which that handler is registered.  The Reactor can be set
- * using the ACE_SSL_SOCK_Stream::reactor() method.  Once set, the
- * ACE_SSL_SOCK_Stream will push the given event handler on to the
- * Reactor's notification pipe so that it is invoked before the
- * Reactor blocks on select() or WaitForMultipleEvents(), for example.
+ * particular, if ::SSL_pending (ssl), where "ssl" is a pointer to the
+ * SSL data structure returned from ACE_SSL_SOCK_Stream::ssl(),
+ * returns a non-zero value then the event handler that calls the IO
+ * methods in this class should return a value greater than zero to
+ * force the Reactor to invoke the event handler before polling for
+ * additional events (e.g. blocking on select()).
  *
  * @note The user must currently ensure that only one thread services
  *       a given SSL session at any given time since underlying SSL
