@@ -5,6 +5,7 @@
 #include "EC_Type_Filter.h"
 #include "EC_Conjunction_Filter.h"
 #include "EC_Disjunction_Filter.h"
+#include "EC_And_Filter.h"
 #include "EC_Negation_Filter.h"
 #include "EC_Bitmask_Filter.h"
 #include "EC_Masked_Type_Filter.h"
@@ -68,6 +69,20 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
           children[i] = this->recursive_build (supplier, qos, pos);
         }
       return new TAO_EC_Disjunction_Filter (children, n);
+    }
+  else if (e.header.type == ACE_ES_LOGICAL_AND_DESIGNATOR)
+    {
+      pos++; // Consume the designator
+      CORBA::ULong n = this->count_children (qos, pos);
+      
+      TAO_EC_Filter** children;
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      CORBA::ULong i = 0;
+      for (; i != n; ++i)
+        {
+          children[i] = this->recursive_build (supplier, qos, pos);
+        }
+      return new TAO_EC_And_Filter (children, n);
     }
   else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR)
     {
@@ -143,12 +158,41 @@ TAO_EC_Basic_Filter_Builder::
 {
   CORBA::ULong l = qos.dependencies.length ();
   CORBA::ULong i;
+  int count = 0;
   for (i = pos; i != l; ++i)
     {
       const RtecEventComm::Event& e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
-          || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
+          || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR
+          || e.header.type == ACE_ES_LOGICAL_AND_DESIGNATOR)
+        // We won't let these be nested by the basic filter builder.
+        // Assume these are the end of the group
         break;
+      else if (e.header.type == ACE_ES_BITMASK_DESIGNATOR)
+        // These take up an extra element
+        i++;
+      else if (e.header.type == ACE_ES_MASKED_TYPE_DESIGNATOR)
+        // These take up two extra elements
+        i += 2;
+      else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR) {
+        // These enclose another filter.
+        // Lets try to figure out how many elements the enclosed
+        // filter takes up (but don't count it in the group).
+        // Only allow basic filter types and bitmasks within
+        // a negation (when it is nested within a group).
+        // This is isn't perfect, but its about the best we can
+        // do without prefixes.
+        i++;
+        switch (qos.dependencies[i].event.header.type) {
+        case ACE_ES_BITMASK_DESIGNATOR:
+          i++;
+          break;
+        case ACE_ES_MASKED_TYPE_DESIGNATOR:
+          i += 2;
+          break;
+        }
+      }
+      count++;
     }
-  return i - pos;
+  return count;
 }

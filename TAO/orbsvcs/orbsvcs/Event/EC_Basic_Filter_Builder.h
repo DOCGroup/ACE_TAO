@@ -32,8 +32,8 @@ class TAO_EC_Event_Channel;
  * @brief Implement a builder for the fundamental filters.
  *
  * The basic filtering mechanisms in the Event channel
- * (source/type based filtering + disjunctions and conjunctions)
- * are constructed using this class.
+ * (source/type based filtering + disjunctions, conjunctions, logical ands,
+ * negations, and bitmasks) are constructed using this class.
  */
 class TAO_RTEvent_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
@@ -56,7 +56,7 @@ private:
                                   CORBA::ULong& pos) const;
 
   /// Count the number of children of the current node, i.e. until a
-  /// conjunction or disjunction starts.
+  /// conjunction, disjunction, logical and, bitmask, or negation occurs.
   CORBA::ULong count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                                CORBA::ULong pos) const;
 
