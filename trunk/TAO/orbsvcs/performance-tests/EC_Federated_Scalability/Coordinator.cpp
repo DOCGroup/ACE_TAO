@@ -128,7 +128,10 @@ ECFS_Coordinator::join (Control::Peer_ptr peer
               for (CORBA::ULong k = 0; k != samples->length (); ++k)
                 {
                   history.sample (samples[k]);
-                  ACE_OS::fprintf (output_file, "HISTO: %d %lld\n",
+                  ACE_OS::fprintf (output_file,
+                                   "HISTO: %d "
+                                   ACE_UINT64_FORMAT_SPECIFIER
+                                   "\n",
                                    k, samples[k] / gsf);
                 }
               ACE_OS::fclose (output_file);
