@@ -38,7 +38,7 @@ tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. IIOP.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. IOP_IOR.pidl
 tao_idl.exe -o orig -Ge 1 -St -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. IOP.pidl
-tao_idl.exe -o orig -Ge 1 -GA -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. IOP_Codec.pidl
+tao_idl.exe -o orig -Ge 1 -Sc -GA -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. IOP_Codec.pidl
 tao_idl.exe -o orig -Ge 1 -GA -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. orb_types.pidl
 tao_idl.exe -o orig -Ge 1 -St -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. ParameterMode.pidl
 tao_idl.exe -o orig -Ge 1 -GA -GT -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. Services.pidl
