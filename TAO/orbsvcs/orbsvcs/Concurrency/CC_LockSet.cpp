@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    cos
-// 
+//
 // = FILENAME
 //   CC_LockSet.cpp
 //
 // = AUTHOR
 //    Torben Worm <tworm@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #include "CC_LockSet.h"
@@ -22,8 +22,8 @@
 // will be instantiated here
 
 CC_LockSet::CC_LockSet (void)
-  : related_lockset_ (0),
-    lock_ (0)
+  : lock_ (0),
+    related_lockset_ (0)
 {
   // Do nothing
 }
@@ -31,8 +31,8 @@ CC_LockSet::CC_LockSet (void)
 // Constructor used to create related lock sets.
 
 CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
-  : related_lockset_ (related),
-    lock_ (0)
+  : lock_ (0),
+    related_lockset_ (related)
 {
   // Do nothing
 }
@@ -53,26 +53,26 @@ CC_LockSet::~CC_LockSet (void)
 // later version the lock set should be searched for incompatible
 // locks.
 
-void 
+void
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
                   CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
-  if (lock_ == 0) 
+  if (lock_ == 0)
     {
       ACE_NEW (lock_, CC_Lock (mode));
-      if (errno == ENOMEM) 
+      if (errno == ENOMEM)
         {
           _env.clear ();
           _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
           _env.print_exception ("CC_Lock::lock ()");
         }
     }
-  TAO_TRY 
+  TAO_TRY
     {
       lock_->lock (_env);
     }
-  TAO_CATCHANY 
+  TAO_CATCHANY
     {
       TAO_RETHROW;
     }
@@ -82,17 +82,17 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
 // Tries to lock. If it is not possible false is returned. Comments
 // for lock holds for later version.
 
-CORBA::Boolean 
+CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
                       CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
-  TAO_TRY 
+  TAO_TRY
     {
       return lock_->try_lock (_env);
     }
-  TAO_CATCHANY 
+  TAO_CATCHANY
     {
       TAO_RETHROW_RETURN (CORBA::B_FALSE);
     }
@@ -103,17 +103,17 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
 // Drops the specified lock. In this simple case we have only one lock
 // at any time so we just drop that lock.
 
-void 
+void
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
                     CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
-  TAO_TRY 
+  TAO_TRY
     {
       lock_->unlock (_env);
     }
-  TAO_CATCHANY 
+  TAO_CATCHANY
     {
       TAO_RETHROW;
     }
@@ -124,7 +124,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
 // one type of lock (in reality) and therefore the type is of no
 // meaning.
 
-void 
+void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode,
                          CORBA::Environment &_env)
