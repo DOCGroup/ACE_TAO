@@ -32,7 +32,7 @@ init (const char *nodeapp_location,
 
   PortableServer::POAManager_var mgr
     = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList policies (0);
 
@@ -42,22 +42,22 @@ init (const char *nodeapp_location,
                             mgr.in (),
                             policies
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (0);
 
   // Activate the ourself.
   PortableServer::ObjectId_var oid
     = this->poa_->activate_object (this
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (0);
 
   // And cache the object reference.
   this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
 							       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (0);
 
   // Note: even I created the object here but I don't hold the object ref.
   // Here I return pointer of myself so the NodeManager could do
