@@ -39,7 +39,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_Repository_tie : public POA_CORBA_Repository
+class POA_CORBA_Repository_tie : public POA_CORBA_Repository
 {
 public:
   POA_CORBA_Repository_tie (T &t);
@@ -377,7 +377,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_ModuleDef_tie : public POA_CORBA_ModuleDef
+class POA_CORBA_ModuleDef_tie : public POA_CORBA_ModuleDef
 {
 public:
   POA_CORBA_ModuleDef_tie (T &t);
@@ -734,7 +734,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_ConstantDef_tie : public POA_CORBA_ConstantDef
+class POA_CORBA_ConstantDef_tie : public POA_CORBA_ConstantDef
 {
 public:
   POA_CORBA_ConstantDef_tie (T &t);
@@ -929,7 +929,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_StructDef_tie : public POA_CORBA_StructDef
+class POA_CORBA_StructDef_tie : public POA_CORBA_StructDef
 {
 public:
   POA_CORBA_StructDef_tie (T &t);
@@ -1311,7 +1311,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_UnionDef_tie : public POA_CORBA_UnionDef
+class POA_CORBA_UnionDef_tie : public POA_CORBA_UnionDef
 {
 public:
   POA_CORBA_UnionDef_tie (T &t);
@@ -1718,7 +1718,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_EnumDef_tie : public POA_CORBA_EnumDef
+class POA_CORBA_EnumDef_tie : public POA_CORBA_EnumDef
 {
 public:
   POA_CORBA_EnumDef_tie (T &t);
@@ -1896,7 +1896,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_AliasDef_tie : public POA_CORBA_AliasDef
+class POA_CORBA_AliasDef_tie : public POA_CORBA_AliasDef
 {
 public:
   POA_CORBA_AliasDef_tie (T &t);
@@ -2074,7 +2074,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_NativeDef_tie : public POA_CORBA_NativeDef
+class POA_CORBA_NativeDef_tie : public POA_CORBA_NativeDef
 {
 public:
   POA_CORBA_NativeDef_tie (T &t);
@@ -2235,7 +2235,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_PrimitiveDef_tie : public POA_CORBA_PrimitiveDef
+class POA_CORBA_PrimitiveDef_tie : public POA_CORBA_PrimitiveDef
 {
 public:
   POA_CORBA_PrimitiveDef_tie (T &t);
@@ -2310,7 +2310,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_StringDef_tie : public POA_CORBA_StringDef
+class POA_CORBA_StringDef_tie : public POA_CORBA_StringDef
 {
 public:
   POA_CORBA_StringDef_tie (T &t);
@@ -2394,7 +2394,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_WstringDef_tie : public POA_CORBA_WstringDef
+class POA_CORBA_WstringDef_tie : public POA_CORBA_WstringDef
 {
 public:
   POA_CORBA_WstringDef_tie (T &t);
@@ -2478,7 +2478,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_SequenceDef_tie : public POA_CORBA_SequenceDef
+class POA_CORBA_SequenceDef_tie : public POA_CORBA_SequenceDef
 {
 public:
   POA_CORBA_SequenceDef_tie (T &t);
@@ -2587,7 +2587,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_ArrayDef_tie : public POA_CORBA_ArrayDef
+class POA_CORBA_ArrayDef_tie : public POA_CORBA_ArrayDef
 {
 public:
   POA_CORBA_ArrayDef_tie (T &t);
@@ -2696,7 +2696,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_ExceptionDef_tie : public POA_CORBA_ExceptionDef
+class POA_CORBA_ExceptionDef_tie : public POA_CORBA_ExceptionDef
 {
 public:
   POA_CORBA_ExceptionDef_tie (T &t);
@@ -3078,7 +3078,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_AttributeDef_tie : public POA_CORBA_AttributeDef
+class POA_CORBA_AttributeDef_tie : public POA_CORBA_AttributeDef
 {
 public:
   POA_CORBA_AttributeDef_tie (T &t);
@@ -3273,7 +3273,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_OperationDef_tie : public POA_CORBA_OperationDef
+class POA_CORBA_OperationDef_tie : public POA_CORBA_OperationDef
 {
 public:
   POA_CORBA_OperationDef_tie (T &t);
@@ -3519,7 +3519,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_InterfaceDef_tie : public POA_CORBA_InterfaceDef
+class POA_CORBA_InterfaceDef_tie : public POA_CORBA_InterfaceDef
 {
 public:
   POA_CORBA_InterfaceDef_tie (T &t);
@@ -3947,7 +3947,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_AbstractInterfaceDef_tie : public POA_CORBA_AbstractInterfaceDef
+class POA_CORBA_AbstractInterfaceDef_tie : public POA_CORBA_AbstractInterfaceDef
 {
 public:
   POA_CORBA_AbstractInterfaceDef_tie (T &t);
@@ -4375,7 +4375,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_IFR_Client_Export POA_CORBA_LocalInterfaceDef_tie : public POA_CORBA_LocalInterfaceDef
+class POA_CORBA_LocalInterfaceDef_tie : public POA_CORBA_LocalInterfaceDef
 {
 public:
   POA_CORBA_LocalInterfaceDef_tie (T &t);
