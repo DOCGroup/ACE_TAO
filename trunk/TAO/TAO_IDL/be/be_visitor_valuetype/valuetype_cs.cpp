@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cs,
            "$Id$")
 
 // ************************************************************
@@ -55,11 +55,11 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_cs::"
                              "visit_valuetype - "
-                             "TypeCode definition failed\n"), 
+                             "TypeCode definition failed\n"),
                             -1);
         }
     }
-  
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -68,8 +68,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (node->is_defined ())
     {
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "void" << be_nl
-          << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
+          << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref ("
           << be_idt << be_idt_nl
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -78,6 +79,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
           << be_idt << be_idt_nl
@@ -88,6 +90,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::tao_release ("
           << be_idt << be_idt_nl
@@ -111,7 +114,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl << be_nl;
 
   // The _tao_obv_repository_id method
-  *os << "const char *" << be_nl 
+  *os << "const char *" << be_nl
       << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
@@ -120,7 +123,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (be_global->any_support ())
     {
       *os << "void" << be_nl
-          << node->name () 
+          << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
@@ -147,7 +150,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       if (node->opt_accessor ())
         {
-          be_decl *scope = 
+          be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
           *os << "ACE_NESTED_CLASS ("
@@ -172,7 +175,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       if (node->opt_accessor ())
         {
-          be_decl *scope = 
+          be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
           *os << "ACE_NESTED_CLASS ("
@@ -221,7 +224,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "if (retval == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl 
+      << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
@@ -245,7 +248,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cs::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -258,7 +261,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ch::"
                          "visit_valuetype - "
-                         "failed to generate _init construct.\n"),  
+                         "failed to generate _init construct.\n"),
                         -1);
     }
 
@@ -348,9 +351,8 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
       << "// We can not use ACE_THROW here." << be_nl
       << "ACE_TRY_ENV.exception (this->exception);" << be_uidt_nl
       << "#endif" << be_nl
-      << "}" 
+      << "}"
       << be_uidt_nl;
 
   return 0;
 }
-
