@@ -11,7 +11,7 @@ Tue Mar  2 23:57:29 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
           instead of just saying unable to read.
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
-          Don't always tack on a file extension.  This was
+          Don't always tack on a file extension.  This was particularly
           vexing when trying to pass a different template file.
           This way, you can let your shell complete the file name
           that you find without having to hit the delete key 5 times.
@@ -56,7 +56,7 @@ Tue Mar  2 18:46:11 2004  Steve Huston  <shuston@riverace.com>
 Tue Mar  2 23:40:42 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/create_ace_build.pl:
-          Don't remove files with the .exp extention from the list
+          Don't remove files with the .exp extension from the list
           of files used to create a workspace since they are used
           by the gperf tests and will break autobuilds that use
           this script.
@@ -160,7 +160,7 @@ Tue Mar  2 11:16:03 2004  Chad Elliott  <elliott_c@ociweb.com>
              be added multiple times which is an error.
           2) When a project name with characters that could be special
              characters in regular expressions are not used within a
-             workspace, but are referenced by othere projects, the code
+             workspace, but are referenced by other projects, the code
              would bomb out.
 
 Mon Mar  1 18:03:22 2004  Steve Huston  <shuston@riverace.com>
@@ -269,8 +269,8 @@ Fri Feb 27 08:51:20 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
 
           Fixed a bug where 'specific' assignments were always added to
-          existing values.  It did not allow for straight assigments or
-          subtractions.  Now, specific assigments (additions and
+          existing values.  It did not allow for straight assignments or
+          subtractions.  Now, specific assignments (additions and
           subtractions) are processed as they are read instead of at the end
           of the project.
 
@@ -553,7 +553,7 @@ Sat Feb 21 08:30:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/CDR_Base.h:
         * ace/CDR_Base.cpp:
           Reverted this change "Fri Feb 20 17:14:46 2004  Irfan Pyarali
-          <irfan@oomworks.com>" as I work aout a way to handle
+          <irfan@oomworks.com>" as I work about a way to handle
           this.
 
 Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
@@ -616,7 +616,7 @@ Fri Feb 20 07:51:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           <dhinton@dresystems.com>" since it broke stuff in
           ACE-categories.html. Don seems to have a better fix. Till
           then. This reversal will create problems for folks who untar
-          doxygen documentation on platfroms where the path length could
+          doxygen documentation on platforms where the path length could
           be an issue.
 
 Thu Feb 19 15:22:49 2004  Steve Huston  <shuston@riverace.com>
@@ -674,7 +674,7 @@ Wed Feb 18 13:51:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
 
-          Fixed a problem with the implict inter-project dependency
+          Fixed a problem with the implicit inter-project dependency
           generation code.  It now looks at indirect project dependency to
           avoid adding inter-project dependencies when they are not needed.
           This fixes [BUGID 1653].
@@ -726,7 +726,7 @@ Tue Feb 17 10:29:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
 
-          Removed a redundent version of the translate_value() method.
+          Removed a redundant version of the translate_value() method.
 
 Mon Feb 16 08:06:23 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
