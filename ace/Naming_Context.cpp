@@ -9,8 +9,6 @@
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
-#if defined (ACE_HAS_WCHAR)
-
 // Make life easier later on...
 
 typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
@@ -685,4 +683,3 @@ template class ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_M
 #pragma instantiate ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_HAS_WCHAR */

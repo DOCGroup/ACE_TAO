@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Service_Object.h"
@@ -332,8 +330,6 @@ private:
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
-
-#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_NAMING_CONTEXT_H */

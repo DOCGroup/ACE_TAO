@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
@@ -127,8 +125,6 @@ private:
   ACE_Name_Proxy ns_proxy_;
   // Interface to Name server process for NET_LOCAL namespace.
 };
-
-#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_REMOTE_NAME_SPACE_H */
