@@ -1,3 +1,13 @@
+Thu Dec 27 14:53:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.(h cpp):
+        * ace/SSL/SSL_SOCK_Connector.(h cpp): Removed #include "ace/Reactor.h"
+          from the .h files and added #include "ace/Handle_Set.h" to the
+          .cpp files. Reactor is no longer needed for the class, but
+          ACE_Handle_Set is used in the implementation.
+
+        * ace/SSL/Makefile: Removed Reactor*.* from dependencies.
+
 Thu Dec 27 12:56:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Stream.i (close): Reverted this change:
