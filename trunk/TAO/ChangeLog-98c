@@ -1,4 +1,11 @@
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
+                          Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+	  Changed ownership of data to 0 in reused any so the
+	  any does not try to delete the data out from under us
+
+Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
 
 	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java: 
 	  converted nested struct memberwise initializations into 
