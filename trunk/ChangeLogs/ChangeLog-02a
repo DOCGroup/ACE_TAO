@@ -1,3 +1,16 @@
+Wed Jan 30 15:11:49 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux.GNU (CXX_VERSION):
+        * ace/config-g++-common.h:
+
+          Turned off explicit template instantiation with gcc under Linux.
+          The specific versions are 2.95.x, 2.96, 3.0.x (3.x). Added a
+          flag implicit_templates to tweak the behaviour from the
+          platform_macros.GNU file.
+
+          The combination of the compiler and binutils seems to give a
+          nice reduction in the footprint.
+
 Wed Jan 30 16:00:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Process_Manager.cpp (register_handler): Replaced ECHILD with
