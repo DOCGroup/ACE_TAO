@@ -8,6 +8,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "EDF_Scheduler.h"
 #include "Task_Stats.h"
+#include "cpuload.h"
 
 #include <dsui.h>
 
@@ -96,6 +97,8 @@ main (int argc, char *argv[])
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
 
   task_stats.init (100000);
+
+   CPULoad::calibrate(10);
 
 //  TAO_debug_level = 1;
 

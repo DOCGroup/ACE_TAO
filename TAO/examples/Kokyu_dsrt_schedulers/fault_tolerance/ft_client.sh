@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source ~/.linux.csh
+source ~/.linux.sh
 ./ft_client
