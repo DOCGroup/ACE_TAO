@@ -12,10 +12,13 @@
 
 module HUDisplay
 {
-
   component navDisplay
     {
       consumes tick Refresh;
       uses position GetLocation;
     };
+
+  home NavDisplayHome manages NavDisplay
+  {
+  };
 };

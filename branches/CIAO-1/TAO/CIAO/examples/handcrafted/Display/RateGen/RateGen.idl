@@ -12,9 +12,18 @@
 
 module HUDisplay
 {
-
   component RateGen supports opmode
     {
       publishes tick Pulse;
+
+      /// The attribute can be configured via the home or the
+      /// component property file.
+      readonly attribute long hertz;
     };
+
+  home RateGenHome manages RateGen
+  {
+    // Explicit operations
+    factory new_RateGen (in long hertz);
+  };
 };

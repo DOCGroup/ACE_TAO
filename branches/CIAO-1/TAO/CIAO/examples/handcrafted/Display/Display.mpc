@@ -18,9 +18,11 @@ project (HUD_skel) : ciao_component {
   dllflags  = HUD_SKEL_BUILD_DLL
 
   IDL_Files {
+    HUDisplayE.idl
   }
 
   Source_Files {
     HUDisplayS.cpp
+    HUDisplayEC.cpp
   }
 }

@@ -96,6 +96,10 @@ SOURCE=.\hello_servants.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\helloEC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\helloS.cpp
 # End Source File
 # End Group
@@ -133,6 +137,60 @@ SOURCE=.\helloEC.i
 # Begin Source File
 
 SOURCE=.\helloS.i
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\helloE.idl
+
+!IF  "$(CFG)" == "hello_servants - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\helloE.idl
+InputName=helloE
+
+BuildCmds= \
+	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_SERVANT_Export -Wb,export_include=hello_servants_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
+	del *S.* \
+	del *S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "hello_servants - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\helloE.idl
+InputName=helloE
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_SERVANT_Export -Wb,export_include=hello_servants_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target

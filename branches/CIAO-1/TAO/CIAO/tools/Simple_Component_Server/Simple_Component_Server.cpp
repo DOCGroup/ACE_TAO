@@ -99,7 +99,10 @@ install_homes (CIAO::Session_Container &container,
                                items);
 
           if (len < 7)
-            continue;
+            {
+              ACE_DEBUG ((LM_DEBUG, "Error parsing configuration file\n"));
+              continue;
+            }
 
           // len should be at least such and such long so we have all
           // the information we need.  These items are separate with
@@ -125,15 +128,20 @@ install_homes (CIAO::Session_Container &container,
           ACE_CHECK;
 
           if (CORBA::is_nil (home))
-            continue;
+            {
+              ACE_DEBUG ((LM_DEBUG, "Fail to create %s\n", items[6]));
+              continue;
+            }
 
           // Register with the HomeFinder now.
+          ACE_DEBUG ((LM_DEBUG, "Installing %s|%s|%s\n",
+                      items[4], items[5], items[6]));
           hr->register_home (items[4],
                              items[5],
                              items[6],
                              home.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK
+          ACE_CHECK;
         }
     }
   ACE_OS::fclose (config_file);
