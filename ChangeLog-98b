@@ -1,9 +1,21 @@
 Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release (check_workspace): use cvs checkout instead
-          of update, to reveal new directories that have been added.
+          of update, to notice any new directories that have been added
+          to the repository but not to the workspace.
+
+          There are .cvsignore files in /project/adaptive/ACE_wrappers
+          and /project/adaptive/ACE_wrappers/java.  They can be used
+          to suppress tripping over any new, uncontrolled files, such
+          as releases, that are added to these directories.
+
           Filter ^U from checkout output, so that release need not be
-          based on the latest repository versions.
+          based on the latest repository versions.  Instead the release
+          is based on the contents of the /project/adapative/ACE_wrappers
+          workspace.  It need not be brought up-to-date with the repository,
+          though it cannot contain any modified files.  This change allows
+          other users to continue to check in files prior to or during the
+          release.
 
 Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
