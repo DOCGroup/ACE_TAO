@@ -1,3 +1,9 @@
+Wed Apr  4 12:13:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.h: Declared ACE_INLINE_FOR_GNUC for
+	  ACE_MT_MEM_IO::Simple_Queue's constructor to eliminate a bogus
+	  warning reported by vxworks' gcc compiler.
+
 Wed Apr 04 07:47:48 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * etc/ace_qos.doxygen:
