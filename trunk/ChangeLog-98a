@@ -1,3 +1,11 @@
+Tue Mar 03 15:05:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.{h,i} (ACE_U_LongLong::operator *=): updated
+          with James Hu's implementation.  Now it's fast :-)
+
+        * tests/Time_Value_Test.cpp (test_ace_u_longlong): added another
+          test of operator *=.
+
 Mon Mar  2 19:21:36 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
 	* ace/OS.h: Changed all uses of "/localname" and "/globalname" to
