@@ -5,6 +5,8 @@
 #define ACE_CONTAINERS_C
 
 #define ACE_BUILD_DLL
+
+#include "ace/Malloc.h"
 #include "ace/Containers.h"
 
 #if !defined (__ACE_INLINE__)
