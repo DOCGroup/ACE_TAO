@@ -103,7 +103,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
 
   // allocate_buffer
   *os << "void" << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
+      << full_class_name << "::_allocate_buffer (CORBA::ULong /* length */)" << be_nl
       << "{" << be_idt_nl
       << "// For this class memory is never reallocated so the implementation" << be_nl
       << "// is *really* simple." << be_nl
