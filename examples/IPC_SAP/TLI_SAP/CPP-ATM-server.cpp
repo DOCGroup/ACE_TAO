@@ -21,7 +21,12 @@ main (int argc, char *argv[])
 
   // Not sure why but reuse_addr set to true/1 causes problems for
   // FORE/XTI/ATM - this is now handled in ACE_TLI_Acceptor::open()
-  if (peer_acceptor.open (addr, 1) == -1)
+  if (peer_acceptor.open (addr,
+                          1,
+                          O_RDWR,
+                          0,
+                          5,
+                          ACE_XTI_ATM_DEVICE) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),
