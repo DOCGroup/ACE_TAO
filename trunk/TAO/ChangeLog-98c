@@ -2,7 +2,8 @@ Thu Nov 12 23:21:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Native exceptions seem to be working fine.  I
  	  have restored the TAO_HAS_EXCEPTIONS option in the configuration
- 	  file.
+ 	  file.  Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for bringing
+ 	  this to our attention.
 
 Thu Nov 12 17:30:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
