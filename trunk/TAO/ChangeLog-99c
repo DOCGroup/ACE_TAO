@@ -1,7 +1,7 @@
 Fri Jul  2 09:25:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
-	  Initialized some vars that were causing Linux/egcs warnings in 
+	  Initialized some variables that were causing Linux/egcs warnings in 
 	  TAO_Marshal_Objref::append().
 
 Thu Jul 01 22:31:06 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
