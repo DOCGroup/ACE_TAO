@@ -92,6 +92,9 @@
 
 #define ACE_LACKS_SYSTIME_H
 
+#define ACE_LACKS_STDINT_H
+#define ACE_LACKS_STROPTS_H
+
 #define ACE_LACKS_STRRECVFD
 
 #define ACE_HAS_SIN_LEN
