@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the Connection pattern tests
 #----------------------------------------------------------------------------
@@ -20,8 +20,7 @@ BIN   	= test_sock_connector \
 	  test_spipe_connector \
 	  test_spipe_acceptor
 
-SRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
+PSRC   	= $(addsuffix .cpp,$(BIN))
 
 LSRC  	= CPP-connector.cpp \
           CPP-acceptor.cpp
