@@ -253,6 +253,7 @@ ACE_File_Lock::dump (void) const
 }
 
 ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
+  : removed_ (0)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
@@ -265,6 +266,7 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
                               int flags,
                               mode_t perms)
+  : removed_ (0)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
@@ -378,12 +380,12 @@ ACE_Mutex::dump (void) const
 }
 
 ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
+  :
 #if defined (CHORUS)
-  : process_lock_ (0),
-    lockname_ (0)
-#else
-  : removed_ (0)
+    process_lock_ (0),
+    lockname_ (0),
 #endif /* CHORUS */
+    removed_ (0)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
