@@ -1,3 +1,7 @@
+Sun Jun  1 23:38:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: Added paths to the CONTROLLE_FILES.w
+
 Sun Jun 01 19:34:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Added a

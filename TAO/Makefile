@@ -88,9 +88,9 @@ CONTROLLED_FILES = TAO/COPYING* \
 		   TAO/utils
 
 
-RELEASE_FILES = $(CONTROLLED_FILES) \
-                TAO/INSTALL \
-                TAO/orbsvcs/README
+RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+                ACE_wrappers/TAO/INSTALL \
+                ACE_wrappers/TAO/orbsvcs/README
 
 .PHONY: INSTALL
 INSTALL: TAO-INSTALL.html
