@@ -46,9 +46,11 @@ TAO_AV_Core::~TAO_AV_Core (void)
 
   while (transport_iter != this->transport_factories_.end())
     {
-      delete (*transport_iter)->factory();
+      if ((*transport_iter)->factory()->ref_count != 1)
+	{
+	  delete (*transport_iter)->factory();
+	}
       delete (*transport_iter);
-
       transport_iter++;
     }
 
@@ -57,7 +59,10 @@ TAO_AV_Core::~TAO_AV_Core (void)
 
   while (flow_iter != this->flow_protocol_factories_.end())
     {
-      delete (*flow_iter)->factory();
+      if ((*flow_iter)->factory()->ref_count != 1)
+	{
+	  delete (*flow_iter)->factory();
+	}
       delete (*flow_iter);
 
       flow_iter++;
@@ -640,6 +645,7 @@ TAO_AV_Core::load_default_transport_factories (void)
 		      TAO_AV_UDP_Factory,
 		      -1);
     }
+  else udp_factory->ref_count = 1;
   
   ACE_NEW_RETURN (udp_item, TAO_AV_Transport_Item ("UDP_Factory"), -1);
   udp_item->factory (udp_factory);
@@ -663,6 +669,7 @@ TAO_AV_Core::load_default_transport_factories (void)
 		      TAO_AV_TCP_Factory,
                           -1);
     }
+  else tcp_factory->ref_count = 1;
   
   ACE_NEW_RETURN (tcp_item, TAO_AV_Transport_Item ("TCP_Factory"), -1);
   tcp_item->factory (tcp_factory);
@@ -689,7 +696,8 @@ TAO_AV_Core::load_default_transport_factories (void)
                           TAO_AV_UDP_QoS_Factory,
                           -1);
     }
-  
+  else udp_qos_factory->ref_count = 1;
+
   ACE_NEW_RETURN (udp_qos_item, 
 		  TAO_AV_Transport_Item ("UDP_QoS_Factory"),
 		  -1);
@@ -736,7 +744,8 @@ TAO_AV_Core::init_transport_factories (void)
 				 name.c_str (), ""),
 				-1);
 	    }
-	  
+	  (*factory)->factory ()->ref_count = 1;
+
 	  if (TAO_debug_level > 0)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
@@ -776,6 +785,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_UDP_Flow_Factory,
 		      -1);
     }
+  else udp_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (udp_item, TAO_AV_Flow_Protocol_Item ("UDP_Flow_Factory"), -1);
   udp_item->factory (udp_flow_factory);
@@ -802,6 +812,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_UDP_QoS_Flow_Factory,
 		      -1);
     }
+  else udp_qos_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (udp_qos_flow_item, TAO_AV_Flow_Protocol_Item ("UDP_QoS_Flow_Factory"), -1);
   udp_qos_flow_item->factory (udp_qos_flow_factory);
@@ -827,6 +838,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_TCP_Flow_Factory,
 		      -1);
     }
+  else tcp_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (tcp_item, TAO_AV_Flow_Protocol_Item ("TCP_Flow_Factory"), -1);
   tcp_item->factory (tcp_flow_factory);
@@ -850,6 +862,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_RTP_Flow_Factory,
 		      -1);
     }
+  else rtp_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (rtp_item, TAO_AV_Flow_Protocol_Item ("RTP_Flow_Factory"), -1);
   rtp_item->factory (rtp_flow_factory);
@@ -873,6 +886,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_RTCP_Flow_Factory,
 		      -1);
     }
+  else rtcp_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (rtcp_item, TAO_AV_Flow_Protocol_Item ("RTCP_Flow_Factory"), -1);
   rtcp_item->factory (rtcp_flow_factory);
@@ -896,6 +910,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 		      TAO_AV_SFP_Factory,
 		      -1);
     }
+  else sfp_flow_factory->ref_count = 1;
 
   ACE_NEW_RETURN (sfp_item, TAO_AV_Flow_Protocol_Item ("SFP_Flow_Factory"), -1);
   sfp_item->factory (sfp_flow_factory);
@@ -939,6 +954,8 @@ TAO_AV_Core::init_flow_protocol_factories (void)
 				-1);
 	    }
 	  
+	  (*factory)->factory ()->ref_count = 1;
+
 	  if (TAO_debug_level > 0)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,

@@ -1,3 +1,22 @@
+Thu Nov 22 04:01:13 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	Fixes and new test supplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Added reference counting to
+	  factories for flow and transport protocols.
+	* orbsvcs/orbsvcs/AV/AV_Core.h: Added "user-defined" entries for UDP and
+	  UDP multicast to Protocol enum.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Added handling for new Protocol
+	  enum values.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: Improved parsing of flow 
+	  protocol names in flow specificiation.
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.h: Added ref_count to flow 
+	  protocol factory.
+	* orbsvcs/orbsvcs/AV/Transport.h: Added ref_count to transport protocol
+	  factory.
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol: Added test which illustrates
+	  how a new flow protocol can be added to the AV Service using the
+	  Service Configurator.
+
 Wed Nov 21 16:11:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/*/TAO_*.rc:
@@ -12,7 +31,7 @@ Wed Nov 21 16:11:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	New tests suplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+	New tests suplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:
 	* orbsvcs/tests/AVStreams/Bidirectional_Flows: Test bidirectional
 	  flows in the AV service. 
 	* orbsvcs/tests/AVStreams/Multiple_Flows:  Test multiple flows in
@@ -20,13 +39,13 @@ Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Nov 21 12:52:37 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-	* /orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	  Had a wrong spelling for the file "ECG_Mcast_EH.i" in the
 	  include statement corrected.
 
 Wed Nov 21 12:42:36 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-	* /orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	  Removed the duplicate template declarations in this file.
 	
 Wed Nov 21 13:35:50 2001  Craig Rodrigues  <crodrigu@bbn.com>
