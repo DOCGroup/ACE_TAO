@@ -4858,23 +4858,23 @@ public:
   // sender, receiver, or both.
 
   // = Get/set caller data.
-  iovec *caller_data (void);
+  iovec *caller_data (void) const;
   void caller_data (iovec *);
 
   // = Get/set callee data.
-  iovec *callee_data (void);
+  iovec *callee_data (void) const;
   void callee_data (iovec *);
 
   // = Get/set socket qos.
-  ACE_QoS *socket_qos (void);
+  ACE_QoS *socket_qos (void) const;
   void socket_qos (ACE_QoS *);
 
   // = Get/set group socket qos.
-  ACE_QoS *group_socket_qos (void);
+  ACE_QoS *group_socket_qos (void) const;
   void group_socket_qos (ACE_QoS *);
 
   // = Get/set flags.
-  u_long flags (void);
+  u_long flags (void) const;
   void flags (u_long);
 
 private:
@@ -4933,11 +4933,11 @@ public:
   // i.e., it is an Asynchronous Completion Token (ACT).
 
   // = Get/set QoS condition callback.
-  ACE_QOS_CONDITION_FUNC qos_condition_callback (void);
+  ACE_QOS_CONDITION_FUNC qos_condition_callback (void) const;
   void qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc);
 
   // = Get/Set callback data.
-  u_long callback_data (void);
+  u_long callback_data (void) const;
   void callback_data (u_long cd);
 
 private:
@@ -5708,7 +5708,7 @@ public:
   static ACE_HANDLE accept (ACE_HANDLE handle,
                             struct sockaddr *addr,
                             int *addrlen,
-			    ACE_Accept_QoS_Params qos_params);
+			    const ACE_Accept_QoS_Params &qos_params);
   // QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
   // the OS platform doesn't support QoS-enabled <accept> then the
   // <qos_params> are ignored and the BSD-style <accept> is called.
@@ -5722,7 +5722,7 @@ public:
   static int connect (ACE_HANDLE handle,
                       const sockaddr *addr,
                       int addrlen,
-		      ACE_Connect_QoS_Params qos_params);
+		      const ACE_Connect_QoS_Params &qos_params);
   // QoS-enabled <connect>, which passes <qos_params> to <connect>.
   // If the OS platform doesn't support QoS-enabled <connect> then the
   // <qos_params> are ignored and the BSD-style <connect> is called.
@@ -5782,7 +5782,7 @@ public:
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
 			       const sockaddr *name,
 			       int namelen,
-			       ACE_Connect_QoS_Params qos_params);
+			       const ACE_Connect_QoS_Params &qos_params);
   // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
