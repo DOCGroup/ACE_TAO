@@ -84,7 +84,7 @@ main (void)
   ACE_DEBUG ((LM_DEBUG,
               "before opening\n"));
 
-  if (0 != open ("", 0))
+  if (0 != open (".obj/DLL_Test.o",0,1))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cant open the library\n"),
                        -1);
