@@ -1,3 +1,10 @@
+Thu Jul  5 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Makefile.bor
+          Added  Asynch_Three_Stage
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/*.bor
+          Added BCB makefiles
+
 Wed Jul  4 09:53:01 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Strategies/TAO_Strategies_Static.dsp:
@@ -22,9 +29,9 @@ Wed Jul  4 09:10:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed ACE_HAS_USING_KEYWORD guard from each TIE class
           declaration, and added it to the global module reopening
-          where all TIE class declarations will occur. This 
+          where all TIE class declarations will occur. This
           includes the TAO_NAMESPACE macro inside the guard, which
-          is what we want if the platform does not support 
+          is what we want if the platform does not support
           namespaces.
 
 Wed Jul  4 14:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>

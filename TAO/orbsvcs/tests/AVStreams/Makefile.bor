@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        Asynch_Three_Stage \
         Component_Switching \
         Simple_Three_Stage \
         Simple_Two_Stage
