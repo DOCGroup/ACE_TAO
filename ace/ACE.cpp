@@ -2441,7 +2441,7 @@ ACE::get_ip_interfaces (size_t &count,
 
           // c. store in hostinfo object array and up the counter
           addrs[count++] = ACE_INET_Addr ((u_short) 0,
-                                          ACE_MULTIBYTE_STRING (buffer));
+                                          ASYS_MULTIBYTE_STRING (buffer));
         }
     }
   return 0;
