@@ -361,12 +361,22 @@ public:
   // top-level <Message_Block>.
 
   // = <ACE_Data_Block> methods.
+
   ACE_Data_Block *data_block (void) const;
-  // Get the data block.
+  // Get a pointer to the data block. Note that the <ACE_Message_Block>
+  // still references the block; this call does not change the reference
+  // count.
+
   void data_block (ACE_Data_Block *);
-  // Set the data block (releasing the original one).
+  // Set a new data block pointer. The original <ACE_Data_Block> is released
+  // as a result of this call. If you need to keep the original block, call
+  // <replace_data_block> instead. Upon return, this <ACE_Message_Block>
+  // holds a pointer to the new <ACE_Data_Block>, taking over the reference
+  // you held on it prior to the call.
+
   ACE_Data_Block *replace_data_block (ACE_Data_Block*);
-  // Set the data block (returning the original one).
+  // Set a new data block pointer. A pointer to the original <ACE_Data_Block>
+  // is returned, and not released (as it is with <data_block>).
 
   // = The continuation field chains together composite messages.
   ACE_Message_Block *cont (void) const;
