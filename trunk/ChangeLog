@@ -1,3 +1,10 @@
+Tue Apr 22 13:49:42 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-sunos5.7.h:
+
+          <sys/loadavg.h> only exists from SunOS 5.7 on.  So I added a new
+          macro, ACE_HAS_SYS_LOADAVG_H, which is defined in this file.
+
 Tue Apr 22 13:20:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
