@@ -143,7 +143,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /MTd /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -187,7 +187,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD /c
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD /MTd /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -232,29 +232,6 @@ LIB32=link.exe -lib
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
 # Begin Source File
 
 SOURCE=.\ACE.cpp
@@ -4728,6 +4705,29 @@ SOURCE=.\UPIPE_Stream.i
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Acceptor.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp

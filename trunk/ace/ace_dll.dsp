@@ -179,8 +179,8 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -243,8 +243,8 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -304,140 +304,6 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-DEP_CPP_ACCEP=\
-	".\Acceptor.h"\
-	".\Acceptor.i"\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Atomic_Op.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config.h"\
-	".\Containers.cpp"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Dynamic.h"\
-	".\Dynamic.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
-	".\Handle_Set.h"\
-	".\Handle_Set.i"\
-	".\Hash_Map_Manager.cpp"\
-	".\Hash_Map_Manager.h"\
-	".\IO_Cntl_Msg.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
-	".\Message_Block.h"\
-	".\Message_Block.i"\
-	".\Message_Queue.cpp"\
-	".\Message_Queue.h"\
-	".\Message_Queue.i"\
-	".\Module.cpp"\
-	".\Module.h"\
-	".\Module.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\Reactor.h"\
-	".\Reactor.i"\
-	".\Reactor_Impl.h"\
-	".\Service_Config.h"\
-	".\Service_Config.i"\
-	".\Service_Object.h"\
-	".\Service_Object.i"\
-	".\Service_Types.h"\
-	".\Service_Types.i"\
-	".\Shared_Object.h"\
-	".\Shared_Object.i"\
-	".\Signal.h"\
-	".\Signal.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\stdcpp.h"\
-	".\Strategies.h"\
-	".\Strategies_T.cpp"\
-	".\Strategies_T.h"\
-	".\Stream_Modules.cpp"\
-	".\Stream_Modules.h"\
-	".\Stream_Modules.i"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
-	".\Svc_Conf_Tokens.h"\
-	".\Svc_Handler.cpp"\
-	".\Svc_Handler.h"\
-	".\Svc_Handler.i"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_Options.h"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Task.h"\
-	".\Task.i"\
-	".\Task_T.cpp"\
-	".\Task_T.h"\
-	".\Task_T.i"\
-	".\Thread.h"\
-	".\Thread.i"\
-	".\Thread_Manager.h"\
-	".\Thread_Manager.i"\
-	".\Timer_Queue.h"\
-	".\Timer_Queue_T.cpp"\
-	".\Timer_Queue_T.h"\
-	".\Timer_Queue_T.i"\
-	".\Trace.h"\
-	".\Version.h"\
-	".\WFMO_Reactor.h"\
-	".\WFMO_Reactor.i"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
 # Begin Source File
 
 SOURCE=.\ACE.cpp
@@ -4797,7 +4663,7 @@ DEP_CPP_NAMIN=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"iostream.h"\
+	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6001,7 +5867,7 @@ DEP_CPP_REGIS=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"iostream.h"\
+	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6130,7 +5996,7 @@ DEP_CPP_REGIST=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"iostream.h"\
+	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -13197,6 +13063,29 @@ SOURCE=.\UPIPE_Stream.i
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Acceptor.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp
