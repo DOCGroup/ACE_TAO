@@ -1,3 +1,15 @@
+Thu Nov  5 10:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/README:
+        * ace/config-all.h:
+        * ace/config-win32-borland.h:
+          Changed my solution for the explicit std:: namespace I made this
+          morning. Making ACE_STD_NAMESPACE dependent of
+          ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB breaks other compilers, so
+          introduced the new define ACE_USES_EXPLICIT_STD_NAMESPACE which
+          defines how ACE_STD_NAMESPACE is expanded. Set this define in the
+          Borland config file only.
+
 Thu Nov  5 09:40:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
