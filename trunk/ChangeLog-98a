@@ -1,9 +1,17 @@
+Fri Apr 24 18:40:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp (handle_accept): Fixed this method so
+ 	  that it has better flexibility and error checking.  Also, added
+ 	  hooks so that users can do validation of remote connections.
+  	  Also, a flag is checked before accept is reissued.  Thanks to
+ 	  Jason Katz <Jason@rtswireless.com> for reporting these upgrades.
+
 Fri Apr 24 16:33:14 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: ACE_FACTORY_DEFINE - in the generated gobble function,
-	  use the indicated object type to do the delete so 1) the aC++
-	  compiler won't complain, and 2) so the service object is destructed
-	  properly.
+ 	  use the indicated object type to do the delete so 1) the aC++
+ 	  compiler won't complain, and 2) so the service object is
+ 	  destructed properly.
 
 	* tests/Env_Value_Test.cpp: Made it compile on Solaris.
 

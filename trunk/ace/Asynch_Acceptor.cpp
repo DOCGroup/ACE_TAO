@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (ACE_ASYNCH_ACCEPTOR_C)
 #define ACE_ASYNCH_ACCEPTOR_C
 
@@ -18,6 +20,8 @@ template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
   : listen_handle_ (ACE_INVALID_HANDLE),
     pass_addresses_ (0),
+    validate_new_connection_ (0),
+    reissue_accept_ (1),
     bytes_to_read_ (0)
 {
 }
@@ -36,11 +40,15 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 				    int pass_addresses,
 				    int backlog,
 				    int reuse_addr,
-				    ACE_Proactor *proactor)
+				    ACE_Proactor *proactor,
+                                    int validate_new_connection,
+                                    int reissue_accept)
 {
   this->proactor (proactor);
   this->pass_addresses_ = pass_addresses;
   this->bytes_to_read_ = bytes_to_read;
+  this->validate_new_connection_ = validate_new_connection;
+  this->reissue_accept_ = reissue_accept;
 
   // Create the listener socket
   this->listen_handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
@@ -120,58 +128,107 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
 
 template <class HANDLER> void 
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
-{  
+{
 #if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
-  // If the asynchronous accept succeeds.
-  if (result.success ())
-    {
-      // In order to use accept handle with other Window Sockets 1.1
-      // functions, we call the setsockopt function with the
-      // SO_UPDATE_ACCEPT_CONTEXT option. This option initializes the
-      // socket so that other Windows Sockets routines to access the
-      // socket correctly.
 
-      if (ACE_OS::setsockopt (result.accept_handle (),  
-			      SOL_SOCKET, 
-			      SO_UPDATE_ACCEPT_CONTEXT, 
-			      (char *) &this->listen_handle_, 
-			      sizeof (this->listen_handle_)) == -1)
-	ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p"),  ASYS_TEXT ("ACE_OS::setsockopt")));
-      
+  // Variable for error tracking 
+  int error = 0;
+  
+  // If the asynchronous accept fails.
+  if (!error &&
+      !result.success ())
+    {      
+      error = 1;
+      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("AcceptEx")));
+    }
+  
+  // In order to use accept handle with other Window Sockets 1.1
+  // functions, we call the setsockopt function with the
+  // SO_UPDATE_ACCEPT_CONTEXT option. This option initializes the
+  // socket so that other Windows Sockets routines to access the
+  // socket correctly.
+  if (!error &&
+      ACE_OS::setsockopt (result.accept_handle (),  
+                          SOL_SOCKET, 
+                          SO_UPDATE_ACCEPT_CONTEXT, 
+                          (char *) &this->listen_handle_, 
+                          sizeof (this->listen_handle_)) == -1)
+    {
+      error = 1;
+      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p"),  ASYS_TEXT ("ACE_OS::setsockopt")));
+    }
+
+  // Parse address
+  ACE_INET_Addr local_address, remote_address;
+  if (!error &&
+      this->validate_new_connection_ || this->pass_addresses_)
+    {
+      // Parse the addresses
+      this->parse_address (result.message_block (),
+                           remote_address, 
+                           local_address);
+    }
+
+  // Validate remote address
+  if (!error &&
+      this->validate_new_connection_ &&
+      this->validate_new_connection (remote_address) == -1)
+    {      
+      error = 1;
+      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Address validation failed")));
+    }
+  
+  HANDLER *new_handler = 0;
+  if (!error)
+    {
       // The Template method
-      HANDLER *new_handler = this->make_handler ();
-      
+      new_handler = this->make_handler ();
+      if (new_handler == 0)
+        {      
+          error = 1;
+          ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Making of new handler failed")));
+        }      
+    }
+
+  // If no errors
+  if (!error)
+    {
       // Update the Proactor.
       new_handler->proactor (this->proactor ());
 
+      // Pass the addresses
       if (this->pass_addresses_)
-	{
-	  ACE_INET_Addr local_address, remote_address;
-	  // Parse the addresses
-	  this->parse_address (result.message_block (),
-			       remote_address, 
-			       local_address);
-	  // Pass the addresses
-	  new_handler->addresses (remote_address, local_address);
-	}
+        {
+          new_handler->addresses (remote_address, local_address);
+        }
+
       // Initiate the handler
-      new_handler->open (result.accept_handle (),
-			 result.message_block ());
+      new_handler->open (result.accept_handle (), 
+                         result.message_block ());
     }
-  else
-    // The asynchronous accept fails
+
+  // On failure, no choice but to close the socket 
+  if (error)
     {
-      // Close the accept handle
       ACE_OS::closesocket (result.accept_handle ());
-      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Asynchronous Accept")));
     }
-  
+     
   // Delete the dynamically allocated message_block
   result.message_block ().release ();
 
   // Start off another asynchronous accept to keep the backlog going
-  this->accept (this->bytes_to_read_);
+  if (this->reissue_accept_)
+    {
+      this->accept (this->bytes_to_read_);
+    }
 #endif // defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
+}
+
+template <class HANDLER> int
+ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (const ACE_INET_Addr &remote_address)
+{
+  // Default implemenation always validates the remote address.
+  return 0; 
 }
 
 template <class HANDLER> int
@@ -180,7 +237,11 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-  return -1; // ::CancelIO (this->listen_handle_);
+#if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) && defined (_MSC_VER) && (_MSC_VER > 1020)
+  return (int) ::CancelIo (this->listen_handle_);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) */
 }
 
 template <class HANDLER> void
