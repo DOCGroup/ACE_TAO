@@ -1,3 +1,17 @@
+Fri Dec 07 11:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/bin.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC_static.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/lib.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.dsp:
+	  Add missing MSVC6 projects and workspaces.
+
 Fri Dec 07 09:58:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/EC_Federated_Latency.dsw:
