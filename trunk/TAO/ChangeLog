@@ -1,3 +1,45 @@
+Mon Dec 13 11:58:49 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * interop-tests/wchar/client.cpp:
+
+          Avoid build warnings from vc71 about mixing CORBA::Boolean and
+          int.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+
+          Added missing \n from many ACE_ERROR and ACE_DEBUG messages.
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+
+          Fixed a bug where the timer would not get canceled in the shutdown
+          method as it should.
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+
+          Renamed the deliver request method as it is not called by anything
+          that I could find.  This eliminates a warning about virtual method
+          hiding.
+
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
+
+          Avoid pulling in the idl files (if any are left around from the
+          previous test run).
+
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+
+          Use the -Sc option and delete the .inl files when the test is
+          done.
+
 Mon Dec 13 13:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/diffs/*.diff:
@@ -17,10 +59,10 @@ Mon Dec 13 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 13 04:35:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release:
+        * Release:
 
-	  Removed referebcs to old files and added autoconf specific files
-	  into the release.
+          Removed referebcs to old files and added autoconf specific files
+          into the release.
 
 Sun Dec 12 19:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -131,14 +173,14 @@ Sat Dec 11 17:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec 11 17:10:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
-	* orbsvcs/tests/BiDir_CORBALOC/README:
-	* orbsvcs/tests/BiDir_CORBALOC/TimeModule.idl:
-	* orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
-	* orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
+        * orbsvcs/tests/BiDir_CORBALOC/README:
+        * orbsvcs/tests/BiDir_CORBALOC/TimeModule.idl:
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
 
-	  A new test for testing BiDirGIOP with CORBALOC URL's. Wanted to
-	  have a unit test for this for a long time.
+          A new test for testing BiDirGIOP with CORBALOC URL's. Wanted to
+          have a unit test for this for a long time.
 
 Sat Dec 11 16:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -325,18 +367,18 @@ Thu Dec  9 12:37:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/IFR_Client/IFR_Components.pidl:
 
           Moved the "omg.org" typeprefix directive from the ComponentIR
- 	  module to the enclosing CORBA module.  This move does not affect
- 	  any of the C++ generated code, but it eliminates an error when
- 	  the IFR loader is loading this file into the repository. Seeing
- 	  the CORBA module without a typeprefix gives it a repository id
- 	  (which we don't generate for modules in C++) that doesn't
- 	  include the prefix. The IFR loader looks up this id in the
- 	  repository, doesn't find it (one including the prefix is already
- 	  there) and so tries to create an entry for the module again.
-  	  This causes a BAD_PARAM exception to be thrown due to the
- 	  resulting local name clash. Thanks to Arjun Thounaojam
- 	  <arjun.thounaojam@wipro.com> for reporting the problem when
- 	  loading the file into the repository for use with CorbaScript.
+          module to the enclosing CORBA module.  This move does not affect
+          any of the C++ generated code, but it eliminates an error when
+          the IFR loader is loading this file into the repository. Seeing
+          the CORBA module without a typeprefix gives it a repository id
+          (which we don't generate for modules in C++) that doesn't
+          include the prefix. The IFR loader looks up this id in the
+          repository, doesn't find it (one including the prefix is already
+          there) and so tries to create an entry for the module again.
+          This causes a BAD_PARAM exception to be thrown due to the
+          resulting local name clash. Thanks to Arjun Thounaojam
+          <arjun.thounaojam@wipro.com> for reporting the problem when
+          loading the file into the repository for use with CorbaScript.
 
 Thu Dec  9 18:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
