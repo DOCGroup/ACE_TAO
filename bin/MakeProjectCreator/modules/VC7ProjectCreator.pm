@@ -22,6 +22,14 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub file_sorter {
+  my($self)  = shift;
+  my($left)  = shift;
+  my($right) = shift;
+  return lc($left) cmp lc($right);
+}
+
+
 sub specific_lookup {
   my($self) = shift;
   my($tag)  = shift;
@@ -56,6 +64,12 @@ sub crlf {
 }
 
 
+sub get_vcversion {
+  #my($self) = shift;
+  return '7.00';
+}
+
+
 sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
@@ -66,6 +80,9 @@ sub fill_value {
     $value = $guid->generate($self->project_file_name(),
                              $self->get_current_input(),
                              $self->getcwd());
+  }
+  elsif ($name eq 'vcversion') {
+    $value = $self->get_vcversion();
   }
   return $value;
 }
