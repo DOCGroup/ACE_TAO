@@ -13,6 +13,9 @@
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
 
+#ifndef TAO_IORMANIP_SAFE_INCLUDE
+#error "You should not include IORC.h directly, use IORManip_Loader.h"
+#endif /* !TAO_IORMANIP_SAFE_INCLUDE */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

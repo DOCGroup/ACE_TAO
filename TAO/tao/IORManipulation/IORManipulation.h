@@ -22,6 +22,7 @@
 #include "ace/pre.h"
 
 #include "tao/LocalObject.h"
+#include "IORManip_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
