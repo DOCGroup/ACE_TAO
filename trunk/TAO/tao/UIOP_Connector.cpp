@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Connector.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
@@ -690,4 +690,4 @@ TAO_UIOP_Connector::object_key_delimiter (void) const
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
 
-#endif /* TAO_HAS_UIOP */
+#endif /* TAO_HAS_UIOP == 1 */

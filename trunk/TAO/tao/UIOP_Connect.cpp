@@ -2,7 +2,7 @@
 
 #include "tao/UIOP_Connect.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Transport.h"
 #include "tao/GIOP.h"
@@ -483,4 +483,4 @@ TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_UIOP */
+#endif /* TAO_HAS_UIOP == 1 */
