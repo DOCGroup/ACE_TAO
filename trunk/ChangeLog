@@ -1,3 +1,16 @@
+Wed Mar 27 18:36:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux.GNU (CXX_VERSION):
+
+          Reorganised the switches a bit for handling the implicit
+          templates.
+
+        * include/makeinclude/wrapper_macros.GNU (ACE_HAS_GNUG_PRE_2_8):
+
+          If the compiler has g++ or any mutations of g++, test whether
+          the version is less than 2.8. If so set ACE_HAS_GNUG_PRE_2_8
+          to 1 else set it to 0.
+
 Wed Mar 27 16:32:55 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Reactor_Dispatch_Order_Test.cpp: Minor compilation fixes.
