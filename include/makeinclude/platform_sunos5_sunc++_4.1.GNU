@@ -1,4 +1,4 @@
-# SunOS 5.x (Solaris 2.x) with SunC++ 4.1
+# SunOS 5.x (Solaris 2.x) with SunC++ 4.1/4.2
 # *not* using Orbix
 #
 # Note:  with the +w option, some ACE files might generate warnings of
@@ -17,8 +17,16 @@
 #
 CC              = cc
 CXX             = CC
-CFLAGS          += +w -mt
-CCFLAGS         += $(CFLAGS) -noex -pta
+CFLAGS          += -mt                #### -xO3
+#### -pta instantiates all template members, which makes libraries bigger.
+#### But, it's supposed to put each member into it's own .o, so executable
+#### size should not be penalized.
+#### Exception handling breaks on MP machines, see config*h files.
+#### -O2/3 breaks build of netsvcs/clients/Tokens/manual/manual.cpp.
+#### Sun C++ 4.2 only:
+#### Dynamic casting and RTTI can coexist with ACE, but it doesn't
+#### use them.  To disable, add: -features=no%castop,no%rtti
+CCFLAGS         += -mt -noex -pta     #### -O3
 DLD             = $(CXX) 
 LD		= $(CXX)
 LDFLAGS         += -R $(WRAPPER_ROOT)/ace 
