@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 013</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 013</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Multiple thread pools</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+On this page we have the code for the Data_Block and Message_Block
+objects.  As you probably suspect from the header on the previous
+page, the complicated part is in the construction and destruction of
+the Data_Block.
+<P>
+<HR WIDTH="100%">
+<PRE>
+#include "block.h"
+
+/*
+  Construct a Dat_Block to contain a unit of work.  Note the careful
+  construction of the baseclass to set the block type and the locking
+  strategy.
+  <i>Also notice that we don't use the data area of the baseclass at
+  all.  If we wanted to, we could have taken a second ctor parameter to
+  allow us the use of that space.</i>
+ */
+Data_Block::Data_Block( Unit_Of_Work * _data )
+   : inherited(0,ACE_Message_Block::MB_DATA,0,0,new Lock(),0,0)
+    ,data_(_data)
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Data_Block ctor for 0x%x\n", (void *) this, (void*)data_));
+}
+
+/*
+  The Lock object created in the constructor is stored in the
+  baseclass and available through the locking_strategy() method.  We
+  can cast it's value to our Lock object and invoke the destroy() to
+  indicate that we want it to go away when the lock is released.
+  <i>In other tutorials I've gone to quite a bit of trouble to avoid
+  the kind of cast you see here.  If I had stuck to that form it might 
+  look something like this:
+    ACE_Lock *  ls = this->locking_stragety();
+    Lock * my_lock = (Lock*)ls;
+    my_lock->destroy();</i>
+ */
+Data_Block::~Data_Block(void)
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Data_Block dtor for 0x%x\n", (void *) this, (void*)data_));
+    ((Lock*)locking_strategy())->destroy();
+    delete data_;
+}
+
+/*
+  Return the data
+*/
+Unit_Of_Work * Data_Block::data(void)
+{
+    return this->data_;
+}
+
+Data_Block::Lock::Lock(void)
+    : destroy_(0)
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Lock ctor\n", (void *) this ));
+}
+
+Data_Block::Lock::~Lock(void)
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Lock dtor\n", (void *) this ));
+}
+
+/*
+  Set our destroy_ flag so that the next lock release will cause us to 
+  be deleted.
+*/
+int Data_Block::Lock::destroy(void)
+{
+    ++destroy_;
+    return(0);
+}
+
+/*
+  Mutexes have acquire() and release() methods.  We've overridden the
+  latter so that when the object we're protecting goes away, we can
+  make ourselves go away after the lock is released.
+*/
+int Data_Block::Lock::release(void)
+{
+    int rval = inherited::release();
+    if( destroy_ )
+    {
+        delete this;
+    }
+    return rval;
+}
+
+/*
+  Create an baseclass unit of work when we instantiate a hangup message.
+*/
+Message_Block::Message_Block( void )
+    : inherited( new Data_Block( new Unit_Of_Work() ) )
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Message_Block ctor for shutdown\n", (void *) this ));
+    this->msg_type( MB_HANGUP );
+}
+
+/*
+  Store the unit of work in a Data_Block and initialize the baseclass
+  with that data.
+*/
+Message_Block::Message_Block( Unit_Of_Work * _data )
+    : inherited( new Data_Block(_data) )
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Message_Block ctor for 0x%x\n", (void *) this, (void*)_data));
+}
+
+Message_Block::~Message_Block( void )
+{
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Message_Block dtor\n", (void *) this ));
+}
+</PRE>
+<HR WIDTH="100%">
+<P>
+I hope that wasn't too confusing.  The locking strategy can be a bit
+daunting at times.  The worst problem  is dealing with the fact
+that the lock is held while the object being guarded by the lock is
+being destroyed.  But the only object that has a reference to the
+(dynamically created) lock object is the very thing being deleted.  We 
+would be in a world of hurt if the lock's release() method had not
+been created virtual!  By simply overridding that method we can get
+ourselves out of a nasty situation.
+<P>
+The rest of the code is pretty cut and dried.  We could have had the
+hangup indicator create a data block with a null unit of work but it's 
+more orthgonal for the thread pool if we always have a valid pointer.
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page06.html">Continue
+This Tutorial</A>]</CENTER>
+
+</BODY>
+</HTML>
