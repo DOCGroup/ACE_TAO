@@ -1121,16 +1121,20 @@ ACE_CHECK_TYPE([key_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_KEY_T])])
 ACE_CHECK_TYPE([ssize_t],[sys/types.h],[AC_DEFINE([ACE_HAS_SSIZE_T])],)
 ACE_CHECK_TYPE([u_longlong_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_U_LONGLONG_T])])
 ACE_CHECK_TYPE([pri_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_PRI_T])])
-ACE_CHECK_TYPE([ucontext_t],[ucontext.h],
-  [
-   AC_DEFINE([ACE_HAS_UCONTEXT_T])
-  ],
-  [
-   dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
-   dnl doesn't explicitly include that header.  However, it is very likely
-   dnl that <signal.h> does, either directly or indirectly.
-   ACE_CHECK_TYPE([ucontext_t],[signal.h],[AC_DEFINE([ACE_HAS_UCONTEXT_T])])
-  ])
+
+dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
+dnl doesn't explicitly include that header.  However, it is very 
+dnl likely that <signal.h> does, either directly or indirectly.
+AC_CHECK_TYPE([ucontext_t],
+	AC_DEFINE([ACE_HAS_UCONTEXT_T]),
+	,
+	[
+#include <signal.h>
+#ifndef ACE_LACKS_UCONTEXT_H
+# include <ucontext.h>
+#endif
+])
+
 ACE_CHECK_TYPE([wchar_t],[wchar.h],,
   [
    ACE_CHECK_TYPE([wchar_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_WCHAR_T])])
@@ -5982,10 +5986,10 @@ ACE_CACHE_CHECK([for sig{empty fill add del}set macros],
 #endif
 #include <signal.h>
 
-#if defined (sigemptyset) && \
-    defined (sigfillset) && \
-    defined (sigaddset) && \
-    defined (sigdelset) && \
+#if defined (sigemptyset) || \
+    defined (sigfillset) || \
+    defined (sigaddset) || \
+    defined (sigdelset) || \
     defined (sigismember)
   ACE_SIG_MACROS
 #endif
