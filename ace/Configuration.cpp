@@ -195,7 +195,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
             {
             case INTEGER:
               {
-                unsigned int value;
+                u_int value;
                 if (get_integer_value (section, name.rep (), value))
                   return -2;
 
@@ -314,7 +314,7 @@ ACE_Configuration::import_config (const ASYS_TCHAR* filename)
       else if (*end == '#')
         {
           // number type
-          unsigned int value = atoi (end + 1);
+          u_int value = atoi (end + 1);
           if (set_integer_value (section, buffer, value))
             return -4;
         }
@@ -553,7 +553,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
 int 
 ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Section_Key& key, 
                                                     const ASYS_TCHAR* name, 
-                                                    unsigned int value)
+                                                    u_int value)
 {
   if (validate_name (name))
     return -1;
@@ -577,7 +577,7 @@ int
 ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Section_Key& key, 
                                                    const ASYS_TCHAR* name, 
                                                    const void* data, 
-                                                   unsigned int length)
+                                                   u_int length)
 {
   if (validate_name (name))
     return -1;
@@ -630,7 +630,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 int 
 ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Section_Key& key, 
                                                     const ASYS_TCHAR* name, 
-                                                    unsigned int& value)
+                                                    u_int& value)
 {
   if (validate_name (name))
     return -1;
@@ -659,7 +659,7 @@ int
 ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key& key, 
                                                    const ASYS_TCHAR* name, 
                                                    void*& data, 
-                                                   unsigned int& length)
+                                                   u_int& length)
 {
   if (validate_name (name))
     return -1;
@@ -807,14 +807,14 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ASYS_TCHAR* string
 {
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (unsigned int integer)
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (u_int integer)
   : type_ (ACE_Configuration::INTEGER),
     data_ ((void*) integer),
     length_ (0)
 {
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, unsigned int length)
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, u_int length)
   : type_ (ACE_Configuration::BINARY),
     data_ (data),
     length_ (length)
@@ -1530,7 +1530,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
 int 
 ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& key, 
                                            const ASYS_TCHAR* name, 
-                                           unsigned int value)
+                                           u_int value)
 {
   if (validate_name (name))
     return -1;
@@ -1573,7 +1573,7 @@ int
 ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& key, 
                                           const ASYS_TCHAR* name, 
                                           const void* data, 
-                                          unsigned int length)
+                                          u_int length)
 {
   if (validate_name (name))
     return -1;
@@ -1659,7 +1659,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
 int 
 ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& key, 
                                            const ASYS_TCHAR* name, 
-                                           unsigned int& value)
+                                           u_int& value)
 {
   if (validate_name (name))
     return -1;
@@ -1687,7 +1687,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     return -4;
   
   // Everythings ok, return the data
-  value = (unsigned int)((long)VIntId.data_);
+  value = (u_int)((long)VIntId.data_);
   return 0;
 }
 
@@ -1695,7 +1695,7 @@ int
 ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& key, 
                                           const ASYS_TCHAR* name, 
                                           void*& data, 
-                                          unsigned int& length)
+                                          u_int& length)
 {
   if (validate_name (name))
     return -1;
