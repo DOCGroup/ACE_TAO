@@ -1,8 +1,15 @@
+Sat Oct 31 13:03:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/CDR.i (operator<<): removed some return statements so that
+          returns at end of functions don't need to be wrapped with
+          ACE_NOTREACHED.  That seems to be the only way to keep
+          both GHS and DEC cxx happy.
+
 Sat Oct 31 01:49:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (main):
-	  Added check for argv[0] to determine whether to use collocation
-	  optimization or not.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (main):
+          Added check for argv[0] to determine whether to use collocation
+          optimization or not.
 
 Fri Oct 30 23:04:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
