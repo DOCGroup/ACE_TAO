@@ -14,6 +14,7 @@
  * ============================================================================= */
 
 #include "pace/pthread.h"
+#include "pace/time.h"
 
 PACE_INLINE
 int
@@ -113,7 +114,7 @@ pace_sigsuspend (const pace_sigset_t * sigmask)
 PACE_INLINE
 int
 pace_sigtimedwait (const pace_sigset_t * set, pace_siginfo_t * info,
-                   const struct timespec * timeout)
+                   const pace_timespec * timeout)
 {
   return sigtimedwait (set, info, timeout);
 }

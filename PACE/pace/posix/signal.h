@@ -54,6 +54,11 @@ extern "C" {
   typedef union sigval pace_sigval;
 #endif /* PACE_SIGVAL */
 
+#ifndef PACE_TIMESPEC
+#define PACE_TIMESPEC
+  typedef struct timespec pace_timespec;
+#endif /* PACE_TIMESPEC */
+
   /**
      PACE's implementation of the POSIX function kill.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
@@ -154,7 +159,7 @@ extern "C" {
    */
   PACE_INLINE int pace_sigtimedwait (const pace_sigset_t * set,
                                      pace_siginfo_t * info,
-                                     const struct timespec * timeout);
+                                     const pace_timespec * timeout);
 
   /**
      PACE's implementation of the POSIX function sigwait.

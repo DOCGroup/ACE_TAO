@@ -15,7 +15,7 @@
 
 PACE_INLINE
 int
-pace_uname (struct utsname * name)
+pace_uname (pace_utsname * name)
 {
   return uname (name);
 }

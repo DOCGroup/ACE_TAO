@@ -49,20 +49,21 @@ extern "C" {
 
 #ifndef PACE_STAT
 #define PACE_STAT
-  /*typedef struct stat pace_stat;*/
+  /* Kludge since there is a func and a type of the same name */
+  typedef struct stat pace_stat_s;
 #endif /* PACE_STAT */
 
   PACE_INLINE int pace_chmod (const char * path, pace_mode_t mode);
 
   PACE_INLINE int pace_fchmod (int fildes, pace_mode_t mode);
 
-  PACE_INLINE int pace_fstat (int fildes, struct stat * buf);
+  PACE_INLINE int pace_fstat (int fildes, pace_stat_s * buf);
 
   PACE_INLINE int pace_mkdir (const char * path, pace_mode_t mode);
 
   PACE_INLINE int pace_mkfifo (const char * path, pace_mode_t mode);
 
-  PACE_INLINE int pace_stat (const char * path, struct stat * buf);
+  PACE_INLINE int pace_stat (const char * path, pace_stat_s * buf);
 
   PACE_INLINE pace_mode_t pace_umask (pace_mode_t cmask);
 
