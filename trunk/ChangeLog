@@ -1,3 +1,9 @@
+Tue Mar  1 12:39:11 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* apps/JAWS3/jaws3/Protocol_Handler.h: Added
+	  JAWS_Export to class JAWS_Protocol_Handler.  Thanks to Shaun
+ 	  Cooley <scooley4241@hotmail.com> for reporting this.
+
 Tue Mar  1 10:33:15 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Descr
