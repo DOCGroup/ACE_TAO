@@ -150,7 +150,7 @@ public:
   // Buffer of command-line options.  Returns exactly what was passed
   // to this->command_line.
 
-  char *const *command_line_argv (void);
+  LPTSTR const *command_line_argv (void);
   // argv-style command-line options.  Parses and modifies the string
   // created from <command_line_>.  All spaces not in quotes ("" or
   // '') are replaced with null (\0) bytes.  An argv array is built
