@@ -1,7 +1,8 @@
+<!-- $Id$ -->
 <HTML>
 
 <HEAD>
-<TITLE>ACE OSE Tools</TITLE>
+<TITLE>ACE Documentation Tools</TITLE>
 
 <BODY text = "#000000"
 link="#000fff"
@@ -9,24 +10,32 @@ vlink="#ff0f0f"
 bgcolor="#ffffff">
 
 <HR>
-<H3>Modified Version of the OSE Documentation Tools</H3>
+<H3>ACE Documentation Tools</H3>
 
 This <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-bin/">directory</A>
 contains versions of the freely available <A
-HREF="http://www.dscpl.com.au/">OSE</A> tools modified by <A
-HREF="mailto:kdorn@erlh.siemens.de">Karlheinz Dorn</A>, which were
-originally written by <A HREF="mailto:grahamd@nms.otc.com.au"> Graham
-Dumpleton</A> I (<A HREF="http://www.cs.wustl.edu/~schmidt">Doug
-Schmidt</a>) am very grateful to Graham and Karlheinz for these tools.
-You can obtain these files via the <A
+HREF="http://www.dscpl.com.au/">OSE</A> tools used to generate the ACE
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/man/man3/">man</A>
+and <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/man/acewindex.html">HTML</A>
+documentation.  These tools were originally written by <A
+HREF="mailto:grahamd@nms.otc.com.au"> Graham Dumpleton</A> and later
+modified by <A HREF="mailto:kdorn@erlh.siemens.de">Karlheinz Dorn</A>.
+<A HREF="http://www.cs.wustl.edu/~schmidt/ACE-members.html">We</A> are
+very grateful to Graham and Karlheinz for these tools.  You can obtain
+the ACE documentation-generation tools in the <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-obtain.html">ACE</A>
 release. <P>
 
-The primary goal of the modifications was to create a <EM>class</EM>.hxx and
-<EM>class</EM>.cxx file (for each class, struct, union included within the
-original ACE header file) from the ACE *.h header files by collecting
-the comments from that file and feeding them into the newly created
-files, but keeping the ACE *.h file untouched. <P>
+<H3>Modified Version of the OSE Documentation Tools</H3>
+
+The primary goal of Karlheinz's modifications was to create a
+<EM>class</EM>.hxx and <EM>class</EM>.cxx file (for each class,
+struct, union included within the original ACE header file) from the
+ACE *.h header files by collecting the comments from that file and
+feeding them into the newly created files, but keeping the ACE *.h
+file untouched. <P>
 
 This helps when making product documentation using commercial
 documentation tools (e.g., <A HREF="http://www.k2.co.uk">George</A>,
@@ -37,12 +46,14 @@ layout.  The modifications are an upgrade to the original OSE-tools,
 but many bug-fixes are also done for the OSE-tool files (some are
 listed below). <P>
 
-Incidentally, the Classinfo tools in OSE have evolved independently
+Incidentally, the classinfo tools in OSE have evolved independently
 since the copies in ACE were made and they support new features not
 supported in the ACE version of the tools.  Certain subtle changes
 were also made in the ACE copies for indicating sections,
-<em>etc.</em>, which makes them different from the OSE
-documentation. <P>
+<em>etc.</em>, which makes them different from the OSE documentation.
+For more information please contact <A
+HREF="mailto:grahamd@nms.otc.com.au">Graham Dumpleton</A>, who heads
+the <A HREF="http://www.dscpl.com.au/">OSE</A> project. <P>
 
 Karlheinz's extensions make it easy to include new ACE versions into
 commercial documentations without doing any painful modifications of
@@ -148,7 +159,8 @@ CORRECT: <P>
 Other documentation tools are available at the following URLs: <P>
 
 <UL>
-<LI> <A HREF="http://www.ZIB-Berlin.DE/VisPar/doc++/doc++.html">doc++</a> <P>
+<A HREF="http://www.dscpl.com.au/">OSE documentation tools</A>
+<LI> <A HREF="http://www.ZIB-Berlin.DE/VisPar/doc++/doc++.html">doc++</a> 
 <LI> <A HREF="http://www.k2.co.uk">George</A>
 </UL>
 
