@@ -1,5 +1,0 @@
-//$Id$
-project : valuetype, core {
-  sharedname   = TAO_ObjRefTemplate
-  dynamicflags = TAO_ORT_BUILD_DLL
-}

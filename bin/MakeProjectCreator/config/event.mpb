@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ec_use_typed_events, naming, messaging {
-  after     += CosEvent
-  libs      += TAO_CosEvent
-  tagchecks += CosEvent
-}

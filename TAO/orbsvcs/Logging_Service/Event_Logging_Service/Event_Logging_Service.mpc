@@ -1,4 +1,0 @@
-// $Id$
-project: namingexe, dseventlogadmin {
-  includes += $(TAO_ROOT)/orbsvcs
-}

@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(POA Default Servant): taoserver {
-  exename = Default_Servant
-  avoids += minimum_corba
-}
