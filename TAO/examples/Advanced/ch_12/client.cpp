@@ -29,7 +29,7 @@
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-//#if 0   // This inserter may or may not be needed for your ORB.
+#if 0   // This inserter may or may not be needed for your ORB.
 
 static ostream &
 operator<< (ostream &os, const CORBA::Exception &e)
@@ -46,7 +46,7 @@ operator<< (ostream &os, const CORBA::Exception &e)
     return os;
 }
 
-//#endif
+#endif
 
 // Show the details for a thermometer or thermostat.
 
@@ -54,12 +54,12 @@ static ostream &
 operator<< (ostream &os, CCS::Thermometer_ptr t)
 {
   // Check for nil.
-  if  (CORBA::is_nil (t)) 
+  if  (CORBA::is_nil (t))
     {
       os << "Cannot show state for nil reference." << endl;
       return os;
     }
-    
+
   // Try to narrow and print what kind of device it is.
   CCS::Thermostat_var tmstat = CCS::Thermostat::_narrow (t);
   os <<  (CORBA::is_nil (tmstat.in ()) ? "Thermometer:" : "Thermostat:")
@@ -98,7 +98,7 @@ operator<< (ostream &os, const CCS::Thermostat::BtData &btd)
 static ostream &
 operator<< (ostream &os, const CCS::Controller::EChange &ec)
 {
-  for  (CORBA::ULong i = 0; i < ec.errors.length (); i++) 
+  for  (CORBA::ULong i = 0; i < ec.errors.length (); i++)
     {
       os << "Change failed:" << endl;
       os << ec.errors[i].tmstat_ref.in (); // Overloaded <<
@@ -125,8 +125,8 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
            << old_nominal << endl;
       cout << "New nominal temperature is: "
            << tmstat->get_nominal () << endl;
-    } 
-  catch (const CCS::Thermostat::BadTemp &bt) 
+    }
+  catch (const CCS::Thermostat::BadTemp &bt)
     {
       cerr << "Setting of nominal temperature failed." << endl;
       cerr << bt.details << endl;             // Overloaded <<
@@ -136,13 +136,13 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 int
 main (int argc, char * argv[])
 {
-  try 
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Check arguments
-      if  (argc != 2) 
+      if  (argc != 2)
         {
           cerr << "Usage: client IOR_string" << endl;
           throw 0;
@@ -151,7 +151,7 @@ main (int argc, char * argv[])
       // Get controller reference from argv
       // and convert to object.
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
-      if  (CORBA::is_nil (obj.in ())) 
+      if  (CORBA::is_nil (obj.in ()))
         {
           cerr << "Nil controller reference" << endl;
           throw 0;
@@ -163,14 +163,14 @@ main (int argc, char * argv[])
         {
           ctrl = CCS::Controller::_narrow (obj.in ());
         }
-      catch (const CORBA::SystemException &se) 
+      catch (const CORBA::SystemException &se)
         {
           cerr << "Cannot narrow controller reference: "
                << se << endl;
           throw 0;
         }
 
-      if (CORBA::is_nil (ctrl.in ())) 
+      if (CORBA::is_nil (ctrl.in ()))
         {
           cerr << "Wrong type for controller ref." << endl;
           throw 0;
@@ -204,7 +204,7 @@ main (int argc, char * argv[])
         cout << list[i];
 
       cout << endl;
-        
+
       // Change the location of first device in the list
       CCS::AssetType anum = list[0]->asset_num ();
       cout << "Changing location of device "
@@ -219,17 +219,17 @@ main (int argc, char * argv[])
       CCS::Thermostat_var tmstat;
       for (CORBA::ULong i = 0;
            i < list->length () && CORBA::is_nil (tmstat.in ());
-           i++) 
+           i++)
         {
           tmstat = CCS::Thermostat::_narrow (list[i]);
         }
 
       // Check that we found a thermostat on the list.
-      if  (CORBA::is_nil (tmstat.in ())) 
+      if  (CORBA::is_nil (tmstat.in ()))
         {
           cout << "No thermostat devices in list." << endl;
-        } 
-      else 
+        }
+      else
         {
           // Set temperature of thermostat to
           // 50 degrees  (should work).
@@ -256,14 +256,14 @@ main (int argc, char * argv[])
         cout << ss[i].device.in ();          // Overloaded <<
 
       cout << endl;
-        
+
       // Increase the temperature of all thermostats by 40
       // degrees. First, make a new list (tss) containing only
       // thermostats.
       cout << "Increasing thermostats by 40 degrees." << endl;
       CCS::Controller::ThermostatSeq tss;
 
-      for (CORBA::ULong i = 0; i < list->length (); i++) 
+      for (CORBA::ULong i = 0; i < list->length (); i++)
         {
           tmstat = CCS::Thermostat::_narrow (list[i]);
           if (CORBA::is_nil (tmstat.in ()))
@@ -274,21 +274,21 @@ main (int argc, char * argv[])
         }
 
       // Try to change all thermostats.
-      try 
+      try
         {
           ctrl->change (tss, 40);
         }
-      catch (const CCS::Controller::EChange &ec) 
+      catch (const CCS::Controller::EChange &ec)
         {
           cerr << ec;                     // Overloaded <<
         }
-    } 
-  catch  (const CORBA::Exception & e) 
+    }
+  catch  (const CORBA::Exception & e)
     {
       cerr << "Uncaught CORBA exception: " << e << endl;
       return 1;
     }
-  catch (...) 
+  catch (...)
     {
       return 1;
     }

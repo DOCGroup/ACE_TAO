@@ -189,8 +189,8 @@ public:
   preinvoke (const PortableServer::ObjectId & oid,
              PortableServer::POA_ptr          poa,
              const char *                     operation,
-             void * &                         cookie,
-             CORBA_Environment &)
+             void * &                         cookie
+             TAO_ENV_ARG_DECL)
     throw (CORBA::SystemException,
            PortableServer::ForwardRequest);
   virtual void
@@ -198,8 +198,8 @@ public:
               PortableServer::POA_ptr          /*poa*/,
               const char *                     /*operation*/,
               void *                           /*cookie*/,
-              PortableServer::Servant          /*servant*/,
-              CORBA_Environment &)
+              PortableServer::Servant          /*servant*/
+              TAO_ENV_ARG_DECL)
     throw (CORBA::SystemException) {}
 private:
   Controller_impl *                   m_ctrl;

@@ -1,3 +1,17 @@
+Thu Oct 12 18:14:16 2000  Phillip DiCorpo  <dicorpo@cs.wustl.edu>
+
+	* examples/Advanced/ch_12/client.cpp (operator<<):
+	* examples/Advanced/ch_12/server.h:
+	* examples/Advanced/ch_12/server.cpp: Added an #if 0 around the
+	  insertion operator to exceptions. We dont need these as TAO
+	  provides them already. Also, added the right environment
+	  variables for preinvoke & postinvoke operations.
+
+	* examples/Advanced/ch_12/Makefile: Added the right libraries for
+	  linking.
+
+	  Thanks to Bala for helping me with this.
+
 Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.cpp (open_default, open_i,
