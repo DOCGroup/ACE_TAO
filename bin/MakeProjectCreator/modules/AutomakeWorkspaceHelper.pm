@@ -67,9 +67,10 @@ sub write_settings {
   my($crlf)   = $wsc->crlf();
   my($pfh)    = new FileHandle();
   my(%seen)   = ();
+  my($outdir) = $wsc->get_outdir();
 
   foreach my $local (reverse @locals) {
-    if (open($pfh, $local)) {
+    if (open($pfh, "$outdir/$local")) {
       while(<$pfh>) {
         foreach my $key (keys %vals) {
           if (/$key/) {
