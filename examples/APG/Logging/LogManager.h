@@ -5,7 +5,7 @@
 #include "ace/Singleton.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
-#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+#if (defined (_MSC_VER) && (_MSC_VER >= 1200) && (_MSC_VER < 1300))
 #include <fstream>
 #endif
 
@@ -53,13 +53,13 @@ void LogManager::redirectToSyslog (const ACE_TCHAR *prog_name)
 {
   ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::SYSLOG, prog_name);
 }
-    
+
 void LogManager::redirectToDaemon (const ACE_TCHAR *prog_name)
 {
   ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER,
                      ACE_DEFAULT_LOGGER_KEY);
 }
-    
+
 void LogManager::redirectToOStream (ACE_OSTREAM_TYPE *output)
 {
   output_stream_ = output;
@@ -68,7 +68,7 @@ void LogManager::redirectToOStream (ACE_OSTREAM_TYPE *output)
     (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 }
-    
+
 void LogManager::redirectToFile (const char *filename)
 {
   log_stream_ = new std::ofstream ();
