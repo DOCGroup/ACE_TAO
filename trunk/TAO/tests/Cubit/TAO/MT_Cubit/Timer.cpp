@@ -64,14 +64,14 @@ MT_Cubit_Timer::get_elapsed (void)
 
           // This is only occuring in VxWorks.
           // I'll leave these here to debug it later.
-          double tmp = (double)delta_t.sec ();
-          double tmp2 = (double)delta_t.usec ();
+          double tmp = (double)this->delta_.sec ();
+          double tmp2 = (double)this->delta_.usec ();
           if (tmp > 100000)
             {
               tmp = 0.0;
               tmp2 = 2000.0;
-              ACE_DEBUG (LM_DEBUG, "tmp > 100000!, delta_t.usec ()=%ld\n",
-                         delta_t.usec ());
+              ACE_DEBUG ((LM_DEBUG, "tmp > 100000!, this->delta_.usec ()=%ld\n",
+                         this->delta_.usec ()));
             }
 
           real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
