@@ -2,9 +2,16 @@
 
 #include "LB_ObjectGroup_Map.h"
 
+
 ACE_RCSID (LoadBalancing,
            LB_ObjectGroup_Map,
            "$Id$")
+
+
+#if !defined (__ACE_INLINE__)
+#include "LB_ObjectGroup_Map.inl"
+#endif  /* __ACE_INLINE__ */
+
 
 TAO_LB_ObjectGroup_Map::TAO_LB_ObjectGroup_Map (void)
   : poa_ (),

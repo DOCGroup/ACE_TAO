@@ -54,6 +54,9 @@ public:
   /// replica resides.
   LoadBalancing::LoadMonitor_var load_monitor;
 
+  /// Average load(s) on the replica
+  LoadBalancing::LoadList_var load_list;
+
 };
 
 #include "ace/post.h"
