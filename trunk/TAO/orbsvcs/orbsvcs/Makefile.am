@@ -97,7 +97,7 @@ libTAO_Svc_Utils_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS = \
+noinst_HEADERS = \
   Channel_Clients_T.h \
   IOR_Multicast.h \
   RtecBaseC.h \
@@ -196,7 +196,7 @@ libTAO_CosNaming_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosNamingC.h \
   CosNamingS.h \
@@ -285,7 +285,7 @@ libTAO_CosProperty_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosPropertyServiceC.h \
   CosPropertyServiceS.h \
@@ -441,7 +441,7 @@ libTAO_AV_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   AV/AVStreams_i.h \
   AV/AV_Core.h \
   AV/AV_export.h \
@@ -565,7 +565,7 @@ libTAO_CosConcurrency_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Concurrency/CC_Lock.h \
   Concurrency/CC_LockSet.h \
@@ -734,7 +734,9 @@ CosEvent = \
   CosTypedEventCommC.cpp \
   CosTypedEventCommS.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_CosEvent.la
+endif
 
 libTAO_CosEvent_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -767,7 +769,7 @@ libTAO_CosEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosEvent/CEC_ConsumerAdmin.h \
   CosEvent/CEC_ConsumerControl.h \
@@ -945,7 +947,7 @@ libTAO_CosLifeCycle_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosLifeCycleS_T.h \
   LifeCycleServiceS_T.h \
@@ -1021,7 +1023,9 @@ FTORB_Utils = \
   FaultTolerance/FT_IOGR_Property.cpp \
   PortableGroup_Simple_DSC.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FTORB_Utils.la
+endif
 
 libTAO_FTORB_Utils_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -1047,7 +1051,7 @@ libTAO_FTORB_Utils_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FT_CORBA_ORBC.h \
   FT_CORBA_ORBS.h \
@@ -1170,7 +1174,9 @@ PortableGroup = \
   miopC.cpp \
   miopS.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_PortableGroup.la
+endif
 
 libTAO_PortableGroup_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -1200,7 +1206,7 @@ libTAO_PortableGroup_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   PortableGroup/PG_Default_Property_Validator.h \
   PortableGroup/PG_FactoryRegistry.h \
@@ -1352,7 +1358,13 @@ CosLoadBalancing = \
   LoadBalancing/LB_RoundRobin.cpp \
   LoadBalancing/LB_ServerRequestInterceptor.cpp
 
+if BUILD_AMI
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_CosLoadBalancing.la
+endif
+endif
+endif
 
 libTAO_CosLoadBalancing_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -1383,7 +1395,7 @@ libTAO_CosLoadBalancing_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosLoadBalancingC.h \
   CosLoadBalancingS.h \
@@ -1457,7 +1469,7 @@ libTAO_ETCL_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   ETCL/ETCL_Constraint.h \
   ETCL/ETCL_Interpreter.h \
@@ -1759,7 +1771,7 @@ libTAO_CosNotification_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosEventChannelAdminC.h \
   CosEventChannelAdminS.h \
@@ -2019,7 +2031,7 @@ libTAO_CosTime_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Time/TAO_TIO.h \
   Time/TAO_Time_Service_Clerk.h \
@@ -2174,7 +2186,7 @@ libTAO_CosTrading_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosTradingC.h \
   CosTradingDynamicC.h \
@@ -2315,7 +2327,7 @@ libTAO_DsLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   DsLogAdminC.h \
   DsLogAdminS.h \
@@ -2380,7 +2392,9 @@ DsEventLogAdmin = \
   Log/EventLogNotification.cpp \
   Log/EventLog_i.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin.la
+endif
 
 libTAO_DsEventLogAdmin_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -2416,7 +2430,7 @@ libTAO_DsEventLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   DsEventLogAdminC.h \
   DsEventLogAdminS.h \
@@ -2470,7 +2484,9 @@ DsNotifyLogAdmin = \
   Log/NotifyLogNotification.cpp \
   Log/NotifyLog_i.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin.la
+endif
 
 libTAO_DsNotifyLogAdmin_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -2508,7 +2524,7 @@ libTAO_DsNotifyLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   DsNotifyLogAdminC.h \
   DsNotifyLogAdminS.h \
@@ -2557,7 +2573,7 @@ libTAO_FTRT_ClientORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h \
@@ -2790,7 +2806,7 @@ libTAO_RTEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/ECG_Adapters.h \
   Event/ECG_Address_Server_Base.h \
@@ -3087,7 +3103,11 @@ FtRtEvent = \
   FtRtecEventCommC.cpp \
   FtRtecEventCommS.cpp
 
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FtRtEvent.la
+endif
+endif
 
 libTAO_FtRtEvent_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3119,7 +3139,7 @@ libTAO_FtRtEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FTRTC.h \
   FTRTS.h \
@@ -3199,7 +3219,13 @@ FTRT_EventChannel = \
   FtRtEvent/EventChannel/create_persistent_poa.cpp \
   PortableGroup_Simple_DSC.cpp
 
+if BUILD_CORBA_MESSAGING
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
+endif
+endif
+endif
 
 libTAO_FTRT_EventChannel_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3234,7 +3260,7 @@ libTAO_FTRT_EventChannel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h \
   FtRtEvent/EventChannel/AMI_Replication_Strategy.h \
   FtRtEvent/EventChannel/Basic_Replication_Strategy.h \
@@ -3291,7 +3317,13 @@ FT_ClientORB = \
   FaultTolerance/FT_Service_Callbacks.cpp \
   PortableGroup_Simple_DSC.cpp
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FT_ClientORB.la
+endif
+endif
+endif
 
 libTAO_FT_ClientORB_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3323,7 +3355,7 @@ libTAO_FT_ClientORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FaultTolerance/FT_ClientORBInitializer.h \
   FaultTolerance/FT_ClientPolicyFactory.h \
@@ -3350,7 +3382,11 @@ FT_ServerORB = \
   FaultTolerance/FT_ServerService_Activate.cpp \
   PortableGroup_Simple_DSC.cpp
 
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FT_ServerORB.la
+endif
+endif
 
 libTAO_FT_ServerORB_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3382,7 +3418,7 @@ libTAO_FT_ServerORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FaultTolerance/FT_ServerORBInitializer.h \
   FaultTolerance/FT_ServerPolicyFactory.h \
@@ -3553,7 +3589,15 @@ FaultTolerance = \
   FT_ReplicationManagerC.cpp \
   FT_ReplicationManagerS.cpp
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_FaultTolerance.la
+endif
+endif
+endif
+endif
 
 libTAO_FaultTolerance_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3590,7 +3634,7 @@ libTAO_FaultTolerance_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FT_CORBAS_T.h \
   FT_FaultDetectorFactoryS_T.h \
@@ -3671,7 +3715,9 @@ IFRService = \
   IFRService/WstringDef_i.cpp \
   IFRService/tmplinst.cpp
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES += libTAO_IFRService.la
+endif
 
 libTAO_IFRService_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3700,7 +3746,7 @@ libTAO_IFRService_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   IFRService/AbstractInterfaceDef_i.h \
   IFRService/AliasDef_i.h \
@@ -3771,7 +3817,9 @@ RTCORBAEvent = \
   Event/EC_RTCORBA_Dispatching.cpp \
   Event/EC_RTCORBA_Factory.cpp
 
+if BUILD_RT_CORBA
 lib_LTLIBRARIES += libTAO_RTCORBAEvent.la
+endif
 
 libTAO_RTCORBAEvent_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3803,7 +3851,7 @@ libTAO_RTCORBAEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/EC_RTCORBA_Dispatching.h \
   Event/EC_RTCORBA_Factory.h \
@@ -3851,7 +3899,11 @@ RTCosScheduling = \
   RTCosSchedulingC.cpp \
   RTCosSchedulingS.cpp
 
+if BUILD_RT_CORBA
+if BUILD_INTERCEPTORS
 lib_LTLIBRARIES += libTAO_RTCosScheduling.la
+endif
+endif
 
 libTAO_RTCosScheduling_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -3878,7 +3930,7 @@ libTAO_RTCosScheduling_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   RTCosScheduling/RTCosScheduling_ClientScheduler_i.h \
   RTCosScheduling/RTCosScheduling_PCP_Manager.h \
   RTCosScheduling/RTCosScheduling_ServerScheduler_i.h \
@@ -3969,7 +4021,7 @@ libTAO_RTSched_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   RtecSchedulerC.h \
   RtecSchedulerS.h \
@@ -4050,7 +4102,7 @@ libTAO_RTOLDEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/BCU.h \
   Event/Dispatching_Modules.h \
@@ -4149,7 +4201,7 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Log/RTEventLogConsumer.h \
   Log/RTEventLogFactory_i.h \
@@ -4206,7 +4258,7 @@ libTAO_RTKokyuEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/EC_Kokyu_Dispatching.h \
   Event/EC_Kokyu_Factory.h \
@@ -4263,7 +4315,7 @@ libTAO_RTSchedEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/EC_Gateway_Sched.h \
   Event/EC_Priority_Dispatching.h \
@@ -4290,7 +4342,9 @@ RT_Notify = \
   Notify/RT_Properties.cpp \
   Notify/Structured/RT_StructuredProxyPushSupplier.cpp
 
+if BUILD_RT_CORBA
 lib_LTLIBRARIES += libTAO_RT_Notification.la
+endif
 
 libTAO_RT_Notification_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -4320,7 +4374,7 @@ libTAO_RT_Notification_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Notify/RT_Builder.h \
   Notify/RT_Factory.h \
@@ -4562,7 +4616,11 @@ Security = \
   SecurityLevel3C.cpp \
   SecurityS.cpp
 
+if BUILD_CORBA_MESSAGING
+if BUILD_INTERCEPTORS
 lib_LTLIBRARIES += libTAO_Security.la
+endif
+endif
 
 libTAO_Security_la_CPPFLAGS = \
   -I$(top_builddir) \
@@ -4587,7 +4645,7 @@ libTAO_Security_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   CSIC.h \
   CSIIOPC.h \
   CSIIOPS_T.h \
@@ -4649,6 +4707,149 @@ nobase_pkginclude_HEADERS += \
   SecurityLevel2S_T.cpp \
   SecurityLevel3S_T.cpp \
   SecurityS_T.cpp
+
+
+## Makefile.SSLIOP.am 
+
+BUILT_SOURCES += \
+  SSLIOPS_T.cpp \
+  SSLIOPC.cpp \
+  SSLIOPS.cpp \
+  SSLIOPC.h \
+  SSLIOPS.h \
+  SSLIOPS_T.h \
+  SSLIOPC.inl \
+  SSLIOPS.inl \
+  SSLIOPS_T.inl
+
+CLEANFILES += \
+  SSLIOPS_T.cpp \
+  SSLIOPC.cpp \
+  SSLIOPS.cpp \
+  SSLIOPC.h \
+  SSLIOPS.h \
+  SSLIOPS_T.h \
+  SSLIOPC.inl \
+  SSLIOPS.inl \
+  SSLIOPS_T.inl \
+  SSLIOP-stamp
+
+SSLIOPS_T.cpp SSLIOPC.cpp SSLIOPS.cpp SSLIOPC.h SSLIOPS.h SSLIOPS_T.h SSLIOPC.inl SSLIOPS.inl SSLIOPS_T.inl: SSLIOP-stamp
+
+SSLIOP-stamp: $(srcdir)/SSLIOP.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h $(srcdir)/SSLIOP.idl
+	@touch $@
+
+SSLIOP = \
+  SSLIOP/IIOP_SSL_Acceptor.cpp \
+  SSLIOP/IIOP_SSL_Connection_Handler.cpp \
+  SSLIOP/IIOP_SSL_Connector.cpp \
+  SSLIOP/IIOP_SSL_Transport.cpp \
+  SSLIOP/SSLIOP_Accept_Strategy.cpp \
+  SSLIOP/SSLIOP_Acceptor.cpp \
+  SSLIOP/SSLIOP_ClientCredentials.cpp \
+  SSLIOP/SSLIOP_Connection_Handler.cpp \
+  SSLIOP/SSLIOP_Connector.cpp \
+  SSLIOP/SSLIOP_Credentials.cpp \
+  SSLIOP/SSLIOP_CredentialsAcquirer.cpp \
+  SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp \
+  SSLIOP/SSLIOP_Current.cpp \
+  SSLIOP/SSLIOP_Current_Impl.cpp \
+  SSLIOP/SSLIOP_EVP_PKEY.cpp \
+  SSLIOP/SSLIOP_Endpoint.cpp \
+  SSLIOP/SSLIOP_Factory.cpp \
+  SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
+  SSLIOP/SSLIOP_ORBInitializer.cpp \
+  SSLIOP/SSLIOP_OwnCredentials.cpp \
+  SSLIOP/SSLIOP_Profile.cpp \
+  SSLIOP/SSLIOP_TargetCredentials.cpp \
+  SSLIOP/SSLIOP_Transport.cpp \
+  SSLIOP/SSLIOP_Util.cpp \
+  SSLIOP/SSLIOP_X509.cpp \
+  SSLIOP/ssl_endpoints.cpp \
+  SSLIOPC.cpp \
+  SSLIOPS.cpp
+
+if BUILD_SSL
+if BUILD_INTERCEPTORS
+lib_LTLIBRARIES += libTAO_SSLIOP.la
+endif
+endif
+
+libTAO_SSLIOP_la_CPPFLAGS = \
+  -I$(top_builddir) \
+  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DACE_HAS_SSL=1 \
+  -DTAO_SSLIOP_BUILD_DLL
+
+libTAO_SSLIOP_la_SOURCES = \
+  $(SSLIOP)
+
+libTAO_SSLIOP_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_SSLIOP_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la_SSL \
+  $(TAO_BUILDDIR)/tao/libTAO.la_Security \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+noinst_HEADERS += \
+  Channel_Clients_T.h \
+  SSLIOP/IIOP_SSL_Acceptor.h \
+  SSLIOP/IIOP_SSL_Connection_Handler.h \
+  SSLIOP/IIOP_SSL_Connector.h \
+  SSLIOP/IIOP_SSL_Transport.h \
+  SSLIOP/SSLIOP_Accept_Strategy.h \
+  SSLIOP/SSLIOP_Acceptor.h \
+  SSLIOP/SSLIOP_ClientCredentials.h \
+  SSLIOP/SSLIOP_Connection_Handler.h \
+  SSLIOP/SSLIOP_Connector.h \
+  SSLIOP/SSLIOP_Credentials.h \
+  SSLIOP/SSLIOP_CredentialsAcquirer.h \
+  SSLIOP/SSLIOP_CredentialsAcquirerFactory.h \
+  SSLIOP/SSLIOP_Current.h \
+  SSLIOP/SSLIOP_Current_Impl.h \
+  SSLIOP/SSLIOP_EVP_PKEY.h \
+  SSLIOP/SSLIOP_Endpoint.h \
+  SSLIOP/SSLIOP_Factory.h \
+  SSLIOP/SSLIOP_Invocation_Interceptor.h \
+  SSLIOP/SSLIOP_ORBInitializer.h \
+  SSLIOP/SSLIOP_OwnCredentials.h \
+  SSLIOP/SSLIOP_Profile.h \
+  SSLIOP/SSLIOP_TargetCredentials.h \
+  SSLIOP/SSLIOP_Transport.h \
+  SSLIOP/SSLIOP_Util.h \
+  SSLIOP/SSLIOP_X509.h \
+  SSLIOP/ssl_endpoints.h \
+  SSLIOPC.h \
+  SSLIOPS.h \
+  SSLIOPS_T.h \
+  Channel_Clients_T.i \
+  SSLIOP/IIOP_SSL_Connection_Handler.inl \
+  SSLIOP/SSLIOP_Acceptor.i \
+  SSLIOP/SSLIOP_Connection_Handler.i \
+  SSLIOP/SSLIOP_Credentials.inl \
+  SSLIOP/SSLIOP_Current.inl \
+  SSLIOP/SSLIOP_Current_Impl.inl \
+  SSLIOP/SSLIOP_EVP_PKEY.inl \
+  SSLIOP/SSLIOP_Endpoint.i \
+  SSLIOP/SSLIOP_Profile.i \
+  SSLIOP/SSLIOP_X509.inl \
+  SSLIOP/ssl_endpoints.i \
+  SSLIOPC.inl \
+  SSLIOPS.inl \
+  SSLIOPS_T.inl \
+  Channel_Clients_T.cpp \
+  SSLIOPS_T.cpp
 
 
 ## Clean up template repositories, etc.

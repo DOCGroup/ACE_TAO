@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.CosEvent_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = CosEvent_Service
+endif
 
 CosEvent_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -15,8 +17,7 @@ CosEvent_Service_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  $(DUMMY_VALUE_NOT_ENDING_IN_BACKSLASH)
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 CosEvent_Service_SOURCES = \
   CosEvent_Service.cpp

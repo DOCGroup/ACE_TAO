@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Fault_Detector.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = Fault_Detector
+endif
+endif
 
 Fault_Detector_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -17,9 +21,11 @@ Fault_Detector_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 Fault_Detector_SOURCES = \
-  Fault_Detector_i.cpp \
+  FT_FaultDetectorFactory_i.cpp \
   Fault_Detector_Main.cpp \
-  FT_FaultDetectorFactory_i.cpp
+  Fault_Detector_i.cpp \
+  FT_FaultDetectorFactory_i.h \
+  Fault_Detector_i.h
 
 Fault_Detector_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -42,9 +48,6 @@ Fault_Detector_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  FT_FaultDetectorFactory_i.h \
-  Fault_Detector_i.h
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -20,9 +20,6 @@ Trading_Service_SOURCES = \
   Trading_Server.cpp \
   Trading_Service.cpp
 
-Trading_Service_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
 Trading_Service_LDADD = \
  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \

@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Fault_Notifier.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = Fault_Notifier
+endif
+endif
 
 Fault_Notifier_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,7 +22,8 @@ Fault_Notifier_CPPFLAGS = \
 
 Fault_Notifier_SOURCES = \
   FT_Notifier_i.cpp \
-  Fault_Notifier_Main.cpp
+  Fault_Notifier_Main.cpp \
+  FT_Notifier_i.h
 
 Fault_Notifier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -41,8 +46,6 @@ Fault_Notifier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  FT_Notifier_i.h
 
 ## Clean up template repositories, etc.
 clean-local:
