@@ -341,7 +341,9 @@ Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           Changes to prevent modules, interrfaces, structs,
           unions, valuetypes and exeptions from being
           redefined immediately inside their own scope. This
-          closes out Bugzilla bug #417.
+          closes out Bugzilla bug #417. Thanks to
+	  Alia Atlas <akatlas@bbn.com> for sending in an
+	  example IDL file.
 
 Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
