@@ -151,7 +151,6 @@ sub run {
   foreach my $creator (@$creators) {
     my($tag) = lc(substr($creator, 0, $signif));
     $self->{'types'}->{$tag} = $creator;
-    require "$creator.pm";
   }
 
   for(my $i = 0; $i <= $#args; $i++) {
@@ -341,9 +340,16 @@ sub run {
   ## Set up un-buffered output for the progress callback
   $| = 1;
 
+  ## Set up a hash that we can use to keep track of what
+  ## has been 'required'
+  my(%loaded) = ();
   ## Generate the files
   foreach my $file (@input) {
     foreach my $name (@generators) {
+      if (!$loaded{$name}) {
+        require "$name.pm";
+        $loaded{$name} = 1;
+      }
       my($generator) = $name->new($global, \@include, $template,
                                   \%ti, $dynamic, $static, \%relative,
                                   \%addtemp, \%addproj,

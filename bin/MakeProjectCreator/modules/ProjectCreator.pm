@@ -128,7 +128,7 @@ sub new {
   $self->{'matching_assignments'} = \%ma;
   $self->{'valid_components'}     = \%vc;
   $self->{'exclude_components'}   = \%ec;
-  $self->{'skeleton_endings'}     = [ "C", "S" ];
+  $self->{'skeleton_endings'}     = [ 'C', 'S' ];
 
   ## Allow subclasses to override the default extensions
   $self->set_component_extensions();
@@ -171,7 +171,7 @@ sub parse_line {
     if ($values[0] eq $type) {
       my($name)      = $values[1];
       my($typecheck) = $self->{'type_check'};
-      if (defined $name && $name eq "}") {
+      if (defined $name && $name eq '}') {
         ## Project Ending
         my($rp) = $self->{'reading_parent'};
         if (!defined $$rp[0] && !$self->{'reading_global'}) {
@@ -195,7 +195,7 @@ sub parse_line {
               }
             }
             else {
-              $errorString = "ERROR: Invalid " .
+              $errorString = 'ERROR: Invalid ' .
                              "assignment modification name: $ap";
               $status = 0;
             }
@@ -265,7 +265,7 @@ sub parse_line {
         }
       }
     }
-    elsif ($values[0] eq "assignment") {
+    elsif ($values[0] eq 'assignment') {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -276,7 +276,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq "assign_add") {
+    elsif ($values[0] eq 'assign_add') {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -287,7 +287,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq "assign_sub") {
+    elsif ($values[0] eq 'assign_sub') {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -298,7 +298,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq "component") {
+    elsif ($values[0] eq 'component') {
       my($comp) = $values[1];
       my($name) = $values[2];
       if (defined $name) {
@@ -375,7 +375,7 @@ sub parse_components {
   while(<$fh>) {
     my($line) = $self->strip_line($_);
 
-    if ($line eq "") {
+    if ($line eq '') {
     }
     elsif ($line =~ /^(\w+)\s*{$/) {
       if (!defined $current || !$set) {
@@ -469,7 +469,7 @@ sub parse_verbatim {
   while(<$fh>) {
     my($line) = $self->strip_line($_);
 
-    if ($line eq "") {
+    if ($line eq '') {
     }
     elsif ($line =~ /^}/) {
       ## This is not an error,
@@ -542,14 +542,13 @@ sub process_assignment_sub {
 
   if (defined $nval) {
     my($parts) = $self->create_array($nval);
-    $nval = "";
+    $nval = '';
     foreach my $part (@$parts) {
-      if ($part ne $value && $part ne "") {
+      if ($part ne $value && $part ne '') {
         $nval .= "$part ";
       }
     }
     $self->process_assignment($name, $nval, $assign);
-    $self->process_duplicate_modification($name, $assign);
   }
 }
 
@@ -563,12 +562,12 @@ sub process_duplicate_modification {
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
-  if ($name eq "libs" || $name eq "libpaths" || $name eq "includes") {
+  if ($name eq 'libs' || $name eq 'libpaths' || $name eq 'includes') {
     my($nval) = $self->get_assignment($name, $assign);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);
       my(%seen)  = ();
-      my($value) = "";
+      my($value) = '';
       foreach my $part (reverse @$parts) {
         if (!defined $seen{$part}) {
           $value = "$part $value";
@@ -584,7 +583,7 @@ sub process_duplicate_modification {
 sub read_template_input {
   my($self)        = shift;
   my($status)      = 1;
-  my($errorString) = "";
+  my($errorString) = '';
   my($file)        = undef;
   my($tag)         = undef;
   my($ti)          = $self->get_ti_override();
@@ -652,7 +651,7 @@ sub read_template_input {
     else {
       if ($override) {
         $status = 0;
-        $errorString = "Unable to locate template input file.";
+        $errorString = 'Unable to locate template input file.';
       }
     }
   }
@@ -1234,7 +1233,7 @@ sub write_output_file {
   my($self)     = shift;
   my($name)     = shift;
   my($status)   = 0;
-  my($error)    = "";
+  my($error)    = '';
   my($dir)      = dirname($name);
   my($fh)       = new FileHandle();
   my($tover)    = $self->get_template_override();
@@ -1243,7 +1242,7 @@ sub write_output_file {
   my($tfile)    = $self->search_include_path($template);
 
   if (defined $tfile) {
-    if ($dir ne ".") {
+    if ($dir ne '.') {
       mkpath($dir, 0, 0777);
     }
 
@@ -1263,7 +1262,7 @@ sub write_output_file {
         if (open($fh, ">$name")) {
           my($lines) = $tp->get_lines();
           foreach my $line (@$lines) {
-            print $fh "$line";
+            print $fh $line;
           }
           close($fh);
           my($fw) = $self->{'files_written'};
@@ -1288,7 +1287,7 @@ sub write_output_file {
 sub write_project {
   my($self)     = shift;
   my($status)   = 1;
-  my($error)    = "";
+  my($error)    = '';
   my($name)     = $self->transform_file_name($self->project_file_name());
   my($prjname)  = $self->get_assignment('project_name');
   my($progress) = $self->get_progress_callback();
@@ -1400,7 +1399,7 @@ sub update_project_info {
   my($names)   = shift;
   my($sep)     = shift;
   my($pi)      = $self->get_project_info();
-  my($value)   = "";
+  my($value)   = '';
   my($arr)     = ($append && defined $$pi[0] ? pop(@$pi) : []);
 
   ## Set up the hash table when we are starting a new project_info
@@ -1414,7 +1413,7 @@ sub update_project_info {
     my($key) = $narr[$i];
     $value .= $self->translate_value($key,
                                      $tparser->get_value_with_default($key)) .
-              (defined $sep && $i != $#narr ? $sep : "");
+              (defined $sep && $i != $#narr ? $sep : '');
   }
 
   ## If we haven't seen this value yet, put it on the array
@@ -1444,7 +1443,7 @@ sub get_verbatim {
       my($crlf) = $self->crlf();
       foreach my $line (@{$thash->{$marker}}) {
         if (!defined $str) {
-          $str = "";
+          $str = '';
         }
         $str .= $self->process_special($line) . $crlf;
       }
@@ -1462,22 +1461,22 @@ sub get_verbatim {
 # ************************************************************
 
 sub specific_lookup {
-  my($self) = shift;
-  my($key)  = shift;
+  #my($self) = shift;
+  #my($key)  = shift;
   return undef;
 }
 
 
 sub save_project_value {
-  my($self)  = shift;
-  my($name)  = shift;
-  my($value) = shift;
+  #my($self)  = shift;
+  #my($name)  = shift;
+  #my($value) = shift;
 }
 
 
 sub get_type_append {
-  my($self) = shift;
-  return "";
+  #my($self) = shift;
+  return '';
 }
 
 
@@ -1490,76 +1489,76 @@ sub translate_value {
 
 
 sub convert_slashes {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
 
 sub fill_value {
-  my($self) = shift;
-  my($name) = shift;
+  #my($self) = shift;
+  #my($name) = shift;
   return undef;
 }
 
 
 sub separate_static_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
 
 sub project_file_name {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub static_project_file_name {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub override_valid_component_extensions {
-  my($self) = shift;
-  my($comp) = shift;
+  #my($self) = shift;
+  #my($comp) = shift;
   return undef;
 }
 
 
 sub override_exclude_component_extensions {
-  my($self) = shift;
-  my($comp) = shift;
+  #my($self) = shift;
+  #my($comp) = shift;
   return undef;
 }
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub get_lib_exe_template_input_file {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub get_lib_template_input_file {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 
 
 sub get_template {
-  my($self) = shift;
+  #my($self) = shift;
   return undef;
 }
 

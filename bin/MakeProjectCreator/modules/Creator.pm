@@ -11,7 +11,6 @@ package Creator;
 # ************************************************************
 
 use strict;
-use Cwd;
 use FileHandle;
 use File::Basename;
 
@@ -45,7 +44,7 @@ sub new {
   $self->{'type_check'}    = $type . '_defined';
   $self->{'global_read'}   = 0;
   $self->{'include_path'}  = $inc;
-  $self->{'current_input'} = "";
+  $self->{'current_input'} = '';
   $self->{'progress'}      = $progress;
   $self->{'addtemp'}       = $addtemp;
   $self->{'addproj'}       = $addproj;
@@ -57,7 +56,7 @@ sub new {
 sub generate_default_input {
   my($self) = shift;
   $self->parse_line(undef, "$self->{'grammar_type'} {");
-  $self->parse_line(undef, "}");
+  $self->parse_line(undef, '}');
   return 1;
 }
 
@@ -108,7 +107,7 @@ sub generate {
 
     ## An empty input file name says that we
     ## should generate a default input file and use that
-    if ($input eq "") {
+    if ($input eq '') {
       $status = $self->generate_default_input();
     }
     else {
@@ -129,17 +128,17 @@ sub parse_assignment {
   if ($line =~ /^(\w+)\s*=\s*(.*)?/) {
     my($name)  = lc($1);
     my($value) = $2;
-    push(@$values, "assignment", $name, $value);
+    push(@$values, 'assignment', $name, $value);
   }
   elsif ($line =~ /^(\w+)\s*\+=\s*(.*)?/) {
     my($name)  = lc($1);
     my($value) = $2;
-    push(@$values, "assign_add", $name, $value);
+    push(@$values, 'assign_add', $name, $value);
   }
   elsif ($line =~ /^(\w+)\s*\-=\s*(.*)?/) {
     my($name)  = lc($1);
     my($value) = $2;
-    push(@$values, "assign_sub", $name, $value);
+    push(@$values, 'assign_sub', $name, $value);
   }
   else {
     $status = 0;
@@ -153,7 +152,7 @@ sub parse_known {
   my($self)        = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = "";
+  my($errorString) = '';
   my($type)        = $self->{'grammar_type'};
   my(@values)      = ();
   my($typecheck)   = $self->{'type_check'};
@@ -165,7 +164,7 @@ sub parse_known {
   ## allows for the most compact file as human readably
   ## possible.
   ##
-  if ($line eq "") {
+  if ($line eq '') {
   }
   elsif ($line =~ /^$type\s*(\([^\)]+\))?\s*(:.*)?\s*{$/) {
     my($name)    = $1;
@@ -180,14 +179,14 @@ sub parse_known {
         foreach my $parent (split(/[:,]/, $parents)) {
           $parent =~ s/^\s+//;
           $parent =~ s/\s+$//;
-          if ($parent ne "") {
+          if ($parent ne '') {
             push(@parents, $parent);
           }
         }
         if (!defined $parents[0]) {
           ## The : was used, but no parents followed.  This
           ## is an error.
-          $errorString = "ERROR: No parents listed";
+          $errorString = 'ERROR: No parents listed';
           $status = 0;
         }
         $parents = \@parents;
@@ -220,9 +219,9 @@ sub parse_known {
       $name =~ s/\s*\)$//;
     }
     else {
-      $name = "default";
+      $name = 'default';
     }
-    push(@values, "component", $comp, $name);
+    push(@values, 'component', $comp, $name);
   }
   else {
     $errorString = "ERROR: Unrecognized line: $line";
@@ -235,7 +234,7 @@ sub parse_known {
 
 sub base_directory {
   my($self) = shift;
-  return basename(getcwd());
+  return basename($self->getcwd());
 }
 
 
@@ -246,7 +245,7 @@ sub generate_default_file_list {
   my(@files) = ();
 
   if (!defined $dir) {
-    $dir = ".";
+    $dir = '.';
   }
 
   if (opendir($dh, $dir)) {
@@ -257,7 +256,7 @@ sub generate_default_file_list {
 
     ## Prefix each file name with the directory
     ## only if it's not .
-    if ($dir ne ".") {
+    if ($dir ne '.') {
       for(my $i = 0; $i <= $#files; $i++) {
         $files[$i] = "$dir/$files[$i]";
       }
@@ -315,7 +314,7 @@ sub get_relative {
 
 
 sub windows_crlf {
-  my($self) = shift;
+  #my($self) = shift;
   if ($^O eq 'MSWin32') {
     return "\n";
   }
@@ -363,18 +362,18 @@ sub get_addproj {
 # ************************************************************
 
 sub crlf {
-  my($self) = shift;
+  #my($self) = shift;
   return "\n";
 }
 
 
 sub reset_values {
-  my($self) = shift;
+  #my($self) = shift;
 }
 
 
 sub sort_files {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
@@ -388,8 +387,8 @@ sub file_sorter {
 
 
 sub read_global_configuration {
-  my($self)  = shift;
-  my($input) = shift;
+  #my($self)  = shift;
+  #my($input) = shift;
   return 1;
 }
 

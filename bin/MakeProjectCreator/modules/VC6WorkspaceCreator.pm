@@ -31,7 +31,7 @@ sub crlf {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_workspace_name() . ".dsw";
+  return $self->get_workspace_name() . '.dsw';
 }
 
 
@@ -42,7 +42,7 @@ sub pre_workspace {
 
   print $fh "Microsoft Developer Studio Workspace File, Format Version 6.00$crlf" .
             "# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!$crlf" .
-            "$crlf";
+            $crlf;
 }
 
 
@@ -61,17 +61,17 @@ sub write_comps {
     $project = $self->slash_to_backslash($project);
 
     print $fh "###############################################################################$crlf" .
-              "$crlf" .
+              $crlf .
               "Project: \"$name\"=$project - Package Owner=<4>$crlf" .
-              "$crlf" .
+              $crlf .
               "Package=<5>$crlf" .
               "{{{$crlf" .
               "}}}$crlf" .
-              "$crlf" .
+              $crlf .
               "Package=<4>$crlf" .
               "{{{$crlf";
 
-    if (defined $deps && $deps ne "") {
+    if (defined $deps && $deps ne '') {
       my($darr) = $self->create_array($deps);
       foreach my $dep (@$darr) {
         ## Avoid cirular dependencies
@@ -83,8 +83,7 @@ sub write_comps {
       }
     }
 
-    print $fh "}}}$crlf" .
-              "$crlf";
+    print $fh "}}}$crlf$crlf";
   }
 }
 
@@ -95,19 +94,19 @@ sub post_workspace {
   my($crlf) = $self->crlf();
 
   print $fh "###############################################################################$crlf" .
-            "$crlf" .
+            $crlf .
             "Global:$crlf" .
-            "$crlf" .
+            $crlf .
             "Package=<5>$crlf" .
             "{{{$crlf" .
             "}}}$crlf" .
-            "$crlf" .
+            $crlf .
             "Package=<3>$crlf" .
             "{{{$crlf" .
             "}}}$crlf" .
-            "$crlf" .
+            $crlf .
             "###############################################################################$crlf" .
-            "$crlf";
+            $crlf;
 }
 
 

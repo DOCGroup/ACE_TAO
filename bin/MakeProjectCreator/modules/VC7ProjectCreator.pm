@@ -27,11 +27,11 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
-    $val = "";
+    $val = '';
     foreach my $entry (@$arr) {
-      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+      $val .= '"' . $self->project_file_name($entry) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -78,10 +78,11 @@ sub fill_value {
   my($name)  = shift;
   my($value) = undef;
 
-  if ($name eq "guid") {
+  if ($name eq 'guid') {
     my($guid) = new GUID();
     $value = $guid->generate($self->project_file_name(),
-                             $self->get_current_input());
+                             $self->get_current_input(),
+                             $self->getcwd());
   }
   return $value;
 }
@@ -100,20 +101,20 @@ sub project_file_name {
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "vc7exe";
+  #my($self) = shift;
+  return 'vc7exe';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "vc7dll";
+  #my($self) = shift;
+  return 'vc7dll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "vc7";
+  #my($self) = shift;
+  return 'vc7';
 }
 
 
