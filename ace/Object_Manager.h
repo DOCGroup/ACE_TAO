@@ -48,6 +48,15 @@ class ACE_Export ACE_Object_Manager
   //     is likely to change, without providing backward capability.
 {
 public:
+  static int at_exit (ACE_Cleanup *object, void *param = 0);
+  // Register an ACE_Cleanup object for cleanup at process
+  // termination.  The object is deleted via the ace_cleanup_destroyer
+  // ().  If you need more flexiblity, see the other at_exit () method
+  // below.  For OS's that do not have processes, this function is the
+  // same as at_thread_exit ().  Returns 0 on success, non-zero on
+  // failure: -1 if virtual memory is exhausted or 1 if the object (or
+  // array) had already been registered.  Not thread safe.
+
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
@@ -61,7 +70,8 @@ public:
   // the object (or array).  For OS's that do not have processes, this
   // function is the same as at_thread_exit ().  Returns 0 on success,
   // non-zero on failure: -1 if virtual memory is exhausted or 1 if
-  // the object (or arrayt) had already been registered.
+  // the object (or array) had already been registered.
+  // Not thread safe.
 
 #if 0 /* not implemented yet */
   static int at_thread_exit (void *object,
@@ -76,7 +86,7 @@ private:
   // Singleton pointer.
 
   ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
-  // Keeps track of all the registered objects.
+  // Keeps track of all registered objects.
 
   int shutting_down_; 
   // Non-zero if this being destroyed
