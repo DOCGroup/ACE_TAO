@@ -1,3 +1,8 @@
+Mon Mar 29 06:56:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Integer_Test.cpp:
+	  Fixed a warning in Win32 builds.
+
 Fri Mar 26 09:49:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Integer_Test.cpp:
