@@ -308,7 +308,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
         w = x->parent ()->left ();
       }
       // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-      if (w && 
+      if (w &&
           (!w->left () ||
            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
           (!w->right () ||
@@ -320,7 +320,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
       else
       {
         // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-        if (w && 
+        if (w &&
             (!w->left () ||
              w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK))
         {
@@ -361,7 +361,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
 // or 0 if the tree is empty.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
-ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_node (const EXT_ID &k, ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_SearchResult &result)
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_node (const EXT_ID &k, ACE_RB_Tree_Base::RB_SearchResult &result)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_node");
 

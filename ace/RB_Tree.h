@@ -112,8 +112,16 @@ private:
   // Pointer to node's right child.
 };
 
+
+class ACE_RB_Tree_Base
+{
+public:
+  // = Search result enumeration.
+  enum RB_SearchResult {LEFT, EXACT, RIGHT};
+};
+
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-class ACE_RB_Tree
+class ACE_RB_Tree : public ACE_RB_Tree_Base
 {
   // = TITLE
   //     Implements a Red-Black Tree ADT, according to T. H. Corman,
@@ -150,9 +158,6 @@ public:
   // = STL-style iterator typedefs.
   typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iterator;
   typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> reverse_iterator;
-
-  // = Search result enumeration.
-  enum RB_SearchResult {LEFT, EXACT, RIGHT};
 
   // = Initialization and termination methods.
 
@@ -416,13 +421,13 @@ protected:
   // is created, and the returned pointer addresses the existing item
   // associated with the existing key.
 
-  int insert_i (const EXT_ID &k, const INT_ID &t, 
+  int insert_i (const EXT_ID &k, const INT_ID &t,
                 ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
   // Inserts a *copy* of the key and the item into the tree: both the
   // key type EXT_ID and the item type INT_ID must have well defined semantics
   // for copy construction.  The default implementation also requires that
   // the key type support well defined < semantics.  This method passes back
-  // a pointer to the inserted (or existing) node, and the search status.  If 
+  // a pointer to the inserted (or existing) node, and the search status.  If
   // the node already exists, the method returns 1.  If the node does not
   // exist, and a new one is successfully created, and the method returns 0.
   // If there was an error, the method returns -1.
