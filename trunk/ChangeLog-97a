@@ -1,3 +1,10 @@
+Mon Apr 28 22:11:05 1997  Irfan Pyarali <irfan@cs.wustl.edu>
+
+	* ace: Removed config-win32-msvc2.0.h,  config-win32-msvc4.0.h
+	  config-win32-msvc4.x.h, and config-winnt-4.0-msvc.h from the
+	  repository. These files have been replaced by config-win32.h
+	  and config-win32-common.h.
+
 Mon Apr 28 22:11:05 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.h and ace/OS.i: Added support for memmove().
