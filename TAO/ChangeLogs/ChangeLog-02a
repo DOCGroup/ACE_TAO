@@ -1,3 +1,12 @@
+Wed Mar 28 17:05:03 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
+
+	* tao/Stub.cpp: Use all the profiles instead of <profile_in_use_>
+	  to calculate the hash. This should fix bug id #671 in the
+	  Bugzilla.
+	
+	* tao/MProfile.cpp: Using mod instead of average to calculate the
+	  hash value over multiple profiles.
+
 Wed Mar 28 17:53:35 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/AV/Protocol_Factory.h:
