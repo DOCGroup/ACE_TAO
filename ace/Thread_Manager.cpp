@@ -1121,7 +1121,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
       ACE_MT (ace_mon.release ()); 
 
       ACE_Thread::exit (status);
-      // On reasonable systems ACE_Thread::exit() should not return.
+      // On reasonable systems <ACE_Thread::exit> should not return.
       // However, due to horrible semantics with Win32 thread-specific
       // storage this call can return (don't ask...).
     }
@@ -1145,10 +1145,8 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     threads_waited_on = this->current_count_;
 
     while (this->current_count_ > 0)
-      {
-        if (this->zero_cond_.wait (timeout) == -1)
-          return -1;
-      }
+      if (this->zero_cond_.wait (timeout) == -1)
+	return -1;
   }
   // Let go of the guard, giving other threads a chance to run.
 
