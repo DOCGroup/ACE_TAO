@@ -99,8 +99,8 @@ protected:
 
 private:
 // Prevent copies and pass-by-value.
-  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &);
-  void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &);
+  ACE_UNIMPLEMENTED_FUNC (Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
 };
 
 #if defined (__ACE_INLINE__)
