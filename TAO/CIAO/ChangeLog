@@ -1,3 +1,12 @@
+Tue Mar 16 11:22:44 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/static_ciao_contents.html:
+	* docs/static_config_example.html:
+	* docs/index.html: 
+
+	  Fixed webpage for unnecessary whitespace characters. Fixed links
+	  to images. Thanks to Tao Lu for pointing out.
+
 Tue Mar 16 10:34:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
@@ -13,7 +22,7 @@ Tue Mar 16 10:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	  Added the support for CIDL with MPC on Linux.
 
-2004-03-15  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
+Tue Mar 16 10:52:21 2004  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
 
 	* docs/static_config_example.html:
 	* docs/static_ciao_contents.html:

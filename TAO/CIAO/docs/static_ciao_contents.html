@@ -3,7 +3,7 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="Author" content="Venkita Subramonian">
-   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
    <title>CIAO Static Configuration</title>
    <base target="main">
 <!-- $Id$ -->
@@ -57,7 +57,7 @@ them to use only the services available on the target real-time platforms.
 <a NAME="currentarch"></a>2. Current CIAO Configuration Architecture</h3>
 
 <center>
-<p><br><img SRC="ciao-dynamic1.jpg" height=462 width=774>
+<p><br><img SRC="imgs/ciao-dynamic1.jpg" height=462 width=774>
 <p><b>Figure 1. Current configuration process in CIAO</b></center>
 
 <p>The first stage of the CIAO system lifecycle occurs off-line, when component
@@ -87,7 +87,7 @@ information about the component implementations available on that endsystem
 – each component UUID is mapped to a disk path for the .dll or .so file
 within which a factory method for its home factory is defined.
 <center>
-<p><img SRC="ciao-dynamic2.jpg" height=384 width=699>
+<p><img SRC="imgs/ciao-dynamic2.jpg" height=384 width=699>
 <p><b>Figure 2. Intermediate representation of configuration information</b></center>
 
 <p>The following steps are optional, and will only be performed if they
@@ -134,7 +134,7 @@ time (managed by the same project/Makefile processes that do the compilation)
 into C++ header and source files that are then compiled and linked with
 the main application.
 <center>
-<p><img SRC="ciao-static1.jpg" height=523 width=800>
+<p><img SRC="imgs/ciao-static1.jpg" height=523 width=800>
 <p><b>Figure 3. Static Configuration in CIAO</b></center>
 
 <p>First, one of the generated files is a C++ header file, so that it can
@@ -148,7 +148,7 @@ Third, it declares information so that later information depends on earlier
 information (<b>Figure 4</b>), and the components are directly configured
 within that header file.
 <center>
-<p><img SRC="ciao-static2.jpg" height=476 width=816>
+<p><img SRC="imgs/ciao-static2.jpg" height=476 width=816>
 <p><b>Figure 4. All XML files are parsed offline and stored as cross-referenced
 tables in Static_Assembly_Config.h</b></center>
 
@@ -201,7 +201,7 @@ configurations for different system modes).
 <br>
 <br>
 <center>
-<p><img SRC="ciao-static-vs-dynamic.jpg" height=384 width=735>
+<p><img SRC="imgs/ciao-static-vs-dynamic.jpg" height=384 width=735>
 <br><b>Figure 5. CIAO Dynamic vs Static Configuration</b></center>
 
 <h3>
