@@ -1,3 +1,9 @@
+Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
+	  template instantiations to Null_Mutex. The declaration was
+	  Null_Mutex.  
+
 Sun Mar 11 11:29:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/Makefile.bor:
