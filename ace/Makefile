@@ -24,11 +24,6 @@ OS_FILES = \
   Sched_Params
 UTILS_FILES = \
   ACE \
-  Init_ACE \
-  Flag_Manip \
-  Handle_Ops \
-  Lib_Find \
-  Malloc_Instantiations \
   Active_Map_Manager \
   Arg_Shifter \
   ARGV \
@@ -38,27 +33,20 @@ UTILS_FILES = \
   Configuration_Import_Export \
   Dirent \
   Dynamic \
-  Dynamic_Service_Base \
+  Flag_Manip \
   Functor \
   Get_Opt \
   Hash_Map_Manager \
-  High_Res_Timer \
+  Handle_Ops \
+  Handle_Set \
+  Init_ACE \
+  Lib_Find \
   Method_Request \
   Object_Manager \
-  Profile_Timer \
   Registry \
   SString \
   Stats \
-  Sample_History \
-  Basic_Stats \
-  System_Time \
-  Time_Request_Reply \
-  Timeprobe \
-  Timer_Hash \
-  Timer_Heap \
-  Timer_List \
-  Timer_Queue \
-  Timer_Wheel
+  Sample_History
   #### NOTE:  see below for Filecache.
 LOGGING_FILES = \
   Dump \
@@ -89,7 +77,6 @@ THREADS_FILES = \
 DEMUX_FILES = \
   Event_Handler \
   FlReactor \
-  Handle_Set \
   Msg_WFMO_Reactor \
   POSIX_Proactor \
   WIN32_Proactor \
@@ -182,6 +169,7 @@ IPC_FILES = \
   MEM_Stream
 SVCCONF_FILES = \
   DLL \
+  Dynamic_Service_Base \
   Parse_Node \
   Service_Config \
   Service_Manager \
@@ -204,6 +192,7 @@ MEMORY_FILES = \
   Malloc \
   PI_Malloc \
   Malloc_Allocator \
+  Malloc_Instantiations \
   Mem_Map \
   Memory_Pool \
   Obstack \
@@ -211,6 +200,18 @@ MEMORY_FILES = \
   Shared_Memory \
   Shared_Memory_MM \
   Shared_Memory_SV
+TIMER_FILES = \
+  Basic_Stats \
+  High_Res_Timer \
+  Profile_Timer \
+  System_Time \
+  Time_Request_Reply \
+  Timeprobe \
+  Timer_Hash \
+  Timer_Heap \
+  Timer_List \
+  Timer_Queue \
+  Timer_Wheel
 TOKEN_FILES = \
   Local_Tokens \
   Remote_Tokens \
@@ -228,7 +229,6 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
-
 
 TEMPLATE_FILES = \
            Acceptor \
@@ -396,6 +396,10 @@ endif # Sockets
 ifneq (,$(findstring IPC,$(ACE_COMPONENTS)))
   FILES += $(IPC_FILES)
 endif # IPC
+
+ifneq (,$(findstring Timer,$(ACE_COMPONENTS)))
+  FILES += $(TIMER_FILES)
+endif # ! Timer
 
 ifneq (,$(findstring Svcconf,$(ACE_COMPONENTS)))
   FILES += $(SVCCONF_FILES)
