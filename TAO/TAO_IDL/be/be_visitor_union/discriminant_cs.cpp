@@ -44,7 +44,6 @@ be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs (void)
 int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os; // output stream
   be_union *bu =
     this->ctx_->be_node_as_union ();  // get the enclosing union backend
   be_type *bt;
@@ -54,8 +53,6 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  os = this->ctx_->stream ();
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
