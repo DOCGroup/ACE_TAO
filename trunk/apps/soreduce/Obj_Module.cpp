@@ -35,13 +35,13 @@ Obj_Module::name()
   return name_;
 }
 
-Sig_List & 
+Sig_List &
 Obj_Module::exports()
 {
   return exports_;
 }
 
-Sig_List & 
+Sig_List &
 Obj_Module::imports()
 {
   return imports_;
@@ -55,7 +55,7 @@ Obj_Module::extref()
 
 void
 Obj_Module::add_extref()
-{ 
+{
   extrefs_ ++;
 }
 
@@ -152,20 +152,20 @@ Obj_Module::add_source(const ACE_TCHAR *p, int imports_only)
     is_import = dummy == 'U';
     is_export = !imports_only && (ACE_OS_String::strchr("BCDRTVW",dummy) != 0);
 
-    //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1) 
+    //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
       break;
 
-    eoln = this->read_line (pipe[0], is_import ? &im_buf_cur : 
+    eoln = this->read_line (pipe[0], is_import ? &im_buf_cur :
                             (is_export ? &ex_buf_cur : 0));
     import_lines += is_import;
     export_lines += is_export;
   }
-  //  ACE_DEBUG ((LM_DEBUG, "read %d import lines and %d export lines\n", 
+  //  ACE_DEBUG ((LM_DEBUG, "read %d import lines and %d export lines\n",
   //            import_lines, export_lines));
 
   nmproc.wait ();
-  close (pipe[0]);
+  ACE_OS::close (pipe[0]);
 
   this->populate_sig_list (imports_,import_lines,&im_buffer);
   if (!imports_only)
@@ -173,8 +173,8 @@ Obj_Module::add_source(const ACE_TCHAR *p, int imports_only)
 }
 
 void
-Obj_Module::populate_sig_list (Sig_List &siglist, 
-                               int lines, 
+Obj_Module::populate_sig_list (Sig_List &siglist,
+                               int lines,
                                ACE_Message_Block *buf)
 {
   char *c;

@@ -20,10 +20,10 @@ SO_Group::SO_Group ()
 {
   libs_ = new Library*[max_libs_];
 }
-           
+
 SO_Group::~SO_Group ()
 {
-  for (int i = 0; i < num_libs_; delete libs_[i++]);    
+  for (int i = 0; i < num_libs_; delete libs_[i++]);
   delete [] libs_;
 }
 
@@ -60,20 +60,20 @@ SO_Group::add_executable (const char * path)
     // skip initial whitespace
     while ((nread = ACE_OS::read(pipe[0],line,1)) == 1 &&
            (*line == ' ' || *line == '\t'));
-    
-    if (nread != 1) 
+
+    if (nread != 1)
       break;
 
     // read the library name
     len = 1;
     while ((nread = ACE_OS::read(pipe[0],line + len,1)) == 1 &&
-           (line[len] != ' '))      
+           (line[len] != ' '))
       if (! bogus && ++len == max_line_length)
         {
           bogus = 1;
           break;
         }
-    if (nread != 1 || bogus) 
+    if (nread != 1 || bogus)
       break;
     line[len] = 0;
     char * dot = ACE_OS::strchr (line,'.');
@@ -97,13 +97,13 @@ SO_Group::add_executable (const char * path)
       // get library path
       len = 0;
       while ((nread = ACE_OS::read(pipe[0],line + len,1)) == 1 &&
-             (line[len] != ' '))      
+             (line[len] != ' '))
         if (! bogus && ++len == max_line_length)
           {
             bogus = 1;
             break;
           }
-      if (nread != 1 || bogus) 
+      if (nread != 1 || bogus)
         break;
       line[len] = 0;
       nlib->set_path (line);
@@ -112,11 +112,11 @@ SO_Group::add_executable (const char * path)
     }
     // skip the rest of the line
     while ((nread = ACE_OS::read(pipe[0],line,1)) == 1 && *line != '\n');
-    if (nread != 1) 
+    if (nread != 1)
       break;
   }
   proc.wait ();
-  close (pipe[0]);
+  ACE_OS::close (pipe[0]);
 
   undef_wrapper_.add_source(path,1);
   // now do the ldd, iterate over the results to add new libs, etc.
