@@ -420,7 +420,10 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
   if (*s == 0)                  // We have reached the end
     return 0;
   int l_org = ACE_OS_String::strlen (s);
-  int l_sub = ACE_OS_String::strlen (s = ::strtok (s, tokens));
+  s = ::strtok (s, tokens);
+  if (s == 0)
+    return 0;
+  int l_sub = ACE_OS_String::strlen (s);
   *lasts = s + l_sub;
   if (l_sub != l_org)
     *lasts += 1;

@@ -53,7 +53,7 @@ public:
 
   /// Send all the <message_block>s chained through their <next> and
   /// <cont> pointers.  This call uses the underlying OS gather-write
-  /// operationto reduce the domain-crossing penalty.
+  /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0);

@@ -11,6 +11,7 @@
 #BIN = test_parse_url test_parse_http_request test_http_headers \
 #      test_http_request test_http_response
 
+LIB   = libHTTPU.a
 SHLIB = libHTTPU.so
 FILES = parse_url parse_http_request parse_http_response \
         http_request http_response http_base http_status \

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SCHED_PARAMS_H
 #define ACE_SCHED_PARAMS_H
 #include "ace/pre.h"
@@ -55,7 +54,6 @@
  */
 class ACE_Export ACE_Sched_Params
 {
-
   //    NOTE: Solaris 2.5.x threads in the RT class must set the
   //    priority of their LWP.  The only way to do that through ACE is
   //    for the RT thread itself to call <ACE_OS::thr_setprio> with
