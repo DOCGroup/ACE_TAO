@@ -2340,6 +2340,10 @@ namespace
         component_emitter.traverse (t);
       }
 
+      
+      os << "ACE_UNUSED_ARG (descr_name);"
+	 << "ACE_UNUSED_ARG (descr_value);" << endl;
+
       os << "}"
          << "}";
 
