@@ -10397,7 +10397,7 @@ ACE_OS::strspn (const wchar_t *s, const wchar_t *t)
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (t);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_WINCE */
 }
 
