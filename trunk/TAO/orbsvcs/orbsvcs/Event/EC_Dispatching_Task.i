@@ -11,12 +11,14 @@ TAO_EC_Queue::
 {
 }
 
+/// @todo The high water mark and low water mark shouldn't be
+/// hardcoded, check http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=565
 ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
      allocator_ (0),
-     the_queue_ (16, 16384) // @@
+     the_queue_ (16384, 16) // @@
 {
   this->msg_queue (&this->the_queue_);
 }
