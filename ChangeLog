@@ -1,3 +1,28 @@
+Tue Nov  5 05:12:16 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Acceptor.h:
+	* ace/Connector.h:
+	* ace/Strategies_T.h:
+
+	  Added missing STL-style template traits found in C++NPv2
+	  including the following: 
+
+		addr_type
+		acceptor_type
+		connector_type
+		handler_type
+		stream_type
+		base_type
+		accept_strategy_type
+		connect_strategy_type
+		creation_strategy_type
+		concurrency_strategy_type
+		recycling_strategy_type
+		scheduling_strategy_type
+
+	  where applicable.  The old traits are still available and remain
+	  unchanged.
+
 Tue Nov  5 05:54:16 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Multicast_Test.cpp: Fixed typo in pragma instantiation, 
