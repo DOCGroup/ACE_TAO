@@ -54,7 +54,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
     << "static TAO::TypeCode::Struct<char const *," << be_nl
     << "                             TAO::TypeCode::Field<char const *> const *," << be_nl
     << "                             CORBA::tk_"
-    << (this->is_exception_ ? "except" : "struct") << be_nl
+    << (this->is_exception_ ? "except" : "struct") << "," << be_nl
     << "                             TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl

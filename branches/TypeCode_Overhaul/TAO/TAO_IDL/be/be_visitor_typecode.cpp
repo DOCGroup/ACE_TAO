@@ -54,7 +54,6 @@
 #include "be_visitor_typecode/struct_typecode.cpp"
 
 
-ACE_RCSID (be, 
-           be_visitor_typecode, 
+ACE_RCSID (be,
+           be_visitor_typecode,
            "$Id$")
-

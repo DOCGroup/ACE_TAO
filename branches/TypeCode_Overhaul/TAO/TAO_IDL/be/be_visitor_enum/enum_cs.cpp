@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/enum_typecode.h"
 
-ACE_RCSID (be_visitor_enum, 
-           enum_cs, 
+ACE_RCSID (be_visitor_enum,
+           enum_cs,
            "$Id$")
 
 
@@ -43,10 +43,10 @@ be_visitor_enum_cs::~be_visitor_enum_cs (void)
 int
 be_visitor_enum_cs::visit_enum (be_enum *node)
 {
-  if (node->cli_stub_gen () 
+  if (node->cli_stub_gen ()
       || node->imported ())
     {
-		  return 0;
+                  return 0;
     }
 
   if (be_global->tc_support ())
@@ -60,7 +60,7 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_enum_cs::"
                              "visit_enum - "
-                             "TypeCode definition failed\n"), 
+                             "TypeCode definition failed\n"),
                             -1);
         }
     }
