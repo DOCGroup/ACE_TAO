@@ -690,10 +690,11 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
             "ImplicitActivationPolicyFactory",
             ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
-            PortableServer::IMPLICIT_ACTIVATION);
+            PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
 
   policies.merge_policy (implicit_activation_policy.in()
                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Merge policies from the ORB level.
