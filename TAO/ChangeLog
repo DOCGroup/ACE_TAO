@@ -6,7 +6,13 @@ Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Invocation.cpp: In TAO_GIOP_Invocation::profile () increment
 	  the refcount of the profile that is being stored in the
 	  class. Decerement the refcount of the profile, if one exists
-	  in the destructor.
+	  in the destructor. Thanks to Bertin Colpron
+	  <BColpron@interstarinc.com> for providing this patch and Thomas
+	  Wiegert <wiegert@schlund.de> for reporting the problem. 
+
+	  The above checkin is just a workaorund for a more serious
+	  problem with profile managements especially during location
+	  forwards.
 
 Fri May  9 16:21:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
