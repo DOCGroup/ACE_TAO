@@ -1,3 +1,11 @@
+Wed May 26 23:44:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Reactor_Registration_Test.cpp (Event_Handler):
+	  (handle_input):
+
+	  Fixed "comparison between signed and unsigned integer"
+	  warnings.
+
 Wed May 26 10:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
@@ -1577,20 +1585,20 @@ Fri Apr 30 18:11:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
 
           Removed template for ACE_HAS_ANSI_CASTS macro.  It is no longer
-          used.
+          used.  [Bug 1758]
 
         * ace/README:
 
           Removed description for ACE_HAS_ANSI_CASTS macro.  It is no
           longer used since compilers that do not support ANSI C++ casts
-          are no longer supported.
+          are no longer supported.  [Bug 1758]
 
         * ace/config-lite.h:
 
           Removed ACE cast macros that wrap C style casts, i.e those used
           when ACE_HAS_ANSI_CASTS is not defined.  ACE now requires
           compilers that support ANSI C++ casts (e.g. static_cast<>,
-          etc).
+          etc).  [Bug 1758]
 
           Documented ACE cast macros as deprecated.
 
@@ -1628,7 +1636,7 @@ Fri Apr 30 18:11:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * ace/config-win32-visualage.h:
 
           Removed all references to the deprecated ACE_HAS_ANSI_CASTS
-          macro.
+          macro.  [Bug 1758]
 
 Fri Apr 30 14:20:41 2004  Steve Huston  <shuston@riverace.com>
 
