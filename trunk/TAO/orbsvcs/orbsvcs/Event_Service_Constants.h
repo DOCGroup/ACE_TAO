@@ -11,6 +11,7 @@
 
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
+#include "orbsvcs/Time_Utilities.h"
 
 const int ACE_ES_MAX_SUBSCRIPTIONS = 32;
 // This is the number of events a consumer can subscribe to.
@@ -46,8 +47,13 @@ const u_long ACE_ES_EVENT_UNDEFINED = 16;
 // to some variables (and even that is doubtful).
 const long ACE_Scheduler_MAX_PRIORITIES = 5;
 
-const u_long ACE_Scheduler_Rates[ACE_Scheduler_MAX_PRIORITIES] = {
-  250000, 500000, 1000000, 2000000, 10000000 };
+const TimeBase::TimeT ACE_Scheduler_Rates[ACE_Scheduler_MAX_PRIORITIES] = {
+  {   250000, 0}, // 40 Hz
+  {   500000, 0}, // 20 Hz
+  {  1000000, 0}, // 10 Hz
+  {  2000000, 0}, // 5 Hz
+  { 10000000, 0}  // 1 Hz
+};
 
 // The minimum preemption priority.
 const long ACE_Scheduler_MIN_PREEMPTION_PRIORITY = 

@@ -13,6 +13,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "Event_Latency.h"
 
@@ -27,7 +28,7 @@ static const char usage [] = "[-? |\n"
 // Configuration parameters.
 static u_int consumers = 1;
 static u_int suppliers = 1;
-static u_int total_messages = 1000;
+static u_int total_messages = 10;
 static int measure_jitter = 0;
 static u_int timeout_interval = 250; // msec
 
@@ -71,9 +72,13 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       rt_info_ = 
 	server->create (my_name, TAO_TRY_ENV);
       server->set (rt_info_,
-		   1, 1, 1, 0,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   0,
 		   RtecScheduler::VERY_LOW,
-		   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+	   1,
 		   TAO_TRY_ENV);
 
       // Create the event that we're registering for.
@@ -158,18 +163,17 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 	{
 	  if (measure_jitter_)
 	    {
-	      // @@ TOTAL HACK
 	      ACE_hrtime_t creation;
-	      ACE_OS::memcpy (&creation, &events[i].creation_time_,
-			      sizeof (creation));
+	      ORBSVCS_Time::TimeT_to_hrtime (creation,
+					     events[i].creation_time_);
 
 	      ACE_hrtime_t ec_recv;
-	      ACE_OS::memcpy (&ec_recv, &events[i].ec_recv_time_,
-			      sizeof (ec_recv));
+	      ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
+					     events[i].ec_recv_time_);
 
 	      ACE_hrtime_t ec_send;
-	      ACE_OS::memcpy (&ec_send, &events[i].ec_send_time_,
-			      sizeof (ec_send));
+	      ORBSVCS_Time::TimeT_to_hrtime (ec_send,
+					     events[i].ec_send_time_);
 
 	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
 	      const ACE_hrtime_t elapsed = now - creation;
@@ -357,9 +361,14 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->rt_info_ = 
 	server->create (name, TAO_TRY_ENV);
       
-      server->set (rt_info_, 1, 1, 1, timeout_interval * 10000,
+      server->set (rt_info_,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   timeout_interval * 10000,
 		   RtecScheduler::VERY_LOW,
-		   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+		   1,
 		   TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -419,10 +428,25 @@ Latency_Supplier::start_generating_events (void)
 
   TAO_TRY
     {
+      ACE_Time_Value tv_timeout (0, timeout_interval * 1000);
+      TimeBase::TimeT timeout;
+      ORBSVCS_Time::Time_Value_to_TimeT (timeout, tv_timeout);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "start generating events: "
+		  "timeout.low = %d "
+		  "timeout.high = %d "
+		  "interval = %d "
+		  "tv.msec () = %d\n",
+		  timeout.low,
+		  timeout.high,
+		  timeout_interval,
+		  tv_timeout.msec ()));
+
       ACE_ConsumerQOS_Factory dependencies;
       dependencies.start_disjunction_group ();
       dependencies.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
-				timeout_interval * 10000, 
+				timeout, 
 				rt_info_);
       if (!master_)
 	dependencies.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info_);
@@ -493,11 +517,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 	      // event.time_.set (now / ACE_ONE_SECOND_IN_NSECS,
 	      // (now % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-	      // @@ TOTAL HACK
-	      // event_push_time = ACE_OS::gethrtime ();
 	      ACE_hrtime_t t = ACE_OS::gethrtime ();
-	      ACE_OS::memcpy (&event.creation_time_, &t,
-			      sizeof (event.creation_time_));
+	      ORBSVCS_Time::hrtime_to_TimeT (event.creation_time_, t);
 	    }
 
 	  // @@ ACE_TIMEPROBE_RESET;

@@ -221,6 +221,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 .obj/CosNaming_i.o .obj/CosNaming_i.so .shobj/CosNaming_i.o .shobj/CosNaming_i.so: CosNaming_i.cpp CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -400,13 +401,15 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  NS_CosNaming.h
 .obj/Naming_Service.o .obj/Naming_Service.so .shobj/Naming_Service.o .shobj/Naming_Service.so: Naming_Service.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h CosNaming_i.h \
+ $(ACE_ROOT)/ace/config.h \
+ CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -581,6 +584,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  NS_CosNaming.h Naming_Service.h \

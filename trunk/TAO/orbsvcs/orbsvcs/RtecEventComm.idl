@@ -2,6 +2,8 @@
 // $Id$
 //
 
+#include "CosTimeBase.idl"
+
 module RtecEventComm {
 
   // = TITLE
@@ -30,11 +32,7 @@ module RtecEventComm {
   };
 #endif
 
-  // @@ TODO: Use CosTimeService?
-  // The current definition (double) is a TOTAL HACK, we store a
-  // <long long> here just because it fits; unfortunately <long long>
-  // is not fully supported in the IDL compiler (yet).
-  typedef double Time;
+  typedef TimeBase::TimeT Time;
 
   typedef long EventSourceID;
   typedef long EventType;

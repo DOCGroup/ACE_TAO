@@ -57,9 +57,12 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
 	TAO_TRY
 	  {
 	    ACE_Scheduler_Factory::server()->set(rt_info_,
-						 0, 0, 0, period,
+						 ORBSVCS_Time::zero,
+						 ORBSVCS_Time::zero,
+						 ORBSVCS_Time::zero,
+						 period,
 						 RtecScheduler::VERY_LOW,
-						 RtecScheduler::NO_QUANTUM,
+						 ORBSVCS_Time::zero,
 						 1, TAO_TRY_ENV);
 	    TAO_CHECK_ENV;
 	  }

@@ -1,3 +1,42 @@
+Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosTimeBase.idl: 
+	* orbsvcs/orbsvcs/Time_Utilities.cpp: 
+	* orbsvcs/orbsvcs/Time_Utilities.h: 
+	* orbsvcs/orbsvcs/Time_Utilities.i: 
+	  Added the standard CORBA types for time, also added some helper
+	  routines to convert between BasicTime::TimeT and the common
+	  representations of time in ACE (ACE_Time_Value and ACE_hrtime_t)
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	* orbsvcs/orbsvcs/RtecScheduler.idl: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/Event_Service/ReactorTask.cpp: 
+	* orbsvcs/Event_Service/Task_Manager.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.h: 
+	* orbsvcs/Scheduling_Service/Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Channel_Clients_T.i: 
+	* orbsvcs/orbsvcs/Event_Service_Constants.h: 
+	* orbsvcs/orbsvcs/Event_Utilities.i: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	  Adapted all the code to use the new time structures.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	* orbsvcs/tests/Event_Latency/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/Naming_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/Dump_Schedule/Makefile: 
+	  Updated dependencies.
+
 Tue Feb 17 07:40:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/any.cpp: Added a "return *this" to operator= to stop certain

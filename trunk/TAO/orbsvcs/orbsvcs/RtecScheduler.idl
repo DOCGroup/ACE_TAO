@@ -2,14 +2,15 @@
 // $Id$
 //
 
+#include "CosTimeBase.idl"
+
 module RtecScheduler {
 
-  // TODO: Use the COS Time Service TimeT type.
-  typedef double Time;
-  typedef long Period;
+  typedef TimeBase::TimeT Time;
   typedef Time Quantum;
 
-  const long NO_QUANTUM = 0;
+  typedef long Period;
+  // @@ What are the units for this?
 
   //
   // TODO: This differ from the ones documented in the TAO paper,
