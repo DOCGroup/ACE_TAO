@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /YX /FD /c
-# ADD CPP /nologo /MD /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -72,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_IDL_BE_DLLd.lib TAO_IDL_FE_DLLd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl.exe" /pdbtype:sept /libpath:"..\..\ace"
+# ADD LINK32 TAO_IDL_BE_DLLd.lib TAO_IDL_FE_DLLd.lib aced.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl.exe" /pdbtype:sept /libpath:"..\..\ace"
 
 !ENDIF 
 
