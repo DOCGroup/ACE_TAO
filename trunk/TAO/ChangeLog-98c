@@ -1,3 +1,15 @@
+Tue Dec  8 10:17:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.cpp: 
+	  Fixed a problem with the CDR::grow routine: it estimated the
+	  size *before* alignment, after the alignment the object did not
+	  fit anymore.  Thanks to Dave Meyer <dmeyer@std.saic.com> for
+	  providing an easy way to reproduce this problem, and for his
+	  workmates at SAIC for finding the problem.
+	  Also fixed a problem in the write_array() method when
+	  SWAP_ON_WRITE is enabled, thanks to Istvan Buki
+	  <istvan.buki@infoboard.be> for reporting this one.
+
 Tue Dec  8 07:22:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the template
