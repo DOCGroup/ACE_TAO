@@ -732,7 +732,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
   CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_ptr member_tc;
+  CORBA::TypeCode_ptr member_tc = 0;
   CORBA::Any_ptr member_label;
   CORBA::ULong discrim_size_with_pad;
   const void *discrim_val;
