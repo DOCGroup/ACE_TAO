@@ -1,5 +1,12 @@
 Thu Apr 24 09:33:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* Makefile: modified the TIMESTAMP macro to update the third
+	  component, if there is one, of the version number in the VERSION
+	  file.  This assumes that alpha/beta releases are numbered with
+	  three components, and that final releases are not.  So, if the
+	  version number is, e.g., 4.2, it will not be modified because it
+	  is assumed to be for a final release.
+
 	* ace/Timer_Heap.cpp (copy): added cast of max_size_ to int to avoid
 	  signed/unsigned comparison.
 
