@@ -444,6 +444,13 @@ project(Multicast Test) : acetest {
   }
 }
 
+project(Multihomed INET Addr Test) : acetest {
+  exename = Multihomed_INET_Addr_Test
+  Source_Files {
+    Multihomed_INET_Addr_Test.cpp
+  }
+}
+
 project(New Fail Test) : acetest {
   exename = New_Fail_Test
   Source_Files {
