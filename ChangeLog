@@ -1,3 +1,12 @@
+Mon Jan 15 12:13:48 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/nightlybuilds/builds.lst: [Added]
+        * bin/nightlybuilds/scoreboard_update.pl: [Added]
+
+          Moved the scoreboard stuff from the internal cvs repos
+          to this one, so it is easier for people to edit the
+          list.
+
 Mon Jan 15 12:29:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (open): Replace the ACE_OS::strncpy() functions
