@@ -4,6 +4,8 @@ Mon Aug 16 15:30:29 2004  Steve Huston  <shuston@riverace.com>
 	  "defined (__IBMCPP__)" test for how to cast a thread result.
 	  __IBMCPP__ is defined for both Windows (where the alternate cast
 	  is needed) and AIX (where it is prohibited).
+	  This is related to this change:
+	  Fri Aug  6 08:34:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
 Mon Aug 16 11:54:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
