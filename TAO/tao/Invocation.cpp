@@ -761,6 +761,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
       return reply_status;
     }
 
+  // Set the reply status to zero before we get out. This is no longer required
   switch (reply_status)
     {
     case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
@@ -870,6 +871,8 @@ TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
                                    this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
+
+  this->rd_.reply_received () = 0;
 }
 
 // Send request, block until any reply comes back, and unmarshal reply
@@ -1053,6 +1056,8 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
                                   this->op_details_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);
+
+  this->rd_.reply_received () = 0;
 }
 
 // Send request, block until any reply comes back.

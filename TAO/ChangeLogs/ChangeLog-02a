@@ -1,3 +1,16 @@
+Sun Nov 26 19:47:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.cpp (start): Reset the reply_received field in
+	  the reply dispatcher  to 0. This piece of code that did this
+	  reset was removed when changes were made to Invocation
+	  classes. The reset is important when the Invocation classes
+	  signals a restart. On restart we dont create a new Invocation
+	  object and we reuse the state that was left by the previous
+	  invocation. All this is fine. But the reply_received field needs
+	  to be reset in the intermediate period.  If not stale values
+	  would be passed on to the next invocation and making tests like
+	  Forwarding fail. 
+
 Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* tests/Connection_Purging/Connection_Purging.cpp:
