@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/FIFO_Send_Msg.h"
 
 int 

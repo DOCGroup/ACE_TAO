@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined(BE_UNION_LABEL_H)
 #define BE_UNION_LABEL_H
 

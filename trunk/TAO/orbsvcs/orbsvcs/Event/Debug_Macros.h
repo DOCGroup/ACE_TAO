@@ -1,3 +1,5 @@
+// $Id$
+
 
 #if defined (ACE_ES_NOLOGGING)
 #define ACE_ES_DEBUG(X)

@@ -1,3 +1,5 @@
+// $Id$
+
 const short l = 4;
 
 enum N { zero, un , deux, trois };

@@ -1,4 +1,6 @@
 /* -*- C++ -*- */
+// $Id$
+
 struct PerfStruct{
   short	s;
   char	c;

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "pbroker/corba/orb.h"
 #include "pbroker/corba/environ.h"
 #include <pbroker/corba/xpsboa.h>

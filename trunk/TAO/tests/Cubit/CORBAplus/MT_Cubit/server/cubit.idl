@@ -1,3 +1,5 @@
+// $Id$
+
   interface Cubit {
     octet	cube_octet (in octet o);
     short	cube_short (in short s);

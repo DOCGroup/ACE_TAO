@@ -1,4 +1,6 @@
 /* -*- C++ -*- */
+// $Id$
+
 /* An interval timer class using C++. */
 
 #if !defined (ACE_PROFILE_TIMER_H)

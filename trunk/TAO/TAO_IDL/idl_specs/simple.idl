@@ -1,3 +1,5 @@
+// $Id$
+
 typedef sequence<long,10> vec10;
 
 exception simple_error {

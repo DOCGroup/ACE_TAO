@@ -1,4 +1,6 @@
 /* -*- C++ -*- */
+// $Id$
+
 
 // Clean up the array (e.g., delete dynamically allocated memory).
 

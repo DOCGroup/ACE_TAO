@@ -1,3 +1,5 @@
+// $Id$
+
 interface Test_Object
 {
   // = TITLE

@@ -1,3 +1,5 @@
+// $Id$
+
 // @ (#)method_db.i 05/14/97
 
 // This file provides a way of initializing the method database

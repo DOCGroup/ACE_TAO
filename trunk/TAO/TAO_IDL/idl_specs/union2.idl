@@ -1,3 +1,5 @@
+// $Id$
+
 enum FooDisc {
 	FOO1,
 	FOO2

@@ -1,4 +1,6 @@
 /* -*- C++ -*- */
+// $Id$
+
 
 ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao.h"
 
 long GenClientHeader(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
