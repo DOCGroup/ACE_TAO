@@ -623,23 +623,27 @@ TAO_POA::decrement_outstanding_requests (void)
 ACE_INLINE void
 TAO_POA::establish_servant_lock (PortableServer::Servant servant)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if defined (TAO_HAS_MINIMUM_CORBA)
+  ACE_UNUSED_ARG (servant);
+#else  /* ! TAO_HAS_MINIMUM_CORBA */
   if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       servant->_increment_single_threaded_poa_lock_count ();
     }
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* ! TAO_HAS_MINIMUM_CORBA */
 }
 
 ACE_INLINE void
 TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if defined (TAO_HAS_MINIMUM_CORBA)
+  ACE_UNUSED_ARG (servant);
+#else  /* ! TAO_HAS_MINIMUM_CORBA */
   if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       servant->_decrement_single_threaded_poa_lock_count ();
     }
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* ! TAO_HAS_MINIMUM_CORBA */
 }
 
 ACE_INLINE TAO_ORB_Core &
