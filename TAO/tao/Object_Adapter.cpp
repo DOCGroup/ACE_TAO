@@ -317,7 +317,9 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator iterator = ipn.begin ();
   iteratable_poa_name::iterator end = ipn.end ();
 
-  TAO_POA *parent = this->orb_core_.root_poa ();
+  TAO_POA *parent = this->orb_core_.root_poa (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   if (parent->name () != *iterator)
     ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                       -1);
@@ -348,15 +350,22 @@ int
 TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         CORBA::Boolean root,
                                         const TAO_Temporary_Creation_Time &poa_creation_time,
-                                        TAO_POA *&poa)
+                                        TAO_POA *&poa,
+                                        CORBA::Environment &ACE_TRY_ENV)
 {
   int result = 0;
 
   if (root)
-    poa = this->orb_core_.root_poa ();
+    {
+      poa = this->orb_core_.root_poa (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+    }
   else
-    result = this->transient_poa_map_->find (system_name,
-                                             poa);
+    {
+      result = this->transient_poa_map_->find (system_name,
+                                               poa);
+    }
+
   if (result == 0 && poa->creation_time () != poa_creation_time)
     result = -1;
 
