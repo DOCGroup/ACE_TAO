@@ -152,6 +152,12 @@ OCFLAGS         += -O
 PIC             =
 
 
+#### Tornado II uses egcs
+ifeq (egcs,$(findstring egcs, $(shell, $(CC) --version)))
+  ACE_HAS_GNUG_PRE_2_8 := 0
+endif # egcs
+
+
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
 LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
