@@ -146,7 +146,8 @@ main (int argc, ASYS_TCHAR *argv[])
                               ACE_TEXT (" -c -n %s"),
                               ACE_WIDE_STRING (mutex_name));
 
-      // Spawn child processes that will contend for the lock.
+      // Spawn <n_processes> child processes that will contend for the
+      // lock.
       ACE_Process children[n_processes];
       size_t i;
 
@@ -158,10 +159,10 @@ main (int argc, ASYS_TCHAR *argv[])
           int result = children[i].spawn (options);
           ACE_ASSERT (result != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Server spawned child process with pid = %d.\n"),
+                      ASYS_TEXT ("Parent spawned child process with pid = %d.\n"),
                       children[i].getpid ()));
 
-          // Give the child process a chance to start...
+          // Give the newly spawned child process a chance to start...
           ACE_OS::sleep (1);
         }
 
@@ -170,7 +171,7 @@ main (int argc, ASYS_TCHAR *argv[])
           // Wait for the child processes we created to exit.
           ACE_ASSERT (children[i].wait () != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Server %d finished\n"),
+                      ASYS_TEXT ("Parent %d finished\n"),
                       children[i].getpid ()));
         }
 
