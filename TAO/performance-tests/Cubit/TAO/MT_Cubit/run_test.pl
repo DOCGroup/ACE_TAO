@@ -11,14 +11,14 @@ $server_port = 0;
 $iorfile = "theior";
 $sleeptime = 3;
 
-$SV = Process::Create ("server".$Process::EXE_EXT,
+$SV = Process::Create ("./server".$Process::EXE_EXT,
                        " -ORBport ".$server_port.
-		       " -s -f $iorfile");
+                       " -s -f $iorfile");
 
 sleep $sleeptime;
 
-$status = system ("client".$Process::EXE_EXT.
-		  " -x -s -f $iorfile");
+$status = system ("./client".$Process::EXE_EXT.
+                  " -x -s -f $iorfile");
 
 
 # @@ TODO change to Wait() once the -x option works.
