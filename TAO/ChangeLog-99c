@@ -1,3 +1,24 @@
+Fri Jan 15 14:25:29 1999  Seth Widoff  <swidoff@thalia.cimds.ri.cmu.edu>
+
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/TT_Info.{h,cpp}:
+	* orbsvcs/tests/Trading/colocated_test.cpp:
+	* orbsvcs/tests/Trading/export_test.cpp:
+	* orbsvcs/tests/Trading/import_test.cpp:
+	Added the -iorfile or -i option to the export and import
+	test. When provided a file name, the tests read the trader IOR
+	from the file, else from standard input. Fixed some formating in
+	the remaining files.
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	More "clever" uses of sequence buffers to avoid copying broke
+	when the memory mangement of string sequences changed
+	recently. Resorted to good, ol' fashioned copying. There shouldn't
+	be any more of these lurking around.
+	
 Fri Jan 15 08:21:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.51 released.
