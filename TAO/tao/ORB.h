@@ -491,7 +491,26 @@ public:
 
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
                                                CORBA::Environment &ACE_TRY_ENV);
+
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
+  //Methods added for Philipe Merle for CORBA Script..
+  CORBA_TypeCode_ptr create_interface_tc (const char * id,
+                                          const char * name,
+                                          CORBA::Environment &ACE_TRY_ENV =
+                                          TAO_default_environment ());
+  CORBA_TypeCode_ptr create_enum_tc (const char *id,
+                                     const char *name,
+                                     CORBA_EnumMemberSeq &members,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                     TAO_default_environment ());
+  
+                                     
+    
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+
 
   int run (void);
   int run (ACE_Time_Value &tv);
