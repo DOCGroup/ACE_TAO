@@ -17,18 +17,15 @@ the following args:
         [-d]                 Increments TAO_debug_level. It's additive, up
                              to 2 levels of debugging.
 
-        [-n <calls/loop>]	   Sets the # of calls per loop (default is 250).
+        [-n <calls/loop>]    Sets the # of calls per loop (default is 250).
 
         [-i <factory IOR>]   For passing the IOR by hand.
 
         [-f <filename>]      If server is run with [-o <filename>] option, 
                              it outputs its factory IOR to a file, which
-                             the client can readwith this option.
+                             the client can read with this option.
 
         [-x]                 Shuts down server when finished.
-
-        [-s]                 Disables use of the TAO naming service (-i and
-                            -f options do this automatically).
 
 If using the -i option, you might want to run the server with the option 
 [-ORBobjrefstyle url]. This will cause the server to display its IOR in a 
