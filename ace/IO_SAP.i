@@ -3,6 +3,9 @@
 
 // IO_SAP.i
 
+#include "ace/Trace.h"
+#include "ace/OS.h"
+
 ASYS_INLINE
 ACE_IO_SAP::~ACE_IO_SAP (void)
 {

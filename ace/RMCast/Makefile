@@ -67,28 +67,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -98,9 +109,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i
 
 .obj/RMCast_Module.o .obj/RMCast_Module.so .shobj/RMCast_Module.o .shobj/RMCast_Module.so: RMCast_Module.cpp RMCast_Module.h \
@@ -109,28 +126,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -140,9 +168,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i
 
 .obj/RMCast_Module_Factory.o .obj/RMCast_Module_Factory.so .shobj/RMCast_Module_Factory.o .shobj/RMCast_Module_Factory.so: RMCast_Module_Factory.cpp \
@@ -152,28 +186,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -183,9 +228,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i
 
 .obj/RMCast_Fragment.o .obj/RMCast_Fragment.so .shobj/RMCast_Fragment.o .shobj/RMCast_Fragment.so: RMCast_Fragment.cpp RMCast_Fragment.h \
@@ -195,28 +246,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -226,11 +288,21 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -243,19 +315,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Fragment.i \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -279,6 +350,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -299,28 +371,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -330,9 +413,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -349,13 +438,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -408,6 +500,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -480,33 +573,51 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/ace_new.h \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
   $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -516,11 +627,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -530,15 +644,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
@@ -549,6 +661,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
@@ -597,6 +710,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -627,28 +741,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -658,9 +783,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i
 
 .obj/RMCast_Membership.o .obj/RMCast_Membership.so .shobj/RMCast_Membership.o .shobj/RMCast_Membership.so: RMCast_Membership.cpp RMCast_Membership.h \
@@ -670,28 +801,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -701,9 +843,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
@@ -718,8 +866,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -727,6 +877,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -739,10 +893,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
@@ -759,28 +910,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -790,12 +952,22 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
   RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -808,19 +980,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Copy_On_Write.i RMCast_Copy_On_Write.cpp \
   $(ACE_ROOT)/ace/RB_Tree.h \
@@ -850,6 +1021,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -883,28 +1055,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -914,12 +1097,22 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Copy_On_Write.h RMCast_Worker.h \
   RMCast_Worker.i RMCast_Worker.cpp \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -932,19 +1125,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Copy_On_Write.i RMCast_Copy_On_Write.cpp RMCast_Resend_Worker.i \
   RMCast_Module.h RMCast_Module.i
@@ -956,28 +1148,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -987,12 +1190,22 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
   RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1005,19 +1218,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Copy_On_Write.i RMCast_Copy_On_Write.cpp \
   $(ACE_ROOT)/ace/RB_Tree.h \
@@ -1047,6 +1259,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -1079,28 +1292,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1110,9 +1334,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1128,6 +1358,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
@@ -1141,12 +1372,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1168,6 +1401,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -1201,28 +1435,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1232,9 +1477,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Reliable_Factory.i RMCast_Receiver_Module.h RMCast_Module.h \
   RMCast_Module.i RMCast_Receiver_Module.i RMCast_Reassembly.h \
@@ -1253,13 +1504,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -1312,6 +1566,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1347,28 +1602,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1378,9 +1644,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i
 
@@ -1391,31 +1663,43 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/ace_new.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
   $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  RMCast_Resend_Handler.i RMCast_Retransmission.h RMCast_Module.h \
+  RMCast.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1425,9 +1709,23 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
+  RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h RMCast_Worker.h \
+  RMCast_Worker.i RMCast_Worker.cpp \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1439,24 +1737,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  RMCast_Resend_Handler.i RMCast_Retransmission.h RMCast_Module.h \
-  RMCast.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
-  RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Copy_On_Write.i RMCast_Copy_On_Write.cpp \
   $(ACE_ROOT)/ace/RB_Tree.h \
@@ -1484,6 +1776,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -1512,28 +1805,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1543,14 +1847,22 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Receiver_Module.i \
   RMCast_Proxy.h RMCast_Proxy.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/RMCast_Sequencer.o .obj/RMCast_Sequencer.so .shobj/RMCast_Sequencer.o .shobj/RMCast_Sequencer.so: RMCast_Sequencer.cpp RMCast_Sequencer.h \
@@ -1560,28 +1872,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1591,11 +1914,21 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1608,19 +1941,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   RMCast_Sequencer.i
 
@@ -1631,28 +1963,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1662,9 +2005,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Fork.i
 
 .obj/RMCast_IO_UDP.o .obj/RMCast_IO_UDP.so .shobj/RMCast_IO_UDP.o .shobj/RMCast_IO_UDP.so: RMCast_IO_UDP.cpp RMCast_IO_UDP.h \
@@ -1674,28 +2023,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1705,9 +2065,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -1724,6 +2090,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -1741,8 +2108,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -1795,6 +2164,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1831,31 +2201,43 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/ace_new.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
   $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  RMCast_UDP_Event_Handler.i RMCast_IO_UDP.h RMCast_Module.h RMCast.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -1865,9 +2247,20 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
+  RMCast.i RMCast_Module.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1879,12 +2272,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  RMCast_UDP_Event_Handler.i RMCast_IO_UDP.h RMCast_Module.h RMCast.h \
-  RMCast.i RMCast_Module.i \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -1902,8 +2290,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -1954,6 +2344,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1985,28 +2376,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -2016,11 +2418,24 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/INET_Addr.i \
+  RMCast_UDP_Proxy.i RMCast_IO_UDP.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.h \
+  $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -2033,13 +2448,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
-  $(ACE_ROOT)/ace/INET_Addr.i \
-  RMCast_UDP_Proxy.i RMCast_IO_UDP.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/SOCK.i \
@@ -2053,8 +2462,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -2107,6 +2518,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2143,28 +2555,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -2174,9 +2597,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i RMCast_Reliable_Factory.h \
   RMCast_Reliable_Factory.i RMCast_IO_UDP.h RMCast_Module.h \
@@ -2196,6 +2625,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -2213,8 +2643,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -2267,6 +2699,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2300,28 +2733,39 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_new.h \
+  $(ACE_ROOT)/ace/ace_dlfcn.h \
+  $(ACE_ROOT)/ace/ace_fcntl.h \
   $(ACE_ROOT)/ace/ace_sys_types.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_poll.h \
+  $(ACE_ROOT)/ace/ace_pwd.h \
+  $(ACE_ROOT)/ace/ace_signal.h \
   $(ACE_ROOT)/ace/ace_stdio.h \
-  $(ACE_ROOT)/ace/ace_semaphore.h \
-  $(ACE_ROOT)/ace/ace_sys_socket.h \
-  $(ACE_ROOT)/ace/ace_time.h \
-  $(ACE_ROOT)/ace/ace_sys_stat.h \
-  $(ACE_ROOT)/ace/ace_sys_sem.h \
-  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_stdlib.h \
   $(ACE_ROOT)/ace/ace_stropts.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/ace_threads.h \
+  $(ACE_ROOT)/ace/ace_time.h \
   $(ACE_ROOT)/ace/ace_sys_resource.h \
+  $(ACE_ROOT)/ace/ace_sys_sem.h \
+  $(ACE_ROOT)/ace/ace_sys_socket.h \
+  $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_utsname.h \
+  $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/ace_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/ace_dirent.h \
+  $(ACE_ROOT)/ace/ace_unistd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/ace_limits.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/ace_string.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
@@ -2331,9 +2775,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/ace_sys_mman.h \
+  $(ACE_ROOT)/ace/ace_sys_msg.h \
+  $(ACE_ROOT)/ace/ace_sys_shm.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i RMCast_IO_UDP.h RMCast_Module.h \
   RMCast_Module.i \
@@ -2352,6 +2802,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/ace_ctype.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -2369,8 +2820,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/ace_sys_param.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -2423,6 +2876,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/ace_sys_ipc.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \

@@ -2,11 +2,13 @@
 // $Id$
 
 #include "ace/IO_SAP.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IO_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#include "ace/Log_Msg.h"
+#include "ace/Flag_Manip.h"
 
 ACE_RCSID(ace, IO_SAP, "$Id$")
 

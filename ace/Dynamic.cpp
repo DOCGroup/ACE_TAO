@@ -2,12 +2,13 @@
 // $Id$
 
 #include "ace/Dynamic.h"
-#include "ace/Singleton.h"
-#include "ace/Synch_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Dynamic.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Singleton.h"
+#include "ace/Synch_T.h"
 
 ACE_RCSID(ace, Dynamic, "$Id$")
 

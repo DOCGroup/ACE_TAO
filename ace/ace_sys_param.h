@@ -21,11 +21,15 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if !defined (ACE_LACKS_PARAM_H)
+# if !defined (ACE_LACKS_SYS_PARAM_H)
 #   include /**/ <sys/param.h>
-# endif /* ACE_LACKS_PARAM_H */
+# endif /* !ACE_LACKS_SYS_PARAM_H */
 
-# include "ace/ace_limits.h"
+// Need to note why this is included.
+//# include "ace/ace_limits.h"
+
+// _MAX_PATH is in stdlib.h on windows...
+# include "ace/ace_stdlib.h"
 
 # if !defined (MAXPATHLEN)
 #   if defined (ACE_WIN32)

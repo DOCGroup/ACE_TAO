@@ -7,6 +7,7 @@
 ACE_RCSID(ace, Filecache, "$Id$")
 
 #if defined (ACE_WIN32)
+#include "ace/ace_unistd.h"
 // Specifies no sharing flags.
 #define R_MASK 0
 #define W_MASK 0

@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Trace.h"
+#include "ace/OS.h"
+
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {

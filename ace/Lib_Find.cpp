@@ -5,6 +5,7 @@
 #include "ace/Trace.h"
 #include "ace/OS_String.h"
 #include "ace/OS.h" // for access(), sprintf(), fopen(), etc...
+#include "ace/ace_unistd.h"
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 

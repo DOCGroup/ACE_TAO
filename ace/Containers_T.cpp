@@ -3,18 +3,19 @@
 #ifndef ACE_CONTAINERS_T_C
 #define ACE_CONTAINERS_T_C
 
-#include "ace/Log_Msg.h"
-#include "ace/Malloc_Base.h"
+#include "ace/Containers_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Containers_T.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Containers.h"
+#include "ace/Log_Msg.h"
+#include "ace/Malloc_Base.h"
 
 ACE_RCSID(ace, Containers_T, "$Id$")
 

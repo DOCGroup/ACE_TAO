@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Trace.h"
+
 // Dynamic.i
 
 ACE_INLINE

@@ -12,14 +12,149 @@
 //=============================================================================
 
 #ifndef ACE_ACE_PSOS_H
-#define ACE_ACE_PSOS_H
-#include "ace/pre.h"
+# define ACE_ACE_PSOS_H
+# include "ace/pre.h"
 
-#include "ace/config-all.h"
+# include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+# if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+  // Header information snarfed from compiler provided header files
+  // that are not included because there is already an identically
+  // named file provided with pSOS, which does not have this info
+  // from compiler supplied stdio.h
+  extern FILE *fdopen(int, const char *);
+  extern int getopt(int, char *const *, const char *);
+  extern char *tempnam(const char *, const char *);
+  extern "C" int fileno(FILE *);
+
+//  #define fileno(stream) ((stream)->_file)
+
+  // from compiler supplied string.h
+  extern char *strdup (const char *);
+
+  // from compiler supplied stat.h
+  extern mode_t umask (mode_t);
+  extern int mkfifo (const char *, mode_t);
+  extern int mkdir (const char *, mode_t);
+
+  // from compiler supplied stdlib.h
+  extern int putenv (char *);
+
+  int isatty (int h);
+
+# endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
+
+# if defined (ACE_PSOS)
+// Some versions of pSOS do not define error numbers, but newer
+// versions do. So, include errno.h and then see which ones are not
+// yet defined.
+#   if !defined (EPERM)
+#     define EPERM        1        /* Not super-user                        */
+#   endif /* EPERM */
+#   if !defined (ENOENT)
+#     define ENOENT       2        /* No such file or directory             */
+#   endif /* ENOENT */
+#   if !defined (ESRCH)
+#     define ESRCH        3        /* No such process                       */
+#   endif /* ESRCH */
+#   if ! defined (EINTR)
+#     define EINTR        4        /* interrupted system call               */
+#   endif /* EINTR */
+#   if !defined (EBADF)
+#     define EBADF        9        /* Bad file number                       */
+#   endif /* EBADF */
+#   if !defined (EAGAIN)
+#     define EAGAIN       11       /* Resource temporarily unavailable      */
+#   endif /* EAGAIN */
+#   if !defined (EWOULDBLOCK)
+#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
+#   endif /* EWOULDBLOCK */
+#   if !defined (ENOMEM)
+#     define ENOMEM       12       /* Not enough core                       */
+#   endif /* ENOMEM */
+#   if !defined (EACCESS)
+#     define EACCESS      13       /* Permission denied                     */
+#   endif /* EACCESS */
+#   if !defined (EFAULT)
+#     define EFAULT       14       /* Bad access                            */
+#   endif /* EFAULT */
+#   if !defined (EEXIST)
+#     define EEXIST       17       /* File exists                           */
+#   endif /* EEXIST */
+#   if !defined (ENOSPC)
+#     define ENOSPC       28       /* No space left on device               */
+#   endif /* ENOSPC */
+#   if !defined (EPIPE)
+#     define EPIPE        32       /* Broken pipe                           */
+#   endif /* EPIPE */
+#   if !defined (ETIME)
+#     define ETIME        62       /* timer expired                         */
+#   endif /* ETIME */
+#   if !defined (ENAMETOOLONG)
+#     define ENAMETOOLONG 78       /* path name is too long                 */
+#   endif /* ENAMETOOLONG */
+#   if !defined (ENOSYS)
+#     define ENOSYS       89       /* Unsupported file system operation     */
+#   endif /* ENOSYS */
+#   if !defined (EADDRINUSE)
+#     define EADDRINUSE   125      /* Address already in use                */
+#   endif /* EADDRINUSE */
+#   if !defined (ENETUNREACH)
+#     define ENETUNREACH  128      /* Network is unreachable                */
+#   endif /* ENETUNREACH */
+#   if !defined (EISCONN)
+#     define EISCONN      133      /* Socket is already connected           */
+#   endif /* EISCONN */
+#   if !defined (ESHUTDOWN)
+#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+#   endif /* ESHUTDOWN */
+#   if !defined (ECONNREFUSED)
+#     define ECONNREFUSED 146      /* Connection refused                    */
+#   endif /* ECONNREFUSED */
+#   if !defined (EINPROGRESS)
+#     define EINPROGRESS  150      /* operation now in progress             */
+#   endif /* EINPROGRESS */
+#   if !defined (ERRMAX)
+#     define ERRMAX       151      /* Last error number                     */
+#   endif /* ERRMAX */
+# endif /* ACE_PSOS */
+
+
+
+# if defined (ACE_PSOS)
+
+// Wrapper for NT events on pSOS.
+class ACE_OS_Export ACE_event_t
+{
+  friend class ACE_OS;
+
+protected:
+
+  /// Protect critical section.
+  ACE_mutex_t lock_;
+
+  /// Keeps track of waiters.
+  ACE_cond_t condition_;
+
+  /// Specifies if this is an auto- or manual-reset event.
+  int manual_reset_;
+
+  /// "True" if signaled.
+  int is_signaled_;
+
+  /// Number of waiting threads.
+  u_long waiting_threads_;
+};
+
+# endif /* ACE_PSOS */
+
+
 
 # if defined (ACE_PSOS)
 
@@ -126,10 +261,6 @@
   typedef long fd_mask;
 #     define IPPORT_RESERVED       1024
 #     define IPPORT_USERRESERVED   5000
-
-#     if !defined (howmany)
-#       define howmany(x, y) (((x)+((y)-1))/(y))
-#     endif /* howmany */
 
   extern "C"
   {
@@ -368,50 +499,50 @@ typedef u_long ACE_thread_mutex_t;
 typedef u_long ACE_thread_t;
 typedef u_long ACE_hthread_t;
 
-#     if defined (ACE_PSOS_HAS_COND_T)
+#   if defined (ACE_PSOS_HAS_COND_T)
 typedef u_long ACE_cond_t;
 typedef u_long ACE_condattr_t;
 struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
-#     endif /* ACE_PSOS_HAS_COND_T */
+#   endif /* ACE_PSOS_HAS_COND_T */
 
 
 // TCB registers 0-7 are for application use
-#     define PSOS_TASK_REG_TSS 0
-#     define PSOS_TASK_REG_MAX 7
+#   define PSOS_TASK_REG_TSS 0
+#   define PSOS_TASK_REG_MAX 7
 
-#     define PSOS_TASK_MIN_PRIORITY   1
-#     define PSOS_TASK_MAX_PRIORITY 239
+#   define PSOS_TASK_MIN_PRIORITY   1
+#   define PSOS_TASK_MAX_PRIORITY 239
 
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  Current POSIX and Solaris TSS implementations also
 // use unsigned int, so the ACE TSS emulation is compatible with them.
 // Native pSOS TSD, where available, uses unsigned long as the key type.
-#     if defined (ACE_PSOS_HAS_TSS)
+#   if defined (ACE_PSOS_HAS_TSS)
 typedef u_long ACE_thread_key_t;
-#     else
+#   else
 typedef u_int ACE_thread_key_t;
-#     endif /* ACE_PSOS_HAS_TSS */
+#   endif /* ACE_PSOS_HAS_TSS */
 
-#     define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
-#     define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
-#     define THR_CANCEL_DEFERRED     0      /* cancellation deferred to cancellation point */
-#     define THR_CANCEL_ASYNCHRONOUS 0      /* cancellation occurs immediately */
+#   define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
+#   define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
+#   define THR_CANCEL_DEFERRED     0      /* cancellation deferred to cancellation point */
+#   define THR_CANCEL_ASYNCHRONOUS 0      /* cancellation occurs immediately */
 
-#     define THR_BOUND               0
-#     define THR_NEW_LWP             0
-#     define THR_DETACHED            0
-#     define THR_SUSPENDED           0
-#     define THR_DAEMON              0
-#     define THR_JOINABLE            0
+#   define THR_BOUND               0
+#   define THR_NEW_LWP             0
+#   define THR_DETACHED            0
+#   define THR_SUSPENDED           0
+#   define THR_DAEMON              0
+#   define THR_JOINABLE            0
 
-#     define THR_SCHED_FIFO          0
-#     define THR_SCHED_RR            0
-#     define THR_SCHED_DEFAULT       0
-#     define USYNC_THREAD            T_LOCAL
-#     define USYNC_PROCESS           T_GLOBAL
+#   define THR_SCHED_FIFO          0
+#   define THR_SCHED_RR            0
+#   define THR_SCHED_DEFAULT       0
+#   define USYNC_THREAD            T_LOCAL
+#   define USYNC_PROCESS           T_GLOBAL
 
 /* from psos.h */
 /* #define T_NOPREEMPT     0x00000001   Not preemptible bit */

@@ -2,14 +2,18 @@
 // $Id$
 
 #include "ace/SOCK_Dgram.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SOCK_Dgram.i"
+#endif
+
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram.i"
-#endif
+#include "ace/ace_netinet_in.h"
+#include "ace/ace_sys_ioctl.h"
 
 ACE_RCSID(ace, SOCK_Dgram, "$Id$")
 

@@ -237,10 +237,17 @@
 #define ACE_LACKS_MKFIFO
 
 #define ACE_LACKS_MALLOC_H
+#define ACE_LACKS_FCNTL_H
 
 #define ACE_PSOS_DIAB
 
 #define ACE_PSOS_DIAB_MIPS
 #define ACE_MALLOC_ALIGN 8
+
+#if defined size_t
+#  undef size_t
+#  define ACE_LACKS_SIZE_T
+#endif /* size_t */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

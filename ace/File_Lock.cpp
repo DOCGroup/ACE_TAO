@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/File_Lock.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/File_Lock.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, File_Lock, "$Id$")
 
@@ -17,7 +18,7 @@ ACE_File_Lock::dump (void) const
 // ACE_TRACE ("ACE_File_Lock::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
+  //this->lock_.dump (); // not a great loss, since it was all commented out anyway.
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

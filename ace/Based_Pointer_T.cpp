@@ -4,14 +4,16 @@
 #define ACE_BASED_POINTER_T_CPP
 
 #include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
-#include "ace/Log_Msg.h"
-
-#   define ACE_TRACEX(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Based_Pointer_T.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Based_Pointer_Repository.h"
+#include "ace/Log_Msg.h"
+#include "ace/Trace.h"
+
+//#define ACE_TRACEX(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 template <class CONCRETE>
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)

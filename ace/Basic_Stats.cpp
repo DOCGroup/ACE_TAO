@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/Basic_Stats.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Basic_Stats, "$Id$")
 

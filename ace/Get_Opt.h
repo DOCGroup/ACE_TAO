@@ -14,7 +14,6 @@
 #define ACE_GET_OPT_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Containers.h"
 

@@ -5,6 +5,7 @@
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Log_Msg.h"
+#include "ace/ace_unistd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -23,7 +23,7 @@
 #include "ace/FILE_Addr.h"
 
 // Used in the FILE_IO.h file...
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
 
 // Forward decl.
 class ACE_Message_Block;

@@ -2,13 +2,14 @@
 // $Id$
 
 #include "ace/MEM_IO.h"
-#include "ace/Handle_Set.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#include "ace/Handle_Set.h"
 
 ACE_RCSID(ace, MEM_IO, "$Id$")
 

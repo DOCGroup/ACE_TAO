@@ -14,7 +14,7 @@
 #define ACE_LOGGING_STRATEGY_H
 
 #include "ace/Service_Object.h"
-#include "ace/Log_Msg.h"
+//#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,8 @@
 #if !defined (ACE_DEFAULT_LOGFILE_POLL_INTERVAL)
 #define ACE_DEFAULT_LOGFILE_POLL_INTERVAL 600 /* Seconds */
 #endif /* ACE_DEFAULT_LOGFILE_POLL_INTERVAL */
+
+class ACE_Log_Msg;
 
 /**
  * @class ACE_Logging_Strategy

@@ -3,20 +3,22 @@
 // Defines the member functions for the memory mapping facility.
 
 #include "ace/Mem_Map.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_WIN32) \
     && (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
 # define ACE_USE_MAPPING_NAME 1
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_USE_MAPPING_NAME)
-#include "ace/SString.h"
-#endif /* ACE_USE_MAPPING_NAME */
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
+
+#if defined (ACE_USE_MAPPING_NAME)
+#include "ace/SString.h"
+#endif /* ACE_USE_MAPPING_NAME */
 
 ACE_RCSID(ace, Mem_Map, "$Id$")
 

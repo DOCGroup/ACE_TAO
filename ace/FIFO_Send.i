@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/ACE.h"
+
 // FIFO_Send.i
 
 ASYS_INLINE ssize_t

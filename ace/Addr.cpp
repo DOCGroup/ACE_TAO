@@ -2,12 +2,17 @@
 // $Id$
 
 #include "ace/Addr.h"
+
+ACE_RCSID(ace, Addr, "$Id$")
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Addr.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Log_Msg.h"
 #include "ace/Trace.h"
 #include "ace/Global_Macros.h"
 #include "ace/ace_sys_socket.h"
-
-ACE_RCSID(ace, Addr, "$Id$")
 
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
 #if defined (sap_any)
@@ -28,10 +33,6 @@ ACE_Addr::sap_any (void)
 /* static */
 const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 #endif /* ACE_HAS_BROKEN_SAP_ANY */
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Addr.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Addr)
 

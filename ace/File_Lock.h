@@ -17,9 +17,7 @@
 #include "ace/config-all.h"
 #include "ace/ACE_export.h"
 #include "ace/ace_sys_types.h"
-
-
-#include "ace/OS.h" // for ACE_OS::ace_flock_t
+#include "ace/ace_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -142,7 +140,7 @@ public:
 
 protected:
   /// Locking structure for OS record locks.
-  ACE_OS::ace_flock_t lock_;
+  ace_flock_t lock_;
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the

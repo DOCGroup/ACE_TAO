@@ -12,18 +12,44 @@
 //=============================================================================
 
 #ifndef ACE_ACE_THREADS_H
-#define ACE_ACE_THREADS_H
-#include "ace/pre.h"
+# define ACE_ACE_THREADS_H
+# include "ace/pre.h"
 
-#include "ace/config-all.h"
+# include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # include "ace/ace_sys_types.h"
 # include "ace/OS_Export.h"
-// moved to ace_thread.h
+
+# if !defined (ACE_DEFAULT_SYNCH_TYPE)
+#   define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
+# endif /* ! ACE_DEFAULT_SYNCH_TYPE */
+
+// This is for C++ static methods.
+# if defined (VXWORKS)
+typedef int ACE_THR_FUNC_INTERNAL_RETURN_TYPE;
+typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
+# else
+typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
+# endif /* VXWORKS */
+
+extern "C" {
+typedef void (*ACE_THR_C_DEST)(void *);
+}
+typedef void (*ACE_THR_DEST)(void *);
+
+
+// Since Linux doesn't define this, I'm not sure how it should be handled.
+// Need to look into it...
+# if defined (ACE_HAS_PRIOCNTL)
+#   include /**/ <sys/priocntl.h>
+# endif /* ACE_HAS_PRIOCNTL */
+
 # if defined (ACE_HAS_PRIOCNTL)
   // Need to #include thread.h before #defining THR_BOUND, etc.,
   // when building without threads on SunOS 5.x.
@@ -40,7 +66,7 @@
 # if defined (ACE_HAS_PTHREADS)
 extern "C" {
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#   include /**/ <signal.h>
+#   include "ace/ace_signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   include /**/ <pthread.h>
 #   if defined (DIGITAL_UNIX)
@@ -81,7 +107,52 @@ extern "C" pthread_t pthread_self (void);
 #   define ACE_TSS_GET(I, T) (I)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
 
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#   define ACE_MT(X) X
+#   if !defined (_REENTRANT)
+#     define _REENTRANT
+#   endif /* _REENTRANT */
+# else
+#   define ACE_MT(X)
+# endif /* ACE_MT_SAFE */
 
+# if !defined (ACE_DEFAULT_THREAD_PRIORITY)
+#   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
+# endif /* ACE_DEFAULT_THREAD_PRIORITY */
+
+
+# if defined (ACE_HAS_POSIX_SEM)
+#   include /**/ <semaphore.h>
+#   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
+#     define SEM_FAILED ((sem_t *) -1)
+#   endif  /* !SEM_FAILED */
+
+// look familiar?
+// looks like this is only used with posix sem
+#   if !defined (SEM_FAILED)
+#     define SEM_FAILED ((sem_t *) -1)
+#   endif  /* !SEM_FAILED */
+
+
+typedef struct
+{
+  sem_t *sema_;
+  // Pointer to semaphore handle.  This is allocated by ACE if we are
+  // working with an unnamed POSIX semaphore or by the OS if we are
+  // working with a named POSIX semaphore.
+
+  char *name_;
+  // Name of the semaphore (if this is non-NULL then this is a named
+  // POSIX semaphore, else its an unnamed POSIX semaphore).
+
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  int new_sema_;
+  // this->sema_ doesn't always get created dynamically if a platform
+  // doesn't support named posix semaphores.  We use this flag to
+  // remember if we need to delete <sema_> or not.
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+} ACE_sema_t;
+# endif /* ACE_HAS_POSIX_SEM */
 
 # if defined (ACE_HAS_THREADS)
 
@@ -103,6 +174,11 @@ extern "C" pthread_t pthread_self (void);
 #     define ACE_SCHED_RR 2
 #   endif /* ! ACE_HAS_PTHREADS */
 
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
 #   if defined (ACE_HAS_PTHREADS)
 #     define ACE_SCHED_OTHER SCHED_OTHER
 #     define ACE_SCHED_FIFO SCHED_FIFO
@@ -409,9 +485,10 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #     define THR_EXPLICIT_SCHED      0x00800000
 #     define THR_SCHED_IO            0x01000000
 
+// still in pthreads
+////////////////////////////////////////////////
 #     if !defined (ACE_HAS_STHREADS)
 #       if !defined (ACE_HAS_POSIX_SEM)
-class ACE_OS;
 /**
  * @class ACE_sema_t
  *
@@ -419,6 +496,10 @@ class ACE_OS;
  * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
  * it's a different type than the POSIX <sem_t>.
  */
+
+class ACE_OS;
+
+// this is used by linux
 class ACE_OS_Export ACE_sema_t
 {
 friend class ACE_OS;
@@ -438,6 +519,8 @@ protected:
 #       endif /* !ACE_HAS_POSIX_SEM */
 
 #       if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
+// looks like sun with pthreads and sthreads
+
         // If we are on Solaris we can just reuse the existing
         // implementations of these synchronization types.
 #         if !defined (ACE_LACKS_RWLOCK_T)
@@ -446,12 +529,19 @@ typedef rwlock_t ACE_rwlock_t;
 #         endif /* !ACE_LACKS_RWLOCK_T */
 #         include /**/ <thread.h>
 #       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
-
-#     else
+#     else /* !ACE_HAS_STHREADS */
+//sthreads w/ posix threads
 #       if !defined (ACE_HAS_POSIX_SEM)
+// must be the sun sema_t
 typedef sema_t ACE_sema_t;
 #       endif /* !ACE_HAS_POSIX_SEM */
 #     endif /* !ACE_HAS_STHREADS */
+
+
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+//////////////////////////////////////////
 #   elif defined (ACE_HAS_STHREADS)
 // Solaris threads, without PTHREADS.
 // Typedefs to help compatibility with Windows NT and Pthreads.
@@ -579,8 +669,8 @@ struct sockaddr_un {
   char  sun_path[108]; // path name.
 };
 
-#     define MAXPATHLEN  1024
-#     define MAXNAMLEN   255
+//#     define MAXPATHLEN  1024
+//#     define MAXNAMLEN   255
 #     define NSIG (_NSIGS + 1)
 
 // task options:  the other options are either obsolete, internal, or for
@@ -634,7 +724,8 @@ typedef struct
   char *name_;
   // Name of the semaphore:  always NULL with VxWorks.
 } ACE_sema_t;
-#     endif /* !ACE_HAS_POSIX_SEM */
+#   endif /* !ACE_HAS_POSIX_SEM */
+
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
@@ -644,9 +735,24 @@ typedef u_int ACE_thread_key_t;
 
       // Marker for ACE_Thread_Manager to indicate that it allocated
       // an ACE_thread_t.  It is placed at the beginning of the ID.
-#     define ACE_THR_ID_ALLOCATED '\022'
+#   define ACE_THR_ID_ALLOCATED '\022'
 
-#   elif defined (ACE_HAS_WTHREADS)
+
+////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+# elif defined (ACE_HAS_WTHREADS)
+
+typedef DWORD ACE_thread_t;
+typedef HANDLE ACE_hthread_t;
+
+//#   define ACE_INVALID_PID ((pid_t) -1)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef DWORD ACE_OS_thread_key_t;
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef DWORD ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
 
@@ -662,17 +768,14 @@ typedef struct
 
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
-
-#     if defined (ACE_WIN32)
-// This can probably get _wider_ as more types are defined in PACE.
-// ie: see above ACE_mutex_t
+#define ACE_EVENT_T_DEFINED
 
 //@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
 //   semaphore simulation on WinNT.  It should be
 //   changed to ACE_USES_HAS_WINCE at some later point.
-#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+#   if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
-#       else
+#   else
 /**
  * @class ACE_sema_t
  *
@@ -691,32 +794,31 @@ public:
   u_int count_;
 };
 
-#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#     endif /* defined (ACE_WIN32) */
+#   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
 // These need to be different values, neither of which can be 0...
-#     define USYNC_THREAD 1
-#     define USYNC_PROCESS 2
+#   define USYNC_THREAD 1
+#   define USYNC_PROCESS 2
 
-#     define THR_CANCEL_DISABLE      0
-#     define THR_CANCEL_ENABLE       0
-#     define THR_CANCEL_DEFERRED     0
-#     define THR_CANCEL_ASYNCHRONOUS 0
-#     define THR_DETACHED            0x02000000 /* ignore in most places */
-#     define THR_BOUND               0          /* ignore in most places */
-#     define THR_NEW_LWP             0          /* ignore in most places */
-#     define THR_DAEMON              0          /* ignore in most places */
-#     define THR_JOINABLE            0          /* ignore in most places */
-#     define THR_SUSPENDED   CREATE_SUSPENDED
-#     define THR_USE_AFX             0x01000000
-#     define THR_SCHED_FIFO          0
-#     define THR_SCHED_RR            0
-#     define THR_SCHED_DEFAULT       0
-#     define THR_SCOPE_PROCESS       0
-#     define THR_SCOPE_SYSTEM        0
-#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
+#   define THR_CANCEL_DISABLE      0
+#   define THR_CANCEL_ENABLE       0
+#   define THR_CANCEL_DEFERRED     0
+#   define THR_CANCEL_ASYNCHRONOUS 0
+#   define THR_DETACHED            0x02000000 /* ignore in most places */
+#   define THR_BOUND               0          /* ignore in most places */
+#   define THR_NEW_LWP             0          /* ignore in most places */
+#   define THR_DAEMON              0          /* ignore in most places */
+#   define THR_JOINABLE            0          /* ignore in most places */
+#   define THR_SUSPENDED   CREATE_SUSPENDED
+#   define THR_USE_AFX             0x01000000
+#   define THR_SCHED_FIFO          0
+#   define THR_SCHED_RR            0
+#   define THR_SCHED_DEFAULT       0
+#   define THR_SCOPE_PROCESS       0
+#   define THR_SCOPE_SYSTEM        0
+# endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
-#   if defined (ACE_LACKS_COND_T) && defined (ACE_WIN32)
+# if defined (ACE_LACKS_COND_T) && defined (ACE_WIN32)
 /**
  * @class ACE_cond_t
  *
@@ -745,23 +847,23 @@ protected:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (VXWORKS) || defined (ACE_PSOS)
+#   if defined (VXWORKS) || defined (ACE_PSOS)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
    * semaphore.
    */
   ACE_sema_t waiters_done_;
-#     elif defined (ACE_WIN32)
+#   elif defined (ACE_WIN32)
   /**
    * An auto reset event used by the broadcast/signal thread to wait
    * for the waiting thread(s) to wake up and get a chance at the
    * semaphore.
    */
   HANDLE waiters_done_;
-#     else
-#       error "Please implement this feature or check your config.h file!"
-#     endif /* VXWORKS || ACE_PSOS */
+#   else
+#     error "Please implement this feature or check your config.h file!"
+#   endif /* VXWORKS || ACE_PSOS */
 
   /// Keeps track of whether we were broadcasting or just signaling.
   size_t was_broadcast_;
@@ -776,9 +878,10 @@ struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
-#   endif /* ACE_LACKS_COND_T */
 
-#   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+# endif /* ACE_LACKS_COND_T */
+
+# if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 
 /**
  * @class ACE_rwlock_t
@@ -819,45 +922,45 @@ protected:
   ACE_cond_t waiting_important_writer_;
   // condition for the upgrading reader
 };
-#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+# elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 typedef pthread_rwlock_t ACE_rwlock_t;
-#   elif defined (ACE_HAS_STHREADS)
-#     include /**/ <synch.h>
+# elif defined (ACE_HAS_STHREADS)
+#   include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
-#   endif /* ACE_LACKS_RWLOCK_T */
+# endif /* ACE_LACKS_RWLOCK_T */
 
 // Define some default thread priorities on all threaded platforms, if
 // not defined above or in the individual platform config file.
 // ACE_THR_PRI_FIFO_DEF should be used by applications for default
 // real-time thread priority.  ACE_THR_PRI_OTHER_DEF should be used
 // for non-real-time priority.
-#   if !defined(ACE_THR_PRI_FIFO_DEF)
-#     if defined (ACE_WTHREADS)
+# if !defined(ACE_THR_PRI_FIFO_DEF)
+#   if defined (ACE_WTHREADS)
       // It would be more in spirit to use THREAD_PRIORITY_NORMAL.  But,
       // using THREAD_PRIORITY_ABOVE_NORMAL should give preference to the
       // threads in this process, even if the process is not in the
       // REALTIME_PRIORITY_CLASS.
-#       define ACE_THR_PRI_FIFO_DEF THREAD_PRIORITY_ABOVE_NORMAL
-#     else  /* ! ACE_WTHREADS */
-#       define ACE_THR_PRI_FIFO_DEF 0
-#     endif /* ! ACE_WTHREADS */
-#   endif /* ! ACE_THR_PRI_FIFO_DEF */
+#     define ACE_THR_PRI_FIFO_DEF THREAD_PRIORITY_ABOVE_NORMAL
+#   else  /* ! ACE_WTHREADS */
+#     define ACE_THR_PRI_FIFO_DEF 0
+#   endif /* ! ACE_WTHREADS */
+# endif /* ! ACE_THR_PRI_FIFO_DEF */
 
-#   if !defined(ACE_THR_PRI_OTHER_DEF)
-#     if defined (ACE_WTHREADS)
+# if !defined(ACE_THR_PRI_OTHER_DEF)
+#   if defined (ACE_WTHREADS)
       // It would be more in spirit to use THREAD_PRIORITY_NORMAL.  But,
       // using THREAD_PRIORITY_ABOVE_NORMAL should give preference to the
       // threads in this process, even if the process is not in the
       // REALTIME_PRIORITY_CLASS.
-#       define ACE_THR_PRI_OTHER_DEF THREAD_PRIORITY_NORMAL
-#     else  /* ! ACE_WTHREADS */
-#       define ACE_THR_PRI_OTHER_DEF 0
-#     endif /* ! ACE_WTHREADS */
-#   endif /* ! ACE_THR_PRI_OTHER_DEF */
+#     define ACE_THR_PRI_OTHER_DEF THREAD_PRIORITY_NORMAL
+#   else  /* ! ACE_WTHREADS */
+#     define ACE_THR_PRI_OTHER_DEF 0
+#   endif /* ! ACE_WTHREADS */
+# endif /* ! ACE_THR_PRI_OTHER_DEF */
 
-#   if defined (ACE_HAS_RECURSIVE_MUTEXES)
+# if defined (ACE_HAS_RECURSIVE_MUTEXES)
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
-#   else
+# else
 /**
  * @class ACE_recursive_thread_mutex_t
  *
@@ -884,68 +987,68 @@ public:
   /// Current owner of the lock.
   ACE_thread_t owner_id_;
 };
-#   endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 
-# else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
+#else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 
 // Give these things some reasonable value...
-#   define ACE_SCOPE_PROCESS 0
-#   define ACE_SCOPE_LWP 1
-#   define ACE_SCOPE_THREAD 2
-#   define ACE_SCHED_OTHER 0
-#   define ACE_SCHED_FIFO 1
-#   define ACE_SCHED_RR 2
-#   if !defined (THR_CANCEL_DISABLE)
-#     define THR_CANCEL_DISABLE      0
-#   endif /* ! THR_CANCEL_DISABLE */
-#   if !defined (THR_CANCEL_ENABLE)
-#     define THR_CANCEL_ENABLE       0
-#   endif /* ! THR_CANCEL_ENABLE */
-#   if !defined (THR_CANCEL_DEFERRED)
-#     define THR_CANCEL_DEFERRED     0
-#   endif /* ! THR_CANCEL_DEFERRED */
-#   if !defined (THR_CANCEL_ASYNCHRONOUS)
-#     define THR_CANCEL_ASYNCHRONOUS 0
-#   endif /* ! THR_CANCEL_ASYNCHRONOUS */
-#   if !defined (THR_JOINABLE)
-#     define THR_JOINABLE    0     /* ignore in most places */
-#   endif /* ! THR_JOINABLE */
-#   if !defined (THR_DETACHED)
-#     define THR_DETACHED    0     /* ignore in most places */
-#   endif /* ! THR_DETACHED */
-#   if !defined (THR_DAEMON)
-#     define THR_DAEMON      0     /* ignore in most places */
-#   endif /* ! THR_DAEMON */
-#   if !defined (THR_BOUND)
-#     define THR_BOUND       0     /* ignore in most places */
-#   endif /* ! THR_BOUND */
-#   if !defined (THR_NEW_LWP)
-#     define THR_NEW_LWP     0     /* ignore in most places */
-#   endif /* ! THR_NEW_LWP */
-#   if !defined (THR_SUSPENDED)
-#     define THR_SUSPENDED   0     /* ignore in most places */
-#   endif /* ! THR_SUSPENDED */
-#   if !defined (THR_SCHED_FIFO)
-#     define THR_SCHED_FIFO 0
-#   endif /* ! THR_SCHED_FIFO */
-#   if !defined (THR_SCHED_RR)
-#     define THR_SCHED_RR 0
-#   endif /* ! THR_SCHED_RR */
-#   if !defined (THR_SCHED_DEFAULT)
-#     define THR_SCHED_DEFAULT 0
-#   endif /* ! THR_SCHED_DEFAULT */
-#   if !defined (USYNC_THREAD)
-#     define USYNC_THREAD 0
-#   endif /* ! USYNC_THREAD */
-#   if !defined (USYNC_PROCESS)
-#     define USYNC_PROCESS 0
-#   endif /* ! USYNC_PROCESS */
-#   if !defined (THR_SCOPE_PROCESS)
-#     define THR_SCOPE_PROCESS 0
-#   endif /* ! THR_SCOPE_PROCESS */
-#   if !defined (THR_SCOPE_SYSTEM)
-#     define THR_SCOPE_SYSTEM 0
-#   endif /* ! THR_SCOPE_SYSTEM */
+# define ACE_SCOPE_PROCESS 0
+# define ACE_SCOPE_LWP 1
+# define ACE_SCOPE_THREAD 2
+# define ACE_SCHED_OTHER 0
+# define ACE_SCHED_FIFO 1
+# define ACE_SCHED_RR 2
+# if !defined (THR_CANCEL_DISABLE)
+#   define THR_CANCEL_DISABLE      0
+# endif /* ! THR_CANCEL_DISABLE */
+# if !defined (THR_CANCEL_ENABLE)
+#   define THR_CANCEL_ENABLE       0
+# endif /* ! THR_CANCEL_ENABLE */
+# if !defined (THR_CANCEL_DEFERRED)
+#   define THR_CANCEL_DEFERRED     0
+# endif /* ! THR_CANCEL_DEFERRED */
+# if !defined (THR_CANCEL_ASYNCHRONOUS)
+#   define THR_CANCEL_ASYNCHRONOUS 0
+# endif /* ! THR_CANCEL_ASYNCHRONOUS */
+# if !defined (THR_JOINABLE)
+#   define THR_JOINABLE    0     /* ignore in most places */
+# endif /* ! THR_JOINABLE */
+# if !defined (THR_DETACHED)
+#   define THR_DETACHED    0     /* ignore in most places */
+# endif /* ! THR_DETACHED */
+# if !defined (THR_DAEMON)
+#   define THR_DAEMON      0     /* ignore in most places */
+# endif /* ! THR_DAEMON */
+# if !defined (THR_BOUND)
+#   define THR_BOUND       0     /* ignore in most places */
+# endif /* ! THR_BOUND */
+# if !defined (THR_NEW_LWP)
+#   define THR_NEW_LWP     0     /* ignore in most places */
+# endif /* ! THR_NEW_LWP */
+# if !defined (THR_SUSPENDED)
+#   define THR_SUSPENDED   0     /* ignore in most places */
+# endif /* ! THR_SUSPENDED */
+# if !defined (THR_SCHED_FIFO)
+#   define THR_SCHED_FIFO 0
+# endif /* ! THR_SCHED_FIFO */
+# if !defined (THR_SCHED_RR)
+#   define THR_SCHED_RR 0
+# endif /* ! THR_SCHED_RR */
+# if !defined (THR_SCHED_DEFAULT)
+#   define THR_SCHED_DEFAULT 0
+# endif /* ! THR_SCHED_DEFAULT */
+# if !defined (USYNC_THREAD)
+#   define USYNC_THREAD 0
+# endif /* ! USYNC_THREAD */
+# if !defined (USYNC_PROCESS)
+#   define USYNC_PROCESS 0
+# endif /* ! USYNC_PROCESS */
+# if !defined (THR_SCOPE_PROCESS)
+#   define THR_SCOPE_PROCESS 0
+# endif /* ! THR_SCOPE_PROCESS */
+# if !defined (THR_SCOPE_SYSTEM)
+#   define THR_SCOPE_SYSTEM 0
+# endif /* ! THR_SCOPE_SYSTEM */
 
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
@@ -960,9 +1063,9 @@ struct ACE_OS_Export ACE_mutexattr_t
 typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 typedef int ACE_recursive_thread_mutex_t;
-#   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+# if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
 typedef int ACE_sema_t;
-#   endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+# endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
@@ -973,16 +1076,166 @@ typedef u_int ACE_thread_key_t;
 // code compatibility.  ACE_THR_PRI_FIFO_DEF should be used by
 // applications for default real-time thread priority.
 // ACE_THR_PRI_OTHER_DEF should be used for non-real-time priority.
-#   if !defined(ACE_THR_PRI_FIFO_DEF)
-#     define ACE_THR_PRI_FIFO_DEF 0
-#   endif /* ! ACE_THR_PRI_FIFO_DEF */
-#   if !defined(ACE_THR_PRI_OTHER_DEF)
-#     define ACE_THR_PRI_OTHER_DEF 0
-#   endif /* ! ACE_THR_PRI_OTHER_DEF */
+# if !defined(ACE_THR_PRI_FIFO_DEF)
+#   define ACE_THR_PRI_FIFO_DEF 0
+# endif /* ! ACE_THR_PRI_FIFO_DEF */
+# if !defined(ACE_THR_PRI_OTHER_DEF)
+#   define ACE_THR_PRI_OTHER_DEF 0
+# endif /* ! ACE_THR_PRI_OTHER_DEF */
 
-# endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS */
 
 
+
+
+#if !defined (ACE_EVENT_T_DEFINED)
+// Wrapper for NT events on UNIX.
+class ACE_OS_Export ACE_event_t
+{
+  friend class ACE_OS;
+protected:
+  /// Protect critical section.
+  ACE_mutex_t lock_;
+
+  /// Keeps track of waiters.
+  ACE_cond_t condition_;
+
+  /// Specifies if this is an auto- or manual-reset event.
+  int manual_reset_;
+
+  /// "True" if signaled.
+  int is_signaled_;
+
+  /// Number of waiting threads.
+  u_long waiting_threads_;
+};
+#define ACE_EVENT_T_DEFINED
+#endif /* ACE_EVENT_T_DEFINED */
+
+
+// not sure where this should go...
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
+// This part if to avoid STL name conflict with the map structure
+// in net/if.h.
+#   if defined (ACE_HAS_STL_MAP_CONFLICT)
+#     define map _Resource_Allocation_Map_
+#   endif /* ACE_HAS_STL_MAP_CONFLICT */
+#   include /**/ <net/if.h>
+#   if defined (ACE_HAS_STL_MAP_CONFLICT)
+#     undef map
+#   endif /* ACE_HAS_STL_MAP_CONFLICT */
+
+#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#     define queue _Queue_
+#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+#   include /**/ <netinet/in.h>
+#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#     undef queue
+#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+
+
+#   if !defined (ACE_LACKS_TCP_H)
+#     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
+#       if defined(TCP_NODELAY)
+#         undef TCP_NODELAY
+#       endif
+#       if defined(TCP_MAXSEG)
+#         undef TCP_MAXSEG
+#       endif
+#     endif
+#     include /**/ <netinet/tcp.h>
+#   endif /* ACE_LACKS_TCP_H */
+#endif /* !ACE_WIN32 && !ACE_PSOS */
+
+
+/**
+ * @class ACE_Thread_ID
+ *
+ * @brief Defines a platform-independent thread ID.
+ */
+class ACE_OS_Export ACE_Thread_ID
+{
+public:
+  // = Initialization method.
+  ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
+  ACE_Thread_ID (const ACE_Thread_ID &id);
+
+  // = Set/Get the Thread ID.
+  ACE_thread_t id (void);
+  void id (ACE_thread_t);
+
+  // = Set/Get the Thread handle.
+  ACE_hthread_t handle (void);
+  void handle (ACE_hthread_t);
+
+  // != Comparison operator.
+  int operator== (const ACE_Thread_ID &) const;
+  int operator!= (const ACE_Thread_ID &) const;
+
+private:
+  /// Identify the thread.
+  ACE_thread_t thread_id_;
+
+  /// Handle to the thread (typically used to "wait" on Win32).
+  ACE_hthread_t thread_handle_;
+};
+
+
+
+
+
+// mit pthread stuff
+#if defined (ACE_HAS_RECV_TIMEDWAIT) && defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
+extern "C" ssize_t recv_timedwait (ACE_HANDLE handle,
+                                   char *buf,
+                                   int len,
+                                   int flags,
+                                   struct timespec *timeout);
+extern "C" ssize_t read_timedwait (ACE_HANDLE handle,
+                                   char *buf,
+                                   size_t n,
+                                   struct timespec *timeout);
+extern "C" ssize_t recvmsg_timedwait (ACE_HANDLE handle,
+                                      struct msghdr *msg,
+                                      int flags,
+                                      struct timespec *timeout);
+extern "C" ssize_t recvfrom_timedwait (ACE_HANDLE handle,
+                                       char *buf,
+                                       int len,
+                                       int flags,
+                                       struct sockaddr *addr,
+                                       int
+                                       *addrlen,
+                                       struct timespec *timeout);
+extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
+                                    iovec *iov,
+                                    int iovcnt,
+                                    struct timespec* timeout);
+extern "C" ssize_t send_timedwait (ACE_HANDLE handle,
+                                   const char *buf,
+                                   int len,
+                                   int flags,
+                                   struct timespec *timeout);
+extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
+                                    const void *buf,
+                                    size_t n,
+                                    struct timespec *timeout);
+extern "C" ssize_t sendmsg_timedwait (ACE_HANDLE handle,
+                                      ACE_SENDMSG_TYPE *msg,
+                                      int flags,
+                                      struct timespec *timeout);
+extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
+                                     const char *buf,
+                                     int len,
+                                     int flags,
+                                     const struct sockaddr *addr,
+                                     int addrlen,
+                                     struct timespec *timeout);
+extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
+                                     ACE_WRITEV_TYPE *iov,
+                                     int iovcnt,
+                                     struct timespec *timeout);
+#endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
 
 #endif /* ACE_ACE_THREADS_H */

@@ -129,6 +129,9 @@
 #define ACE_NEEDS_SCHED_H
 #define ACE_HAS_POSIX_NONBLOCK
 
+#define ACE_LACKS_FCNTL_H
+#define ACE_NEEDS_SYS_FCNTL_H
+
 /*  What should these be set to?.
 
 ACE_TLI_TCP_DEVICE

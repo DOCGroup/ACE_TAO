@@ -17,21 +17,11 @@
 
 #include "ace/config-all.h"
 #include "ace/streams.h"
-#include /**/ <stdarg.h> // LynxOS requires this before stdio.h
-#include /**/ <stdio.h>
+#include "ace/ace_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if !defined (ACE_OSTREAM_TYPE)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_OSTREAM_TYPE FILE
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_OSTREAM_TYPE ostream
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_OSTREAM_TYPE */
-
 
 #include "ace/OS_Export.h"
 

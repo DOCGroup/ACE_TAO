@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/SOCK_IO.h"
-#include "ace/Handle_Set.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#include "ace/Handle_Set.h"
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")
 

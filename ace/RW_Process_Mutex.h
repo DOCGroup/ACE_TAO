@@ -16,6 +16,7 @@
 
 #include "ace/File_Lock.h"
 #include "ace/ACE_export.h"
+#include "ace/Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,6 +1,13 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/ace_unistd.h"
+#include "ace/ace_sys_mman.h"
+# include "ace/ace_sys_msg.h"
+# include "ace/ace_sys_shm.h"
+# include "ace/ace_sys_uio.h"
+# include "ace/ace_string.h"
+
 #if defined (__CYGWIN32__)
 # include /**/ <getopt.h>
 #endif
@@ -231,34 +238,11 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 
 #if !defined (ACE_WIN32)
 
-// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
-# if defined (ACE_HAS_GNU_CSTRING_H)
-// Define this file to keep /usr/include/memory.h from being included.
-#   include /**/ <cstring>
-# else
-#   if defined (ACE_LACKS_MEMORY_H)
-#     if !defined (ACE_PSOS_DIAB_MIPS)
-#       include /**/ <string.h>
-#     endif /* ACE_PSOS_DIAB_MIPS */
-#   else
-#     include /**/ <memory.h>
-#   endif /* VXWORKS */
-# endif /* ACE_HAS_GNU_CSTRING_H */
 
 // These prototypes are chronically lacking from many versions of
 // UNIX.
-extern "C" int isastream (int);
-# if !defined (ACE_HAS_GETRUSAGE_PROTO)
-extern "C" int getrusage (int who, struct rusage *rusage);
-# endif /* ! ACE_HAS_GETRUSAGE_PROTO */
 
-# if defined (ACE_LACKS_SYSCALL)
-extern "C" int syscall (int, ACE_HANDLE, struct rusage *);
-# endif /* ACE_LACKS_SYSCALL */
 
-# if defined (ACE_LACKS_MKTEMP)
-extern "C" char *mktemp (char *);
-# endif /* ACE_LACKS_MKTEMP */
 
 // The following are #defines and #includes that must be visible for
 // ACE to compile it's OS wrapper class implementation correctly.  We
@@ -4791,9 +4775,9 @@ ACE_OS::select (int width,
   const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);
 # endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width,
-                                 (ACE_FD_SET_TYPE *) rfds,
-                                 (ACE_FD_SET_TYPE *) wfds,
-                                 (ACE_FD_SET_TYPE *) efds,
+                                 (ACE_SELECT_FD_SET_TYPE *) rfds,
+                                 (ACE_SELECT_FD_SET_TYPE *) wfds,
+                                 (ACE_SELECT_FD_SET_TYPE *) efds,
                                  timep),
                        int, -1);
 }
@@ -4812,9 +4796,9 @@ ACE_OS::select (int width,
   const timeval *timep = timeout;
 # endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width,
-                                 (ACE_FD_SET_TYPE *) rfds,
-                                 (ACE_FD_SET_TYPE *) wfds,
-                                 (ACE_FD_SET_TYPE *) efds,
+                                 (ACE_SELECT_FD_SET_TYPE *) rfds,
+                                 (ACE_SELECT_FD_SET_TYPE *) wfds,
+                                 (ACE_SELECT_FD_SET_TYPE *) efds,
                                  ___ACE_TIMEOUT),
                        int, -1);
 # undef ___ACE_TIMEOUT
@@ -5032,7 +5016,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                ACE_reinterpret_cast (char *ACE_CAST_CONST,
+                                ACE_reinterpret_cast (const char *ACE_CAST_CONST,
                                                       buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
@@ -8600,7 +8584,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 }
 
 ACE_INLINE int
-ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_init (ace_flock_t *lock,
                     int flags,
                     const ACE_TCHAR *name,
                     mode_t perms)
@@ -8681,7 +8665,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
 
 # if defined (ACE_WIN32)
 ACE_INLINE void
-ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock,
+ACE_OS::adjust_flock_params (ace_flock_t *lock,
                              short whence,
                              off_t &start,
                              off_t &len)
@@ -8705,7 +8689,7 @@ ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock,
 # endif /* ACE_WIN32 */
 
 ACE_INLINE int
-ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_wrlock (ace_flock_t *lock,
                       short whence,
                       off_t start,
                       off_t len)
@@ -8753,7 +8737,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_rdlock (ace_flock_t *lock,
                       short whence,
                       off_t start,
                       off_t len)
@@ -8801,7 +8785,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_trywrlock (ace_flock_t *lock,
                          short whence,
                          off_t start,
                          off_t len)
@@ -8858,7 +8842,7 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_tryrdlock (ace_flock_t *lock,
                          short whence,
                          off_t start,
                          off_t len)
@@ -8914,7 +8898,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_unlock (ace_flock_t *lock,
                       short whence,
                       off_t start,
                       off_t len)
@@ -8953,7 +8937,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
+ACE_OS::flock_destroy (ace_flock_t *lock,
                        int unlink_file)
 {
   ACE_OS_TRACE ("ACE_OS::flock_destroy");
@@ -9242,7 +9226,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 # endif /* ghs && ACE_HAS_PENTIUM */
 
 ACE_INLINE ACE_hrtime_t
-ACE_OS::gethrtime (const ACE_HRTimer_Op op)
+ACE_OS::gethrtime (int op)
 {
   ACE_OS_TRACE ("ACE_OS::gethrtime");
 # if defined (ACE_HAS_HI_RES_TIMER)
@@ -9317,7 +9301,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 #   endif //ACE_LACKS_LONGLONG_T
 
 # elif defined (CHORUS)
-  if (op == ACE_OS::ACE_HRTIMER_GETTIME)
+  if (op == ACE_High_Res_Timer::ACE_HRTIMER_GETTIME)
     {
       struct timespec ts;
 
@@ -10184,21 +10168,6 @@ ACE_OS::putenv (const ACE_TCHAR *string)
 # endif /* ACE_HAS_WINCE */
 }
 
-ACE_INLINE
-ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
-{
-  this->maxlen = max;
-  this->len = l;
-  this->buf = (char *) b;
-}
-
-ACE_INLINE
-ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
-{
-  this->maxlen = sb.maxlen;
-  this->len = sb.len;
-  this->buf = sb.buf;
-}
 
 # if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS) 
 ACE_INLINE long

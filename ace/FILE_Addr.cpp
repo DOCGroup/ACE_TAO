@@ -1,13 +1,14 @@
 // $Id$
 
 #include "ace/FILE_Addr.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/FILE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Lib_Find.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, FILE_Addr, "$Id$")
 

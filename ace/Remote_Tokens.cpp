@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/Remote_Tokens.h"
-#include "ace/Singleton.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Singleton.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 

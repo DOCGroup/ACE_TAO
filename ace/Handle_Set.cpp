@@ -2,12 +2,13 @@
 // $Id$
 
 #include "ace/Handle_Set.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
@@ -83,7 +84,7 @@ ACE_Handle_Set::ACE_Handle_Set (void)
   this->reset ();
 }
 
-ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
+ACE_Handle_Set::ACE_Handle_Set (const ACE_SELECT_FD_SET_TYPE &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();

@@ -27,7 +27,6 @@
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 // Do this so the #pragma warning in the MSVC headers do not
 // affect our #pragma warning settings

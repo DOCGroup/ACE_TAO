@@ -1,12 +1,13 @@
 // $Id$
 
-#include "ace/Map_Manager.h"
 #include "ace/Capabilities.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Capabilities.i"
 #endif /* !__ACE_INLINE__ */
+
+#include "ace/Map_Manager.h"
+#include "ace/Log_Msg.h"
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 

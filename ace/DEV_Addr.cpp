@@ -2,14 +2,15 @@
 // $Id$
 
 #include "ace/DEV_Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
-#include "ace/ace_stdio.h" // for MAXNAMELEN
-#include "ace/Global_Macros.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
+#include "ace/ace_stdio.h" // for MAXNAMELEN
+#include "ace/Global_Macros.h"
 
 ACE_RCSID(ace, DEV_Addr, "$Id$")
 

@@ -695,6 +695,63 @@ friend class ace_dewarn_gplusplus
 
 # define ACE_NOOP(x)
 
+
+
+
+// these are more or less constants, but I'll move them later...
+
+// Define the Wide character and normal versions of some of the string macros
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#   define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
+#   define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
+# endif /* ACE_HAS_WCHAR */
+
+# define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+# define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
+# define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
+# define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
+
+// Theses defines are used by the ACE Name Server.
+# if !defined (ACE_DEFAULT_LOCALNAME_A)
+#   define ACE_DEFAULT_LOCALNAME_A "localnames"
+# endif /* ACE_DEFAULT_LOCALNAME_A */
+# if !defined (ACE_DEFAULT_GLOBALNAME_A)
+#   define ACE_DEFAULT_GLOBALNAME_A "globalnames"
+# endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
+// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
+// this directory may not exist
+# if defined (ACE_LEGACY_MODE)
+#   if defined (ACE_WIN32)
+#     define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
+#   else /* ACE_WIN32 */
+#     define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#   endif /* ACE_WIN32 */
+#   if defined (ACE_HAS_WCHAR)
+#     define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
+#   endif /* ACE_HAS_WCHAR */
+#   define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
+# endif /* ACE_LEGACY_MODE */
+
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
+#   define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
+# endif /* ACE_HAS_WCHAR */
+
+# define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
+# define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
+
+
+// The "null" device on UNIX.
+#if !defined (ACE_DEV_NULL)
+#   define ACE_DEV_NULL "/dev/null"
+#endif /* !ACE_DEV_NULL */
+
+
+
 #include "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

@@ -22,7 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Flag_Manip.h"
-#include "ace/ace_stdio.h"
+#include "ace/ace_dirent.h"
+#include "ace/ace_sys_socket.h"
+#include "ace/Global_Macros.h"
 
 /**
  * @class ACE_FILE_Addr

@@ -4,7 +4,6 @@
 // abstraction.
 
 #include "ace/TLI.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, TLI, "$Id$")
 
@@ -13,6 +12,8 @@ ACE_RCSID(ace, TLI, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/TLI.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI)
 

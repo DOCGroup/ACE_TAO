@@ -3,6 +3,8 @@
 
 // Service_Object.i
 
+#include "ace/ACE.h"
+
 ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *so)
   : service_object_ (so)
 {

@@ -1,16 +1,17 @@
 // $Id$
 
-#include "ace/Synch_T.h"
 #include "ace/Thread_Manager.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Thread_Manager.i"
+#endif /* __ACE_INLINE__ */
+
+#include "ace/Synch_T.h"
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Thread_Exit.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Thread_Manager, "$Id$")
 

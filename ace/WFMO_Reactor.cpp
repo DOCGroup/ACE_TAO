@@ -4,13 +4,13 @@
 
 #if defined (ACE_WIN32)
 
-#include "ace/Handle_Set.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Thread.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Handle_Set.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Thread.h"
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 

@@ -1,6 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Trace.h"
+#include "ace/Time_Value.h"
+#include "ace/OS.h"
+
 // Date_Time.i
 
 ASYS_INLINE void

@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
+#include "ace/ace_dlfcn.h"
 
 #define ACE_Component ACE_Service_Object
 /**

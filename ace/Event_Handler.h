@@ -22,7 +22,9 @@
 
 #include "ace/ACE_export.h"
 #include "ace/ace_sys_types.h"
-#include "ace/OS.h" // for siginfo_t, etc...
+#include "ace/ace_signal.h"
+#include "ace/ace_threads.h"
+//#include "ace/OS.h" // for siginfo_t, etc...
 
 // Forward declaration.
 class ACE_Message_Block;

@@ -1,6 +1,11 @@
 // $Id$
 
 #include "ace/ACE.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/ACE.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -8,9 +13,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, ACE, "$Id$")
 

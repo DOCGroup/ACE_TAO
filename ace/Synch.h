@@ -16,11 +16,16 @@
 #define ACE_SYNCH_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ace_threads.h"
+#include "ace/ACE_export.h"
+#include "ace/Global_Macros.h"
 
 // Forward declarations.
 /**

@@ -12,11 +12,15 @@
 #define ACE_SOCK_CONNECT_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/Basic_Types.h"
+#include "ace/ace_sys_socket.h"
 
 // Forward Declarations
 class ACE_INET_Addr;

@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/Token_Manager.h"
-#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Manager.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Object_Manager.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 

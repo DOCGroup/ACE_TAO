@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Global_Macros.h"
+
 // Forward decl
 class ACE_Time_Value;
 

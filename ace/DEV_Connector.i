@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Log_Msg.h"
+
 // Creates a Local ACE_DEV. 
 
 ASYS_INLINE

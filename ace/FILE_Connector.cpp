@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/FILE_Connector.h"
-#include "ace/Handle_Ops.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_Connector.i"
 #endif
+
+#include "ace/Handle_Ops.h"
 
 ACE_RCSID(ace, FILE_Connector, "$Id$")
 

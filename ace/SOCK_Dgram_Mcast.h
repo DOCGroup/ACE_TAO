@@ -25,6 +25,22 @@
 
 #include "ace/INET_Addr.h"
 
+
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
+  // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
+  // is defined, assume that the ip_mreq struct is also defined
+  // (presumably in netinet/in.h).
+  struct ip_mreq
+  {
+    struct in_addr imr_multiaddr;
+    // IP multicast address of group
+    struct in_addr imr_interface;
+    // local IP address of interface
+  };
+# endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
+
+
+
 /**
  * @class ACE_SOCK_Dgram_Mcast
  *

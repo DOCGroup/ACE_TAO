@@ -44,7 +44,9 @@
 // the information using getenv.
 #define ACE_DEFAULT_LD_SEARCH_PATH ACE_LIB_TEXT (".\\;\\windows")
 
-#define ACE_LACKS_SYS_TYPES_H
+// This should turn off includes of all the sys/*.h headers...
+//#define ACE_LACKS_SYS_TYPES_H
+#define ACE_LACKS_UNIX_SYS_HEADERS
 
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 
@@ -156,6 +158,7 @@
 //    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
 
+#define ACE_LACKS_FCNTL_H
 
 #define ACE_LACKS_STRCASECMP    // WinCE doesn't support _stricmp
 #define ACE_LACKS_GETSERVBYNAME

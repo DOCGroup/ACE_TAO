@@ -2,12 +2,13 @@
 // $Id$
 
 #include "ace/Framework_Component.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Framework_Component.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 

@@ -6,12 +6,13 @@
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 #include "ace/NT_Service.h"
-#include "ace/Log_Msg.h"
-#include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/NT_Service.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/Service_Object.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 

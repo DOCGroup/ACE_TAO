@@ -4,18 +4,18 @@
 #ifndef ACE_TYPED_SV_MESSAGE_QUEUE_C
 #define ACE_TYPED_SV_MESSAGE_QUEUE_C
 
-#include "ace/Typed_SV_Message.h"
+#include "ace/Typed_SV_Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Typed_SV_Message_Queue.h"
-#include "ace/Log_Msg.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Typed_SV_Message_Queue.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Typed_SV_Message.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Typed_SV_Message_Queue, "$Id$")
 

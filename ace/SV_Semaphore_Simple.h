@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ace_sys_ipc.h"
+
 /**
  * @class ACE_SV_Semaphore_Simple
  *
@@ -77,7 +79,7 @@ public:
    * Most other processes should use <close> below.
    */
   int remove (void) const;
-
+ 
   // = Semaphore acquire and release methods.
   /**
    * Wait until a ACE_SV_Semaphore's value is greater than 0, the

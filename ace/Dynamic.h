@@ -15,14 +15,13 @@
 #define ACE_DYNAMIC_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-#include "ace/Singleton.h"
+#include "ace/ACE_export.h"
 
 /**
  * @class ACE_Dynamic

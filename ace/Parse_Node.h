@@ -303,6 +303,8 @@ private:
   const ACE_Parse_Node *mods_;
 };
 
+class ACE_Service_Config;
+
 /**
  * @class ACE_Static_Function_Node
  *

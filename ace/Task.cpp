@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/Task.h"
-#include "ace/Module.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Module.h"
 
 ACE_RCSID(ace, Task, "$Id$")
 

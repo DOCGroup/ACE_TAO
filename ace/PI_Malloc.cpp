@@ -12,13 +12,13 @@
 #define ACE_PI_MALLOC_CPP
 
 #include "ace/PI_Malloc.h"
-#include "ace/Object_Manager.h"
-#include "ace/Process_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/PI_Malloc.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Object_Manager.h"
+#include "ace/Process_Mutex.h"
 #include "ace/Synch_T.h"
 
 ACE_RCSID(ace, PI_Malloc, "$Id$")

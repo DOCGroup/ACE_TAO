@@ -24,6 +24,9 @@
 
 #include "ace/OS_Errno.h"
 
+# define LOCALNAME 0
+# define REMOTENAME 1
+
 # if !defined (ACE_HAS_TLI)
 // Dummies to help compilation.
 struct t_call { };

@@ -5,14 +5,18 @@
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
 
+ACE_RCSID(ace, Proactor, "$Id$")
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Proactor.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #  endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
-
-ACE_RCSID(ace, Proactor, "$Id$")
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -23,10 +27,6 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #else /* !ACE_HAS_AIO_CALLS */
 #   include "ace/WIN32_Proactor.h"
 #endif /* ACE_HAS_AIO_CALLS */
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
 
 // Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;

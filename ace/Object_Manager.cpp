@@ -1,6 +1,11 @@
 // $Id$
 
 #include "ace/Object_Manager.h"
+
+#if !defined (__ACE_INLINE__)
+# include "ace/Object_Manager.i"
+#endif /* __ACE_INLINE__ */
+
 #if !defined (ACE_LACKS_ACE_TOKEN)
 # include "ace/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
@@ -17,10 +22,6 @@
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
-
-#if !defined (__ACE_INLINE__)
-# include "ace/Object_Manager.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Object_Manager, "$Id$")
 

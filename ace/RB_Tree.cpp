@@ -6,7 +6,6 @@
 #define ACE_RB_TREE_C
 
 #include "ace/RB_Tree.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,6 +14,8 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/SString.h"
 
 ACE_RCSID(ace, RB_Tree, "$Id$")
 

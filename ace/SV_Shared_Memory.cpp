@@ -2,11 +2,12 @@
 // $Id$
 
 #include "ace/SV_Shared_Memory.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SV_Shared_Memory.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, SV_Shared_Memory, "$Id$")
 

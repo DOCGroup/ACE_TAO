@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Basic_Types.h"
+#include "ace/ace_sys_types.h"
 #include "ace/ace_sys_param.h" // form MAXPATHLEN
 
 /**

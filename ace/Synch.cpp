@@ -3,21 +3,22 @@
 #ifndef ACE_SYNCH_C
 #define ACE_SYNCH_C
 
-#include "ace/Thread.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch_T.h"
-#include "ace/Synch.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Synch, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Thread.h"
+#include "ace/Synch_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/ace_sys_mman.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 
