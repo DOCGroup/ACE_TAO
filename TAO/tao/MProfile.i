@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  policy_list_ (0),
@@ -17,6 +18,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
   :  policy_list_ (0),
+     is_policy_list_initialized_ (0),
      forward_from_(0),
      pfiles_ (0),
      current_ (0),
@@ -271,37 +273,4 @@ ACE_INLINE void
 TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 {
   this->policy_list_ = policy_list;
-}
-
-ACE_INLINE CORBA::PolicyList*
-TAO_MProfile::policy_list (void)
-{
-
-  // Here we use Double-Checked Loking to
-  // avoid to create more then one policy list
-  // if more thread try to get a policy for
-  // the first time, at the same time.
-
-  if (this->is_policy_list_initialized_)
-    return this->policy_list_;
-  else
-    {
-      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                        guard,
-                        this->mutex_,
-                        0);
-      if (this->policy_list_ == 0)
-        {
-          this->create_policy_list ();
-          this->is_policy_list_initialized_ = 1;
-          // Init Policy.
-          this->get_current_profile ()->policies ();
-          // Right now all the profile share the same
-          // policies, so any profile can be picked up
-          // to parse the policy.
-          // So we pick the current profile, so that no
-          // state is changed in the MProfile.
-        }
-    }
-  return this->policy_list_;
 }

@@ -218,3 +218,32 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
   // simply take the average value and round.
   return hashval / last_;
 }
+
+void
+TAO_MProfile::init_policy_list (void)
+{
+  // The first time this method is called
+  // it causes the initialization of the policies
+  // for the current profile.
+
+  this->get_current_profile ()->policies ();
+  this->is_policy_list_initialized_ = 1;
+}
+
+CORBA::PolicyList*
+TAO_MProfile::policy_list (void)
+{
+  if (this->is_policy_list_initialized_)
+    return this->policy_list_;
+  else
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                        guard,
+                        this->mutex_,
+                        0);
+      this->create_policy_list ();
+      this->init_policy_list ();
+    }
+
+  return this->policy_list_;
+}
