@@ -1,3 +1,25 @@
+Mon Aug 23 18:25:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/examples/Load_Balancing/Load_Balancing.dsw:
+	* TAO/examples/Load_Balancing/client.dsp:
+	* TAO/examples/Load_Balancing/server.dsp:
+	* TAO/examples/Load_Balancing/service.dsp:
+	  New files for MSVC++.
+
+	* TAO/examples/Load_Balancing/Identity_Client.cpp:
+	* TAO/examples/Load_Balancing/Identity_Server.cpp:
+	  Some _var instantiations needed to be scoped with
+	  their module name to avoid compile errors.
+
+	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp:
+	  In places where an exception is raised, the exception arg
+	  needed '()' added to make it a function call. This was
+	  causing compile errors on some platforms and warnings
+	  on others.
+
+	* TAO/examples/Load_Balancing/Makefile:
+	  Cosmetic changes.
+
 Mon Aug 23 16:43:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.i:
