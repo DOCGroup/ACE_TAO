@@ -30,14 +30,27 @@
 #define TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE 64
 #endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
 
-// The default multicast port number for TAO Naming Service.
-#if !defined (TAO_DEFAULT_NAME_SERVER_PORT)
-#define TAO_DEFAULT_NAME_SERVER_PORT 10013
-#endif /* TAO_DEFAULT_SERVER_PORT */
+// The default UDP multicast port number for locating the TAO Naming
+// Service.
+#if !defined (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)
+#define TAO_DEFAULT_NAME_SERVER_REQUEST_PORT 10013
+#endif /* TAO_DEFAULT_NAME_SERVER_REQUEST_PORT */
+
+// The default UDP port number for replying to a location request to
+// the TAO Naming Service.
+#if !defined (TAO_DEFAULT_NAME_SERVER_REPLY_PORT)
+#define TAO_DEFAULT_NAME_SERVER_REPLY_PORT 10014
+#endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
+
+// The default timeout receiving the location request to
+// the TAO Naming Service.
+#if !defined (TAO_DEFAULT_NAME_SERVER_TIMEOUT)
+#define TAO_DEFAULT_NAME_SERVER_TIMEOUT 5
+#endif /* TAO_DEFAULT_NAME_SERVER_TIMEOUT */
 
 // The default starting port number for TAO servers.
 #if !defined (TAO_DEFAULT_SERVER_PORT)
-#define TAO_DEFAULT_SERVER_PORT 10014
+#define TAO_DEFAULT_SERVER_PORT 10015
 #endif /* TAO_DEFAULT_SERVER_PORT */
 
 // This controls the alignment for TAO structs.

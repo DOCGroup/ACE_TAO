@@ -12,6 +12,7 @@
 #include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 #include "tao/tao_internals.h"
 
 extern void __TC_init_table (void);
@@ -386,6 +387,7 @@ CORBA_ORB::resolve_name_service (void)
       // First, see if the user has given us a multicast port number
       // for the name service on the command-line;
       u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+      char buf[BUFSIZ];
 
       if (port == 0)
         {
@@ -396,10 +398,54 @@ CORBA_ORB::resolve_name_service (void)
         }
 
       if (port == 0)
-        port = TAO_DEFAULT_NAME_SERVER_PORT;
+        port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-      // This is where the code must go to implement the multicast
+      // This is the code that implements the multicast
       // Naming Service locator.
+      ACE_SOCK_Dgram_Mcast multicast;
+      ACE_INET_Addr multicast_addr, remote_addr;
+  
+      // This starts out initialized to all zeros!
+      multicast_addr = ACE_INET_Addr(TAO_DEFAULT_NAME_SERVER_REQUEST_PORT, 
+				     ACE_DEFAULT_MULTICAST_ADDR);
+
+      // subscribe to multicast address
+      if (multicast.subscribe (multicast_addr) == -1)
+	return CORBA_Object::_nil ();
+
+      // prepare connection for the reply
+      ACE_INET_Addr response_addr (TAO_DEFAULT_NAME_SERVER_REPLY_PORT);
+      ACE_SOCK_Dgram response (response_addr);
+
+      // send multicast of one byte, enough to wake up server
+      ssize_t retcode = multicast.send (buf, 1);
+      if (retcode == -1)
+	return CORBA_Object::_nil ();
+
+      // wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT
+      ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
+      if ((retcode = response.recv (buf, 
+				    BUFSIZ, 
+				    remote_addr, 
+				    0,
+				    &timeout )) == -1)
+	return CORBA_Object::_nil ();
+
+      // null terminate message
+      buf[retcode] = 0; 
+      
+      // convert ior to an object reference
+      CORBA::Environment env;
+      this->name_service_ =
+	this->string_to_object ((CORBA::String) buf, env);
+
+      // check for errors
+      if (env.exception () != 0)
+	this->name_service_ = CORBA_Object::_nil ();
+
+      // return ior.
+      return this->name_service_;
+      
       ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
     }
 }

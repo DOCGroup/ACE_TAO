@@ -20,8 +20,11 @@
 // ============================================================================
 
 #include <iostream.h>
+#include "ace/INET_Addr.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 #include "loggerC.h"
 #include "clnt.h"
+#include "ior_multicast.h"
 
 // constructor
 
@@ -88,7 +91,8 @@ Logger_Client::run (void)
     
   if (this->exit_later_)
     {
-      // this->logger_1_->please_exit (this->env_);
+      //Not supported yet.
+      //this->logger_1_->please_exit (this->env_);
       //this->logger_2_->please_exit (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
@@ -119,7 +123,7 @@ Logger_Client::init (int argc, char **argv)
   // retrieve the ORB
   this->orb_ptr_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "logger",
+                                    "internet",
                                     this->env_);
 
   if (this->env_.exception () != 0)
@@ -127,6 +131,9 @@ Logger_Client::init (int argc, char **argv)
       this->env_.print_exception ("ORB initialization");
       return 1;
     }
+
+#if !defined (ACE_HAS_IP_MULTICAST)
+  ACE_DEBUG ((LM_ERROR, "IP multicast not supported.\n"));  
 
   // Retrieve a factory objref.
   this->objref_ = Logger_Factory::_bind (this->hostname_,
@@ -159,7 +166,66 @@ Logger_Client::init (int argc, char **argv)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to narrow object reference to a Logger_Factory_ptr.\n"),
 		      1);
+#else
+  char buf[BUFSIZ];
 
+  ACE_SOCK_Dgram_Mcast logger;
+  ACE_INET_Addr server, remote_addr;
+  
+  // This starts out initialized to all zeros!
+  server = ACE_INET_Addr(DEFAULT_LOGGER_SERVER_REQUEST_PORT, 
+			 DEFAULT_LOGGER_SERVER_MULTICAST_ADDR);
+
+  if (logger.subscribe (server) == -1)
+      perror("can't subscribe to multicast group");
+
+  ACE_INET_Addr response_addr (DEFAULT_LOGGER_SERVER_REPLY_PORT);
+  ACE_SOCK_Dgram response (response_addr);
+
+  ssize_t retcode = logger.send (buf, 1);
+  if (retcode == -1)
+    return -1;
+
+  ACE_DEBUG ((LM_ERROR, "@@ Sent multicast @@\n"));
+
+  ACE_Time_Value timeout (DEFAULT_LOGGER_SERVER_TIMEOUT); 
+ 
+  if ((retcode = response.recv (buf, 
+				BUFSIZ, 
+				remote_addr, 
+				0,
+				&timeout)) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram::recv"));
+
+  buf[retcode] = 0; // null terminate message
+
+  ACE_DEBUG ((LM_ERROR, "server returned '%s'\n", buf));
+
+  this->objref_ = this->orb_ptr_->string_to_object ((CORBA::String) buf, 
+						    this->env_);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("string2object");
+      return 1;
+    }
+
+  if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%s:  must identify non-null target objref\n",
+		       this->argv_ [0]),
+		      -1);
+
+  // Narrow the CORBA::Object reference to the stub object, checking
+  // the type along the way using _is_a.
+  this->factory_ = Logger_Factory::_narrow (this->objref_);
+
+  if (this->factory_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       " (%P|%t) Unable to narrow object reference to a Logger_ptr.\n"),
+		      -1);
+
+#endif   
   // Now retrieve the Logger obj ref corresponding to key1 and key2
   this->logger_1_ = this->factory_->make_logger ("key1", this->env_);
   this->logger_2_ = this->factory_->make_logger ("key2", this->env_);
@@ -199,96 +265,3 @@ main (int argc, char **argv)
   cout << "....the end" << endl;
   return rc;
 }
-
-
-
-
-#if 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-int
-main (int argc, char ** argv)
-{
-  CORBA::Environment env;
-  // Environment variable
-
-  CORBA::Object_ptr objref;
-  // storage of the factory objref
-
-  Logger_Factory_ptr factory;
-  // factory pointer for logger
-
-  const char *logger_factory_key = "factory";
-  // Key of factory obj ref.
-
-  char * hostname = "macarena";
-
-  CORBA::ULong portnum = 10026;
-
-  // retrieve the ORB
-  CORBA::ORB_init (argc,
-                   argv,
-                   "logger",
-                   env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("ORB initialization");
-      return 1;
-    }
-
-  // Retrieve a factory objref.
-  objref = Logger_Factory::_bind (hostname,
-                                  portnum,
-                                  logger_factory_key,
-                                  env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Logger_Factory::_bind");
-      return 1;
-    }
-
-  if (CORBA::is_nil (objref) == CORBA::B_TRUE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " _bind returned null object for key (%s), host (%s), port (%d)\n",
-		       logger_factory_key,
-                       hostname,
-                       portnum),
-                       1);
-
-  // Narrow the CORBA::Object reference to the stub object, checking
-  // the type along the way using _is_a.  There is really no need to
-  // narrow <objref> because <_bind> will return us the
-  // <LoggerFactory> pointer.  However, we do it so that we can
-  // explicitly test the _narrow function.
-  factory = Logger_Factory::_narrow (objref);
-
-  if (factory == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a Logger_Factory_ptr.\n"),
-		      1);
-
-  // Create several logger objects (name specifies the level in the tree
-  // where the logger will be bound)
-  Logger_var l1 = factory->make_logger ("key1", env);
-  Logger_var l2 = factory->make_logger ("key2", env);
-
-  l1->log ("Logging at logger 1", env);
-  l2->log ("Logging at logger 2", env);
-    
-  cout << "....the end" << endl;
-  return 0;
-}
-#endif
