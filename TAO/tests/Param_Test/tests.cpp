@@ -2760,9 +2760,9 @@ Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Bounded_Long_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_long_sequence (this->in_.in (),
-                                                                                           this->inout_.inout (),
+                                                   this->inout_.inout (),
                                                    out,
-                                                           env);
+                                                   env);
   return (env.exception () ? -1:0);
 }
 
@@ -2989,21 +2989,29 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr &param_list,
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
-        TAO_TRY
+  TAO_TRY
+  {
+    if (this->compare (this->in_, this->inout_.in (), TAO_TRY_ENV))
+    {
+      TAO_CHECK_ENV;
+      if (this->compare (this->in_, this->out_.in (), TAO_TRY_ENV))
+      {
+        TAO_CHECK_ENV;
+        if (this->compare (this->in_, this->ret_.in (), TAO_TRY_ENV))
         {
-                if (this->compare (this->in_, this->inout_.in (), TAO_TRY_ENV) &&
-                    this->compare (this->in_, this->out_.in (), TAO_TRY_ENV) &&
-                this->compare (this->in_, this->ret_.in (), TAO_TRY_ENV))
-                  return 1;
-            else
-                  return 0;
+          TAO_CHECK_ENV;
+          return 1;
         }
-        TAO_CATCHANY;
-        {
-          return 0;
-        }
-        TAO_ENDTRY;
-        return 0;
+      }
+    }
+    return 0;
+  }
+  TAO_CATCHANY;
+  {
+    return 0;
+  }
+  TAO_ENDTRY;
+  return 0;
 }
 
 CORBA::Boolean
