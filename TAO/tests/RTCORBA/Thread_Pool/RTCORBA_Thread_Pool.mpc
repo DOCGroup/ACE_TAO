@@ -1,4 +1,5 @@
 project(*Server): strategies, rt_server {
+  avoid += minimum_corba
   Source_Files {
     test_i.cpp
     server.cpp

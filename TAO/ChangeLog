@@ -1,3 +1,30 @@
+Wed Dec 10 09:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+	* examples/POA/DSI/POA_DSI.mpc:
+	* examples/POA/Default_Servant/POA_Default_Servant.mpc:
+	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+	* examples/POA/FindPOA/POA_FindPOA.mpc:
+	* examples/POA/Forwarding/POA_Forwarding.mpc:
+	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+	* examples/POA/Loader/POA_Loader.mpc:
+	* examples/POA/NewPOA/POA_NewPOA.mpc:
+	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+	* examples/POA/POA_BiDir/POA_BiDir.mpc:
+	* examples/POA/TIE/POA_TIE.mpc:
+	* orbsvcs/tests/Bug_1630_Regression/test.mpc:
+	* tests/AMI_Buffering/client.cpp:
+	* tests/Bug_1639_Regression/Makefile
+	* tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+	* tests/POA/Identity/Identity.mpc
+	* tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc:
+	* tests/RTCORBA/Policies/Policies.mpc:
+	* tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+	* tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+	* tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+
 Wed Dec 10 16:58:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP_Message_State.cpp:
@@ -527,7 +554,6 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           Changes that don't appear to be related in any way to PMB...
 
 ----------------------------------------
-
 Wed Dec 10 15:12:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
@@ -769,17 +795,10 @@ Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Synch_Invocation.cpp:
 
-<<<<<<< ChangeLog
 	  Fixed a minor problem with reinvocation. We were not handling
 	  errors properly, more precisely the restart errors if they show
 	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
 	  motivating this change.
-=======
-          Fixed a minor problem with reinvocation. We were not handling
-          errors properly, more precisely the retsrat errors if they show
-          up during wait_for_reply (). Thanks to Milan Cvetkovic for
-          motivating this change.
->>>>>>> 1.3209
 
         * tao/Messaging/Asynch_Invocation.cpp:
 
