@@ -74,23 +74,13 @@ public:
    */
   int elect_new_leader (void);
 
-  // Node structure for the queue
-  struct TAO_Follower_Node
-  {
-    TAO_Follower_Node (TAO_SYNCH_CONDITION *follower_ptr);
-
-    TAO_SYNCH_CONDITION *follower;
-
-    TAO_Follower_Node  *next;
-
-  };
   /**
    * adds the a follower to the set of followers in the leader-
    * follower model
    * returns 0 on success, -1 on failure and 1 if the element is
    * already there.
    */
-  int add_follower (TAO_Follower_Node* node);
+  int add_follower (TAO_SYNCH_CONDITION *follower_ptr);
 
   /// checks for the availablity of a follower
   /// returns 1 on available, 0 else
@@ -98,7 +88,7 @@ public:
 
   /// removes a follower from the leader-follower set
   /// returns 0 on success, -1 on failure
-  int remove_follower (TAO_Follower_Node* node);
+  int remove_follower (TAO_SYNCH_CONDITION *follower_ptr);
 
   /// returns randomly a follower from the leader-follower set
   /// returns follower on success, else 0
@@ -113,8 +103,6 @@ public:
 
   /// Accesor to the reactor
   ACE_Reactor *reactor (void);
-
-
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
@@ -140,23 +128,7 @@ private:
   /// do protect the access to the following three members
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
-  // Queue to store the followers
-  struct TAO_Follower_Queue
-  {
-    TAO_Follower_Queue (void);
-
-    int is_empty (void) const;
-
-    int remove (TAO_Follower_Node *);
-
-    int insert (TAO_Follower_Node *);
-
-    TAO_Follower_Node *head;
-
-    TAO_Follower_Node *tail;
-  };
-
-  TAO_Follower_Queue follower_set_;
+  ACE_Unbounded_Set<TAO_SYNCH_CONDITION *> follower_set_;
   // keep a set of followers around (protected)
 
   /**
