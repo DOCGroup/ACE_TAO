@@ -18,13 +18,13 @@ CFG=Barrier_Test - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Barrier_Test - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Barrier_Test - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Console Application")
+!MESSAGE "Barrier_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Barrier_Test - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Barrier_Test - Win32 PharLap ETS Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Barrier_Test"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -83,12 +83,43 @@ LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 
+!ELSEIF  "$(CFG)" == "Barrier_Test - Win32 PharLap ETS Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Barrier"
+# PROP BASE Intermediate_Dir "Barrier"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "./ETS_DLL/Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\ace"
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"Barrier_Test_ETS.exe" /pdbtype:sept /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
+# SUBTRACT LINK32 /pdb:none
+
 !ENDIF 
 
 # Begin Target
 
 # Name "Barrier_Test - Win32 Debug"
 # Name "Barrier_Test - Win32 Alpha Debug"
+# Name "Barrier_Test - Win32 PharLap ETS Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -142,7 +173,6 @@ DEP_CPP_BARRI=\
 	"..\ace\Signal.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\SV_Semaphore_Complex.h"\
 	"..\ace\SV_Semaphore_Complex.i"\
 	"..\ace\SV_Semaphore_Simple.h"\
@@ -161,6 +191,11 @@ DEP_CPP_BARRI=\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
 	
+NODEP_CPP_BARRI=\
+	"..\ace\stdcpp.h"\
+	
+
+!ELSEIF  "$(CFG)" == "Barrier_Test - Win32 PharLap ETS Debug"
 
 !ENDIF 
 
