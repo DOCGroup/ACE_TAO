@@ -173,7 +173,9 @@ private:
   // An auto event is used so that we can <signal> it to wakeup one
   // thread up (e.g., when the <notify> method is called).
 
+#if defined (ACE_WIN32)  // because SunOS can't cope with this declaration:
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
+#endif /* ACE_WIN32 */
   // Message queue that keeps track of pending <ACE_Event_Handlers>.
   // This queue must be thread-safe because it can be called by
   // multiple threads of control.
