@@ -28,7 +28,6 @@ TAO_GIOP_Message_Handler::
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 {
-  cout << "The wr_ptr is " << this->current_buffer_.wr_ptr () <<endl;
   // Read the message from the transport
   ssize_t n = transport->read (this->current_buffer_.wr_ptr (),
                                this->message_size_);
