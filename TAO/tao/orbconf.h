@@ -279,7 +279,8 @@
 // responsible for instantiating the templates.
 //
 #if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+    ( defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) )
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -24,6 +24,7 @@
     _UNICOS   (defined if running UNICOS or UNICOS/mk)
 
     Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
+    Compiles on UNICOS 9.0.2.8, but some tests deadlock
 
     Contributed by Doug Anderson <doug@clark.net>
 */
@@ -63,9 +64,22 @@
 
 #define ACE_HAS_PTHREADS
 
-// UNICOS implements a small subset of POSIX Threads, but the prototypes follow
-// the POSIX.1c-1995 definitions
-#define ACE_HAS_PTHREADS_STD  
+// UNICOS 10 and UNICOS/mk implement a small subset of POSIX Threads,
+// but the prototypes follow the POSIX.1c-1995 definitions.  Earlier
+// UNICOS versions sport Draft 7 threads.
+
+#if _UNICOS > 9
+# define ACE_HAS_PTHREADS_STD  
+#else
+# define ACE_HAS_PTHREADS_DRAFT7
+# define ACE_LACKS_THREAD_STACK_SIZE
+# define ACE_LACKS_THREAD_STACK_ADDR
+  // UNICOS 9 doesn't have this, nor sched.h
+# define SCHED_OTHER 0
+# define SCHED_FIFO 1
+# define SCHED_RR 2
+# define pthread_sigmask sigprocmask
+#endif
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
