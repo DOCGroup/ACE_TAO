@@ -21,7 +21,7 @@
 // You should find some way to avoid name space polution.
 
 template <class T>
-size_t ace_array_bsize (const T &x);
+size_t ace_array_size (const T &x);
 
 template <class T>
 size_t ace_array_encode (void *buf, const T &x);

@@ -4,17 +4,16 @@
 #if !defined (ACE_URL_ARRAY_HELPER_C)
 #define ACE_URL_ARRAY_HELPER_C
 
-#define ACE_BUILD_DLL
 #include "URL_Array_Helper.h"
 
 // Some helper functions for encoding/decoding
 
 template <class T>
-size_t ace_array_bsize (const T &x)
+size_t ace_array_size (const T &x)
 {
   size_t sum = sizeof (ACE_UINT32);
   for (size_t i = 0; i < x.size (); i++)
-    sum += x[i].bsize ();
+    sum += x[i].size ();
   return sum;
 }
 

@@ -20,7 +20,7 @@
 
 #include "URL_Properties.h"
 
-class ACE_Export ACE_URL_Locator_Request
+class ACE_SVC_Export ACE_URL_Locator_Request
   // = TITLE
   //     A URL request message formater/wrapper.
   //
@@ -71,7 +71,9 @@ public:
 
   size_t decode (void *buffer);
   // Restore from network data.  Returns size of the buffer
-  // if succeed, 0 otherwise.
+  // if succeed, 0 otherwise.  When passing in a buffer,
+  // caller must take the responsibility to delete the buffer
+  // afterward, if so needed.
 
   const int how (void) const;
   const int how_many (void) const;
@@ -89,7 +91,7 @@ public:
   // Print out this object.
 
 protected:
-  size_t bsize (void);
+  size_t size (void);
   // Return the size of the buffer required to encode
   // this request.
 
@@ -131,7 +133,7 @@ protected:
   // Buffer to store encoded data. 
 };
 
-class ACE_Export ACE_URL_Locator_Reply
+class ACE_SVC_Export ACE_URL_Locator_Reply
   // = TITLE
   //     A URL reply message formater/wrapper.
   //
@@ -140,6 +142,7 @@ class ACE_Export ACE_URL_Locator_Reply
   //     to transform reply messages to an object so that we can 
   //     ship them across network.  
 {
+public:
   ACE_URL_Locator_Reply (void);
   // Default ctor.
 
@@ -163,7 +166,9 @@ class ACE_Export ACE_URL_Locator_Reply
 
   size_t decode (void *buffer);
   // Restore from network data.  Returns size of the buffer
-  // if succeed, 0 otherwise.
+  // if succeed, 0 otherwise.  When passing in a buffer,
+  // caller must take the responsibility to delete the buffer
+  // afterward, if so needed.
 
   // Accessor function.
   const size_t num_offers (void) const;
@@ -177,7 +182,7 @@ class ACE_Export ACE_URL_Locator_Reply
   // Print out this object.
 
 protected:
-  size_t bsize (void);
+  size_t size (void);
   // Return the size of the buffer required to encode
   // this request.
 

@@ -21,7 +21,7 @@
 #include "ace/SString.h"
 #include "ace/Array.h"
 
-class ACE_Export ACE_WString_Helper
+class ACE_SVC_Export ACE_WString_Helper
   // = TITLE
   //     Some helper functions for manipulate ACE_WString.
   //
@@ -30,37 +30,39 @@ class ACE_Export ACE_WString_Helper
   //     ACE_WString objects for network communication.
 {
 public:
-  static size_t bsize (const ACE_WString *wstr);
-  // Returns the actual size required to contain the ACE_WString.
+  static size_t size (const ACE_WString &wstr);
+  // Returns the actual size (in bytes) required to contain the
+  // ACE_WString.
 
-  static size_t encode (void *buf, ACE_WString *wstr);
+  static size_t encode (void *buf, const ACE_WString &wstr);
   // Encode <wstr> into <buf> for network communication.
   // Return total octets consumed.
 
   static size_t decode (void *buf);
   // This function doesn't relate to ACE_WString directly.
   // It converts an ACE_USHORT16 string from network
-  // byte order to host byte order.  Returns bsize of the string.
+  // byte order to host byte order.  Returns size of the string.
 };
 
-class ACE_Export ACE_URL_Property
+class ACE_SVC_Export ACE_URL_Property
   // = TITLE
   //     Defines a property of a URL.
   //
   // = DESCRIPTION
   //     A property contains a <name> and a <value>.
-// Nanbor, please add more description of what is typically *done* with a URL property.
+  //     A URL may contain some properties and we can "locate"
+  //     the URL's we are looking for by examming URL for certain
+  //     properties that match our need.
 {
 public:
   ACE_URL_Property (const char *name = 0,
 		    const char *value=0);
-  // Create a property.
+  // Create a new property.
 
   ACE_URL_Property (const ACE_USHORT16 *name,
 		    const ACE_USHORT16 *value);
-  // Nanbor, please make sure that you comment these interfaces.  In
-  // particular, does this interface distinguish between UNICODE and
-  // non-UNICODE?
+  // Create a new property using wchar strings.  This is mostly used
+  // to support DBCS or UNICODE.
 
   ACE_URL_Property (const ACE_URL_Property &p);
   // Copy constructor.
@@ -78,25 +80,24 @@ public:
   // Inequality operator.
 
   // = Query property name.
-  ACE_WString *name_rep (void);
-  const ACE_WString *name (void) const;
+  ACE_WString &name_rep (void);
+  const ACE_WString &name (void) const;
 
   // = Set property name.
   void name (const ACE_USHORT16 *n);
   void name (const char *n);
 
   // = Query property value.
-  ACE_WString *value_rep (void);
-  const ACE_WString *value (void) const;
+  ACE_WString &value_rep (void);
+  const ACE_WString &value (void) const;
 
   // = Set property value. 
   void value (const ACE_USHORT16 *v);
   void value (const char *v);
 
   // = Helper functions for encoding and decoding.
-  size_t bsize (void) const;
-  // Returns memory size required to encode this object.
-  // Nanbor, can we make this <size> rather than <bsize>?
+  size_t size (void) const;
+  // Returns memory size (in bytes) required to encode this object.
 
   size_t encode (void *buf) const;
   // Encodes this object into buf for network transmission.
@@ -109,28 +110,25 @@ public:
   // Dump out this object for debug.
   
 protected:
-  // Nanbor, is there a particular reason that you're using dynamic
-  // memory allocation here?  Can you just use instances of
-  // ACE_WString that aren't allocated dynamically or is there some
-  // reason why you need pointers?
-  ACE_WString *name_;
+  ACE_WString name_;
   // Property name pointer.
   
-  ACE_WString *value_;
+  ACE_WString value_;
   // Property value.
 } ;
 
 typedef ACE_Array<ACE_URL_Property> ACE_URL_Property_Seq;
-// type of URL_Property collection.
+// type of URL_Property collections.
 
-class ACE_Export ACE_URL_Offer
+class ACE_SVC_Export ACE_URL_Offer
   // = TITLE
   //     Defines a URL offer.
   //
   // = DESCRIPTION
   //     A URL offer is defined by a <url> and an
-  //     <ACE_URL_Property_Seq>.
-// Nanbor, please explain how an offer is typically *used*.
+  //     <ACE_URL_Property_Seq>.  An offer is stored at server end
+  //     thru registering or reported back to querying client from the
+  //     sever.
 {
 public:
   ACE_URL_Offer (const size_t size = 1, const char *url = 0);
@@ -152,8 +150,8 @@ public:
   // Inequality operator.
 
   // = Get URL string.
-  ACE_WString *url_rep (void);
-  const ACE_WString *url (void) const;
+  ACE_WString &url_rep (void);
+  const ACE_WString &url (void) const;
 
   // = Set URL.
   void url (const char *url);
@@ -167,9 +165,8 @@ public:
   // copy of the passed in prop.
 
   // = Helper functions for encoding and decoding.
-  size_t bsize (void) const;
-  // Returns memory size required to encode this object.
-  // Nanbor, can you please make this <size>?
+  size_t size (void) const;
+  // Returns memory size (in bytes) required to encode this object.
 
   size_t encode (void *buf) const;
   // Encodes this object into buf for network transmission.
@@ -182,16 +179,15 @@ public:
   // Dump this object for debug.
 
 protected:
-  ACE_WString *url_;
+  ACE_WString url_;
   // URL of this offer.
 
   ACE_URL_Property_Seq prop_;
   // Properties associate with this offer.
 };
 
-// Nanbor, please add a comment here.
-
 typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
+// type of URL offer collections.
 
 #if defined (__ACE_INLINE__)
 #include "URL_Properties.i"
