@@ -1,3 +1,28 @@
+Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Removed all support for reading from standard input (for
+          example 'tao_idl < foo.idl'). Reasons for this change are:
+          
+          - The IDL compiler has no filename on which to base the
+            names of the generated files. Even if we make up a
+            name, the generated files are unusable if foo.idl is
+            included in another IDL file.
+            
+          - Most if not all C++ compilers (including gcc and Visual Studio)
+            do not accept this kind of input.
+            
+          The above command line now outputs the error message
+          "IDL: No input files" similarly to gcc's output in a similar
+          situation.
+
 Wed Jun 16 19:11:16 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests\Protocols\server.cpp:

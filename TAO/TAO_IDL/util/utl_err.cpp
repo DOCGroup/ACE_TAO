@@ -213,8 +213,7 @@ idl_error_header (UTL_Error::ErrorCode c,
   ACE_ERROR ((LM_ERROR,
               "%s: \"%s\", line %d: %s",
               idl_global->prog_name (),
-              idl_global->read_from_stdin () ? "standard input"
-                                             : s->get_string (),
+              s->get_string (),
               lineno == -1 ? idl_global->lineno () : lineno,
               error_string (c)));
 }
