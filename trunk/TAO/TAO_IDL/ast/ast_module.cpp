@@ -1072,10 +1072,10 @@ AST_Module::fe_add_exception (AST_Exception *t)
 AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
-  AST_Decl *predef = 0;
   AST_UnionFwd *fwd = 0;
+  AST_Decl *predef = this->lookup_for_add (t, I_FALSE);
 
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if (predef != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_union_fwd)

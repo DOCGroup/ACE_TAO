@@ -5,7 +5,8 @@ Mon Nov  3 23:23:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/y.tab.cpp:
 
           Fixed bug in redefinition of forward declared union. Thanks to
-          Tommy Persson <tpe@ida.liu.se> for reporting the problem.
+          Tommy Persson <tpe@ida.liu.se> for reporting the problem. This
+          closes [BUGID:1625].
 
 Tue Nov  4 04:55:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
