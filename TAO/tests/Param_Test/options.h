@@ -59,7 +59,7 @@ public:
   char *hostname (void);
   // return the hostname
 
-  CORBA::ULong portnum (void);
+  CORBA::UShort portnum (void);
   // return the port number
 
   TEST_TYPE test_type (void);
@@ -80,7 +80,7 @@ private:
   char *hostname_;
   // Hostname of server.
 
-  CORBA::ULong portnum_;
+  CORBA::UShort portnum_;
   // port number of server.
 
   TEST_TYPE test_type_;
