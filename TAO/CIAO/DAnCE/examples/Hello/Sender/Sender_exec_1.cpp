@@ -98,6 +98,36 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_1_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "1 being removed\n"));
+  CORBA::Object_var comp_object =
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Hello::Sender_var sender = Hello::Sender::_narrow (comp_object.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
+
+  ::Components::ConsumerDescriptions_var cons_desc =
+    sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+  ::Components::FacetDescriptions_var facet_desc =
+    sender->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+  ACE_DEBUG ((LM_DEBUG, "i am here\n"));
+
+  CORBA::ULong cons_len = cons_desc->length ();
+  CORBA::ULong facet_len = facet_desc->length ();
+  ACE_DEBUG ((LM_DEBUG, "cons length is %d\n", cons_len));
+  ACE_DEBUG ((LM_DEBUG, "facet length is %d\n", facet_len));
+  for (CORBA::ULong i = 0; i < cons_len; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG, "consumer name is %s\n", cons_desc[i]->name ()));
+    }
+  for (CORBA::ULong i = 0; i < facet_len; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
+    }
 }
 
 void
