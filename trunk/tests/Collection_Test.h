@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -28,7 +30,7 @@ struct UglyThing
   deletion_func dfunc_;
 
   UglyThing (void* alloc = 0, deletion_func dfunc = 0);
-  int operator== (const UglyThing& r) const;
+  bool operator== (const UglyThing& r) const;
 };
 
 #endif /* ACE_TESTS_COLLECTION_TEST_H */

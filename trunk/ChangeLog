@@ -110,6 +110,10 @@ Thu Apr 22 20:01:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* docs/tutorials/016/condition.cpp:
 	* examples/Web_Crawler/URL_Addr.cpp:
 	* examples/Web_Crawler/URL_Addr.h:
+	* tests/CDR_File_Test.cpp:
+	* tests/Collection_Test.cpp:
+	* tests/Collection_Test.h:
+	* tests/IOStream_Test.cpp:
 
 	  Changed all return types for equality, relational and logical
 	  operators to "bool", as is the norm for modern C++.
