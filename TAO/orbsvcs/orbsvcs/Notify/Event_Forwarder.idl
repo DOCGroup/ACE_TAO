@@ -1,8 +1,8 @@
 
 /**
- * @file Event_Forwarder
+ * @file Event_Forwarder.idl
  *
- * @brief 
+ * @brief
  *
  * $Id$
  *
@@ -20,7 +20,7 @@
 /**
  * @namespace Event_Forwarder
  *
- * @brief 
+ * @brief
  */
 module Event_Forwarder
 {
