@@ -40,12 +40,14 @@ $MODULE='ACE_wrappers';
      'netsvcs',
      'tests',
      'apps/gperf',
-     'TAO/tao',
-     'TAO/TAO_IDL',
-     'TAO/orbsvcs',
-     'TAO/tests',
-     'TAO/examples/POA',
-     'TAO/performance-tests');
+     'websvcs',
+#     'TAO/tao',
+#     'TAO/TAO_IDL',
+#     'TAO/orbsvcs',
+#     'TAO/tests',
+#     'TAO/examples/POA',
+#     'TAO/performance-tests');
+     'TAO');
 
 # This are the pairs "sub-directory , script" we run; the separator
 # *must* be a space followed by a comma and then another space.
@@ -62,19 +64,23 @@ $MODULE='ACE_wrappers';
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
       'TAO/examples/POA/Explicit_Activation , run_test.pl',
-#      'TAO/examples/POA/FindPOA , run_test.pl',
+      'TAO/examples/POA/FindPOA , run_test.pl',
       'TAO/examples/POA/Forwarding , run_test.pl',
       'TAO/examples/POA/NewPOA , run_test.pl',
       'TAO/examples/POA/On_Demand_Activation , run_test.pl',
       'TAO/examples/POA/On_Demand_Loading , run_test.pl',
       'TAO/examples/POA/Reference_Counted_Servant , run_test.pl',
       'TAO/examples/POA/Loader , run_test.pl',
-      'TAO/examples/POA/RootPOA , RootPOA',
-      'TAO/examples/POA/Identity , Identity',
+      'TAO/examples/POA/RootPOA , run_test.pl',
+      'TAO/examples/POA/Identity , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
+      'TAO/tests/MT_Server , run_test.pl',
+      'TAO/tests/OctetSeq , run_test.pl',
+      'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/NestedUpcall/Reactor , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100',
+      'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl'
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
 #      'TAO/orbsvcs/tests/Property , run_test.pl'
