@@ -1,3 +1,9 @@
+Tue Jun 24 21:30:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
+	  assignments in "if" conditionals with parenthesis to avoid
+	  g++ warnings.
+
 Tue Jun 24 18:15:46 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/Reactor.cpp (wait_for_multiple_events): Modified the way to
