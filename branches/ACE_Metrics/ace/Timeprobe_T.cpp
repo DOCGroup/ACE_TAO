@@ -33,12 +33,6 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe (u_long size)
                         this->max_size_);
   this->timeprobes_ = temp;
 
-#if defined (VXWORKS)
-  if (sysProcNumGet () == 0)
-    this->current_slot_vme_address_ = (u_int *) 0xDa010000;
-  else
-    this->current_slot_vme_address_ = (u_int *) 0xD8010000;
-#endif /* VXWORKS */
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -60,12 +54,6 @@ ACE_Timeprobe (ALLOCATOR *allocator,
                         this->max_size_);
   this->timeprobes_ = temp;
 
-#if defined (VXWORKS)
-  if (sysProcNumGet () == 0)
-    this->current_slot_vme_address_ = (u_int *) 0xDa010000;
-  else
-    this->current_slot_vme_address_ = (u_int *) 0xD8010000;
-#endif /* VXWORKS */
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -121,11 +109,6 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 
   this->current_size_++;
 
-#if defined (VMETRO_TIME_TEST) && (VXWORKS)
-  // If we are using the VMETRO board to get time samples, then write
-  // to the other boards VME address.
-  *this->current_slot_vme_address_ = event;
-#endif /* VMETRO_TIME_TEST && VXWORKS */
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
@@ -210,12 +193,6 @@ template <class ACE_LOCK, class ALLOCATOR> ACE_Unbounded_Set<ACE_Event_Descripti
 ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::sorted_event_descriptions (void)
 {
   return this->sorted_event_descriptions_;
-}
-
-template <class ACE_LOCK, class ALLOCATOR> u_int *
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::current_slot_vme_address (void)
-{
-  return this->current_slot_vme_address_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_timeprobe_t *
