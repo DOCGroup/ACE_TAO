@@ -86,6 +86,8 @@ Read_Handler::get_countdown (void)
 int
 Read_Handler::open (void *)
 {
+  ACE_DEBUG ((LM_DEBUG, "Read_Hanlder::open()- %d\n", started_.value()));
+
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Read_Handler::open, "
@@ -116,8 +118,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
 {
   char buf[BUFSIZ];
 
-  ACE_DEBUG((LM_DEBUG,
-	     "(%P|%t|%x) read from handle %d...", this, h));
+//  ACE_DEBUG((LM_DEBUG,
+//	     "(%P|%t|%x) read from handle %d...", this, h));
   ssize_t result = this->peer ().recv (buf, sizeof (buf));
 
   if (result <= 0)
@@ -142,9 +144,9 @@ Read_Handler::handle_input (ACE_HANDLE h)
       return -1;
     }
 
-  ACE_DEBUG((LM_DEBUG,
-	     "...(%P|%t) read %d bytes from handle %d, priority %d\n",
-	     result, h, priority ()));
+//  ACE_DEBUG((LM_DEBUG,
+//	     "...(%P|%t) read %d bytes from handle %d, priority %d\n",
+//	     result, h, priority ()));
   return 0;
 }
 
@@ -157,21 +159,32 @@ Write_Handler::open (void *)
 int
 Write_Handler::svc (void)
 {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) in svc\n"));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Write_Hanlder in svc\n"));
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
 
     ACE_Time_Value pause (0, 1000);
     for (int i = 0; i < opt_nloops; ++i)
     {
+	ACE_DEBUG((LM_DEBUG, "(%t) send..."));
 	if (this->peer ().send_n (ACE_ALPHABET,
 				  sizeof (ACE_ALPHABET) - 1) == -1)
 	{
 	    ACE_DEBUG((LM_DEBUG, "%t %p\n", "send_n\n"));
 	    ACE_OS::sleep (pause);
 	}
+	// A debug message to check if ipcSend() is blocking
+	ACE_DEBUG((LM_DEBUG, " ...\n"));
+
+	// Work around block problem with ipcSend():
+	// ipcSend() will block instead of returning K_EFULL value,
+	// if resources are not available.
+	// 
+	// sleep for a while to allow the reader to empty the ipc poul
+	ACE_OS::sleep(pause);
     }
   this->peer().close_writer();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Write Handler exiting svc\n"));
   return 0;
 }
 
@@ -209,10 +222,10 @@ client (void *arg)
       else
         {
 	    // Let the new Svc_Handler to its job...
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) running svc\n"));
+	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) client running svc\n"));
 	    writer->svc ();
 
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
+	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) client finishing\n"));
 
 	    // then close the connection and release the Svc_Handler.
 	    writer->destroy ();
