@@ -530,14 +530,6 @@ main (int argc, char *argv[])
                               1);
           break;
 
-        case 'I':
-          usecs = ACE_OS::atoi (getopt.optarg);
-          if (usecs < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nInvalid interval value\n\n"),
-                              1);
-          break;
-
         case 'a':
           use_reactor = SELECT;
           break;
