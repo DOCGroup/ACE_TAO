@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -13,8 +13,10 @@
 // 
 // ============================================================================
 
-#if !defined(TAO_OPERATION_TABLE_H)
-#define TAO_OPERATION_TABLE_H
+// @@ Can you please comment all the classes and methods in the file?
+
+#if !defined (TAO_OPTABLE_H)
+#define TAO_OPTABLE_H
 
 #include "ace/ACE.h"
 #include "ace/Synch.h"
@@ -24,84 +26,92 @@
 
 #include "orb.h"
 
-// Dynamic Hashing scheme
 typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
 
-class TAO_Dynamic_Hash_OpTable: public TAO_Operation_Table
+class TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
+// = TITLE
+// Dynamic Hashing scheme
 {
 public:
-  TAO_Dynamic_Hash_OpTable(CORBA_ULong size=0);
+  TAO_Dynamic_Hash_OpTable (CORBA_ULong size = 0);
 
-  ~TAO_Dynamic_Hash_OpTable();
+  ~TAO_Dynamic_Hash_OpTable (void);
 
-  virtual int bind(const CORBA_String &opname, const TAO_Skeleton skel_ptr);
+  virtual int bind (const CORBA_String &opname, 
+		    const TAO_Skeleton skel_ptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
-  virtual int find(const CORBA_String &opname, TAO_Skeleton &skelfunc);
+  virtual int find (const CORBA_String &opname,
+		    TAO_Skeleton &skelfunc);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
 private:
-  OP_MAP_MANAGER  hash_;
+  OP_MAP_MANAGER hash_;
 };
 
-// Linear strategy
 struct TAO_Linear_OpTable_Entry
+// = TITLE
+// Linear strategy
 {
   CORBA_String_var opname;
   TAO_Skeleton skel_ptr;
 
-  TAO_Linear_OpTable_Entry();
-  ~TAO_Linear_OpTable_Entry();
+  TAO_Linear_OpTable_Entry (void);
+  ~TAO_Linear_OpTable_Entry (void);
 };
 
-class TAO_Linear_OpTable: public TAO_Operation_Table
+class TAO_Linear_OpTable : public TAO_Operation_Table
 {
 public:
-  TAO_Linear_OpTable(CORBA_ULong size);
+  TAO_Linear_OpTable (CORBA_ULong size);
 
-  ~TAO_Linear_OpTable();
+  ~TAO_Linear_OpTable (void);
 
-  virtual int find(const CORBA_String &opname, TAO_Skeleton &skel_ptr);
+  virtual int find (const CORBA_String &opname,
+		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind(const CORBA_String &opname, TAO_Skeleton skelptr);
+  virtual int bind (const CORBA_String &opname,
+		    TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-
   CORBA_ULong next_;
   CORBA_ULong tablesize_;
   TAO_Linear_OpTable_Entry *tbl_;
 };
 
-// Active Demux
 struct TAO_Active_Demux_OpTable_Entry
+// = TITLE
+// Active Demux
 {
-  TAO_Skeleton  skel_ptr;
+  TAO_Skeleton skel_ptr;
 
-  TAO_Active_Demux_OpTable_Entry();
-  ~TAO_Active_Demux_OpTable_Entry();
+  TAO_Active_Demux_OpTable_Entry (void);
+  ~TAO_Active_Demux_OpTable_Entry (void);
 };
 
-class TAO_Active_Demux_OpTable: public TAO_Operation_Table
+class TAO_Active_Demux_OpTable : public TAO_Operation_Table
 {
 public:
-  TAO_Active_Demux_OpTable(CORBA_ULong size);
+  TAO_Active_Demux_OpTable (CORBA_ULong size);
 
-  ~TAO_Active_Demux_OpTable();
+  ~TAO_Active_Demux_OpTable (void);
 
-  virtual int find(const CORBA_String &opname, TAO_Skeleton &skel_ptr);
+  virtual int find (const CORBA_String &opname,
+		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind(const CORBA_String &opname, TAO_Skeleton skelptr);
+  virtual int bind (const CORBA_String &opname,
+		    TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
@@ -111,6 +121,7 @@ private:
   TAO_Active_Demux_OpTable_Entry *tbl_;
 };
 
+// @@ Please prefix these classes with TAO_...
 
 class OpTable_Parameters
 {
@@ -122,13 +133,15 @@ public:
     TAO_ACTIVE_DEMUX,
     TAO_USER_DEFINED
   };
-  void lookup_strategy(OpTable_Parameters::DEMUX_STRATEGY s);
-  OpTable_Parameters::DEMUX_STRATEGY lookup_strategy() const;
-  void concrete_strategy(TAO_Operation_Table *ot);
-  TAO_Operation_Table* concrete_strategy();
 
-  OpTable_Parameters();
-  ~OpTable_Parameters();
+  void lookup_strategy (OpTable_Parameters::DEMUX_STRATEGY s);
+  OpTable_Parameters::DEMUX_STRATEGY lookup_strategy (void) const;
+  void concrete_strategy (TAO_Operation_Table *ot);
+  TAO_Operation_Table *concrete_strategy (void);
+
+  OpTable_Parameters (void);
+  ~OpTable_Parameters (void);
+
 private:
   TAO_Operation_Table *strategy_;
   OpTable_Parameters::DEMUX_STRATEGY type_;
@@ -139,11 +152,11 @@ typedef ACE_Singleton<OpTable_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
 class OpTable_Factory
 {
 public:
-  TAO_Operation_Table *opname_lookup_strategy();
-  OpTable_Factory();
-  ~OpTable_Factory();
+  TAO_Operation_Table *opname_lookup_strategy (void);
+  OpTable_Factory (void);
+  ~OpTable_Factory (void);
 };
 
 typedef ACE_Singleton<OpTable_Factory, ACE_RW_Mutex> TAO_OP_TABLE_FACTORY;
 
-#endif
+#endif /* TAO_OPTABLE_H */

@@ -1,23 +1,37 @@
 // This may look like C, but it's really -*- C++ -*-
+
+// ============================================================================
 //
-// Header file for Win32 C/C++/COM interface to CORBA's "Any" type.
+// = LIBRARY
+//    TAO
+// 
+// = FILENAME
+//    any.h
+//
+// = DESCRIPTION
+//     Header file for Win32 C/C++/COM interface to CORBA's "Any" type.
+//
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems, Inc.
+// 
+// ============================================================================
 
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-extern const IID	IID_CORBA_Any;
+extern const IID IID_CORBA_Any;
 
 class CORBA_Any : public IUnknown
-// = TITLE
-// Class "Any" can wrap values of any type, with the assistance
-// of a TypeCode to describe that type.
-//
-// = DESCRIPTION
-// XXX should find a way to make its memory allocation always go
-// within the appropriate OLE heap...
+  // = TITLE
+  //   Class "Any" can wrap values of any type, with the assistance
+  //   of a TypeCode to describe that type.
+  //
+  // = DESCRIPTION
+  //   XXX should find a way to make its memory allocation always go
+  //   within the appropriate OLE heap...
 {
 public:
-  // minor codes for exceptional returns
+  // = Minor codes for exceptional returns
   enum 
   {
     uninitialised_type = 0xf000,
@@ -25,13 +39,22 @@ public:
     unsupported_operation
   };
 
+  // = Initialization and termination operations.
   CORBA_Any (void);
+  // Default constructor.
+
   CORBA_Any (CORBA_TypeCode_ptr	type,
 	     void *value = 0,
 	     CORBA_Boolean orb_owns_data = CORBA_B_FALSE);
-  CORBA_Any (const CORBA_Any &a);
-  virtual ~CORBA_Any (void);
+  // Constructor.
 
+  CORBA_Any (const CORBA_Any &a);
+  // Copy constructor.
+
+  virtual ~CORBA_Any (void);
+  // Destructor.
+
+  // @@ Need to put these in the *.i file.
   void *operator new (size_t, const void *p)
   { return (void *) p; }
   void *operator new (size_t s)
@@ -39,8 +62,7 @@ public:
   void operator delete (void *p)
   { ::operator delete (p); }
 
-  // NOTE: 94-9-14 has assignment operator plus many insertion,
-  // extraction operators, various from_xx and to_xx helper classes.
+  // = NOTE: 94-9-14 has assignment operator plus many insertion,
 
   void replace (CORBA_TypeCode_ptr type,
 		const void *value,
@@ -48,29 +70,44 @@ public:
 		CORBA_Environment &env);
 
   CORBA_TypeCode_ptr type (void) const;
-  void *value (void) const;
+  // Return <type> of <Any>.
 
-  // Stuff required for COM IUnknown support
+  void *value (void) const;
+  // Return <value> of <Any>.
+
+  // = Methods required for COM <IUnknown> support.
 
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
   HRESULT __stdcall QueryInterface (REFIID riid,
 				    void **ppv);
 
-  // Conversion to/from COM Variant types:  copy constructor,
-  // assignment operator, cast.
+  // = Conversion to/from COM Variant types: 
 
   CORBA_Any (const VARIANT &src);
+  // copy constructor,
+
   CORBA_Any &operator = (const VARIANT &src);
+  // assignment operator
+
   operator VARIANT (void);
-    
+  // cast operator.
+
 private:
   CORBA_TypeCode_ptr _type;
+  // Typecode for the <Any>.
+
   void *_value;
+  // Value for the <Any>.
+
   CORBA_Boolean _orb_owns_data;
+  // Flag that indicates the ORB is responsible for deleting the data.
+
+  u_int _refcnt;
+  // Reference count the <Any> to reduce copying costs.
 
   ACE_Thread_Mutex lock_;
-  unsigned _refcnt;
+  // Serialize access to the reference count.
 
   // NOT PROVIDED
   CORBA_Any &operator = (const CORBA_Any &a);

@@ -1,3 +1,8 @@
+Tue May 13 21:51:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Continued to update the format of the TAO source code so that it
+ 	  will be consistent with the style used in ACE.
+
 Mon May 12 17:02:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/roa.*: Moved short method into an inline file.

@@ -1,3 +1,17 @@
+
+Tue May 13 18:56:27 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IOStream.h: To make C++ compilers happy I added
+	  the following changes by modifying
+
+	  ACE_IOStream & operator>>( ACE_Time_Value *& tv );
+
+	  to be
+
+	  ACE_IOStream<STREAM> & operator>>( ACE_Time_Value *& tv );
+
+	  Thanks to Chuck Gehr for this fix.
+
 Tue May 13 21:32:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Process.cpp (~ACE_Process_Options): delete
@@ -43,7 +57,7 @@ Tue May 13 18:08:32 1997    <irfan@TWOSTEP>
 
 Tue May 13 16:48:18 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
-	* ace/Process.cpp: Added implmenetations to new interfaces
+	* ace/Process.cpp: Added implementations to new interfaces
 	  to ACE_Process_Options::setenv (char *envp[]), and
 	  ACE_Process_Options::command_line (char *argv[]).
 

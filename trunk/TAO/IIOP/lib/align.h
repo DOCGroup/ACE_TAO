@@ -1,13 +1,26 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // @(#) $Id$
-// Copyright 1994-1995 by Sun Microsystems, Inc.
+
+// ============================================================================
 //
-// Pointer alignment utilities
+// = LIBRARY
+//    TAO
+// 
+// = FILENAME
+//    align.h
 //
-// A "ptr_arith_t" type is defined for doing numerical operations on
-// pointers, such as aligning them.  Pointer sizes vary from 2 to 8
-// bytes in today's environments; a portable data type is much needed.
+// = DESCRIPTION
+//    Pointer alignment utilities
+//
+//    A "ptr_arith_t" type is defined for doing numerical operations
+//    on pointers, such as aligning them.  Pointer sizes vary from 2
+//    to 8 bytes in today's environments; a portable data type is much
+//    needed.
+//
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems, Inc.
+// 
+// ============================================================================
 
 #if !defined (TAO_ALIGN_H)
 #define	TAO_ALIGN_H
@@ -17,13 +30,13 @@
 // "signed" version of the same type.
 
 #if	SIZEOF_VOID_P == SIZEOF_INT
-typedef unsigned int ptr_arith_t;
+typedef u_int ptr_arith_t;
 
 #elif	SIZEOF_VOID_P == SIZEOF_LONG
-typedef unsigned long ptr_arith_t;
+typedef u_long ptr_arith_t;
 
 #elif	SIZEOF_VOID_P == SIZEOF_LONG_LONG
-typedef unsigned long long ptr_arith_t;
+typedef u_long long ptr_arith_t;
 
 #else
 #	error "Can't find a suitable type for doing pointer arithmetic."
@@ -34,9 +47,10 @@ typedef unsigned long long ptr_arith_t;
 // arithmetic.
 
 static inline ptr_arith_t
-align_binary (const ptr_arith_t value, size_t alignment)
+align_binary (const ptr_arith_t value,
+	      size_t alignment)
 {
-  ptr_arith_t		 temp = alignment - 1;
+  ptr_arith_t temp = alignment - 1;
 
   return (value + temp) & ~temp;
 }
@@ -48,10 +62,11 @@ align_binary (const ptr_arith_t value, size_t alignment)
 // XXX Returned as "byte pointer" -- CDR module would change to be
 // seen as a "void *".  May want to change this to add XDR cleanly.
 
-static inline unsigned char *
-ptr_align_binary (const unsigned char *ptr, size_t alignment)
+static inline u_char *
+ptr_align_binary (const u_char *ptr, 
+		  size_t alignment)
 {
-  return (unsigned char *) align_binary ((ptr_arith_t) ptr, alignment);
+  return (u_char *) align_binary ((ptr_arith_t) ptr, alignment);
 }
 
 #endif /* TAO_ALIGN_H */

@@ -1,14 +1,25 @@
 // This may look like C, but it's really -*- C++ -*-
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
 // 
-// @(#) $Id$
-// Copyright 1995 by Sun Microsystems, Inc.
+// = FILENAME
+//    boa.h
 //
-// (Early) BOA
+// = DESCRIPTION
+//     (Early) BOA
 //
-// BOA is a stripped down, lean, mean, portable OA.  The work involved
-// in managing objects is all handled by "higher level" code,
-// including skeletons, generated either by an IDL compiler by hand.
-// BOA itself maintains no object-level state.
+//     BOA is a stripped down, lean, mean, portable OA.  The work
+//     involved in managing objects is all handled by "higher level"
+//     code, including skeletons, generated either by an IDL compiler
+//     by hand.  BOA itself maintains no object-level state.
+//
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems, Inc.
+// 
+// ============================================================================
 
 #if !defined (TAO_BOA_H)
 #  define TAO_BOA_H
@@ -18,7 +29,13 @@
 #  include "orb.h"
 #  include "corbacom.h"
 
+// @@ Shouldn't this go into the CORBA:: namespace?  It doesn't belong
+// at global scope!
+
+// True of <obj> is nil.
 CORBA_Boolean is_nil (CORBA_BOA_ptr obj);
+
+// Decrement reference count on <obj>.
 void release (CORBA_BOA_ptr obj);
 
 extern const IID IID_BOA;
@@ -29,7 +46,6 @@ class TAO_Object_Table
   //     to pointers to CORBA objects.
 {
 public:
-
   virtual int find (const CORBA_OctetSeq &key, 
 		    CORBA_Object_ptr &obj) = 0;
   // Find object associated with <{key}>, setting <{obj}> to the
@@ -43,21 +59,24 @@ public:
   // a failure occurs during registration.
 
   virtual ~TAO_Object_Table (void);
+  // Destructor.
 };
 
 struct TAO_Dispatch_Context;
 
+// @@ Why does this inherit from IUnknown?
+
 class CORBA_BOA : public IUnknown
   // = TITLE
-  //    The <{TAO}> Basic Object Adapter
+  //    The <{TAO}> Basic Object Adapter.
 {
 public:
   virtual CORBA_Object_ptr create (CORBA_OctetSeq& obj_id,
 				   CORBA_String type_id,
 				   CORBA_Environment& env) = 0;
   // Create a reference to an object, using identifying information
-  // that is fully exposed to applications. (An ORB may use
-  // additional data internally, of course.)
+  // that is fully exposed to applications. (An ORB may use additional
+  // data internally, of course.)
   //
   // Object IDs are assigned and used by servers to identify objects.
   //
@@ -83,15 +102,18 @@ public:
 					  CORBA_ServerRequest &request,
 					  void *context,
 					  CORBA_Environment &env);
+  // @@ Please add a comment.  BTW, weren't we planning to rename this
+  // typedef?
 
-  virtual int handle_message (TAO_Dispatch_Context& context,
-			      CORBA_Environment& env) = 0;
+  // @@ Weren't we planning to rename this method?
+  virtual int handle_message (TAO_Dispatch_Context &context,
+			      CORBA_Environment &env) = 0;
   // Reads incoming GIOP messages, dispatches them, and sends back any
   // required replies.  Returns 1 for success, 0==EOF, -1==error.
 
-  virtual void 	register_dir (dsi_handler skeleton,
-			      void* context,
-			      CORBA_Environment& env) = 0;
+  virtual void register_dir (dsi_handler skeleton,
+			     void *context,
+			     CORBA_Environment &env) = 0;
   // All invocations are handled using DSI ... slightly enhanced from
   // the original CORBA 2.0 specs, to improve performance by getting
   // rid of all mallocation for calls with fixed-size parameter lists.
@@ -125,8 +147,8 @@ public:
   //   objects that may no longer exist.
     
   virtual void get_request (CORBA_Boolean use_threads,
-			   struct timeval* tvp,
-			   CORBA_Environment& env) = 0;
+			   struct timeval *tvp,
+			   CORBA_Environment &env) = 0;
   // Get/handle requests ... this starts processing a request, or
   // times out.
   // 
@@ -146,7 +168,7 @@ public:
   // Reports INITIALIZE exception if no DIR was registered.  Reports
   // BAD_INV_ORDER if this is shutting down.
 
-  virtual void please_shutdown (CORBA_Environment& env) = 0;
+  virtual void please_shutdown (CORBA_Environment &env) = 0;
   // Please Shutdown -- reject all further incoming requests, and
   // allow all currently active calls (e.g. "this one") to complete.
   // This ensures that OS resources associated with this OA can be
@@ -164,7 +186,7 @@ public:
   // avoid writing that loop.
 
   static CORBA_BOA_ptr get_boa (CORBA_ORB_ptr orb,
-				CORBA_Environment& env);
+				CORBA_Environment &env);
   // Get an "anonymous" BOA pseudo-objref ... this is the API that
   // most applications will use.  It returns a BOA which is not
   // otherwise in use (though it may have been used in the past).
@@ -175,7 +197,7 @@ public:
 
   static CORBA_BOA_ptr get_named_boa (CORBA_ORB_ptr orb,
 				      CORBA_String name,
-				      CORBA_Environment& env);
+				      CORBA_Environment &env);
   // Get a "named" BOA ... most applications don't use/need this API.
   // 
   // BOA names are for ORB/system bootstrapping purposes, and need not
@@ -183,7 +205,7 @@ public:
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
 
-  virtual void clean_shutdown (CORBA_Environment& env) = 0;
+  virtual void clean_shutdown (CORBA_Environment &env) = 0;
   // NON-STANDARD CALL.  OA user asks for a clean shutdown of the OA
   // after currently active calls complete.  OA "requester" (calls
   // <get_request>) asks if we're shutting down, and if so closes down
@@ -197,6 +219,8 @@ public:
 		 CORBA_ServerRequest &req, 
 		 void *context, 
 		 CORBA_Environment &env);
+  // @@ Please add a comment.
+
   virtual int bind (const CORBA_OctetSeq &key, 
 		    CORBA_Object_ptr obj);
   // Registers a CORBA_Object into the object table and associates the
@@ -209,20 +233,24 @@ public:
   // non-negative integer on success, or -1 on failure.
 
   virtual CORBA_ORB_ptr orb (void) const = 0;
+  // @@ Please add a comment.
+
   virtual ACE_INET_Addr get_addr (void) const = 0;
-  
+  // @@ Please add a comment.
+
 protected:
-  TAO_Object_Table  *objtable_;
+  TAO_Object_Table *objtable_;
+  // @@ Please add a comment.
 };
 
 struct TAO_Dispatch_Context
-// = TITLE
-//    Structure holding information necessary for GIOP functionality.
-//
-// = DESCRIPTION 
-// Data structure passed as "context" to the GIOP code, which then
-// calls back one of the two helper routines as part of handling any
-// particular incoming request.
+  // = TITLE
+  //    Structure holding information necessary for GIOP functionality.
+  //
+  // = DESCRIPTION 
+  // Data structure passed as "context" to the GIOP code, which then
+  // calls back one of the two helper routines as part of handling any
+  // particular incoming request.
 {
   CORBA_BOA::dsi_handler skeleton_;
   // Function pointer to skeleton glue function.
@@ -232,10 +260,11 @@ struct TAO_Dispatch_Context
 			  void* context,
 			  CORBA_Environment& env);
   // Function to check if the request should be forwarded (whatever
-  // that means)
+  // that means).
 
-  void* context_;
-  // Who knows...another overloading of the word "context"
+  void *context_;
+  // Who knows...another overloading of the word "context".
+  // @@ Can we please try to remove this?
 
   CORBA_BOA_ptr oa_;
   // This should really be a BOA_ptr, but currently it doesn't support
