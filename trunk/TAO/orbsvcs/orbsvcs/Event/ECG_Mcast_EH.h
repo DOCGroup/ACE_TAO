@@ -29,7 +29,6 @@
 #include "ace/Synch.h"
 #include "ace/Atomic_Op.h"
 #include "tao/Synch_Refcountable.h"
-//#include "tao/Utils/Servant_Var.h"
 
 /**
  * @class TAO_ECG_Mcast_Socket
@@ -128,8 +127,7 @@ public:
    */
 
   class Observer 
-    : public virtual POA_RtecEventChannelAdmin::Observer
-    , public virtual PortableServer::RefCountServantBase
+    : public POA_RtecEventChannelAdmin::Observer
   {
   public:
     /// We report changes in the EC subscriptions to the event

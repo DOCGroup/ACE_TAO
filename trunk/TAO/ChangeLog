@@ -1,3 +1,19 @@
+Fri Dec  6 21:02:48 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.{h,cpp}:  Removed use of 
+	  TAO:Utils:Implicit_Deactivator since it has problems on windows.
+	  Made dtor exception safe.  Thanks to Bala for pointing this out.
+
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile: Removed link to 
+	  libTAO_Utils to pick up Implicit_Deactivator due to windows 
+	  problem cited above.
+		
 Fri Dec  6 05:20:28 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.{h,i,cpp}: Refactored

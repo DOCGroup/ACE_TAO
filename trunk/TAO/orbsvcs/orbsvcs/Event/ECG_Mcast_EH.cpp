@@ -8,7 +8,6 @@
 
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "tao/Utils/Implicit_Deactivator.h"
 
 #include "ace/Reactor.h"
 
@@ -58,8 +57,14 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
 
 TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
 {
-  if (this->handle_)
-    this->close ();
+  ACE_TRY
+    {
+      if (this->handle_)
+	this->close ();
+    }
+  ACE_CATCHALL
+  ACE_ENDTRY;
+
   ACE::strdelete (this->net_if_);
   delete this->lock_;
 }
@@ -96,8 +101,18 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
     }
   ACE_CATCH(CORBA::SystemException, ex)
     {
-      TAO::Utils::Implicit_Deactivator deactivator (&this->observer_
-                                                    ACE_ENV_ARG_PARAMETER);
+      // @@ TODO This code is tedious and error prone, plus its
+      // exceptions should be ignored (no way to recover from them),
+      // we should encapsulate it in a Deactivator.
+
+      PortableServer::POA_var poa =
+        this->observer_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&this->observer_ ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
       ACE_RE_THROW;
     }
@@ -139,13 +154,23 @@ TAO_ECG_Mcast_EH::close (ACE_ENV_SINGLE_ARG_DECL)
   this->subscriptions_.unbind_all ();
   this->handles_.unbind_all ();
 
-  TAO::Utils::Implicit_Deactivator deactivator (&this->observer_
-                                                ACE_ENV_ARG_PARAMETER);
-
   RtecEventChannelAdmin::Observer_Handle h = this->handle_;
   this->handle_ = 0;
   this->ec_->remove_observer (h ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  // @@ TODO If the first operation raises an exception then the
+  // second one never executes!!!
+  {
+    PortableServer::POA_var poa =
+      this->observer_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->observer_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+  }
 
   return 0;
 }
