@@ -509,7 +509,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
 
   // Copy in only as many bytes are valid, or only as many as we have
   // room for, whichever is less.  -------> What a friggin' HACK!?!?!
-  ACE_OS::memcpy (&this->my_request_id_, 
+  ACE_OS::memcpy (&this->my_request_id_,
                   &me,
                   ACE_MIN (sizeof (me), sizeof (this->my_request_id_)));
 }
@@ -673,9 +673,12 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Establish the connection and get back a Client_Connection_Handler
   if (con->connect (this->handler_, server_addr) == -1)
-    // @@ Need to figure out which exception to set...this one is
-    // pretty vague.
-    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    {
+      // @@ Need to figure out which exception to set...this one is
+      // pretty vague.
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      return;
+    }
 
   // Use the ACE_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
