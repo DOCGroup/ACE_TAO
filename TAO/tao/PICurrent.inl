@@ -35,7 +35,7 @@ TAO_PICurrent_Impl::pi_peer (TAO_PICurrent_Impl *peer)
 ACE_INLINE TAO_PICurrent_Impl::Table &
 TAO_PICurrent_Impl::slot_table (void)
 {
-  return this->slot_table_;
+  return this->lc_slot_table_ == 0 ? this->slot_table_ : *this->lc_slot_table_;
 }
 
 ACE_INLINE void
