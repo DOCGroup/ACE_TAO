@@ -747,11 +747,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
 
-      // Add it to the sequence of object reference templates that
-      // will be destroyed.
-      array_obj_ref_template.size (i + 1);
+      // In case no ORT library is linked we get zero
+      if (child_at != 0)
+        {
+          // Add it to the sequence of object reference templates that
+          // will be destroyed.
+          array_obj_ref_template.size (i + 1);
 
-      array_obj_ref_template[i] = child_at;
+          array_obj_ref_template[i] = child_at;
+        }
 
       child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
 
@@ -840,11 +844,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       PortableInterceptor::ObjectReferenceTemplate *adapter =
         this->get_adapter_template ();
 
-      // Add it to the sequence of object reference templates, we just notify
-      // for ourselves that we are now non_existent, our childs will do it
-      // for themselves.
-      array_obj_ref_template.size (1);
-      array_obj_ref_template[0] = adapter;
+      if (adapter != 0)
+        {
+          // Add it to the sequence of object reference templates, we just notify
+          // for ourselves that we are now non_existent, our childs will do it
+          // for themselves.
+          array_obj_ref_template.size (1);
+          array_obj_ref_template[0] = adapter;
+        }
 
       // According to the ORT spec, after a POA is destroyed, its state
       // has to be changed to NON_EXISTENT and all the registered
@@ -4091,8 +4098,11 @@ TAO_POA::object_reference_template_adapter (void)
     return this->ort_adapter_;
 
   {
-    // Lock access for the duration of this transaction.
-    TAO_POA_GUARD_RETURN (0);
+    // Lock access for the duration of this transaction, this method is also
+    // called in the cleanup process, so don't let the guard check for closure
+    TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
+    ACE_CHECK;
+    ACE_UNUSED_ARG (poa_guard);
 
     // DCL ..
     if (this->ort_adapter_ != 0)

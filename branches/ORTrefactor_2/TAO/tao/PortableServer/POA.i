@@ -470,10 +470,6 @@ TAO_POA::get_adapter_template ()
     {
       return this->ort_adapter_->get_adapter_template();
     }
-  else
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
@@ -482,10 +478,6 @@ TAO_POA::get_obj_ref_factory ()
   if (this->object_reference_template_adapter ())
     {
       return this->ort_adapter_->get_obj_ref_factory();
-    }
-  else
-    {
-      ACE_THROW (CORBA::INTERNAL ());
     }
 }
 

@@ -1,3 +1,22 @@
+Wed Aug 25 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/POA.i:
+          Removed the throw from get_obj_ref_factory() and
+          get_adapter_template() when we can't retrieve these, exceptions
+          are already thrown in the IORInterceptor and we call the
+          get_adapter_template() also from the POA and we don't want to have
+          an exception then.
+
+        * tao/POA.cpp:
+          In the destroy_i() check whether get_adapter_template() doesn't
+          return zero, if it returns zero, then we don't have an
+          adapter_template, so don't add it to the array, this can happen when
+          we don't load the ORT library.
+          In the object_reference_template_adapter() method use a POA Guard
+          that doesn't check for closure, this method can be called by
+          destroy_i() when we don't have an ORT library loaded and then we
+          don't want to get an exception by the guard that we are closing
+
 Tue Aug 24 14:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp (destroy_i):
