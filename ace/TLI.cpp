@@ -89,7 +89,7 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
     return -1;
   else
     return 0;
-#else /* SunOS4 sucks... */
+#else /* SunOS4 */
   ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SVR4_TLI */
