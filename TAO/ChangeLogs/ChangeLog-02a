@@ -1,3 +1,13 @@
+Thu Jun 28 15:01:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+
+          Fixed initialization of the return value (in an operation
+          or the _get version of an attribute) to work for
+          longlongs and long doubles by using the portable
+          macros defined in ace/CDR_Base.h.
+
 Thu Jun 28 10:03:44 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.inl (orb_core):
