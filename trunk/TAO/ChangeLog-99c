@@ -1,7 +1,13 @@
+Sun Jun 06 12:54:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Trader.cpp: added
+          ACE_Equal_To<TAO_String_Hash_Key> explicit instantiation,
+          because g++ on LynxOS 3.0.0 needs it.
+
 Sun Jun  6 11:51:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao: Continued to make a huge pass through the code to ensure
-	  that TAO conforms to the ACE programming guidelines.
+        * tao: Continued to make a huge pass through the code to ensure
+          that TAO conforms to the ACE programming guidelines.
 
 Sun Jun 06 11:44:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
