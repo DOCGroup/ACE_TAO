@@ -1,3 +1,11 @@
+Sat Aug 29 20:29:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (TAO_Resource_Factory): Changed
+	  use_lock_freed_reactor_ and its access function to
+	  reactor_lock_.  Also declare new enum TAO_NULL_LOCK and
+	  TAO_TOKEN to specify the type of lock to use with
+	  Select_Reactor.
+
 Sat Aug 29 18:56:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/TIE: Change Foo to A, B, and C.  Hopefully g++ can
