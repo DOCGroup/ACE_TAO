@@ -742,7 +742,7 @@ CORBA::PolicyType POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::policy_type (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "policy_type",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -783,7 +783,7 @@ CORBA::PolicyType POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::policy_type (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "copy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -823,7 +823,7 @@ void POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::destroy (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "destroy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER

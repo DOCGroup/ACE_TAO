@@ -232,6 +232,26 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
 }
 
 
+const TAO::ObjectKey &
+TAO_Stub::object_key (void) const
+{
+  // Return the profile in use's object key if you see one.
+  if (this->profile_in_use_)
+    return this->profile_in_use_->object_key ();
+
+  if (this->forward_profiles_)
+    {
+      // Double-checked
+      ACE_Guard<ACE_Lock> obj (*this->profile_lock_ptr_);
+
+      if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
+        return this->forward_profiles_->get_profile (0)->object_key ();
+    }
+
+  // If no forwarded profiles, just use the base profile
+  return this->base_profiles_.get_profile (0)->object_key ();
+}
+
 int
 TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
                                 IOP::IOR *&ior_info

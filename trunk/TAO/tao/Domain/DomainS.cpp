@@ -482,7 +482,7 @@ POA_CORBA::_TAO_DomainManager_ThruPOA_Proxy_Impl::_TAO_DomainManager_ThruPOA_Pro
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "get_domain_policy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1338,7 +1338,7 @@ void POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::make_domain_manager 
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "make_domain_manager",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
