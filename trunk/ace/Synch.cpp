@@ -17,6 +17,10 @@
 ACE_Recursive_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
 #endif
 
+#if defined (ACE_WIN32)
+ACE_Thread_Mutex *ACE_TSS_Cleanup_Lock::mutex_ = 0;
+#endif /* ACE_WIN32 */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
@@ -948,6 +952,21 @@ ACE_Static_Object_Lock::instance (void)
     }
   return ACE_Static_Object_Lock::mutex_;
 }
+
+////////////////////////////////////////////////////////////////
+#if defined (ACE_WIN32)
+
+ACE_Thread_Mutex *
+ACE_TSS_Cleanup_Lock::instance (void)
+{
+  // We assume things before main are single threaded.
+  if (ACE_TSS_Cleanup_Lock::mutex_ == 0)
+      ACE_NEW_RETURN (ACE_TSS_Cleanup_Lock::mutex_,
+		      ACE_Thread_Mutex, 0);
+  return ACE_TSS_Cleanup_Lock::mutex_;
+}
+
+#endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only specialized with ACE_HAS_THREADS.
