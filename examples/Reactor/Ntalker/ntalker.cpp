@@ -183,10 +183,11 @@ main (int argc, char *argv[])
   // Register the STDIN handler.
   if (ACE::register_stdin_handler (&handler,
                                    ACE_Reactor::instance (),
-                                   ACE_Thread_Manager::instance () == -1)
+                                   ACE_Thread_Manager::instance ()) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "register_stdin_handler"));
+                         "register_stdin_handler"),
+                        -1);
 
   // Run the event loop.
   ACE_Reactor::run_event_loop ();
@@ -196,10 +197,11 @@ main (int argc, char *argv[])
 
   // Cleanup the STDIN handler.
   if (ACE::remove_stdin_handler (ACE_Reactor::instance (),
-                                 ACE_Thread_Manager::instance () == -1)
+                                 ACE_Thread_Manager::instance ()) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "remove_stdin_handler"));
+                         "remove_stdin_handler"),
+                        -1);
   return 0;
 }
 #else
