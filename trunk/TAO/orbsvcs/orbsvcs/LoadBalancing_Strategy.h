@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    LoadBalancing_Strategy.h
@@ -17,6 +17,8 @@
 
 #ifndef LOAD_BALANCING_STRATEGY_H
 #define LOAD_BALANCING_STRATEGY_H
+
+#include "ace/pre.h"
 
 #include "orbsvcs/LoadBalancingS.h"
 #include "LoadBalancing_export.h"
@@ -67,5 +69,7 @@ public:
 #if !defined (__ACE_INLINE__)
 #include "LoadBalancing_Strategy.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif  /* LOAD_BALANCING_STRATEGY_H */

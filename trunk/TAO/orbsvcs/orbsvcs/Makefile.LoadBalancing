@@ -1003,8 +1003,8 @@ realclean: clean
 
 .obj/LoadBalancer_i.o .obj/LoadBalancer_i.so .shobj/LoadBalancer_i.o .shobj/LoadBalancer_i.so: LoadBalancing/LoadBalancer_i.cpp \
  LoadBalancing/LoadBalancer_i.h \
- LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
+ LoadBalancingS.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1317,8 +1317,8 @@ realclean: clean
 
 .obj/LoadBalancing_Strategy.o .obj/LoadBalancing_Strategy.so .shobj/LoadBalancing_Strategy.o .shobj/LoadBalancing_Strategy.so: LoadBalancing/LoadBalancing_Strategy.cpp \
  LoadBalancing/LoadBalancing_Strategy.h \
- LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
+ LoadBalancingS.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1630,8 +1630,8 @@ realclean: clean
 
 .obj/ReplicaProxy.o .obj/ReplicaProxy.so .shobj/ReplicaProxy.o .shobj/ReplicaProxy.so: LoadBalancing/ReplicaProxy.cpp \
  LoadBalancing/ReplicaProxy.h \
- LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
+ LoadBalancingS.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1944,9 +1944,9 @@ realclean: clean
 
 .obj/Round_Robin_Strategy.o .obj/Round_Robin_Strategy.so .shobj/Round_Robin_Strategy.o .shobj/Round_Robin_Strategy.so: LoadBalancing/Round_Robin_Strategy.cpp \
  LoadBalancing/Round_Robin_Strategy.h \
+ $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
  LoadBalancingS.h \
- $(ACE_ROOT)/ace/pre.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2258,9 +2258,9 @@ realclean: clean
 
 .obj/Minimum_Dispersion.o .obj/Minimum_Dispersion.so .shobj/Minimum_Dispersion.o .shobj/Minimum_Dispersion.so: LoadBalancing/Minimum_Dispersion.cpp \
  LoadBalancing/Minimum_Dispersion.h \
+ $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
  LoadBalancingS.h \
- $(ACE_ROOT)/ace/pre.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \

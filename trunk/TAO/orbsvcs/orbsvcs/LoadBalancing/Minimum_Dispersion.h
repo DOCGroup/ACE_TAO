@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    Minimum_Dispersion_Strategy.h
@@ -17,6 +17,8 @@
 
 #ifndef MINIMUM_DISPERSION_H
 #define MINIMUM_DISPERSION_H
+
+#include "ace/pre.h"
 
 #include "LoadBalancing_Strategy.h"
 #include "orbsvcs/LoadBalancingS.h"
@@ -64,5 +66,7 @@ private:
   TAO_LB_ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
 };
+
+#include "ace/post.h"
 
 #endif  /* MINIMUM_DISPERSION_H */

@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    ReplicaProxy.h
@@ -17,6 +17,8 @@
 
 #ifndef TAO_REPLICAPROXY_H
 #define TAO_REPLICAPROXY_H
+
+#include "ace/pre.h"
 
 #include "orbsvcs/LoadBalancingS.h"
 #include "LoadBalancing_export.h"
@@ -120,5 +122,7 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#include "ace/post.h"
 
 #endif  /* TAO_REPLICAPROXY_H */
