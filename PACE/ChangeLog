@@ -1,6 +1,15 @@
+Mon Jun  5 17:22:23 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/paces.dsp
+	* pace/pacesd.dsp
+
+	  Removed from the respository.
+	  These files are generated (ie: paces.lib),
+	  not project files.
+
 Mon Jun  5 17:19:30 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ACE_wrappers/THANKS:
+	* pace/THANKS:
 	  
 	  Added John Heitmann, Andrew Gilpin and Darrell Brunsch.
 	  Note: names and email addresses are nicely accesible
