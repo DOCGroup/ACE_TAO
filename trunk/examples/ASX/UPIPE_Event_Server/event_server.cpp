@@ -41,12 +41,12 @@ Quit_Handler::Quit_Handler (void)
 {
   // Register to trap input from the user.
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
   else if (ACE_Reactor::instance ()->register_handler
-	   (SIGINT, this) == -1)
+           (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 
@@ -91,21 +91,21 @@ consumer (void *)
   par1= (time_t) currsec;
 
   while (done == 0
-	 && (c_stream.recv (mb_p) != -1))
+         && (c_stream.recv (mb_p) != -1))
     if (mb_p->length () > 1)
       {
-	cnt++;
-	if (verb)
-	  cout << " consumer received message !!!!!! "
-	       << mb_p->rd_ptr () << endl;
+        cnt++;
+        if (verb)
+          cout << " consumer received message !!!!!! "
+               << mb_p->rd_ptr () << endl;
       }
     else
       {
-	if (verb)
-	  cout << "consumer got last mb"
-	       << (char) * (mb_p->rd_ptr ()) << endl;
-	c_stream.close ();
-	done = 1;
+        if (verb)
+          cout << "consumer got last mb"
+               << (char) * (mb_p->rd_ptr ()) << endl;
+        c_stream.close ();
+        done = 1;
       }
 
     ACE_OS::time (&currsec);
@@ -117,7 +117,7 @@ consumer (void *)
       secs=1;
 
     cout << "consumer got " << cnt << " messages of size " << msiz
-	 << "within " << secs << " seconds" << endl;
+         << "within " << secs << " seconds" << endl;
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
@@ -140,7 +140,7 @@ supplier (void *dummy)
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
 
   cout << "supplier : we're connected" << endl;
-  int	   n;
+  int      n;
   n = 0;
   ACE_Message_Block * mb_p;
 
@@ -152,10 +152,10 @@ supplier (void *dummy)
       if (verb)
         cout << "supplier sending 1 message_block" << endl;
       if (s_stream.send (mb_p) == -1)
-	{
-	  cout << "supplier send failed" << endl;
-	  return (void *) -1;
-	}
+        {
+          cout << "supplier send failed" << endl;
+          return (void *) -1;
+        }
       n++;
     }
 
@@ -204,13 +204,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Create the modules..
 
   MT_Module *sr = new MT_Module (ACE_TEXT ("Supplier_Router"),
-	  new Supplier_Router (ACE_Thread_Manager::instance ()));
+          new Supplier_Router (ACE_Thread_Manager::instance ()));
   MT_Module *ea = new MT_Module (ACE_TEXT ("Event_Analyzer"),
-				 new Event_Analyzer,
-				 new Event_Analyzer);
+                                 new Event_Analyzer,
+                                 new Event_Analyzer);
   MT_Module *cr = new MT_Module (ACE_TEXT ("Consumer_Router"),
-				 0, // 0 triggers the creation of a ACE_Thru_Task...
-				 new Consumer_Router (ACE_Thread_Manager::instance ()));
+                                 0, // 0 triggers the creation of a ACE_Thru_Task...
+                                 new Consumer_Router (ACE_Thread_Manager::instance ()));
 
   // Push the modules onto the event_server stream.
 
@@ -242,11 +242,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // spawn the two threads.
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) 0,
-					     THR_NEW_LWP | THR_DETACHED) == -1)
+                                             THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
   else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), (void *) "hello",
-						  THR_NEW_LWP | THR_DETACHED) == -1)
+                                                  THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
   // Perform the main event loop waiting for the user to type ^C or to

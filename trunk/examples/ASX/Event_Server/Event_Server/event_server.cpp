@@ -12,7 +12,9 @@
 #include "Supplier_Router.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(Event_Server, event_server, "$Id$")
+ACE_RCSID (Event_Server,
+           event_server,
+           "$Id$")
 
 // Typedef these components to handle multi-threading correctly.
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
