@@ -26,24 +26,22 @@
 // configure fixed one-byte alignment policy, since some fixed policy
 // needs to apply throughout an ORB.
 
-#if     defined (_MSC_VER)
-#       pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
-
-#       ifdef   _DEBUG                  // convert from VC++ convention ...
-#               define  DEBUG           // ... to normal convention
-#       endif
-
-#elif   defined (__BORLANDC__)
-#       pragma option -a                // BC++, use 1 byte alignment
-
+#if defined (_MSC_VER)
+# pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
+# ifdef   _DEBUG                  // convert from VC++ convention ...
+#   define  DEBUG           // ... to normal convention
+# endif
+#elif defined (__BORLANDC__)
+# pragma option -a                // BC++, use 1 byte alignment
 #endif
 
 #if !defined (TAO_CONST)
-//Something to document the fact that we want to put 'const' in front
+// Something to document the fact that we want to put 'const' in front
 // of a type, but that it won't turn out the way we want, e.g., we
-// really want to express that a CORBA_String is const, but since CORBA_String
-// is a char*, the const modifies the pointer and not the pointed-to, and
-// some compilers (like SGI's EDG-derived thang) complain.
+// really want to express that a CORBA_String is const, but since
+// CORBA_String is a char*, the const modifies the pointer and not the
+// pointed-to, and some compilers (like SGI's EDG-derived thang)
+// complain.
 #define TAO_CONST
 #endif /* TAO_CONST */
 
@@ -145,11 +143,7 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-#  if defined (ACE_HAS_BOOL)
-  typedef bool CORBA_Boolean;
-#  else /* "bool" not builtin to this compiler */
-  typedef int CORBA_Boolean;
-#  endif /* "bool" not builtin */
+typedef ACE_UINT32 CORBA_Boolean;
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
@@ -176,13 +170,7 @@ struct CORBA_SEQUENCE
     : maximum (0),
       length (0),
       buffer (0),
-#  if defined (ACE_HAS_BOOL)
-      release (false) { }
-#  else /* "bool" not builtin to this compiler */
-      // The following hard-codes the definition of CORBA::B_FALSE here, but
-      // this class will be disappearing soon . . .
-      release (0 /* CORBA::B_FALSE */) { }
-#  endif /* "bool" not builtin */
+      release (0) { }
 
   // XXX destructor should free buffer, elements!!
   ~CORBA_SEQUENCE (void) { }
@@ -200,12 +188,7 @@ public:
   // typedef void Status; // g++ doesn't like this
   // return status of operations in a number of standard CORBA classes.
 
-#  if defined (ACE_HAS_BOOL)
-#    define B_FALSE false
-#    define B_TRUE true
-#  else /* "bool" not builtin to this compiler */
   enum { B_FALSE = 0, B_TRUE = 1 };
-#  endif /* "bool" not builtin */
 
   typedef CORBA_Boolean Boolean;
   typedef Boolean &Boolean_out; // out type for boolean
@@ -213,14 +196,13 @@ public:
   typedef u_char Octet;
   typedef Octet  &Octet_out;  // out type for octet
 
-  typedef short Short;
-  typedef Short &Short_out;   // out type for short
+  typedef ACE_INT16 Short;
+  typedef Short &Short_out;   // out type for Short
 
-  typedef u_short UShort;
-  typedef UShort &UShort_out; // out type for unsigned short
+  typedef ACE_UINT16 UShort;
+  typedef UShort &UShort_out; // out type for UShort
 
-  // CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
-  // almost all C/C++ compilers.
+  // CORBA "Long" (and its unsigned cousin) are 32 bits.
 
   typedef ACE_INT32 Long;
   typedef ACE_UINT32 ULong;
@@ -265,10 +247,38 @@ public:
   typedef LongLong &LongLong_out;  // out type for long long
   typedef ULongLong &ULongLong_out; // out type for unsigned long long
 
-  typedef float Float;
+# if ACE_SIZEOF_FLOAT == 4
+    typedef float Float;
+# else  /* ACE_SIZEOF_FLOAT != 4 */
+#   define TAO_NONNATIVE_FLOAT
+    struct Float
+    {
+#     if ACE_SIZEOF_INT == 4
+        // Use u_int to get word alignment.
+        u_int f;
+#     else  /* ACE_SIZEOF_INT != 4 */
+        // Applications will probably have trouble with this.
+        char f[4];
+#     endif /* ACE_SIZEOF_INT != 4 */
+    };
+# endif /* ACE_SIZEOF_FLOAT != 4 */
   typedef Float &Float_out; // out type for float
 
-  typedef double Double;
+# if ACE_SIZEOF_DOUBLE == 8
+    typedef double Double;
+# else  /* ACE_SIZEOF_DOUBLE != 8 */
+#   define TAO_NONNATIVE_DOUBLE
+    struct Double
+    {
+#     if ACE_SIZEOF_LONG == 8
+        // Use u_long to get word alignment.
+        u_long f;
+#     else  /* ACE_SIZEOF_INT != 8 */
+        // Applications will probably have trouble with this.
+        char f[8];
+#     endif /* ACE_SIZEOF_INT != 8 */
+    };
+# endif /* ACE_SIZEOF_DOUBLE != 8 */
   typedef Double &Double_out; // out type for double
 
   // 94-9-32 Appendix A defines a 128 bit floating point "long double"
@@ -280,7 +290,7 @@ public:
 #  if   ACE_SIZEOF_LONG_DOUBLE == 16
   typedef long double LongDouble;
 #  else
-#    define     NONNATIVE_LONGDOUBLE
+#    define NONNATIVE_LONGDOUBLE
   struct LongDouble
   {
     char ld[16];
