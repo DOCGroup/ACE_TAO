@@ -502,8 +502,10 @@ main (int argc, ASYS_TCHAR *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Double_Linked_List<Element>;
+template class ACE_Double_Linked_List_Iterator_Base<Element>;
 template class ACE_Double_Linked_List_Iterator<Element>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Double_Linked_List<Element>
+#pragma instantiate ACE_Double_Linked_List_Iterator_Base<Element>
 #pragma instantiate ACE_Double_Linked_List_Iterator<Element>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

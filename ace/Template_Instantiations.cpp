@@ -87,8 +87,9 @@ template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
 
 template class ACE_Cleanup_Adapter<ACE_Thread_Mutex>;
 template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
 template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
-
+template class ACE_Double_Linked_List_Reverse_Iterator<ACE_Thread_Descriptor>;
 // ACE_SYNCH_RECURSIVE_MUTEX is defined in Synch_T.h
 template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>;
 

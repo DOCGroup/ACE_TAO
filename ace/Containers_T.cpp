@@ -17,10 +17,10 @@
 #include "ace/Containers_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Containers_T, "$Id$")
+ACE_RCSID(ace, Containers_T, "$Id$") 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
-
+  
 template <class T> void
 ACE_Bounded_Stack<T>::dump (void) const
 {
@@ -33,7 +33,6 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
     size_ (size)
 {
   ACE_NEW (this->stack_, T[size]);
-
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 }
 
@@ -276,7 +275,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
 template <class T> int
 ACE_Unbounded_Stack<T>::find (const T &item) const
 {
-// ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
+  // ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
   // Set <item> into the dummy node.
   this->head_->item_ = item;
 
@@ -294,7 +293,7 @@ ACE_Unbounded_Stack<T>::find (const T &item) const
 template <class T> int
 ACE_Unbounded_Stack<T>::insert (const T &item)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack<T>::insert");
+  // ACE_TRACE ("ACE_Unbounded_Stack<T>::insert");
 
   if (this->find (item) == 0)
     return 1;
@@ -305,7 +304,7 @@ ACE_Unbounded_Stack<T>::insert (const T &item)
 template <class T> int
 ACE_Unbounded_Stack<T>::remove (const T &item)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack<T>::remove");
+  // ACE_TRACE ("ACE_Unbounded_Stack<T>::remove");
 
   // Insert the item to be founded into the dummy node.
   this->head_->item_ = item;
@@ -337,7 +336,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
     cur_size_ (0),
     allocator_ (alloc)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -356,7 +355,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
     cur_size_ (0),
     allocator_ (us.allocator_)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -371,7 +370,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
 template <class T> void
 ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
   if (this != &us)
     {
@@ -400,7 +399,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
 template <class T> void
 ACE_Unbounded_Queue<T>::dump (void) const
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
@@ -457,7 +456,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
 template <class T>
 ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
   ACE_DES_FREE_TEMPLATE (head_,
@@ -470,7 +469,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
 
   ACE_Node<T> *temp;
 
@@ -490,7 +489,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
   ACE_Node<T> *temp;
 
@@ -515,7 +514,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 template <class T> int
 ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::dequeue_head");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::dequeue_head");
 
   // Check for empty queue.
   if (this->is_empty ())
@@ -544,7 +543,7 @@ ACE_Unbounded_Queue<T>::reset (void)
 template <class T> int
 ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
 
   ACE_Node<T> *curr = this->head_->next_;
 
@@ -571,7 +570,7 @@ template <class T> int
 ACE_Unbounded_Queue<T>::set (const T &item,
                              size_t slot)
 {
-//   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
 
   ACE_Node<T> *curr = this->head_->next_;
 
@@ -629,21 +628,21 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 template <class T> void
 ACE_Unbounded_Queue_Iterator<T>::dump (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::dump");
+  // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::dump");
 }
 
 template <class T>
 ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end)
-    : current_ (end == 0 ? q.head_->next_ : q.head_ ),
-      queue_ (q)
+  : current_ (end == 0 ? q.head_->next_ : q.head_ ),
+    queue_ (q)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator");
+  // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator");
 }
 
 template <class T> int
 ACE_Unbounded_Queue_Iterator<T>::advance (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::advance");
+  // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::advance");
   this->current_ = this->current_->next_;
   return this->current_ != this->queue_.head_;
 }
@@ -651,7 +650,7 @@ ACE_Unbounded_Queue_Iterator<T>::advance (void)
 template <class T> int
 ACE_Unbounded_Queue_Iterator<T>::first (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::first");
+  // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::first");
   this->current_ = this->queue_.head_->next_;
   return this->current_ != this->queue_.head_;
 }
@@ -667,7 +666,7 @@ ACE_Unbounded_Queue_Iterator<T>::done (void) const
 template <class T> int
 ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::next");
+  // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::next");
   if (this->current_ == this->queue_.head_)
     return 0;
   else
@@ -678,26 +677,84 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 }
 
 //--------------------------------------------------
-ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
+ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator_Base)
+  
+template <class T>
+ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> &dll)
+  : current_ (0), dllist_ (&dll)
+{
+  // Do nothing
+}
 
 template <class T>
-ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
-  : dllist_ (dll)
+ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List_Iterator_Base<T> &iter)
+  : current_ (iter.current_),
+    dllist_ (iter.dllist_)
 {
-  this->current_ = ACE_static_cast (T*, dll.head_->next_);  // Initialize head ptr.
+  // Do nothing
+}
+
+
+template <class T> T *
+ACE_Double_Linked_List_Iterator_Base<T>::next (void) const
+{
+  return this->not_done ();
+}
+
+template <class T> int
+ACE_Double_Linked_List_Iterator_Base<T>::next (T *&ptr) const
+{
+  ptr = this->not_done ();
+  return ptr ? 1 : 0;
+}
+
+
+template <class T> int
+ACE_Double_Linked_List_Iterator_Base<T>::done (void) const
+{
+  return this->not_done () ? 0 : 1;
+}
+
+template <class T> T & 
+ACE_Double_Linked_List_Iterator_Base<T>::operator* (void) const
+{
+  return *(this->not_done ());
+}
+
+// @@ Is this a valid retasking? Make sure to check with Purify and
+// whatnot that we're not leaking memory or doing any other screwing things.
+template <class T> void
+ACE_Double_Linked_List_Iterator_Base<T>::reset (ACE_Double_Linked_List<T> &dll)
+{
+  current_ = 0;
+  dllist_ = &dll;
+}
+
+ template <class T> int
+ACE_Double_Linked_List_Iterator_Base<T>::go_head (void)
+{
+  this->current_ = ACE_static_cast (T*, dllist_->head_->next_);
+  return this->current_ ? 1 : 0;
+}
+
+template <class T> int
+ACE_Double_Linked_List_Iterator_Base<T>::go_tail (void)
+{
+  this->current_ = ACE_static_cast (T*, dllist_->head_->prev_);
+  return this->current_ ? 1 : 0;
 }
 
 template <class T> T *
-ACE_Double_Linked_List_Iterator<T>::not_done (void) const
+ACE_Double_Linked_List_Iterator_Base<T>::not_done (void) const
 {
-  if (this->current_ != this->dllist_.head_)
+  if (this->current_ != this->dllist_->head_)
     return this->current_;
   else
     return 0;
 }
 
 template <class T> T *
-ACE_Double_Linked_List_Iterator<T>::do_advance (void)
+ACE_Double_Linked_List_Iterator_Base<T>::do_advance (void)
 {
   if (this->not_done ())
     {
@@ -709,9 +766,41 @@ ACE_Double_Linked_List_Iterator<T>::do_advance (void)
 }
 
 template <class T> T *
-ACE_Double_Linked_List_Iterator<T>::next (void) const
+ACE_Double_Linked_List_Iterator_Base<T>::do_retreat (void)
 {
-  return this->not_done ();
+  if (this->not_done ())
+    {
+      this->current_ = ACE_static_cast (T*, this->current_->prev_);
+      return this->not_done ();
+    }
+  else
+    return 0;
+}
+
+template <class T> void
+ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("current_ = %x"), this->current_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+//--------------------------------------------------
+ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
+  
+template <class T>
+ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
+  : ACE_Double_Linked_List_Iterator_Base <T> (dll)
+{
+  this->current_ = ACE_static_cast (T*, dll.head_->next_);
+  // Advance current_ out of the null area and onto the first item in
+  // the list
+}
+
+template <class T> int
+ACE_Double_Linked_List_Iterator<T>::first (void)
+{
+  return this->go_head ();
 }
 
 template <class T> int
@@ -720,28 +809,167 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
   return this->do_advance () ? 1 : 0;
 }
 
-template <class T> int
-ACE_Double_Linked_List_Iterator<T>::first (void)
+template <class T> T*
+ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
 {
-  this->current_ = ACE_static_cast (T*, dllist_.head_->next_);
-  return this->not_done () ? 1 : 0;
-}
-
-template <class T> int
-ACE_Double_Linked_List_Iterator<T>::done (void) const
-{
-  return this->not_done () ? 0 : 1;
+  T* item = 0;
+  if (dont_remove)
+    this->do_advance ();
+  else
+    {
+      item = this->next ();
+      this->do_advance ();
+      dllist_->remove (item);
+    }
+  return item;
 }
 
 template <class T> void
 ACE_Double_Linked_List_Iterator<T>::dump (void) const
 {
-  // Dump the state of an object.
+  this->dump_i ();
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List)
+// Prefix advance.
 
 template <class T>
+ACE_Double_Linked_List_Iterator<T> &
+ACE_Double_Linked_List_Iterator<T>::operator++ (void)
+{
+  this->do_advance ();
+  return *this;
+}
+
+
+// Postfix advance.
+
+template <class T>
+ACE_Double_Linked_List_Iterator<T>
+ACE_Double_Linked_List_Iterator<T>::operator++ (int)
+{
+  ACE_Double_Linked_List_Iterator<T> retv (*this);
+  this->do_advance ();
+  return retv;
+}
+
+
+// Prefix reverse.
+
+template <class T>
+ACE_Double_Linked_List_Iterator<T> &
+ACE_Double_Linked_List_Iterator<T>::operator-- (void)
+{
+  this->do_retreat ();
+  return *this;
+}
+
+
+// Postfix reverse.
+
+template <class T>
+ACE_Double_Linked_List_Iterator<T>
+ACE_Double_Linked_List_Iterator<T>::operator-- (int)
+{
+  ACE_Double_Linked_List_Iterator<T> retv (*this);
+  this->do_retreat ();
+  return retv;
+}
+
+
+//--------------------------------------------------
+ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Reverse_Iterator)
+
+  template <class T>
+ACE_Double_Linked_List_Reverse_Iterator<T>::ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &dll)
+  : ACE_Double_Linked_List_Iterator_Base <T> (dll)
+{
+  this->current_ = ACE_static_cast (T*, dll.head_->prev_);
+  // Advance current_ out of the null area and onto the last item in
+  // the list
+}
+
+template <class T> int
+ACE_Double_Linked_List_Reverse_Iterator<T>::first (void)
+{
+  return this->go_tail ();
+}
+
+template <class T> int
+ACE_Double_Linked_List_Reverse_Iterator<T>::advance (void)
+{
+  return this->do_retreat () ? 1 : 0;
+}
+
+template <class T> T*
+ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
+{
+  T* item = 0;
+  if (dont_remove)
+    this->do_retreat ();
+  else
+    {
+      item = this->next ();
+      this->do_retreat ();
+      dllist_->remove (item);
+    }
+  return item;
+}
+
+template <class T> void
+ACE_Double_Linked_List_Reverse_Iterator<T>::dump (void) const
+{
+  this->dump_i ();
+}
+
+// Prefix advance.
+
+template <class T>
+ACE_Double_Linked_List_Reverse_Iterator<T> &
+ACE_Double_Linked_List_Reverse_Iterator<T>::operator++ (void)
+{
+  this->do_retreat ();
+  return *this;
+}
+
+
+// Postfix advance.
+
+template <class T>
+ACE_Double_Linked_List_Reverse_Iterator<T>
+ACE_Double_Linked_List_Reverse_Iterator<T>::operator++ (int)
+{
+  ACE_Double_Linked_List_Reverse_Iterator<T> retv (*this);
+  this->do_retreat ();
+  return retv;
+}
+
+
+// Prefix reverse.
+
+template <class T>
+ACE_Double_Linked_List_Reverse_Iterator<T> &
+ACE_Double_Linked_List_Reverse_Iterator<T>::operator-- (void)
+{
+  this->do_advance ();
+  return *this;
+}
+
+
+// Postfix reverse.
+
+template <class T>
+ACE_Double_Linked_List_Reverse_Iterator<T>
+ACE_Double_Linked_List_Reverse_Iterator<T>::operator-- (int)
+{
+  ACE_Double_Linked_List_Reverse_Iterator<T> retv (*this);
+  this->do_advance ();
+  return retv;
+}
+
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List)
+  
+  template <class T>
 ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
   : size_ (0), allocator_ (alloc)
 {
@@ -903,7 +1131,7 @@ ACE_Double_Linked_List<T>::remove (const T &item)
   T *temp = this->find (item);
 
   if (temp != 0)
-      return this->remove (temp);
+    return this->remove (temp);
   else
     return -1;
 }
@@ -982,7 +1210,7 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
 
-template <class T, size_t ACE_SIZE> size_t
+  template <class T, size_t ACE_SIZE> size_t
 ACE_Fixed_Set<T, ACE_SIZE>::size (void) const
 {
   return this->cur_size_;
@@ -1079,7 +1307,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
       this->search_structure_[first_free].is_free_ = 0;
       return 0;
     }
-    // Insert at the end of the active portion.
+  // Insert at the end of the active portion.
   else if (i < this->max_size_)
     {
       this->search_structure_[i].item_ = item;
@@ -1127,7 +1355,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Iterator)
 
-template <class T, size_t ACE_SIZE> void
+  template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump");
@@ -1149,7 +1377,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance (void)
 
   for (++this->next_;
        ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
-       && this->s_.search_structure_[this->next_].is_free_;
+         && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
@@ -1189,7 +1417,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next (T *&item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set)
 
-template <class T> void
+  template <class T> void
 ACE_Bounded_Set<T>::dump (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::dump");
@@ -1343,7 +1571,7 @@ ACE_Bounded_Set<T>::remove (const T &item)
 }
 
 #if defined (__Lynx__)
- // LynxOS 3.0.0 native g++ compiler raises internal error with this inline.
+// LynxOS 3.0.0 native g++ compiler raises internal error with this inline.
 template <class T> int
 ACE_Bounded_Set<T>::is_full (void) const
 {
@@ -1354,7 +1582,7 @@ ACE_Bounded_Set<T>::is_full (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set_Iterator)
 
-template <class T> void
+  template <class T> void
 ACE_Bounded_Set_Iterator<T>::dump (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::dump");
@@ -1376,26 +1604,11 @@ ACE_Bounded_Set_Iterator<T>::advance (void)
 
   for (++this->next_;
        ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
-       && this->s_.search_structure_[this->next_].is_free_;
+         && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
   return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
-}
-
-template <class T> T*
-ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
-{
-  T* item = 0;
-  if (dont_remove)
-      this->do_advance ();
-  else
-    {
-      item = this->next ();
-      this->do_advance ();
-      this->dllist_.remove_element (item);
-    }
-  return item;
 }
 
 template <class T> int
@@ -1432,7 +1645,7 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
 ACE_ALLOC_HOOK_DEFINE(ACE_Node)
 
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
-template <class T>
+  template <class T>
 ACE_Node<T>::~ACE_Node (void)
 {
 }
@@ -1443,14 +1656,14 @@ ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
   : next_ (n),
     item_ (i)
 {
-// ACE_TRACE ("ACE_Node<T>::ACE_Node");
+  // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 template <class T>
 ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int)
   : next_ (n)
 {
-// ACE_TRACE ("ACE_Node<T>::ACE_Node");
+  // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 template <class T>
@@ -1458,12 +1671,12 @@ ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
   : next_ (s.next_),
     item_ (s.item_)
 {
-// ACE_TRACE ("ACE_Node<T>::ACE_Node");
+  // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DNode)
 
-template <class T>
+  template <class T>
 ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
   : next_ (n), prev_ (p), item_ (i)
 {
@@ -1478,17 +1691,17 @@ ACE_DNode<T>::~ACE_DNode (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 
-template <class T> size_t
+  template <class T> size_t
 ACE_Unbounded_Set<T>::size (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::size");
   return this->cur_size_;
 }
 
 template <class T> int
 ACE_Unbounded_Set<T>::insert_tail (const T &item)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+  // ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
   ACE_Node<T> *temp;
 
   // Insert <item> into the old dummy node location.
@@ -1575,7 +1788,7 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
 template <class T>
 ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::~ACE_Unbounded_Set");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::~ACE_Unbounded_Set");
 
   this->delete_nodes ();
 
@@ -1593,7 +1806,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
     cur_size_ (0),
     allocator_ (alloc)
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -1639,7 +1852,7 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 template <class T> int
 ACE_Unbounded_Set<T>::find (const T &item) const
 {
-// ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
+  // ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
   // Set <item> into the dummy node.
   this->head_->item_ = item;
 
@@ -1657,7 +1870,7 @@ ACE_Unbounded_Set<T>::find (const T &item) const
 template <class T> int
 ACE_Unbounded_Set<T>::insert (const T &item)
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
   if (this->find (item) == 0)
     return 1;
   else
@@ -1667,7 +1880,7 @@ ACE_Unbounded_Set<T>::insert (const T &item)
 template <class T> int
 ACE_Unbounded_Set<T>::remove (const T &item)
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::remove");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::remove");
 
   // Insert the item to be founded into the dummy node.
   this->head_->item_ = item;
@@ -1710,24 +1923,24 @@ ACE_Unbounded_Set<T>::end (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
 
-template <class T> void
+  template <class T> void
 ACE_Unbounded_Set_Iterator<T>::dump (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::dump");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::dump");
 }
 
 template <class T>
 ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end)
-    : current_ (end == 0 ? s.head_->next_ : s.head_ ),
-      set_ (&s)
+  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
+    set_ (&s)
 {
-// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
 }
 
 template <class T> int
 ACE_Unbounded_Set_Iterator<T>::advance (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::advance");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::advance");
   this->current_ = this->current_->next_;
   return this->current_ != this->set_->head_;
 }
@@ -1735,7 +1948,7 @@ ACE_Unbounded_Set_Iterator<T>::advance (void)
 template <class T> int
 ACE_Unbounded_Set_Iterator<T>::first (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::first");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::first");
   this->current_ = this->set_->head_->next_;
   return this->current_ != this->set_->head_;
 }
@@ -1751,7 +1964,7 @@ ACE_Unbounded_Set_Iterator<T>::done (void) const
 template <class T> int
 ACE_Unbounded_Set_Iterator<T>::next (T *&item)
 {
-// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::next");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::next");
   if (this->current_ == this->set_->head_)
     return 0;
   else
@@ -1814,21 +2027,21 @@ ACE_Unbounded_Set_Iterator<T>::operator!= (const ACE_Unbounded_Set_Iterator<T> &
 template <class T> void
 ACE_Unbounded_Stack_Iterator<T>::dump (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::dump");
+  // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::dump");
 }
 
 template <class T>
 ACE_Unbounded_Stack_Iterator<T>::ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &q)
-    : current_ (q.head_->next_),
-      stack_ (q)
+  : current_ (q.head_->next_),
+    stack_ (q)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::ACE_Unbounded_Stack_Iterator");
+  // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::ACE_Unbounded_Stack_Iterator");
 }
 
 template <class T> int
 ACE_Unbounded_Stack_Iterator<T>::advance (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::advance");
+  // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::advance");
   this->current_ = this->current_->next_;
   return this->current_ != this->stack_.head_;
 }
@@ -1836,7 +2049,7 @@ ACE_Unbounded_Stack_Iterator<T>::advance (void)
 template <class T> int
 ACE_Unbounded_Stack_Iterator<T>::first (void)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::first");
+  // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::first");
   this->current_ = this->stack_.head_->next_;
   return this->current_ != this->stack_.head_;
 }
@@ -1852,7 +2065,7 @@ ACE_Unbounded_Stack_Iterator<T>::done (void) const
 template <class T> int
 ACE_Unbounded_Stack_Iterator<T>::next (T *&item)
 {
-// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::next");
+  // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::next");
   if (this->current_ == this->stack_.head_)
     return 0;
   else
@@ -1866,14 +2079,14 @@ ACE_Unbounded_Stack_Iterator<T>::next (T *&item)
 ACE_ALLOC_HOOK_DEFINE(ACE_Ordered_MultiSet)
 
 
-template <class T>
+  template <class T>
 ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (ACE_Allocator *alloc)
   : head_ (0)
   , tail_ (0)
   , cur_size_ (0)
   , allocator_ (alloc)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -1897,7 +2110,7 @@ ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &us
 template <class T>
 ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet (void)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet");
 
   this->delete_nodes ();
 }
@@ -1919,7 +2132,7 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 template <class T> int
 ACE_Ordered_MultiSet<T>::insert (const T &item)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
 
   return  this->insert_from (item, this->head_, 0);
 }
@@ -1928,7 +2141,7 @@ template <class T> int
 ACE_Ordered_MultiSet<T>::insert (const T &item,
                                  ACE_Ordered_MultiSet_Iterator<T> &iter)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
 
   return  this->insert_from (item, iter.current_, &iter.current_);
 }
@@ -1936,7 +2149,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &item,
 template <class T> int
 ACE_Ordered_MultiSet<T>::remove (const T &item)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet<T>::remove");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::remove");
 
   ACE_DNode<T> *node = 0;
 
@@ -1944,33 +2157,33 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
 
   // if we found the node, remove from list and free it
   if (node && (result == 0))
-  {
-    if (node->prev_)
     {
-      node->prev_->next_ = node->next_;
-    }
-    else
-    {
-      head_ = node->next_;
-    }
+      if (node->prev_)
+        {
+          node->prev_->next_ = node->next_;
+        }
+      else
+        {
+          head_ = node->next_;
+        }
 
-    if (node->next_)
-    {
-      node->next_->prev_ = node->prev_;
-    }
-    else
-    {
-      tail_ = node->prev_;
-    }
+      if (node->next_)
+        {
+          node->next_->prev_ = node->prev_;
+        }
+      else
+        {
+          tail_ = node->prev_;
+        }
 
-    this->cur_size_--;
+      this->cur_size_--;
 
-    ACE_DES_FREE_TEMPLATE (node,
-                           this->allocator_->free,
-                           ACE_DNode,
-                           <T>);
-    return 0;
-  }
+      ACE_DES_FREE_TEMPLATE (node,
+                             this->allocator_->free,
+                             ACE_DNode,
+                             <T>);
+      return 0;
+    }
 
   return -1;
 }
@@ -1985,10 +2198,10 @@ ACE_Ordered_MultiSet<T>::find (const T &item,
 
   // if we found the node, update the iterator and indicate success
   if (node && (result == 0))
-  {
-    iter.current_ = node;
-    return 0;
-  }
+    {
+      iter.current_ = node;
+      return 0;
+    }
 
   return -1;
 }
@@ -2006,31 +2219,31 @@ ACE_Ordered_MultiSet<T>::reset (void)
 template <class T> void
 ACE_Ordered_MultiSet<T>::dump (void) const
 {
-//  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
-//
-//  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
-//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
-//
-//  T *item = 0;
-//  size_t count = 1;
-//
-//  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
-//       iter.next (item) != 0;
-//       iter.advance ())
-//    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
-//
-//  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
+  //
+  //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  //
+  //  T *item = 0;
+  //  size_t count = 1;
+  //
+  //  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
+  //       iter.next (item) != 0;
+  //       iter.advance ())
+  //    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
+  //
+  //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 template <class T> int
 ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
                                       ACE_DNode<T> **new_position)
 {
-// ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+  // ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
 
-    // create a new node
+  // create a new node
   ACE_DNode<T> *temp;
   ACE_NEW_MALLOC_RETURN (temp,
                          (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
@@ -2042,70 +2255,70 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 
   // if there are nodes in the multiset
   if (position)
-  {
-    switch (result)
     {
-      // insert after the approximate position
-      case -1:
-
-        // if there is a following node
-        if (position->next_)
+      switch (result)
         {
-          // link up with the following node
-          position->next_->prev_ = temp;
-          temp->next_ = position->next_;
-        }
-        else
-        {
-          // appending to the end of the set
-          tail_ = temp;
-        }
+          // insert after the approximate position
+        case -1:
 
-        // link up with the preceeding node
-        temp->prev_ = position;
-        position->next_ = temp;
+          // if there is a following node
+          if (position->next_)
+            {
+              // link up with the following node
+              position->next_->prev_ = temp;
+              temp->next_ = position->next_;
+            }
+          else
+            {
+              // appending to the end of the set
+              tail_ = temp;
+            }
 
-        break;
-
-      // insert before the position
-      case  0:
-      case  1:
-
-        // if there is a preceeding node
-        if (position->prev_)
-        {
           // link up with the preceeding node
-          position->prev_->next_ = temp;
-          temp->prev_ = position->prev_;
+          temp->prev_ = position;
+          position->next_ = temp;
+
+          break;
+
+          // insert before the position
+        case  0:
+        case  1:
+
+          // if there is a preceeding node
+          if (position->prev_)
+            {
+              // link up with the preceeding node
+              position->prev_->next_ = temp;
+              temp->prev_ = position->prev_;
+            }
+          else
+            {
+              // prepending to the start of the set
+              head_ = temp;
+            }
+
+          // link up with the preceeding node
+          temp->next_ = position;
+          position->prev_ = temp;
+
+          break;
+
+        default:
+          return -1;
         }
-        else
-        {
-          // prepending to the start of the set
-          head_ = temp;
-        }
-
-        // link up with the preceeding node
-        temp->next_ = position;
-        position->prev_ = temp;
-
-        break;
-
-      default:
-        return -1;
     }
-  }
   else
-  {
-    // point the head and tail to the new node.
-    this->head_ = temp;
-    this->tail_ = temp;
-  }
+    {
+      // point the head and tail to the new node.
+      this->head_ = temp;
+      this->tail_ = temp;
+    }
 
   this->cur_size_++;
   if (new_position)
-  {
-    *new_position = temp;
-  }
+    {
+      *new_position = temp;
+    }
 
   return 0;
 }
@@ -2115,56 +2328,56 @@ ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
                                  ACE_DNode<T> *&new_position) const
 {
   if (! start_position)
-  {
-    start_position = this->head_;
-  }
+    {
+      start_position = this->head_;
+    }
 
   // if starting before the item, move forward
   // until at or just before item
   while (start_position && start_position->item_ < item &&
          start_position->next_)
-  {
-    start_position = start_position->next_;
-  }
+    {
+      start_position = start_position->next_;
+    }
 
   // if starting after the item, move back
   // until at or just after item
   while (start_position && item < start_position->item_ &&
          start_position->prev_)
-  {
-    start_position = start_position->prev_;
-  }
+    {
+      start_position = start_position->prev_;
+    }
 
   // save the (approximate) location in the passed pointer
   new_position = start_position;
 
   // show the location is after (1), before (-1) , or at (0) the item
   if (! new_position )
-  {
-    return 1;
-  }
+    {
+      return 1;
+    }
   else if (item < new_position->item_)
-  {
-    return 1;
-  }
+    {
+      return 1;
+    }
   else if (new_position->item_ < item)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
-  // looks for first occurance of <item> in the ordered set, using the
-  // passed starting position as a hint: if there is such an instance, it
-  // updates the new_position pointer to point to one such node and returns 0;
-  // if there is no such node, then if there is a node before where the
-  // item would have been, it updates the new_position pointer to point
-  // to this node and returns -1; if there is no such node, then if there
-  // is a node after where the item would have been, it updates the
-  // new_position pointer to point to this node (or 0 if there is no such
-  // node) and returns 1;
+// looks for first occurance of <item> in the ordered set, using the
+// passed starting position as a hint: if there is such an instance, it
+// updates the new_position pointer to point to one such node and returns 0;
+// if there is no such node, then if there is a node before where the
+// item would have been, it updates the new_position pointer to point
+// to this node and returns -1; if there is no such node, then if there
+// is a node after where the item would have been, it updates the
+// new_position pointer to point to this node (or 0 if there is no such
+// node) and returns 1;
 
 template <class T> void
 ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
@@ -2174,9 +2387,9 @@ ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
   for (ACE_DNode<T> *curr = us.head_;
        curr;
        curr = curr->next_)
-  {
-    this->insert_from (curr->item_, insertion_point, &insertion_point);
-  }
+    {
+      this->insert_from (curr->item_, insertion_point, &insertion_point);
+    }
 }
 
 template <class T> void
@@ -2202,30 +2415,30 @@ ACE_Ordered_MultiSet<T>::delete_nodes (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Ordered_MultiSet_Iterator)
 
-template <class T>
+  template <class T>
 ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s)
-    : current_ (s.head_),
-      set_ (s)
+  : current_ (s.head_),
+    set_ (s)
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator");
+  // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator");
 }
 
- template <class T> int
+template <class T> int
 ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
 {
-// ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::next");
+  // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::next");
   if (this->current_)
-  {
-    item = &this->current_->item_;
-    return 1;
-  }
+    {
+      item = &this->current_->item_;
+      return 1;
+    }
 
   return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 
-template <class T> T *
+  template <class T> T *
 ACE_DLList<T>::insert_tail (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
@@ -2243,9 +2456,9 @@ ACE_DLList<T>::insert_head (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
   ACE_NEW_MALLOC_RETURN (
-    temp1,
-    (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
-    ACE_DLList_Node ((void *&)new_item), 0);
+                         temp1,
+                         (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
+                         ACE_DLList_Node ((void *&)new_item), 0);
 
   temp2 = ACE_DLList_Base::insert_head (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
@@ -2328,9 +2541,9 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
 
 template <class T>
 ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
-   : max_size_ (s.size ()),
-     cur_size_ (s.size ()),
-     allocator_ (s.allocator_)
+  : max_size_ (s.size ()),
+    cur_size_ (s.size ()),
+    allocator_ (s.allocator_)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -2391,15 +2604,15 @@ ACE_Array_Base<T>::set (const T &new_item, size_t slot)
 template <class T> int
 ACE_Array_Base<T>::get (T &item, size_t slot) const
 {
-   if (this->in_range (slot))
-     {
-       // Copies the item.  If you don't want to copy, use operator []
-       // instead (but then you'll be responsible for range checking).
-       item = this->array_[slot];
-       return 0;
-     }
-   else
-     return -1;
+  if (this->in_range (slot))
+    {
+      // Copies the item.  If you don't want to copy, use operator []
+      // instead (but then you'll be responsible for range checking).
+      item = this->array_[slot];
+      return 0;
+    }
+  else
+    return -1;
 }
 
 template<class T> int
@@ -2415,7 +2628,7 @@ ACE_Array_Base<T>::max_size (size_t new_size)
                              -1);
 
       for (size_t i = 0; i < this->cur_size_; ++i)
-         new (&tmp[i]) T (this->array_[i]);
+        new (&tmp[i]) T (this->array_[i]);
 
       // Initialize the new portion of the array that exceeds the
       // previously allocated section.
