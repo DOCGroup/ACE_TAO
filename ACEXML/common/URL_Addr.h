@@ -53,7 +53,7 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
-  virtual int string_to_addr (const char *address);
+  virtual int string_to_addr (const ACEXML_Char* address);
 
   /**
    *  Transform the current <ACE_INET_Addr> address into string format. If
@@ -78,7 +78,7 @@ public:
    *  allocated on demand and deallocated when the object is destroyed.
    *  Returns -1 if dynamic memory fails, else 0.
    */
-  virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1) const;
+  virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1);
 
   /// Assignment operator.
   void operator= (const ACEXML_URL_Addr &addr);
@@ -105,6 +105,10 @@ public:
   int destroy (void);
 
 private:
+
+  /// Calculate the maximum length of the address string
+  size_t calculate_length (int ipaddr_format) const;
+
   /// Our path name.
   ACEXML_Char *path_name_;
 
@@ -116,6 +120,9 @@ private:
   size_t addr_string_len_;
 };
 
+#if defined (__ACEXML_INLINE__)
+# include "ACEXML/common/URL_Addr.inl"
+#endif /* __ACEXML_INLINE__ */
 
 #include "ace/post.h"
 

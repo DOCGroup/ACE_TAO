@@ -1,3 +1,19 @@
+Tue Sep 03 22:40:22 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/HttpCharStream.cpp:
+
+          Handle WCHAR properly when getting data from URLs.
+
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/URL_Addr.h:
+        * ACEXML/common/URL_Addr.inl:
+
+          Fixes for proper parsing of URLs when URLs are WCHARs.
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Use int in GetOpt instead of char or ACEXML_Char.
+
 Tue Sep  3 17:12:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.cpp (num_processors_online):
