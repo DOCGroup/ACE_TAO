@@ -10,6 +10,7 @@ DIRS = \
         Multicast_Full_Profile \
         Pluggable \
         Simple_Three_Stage \
-        Simple_Two_Stage
+        Simple_Two_Stage \
+        Simple_Two_Stage_With_QoS
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
