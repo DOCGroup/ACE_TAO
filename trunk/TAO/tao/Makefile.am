@@ -698,7 +698,7 @@ nobase_include_HEADERS += \
   Connection_Purging_Strategy.inl \
   Connector_Impl.inl \
   Connector_Registry.i \
-  CurrentC.i \
+  CurrentC.inl \
   DLL_Parser.i \
   Default_Collocation_Resolver.i \
   Default_Protocols_Hooks.i \
