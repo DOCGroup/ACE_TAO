@@ -1,3 +1,12 @@
+Wed Apr 25 18:32:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ACE-INSTALL.html: Make sure to mention that ACE (and TAO) run
+	  on Solaris 8.  Thanks to Richard Hardgrave
+ 	  <hardgrav@ttd.teradyne.com> for motivating this.
+
+	* include/makeinclude: Zapped the platform_sunos5_egcs.GNU
+	  file.  Thanks to Craig Rodrigues for the suggestion.
+
 Wed Apr 25 15:30:18 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp: The reference counter needs to be release
