@@ -29,11 +29,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
 
-  template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
                                                  ACE_Allocator *alloc)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+
+  // Close old map (if any).
+  this->close_i ();
 
   // Use the user specified allocator or the default singleton one.
   if (alloc == 0)
@@ -44,14 +47,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
   // This assertion is here to help track a situation that shouldn't
   // happen.
   ACE_ASSERT (size != 0);
-
-  // Reset circular occupied list.
-  this->occupied_list_.next (this->occupied_list_id ());
-  this->occupied_list_.prev (this->occupied_list_id ());
-
-  // Reset circular free list.
-  this->free_list_.next (this->free_list_id ());
-  this->free_list_.prev (this->free_list_id ());
 
   // Resize from 0 to <size>.  Note that this will also set up the
   // circular free list.
