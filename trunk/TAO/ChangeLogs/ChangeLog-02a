@@ -1,7 +1,13 @@
-Mon Jan 14 08:20:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+Mon Jan 14 09:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
           Added Request_Dispatcher
+
+        * tao/orbsvcs/tests/Makefile.bor:
+          Added new Miop directory
+
+        * tao/orbsvcs/tests/Miop/Makefile.bor:
+          Added new BCB makefile
 
 Sun Jan 13 21:50:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
