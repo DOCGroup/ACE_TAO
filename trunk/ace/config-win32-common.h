@@ -455,6 +455,14 @@ typedef unsigned __int64 ACE_UINT64;
 // At least for Win32 - MSVC compiler (ver. 5)
 #define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
 
+// Try to make a good guess whether we are compiling with the newer version
+// of WinSock 2 that has GQOS support.
+#if !defined (ACE_HAS_WINSOCK2_GQOS)
+#  if defined (WINSOCK_VERSION) 
+#    define ACE_HAS_WINSOCK2_GQOS 1
+#  endif /* WINSOCK_VERSION */
+#endif /* ACE_HAS_WINSOCK2_GQOS */
+
 // Borland C++ compiler.
 #include /**/ <ace/config-win32-borland.h>
 
