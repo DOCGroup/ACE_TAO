@@ -1,7 +1,7 @@
 1998-05-15  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
-	(delete_all_properties): Removed the warning by having _out
+	(delete_all_properties): Removed the warnings by having _out
 	variables instead of having _var variables.
 
 1998-05-15  Torben Worm  <tworm@cumbia.cs.wustl.edu>
