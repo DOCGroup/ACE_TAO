@@ -1,3 +1,25 @@
+Wed Nov 12 23:59:29 1997    <nw1@COYOTE>
+
+	* TAO/TAO_IDL/tao_idl.dsp: Changed to generate multithreaded codes
+ 	  on NT.
+	
+	* TAO/TAO_IDL/be/be_scope.cpp:
+	* TAO/TAO_IDL/fe/lex.yy.cpp:
+	* TAO/TAO_IDL/fe/y.tab.cpp:
+	* TAO/TAO_IDL/include/ast_decl.h:
+	* TAO/TAO_IDL/include/idl.h:
+	* TAO/TAO_IDL/include/utl_identifier.h:
+	* TAO/TAO_IDL/include/utl_idlist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_decllist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_exceptlist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_exprlist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_idlist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_labellist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_namelist.h:
+	* TAO/TAO_IDL/include/utl_tmpl/utl_strlist.h:  Changed to use
+	  "ace/stdcpp.h" and removed inclusion of header files that
+	  conflict with standard C++ library. 
+	
 Wed Nov 12 18:59:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/iioporb.cpp: Added call to set object address in Profile.
