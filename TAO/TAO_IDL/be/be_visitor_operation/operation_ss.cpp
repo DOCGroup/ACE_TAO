@@ -238,7 +238,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     }
 
   // Skip marshalling on location forward
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
       << "{" << be_idt;
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */"<< be_nl;
@@ -300,7 +300,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       << "}" << be_uidt;
 
   // End of scope: Skip marshalling on location forward
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)"
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1"
       << be_uidt_nl << "}" << be_uidt;
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
@@ -393,7 +393,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   this->gen_skel_body_arglist (node, os);
 
   *os << be_nl << be_nl
-      << "TAO::Argument * _tao_args [] =" << be_idt_nl
+      << "TAO::Argument * const _tao_args [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
 

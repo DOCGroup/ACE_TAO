@@ -1,52 +1,51 @@
-//
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
 //    TAO IDL
 //
 // = FILENAME
-//    interceptors_ss.cpp
+//    upcall_command_ss.cpp
 //
 // = DESCRIPTION
-//    This provides code generation for interceptor classes for an
-//    interface in the server source.
+//    Visitor that generates operation-specific TAO::Upcall_Command
+//    objects in skeletons.
 //
 // = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//    Ossama Othman
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interceptors_ss, 
+
+ACE_RCSID (be_visitor_interface,
+           upcall_command_ss,
            "$Id$")
 
 // ************************************************************
 //  interceptor class in header
 // ************************************************************
 
-be_visitor_interface_interceptors_ss::be_visitor_interface_interceptors_ss (
-    be_visitor_context *ctx
-  )
+be_visitor_interface_upcall_command_ss
+::be_visitor_interface_upcall_command_ss (be_visitor_context * ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_interceptors_ss::~be_visitor_interface_interceptors_ss (
-    void
-  )
+be_visitor_interface_upcall_command_ss
+::~be_visitor_interface_upcall_command_ss (void)
 {
 }
 
-int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
+int
+be_visitor_interface_upcall_command_ss::visit_interface (be_interface * node)
 {
   if (node->is_local ())
     {
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
@@ -55,8 +54,6 @@ int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
-  *os << be_nl << be_nl 
-      << "#if (TAO_HAS_INTERCEPTORS == 1)";
 
   os->reset ();
 
@@ -66,50 +63,46 @@ int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_ch::"
+                         "(%N:%l) be_visitor_interface_upcall_command_ss::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
-
-  *os  << "\n\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
 }
 
-int 
-be_visitor_interface_interceptors_ss::visit_component (be_component *node)
+int
+be_visitor_interface_upcall_command_ss::visit_component (be_component * node)
 {
   return this->visit_interface (node);
 }
 
-int 
-be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
-    be_interface *node,
-    be_interface *base,
-    TAO_OutStream *os
-  )
+int
+be_visitor_interface_upcall_command_ss::gen_abstract_ops_helper (
+  be_interface * node,
+  be_interface * base,
+  TAO_OutStream * os)
 {
   if (!base->is_abstract ())
     {
       return 0;
     }
 
-  AST_Decl *d = 0;
   be_visitor_context ctx;
   ctx.stream (os);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {
-      d = si.item ();
+      AST_Decl * const d = si.item ();
 
       if (d == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_interceptors_ss::"
+                             "(%N:%l) be_visitor_interface_upcall_command_ss::"
                              "gen_abstract_ops_helper - "
                              "bad node in this scope\n"),
                             -1);
@@ -136,7 +129,7 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
           new_op.set_name (base);
-          be_visitor_operation_interceptors_ss op_visitor (&ctx);
+          be_visitor_operation_upcall_command_ss op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
         }
       else if (d->node_type () == AST_Decl::NT_attr)
@@ -163,4 +156,3 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
 
   return 0;
 }
-

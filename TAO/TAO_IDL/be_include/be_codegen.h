@@ -56,8 +56,6 @@ public:
 
       // Emitting code for arguments of an operation. No distinction between
       // headers, inlines, stubs.
-      TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS,     // ... server source
-      TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS,    // ... server source
       TAO_ARGUMENT_COLLOCATED_UPCALL_SS,        // passing argument
       // variable to upcall
 
@@ -72,8 +70,8 @@ public:
       TAO_INTERFACE_CH,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
-      TAO_INTERFACE_INTERCEPTORS_SH,
-      TAO_INTERFACE_INTERCEPTORS_SS,
+
+      TAO_INTERFACE_UPCALL_COMMAND_SS,
 
       TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH,
       TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS,
@@ -104,13 +102,6 @@ public:
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
 
-      TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
-      TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,  // create the exceptionlist on demand
-      TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,  // private member list list for request info
-      TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
-      TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
-      TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,  // private member list list for request info                                                                  // ... for server source
-
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
       // in client/server  header
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
@@ -129,7 +120,6 @@ public:
       TAO_OPERATION_ARG_UPCALL_SS,            // variables to upcall
       TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS, // variables to upcall for
       // collocated op
-      TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS, // Interceptor args
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
       TAO_OBV_OPERATION_ARGLIST_CS,           // used only for AMH exceptions

@@ -1622,6 +1622,10 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Operation_Table.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Upcall_Command.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Upcall_Wrapper.h");
 
   this->gen_skel_arg_file_includes (this->server_skeletons_);
 

@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_attribute, 
-           attribute, 
+ACE_RCSID (be_visitor_attribute,
+           attribute,
            "$Id$")
 
 // Attribute gets mapped to one or possibly two operations based on whether
@@ -147,15 +147,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
       {
-        be_visitor_operation_interceptors_sh visitor (&ctx);
-        status = get_op.accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
-      {
-        be_visitor_operation_interceptors_ss visitor (&ctx);
+        be_visitor_operation_upcall_command_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
@@ -328,15 +322,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
       {
-        be_visitor_operation_interceptors_sh visitor (&ctx);
-        status = set_op.accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
-      {
-        be_visitor_operation_interceptors_ss visitor (&ctx);
+        be_visitor_operation_upcall_command_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }

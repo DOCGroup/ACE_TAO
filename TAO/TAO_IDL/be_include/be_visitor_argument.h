@@ -1,6 +1,6 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -33,9 +33,5 @@
 #include "be_visitor_argument/marshal_ss.h"
 #include "be_visitor_argument/invoke_cs.h"
 #include "be_visitor_argument/paramlist.h"
-#include "be_visitor_argument/request_info_sh.h"
-#include "be_visitor_argument/request_info_ss.h"
-#include "be_visitor_argument/request_info_result.h"
-#include "be_visitor_argument/request_info_arglist.h"
 
 #endif /* _BE_VISITOR_ARGUMENT_H */

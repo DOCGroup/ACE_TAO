@@ -74,6 +74,7 @@
 #include "be_visitor_operation/rettype_vardecl_ss.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
+#include "be_visitor_operation/upcall_command_ss.cpp"
 
 // AMI
 #include "be_visitor_operation/ami_ch.cpp"
@@ -85,14 +86,6 @@
 // Smart proxy
 #include "be_visitor_operation/smart_proxy_ch.cpp"
 #include "be_visitor_operation/smart_proxy_cs.cpp"
-
-// Interceptors
-#include "be_visitor_operation/interceptors_arglist.cpp"
-#include "be_visitor_operation/interceptors_sh.cpp"
-#include "be_visitor_operation/interceptors_ss.cpp"
-#include "be_visitor_operation/interceptors_exceptlist.cpp"
-#include "be_visitor_operation/interceptors_info_rettype.cpp"
-#include "be_visitor_operation/interceptors_result.cpp"
 
 // Collocation
 #include "be_visitor_operation/proxy_impl_xh.cpp"
