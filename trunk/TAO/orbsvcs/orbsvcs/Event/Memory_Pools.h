@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    ORB Services
-//
-// = FILENAME
-//    Memory_Pools
-//
-// = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Memory_Pools
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison (harrison@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef ACE_MEMORY_POOLS_H
 #define ACE_MEMORY_POOLS_H
@@ -43,12 +39,14 @@ typedef char
 typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>
         _ACE_Dispatch_Request_Allocator;
 
+/**
+ * @class ACE_ES_Dispatch_Request_Allocator
+ *
+ * @brief Dispatch Request Allocator
+ *
+ * This just sets the size of the Event Container memory pool.
+ */
 class TAO_RTOLDEvent_Export ACE_ES_Dispatch_Request_Allocator : public _ACE_Dispatch_Request_Allocator
-// = TITLE
-//     Dispatch Request Allocator
-//
-// = DESCRIPTION
-//     This just sets the size of the Event Container memory pool.
 {
 public:
   ACE_ES_Dispatch_Request_Allocator (void) :
@@ -59,19 +57,23 @@ public:
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, TAO_SYNCH_MUTEX> ACE_ES_Event_Allocator;
 
+/**
+ * @class ACE_ES_Memory_Pools
+ *
+ * @brief Event Service Memory Pools.
+ *
+ * These have to be static in order to be accessed by operator
+ * news, right?
+ */
 class TAO_RTOLDEvent_Export ACE_ES_Memory_Pools
-// = TITLE
-//     Event Service Memory Pools.
-//
-// = DESCRIPTION
-//     These have to be static in order to be accessed by operator
-//     news, right?
 {
 public:
+  /**
+   * This can be called by every thread that will access these memory
+   * pools to preallocate the thread specific allocators.  It is not
+   * mandatory.
+   */
   static int thr_init (void);
-  // This can be called by every thread that will access these memory
-  // pools to preallocate the thread specific allocators.  It is not
-  // mandatory.
 
   static void *new_Dispatch_Request (void);
   static void delete_Dispatch_Request (void *);
