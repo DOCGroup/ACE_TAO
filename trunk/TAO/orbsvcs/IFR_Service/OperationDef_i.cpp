@@ -337,7 +337,7 @@ TAO_OperationDef_i::params_i (const IR_ParDescriptionSeq &params,
                                                 "name",
                                                 params[i].name.in ());
       PortableServer::ObjectId_var oid = 
-        this->repo_->ir_poa ()->reference_to_id (params[i].type_def,
+        this->repo_->ir_poa ()->reference_to_id (params[i].type_def.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK;
 

@@ -374,7 +374,7 @@ TAO_UnionDef_i::members_i (const IR_UnionMemberSeq &members,
                                                 members[i].name.in ());
 
       PortableServer::ObjectId_var oid = 
-        this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
+        this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK;
 
