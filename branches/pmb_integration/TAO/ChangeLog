@@ -1,11 +1,38 @@
+Mon Dec  6 13:44:51 2004  Mike Martinez  <martinez_m@ociweb.com>
+
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Pluggable_Messaging.h:
+
+          Added set_request_id_from_peek() method to perform actual
+          request ID parsing.  Maintained current mechanism (which
+          incorrectly estimates the GIOP1.0 and GIOP1.1 request ID
+          value).
+
+        * tao/GIOP_Message_Base.cpp:
+
+          More cleanup.  Moved InputCDR from heap to stack.
+
+        * tao/Transport.h:
+
+          Removed locking strategy to let the default ORB strategy be
+          used only.
+
+        * tao/Transport.cpp:
+
+          More cleanup.  Pushed request ID parsing down into messaging
+          object.
+
 Wed Dec  1 13:06:29 2004  Mike Martinez  <martinez_m@ociweb.com>
 
         * tao/GIOP_Message_Base.cpp ( process_request, process_locate_request):
-          
+
           Added new diagnostics.
 
         * tao/GIOP_Message_Base.cpp ( process_request_message, process_reply_message):
-          
+
           Added new diagnostics.  Added check for alignment with respect
           to original header instead of message data after GIOP header.
           When re-aligning, force the intial offset to correspond to the
@@ -23,17 +50,17 @@ Wed Dec  1 13:06:29 2004  Mike Martinez  <martinez_m@ociweb.com>
           inlined read_ulong.
 
         * tao/Transport.cpp( handle_input):
-          
+
           Aligned read buffer before use.
           Cleaned up and added diagnostic messages.  Conditional debug
           code.  Removed some dead code.
 
         * tao/Transport.cpp( enqueue_incoming_message):
-          
+
           Peek at request Id to initialize TAO_Queued_Data object.
 
         * tao/Transport.cpp( parse_queue_head, process_parsed_messages):
-          
+
           Cleaned up diagnostics, added more conditions to diagnostic
           generation.
 

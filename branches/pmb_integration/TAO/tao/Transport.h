@@ -967,8 +967,6 @@ private:
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
   CORBA::Boolean first_request_;
-
-  ACE_Lock* data_locking_strategy_; // SYNCH or NULL
 };
 
 /**

@@ -129,7 +129,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , wchar_translator_ (0)
   , tcs_set_ (0)
   , first_request_ (1)
-  , data_locking_strategy_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -139,12 +138,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
   // Create TMS now.
   this->tms_ = cf->create_transport_mux_strategy (this);
-
-#ifdef MIKE_SEZ_COPYIT
-  this->data_locking_strategy_ = new ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ;
-#else  // MIKE_SEZ_COPYIT
-  this->data_locking_strategy_ = this->orb_core_->locking_strategy() ;
-#endif // MIKE_SEZ_COPYIT
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -169,10 +162,6 @@ TAO_Transport::~TAO_Transport (void)
   // *must* have been cleaned up.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
-
-#ifdef MIKE_SEZ_COPYIT
-  delete this->data_locking_strategy_ ;
-#endif // MIKE_SEZ_COPYIT
 }
 
 void
@@ -1185,29 +1174,6 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   return 0;
 }
 
-#define DEBUG_PMB_CODE
-#ifdef DEBUG_PMB_CODE
-static void
-dump_db_refcounts(
-  const ACE_Message_Block* b
-)
-{
-  const ACE_Data_Block* d = b->data_block() ;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("---Chain ref count: "))) ;
-  for( ; b ; b = b->cont()) {
-    if( b->data_block() != d) {
-      d = b->data_block() ;
-    }
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%@) %d, "),
-                  d, d->reference_count()
-              )) ;
-
-  }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n"))) ;
-}
-#endif // DEBUG_PMB_CODE
-
 int
 TAO_Transport::queue_message_i(const ACE_Message_Block *message_block)
 {
@@ -1296,10 +1262,10 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                             ->malloc( sizeof(ACE_Data_Block)),
       ACE_Data_Block(
         4*TAO_MAXBUFSIZE,             // S/B tunable
-                     ACE_Message_Block::MB_DATA,
+        ACE_Message_Block::MB_DATA,
         0,                            // Create new buffer on heap
-                     this->orb_core_->input_cdr_buffer_allocator (),
-        this->data_locking_strategy_, // SYNCH or NULL
+        this->orb_core_->input_cdr_buffer_allocator (),
+        this->orb_core_->locking_strategy (),
         0,                            // flags -- on the heap and fully owned!
         this->orb_core_->input_cdr_dblock_allocator()
       ),
@@ -1356,6 +1322,9 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
 // #define NO_RETRY_ON_EMPTY_HANDLE
 #ifdef NO_RETRY_ON_EMPTY_HANDLE
       } else {
+        //
+        // @todo: Determine the desired action here -- ask Chris.
+        //
         partial = false ;
 #endif // NO_RETRY_ON_EMPTY_HANDLE
 
@@ -1433,22 +1402,22 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         }
 
         if (TAO_debug_level > 3)
-                    {
-                      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
-                  ACE_TEXT("processed %d header bytes, header is %s.\n"),
-                  this->id (), current_block->length(),
-                  (partial == true) ? ACE_TEXT("incomplete") : ACE_TEXT("complete")
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+              ACE_TEXT("processed %d header bytes, header is %s.\n"),
+              this->id (), current_block->length(),
+              (partial == true) ? ACE_TEXT("incomplete") : ACE_TEXT("complete")
             ));
-                }
+          }
 
         if (TAO_debug_level >= 10)
-                    {
+          {
             ACE_HEX_DUMP ((LM_DEBUG,
                           (const char *) current_block->rd_ptr(),
                           current_block->length(),
                           ACE_TEXT ("handle data")));
-                    }
+          }
 
         //
         // Install the new block appropriately.
@@ -1495,7 +1464,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
             //
             location->cont( current_block) ;
           }
-
         }
 
         //
@@ -1633,7 +1601,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         data_left_in_buffer -= wanted_size ;
         this->current_message_->missing_data_bytes_ = 0 ;
         this->current_message_->current_state_ = TAO_Queued_Data::COMPLETED ;
-        }
+      }
 
       if (TAO_debug_level > 3)
         {
@@ -1644,7 +1612,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                 ACE_TEXT("%d bytes left to read to complete message.\n"),
                 this->id (), current_block->length(), data_left_in_buffer,
                 this->current_message_->missing_data_bytes_
-		     ));
+                     ));
         }
 
       if (TAO_debug_level >= 10)
@@ -1692,7 +1660,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       if( this->current_message_->current_state_
           == TAO_Queued_Data::COMPLETED
         ) {
-#ifndef BOGUS
         //
         // Remove and release the header from the queued message.
         // This works since we are assured that the header has been
@@ -1703,7 +1670,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
           = this->current_message_->msg_block_->cont() ;
         current_block->cont( 0) ;
         current_block->release() ;
-#endif // BOGUS
 
         if (TAO_debug_level > 3)
           {
@@ -1711,21 +1677,12 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                 ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
                 ACE_TEXT("enqueueing message for processing.\n"),
                 this->id ()));
-#ifdef BOGUS
-            ACE_DEBUG ((LM_DEBUG,"---Data block ref count: %d\n",
-                       this->current_message_
-                           ->msg_block_->cont()
-                           ->data_block()
-                           ->reference_count()
-                      )) ;
-#else // BOGUS
             ACE_DEBUG ((LM_DEBUG,"---Data block ref count: %d\n",
                        this->current_message_
                            ->msg_block_
                            ->data_block()
                            ->reference_count()
                       )) ;
-#endif // BOGUS
           }
 
         if (TAO_debug_level >= 10)
@@ -1757,8 +1714,16 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
   }
 
+  //
+  // @todo: Need to determine whether to process the queue head if we
+  //        are left with a partial message.  If we have a partial
+  //        message, we will process the messages on the queue, then
+  //        wait for more input.  This is regardless of wheter we have a
+  //        partial or not -- not sure if the calling code needs to know
+  //        that we have a partial message waiting to complete or not.
+  //
   int processing_results = 0 ;
-  if( (message_enqueued == true) && (partial == false)) {
+  if( (message_enqueued == true) ){// && (partial == false)) {
                                     // because of return val?
     processing_results = this->process_queue_head( rh) ;
   }
@@ -1792,23 +1757,13 @@ TAO_Transport::enqueue_incoming_message (TAO_Queued_Data *queueable_message)
   TAO_Queued_Data *fragment_message = 0;
 
   //
-  // No message block is probably a close connection message.
+  // Peek at the request ID since we may need that to find any
+  // previous fragments.
   //
-  if( queueable_message->msg_block_ != 0) {
-    //
-    // Grab the message request ID.  This should likely be moved out of
-    // the transport and into the protocol processing.
-    //
-    queueable_message->request_id_
-      = TAO_GIOP_Message_State::read4(
-#ifdef BOGUS
-          queueable_message->msg_block_->cont()->rd_ptr(),
-#else // BOGUS
-          queueable_message->msg_block_->rd_ptr(),
-#endif // BOGUS
-          queueable_message->byte_order_
-        ) ;
-  }
+  this->messaging_object()->set_request_id_from_peek(
+                              queueable_message,
+                              queueable_message->msg_block_
+                            );
 
   switch(whole)
     {
@@ -1960,7 +1915,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       qd->dump_msg( "dispatching") ;
     }
 
-//  int result = 0;
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {
       if (TAO_debug_level > 0)
@@ -2010,8 +1964,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           return -1;
         }
 
-/************************************************************************
-*/
       int result = this->tms ()->dispatch_reply (params);
 
       if (result == -1)
@@ -2026,9 +1978,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 
           return -1;
         }
-/*
-************************************************************************/
-
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {
@@ -2068,14 +2017,6 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 
   if (this->incoming_message_queue_.is_head_complete () != 1)
     return 1;
-
-  if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - Transport[%d]::process_queue_head  ")
-                  ACE_TEXT("processing a complete message.\n"),
-                  this->id ()));
-    }
 
   // Get the message on the head of the queue..
   TAO_Queued_Data *qd =
@@ -2137,23 +2078,6 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 
   // Process the message...
   int retval = this->process_parsed_messages (qd, rh);
-
-#define DEBUG_PMB_CODE
-#ifdef DEBUG_PMB_CODE
-  if( qd == 0) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input: processed a NULL message?\n"),
-                this->id ()));
-
-  } else if( qd->msg_block_ == 0) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input: processed message with no data.\n"),
-                this->id ()));
-
-  } else if( qd->msg_block_->data_block()->reference_count() == 0) {
-        dump_db_refcounts( qd->msg_block_) ;
-  }
-#endif // DEBUG_PMB_CODE
 
   // Delete the Queued_Data..
   TAO_Queued_Data::release (qd);
