@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "ace/OS_NS_string.h"
 
 int main(int argc, char** argv)
 {  

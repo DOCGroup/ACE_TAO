@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Loader,

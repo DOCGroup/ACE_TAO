@@ -234,17 +234,6 @@ typedef void *ACE_MALLOC_T;
 
 #include "ace/OS_NS_stdlib.h"
 
-/**
- * @namespace ACE_OS_Memory
- *
- * @brief This class is a wrapper for dynamic memory operations.
- *
- */
-#define ACE_OS_Memory ACE_OS
-namespace ACE_OS
-{
-} /* namespace ACE_OS */
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE

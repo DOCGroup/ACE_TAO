@@ -1,3 +1,16 @@
+Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_Dirent.h:
+        * ace/OS_Memory.h:
+        * ace/OS_String.h:
+        * ace/OS_TLI.h:
+        * ace/config-all.h:
+          Moved the #defines of ACE_OS_String, ACE_OS_Memory,
+          ACE_OS_Dirent, and ACE_OS_TLI to config-all.h.  This makes it
+          easier for older code that may still use these old class names
+          to continue to compile even though the header refactoring has
+          eliminated the old empty headers.
+
 Tue Nov  4 15:38:01 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Makefile.am (HEADER_FILES):

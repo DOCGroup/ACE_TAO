@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "CC_naming_service.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Concurrency, CC_naming_service, "$Id$")
 

@@ -124,12 +124,11 @@ extern "C" int _xti_error(char *);
 # endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
 /**
- * @namespace ACE_OS_TLI
+ * @namespace ACE_OS
  *
  * @brief This class is a wrapper for the TLI operations
  *
  */
-#define ACE_OS_TLI ACE_OS
 namespace ACE_OS
 {
   // = A set of wrappers for TLI.

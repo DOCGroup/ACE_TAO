@@ -27,15 +27,6 @@
 #include "ace/os_include/sys/os_types.h"
 
 #include "ace/OS_NS_dirent.h"
-/**
- * @namespace ACE_OS_Dirent
- *
- * @brief This class is a wrapper for the dirent.h operations
- *
- */
-#define ACE_OS_Dirent ACE_OS
-namespace ACE_OS {
-}; /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
