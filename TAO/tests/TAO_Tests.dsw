@@ -747,6 +747,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IOR CorbaLoc Client"=".\IOR_CORBALOC\IOR CorbaLoc Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "IOR CorbaLoc Server"=".\IOR_CORBALOC\IOR CorbaLoc Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "IOR CorbaName Client"=".\IOR_CORBALOC\IOR CorbaName Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "IORTest"=.\IORManipulation\IORTest.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1516,6 +1552,18 @@ Package=<4>
 ###############################################################################
 
 Project: "idl_test"=.\IDL_Test\idl_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "portspan"=.\ORB_init\Portspan\portspan.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
