@@ -1,3 +1,24 @@
+Wed Jul 14 08:26:42 1999  Brian Raven <brianr@mrpotatohead.liffe.com>
+
+        * asnmp/snmp.{h,cpp},wpdu.cpp:
+          SYNOPSIS:
+          1) The agent IP address in traps originating from logical
+             domains on an Enterprise 10000 is that of the physical domain.
+
+          2) The code that gets the IP address uses gethostbyname
+             which is unsafe in a MT environment (according to the man page).
+
+          DESCRIPTION:
+          1) The problem seems to be caused by hostname only returning
+             the physical domain name.
+
+          SAMPLE FIX/WORKAROUND:
+          1) To get around this problem I added the capability to
+             override the local host name.
+
+          2) I would suggest using the GenAddress class to obtain the
+             IP address.
+
 Tue Jun 22 13:34:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * agent/Makefile: replaced rm -f with $(RM).

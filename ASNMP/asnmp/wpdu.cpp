@@ -175,11 +175,14 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
 
   // HDN - set agent addr using the local hostname if possible
   char localHostName[MAXHOSTNAMELEN];
-  if (ACE_OS::hostname(localHostName, sizeof(localHostName)) != -1) {
-    struct hostent* hostInfo;
-    if ((hostInfo = ACE_OS::gethostbyname(localHostName))) {
-      ACE_OS::memcpy(&(raw_pdu->agent_addr.sin_addr), hostInfo->h_addr, hostInfo->h_length);
-    }
+  Snmp::get_host_name(localHostName, MAXHOSTNAMELEN);
+  if (ACE_OS::strlen(localHostName) > 0) {
+    GenAddress addr(localHostName);
+    OctetStr octet;
+    addr.to_octet(octet);
+    ACE_OS::memcpy(&(raw_pdu->agent_addr.sin_addr),
+                   octet.data(),
+                   octet.length());
   }
 
   return 0;
