@@ -64,7 +64,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
       *os << "  : CORBA_UserException ("
-          << node->tc_name () << ")\n";
+          << "::" << node->tc_name () << ")\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
 
@@ -78,7 +78,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // copy constructor
       os->indent ();
       *os << "// copy constructor" << be_nl;
-      *os << node->name () << "::" << node->local_name () << " (const " 
+      *os << node->name () << "::" << node->local_name () << " (const ::" 
           << node->name () << " &_tao_excp)" << be_nl;
       *os << "  : CORBA_UserException (" 
           << "_tao_excp._type ())" << be_nl;
@@ -104,7 +104,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->indent ();
       *os << "// assignment operator" << be_nl;
       *os << node->name () << "&" << be_nl;
-      *os << node->name () << "::operator= (const "
+      *os << node->name () << "::operator= (const ::"
 	        << node->name () << " &_tao_excp)" << be_nl
 	        << "{\n" << be_idt_nl
 	        << "this->CORBA_UserException::operator= "
@@ -135,7 +135,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID () 
           << "\", exc->_id ())) // same type" << be_nl;
-      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" 
+      *os << "  return ACE_dynamic_cast (::" << node->name () << "_ptr, exc);" 
           << be_nl;
       *os << "else" << be_nl;
       *os << "  return 0;\n";
@@ -155,7 +155,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "::_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "CORBA::Exception *retval = 0;" << be_nl
-          << "ACE_NEW_RETURN (retval, " << node->name () << ", 0);" << be_nl
+          << "ACE_NEW_RETURN (retval, ::" << node->name () 
+          << ", 0);" << be_nl
           << "return retval;" << be_uidt_nl;
       *os << "}\n\n";
 
