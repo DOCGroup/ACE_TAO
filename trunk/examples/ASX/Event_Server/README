@@ -1,0 +1,38 @@
+The subdirectory illustrates a number of the ACE ASX framework
+features using an ACE_Stream application called the Event Server.  The
+Event Server works as follows:
+
+1. When the ./Event_Server/event_server executable is run it
+   creates two SOCK_Acceptors, which listen for and accept
+   incoming connections from consumers and suppliers.
+
+2. The ./Event_Server/Transceiver/transceiver application may be 
+   started multiple times.  Each call should be either:
+
+   % transceiver -p XYZ -h hostname
+
+   or 
+
+   % transceiver -p ABC -h hostname
+
+   where XYZ and ABC are the consumer port and supplier port,
+   respectively, on the event server and "hostname" is the name of the
+   machine the event_server is running.  I typically open up multiple
+   windows. 
+
+3. Once the consumer(s) and supplier(s) are connected, you can type
+   data from any supplier windows.  This data will be routed
+   through the Modules/Tasks in an event_server's Stream and
+   be forwarded to the consumer(s).
+
+4. When you want to shut down the tranceivers or event server
+   just type ^C (which generates a SIGINT).
+
+What makes this example particularly interesting is that
+once you've got the hang of this basic architecture, you can
+"push" new filtering Modules onto the event_server Stream
+ and modify the application's behavior.  
+
+For more information on the design and use of the ACE ASX framework
+please see http://www.cs.wustl.edu/~schmidt/C++-USENIX-94.ps.gz and
+http://www.cs.wustl.edu/~schmidt/DSEJ-94.ps.gz
