@@ -19,6 +19,9 @@ Tue Feb 22 20:17:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  7.1 compile-time warnings regarding unimplemented local class
 	  members.
 
+	* tao/Domain/DomainS.cpp:
+	* tao/ImR_Client/ImplRepoS.cpp:
+	* tao/ImR_Client/ServerObjectS.cpp:
 	* tao/Messaging/MessagingS.cpp:
 	* tao/PortableServer/PolicyS.cpp:
 
