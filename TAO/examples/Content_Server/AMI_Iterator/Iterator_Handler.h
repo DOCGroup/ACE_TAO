@@ -63,7 +63,7 @@ public:
       CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  void run (int * request_count,
+  void run (int *request_count,
             const char *pathname,
             Web_Server::Iterator_Factory_ptr factory,
             CORBA::Environment &ACE_TRY_ENV)
@@ -73,14 +73,12 @@ public:
   // pointer itself) of the <request_count> parameter will be
   // incremented when file retrieval begins, and decremented when file
   // retrieval completes.
-
 private:
-
   ~Iterator_Handler (void);
-  // Destructor  (private to ensure that Iterator_Handler is allocated
+  // Destructor (private to ensure that Iterator_Handler is allocated
   // on the heap).
 
-  void initialize_content_iterator (const char * pathname,
+  void initialize_content_iterator (const char *pathname,
                                     Web_Server::Iterator_Factory_ptr factory,
                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -91,7 +89,7 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 
-  int get_viewer (char * viewer, size_t length);
+  int get_viewer (char *viewer, size_t length);
   // Get the name of the viewer associated with the file being
   // retrieved.
 
@@ -122,11 +120,10 @@ private:
   Web_Server::AMI_Content_IteratorHandler_var ami_handler_;
   // Reference to this Reply Handler's self.
 
-  int * request_count_;
-  // Pointer to external status monitoring variable. The contents (not
-  // the pointer itself) of the <pending_data> parameter will be
-  // decremented when file retrieval has completed.
-};
+  int *request_count_; // Pointer to external status monitoring
+variable. The contents (not // the pointer itself) of the
+<pending_data> parameter will be // decremented when file retrieval
+has completed.  };
 
 #include "ace/post.h"
 

@@ -29,7 +29,7 @@ Iterator_Handler::~Iterator_Handler (void)
 
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
-                              const Web_Server::Chunk_Type & chunk_data,
+                              const Web_Server::Chunk_Type &chunk_data,
                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -46,7 +46,6 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Unable to write retrieved data to ")
                       ACE_TEXT ("file")));
-
           return;
         }
       else
@@ -87,19 +86,18 @@ Iterator_Handler::destroy (CORBA::Environment &ACE_TRY_ENV)
 
 
 void
-Iterator_Handler::run (int * request_count,
-                                 const char *pathname,
-                                 Web_Server::Iterator_Factory_ptr factory,
-                                 CORBA::Environment &ACE_TRY_ENV)
+Iterator_Handler::run (int *request_count,
+                       const char *pathname,
+                       Web_Server::Iterator_Factory_ptr factory,
+                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   if (request_count != 0)
       this->request_count_ = request_count;
   else
-    ACE_THROW (CORBA::BAD_PARAM ());  // @@ Application code shouldn't
-                                      //    throw system exceptions.
-
+    // @@ Application code shouldn't throw system exceptions.
+    ACE_THROW (CORBA::BAD_PARAM ());  
   // Initialize the Content Iterator
   this->initialize_content_iterator (pathname,
                                      factory,
@@ -118,10 +116,10 @@ Iterator_Handler::run (int * request_count,
 }
 
 void
-Iterator_Handler::initialize_content_iterator (
-    const char * pathname,
-    Web_Server::Iterator_Factory_ptr factory,
-    CORBA::Environment &ACE_TRY_ENV)
+Iterator_Handler::initialize_content_iterator 
+  (const char *pathname,
+   Web_Server::Iterator_Factory_ptr factory,
+   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -142,12 +140,10 @@ Iterator_Handler::initialize_content_iterator (
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
                          S_IRUSR | S_IWUSR) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("Could not open file %s"),
-                  this->file_.get_path_name ()));
-    }
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("Could not open file %s"),
+                this->file_.get_path_name ()));
   else
     (*this->request_count_)++;
 }
@@ -157,12 +153,13 @@ Iterator_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
-  PortableServer::ObjectId_var oid = poa->servant_to_id (this,
-                                                         ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    poa->servant_to_id (this, ACE_TRY_ENV);
   ACE_CHECK;
 
   // Now deactivate the iterator object.
@@ -172,10 +169,11 @@ Iterator_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
 
 
 int
-Iterator_Handler::get_viewer (char * viewer,
+Iterator_Handler::get_viewer (char *viewer,
                               size_t length)
 {
-  const char * content_type = this->metadata_->content_type.in ();
+  const char *content_type =
+    this->metadata_->content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     {
@@ -244,7 +242,7 @@ Iterator_Handler::spawn_viewer (void)
   char viewer[80];
 
   if (this->get_viewer (viewer,
-                        sizeof (viewer)) != 0)
+                        sizeof viewer) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Problem determining which external ")
                        ACE_TEXT ("viewer to use.\n")),
