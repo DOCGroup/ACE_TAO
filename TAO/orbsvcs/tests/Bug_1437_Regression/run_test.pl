@@ -63,7 +63,7 @@ sub test_body
 
    # Redirect STDERR to a log file so that the ERROR
    # message does not get printed to the terminal
-   open(SAVEERR, '>&STDERR');
+   open(SAVEERR, ">&STDERR");
    open(STDERR, ">$log_file");
 
    # Add the illegal persistent POA name to the IMR
@@ -72,7 +72,7 @@ sub test_body
 
    # Close the log file and restore STDERR
    close(STDERR);
-   open(STDERR, '>&SAVEERR');
+   open(STDERR, ">&SAVEERR");
 
    # If the add of an empty string failed, then
    # the test of the tao_imr succeeded.
