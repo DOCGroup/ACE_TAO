@@ -196,7 +196,7 @@ void TAO_FTEC_Group_Manager::add_member (
                               new_impl->my_position
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      group_info.reset(group_info1.release());
+      ACE_AUTO_PTR_RESET(group_info, group_info1.release());
 
       last_one = true;
     }
