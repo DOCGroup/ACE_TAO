@@ -1,3 +1,8 @@
+Sat Jan 03 11:37:21 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Typedefs and predefined types where unproperly handled.
+
 Fri Jan  2 14:09:49 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
