@@ -239,7 +239,7 @@ main (int argc, char *argv[])
     {
       ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      impl = impl_ptr;
+      impl = auto_ptr<ACE_Select_Reactor> (impl_ptr);
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
       reactor = auto_ptr<ACE_Reactor> (reactor_ptr);

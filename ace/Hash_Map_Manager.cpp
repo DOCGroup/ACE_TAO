@@ -156,7 +156,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
           // Now deal with the sentinal
           // Explicitly call the destructor.
 #if defined (ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR)
-          ACE_Destructor_Template_For_HPUX_aCC_Only (&table[i]);
+          ACE_Destructor_Template_For_HPUX_aCC_Only (&table_[i]);
 #else
           this->table_[i].ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
 #endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
