@@ -28,7 +28,7 @@ const ACE_TCHAR *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
  */
 Options::Options ()
   : repo_config_ (0)
-  , repo_mode_ ("p")
+  , repo_mode_ ('p')
   , debug_ (1)
   , ior_output_file_ (0)
   , multicast_ (0)
@@ -58,7 +58,7 @@ Options::~Options ()
  * @retval  1 Success but we should exit.
  */
 int
-Options::parse_args (int &argc, ACE_TCHAR *argv[])
+Options::parse_args (int &argc, char *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
 
@@ -173,7 +173,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           if (this->initialize_xml_persistence (shifter.get_current ()) != 0)
             return -1;
 
-          this->repo_mode_ = "x";
+          this->repo_mode_ = 'x';
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-s")) == 0)
@@ -222,7 +222,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
  * @retval  1 Success but we should exit.
  */
 int
-Options::init (int argc, ACE_TCHAR *argv[])
+Options::init (int argc, char *argv[])
 {
   ACE_ARGV orb_args;
   int i = 0;
@@ -338,7 +338,7 @@ Options::print_usage (void) const
  * @retval -1 Failure
  */
 int
-Options::initialize_file_persistence (const ACE_TCHAR *filename)
+Options::initialize_file_persistence (const char *filename)
 {
   if (this->repo_config_ != 0)
   {
@@ -350,6 +350,7 @@ Options::initialize_file_persistence (const ACE_TCHAR *filename)
   }
 
   Repository_Configuration *repo_config = 0;
+  
   ACE_NEW_RETURN (repo_config,
                   Repository_Configuration ("h"),
                   -1);
@@ -435,9 +436,9 @@ Options::initialize_non_persistence (void)
 
 /// Initialize for the XML repository case.
 int
-Options::initialize_xml_persistence (const ACE_TCHAR *file_name)
+Options::initialize_xml_persistence (const char *file_name)
 {
-  this->file_name_ = ACE_const_cast (ACE_TCHAR *, file_name);
+  this->file_name_ = ACE_const_cast (char *, file_name);
 
   Repository_Configuration *repo_config = 0;
   ACE_NEW_RETURN (repo_config,
@@ -469,14 +470,14 @@ Options::initialize_xml_persistence (const ACE_TCHAR *file_name)
  * @todo Update to unicode
  */
 int
-Options::run_service_command (const ACE_TCHAR *command)
+Options::run_service_command (const char *command)
 {
 #if defined (ACE_WIN32)
   SERVICE::instance ()->name (IMR_SERVICE_NAME, IMR_DISPLAY_NAME);
 
   if (ACE_OS::strcmp (command, ACE_TEXT ("install")) == 0)
     {
-      ACE_TCHAR pathname[_MAX_PATH * 2 + 3];  // +3 for the ' -s' at the end
+      char pathname[_MAX_PATH * 2 + 3];  // +3 for the ' -s' at the end
 
       if (ACE_TEXT_GetModuleFileName(NULL, pathname, _MAX_PATH * 2) == 0)
         {
@@ -576,11 +577,11 @@ Options::load_registry_options (ACE_ARGV &orb_options)
   if (dwSize > 1)
     {
       // Create an argv array
-      ACE_TCHAR **orb_argv = 0;
+      char **orb_argv = 0;
 
-      ACE_NEW_RETURN (orb_argv, ACE_TCHAR *[dwSize], -1);
+      ACE_NEW_RETURN (orb_argv, char *[dwSize], -1);
 
-      ACE_TCHAR *tchar_buffer = ACE_reinterpret_cast (ACE_TCHAR *, buffer);
+      char *tchar_buffer = ACE_reinterpret_cast (char *, buffer);
       orb_argv[0] = tchar_buffer;
 
       if (this->debug () > 1)
@@ -591,7 +592,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
       int orb_argv_pos = 1;
 
       for (unsigned int buffer_pos = 0;
-           buffer_pos < dwSize / sizeof (ACE_TCHAR) - 2;
+           buffer_pos < dwSize / sizeof (char ) - 2;
            ++buffer_pos)
         {
           if (tchar_buffer[buffer_pos] == 0)
@@ -692,13 +693,13 @@ Options::config (void) const
   return this->repo_config_;
 }
 
-ACE_TCHAR *
+char *
 Options::repository_mode (void)
 {
-  return this->repo_mode_;
+  return &this->repo_mode_;
 }
 
-ACE_TCHAR *
+char *
 Options::file_name (void) const
 {
   return this->file_name_;
