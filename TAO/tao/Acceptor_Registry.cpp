@@ -498,18 +498,16 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   const char *astr = ACE_OS::strtok_r (addr_str.get (),
                                        ",",
                                        &last_addr);
-  if (astr == 0)
-    astr = "";
 
   // Iterate over the addrs specified in the endpoint.
 
-  for ( ;
-       astr != 0;
-       astr = ACE_OS::strtok_r (0,
-                                ",",
-                                &last_addr))
+  do
     {
-      ACE_CString address (astr);
+      // For the first time only through the loop, it is
+      // possible for astr to be 0.  This indicates that
+      // the user is requesting the default endpoint for
+      // the specified protocol.
+      ACE_CString address (astr == 0 ? "" : astr);
 
       TAO_Acceptor *acceptor =
         (*factory)->factory ()->make_acceptor ();
@@ -591,6 +589,10 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             -1);
         }
     }
+  while ((astr != 0) &&
+         ((astr = ACE_OS::strtok_r (0,
+                                    ",",
+                                    &last_addr)) != 0));
 
   return 0;
 }
