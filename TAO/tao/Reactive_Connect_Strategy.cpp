@@ -2,6 +2,7 @@
 #include "Connection_Handler.h"
 #include "Transport.h"
 #include "ORB_Core.h"
+#include "debug.h"
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
