@@ -1,3 +1,9 @@
+Thu Sep 30 14:02:26 2004  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Added the same kernel version-checking code to the
+	  ACE_HAS_EVENT_POLL check that Dev_Poll_Reactor.h uses to be sure
+	  that if enabled, it will compile.
+
 Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
