@@ -236,7 +236,7 @@ ACE_Sig_Handler::handler (int signum,
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
     ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 
-  return this->handler_i (signum, new_sh);
+  return ACE_Sig_Handler::handler_i (signum, new_sh);
 }
 
 // Register an ACE_Event_Handler along with the corresponding SIGNUM.
@@ -255,8 +255,8 @@ ACE_Sig_Handler::register_handler_i (int signum,
   if (ACE_Sig_Handler::in_range (signum))
     {
       ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = this->handler_i (signum,
-                                               new_sh);
+      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum,
+                                                          new_sh);
 
       // Return a pointer to the old <ACE_Sig_Handler> if the user
       // asks for this.
@@ -295,11 +295,11 @@ ACE_Sig_Handler::register_handler (int signum,
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
     ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 
-  return this->register_handler_i (signum,
-                                   new_sh,
-                                   new_disp,
-                                   old_sh,
-                                   old_disp);
+  return ACE_Sig_Handler::register_handler_i (signum,
+                                              new_sh,
+                                              new_disp,
+                                              old_sh,
+                                              old_disp);
 }
 
 // Remove an ACE_Event_Handler.
@@ -386,8 +386,8 @@ ACE_Sig_Handler::dispatch (int signum,
         // dispatched.  Therefore, to workaround this "feature" we
         // must re-register the <ACE_Event_Handler> with <signum>
         // explicitly.
-        this->register_handler_i (signum,
-                                  eh);
+        ACE_Sig_Handler::register_handler_i (signum,
+                                             eh);
 #endif /* ACE_WIN32*/
     }
 }
