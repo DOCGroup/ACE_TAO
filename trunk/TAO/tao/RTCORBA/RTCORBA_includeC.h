@@ -45,13 +45,13 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO 
+#  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -71,7 +71,7 @@
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // w:\ace_wrappers\tao\tao_idl\be\be_visitor_root/cdr_op.cpp:48
