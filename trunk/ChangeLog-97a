@@ -3,14 +3,28 @@ Tue May  6 00:00:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* ace/Message_Block.cpp: Added template specialization for
  	  ACE_Guard<> that prevented ACE from compiling under Linux.
 
-Mon May 05 19:58:16 1997    <irfan@TWOSTEP>
-
-	* ace/ace.{mak,mdp}: Readded IOStream.cpp to the makefile. 
-
 Mon May  5 22:17:15 1997  Sumedh Mungee      <sumedh@cs.wustl.edu>
         
        * apps/JAWS/stress_testing: Removed the usleep definition from
          global.h, it was unused by the program.
+
+Mon May 05 21:01:42 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-linux*.h: added ACE_HAS_STRING_CLASS.  Thanks to
+	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this.
+
+Mon May 05 19:58:16 1997    <irfan@TWOSTEP>
+
+	* ace/ace.{mak,mdp}: Readded IOStream.cpp to the makefile. 
+
+	* ace/Synch_T.h: Added ACE_SYNCH_RECURSIVE_MUTEX.
+
+	* ace/Timer_Queue: Added an extra template parameter to
+	  Timer_Queues that specifies the type of locking to be used
+	  inside of the timer queue.
+
+	  Also changed the functor callback routines so that they are more
+	  descriptive compared to operator ().
 
 Mon May  5 21:37:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -23,24 +37,6 @@ Mon May  5 21:37:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Block.cpp: Replaced an explicit acquire()/release()
  	  of ACE_Lock::locking_strategy_ with a call to an ACE_Guard.
-
-Mon May 05 21:01:42 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/config-linux*.h: added ACE_HAS_STRING_CLASS.  Thanks to
-	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this.
-
-Mon May 05 19:58:16 1997    <irfan@TWOSTEP>
-
-	* ace/Synch_T.h: Added ACE_SYNCH_RECURSIVE_MUTEX.
-
-	* ace/Timer_Queue: Added an extra template parameter to
-	  Timer_Queues that specifies the type of locking to be used
-	  inside of the timer queue.
-
-	  Also changed the functor callback routines so that they are more
-	  descriptive compared to operator ().
-
-Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers.cpp (set): Optimized for the common case where
  	  we're increasing the size of the set by 1.
