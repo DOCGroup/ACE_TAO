@@ -34,26 +34,28 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 
 RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::priority_model (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
 TAO_PriorityModelPolicy::server_priority (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
 TAO_PriorityModelPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -66,6 +68,7 @@ TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityModelPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

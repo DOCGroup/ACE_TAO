@@ -73,22 +73,25 @@ public:
   virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
                                                  &ACE_TRY_ENV =
                                                  TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RTCORBA::Priority server_priority (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ());
+                                         TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ());
+                                         TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ());
+                                         TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the object state.
