@@ -80,7 +80,8 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       object_key,
                                       this->address_,
                                       this->version_,
-                                      this->orb_core_)
+                                      this->orb_core_,
+                                      this->ssl_component_.port)
 ,
                   -1);
 
@@ -109,14 +110,21 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   component.tag = IOP::TAG_SSL_SEC_TRANS;
   // @@???? Check this code, only intended as guideline...
   TAO_OutputCDR cdr;
-  CORBA::Boolean byte_order = ACE_CDR_BYTE_ORDER;
-  cdr << TAO_OutputCDR::from_boolean (byte_order);
+  cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   cdr << this->ssl_component_;
   // TAO extension, replace the contents of the octet sequence with
   // the CDR stream
-  component.component_data.replace (cdr.total_length (),
-				    cdr.begin ());
-  
+  CORBA::ULong length = cdr.total_length ();
+  component.component_data.length (length);
+  CORBA::Octet *buf = component.component_data.get_buffer ();
+  for (const ACE_Message_Block *i = cdr.begin ();
+       i != 0;
+       i = i->cont ())
+    {
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      buf += i->length ();
+    }
+
   pfile->tagged_components ().set_component (component);
 
   return 0;
@@ -196,7 +204,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   -1);
 
   if (this->ssl_acceptor_.open (addr,
-                                this->orb_core_->reactor (this),
+                                orb_core->reactor (this),
                                 this->creation_strategy_,
                                 this->accept_strategy_,
                                 this->concurrency_strategy_) == -1)
@@ -219,33 +227,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       return -1;
     }
 
-  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
-    {
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "\n\nTAO (%P|%t) SSLIOP_Acceptor::open_i - %p\n\n",
-                        "cannot cache hostname"));
-          return -1;
-        }
-      this->host_ = tmp;
-    }
-  else
-    {
-      char tmp_host[MAXHOSTNAMELEN+1];
-      if (addr.get_host_name (tmp_host,
-                              sizeof tmp_host) != 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "\n\nTAO (%P|%t) SSLIOP_Acceptor::open_i - %p\n\n",
-                        "cannot cache hostname"));
-          return -1;
-        }
-      this->host_ = tmp_host;
-    }
+  this->ssl_component_.port = ssl_address.get_port_number ();
 
   if (TAO_debug_level > 5)
     {
@@ -253,7 +235,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   "\nTAO (%P|%t) SSLIOP_Acceptor::open_i - "
                   "listening on: <%s:%u>\n",
                   this->host_.c_str (),
-                  this->address_.get_port_number ()));
+                  this->ssl_component_.port));
     }
   return 0;
 }
@@ -309,7 +291,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
   int begin = 0;
   int end = -1;
 
-  // @@ We should add options to set the security association options, 
+  // @@ We should add options to set the security association options,
   // or are those controlled by Policies?
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
