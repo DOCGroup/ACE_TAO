@@ -1,3 +1,21 @@
+Fri Dec  5 00:37:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Dynamic.h:
+	* ace/CORBA_Ref.h:
+	* ace/Token_Invariants.h:
+	* ace/Token_Collection.h:
+	* ace/Local_Tokens.h:
+	* ace/Remote_Name_Space.h:
+	* ace/Registry_Name_Space.h:
+	* ace/Strategies.h:
+	* ace/Name_Space.h:
+	* ace/Name_Request_Reply.h:
+	* ace/Naming_Context.h:
+	* ace/Name_Proxy.h:
+	* ace/Local_Name_Space_T.h: Corrected erroneous comments.  These
+	  files all contain incorrect filename info in the preambles which
+	  makes erroneous auto-generated man pages.
+
 Fri Dec 05 00:00:53 1997    <irfan@TWOSTEP>
 
 	* ace/OS.h: If the user wants minimum IOStream inclusion, i.e.,
