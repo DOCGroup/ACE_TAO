@@ -118,6 +118,16 @@ public:
   int init (const char *name,int argc, char *argv[]);
   // Initialize the client communication endpoint with server.
 
+  int reconnect_ior (const char * ior);
+  // reconnect to server using ior
+
+  int reconnect_file (const char * file);
+  // reconnect to server reading ior from file
+
+  int reconnect_name (const char * name);
+  // reconnect to server using name service
+
+
   INTERFACE_OBJECT *operator-> () { return server_.in ();};
   // Return the interface object pointer.
 
@@ -132,10 +142,14 @@ public:
 
   CORBA::ORB_ptr orb (void) {return this->orb_.in ();}
 protected:
+
+  int bind ();
+  // establish the connection to server
+
   CORBA::ORB_var orb_;
   // Remember our orb.
 
-  int read_ior (char *filename);
+  int read_ior (const char *filename);
   // Function to read the server IOR from a file.
 
   int parse_args (void);
@@ -158,9 +172,6 @@ protected:
 
   Var server_;
   // Server object
-
-  int naming_;
-  // Flag to use the naming service
 
   int shutdown_;
   // Flag for shutting down the server

@@ -56,6 +56,9 @@ private:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   ///////////////////////////
   // override PullMonitorable
 
@@ -80,15 +83,15 @@ private:
   /////////////////
   // implementation
 private:
-  void load();
-  void store();
+  long load();
+  void store(long value);
 
   ///////////////
   // data members
 private:
-  long counter_;
   FT_TEST::TestReplica::Bane death_pending_;
   CORBA::ORB_var orb_;
+  int verbose_;
 };
 
 #endif /* FT_TESTREPLICA_I_H_  */

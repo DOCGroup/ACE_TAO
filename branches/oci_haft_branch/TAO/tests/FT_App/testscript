@@ -1,6 +1,9 @@
-v3
+v3 echo commands
 =0
 +5
-d1
+d5 die before increment
+#d5 die after increment
 +5
-q
+c10
++5
+q1 quit and bring down primary replica

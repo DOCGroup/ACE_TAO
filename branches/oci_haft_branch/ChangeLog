@@ -1,3 +1,26 @@
+Wed Jul 16 17:53:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO/examples/Simple/Simple_util.h:
+        * TAO/examples/Simple/Simple_util.cpp:
+          Add "reconnect*" methods to allow switching to a different
+          servant on-the-fly.  This is used in the client-simulated
+          Fault Tolerance test.
+
+        * TAO/tests/FT_App/FT_Client.cpp:
+        * TAO/tests/FT_App/FT_Replica.cpp:
+        * TAO/tests/FT_App/FT_TestReplica.idl:
+        * TAO/tests/FT_App/FT_TestReplica_i.h:
+        * TAO/tests/FT_App/FT_TestReplica_i.cpp:
+        * TAO/tests/FT_App/README:
+        * TAO/tests/FT_App/run_test.pl:
+        * TAO/tests/FT_App/testscript:
+          Add client-simulated fault tolerance to allow FT_App
+          to pass the unit test.  When FT CORBA is working we should
+          be able to disable client simulated FT (via command line), 
+          and it should still pass.
+
+        These changes were made in the oci_haft branch.
+
 Wed Jul 16 09:51:12 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/tests/FT_App/.cvsignore:

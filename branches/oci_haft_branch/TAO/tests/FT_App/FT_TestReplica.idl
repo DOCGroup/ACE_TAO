@@ -66,7 +66,13 @@ module FT_TEST
      * die a horrid death.
      * @param when is an arbitrary code to indicate how and when to die.
      */
-    oneway void die(in Bane when);
+    void die(in Bane when);
+
+
+    /**
+     * die a clean death.
+     */
+    oneway void shutdown();
 
     /**
      * provide direct access to the counter.

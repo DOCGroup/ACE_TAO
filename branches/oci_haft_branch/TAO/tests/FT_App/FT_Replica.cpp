@@ -50,9 +50,6 @@ namespace {
     // Indicates sucessful parsing of the command line
     return 0;
   }
-
-
-
 }
 
 
@@ -116,15 +113,16 @@ int main (int argc, char * argv[] )
         }
         if (result == 0)
         {
-          std::cout << "Running Fault Tolerant Replica. ";
-          if (nsName != 0)
-          {
-            std::cout << " name:" << nsName;
-          }
+          std::cout << "FT Replica: Ready. ";
           if (ior_output_file)
           {
             std::cout << " file:" << ior_output_file;
           }
+          else if (nsName != 0)
+          {
+            std::cout << " name:" << nsName;
+          }
+
           std::cout << std::endl;
 
           // Run the main event loop for the ORB.
@@ -136,15 +134,16 @@ int main (int argc, char * argv[] )
               -1);
           }
           ACE_TRY_CHECK;
-          std::cout << "Fault Tolerant Replica terminated normally.";
-          if (nsName != 0)
-          {
-            std::cout << " name:" << nsName;
-          }
+          std::cout << "FT Replica: Terminated normally.";
           if (ior_output_file)
           {
             std::cout << " file:" << ior_output_file;
           }
+          else if (nsName != 0)
+          {
+            std::cout << " name:" << nsName;
+          }
+
           std::cout << std::endl;
         }
         else
