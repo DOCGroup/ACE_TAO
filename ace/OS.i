@@ -7775,17 +7775,49 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
     return 0;
 }
 
+#if defined (ACE_WIN32)
+ACE_INLINE void
+ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock, short whence, off_t &start, off_t &len)
+{
+  switch (whence)
+    {
+    case SEEK_SET:
+      break;
+    case SEEK_CUR:
+      start += SetFilePointer (lock->handle_, 0, 0, FILE_CURRENT);
+      break;
+    case SEEK_END:
+      start += ::GetFileSize (lock->handle_, NULL);
+      break;
+    }
+  lock->overlapped_.Offset = start;
+  if (len == 0)
+    len = ::GetFileSize (lock->handle_, NULL) - start;
+}
+#endif /* ACE_WIN32 */
+
 ACE_INLINE int
 ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_wrlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (whence);
-  lock->overlapped_.Offset = start;
-  if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_),
+  ACE_OS::adjust_flock_params (lock, whence, start, len);
+#  if defined (ACE_HAS_WINNT4)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
+                                                        LOCKFILE_EXCLUSIVE_LOCK, 
+                                                        0, 
+                                                        len, 
+                                                        0, 
+                                                        &lock->overlapped_),
                                           ace_result_), int, -1);
+#  else /* ACE_HAS_WINNT4 */
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_, 
+                                                      lock->overlapped_.Offset, 
+                                                      0, 
+                                                      len, 
+                                                      0),
+                                          ace_result_), int, -1);
+#  endif /* ACE_HAS_WINNT4 */
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -7807,12 +7839,23 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
 {
   // ACE_TRACE ("ACE_OS::flock_rdlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (whence);
-  lock->overlapped_.Offset = start;
-  if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_),
+  ACE_OS::adjust_flock_params (lock, whence, start, len);
+#  if defined (ACE_HAS_WINNT4)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
+                                                        0, 
+                                                        0, 
+                                                        len, 
+                                                        0, 
+                                                        &lock->overlapped_),
                                           ace_result_), int, -1);
+#  else /* ACE_HAS_WINNT4 */
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_, 
+                                                      lock->overlapped_.Offset, 
+                                                      0, 
+                                                      len, 
+                                                      0),
+                                          ace_result_), int, -1);
+#  endif /* ACE_HAS_WINNT4 */
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -7834,15 +7877,22 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
 {
   // ACE_TRACE ("ACE_OS::ace_flock_trywrlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (whence);
-  lock->overlapped_.Offset = start;
-  if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL);
+#  if defined (ACE_HAS_WINNT4)
+  ACE_OS::adjust_flock_params (lock, whence, start, len);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                                         LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK,
-                                                        0, len, 0,
+                                                        0, 
+                                                        len, 
+                                                        0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
+#  else /* ACE_HAS_WINNT4 */
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#  endif /* ACE_HAS_WINNT4 */
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -7873,15 +7923,22 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
 {
   // ACE_TRACE ("ACE_OS::ace_flock_tryrdlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (whence);
-  lock->overlapped_.Offset = start;
-  if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL);
+#  if defined (ACE_HAS_WINNT4)
+  ACE_OS::adjust_flock_params (lock, whence, start, len);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                                         LOCKFILE_FAIL_IMMEDIATELY,
-                                                        0, len, 0,
+                                                        0, 
+                                                        len, 
+                                                        0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
+#  else /* ACE_HAS_WINNT4 */
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#  endif /* ACE_HAS_WINNT4 */
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -7912,11 +7969,12 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
 {
   // ACE_TRACE ("ACE_OS::flock_unlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (whence);
-  lock->overlapped_.Offset = start;
-  if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_),
+  ACE_OS::adjust_flock_params (lock, whence, start, len);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_, 
+                                                        lock->overlapped_.Offset,
+                                                        0, 
+                                                        len, 
+                                                        0),
                                           ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
