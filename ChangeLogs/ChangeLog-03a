@@ -1,3 +1,40 @@
+Tue Apr 03 19:55:26 2001  Steve Huston  <shuston@riverace.com>
+
+        * bin/auto_compile: Added a -make_type option - the argument to
+          the option is the suffix of Makefile to use. Example:
+          -make_type vac  would use Makefile.vac instead of Makefile
+          when building.
+
+        * bin/make_pretty.pl: Corrected tests for AIX errors/warnings.
+
+        * ace/ace.icp: (new) Visual Age C++ 5 project file for libACE.
+
+        * ace/ace.icc: (new) Visual Age C++ 5 configuration file for
+          libACE. Replaces ace-dll.icc. It will eventually have the
+          stuff added to make debug/optimize as well as subsets.
+
+        * ace/ace_vacpp_options.icc: Visual Age C++ file for setting ACE
+          build options.
+
+        * ace/Makefile.vac: Makefile to build libACE using the Visual
+          Age C++ 5 incremental compiler. It only has "all" and "realclean"
+          targets, and uses vacbld_r to do the build.
+
+        * tests/tests.icp: Visual Age C++ 5 Project file for making all the
+          tests.
+
+        * tests/Makefile.vac: Makefile to drive vacbld_r for Visual Age C++.
+
+        * tests/Config_Test.icc:
+        * tests/Dirent_Test.icc:
+        * tests/Logging_Strategy_Test.icc:
+        * tests/MEM_Stream_Test.icc:
+        * tests/Message_Queue_Test_Ex.icc:
+        * tests/OS_Test.icc:
+             New files for building tests with Visual Age C++.
+
+        * tests/libDLL_Test.icc: Changed to use up-to-date source file.
+
 Tue Apr 03 13:45:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp: Fixed mismatched ACE_TRACE messages.  Thanks to
@@ -1320,37 +1357,15 @@ Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
-<<<<<<< ChangeLog
-=======
-          As Ossama pointed out, the ACE_CHECK test was seeing problems in
-<<<<<<< ChangeLog
-          the tao_idl files since it has uses of ACE_TRY_ENV inside
-          quotes.  Made sure not to detect problems in this case.
->>>>>>> 4.1785
-
           As Ossama pointed out, the ACE_CHECK test was seeing
           problems in the tao_idl files since it has uses of ACE_TRY_ENV
           inside quotes.  Made sure not to detect problems in this case.
-=======
-          the tao_idl files since it has uses of ACE_TRY_ENV inside
-          quotes.  Made sure not to detect problems in this case.
->>>>>>> 4.1786
 
 Mon Mar  5 18:58:32 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
-<<<<<<< ChangeLog
-
           Fixed some false positives in the resolve_initial_reference
           test and also added an ACE_CHECK test by Carlos's request.
-=======
-          Fixed some false positives in the resolve_initial_reference test
-<<<<<<< ChangeLog
-          and also added an ACE_CHECK test by Carlos's request.
->>>>>>> 4.1785
-=======
-          and also added an ACE_CHECK test by Carlos's request.
->>>>>>> 4.1786
 
 Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
