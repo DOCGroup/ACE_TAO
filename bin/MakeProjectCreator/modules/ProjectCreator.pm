@@ -123,6 +123,8 @@ my(%genext) = ('idl_files' => {'automatic'     => 1,
                               },
               );
 
+my($grouped_key) = 'grouped_';
+
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -535,6 +537,7 @@ sub parse_components {
   my($set)     = 0;
   my(%flags)   = ();
   my($custom)  = defined $self->{'generated_exts'}->{$tag};
+  my($grtag)   = $grouped_key . $tag;
 
   if ($custom) {
     ## For the custom scoped assignments, we want to put a copy of
@@ -585,6 +588,7 @@ sub parse_components {
         $set = 1;
         if (!defined $$comps{$current}) {
           $$comps{$current} = [];
+          $self->process_assignment_add($grtag, $current);
         }
       }
       else {
@@ -1814,6 +1818,65 @@ sub check_custom_output {
   }
 
   return @outputs;
+}
+
+
+sub get_special_value {
+  my($self)  = shift;
+  my($type)  = shift;
+  my($cmd)   = shift;
+  my($based) = shift;
+
+  if ($type =~ /^custom_type/) {
+    return $self->get_custom_value($cmd, $based);
+  }
+  elsif ($type =~ /^grouped_/) {
+    return $self->get_grouped_value($type, $cmd, $based);
+  }
+
+  return undef;
+}
+
+
+sub get_grouped_value {
+  my($self)  = shift;
+  my($type)  = shift;
+  my($cmd)   = shift;
+  my($based) = shift;
+  my($value) = undef;
+
+  ## Remove the grouped_ part
+  $type =~ s/^$grouped_key//;
+
+  ## Add the s if it isn't there
+  if ($type !~ /s$/i) {
+    $type .= 's';
+  }
+
+  ## Make it all lowercase
+  $type = lc($type);
+
+  my($names) = $self->{$type};
+  if ($cmd eq 'files') {
+    foreach my $name (keys %$names) {
+      my($comps) = $$names{$name};
+      foreach my $comp (keys %$comps) {
+        if ($comp eq $based) {
+          $value = $$comps{$comp};
+          last;
+        }
+      }
+    }
+  }
+  elsif ($cmd eq 'component_name') {
+    ## If there is more than one name, then we will need
+    ## to deal with that at a later time.
+    foreach my $name (keys %$names) {
+      $value = $name;
+    }
+  }
+
+  return $value;
 }
 
 

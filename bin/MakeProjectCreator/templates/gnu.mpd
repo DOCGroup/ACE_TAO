@@ -29,7 +29,35 @@ IDL_FILES =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 
-<%gnu_source_files%>
+<%if(grouped_source_files)%>
+<%foreach(grouped_source_files)%>
+<%grouped_source_file%> = \
+<%foreach(grouped_source_file->files)%>
+  <%noextension(grouped_source_file->file)%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endfor%>
+ifndef <%grouped_source_files->component_name%>
+  <%grouped_source_files->component_name%> = \
+<%foreach(grouped_source_files)%>
+    <%grouped_source_file%><%fornotlast(" \\")%>
+<%endfor%>
+endif # <%grouped_source_files->component_name%>
+
+<%foreach(grouped_source_files)%>
+ifneq (,$(findstring <%grouped_source_file%>, $(<%grouped_source_files->component_name%>)))
+  FILES += $(<%grouped_source_file%>)
+endif # <%grouped_source_file%>
+
+<%endfor%>
+<%else%>
+FILES = \
+<%foreach(source_files)%>
+  <%noextension(source_file)%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
+<%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -199,7 +227,9 @@ LSRC   = $(addsuffix .cpp, $(FILES))
 <%if(tagname)%>
 ifeq (,$(<%tagname%>))
 <%endif%>
-<%build%>
+<%if(grouped_source_files)%>
+BUILD += <%grouped_source_files->component_name%>
+<%endif%>
 <%if(tagname)%>
 else
 <%foreach(tagchecks)%>
