@@ -1,3 +1,8 @@
+Sun Nov 14 15:22:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Configuration.cpp: Fixed a statement unreachable in 
+          expand_path ().
+
 Sat Nov 13 19:55:17 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* ace/SString.cpp (next):
