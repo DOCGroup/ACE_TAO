@@ -6,6 +6,8 @@ extern "C" {
 #include <sys/types.h>
 };
 
+#include "ace/Get_Opt.h"
+
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message.
@@ -19,8 +21,6 @@ extern "C" {
 #define IPPROTO_SCTP 132 /* always the same value on every platform */ 
 #endif
 #endif
-
-#include "ace/Get_Opt.h"
 
 #include "Options_Manager.h"
 

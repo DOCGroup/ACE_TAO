@@ -1,3 +1,11 @@
+Tue Jun 17 14:42:25 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
+
+        * performance-tests/SCTP/Options_Manager.cpp: 
+
+          Change was necessary for build on RH 9.0 to work properly.
+          Change consisted of moving the definition of IPPROTO_SCTP
+          to after all the other includes.
+
 Tue Jun 17 13:26:58 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
