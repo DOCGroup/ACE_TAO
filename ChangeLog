@@ -1,3 +1,7 @@
+Thu Jan  1 16:23:17 2004  Steve Huston  <shuston@riverace.com>
+
+	* bin/make_release: Add VC6 to files that generate_makefiles() makes.
+
 Thu Jan  1 15:20:30 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Makefile:
