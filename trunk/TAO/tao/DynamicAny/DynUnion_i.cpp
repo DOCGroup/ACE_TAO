@@ -343,7 +343,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
                                     ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::Boolean match;
+  CORBA::Boolean match = 0;
 
   for (i = 0; i < length; ++i)
     {
