@@ -38,15 +38,12 @@ namespace CIAO
    * This class implements navigation and other operations
    * common to all generated servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
-            typename CONTEXT>
-  class Servant_Impl : public virtual BASE_SKEL,
+  template <typename SKEL, typename EXEC, typename CONTEXT>
+  class Servant_Impl : public virtual SKEL,
                        public Servant_Impl_Base
   {
   public:
-    Servant_Impl (EXEC * exe, 
+    Servant_Impl (typename EXEC::_ptr_type exe, 
                   Session_Container * c);
     virtual ~Servant_Impl (void);
    
@@ -59,8 +56,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
       
   protected: 
-    EXEC_VAR executor_;    
-    
+    typename EXEC::_var_type executor_;        
     CONTEXT * context_;  
   };
 }
