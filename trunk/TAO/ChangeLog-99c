@@ -1,3 +1,17 @@
+Mon Jun 21 20:47:46 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/makefile:
+	* TAO/orbsvcs/tests/Trading/Makefile:
+	* TAO/orbsvcs/tests/ImplRepo/Makefile:
+	* TAO/orbsvcs/examples/CosEC/Factory/Makefile:
+	* TAO/examples/Quoter/Makefile:
+	* TAO/examples/Simple/bank/Makefile:
+	* TAO/examples/Simple/chat/Makefile:
+	* TAO/examples/Simple/echo/Makefile:
+	* TAO/examples/Simple/grid/Makefile:
+	* TAO/examples/Simple/time-date/Makefile: Added -Ge 1 option to
+	  these files.
+	
 Mon Jun 21 19:41:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
