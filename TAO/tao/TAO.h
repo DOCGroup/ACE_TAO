@@ -93,7 +93,7 @@ protected:
   // The POA manager of poa_.
 };
   
-class TAO
+class TAO_Export TAO
 {
   // = TITLE
   //   Defines a namespace for externally visible TAO extensions.

@@ -17,9 +17,7 @@
 #if !defined (TAO_OBJTABLE_H)
 #  define TAO_OBJTABLE_H
 
-typedef
-ACE_Map_Entry<PortableServer::ObjectId,PortableServer::Servant> 
-TAO_Object_Table_Entry;
+typedef ACE_Map_Entry<PortableServer::ObjectId, PortableServer::Servant> TAO_Object_Table_Entry;
 
 class TAO_Export TAO_Object_Table_Iterator_Impl
 {
@@ -45,7 +43,7 @@ public:
   virtual TAO_Object_Table_Iterator_Impl *clone (void) const = 0;
   // Make a copy of the iterator, pointing to the current position.
 
-  virtual const TAO_Object_Table_Entry& item (void) const = 0;
+  virtual const TAO_Object_Table_Entry &item (void) const = 0;
   // Obtain the current item
 
   virtual void advance (void) = 0;
@@ -68,15 +66,14 @@ class TAO_Export TAO_Object_Table_Impl
   //   Iterators may return free entries, whose "int_id" (the servant)
   //   is 0.
 public:
+  enum 
+  {
+    // Default table size
+    DEFAULT_TABLE_SIZE = TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE
+  };
+
   virtual ~TAO_Object_Table_Impl (void);
   // Destructor.
-
-  virtual int find (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant &servant) = 0;
-  // Find object associated with <{id}>.
-  // If the ObjectId is found it sets <{servant}> and returns a
-  // non-negative integer.  If not found, <{servant}> is unchanged and
-  // the value <-1> is returned. 
 
   virtual int bind (const PortableServer::ObjectId &id, 
 		    PortableServer::Servant servant) = 0;
@@ -89,9 +86,16 @@ public:
   // Remote any association among <id> and <servant>.
   // Returns 0 if the operation was succesful, <-1> otherwise.
 
-  virtual TAO_Object_Table_Iterator_Impl* begin () const = 0;
-  virtual TAO_Object_Table_Iterator_Impl* end () const = 0;
+  virtual TAO_Object_Table_Iterator_Impl *begin () const = 0;
+  virtual TAO_Object_Table_Iterator_Impl *end () const = 0;
   // Iterator interface
+
+  virtual int find (const PortableServer::ObjectId &id, 
+		    PortableServer::Servant &servant) = 0;
+  // Find object associated with <{id}>.
+  // If the ObjectId is found it sets <{servant}> and returns a
+  // non-negative integer.  If not found, <{servant}> is unchanged and
+  // the value <-1> is returned. 
 
   virtual int find (const PortableServer::Servant servant);
   // Returns 0 if <servant> is in the table, <-1> otherwise.
@@ -110,6 +114,9 @@ public:
   // Returns <-1> if <servant> is not found or if more than one <id>
   // is associated with <servant>, returns <0> otherwise.
 
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                                                      CORBA::Environment &env);
+  // Create an object id
 };
 
 class TAO_Export TAO_Object_Table_Iterator
@@ -124,12 +131,12 @@ public:
   TAO_Object_Table_Iterator (TAO_Object_Table_Iterator_Impl *impl);
   // Constructor taking an implementation.
 
-  TAO_Object_Table_Iterator (const TAO_Object_Table_Iterator& x);
-  TAO_Object_Table_Iterator& operator=(const TAO_Object_Table_Iterator& x);
+  TAO_Object_Table_Iterator (const TAO_Object_Table_Iterator &x);
+  TAO_Object_Table_Iterator &operator=(const TAO_Object_Table_Iterator &x);
   ~TAO_Object_Table_Iterator (void);
   // This is a well behaved class
 
-  const TAO_Object_Table_Entry& operator* (void) const;
+  const TAO_Object_Table_Entry &operator *(void) const;
   // Return the current item.
 
   TAO_Object_Table_Iterator operator++ (void);
@@ -142,8 +149,8 @@ public:
 			const TAO_Object_Table_Iterator &r);
   // Compare two iterators.
 
-private:
-  TAO_Object_Table_Iterator_Impl* impl_;
+protected:
+  TAO_Object_Table_Iterator_Impl *impl_;
 };
 
 class TAO_Export TAO_Object_Table
@@ -152,18 +159,12 @@ class TAO_Export TAO_Object_Table
   //     to pointers to CORBA objects.
 {
 public:
-  TAO_Object_Table (void);
+  TAO_Object_Table (TAO_Object_Table_Impl *impl = 0, 
+                    int delete_impl = 0);
   // Constructor
   
   ~TAO_Object_Table (void);
   // Destructor.
-
-  int find (const PortableServer::ObjectId &id, 
-	    PortableServer::Servant &servant);
-  // Find object associated with <{id}>.
-  // If the ObjectId is found it sets <{servant}> and returns a
-  // non-negative integer.  If not found, <{servant}> is unchanged and
-  // the value <-1> is returned. 
 
   int bind (const PortableServer::ObjectId &id, 
 	    PortableServer::Servant servant);
@@ -175,6 +176,13 @@ public:
 	      PortableServer::Servant &servant);
   // Remote any association among <id> and <servant>.
   // Returns 0 if the operation was succesful, <-1> otherwise.
+
+  int find (const PortableServer::ObjectId &id, 
+	    PortableServer::Servant &servant);
+  // Find object associated with <{id}>.
+  // If the ObjectId is found it sets <{servant}> and returns a
+  // non-negative integer.  If not found, <{servant}> is unchanged and
+  // the value <-1> is returned. 
 
   int find (const PortableServer::Servant servant);
   // Returns 0 if <servant> is in the table, <-1> otherwise.
@@ -193,17 +201,25 @@ public:
   // Returns <-1> if <servant> is not found or if more than one <id>
   // is associated with <servant>, returns <0> otherwise.
 
+  PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                                              CORBA::Environment &env);
+  // Create an object id
+
   typedef TAO_Object_Table_Iterator iterator;
   iterator begin (void) const;
   iterator end (void) const;
 
-private:
+protected:
   TAO_Object_Table (const TAO_Object_Table&);
-  TAO_Object_Table& operator= (const TAO_Object_Table&);
+  TAO_Object_Table &operator= (const TAO_Object_Table&);
   // disallow copying.
 
-private:
-  TAO_Object_Table_Impl* impl_;
+protected:
+  TAO_Object_Table_Impl *impl_;
+  // Implementation pointer
+
+  int delete_impl_;
+  // Flag to know if impl should be deleted
 };
 
 /****************************************************************/
@@ -231,7 +247,7 @@ class TAO_Export TAO_Dynamic_Hash_ObjTable : public TAO_Object_Table_Impl
   //   class.
   //
 public:
-  TAO_Dynamic_Hash_ObjTable (CORBA::ULong size = 0);
+  TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
   // constructor. If size is 0, some default is used.
 
   // Implement TAO_Dynamic_Hash_ObjTable....
@@ -245,14 +261,14 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
-  virtual TAO_Object_Table_Iterator_Impl* begin (void) const;
-  virtual TAO_Object_Table_Iterator_Impl* end (void) const;
+  virtual TAO_Object_Table_Iterator_Impl *begin (void) const;
+  virtual TAO_Object_Table_Iterator_Impl *end (void) const;
 
   // Dynamic Hashing scheme using template specialization for char*
   typedef ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX> Hash_Map;
   typedef ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX> Iterator;
 
-private:
+protected:
   Hash_Map hash_map_;
   // internal hash table
 };
@@ -263,17 +279,17 @@ class TAO_Export TAO_Dynamic_Hash_ObjTable_Iterator : public TAO_Object_Table_It
   //   Iterator for TAO_Dynamic_Hash_ObjTable.
 public:
   typedef TAO_Dynamic_Hash_ObjTable::Iterator Impl;
-  TAO_Dynamic_Hash_ObjTable_Iterator (const Impl& impl);
+  TAO_Dynamic_Hash_ObjTable_Iterator (const Impl &impl);
 
   // default copy ctor, dtor and operator=
 
   // TAO_Object_Table_Impl methods...
   virtual TAO_Object_Table_Iterator_Impl *clone (void) const;
-  virtual const TAO_Object_Table_Entry& item (void) const;
+  virtual const TAO_Object_Table_Entry &item (void) const;
   virtual void advance (void);
   virtual int done (const TAO_Object_Table_Iterator_Impl *end) const;
 
-private:
+protected:
   Impl impl_;
   TAO_Object_Table_Entry entry_;
 };
@@ -291,12 +307,12 @@ public:
 
   // TAO_Object_Table_Impl methods...
   virtual TAO_Object_Table_Iterator_Impl *clone (void) const;
-  virtual const TAO_Object_Table_Entry& item (void) const;
+  virtual const TAO_Object_Table_Entry &item (void) const;
   virtual void advance (void);
   virtual int done (const TAO_Object_Table_Iterator_Impl *end) const;
 
-private:
-  TAO_Object_Table_Entry* pos_;
+protected:
+  TAO_Object_Table_Entry *pos_;
 };
 
 /****************************************************************/
@@ -312,6 +328,16 @@ class TAO_Export TAO_Linear_ObjTable : public TAO_Object_Table_Impl
   //   for the lookups.
   //
 public:
+  
+  enum 
+  {
+    // Grow table exponentially up to 64K
+    MAX_EXPONENTIAL = 65536, 
+
+    // Afterwards grow in chunks of 32K
+    LINEAR_INCREASE = 32768  
+  };
+
   TAO_Linear_ObjTable (CORBA::ULong size);
   virtual ~TAO_Linear_ObjTable (void);
 
@@ -325,27 +351,33 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
-  virtual TAO_Object_Table_Iterator_Impl* begin () const;
-  virtual TAO_Object_Table_Iterator_Impl* end () const;
+  virtual TAO_Object_Table_Iterator_Impl *begin () const;
+  virtual TAO_Object_Table_Iterator_Impl *end () const;
 
-private:
-  int next_;
-  int tablesize_;
+protected:
+
+  virtual int resize (void);
+
+  CORBA::ULong next_;
+  CORBA::ULong tablesize_;
   TAO_Object_Table_Entry *table_;
+  PortableServer::ObjectId empty_id_;
 };
 
 /****************************************************************/
 
-class TAO_Export TAO_Active_Demux_ObjTable : public TAO_Object_Table_Impl
+class TAO_Export TAO_Active_Demux_ObjTable : public TAO_Linear_ObjTable
 {
   // = TITLE
   //   An object table lookup strategy based on active
   //   demultiplexing strategy.
   //
   // = DESCRIPTION
-  //   Use an static array to store the objects, keys must be the
-  //   string representation of the indices into the array so lookups
-  //   can be done in O(1).
+  //
+  //   Use the linear object table as the base; keys must be the
+  //   string representation of the indices into the array and a
+  //   generation count, so lookups can be done in O(1).
+  //
   //   Iterators are implemented using pointers on the array.
 public:
   TAO_Active_Demux_ObjTable (CORBA::ULong size);
@@ -353,10 +385,6 @@ public:
 
   ~TAO_Active_Demux_ObjTable (void);
   // Destructor
-
-  int next_free (void) const;
-  // Searches the array for the next free element, returns -1 if none
-  // is found.
 
   // Implement TAO_Dynamic_Hash_ObjTable....
   virtual int find (const PortableServer::Servant servant);
@@ -369,16 +397,20 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
-  virtual TAO_Object_Table_Iterator_Impl* begin () const;
-  virtual TAO_Object_Table_Iterator_Impl* end () const;
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                                                      CORBA::Environment &env);
 
-private:
-  int index_from_id (const PortableServer::ObjectId &id) const;
-  // Return the array index for the id...
+protected:
 
-private:
-  int tablesize_;
-  TAO_Object_Table_Entry *table_;
+  virtual CORBA::ULong next_free (void);
+
+  virtual int parse_object_id (const PortableServer::ObjectId &id,
+                               CORBA::ULong &index,
+                               CORBA::ULong &generation);
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Object_Table.i"
+#endif /* ! __ACE_INLINE__ */
 
 #endif /* TAO_OBJTABLE_H */

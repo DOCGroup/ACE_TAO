@@ -82,6 +82,9 @@ public:
 
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.
+
+  virtual u_long object_table_size (void) const;
+  // Return the object table size
 };
 
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */
