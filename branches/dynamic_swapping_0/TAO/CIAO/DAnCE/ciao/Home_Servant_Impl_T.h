@@ -103,6 +103,12 @@ namespace CIAO
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       component_map_;
+    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            Components::CCMObject_ptr,
+                            TAO_ObjectId_Hash,
+                            ACE_Equal_To<PortableServer::ObjectId>,
+                            ACE_SYNCH_MUTEX>
+      objref_map_;
   };
 }
 
