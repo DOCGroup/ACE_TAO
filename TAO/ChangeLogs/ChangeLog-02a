@@ -1,3 +1,12 @@
+Thu Jan 24 12:35:17 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  
+	  Fixed a bug in typecode generation for multidimension arrays.
+	  Implemented first part of new recursive IDL handling machanism.
+ 	  Refactored some repetitive code.
+	
 Thu Jan 24 00:08:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp:
