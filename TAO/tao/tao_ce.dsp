@@ -937,8 +937,8 @@ DEP_CPP_ACCEP=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -1273,8 +1273,8 @@ DEP_CPP_ACTIV=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -1640,8 +1640,8 @@ DEP_CPP_ANY_C=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -2000,8 +2000,8 @@ DEP_CPP_APPEN=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Principal.h"\
@@ -2417,8 +2417,8 @@ DEP_CPP_ASYNC=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -2837,8 +2837,8 @@ DEP_CPP_CDR_C=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -3418,8 +3418,8 @@ DEP_CPP_CLIEN=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -3981,8 +3981,8 @@ DEP_CPP_CONNE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -4344,8 +4344,8 @@ DEP_CPP_CONTE=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -5561,8 +5561,8 @@ DEP_CPP_CURRE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -5631,334 +5631,6 @@ NODEP_CPP_CURRE=\
 	".\tao\POA_CORBA.h"\
 	".\tao\Servant_Base.h"\
 	".\tao\Stub.h"\
-	".\tao\Typecode.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CurrentS.cpp
-
-!IF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Debug"
-
-DEP_CPP_CURREN=\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Based_Pointer_Repository.h"\
-	"..\..\ace\Based_Pointer_T.cpp"\
-	"..\..\ace\Based_Pointer_T.h"\
-	"..\..\ace\Based_Pointer_T.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\CDR_Stream.h"\
-	"..\..\ace\CDR_Stream.i"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\CORBA_macros.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Any.h"\
-	".\Any.i"\
-	".\CDR.h"\
-	".\CDR.i"\
-	".\corbafwd.h"\
-	".\corbafwd.i"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\DomainC.h"\
-	".\DomainC.i"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\GIOP.h"\
-	".\GIOP.i"\
-	".\IOPC.h"\
-	".\IOPC.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\Object.h"\
-	".\Object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\orbconf.h"\
-	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\PollableC.h"\
-	".\PollableC.i"\
-	".\Sequence.h"\
-	".\Sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\Servant_Base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\try_macros.h"\
-	".\Typecode.h"\
-	".\Typecode.i"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Release"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
-	".\tao\Typecode.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Debug"
-
-NODEP_CPP_CURREN=\
-	".\tao\CurrentC.h"\
-	".\tao\Environment.h"\
-	".\tao\Operation_Table.h"\
-	".\tao\POA_CORBA.h"\
-	".\tao\Server_Request.h"\
 	".\tao\Typecode.h"\
 	
 
@@ -6584,8 +6256,8 @@ DEP_CPP_DECOD=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -7032,8 +6704,8 @@ DEP_CPP_DEEP_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -7431,8 +7103,8 @@ DEP_CPP_DEFAU=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -8071,8 +7743,8 @@ DEP_CPP_DEFAUL=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -8475,8 +8147,8 @@ DEP_CPP_DEFAULT=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -9161,8 +8833,8 @@ DEP_CPP_DOMAI=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -9616,8 +9288,8 @@ DEP_CPP_DOMAIN=\
 	".\ORB.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -9963,8 +9635,8 @@ DEP_CPP_DYNAN=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -10337,8 +10009,8 @@ DEP_CPP_DYNANY=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -10422,7 +10094,7 @@ SOURCE=.\DynAnyS.cpp
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10431,7 +10103,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10440,7 +10112,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10449,7 +10121,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10458,7 +10130,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10467,7 +10139,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10476,7 +10148,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10485,7 +10157,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10494,7 +10166,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10503,7 +10175,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10512,7 +10184,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10521,7 +10193,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10530,7 +10202,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10634,8 +10306,8 @@ DEP_CPP_DYNANYS=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -10660,7 +10332,7 @@ DEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10669,7 +10341,7 @@ NODEP_CPP_DYNANYS=\
 NODEP_CPP_DYNANYS=\
 	".\tao\DynAnyC.h"\
 	".\tao\POA_CORBA.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Servant_Base.h"\
 	
 
@@ -10887,8 +10559,8 @@ DEP_CPP_DYNAR=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -11138,8 +10810,8 @@ DEP_CPP_DYNEN=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -11389,8 +11061,8 @@ DEP_CPP_DYNSE=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -11640,8 +11312,8 @@ DEP_CPP_DYNST=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -11893,8 +11565,8 @@ DEP_CPP_DYNUN=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -12286,8 +11958,8 @@ DEP_CPP_ENCOD=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -12669,8 +12341,8 @@ DEP_CPP_ENVIR=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -13029,7 +12701,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13039,7 +12711,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13049,7 +12721,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13059,7 +12731,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13069,7 +12741,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13079,7 +12751,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13089,7 +12761,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13099,7 +12771,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13109,7 +12781,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13119,7 +12791,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13129,7 +12801,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13139,7 +12811,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13149,7 +12821,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13294,8 +12966,8 @@ DEP_CPP_FORWA=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -13323,7 +12995,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13333,7 +13005,7 @@ NODEP_CPP_FORWA=\
 	".\tao\Any.h"\
 	".\tao\Forwarding_Servant.h"\
 	".\tao\Object.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Server_Request.h"\
 	
 
@@ -13740,12 +13412,10 @@ DEP_CPP_GIOP_=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -13841,7 +13511,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13857,7 +13527,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13873,7 +13543,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13889,7 +13559,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13905,7 +13575,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13921,7 +13591,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13937,7 +13607,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13953,7 +13623,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13969,7 +13639,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -13985,7 +13655,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14001,7 +13671,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14017,7 +13687,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14033,7 +13703,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14229,8 +13899,8 @@ DEP_CPP_GIOP_S=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -14290,7 +13960,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14306,7 +13976,7 @@ NODEP_CPP_GIOP_S=\
 	".\tao\NVList.h"\
 	".\tao\ORB.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Timeprobe.h"\
 	
@@ -14718,8 +14388,8 @@ DEP_CPP_IIOP_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -15194,8 +14864,8 @@ DEP_CPP_IIOP_C=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -15699,8 +15369,8 @@ DEP_CPP_IIOP_CO=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -16152,8 +15822,8 @@ DEP_CPP_IIOP_F=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -16666,12 +16336,10 @@ DEP_CPP_IIOP_P=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -17169,8 +16837,8 @@ DEP_CPP_IIOP_T=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -17484,8 +17152,8 @@ DEP_CPP_INCON=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -17732,8 +17400,8 @@ DEP_CPP_INTER=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -17978,8 +17646,8 @@ DEP_CPP_INTERC=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -18198,8 +17866,8 @@ DEP_CPP_INTERCE=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -18566,8 +18234,8 @@ DEP_CPP_INTERF=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -19051,8 +18719,8 @@ DEP_CPP_INVOC=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -20367,8 +20035,8 @@ DEP_CPP_IORC_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -20722,8 +20390,8 @@ DEP_CPP_IORMA=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -21034,8 +20702,8 @@ DEP_CPP_IORS_=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -21312,8 +20980,8 @@ DEP_CPP_KEY_A=\
 	".\Object.h"\
 	".\Object.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -21635,8 +21303,8 @@ DEP_CPP_LEADE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -22193,8 +21861,8 @@ DEP_CPP_MANAG=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -22505,8 +22173,8 @@ DEP_CPP_MARSH=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Principal.h"\
@@ -22755,8 +22423,8 @@ DEP_CPP_MESSA=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -23136,8 +22804,8 @@ DEP_CPP_MESSAG=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -23634,10 +23302,8 @@ DEP_CPP_MESSAGI=\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
-	".\POAS.h"\
-	".\POAS.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -24079,12 +23745,10 @@ DEP_CPP_MESSAGIN=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -24684,8 +24348,8 @@ DEP_CPP_NVLIS=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -25197,10 +24861,8 @@ DEP_CPP_OBJEC=\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
-	".\POAS.h"\
-	".\POAS.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -25683,12 +25345,10 @@ DEP_CPP_OBJECT=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -26348,8 +26008,8 @@ DEP_CPP_OBJECTI=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -26651,8 +26311,8 @@ DEP_CPP_OPERA=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -27468,12 +27128,10 @@ DEP_CPP_ORB_C=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -28203,12 +27861,10 @@ DEP_CPP_ORB_CO=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -28958,8 +28614,8 @@ DEP_CPP_PLUGG=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -29459,12 +29115,10 @@ DEP_CPP_POA_C=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -29544,180 +29198,167 @@ NODEP_CPP_POA_C=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAC.cpp
+SOURCE=.\PortableServerC.cpp
 
 !IF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Debug"
 
-DEP_CPP_POAC_=\
+DEP_CPP_PortableServerC_=\
 	"..\..\ace\ACE.h"\
 	"..\..\ace\ACE.i"\
 	"..\..\ace\Active_Map_Manager.h"\
@@ -29926,12 +29567,10 @@ DEP_CPP_POAC_=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -29986,26 +29625,24 @@ DEP_CPP_POAC_=\
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Release"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
 
 !ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Debug"
 
-NODEP_CPP_POAC_=\
+NODEP_CPP_PortableServerC_=\
 	".\tao\Any.h"\
 	".\tao\Invocation.h"\
 	".\tao\POA.h"\
-	".\tao\POAC.h"\
-	".\tao\POAC.i"\
-	".\tao\POAS.h"\
+	".\tao\PortableServerC.h"\
+	".\tao\PortableServerC.i"\
 	".\tao\Stub.h"\
 	".\tao\Typecode.h"\
 	
@@ -30302,12 +29939,10 @@ DEP_CPP_POAMA=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -30346,409 +29981,6 @@ NODEP_CPP_POAMA=\
 	".\tao\POAManager.h"\
 	".\tao\POAManager.i"\
 	".\tao\Server_Strategy_Factory.h"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAS.cpp
-
-!IF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPS) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH4) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE SH3) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE ARM) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE MIPSFP) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE x86em) Debug"
-
-DEP_CPP_POAS_=\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Based_Pointer_Repository.h"\
-	"..\..\ace\Based_Pointer_T.cpp"\
-	"..\..\ace\Based_Pointer_T.h"\
-	"..\..\ace\Based_Pointer_T.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\CDR_Stream.h"\
-	"..\..\ace\CDR_Stream.i"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\CORBA_macros.h"\
-	"..\..\ace\Dynamic_Service.cpp"\
-	"..\..\ace\Dynamic_Service.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Message_Queue.h"\
-	"..\..\ace\Message_Queue.i"\
-	"..\..\ace\Message_Queue_T.cpp"\
-	"..\..\ace\Message_Queue_T.h"\
-	"..\..\ace\Message_Queue_T.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Service_Repository.h"\
-	"..\..\ace\Service_Repository.i"\
-	"..\..\ace\Service_Types.h"\
-	"..\..\ace\Service_Types.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\Strategies.h"\
-	"..\..\ace\Strategies.i"\
-	"..\..\ace\Strategies_T.cpp"\
-	"..\..\ace\Strategies_T.h"\
-	"..\..\ace\Strategies_T.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_Options.h"\
-	"..\..\ace\Synch_Options.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Thread_Manager.h"\
-	"..\..\ace\Thread_Manager.i"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\WFMO_Reactor.h"\
-	"..\..\ace\WFMO_Reactor.i"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Any.h"\
-	".\Any.i"\
-	".\CDR.h"\
-	".\CDR.i"\
-	".\corbafwd.h"\
-	".\corbafwd.i"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\DomainC.h"\
-	".\DomainC.i"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\GIOP.h"\
-	".\GIOP.i"\
-	".\Interceptor.h"\
-	".\Interceptor.i"\
-	".\InterceptorC.h"\
-	".\InterceptorC.i"\
-	".\InterceptorS.h"\
-	".\IOPC.h"\
-	".\IOPC.i"\
-	".\IOR_LookupTable.h"\
-	".\IORC.h"\
-	".\IORC.i"\
-	".\IORManipulation.h"\
-	".\IORS.h"\
-	".\IORS.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\MessagingC.h"\
-	".\MessagingC.i"\
-	".\MessagingS.h"\
-	".\MessagingS.i"\
-	".\Object.h"\
-	".\Object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\ORB.h"\
-	".\ORB.i"\
-	".\ORB_Core.h"\
-	".\ORB_Core.i"\
-	".\orbconf.h"\
-	".\params.h"\
-	".\params.i"\
-	".\Pluggable.h"\
-	".\Pluggable.i"\
-	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
-	".\POAS.h"\
-	".\POAS.i"\
-	".\Policy_Manager.h"\
-	".\Policy_Manager.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\PollableC.h"\
-	".\PollableC.i"\
-	".\Protocol_Factory.h"\
-	".\Resource_Factory.h"\
-	".\Sequence.h"\
-	".\Sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\Servant_Base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\Services.h"\
-	".\Services.i"\
-	".\TAOC.h"\
-	".\TAOC.i"\
-	".\TAOS.h"\
-	".\TAOS.i"\
-	".\TAOS_T.cpp"\
-	".\TAOS_T.h"\
-	".\TAOS_T.i"\
-	".\TimeBaseC.h"\
-	".\TimeBaseC.i"\
-	".\TimeBaseS.h"\
-	".\TimeBaseS.i"\
-	".\TimeBaseS_T.cpp"\
-	".\TimeBaseS_T.h"\
-	".\TimeBaseS_T.i"\
-	".\try_macros.h"\
-	".\Typecode.h"\
-	".\Typecode.i"\
-	".\ValueBase.h"\
-	".\ValueBase.i"\
-	".\ValueFactory.h"\
-	".\ValueFactory.i"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Release"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
-	
-
-!ELSEIF  "$(CFG)" == "tao_ce - Win32 (WCE PPC) Debug"
-
-NODEP_CPP_POAS_=\
-	".\tao\Operation_Table.h"\
-	".\tao\ORB.h"\
-	".\tao\ORB_Core.h"\
-	".\tao\POAS.h"\
-	".\tao\POAS.i"\
-	".\tao\Server_Request.h"\
 	
 
 !ENDIF 
@@ -31067,8 +30299,8 @@ DEP_CPP_POLIC=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -31493,8 +30725,8 @@ DEP_CPP_POLICY=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -31881,8 +31113,8 @@ DEP_CPP_POLICYS=\
 	".\ORB.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -32265,8 +31497,8 @@ DEP_CPP_POLLA=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -32623,8 +31855,8 @@ DEP_CPP_POLLAB=\
 	".\Operation_Table.h"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -33057,8 +32289,8 @@ DEP_CPP_POOL_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -34449,8 +33681,8 @@ DEP_CPP_REACT=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -35041,8 +34273,8 @@ DEP_CPP_REPLY=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -35387,8 +34619,8 @@ DEP_CPP_REQUE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -35774,8 +35006,8 @@ DEP_CPP_RESOU=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -36172,8 +35404,8 @@ DEP_CPP_RT_CU=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -37062,12 +36294,10 @@ DEP_CPP_SERVA=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -37164,7 +36394,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37179,7 +36409,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37194,7 +36424,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37209,7 +36439,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37224,7 +36454,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37239,7 +36469,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37254,7 +36484,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37269,7 +36499,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37284,7 +36514,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37299,7 +36529,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37314,7 +36544,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37329,7 +36559,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37344,7 +36574,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37540,8 +36770,8 @@ DEP_CPP_SERVE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -37598,7 +36828,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -37613,7 +36843,7 @@ NODEP_CPP_SERVE=\
 	".\tao\Environment.h"\
 	".\tao\NVList.h"\
 	".\tao\ORB_Core.h"\
-	".\tao\POAC.h"\
+	".\tao\PortableServerC.h"\
 	".\tao\Principal.h"\
 	".\tao\Server_Request.h"\
 	".\tao\Server_Request.i"\
@@ -38432,8 +37662,8 @@ DEP_CPP_SINGL=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -38794,8 +38024,8 @@ DEP_CPP_SKIP_=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Principal.h"\
@@ -39265,8 +38495,8 @@ DEP_CPP_STUB_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -39807,8 +39037,8 @@ DEP_CPP_TAO_C=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -40621,8 +39851,8 @@ DEP_CPP_TAOC_=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -41086,8 +40316,8 @@ DEP_CPP_TAOS_=\
 	".\Object.i"\
 	".\orbconf.h"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -43003,8 +42233,8 @@ DEP_CPP_TYPECO=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\PollableC.h"\
@@ -43462,8 +42692,8 @@ DEP_CPP_UIOP_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -43960,8 +43190,8 @@ DEP_CPP_UIOP_C=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -44460,8 +43690,8 @@ DEP_CPP_UIOP_CO=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -44920,8 +44150,8 @@ DEP_CPP_UIOP_F=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -45430,12 +44660,10 @@ DEP_CPP_UIOP_P=\
 	".\POA.i"\
 	".\POA_CORBA.h"\
 	".\poa_macros.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\POAManager.h"\
 	".\POAManager.i"\
-	".\POAS.h"\
-	".\POAS.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -45939,8 +45167,8 @@ DEP_CPP_UIOP_T=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -46522,8 +45750,8 @@ DEP_CPP_VALUE=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -47045,8 +46273,8 @@ DEP_CPP_VALUEFA=\
 	".\ORB.h"\
 	".\ORB.i"\
 	".\orbconf.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\PolicyC.h"\
 	".\PolicyC.i"\
 	".\Sequence.h"\
@@ -47407,8 +46635,8 @@ DEP_CPP_WAIT_=\
 	".\Pluggable.h"\
 	".\Pluggable.i"\
 	".\POA_CORBA.h"\
-	".\POAC.h"\
-	".\POAC.i"\
+	".\PortableServerC.h"\
+	".\PortableServerC.i"\
 	".\Policy_Manager.h"\
 	".\Policy_Manager.i"\
 	".\PolicyC.h"\
@@ -47962,15 +47190,11 @@ SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAC.h
+SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAS.h
 # End Source File
 # Begin Source File
 
@@ -48350,15 +47574,11 @@ SOURCE=.\POA.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAC.i
+SOURCE=.\PortableServerC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAS.i
 # End Source File
 # Begin Source File
 
