@@ -172,17 +172,14 @@ Server::write_iors (void)
 int
 Server::activate_high_servant (void)
 {
-  char orbport[BUFSIZ];
-  char orbhost[BUFSIZ];
+  char orbendpoint[BUFSIZ];
 
-  ACE_OS::sprintf (orbport,
-                   "-ORBport %d ",
+  ACE_OS::sprintf (orbendpoint,
+                   "-ORBendpoint iiop://%s:%d ",
+                   GLOBALS::instance ()->hostname,
                    GLOBALS::instance ()->base_port);
-  ACE_OS::sprintf (orbhost,
-                   "-ORBhost %s ",
-                   GLOBALS::instance ()->hostname);
-  char *high_second_argv[] = {orbport,
-                              orbhost,
+
+  char *high_second_argv[] = {orbendpoint,
                               "-ORBsndsock 32768 ",
                               "-ORBrcvsock 32768 ",
                               0};
@@ -227,12 +224,6 @@ Server::activate_high_servant (void)
 int
 Server::activate_low_servants (void)
 {
-  char orbhost[BUFSIZ];
-
-  ACE_OS::sprintf (orbhost,
-                   "-ORBhost %s ",
-                   GLOBALS::instance ()->hostname);
-
   if (ACE_static_cast (int, this->num_low_priority_) > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -250,16 +241,16 @@ Server::activate_low_servants (void)
        i > 0;
        i--)
     {
-      char orbport[BUFSIZ];
+      char orbendpoint[BUFSIZ];
 
-      ACE_OS::sprintf (orbport,
-                      "-ORBport %d",
+      ACE_OS::sprintf (orbendpoint,
+                       "-ORBendpoint iiop://%s:%d",
+                       GLOBALS::instance ()->hostname,
                        GLOBALS::instance ()->base_port == 0
                        ? (int) 0
                        : GLOBALS::instance ()->base_port + i);
 
-      char *low_second_argv[] = {orbport,
-                                 orbhost,
+      char *low_second_argv[] = {orbendpoint,
                                  "-ORBsndsock 32768 ",
                                  "-ORBrcvsock 32768 ",
                                  0};
