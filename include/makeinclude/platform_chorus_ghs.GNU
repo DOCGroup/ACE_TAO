@@ -29,7 +29,7 @@ CROSS-COMPILE = 1
 
 debug = 1
 ifndef exceptions
-  exceptions =
+  exceptions = 1
 endif # exceptions
 optimize = 1
 shared_libs =
