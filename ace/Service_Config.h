@@ -197,6 +197,8 @@ public:
    *        Please observe the difference between options '-f' that looks
    *        for a list of files and here a list of services.
    *
+   * @param argc The number of commandline arguments.
+   * @param argv The array with commandline arguments
    * @param logger_key   Indicates where to write the logging output,
    *                     which is typically either a STREAM pipe or a
    *                     socket address.
@@ -211,7 +213,7 @@ public:
    * @retval -1   the configuration file is not found or cannot
    *              be opened (errno is set accordingly).
    * @retval  0   Success.
-   * @retval  &gt; 0  The number of errors encountered while processing
+   * @retval  >0  The number of errors encountered while processing
    *              the service configuration file(s).
    */
   static int open (int argc,
