@@ -37,11 +37,6 @@ CC		= gcc
 CXX		= g++
 CFLAGS		+= -w
 
-# Enable 64-bit builds
-ifeq (64,$(buildbits))
-  CPPFLAGS      += -m64
-endif
-
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any.
