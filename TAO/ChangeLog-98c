@@ -1,74 +1,81 @@
+Mon Nov 09 09:59:45 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: changed some
+          ACE_NOTREACHED (return 0) statements to return 0, if
+          TAO_HAS_EXCEPTIONS is _not_ defined.  There's got to be a
+          better way.
+
 1998-11-08  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* examples/Event_Comm/Event_Comm.idl: Added exceptions
-	  CannotSubscribe and CannotUnSubscribe.
-	* examples/Event_Comm/Event_Comm_i.h: Modified ACE_Map_Manager,
-	  ACE_Map_Iterator and ACE_Map_Entry to use Consumer_ptr.
-	  Added the ShutdownCallback helper class.
-	* examples/Event_Comm/Event_Comm_i.cpp: Made changes to Notifier_i
-	  to use Consumer_ptr instead of the previous "marker" for Orbix.
-	  Added a warning message for platforms (e.g. Win32) that do not
-	  support regular expression functions such as compile and step.
-	  Added explicit template instantiation code for the egcs compiler.
-	* examples/Event_Comm/Notifier_Server.h: Added this new file.
-	* examples/Event_Comm/Notifier_Server.cpp: Added this new file.
-	* examples/Event_Comm/Notifier.cpp: Uses Notifier_Server class.
-	* examples/Event_Comm/consumer.cpp: Class consumer now derives
-	  from ACE_Event_Handler and implements the ShutdownCallback.
-	* examples/Event_Comm/Consumer_Handler.h: Added the following
-	  methods -
-	  int init (int argc, char *argv[],
-		ShutdownCallback *_shutdowncallback);
-	  int run (void);
+        * examples/Event_Comm/Event_Comm.idl: Added exceptions
+          CannotSubscribe and CannotUnSubscribe.
+        * examples/Event_Comm/Event_Comm_i.h: Modified ACE_Map_Manager,
+          ACE_Map_Iterator and ACE_Map_Entry to use Consumer_ptr.
+          Added the ShutdownCallback helper class.
+        * examples/Event_Comm/Event_Comm_i.cpp: Made changes to Notifier_i
+          to use Consumer_ptr instead of the previous "marker" for Orbix.
+          Added a warning message for platforms (e.g. Win32) that do not
+          support regular expression functions such as compile and step.
+          Added explicit template instantiation code for the egcs compiler.
+        * examples/Event_Comm/Notifier_Server.h: Added this new file.
+        * examples/Event_Comm/Notifier_Server.cpp: Added this new file.
+        * examples/Event_Comm/Notifier.cpp: Uses Notifier_Server class.
+        * examples/Event_Comm/consumer.cpp: Class consumer now derives
+          from ACE_Event_Handler and implements the ShutdownCallback.
+        * examples/Event_Comm/Consumer_Handler.h: Added the following
+          methods -
+          int init (int argc, char *argv[],
+                ShutdownCallback *_shutdowncallback);
+          int run (void);
           void close (void);
-  	  void shutdown (void);
- 	  ACE_Reactor *reactor (void);
-	  int get_notifier (void);
-	  data members -
-  	  Consumer_i receiver_i_;
-  	  Event_Comm::Consumer_var receiver_;
-  	  Event_Comm::Notifier_var notifier_;
-  	  TAO_Naming_Client naming_services_client_;
-	* examples/Event_Comm/Consumer_Handler.cpp: Uses the naming service
-	  to get hold of the Notifier object instead of using an IOR.
-	* examples/Event_Comm/Consumer_Input_Handler.h:
-	  Class Consumer_Input_Handler derives from ACE_Event_Handler.
-	* examples/Event_Comm/Consumer_Input_Handler.cpp: handle_input
- 	  calls Consumer_Handler::shutdown to initiate a shutdown on
-	  the "quit" command.
-	  Uses register_stdin_handler and remove_stdin_handler to
-	  register the input handler.
-	* examples/Event_Comm/supplier.cpp: Class Supplier derives from
-	  ACE_Event_Handler and implements ShutdownCallback.
-	* examples/Event_Comm/Supplier_Input_Handler.h: Derives from
-	  ACE_Event_Handler.
-	* examples/Event_Comm/Supplier_Input_Handler.cpp:handle_input
- 	  calls Supplier_Handler::shutdown to initiate a shutdown on
-	  the "quit" command.
-	* Makefile: detects if the g++ compiler version is lesser than
-	  2.8.0 and if so, prints a warning message.
+          void shutdown (void);
+          ACE_Reactor *reactor (void);
+          int get_notifier (void);
+          data members -
+          Consumer_i receiver_i_;
+          Event_Comm::Consumer_var receiver_;
+          Event_Comm::Notifier_var notifier_;
+          TAO_Naming_Client naming_services_client_;
+        * examples/Event_Comm/Consumer_Handler.cpp: Uses the naming service
+          to get hold of the Notifier object instead of using an IOR.
+        * examples/Event_Comm/Consumer_Input_Handler.h:
+          Class Consumer_Input_Handler derives from ACE_Event_Handler.
+        * examples/Event_Comm/Consumer_Input_Handler.cpp: handle_input
+          calls Consumer_Handler::shutdown to initiate a shutdown on
+          the "quit" command.
+          Uses register_stdin_handler and remove_stdin_handler to
+          register the input handler.
+        * examples/Event_Comm/supplier.cpp: Class Supplier derives from
+          ACE_Event_Handler and implements ShutdownCallback.
+        * examples/Event_Comm/Supplier_Input_Handler.h: Derives from
+          ACE_Event_Handler.
+        * examples/Event_Comm/Supplier_Input_Handler.cpp:handle_input
+          calls Supplier_Handler::shutdown to initiate a shutdown on
+          the "quit" command.
+        * Makefile: detects if the g++ compiler version is lesser than
+          2.8.0 and if so, prints a warning message.
 
 Sun Nov 08 14:55:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: Please uncomment TAO_HAS_EXCEPTIONS and
- 	  TAO_USE_EXCEPTIONS once exceptions are working in TAO.  For now,
- 	  they are not working properly.
+        * tao/orbconf.h: Please uncomment TAO_HAS_EXCEPTIONS and
+          TAO_USE_EXCEPTIONS once exceptions are working in TAO.  For now,
+          they are not working properly.
 
-	* tao/Object_Table.cpp (find): Fixed the find routine.  It was
- 	  considering the is_free_ field in all cases, but this field is
- 	  not used when the dynamic hashing mechanism is used.
+        * tao/Object_Table.cpp (find): Fixed the find routine.  It was
+          considering the is_free_ field in all cases, but this field is
+          not used when the dynamic hashing mechanism is used.
 
 Fri Nov  6 19:11:39 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Notifier_i.cpp:
-	  Added exceptions handling to methods:
-	  register_callback, unregister_callback, market_status.
+        * examples/Callback_Quoter/Notifier_i.cpp:
+          Added exceptions handling to methods:
+          register_callback, unregister_callback, market_status.
 
 Fri Nov  6 17:09:52 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/mpeg_shared/MMDevice_Exporter.idl:
-	  The new idl defining the wrapper interface for exporting both
-	  Audio and Video MMDevices.
+        * orbsvcs/tests/AVStreams/mpeg/mpeg_shared/MMDevice_Exporter.idl:
+          The new idl defining the wrapper interface for exporting both
+          Audio and Video MMDevices.
 
 Fri Nov 06 10:59:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
