@@ -1705,6 +1705,13 @@ The steps we followed in the build are:
        # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
        </pre></code></blockquote>
 
+       If you are using MPC generated Makefiles, then the DLLs have beein
+       placed in the lib directory instead of ace and thus your PATH
+       addition would need to look like this:
+
+       <blockquote><code><pre>
+       # export PATH=//c/work/mingw/ACE_wrappers/lib:$PATH
+       </pre></code></blockquote>
 
 </OL>
 
@@ -1846,6 +1853,14 @@ setup selects by default:
 
        <blockquote><code><pre>
        # export PATH=//c/work/cygwin/ACE_wrappers/ace:$PATH
+       </pre></code></blockquote>
+
+       If you are using MPC generated Makefiles, then the DLLs have beein
+       placed in the lib directory instead of ace and thus your PATH
+       addition would need to look like this:
+
+       <blockquote><code><pre>
+       # export PATH=//c/work/mingw/ACE_wrappers/lib:$PATH
        </pre></code></blockquote>
 
 
