@@ -170,7 +170,7 @@ Task_Entry::info_type () const
 ACE_INLINE u_long
 Task_Entry::effective_execution_time () const
 {
-  // Just use low 32 bits.  This will have to change when CosTimeBase.idl
+  // Just use low 32 bits.  This will have to change when TimeBase.idl
   // is finalized.
   ACE_UINT32 worst_case_execution_time =
     ACE_U64_TO_U32 (rt_info_->worst_case_execution_time);

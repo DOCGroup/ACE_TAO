@@ -1,5 +1,10 @@
 // $Id$
+
+#pragma prefix "omg.org"
+
 module CORBA
 {
   interface Current {};
 };
+
+#pragma prefix ""

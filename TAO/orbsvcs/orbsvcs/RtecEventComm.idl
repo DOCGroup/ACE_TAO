@@ -3,14 +3,14 @@
 #ifndef TAO_RTEC_EVENTCOMM_IDL
 #define TAO_RTEC_EVENTCOMM_IDL
 
-#include "CosTimeBase.idl"
+#include "TimeBase.idl"
 
 // Remove the prefix definition...
 // @@ TODO Is this the "Right Thing"? AFAIK the spec does not mention
 // if pragmas should survive the file scope...
 #pragma prefix ""
 
-module RtecEventComm 
+module RtecEventComm
 {
   // = TITLE
   //   User defined Event Data.
@@ -25,7 +25,7 @@ module RtecEventComm
   //   sequence of octet.
 
   typedef sequence<octet> EventPayload;
-  struct EventData 
+  struct EventData
   {
     long x;
     long y;
@@ -95,13 +95,13 @@ module RtecEventComm
   };
   typedef sequence<Event> EventSet;
 
-  interface PushConsumer 
+  interface PushConsumer
     {
       oneway void push (in EventSet data);
       void disconnect_push_consumer ();
     };
 
-  interface PushSupplier 
+  interface PushSupplier
     {
       void disconnect_push_supplier ();
     };

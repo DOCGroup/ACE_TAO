@@ -137,7 +137,7 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
 
 // = Utility function for creating an entry for determining
 //   the severity of an anomaly detected during scheduling.
-ACE_DynScheduler::Anomaly_Severity 
+ACE_DynScheduler::Anomaly_Severity
 ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
 {
   // Determine severity of the anomaly
@@ -180,12 +180,12 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
 
 // = Utility function for creating an entry for the
 //   log of anomalies detected during scheduling.
-ACE_DynScheduler::Scheduling_Anomaly * 
+ACE_DynScheduler::Scheduling_Anomaly *
 ACE_DynScheduler::create_anomaly (ACE_DynScheduler::status_t status)
 {
   ACE_DynScheduler::Scheduling_Anomaly * anomaly;
   ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 0);
-  
+
   anomaly->severity = anomaly_severity (status);
   anomaly->description = status_message (status);
 
@@ -749,7 +749,7 @@ ACE_DynScheduler::schedule (
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
 
-      switch (anomaly->severity) 
+      switch (anomaly->severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -779,7 +779,7 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
-      switch (temp_severity) 
+      switch (temp_severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -808,7 +808,7 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
-      switch (temp_severity) 
+      switch (temp_severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -834,13 +834,13 @@ ACE_DynScheduler::schedule (
 
   // propagate the dispatch information from the
   // threads throughout the call graph
-  temp_status = propagate_dispatches (anomaly_set, 
-                                      unresolved_locals, 
+  temp_status = propagate_dispatches (anomaly_set,
+                                      unresolved_locals,
                                       unresolved_remotes);
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
-      switch (temp_severity) 
+      switch (temp_severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -864,7 +864,7 @@ ACE_DynScheduler::schedule (
         }
     }
 
-    // log anomalies for unresolved local dependencies 
+    // log anomalies for unresolved local dependencies
     if (unresolved_locals.length () > 0)
       {
         // Create an anomaly, add it to anomaly set
@@ -878,20 +878,20 @@ ACE_DynScheduler::schedule (
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
 
-        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 
+        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly,
                         ST_VIRTUAL_MEMORY_EXHAUSTED);
-    
+
         ACE_CString temp_str ("The following entry points have "
                             "unresolved local dependencies:\n");
-        temp_str += unresolved_locals; 
+        temp_str += unresolved_locals;
 
-        anomaly->severity = 
+        anomaly->severity =
           anomaly_severity (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
         anomaly->description = temp_str.c_str ();
         anomaly_set.insert (anomaly);
       }
 
-    // log anomalies for unresolved remote dependencies 
+    // log anomalies for unresolved remote dependencies
     if (unresolved_remotes.length () > 0)
       {
         // Create an anomaly, add it to anomaly set
@@ -905,14 +905,14 @@ ACE_DynScheduler::schedule (
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
 
-        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 
+        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly,
                         ST_VIRTUAL_MEMORY_EXHAUSTED);
-    
+
         ACE_CString temp_str ("The following entry points have "
                               "unresolved remote dependencies:\n");
-        temp_str += unresolved_remotes; 
+        temp_str += unresolved_remotes;
 
-        anomaly->severity = 
+        anomaly->severity =
           anomaly_severity (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
         anomaly->description = temp_str.c_str ();
         anomaly_set.insert (anomaly);
@@ -923,7 +923,7 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
-      switch (temp_severity) 
+      switch (temp_severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -962,7 +962,7 @@ ACE_DynScheduler::schedule (
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
 
-      switch (anomaly->severity) 
+      switch (anomaly->severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -1001,7 +1001,7 @@ ACE_DynScheduler::schedule (
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
 
-      switch (anomaly->severity) 
+      switch (anomaly->severity)
         {
           case RtecScheduler::ANOMALY_FATAL :
             status_ = temp_status;
@@ -1043,7 +1043,7 @@ ACE_DynScheduler::schedule (
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
 
-          switch (anomaly->severity) 
+          switch (anomaly->severity)
             {
               case RtecScheduler::ANOMALY_FATAL :
                 status_ = temp_status;
@@ -1082,7 +1082,7 @@ ACE_DynScheduler::schedule (
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
 
-          switch (anomaly->severity) 
+          switch (anomaly->severity)
             {
               case RtecScheduler::ANOMALY_FATAL :
                 status_ = temp_status;
@@ -1150,7 +1150,7 @@ ACE_DynScheduler::propagate_dispatches (
     switch (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_,
                                                          unresolved_locals,
                                                          unresolved_remotes))
-    {                      
+    {
       case Task_Entry::INTERNAL_ERROR :
         // Create an anomaly, add it to anomaly set
         anomaly = create_anomaly (ST_BAD_INTERNAL_POINTER);
@@ -1490,7 +1490,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
         u_int thread_count = (task_entries_ [i].rt_info ()->threads > 0)
                              ? task_entries_ [i].rt_info ()->threads : 1;
         // Just use low 32 bits of effective_period.  This will
-        // have to change when CosTimeBase.idl is finalized.
+        // have to change when TimeBase.idl is finalized.
         const TimeBase::TimeT zero = 0;
         for (j = 0; j < thread_count; j++)
         {
@@ -1687,7 +1687,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
   if (status == SUCCEEDED)
   {
     // assign priorities to the thread dispatch entries
-    status = assign_priorities (ordered_thread_dispatch_entries_, 
+    status = assign_priorities (ordered_thread_dispatch_entries_,
                                 threads_, anomaly_set);
   }
 
@@ -1724,7 +1724,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   sort_dispatches (ordered_dispatch_entries_, dispatch_entry_count_);
 
   // assign dynamic and static subpriorities to the thread dispatch entries
-  return assign_subpriorities (ordered_dispatch_entries_, 
+  return assign_subpriorities (ordered_dispatch_entries_,
                                dispatch_entry_count_, anomaly_set);
 }
   // dispatch scheduling method: sets up an array of dispatch entries,
@@ -1841,7 +1841,7 @@ ACE_DynScheduler::create_timeline ()
 
       // create a new dispatch entry at the current sub-frame offset
       // Just use low 32 bits of arrival and deadline.  This will
-      // have to change when CosTimeBase.idl is finalized.
+      // have to change when TimeBase.idl is finalized.
       const TimeBase::TimeT arrival =
         ordered_dispatch_entries_[i]->arrival () + current_frame_offset;
       const TimeBase::TimeT deadline=

@@ -35,6 +35,8 @@
 #include "DynAnyC.i"
 #endif /* !defined INLINE */
 
+ACE_RCSID(tao, DynAnyC, "$Id$")
+
 CORBA_DynAny_ptr CORBA_DynAny::_duplicate (CORBA_DynAny_ptr obj)
 {
   if (!CORBA::is_nil (obj))

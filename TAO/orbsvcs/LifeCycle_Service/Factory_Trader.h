@@ -32,10 +32,10 @@ public:
   void add_type ();
   // Add a the Factory type to the repository
 
-  void export (const char * name,
-               const char * location,
-               const char * description,
-               const CORBA::Object_ptr object_ptr);
+  void _cxx_export (const char * name,
+                    const char * location,
+                    const char * description,
+                    const CORBA::Object_ptr object_ptr);
   // export a specific factory
 
   CORBA::Object_ptr query (const CORBA::String constraint);

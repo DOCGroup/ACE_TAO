@@ -86,9 +86,9 @@ class TAO_Property_Exporter
   void add_dynamic_property (const char* name,
                              CosTradingDynamic::DynamicProp* dp_struct);
 
-  CosTrading::OfferId export (const CORBA::Object_ptr object_ref,
-                              const CosTrading::ServiceTypeName type,
-                              CORBA::Environment& _env)
+  CosTrading::OfferId _cxx_export (const CORBA::Object_ptr object_ref,
+                                   const CosTrading::ServiceTypeName type,
+                                   CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      CosPropertyService::MultipleExceptions,
                      CosTrading::Register::InvalidObjectRef,
@@ -103,11 +103,11 @@ class TAO_Property_Exporter
   // Export the offer to the trader under the given type.
 
   typedef CosTradingRepos::ServiceTypeRepository TRADING_REPOS;
-  CosTrading::OfferId export (const CORBA::Object_ptr object_ref,
-                              const CosTrading::ServiceTypeName type,
-                              const TRADING_REPOS::PropStructSeq& props,
-                              const TRADING_REPOS::ServiceTypeNameSeq& stypes,
-                              CORBA::Environment& _env)
+  CosTrading::OfferId _cxx_export (const CORBA::Object_ptr object_ref,
+                                   const CosTrading::ServiceTypeName type,
+                                   const TRADING_REPOS::PropStructSeq& props,
+                                   const TRADING_REPOS::ServiceTypeNameSeq& stypes,
+                                   CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      CosPropertyService::MultipleExceptions,
                      CosTrading::IllegalServiceType,

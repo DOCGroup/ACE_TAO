@@ -526,11 +526,10 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
         {
           // Adding more storage.
 
-          char** old_included_idl_files;
-          size_t n_old_allocated_idl_files;
-
-          old_included_idl_files = this->included_idl_files_;
-          n_old_allocated_idl_files = this->n_allocated_idl_files_;
+          char** old_included_idl_files =
+            this->included_idl_files_;
+          size_t n_old_allocated_idl_files =
+            this->n_allocated_idl_files_;
           this->n_allocated_idl_files_ += INCREMENT;
           ACE_NEW (this->included_idl_files_,
                    char *[this->n_allocated_idl_files_]);
@@ -541,8 +540,7 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
     }
 
   // Store it.
-  this->included_idl_files_ [this->n_included_idl_files_++] =
-    file_name;
+  this->included_idl_files_ [this->n_included_idl_files_++] = file_name;
 }
 
 char**
@@ -741,9 +739,24 @@ be_change_idl_file_extension (String* idl_file,
   // Get the char* from the String.
   const char* string = idl_file->get_string ();
 
-  // Get the base part of the filename.
-  const char *base = ACE_OS::strstr (string, ".idl");
+  // Get the base part of the filename, we try several extensions
+  // before giving up.
+  const char *base = 0;
 
+  static const char* extensions[] = {
+    ".idl",
+    ".pidl",
+    ".IDL",
+    ".PIDL"
+  };
+  static int nextensions = sizeof(extensions)/sizeof(extensions[0]);
+
+  for (int k = 0; k < nextensions; ++k)
+    {
+      base = ACE_OS::strstr (string, extensions[k]);
+      if (base != 0)
+        break;
+    }
   if (base == 0)
     return 0;
 

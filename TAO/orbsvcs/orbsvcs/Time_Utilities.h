@@ -17,7 +17,7 @@
 #ifndef ORBSVCS_TIME_UTILITIES_H
 #define ORBSVCS_TIME_UTILITIES_H
 
-#include "orbsvcs/CosTimeBaseC.h"
+#include "orbsvcs/TimeBaseC.h"
 #include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ORBSVCS_Time

@@ -40,13 +40,13 @@ MMDevice_Exporter_i::connections (void) const
 //   return this->video_mmdevice_;
 // }
 
- CORBA::Object_ptr 
+ CORBA::Object_ptr
 MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &TAO_IN_ENV)
 {
   return CORBA::Object::_duplicate (this->audio_mmdevice_);
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &TAO_IN_ENV)
 {
   return CORBA::Object::_duplicate (this->video_mmdevice_);
@@ -72,7 +72,7 @@ export_properties (TAO_Property_Exporter& prop_exporter)
 int
 MMDevice_Exporter_i::
 define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
-		   CORBA::ULong offset) const
+                   CORBA::ULong offset) const
 {
   CORBA::ULong num_props = prop_seq.length ();
 
@@ -95,19 +95,19 @@ define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_s
 AV_Audio_MMDevice::
 AV_Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy)
   :TAO_MMDevice (endpoint_strategy)
-  
+
 {
 }
 
 AVStreams::StreamEndPoint_B_ptr
 AV_Audio_MMDevice::
 create_B (AVStreams::StreamCtrl_ptr the_requester,
-	  AVStreams::VDev_out the_vdev,
-	  AVStreams::streamQoS &the_qos,
-	  CORBA::Boolean_out met_qos,
-	  char *&named_vdev,
-	  const AVStreams::flowSpec &the_spec,
-	  CORBA::Environment &env)
+          AVStreams::VDev_out the_vdev,
+          AVStreams::streamQoS &the_qos,
+          CORBA::Boolean_out met_qos,
+          char *&named_vdev,
+          const AVStreams::flowSpec &the_spec,
+          CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;
@@ -124,7 +124,7 @@ create_B (AVStreams::StreamCtrl_ptr the_requester,
     this->connections_;
   */
   return stream_ptr;
-  
+
 }
 
 
@@ -138,12 +138,12 @@ AV_Video_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy)
 AVStreams::StreamEndPoint_B_ptr
 AV_Video_MMDevice::
 create_B (AVStreams::StreamCtrl_ptr the_requester,
-	  AVStreams::VDev_out the_vdev,
-	  AVStreams::streamQoS &the_qos,
-	  CORBA::Boolean_out met_qos,
-	  char *&named_vdev,
-	  const AVStreams::flowSpec &the_spec,
-	  CORBA::Environment &env)
+          AVStreams::VDev_out the_vdev,
+          AVStreams::streamQoS &the_qos,
+          CORBA::Boolean_out met_qos,
+          char *&named_vdev,
+          const AVStreams::flowSpec &the_spec,
+          CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;
@@ -297,13 +297,13 @@ AV_Server_Sig_Handler::remove_names (void)
       /*
       CORBA::Object_var naming_obj = TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to resolve the Name Service.\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          -1);
 
       CosNaming::NamingContext_var naming_context =
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-					   TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Unregister the video_mmdevice with the naming service.
@@ -314,7 +314,7 @@ AV_Server_Sig_Handler::remove_names (void)
 
       // Register the video control object with the naming server.
       naming_context->unbind (video_server_mmdevice_name,
-			      TAO_TRY_ENV);
+                              TAO_TRY_ENV);
       // Unregister the audio_mmdevice with the naming service.
 
       CosNaming::Name audio_server_mmdevice_name (1);
@@ -323,7 +323,7 @@ AV_Server_Sig_Handler::remove_names (void)
 
       // Register the audio control object with the naming server.
       naming_context->unbind (audio_server_mmdevice_name,
-			      TAO_TRY_ENV);
+                              TAO_TRY_ENV);
       */
       this->av_server_.shutdown ();
     }
@@ -396,7 +396,7 @@ AV_Server::on_exit_routine (void)
 // Parses the command line arguments
 int
 AV_Server::parse_args (int argc,
-		       char **argv)
+                       char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "rd:s:vamh");
   int c;
@@ -503,8 +503,8 @@ AV_Server::init (int argc,
     {
       env.clear ();
       this->naming_context_->rebind (video_server_mmdevice_name,
-				     this->video_mmdevice_->_this (env),
-				     env);
+                                     this->video_mmdevice_->_this (env),
+                                     env);
       TAO_CHECK_ENV_RETURN (env,-1);
     }
 
@@ -565,7 +565,7 @@ AV_Server::init (int argc,
   // service type.
 
 
- 
+
   if (this->resolve_trader (env) != -1)
     {
       // Invoke this for each offer.
@@ -621,14 +621,14 @@ AV_Server::export_properties (CORBA::Environment& TAO_IN_ENV)
 
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq mmdevice_super_types;
   this->mmdevice_offer_id_ =
-    mmdevice_prop_exporter.export (mmdevice_object_ptr,
-			  (CosTrading::ServiceTypeName) MMDEVICE_SERVICE_TYPE,
+    mmdevice_prop_exporter._cxx_export (mmdevice_object_ptr,
+                          (CosTrading::ServiceTypeName) MMDEVICE_SERVICE_TYPE,
                           this->prop_seq_,
                           mmdevice_super_types,
-			  TAO_IN_ENV);
+                          TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
- 
+
 
 }
 
@@ -640,14 +640,14 @@ AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
       // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
-	this->orb_manager_.orb ()->resolve_initial_references ("TradingService");
+        this->orb_manager_.orb ()->resolve_initial_references ("TradingService");
 
       if (CORBA::is_nil (trading_obj.in ()))
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      " (%P|%t) Unable to bootstrap to the Trading Service.\n"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR,
+                      " (%P|%t) Unable to bootstrap to the Trading Service.\n"));
+          return -1;
+        }
 
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
@@ -662,7 +662,7 @@ AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
     }
   ACE_DEBUG ((LM_DEBUG,"Trader IOR: %s\n",
               this->orb_manager_.orb ()->object_to_string (this->trader_.in (),TAO_IN_ENV)));
-              
+
 }
 
 AV_Server::~AV_Server (void)
@@ -683,14 +683,14 @@ AV_Server::shutdown (void) const
   TAO_TRY
     {
       if (this->trader_.ptr () != 0)
-	{
-	  CosTrading::Register_var reg = this->trader_->register_if (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+        {
+          CosTrading::Register_var reg = this->trader_->register_if (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-	  ACE_DEBUG ((LM_DEBUG, "Withdrawing offer...\n"));
-	  reg->withdraw (this->mmdevice_offer_id_.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
+          ACE_DEBUG ((LM_DEBUG, "Withdrawing offer...\n"));
+          reg->withdraw (this->mmdevice_offer_id_.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
     }
   TAO_CATCHANY
     {
@@ -705,14 +705,14 @@ main (int argc, char **argv)
   TAO_TRY
     {
       int return_value =
-	AV_SERVER::instance ()->init (argc, argv, TAO_TRY_ENV);
+        AV_SERVER::instance ()->init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (return_value != -1)
-	{
-	  AV_SERVER::instance ()->run (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
+        {
+          AV_SERVER::instance ()->run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
     }
   TAO_CATCHANY
     {
