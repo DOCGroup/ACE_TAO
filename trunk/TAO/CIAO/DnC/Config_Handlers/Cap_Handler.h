@@ -88,6 +88,16 @@ namespace CIAO
       // process elements of type Capability definitions in
       // the descriptor files
 
+     /// Process the attributes for the property
+      void process_attributes_for_satisfier_property (DOMNamedNodeMap* nm,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int length,
+        Deployment::SatisfierProperty& pro);
+
+      /// create a document
+      DOMDocument* create_document (const char *url);
+
     private:
       typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
       typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
