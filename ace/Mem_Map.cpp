@@ -240,9 +240,9 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-  ACE_OS::strncpy (this->filename_,
-                   file_name,
-                   MAXPATHLEN);
+  ACE_OS::strsncpy (this->filename_,
+                    file_name,
+                    MAXPATHLEN);
 
 #if defined (CHORUS)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);

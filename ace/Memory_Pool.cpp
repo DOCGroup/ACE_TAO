@@ -216,9 +216,9 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strncpy (this->backing_store_name_,
-                     backing_store_name,
-                     (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+    ACE_OS::strsncpy (this->backing_store_name_,
+                      backing_store_name,
+                      (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
 #if !defined (ACE_WIN32) && !defined (CHORUS)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
@@ -1028,9 +1028,9 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
     // the user didn't supply one...
     backing_store_name = ACE_DEFAULT_PAGEFILE_POOL_NAME;
 
-  ACE_OS::strncpy (this->backing_store_name_,
-                   backing_store_name,
-                   (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+  ACE_OS::strsncpy (this->backing_store_name_,
+                    backing_store_name,
+                    (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 }
 
 void *

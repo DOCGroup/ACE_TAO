@@ -4126,9 +4126,9 @@ ACE_OS::unique_name (const void *object,
                    ACE_LIB_TEXT ("%lx%d"),
                    ACE_reinterpret_cast (long, object),
                    ACE_static_cast (int, ACE_OS::getpid ()));
-  ACE_OS::strncpy (name,
-                   temp_name,
-                   length);
+  ACE_OS::strsncpy (name,
+                    temp_name,
+                    length);
 }
 
 int

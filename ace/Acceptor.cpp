@@ -797,7 +797,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, buf, length);
+    ACE_OS::strsncpy (*strp, buf, length);
   return ACE_OS::strlen (buf);
 }
 
@@ -1149,7 +1149,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, buf, length);
+    ACE_OS::strsncpy (*strp, buf, length);
   return ACE_OS::strlen (buf);
 }
 

@@ -147,13 +147,9 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
   if (id == 0)
     return;
 
-  int n = ACE_OS::strlen (id) + 1;
-
-  if (n >= ACE_MAXCLIENTIDLEN)
-    n = ACE_MAXCLIENTIDLEN - 1;
-
-  ACE_OS::strncpy (this->client_id_, (ACE_TCHAR *) id, n);
-  this->client_id_[ACE_MAXCLIENTIDLEN - 1] = '\0';
+  ACE_OS::strsncpy (this->client_id_,
+                    (ACE_TCHAR *) id,
+                    ACE_MAXCLIENTIDLEN);
 }
 
 void
@@ -436,13 +432,9 @@ ACE_Mutex_Token::ACE_Mutex_Token (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Mutex_Token::ACE_Mutex_Token");
 
-  int n = ACE_OS::strlen (name) + 1;  // + 1 for \0
-
-  if (n > ACE_MAXTOKENNAMELEN)
-    n = ACE_MAXTOKENNAMELEN - 1;
-
-  ACE_OS::strncpy (this->token_name_, name, n);
-  this->token_name_[ACE_MAXTOKENNAMELEN - 1] = '\0';
+  ACE_OS::strsncpy (this->token_name_,
+                    name,
+                    ACE_MAXTOKENNAMELEN);
 }
 
 ACE_Mutex_Token::~ACE_Mutex_Token (void)
@@ -679,13 +671,9 @@ ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_RW_Token::ACE_RW_Token");
 
-  int n = ACE_OS::strlen (name) + 1;  // + 1 for \0
-
-  if (n > ACE_MAXTOKENNAMELEN)
-    n = ACE_MAXTOKENNAMELEN;
-
-  ACE_OS::strncpy (this->token_name_, name, n);
-  this->token_name_[ACE_MAXTOKENNAMELEN - 1] = '\0';
+  ACE_OS::strsncpy (this->token_name_,
+                    name,
+                    ACE_MAXTOKENNAMELEN);
 }
 
 ACE_RW_Token::~ACE_RW_Token (void)

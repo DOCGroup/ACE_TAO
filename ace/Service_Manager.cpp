@@ -75,7 +75,7 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, buf, length);
+    ACE_OS::strsncpy (*strp, buf, length);
   return ACE_OS::strlen (buf);
 }
 

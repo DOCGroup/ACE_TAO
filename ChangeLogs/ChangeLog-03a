@@ -1,3 +1,35 @@
+Sat Sep  1 14:10:08 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/System_Time.cpp,
+	* ace/Stream_Modules.cpp,
+	* ace/Service_Types.cpp,
+	* ace/Service_Manager.cpp,
+	* ace/SPIPE_Addr.cpp,
+	* ace/OS.cpp,
+	* ace/Memory_Pool.cpp,
+	* ace/Mem_Map.cpp,
+  	* ace/Local_Name_Space_T.cpp,
+	* ace/FILE_Addr.cpp,
+	* ace/FIFO.cpp,
+	* ace/Connector.cpp,
+	* ace/Acceptor.cpp,
+	* ace/Token_Collection.cpp,
+	* ace/Name_Request_Reply.cpp,
+	* ace/Local_Tokens.cpp,
+	* ace/ACE.cpp,
+	* ace/Log_Record.cpp,
+  	* ace/Log_Msg.cpp: Added the use of the new ACE_OS::strsncpy()
+ 	  method.  Thanks to Alain for reporting this.
+
+	* ace/OS_String.{h,cpp}: Added a "safe" c string copy method:
+	  strsncpy(dst,src,maxlen).  Changing an occurence off strncpy()
+ 	  to strsncpy() is less errorprone, but could break somebody's
+ 	  code if he/she is using the fact that the strncpy's where
+ 	  nul-padding the destination, but this is extremely
+ 	  unlikely. Using strsncpy() is also almost always (a lot) faster
+ 	  than strncpy().  Thanks to Alain Decamps
+ 	  <Alain.Decamps@PIDPA.be> for this method.
+
 Sat Sep  1 09:54:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Bound_Ptr_Test.cpp: Added a patch from Chris Kohlhoff that

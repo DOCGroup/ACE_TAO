@@ -315,6 +315,28 @@ public:
   static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
+  /// This is a "safe" c string copy function (char version).
+  /**
+   * The function doesn't check for a 0 <dst>, because this will give
+   * problems anyway.  When <src> is 0 an empty string is made.  We do
+   * not "touch" *<dst> if maxlen is 0.  Returns <dst>.
+   */
+  static char *strsncpy (char *dst,
+                         const char *src,
+                         size_t maxlen);
+
+#if defined (ACE_HAS_WCHAR)
+  /// This is a "safe" c string copy function (wchar_t version).
+  /**
+   * The function doesn't check for a 0 <dst>, because this will give
+   * problems anyway.  When <src> is 0 an empty string is made.  We do
+   * not "touch" *<dst> if maxlen is 0.  Returns <dst>.
+   */
+  static wchar_t *strsncpy (wchar_t *dst,
+                            const wchar_t *src,
+                            size_t maxlen);
+#endif /* ACE_HAS_WCHAR */ 
+
   /// Finds the first occurance of a substring in an array (const char
   /// version).
   static const char *strnstr (const char *s, const char *t, size_t len);
