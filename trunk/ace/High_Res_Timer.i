@@ -64,29 +64,28 @@ ACE_INLINE void
 ACE_High_Res_Timer::start (const ACE_OS::ACE_HRTimer_Op op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start");
-  this->start_ = ACE_High_Res_Timer::gettime (ACE_OS::ACE_HRTIMER_START);
+  this->start_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
 ACE_High_Res_Timer::stop (const ACE_OS::ACE_HRTimer_Op op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop");
-  this->end_ = ACE_High_Res_Timer::gettime (ACE_OS::ACE_HRTIMER_STOP);
+  this->end_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
 ACE_High_Res_Timer::start_incr (const ACE_OS::ACE_HRTimer_Op op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start_incr");
-  this->start_incr_ = ACE_High_Res_Timer::gettime (ACE_OS::ACE_HRTIMER_START);
+  this->start_incr_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
 ACE_High_Res_Timer::stop_incr (const ACE_OS::ACE_HRTimer_Op op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop_incr");
-  this->total_ += ACE_High_Res_Timer::gettime (ACE_OS::ACE_HRTIMER_STOP) -
-    this->start_incr_;
+  this->total_ += ACE_High_Res_Timer::gettime (op) - this->start_incr_;
 }
 
 ACE_INLINE void
