@@ -1414,7 +1414,15 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (is_tli)
     need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
   else
+#if defined(AIX)
+    /*
+    ** AIX is broken... both success and failed connect will set the write
+    ** handle only, so always check.
+    */
+    need_to_check = 1;
+#else
     need_to_check = rd_handles.is_set (h);
+#endif /* AIX */
 #endif /* ACE_WIN32 */
 
   if (need_to_check)
