@@ -3,10 +3,10 @@ Thu Jul  2 12:29:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	The Next round of changes for GPERF + TAO_IDL integration. NT
 	related stuff have been taken care of. attributes also should work
 	now. 
-	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): 
-	* TAO_IDL/be_include/be_interface.h (be_type): 
+	* TAO_IDL/driver/drv_args.cpp: 
+	* TAO_IDL/be_include/be_interface.h: 
 	* TAO_IDL/be_include/be_codegen.h: 
-	* TAO_IDL/be/be_interface.cpp (tc_encap_len): 
+	* TAO_IDL/be/be_interface.cpp: 
 	* TAO_IDL/be/be_helper.cpp: 
 	* TAO_IDL/be/be_codegen.cpp: 
 
