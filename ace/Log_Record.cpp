@@ -15,7 +15,7 @@ ACE_Log_Record::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "type_ = %d\n", this->type_));
   ACE_DEBUG ((LM_DEBUG, "\nlength_ = %d\n", this->length_));
   ACE_DEBUG ((LM_DEBUG, "\ntime_stamp_ = (%d, %d)\n", this->time_stamp_.sec (), this->time_stamp_.usec ()));
-  ACE_DEBUG ((LM_DEBUG, "\npid_ = %s\n", this->pid_));
+  ACE_DEBUG ((LM_DEBUG, "\npid_ = %d\n", this->pid_));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_data_ = %s\n", this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -1,14 +1,15 @@
 // $Id$
 
-// Perform an extensive test of all the ACE_Reactor's event
-// dispatching mechanisms.  These mechanisms illustrate how I/O and
-// timeout events, and even ACE_Message_Queues can all be handled
-// within the same framework.  In addition, this example illustrates
-// how to use the ACE_Reactor for devices that perform I/O via signals
-// (such as SVR4 message queues).
+// Perform an extensive test of all the ACE_Reactor's event handler
+// dispatching mechanisms.  These mechanisms illustrate how I/O,
+// timeout, and signal events, as well as ACE_Message_Queues, can all
+// be handled within the same demultiplexing and dispatching
+// framework.  In addition, this example illustrates how to use the
+// ACE_Reactor for devices that perform I/O via signals (such as SVR4
+// message queues).
 
 #include "ace/Service_Config.h"
-#include "ace/Message_Queue.h"
+#include "ace/Task.h"
 
 // Used to shut down the event loop.
 static sig_atomic_t done = 0;
@@ -79,7 +80,7 @@ Sig_Handler::get_handle (void) const
 int 
 Sig_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "handling asynchonrous input...\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
   return 0;
 }
 
@@ -89,7 +90,7 @@ Sig_Handler::handle_input (ACE_HANDLE)
 int 
 Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "closing down Sig_Handler...\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
   return 0;
 }
 
@@ -106,7 +107,7 @@ Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
 
   switch (signum)
     {
@@ -121,12 +122,12 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       return ACE_Service_Config::reactor ()->ready_ops 
 	(this->handle_, ACE_Event_Handler::READ_MASK, ACE_Reactor::ADD_MASK);
     case SIGQUIT:
-      ACE_DEBUG ((LM_DEBUG, "%S: shutting down signal tester\n", signum));
+      ACE_DEBUG ((LM_DEBUG, "(%t) %S: shutting down signal tester\n", signum));
       ACE_Service_Config::end_reactor_event_loop ();
       break;
     default: 
       ACE_DEBUG ((LM_DEBUG, 
-		  "%S: not handled, returning to program\n", signum));
+		  "(%t) %S: not handled, returning to program\n", signum));
       break;
     }
   return 0;
@@ -161,7 +162,7 @@ int
 STDIN_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "timeout occurred at %d sec, %d usec\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) timeout occurred at %d sec, %d usec\n",
 	      tv.sec (), tv.usec ()));
   return 0;
 }
@@ -203,17 +204,18 @@ class Message_Handler : public ACE_Task <ACE_MT_SYNCH>
 public:
   Message_Handler (void);
 
-  virtual int notify (void);
-  // Override the <ACE_Message_Queue::notify> hook to requeue this
-  // within the <ACE_Reactor> Singleton.
-
   virtual int handle_input (ACE_HANDLE);
   // Called back within the context of the <ACE_Reactor> Singleton to
   // dequeue and process the message on the <ACE_Message_Queue>.
 
-  int svc (void);
+  virtual int svc (void);
   // Run the "event-loop" periodically putting messages to our
   // internal <Message_Queue> that we inherit from <ACE_Task>.
+
+  // = Not used...
+  virtual int open (void *) { return 0; }
+  virtual int close (u_long) { return 0; }
+  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
 
 private:
   ACE_Reactor_Notification_Strategy notification_strategy_;
@@ -227,7 +229,7 @@ Message_Handler::Message_Handler (void)
 			    ACE_Event_Handler::READ_MASK)
 {
   // Set this to the Reactor notification strategy.
-  this->msg_queue ()->notification_strategy (&this->notification_strategy);
+  this->msg_queue ()->notification_strategy (&this->notification_strategy_);
 
   if (this->activate ())
     ACE_ERROR ((LM_ERROR, "%p\n", "activate"));
@@ -250,8 +252,15 @@ Message_Handler::svc (void)
       // thereby informing the <ACE_Reactor> Singleton to call our
       // <handle_input> method.
       if (this->putq (mb) == -1)
-	ACE_ERROR ((LM_ERROR, "%p\n", "enqueue_tail"));
+	{
+	  if (errno == ESHUTDOWN)
+	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) queue is deactivated"), 0);
+	  else
+	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "putq"), -1);
+	}
     }
+
+  return 0;
 }
 
 int
@@ -262,7 +271,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_Message_Block *mb;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "dequeue_head"));
+    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "dequeue_head"));
   else
     {
       delete mb;
@@ -295,5 +304,11 @@ main (int argc, char *argv[])
   while (daemon.reactor_event_loop_done () == 0)
     daemon.run_reactor_event_loop ();
 
+  // Deactivate the message queue.
+  mh.msg_queue ()->deactivate ();
+
+  // Wait for the thread to exit.
+  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) leaving main\n"));
   return 0;
 }

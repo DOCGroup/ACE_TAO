@@ -18,17 +18,12 @@
 #define ACE_MESSAGE_LIST_H
 
 #include "ace/Message_Block.h"
-#include "ace/Time_Value.h"
-#include "ace/Strategies.h"
 #include "ace/IO_Cntl_Msg.h"
 
-// Forward decl.
-template <ACE_SYNCH_1>
-class ACE_Message_Queue_Iterator;
-
-// Forward decl.
-template <ACE_SYNCH_1>
-class ACE_Message_Queue_Reverse_Iterator;
+// Forward decls.
+class ACE_Notification_Strategy;
+template <ACE_SYNCH_1> class ACE_Message_Queue_Iterator;
+template <ACE_SYNCH_1> class ACE_Message_Queue_Reverse_Iterator;
 
 template <ACE_SYNCH_1>
 class ACE_Message_Queue
@@ -300,6 +295,9 @@ private:
   ACE_Message_Block *curr_;           
   // Keeps track of how far we've advanced...
 };
+
+// This must go here to avoid problems with circular includes.
+#include "ace/Strategies.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Queue.i"

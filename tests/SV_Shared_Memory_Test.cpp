@@ -17,14 +17,10 @@
 // 
 // ============================================================================
 
-#include "ace/OS.h"
-#include "ace/SV_Shared_Memory.h"
+#include "ace/Malloc.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_SYSV_IPC)
-const int SHMSZ = 27;
-const int SEM_KEY = ACE_DEFAULT_SEM_KEY;
-const int SHM_KEY = ACE_DEFAULT_SHM_KEY;
 
 // Shared memory allocator (note that this chews up the
 // ACE_DEFAULT_SEM_KEY).
@@ -38,12 +34,13 @@ static int
 parent (char *shm)
 {
   ACE_SV_Semaphore_Complex mutex;
-  ACE_ASSERT (mutex.open (SEM_KEY_1,
-			  ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
-  ACE_SV_Semaphore_Complex synch; 
+  ACE_ASSERT (mutex.open (SEM_KEY_1,
+			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+
+  ACE_SV_Semaphore_Complex synch;
   ACE_ASSERT (synch.open (SEM_KEY_2,
-			  ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   char *s = shm;
 
@@ -53,16 +50,16 @@ parent (char *shm)
   *s = '\0';
 
   if (mutex.release () == -1)
-    ACE_ERROR ((LM_ERROR, "%p", "parent mutex.release"));
+    ACE_ERROR ((LM_ERROR, "(%P) %p", "parent mutex.release"));
   else if (synch.acquire () == -1)
-    ACE_ERROR ((LM_ERROR, "%p", "parent synch.acquire"));
+    ACE_ERROR ((LM_ERROR, "(%P) %p", "parent synch.acquire"));
 
   if (allocator.remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "allocator.remove"));
+    ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent allocator.remove"));
   if (mutex.remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "mutex.remove"));
+    ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent mutex.remove"));
   if (synch.remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "synch.remove"));
+    ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent synch.remove"));
   return 0;
 }
 
@@ -71,17 +68,18 @@ child (char *shm)
 {
   ACE_SV_Semaphore_Complex mutex;
   ACE_ASSERT (mutex.open (SEM_KEY_1,
-			  ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
-  ACE_SV_Semaphore_Complex synch; 
+  ACE_SV_Semaphore_Complex synch;
+
   ACE_ASSERT (synch.open (SEM_KEY_2,
-			  ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   while (mutex.tryacquire () == -1)
     if (errno == EAGAIN)
-      ACE_DEBUG ((LM_DEBUG, "spinning in child!\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P) spinning in child!\n"));
     else
-      ACE_ERROR_RETURN ((LM_ERROR, "child mutex.tryacquire"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P) child mutex.tryacquire"), 1);
 
   char t = 'a';
   for (char *s = (char *) shm; *s != '\0'; s++)
@@ -90,10 +88,8 @@ child (char *shm)
       t++;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-
   if (synch.release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "child synch.release"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P) child synch.release"), 1);
   return 0;
 }
 #endif /* ACE_HAS_SYSV_IPC */
@@ -109,13 +105,14 @@ main (int, char *argv[])
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "fork failed\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P) fork failed\n"), -1);
       /* NOTREACHED */
     case 0:
       // Child.
-      child (shm);
+      ACE_LOG_MSG->sync ("SV_Shared_Memory_Test.cpp");
+      return child (shm);
     default:
-      parent (shm);
+      return parent (shm);
     }
 #else
   ACE_ERROR ((LM_ERROR, 
