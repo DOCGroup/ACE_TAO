@@ -219,7 +219,7 @@ class ACE_Export ACE_Thread_Manager
   //
   // = DESCRIPTION
   //    This class allows operations on groups of threads atomically.
-  //    The default behavior behavior of thread manager is to wait on
+  //    The default behavior of thread manager is to wait on
   //    all threads under it's management when it gets destructed.
   //    Therefore, remember to remove a thread from thread manager if
   //    you don't want it to wait for the thread.  There are also
