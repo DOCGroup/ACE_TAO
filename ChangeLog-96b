@@ -1,3 +1,11 @@
+Tue Nov 19 23:09:08 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Log_Record.cpp (print): Added a call to ACE_OS::fflush
+	  before returning.  This change was suggested by Luca in order to
+	  help prevent messages from getting lost when applications exit.
+	  We're unsure of the affects this will have on performance, so we
+	  may change this back in the future.
+
 Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/TTY_IO.h: Added the ACE_Export macro before the ACE_TTY_IO
