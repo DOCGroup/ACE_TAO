@@ -60,10 +60,9 @@ undefined and most likely unpredictable and erroneous results.
 
 We welcome suggestions for improvement, bug fixes, portability
 enhancements, etc. and will strive to integrate correct bug fixes
-quickly!  If you have any questions or problems with TAO, please post
-them to the ACE mailing list (ace-users@cs.wustl.edu) or send email to
-Douglas C. Schmidt (schmidt@cs.wustl.edu) and Nanbor Wang
-(nanbor@cs.wustl.edu).
+quickly!  The current release has been tested extensively, but if you
+find any bugs, please report them to the ACE mailing list
+ace-users@cs.wustl.edu using the $TAO_ROOT/BUG-REPORT-FORM.
 
 Thanks,
 

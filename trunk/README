@@ -188,6 +188,14 @@ http://www.cs.wustl.edu/~schmidt/ACE.html
 
 ----------------------------------------
 
+ACE MAILING LIST AND NEWSGROUP
+
+A mailing list, ace-users@cs.wustl.edu, is available for discussing
+bug fixes, enhancements, and porting issues regarding ACE.  Please
+send mail to me at the ace-users-request@cs.wustl.edu if you'd like to
+join the mailing list.  There is also a USENET newsgroup called
+comp.soft-sys.ace.
+
 BUILDING AND INSTALLING ACE
 
 Please refer to the http://www.cs.wustl.edu/~schmidt/ACE-Install.html
@@ -196,14 +204,8 @@ BIBLIOGRAPHY file contains information on where to obtain articles
 that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
-bugs, please report them to me.
-
-ACE MAILING LIST AND NEWSGROUP
-
-A mailing list is available for discussing bug fixes, enhancements,
-and porting issues regarding ACE.  Please send mail to me at the
-ace-users-request@cs.wustl.edu if you'd like to join the mailing list.
-There is also a USENET newsgroup called comp.soft-sys.ace.
+bugs, please report them to the ACE mailing list
+ace-users@cs.wustl.edu using the $ACE_ROOT/BUG_REPORT_FORM.
 
 ACKNOWLEDGEMENTS
 
