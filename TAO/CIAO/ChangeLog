@@ -1,3 +1,12 @@
+Tue Jun  8 02:53:32 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+	  Rewritten the connection part of the interface.
+	  Enhanced the performace by avoiding excessive deep copy and
+	  better condition branching. Also added exception mechanism in
+	  the connction part.
+
 Mon Jun  7 21:22:03 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:

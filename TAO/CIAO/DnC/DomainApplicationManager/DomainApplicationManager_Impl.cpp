@@ -300,99 +300,28 @@ add_connections (::Deployment::Connections & incoming_conn)
   }
 }
 
-void
+bool
 CIAO::DomainApplicationManager_Impl::
-get_outgoing_connections (::Deployment::Connections_out provided,
-                          ::Deployment::DeploymentPlan &plan)
+get_outgoing_connections (Deployment::Connections_out provided,
+                          const Deployment::DeploymentPlan &plan)
 {
-  ::Deployment::Connections_var retn_connections;
-  ACE_NEW (retn_connections,
-           ::Deployment::Connections);
+  Deployment::Connections * retn_connections;
+  ACE_NEW_RETURN (retn_connections,
+		  Deployment::Connections,
+		  0);
+
+  Deployment::Connections_var safe = retn_connections;
 
   // For each component instance in the child plan ...
   for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
-    {
-      // Get the component instance name
-      CORBA::String_var instance_name = (plan.instance[i].name).in();
-
-      // Find out all the PlanConnectionDescriptions from the global plan
-      // where this component instance plays the role as either "receptacle"
-      // or "event sink".
-      for (CORBA::ULong j = 0; j < this->plan_.connection.length (); j++)
-        {
-          ::Deployment::PlanConnectionDescription tmp_conn
-            = this->plan_.connection[j];
-
-          /* The "source" end point */
-          ::Deployment::PlanSubcomponentPortEndpoint src_endpoint;
-
-          /* The "destination" end point */
-          ::Deployment::PlanSubcomponentPortEndpoint dest_endpoint;
-
-          switch (tmp_conn.internalEndpoint[0].kind)
-          {
-          case ::Deployment::Facet:
-          case ::Deployment::EventConsumer:
-            src_endpoint = tmp_conn.internalEndpoint[0];
-            dest_endpoint = tmp_conn.internalEndpoint[1];
-            break;
-          case ::Deployment::SimplexReceptacle:
-          case ::Deployment::MultiplexReceptacle:
-          case ::Deployment::EventEmitter:
-          case ::Deployment::EventPublisher:
-            src_endpoint = tmp_conn.internalEndpoint[1];
-            dest_endpoint = tmp_conn.internalEndpoint[0];
-            break;
-          default:
-            break;
-          }
-
-          // instanceRef of this particular receiver side component instance.
-          CORBA::ULong dest_instanceRef = dest_endpoint.instanceRef;
-
-          // Check whether the name is the same as <instance_name>.
-          if (! ACE_OS::strcmp (this->plan_.instance[dest_instanceRef].name.in (),
-                                instance_name.in ()))
-            continue; // This connection is not got involved.
-
-          // Otherwise, this connection is what we are interested in ...
-          // instanceRef of the provider side component instance.
-          CORBA::ULong src_instanceRef = src_endpoint.instanceRef;
-
-          // Get the prvoider side component instance name and port name.
-          CORBA::String_var provider_name =
-            (this->plan_.instance[src_instanceRef].name).in ();
-
-          CORBA::String_var port_name = (src_endpoint.portName).in ();
-
-          // Fetch the connections out from the <all_connections_> by
-          // comparing the "component instance name" and "port name".
-          for (CORBA::ULong k = 0; k < this->all_connections_->length (); k++)
-            {
-              if (! ACE_OS::strcmp ((*this->all_connections_)[k].instanceName.in (),
-                                    provider_name.in ()))
-                continue;
-
-              if (! ACE_OS::strcmp ((*this->all_connections_)[k].portName.in (),
-                                    port_name.in ()))
-                continue;
-
-              CORBA::ULong length = retn_connections->length ();
-              retn_connections->length (length + 1);
-
-              // Get the "receiver" side connection infomation.
-              (*retn_connections)[length] = this->all_connections_[k];
-              (*retn_connections)[length].instanceName = 
-                (this->plan_.instance[dest_endpoint.instanceRef]).name;
-              (*retn_connections)[length].portName = 
-                dest_endpoint.portName;
-              (*retn_connections)[length].kind = dest_endpoint.kind;
-            }
-        }
-    }
-
-    provided = retn_connections._retn (); // return the connection.
-    return;
+  {
+    // Get the component instance name
+    if (!get_outgoing_connections_i (plan.instance[i].name.in (),
+				     retn_connections))
+      return 0;
+  }
+  provided = safe._retn (); // return the connection.
+  return 1;
 }
 
 
@@ -422,7 +351,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
           ::Deployment::NodeApplicationManager_var my_nam =
-            (entry->int_id_).node_application_manager_;
+            (entry->int_id_).node_application_manager_.in ();
 
           ::Deployment::Connections_var retn_connections;
 
@@ -444,7 +373,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           // Cache the returned NodeApplication object reference into
           // the hash table.
-          (entry->int_id_).node_application_ = my_na;
+          (entry->int_id_).node_application_ = my_na.in ();
         }
     }
   ACE_CATCHANY
@@ -465,7 +394,7 @@ CIAO::DomainApplicationManager_Impl::
 finishLaunch (::CORBA::Boolean start
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::StartError))
+                   Deployment::StartError))
 {
   ACE_TRY
     {
@@ -481,13 +410,14 @@ finishLaunch (::CORBA::Boolean start
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
-          ::Deployment::NodeApplication_var my_na =
-            (entry->int_id_).node_application_;
+          Deployment::NodeApplication_var my_na =
+            (entry->int_id_).node_application_.in ();
 
           // Get the Connections variable.
-          ::Deployment::Connections_var my_connections;
-          this->get_outgoing_connections (my_connections.out (),
-                                          (entry->int_id_).child_plan_);
+          Deployment::Connections_var my_connections;
+          if (!this->get_outgoing_connections (my_connections.out (),
+					      (entry->int_id_).child_plan_))
+	    ACE_THROW (Deployment::StartError ());
 
           // Invoke finishLaunch() operation on NodeApplication.
           my_na->finishLaunch (my_connections,
@@ -531,7 +461,7 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
           ::Deployment::NodeApplication_var my_na =
-            (entry->int_id_).node_application_;
+            (entry->int_id_).node_application_.in ();
 
           my_na->start (ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -574,7 +504,7 @@ destroyApplication ()
             (entry->int_id_).node_manager_;
 
           ::Deployment::NodeApplicationManager_var my_node_application_manager =
-            (entry->int_id_).node_application_manager_;
+            (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryManager() operation on the NodeManger.
           my_node_manager->destroyManager (my_node_application_manager.in ()
@@ -609,4 +539,84 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   // Transfer ownership
   return plan._retn ();
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+get_outgoing_connections_i (const char * instname,
+			    Deployment::Connections * retv)
+{
+  // Search in all the connections in the plan.
+  for (CORBA::ULong i = 0; i < this->plan_.connection.length(); ++i)
+  {
+    CORBA::ULong len = retv->length ();
+
+    // Current connection that we are looking at.
+    const Deployment::PlanConnectionDescription & curr_conn
+      = this->plan_.connection[i];
+
+    //The modeling tool should make sure there are always 2 endpoints
+    //in a connection.
+    for (CORBA::ULong p_index = 0;
+	 p_index < curr_conn.internalEndpoint.length ();
+	 ++p_index)
+    {
+      const Deployment::PlanSubcomponentPortEndpoint & endpoint
+	= curr_conn.internalEndpoint[p_index];
+
+      // If the component name matches the name of one of the endpoints in the connection.
+      if (ACE_OS::strcmp (this->plan_.instance[endpoint.instanceRef].name.in (),
+			  instname) == 0 )
+      {
+	//Look at the port kind to make sure it's what we are interested in.
+	if (endpoint.kind != Deployment::Facet &&
+	    endpoint.kind != Deployment::EventConsumer)
+	{
+	  // The other endpoints in this connection is what we want.
+	  CORBA::ULong index = (p_index +1)%2;
+
+	  //Cache the name of the other component for later usage (search).
+	  ACE_CString name =
+	    this->plan_.instance[curr_conn.internalEndpoint[index].instanceRef].name.in ();
+
+	  //Cache the name of the port from the other component for searching later.
+	  ACE_CString port_name =
+	    curr_conn.internalEndpoint[index].portName.in ();
+
+	  bool found = false;
+	  // Now we have to search in the received connections to get the objRef.
+	  for (CORBA::ULong conn_index = 0;
+	       conn_index < this->all_connections_->length ();
+	       ++conn_index)
+	  {
+	    const Deployment::Connection curr_rev_conn = this->all_connections_[conn_index];
+
+	    // We need to look at the instance name and the port name to confirm.
+	    if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
+				name.c_str ()) == 0
+		&&
+		ACE_OS::strcmp (curr_rev_conn.portName.in (),
+				port_name.c_str ()) == 0)
+	    {
+	      retv->length (len+1);
+	      (*retv)[len].instanceName = instname;
+	      (*retv)[len].portName = endpoint.portName.in ();
+	      (*retv)[len].kind = endpoint.kind;
+	      (*retv)[len].endpoint = curr_rev_conn.endpoint;  //No need to duplicate here.
+	      ++len;             // This way we dont have do "-1" 4 times.
+	      found = true;
+	      break;             // Since we know there is only 2 endpoints in a connection.
+	                         // so we dont have to worry about multiplex Receptacle etc.
+	    }
+	 }
+
+	 // We didnt find the counter part connection even we are sure there must be 1.
+	 if (!found ) return false;
+	 break; // We know we have found the connection so even we are still on
+	        // internalpoint 0 we can skip internalpoint 1.
+	}
+      }
+    }  /* close for loop on internal endpoints */
+  }  /* close for loop on all connections in the plan */
+  return 1;
 }

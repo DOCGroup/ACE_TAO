@@ -225,9 +225,6 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     for (CORBA::ULong i = 0; i < facets->length (); ++i)
     {
-      // Note: Its a bit strange to me that in the valuetype a string access
-      // method returns a const char * while an Object returns a Object_ptr
-      // without a const. They are all public member, so?
       retv->length (len+1);
       retv[len].instanceName = (*iter).ext_id_.c_str ();
       retv[len].portName = facets[i]->name ();
