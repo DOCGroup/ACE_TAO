@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/Arg_Shifter.h"
-#include "orbsvcs/Sched/Reconfig_Scheduler.h"
-
 #include "Config_Factory.h"
 #include "ECConfig.h"
+
+#include "ace/Arg_Shifter.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
 
 using namespace ConfigFactory;
 
@@ -12,6 +12,10 @@ using namespace ConfigFactory;
 
 typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> MUF_SCHED_TYPE;
 typedef TAO_Reconfig_Scheduler<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RMS_SCHED_TYPE;
+
+Config_Factory::~Config_Factory (void)
+{
+}
 
 Default_Config_Factory::Default_Config_Factory (void)
   : Config_Factory (),
