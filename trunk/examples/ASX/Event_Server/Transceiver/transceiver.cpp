@@ -233,10 +233,12 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Connector_Base<Event_Transceiver>;
 template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_NonBlocking_Connect_Handler<Event_Transceiver>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector_Base<Event_Transceiver>
 #pragma instantiate ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Event_Transceiver>

@@ -1,3 +1,15 @@
+Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+
+	  Added explicit template instantiation for ACE_Connector_Base.
+
 Thu Jul 10 20:01:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\Transport_Cache_Manager.cpp: 
@@ -585,14 +597,14 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
-	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
-	* TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* TAO/tao/IIOP_Connector.cpp:
-	* TAO/tao/Strategies/DIOP_Connector.cpp:
-	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
-	* TAO/tao/Strategies/UIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
 
 	  Fixed Connector related template instantiations.
 

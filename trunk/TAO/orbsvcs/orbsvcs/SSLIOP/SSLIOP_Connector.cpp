@@ -30,6 +30,7 @@ template class TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connector_Base<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
@@ -40,6 +41,7 @@ template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector_Base<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
