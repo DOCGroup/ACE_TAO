@@ -50,7 +50,7 @@ namespace CIAO
           dest.provider = 0;
         }
 
-      CORBA::ULong tmp = 0;
+      size_t tmp = 0;
       bool r = IDD_Handler::IDREF.find_ref
         (src.instance ().id ().c_str (), tmp);
       ACE_UNUSED_ARG (r);

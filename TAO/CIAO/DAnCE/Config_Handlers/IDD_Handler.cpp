@@ -77,7 +77,7 @@ namespace CIAO
       // this later.
       // ACE_DEBUG ((LM_DEBUG, "string is %s\n", 
       //            src.implementation ().id ().c_str ()));
-      CORBA::ULong tmp = 0;
+      size_t tmp = 0;
       bool r = MDD_Handler::IDREF.find_ref 
           (src.implementation ().id ().c_str (), tmp);
       

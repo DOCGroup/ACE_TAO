@@ -1,3 +1,11 @@
+Thu Mar 17 11:06:23 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Config_Handlers/IDD_Handler.cpp:
+	* Config_Handlers/MDD_Handler.cpp:
+	* Config_Handlers/PSPE_Handler.cpp: Fixed the type of a temporary
+	  variable used to find IDREF.  Thanks to Will for verifying these
+	  Changes. 
+
 Wed Mar 16 15:24:09 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
