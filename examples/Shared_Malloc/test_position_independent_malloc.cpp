@@ -16,27 +16,9 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 // Default address for memory-mapped files.
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
 
-#if 0
-// Some dummy data
-struct Dummy_Data
-{
-  int i1_;
-  int i2_;
-  int i3_;
-  // ACE_Based_Pointer<Dummy_Data> next_;
-};
-
-struct Long_Test
-{
-  ACE_Based_Pointer<long> bpl_;
-  long array_[10];
-};
-#endif /* 0 */
-
 static void
 print (Dummy_Data *data)
 {
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "<<<<\ni1_ = %d, i2_ = %d, i3_ = %d\n",
               data->i1_,
@@ -48,9 +30,6 @@ print (Dummy_Data *data)
               data->next_->i1_,
               data->next_->i2_,
               data->next_->i3_));
-#else
-  ACE_UNUSED_ARG (data);
-#endif /* 0 */
 }
 
 static void *
@@ -76,7 +55,6 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Dummy_Data)),
                         0);
-#if 0
   Dummy_Data *data2 = new (ptr) Dummy_Data;
 
   data1->next_ = data2;
@@ -108,7 +86,7 @@ initialize (MALLOC *allocator)
   ACE_NEW_RETURN (ptr,
                   long[5],
                   0);
-  longTest *lt_lcl = new (ptr) Long_Test;
+  Long_Test *lt_lcl = new (ptr) Long_Test;
 
   lt_lcl->array_[0] = 2000;
   lt_lcl->array_[1] = 2001;
@@ -119,7 +97,6 @@ initialize (MALLOC *allocator)
 
   long longCont_lcl1 = *lt_lcl->bpl_;
   long longCont_lcl4 = lt_lcl->bpl_[4];
-#endif /* 0 */
 
   return data1;
 }
@@ -167,10 +144,7 @@ main (int argc, char *argv[])
   if (allocator->find ("foo",
                        data) == -1)
     {
-      // data = initialize (allocator);
-
-      data = allocator->malloc (sizeof (long));
-      *(long *) data = -36;
+      data = initialize (allocator);
 
       if (allocator->bind ("foo",
                            data) == -1)
@@ -186,11 +160,7 @@ main (int argc, char *argv[])
   // release the resources.
   else
     {
-      // @@ Add a new print statement...
-      // print ((Dummy_Data *) data);
-      ACE_DEBUG ((LM_DEBUG,
-                  "data = %d\n",
-                  *(long *) data));
+      print ((Dummy_Data *) data);
       allocator->free (data);
       allocator->remove ();
       ACE_DEBUG ((LM_DEBUG,
@@ -203,7 +173,11 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Based_Pointer<Dummy_Data>;
 template class ACE_Based_Pointer_Basic<Dummy_Data>;
+template class ACE_Based_Pointer_Basic<long>;
+template class ACE_Based_Pointer<long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<Dummy_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
+#pragma instantiate ACE_Based_Pointer_Basic<long>
+#pragma instantiate ACE_Based_Pointer<long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
