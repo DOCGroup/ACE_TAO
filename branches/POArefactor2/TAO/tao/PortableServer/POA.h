@@ -493,6 +493,8 @@ public:
 
   CORBA::Boolean is_persistent (void) const;
 
+  CORBA::Short server_priority (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.

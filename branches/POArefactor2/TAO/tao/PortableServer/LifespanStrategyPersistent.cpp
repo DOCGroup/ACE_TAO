@@ -139,7 +139,7 @@ namespace TAO
   // Activate the servant in the root poa.
   PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
-                                 this->cached_policies_.server_priority (),
+                                 this->poa_->server_priority (),
                                  wait_occurred_restart_call_ignored
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

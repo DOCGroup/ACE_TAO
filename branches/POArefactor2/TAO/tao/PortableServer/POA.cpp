@@ -340,14 +340,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   // lead to reference deadlock, i.e., POA holds object A, but POA
   // cannot die because object A hold POA.
   {
-    // A recursive thread lock without using a recursive thread lock.
-    // Non_Servant_Upcall has a magic constructor and destructor.  We
-    // unlock the Object_Adapter lock for the duration of the servant
-    // activator upcalls; reacquiring once the upcalls complete.  Even
-    // though we are releasing the lock, other threads will not be
-    // able to make progress since
-    // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-
     //
     // If new things are added to this cleanup code, make sure to move
     // the minimum CORBA #define after the declaration of
@@ -356,6 +348,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+    // ATTENTION: Trick locking here, see class header for details
     TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
     ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -563,13 +556,7 @@ TAO_POA::find_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  // A recursive thread lock without using a recursive thread lock.
-  // Non_Servant_Upcall has a magic constructor and destructor.  We
-  // unlock the Object_Adapter lock for the duration of the servant
-  // activator upcalls; reacquiring once the upcalls complete.  Even
-  // though we are releasing the lock, other threads will not be able
-  // to make progress since
-  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  // ATTENTION: Trick locking here, see class header for details
   TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
   ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -780,7 +767,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
 
   return this->create_reference_with_id_i (id,
                                            intf,
-                                           this->cached_policies_.server_priority ()
+                                           this->server_priority ()
                                            ACE_ENV_ARG_PARAMETER);
 }
 
@@ -1169,7 +1156,7 @@ TAO_POA::activate_object (PortableServer::Servant servant
 
       PortableServer::ObjectId *result =
         this->activate_object_i (servant,
-                                 this->cached_policies_.server_priority (),
+                                 this->server_priority (),
                                  wait_occurred_restart_call
                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -1202,7 +1189,7 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 
       this->activate_object_with_id_i (id,
                                        servant,
-                                       this->cached_policies_.server_priority (),
+                                       this->server_priority (),
                                        wait_occurred_restart_call
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -1365,7 +1352,7 @@ TAO_POA::create_reference (const char *intf
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
   return this->create_reference_i (intf,
-                                   this->cached_policies_.server_priority ()
+                                   this->server_priority ()
                                    ACE_ENV_ARG_PARAMETER);
 }
 
@@ -2586,14 +2573,7 @@ TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
 
   if (servant != 0)
     {
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
+      // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -2659,6 +2639,13 @@ TAO_POA::allow_multiple_activations (void) const
 {
   return this->active_policy_strategies_.id_uniqueness_strategy ()->
     allow_multiple_activations ();
+}
+
+
+CORBA::Short
+TAO_POA::server_priority (void) const
+{
+  return this->cached_policies_.server_priority ();
 }
 
 int

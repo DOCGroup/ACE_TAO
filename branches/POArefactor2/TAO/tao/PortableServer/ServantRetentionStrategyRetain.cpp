@@ -174,14 +174,7 @@ namespace TAO
           else
     #endif
             {
-              // A recursive thread lock without using a recursive thread
-              // lock.  Non_Servant_Upcall has a magic constructor and
-              // destructor.  We unlock the Object_Adapter lock for the
-              // duration of the servant activator upcalls; reacquiring
-              // once the upcalls complete.  Even though we are releasing
-              // the lock, other threads will not be able to make progress
-              // since <Object_Adapter::non_servant_upcall_in_progress_>
-              // has been set.
+              // ATTENTION: Trick locking here, see class header for details
               TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -248,15 +241,13 @@ namespace TAO
 
     PortableServer::ObjectId *
     Retain_Servant_Retention_Strategy::reference_to_id (
-      CORBA::Object_ptr reference,
+      CORBA::Object_ptr /*reference*/,
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongAdapter,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (reference);
-
       // The object denoted by the reference does not have to be
       // active for this operation to succeed.
       PortableServer::ObjectId_var user_id;
@@ -637,7 +628,7 @@ namespace TAO
           PortableServer::ObjectId_var user_id;
           if (this->active_object_map_->
               bind_using_system_id_returning_user_id (servant,
-                                                      this->poa_->cached_policies().server_priority (),
+                                                      this->poa_->server_priority (),
                                                       user_id.out ()) != 0)
             {
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -648,14 +639,7 @@ namespace TAO
           // Everything is finally ok
           //
 
-          // A recursive thread lock without using a recursive thread
-          // lock.  Non_Servant_Upcall has a magic constructor and
-          // destructor.  We unlock the Object_Adapter lock for the
-          // duration of the servant activator upcalls; reacquiring once
-          // the upcalls complete.  Even though we are releasing the lock,
-          // other threads will not be able to make progress since
-          // <Object_Adapter::non_servant_upcall_in_progress_> has been
-          // set.
+          // ATTENTION: Trick locking here, see class header for details
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -747,14 +731,7 @@ namespace TAO
           // Everything is finally ok
           //
 
-          // A recursive thread lock without using a recursive thread
-          // lock.  Non_Servant_Upcall has a magic constructor and
-          // destructor.  We unlock the Object_Adapter lock for the
-          // duration of the servant activator upcalls; reacquiring once
-          // the upcalls complete.  Even though we are releasing the lock,
-          // other threads will not be able to make progress since
-          // <Object_Adapter::non_servant_upcall_in_progress_> has been
-          // set.
+          // ATTENTION: Trick locking here, see class header for details
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -788,7 +765,7 @@ namespace TAO
       // produced that will behave appropriately (that is, yield a
       // consistent Object Id value when asked politely).
       CORBA::Short priority =
-        this->poa_->cached_policies().server_priority ();
+        this->poa_->server_priority ();
 
       PortableServer::ObjectId_var system_id =
         this->servant_to_system_id_i (servant,
@@ -876,13 +853,7 @@ namespace TAO
       // Everything is finally ok
       //
 
-      // A recursive thread lock without using a recursive thread lock.
-      // Non_Servant_Upcall has a magic constructor and destructor.  We
-      // unlock the Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls complete.  Even
-      // though we are releasing the lock, other threads will not be able
-      // to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+      // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -989,13 +960,7 @@ namespace TAO
       // Everything is finally ok
       //
 
-      // A recursive thread lock without using a recursive thread lock.
-      // Non_Servant_Upcall has a magic constructor and destructor.  We
-      // unlock the Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls complete.  Even
-      // though we are releasing the lock, other threads will not be able
-      // to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+      // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 

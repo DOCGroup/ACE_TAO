@@ -15,19 +15,16 @@ namespace TAO
     }
 
     void
-    Multiple_Id_Uniqueness_Strategy::strategy_init (TAO_POA *)
+    Multiple_Id_Uniqueness_Strategy::strategy_init (TAO_POA * /*poa*/)
     {
       // dependent on type create the correct strategy.
     }
 
     bool
     Multiple_Id_Uniqueness_Strategy::is_servant_activation_allowed (
-      PortableServer::Servant servant,
-      int &wait_occurred_restart_call)
+      PortableServer::Servant /*servant*/,
+      int &/*wait_occurred_restart_call*/)
     {
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       // With the multiple id strategy we can always activate the servant
       // another time
       return true;

@@ -205,15 +205,7 @@ namespace TAO
       CORBA::Boolean remaining_activations =
         this->poa_->servant_has_remaining_activations (servant);
 
-      // A recursive thread lock without using a recursive
-      // thread lock.  Non_Servant_Upcall has a magic
-      // constructor and destructor.  We unlock the
-      // Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls
-      // complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has
-      // been set.
+      // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
@@ -236,15 +228,7 @@ namespace TAO
     {
       PortableServer::Servant servant = 0;
 
-      // A recursive thread lock without using a recursive
-      // thread lock.  Non_Servant_Upcall has a magic
-      // constructor and destructor.  We unlock the
-      // Object_Adapter lock for the duration of the servant
-      // activator upcalls; reacquiring once the upcalls
-      // complete.  Even though we are releasing the lock, other
-      // threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has
-      // been set.
+      // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
