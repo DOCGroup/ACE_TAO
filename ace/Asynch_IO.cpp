@@ -86,7 +86,7 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation)
 
 ACE_Asynch_Result::~ACE_Asynch_Result (void)
 {
-  // Proactor deletes the implementation when the <complete> finishes. 
+  // Proactor deletes the implementation when the <complete> finishes.  
 }
 
 ACE_Asynch_Result_Impl *
@@ -932,40 +932,33 @@ ACE_Handler::~ACE_Handler (void)
 }
 
 void
-ACE_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+ACE_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result & /* result */)
 {
-  ACE_UNUSED_ARG (result);
 }
 
 void
-ACE_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+ACE_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result & /* result */)
 {
-  ACE_UNUSED_ARG (result);
 }
 
 void
-ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
+ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result & /* result */)
 {
- 
-	ACE_UNUSED_ARG (result);
 }
 
 void
-ACE_Handler::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
+ACE_Handler::handle_transmit_file (const ACE_Asynch_Transmit_File::Result & /* result */)
 {
-  ACE_UNUSED_ARG (result);
 }
 
 void
-ACE_Handler::handle_read_file (const ACE_Asynch_Read_File::Result &result)
+ACE_Handler::handle_read_file (const ACE_Asynch_Read_File::Result & /* result */)
 {
-  ACE_UNUSED_ARG (result);
 }
 
 void
-ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result &result)
+ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result & /* result */)
 {
-  ACE_UNUSED_ARG (result);
 }
 
 void

@@ -71,18 +71,17 @@ public:
   // user once this method is called.
 
   int wake_up_dispatch_threads (void);
-  // Add wakeup dispatch threads (reinit).
+  // @@ This is a no-op on POSIX platforms. Returns 0.  
 
   int close_dispatch_threads (int wait);
-  // Close all dispatch threads.
+  // @@ This is a no-op on POSIX platforms. Returns 0.  
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort.
+  // @@ This is a no-op on POSIX platforms. Returns 0.  
 
   virtual ACE_HANDLE get_handle (void) const;
-  // Get the event handle. This is a no-op in POSIX. Returns
-  // ACE_INVALID_HANDLE. 
+  // This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
 
   // Methods used to create Asynch_IO_Result objects. We create the right
   // objects here in these methods.
@@ -235,7 +234,7 @@ public:
   // Post a result to the completion port of the Proactor.
 
   // = Methods used to create Asynch_IO objects. We create the right
-  // objects here in these methods.
+  //   objects here in these methods.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
@@ -279,7 +278,9 @@ protected:
   // operations can be pending at a time.
 
   ACE_POSIX_Asynch_Result *result_list_ [ACE_RTSIG_MAX];
-  // @@ I am keeing an extra copy of the <aiocb_
+  // @@ Keeping an extra copy of the <aiocb_list> here so that we can 
+  //    avoid dynamic cast when we use the result object calling back
+  //    the hook methods.
 
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).
