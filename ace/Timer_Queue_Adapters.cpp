@@ -1,12 +1,10 @@
 // $Id$
 
+#define ACE_BUILD_DLL
 #include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
 #define ACE_TIMER_QUEUE_ADAPTERS_C
-
-#define ACE_BUILD_DLL
-#include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_Adapters.i"
@@ -42,7 +40,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::expire (void)
 template <class TQ> int
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
 {
-  ACE_Time_Value tv = this->timer_queue_.earliest_time () 
+  ACE_Time_Value tv = this->timer_queue_.earliest_time ()
     - ACE_OS::gettimeofday ();
 
   // Beware of negative times and zero times (which cause problems for
@@ -57,9 +55,9 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
   return 0;
 }
 
-template <class TQ> long 
+template <class TQ> long
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
-                                             const void *act, 
+                                             const void *act,
                                              const ACE_Time_Value &delay,
                                              const ACE_Time_Value &interval)
 {
@@ -114,13 +112,13 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
       {
         int expired_timers;
 
-        // Expire the pending timers.  
+        // Expire the pending timers.
 	// @@ We need to figure out how to implement interval timers...
         expired_timers = this->timer_queue_.expire ();
 
         if (expired_timers > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      "time = %d, timers expired = %d\n", 
+                      "time = %d, timers expired = %d\n",
                       ACE_OS::time (),
                       expired_timers));
 
@@ -139,7 +137,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
     }
 }
 
-template<class TQ> 
+template<class TQ>
 ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm)
   : ACE_Task_Base (tm),
     condition_ (mutex_),
@@ -154,7 +152,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::mutex (void)
   return this->mutex_;
 }
 
-template<class TQ> long 
+template<class TQ> long
 ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
     (ACE_Event_Handler* handler,
      const void *act,
@@ -168,7 +166,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
   return result;
 }
 
-template<class TQ> int 
+template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 					    const void **act)
 {
@@ -178,8 +176,8 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
   condition_.signal ();
   return result;
 }
- 
-template<class TQ> void 
+
+template<class TQ> void
 ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -188,13 +186,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
   this->condition_.signal ();
 }
 
-template<class TQ> int 
+template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
   this->thr_id_ = ACE_Thread::self ();
-  
+
   // Thread cancellation point, if ACE supports it.
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ());
