@@ -1,3 +1,8 @@
+Tue Feb 22 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORManipulation/IORManip_Loader.h:
+          Doxygen improvements
+
 Tue Feb 22 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client_Adapter_Impl.{h,cpp}:
