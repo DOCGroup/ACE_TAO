@@ -23,13 +23,13 @@
 // ==========================================================================
 
 #include "test_config.h"
-#include <ace/OS_NS_time.h>
-#include <ace/Log_Msg.h>
-#include <ace/Get_Opt.h>
-#include <ace/SOCK_Dgram_Bcast.h>
-#include <ace/Thread_Manager.h>
-#include <ace/Process.h>
-#include <ace/Process_Manager.h>
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Log_Msg.h"
+#include "ace/Get_Opt.h"
+#include "ace/SOCK_Dgram_Bcast.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Process.h"
+#include "ace/Process_Manager.h"
 
 static int              dgram_port  = 14521;
 static int              dgrams_no   = 10;
