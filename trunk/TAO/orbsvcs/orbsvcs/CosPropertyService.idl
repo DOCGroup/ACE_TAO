@@ -29,6 +29,14 @@ module CosPropertyService
 //     property modes etc.
 {
   // Data Types
+  typedef string PropertyName;
+  
+  struct Property 
+  {
+    PropertyName property_name;
+    any property_value;
+  };
+  
   enum PropertyModeType 
   {
     normal,    
@@ -37,7 +45,7 @@ module CosPropertyService
     fixed_readonly,    
     undefined   
   };
-
+  
   struct PropertyDef 
   {
     PropertyName property_name;   
