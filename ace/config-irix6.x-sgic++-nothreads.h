@@ -45,6 +45,9 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
+// Platform has terminal ioctl flags like TCGETS and TCSETS.
+#define ACE_HAS_TERM_IOCTLS
+
 // Platform does not support reentrant password file accessor functiions.
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
 

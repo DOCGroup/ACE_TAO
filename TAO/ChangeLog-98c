@@ -1,7 +1,8 @@
 Tue Oct 21 13:23:48 1997 Brian Mendel  <brian.r.mendel@boeing.com>
 
-        * tao/connect.i: Moved hash_i and compare_i template specialization to Orb_Core.i.  Original code was
-          left comment out until this mod is checked on all platforms.
+        * tao/connect.i: Moved hash_i and compare_i template
+ 	  specialization to Orb_Core.i.  Original code was left comment
+ 	  out until this mod is checked on all platforms.
 
         * tao/Orb_Core.i: Added hash_i and compare_i code from connect.i.
 
