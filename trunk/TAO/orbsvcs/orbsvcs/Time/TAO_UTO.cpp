@@ -200,4 +200,4 @@ TAO_UTO::interval (CORBA::Environment &_env)
   TAO_ENDTRY;
 
   return tio->_this ();
-};
+}
