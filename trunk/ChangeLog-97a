@@ -1,5 +1,16 @@
 Tue Jan 28 16:49:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (thr_setprio): Fixed a typo that was left over from a
+ 	  previous change.  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for reporting this.
+
+	* apps/Gateway/Gateway/{proxy_config,consumer_config}: Added
+ 	  comments to these config files so they are easier to understand.
+  	  Thanks to Chuck Gehr for motivating this.
+
+	* apps/Gateway/Peer/Peer.cpp: Changed the name from connection_id_
+ 	  to proxy_id_, which is more accurate.
+
 	* apps/Gateway/Peer/Peer.cpp: Added a destructor to Peer_Handler
  	  so that it can clean itself up properly when shutdown with a
  	  signal.  This fixes a nasty bug.

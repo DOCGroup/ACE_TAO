@@ -48,6 +48,11 @@ Peer
 	      events forwarded by the Gateway (forwarding is based on
 	      the settings in the consumer_config configuration file).
 
+	   Note that in the current implementation, the same Peer
+	   process (peerd) cannot serve as both a Consumer and
+	   Supplier of Events.  Naturally, multiple peerd processes
+	   can work together to play these different roles.
+
 RUNNING THE TESTS
 
 To run the tests do the following:
