@@ -1,3 +1,11 @@
+Mon May 31 13:49:17 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+
+	  Removed all occurrences of -ORBhost and -ORBport, and updated
+	  to use new -ORBendpoint option instead.  This removes all of the
+	  run-time warnings regarding the usage of -ORBhost and -ORBport.
+
 Mon May 31 11:56:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
