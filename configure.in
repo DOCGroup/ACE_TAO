@@ -172,24 +172,18 @@ AC_CHECK_PROG(GPERF, gperf, gperf) dnl
 dnl Check for profiling progam
 AC_CHECK_PROGS(PROF, gprof prof,) dnl
 
-dnl Call ACE_SET_COMPILER_FLAGS before AM_PROG_LIBTOOL
+dnl Call ACE_SET_COMPILER_FLAGS before AC_PROG_LIBTOOL
 ACE_SET_COMPILER_FLAGS
 
-dnl Since we are linking ACE with the C++ compiler, and since
-dnl libtool checks linker characteristics using the C compiler,
-dnl temporarily state that the C compiler is the C++ compiler.
-save_CC="$CC"
-CC="$CXX"
-
 dnl Disable building of static libraries by default
-AM_DISABLE_STATIC
+AC_DISABLE_STATIC
+
+dnl Tell libtool to build a C++ shared library
+AC_LIBTOOL_BUILD_CXX_LIBRARY
 
 dnl Check for libtool and turn on Automake processing for Libtool
-AM_PROG_LIBTOOL
+AC_PROG_LIBTOOL
 
-
-dnl Restore the C compiler variable
-CC="$save_CC"
 
 dnl
 dnl SECTION 2: Configure script command line options
@@ -1478,7 +1472,7 @@ ACE_CACHE_CHECK(sched.h for thread scheduling definitions,
      [
       ace_cv_needs_sched_h=no
      ])
-   ], AC_DEFINE(ACE_LACKS_SCHED_H),)
+   ], AC_DEFINE(ACE_NEEDS_SCHED_H),)
 
 dnl Check if platform needs to #include <regexpr.h> for
 dnl regular expression support
@@ -2655,7 +2649,7 @@ int main ()
 }
 EOF
 
-   save_ac_link="$ac_link"
+   ace_save_ac_link="$ac_link"
 
    dnl Command to link two C++ files
    ac_link='${CXX-g++} -o conftest${ac_exeext} $CXXFLAGS $CPPFLAGS $LDFLAGS conftestMain.$ac_ext $LIBS 1>&AC_FD_CC'
@@ -2664,7 +2658,7 @@ EOF
    if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
      rm -rf conftest*
      dnl Restore the original link variable NOW not later
-     ac_link="$save_ac_link"
+     ac_link="$ace_save_ac_link"
 
      dnl Template source is not required
      ace_cv_feature_templates_require_source=no
@@ -2685,7 +2679,7 @@ EOF
      if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
        rm -rf conftest*
        dnl Restore the original link variable NOW not later
-       ac_link="$save_ac_link"
+       ac_link="$ace_save_ac_link"
 
        dnl Template source is required!
        ace_cv_feature_templates_require_source=yes
@@ -2700,7 +2694,7 @@ EOF
        cat conftestMain.$ac_ext >&AC_FD_CC
        rm -rf conftest*
        dnl Restore the original link variable NOW not later
-       ac_link="$save_ac_link"
+       ac_link="$ace_save_ac_link"
 
        ace_cv_feature_templates_require_source=no
      fi
@@ -5928,7 +5922,7 @@ dnl        the UNIX International threads library was detected.
 # include <pthread.h>
 #endif
 
-#if defined (ACE_LACKS_SCHED_H)
+#if defined (ACE_NEEDS_SCHED_H)
 # include <sched.h>
 #endif
 
@@ -6108,7 +6102,6 @@ if test "$ace_user_enable_optimize"; then
   CFLAGS="$CFLAGS $OCFLAGS"
 fi
 CXXFLAGS="$ACE_CXXFLAGS $X_CFLAGS $CXXFLAGS"
-CXXCPPFLAGS="$ACE_CXXCPPFLAGS $CXXCPPFLAGS"
 CFLAGS="$ACE_CFLAGS $X_CFLAGS $CFLAGS"
 CPPFLAGS="$ACE_CPPFLAGS $CPPFLAGS"
 LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
