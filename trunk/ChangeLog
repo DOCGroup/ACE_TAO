@@ -1,3 +1,11 @@
+Thu Apr 24 11:06:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_auto_compile.pl:
+          When the configuration name of the dsp file containers Library, DLL
+          or LIB it is build first. Previous spaces are DLL and LIB where
+          required. Also, previously, those projects where compiled twice,
+          now only once.
+
 Thu Apr 24 08:50:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/Misc/Timer_Service.h:
