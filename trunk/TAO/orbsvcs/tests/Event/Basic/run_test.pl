@@ -13,12 +13,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$svc_conf = PerlACE::LocalFile ("svc.conf");
-$observer_conf = PerlACE::LocalFile ("observer.conf");
-$svc_complex_conf = PerlACE::LocalFile ("svc.complex.conf");
-$mt_svc_conf = PerlACE::LocalFile ("mt.svc.conf");
-$svc_complex_conf = PerlACE::LocalFile ("svc.complex.conf");
-$control_conf = PerlACE::LocalFile ("control.conf");
+$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
+$observer_conf = PerlACE::LocalFile ("observer$PerlACE::svcconf_ext");
+$svc_complex_conf = PerlACE::LocalFile ("svc.complex$PerlACE::svcconf_ext");
+$mt_svc_conf = PerlACE::LocalFile ("mt.svc$PerlACE::svcconf_ext");
+$svc_complex_conf = PerlACE::LocalFile ("svc.complex$PerlACE::svcconf_ext");
+$control_conf = PerlACE::LocalFile ("control$PerlACE::svcconf_ext");
 
 sub RunTest ($$$)
 {

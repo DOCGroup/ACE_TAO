@@ -40,7 +40,7 @@ for($i = 0; $i < $server_count; $i++) {
     $endpoint = "-ORBEndpoint uiop://$socket";
   }
   elsif ($use_shmiop) {
-    $server_shmiop_conf = PerlACE::LocalFile ("server_shmiop.conf");
+    $server_shmiop_conf = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
     $endpoint = "-ORBEndpoint shmiop:// -ORBSvcConf $server_shmiop_conf";
   }
 
@@ -56,8 +56,8 @@ for($i = 0; $i < $server_count; $i++) {
   }
 }
 
-foreach $conf ("client.lru.conf", "client.lfu.conf",
-               "client.fifo.conf", "client.null.conf") {
+foreach $conf ("client.lru$PerlACE::svcconf_ext", "client.lfu$PerlACE::svcconf_ext",
+               "client.fifo$PerlACE::svcconf_ext", "client.null$PerlACE::svcconf_ext") {
   print "========== Client using $conf configurator file =========\n";
   $CL = new PerlACE::Process ("client", " -k $iorfile " .
                                         "-ORBSvcConf $conf ".

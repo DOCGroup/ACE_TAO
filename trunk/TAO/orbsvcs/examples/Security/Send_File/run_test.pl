@@ -18,8 +18,9 @@ $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 $iorfile = "server.ior";
 unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -ORBSvcConf server_nopasswd.conf "
-                       . " -o $iorfile");
+                       " -ORBSvcConf server_nopasswd" .
+                       "$PerlACE::svcconf_ext " .
+                       " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -28,8 +29,9 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       " -ORBSvcConf client_nopasswd.conf "
-                       . " -k file://$iorfile < client.cpp");
+                       " -ORBSvcConf client_nopasswd" .
+                       "$PerlACE::svcconf_ext " .
+                       " -k file://$iorfile < client.cpp");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

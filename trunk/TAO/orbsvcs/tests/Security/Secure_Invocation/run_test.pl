@@ -20,9 +20,9 @@ $status = 0;
 $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
 $SV = new PerlACE::Process ("server",
-			    "-o $file -ORBSvcConf server.conf");
+			    "-o $file -ORBSvcConf server$PerlACE::svcconf_ext");
 $CL = new PerlACE::Process ("client",
-			    "-ORBSvcConf client.conf -k file://$file");
+			    "-ORBSvcConf client$PerlACE::svcconf_ext -k file://$file");
 
 print STDERR "\n\n==== Running Secure_Invocation test\n";
 

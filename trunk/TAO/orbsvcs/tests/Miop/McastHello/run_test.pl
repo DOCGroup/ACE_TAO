@@ -12,8 +12,8 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 $status = 0;
 
-$server_conf = PerlACE::LocalFile ("server.conf");
-$client_conf = PerlACE::LocalFile ("client.conf");
+$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
+$client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
 
 $SV1 = new PerlACE::Process ("server", "-o $iorfile -ORBsvcconf $server_conf");
 $SV2 = new PerlACE::Process ("server", "-o $iorfile -ORBsvcconf $server_conf");

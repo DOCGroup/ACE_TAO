@@ -470,7 +470,7 @@ for $pool_priority (@pool_priorities)
     $new_configuration = {};
     if ($native_priorities)
     {
-        $pool_args = "-ORBsvcconf svc.conf-native -p invocation-priorities-native";
+        $pool_args = "-ORBsvcconf native-svc$PerlACE::svcconf_ext -p invocation-priorities-native";
     }
     $test_type = "work-pool-".$pool_priority;
     $new_configuration->{description} = $test_type;

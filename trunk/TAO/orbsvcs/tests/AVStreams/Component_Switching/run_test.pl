@@ -22,15 +22,15 @@ $makefile = PerlACE::LocalFile ("input");
 unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$RE1 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
-$RE2 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
-$DI1 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI2 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI3 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI4 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$RE1 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
+$RE2 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
+$DI1 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI2 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI3 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI4 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r distributer");
 
 print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer 1 --> Sender1 --> Distributer 2 --> Distributer 3 --> Sender2 --> Sender3 --> Distributer4\n\n";
 

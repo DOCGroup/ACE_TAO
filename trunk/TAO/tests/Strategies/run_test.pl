@@ -10,8 +10,8 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile    = PerlACE::LocalFile ("test.ior");
-$svcconf    = PerlACE::LocalFile ("svc.conf");
-$advsvcconf = PerlACE::LocalFile ("advanced_svc.conf");
+$svcconf    = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
+$advsvcconf = PerlACE::LocalFile ("advanced_svc$PerlACE::svcconf_ext");
 
 print "$svcconf\n";
 unlink $iorfile;

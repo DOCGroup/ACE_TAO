@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 
 $iorfile = PerlACE::LocalFile ("test.ior");
-$svcfile = PerlACE::LocalFile ("svc.conf");
+$svcfile = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
 $BSV = new PerlACE::Process ("blocking_server",
 			     "-ORBSvcConf $svcfile -o $iorfile");

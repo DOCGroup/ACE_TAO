@@ -42,7 +42,7 @@ elsif ($^O eq "hpux") {
 unlink $iorfile;
 unlink $data_file;
 
-$server_conf = PerlACE::LocalFile ("server.conf");
+$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 
 $server_args =
     "-o $iorfile -ORBdebuglevel $debug_level -ORBsvcconf $server_conf "
