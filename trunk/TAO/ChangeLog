@@ -1,10 +1,9 @@
-Sun Aug 18 11:32:41 2002  Ossama Othman  <ossama@uci.edu>
+Sun Aug 18 12:20:25 2002  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing.rc (InternalName):
-	  (OriginalFilename):
+	* orbsvcs/orbsvcs/LoadBalancing.rc:
 
-	  Corrected these fields.  They still refered to the old Load
-	  Balancer library.
+	  Removed this file.  It is no longer used since the old load
+	  balancer prototype was removed.
 
 Fri Aug 16 14:22:43 2002  Ossama Othman  <ossama@uci.edu>
 
