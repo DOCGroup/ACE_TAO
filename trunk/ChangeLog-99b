@@ -1,3 +1,17 @@
+Sun Nov 14 18:13:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE-configuration.txt:
+
+	  Updated with information about bootstrapping autoconf support in
+	  ACE since it is currently not enabled by default in ACE.
+
+	* configure.in:
+
+	  User must now specify the "--enable-maintainer-mode" configure
+	  script option before in order to be able to use the configure
+	  script.  Once autoconf support is fully integrated into ACE,
+	  this requirement will be removed.
+
 Sun Nov 14 15:22:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.cpp: Fixed a statement unreachable in 
