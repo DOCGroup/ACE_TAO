@@ -10,6 +10,7 @@
 
 LDLIBS     =  -lTAO
 
+IDL_HDR	= param_testC.h param_testS.h
 IDL_SRC	= param_testC.cpp param_testS.cpp
 PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp param_test_i.cpp helper.cpp \
 		driver.cpp options.cpp results.cpp tests.cpp
@@ -44,7 +45,7 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-$(IDL_SRC): param_test.idl
+$(IDL_HDR) $(IDL_SRC): param_test.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl param_test.idl
 
 server:	$(addprefix $(VDIR),$(PARAM_TEST_SVR_OBJS))
@@ -58,6 +59,7 @@ clean:
 
 realclean: clean
 	-/bin/rm -rf param_testC.* param_testS.*
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
@@ -211,6 +213,7 @@ param_testC.o: param_testC.cpp param_testC.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -378,6 +381,7 @@ param_testS.o: param_testS.cpp param_testS.h param_testC.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -546,6 +550,7 @@ server.o: server.cpp \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -713,6 +718,7 @@ client.o: client.cpp options.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -885,6 +891,7 @@ param_test_i.o: param_test_i.cpp \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -1053,6 +1060,7 @@ helper.o: helper.cpp helper.h param_testC.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -1220,6 +1228,7 @@ driver.o: driver.cpp options.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -1392,6 +1401,7 @@ options.o: options.cpp options.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -1562,6 +1572,7 @@ results.o: results.cpp results.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
@@ -1728,6 +1739,7 @@ tests.o: tests.cpp helper.h param_testC.h \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/corbacom.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/sequence.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/typecode.i \
+ /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/nvlist.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/any.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/stub.i \
  /project/doc/gokhale/packages/ACE_wrappers/build/SunCC/TAO/tao/object.i \
