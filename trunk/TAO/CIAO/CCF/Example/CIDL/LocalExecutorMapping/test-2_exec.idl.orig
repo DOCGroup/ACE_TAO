@@ -57,8 +57,9 @@ module M2
   {
     attribute long l;
     attribute ::M::I i;
+    attribute ::M2::OctetSeq seq;
     void foo (in long l, inout boolean b, out long ol, in ::M::I i, out unsigned long long ull);
-    ::Components::EnterpriseComponent new (in long l);
+    ::Components::EnterpriseComponent new (in long l, in ::M2::OctetSeq s);
   };
 
   local interface CCM_H2 : CCM_H2Explicit, CCM_H2Implicit
