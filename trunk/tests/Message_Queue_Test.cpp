@@ -60,22 +60,14 @@ struct Queue_Wrapper
   //
   // = DESCRIPTION
   //     For use in multithreaded performance test.
-  union
-    {
-      SYNCH_QUEUE *sq_;
-      // The message queue, synchronized.
 
-      QUEUE *q_;
-      // The message queue, unsynchronized.  For VxWorks message queue.
-    };
-  u_int synch_queue_;
-  // Tag field indicating whether to use the synchronized or unsynchronized
-  // message queue.
+  ACE_Message_Queue_Base *q_;
+  // The message queue.
 
   ACE_Message_Block **send_block_;
   // Pointer to messages blocks for sender to send to reciever.
 
-  Queue_Wrapper () : q_ (0), synch_queue_ (0), send_block_ (0) {}
+  Queue_Wrapper () : q_ (0), send_block_ (0) {}
   // Default constructor.
 };
 
@@ -163,19 +155,25 @@ single_thread_performance_test (int queue_type = 0)
   int i;
 
   // Create a message queue.
-  QUEUE *msgq = 0;
+  ACE_Message_Queue_Base *msgq = 0;
 
   if (queue_type == 0)
-    {
-      ACE_NEW_RETURN (msgq, QUEUE, -1);
-    }
+    ACE_NEW_RETURN (msgq, QUEUE, -1);
 #if defined (VXWORKS)
   else
     {
       ACE_NEW_RETURN (msgq,
                       ACE_Message_Queue_Vx (messages, MAX_MESSAGE_SIZE),
                       -1);
-      message = "ACE_Message_Queue_Vx, single thread";
+      message = "ACE_Message_Queue_Vx, single thread test";
+    }
+#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+  else
+    {
+      ACE_NEW_RETURN (msgq,
+                      ACE_Message_Queue_NT,
+                      -1);
+      message = "ACE_Message_Queue_NT, single thread test";
     }
 #endif /* VXWORKS */
 
@@ -281,16 +279,9 @@ receiver (void *arg)
 #endif /* VXWORKS */
 
   for (i = 0; i < messages; ++i)
-    if (queue_wrapper->synch_queue_)
-      { // Do not remove the brace!!!!
-        if (queue_wrapper->sq_->dequeue_head (receive_block_p[i]) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                             ASYS_TEXT ("dequeue_head")), 0);
-      } // Do not remove the brace!!!!
-    else
-      if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("dequeue_head")), 0);
+    if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("dequeue_head")), 0);
 
   timer->stop ();
 
@@ -313,18 +304,10 @@ sender (void *arg)
 
   // Send the messages.
   for (i = 0; i < messages; ++i)
-    if (queue_wrapper->synch_queue_)
-      { // Do not remove the brace!!!!
-        if (queue_wrapper->sq_->
-              enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                             ASYS_TEXT ("enqueue")), 0);
-      } // Do not remove the brace!!!!
-    else
-      if (queue_wrapper->q_->
-            enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("enqueue")), 0);
+    if (queue_wrapper->q_->
+        enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("enqueue")), 0);
 
   return 0;
 }
@@ -352,18 +335,22 @@ performance_test (int queue_type = 0)
   queue_wrapper.send_block_ = send_block;
 
   if (queue_type == 0)
-    {
-      queue_wrapper.synch_queue_ = 1;
-      ACE_NEW_RETURN (queue_wrapper.sq_, SYNCH_QUEUE, -1);
-    }
+    ACE_NEW_RETURN (queue_wrapper.q_, SYNCH_QUEUE, -1);
 #if defined (VXWORKS)
   else
     {
-      queue_wrapper.synch_queue_ = 0;
       ACE_NEW_RETURN (queue_wrapper.q_,
                       ACE_Message_Queue_Vx (messages, MAX_MESSAGE_SIZE),
                       -1);
       message = "ACE_Message_Queue_Vx";
+    }
+#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+  else
+    {
+      ACE_NEW_RETURN (queue_wrapper.q_,
+                      ACE_Message_Queue_NT,
+                      -1);
+      message = "ACE_Message_Queue_NT";
     }
 #endif /* VXWORKS */
 
@@ -393,18 +380,8 @@ performance_test (int queue_type = 0)
               (double) tv.msec () / messages));
   timer->reset ();
 
-  if (queue_type == 0)
-    {
-      delete queue_wrapper.sq_;
-      queue_wrapper.sq_ = 0;
-    }
-#if defined (VXWORKS)
-  else
-    {
-      delete queue_wrapper.q_;
-      queue_wrapper.q_ = 0;
-    }
-#endif /* VXWORKS */
+  delete queue_wrapper.q_;
+  queue_wrapper.q_ = 0;
 
   for (i = 0; i < messages; ++i)
     delete send_block[i];
@@ -439,8 +416,8 @@ main (int argc, ASYS_TCHAR *argv[])
   if (status == 0)
     single_thread_performance_test ();
 
-# if defined (VXWORKS)
-  // Test ACE_Message_Queue_Vx.
+# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
+  // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
   if (status == 0)
     single_thread_performance_test (1);
 # endif /* VXWORKS */
@@ -448,8 +425,8 @@ main (int argc, ASYS_TCHAR *argv[])
   if (status == 0)
     performance_test ();
 
-# if defined (VXWORKS)
-  // Test ACE_Message_Queue_Vx.
+# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
+  // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
   if (status == 0)
     performance_test (1);
 # endif /* VXWORKS */
