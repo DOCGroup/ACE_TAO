@@ -1,15 +1,22 @@
+Mon Aug 30 15:29:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB.h (CORBA): 
+
+	  Added documentation for run () with a timeout parameter. Thanks
+	  to Jules Colding <jules at tdcadsl dot dk> for motivating this. 
+
 Mon Aug 30 08:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/Session.cpp:
           When catching an exception in the svc method print out the number
-          of messages send. This test fails in some builds, maybe it is
+          of messages sent. This test fails in some builds, maybe it is
           just taking a long time, this should give us some more info.
 
 Mon Aug 30 08:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Twoways/Session.cpp:
           When catching an exception in the svc method print out the number
-          of messages send. This test fails in some builds, maybe it is
+          of messages sent. This test fails in some builds, maybe it is
           just taking a long time, this should give us some more info.
 
 Mon Aug 30 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
