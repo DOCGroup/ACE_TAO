@@ -6,6 +6,8 @@ Mon Aug  2 09:06:39 2004  Steve Huston  <shuston@riverace.com>
 	  tentative struct sigaction and doesn't match the real one, causing
 	  compile errors in ACE_OS::sigaction().
 
+	* ace/OS_TLI.h: Removed stray '#'.
+
 	* ace/Signal.{h inl}: Removed the hack typedef ACE_SIGACTION that
 	  was allegedly put in for an HP-UX C++ bug. It's not needed and is
 	  causing further problems. #include "ace/os_include/os_signal.h"
@@ -19,6 +21,9 @@ Mon Aug  2 09:06:39 2004  Steve Huston  <shuston@riverace.com>
 	  error creeps up every once in a while and is always related to
 	  fudging something somewhere (see fix above for signal...) but
 	  this one doesn't have an apparant cause.
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Removed AREXTRA. It
+	  was breaking static lib builds.
 
 Sun Aug  1 08:15:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
