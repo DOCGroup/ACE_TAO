@@ -2312,8 +2312,10 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::purge_pending_notifications");
 
-  // go over message queue and take out all the matching event handlers
-  // if eh = 0, purge all..
+  // Go over message queue and take out all the matching event handlers.
+  // If eh == 0, purge all. Note that reactor notifies (no handler specified)
+  // are never purged, as this may lose a needed notify the reactor
+  // queued for itself.
 
   if (this->message_queue_.is_empty ())
     return 0;
@@ -2344,15 +2346,19 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
       ACE_Notification_Buffer *buffer =
         ACE_reinterpret_cast (ACE_Notification_Buffer *, mb->base ());
 
-      if (eh && (eh != buffer->eh_))
-        { // remove it by not copying it to the new queue
-          if (-1 == local_queue.enqueue_head (mb))
-            return -1;
-        }
-      else
+      // If this is not a Reactor notify (it is for a particular handler),
+      // and it matches the specified handler (or purging all), then
+      // release it and count the number purged.
+      if (0 != buffer->eh_ && (0 == eh || eh == buffer->eh_))
         {
           mb->release ();
           ++number_purged;
+        }
+      else
+        {
+          // To preserve it, move it to the local_queue.
+          if (-1 == local_queue.enqueue_head (mb))
+            return -1;
         }
     }
 
