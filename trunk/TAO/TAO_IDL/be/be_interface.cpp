@@ -98,7 +98,7 @@ be_interface::compute_fullskelname (void)
       this->full_skel_name_ = new char [namelen+1];
       this->full_skel_name_[0] = '\0';
       first = I_TRUE;
-      second - I_FALSE;
+      second = I_FALSE;
       ACE_OS::strcat (this->full_skel_name_, "POA_");
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
@@ -271,6 +271,8 @@ int be_interface::gen_client_stubs (void)
   long i;            // loop index
   TAO_NL  nl;        // end line
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -467,6 +469,9 @@ int be_interface::gen_server_skeletons (void)
   TAO_NL  nl;        // end line
   AST_Decl *d;        // temporary
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_SS); // set the current code generation
@@ -596,6 +601,9 @@ be_interface::gen_operation_table (void)
   long i;            // loop index
   TAO_NL  nl;        // end line
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
@@ -702,6 +710,9 @@ be_interface::gen_server_inline (void)
   TAO_OutStream *si; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -1088,6 +1099,9 @@ be_interface::tc_encap_len (void)
   if (this->encap_len_ == -1) // not computed yet
     {
       long slen;
+
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
 
       this->encap_len_ = 4;  // holds the byte order flag
 

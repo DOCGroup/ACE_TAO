@@ -79,9 +79,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 UTL_ScopeStack::UTL_ScopeStack()
-	      : pd_stack_data_nalloced(INCREMENT),
-		pd_stack_data(new UTL_Scope *[INCREMENT]),
-		pd_stack_top(0)
+  : pd_stack_data(new UTL_Scope *[INCREMENT]),
+    pd_stack_data_nalloced(INCREMENT),
+    pd_stack_top(0)
 {
 }
 
@@ -107,6 +107,9 @@ UTL_ScopeStack::push(UTL_Scope *el)
   AST_Decl	*d = ScopeAsDecl(el);
   long		ostack_data_nalloced;
   long		i;
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (d);
 
   // Make sure there's space for one more
   if (pd_stack_data_nalloced == pd_stack_top) {

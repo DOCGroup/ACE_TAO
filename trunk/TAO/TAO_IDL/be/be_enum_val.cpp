@@ -111,6 +111,10 @@ be_enum_val::gen_encapsulation (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (bt);
+  ACE_UNUSED_ARG (nl);
+
   cs = cg->client_stubs ();
   cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at

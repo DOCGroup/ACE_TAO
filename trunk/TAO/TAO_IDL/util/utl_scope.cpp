@@ -329,7 +329,7 @@ AST_Attribute *UTL_Scope::add_attribute(AST_Attribute *a)
   if (a == NULL) return NULL;
   a->set_added(I_TRUE);
   if (!a->field_type()->added()) {
-    return add_type(a->field_type()) ? a : NULL;
+    return add_type(a->field_type()) ? a : 0 ;
   } else
     return a;
 }
@@ -339,7 +339,7 @@ AST_Operation *UTL_Scope::add_operation(AST_Operation *o)
   if (o == NULL) return NULL;
   o->set_added(I_TRUE);
   if (!o->return_type()->added()) {
-    return add_type(o->return_type()) ? o : NULL;
+    return add_type(o->return_type()) ? o : 0 ;
   } else
     return o;
 }
@@ -349,7 +349,7 @@ AST_Argument *UTL_Scope::add_argument(AST_Argument *a)
   if (a == NULL) return NULL;
   a->set_added(I_TRUE);
   if (!a->field_type()->added()) {
-    return add_type(a->field_type()) ? a : NULL;
+    return add_type(a->field_type()) ? a : 0 ;
   } else
     return a;
 }
@@ -366,7 +366,7 @@ AST_UnionBranch *UTL_Scope::add_union_branch(AST_UnionBranch *u)
   if (u == NULL) return NULL;
   u->set_added(I_TRUE);
   if (!u->field_type()->added()) {
-    return add_type(u->field_type()) ? u : NULL;
+    return add_type(u->field_type()) ? u : 0 ;
   } else 
     return u;
 }
@@ -383,7 +383,7 @@ AST_Field *UTL_Scope::add_field(AST_Field *f)
   if (f == NULL) return NULL;
   f->set_added(I_TRUE);
   if (!f->field_type()->added()) {
-    return add_type(f->field_type()) ? f : NULL;
+    return add_type(f->field_type()) ? f : 0 ;
   } else
     return f;
 }
@@ -407,7 +407,7 @@ AST_Typedef *UTL_Scope::add_typedef(AST_Typedef *t)
   if (t == NULL) return NULL;
   t->set_added(I_TRUE);
   if (!t->base_type()->added()) {
-    return add_type(t->base_type()) ? t : NULL;
+    return add_type(t->base_type()) ? t : 0 ;
   } else 
     return t;
 }
@@ -417,7 +417,7 @@ AST_Sequence *UTL_Scope::add_sequence(AST_Sequence *s)
   if (s == NULL) return NULL;
   s->set_added(I_TRUE);
   if (!s->base_type()->added()) {
-    return add_type(s->base_type()) ? s : NULL;
+    return add_type(s->base_type()) ? s : 0 ;
   } else
     return s;
 }
@@ -434,7 +434,7 @@ AST_Array *UTL_Scope::add_array(AST_Array *a)
   if (a == NULL) return NULL;
   a->set_added(I_TRUE);
   if (!a->base_type()->added()) {
-    return add_type(a->base_type()) ? a : NULL;
+    return add_type(a->base_type()) ? a : 0 ;
   } else 
     return a;
 }
@@ -713,6 +713,7 @@ UTL_Scope::lookup_primitive_type(AST_Expression::ExprType et)
   case AST_Expression::EV_string:
   case AST_Expression::EV_wstring:
   case AST_Expression::EV_none:
+  default:
     return NULL;
   }
   i = new UTL_ScopeActiveIterator(this, UTL_Scope::IK_decls);
@@ -1112,10 +1113,10 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator(
 				       UTL_Scope::ScopeIterationKind i)
 			: iter_source(s),
 			  ik(i),
-			  il(0),
 			  stage(i == UTL_Scope::IK_both
 				? UTL_Scope::IK_decls
-				: i)
+				: i),
+			  il(0)
 {
 }
 

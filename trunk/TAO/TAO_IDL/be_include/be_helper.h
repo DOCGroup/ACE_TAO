@@ -53,7 +53,7 @@ public:
   TAO_OutStream (void);
   // constructor. 
   
-  ~TAO_OutStream (void);
+  virtual ~TAO_OutStream (void);
   // destructor
   
   int open (const char *fname, TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);

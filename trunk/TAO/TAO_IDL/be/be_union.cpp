@@ -550,6 +550,9 @@ be_union::tc_encap_len (void)
       long slen;
       be_type *discrim;
 
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
+
       this->encap_len_ = 4;  // holds the byte order flag
 
       this->encap_len_ += this->repoID_encap_len (); // for repoID

@@ -55,6 +55,11 @@ int be_root::gen_idl2cplusplus_mapping (void)
   AST_Decl			*d;   // points to an individual node in the
 				      // chain of nodes in the current scope
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (d);
+  ACE_UNUSED_ARG (si);
+  ACE_UNUSED_ARG (i);
+
   // this is the main starting point from which the files are generated. We
   // delegate the task of code generation to a special Code Generation
   // object. This allows a number of different front ends to access the services

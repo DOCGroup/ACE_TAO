@@ -53,6 +53,9 @@ be_argument::gen_client_header (void)
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_ARGUMENT_CH); // generating code for arguments
@@ -81,6 +84,9 @@ be_argument::gen_client_stubs (void)
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_ARGUMENT_CS); // generating code for arguments
@@ -107,6 +113,9 @@ be_argument::gen_server_header (void)
   TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -135,6 +144,9 @@ be_argument::gen_server_skeletons (void)
   TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();

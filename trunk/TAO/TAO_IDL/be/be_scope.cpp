@@ -33,6 +33,9 @@ be_scope::gen_client_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (cg);
+
   if (this->nmembers () > 0)
     {
       // if there are elements in this scope

@@ -38,6 +38,11 @@ be_state_attribute::be_state_attribute (void)
 int 
 be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (bt);
+  ACE_UNUSED_ARG (d);
+  ACE_UNUSED_ARG (type);
+
   return -1;
 }
 
@@ -56,6 +61,9 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_field *f;       // field node
   be_structure *bs;  // enclosing structure node
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   os = cg->client_header (); // get client header stream
   f = be_field::narrow_from_decl (d); // downcast to field node
@@ -225,6 +233,9 @@ be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_union *bu;
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (type);
 
   bu = be_union::narrow_from_decl (d); // downcast to union type
   if (!bu)
@@ -730,6 +741,9 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
   be_union_branch *ub; // union branch member
   be_union *bu;      // enclosing union
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   os = cg->client_header (); // get client header stream
   ub = be_union_branch::narrow_from_decl (d); // downcast to union branch node
   if (!ub)
@@ -820,7 +834,7 @@ be_state_operation::be_state_operation (void)
 int
 be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = 0; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
@@ -1100,7 +1114,7 @@ be_state_argument::be_state_argument (void)
 int
 be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = 0; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_argument *arg;  // argument node
@@ -1871,9 +1885,12 @@ be_state_array::be_state_array (void)
 int
 be_state_array::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = 0; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   // get the appropriate stream
   switch (cg->state ())
@@ -1967,10 +1984,14 @@ be_state_sequence::be_state_sequence (void)
 int
 be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = 0; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_sequence *seq;
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (seq);
+  ACE_UNUSED_ARG (nl);
 
   switch (cg->state ())
     {

@@ -34,6 +34,9 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
 {
   be_type *bt;
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (bt);
+
   // if we are inside of a union, we change our local name to have an
   // underscore before us
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
@@ -78,6 +81,9 @@ be_array::gen_client_header (void)
   be_type *bt;       // our base type
   be_decl *d;        // enclosing scope
   be_state *s;       // state based code gen object
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (d);
 
   if (!this->cli_hdr_gen_) // not already generated
     {
@@ -270,6 +276,9 @@ be_array::gen_client_inline (void)
       be_decl *d;        // enclosing scope
       be_state *s;       // state based code gen obj
 
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (d);
+
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   
@@ -440,6 +449,9 @@ be_array::gen_forany_defn (void)
   TAO_NL  nl;        // end line
   char namebuf [MAXNAMELEN];  // to hold the _out name
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
+
   ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_forany", local_name ()->get_string ());
 
@@ -519,6 +531,9 @@ be_array::gen_forany_impl (void)
   TAO_NL  nl;        // end line
   char fname [MAXNAMELEN];  // to hold the full and
   char lname [MAXNAMELEN];  // local _var names
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (i);
 
   ACE_OS::memset (fname, '\0', MAXNAMELEN);
   ACE_OS::sprintf (fname, "%s_forany", this->fullname ());
