@@ -1,6 +1,7 @@
 // $Id$
 
 interface Cubit
+{
   // = TITLE
   //    Defines an interface that encapsulates operations that cube
   //    numbers.
@@ -8,7 +9,7 @@ interface Cubit
   // = DESCRIPTION
   //    This interface encapsulates operations that cube
   //    octets, shorts, longs, structs and unions.
-{
+
   struct Many
   {
     octet o;            // + 3 bytes padding (normally) ...
@@ -16,16 +17,16 @@ interface Cubit
     short s;            // + 2 bytes padding (normally) ...
   };
 
-  octet  cube_octet  (in octet o);
+  octet cube_octet (in octet o);
   // cube an octet
 
-  short  cube_short  (in short s);
+  short cube_short (in short s);
   // cube a short
 
-  long   cube_long   (in long l);
+  long cube_long (in long l);
   // cube a long
 
-  Many   cube_struct (in Many values);
+  Many cube_struct (in Many values);
   // cube each of the members of a struct
 
   oneway void noop ();
@@ -36,8 +37,11 @@ interface Cubit
 };
 
 interface Cubit_Factory
+{
   // = TITLE
   //    Creates Cubit objects.
-{
+
   string create_cubit (in unsigned short index);
+  // Factory method that creates an string containing the IOR of the
+  // designated Cubit object.
 };

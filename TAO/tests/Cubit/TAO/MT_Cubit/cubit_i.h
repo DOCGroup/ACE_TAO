@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -19,9 +20,9 @@
 #include "cubitS.h"
 
 class Cubit_i : public POA_Cubit
+{
   // = TITLE
   //   Cubit implementation class.
-{
 public:
   Cubit_i (void);
   ~Cubit_i (void);
@@ -44,25 +45,26 @@ public:
 };
 
 class Cubit_Factory_i : public POA_Cubit_Factory
+{
   // = TITLE
   //   Cubit Factory implementation class.
-{
- public:
+public:
   Cubit_Factory_i (CORBA::String * cubits, u_int num_of_objs);
-  // constructor
+  // Constructor.
 
   ~Cubit_Factory_i (void);
-  // destructor
+  // Destructor.
   
   virtual CORBA::String create_cubit (CORBA::UShort index, 
 				      CORBA::Environment &env); 
-  // make the cubit object whose priority is "priority"
- private:
+  // Make the cubit object whose priority is "priority".
+
+private:
   CORBA::String * my_cubit_;
-  // array of cubit iors
+  // Array of cubit iors.
 
   u_int num_of_objs_;
-  // number of cubit objects we have ior's for.
+  // Number of cubit objects we have ior's for.
 };
 
 #endif /* _CUBIT_I_HH */
