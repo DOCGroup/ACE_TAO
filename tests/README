@@ -44,33 +44,8 @@ Notes:
    UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf 
    and Win32clerk.conf). 
 
-
-As of ACE 4.3, all of the tests on g++ 2.7.2/VxWorks 5.3.1 pass, with
-these exceptions:
-
-    Buffer_Stream_Test                      ENOTSUP: unknown
-    Conn_Test                               unknown
-    MM_Shared_Memory_Test                   ENOTSUP: unknown
-    Mem_Map_Test                            ENOTSUP: unknown (mmap)
-    Message_Queue_Test                      memory problem: sometimes hangs
-                                                on shutdown; usually clobbers
-                                                the shell task name in the
-                                                kernel's task table
-    Mutex_Test                              ENOTSUP: unknown
-    Naming_Test                             failed: (uses mmap?)
-    Pipe_Test                               failed: requires fork
-    Process_Mutex_Test                      failed: requires fork
-    Process_Strategy_Test                   failed: /tmp/ace_temp_file not founc
-    Reactors_Test                           failed: problem with test?
-    Reactor_Notify_Test                     unknown
-    Service_Config_Test                     failed: page fault
-    Time_Service_Test                       failed: requires fork
-    Tokens_Test                             failed: unknown
-
-If you are able to determine the cause of failure of Conn_Test,
-Mutex_Test, or Reactors_Test, please let us know!  The other tests
-need to be fixed so that they fail gracefully on VxWorks.
-
+Please see run_tests.vxworks for information on the status of
+tests on VxWorks.
 
 If you have any questions/suggestions, please send email to
 ace-users@cs.wustl.edu.
