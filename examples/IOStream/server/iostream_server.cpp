@@ -112,6 +112,13 @@ main (int argc, char *argv [])
                        "open"),
                       -1);
 
+  else if (ACE_Reactor::instance ()->register_handler
+           (&peer_acceptor,
+            ACE_Event_Handler::READ_MASK) == - 1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "registering service with ACE_Reactor\n"),
+                      -1);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P) starting up daemon\n"));
 

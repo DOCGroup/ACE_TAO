@@ -27,8 +27,7 @@ TAO_Notify_SupplierAdmin_i::TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_
 // Implementation skeleton destructor
 TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i ()
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
+  ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
   // Cleanup all resources..
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -444,6 +443,6 @@ TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &ACE_TRY_EN
 template class TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>
+#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>;
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

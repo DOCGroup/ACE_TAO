@@ -2,7 +2,9 @@
 # Makefile for building the ACE tests
 #
 
-NAMES = \
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+TESTS = \
 	Aio_Platform_Test \
 	ARGV_Test \
 	Atomic_Op_Test \
@@ -19,8 +21,7 @@ NAMES = \
 	CDR_Test \
 	Collection_Test \
 	Conn_Test \
-	Config_Test \
-	Dirent_Test \
+        Config_Test \
 	DLL_Test \
 	DLList_Test \
 	Dynamic_Priority_Test \
@@ -39,7 +40,7 @@ NAMES = \
 	Malloc_Test \
 	Map_Manager_Test \
 	Map_Test \
-	MEM_Stream_Test \
+        MEM_Stream_Test \
 	Mem_Map_Test \
 	Message_Block_Test \
 	Message_Queue_Notifications_Test \
@@ -69,8 +70,7 @@ NAMES = \
 	Reactors_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \
-        Refcounted_Auto_Ptr_Test \
-        Reverse_Lock_Test \
+	Reverse_Lock_Test \
 	Semaphore_Test \
 	Service_Config_Test \
 	Signal_Test \
@@ -99,7 +99,21 @@ NAMES = \
 	UPIPE_SAP_Test \
 	XtReactor_Test
 
-DIRS = RMCast
+!ifdef TARGET_NAME
+NAME = $(TARGET_NAME)
+!else
+!undef NAME
+
+all: $(TESTS)
+
+$(TESTS):
+	$(MAKE) -fMakefile.bor -DTARGET_NAME=$@ $(MAKE_FLAGS)
+
+clean: $(TESTS:_Test=_Test.Clean)
+
+$(TESTS:_Test=_Test.Clean):
+	$(MAKE) -fMakefile.bor -DTARGET_NAME=$(@:.Clean=) $(MAKE_FLAGS) clean
+!endif
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
@@ -109,5 +123,4 @@ CPPDIR = .
 
 LIBFILES = $(ACE_LIB)
 
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

@@ -47,6 +47,11 @@ TAO_ORB_Core::object_ref_table (void)
   return this->object_ref_table_;
 }
 
+ACE_INLINE TAO_Flushing_Strategy *
+TAO_ORB_Core::flushing_strategy (void)
+{
+  return this->flushing_strategy_;
+}
 
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
@@ -578,23 +583,6 @@ ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::poa_current (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-
-  if (CORBA::is_nil (this->poa_current_.in ()))
-    {
-      ACE_TRY_NEW_ENV
-        {
-          // @@ This is a hack.  FIXME!
-          // This forces the POACurrent to be initialized.
-          CORBA::Object_var root = this->root_poa (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          return CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
-    }
-
   return CORBA::Object::_duplicate (this->poa_current_.in ());
 }
 
@@ -681,41 +669,25 @@ TAO_ORB_Core::client_priority_policy_selector (void)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->rt_orb_.in ()))
+if (CORBA::is_nil (this->rt_orb_))
     {
       this->resolve_rt_orb_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
-  return CORBA::Object::_duplicate (this->rt_orb_.in ());
+  return CORBA::Object::_duplicate (this->rt_orb_);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::rt_current (void)
 {
-  if (CORBA::is_nil (this->rt_current_.in ()))
-    {
-      ACE_TRY_NEW_ENV
-        {
-          // Make sure the RT ORB is loaded and initialized since it
-          // also initializes the RTCurrent object.
-          this->resolve_rt_orb_i (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          return CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
-    }
-
-  return CORBA::Object::_duplicate (this->rt_current_.in ());
+  return CORBA::Object::_duplicate (this->rt_current_);
 }
 
 ACE_INLINE void
 TAO_ORB_Core::rt_current (CORBA::Object_ptr current)
 {
-  this->rt_current_ = CORBA::Object::_duplicate (current);
+  this->rt_current_ =
+    CORBA::Object::_duplicate (current);
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -812,7 +784,7 @@ TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
 ACE_INLINE TAO_ORB_Core *
 TAO_ORB_Core_Auto_Ptr::operator-> () const
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator->");
+  ACE_TRACE ("auto_ptr::operator->");
   return this->get ();
 }
 

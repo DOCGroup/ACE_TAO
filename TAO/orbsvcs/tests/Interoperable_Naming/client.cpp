@@ -22,7 +22,6 @@
 
 int main (int argc, char *argv [])
 {
-  int result = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -32,16 +31,18 @@ int main (int argc, char *argv [])
 
       if (client.init (argc, argv) == -1)
         return 1;
-
-      result = client.run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      else
+        {
+          return client.run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      return 1;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
-  return result;
+  return 0;
 }

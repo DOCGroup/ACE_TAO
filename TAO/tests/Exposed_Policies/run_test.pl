@@ -6,38 +6,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../bin";
-require PerlACE::Run_Test;
-
-$poa_file = PerlACE::LocalFile ("POA.cfg");
-$obj_file = PerlACE::LocalFile ("Object.cfg");
-$server_conf = PerlACE::LocalFile ("server.conf");
-
-$SV = new PerlACE::Process ("server", "-ORBSvcConf $server_conf"
-                                      . " -ORBendpoint iiop://localhost:0/priority=5"
-                                      . " -ORBendpoint iiop://localhost:0/priority=15"
-                                      . " -POAConfigFile $poa_file"
-                                      . " -ObjectConfigFile $obj_file");
-
-$CL = new PerlACE::Process ("client", "-POAConfigFile $poa_file -ObjectConfigFile $obj_file");
+require Process;
 
 $status = 0;
+$POAConfigFile = "POA.cfg";
+$ObjectConfigFile = "Object.cfg";
 
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-POAConfigFile $POAConfigFile -ObjectConfigFile $ObjectConfigFile");
 
-sleep (5);
 
-$client = $CL->SpawnWaitKill (60);
+$client = Process::Create($EXEPREFIX."client$EXE_EXT", "-POAConfigFile $POAConfigFile -ObjectConfigFile $ObjectConfigFile");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+if ($client->TimedWait (60) == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $status = 1;
+  $client->Kill (); $client->TimedWait (1);
 }
 
-$server = $SV->TerminateWaitKill (10);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
+$SV->Kill ();
 
 exit $status;

@@ -7,7 +7,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/operation_details.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/GIOP_Message_Locate_Header.h"
+#include "tao/GIOP_Message_Headers.h"
 #include "tao/target_specification.h"
 #include "tao/Leader_Follower.h"
 #include "Transport.h"
@@ -1350,7 +1350,9 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_LITE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bytes_transferred;
+  int result = transport->send_message_block_chain (&message_block,
+                                                    bytes_transferred);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

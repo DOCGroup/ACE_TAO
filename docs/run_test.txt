@@ -24,40 +24,33 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../bin';
 use PerlACE::Run_Test;
-
-$status = 0;
+use Cwd;
 
 $server_ior = PerlACE::LocalFile ("server.ior");
 unlink $server_ior;
 
 $SV = new PerlACE::Process ("server", "-o $server_ior");
-$CL = new PerlACE::Process ("client", "-k file://$server_ior");
 
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$server_ior>\n";
-    $SV->Kill ();
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
 
+$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
+
 $client = $CL->SpawnWaitKill (60);
-
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
-}
-
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
+$server = $SV->WaitKill (5);
 
 unlink $server_ior;
  
-exit $status;
+if ($server != 0 || $client != 0) {
+    exit 1;
+}
+
+exit 0;
 @endverbatim
 
 @subsection details Example Details
@@ -90,7 +83,7 @@ line arguments (like -Config and -ExeSubDir) and also brings in
 the PerlACE::Process module.
 
 @verbatim
-$status = 0;
+use Cwd;
 
 $server_ior = PerlACE::LocalFile ("server.ior");
 
@@ -103,70 +96,50 @@ immediately because we use PerlACE::waitforfile_timed later.
 
 @verbatim
 $SV = new PerlACE::Process ("server", "-o $server_ior");
-$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
 
 $SV->Spawn ();
 @endverbatim
 
 The PerlACE::Process is constructed with an executable and 
 arguments.  @note Unlike the old Process module, the process
-isn't started until one of the Spawn methods is used.
+isn't started until one of the Spawn's is called.
 
 @verbatim
 if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$server_ior>\n";
-    $SV->Kill (); 
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
 @endverbatim
 
 The PerlACE::waitforfile_timed method waits until the file is
-created.  In this way, we know when to start the client.  If
-no IOR file is used, then you'd need to use Perl's sleep 
-method. 
+created.  In this way, we know when to start the client.
 
 @verbatim
+$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
+
 $client = $CL->SpawnWaitKill (60);
-
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
-}
+$server = $SV->WaitKill (5);
 @endverbatim
 
-Here is an example of starting the client.  SpawnWaitKill will start 
-the process and wait for the specified number of seconds for the 
-process to end.  If the time limit is reached, it will kill the 
-process and return -1.  
-
-The return value of SpawnWaitKill is the return value of the 
-process, unless it timed out.  You don't need to check for the 
-timeout, since SpawnWaitKill will print out a timeout error.  
-Instead, just check for != 0.
-
-@verbatim
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-@endverbatim
-
-Here is the termination of the server.  Servers are usually terminated
-either by TerminateWaitKill or just WaitKill.  TerminateWaitKill is 
-used when the server doesn't shut down itself.  WaitKill is used when
-it does (such as when the client calls a shutdown method).  Once
-again, we check the return status.
-
+Here are two more methods on the PerlACE::Process object.
+SpawnWaitKill will start the process and wait for the specified
+number of seconds for the process to end.  If the time limit
+is reached, it will kill the process.  WaitKill will do the same,
+but is used after the process is already spawned.
 
 @verbatim
 unlink $server_ior;
  
-exit $status;
+if ($server != 0 || $client != 0) {
+    exit 1;
+}
+ 
+exit 0;
 @endverbatim
 
-And finally, we unlink any files that were created and then just
-exit with $status.  
+And finally, we just check the return codes of the server and 
+client and return 1 from this perl script if they aren't 0.
 
+This return code is used by the auto_run_tests.pl script.
 */

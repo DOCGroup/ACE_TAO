@@ -17,6 +17,7 @@
 
 #include "tao/TimeBaseC.h"
 
+#include "tao/TimeBaseS.h"
 #include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)

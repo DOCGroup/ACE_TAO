@@ -19,9 +19,6 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_RTCORBAS_CPP_
-#define _TAO_IDL_ORIG_RTCORBAS_CPP_
-
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -42,7 +39,4 @@
 #include "RTCORBAS.i"
 #endif /* !defined INLINE */
 
-
-#endif /* ifndef */
-
-#endif /* (TAO_HAS_RT_CORBA == 1) */
+#endif /* TAO_HAS_RT_CORBA == 1 */

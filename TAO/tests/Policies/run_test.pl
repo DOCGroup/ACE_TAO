@@ -5,18 +5,22 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
+use Cwd;
 
-$threads = '10';
+$cwd = getcwd();
+$threads='10';
+$status = 0;
 
-$T = new PerlACE::Process ("Manipulation", "-n $threads");
+$T = Process::Create ($EXEPREFIX."Manipulation$EXE_EXT",
+		      " -n $threads");
 
-$test = $T->SpawnWaitKill (60);
-
-if ($test != 0) {
-    print STDERR "ERROR: test returned $test\n";
-    exit 1;
+$t = $T->TimedWait (60);
+if ($t == -1) {
+  print STDERR "ERROR: test timedout\n";
+  $T->Kill (); $T->TimedWait (1);
+  $status = 1;
 }
 
-exit 0;
+exit $status;

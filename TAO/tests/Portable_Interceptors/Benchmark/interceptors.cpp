@@ -40,12 +40,6 @@ Vault_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Vault_Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -192,12 +186,6 @@ Vault_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Vault_Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -325,13 +313,6 @@ Vault_Client_Request_Context_Interceptor::name (
 }
 
 void
-Vault_Client_Request_Context_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Client_Request_Context_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -450,13 +431,6 @@ Vault_Server_Request_Context_Interceptor::name (
 }
 
 void
-Vault_Server_Request_Context_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Server_Request_Context_Interceptor::receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -546,13 +520,6 @@ Vault_Client_Request_Dynamic_Interceptor::name (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
-}
-
-void
-Vault_Client_Request_Dynamic_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
 }
 
 void
@@ -706,13 +673,6 @@ Vault_Server_Request_Dynamic_Interceptor::name (
 }
 
 void
-Vault_Server_Request_Dynamic_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Server_Request_Dynamic_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri
     TAO_ENV_ARG_DECL)
@@ -843,13 +803,6 @@ Vault_Client_Request_NOOP_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
 Vault_Client_Request_NOOP_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -944,13 +897,6 @@ Vault_Server_Request_NOOP_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
-}
-
-void
-Vault_Server_Request_NOOP_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
 }
 
 void

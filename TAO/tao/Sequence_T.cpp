@@ -55,17 +55,8 @@ TAO_Unbounded_Sequence<T>::operator= (const TAO_Unbounded_Sequence<T> &rhs)
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -179,17 +170,8 @@ operator= (const TAO_Bounded_Sequence<T, MAX> &rhs)
       // always of size MAX.
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_Sequence<T, MAX>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -430,17 +412,8 @@ operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (rhs.maximum_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -618,17 +591,8 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator=
       // MAX
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_Object_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -791,17 +755,8 @@ operator= (const TAO_Unbounded_Pseudo_Sequence<T,T_var> &rhs)
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_Pseudo_Sequence<T,T_var>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_Pseudo_Sequence<T,T_var>::allocbuf (rhs.maximum_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -959,17 +914,8 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
       // MAX
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_Pseudo_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Bounded_Pseudo_Sequence<T, T_var, MAX>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -1121,15 +1067,8 @@ operator= (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
     }
   else
     {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_Array_Sequence<T,T_var>::allocbuf (rhs.maximum_);
-        }
+      this->buffer_ =
+        TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (rhs.maximum_);
     }
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
@@ -1264,15 +1203,8 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator=
     }
   else
     {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_Array_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
-        }
+      this->buffer_ =
+        TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (rhs.maximum_);
     }
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
@@ -1381,17 +1313,8 @@ TAO_Bounded_String_Sequence<MAX>::operator=
       // <MAX> size.
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_String_Sequence<MAX>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Bounded_String_Sequence<MAX>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -1539,17 +1462,8 @@ TAO_Bounded_WString_Sequence<MAX>::operator=
       // <MAX> size.
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Bounded_WString_Sequence<MAX>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Bounded_WString_Sequence<MAX>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 

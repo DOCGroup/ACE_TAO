@@ -118,17 +118,8 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -352,17 +343,8 @@ operator= (const TAO_Unbounded_WString_Sequence &rhs)
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_WString_Sequence::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_WString_Sequence::allocbuf (rhs.maximum_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -606,17 +588,8 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
         }
     }
   else
-    {
-      if (rhs.maximum_ == 0)
-        {
-          this->buffer_ = 0;
-        }
-      else
-        {
-          this->buffer_ =
-            TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.maximum_);
-        }
-    }
+    this->buffer_ =
+      TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.length_);
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 

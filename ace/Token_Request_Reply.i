@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
+// Token_Request_Reply.i
 
 // = Set/get the length of the encoded/decoded message.
 
@@ -193,4 +193,3 @@ ACE_Token_Reply::arg (ACE_UINT32 arg)
   this->transfer_.arg_ = htonl (arg);
 }
 
-#endif /* ACE_HAS_TOKENS_LIBRARY */

@@ -5,32 +5,43 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
+use Cwd;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
+$cwd = getcwd();
+$iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
 
-$SV = new PerlACE::Process ("server", "-f $iorfile");
-$CL = new PerlACE::Process ("client", "-f $iorfile");
+ACE::checkForTarget($cwd);
 
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
+                       " -f $iorfile");
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT",
+                       " -f $iorfile");
 
-$SV->Kill ();
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$SV->Terminate (); $server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    exit $client;
+if ($server == -1 || $client != 0) {
+  exit 1;
 }
 
 exit 0;

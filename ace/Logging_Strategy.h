@@ -42,20 +42,6 @@
  * by specifying the -i <sample_interval_in_secs> and -m
  * <max_size_in_KB> options for the Logging_Strategy class in a
  * svc.conf file.
- *
- * By default, two logfiles are generated.  It's possible, however, to
- * generate as many logfiles as necessary to store all the
- * information.  To achieve this, it is only necessary to indicate the
- * maximum size of the logfiles via the -m option and the process will
- * generate automatically the logfiles.  You can control the total
- * number of logfiles created via the -n option.
- *
- * By using the -o option we can also choose the mode of organization
- * of the files, e.g., the first one is the normal used in Unix
- * systems (when cron rotates the logs it keeps the lowest number the
- * most recent one), the second is for increasing speed (we only
- * create a new log file, and don't rotate the others (fewer accesses
- * to disk)).
  */
 class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
@@ -76,29 +62,7 @@ public:
    */
   virtual int handle_timeout (const ACE_Time_Value& tv, const void* arg);
 
-  /** Parse arguments provided in svc.conf file.
-   '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
-        SILENT, VERBOSE_LITE) used to control logging. 
-   '-i' The interval (in seconds) at which the logfile size is sampled
-        (default is 0, i.e., do not sample by default).
-   '-k' Set the logging key.
-   '-m' Maximum logfile size in Kbytes.
-   '-n' The maximum number of logfiles that we want created.
-   '-o' Specifies that we want the no standard logfiles ordering
-        (fastest processing in <handle_timeout>).  Default is not to order
-        logfiles.  
-   '-p' Pass in the process-wide priorities to either enable (e.g.,
-        DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
-        EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
-        ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   '-s' Ensure that the OSTREAM flag is set
-   '-t' Pass in the thread-wide priorities to either enable (e.g.,
-        DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
-        EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
-        ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   '-w' Cause the logfile to be wiped out, both on startup and on
-        reconfiguration. 
-   */
+  /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
@@ -121,36 +85,14 @@ private:
   /// File name we're logging to.
   ACE_TCHAR *filename_;
 
-  /// Logger key for distributed logging.
-  ACE_TCHAR *logger_key_;
-
   /// If non-0 then wipeout the logfile, otherwise append to it.
-  /// Default value is 0.  
   int wipeout_logfile_;
-
-  /// This tells us in what file we last wrote. It will be increased
-  /// to enable multiple log files
-  int count_;
-
-  /// If non-0 we have a maximum number of log files we can write.
-  /// Default value is 0, i.e., no maximum number.
-  int fixed_number_;
-
-  /// If non-0 we order the files as we rotate them.  Default value
-  /// is 0, i.e., we do not rotate files by default.
-  int order_files_;
-
-  /// Tells us what is the maximum log file to write. We will write
-  /// <max_file_number_> + 1 files (includes the current log file).
-  /// Default value is 1, i.e., 2 files by default.
-  int max_file_number_;
 
   /// If non-zero, sampling interval (in secs) at which maximum logfile
   /// size is checked, otherwise logfile size can grow indefinitely.
-  /// Default value is 0.
   u_long interval_;
 
-  /// Maximum logfile size (in KB).  Default value is <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
+  /// Maximum logfile size (in KB).
   u_long max_size_;
 };
 

@@ -28,8 +28,6 @@
 
 #include "ace/Time_Value.h"
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
-
 // Specifies the size of the fixed length portion of
 // the Transfer structure in ACE_Token_Request
 #define ACE_TOKEN_REQUEST_HEADER_SIZE 40
@@ -236,8 +234,6 @@ private:
 
   } transfer_;
 };
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Request_Reply.i"

@@ -49,7 +49,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Short
-Test_i::box_prices (CORBA::Environment &)
+Test_i::box_prices (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125;
@@ -57,17 +57,17 @@ Test_i::box_prices (CORBA::Environment &)
 
 CORBA::Long 
 Test_i::tickets (CORBA::Short number,
-                 CORBA::Environment &)
+                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125 * number;
 }
 
 void
-Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Test_i::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown ();
 }
 
 static const char *ior_output_file = 0;
@@ -116,9 +116,8 @@ main (int argc, char *argv[])
       Test_i servant (orb.in ());      
       // Obtain RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
+        orb->resolve_initial_references ("RootPOA", 
                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       
       PortableServer::POA_var root_poa = 
         PortableServer::POA::_narrow (object.in (),
@@ -159,9 +158,11 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (orb->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "orb->run"),
+                          -1);
       ACE_DEBUG ((LM_DEBUG,
                   "event loop finished\n"));
 

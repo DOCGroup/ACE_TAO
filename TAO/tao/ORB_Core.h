@@ -82,6 +82,8 @@ class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
 
+class TAO_Flushing_Strategy;
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Eager_Buffering_Sync_Strategy;
@@ -576,7 +578,10 @@ public:
   /// Access the priority mapping manager class.  This is a TAO
   /// extension but there is no standard for setting priority mapping
   /// either.
+  //@{
   CORBA::Object_ptr priority_mapping_manager (void);
+  static void priority_mapping_manager (CORBA::Object_ptr manager);
+  //@}
 
   /// Methods for obtaining ORB implementation default values for RT
   /// policies.
@@ -853,22 +858,30 @@ public:
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
-  /// @note At present, the value will be true even if one of the POA's
-  ///       is set with the Bi Dir GIOP policy.
+  /// @@ At present, the value will be true even if one of the POA's
+  ///    is set with the Bi Dir GIOP policy.
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
-
-
 
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
 
+  /// Return the flushing strategy
+  /**
+   * The flushing strategy is created by the resource factory, and it
+   * is used by the ORB to control the mechanism used to flush the
+   * outgoing data queues.
+   * The flushing strategies are stateless, therefore, there is only
+   * one per ORB.
+   */
+  TAO_Flushing_Strategy *flushing_strategy (void);
+
 protected:
 
-  /// Destructor is protected since the ORB Core is a reference
-  /// counted object.
+  /// Destructor is protected since the ORB Core should only be
+  /// allocated on the heap.
   ~TAO_ORB_Core (void);
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
@@ -878,6 +891,7 @@ protected:
   /// Final termination hook, typically called by CORBA::ORB's
   /// destructor.
   int fini (void);
+
 
   /// Implement the input_cdr_*_allocator() routines using pre-fetched
   /// TSS resources.  This minimizes the number of calls to them.
@@ -905,10 +919,6 @@ protected:
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
   void services_callbacks_init (void);
-
-  /// Helper method that invokes Interceptor::destroy() on all
-  /// registered interceptors when ORB::destroy() is called.
-  void destroy_interceptors (CORBA::Environment &ACE_TRY_ENV);
 
 private:
 
@@ -975,10 +985,10 @@ protected:
    */
   CORBA::ORB_var orb_;
 
-  /// Object reference to the root POA.  It will eventually be the
-  /// object reference returned by calls to
+  /// Pointer to the root POA.  It will eventually be the pointer
+  /// returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
-  CORBA::Object_ptr root_poa_;
+  CORBA::Object_var root_poa_;
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
@@ -1151,16 +1161,17 @@ protected:
   TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector_;
   TAO_Priority_Protocol_Selector *priority_protocol_selector_;
   TAO_Bands_Protocol_Selector *bands_protocol_selector_;
-  TAO_Client_Priority_Policy_Selector *client_priority_policy_selector_;
+  TAO_Client_Priority_Policy_Selector
+  *client_priority_policy_selector_;
 
   /// Implementation of RTCORBA::RTORB interface.
-  CORBA::Object_var rt_orb_;
+  CORBA::Object_ptr rt_orb_;
 
   /// Implementation of RTCORBA::RTCurrent interface.
-  CORBA::Object_var rt_current_;
+  CORBA::Object_ptr rt_current_;
 
   /// Manager for setting priority mapping.
-  CORBA::Object_var priority_mapping_manager_;
+  static CORBA::Object_ptr priority_mapping_manager_;
 
   // RT ORB specific command line argument parsing.
   int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
@@ -1203,6 +1214,9 @@ protected:
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// Hold the flushing strategy
+  TAO_Flushing_Strategy *flushing_strategy_;
 };
 
 // ****************************************************************

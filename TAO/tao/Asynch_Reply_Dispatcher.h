@@ -27,7 +27,6 @@
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core ;
-class TAO_Asynch_Timeout_Handler;
 
 
 
@@ -57,12 +56,6 @@ public:
   virtual void dispatcher_bound (TAO_Transport *t);
 
   virtual void connection_closed (void);
-
-    /// Inform that the reply timed out
-  virtual void reply_timed_out (void);
-
-  /// Install the timeout handler
-  virtual void timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler);
 
 protected:
   /// The service context list.
@@ -109,21 +102,12 @@ public:
 
   virtual void connection_closed (void);
 
-  /// Inform that the reply timed out
-  virtual void reply_timed_out (void);
-
-  /// Install the timeout handler
-  virtual void timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler);
-
 private:
   /// Skeleton for the call back method in the Reply Handler.
   const TAO_Reply_Handler_Skeleton reply_handler_skel_;
 
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;
-
-  /// Timeout Handler in case of AMI timeouts
-  TAO_Asynch_Timeout_Handler *timeout_handler_;
 };
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

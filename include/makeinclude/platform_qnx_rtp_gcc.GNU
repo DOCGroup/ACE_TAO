@@ -13,20 +13,10 @@ ifeq (,$(optimize))
   optimize = 1
 endif # ! optimize
 
-#
-# This is a workaround needed only on QNX RTP.
-#
-TAO_DYNAMIC_LIBS=-lTAO_PortableServer
-TAO_COS_NAMING_LIBS=-lTAO_IORTable -lTAO_RTSched -lTAO_PortableServer -lTAO_Svc_Utils
-TAO_COS_NOTIFICATION_LIBS=-lTAO_Svc_Utils -lTAO_DynamicAny
-TAO_RT_SCHED_LIBS=-lTAO_PortableServer
-TAO_FAULT_TOLERANCE_LIBS=-lTAO_IORManip
-TAO_COS_TRADING_LIBS=-lTAO_Svc_Utils
-
 CC      = gcc
 CXX     = g++
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
-CCFLAGS += $(CFLAGS) -fno-implicit-templates -fexceptions
+CCFLAGS += $(CFLAGS) -fno-implicit-templates
 
 #
 # Under the current version of QNX RTP ACE crashes
@@ -46,5 +36,3 @@ ARFLAGS = ruv
 SOFLAGS = -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
-
-exceptions=1

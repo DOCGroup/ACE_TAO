@@ -25,7 +25,7 @@
 #include "ace/Log_Msg.h"
 
 static char *
-time_stamp (void)
+tstamp (void)
 {
   time_t time_now;
   char *temp;
@@ -43,7 +43,7 @@ exit_server (int sig)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s exiting on signal %S\n",
-              time_stamp (),
+              tstamp (),
               sig));
   ACE_OS::exit (0);
 }

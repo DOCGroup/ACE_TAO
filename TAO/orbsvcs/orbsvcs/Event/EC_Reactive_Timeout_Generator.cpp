@@ -29,7 +29,6 @@ void
 TAO_EC_Reactive_Timeout_Generator::shutdown (void)
 {
   this->reactor_->cancel_timer (&this->event_handler_);
-  this->event_handler_.reactor (0);
 }
 
 int

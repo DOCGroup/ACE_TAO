@@ -79,7 +79,8 @@ TAO_UIOP_Transport::close_connection (void)
   // Now close the handler
   this->connection_handler_->handle_close ();
 
-  // Purge the entry
+  // Purge the entry from the Cache map first and then close the
+  // handler
   this->connection_handler_->purge_entry ();
 }
 
@@ -90,14 +91,16 @@ TAO_UIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
-                          size_t *bytes_transferred)
+TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
+                                                            max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
@@ -205,7 +208,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -218,17 +221,6 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 
@@ -381,16 +373,7 @@ TAO_UIOP_Transport::process_message (void)
       if (result == 0)
         {
           this->messaging_object_->reset ();
-
-          // The reply dispatcher was no longer registered.
-          // This can happened when the request/reply
-          // times out.
-          // To throw away all registered reply handlers is
-          // not the right thing, as there might be just one
-          // old reply coming in and several valid new ones
-          // pending. If we would invoke <connection_closed>
-          // we would throw away also the valid ones.
-          //return 0;
+          return 0;
         }
 
 

@@ -20,9 +20,9 @@ ACE_RCSID(Default_Servant, File_i, "$Id$")
 
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
-    // Create the Default Descriptor Servant
-    fd_servant_ (poa)
+ : poa_ (PortableServer::POA::_duplicate (poa)),
+   // Create the Default Descriptor Servant
+   fd_servant_ (poa)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   // set the default servant of the POA
@@ -50,7 +50,7 @@ FileImpl::System::open (const char *file_name,
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
                                              flags,
-                                             ACE_DEFAULT_FILE_PERMS);
+                                             0644);
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {

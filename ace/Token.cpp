@@ -88,7 +88,7 @@ ACE_Token::ACE_Token_Queue::ACE_Token_Queue (void)
 void
 ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entry)
 {
-  ACE_TRACE ("ACE_Token::ACE_Token_Queue::remove_entry");
+  ACE_TRACE ("ACE_Token::remove_entry");
   ACE_Token_Queue_Entry *curr = 0;
   ACE_Token_Queue_Entry *prev = 0;
 
@@ -165,6 +165,7 @@ ACE_Token::ACE_Token (const ACE_TCHAR *name, void *any)
     in_use_ (0),
     waiters_ (0),
     nesting_level_ (0),
+    signal_all_threads_ (0),
     attributes_ (USYNC_THREAD)
 {
 //  ACE_TRACE ("ACE_Token::ACE_Token");
@@ -316,6 +317,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 
   // If this is a normal wakeup, this thread should be runnable.
   ACE_ASSERT (my_entry.runable_);
+
+  if (this->signal_all_threads_ != 0)
+    return 2;
 
   return ret;
 }
@@ -469,6 +473,9 @@ ACE_Token::renew (int requeue_position,
   // Reinstate nesting level.
   this->nesting_level_ = save_nesting_level_;
 
+  if (this->signal_all_threads_ != 0)
+    return 2;
+
   return 0;
 }
 
@@ -517,6 +524,7 @@ ACE_Token::wakeup_next_waiter (void)
       this->readers_.head_ == 0)
     {
       // No more waiters...
+      this->signal_all_threads_ = 0;
       return;
     }
 
@@ -540,6 +548,17 @@ ACE_Token::wakeup_next_waiter (void)
   queue->head_->signal ();
 
   this->owner_ = queue->head_->thread_id_;
+}
+
+int
+ACE_Token::signal_all_threads (void)
+{
+  ACE_TRACE ("ACE_Token::release");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+
+  if (this->waiters_ != 0)
+      this->signal_all_threads_ = 1;
+  return this->waiters_;
 }
 
 #endif /* ACE_HAS_THREADS */

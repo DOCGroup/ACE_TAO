@@ -271,8 +271,8 @@ main (int argc, char **argv)
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      test::data the_data (data_bytes);
-      the_data.length (data_bytes);
+      test::data data (data_bytes);
+      data.length (data_bytes);
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
@@ -282,7 +282,7 @@ main (int argc, char **argv)
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data,
+                               data,
                                work,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;

@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "Token_Handler.h"
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
-
 ACE_RCSID(lib, Token_Handler, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -331,7 +329,7 @@ ACE_Token_Handler::get_proxy (void)
 ACE_Token_Proxy *
 ACE_Token_Handler::create_proxy (void)
 {
-  ACE_TRACE ("ACE_Token_Handler::create_proxy");
+  ACE_TRACE ("ACE_Token_Handler::new_proxy");
 
   ACE_Token_Proxy *proxy;
 
@@ -656,5 +654,3 @@ ACE_TS_WLock::clone (void) const
   ACE_NEW_RETURN (temp, ACE_TS_WLock (*this), 0);
   return temp;
 }
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */

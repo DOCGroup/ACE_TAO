@@ -90,8 +90,7 @@ public:
                        const char *operation,
                        CORBA::ULong opname_len,
                        CORBA::Boolean argument_flag,
-                       TAO_ORB_Core *orb_core,
-                       int byte_order = TAO_ENCAP_BYTE_ORDER);
+                       TAO_ORB_Core *orb_core);
 
   /**
    * This destructor is virtual so that the derived synchronous
@@ -220,6 +219,12 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
+   * Create the IOP::IOR info. We will create the info at most once.
+   * Return index of the profile we are using to make the invocation.
+   */
+  CORBA::ULong create_ior_info (void);
+
+  /**
    * Add RT-related context to the service context list if the
    * invocation target supports RTCORBA::CLIENT_PROPAGATED priority
    * model.
@@ -294,6 +299,15 @@ protected:
   //@}
 
   /**
+   * The ior info. This is needed for GIOP 1.2, as the clients could
+   * receive an exception from the server asking for this info.  The
+   * exception that the client receives is LOC_NEEDS_ADDRESSING_MODE.
+   * If we receive an exception we will fill up this data at most
+   * *once* and send it to the server.
+   */
+  IOP::IOR ior_info_;
+
+  /**
    * Flag indicating whether RTCORBA-specific service context list
    * processing has taken place.  This is needed because
    * prepare_header() may get called multiple times, but we only need
@@ -343,8 +357,7 @@ public:
                              const char *operation,
                              CORBA::ULong opname_len,
                              CORBA::Boolean argument_flag,
-                             TAO_ORB_Core *orb_core,
-                             int byte_order = TAO_ENCAP_BYTE_ORDER);
+                             TAO_ORB_Core *orb_core);
 
   /// Destructor.
   virtual ~TAO_GIOP_Synch_Invocation (void);
@@ -388,8 +401,7 @@ public:
                               const char *operation,
                               CORBA::ULong opname_len,
                               CORBA::Boolean argument_flag,
-                              TAO_ORB_Core *orb_core,
-                              int byte_order = TAO_ENCAP_BYTE_ORDER);
+                              TAO_ORB_Core *orb_core);
 
   /// Destructor.
   virtual ~TAO_GIOP_Twoway_Invocation (void);
@@ -428,8 +440,7 @@ public:
                               const char *operation,
                               CORBA::ULong opname_len,
                               CORBA::Boolean argument_flag,
-                              TAO_ORB_Core *orb_core,
-                              int byte_order = TAO_ENCAP_BYTE_ORDER);
+                              TAO_ORB_Core *orb_core);
 
   /// Destructor.
   virtual ~TAO_GIOP_Oneway_Invocation (void);

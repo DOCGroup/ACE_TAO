@@ -29,10 +29,11 @@ Callback_i::Callback_i (int *request_count)
                          ACE_Addr::sap_any,
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
-                         ACE_DEFAULT_FILE_PERMS) == -1)
+                         S_IRUSR | S_IWUSR) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Could not open file \"%s\"%p\n"),
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Could not open file %s"),
                   this->file_.get_path_name ()));
     }
   else
@@ -257,13 +258,15 @@ Callback_i::spawn_viewer (void)
       return 0;
     case ACE_INVALID_PID:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error during viewer spawn of %p\n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error during viewer spawn of ")
+                         ACE_TEXT ("\"%s\""),
                          opts.command_line_buf ()),
                         -1);
     default:
       // Parent
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("Spawned viewer <%s> with PID <%d>.\n"),
+                  "Spawned viewer <%s> with PID <%d>.\n",
                   viewer,
                   result));
       break;

@@ -5,67 +5,78 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
+use Cwd;
 
+$cwd = getcwd();
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-$svcfile = PerlACE::LocalFile ("svc.conf");
+ACE::checkForTarget($cwd);
 
-$BSV = new PerlACE::Process ("blocking_server", "-ORBSvcConf $svcfile -o $iorfile");
-$ASV = new PerlACE::Process ("ami_server", "-ORBSvcConf $svcfile -o $iorfile");
-$BCL = new PerlACE::Process ("blocking_client", "-ORBSvcConf $svcfile -k file://$iorfile");
+$iorfile = "$cwd$DIR_SEPARATOR" ."test.ior";
+$svcfile = $cwd . $DIR_SEPARATOR . "svc.conf";
 
 print STDERR "==== Server upcall waits for operations on other threads\n";
 
 unlink $iorfile;
+$SV = Process::Create ($EXEPREFIX."blocking_server$EXE_EXT",
+                       " -ORBSvcConf " . $svcfile
+                       . " -o $iorfile");
 
-$BSV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $BSV->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 30) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $BCL->SpawnWaitKill (240);
+$CL = Process::Create ($EXEPREFIX."blocking_client$EXE_EXT",
+                       " -ORBSvcConf " . $svcfile
+                       . " -k file://$iorfile ");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+$client = $CL->TimedWait (240);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
 }
 
-$server = $BSV->WaitKill (30);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+$server = $SV->TimedWait (30);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  $status = 1;
 }
 
 print STDERR "==== Server upcall waits for AMI operations on other threads\n";
 
 unlink $iorfile;
-$ASV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."ami_server$EXE_EXT",
+                       " -ORBSvcConf " . $svcfile
+                       . " -o $iorfile");
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $ASV->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 30) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $BCL->SpawnWaitKill (240);
+$CL = Process::Create ($EXEPREFIX."blocking_client$EXE_EXT",
+                       " -ORBSvcConf " . $svcfile
+                       . " -k file://$iorfile ");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+$client = $CL->TimedWait (240);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
 }
 
-$server = $ASV->WaitKill (30);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+$server = $SV->TimedWait (30);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  $status = 1;
 }
 
 unlink $iorfile;

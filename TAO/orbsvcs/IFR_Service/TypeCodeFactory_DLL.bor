@@ -19,7 +19,6 @@ CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
-	$(TAO_IFR_CLIENT_CFLAGS) \
 	-DTCF_HAS_DLL=$(TCF_DLLFLAG) \
 	-DTCF_BUILD_DLL
 
@@ -28,7 +27,6 @@ CPPDIR = .
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_PORTABLESERVER_LIB) \
-	$(TAO_IFR_CLIENT_LIB)
+	$(TAO_PORTABLESERVER_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

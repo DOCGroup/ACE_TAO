@@ -20,6 +20,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_TOKEN_COLLECTION_H
 #define ACE_TOKEN_COLLECTION_H
 #include "ace/pre.h"
@@ -32,8 +33,6 @@
 
 #include "ace/Local_Tokens.h"
 #include "ace/SString.h"
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 /**
  * @class ACE_Token_Collection
@@ -223,8 +222,6 @@ protected:
   virtual ACE_Token_Proxy *clone (void) const;
   virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
 };
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Collection.i"

@@ -341,10 +341,9 @@
 // default can be changed, but then the application developer is
 // responsible for instantiating the templates.
 //
-#if defined (AIX) || \
-    (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-     (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-      (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS))))
+#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
+    (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
+     (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS)))
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -368,13 +367,6 @@
 #define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
-#define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
-#define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
-#define TAO_OBJID_COMPONENTHOMEFINDER "ComponentHomeFinder"
-#define TAO_OBJID_PSS "PSS"
-#define TAO_OBJID_CODECFACTORY "CodecFactory"
-#define TAO_OBJID_PICurrent "PICurrent"
-
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -394,12 +386,8 @@
         TAO_OBJID_DYNANYFACTORY, \
         TAO_OBJID_TYPECODEFACTORY, \
         TAO_OBJID_RTORB, \
-        TAO_OBJID_RTCURRENT
-// @@ Some initial references are added via other means, such as
-//    ORBInitInfo::register_initial_references().  Those should not be
-//    placed in the above list.  Ideally, we should no longer need the
-//    above list once the above services register their references
-//    dynamically.
+        TAO_OBJID_RTCURRENT, \
+        TAO_OBJID_PRIORITYMAPPINGMANAGER
 
 // Service IDs for the services that are located through Multicast.
 enum MCAST_SERVICEID
@@ -461,17 +449,9 @@ enum MCAST_SERVICEID
 #  endif  /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif  /* !TAO_HAS_UIOP */
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-# if !defined (TAO_HAS_SHMIOP)
-#   define TAO_HAS_SHMIOP 1
-# endif /* TAO_HAS_SHMIOP */
-#else
-# if defined (TAO_HAS_SHMIOP)
-#   undef TAO_HAS_SHMIOP
-# endif /* TAO_HAS_SHMIOP */
-# define TAO_HAS_SHMIOP 0
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-
+#if !defined (TAO_HAS_SHMIOP)
+#  define TAO_HAS_SHMIOP 1
+#endif /* TAO_HAS_SHMIOP */
 
 // RT_CORBA support is enabled by default if TAO is not configured for
 // minimum CORBA.  If TAO is configured for minimum CORBA, then
@@ -489,22 +469,6 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_RT_CORBA 1
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_RT_CORBA */
-
-
-// NAMED_RT_MUTEX support is disabled by default.
-// To explicitly enable NAMED_RT_MUTEX support uncomment the following
-// #define TAO_HAS_NAMED_RT_MUTEXES 1
-// To explicitly disable NAMED_RT_MUTEX support uncomment the following
-// #define TAO_HAS_NAMED_RT_MUTEXES 0
-
-// Default NAMED_RT_MUTEX settings
-#if !defined (TAO_HAS_NAMED_RT_MUTEXES)
-#  define TAO_HAS_NAMED_RT_MUTEXES 0
-#else
-#  if (TAO_HAS_RT_CORBA == 1)
-#  error "tao/orbconf.h: You need RT_CORBA for NAMED_RT_MUTEX support"
-#  endif /* TAO_HAS_RT_CORBA == 1 */
-#endif  /* !TAO_HAS_NAMED_RT_MUTEXES */
 
 // MINIMUM_POA support is disabled by default if TAO is not
 // configured for minimum CORBA.  If TAO is configured for minimum
@@ -556,13 +520,6 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_CORBA_MESSAGING 1
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
-
-// Additional settings for RT CORBA
-#  if (TAO_HAS_RT_CORBA == 1) && \
-      (TAO_HAS_CORBA_MESSAGING == 0)
-#  error "tao/orbconf.h: You need CORBA_MESSAGING for RT CORBA support"
-#  endif /* TAO_HAS_RT_CORBA == 1 &&
-            TAO_HAS_CORBA_MESSAGING == 0 */
 
 // For all the policies, support is enabled by default if TAO is
 // configured for CORBA Messaging.  If TAO is not configured for CORBA
@@ -897,11 +854,10 @@ enum MCAST_SERVICEID
 #define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
 
 // Control the default version of GIOP used by TAO.
-// The ORB is always able to communicate with 1.0, 1.1 and 1.2
-// servers, and it creates 1.2 endpoints (and profiles).  If you need
-// to talk to old clients that only understand 1.0 or 1.1 (and do not
-// attempt to use 1.0 or 1.1 with 1.2 servers), then change the values
-// below.
+// The ORB is always able to communicate with 1.0 and 1.1 servers, and
+// it creates 1.1 endpoints (and profiles).  If you need to talk to
+// old clients that only understand 1.0 (and do not attempt to use 1.0
+// with 1.1 servers), then change the values below.
 #if !defined (TAO_DEF_GIOP_MAJOR)
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */

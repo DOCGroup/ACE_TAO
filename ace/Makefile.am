@@ -361,7 +361,12 @@ libACE_Other_la_SOURCES = \
   Name_Space.cpp \
   Naming_Context.cpp \
   Registry_Name_Space.cpp \
-  Remote_Name_Space.cpp
+  Remote_Name_Space.cpp \
+  SOCK_Dgram_Mcast_QoS.cpp \
+  QoS_Session_Impl.cpp \
+  QoS_Session_Factory.cpp \
+  QoS_Manager.cpp \
+  QoS_Decorator.cpp
 
 libACE_la_SOURCES = \
   $(libACE_OS_la_SOURCES) \
@@ -650,7 +655,11 @@ HEADER_FILES = \
   Process_Mutex.h \
   Process_Semaphore.h \
   Profile_Timer.h \
+  QoS_Decorator.h \
+  QoS_Manager.h \
   QoS_Session.h \
+  QoS_Session_Factory.h \
+  QoS_Session_Impl.h \
   QtReactor.h \
   RB_Tree.h \
   RW_Process_Mutex.h \
@@ -668,6 +677,7 @@ HEADER_FILES = \
   SOCK_Dgram.h \
   SOCK_Dgram_Bcast.h \
   SOCK_Dgram_Mcast.h \
+  SOCK_Dgram_Mcast_QoS.h \
   SOCK_IO.h \
   SOCK_Stream.h \
   SPIPE.h \
@@ -770,7 +780,8 @@ HEADER_FILES = \
   post.h \
   pre.h \
   streams.h \
-  svc_export.h 
+  svc_export.h \
+  ws2tcpip.h
 ## Make sure config.h and config-all.h are in the above header list!
 
 INLINE_FILES = \
@@ -881,6 +892,7 @@ INLINE_FILES = \
   Process.i \
   Process_Manager.i \
   Profile_Timer.i \
+  QoS_Session_Impl.i \
   RB_Tree.i \
   Reactor.i \
   Read_Buffer.i \
@@ -892,6 +904,7 @@ INLINE_FILES = \
   SOCK_Dgram.i \
   SOCK_Dgram_Bcast.i \
   SOCK_Dgram_Mcast.i \
+  SOCK_Dgram_Mcast_QoS.i \
   SOCK_IO.i \
   SOCK_Stream.i \
   SPIPE.i \

@@ -111,10 +111,10 @@ parse_arg (int argc, ACE_TCHAR *argv[])
           break;
         default:
           ACE_ERROR ((LM_ERROR,
-                      "Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]"
-                      "\t[-s <server thr#>] [-c <client thr#>] [-d <delay>]"
-                      "\t[-i <client conn attempt#>]"
-                      "[-n <client request# per conn>]\n"));
+                      ACE_TEXT ("Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]")
+                      ACE_TEXT ("\t[-s <server thr#>] [-c <client thr#>] [-d <delay>]")
+                      ACE_TEXT ("\t[-i <client conn attempt#>]")
+                      ACE_TEXT ("[-n <client request# per conn>]\n")));
           break;
         }
     }
@@ -134,25 +134,26 @@ Request_Handler::handle_input (ACE_HANDLE fd)
 {
   ACE_TCHAR buffer[BUFSIZ];
   ACE_TCHAR len = 0;
-  ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
+  ssize_t result = this->peer ().recv (&len,
+                                       sizeof (ACE_TCHAR));
 
   if (result > 0
-      && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR)) 
-          == ACE_static_cast (ssize_t, len * sizeof (ACE_TCHAR)))
+      && this->peer ().recv_n (buffer, len) == len)
     {
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) svr input; fd: 0x%x; input: %s\n",
+                  ACE_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
                   fd,
                   buffer));
-      if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
+      if (ACE_OS::strcmp (buffer,
+                          ACE_TEXT ("shutdown")) == 0)
           ACE_Reactor::end_event_loop ();
       return 0;
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
+                ACE_TEXT ("(%t) Request_Handler: 0x%x peer closed (0x%x)\n"),
                 this, fd));
   return -1;
 }
@@ -161,14 +162,14 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: 0x%x, rcvd %d msgs\n",
+              ACE_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
               fd,
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
+               ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
                this,
-               cli_req_no, 
+               cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();
   return 0;
@@ -182,16 +183,16 @@ svr_worker (void *)
   while (!ACE_Reactor::event_loop_done ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) handling events ....\n"));
+                  ACE_TEXT ("(%t) handling events ....\n")));
 
       if (ACE_Reactor::instance ()->handle_events () == -1)
         ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "Error handling events"));
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Error handling events")));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) I am done handling events. Bye, bye\n"));
+              ACE_TEXT ("(%t) I am done handling events. Bye, bye\n")));
   return 0;
 }
 
@@ -210,23 +211,23 @@ cli_worker (void *arg)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "connect"));
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("connect")));
           continue;
         }
 
       for (size_t j = 0; j < cli_req_no; j++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle 0x%x, req %d\n",
+                      ACE_TEXT ("(%t) conn_worker handle 0x%x, req %d\n"),
                       stream.get_handle (),
                       j+1));
           if (stream.send_n (arg,
-                             (len + 1) * sizeof (ACE_TCHAR)) == -1)
+                             len + sizeof (ACE_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%t) %p\n",
-                          "send_n"));
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("send_n")));
               continue;
             }
           ACE_OS::sleep (delay);
@@ -244,13 +245,13 @@ worker (void *)
   ACE_OS::sleep (3);
   const ACE_TCHAR *msg = ACE_TEXT ("Message from Connection worker");
   ACE_TCHAR buf [BUFSIZ];
-  buf[0] = ACE_OS::strlen (msg) + 1;
+  buf[0] = (ACE_OS::strlen (msg) + 1) * sizeof (ACE_TCHAR);
   ACE_OS::strcpy (&buf[1], msg);
 
   ACE_INET_Addr addr (rendezvous);
 
   ACE_DEBUG((LM_DEBUG,
-             "(%t) Spawning %d client threads...\n",
+             ACE_TEXT ("(%t) Spawning %d client threads...\n"),
              cli_thrno));
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
@@ -260,25 +261,25 @@ worker (void *)
   ACE_Thread_Manager::instance ()->wait_grp (grp);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Client threads done; shutting down...\n"));
+              ACE_TEXT ("(%t) Client threads done; shutting down...\n")));
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
 
   if (connect.connect (stream, addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p Error while connecting\n",
-                "connect"));
+                ACE_TEXT ("(%t) %p Error while connecting\n"),
+                ACE_TEXT ("connect")));
 
-  const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
+  const char *sbuf = "\011shutdown";
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %x\n",
+              ACE_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
 
-  if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
+  if (stream.send_n (sbuf, ACE_OS::strlen (sbuf) + 1) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "send_n"));
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("send_n")));
 
   stream.close ();
 
@@ -342,8 +343,8 @@ main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
 
-  ACE_ERROR ((LM_INFO, 
-              "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

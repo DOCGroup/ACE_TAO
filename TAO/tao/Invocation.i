@@ -110,15 +110,13 @@ TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (
     const char *operation,
     CORBA::ULong opname_len,
     CORBA::Boolean argument_flag,
-    TAO_ORB_Core *orb_core,
-    int byte_order
+    TAO_ORB_Core *orb_core
   )
   : TAO_GIOP_Invocation	(stub,
 			 operation,
 			 opname_len,
 			 argument_flag,
-			 orb_core,
-                         byte_order),
+			 orb_core),
     rd_	(orb_core,
 	 this->op_details_.service_info	())
 {
@@ -138,15 +136,13 @@ TAO_GIOP_Twoway_Invocation::TAO_GIOP_Twoway_Invocation (
     const char *operation,
     CORBA::ULong opname_len,
     CORBA::Boolean argument_flag,
-    TAO_ORB_Core *orb_core,
-    int byte_order
+    TAO_ORB_Core *orb_core
   )
   : TAO_GIOP_Synch_Invocation (stub,
 			       operation,
 			       opname_len,
 			       argument_flag,
-			       orb_core,
-                               byte_order)
+			       orb_core)
 {
 }
 

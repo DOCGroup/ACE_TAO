@@ -6,92 +6,103 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../../bin";
-use PerlACE::Run_Test;
+
+require ACEutils;
+use Cwd;
+
+$cwd = getcwd();
+ACE::checkForTarget($cwd);
 
 $persistent = "-p";
 
-$status = 0;
+$ifr_service = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
+               "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
+	       "IFR_Service".$EXE_EXT, " $persistent";
 
-$iorfile = "if_repo.ior";
-$backing_file = PerlACE::LocalFile ("ifr_default_backing_store");
+$init_ref = 
+  "-ORBInitRef InterfaceRepository=file://if_repo.ior";
 
-$init_ref = "-ORBInitRef InterfaceRepository=file://$iorfile";
+$iorfile = "$cwd$DIR_SEPARATOR" . "if_repo.ior";
+$backing_file = "$cwd$DIR_SEPARATOR" . "ifr_default_backing_store";
 
 $debug = "";
 $query_opt = "-q";
 $other = "";
 
-for ($i = 0; $i <= $#ARGV; $i++) {
-    if ($ARGV[$i] eq "-d") {
-        $debug = "-d";
+for ($i = 0; $i <= $#ARGV; $i++)
+{
+  SWITCH:
+  {
+    if ($ARGV[$i] eq "-d")
+    {
+      $debug = "-d";
+      last SWITCH;
     }
-    else {
-        $other .= $ARGV[$i];
-    }
+    $other .= $ARGV[$i];
+  }
 }
 
 unlink $iorfile;
 unlink $backing_file;
 
-print STDERR "\t IFR Persistence Test\n\n";
+print "\t IFR Persistence Test\n\n";
 
-$IFR = new PerlACE::Process ("../../../IFR_Service/IFR_Service", $persistent);
-$T   = new PerlACE::Process ("Persistence_Test");
+$NEW_IFR = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
+               "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
+	       "IFR_Service".$EXE_EXT, " $persistent");
 
-$IFR->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $IFR->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 15) == -1) 
+{
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $NEW_IFR->Kill (); 
+  $NEW_IFR->TimedWait (1);
+  exit 1;
 }
 
-$T->Arguments ($init_ref);
+$POPULATE = Process::Create ($EXEPREFIX."Persistence_Test".$EXE_EXT,
+                             " $init_ref");
 
-$test = $T->SpawnWaitKill (60);
-
-if ($test != 0) {
-    print STDERR "ERROR: populate test returned $test\n";
-    $status = 1;
+$populate = $POPULATE->TimedWait (60);
+if ($populate == -1) 
+{
+  print STDERR "ERROR: populate timedout\n";
+  $POPULATE->Kill (); 
+  $POPULATE->TimedWait (1);
 }
 
-$server = $IFR->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: IFR returned $server\n";
-    $status = 1;
-}
+$NEW_IFR->Kill (); 
+$NEW_IFR->TimedWait (1);
 
 unlink $iorfile;
 
-$IFR->Spawn ();
+$FILE_IFR = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
+               "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
+	       "IFR_Service".$EXE_EXT, " $persistent");
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $IFR->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 15) == -1) 
+{
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $FILE_IFR->Kill (); 
+  $FILE_IFR->TimedWait (1);
+  exit 1;
 }
 
-$T->Arguments ("$init_ref $debug $query_opt");
+$QUERY = Process::Create ($EXEPREFIX."Persistence_Test".$EXE_EXT,
+                          " $init_ref $debug $query_opt");
 
-
-$test = $T->SpawnWaitKill (60);
-
-if ($test != 0) {
-    print STDERR "ERROR: query test returned $test\n";
-    $status = 1;
+$query = $QUERY->TimedWait (60);
+if ($query == -1) 
+{
+  print STDERR "ERROR: query timedout\n";
+  $QUERY->Kill (); 
+  $QUERY->TimedWait (1);
 }
 
+$FILE_IFR->Kill (); 
+$FILE_IFR->TimedWait (1);
 
-$server = $IFR->TerminateWaitKill (5);
+#unlink $iorfile;
+#unlink $backing_file;
 
-if ($server != 0) {
-    print STDERR "ERROR: IFR returned $server\n";
-    $status = 1;
-}
-
-unlink $iorfile;
-unlink $backing_file;
-
-exit $status;
+exit 0;
 

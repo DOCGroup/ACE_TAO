@@ -165,7 +165,7 @@ protected:
 
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
- void create_policy_list (CORBA::Environment &ACE_TRY_ENV);
+ void create_policy_list (void);
 
 public:
 
@@ -175,12 +175,12 @@ public:
 
   /// Gets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  CORBA::PolicyList *policy_list (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::PolicyList * policy_list (void);
 
 protected:
 
   /// Initialize the policy list, demarsharling the policy.
-  void init_policy_list (CORBA::Environment &ACE_TRY_ENV);
+  void init_policy_list (void);
 
 protected:
   /// Stores the policy list for the profile of this MProfile.

@@ -5,42 +5,47 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../../bin';
+require ACEutils;
+use Cwd;
 
-$status = 0;
+$cwd = getcwd();
+$iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-
-unlink $iorfile;
+ACE::checkForTarget($cwd);
 
 print STDERR "\n            RTCORBA CLIENT_PROPAGATED Priority Unit Test\n\n";
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile");
+unlink $iorfile;
 
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+                       " -o $iorfile");
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       " -k file://$iorfile");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->WaitKill (60);
-
-if ($server !=0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+$server = $SV->TimedWait (60);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
 }
 
 unlink $iorfile;
 
-exit $status;
+if ($server != 0 || $client != 0) {
+  exit 1;
+}
+
+exit 0;

@@ -8,75 +8,99 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs a Load Balancing service demo.
 # See README file for details about the demo.
 
-use lib "../../../bin";
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require Process;
+require ACEutils;
+require Uniqueid;
 
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
 $sleeptime = 4;
 
 # File used to pass load balancing service ior to its clients.
-$iorfile = PerlACE::LocalFile("lb.ior");
-
-unlink $iorfile;
-
-$LB = new PerlACE::Process ("load_balancer", "-o $iorfile");
-$SV = new PerlACE::Process ("server", "-i file://$iorfile");
-$CL = new PerlACE::Process ("client", "-i file://$iorfile -n 10");
-
-print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
+$iorfile = "lb.ior";
 
 # Run the load balancing server.
-$LB->Spawn ();
+sub load_balancing_server
+{
+  my $args = "@_"." -o $iorfile";
+  my $prog = $EXEPREFIX."load_balancer".$EXE_EXT;
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
-    print STDERR "ERROR: File containing Load Balancing Service ior,".
-        " <$iorfile>, cannot be found\n";
-    $LB->Kill ();
-    exit 1;
+  unlink $iorfile;
+  $LB = Process::Create ($prog, $args);
+
+  if (ACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+      print STDERR "ERROR: File containing Load Balancing Service ior,".
+          " <$iorfile>, cannot be found\n";
+      $LB->Kill (); $LB->TimedWait (1);
+      exit 1;
+  }
 }
 
 # Run the identity server, which registers its objects with the load
 # balancing server.
+sub server
+{
+    my $args = "@_"." -i file://$iorfile ";
+    my $prog = $EXEPREFIX."server".$EXE_EXT;
 
-$SV->Spawn ();
-sleep ($sleeptime);
+    if (ACE::waitforfile_timed ($iorfile, $sleeptime) == -1)
+    {
+        exit 1;
+    }
 
-
-# Run tests, i.e., run client with different command line options.
-
-print STDERR "\n     Client using Round Robin Object Group (10 iterations): \n\n";
-$client = $CL->SpawnWaitKill (60);
-
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+    $S = Process::Create ($prog, $args);
+    sleep ($sleeptime);
 }
 
-$CL->Arguments ("-r " . $CL->Arguments ());
+# Run client, which obtains references to Identity objects from the load balancing
+# service, and invokes operations on them.
+sub client
+{
+    my $args = "@_"." -i file://$iorfile -n 10";
+    my $prog = $EXEPREFIX."client".$EXE_EXT;
 
-print STDERR "\n     Client using Random Object Group (10 iterations): \n\n";
-$client = $CL->SpawnWaitKill (60);
+    $CL = Process::Create ($prog, $args);
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+    $client = $CL->TimedWait (60);
+    if ($client == -1) {
+        print STDERR "ERROR: client timedout\n";
+        $CL->Kill (); $CL->TimedWait (1);
+    }
+}
+
+# Data for each test we will run, i.e., client command-line options
+# and test description.
+@client_opts = ("", "-r");
+
+@test_heading = ("Client using Round Robin Object Group (10 iterations): \n\n",
+                 "Client using Random Object Group (10 iterations): \n\n");
+
+print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
+load_balancing_server ("");
+server ("");
+
+# Run tests, i.e., run client with different command line options.
+$test_number = 0;
+foreach $o (@client_opts)
+{
+    print STDERR "\n     ".$test_heading[$test_number];
+    client ($o);
+
+    $test_number++;
 }
 
 # Clean up.
-$loadbalancer= $LB->TerminateWaitKill (5);
-
-if ($loadbalancer != 0) {
-    print STDERR "ERROR: load balancer returned $loadbalancer\n";
-    $status = 1;
+$LB->Terminate (); $lserver = $LB->TimedWait (5);
+if ($lserver == -1) {
+    print STDERR "ERROR: load balancing server timedout\n";
+    $LB->Kill (); $LB->TimedWait (1);
+}
+$S->Terminate (); $server = $S->TimedWait (5);
+if ($server == -1) {
+    print STDERR "ERROR: identity server timedout\n";
+    $S->Kill (); $S->TimedWait (1);
 }
 
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-unlink $iorfile;
-
-exit $status;
+# @@ Capture any exit status from the processes.
+exit 0;

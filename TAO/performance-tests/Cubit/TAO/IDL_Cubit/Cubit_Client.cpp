@@ -1072,8 +1072,6 @@ Cubit_Client::cube_any (int i,
 
           this->error_count_++;
         }
-
-      delete ret_any;
     }
   ACE_CATCHANY
     {
@@ -1135,8 +1133,6 @@ Cubit_Client::cube_any_struct (int i,
 
           this->error_count_++;
         }
-
-      delete ret_any;
     }
   ACE_CATCHANY
     {

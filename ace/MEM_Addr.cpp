@@ -5,8 +5,6 @@
 #include "ace/MEM_Addr.h"
 #include "ace/Log_Msg.h"
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
@@ -143,5 +141,3 @@ ACE_MEM_Addr::dump (void) const
   this->internal_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

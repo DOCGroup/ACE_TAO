@@ -137,8 +137,6 @@ SOURCE=.\Hash_Replica.idl
 
 !IF  "$(CFG)" == "LoadBalancing server - Win32 Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__HASH_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Hash_Replica.idl
 InputName=Hash_Replica
@@ -176,8 +174,6 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "LoadBalancing server - Win32 Debug"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__HASH_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Hash_Replica.idl
 InputName=Hash_Replica

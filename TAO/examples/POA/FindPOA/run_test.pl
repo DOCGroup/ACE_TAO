@@ -5,16 +5,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../../bin';
+require ACEutils;
 
-$T = new PerlACE::Process ("FindPOA");
+$TEST  = Process::Create ($EXEPREFIX."FindPOA$EXE_EXT","");
 
-$test = $T->SpawnWaitKill (60);
-
-if ($test != 0) {
-    print STDERR "ERROR: test returned $test\n";
-    exit 1;
+if ($TEST->TimedWait (60) == -1){
+  print STDERR "ERROR: test timedout\n";
+  $TEST->Kill (); $TEST->TimedWait(1);
+  exit 1;
 }
 
 exit 0;

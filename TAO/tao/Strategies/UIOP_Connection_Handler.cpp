@@ -56,21 +56,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 {
-
-  // If the socket has not already been closed.
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->transport_.send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->transport_.dequeue_all ();
-    }
 }
-
-
 
 int
 TAO_UIOP_Connection_Handler::open (void*)
@@ -180,21 +166,8 @@ TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // passed to the reactor on ORB destruction.
       this->is_registered (0);
 
-      // Close the handle..
-      if (this->get_handle () != ACE_INVALID_HANDLE)
-        {
-          // Send the buffered messages first
-          this->transport_.send_buffered_messages ();
-
-          this->peer ().close ();
-
-          // Mark the entry as invalid
-          this->mark_invalid ();
-        }
-
       // Decrement the reference count
       this->decr_ref_count ();
-
     }
 
   return 0;
@@ -211,22 +184,12 @@ int
 TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                              const void *)
 {
-  // This method is called when buffering timer expires.
-  //
-  ACE_Time_Value *max_wait_time = 0;
-
-  TAO_Stub *stub = 0;
-  int has_timeout;
-  this->orb_core ()->call_timeout_hook (stub,
-                                        has_timeout,
-                                        *max_wait_time);
-
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages (max_wait_time);
+  if (this->transport ()->handle_output () == -1)
+    return -1;
 
   return 0;
 }
-
 
 int
 TAO_UIOP_Connection_Handler::close (u_long)

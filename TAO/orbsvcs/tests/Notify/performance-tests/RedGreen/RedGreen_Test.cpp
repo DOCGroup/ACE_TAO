@@ -57,7 +57,7 @@ RedGreen_Test::parse_args(int argc, char *argv[])
 
 RedGreen_Test::RedGreen_Test (void)
   :burst_size_ (10),
-   nthreads_ (2)
+   nthreads_ (4)
 {
   // No-Op.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
@@ -103,7 +103,7 @@ void
 RedGreen_Test::done (void)
 {
   dump_results ();
-	worker_.done ();
+  this->orb_->shutdown ();
 }
 
 void
@@ -251,7 +251,7 @@ RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   CosNotification::EventTypeSeq removed_1 (0);
 
   added_1[0].domain_name =  CORBA::string_dup (DOMAIN_GREEN);
-  added_1[0].type_name = CORBA::string_dup (TYPE_GREEN);
+  added_1[0].type_name = CORBA::string_dup (DOMAIN_GREEN);
   added_1.length (1);
   removed_1.length (0);
 
@@ -589,7 +589,6 @@ RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (CORBA
 /*****************************************************************/
 
 Worker::Worker (void)
-:done_(0)
 {
 }
 
@@ -599,20 +598,11 @@ Worker::orb (CORBA::ORB_ptr orb)
   orb_ = CORBA::ORB::_duplicate (orb);
 }
 
-void
-Worker::done (void)
-{
-	done_ = 1;
-}
-
 int
 Worker::svc (void)
 {
-  while (!this->done_)
-		if (this->orb_->work_pending ())
-			this->orb_->perform_work ();
-  
-	return 0;
+  this->orb_->run ();
+  return 0;
 }
 
 // ****************************************************************

@@ -138,10 +138,7 @@ Test_ECG::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA",
-                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -257,9 +254,7 @@ Test_ECG::run (int argc, char* argv[])
       print_priority_info ("Test_ECG::run (Main after thr_setprio)");
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
@@ -444,8 +439,8 @@ Test_ECG::run (int argc, char* argv[])
 
       if (this->rmt_name_ != 0)
         {
-          orb->run (&tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (orb->run (&tv) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
         }
 
       ACE_DEBUG ((LM_DEBUG, "starting....\n"));
@@ -477,8 +472,8 @@ Test_ECG::run (int argc, char* argv[])
       if (this->rmt_name_ != 0)
         {
           tv.set (5, 0);
-          orb->run (&tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (orb->run (&tv) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             this->get_ec (naming_context.in (),
@@ -513,8 +508,8 @@ Test_ECG::run (int argc, char* argv[])
           ACE_DEBUG ((LM_DEBUG, "connected proxy\n"));
 
           tv.set (5, 0);
-          orb->run (&tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (orb->run (&tv) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
           RtecEventChannelAdmin::Observer_ptr observer =
             this->ecg_._this (ACE_TRY_ENV);
@@ -565,8 +560,8 @@ Test_ECG::run (int argc, char* argv[])
       ec_impl.activate ();
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (orb->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
       this->test_stop_ = ACE_OS::gethrtime ();
 
@@ -635,8 +630,9 @@ Test_ECG::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
-      orb->run (&tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (orb->run (&tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {

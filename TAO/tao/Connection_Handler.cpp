@@ -39,23 +39,12 @@ TAO_Connection_Handler::purge_entry (void)
   int retval =
     this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
 
-  this->cache_map_entry_ = 0;
-
   // Decrement our reference count as we have been removed from the
   // cache map.
   this->decr_ref_count ();
 
   return retval;
 }
-
-void
-TAO_Connection_Handler::mark_invalid (void)
-{
-  if (this->cache_map_entry_)
-    this->cache_map_entry_->int_id_.recycle_state
-      (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
-}
-
 
 int
 TAO_Connection_Handler::make_idle (void)
@@ -96,9 +85,6 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                             sizeof (int)) == -1
            && errno != ENOTSUP)
     return -1;
-#else
-   ACE_UNUSED_ARG (snd_size);
-   ACE_UNUSED_ARG (rcv_size);
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
   (void) sock.enable (ACE_CLOEXEC);

@@ -1,16 +1,15 @@
 #
-# Makefile for building the AMI timeout server
+# Makefile for building the AMI server
 #
 
 NAME = server
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC -Gv
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC
 
 OBJFILES = \
-	$(OBJDIR)\timeoutS.obj \
-	$(OBJDIR)\timeoutC.obj \
-	$(OBJDIR)\timeout_i.obj \
-	$(OBJDIR)\timeout_client.obj \
+	$(OBJDIR)\ami_testS.obj \
+	$(OBJDIR)\ami_testC.obj \
+	$(OBJDIR)\ami_test_i.obj \
 	$(OBJDIR)\server.obj
 
 CFLAGS = \
@@ -28,7 +27,7 @@ CPPDIR = .
 IDLDIR = .
 
 IDLFILES = \
-        $(IDLDIR)\timeout.idl
+        $(IDLDIR)\ami_test.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
@@ -36,5 +35,5 @@ IDLFILES = \
 # IDL Build rules
 #
 
-$(IDLDIR)\timeoutS.cpp $(IDLDIR)\timeoutC.cpp: $(IDLDIR)\timeout.idl
+$(IDLDIR)\ami_testS.cpp $(IDLDIR)\ami_testC.cpp: $(IDLDIR)\ami_test.idl
 	$(TAO_IDL) $**

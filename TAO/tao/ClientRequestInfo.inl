@@ -46,7 +46,7 @@ TAO_ClientRequestInfo::reply_status (int invoke_status)
 
 ACE_INLINE void
 TAO_ClientRequestInfo::forward_reference (
-  PortableInterceptor::ForwardRequest &)
+  PortableInterceptor::ForwardRequest &exc)
 {
   // Note that we're converting the ForwardRequest exception in to a
   // LOCATION_FORWARD reply, so we do not set the exception status.
@@ -55,5 +55,10 @@ TAO_ClientRequestInfo::forward_reference (
   // handled by the TAO_GIOP_Invocation object so that its profiles
   // can be added to the list of forward profiles.
 
-  this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
+  if (exc.permanent)
+    this->reply_status_ =
+      PortableInterceptor::LOCATION_FORWARD_PERMANENT;
+  else
+    this->reply_status_ = 
+      PortableInterceptor::LOCATION_FORWARD;
 }

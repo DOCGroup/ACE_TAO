@@ -38,20 +38,24 @@ class TAO_Priority_Mapping_Manager_var;
 typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
 
 
-/**
- * @class TAO_Priority_Mapping_Manager
- *
- * @brief Priority_Mapping_Manager pseudo-objref.
- *
- * Allows setting of user-defined Priority_Mapping at run-time.
- */
 class TAO_Export TAO_Priority_Mapping_Manager :
   public virtual TAO_Local_RefCounted_Object
 {
+  // = TITLE
+  //   Priority_Mapping_Manager pseudo-objref.
+  //
+  // = DESCRIPTION
+  //   Allows setting of user-defined Priority_Mapping at run-time.
+  //
 
 public:
   /// Constructor.
   TAO_Priority_Mapping_Manager (void);
+
+  /// Destructor.
+  ~TAO_Priority_Mapping_Manager (void);
+
+  // = Interface methods.
 
   ///
   void mapping (RTCORBA::PriorityMapping * mapping);
@@ -86,14 +90,7 @@ public:
 
   virtual const char* _interface_repository_id (void) const;
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  ~TAO_Priority_Mapping_Manager (void);
-
 private:
-
   TAO_Priority_Mapping_Manager (const TAO_Priority_Mapping_Manager &);
   void operator= (const TAO_Priority_Mapping_Manager &);
 

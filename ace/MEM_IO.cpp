@@ -4,8 +4,6 @@
 #include "ace/MEM_IO.h"
 #include "ace/Handle_Set.h"
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
@@ -202,5 +200,3 @@ ACE_MEM_IO::recv (size_t n, ...) const
   return result;
 }
 #endif /* 0 */
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

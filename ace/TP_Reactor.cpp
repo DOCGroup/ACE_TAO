@@ -87,22 +87,22 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();
 
-  // Check for timeouts and errors.
-  if (result == -1)
+  switch (result)
     {
+    case 2:
+      ACE_MT (this->token_.release ());
+      return 0;
+    case -1:
       if (errno == ETIME)
         return 0;
-      else
-        return -1;
+      return -1;
     }
 
-  // After acquiring the lock, check if we have been deactivated.  If
-  // we are deactivated, simply return without handling further
-  // events.
+  // After acquiring the lock, check if we have been deactivated.
   if (this->deactivated_)
     {
       ACE_MT (this->token_.release ());
-      return 0;
+      return -1;
     }
 
   // We got the lock, lets handle some events.  Note: this method will
@@ -143,6 +143,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     }
 
   return result;
+
 }
 
 int

@@ -51,7 +51,7 @@ FTP_Client_Callback::handle_timeout (void *)
                   AVStreams::flowSpec stop_spec (1);
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
                   ACE_TRY_CHECK;
-                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
@@ -176,7 +176,8 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  : client_mmdevice_ (&endpoint_strategy_),
+  : endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
+    client_mmdevice_ (&endpoint_strategy_),
     fdev_ (0),
     address_ (ACE_OS::strdup ("224.9.9.2:12345")),
     fp_ (0),
@@ -184,8 +185,6 @@ Client::Client (void)
     orb_ (TAO_AV_CORE::instance ()->orb ()),
     poa_ (TAO_AV_CORE::instance ()->poa ())
 {
-  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
-                           TAO_AV_CORE::instance ()->poa ());
 }
 
 
@@ -342,11 +341,11 @@ Client::run (void)
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
-      this->orb_->run (tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (this->orb_->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
   ACE_CATCHANY
     {

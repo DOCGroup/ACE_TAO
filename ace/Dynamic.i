@@ -26,7 +26,7 @@ ACE_Dynamic::is_dynamic ()
 ACE_INLINE void
 ACE_Dynamic::reset (void)
 { 
-  ACE_TRACE ("ACE_Dynamic::reset");
+  ACE_TRACE ("ACE_Dynamic::set");
   this->is_dynamic_ = 0; 
 }
 

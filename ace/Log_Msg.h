@@ -168,9 +168,7 @@ public:
     VERBOSE_LITE = 32,
     /// Do not print messages at all (just leave in thread-specific
     /// storage for later inspection).
-    SILENT = 64,
-    /// Write messages to the system's event log.
-    SYSLOG = 128
+    SILENT = 64
  };
 
   // = Initialization and termination routines.

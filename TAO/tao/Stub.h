@@ -142,21 +142,21 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  /// Returns the CORBA::Policy (which will be narrowed to be
+  /// Returns the CORBA::Policy (which will be narrowed to be 
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (CORBA::Environment &ACE_TRY_ENV);
-
+  CORBA::Policy *exposed_priority_model (void);
+  
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV);
-
+  CORBA::Policy *exposed_priority_banded_connection (void);
+  
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (CORBA::Environment &ACE_TRY_ENV);
-
+  CORBA::Policy *exposed_client_protocol (void);
+  
 # endif /*TAO_HAS_RT_CORBA == 1*/
 
   // = Methods for obtaining effective overrides.
@@ -258,9 +258,6 @@ public:
   /// Obtain a reference to the basic profile set.
   TAO_MProfile& base_profiles (void);
 
-  /// Obtain a pointer to the forwarded profile set
-  const TAO_MProfile *forward_profiles (void) const;
-
   // Manage forward and base profiles.
   /**
    * THREAD SAFE.  If forward_profiles is null then this will
@@ -342,15 +339,6 @@ public:
   /// preferences on selecting the right profiles.
   CORBA::Boolean service_profile_selection (void);
 
-  /**
-   * Create the IOP::IOR info. We will create the info at most once.
-   * Get the index of the profile we are using to make the invocation.
-   */
-  int create_ior_info (IOP::IOR *&ior_info,
-                       CORBA::ULong &index,
-                       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
 private:
   /// Makes a copy of the profile and frees the existing profile_in_use.
   /// NOT THREAD SAFE
@@ -374,18 +362,12 @@ private:
   /// NON-THREAD-SAFE.  utility method for next_profile.
   TAO_Profile *next_forward_profile (void);
 
-  /// THREAD-SAFE Create the IOR info
-  int get_profile_ior_info (TAO_MProfile &profile,
-                            IOP::IOR *&ior_info,
-                            CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
 #if (TAO_HAS_RT_CORBA == 1)
 
 private:
 
   /// Helper method used to parse the policies.
-  void parse_policies (CORBA::Environment &ACE_TRY_ENV);
+  void parse_policies (void);
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 
@@ -455,19 +437,6 @@ private:
 
   /// The addressing mode.
   CORBA::Short addressing_mode_;
-
-  /**
-   * The ior info. This is needed for GIOP 1.2, as the clients could
-   * receive an exception from the server asking for this info.  The
-   * exception that the client receives is LOC_NEEDS_ADDRESSING_MODE.
-   * The data is set up here to be passed on to Invocation classes
-   * when they receive an exception. This info is for the base
-   * profiles that this class stores
-   */
-  IOP::IOR *ior_info_;
-
-  /// Forwarded IOR info
-  IOP::IOR *forwarded_ior_info_;
 
   // = Disallow copy constructor and assignment operator.
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))

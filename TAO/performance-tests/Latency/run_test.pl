@@ -5,122 +5,124 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "../../../bin";
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
 
-$status = 0;
+$client_conf="client.conf";
+$server_conf="server.conf";
+$threads='4';
 
-$threads = '4';
-
-$iorfile = PerlACE::LocalFile ("test.ior");
-$server_conf = PerlACE::LocalFile ("server.conf");
-$client_conf = PerlACE::LocalFile ("client.conf");
-$st_server_conf = PerlACE::LocalFile ("st_server.conf");
-$st_client_conf = PerlACE::LocalFile ("st_client.conf");
-$client_st_muxed_conf = PerlACE::LocalFile ("client-st-muxed.conf");
-
-unlink $iorfile;
+$iorfile = "test.ior";
 
 print STDERR "================ Multi-threaded test\n";
 
-$SV = new PerlACE::Process ("server",
-                            " -ORBSvcConf $server_conf -o $iorfile"
-                            . " -n $threads");
-$CL = new PerlACE::Process ("client",
-                            " -ORBSvcConf $client_conf -k file://$iorfile "
-                            . " -n $threads -i 1000");
+unlink $iorfile;
 
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+                       " -ORBSvcConf server.conf"
+                       . " -o $iorfile -n $threads");
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
-$server = $SV->WaitKill (5);
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       " -ORBSvcConf client.conf "
+                       . " -k file://$iorfile "
+                       . " -n $threads -i 1000");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$server = $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
-}
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+if ($server != 0 || $client != 0) {
+  exit 1;
 }
 
 print STDERR "================ Single-threaded test\n";
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("st_server",
-                            " -ORBSvcConf $st_server_conf"
-                            . " -o $iorfile");
-$CL = new PerlACE::Process ("st_client",
-                            " -ORBSvcConf $st_client_conf "
-                            . " -k file://$iorfile "
-                            . " -i 1000");
+$SV = Process::Create ($EXEPREFIX."st_server$EXE_EXT ",
+                       " -ORBSvcConf st_server.conf"
+                       . " -o $iorfile");
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
-$server = $SV->WaitKill (5);
+$CL = Process::Create ($EXEPREFIX."st_client$EXE_EXT ",
+                       " -ORBSvcConf st_client.conf "
+                       . " -k file://$iorfile "
+                       . " -i 1000");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
-}
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+if ($server != 0 || $client != 0) {
+  exit 1;
 }
 
 print STDERR "================ Deferred synchronous test\n";
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("st_server",
-                            " -ORBSvcConf $st_server_conf"
-                            . " -o $iorfile");
-$CL = new PerlACE::Process ("deferred_synch_client",
-                            " -ORBSvcConf $client_st_muxed_conf "
-                            . " -k file://$iorfile "
-                            . " -i 1000");
+$SV = Process::Create ($EXEPREFIX."st_server$EXE_EXT ",
+                       " -ORBSvcConf st_server.conf"
+                       . " -o $iorfile");
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
-$server = $SV->WaitKill (5);
+$CL = Process::Create ($EXEPREFIX."deferred_synch_client$EXE_EXT ",
+                       " -ORBSvcConf client-st-muxed.conf "
+                       . " -k file://$iorfile "
+                       . " -i 1000");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+if ($server != 0 || $client != 0) {
+  exit 1;
 }
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-
-exit $status;
+exit 0;

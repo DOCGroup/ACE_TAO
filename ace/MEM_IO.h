@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
 /**
  * @class ACE_MEM_IO
  *
@@ -169,8 +167,6 @@ private:
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include "ace/post.h"
 #endif /* ACE_SOCK_IO_H */

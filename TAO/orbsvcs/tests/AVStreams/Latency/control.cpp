@@ -8,18 +8,18 @@
 
 ACE_RCSID(Latency, ping, "$Id$")
 
-const char *ping_ior = CORBA::string_dup ("file://ping.ior");
-const char *pong_ior = CORBA::string_dup ("file://pong.ior");
-const char *ping_address = CORBA::string_dup ("224.9.9.2:12345");
-const char *pong_address = CORBA::string_dup ("224.9.9.2:23456");
-const char *protocol = CORBA::string_dup ("UDP");
+const char *ping_ior = "file://ping.ior";
+const char *pong_ior = "file://pong.ior";
+const char *ping_address = "224.9.9.2:12345";
+const char *pong_address = "224.9.9.2:23456";
+const char *protocol = "UDP";
 
 int milliseconds = 30000;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:d");
+  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,10 +49,6 @@ parse_args (int argc, char *argv[])
         protocol = get_opts.optarg;
         break;
 
-      case 'd':
-        TAO_debug_level++;
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,25 +75,25 @@ int main (int argc, char *argv[])
     {
 
       parse_args (argc, argv);
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
                                             argv);
-
+      
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-
+      
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-
+      
       PortableServer::POAManager_var mgr
         = poa->the_POAManager ();
-
+      
       mgr->activate ();
-
+      
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       // Connect the two streams and run them...
       AVStreams::flowSpec flow_spec (2);
       flow_spec.length (2);
@@ -154,14 +150,13 @@ int main (int argc, char *argv[])
       stream_control->start (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (100, 0);
-      orb->run (tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      ACE_Time_Value tv (0, milliseconds * 1000);
+      if (orb->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-     // flow_spec.length (0);
-     // stream_control->stop (flow_spec, ACE_TRY_ENV);
+      flow_spec.length (0);
+      stream_control->stop (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
     }

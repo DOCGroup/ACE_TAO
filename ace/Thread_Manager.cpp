@@ -113,7 +113,7 @@ void
 ACE_Thread_Descriptor::do_at_exit ()
 
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::do_at_exit");
+  ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
   while (at_exit_list_!=0)
     this->at_pop ();
 }
@@ -952,6 +952,20 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
   return ACE_Thread::join (td->thr_handle_);
 #else
   int result = ACE_Thread::join (td->thr_handle_);
+
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
+#   if defined (HPUX_10)
+  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
+  // as an argument.  Since the id is still needed, give pthread_detach
+  // a junker to scribble on.
+  ACE_thread_t  junker;
+  cma_handle_assign(&td->thr_handle_, &junker);
+  ::pthread_detach (&junker);
+#   else
+  ::pthread_detach (&td->thr_handle_);
+#   endif  /* HPUX_10 */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
+
   if (result != 0)
     {
       // Since the thread are being joined, we should
@@ -1293,7 +1307,7 @@ ACE_Thread_Manager::kill_grp (int grp_id, int signum)
 int
 ACE_Thread_Manager::cancel_grp (int grp_id, int async_cancel)
 {
-  ACE_TRACE ("ACE_Thread_Manager::cancel_grp");
+  ACE_TRACE ("ACE_Thread_Manager::resume_grp");
   return this->apply_grp (grp_id,
                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr),
                           async_cancel);
@@ -2146,7 +2160,7 @@ ACE_Thread_Manager::hthread_grp_list (int grp_id,
                                       ACE_hthread_t hthread_list[],
                                       size_t n)
 {
-  ACE_TRACE ("ACE_Thread_Manager::hthread_grp_list");
+  ACE_TRACE ("ACE_Thread_Manager::hthread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   size_t hthread_count = 0;

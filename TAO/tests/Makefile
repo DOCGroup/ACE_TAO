@@ -11,10 +11,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  = CDR \
-	Codec \
         BiDirectional \
 	BiDirectional_NestedUpcall \
-	Collocation \
         IDL_Test \
         OctetSeq \
         InterOp-Naming \
@@ -38,7 +36,6 @@ DIRS  = CDR \
 	Param_Test \
 	DSI_Gateway \
 	AMI \
-	AMI_Timeouts \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
@@ -55,7 +52,8 @@ DIRS  = CDR \
 	Single_Read \
 	QtTests \
 	Multiple \
-	LongWrites
+	LongWrites \
+	Queued_Message_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -24,6 +24,8 @@ IDL_ALWAYS =	anonymous		\
 		including		\
 		interface		\
 		keywords		\
+		nested_scope		\
+		params			\
 		pragma			\
 		sequence		\
 		typedef			\
@@ -31,9 +33,7 @@ IDL_ALWAYS =	anonymous		\
 
 IDL_MAYBE = 	reopened_modules \
 		reopen_include1  \
-		reopen_include2  \
-                params           \
-                nested_scope
+		reopen_include2
 
 IDL_FILES = $(IDL_ALWAYS) $(IDL_MAYBE)
 
@@ -51,12 +51,7 @@ SRC = $(IDL_SRC) \
 	reopen_include1S.cpp \
 	reopen_include2C.cpp \
 	reopen_include2S.cpp \
-        paramsC.cpp \
-        paramsS.cpp \
-        nested_scopeC.cpp \
-        nested_scopeS.cpp \
-	main.cpp \
-        namespace_check.cpp
+	main.cpp namespace_check.cpp
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -71,9 +66,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 BUILD += 	namespace_check.cpp   \
 		reopened_modulesC.cpp \
 		reopen_include1C.cpp  \
-		reopen_include2C.cpp  \
-                paramsC.cpp           \
-                nested_scopeC.cpp
+		reopen_include2C.cpp
 
 BIN = main
 
@@ -86,8 +79,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
-namespace_check.cpp: reopened_modulesC.h reopen_include1C.h reopen_include2C.h \
-                     paramsC.h nested_scopeC.h
+namespace_check.cpp: reopened_modulesC.h reopen_include1C.h reopen_include2C.h
 
 reopened_modulesC.h: reopened_modules.idl $(TAO_IDL)
 	$(TAO_IDL) -w $(TAO_IDLFLAGS) reopened_modules.idl
@@ -97,12 +89,6 @@ reopen_include1C.h: reopen_include1.idl $(TAO_IDL)
 
 reopen_include2C.h: reopen_include2.idl $(TAO_IDL)
 	$(TAO_IDL) -w $(TAO_IDLFLAGS) reopen_include2.idl
-
-paramsC.h: params.idl $(TAO_IDL)
-	$(TAO_IDL) -w $(TAO_IDLFLAGS) params.idl
-
-nested_scopeC.h: nested_scope.idl $(TAO_IDL)
-	$(TAO_IDL) -w $(TAO_IDLFLAGS) nested_scope.idl
 
 main:	$(addprefix $(VDIR),$(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

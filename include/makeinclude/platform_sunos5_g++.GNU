@@ -10,11 +10,6 @@
 # NOTE: On Solaris86, you'll need to use GNU as instead of /usr/ccs/bin/as,
 #       if you want -gstabs+ and -pipe support.
 
-ACE_HAS_GNUG_PRE_2_8 := \
-  $(shell \
-    if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
-    echo 1; else echo 0; fi)
-
 ifeq (,$(debug))
   debug = 1
 endif
@@ -30,14 +25,11 @@ ifeq ($(threads),0)
 endif # threads
 
 ifeq (,$(exceptions))
-exceptions = 0
+ exceptions = 0
 endif
-# if we are not working with old gcc ...
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
-ifeq ($(exceptions),0) 
-CFLAGS += -fno-exceptions
+ifeq ($(exceptions),0)
+ CFLAGS += -fno-exceptions
 endif # exceptions
-endif # ! ACE_HAS_GNUG_PRE_2_8
 
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g

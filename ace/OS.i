@@ -147,7 +147,7 @@ ACE_Time_Value::operator timeval () const
 ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+  ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
   return (const timeval *) &this->tv_;
 }
 
@@ -2575,7 +2575,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 ACE_INLINE int
 ACE_OS::cond_signal (ACE_cond_t *cv)
 {
-  ACE_OS_TRACE ("ACE_OS::cond_signal");
+ACE_OS_TRACE ("ACE_OS::cond_signal");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_pthread_cond_signal (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -2601,7 +2601,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 ACE_INLINE int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
-  ACE_OS_TRACE ("ACE_OS::cond_broadcast");
+ACE_OS_TRACE ("ACE_OS::cond_broadcast");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_pthread_cond_broadcast (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -3019,7 +3019,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_unlock (m);
 #else
-  ACE_OS_TRACE ("ACE_OS::recursive_mutex_unlock");
+ACE_OS_TRACE ("ACE_Recursive_Thread_Mutex::release");
 #if !defined (ACE_NDEBUG)
   ACE_thread_t t_id = ACE_OS::thr_self ();
 #endif /* ACE_NDEBUG */
@@ -4429,7 +4429,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 ACE_INLINE int
 ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 {
-  ACE_OS_TRACE ("ACE_OS::rw_trywrlock_upgrade");
+  ACE_OS_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
   // Some native rwlocks, such as those on Solaris and HP-UX 11, don't
@@ -5953,11 +5953,13 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
 #else
+
   int ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
   if (ace_result_ == -1 && errno == EAGAIN)
     errno = EWOULDBLOCK;
   return ace_result_;
+
 #endif /* defined (ACE_WIN32) */
 }
 
@@ -6009,29 +6011,11 @@ ACE_INLINE int
 ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
-
-  // On UNIX, a non-blocking socket with no data to receive, this
-  // system call will return EWOULDBLOCK or EAGAIN, depending on the
-  // platform.  UNIX 98 allows either errno, and they may be the same
-  // numeric value.  So to make life easier for upper ACE layers as
-  // well as application programmers, always change EAGAIN to
-  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
-  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
-  // this function needs to be reviewed.  On Win32, the regular macros
-  // can be used, as this is not an issue.
-#if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+#if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
+  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, (char *) buf, len, flags), int, -1);
 #else
-  int ace_result_;
-#  if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
-  ace_result_ = ::send ((ACE_SOCKET) handle, (char *) buf, len, flags);
-#  else
-  ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
-#  endif /* VXWORKS */
-  if (ace_result_ == -1 && errno == EAGAIN)
-    errno = EWOULDBLOCK;
-  return ace_result_;
-#endif /* defined (ACE_WIN32) */
+  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+#endif /* VXWORKS */
 }
 
 ACE_INLINE int
@@ -6794,7 +6778,6 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
 #     if defined (ACE_HAS_PTHREADS_STD) && \
       !defined (ACE_HAS_STHREADS) || \
-      defined (HPUX_11)  || \
       defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
   struct passwd *result;
   int status;
@@ -7737,32 +7720,13 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
                      int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-  int ace_result;
 #     if defined (ACE_LACKS_NULL_PTHREAD_STATUS)
   void *temp;
-  ACE_OSCALL (::pthread_join (thr_handle,
-                              status == 0  ?  &temp  :  status),
-              int, -1, ace_result);
+  ACE_OSCALL_RETURN (::pthread_join (thr_handle,
+    status == 0  ?  &temp  :  status), int, -1);
 #     else
-  ACE_OSCALL (::pthread_join (thr_handle, status), int, -1, ace_result);
-#     endif /* ACE_LACKS_NULL_PTHREAD_STATUS */
-  // Joinable threads need to be detached after joining on Pthreads
-  // draft 4 (at least) to reclaim thread storage.
-#     if defined (ACE_HAS_PTHREADS_DRAFT4)
-#       if defined (HPUX_10)
-  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
-  // as an argument.  Since the id is still needed, give pthread_detach
-  // a junker to scribble on.
-  ACE_thread_t  junker;
-  cma_handle_assign(&thr_handle, &junker);
-  ::pthread_detach (&junker);
-#       else
-  ::pthread_detach (&thr_handle);
-#       endif  /* HPUX_10 */
-#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
-
-    return ace_result;
-
+  ACE_OSCALL_RETURN (::pthread_join (thr_handle, status), int, -1);
+#     endif
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
                      int, -1);
@@ -8680,7 +8644,7 @@ ACE_OS::filesize (const ACE_TCHAR *filename)
 ACE_INLINE int
 ACE_OS::closesocket (ACE_HANDLE handle)
 {
-  ACE_OS_TRACE ("ACE_OS::closesocket");
+  ACE_OS_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #elif defined (ACE_PSOS_DIAB_PPC)
@@ -9112,9 +9076,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  char *symbolname = ACE_TEXT_ALWAYS_CHAR (sname);
 #elif defined (ACE_HAS_CHARPTR_DL)
   char *symbolname = ACE_const_cast (char *, sname);
-#elif !defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#else
   const char *symbolname = sname;
 #endif /* ACE_HAS_CHARPTR_DL */
 
@@ -9137,10 +9103,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
-
-# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
-
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, ACE_TEXT_ALWAYS_CHAR (sname)), void *, 0);
 
 # elif defined (ACE_WIN32)
 
@@ -9731,27 +9693,27 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #if defined (ACE_HAS_PACE)
   ACE_UNUSED_ARG (buflen);
   ACE_OSCALL_RETURN (::pace_ctime_r (t, buf), ACE_TCHAR*, 0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   ACE_TCHAR *result;
-#      if defined (DIGITAL_UNIX)
+#     if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, buf), ACE_TCHAR *, 0, result);
-#      else /* DIGITAL_UNIX */
+#     else /* DIGITAL_UNIX */
   ACE_OSCALL (::ctime_r (t, buf), ACE_TCHAR *, 0, result);
-#      endif /* DIGITAL_UNIX */
+#     endif /* DIGITAL_UNIX */
   if (result != 0)
     ::strncpy (buf, result, buflen);
   return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
-#      if defined (ACE_CTIME_R_RETURNS_INT)
+#     if defined (ACE_CTIME_R_RETURNS_INT)
   return (::ctime_r (t, buf, buflen) == -1 ? 0 : buf);
-#      else /* ACE_CTIME_R_RETURNS_INT */
+#     else /* ACE_CTIME_R_RETURNS_INT */
   ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), ACE_TCHAR *, 0);
-#      endif /* ACE_CTIME_R_RETURNS_INT */
+#     endif /* ACE_CTIME_R_RETURNS_INT */
 
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
-#else /* ACE_HAS_REENTRANT_FUNCTIONS */
+# else /* ACE_HAS_REENTRANT_FUNCTIONS */
 #   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
    ::strncpy(buf, "ctime-return",buflen);
    return buf;
@@ -9766,8 +9728,8 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (result != 0)
     ACE_OS::strncpy (buf, result, buflen);
   return buf;
-#   endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
-#endif /* ACE_HAS_PACE */
+#    endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
+# endif /* ACE_HAS_PACE */
 }
 #endif /* !ACE_HAS_WINCE */
 
@@ -9793,7 +9755,7 @@ ACE_OS::gmtime (const time_t *t)
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_gmtime (t), pace_tm*, 0);
 #elif !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
-  ACE_OS_TRACE ("ACE_OS::gmtime");
+  ACE_OS_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #else
   // @@ WinCE doesn't have gmtime also.
@@ -12147,17 +12109,5 @@ ACE_INLINE const OSVERSIONINFO &
 ACE_OS::get_win32_versioninfo ()
 {
   return ACE_OS::win32_versioninfo_;
-}
-
-ACE_INLINE HINSTANCE
-ACE_OS::get_win32_resource_module ()
-{
-  return ACE_OS::win32_resource_module_;
-}
-
-ACE_INLINE void
-ACE_OS::set_win32_resource_module (HINSTANCE instance)
-{
-  ACE_OS::win32_resource_module_ = instance;
 }
 #endif /* ACE_WIN32 */

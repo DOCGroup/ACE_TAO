@@ -4,9 +4,7 @@
 
 #include "SSLIOP_Transport.h"
 
-ACE_RCSID (TAO_SSLIOP,
-           SSLIOP_Transport,
-           "$Id$")
+ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
 
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
@@ -23,11 +21,11 @@ ACE_RCSID (TAO_SSLIOP,
 #include "tao/Acceptor_Registry.h"
 
 
-TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
-  TAO_SSLIOP_Connection_Handler *handler,
-  TAO_ORB_Core *orb_core,
-  CORBA::Boolean /*flag*/)
-  : TAO_Transport (TAO_TAG_IIOP_PROFILE, orb_core),
+TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Connection_Handler *handler,
+                                            TAO_ORB_Core *orb_core,
+                                            CORBA::Boolean /*flag*/)
+  : TAO_Transport (TAO_TAG_IIOP_PROFILE,
+                   orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)
 {
@@ -66,7 +64,7 @@ TAO_SSLIOP_Transport::close_connection (void)
   // First close the handle
   this->connection_handler_->handle_close ();
 
-  // Purge the entry
+  // Now, purge the entry
   this->connection_handler_->purge_entry ();
 }
 
@@ -77,74 +75,16 @@ TAO_SSLIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *bt)
+TAO_SSLIOP_Transport::send (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
-  // @@ This code should be refactored into ACE.cpp or something
-  // similar!
+  ssize_t retval = this->service_handler ()->peer ().send (iov, iovcnt,
+                                                           max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
 
-  // For the most part this was copied from GIOP::send_request and
-  // friends.
-
-  size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
-
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
-  ssize_t n = 0;
-
-  for (const ACE_Message_Block *i = message_block;
-       i != 0;
-       i = i->cont ())
-    {
-      // Make sure there is something to send!
-      if (i->length () > 0)
-        {
-          iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = i->length ();
-          iovcnt++;
-
-          // The buffer is full make a OS call.  @@ TODO this should
-          // be optimized on a per-platform basis, for instance, some
-          // platforms do not implement writev() there we should copy
-          // the data into a buffer and call send_n(). In other cases
-          // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
-            {
-              if (max_wait_time == 0)
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt);
-              else
-                // @@ No timeouts!!!
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt /*,
-                                                     max_wait_time */);
-
-              if (n == 0 ||
-                  n == -1)
-                return n;
-
-              bytes_transferred += n;
-              iovcnt = 0;
-            }
-        }
-    }
-
-  // Check for remaining buffers to be sent!
-  if (iovcnt != 0)
-    {
-      n = this->service_handler ()->peer ().sendv_n (iov,
-                                                     iovcnt);
-      if (n == 0 ||
-          n == -1)
-        return n;
-
-      bytes_transferred += n;
-    }
-
-  return bytes_transferred;
+  return retval;
 }
 
 ssize_t
@@ -253,7 +193,7 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -266,17 +206,6 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 
@@ -456,14 +385,11 @@ TAO_SSLIOP_Transport::process_message (void)
 
       if (result == -1)
         {
-          // Something really critical happened, we will forget about
-          // every reply on this connection.
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : SSLIOP_Transport::")
-                        ACE_TEXT ("process_message - ")
+                        ACE_TEXT ("TAO (%P|%t) : SSLIOP_Client_Transport::")
+                        ACE_TEXT ("handle_client_input - ")
                         ACE_TEXT ("dispatch reply failed\n")));
-
           this->messaging_object_->reset ();
           this->tms_->connection_closed ();
           return -1;
@@ -472,16 +398,7 @@ TAO_SSLIOP_Transport::process_message (void)
       if (result == 0)
         {
           this->messaging_object_->reset ();
-
-          // The reply dispatcher was no longer registered.
-          // This can happened when the request/reply
-          // times out.
-          // To throw away all registered reply handlers is
-          // not the right thing, as there might be just one
-          // old reply coming in and several valid new ones
-          // pending. If we would invoke <connection_closed>
-          // we would throw away also the valid ones.
-          //return 0;
+          return 0;
         }
 
 
@@ -529,7 +446,7 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_OutputCDR cdr;
 
   // Marshall the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)== 0)
       || (cdr << listen_point_list) == 0)
     return;
 
@@ -548,7 +465,7 @@ TAO_SSLIOP_Transport::get_listen_point (
 {
   TAO_SSLIOP_Acceptor *iiop_acceptor =
     ACE_dynamic_cast (TAO_SSLIOP_Acceptor *,
-                      acceptor);
+                      acceptor );
 
   // Get the array of endpoints serviced by <iiop_acceptor>
   const ACE_INET_Addr *endpoint_addr =
@@ -565,8 +482,8 @@ TAO_SSLIOP_Transport::get_listen_point (
       == -1)
     {
        ACE_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Could not resolve local host")
-                          ACE_TEXT (" address in set_bidir_context_info()\n")),
+                         ACE_TEXT ("(%P|%t) Could not resolve local host")
+                         ACE_TEXT (" address in set_bidir_context_info () \n")),
                         -1);
     }
 
@@ -582,16 +499,16 @@ TAO_SSLIOP_Transport::get_listen_point (
       // Note: Looks like there is no point in sending the list of
       // endpoints on interfaces on which this connection has not
       // been established. If this is wrong, please correct me.
-      char local_interface[MAXHOSTNAMELEN + 1];
-      char acceptor_interface[MAXHOSTNAMELEN + 1];
+      char local_interface[MAXHOSTNAMELEN];
+      char acceptor_interface[MAXHOSTNAMELEN];
 
       if (endpoint_addr[index].get_host_name (acceptor_interface,
-                                              sizeof (acceptor_interface)) ==
+                                              MAXHOSTNAMELEN) ==
           -1)
         continue;
 
       if (local_addr.get_host_name (local_interface,
-                                    sizeof (local_interface)) == -1)
+                                    MAXHOSTNAMELEN) == -1)
         continue;
 
       // @@ This is very bad for performance, but it is a one time

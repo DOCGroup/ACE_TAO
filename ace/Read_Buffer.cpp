@@ -99,8 +99,13 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       // Don't insert EOF into the buffer...
       if (c == EOF)
         {
-          ungetc (c, this->stream_);
-          break;
+          if (slot == 0)
+            return 0;
+          else
+            {
+              ungetc (c, this->stream_);
+              break;
+            }
         }
       else if (c == term)
         done = 1;
@@ -124,10 +129,6 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Increment the number of bytes.
   this->size_ += slot;
 
-  // Don't bother going any farther if the total size is 0.
-  if (this->size_ == 0)
-    return 0;
-
   char *result;
 
   // Recurse, when the recursion bottoms out, allocate the result
@@ -144,7 +145,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           return 0;
         }
       result += this->size_;
-
+	  
       // Null terminate the buffer.
       *result = '\0';
     }

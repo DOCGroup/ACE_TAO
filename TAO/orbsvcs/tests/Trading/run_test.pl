@@ -5,50 +5,70 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../../bin';
+require ACEutils;
+require Process;
+use Cwd;
 
-$ior = PerlACE::LocalFile ("trading.ior");
-$ready_file = PerlACE::LocalFile ("export_test_ready");
+$cwd = getcwd();
+$ior = "$cwd$DIR_SEPARATOR" . "trading.ior";
+$ready_file = "$cwd$DIR_SEPARATOR" . "export_test_ready";
 $sleeptime = 20;
+$status = 0;
 
 unlink $ior;
 unlink $ready_file;
 
-$TS = new PerlACE::Process ("../../Trading_Service/Trading_Service",
-                            "-TSdumpior $ior");
-$E = new PerlACE::Process ("export_test",
-                           "-ORBInitRef TradingService=file://$ior -quiet");
-$I = new PerlACE::Process ("import_test",
-                           "-ORBInitRef TradingService=file://$ior -quiet");
+ACE::checkForTarget($cwd);
 
-$TS->Spawn ();
+$TS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
+                       "..".$DIR_SEPARATOR.
+                       "Trading_Service".$DIR_SEPARATOR.
+                       "Trading_Service".$EXE_EXT,
+                       " -TSdumpior $ior ");
 
-if (PerlACE::waitforfile_timed ($ior, $sleeptime) == -1) {
-    print STDERR "ERROR: waiting for trading service IOR file\n";
-    $TS->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($ior, $sleeptime) == -1) {
+  print STDERR "ERROR: waiting for trading service IOR file\n";
+  $TS->Kill (); $TS->TimedWait (1);
+  exit 1;
 }
 
-$E->Spawn ();
+$E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
+                      "-ORBInitRef TradingService=file://$ior"
+		      . " -quiet");
 
-if (PerlACE::waitforfile_timed ($ready_file, 120) == -1) {
-    print STDERR "ERROR: waiting for the export test to finish\n";
-    $E->Kill (); 
-    $TS->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($ready_file, 120) == -1) {
+  print STDERR "ERROR: waiting for the export test to finish\n";
+  $E->Kill (); $E->TimedWait (1);
+  $TS->Kill (); $TS->TimedWait (1);
+  exit 1;
 }
 
-$test = $I->SpawnWaitKill (60);
-$E->Kill ();
-$TS->Kill ();
+$I = Process::Create ($EXEPREFIX."import_test".$EXE_EXT,
+                      "-ORBInitRef TradingService=file://$ior"
+		      . " -quiet");
+
+if ($I->TimedWait (60) == -1) {
+  $status = 1;
+  print STDERR "ERROR: import test timedout\n";
+  $I->Kill (); $I->TimedWait (1);
+}
+
+$E->Terminate ();
+if ($E->TimedWait (15) == -1) {
+  $status =1;
+  print STDERR "ERROR: export test timedout\n";
+  $E->Kill (); $E->TimedWait (1);
+}
+
+$TS->Terminate();
+if ($TS->TimedWait (15) == -1) {
+  print STDERR "ERROR: couldn't terminate the trading service nicely\n";
+  $TS->Kill (); $TS->TimedWait (1);
+  $status = 1;
+}
 
 unlink $ior;
 unlink $ready_file;
 
-if ($test != 0) {
-    print STDERR "ERROR: import test returned $test\n";
-    exit 1;
-}
-
-exit 0;
+exit $status;

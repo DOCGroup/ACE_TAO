@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,13 +17,18 @@
 
 #include "tao/IOR_Parser.h"
 
+// @@ Priyanka: notice how many includes I was able to remove.  In
+// general you should try to minimize the number of #includes in your
+// .h files.  In fact, I believe that once you remove the orb_ and
+// mprofile_ fields below these two includes can go away too!
+#include "tao/ORB.h"
+#include "tao/MProfile.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-
-class TAO_MProfile;
 
 /**
  * @class TAO_CORBALOC_Parser
@@ -74,10 +78,11 @@ private:
    * the Object represented by the key_string is obtained and passed
    * to the application.
    */
-  virtual void parse_string_mprofile_helper (const char * end_point,
-                                             CORBA::ORB_ptr orb,
-                                             TAO_MProfile &mprofile,
-                                             CORBA::Environment &)
+  virtual void
+    parse_string_mprofile_helper (CORBA::String_var end_point,
+                                  CORBA::ORB_ptr orb,
+                                  TAO_MProfile &mprofile,
+                                  CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -103,7 +108,7 @@ private:
   virtual void parse_string_assign_helper (CORBA::ULong &addr_list_length,
                                            ACE_CString &key_string,
                                            ACE_CString &cloc_name,
-                                           CORBA::ORB_ptr orb,
+                                           CORBA::ORB_ptr orb_var,
                                            TAO_MProfile &mprofile,
                                            CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));

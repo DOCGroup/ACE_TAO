@@ -59,9 +59,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     policies_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    addressing_mode_ (0),
-    ior_info_ (0),
-    forwarded_ior_info_ (0)
+    addressing_mode_ (0)
 {
   if (this->orb_core_ == 0)
     {
@@ -129,11 +127,6 @@ TAO_Stub::~TAO_Stub (void)
 
   this->orb_core_->_decr_refcnt ();
 
-  if (this->ior_info_)
-    delete this->ior_info_;
-
-  if (this->forwarded_ior_info_)
-    delete this->forwarded_ior_info_;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -184,111 +177,6 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 }
 
 
-int
-TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
-                           CORBA::ULong &index,
-                           CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // We are creating the IOR info. Let us not be disturbed. So grab a
-  // lock.
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->profile_lock_ptr_,
-                            -1));
-
-  IOP::IOR *tmp_info = 0;
-
-  if (this->forward_profiles_ != 0)
-    {
-      if (this->forwarded_ior_info_ == 0)
-        {
-          this->get_profile_ior_info (*this->forward_profiles_,
-                                      tmp_info,
-                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
-
-          this->forwarded_ior_info_ = tmp_info;
-        }
-
-      // First we look at the forward profiles to see whether the
-      // profile_in_use is any of it.
-      for (CORBA::ULong i = 0;
-           i < this->forward_profiles_->profile_count ();
-           ++i)
-        {
-          if (this->forward_profiles_->get_profile (i)
-              == this->profile_in_use_)
-            {
-              ior_info = this->forwarded_ior_info_;
-              index = i;
-              return 0;
-            }
-        }
-    }
-
-  // Else we look at the base profiles
-  if (this->ior_info_ == 0)
-    {
-      this->get_profile_ior_info (this->base_profiles_,
-                                  tmp_info,
-                                  ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      this->ior_info_ = tmp_info;
-    }
-
-
-  for (CORBA::ULong ind = 0;
-       ind < this->base_profiles_.profile_count ();
-       ++ind)
-    {
-      if (this->base_profiles_.get_profile (ind) ==
-          this->profile_in_use_)
-        {
-          index = ind;
-          ior_info = this->ior_info_;
-          return 0;
-        }
-    }
-
-  // Error, there was no match
-  return -1;
-}
-
-
-int
-TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
-                                IOP::IOR *&ior_info,
-                                CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-
-
-  ACE_NEW_THROW_EX (ior_info,
-                    IOP::IOR (),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
-
-
-  // Get the number of elements
-  CORBA::ULong count = profiles.profile_count ();
-
-  // Set the number of elements in the sequence of tagged_profile
-  ior_info->profiles.length (count);
-
-  // Call the create_tagged_profile one every member of the
-  // profile and make the sequence
-  for (CORBA::ULong index = 0; index < count; ++index)
-    {
-      TAO_Profile *prof = profiles.get_profile (index);
-
-      ior_info->profiles[index] = prof->create_tagged_profile ();
-    }
-
-  return 0;
-}
-
 
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
@@ -311,10 +199,10 @@ TAO_Stub::hash (CORBA::ULong max,
                 ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        0),
-                      CORBA::COMPLETED_NO),
+                                     CORBA_SystemException::_tao_minor_code (
+                                                                             TAO_DEFAULT_MINOR_CODE,
+                                                                             0),
+                                     CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -437,90 +325,96 @@ private:
 #if (TAO_HAS_RT_CORBA == 1)
 
 void
-TAO_Stub::parse_policies (CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::parse_policies (void)
 {
-  CORBA::PolicyList_var policy_list
-    = this->base_profiles_.policy_list (ACE_TRY_ENV);
-  ACE_CHECK;
+  CORBA::PolicyList *policy_list
+    = this->base_profiles_.policy_list ();
 
   CORBA::ULong length = policy_list->length ();
+  //  CORBA::ULong index = 0;
 
-  // @@ Priyanka The code implemented in this methods doesn't do what
-  //    it is supposed to. I reverted your change for the time being.
-  // this->orb_core ()->get_protocols_hooks ()->call_policy_type_hook (policy_list,
-  //   policy_type);
+  CORBA::ULong policy_type = 0;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  this->orb_core ()->get_protocols_hooks ()->call_policy_type_hook (policy_list,
+                                                                    policy_type);
+
+  for (unsigned int i = 0; i < length; ++i)
     {
-      if (policy_list[i]->policy_type () ==
-           RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-        this->exposed_priority_model (policy_list[i].in ());
+      if (policy_type == 0)
+        this->exposed_priority_model ((*policy_list)[i].in ());
 
-      else if (policy_list[i]->policy_type () ==
-                RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-        this->exposed_priority_banded_connection (policy_list[i].in ());
+      else if (policy_type == 1)
+        this->exposed_priority_banded_connection ((*policy_list)[i].in ());
 
-      else if (policy_list[i]->policy_type () ==
-                RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-        this->exposed_client_protocol (policy_list[i].in ());
+      else if (policy_type == 2)
+        this->exposed_client_protocol ((*policy_list)[i].in ());
     }
 
   this->are_policies_parsed_ = 1;
 }
 
 CORBA::Policy *
-TAO_Stub::exposed_priority_model (CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::exposed_priority_model (void)
 {
   if (!this->are_policies_parsed_)
-    {
-      this->parse_policies (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
+    this->parse_policies ();
 
-  return CORBA::Policy::_duplicate (this->priority_model_policy_);
+  if (!CORBA::is_nil (this->priority_model_policy_))
+    this->priority_model_policy_->_add_ref ();
+
+  return this->priority_model_policy_;
 }
 
 void
 TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
 {
-  this->priority_model_policy_ = CORBA::Policy::_duplicate (policy);
+  if (!CORBA::is_nil (policy))
+    {
+      this->priority_model_policy_ = policy;
+    }
 }
 
 CORBA::Policy *
-TAO_Stub::exposed_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::exposed_priority_banded_connection (void)
 {
   if (!this->are_policies_parsed_)
-    {
-      this->parse_policies (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
+    this->parse_policies ();
 
-  return CORBA::Policy::_duplicate (this->priority_banded_connection_policy_);
+  if (!CORBA::is_nil (this->priority_banded_connection_policy_))
+    this->priority_banded_connection_policy_->_add_ref ();
+
+  return this->priority_banded_connection_policy_;
 }
 
 void
 TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
 {
-  this->priority_banded_connection_policy_ =
-    CORBA::Policy::_duplicate (policy);
+  if (!CORBA::is_nil (policy))
+    {
+      this->priority_banded_connection_policy_ =
+        policy;
+    }
 }
 
 CORBA::Policy *
-TAO_Stub::exposed_client_protocol (CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::exposed_client_protocol (void)
 {
   if (!this->are_policies_parsed_)
-    {
-      this->parse_policies (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
+    this->parse_policies ();
 
-  return CORBA::Policy::_duplicate (this->client_protocol_policy_);
+  if (!CORBA::is_nil (this->client_protocol_policy_))
+    this->client_protocol_policy_->_add_ref ();
+
+  return this->client_protocol_policy_;
 }
 
 void
 TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
 {
-  this->client_protocol_policy_ = CORBA::Policy::_duplicate (policy);
+  if (!CORBA::is_nil (policy))
+    {
+      this->client_protocol_policy_ = policy;
+    }
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -546,7 +440,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
   if (type_value == 1)
-    return this->exposed_priority_model (ACE_TRY_ENV);
+    return this->exposed_priority_model ();
 
   if (type_value == 2)
     return this->effective_priority_banded_connection (ACE_TRY_ENV);
@@ -678,15 +572,14 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       //    CORBA::INV_Policy (). So, in here, I am not checking the
       //    CORBA::Environment variable, but checking on the value of
       //    type_value to throw the right exception. - Priyanka
-      this->orb_core_->get_protocols_hooks ()->validate_policy_type (
-         slot,
-         type_value,
-         ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
+      this->orb_core_->get_protocols_hooks ()->validate_policy_type (slot,
+                                                                     type_value,
+                                                                     ACE_TRY_ENV);
+      //ACE_CHECK;
+      
       if (type_value == 1 || type_value == 4)
         ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
-
+      
     }
 
   // We are not required to check for consistency of <policies> with
@@ -695,8 +588,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (
-    new TAO_Policy_Manager_Impl);
+  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (new TAO_Policy_Manager_Impl);
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -717,7 +609,6 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       policy_manager->copy_from (this->policies_,
                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-
       policy_manager->set_policy_overrides (policies,
                                             set_add,
                                             ACE_TRY_ENV);
@@ -1071,29 +962,28 @@ CORBA::Policy *
 TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
 {
   // Get effective override.
-  CORBA::Policy_var override =
+  CORBA::Policy *override =
     this->priority_banded_connection ();
 
   // Get the value from the ior.
-  CORBA::Policy_var exposed =
-    this->exposed_priority_banded_connection (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+  CORBA::Policy *exposed =
+    this->exposed_priority_banded_connection ();
 
   // Reconcile client-exposed and locally set values.
-  if (CORBA::is_nil (exposed.in ()))
-    return override._retn ();
+  if (exposed == 0)
+    return override;
 
-  if (CORBA::is_nil (override.in ()))
-    return exposed._retn ();
+  if (override == 0)
+    return exposed;
 
   CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->
-    effective_priority_banded_connection_hook (override.in (),
-                                               exposed.in (),
+    effective_priority_banded_connection_hook (override,
+                                               exposed,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  return policy._retn ();
+  return policy.in ();
 }
 
 CORBA::Policy *
@@ -1105,15 +995,14 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =
-    this->exposed_client_protocol (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    this->exposed_client_protocol ();
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
-    return override._retn ();
+    return override.in ();
 
   if (CORBA::is_nil (override.in ()))
-    return exposed._retn ();
+    return exposed.in ();
 
   CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->effective_client_protocol_hook (
@@ -1127,7 +1016,7 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::Policy::_nil ());
   */
 
-  return policy._retn ();
+  return policy.in ();
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

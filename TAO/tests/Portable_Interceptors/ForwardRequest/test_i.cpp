@@ -13,10 +13,6 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
-test_i::~test_i (void)
-{
-}
-
 CORBA::Short
 test_i::number (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))

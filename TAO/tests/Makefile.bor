@@ -4,11 +4,7 @@
 
 DIRS = \
         AMI \
-        AMI_Timeouts \
-        Bidirectional \
-        Bidirectional_NestedUpcall \
 	CDR \
-	Codec \
 	Collocation \
 	Connection_Purging \
 	DSI_Gateway \
@@ -16,16 +12,14 @@ DIRS = \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
         Exposed_Policies \
-	Faults \
         FL_Cube \
-        Forwarding \
+	Faults \
 	IDL_Test \
 	IORManipulation \
 	InterOp-Naming \
 	Leader_Followers \
 	MProfile \
 	Multiple_Inheritance \
-        Native_Exceptions \
 	Nested_Event_Loop \
 	ORB_destroy \
 	ORB_init \

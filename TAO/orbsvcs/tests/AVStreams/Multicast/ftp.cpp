@@ -10,7 +10,7 @@ FTP_Client_Callback::FTP_Client_Callback (void)
 int
 FTP_Client_Callback::handle_end_stream (void)
 {
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
+  TAO_AV_CORE::instance ()->stop_run ();
   return 0;
 }
 
@@ -56,8 +56,8 @@ FTP_Client_Callback::handle_timeout (void *)
                   //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
                   ACE_TRY_CHECK;
-//                    CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-//                    ACE_TRY_CHECK;
+                  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
@@ -108,9 +108,9 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
 Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb,
                                                         PortableServer::POA_ptr poa,
                                                         Client *client)
-  : client_ (client)
+  :ENDPOINT_STRATEGY (orb, poa),
+   client_ (client)
 {
-  this->init (orb, poa);
 }
 
 int
@@ -176,7 +176,7 @@ Client::streamctrl (void)
 Client::Client (void)
   :endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa (),this),
    client_mmdevice_ (&endpoint_strategy_),
-   address_ (ACE_OS::strdup ("224.9.9.2:12345")),
+   address_ (ACE_OS::strdup ("224.9.9.2:10002")),
    fp_ (0),
    protocol_ (ACE_OS::strdup ("UDP"))
 {
@@ -232,6 +232,7 @@ Client::init (int argc,char **argv)
   this->argv_ = argv;
 
   // Increase the debug_level so that we can see the output
+  //  TAO_debug_level++;
   this->parse_args (this->argc_, this->argv_);
 
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -317,10 +318,8 @@ Client::run (void)
       // Schedule a timer for the for the flow handler.
       //TAO_AV_CORE::instance ()->run ();
       ACE_Time_Value tv (10000,0);
-      
-      TAO_AV_CORE::instance ()->orb ()->run (tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (TAO_AV_CORE::instance ()->orb ()->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));

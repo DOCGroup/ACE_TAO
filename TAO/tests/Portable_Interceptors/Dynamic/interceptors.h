@@ -35,10 +35,8 @@ public:
 
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Canonical name of the interceptor.
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Canonical name of the interceptor.
 
   virtual void send_poll (
         PortableInterceptor::ClientRequestInfo_ptr
@@ -98,18 +96,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
-        )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableInterceptor::ForwardRequest
-      ));
-
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -123,6 +109,15 @@ public:
                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
+
+  virtual void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ForwardRequest
+      ));
   
   virtual void send_other (
         PortableInterceptor::ServerRequestInfo_ptr

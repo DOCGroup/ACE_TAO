@@ -122,7 +122,6 @@ public:
                       "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     };
 
   
@@ -294,11 +293,7 @@ main (int argc, char *argv[])
         }
       
       if (shutdown_flag)
-        {
-          ami_test_var->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
+        ami_test_var->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -307,7 +302,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   
   return 0;
 }

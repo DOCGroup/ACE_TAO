@@ -36,8 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  /* int pace_setjmp (pace_jmp_buf env); */
-# define pace_setjmp setjmp
+  PACE_INLINE int pace_setjmp (pace_jmp_buf env);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -46,8 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.1.
    */
 #if (PACE_HAS_POSIX_SIG_UOF)
-  /* int pace_sigsetjmp (pace_sigjmp_buf env, int savemask); */
-# define pace_sigsetjmp setjmp
+  PACE_INLINE int pace_sigsetjmp (pace_sigjmp_buf env, int savemask);
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
   /**

@@ -18,11 +18,11 @@ Priyanka Gontla <pgontla@ece.uci.edu>
 Pradeep Gore <pradeep@cs.wustl.edu>
 Shawn Hannan <hannan@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
-John Heitmann <jwh1@cs.wustl.edu>
+John Heitmann  <jwh1@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
-Michael Kircher <Michael.Kircher@mchp.siemens.de>
+Michael Kircher <mlkirche@mchp.siemens.de>
 Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 Fred Kuhns <fredk@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
@@ -136,7 +136,7 @@ Jean-Francois Ripouteau <Jean-Francois.Ripouteau@netsurf.org>
 Ajit Sagar <asagar@spdmail.spd.dsccc.com>
 Ashish Singhai <singhai@delirius.cs.uiuc.edu>
 David Sames <David.L.Sames.1@gsfc.nasa.gov>
-Gonzalo Diethelm <Gonzalo.Diethelm@sonda.com>
+Gonzalo Diethelm <gonzo@ing.puc.cl>
 Raj <raj@itd.ssb.com>
 Darrin Edelman <darrin@aetherworks.com>
 Steve Weismuller <spweismu@rsoc.rockwell.com>
@@ -503,7 +503,7 @@ Patty Hair <patty@Lynx.COM>
 Ivan Pascal <pascal@info.tsu.ru>
 William A. Hoffman <hoffman@crd.ge.com>
 Mark Lucovsky <markl@microsoft.com>
-Greg Holtmeyer <greg.holtmeyer@windriver.com>
+Greg Holtmeyer <greg.a.holtmeyer@boeing.com>
 Jody Hagins <jody@atdesk.com>
 Patrice Bensoussan <pbensoussan@amadeus.net>
 Keith Brown <kalbrown@ix.netcom.com>
@@ -1040,7 +1040,7 @@ Caleb Epstein <cae@home.com>
 Bruno Marconi <bmarconi@jetstream.com>
 Ken Childress <kchildre@uccs.jpl.nasa.gov>
 Michael Kramer <kramer@ave.ac.agit.de>
-Johnny Willemsen <johnny.willemsen@meco.nl>
+Johnny Willemsen <jwillemsen@meco.nl>
 Jonathan Astle <JNASTLE@dera.gov.uk>
 Javier Lopez Sanchez <jlopez@uida.es>
 Nir Drang <Nir@bandwiz.com>
@@ -1091,7 +1091,7 @@ David Channon <djc@uq.net.au>
 Andy Guy <andy@emory.demon.co.uk>
 Oscar Rodriquez <Oscar.Rodriquez@eln.ericsson.se>
 Jonathan Cano <jcano@mmcnet.com>
-Alain Decamps <Alain.Decamps@PIDPA.be>
+Decamps Alain <Alain.Decamps@PIDPA.be>
 Paul Rubel <prubel@bbn.com>
 Jon Loeliger <jloeliger@chiaro.com>
 Ricardo Chan <ricchan@nortelnetworks.com>
@@ -1107,7 +1107,7 @@ Alexander Kogan <jk@kogan.nnov.ru>
 Michael Lindner <mikel@att.net>
 Arnaud Compan <compan@ipanematech.com>
 Frank A. Hunleth <fhunleth@cs.wustl.edu>
-Michael Searles <msearles@base16.com>
+Michael Searles <msearles@base16.com> 
 Bogdan Jeram <bjeram@eso.org>
 Sebastian Schubert <sschuber@et.htwk-leipzig.de>
 Li Zhou <lizhou@doc.ece.uci.edu>
@@ -1127,7 +1127,7 @@ Mike Anderson <manderson@sonusnet.com>
 David Singer <David_P_Singer@res.raytheon.com>
 Nick Lin <nicklin@vantech.com.tw>
 Ron Hashimshony <Ron@bandwiz.com>
-Max Khon <fjoe@iclub.nsu.ru>
+Max Khon <fjoe@iclub.nsu.ru> 
 Jonas Nordin <jonas.nordin@syncom.se>
 Jonathan Stockdale <Jonathan.Stockdale@locusdialogue.com>
 Jean-Francois Daune <Daune@IBA.be>
@@ -1136,35 +1136,13 @@ Rick Stille  <stille_r@ociweb.com>
 Kirill Kuolechov <Kirill.Koulechov@gmx.net>
 Edwin Wrench <Edwin.Wrench@itt.com>
 Yung Trinh <ytrinh@email.com>
-Richard Eperjesi <reperjesi@yahoo.com>
+Richard Eperjesi <reperjesi@yahoo.com> 
 Ben Strong <bstrong@bluelark.com>
 David Karr <dkarr@bbn.com>
-Sathish Tiptur <Sathish.Tiptur@geind.ge.com>
+Sathish Tiptur <Sathish.Tiptur@geind.ge.com> 
 Frank Hunleth <fhunleth@cs.wustl.edu>
 Lu Yunhai <luyunhai@huawei.com>
 Christian Ewald <christian.ewald@zuehlke.com>
-Samuel Qi Luo <Samuel.QiLuo@ericsson.com.au>
-Sergey Logvin <S.Logvin@telesens.com.ua>
-Orlando Ribeiro <oribeiro@inescporto.pt>
-Doug Warner <dougwarner@micron.com>
-Kevin Regan <kregan@infoglide.com>
-Andy Olson <andrew.olson@lmco.com>
-Max Voronoy <m.voronoy@telesens.com.ua>
-Alexandr Gavrilov <gavr@trustworks.com>
-Scott Gunn <gunns@tvratings.com>
-Mason Deaver <mason.deaver@tripointglobal.com>
-Richard Huber <rhuber@amadeus.net>
-Glen Osterhout <gosterho@elronsw.com>
-YingLi <taoace@sina.com>
-Haka <newhaka@21cn.com>
-Sam Chong <sam@i2i-inc.com> 
-Virgilijus Globis <virgis@megagis.lt>
-Stefan Scherer <stefan_scherer@sepp.de>
-Pim Philipse <ppm@rogan-medical.com>
-Mike Snowy <snowymike@aol.com>
-John Mackenzie <John.Mackenzie.extern@icn.siemens.de>
-Ricky Marek <ricky@waveip.com>
-Patrick Maassen <patrick.maassen@meco.nl>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

@@ -71,8 +71,7 @@ run_client (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK;
 
           // Run for <period> milliseconds, to receive the reply
-          orb->run (tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          orb->run (tv);
 
           // Terminate the client if:
           //   - This is the last iteration

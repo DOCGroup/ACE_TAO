@@ -12,8 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS     += -lTAO_IDL_FE_DLL -lTAO_IFR_Client -lTAO
-ACE_SHLIBS += -lTAO_IDL_FE_DLL -lTAO_IFR_Client -lTAO -lACE
+LDLIBS += -lTAO_IFR_Client -lTAO_IDL_FE_DLL -lTAO
+ACE_SHLIBS += -lTAO_IDL_FE_DLL -lACE
 
 VPATH = .
 
@@ -53,7 +53,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 CPPFLAGS += -I../../TAO_IDL/include -I../../TAO_IDL/fe
-LDFLAGS += -I$(TAO_ROOT)/tao
 
 realclean: clean
 

@@ -45,7 +45,7 @@ int main (int argc, char* argv[])
       corbaloc_Status_i status_i;
 
       // Activate it to obtain the reference
-      corbaloc::Status_var status =
+      corbaloc::Status_var status = 
         status_i._this ();
 
       // Get a reference to Naming Context
@@ -67,14 +67,12 @@ int main (int argc, char* argv[])
       naming_context->bind (name, status.in ());
 
       // Run the orb
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       // Destroy the POA, waiting until the destruction terminates
-      poa->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 1);
+      orb->destroy ();
+
     }
   ACE_CATCH (CORBA::SystemException, ex) {
     std::cerr << "CORBA exception raised! " << ex << std::endl;

@@ -55,9 +55,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -133,9 +131,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
@@ -203,17 +199,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       this->disconnect_suppliers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
-
       // @@ Deactivate the suppliers (as CORBA Objects?)
-
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "orb and poa destroyed\n"));
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -270,9 +256,6 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
     {
       this->suppliers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
-
-      delete this->suppliers_[i];
-      this->suppliers_[i] = 0;
     }
 }
 

@@ -3252,7 +3252,7 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#     include /**/ <ws2tcpip.h>
+#     include "ace/ws2tcpip.h"
 #   endif /* ACE_HAS_WINSOCK2 */
 
 // error code mapping
@@ -3638,14 +3638,6 @@ extern "C"
 #   endif /* ! VXWORKS */
 }
 #   if !defined (ACE_LACKS_TCP_H)
-#     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
-#       if defined(TCP_NODELAY)
-#         undef TCP_NODELAY
-#       endif
-#       if defined(TCP_MAXSEG)
-#         undef TCP_MAXSEG
-#       endif
-#     endif
 #     include /**/ <netinet/tcp.h>
 #   endif /* ACE_LACKS_TCP_H */
 
@@ -5269,17 +5261,6 @@ public:
   /// Return the win32 OSVERSIONINFO structure.
   static const OSVERSIONINFO &get_win32_versioninfo (void);
 
-  // = A pair of functions for modifying ACE's Win32 resource usage.
-  /// Return the handle of the module containing ACE's resources. By
-  /// default, for a DLL build of ACE this is a handle to the ACE DLL
-  /// itself, and for a static build it is a handle to the executable.
-  static HINSTANCE get_win32_resource_module (void);
-
-  /// Allow an application to modify which module contains ACE's
-  /// resources. This is mainly useful for a static build of ACE where
-  /// the required resources reside somewhere other than the executable.
-  static void set_win32_resource_module (HINSTANCE);
-
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
@@ -6598,8 +6579,6 @@ private:
 
   static OSVERSIONINFO win32_versioninfo_;
 
-  static HINSTANCE win32_resource_module_;
-
 # endif /* ACE_WIN32 */
 };
 
@@ -7395,8 +7374,7 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
-extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
+#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)

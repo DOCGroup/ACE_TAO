@@ -37,8 +37,7 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component,
 }
 
 void
-TAO_Profile::policies (CORBA::PolicyList *policy_list,
-                       CORBA::Environment &)
+TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -83,7 +82,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list,
           buf += iterator->length ();
         }
 
+      //policy_value_seq[i] = pv;
 
+      // Reset the CDR buffer index so that the buffer can
+      // be reused for the next conversion.
+
+      //out_CDR.reset ();
     }
 
   TAO_OutputCDR out_cdr;
@@ -125,7 +129,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list,
 
 
 CORBA::PolicyList&
-TAO_Profile::policies (CORBA::Environment &)
+TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -150,7 +154,7 @@ TAO_Profile::policies (CORBA::Environment &)
           // Extract the Byte Order
           CORBA::Boolean byte_order;
           if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-              return *(stub_->base_profiles ().policy_list_);
+              return *(stub_->base_profiles ().policy_list ());
           in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
           // Now we take out the Messaging::PolicyValueSeq out from the

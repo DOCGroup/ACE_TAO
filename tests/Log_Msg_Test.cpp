@@ -276,12 +276,10 @@ test_log_msg_features (const ACE_TCHAR *program)
                             sizeof array);
 
   // Disable the LM_DEBUG and LM_INFO messages.
-  u_long priority_mask =
-    ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
+  u_long priority_mask = ACE_LOG_MSG->priority_mask ();
   ACE_CLR_BITS (priority_mask,
                 LM_DEBUG | LM_INFO);
-  ACE_LOG_MSG->priority_mask (priority_mask,
-                              ACE_Log_Msg::PROCESS);
+  ACE_LOG_MSG->priority_mask (priority_mask);
 
   ACE_DEBUG ((LM_INFO,
               "This LM_INFO message should not print!\n"));

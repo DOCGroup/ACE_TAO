@@ -15,6 +15,8 @@ Server_Request_Interceptor::Server_Request_Interceptor (void)
 
 Server_Request_Interceptor::~Server_Request_Interceptor (void)
 {
+  CORBA::release (this->obj_[0]);
+  CORBA::release (this->obj_[1]);
 }
 
 void
@@ -22,7 +24,6 @@ Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
   CORBA::Object_ptr obj2,
   CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
     ACE_THROW (CORBA::INV_OBJREF (
@@ -40,14 +41,6 @@ Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
-}
-
-void
-Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::release (this->obj_[0]);
-  CORBA::release (this->obj_[1]);
 }
 
 void

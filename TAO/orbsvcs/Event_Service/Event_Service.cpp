@@ -62,9 +62,7 @@ Event_Service::run (int argc, char* argv[])
         return 1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA",
-                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -82,8 +80,7 @@ Event_Service::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the Naming Service.\n"),
@@ -222,8 +219,8 @@ Event_Service::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
-      this->orb_->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (this->orb_->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
       naming_context->unbind (channel_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;

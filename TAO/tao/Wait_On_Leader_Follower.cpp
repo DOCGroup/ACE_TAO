@@ -36,7 +36,9 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
   // Register the handler.
   // @@ We could probably move this somewhere else, and remove this
   //    function totally. (Alex).
-  this->transport_->register_handler ();
+  // @@ The handler is registered already, when the connection is
+  //    created!
+  // this->transport_->register_handler ();
 
   // Send the request.
   return this->TAO_Wait_Strategy::sending_request (orb_core,
@@ -144,13 +146,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                   ACE_TEXT ("TAO (%P|%t) - wait (follower) on <%x> ")
                                   ACE_TEXT ("cond == 0 || cond->wait (tv) == -1\n"),
                                   this->transport_));
-
-                    if (leader_follower.remove_follower (cond) == -1)
-                      ACE_ERROR ((LM_ERROR,
-                                  "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                                  "remove_follower failed for <%x>\n", cond));
-
-                    return -1;
+                  return -1;
                   }
               }
           }

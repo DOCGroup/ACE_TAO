@@ -35,6 +35,8 @@
 
 #include "IORInfo.h"
 
+#include "Flushing_Strategy.h"
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -43,9 +45,7 @@
 # include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
-           ORB_Core,
-           "$Id$")
+ACE_RCSID(tao, ORB_Core, "$Id$")
 
 
 // ****************************************************************
@@ -65,6 +65,10 @@ const char * TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
 const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
 const char * TAO_ORB_Core::ifr_client_adapter_name_ = "IFR_Client_Adapter";
 
+#if (TAO_HAS_RT_CORBA == 1)
+CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ =
+  CORBA::Object::_nil ();
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
@@ -79,7 +83,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
-    root_poa_ (CORBA::Object::_nil ()),
     orb_params_ (),
     init_ref_map_ (),
     object_ref_table_ (),
@@ -108,7 +111,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-    poa_current_ (),
+    poa_current_ (0),
     adapter_registry_ (this),
     poa_adapter_ (0),
     tm_ (),
@@ -139,9 +142,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     priority_protocol_selector_ (0),
     bands_protocol_selector_ (0),
     client_priority_policy_selector_ (0),
-    rt_orb_ (),
-    rt_current_ (),
-    priority_mapping_manager_ (),
+    rt_orb_ (0),
+    rt_current_ (0),
 #endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
@@ -158,6 +160,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     connection_cache_ (),
     bidir_giop_policy_ (0)
+  , flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -221,6 +224,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
+  delete this->flushing_strategy_;
+
   ACE_OS::free (this->orbid_);
 
   delete this->from_iso8859_;
@@ -235,9 +240,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::release (this->policy_manager_);
+  delete this->policy_manager_;
   delete this->default_policies_;
-  CORBA::release (this->policy_current_);
+  delete this->policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -252,6 +257,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->priority_protocol_selector_;
   delete this->bands_protocol_selector_;
   delete this->client_priority_policy_selector_;
+  // delete this->rt_orb_;
+  // delete this->rt_current_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -915,7 +922,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->reactor_registry_->open (this);
 
 #if (TAO_HAS_RT_CORBA == 1)
-
   this->get_protocols_hooks()->set_priority_mapping (this,
                                                      trf,
                                                      ACE_TRY_ENV);
@@ -1042,6 +1048,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // init the ORB core's pointer
   this->protocol_factories_ = trf->get_protocol_factories ();
 
+  // Initialize the flushing strategy
+  this->flushing_strategy_ = trf->create_flushing_strategy ();
+
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
   // registries!
@@ -1144,6 +1153,10 @@ TAO_ORB_Core::fini (void)
 {
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
+
+#if (TAO_HAS_RT_CORBA == 1)
+  CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::release (this->implrepo_service_);
 
@@ -1543,8 +1556,8 @@ TAO_ORB_Core::inherit_from_parent_thread (
 CORBA::Object_ptr
 TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!CORBA::is_nil (this->root_poa_))
-    return CORBA::Object::_duplicate (this->root_poa_);
+  if (!CORBA::is_nil (this->root_poa_.in ()))
+    return CORBA::Object::_duplicate (this->root_poa_.in ());
 
   TAO_Adapter_Factory *factory =
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
@@ -1570,15 +1583,12 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
   poa_adapter->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // @@ poa_adapter->root() is busted.  It doesn't return a
-  //    duplicate.  As such, this->root_poa_ is an Object_ptr, and is
-  //    not released by the ORB_Core.
   this->root_poa_ = poa_adapter->root ();
 
   this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return CORBA::Object::_duplicate (this->root_poa_);
+  return CORBA::Object::_duplicate (this->root_poa_.in ());
 }
 
 TAO_Adapter *
@@ -1670,8 +1680,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
         {
           // Get the ith profile
           profile = mp.get_profile (i);
-          profile->policies (policy_list, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          profile->policies (policy_list);
         }
     }
 
@@ -1991,55 +2000,10 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
-
-  // Invoke Interceptor::destroy() on all registered interceptors.
-  this->destroy_interceptors (ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-void
-TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
-{
-  size_t len = 0;
-
-#if TAO_HAS_INTERCEPTORS == 1
-  TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
-    this->client_request_interceptors_.interceptors ();
-
-  len = client_interceptors.size ();
-  for (size_t i = 0; i < len; ++i)
-    {
-      client_interceptors[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
-  TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
-    this->server_request_interceptors_.interceptors ();
-
-  len = server_interceptors.size ();
-  for (size_t j = 0; j < len; ++j)
-    {
-      server_interceptors[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#ifdef TAO_HAS_EXCEPTIONS
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif  /* TAO_HAS_EXCEPTIONS */
-
-  TAO_IORInterceptor_List::TYPE &ior_interceptors =
-    this->ior_interceptors_.interceptors ();
-
-  len = ior_interceptors.size ();
-  for (size_t k = 0; k < len; ++k)
-    {
-      ior_interceptors[k]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
 }
 
 // Set up listening endpoints.
+
 int
 TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2258,7 +2222,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
   return CORBA::Object::_nil ();
 }
 
-CORBA::ORB::ObjectIdList_ptr
+CORBA_ORB_ObjectIdList_ptr
 TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 {
   // Unsupported initial services should NOT be included in the below list!
@@ -2270,18 +2234,16 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
     sizeof (initial_services) / sizeof (initial_services[0]);
 
   const size_t total_size =
-    initial_services_size
-    + this->init_ref_map_.current_size ();
-//     + this->object_ref_table_.current_size ();
+    initial_services_size + this->init_ref_map_.current_size ();
 
-  CORBA::ORB::ObjectIdList_ptr tmp = 0;
+  CORBA_ORB_ObjectIdList_ptr tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
                     CORBA_ORB_ObjectIdList (total_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ORB::ObjectIdList_var list = tmp;
+  CORBA_ORB_ObjectIdList_var list = tmp;
   list->length (total_size);
 
   CORBA::ULong index = 0;
@@ -2293,23 +2255,12 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
+  InitRefMap::iterator end  = this->init_ref_map_.end ();
 
-//   // References registered via
-//   // ORBInitInfo::register_initial_reference().
-//   TAO_Object_Ref_Table::Iterator end = this->object_ref_table_.end ();
-
-//   for (TAO_Object_Ref_Table::Iterator i = this-> object_ref_table_.begin ();
-//        i != end;
-//        ++i, ++index)
-//     list[index] = (*i).int_id_;
-
-  // References registered via INS.
-  InitRefMap::iterator end = this->init_ref_map_.end ();
-
-  for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
-       j != end;
-       ++j, ++index)
-    list[index] = (*j).int_id_.c_str ();
+  for (InitRefMap::iterator i =this-> init_ref_map_.begin ();
+       i != end;
+       ++i, ++index)
+    list[index] = (*i).int_id_.c_str ();
 
   return list._retn ();
 }
@@ -2713,29 +2664,21 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 CORBA::Object_ptr
 TAO_ORB_Core::priority_mapping_manager (void)
 {
-  if (CORBA::is_nil (this->priority_mapping_manager_.in ()))
+  return
+    CORBA::Object::_duplicate (TAO_ORB_Core::priority_mapping_manager_);
+}
+
+void
+TAO_ORB_Core::priority_mapping_manager (CORBA::Object_ptr manager)
+{
+  if (TAO_ORB_Core::priority_mapping_manager_ != manager)
     {
-      ACE_TRY_NEW_ENV
-        {
-          this->priority_mapping_manager_ =
-            this->object_ref_table_.resolve_initial_references (
-              "PriorityMappingManager",
-              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Could not resolve "
-                        "\"PriorityMappingManager\".\n"));
+      // Release the old reference before setting the new one.
+      CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
 
-          return CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
+      TAO_ORB_Core::priority_mapping_manager_ =
+        CORBA::Object::_duplicate (manager);
     }
-
-  return CORBA::Object::_duplicate (this->priority_mapping_manager_.in ());
 }
 
 CORBA::Policy *

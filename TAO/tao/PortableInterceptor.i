@@ -12,6 +12,12 @@ TAO_ClientRequestInterceptor_Adapter::TAO_ClientRequestInterceptor_Adapter
   this->len_ = interceptors.size ();
 }
 
+ACE_INLINE
+TAO_ClientRequestInterceptor_Adapter::
+~TAO_ClientRequestInterceptor_Adapter (void)
+{
+}
+
 ACE_INLINE void
 TAO_ClientRequestInterceptor_Adapter::
 send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
@@ -139,6 +145,12 @@ TAO_ServerRequestInterceptor_Adapter::TAO_ServerRequestInterceptor_Adapter
       stack_size_ (stack_size)
 {
   this->len_ = interceptors.size ();
+}
+
+ACE_INLINE
+TAO_ServerRequestInterceptor_Adapter::
+~TAO_ServerRequestInterceptor_Adapter (void)
+{
 }
 
 ACE_INLINE void

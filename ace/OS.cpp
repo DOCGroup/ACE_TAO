@@ -31,19 +31,6 @@ static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d
 # if defined (ACE_WIN32)
 OSVERSIONINFO ACE_OS::win32_versioninfo_;
 // Cached win32 version information.
-
-HINSTANCE ACE_OS::win32_resource_module_;
-
-#  if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
-// This function is called by the OS when the ACE DLL is loaded. We
-// use it to determine the default module containing ACE's resources.
-BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
-{
-  if (reason == DLL_PROCESS_ATTACH)
-    ACE_OS::set_win32_resource_module(instance);
-  return TRUE;
-}
-#  endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */
 # endif /* ACE_WIN32 */
 
 class ACE_OS_Thread_Mutex_Guard
@@ -1591,9 +1578,9 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 // Check for inequality.
 ACE_SPECIAL_INLINE
 int
-ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
+ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref) const
 {
-  ACE_OS_TRACE ("ACE_TSS_Ref::operator !=");
+  ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
 
   return !(*this == tss_ref);
 }
@@ -1647,9 +1634,9 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 
 // Check for inequality.
 int
-ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
+ACE_TSS_Info::operator!= (const ACE_TSS_Info &info) const
 {
-  ACE_OS_TRACE ("ACE_TSS_Info::operator !=");
+  ACE_OS_TRACE ("ACE_TSS_Info::operator==");
 
   return !(*this == info);
 }
@@ -4495,7 +4482,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
 int
 ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
-  ACE_OS_TRACE ("ACE_OS::writev_emulation");
+  ACE_OS_TRACE ("::writev");
 
   size_t length = 0;
   int i;
@@ -4543,7 +4530,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
                          ACE_READV_TYPE *iov,
                          int n)
 {
-  ACE_OS_TRACE ("ACE_OS::readv_emulation");
+  ACE_OS_TRACE ("readv");
 
   ssize_t length = 0;
   int i;

@@ -471,7 +471,13 @@ Demux_Test_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      if (this->orb_->run (ACE_TRY_ENV) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) Demux_Test_Server::run - "
+                             "orb run failed\n"),
+                            -1);
+        }
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

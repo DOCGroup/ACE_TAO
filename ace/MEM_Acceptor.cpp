@@ -3,8 +3,6 @@
 
 #include "ace/MEM_Acceptor.h"
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
@@ -205,5 +203,3 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
 
   return 0;
 }
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

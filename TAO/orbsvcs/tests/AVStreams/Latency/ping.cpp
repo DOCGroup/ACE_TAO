@@ -21,7 +21,6 @@ Pong_Send_Callback pong_callback;
 ACE_hrtime_t recv_base = 0;
 ACE_Throughput_Stats recv_latency;
 
-
 int
 parse_args (int argc, char *argv[])
 {
@@ -95,32 +94,31 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       parse_args (argc, argv);
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+      
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
                                             argv);
-
+      
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-
+      
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-
+      
       PortableServer::POAManager_var mgr
         = poa->the_POAManager ();
-
+      
       mgr->activate ();
-
+      
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       // Register the video mmdevice object with the ORB
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy,
+                      Reactive_Strategy (orb.in (), poa.in ()),
                       1);
-      reactive_strategy->init (orb.in (), poa.in ());
       TAO_MMDevice *mmdevice_impl;
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
@@ -174,9 +172,10 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      orb->run ();
-      ACE_TRY_CHECK;
-
+      ACE_Time_Value tv (120, 0);
+      if (orb->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
@@ -184,6 +183,8 @@ int main (int argc, char *argv[])
 
       recv_latency.dump_results ("Receive", gsf);
 
+      // root_poa->destroy (1, 1, ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -214,11 +215,6 @@ Ping_Recv::get_callback (const char *,
   return 0;
 }
 
-Ping_Recv_Callback::Ping_Recv_Callback (void)
-  : count_ (0)
-{
-}
-
 int
 Ping_Recv_Callback::handle_stop (void)
 {
@@ -233,40 +229,33 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    const ACE_Addr &)
 {
-  this->count_++;
- 
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame %d\n", this->count_));
+  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame\n"));
 
-  if (this->count_ < 10)
+  for (const ACE_Message_Block *i = frame;
+       i != 0;
+       i = i->cont ())
     {
-      for (const ACE_Message_Block *i = frame;
-	   i != 0;
-	   i = i->cont ())
-	{
-	  ACE_hrtime_t stamp;
-	  
-	  if (i->length () < sizeof(stamp))
-	    return 0;
-	  
-	  ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
-	  
-	  ACE_hrtime_t now = ACE_OS::gethrtime ();
-	  if (recv_base == 0)
-	    {
-	      recv_base = now;
-	    }
-	  else
-	    {
+      ACE_hrtime_t stamp;
+
+      if (i->length () < sizeof(stamp))
+        return 0;
+
+      ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
+
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      if (recv_base == 0)
+        {
+          recv_base = now;
+        }
+      else
+        {
           recv_latency.sample (now - recv_base,
                                now - stamp);
-	    }
-	  
-	  if (respond == 1)
-	    pong_callback.send_response (stamp);
-	}
+        }
+
+      if (respond == 1)
+        pong_callback.send_response (stamp);
     }
-  else
-    TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -349,8 +338,8 @@ template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev,
 template class TAO_FDev<TAO_FlowProducer, Ping_Recv>;
 template class TAO_FDev<Pong_Send, TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_FDev<TAO_FlowProducer, Ping_Recv>
-#pragma instantiate TAO_FDev<Pong_Send, TAO_FlowConsumer>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, Ping_Recv>;
+#pragma instantiate TAO_FDev<Pong_Send, TAO_FlowConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -9,9 +9,6 @@ use PerlACE::ConfigList;
 package PerlACE;
 use Cwd;
 
-# Turn on autoflush
-$| = 1;
-
 sub LocalFile ($)
 {
     my $file = shift;

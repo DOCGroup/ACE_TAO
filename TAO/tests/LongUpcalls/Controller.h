@@ -1,4 +1,6 @@
+//
 // $Id$
+//
 
 #ifndef LONGUPCALLS_CONTROLLER_H
 #define LONGUPCALLS_CONTROLLER_H
@@ -13,8 +15,8 @@
 #endif /* _MSC_VER */
 
 class Controller
-  : public virtual POA_Test::Controller,
-    public virtual PortableServer::RefCountServantBase
+  :  public virtual POA_Test::Controller
+  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Controller (void);

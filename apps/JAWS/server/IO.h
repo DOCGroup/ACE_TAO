@@ -45,9 +45,8 @@ public:
   JAWS_IO (void);
   virtual ~JAWS_IO (void);
   void handler (JAWS_IO_Handler *handler);
-
-  virtual void handle (ACE_HANDLE h) = 0;
-  virtual ACE_HANDLE handle (void) const = 0;
+  void handle (ACE_HANDLE h);
+  ACE_HANDLE handle (void);
 
   // James, please add documentation here.
 
@@ -74,6 +73,7 @@ public:
   // send an error message to the handle.
 
 protected:
+  ACE_HANDLE handle_;
   JAWS_IO_Handler *handler_;
 };
 
@@ -136,9 +136,6 @@ public:
 
   ~JAWS_Synch_IO (void);
 
-  virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle (void) const;
-
   void read (ACE_Message_Block& mb, int size);
 
   void transmit_file (const char *filename,
@@ -161,8 +158,6 @@ public:
 protected:
   virtual void send_message (const char *buffer,
                              int length);
-
-  ACE_HANDLE handle_;
 };
 
 // This only works on Win32
@@ -179,9 +174,6 @@ public:
   JAWS_Asynch_IO (void);
 
   ~JAWS_Asynch_IO (void);
-
-  virtual void handle (ACE_HANDLE h) { ACE_Handler::handle (h); };
-  virtual ACE_HANDLE handle (void) const { return ACE_Handler::handle (); };
 
   void read (ACE_Message_Block& mb, int size);
 

@@ -29,17 +29,19 @@ main (int argc, char **argv)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Initialize the ORB
+  char str[256]; // Exception message
   ACE_TRY
     {
+      ACE_OS::strcpy (str, "CORBA::ORB_init");
+
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Obtain the RootPOA.
+      // Get Object reference to RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
+      ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
       // Narrow Object reference to RootPOA to a POA reference.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in(), ACE_TRY_ENV);
@@ -59,12 +61,14 @@ main (int argc, char **argv)
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
+      ACE_OS::strcpy (str,"PortableServer::POA::the_activator");
       root_poa->the_activator (activator.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to find a childPOA of RootPOA named firstPOA
       ACE_CString name = "firstPOA";
+      ACE_OS::strcpy (str,"PortableServer::POA::find_POA");
       PortableServer::POA_var first_poa =
         root_poa->find_POA (name.c_str (),
                             1,
@@ -79,6 +83,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Get the names of all the POAs
+      ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
+
       CORBA::String_var root_poa_name =
         root_poa->the_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -99,7 +105,7 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, str);
       return -1;
     }
   ACE_ENDTRY;

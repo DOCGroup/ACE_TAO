@@ -8,8 +8,6 @@
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
-
 ACE_RCSID(ace, Local_Tokens, "$Id$")
 
 void
@@ -915,7 +913,7 @@ ACE_RW_Token::release (ACE_TPQ_Entry *caller)
 void
 ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
 {
-  ACE_TRACE ("ACE_RW_Token::notify_new_owner");
+  ACE_TRACE ("ACE_RW_Token::new_owner");
 
   if (this->owner () == 0)
     return;
@@ -1017,7 +1015,7 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
 int
 ACE_RW_Token::is_owner (const ACE_TCHAR *id)
 {
-  ACE_TRACE ("ACE_RW_Token::is_owner");
+  ACE_TRACE ("ACE_Mutex_Token::is_owner");
   // If there is no owner, return false.
   if (this->owner () == 0)
     return 0;
@@ -1097,7 +1095,7 @@ ACE_Token_Proxy::owner_id (void)
 const ACE_TCHAR *
 ACE_Token_Proxy::name (void) const
 {
-  ACE_TRACE ("ACE_Token_Proxy::name");
+  ACE_TRACE ("ACE_Token_Proxy::owner_id");
   return this->token_->name ();
 }
 
@@ -1122,7 +1120,7 @@ ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
 // @@ should I do a mutex_->release ()?
 ACE_Token_Proxy::~ACE_Token_Proxy (void)
 {
-  ACE_TRACE ("ACE_Token_Proxy::~ACE_Token_Proxy");
+  ACE_TRACE ("ACE_Local_Mutex::~ACE_Local_Mutex");
 
   if (token_ != 0)
     // notify token manager that we are done with it so it can
@@ -1454,5 +1452,3 @@ template class ACE_Node <ACE_TPQ_Entry *>;
 #pragma instantiate ACE_Unbounded_Stack <ACE_TPQ_Entry *>
 #pragma instantiate ACE_Node <ACE_TPQ_Entry *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */

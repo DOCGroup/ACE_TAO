@@ -196,7 +196,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
       return 0;
     }
 
-  factory = strm.orb_core ()->orb ()
+  factory = TAO_ORB_Core_instance ()->orb ()   // @@ %! right way to access ?
     ->lookup_value_factory (repo_id_stream.in());
   if (factory == 0) // %! except.!
     {

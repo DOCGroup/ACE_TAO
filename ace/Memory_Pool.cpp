@@ -176,8 +176,6 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
   // Only change the defaults if <options> != 0.
   if (options)
     {
-      if (options->flags_ != 0)
-        this->flags_ = options->flags_;
       if (options->use_fixed_addr_)
         {
           this->base_addr_ =
@@ -186,6 +184,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
         }
       this->write_each_page_ = options->write_each_page_;
       this->minimum_bytes_ = options->minimum_bytes_;
+      if (options->flags_ != 0)
+        this->flags_ = options->flags_;
       if (options->sa_ != 0)
         this->sa_ = options->sa_;
     }
@@ -674,7 +674,7 @@ int
 ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                                                    off_t &offset)
 {
-  ACE_TRACE ("ACE_Shared_Memory_Pool::commit_backing_store_name");
+  ACE_TRACE ("ACE_Shared_Memory_Pool::update");
 
   size_t counter;
   SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,

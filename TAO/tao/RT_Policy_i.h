@@ -22,6 +22,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+#include "tao/RTCORBAS.h"
 #include "tao/RTCORBAC.h"
 #include "tao/LocalObject.h"
 
@@ -43,9 +44,7 @@
  * This policy controls how the priority at which a server handles
  * requests from clients is determined.
  */
-class TAO_Export TAO_PriorityModelPolicy
-  : public RTCORBA::PriorityModelPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityModelPolicy :  public RTCORBA::PriorityModelPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -54,6 +53,9 @@ public:
 
   /// Copy constructor.
   TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_PriorityModelPolicy (void);
 
   /**
    * Accessor for the <priority_model_> attribute.  This method is
@@ -94,10 +96,6 @@ public:
 
 protected:
 
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_PriorityModelPolicy (void);
-
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
@@ -119,9 +117,7 @@ private:
  *
  * This policy controls which threadpool is associated with a POA.
  */
-class TAO_Export TAO_ThreadpoolPolicy
-  : public RTCORBA::ThreadpoolPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -129,6 +125,9 @@ public:
 
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_ThreadpoolPolicy (void);
 
   virtual RTCORBA::ThreadpoolId threadpool (CORBA::Environment
                                             &ACE_TRY_ENV =
@@ -148,12 +147,6 @@ public:
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_ThreadpoolPolicy (void);
-
 private:
 
   /// Attribute.
@@ -171,9 +164,7 @@ private:
  * Object is private, i.e., not available for carrying out invocations on
  * other objects.
  */
-class TAO_Export TAO_PrivateConnectionPolicy
-  : public RTCORBA::PrivateConnectionPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PrivateConnectionPolicy : public RTCORBA::PrivateConnectionPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -181,6 +172,9 @@ public:
 
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_PrivateConnectionPolicy (void);
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -194,13 +188,6 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_PrivateConnectionPolicy (void);
-
 };
 
 //*************************************************************************
@@ -216,9 +203,7 @@ protected:
  * This policy allows the specification of the number of such
  * bands and their priorities.
  */
-class TAO_Export TAO_PriorityBandedConnectionPolicy
-  : public RTCORBA::PriorityBandedConnectionPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityBandedConnectionPolicy : public RTCORBA::PriorityBandedConnectionPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -227,6 +212,9 @@ public:
   /// Copy constructor.
   TAO_PriorityBandedConnectionPolicy (const
                                       TAO_PriorityBandedConnectionPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_PriorityBandedConnectionPolicy (void);
 
   /**
    * Accessor to the underlying priority bands of the policy (does not
@@ -261,10 +249,6 @@ public:
 
 protected:
 
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_PriorityBandedConnectionPolicy (void);
-
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
@@ -286,9 +270,7 @@ private:
  * This policy controls selection and configuration of
  * communication protocols on the server-side of the RT ORB.
  */
-class TAO_Export TAO_ServerProtocolPolicy
-  : public RTCORBA::ServerProtocolPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ServerProtocolPolicy : public RTCORBA::ServerProtocolPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -296,6 +278,9 @@ public:
 
   /// Copy constructor.
   TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_ServerProtocolPolicy (void);
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
@@ -327,13 +312,6 @@ public:
                    int &recv_buffer_size,
                    int &no_delay,
                    const char *protocol_type);
-
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_ServerProtocolPolicy (void);
-
 private:
 
   /// Attribute.
@@ -350,9 +328,7 @@ private:
  * This policy controls selection and configuration of
  * communication protocols on the client-side of the RT ORB.
  */
-class TAO_Export TAO_ClientProtocolPolicy
-  : public RTCORBA::ClientProtocolPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ClientProtocolPolicy : public RTCORBA::ClientProtocolPolicy, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -360,6 +336,9 @@ public:
 
   /// Copy constructor.
   TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs);
+
+  /// Destructor.
+  virtual ~TAO_ClientProtocolPolicy (void);
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
@@ -402,10 +381,6 @@ public:
 
 protected:
 
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_ClientProtocolPolicy (void);
-
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
@@ -419,9 +394,8 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_TCP_Properties
-  : public RTCORBA::TCPProtocolProperties,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties, public TAO_Local_RefCounted_Object
+
 {
   // = TITLE
   //   RTCORBA::TCPProtocolProperties implementation
@@ -438,6 +412,9 @@ public:
                       CORBA::Boolean keep_alive = 1,
                       CORBA::Boolean dont_route = 0,
                       CORBA::Boolean no_delay = 1);
+
+  /// Destructor.
+  virtual ~TAO_TCP_Properties (void);
 
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
@@ -493,12 +470,6 @@ public:
   /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_TCP_Properties (void);
-
 private:
   // = Attributes.
 
@@ -519,17 +490,18 @@ private:
  * Stores Unix Domain Sockets (Local IPC) Protocol configuration
  * properties.
  */
-class TAO_Export TAO_Unix_Domain_Properties
-  : public RTCORBA::UnixDomainProtocolProperties,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Unix_Domain_Properties : public RTCORBA::UnixDomainProtocolProperties, public TAO_Local_RefCounted_Object
 {
 public:
-
-  /// Constructor
   TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size =
                               ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                               CORBA::Long recv_buffer_size =
                               ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
+
+  // Constructor.
+
+  /// Destructor.
+  virtual ~TAO_Unix_Domain_Properties (void);
 
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
@@ -570,12 +542,6 @@ public:
    */
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_Unix_Domain_Properties (void);
-
 private:
 
   // = Attributes.
@@ -593,13 +559,14 @@ private:
  * Stores Shared Memory Protocol configuration
  * properties.
  */
-class TAO_Export TAO_SMEM_Properties
-  : public RTCORBA::SharedMemoryProtocolProperties,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_SMEM_Properties : public RTCORBA::SharedMemoryProtocolProperties, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
   TAO_SMEM_Properties (void);
+
+  /// Destructor.
+  virtual ~TAO_SMEM_Properties (void);
 
   // = IDL interface methods.
 
@@ -651,12 +618,6 @@ public:
    */
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
-protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_SMEM_Properties (void);
-
 private:
 
   // = Attributes.
@@ -667,11 +628,10 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_GIOP_Properties
-  : public RTCORBA::GIOPProtocolProperties,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_GIOP_Properties : public RTCORBA::GIOPProtocolProperties, public TAO_Local_RefCounted_Object
 {
 public:
+  virtual ~TAO_GIOP_Properties ();
 
   // = CDR encoding methods
 
@@ -680,11 +640,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
-
-  /// Protected destructor to enforce proper memory management of this
-  /// reference counted object.
-  virtual ~TAO_GIOP_Properties ();
-
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Properties (void);
 };

@@ -70,9 +70,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -149,15 +147,6 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
+  this->orb_->run ();
   return 0;
 }

@@ -23,8 +23,7 @@
 #define _TAO_IDL_PORTABLEINTERCEPTORC_H_
 
 #include "ace/pre.h"
-
-#include "corbafwd.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,10 +52,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
 
 TAO_NAMESPACE  PortableInterceptor
 {
@@ -164,20 +159,12 @@ class TAO_Export Interceptor : public virtual CORBA_Object
         CORBA::SystemException
       )) = 0;
 
-    virtual void destroy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    Interceptor ();
-
+    Interceptor (void);
     virtual ~Interceptor (void);
   private:
     Interceptor (const Interceptor &);
@@ -428,8 +415,7 @@ class TAO_Export Current: public virtual CORBA::Current
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    Current ();
-
+    Current (void);
     virtual ~Current (void);
   private:
     Current (const Current &);
@@ -537,7 +523,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       }
 
     virtual CORBA::ULong request_id (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -545,7 +531,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual char * operation (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -553,7 +539,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual Dynamic::ParameterList * arguments (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -561,7 +547,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual Dynamic::ExceptionList * exceptions (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -569,7 +555,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual Dynamic::ContextList * contexts (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -577,7 +563,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual Dynamic::RequestContext * operation_context (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -585,7 +571,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Any * result (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -593,27 +579,27 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Boolean response_expected (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-#if TAO_HAS_CORBA_MESSAGING == 1
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
     virtual Messaging::SyncScope sync_scope (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     virtual PortableInterceptor::ReplyStatus reply_status (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -621,7 +607,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr forward_reference (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -661,8 +647,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    RequestInfo ();
-
+    RequestInfo (void);
     virtual ~RequestInfo (void);
   private:
     RequestInfo (const RequestInfo &);
@@ -770,7 +755,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       }
 
     virtual CORBA::Object_ptr target (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -778,7 +763,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       )) = 0;
 
     virtual CORBA::Object_ptr effective_target (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -786,7 +771,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       )) = 0;
 
     virtual IOP::TaggedProfile * effective_profile (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -794,7 +779,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       )) = 0;
 
     virtual CORBA::Any * received_exception (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -802,7 +787,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       )) = 0;
 
     virtual char * received_exception_id (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -811,17 +796,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
 
     virtual IOP::TaggedComponent * get_effective_component (
         IOP::ComponentId id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual IOP::TaggedComponentSeq * get_effective_components (
-        IOP::ComponentId id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -829,8 +804,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
 
     virtual CORBA::Policy_ptr get_request_policy (
         CORBA::PolicyType type,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -839,8 +813,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     virtual void add_request_service_context (
         const IOP::ServiceContext & service_context,
         CORBA::Boolean replace,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -851,8 +824,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ClientRequestInfo ();
-
+    ClientRequestInfo (void);
     virtual ~ClientRequestInfo (void);
   private:
     ClientRequestInfo (const ClientRequestInfo &);
@@ -960,32 +932,28 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
       }
 
     virtual CORBA::Any * sending_exception (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::OctetSeq * object_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::OctetSeq * adapter_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * target_most_derived_interface (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -993,8 +961,7 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
 
     virtual CORBA::Policy_ptr get_server_policy (
         CORBA::PolicyType type,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1003,9 +970,8 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     virtual void set_slot (
         PortableInterceptor::SlotId id,
         const CORBA::Any & data,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::InvalidSlot
@@ -1013,8 +979,7 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
 
     virtual CORBA::Boolean target_is_a (
         const char * id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1023,9 +988,8 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     virtual void add_reply_service_context (
         const IOP::ServiceContext & service_context,
         CORBA::Boolean replace,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1035,8 +999,7 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ServerRequestInfo ();
-
+    ServerRequestInfo (void);
     virtual ~ServerRequestInfo (void);
   private:
     ServerRequestInfo (const ServerRequestInfo &);
@@ -1146,7 +1109,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     virtual void send_request (
         PortableInterceptor::ClientRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest
@@ -1163,7 +1126,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     virtual void receive_reply (
         PortableInterceptor::ClientRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1171,7 +1134,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     virtual void receive_exception (
         PortableInterceptor::ClientRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest
@@ -1191,8 +1154,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ClientRequestInterceptor ();
-
+    ClientRequestInterceptor (void);
     virtual ~ClientRequestInterceptor (void);
   private:
     ClientRequestInterceptor (const ClientRequestInterceptor &);
@@ -1311,7 +1273,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     virtual void receive_request (
         PortableInterceptor::ServerRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest
@@ -1320,7 +1282,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     virtual void send_reply (
         PortableInterceptor::ServerRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1328,7 +1290,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     virtual void send_exception (
         PortableInterceptor::ServerRequestInfo_ptr ri
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest
@@ -1348,8 +1310,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ServerRequestInterceptor ();
-
+    ServerRequestInterceptor (void);
     virtual ~ServerRequestInterceptor (void);
   private:
     ServerRequestInterceptor (const ServerRequestInterceptor &);
@@ -1458,8 +1419,7 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 
     virtual CORBA::Policy_ptr get_effective_policy (
         CORBA::PolicyType type,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1467,8 +1427,7 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 
     virtual void add_ior_component (
         const IOP::TaggedComponent & component,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1477,8 +1436,7 @@ class TAO_Export IORInfo : public virtual CORBA_Object
     virtual void add_ior_component_to_profile (
         const IOP::TaggedComponent & component,
         IOP::ProfileId profile_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1489,8 +1447,7 @@ class TAO_Export IORInfo : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    IORInfo ();
-
+    IORInfo (void);
     virtual ~IORInfo (void);
   private:
     IORInfo (const IORInfo &);
@@ -1610,8 +1567,7 @@ class TAO_Export IORInterceptor: public virtual Interceptor
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    IORInterceptor ();
-
+    IORInterceptor (void);
     virtual ~IORInterceptor (void);
   private:
     IORInterceptor (const IORInterceptor &);
@@ -1733,8 +1689,7 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    PolicyFactory ();
-
+    PolicyFactory (void);
     virtual ~PolicyFactory (void);
   private:
     PolicyFactory (const PolicyFactory &);
@@ -1931,7 +1886,7 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #endif /* end #if !defined */
 
     virtual CORBA::StringSeq * arguments (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1939,15 +1894,7 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual char * orb_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual IOP::CodecFactory_ptr codec_factory (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2006,7 +1953,7 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
       )) = 0;
 
     virtual PortableInterceptor::SlotId allocate_slot_id (
-        CORBA::Environment &ACE_TRY_ENV =
+                CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -2028,8 +1975,7 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ORBInitInfo ();
-
+    ORBInitInfo (void);
     virtual ~ORBInitInfo (void);
   private:
     ORBInitInfo (const ORBInitInfo &);
@@ -2157,8 +2103,7 @@ class TAO_Export ORBInitializer : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ORBInitializer ();
-
+    ORBInitializer (void);
     virtual ~ORBInitializer (void);
   private:
     ORBInitializer (const ORBInitializer &);
@@ -2168,16 +2113,14 @@ class TAO_Export ORBInitializer : public virtual CORBA_Object
 
 #endif /* end #if !defined */
 
-/// Register an ORBInitializer with the global ORBInitializer
-/// table.
-TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
-  ORBInitializer_ptr init,
-  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ /// Register an ORBInitializer with the global ORBInitializer
+ /// table.
+ TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
+   ORBInitializer_ptr init,
+   CORBA::Environment & = TAO_default_environment ());
 
 }
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
-
-// Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ForwardRequest &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version
@@ -2207,10 +2150,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::Inval
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ifndef */

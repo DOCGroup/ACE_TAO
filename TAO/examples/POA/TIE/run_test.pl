@@ -5,12 +5,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../../bin';
+require ACEutils;
 
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("ior");
+$iorfile = "ior";
 
 $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
@@ -26,41 +26,34 @@ unlink $iorfile_4;
 unlink $iorfile_5;
 unlink $iorfile_6;
 
-$SV = new PerlACE::Process ("server");
-$CL1 = new PerlACE::Process ("client",
-                             "-a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
-$CL2 = new PerlACE::Process ("client", "-e file://$iorfile_5 -f file://$iorfile_6");
-
-
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT");
 
 # In this example all the files are written out at the same time. So  make a
 # check only for the first file
-if (PerlACE::waitforfile_timed ($iorfile_1, 5) == -1) {
-    print STDERR "ERROR: cannot find ior files\n";
-    $SV->Kill (); 
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL1->SpawnWaitKill (60);
+$client  = Process::Create ($EXEPREFIX."client$EXE_EXT",
+                            "-a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
 
-if ($client != 0) {
-    print STDERR "ERROR: client 1 returned $client\n";
-    $status = 1;
+if ($client->TimedWait (60) == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $status = 1;
+  $client->Kill (); $client->TimedWait (1);
 }
 
-$client = $CL2->SpawnWaitKill (60);
+if (ACE::waitforfile_timed ($iorfile_5,1) == 0) {
+  $client  = Process::Create ($EXEPREFIX."client$EXE_EXT",
+                              " -e file://$iorfile_5 -f file://$iorfile_6");
 
-if ($client != 0) {
-    print STDERR "ERROR: client 2 returned $client\n";
+  if ($client->TimedWait (60) == -1) {
+    print STDERR "ERROR: client timedout\n";
     $status = 1;
-}
-
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+    $client->Kill (); $client->TimedWait (1);
+  }
 }
 
 unlink $iorfile_1;
@@ -69,5 +62,11 @@ unlink $iorfile_3;
 unlink $iorfile_4;
 unlink $iorfile_5;
 unlink $iorfile_6;
+
+$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
+  print STDERR "ERROR: couldn't terminate server nicely\n";
+  $status = 1;
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 exit $status;

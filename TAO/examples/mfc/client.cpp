@@ -7,60 +7,40 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
-    {
-      const char *orb_name = "";
+  const char *orb_name = "";
 
-      cout << "Initializing the ORB!" << endl;
-      CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
-                                                argv,
-                                                orb_name,
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  cout << "Initializing the ORB!" << endl;
+  CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            orb_name);
+  CORBA::Object_var orb_obj =
+    the_orb->resolve_initial_references ("RootPOA");
 
-      CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  PortableServer::POA_var the_root_poa =
+    PortableServer::POA::_narrow (orb_obj.in ());
+  PortableServer::POAManager_var the_poa_manager =
+    the_root_poa->the_POAManager ();
 
-      PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // Retrieving the servants IOR from a file
+  cout << "Reading the IOR!" << endl;
 
-      PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  const char *filename =
+    "file://ior.txt";
 
-      // Retrieving the servants IOR from a file
-      cout << "Reading the IOR!" << endl;
+  orb_obj =
+    the_orb->string_to_object (filename);
 
-      const char *filename =
-        "file://ior.txt";
+  cout << "Narrowing the IOR!" << endl;
 
-      orb_obj =
-        the_orb->string_to_object (filename, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  W32_Test_Interface_var mycall =
+    W32_Test_Interface::_narrow (orb_obj.in ());
 
-      cout << "Narrowing the IOR!" << endl;
+  cout << "Sending the Request!" << endl;
+  char *response = mycall->getresponse (1);
+  cout << "The answer ..." << response << endl;
 
-      W32_Test_Interface_var mycall =
-        W32_Test_Interface::_narrow (orb_obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      cout << "Sending the Request!" << endl;
-      char *response = mycall->getresponse (1);
-      cout << "The answer ..." << response << endl;
-
-      // Free up the string.
-      CORBA::string_free (response);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
-      return 1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  // Free up the string.
+  CORBA::string_free (response);
 
   return 0;
 }

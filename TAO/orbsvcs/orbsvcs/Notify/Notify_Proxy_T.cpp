@@ -22,8 +22,7 @@ TAO_Notify_Proxy<SERVANT_TYPE>::TAO_Notify_Proxy (void)
 template <class SERVANT_TYPE>
 TAO_Notify_Proxy<SERVANT_TYPE>::~TAO_Notify_Proxy (void)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Proxy\n"));
+  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Proxy\n"));
 }
 
 template <class SERVANT_TYPE> CORBA::ULong

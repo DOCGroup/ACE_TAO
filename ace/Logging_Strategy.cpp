@@ -97,8 +97,6 @@ ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
       else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SILENT")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SYSLOG")) == 0)
-        ACE_SET_BITS (this->flags_, ACE_Log_Msg::SYSLOG);
     }
 }
 
@@ -108,19 +106,12 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Logging_Strategy::parse_args");
   ACE_TCHAR *temp;
 
-  // Perform data member initializations.
-  this->thread_priority_mask_ = 0;
-  this->process_priority_mask_ = 0;
   this->flags_ = 0;
   this->wipeout_logfile_ = 0;
-  this->count_ = 0;
-  this->fixed_number_ = 0;
-  this->order_files_ = 0;
-  this->max_file_number_ = 1;
   this->interval_ = 0;
   this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:k:m:p:s:t:wn:o"), 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:m:p:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -135,27 +126,12 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           // Interval (in secs) at which logfile size is sampled.
           this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
           break;
-        case 'k':
-          // Ensure that the LOGGER flag is set
-          ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
-          delete [] this->logger_key_;
-          this->logger_key_ = ACE::strnew (get_opt.optarg);
-          break;
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
           this->max_size_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
           if (this->max_size_ == 0)
             this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
           this->max_size_ <<= 10;       // convert to KB
-          break;
-        case 'n':
-          // The max number for the log_file being created
-          this->max_file_number_ = ACE_OS::atoi (get_opt.optarg) - 1;
-          this->fixed_number_ = 1;
-          break;
-        case 'o':
-          // Log_files generation order
-          this->order_files_ = 1;
           break;
         case 'p':
           temp = get_opt.optarg;
@@ -190,8 +166,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
 #if defined (ACE_DEFAULT_LOGFILE)
   this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
 #else /* ACE_DEFAULT_LOGFILE */
-  ACE_NEW (this->filename_,
-           ACE_TCHAR[MAXPATHLEN + 1]);
+  ACE_NEW (this->filename_, ACE_TCHAR[MAXPATHLEN + 1]);
 
   // Get the temporary directory
   if (ACE_Lib_Find::get_temp_dir (this->filename_,
@@ -207,14 +182,12 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_OS::strcat (this->filename_,
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
-  this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
 }
 
 int
 ACE_Logging_Strategy::fini (void)
 {
   delete [] this->filename_;
-  delete [] this->logger_key_;
   return 0;
 }
 
@@ -252,8 +225,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                                           | ACE_Log_Msg::OSTREAM
                                           | ACE_Log_Msg::VERBOSE
                                           | ACE_Log_Msg::VERBOSE_LITE
-                                          | ACE_Log_Msg::SILENT
-                                          | ACE_Log_Msg::SYSLOG);
+                                          | ACE_Log_Msg::SILENT);
       // Check if OSTREAM bit is set
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Log_Msg::OSTREAM))
@@ -300,7 +272,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
   return ACE_LOG_MSG->open (ACE_LIB_TEXT ("Logging_Strategy"),
                             ACE_LOG_MSG->flags (),
-                            this->logger_key_);
+                            ACE_DEFAULT_LOGGER_KEY);
 }
 
 int
@@ -329,93 +301,22 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       ofstream *output_file = (ofstream *) ACE_LOG_MSG->msg_ostream ();
       output_file->close ();
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-      // Save current logfile to logfile.old analyse if it was set any
-      // fixed number for the log_files
-      if (fixed_number_)
-        {
-          if (max_file_number_ < 1) //we only want one file
-            {
-              // Just unlink the file.
-              ACE_OS::unlink (this->filename_);
-
-              // Open a new log file with the same name.
-              output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
-                                 ios::out);
-
-              // Release the lock previously acquired.
-              ACE_LOG_MSG->release ();
-              return 0;
-            }
-        }
-      count_++;
-
-      // Set the number of digits of the log_files labels.
-      int digits = 1, res = count_;
-      while((res = (res / 10))>0)
-        digits++;
-
-      if (ACE_OS::strlen (this->filename_) + digits <= MAXPATHLEN)
+      // Save current logfile to logfile.old
+      if (ACE_OS::strlen (this->filename_) + 4 <= MAXPATHLEN)   // 4 for ".old"
         {
           ACE_TCHAR backup[MAXPATHLEN+1];
 
-          // analyse if it was chosen the mode which will order the
-          // log_files
-          if (order_files_)
-            {
-              ACE_TCHAR to_backup[MAXPATHLEN+1];
+          ACE_OS::strcpy (backup, this->filename_);
+          ACE_OS::strcat (backup, ACE_LIB_TEXT (".old"));
 
-              // reorder the logs starting at the oldest (the biggest
-              // number) watch if we reached max_file_number_.
-              int max_num;
-              if (fixed_number_ && count_ > max_file_number_)
-                // count_ will always be bigger than max_file_number_,
-                // so do nothing so to always reorder files from
-                // max_file_number_.
-                max_num = max_file_number_;
-              else
-                max_num = count_;
-
-              for (int i = max_num ; i > 1 ;i--)
-                {
-                  ACE_OS::sprintf (backup,
-                                   ACE_LIB_TEXT ("%s.%d"),
-                                   this->filename_,
-                                   i);
-                  ACE_OS::sprintf (to_backup,
-                                   ACE_LIB_TEXT ("%s.%d"),
-                                   this->filename_,
-                                   i - 1);
-
-                  // Remove any existing old file; ignore error as
-                  // file may not exist.
-                  ACE_OS::unlink (backup);
-
-                  // Rename the current log file to the name of the
-                  // backup log file.
-                  ACE_OS::rename (to_backup, backup);
-                }
-              ACE_OS::sprintf (backup,
-                               ACE_LIB_TEXT ("%s.1"),
-                               this->filename_);
-            }
-          else
-            {
-              if (fixed_number_ && count_>max_file_number_) //start over from 1
-                count_ = 1;
-
-              ACE_OS::sprintf (backup,
-                               ACE_LIB_TEXT ("%s.%d"),
-                               this->filename_,
-                               count_);
-            }
-
-          // Remove any existing old file; ignore error as file may
+          // Remove any existing .old file; ignore error as file may
           // not exist.
           ACE_OS::unlink (backup);
 
           // Rename the current log file to the name of the backup log
           // file.
-          ACE_OS::rename (this->filename_, backup);
+          ACE_OS::rename (this->filename_,
+                          backup);
         }
       else
         ACE_ERROR ((LM_ERROR,

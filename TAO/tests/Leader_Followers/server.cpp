@@ -58,7 +58,8 @@ public:
 
       ACE_TRY
         {
-          this->orb_->run (ACE_TRY_ENV);
+          if (this->orb_->run (ACE_TRY_ENV) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

@@ -5,81 +5,85 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
 
-$status = 0;
-$server_conf = PerlACE::LocalFile ("server.conf");
-$client_conf = PerlACE::LocalFile ("client.conf");
+$client_conf="client.conf";
+$server_conf="server.conf";
 $iterations = 10000;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-
-$JSV = new PerlACE::Process ("vbj",
-                             "java_server"
-                             . " -D -OAid TPool"
-                             . " -D -OAthreadMax 0"
-                             . " -D -OAthreadMin 16");
-
-$JSV->IgnoreExeSubDir (1);
-
-$SV = new PerlACE::Process ("server",
-                            " -ORBSvcConf $server_conf"
-                            . " -o $iorfile -n 16");
-
-
-$CL = new PerlACE::Process ("client");
+$iorfile = "test.ior";
 
 print STDERR "================ Java server test\n";
 
 unlink $iorfile;
 
-$JSV->Spawn ();
+$SV = Process::Create ("vbj",
+		       "java_server",
+                       " -D -OAid TPool"
+                       ." -D -OAthreadMax 0"
+                       ." -D -OAthreadMin 16");
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $JSV->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
 for ($i = 1; $i < 40; $i += 4) {
-    $CL->Arguments ("-ORBSvcConf $client_conf "
-                    . " -k file://$iorfile "
-                    . " -n $i -i $iterations -p 10 -x");
+  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+			 " -ORBSvcConf client.conf "
+			 . " -k file://$iorfile "
+			 . " -n $i -i $iterations -p 10 -x");
 
-    if ($CL->SpawnWaitKill (120) != 0) {
-        print STDERR "ERROR: client returned $client\n";
-        $status = 1;
-    }
+  # Each iteration should take 100 seconds
+  $client = $CL->Wait ();
+  if ($client == -1) {
+    print STDERR "ERROR: client <$i> timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
 }
 
-$JSV->Kill ();
+$server = $SV->Terminate (); $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 print STDERR "================ C++ server test\n";
 
 unlink $iorfile;
 
-$SV->Spawn ();
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+                       " -ORBSvcConf $server_conf"
+                       . " -o $iorfile -n 16");
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
 for ($i = 1; $i < 40; $i += 4) {
-    $CL->Arguments (" -ORBSvcConf $client_conf "
-                    . " -k file://$iorfile "
-                    . " -n $i -i $iterations -p 10 -x");
+  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+			 " -ORBSvcConf client.conf "
+			 . " -k file://$iorfile "
+			 . " -n $i -i $iterations -p 10 -x");
 
-    if ($CL->SpawnWaitKill (120) != 0) {
-        print STDERR "ERROR: client returned $client\n";
-        $status = 1;
-    }
+  # Each iteration should take 100 seconds
+  $client = $CL->Wait ();
+  if ($client == -1) {
+    print STDERR "ERROR: client <$i> timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
 }
 
-$SV->Kill ();
+$server = $SV->Terminate (); $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-exit $status;
+exit 0;

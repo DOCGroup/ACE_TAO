@@ -8,10 +8,13 @@ ACE_RCSID(LongWrites, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 
+CORBA::ULong initial_event_size = 64 * 1024;
+CORBA::Long test_iterations = 50;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:p:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,11 +23,22 @@ parse_args (int argc, char *argv[])
       case 'o':
 	ior_output_file = get_opts.optarg;
 	break;
+
+      case 'p':
+        initial_event_size = ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'i':
+        test_iterations =  ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
 			   "-o <iorfile>"
+			   "-p <payload_size>"
+			   "-i <test_iterations>"
                            "\n",
                            argv [0]),
                           -1);
@@ -43,9 +57,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -64,7 +76,8 @@ main (int argc, char *argv[])
 
       Coordinator *coordinator_impl;
       ACE_NEW_RETURN (coordinator_impl,
-                      Coordinator,
+                      Coordinator (initial_event_size,
+                                   test_iterations),
                       1);
       PortableServer::ServantBase_var coordinator_owner_transfer(coordinator_impl);
 

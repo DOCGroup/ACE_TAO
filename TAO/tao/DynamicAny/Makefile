@@ -73,7 +73,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -161,15 +160,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -189,6 +187,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -318,8 +318,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -379,7 +394,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -467,15 +481,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -495,6 +508,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -624,8 +639,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -689,7 +719,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -777,15 +806,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -805,6 +833,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -934,8 +964,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -995,7 +1040,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1083,15 +1127,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1111,6 +1154,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -1240,8 +1285,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1319,7 +1379,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS.i DynamicAny.h \
  dynamicany_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1391,15 +1450,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1419,6 +1477,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -1548,8 +1608,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1611,7 +1686,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1699,15 +1773,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1727,6 +1800,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -1856,8 +1931,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1917,7 +2007,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2005,15 +2094,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2033,6 +2121,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -2162,8 +2252,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2225,7 +2330,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2313,15 +2417,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2341,6 +2444,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -2470,8 +2575,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2533,7 +2653,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2621,15 +2740,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2649,6 +2767,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -2778,8 +2898,23 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \

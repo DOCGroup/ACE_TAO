@@ -132,7 +132,6 @@ public:
                                "Catched exception:");
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     };
 
   void get_yadda (CORBA::Long result, 
@@ -210,9 +209,7 @@ main (int argc, char *argv[])
       // Activate POA to handle the call back.
       
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -248,14 +245,10 @@ main (int argc, char *argv[])
         }
       
       // ORB loop.
-      while (orb->work_pending (ACE_TRY_ENV) && number_of_replies > 0)
+      while (orb->work_pending () && number_of_replies > 0)
         {
-          ACE_TRY_CHECK;
-
-          orb->perform_work (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
-      ACE_TRY_CHECK;
 
       if (debug)
         {
@@ -278,7 +271,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

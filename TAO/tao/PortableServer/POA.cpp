@@ -374,17 +374,17 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                              ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
-  // Give ownership of the new map to the POA_var.  Note, that it
-  // is important for the POA_var to take ownership before
+  // Give ownership of the new map to the auto pointer.  Note, that it
+  // is important for the auto pointer to take ownership before
   // checking for exception since we may need to delete the new map.
-  PortableServer::POA_var new_poa = poa;
+  auto_ptr<TAO_POA> new_poa (poa);
 
   // Check for exception in construction of the POA.
   ACE_CHECK_RETURN (0);
 
   // Add to children map
   result = this->children_.bind (adapter_name,
-                                 poa);
+                                 new_poa.get ());
   if (result != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -402,13 +402,9 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
   // initialized, the application can initialize the POA by invoking
   // find_POA with a TRUE activate parameter.
 
-  // Everything is fine. Don't let the POA_var release the
+  // Everything is fine. Don't let the auto_ptr delete the
   // implementation.
-  (void) new_poa._retn ();  // We could do a "return new_poa._retn()"
-                            // but the return type doesn't match this
-                            // method's return type.
-
-  return poa;
+  return new_poa.release ();
 }
 
 PortableServer::POA_ptr
@@ -4166,7 +4162,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-      if (this->policies ().priority_bands () != 0)
+      if (this->policies ().priority_bands () == 0)
         {
           TAO_Priority_Acceptor_Filter
             filter (this->policies ().server_protocol ()->protocols_rep (),
@@ -4178,17 +4174,9 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                                      &filter,
                                                      ACE_TRY_ENV);
         }
-
-      else
-        {
-          data = this->orb_core_.create_stub_object (key,
-                                                     type_id,
-                                                     client_exposed_policies._retn (),
-                                                     this->acceptor_filter_,
-                                                     ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-        }
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+      ACE_CHECK_RETURN (0);
     }
   else
     {
@@ -4336,25 +4324,10 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
 
-  ACE_TRY
-    {
-      imr_admin->server_is_running (this->name ().c_str (),
-                                    curr_addr.in (),
-                                    svr.in (),
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      ACE_RE_THROW;
-    }
-  ACE_CATCHANY
-    {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-          CORBA::COMPLETED_NO));
-    }
-  ACE_ENDTRY;
+  imr_admin->server_is_running (this->name ().c_str (),
+                                curr_addr.in (),
+                                svr.in (),
+                                ACE_TRY_ENV);
   ACE_CHECK;
 
   if (TAO_debug_level > 0)
@@ -4400,7 +4373,9 @@ template class ACE_Array<PortableServer::ObjectId>;
 template class ACE_Array_Base<PortableServer::ObjectId>;
 
 //template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
+template class ACE_Auto_Basic_Ptr<TAO_POA>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
+template class ACE_Auto_Basic_Ptr<TAO_POA_Manager>;
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>;
 template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
@@ -4414,7 +4389,9 @@ template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 
 //template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
+template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Active_Object_Map>;
+template class auto_ptr<TAO_POA_Manager>;
 template class ACE_Node<TAO_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -4423,7 +4400,9 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
 
 //#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA_Manager>
 #pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
@@ -4437,6 +4416,8 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 
 //#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
+#pragma instantiate auto_ptr<TAO_POA>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map>
+#pragma instantiate auto_ptr<TAO_POA_Manager>
 #pragma instantiate ACE_Node<TAO_POA *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

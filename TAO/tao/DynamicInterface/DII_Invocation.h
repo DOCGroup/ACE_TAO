@@ -49,8 +49,7 @@ public:
                            const char *operation,
                            CORBA::ULong opname_len,
                            CORBA::Boolean argument_flag,
-                           TAO_ORB_Core *orb_core,
-                           int byte_order = TAO_ENCAP_BYTE_ORDER);
+                           TAO_ORB_Core *orb_core);
   // Constructor.
 
   int invoke (CORBA::ExceptionList_ptr exceptions,
@@ -76,8 +75,7 @@ public:
   TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *data,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean argument_flag,
-                                    const CORBA::Request_ptr req,
-                                    int byte_order = TAO_ENCAP_BYTE_ORDER);
+                                    const CORBA::Request_ptr req);
   // Constructor.
 
   int invoke (CORBA_Environment &TAO_IN_ENV =

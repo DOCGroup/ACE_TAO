@@ -13,7 +13,7 @@ my $STILL_ACTIVE = 259;
 
 ###############################################################################
 
-### Constructor and Destructor
+### Constructor
 
 sub new  
 {
@@ -22,24 +22,12 @@ sub new
     my $self = {};
     
     $self->{RUNNING} = 0;
-    $self->{IGNOREEXESUBDIR} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     
     bless ($self, $class);
     return $self;
-}
-
-sub DESTROY
-{
-    my $self = shift;
-    
-    if ($self->{RUNNING} == 1) {
-        print STDERR "ERROR: <", $self->{EXECUTABLE}, 
-                     "> still running upon object destruction\n";
-        $self->Kill ();             
-    }
 }
 
 ###############################################################################
@@ -55,17 +43,13 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
-    
-    if ($self->{IGNOREEXESUBDIR}) {
-        return $executable;
-    }
 
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
 
     $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
 
-    $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
+    $executable =~ s/\//\\/g;
 
     return $executable;
 }
@@ -94,17 +78,6 @@ sub CommandLine ()
     return $commandline;
 }
 
-sub IgnoreExeSubDir
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREEXESUBDIR} = shift;
-    }
-
-    return $self->{IGNOREEXESUBDIR};
-}
-
 ###############################################################################
 
 ### Spawning processes
@@ -117,28 +90,14 @@ sub Spawn ()
     my $self = shift;
 
     if ($self->{RUNNING} == 1) {
-        print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
-                     "> already running\n";
-        return -1;
+        print STDERR "ERROR: Cannot Spawn: <$self->{EXECUTABLE}> ",
+                     "already running\n";
+	return -1;
     }
 
     if (!defined $self->{EXECUTABLE}) {
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
 	    return -1;
-    }
-    
-    if ($self->{IGNOREEXESUBDIR} == 0) {
-        if (!-f $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
-                         "> not found\n";
-            return -1;
-        }
-
-        if (!-x $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
-                         "> not executable\n";
-            return -1;
-        }
     }
 
     Win32::Process::Create ($self->{PROCESS}, 
@@ -158,7 +117,6 @@ sub Spawn ()
     }
 
     $self->{RUNNING} = 1;
-    return 0;
 }
 
 
@@ -167,9 +125,9 @@ sub Spawn ()
 sub WaitKill ($)
 {
     my $self = shift;
-    my $timeout = shift;
+    my $maxtime = shift;
 
-    my $status = $self->TimedWait ($timeout);
+    my $status = $self->TimedWait ($maxtime);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -188,13 +146,13 @@ sub WaitKill ($)
 sub SpawnWaitKill ($)
 {
     my $self = shift;
-    my $timeout = shift;
+    my $maxtime = shift;
 
     if ($self->Spawn () == -1) {
         return -1;
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($maxtime);
 }
 
 
@@ -203,27 +161,18 @@ sub SpawnWaitKill ($)
 sub Kill ()
 {
     my $self = shift;
- 
-    if ($self->{RUNNING}) {
-        Win32::Process::Kill ($self->{PROCESS}, -1);
-    }
-    
+    Win32::Process::Kill ($self->{PROCESS}, -1);
 	$self->{RUNNING} = 0;
 }
 
 
-# Terminate the process and wait for it to finish
+# Termnate the process
 
-sub TerminateWaitKill ($)
+sub Terminate ()
 {
     my $self = shift;
-    my $timeout = shift;
-    
-    if ($self->{RUNNING}) {
-        Win32::Process::Kill ($self->{PROCESS}, 0);
-    }
-    
-    return $self->WaitKill ($timeout);
+    Win32::Process::Kill ($self->{PROCESS}, -1);
+	$self->{RUNNING} = 0;
 }
 
 
@@ -241,16 +190,16 @@ sub Wait ()
 
 # Wait for a process to exit with a timeout
 
-sub TimedWait ($)
+sub TimedWait
 {
     my $self = shift;
-    my $timeout = shift;
+    my $maxtime = shift;
 
     if (!$self->{RUNNING}) {
         return 0;
     }
 
-    if (Win32::Process::Wait ($self->{PROCESS}, $timeout * 1000) == 0) {
+    if (Win32::Process::Wait ($self->{PROCESS}, $maxtime * 1000) == 0) {
         return -1;
     }
 

@@ -20,11 +20,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_CORBA_OCTETSEQ_CI_)
-#define _CORBA_OCTETSEQ_CI_
+#if !defined (TAO_OCTETSEQ_CI)
+#define TAO_OCTETSEQ_CI
 
 // *************************************************************
-// Inline operations for class CORBA::OctetSeq_var
+// Inline operations for class CORBA_OctetSeq_var
 // *************************************************************
 
 ACE_INLINE
@@ -67,8 +67,8 @@ CORBA_OctetSeq_var::operator= (CORBA_OctetSeq *p)
   return *this;
 }
 
-ACE_INLINE ::CORBA_OctetSeq_var &
-CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p)
+ACE_INLINE CORBA_OctetSeq_var &
+CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p) // deep copy
 {
   if (this != &p)
     {
@@ -79,8 +79,7 @@ CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p)
         }
       else
         {
-          CORBA_OctetSeq *deep_copy =
-            new CORBA_OctetSeq (*p.ptr_);
+          CORBA_OctetSeq *deep_copy = new CORBA_OctetSeq (*p.ptr_);
           
           if (deep_copy != 0)
             {
@@ -250,8 +249,8 @@ CORBA_OctetSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined _TAO_CDR_OP_CORBA_OctetSeq_I_
-#define _TAO_CDR_OP_CORBA_OctetSeq_I_
+#if !defined TAO_TAO_CDR_OP_CORBA_OctetSeq_I
+#define TAO_TAO_CDR_OP_CORBA_OctetSeq_I
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
@@ -262,5 +261,5 @@ CORBA::Boolean TAO_Export operator>> (
     CORBA_OctetSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_OctetSeq_I_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_OctetSeq_I */
 

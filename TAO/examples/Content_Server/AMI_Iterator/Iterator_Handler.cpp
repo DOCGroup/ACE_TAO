@@ -140,9 +140,10 @@ Iterator_Handler::initialize_content_iterator
                          ACE_Addr::sap_any,
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
-                         ACE_DEFAULT_FILE_PERMS) == -1)
+                         S_IRUSR | S_IWUSR) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Could not open file %p\n"),
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("Could not open file %s"),
                 this->file_.get_path_name ()));
   else
     (*this->request_count_)++;
@@ -262,7 +263,9 @@ Iterator_Handler::spawn_viewer (void)
       return 0;
     case ACE_INVALID_PID:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error during viewer spawn of %p\n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error during viewer spawn of ")
+                         ACE_TEXT ("\"%s\""),
                          opts.command_line_buf ()),
                         -1);
     default:

@@ -89,9 +89,8 @@ main (int argc, char *argv[])
         poa_manager->activate (ACE_TRY_ENV);
         ACE_TRY_CHECK;
 
-        orb->run (ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-
+        if (orb->run () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
         ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
         root_poa->destroy (1, 1, ACE_TRY_ENV);

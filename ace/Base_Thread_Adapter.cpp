@@ -87,8 +87,7 @@ ACE_Base_Thread_Adapter::thr_desc_log_msg (void)
 // be an extern "C" to make certain compilers happy...
 
 #if defined (ACE_PSOS)
-extern "C" void 
-ace_thread_adapter (unsigned long args)
+extern "C" void ace_thread_adapter (unsigned long args)
 {
   ACE_OS_TRACE ("ace_thread_adapter");
 
@@ -107,8 +106,7 @@ ace_thread_adapter (unsigned long args)
   thread_args->invoke ();
 }
 #else /* ! defined (ACE_PSOS) */
-extern "C" void * 
-ace_thread_adapter (void *args)
+extern "C" void * ace_thread_adapter (void *args)
 {
   ACE_OS_TRACE ("ace_thread_adapter");
 

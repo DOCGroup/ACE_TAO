@@ -241,12 +241,6 @@ TAO_Stub::base_profiles (void)
   return this->base_profiles_;
 }
 
-ACE_INLINE const TAO_MProfile *
-TAO_Stub::forward_profiles (void) const
-{
-  return this->forward_profiles_;
-}
-
 
 ACE_INLINE TAO_ORB_Core*
 TAO_Stub::orb_core (void) const
@@ -323,7 +317,7 @@ TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
 ACE_INLINE TAO_Stub *
 TAO_Stub_Auto_Ptr::operator-> () const
 {
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator->");
+  ACE_TRACE ("auto_ptr::operator->");
   return this->get ();
 }
 

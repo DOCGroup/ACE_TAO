@@ -40,7 +40,6 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -94,9 +93,9 @@ FTP_Server_Callback::handle_end_stream (void)
 // }
 
 Server::Server (void)
+  : reactive_strategy_ (TAO_AV_CORE::instance ()->orb (),
+                        TAO_AV_CORE::instance ()->poa ())
 {
-  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
-                           TAO_AV_CORE::instance ()->poa ());
 }
 
 AVStreams::protocolSpec
@@ -292,7 +291,7 @@ template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev,
 template class TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Server,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,4 +1,5 @@
-// ================================================================
+
+//=============================================================================
 /**
  *  @file   Object_Loader.h
  *
@@ -6,13 +7,14 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-// ================================================================
+//=============================================================================
+
 
 #ifndef TAO_OBJECT_LOADER_H
 #define TAO_OBJECT_LOADER_H
 #include "ace/pre.h"
 
-#include "tao/Exception.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,11 +29,8 @@
  * ORB.
  *
  * Many services and components of the ORB can be dynamically
- * loaded, often this components are returned to the application via
- * an object reference (CORBA::Object_ptr).  This class is used to
- * dynamically load such components, and encapsulate the creation of
- * the object reference.
- *
+ * loaded, this is the class used to implement ....
+ * @@ TODO
  */
 class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {
@@ -48,7 +47,7 @@ public:
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    ACE_THROW_SPEC (()) = 0;
 };
 
 #if defined (__ACE_INLINE__)

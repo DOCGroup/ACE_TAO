@@ -112,18 +112,8 @@ int
 Logging_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the Telecom Log Service\n", __FILE__));
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return -1;
-    }
-  ACE_ENDTRY;
+  if (this->orb_->run () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
   return 0;
 }

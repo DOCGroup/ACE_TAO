@@ -6,7 +6,7 @@
 //    tests
 //
 // = FILENAME
-//    DLL_Test.cpp
+ //    DLL_Test.cpp
 //
 // = DESCRIPTION
 //    This test illustrates the use of <ACE_DLL> wrapper class.
@@ -16,6 +16,8 @@
 //
 // ============================================================================
 
+#define ACE_BUILD_SVC_DLL
+
 #include "test_config.h"
 #include "DLL_Test.h"
 #include "ace/DLL.h"
@@ -23,13 +25,22 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-#if defined (ACE_WIN32) && defined (_DEBUG) 
-# define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#else /* ACE_WIN32 && _DEBUG */
-# define OBJ_SUFFIX ACE_DLL_SUFFIX
-#endif /* ACE_WIN32 && _DEBUG */
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define OBJ_PREFIX ACE_TEXT ("./") ACE_DLL_PREFIX
+// Considering UNIX OS to be default. On Win32 platforms, the symbols
+// are got form the .exe as one cant have .exe and .dll for the same
+// .cpp. Also, on Win32 platforms one cant use the .obj to obtain
+// symbols dynamically at runtime.
+
+#if defined (ACE_WIN32)
+#  define OBJ_SUFFIX ACE_TEXT (".exe")
+#  define OBJ_PREFIX ACE_TEXT ("")
+#else
+#  define OBJ_SUFFIX ACE_DLL_SUFFIX
+#  define OBJ_PREFIX "./" ACE_DLL_PREFIX
+#endif /*ACE_WIN32*/
 
 ACE_TCHAR const *
 cdecl_decoration (ACE_TCHAR const *func_name)
@@ -45,12 +56,30 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 #endif /* __BORLANDC__ */
 }
 
-// Declare the type of the symbol:
-typedef Hello *(*Hello_Factory)(void);
+// This function returns the Hello object pointer.
+
+extern "C" ACE_Svc_Export Hello *get_hello (void);
+
+Hello *
+get_hello (void)
+{
+  Hello *hello = 0;
+
+  ACE_NEW_RETURN (hello,
+                  Hello,
+                  NULL);
+
+  return hello;
+}
+
+typedef Hello *(*TC) (void);
 
 int
-main (int, ACE_TCHAR *[])
+main (int argc, ACE_TCHAR *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
 // Protection against this test being run on platforms not supporting Dlls.
@@ -68,7 +97,7 @@ main (int, ACE_TCHAR *[])
 
   // Just because the ANSI C++ spec says you can no longer cast a
   // void* to a function pointer. Doesn't allow:
-  // TC f = (Hello_Factory) dll.symbol ("get_hello");
+  // TC f = (TC) dll.symbol ("get_hello");
   void *foo;
 
   ACE_TCHAR const *cdecl_str = cdecl_decoration (ACE_TEXT ("get_hello"));
@@ -76,14 +105,14 @@ main (int, ACE_TCHAR *[])
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
-  Hello_Factory factory = ACE_reinterpret_cast (Hello_Factory, tmp);
-  if (factory == 0)
+  TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
+  if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
 		       dll.error ()),
                       -1);
 
-  auto_ptr<Hello> my_hello (factory ());
+  auto_ptr<Hello> my_hello (f ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();

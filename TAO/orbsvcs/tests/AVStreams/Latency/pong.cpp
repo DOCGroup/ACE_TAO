@@ -28,7 +28,7 @@ ACE_Throughput_Stats send_latency;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:b:d");
+  ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:b:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,9 +70,6 @@ parse_args (int argc, char *argv[])
       case 'x':
         respond = 0;
         break;
-      case 'd':
-        TAO_debug_level++;
-        break;
 
       case '?':
       default:
@@ -112,30 +109,29 @@ int main (int argc, char *argv[])
 
       parse_args (argc, argv);
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
                                             argv);
-
+      
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-
+      
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-
+      
       PortableServer::POAManager_var mgr
         = poa->the_POAManager ();
-
+      
       mgr->activate ();
-
+      
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy,
+                      Reactive_Strategy (orb.in (), poa.in ()),
                       1);
-      reactive_strategy->init (orb.in (), poa.in ());
       TAO_MMDevice *mmdevice_impl;
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
@@ -188,9 +184,9 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      orb->run ();
-      ACE_TRY_CHECK;
-
+      ACE_Time_Value tv (120, 0);
+      if (orb->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
@@ -201,6 +197,8 @@ int main (int argc, char *argv[])
 
       send_latency.dump_results ("Send", gsf);
 
+      // root_poa->destroy (1, 1, ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -297,9 +295,8 @@ Ping_Send::get_callback (const char *,
 }
 
 Ping_Send_Callback::Ping_Send_Callback (void)
-  :count_ (0)
 {
-  this->timeout_ = ACE_Time_Value (2);
+  this->timeout_ = ACE_Time_Value (0, milliseconds * 1000);
 
   this->frame_.size (message_size);
   this->frame_.wr_ptr (message_size);
@@ -315,16 +312,7 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 Ping_Send_Callback::handle_timeout (void *)
 {
-
-  this->count_++;
-
-  ACE_DEBUG ((LM_DEBUG, "Ping timeout frame %d\n", this->count_));
-
-  if (this->count_ > 10)
-    {
-      TAO_AV_CORE::instance ()->orb ()->shutdown ();
-      return 0;
-    }
+  // ACE_DEBUG ((LM_DEBUG, "ping timeout\n"));
 
   ACE_hrtime_t stamp = ACE_OS::gethrtime ();
   ACE_OS::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
@@ -362,8 +350,8 @@ template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A, TAO_VDev,
 template class TAO_FDev<TAO_FlowProducer, Pong_Recv>;
 template class TAO_FDev<Ping_Send, TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndpoint_A, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_FDev<TAO_FlowProducer, Ping_Recv>
-#pragma instantiate TAO_FDev<Pong_Send, TAO_FlowConsumer>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndpoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, Ping_Recv>;
+#pragma instantiate TAO_FDev<Pong_Send, TAO_FlowConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

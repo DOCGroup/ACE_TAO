@@ -76,9 +76,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
-    //ACE_DEBUG ((LM_DEBUG,
-    //            "\n(%P|%t) TAO_Muxed_TMS::dispatch_reply: id = %d\n",
-    //            params.request_id_));
   }
 
   if (result != 0)
@@ -89,15 +86,10 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                     ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
                     result));
 
-      // This return value means that the mux strategy was not able
-      // to find a registered reply handler, either because the reply
-      // was not our reply - just forget about it - or it was ours, but
-      // the reply timed out - just forget about the reply.
-      return 0;
+      return -1;
     }
 
   // Dispatch the reply.
-  // They return 1 on success, and -1 on failure.
   return rd->dispatch_reply (params);
 
   // No need for idling Transport, it would have got idle'd soon after

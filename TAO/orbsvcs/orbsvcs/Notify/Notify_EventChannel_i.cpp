@@ -19,10 +19,9 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
   :lock_ (0),
    destory_child_POAs_ (0),
    channel_factory_ (my_factory),
-   channel_objects_factory_ (TAO_Notify_Factory::
-                             get_channel_objects_factory ()),
+   channel_objects_factory_ (TAO_Notify_Factory::get_channel_objects_factory ()),
    poa_factory_ (TAO_Notify_Factory::get_poa_factory ()),
-   event_manager_objects_factory_ (TAO_Notify_Factory::create_event_manager_objects_factory ()),
+   event_manager_objects_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
    default_op_ (CosNotifyChannelAdmin::OR_OP),
    default_id_ (0),
    event_listener_list_ (0)
@@ -33,8 +32,7 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
 // Implementation skeleton destructor
 TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"in EC dtor\n"));
+  ACE_DEBUG ((LM_DEBUG,"in EC dtor\n"));
   // Cleanup all resources..
 
   delete this->event_manager_;
@@ -43,8 +41,6 @@ TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 
   this->channel_factory_->event_channel_destroyed (this->channel_id_);
   channel_factory_->_remove_ref ();
-
-  delete event_manager_objects_factory_;
 }
 
 void
@@ -417,7 +413,7 @@ template class ACE_Unbounded_Set_Iterator<CosNotifyChannelAdmin::AdminID>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID, CosNotifyChannelAdmin::AdminIDSeq>
+#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID, CosNotifyChannelAdmin::AdminIDSeq>;
 #pragma instantiate TAO_Notify_ID_Pool<CosNotifyChannelAdmin::AdminID>
 
 #pragma instantiate ACE_Unbounded_Set<CosNotifyChannelAdmin::AdminID>

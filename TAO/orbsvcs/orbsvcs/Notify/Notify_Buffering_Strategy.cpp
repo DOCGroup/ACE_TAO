@@ -61,8 +61,7 @@ TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
     }
   else if (this->order_policy_ == CosNotification::PriorityOrder)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "enqueue in priority order\n"));
+      ACE_DEBUG ((LM_DEBUG, "enqueue in priority order\n"));
       result = msg_queue->enqueue_prio (mb, tv);
     }
   else  // CosNotification::DeadlineOrder
@@ -73,10 +72,7 @@ TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
     }
 
   if (result == -1) // we could not enqueue successfully
-    {
-      ACE_DEBUG ((LM_DEBUG, "Panic! failed to enqueue event"));
-      return; // behave as if we discarded this event.
-    }
+    return; // behave as if we discarded this event.
 
   // increment the global count of events.
   (*queue_length_)++;

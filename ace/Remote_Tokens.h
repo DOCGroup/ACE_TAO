@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
 #include "ace/pre.h"
@@ -26,8 +27,6 @@
 #include "ace/Synch_Options.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Request_Reply.h"
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 /**
  * @class ACE_Remote_Token_Proxy
@@ -305,8 +304,6 @@ private:
   ACE_TSS_Connection (const ACE_TSS_Connection &);
   void operator= (const ACE_TSS_Connection &);
 };
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Remote_Tokens.i"

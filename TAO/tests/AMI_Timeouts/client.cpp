@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- *  A client, which uses the AMI callback model and timeouts.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    A client, which uses the AMI callback model.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -21,30 +25,34 @@
 #include "timeout_i.h"
 #include "timeout_client.h"
 
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
+ACE_RCSID(AMI, client, "$Id$")
 
 const char *ior = "file://test.ior";
-unsigned int msec = 50;
+int nthreads = 5;
+int niterations = 5;
+int debug = 0;
+int number_of_replies = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:t:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:n:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        debug = 1;
         break;
       case 'k':
         ior = get_opts.optarg;
         break;
-      case 't':
-        msec = ACE_OS::atoi (get_opts.optarg);
+      case 'n':
+        nthreads = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'i':
+        niterations = ACE_OS::atoi (get_opts.optarg);
         break;
       case '?':
       default:
@@ -52,7 +60,8 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-d "
                            "-k <ior> "
-                           "-t <timeout in ms> "
+                           "-n <nthreads> "
+                           "-i <niterations> "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,8 +73,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -91,16 +99,14 @@ main (int argc, char *argv[])
         }
 
       // Activate POA to handle the call back.
-
+      
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-
+      
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -120,28 +126,35 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      TimeoutClient* client = new TimeoutClient (orb.in (),
+      TimeoutClient* client = new TimeoutClient (orb,
                                                  timeout_var.in (),
-                                                 timeoutHandler_var.in (),
-                                                 &timeoutHandler_i,
-                                                 msec);
+                                                 timeoutHandler_var.in ());
 
       client->activate ();
-
+      
       // ORB loop.
-      orb->run ();  // Fetch responses
+      ACE_Time_Value time (1,0); // 1 s
+      orb->run (time);  // Fetch responses
 
-      ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
+                      (nthreads*niterations) - number_of_replies));
+        }
+
+
+
+      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+                           "Catched exception:");
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -9,7 +9,7 @@
 //    Quoter_i.h
 //
 // = AUTHOR
-//    Darrell Brunsch <brunsch@uci.edu>
+//    Darrell Brunsch
 //
 // ============================================================================
 

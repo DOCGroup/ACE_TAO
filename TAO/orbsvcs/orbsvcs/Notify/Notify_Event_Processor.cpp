@@ -18,7 +18,6 @@ TAO_Notify_Event_Processor::TAO_Notify_Event_Processor (TAO_Notify_Event_Manager
    lookup_task_ (0),
    emo_factory_ (0)
 {
-  this->emo_factory_ = event_manager_->resource_factory ();
 }
 
 TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
@@ -29,6 +28,9 @@ TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
 void
 TAO_Notify_Event_Processor::init (CORBA::Environment& ACE_TRY_ENV)
 {
+  this->emo_factory_ =
+    TAO_Notify_Factory::get_event_manager_objects_factory ();
+
   this->lookup_task_ = this->emo_factory_->create_lookup_task (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -46,14 +48,9 @@ TAO_Notify_Event_Processor::shutdown (CORBA::Environment & ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event,
-                                                    TAO_Notify_EventSource* event_source,
-                                                    CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV)
 {
   // TODO: use cache allocator here.
-  // @@ Pradeep: you shouldn't be allocating at all!  If this must go
-  // into a queue then the processing queue should make the
-  // allocation, that way the single threaded case works just fine.
   TAO_Notify_Source_Filter_Eval_Command* mb =
     new TAO_Notify_Source_Filter_Eval_Command (this, event, event_source);
 
@@ -61,9 +58,7 @@ TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event,
 }
 
 void
-TAO_Notify_Event_Processor::lookup_subscriptions (TAO_Notify_Event* event,
-                                                  TAO_Notify_EventSource* /*event_source*/,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Processor::lookup_subscriptions (TAO_Notify_Event* event, TAO_Notify_EventSource* /*event_source*/, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Notify_Lookup_Command* lookup =
     new TAO_Notify_Lookup_Command (this, event, this->event_manager_->event_map ());

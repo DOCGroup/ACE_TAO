@@ -2,13 +2,13 @@
 
 //============================================================================
 //
-//  = FILENAME
+//  =FILENAME
 //     Collocation_Test.h
 //
-//  = DESCRIPTION
+//  =DESCRIPTION
 //     Server class to perform testing of TAO's collocation mechanism.
 //
-//  = AUTHOR
+//  =AUTHOR
 //     Nanbor Wang
 //
 //=============================================================================
@@ -16,13 +16,11 @@
 #if !defined (TAO_COLLOCATION_TEST_H)
 #define TAO_COLLOCATION_TEST_H
 
-#include "Diamond_i.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "Diamond_i.h"
 
 class Collocation_Test
 {

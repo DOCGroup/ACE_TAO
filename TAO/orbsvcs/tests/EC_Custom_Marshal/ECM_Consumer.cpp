@@ -1,17 +1,16 @@
 // $Id$
 
-#include "ECM_Consumer.h"
-#include "ECM_Data.h"
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
 
+#include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
-#include "tao/Timeprobe.h"
-
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
+#include "ECM_Consumer.h"
+#include "ECM_Data.h"
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Consumer, "$Id$")
 
@@ -34,7 +33,7 @@ Driver::Driver (void)
 {
 }
 
-// ****************************************************************
+
 
 int
 Driver::run (int argc, char* argv[])
@@ -47,9 +46,7 @@ Driver::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -116,10 +113,7 @@ Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
@@ -154,9 +148,8 @@ Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (orb->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       this->disconnect_consumers (ACE_TRY_ENV);

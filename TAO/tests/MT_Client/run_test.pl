@@ -5,60 +5,63 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../bin';
+require ACEutils;
+use Cwd;
 
-$client_conf = PerlACE::LocalFile ("client.global.conf");
-$server_conf = PerlACE::LocalFile ("server.conf");
-$client_process = "client";
-$debug_level = '0';
-$threads = '1';
+$cwd = getcwd();
+$client_conf="$cwd$DIR_SEPARATOR" ."client.global.conf";
+$client_process="client";
+$debug_level='0';
+$threads='1';
 $status = 0;
 
+ACE::checkForTarget($cwd);
 foreach $i (@ARGV) {
-    if ($i eq '-tss') {
-        $client_conf = PerlACE::LocalFile ("client.tss.conf");
-    } elsif ($i eq '-debug') {
-        $debug_level = '1';
-    } elsif ($i eq '-creation') {
-        $client_process = 'orb_creation';
-        $threads='2';
-    }
+  if ($i eq '-tss') {
+    $client_conf = "$cwd$DIR_SEPARATOR" . "client.tss.conf";
+  } elsif ($i eq '-debug') {
+    $debug_level = '1';
+  } elsif ($i eq '-creation') {
+    $client_process = 'orb_creation';
+    $threads='2';
+  }
 }
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfile = "$cwd$DIR_SEPARATOR" ."server.ior";
 
 unlink $iorfile;
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+                       " -ORBsvcconf " . "$cwd$DIR_SEPARATOR" ."server.conf ".
+                       " -ORBdebuglevel $debug_level"
+                       . " -o $iorfile");
 
-$SV = new PerlACE::Process ("server", "-ORBsvcconf $server_conf -ORBdebuglevel $debug_level -o $iorfile");
-$CL = new PerlACE::Process ($client_process, 
-                            "-ORBsvcconf $client_conf "
-                            . "-ORBdebuglevel $debug_level "
-                            . "-k file://$iorfile "
-                            . "-n $threads -i 1000 -x");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
+if (ACE::waitforfile_timed ($iorfile, 30) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (240);
+$CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
+                       " -ORBsvcconf $client_conf "
+                       . "-ORBdebuglevel $debug_level"
+                       . " -k file://$iorfile "
+                       . " -n $threads -i 1000 "
+                       . " -x");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+$client = $CL->TimedWait (240);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
 }
 
-$server = $SV->WaitKill (30);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+$server = $SV->TimedWait (30);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  $status = 1;
 }
-
 
 unlink $iorfile;
 

@@ -1,18 +1,31 @@
 #
-# Makefile for building the RMCast Send_File ace examples
-#
+ # Makefile for building the RMCast Send_File ace examples
+ #
 
-NAMES = \
-	Receiver \
-	Sender
+ !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+ TESTS = \
+        Receiver \
+        Sender
+
+all_tests: $(TESTS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+        $(ACE_RMCAST_LIB)
+
+$(TESTS):
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
-CFLAGS = $(ACE_CFLAGS) $(ACE_RMCAST_CFLAGS)
+CFLAGS = $(ACE_CFLAGS)
 
 CPPDIR = .
 
-LIBFILES = $(ACE_LIB) $(ACE_RMCAST_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(ACE_RMCAST_LIB)
 
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

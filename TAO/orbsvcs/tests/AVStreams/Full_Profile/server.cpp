@@ -44,7 +44,6 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -76,11 +75,10 @@ FTP_Server_Callback::handle_end_stream (void)
 }
 
 Server::Server (void)
-  :orb_ (TAO_AV_CORE::instance ()->orb ()),
+  :reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
+   orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
-  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
-                           TAO_AV_CORE::instance ()->poa ());
 }
 
 AVStreams::protocolSpec

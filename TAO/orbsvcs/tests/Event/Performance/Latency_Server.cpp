@@ -2,7 +2,6 @@
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
@@ -49,7 +48,7 @@ main (int argc, char *argv [])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_MESSAGING == 1)
       CORBA::Object_var manager_object =
         orb->resolve_initial_references ("ORBPolicyManager",
                                          ACE_TRY_ENV);
@@ -81,9 +80,7 @@ main (int argc, char *argv [])
 #endif /* TAO_HAS_MESSAGING */
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),

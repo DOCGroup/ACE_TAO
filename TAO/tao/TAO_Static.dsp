@@ -123,10 +123,6 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Timeout_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Base_Connection_Property.h
 # End Source File
 # Begin Source File
@@ -167,10 +163,6 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Encaps_Codec.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Cleanup_Func_Registry.h
 # End Source File
 # Begin Source File
@@ -184,14 +176,6 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CodecFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -467,6 +451,10 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Sent_Callback.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -644,6 +632,10 @@ SOURCE=.\Protocol_Factory.h
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.h
 # End Source File
 # Begin Source File
 
@@ -1179,6 +1171,10 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Sent_Callback.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
@@ -1312,6 +1308,10 @@ SOURCE=.\Private_Connection_Descriptor.inl
 # Begin Source File
 
 SOURCE=.\Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.inl
 # End Source File
 # Begin Source File
 
@@ -1519,10 +1519,6 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Timeout_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Base_Connection_Property.cpp
 # End Source File
 # Begin Source File
@@ -1563,10 +1559,6 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Encaps_Codec.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Cleanup_Func_Registry.cpp
 # End Source File
 # Begin Source File
@@ -1580,14 +1572,6 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CodecFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
@@ -1612,6 +1596,10 @@ SOURCE=.\Connector_Registry.cpp
 # Begin Source File
 
 SOURCE=.\CONV_FRAMEC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES.cpp
 # End Source File
 # Begin Source File
 
@@ -1815,6 +1803,10 @@ SOURCE=.\IOPC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOPS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
@@ -1836,6 +1828,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.cpp
 # End Source File
 # Begin Source File
 
@@ -1959,6 +1955,10 @@ SOURCE=.\PollableC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PollableS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
@@ -1996,6 +1996,10 @@ SOURCE=.\Protocol_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.cpp
 # End Source File
 # Begin Source File
 
@@ -2060,6 +2064,14 @@ SOURCE=.\RT_Protocols_Hooks.cpp
 # Begin Source File
 
 SOURCE=.\RTCORBAC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS_T.cpp
 # End Source File
 # Begin Source File
 
@@ -2132,6 +2144,10 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TAOC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 

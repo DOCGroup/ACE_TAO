@@ -5,11 +5,8 @@
 #include "ORBInitInfo.h"
 #include "ORB_Core.h"
 #include "StringSeqC.h"
-#include "CodecFactory.h"
 
-ACE_RCSID (TAO,
-           ORBInitInfo,
-           "$Id$")
+ACE_RCSID(tao, ORBInitInfo, "$Id$")
 
 
 TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
@@ -17,8 +14,7 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                                   char *argv[])
   : orb_core_ (orb_core),
     argc_ (argc),
-    argv_ (argv),
-    codec_factory_ ()
+    argv_ (argv)
 {
 }
 
@@ -67,16 +63,6 @@ TAO_ORBInitInfo::orb_id (CORBA::Environment &ACE_TRY_ENV)
   // In accordance with the C++ mapping for strings, return a copy.
 
   return CORBA::string_dup (this->orb_core_->orbid ());
-}
-
-IOP::CodecFactory_ptr
-TAO_ORBInitInfo::codec_factory (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->check_validity (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
-
-  return &(this->codec_factory_);
 }
 
 void
@@ -150,11 +136,7 @@ TAO_ORBInitInfo::add_client_request_interceptor (
                                     ACE_TRY_ENV);
 #else
   ACE_UNUSED_ARG (interceptor);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA_SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
-                 ENOTSUP),
-               CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -174,11 +156,7 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 
 #else
   ACE_UNUSED_ARG (interceptor);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA_SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
-                 ENOTSUP),
-               CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 

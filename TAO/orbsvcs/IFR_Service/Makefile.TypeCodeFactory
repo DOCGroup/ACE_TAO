@@ -13,7 +13,6 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO_IFR_Client -lTAO -lACE
-ACE_SHLIBS += -lTAO_IFR_Client -lTAO -lACE
 
 LIBNAME = libTypeCodeFactory_DLL
 LIB = $(LIBNAME).a
@@ -41,8 +40,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-
-LDFLAGS += -I$(TAO_ROOT)/tao
 
 realclean: clean
 

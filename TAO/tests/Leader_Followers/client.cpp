@@ -205,7 +205,9 @@ public:
           ACE_Time_Value timeout (0,
                                   event_loop_timeout_for_this_thread * 1000);
 
-          this->orb_->run (timeout, ACE_TRY_ENV);
+          if (this->orb_->run (timeout,
+                               ACE_TRY_ENV) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));

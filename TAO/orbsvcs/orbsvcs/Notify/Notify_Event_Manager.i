@@ -6,17 +6,13 @@
 #include "tao/corba.h"
 
 ACE_INLINE void
-TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event,
-                                          TAO_Notify_EventSource* event_source,
-                                          CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV)
 {
   if (admin_properties_->reject_new_events () == 1
       && admin_properties_->queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
-  this->event_processor_->evaluate_source_filter (event,
-                                                  event_source,
-                                                  ACE_TRY_ENV);
+  this->event_processor_->evaluate_source_filter (event, event_source, ACE_TRY_ENV);
   // Start by checking if the event passes through the Source's filter.
 }
 
@@ -76,10 +72,4 @@ ACE_INLINE TAO_Notify_AdminProperties*
 TAO_Notify_Event_Manager::admin_properties (void)
 {
   return this->admin_properties_;
-}
-
-ACE_INLINE TAO_Notify_EMO_Factory*
-TAO_Notify_Event_Manager::resource_factory (void)
-{
-  return this->emo_factory_;
 }

@@ -38,9 +38,9 @@
 #endif /* _MSC_VER */
 
 /// Policy factory for all RTCORBA related policies.
-class TAO_Export TAO_RT_PolicyFactory
-  : public PortableInterceptor::PolicyFactory,
-    public CORBA::LocalObject
+class TAO_Export TAO_RT_PolicyFactory :
+  public PortableInterceptor::PolicyFactory,
+  public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -49,7 +49,6 @@ public:
                                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
-
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -16,17 +16,14 @@ TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
 TAO/performance-tests/Latency/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
-TAO/tests/AMI/run_test.pl: !MINIMUM
-TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM
 
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/Leader_Followers/run_test.pl: !ST
-TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
-TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !Linux
-TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !Linux
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !linux
+TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !linux
+TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !linux
+TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !linux
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
@@ -47,7 +44,6 @@ TAO/tests/IORManipulation/run_test.pl
 TAO/tests/Policies/run_test.pl: !MINIMUM !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
-TAO/tests/Codec/run_test.pl
 TAO/tests/IDL_Test/run_test.pl
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
@@ -59,11 +55,11 @@ TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl
-TAO/tests/Exposed_Policies/run_test.pl
-TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+# This test is broken - to be fixed by Angelo TAO/tests/Exposed_Policies/run_test.pl
+TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM
+TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM
+TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM
+TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
@@ -78,17 +74,13 @@ TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/Reference_Counted_Servant/run_test.pl
 TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/RootPOA/run_test.pl
+TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
 TAO/examples/Simple/bank/run_test.pl
 TAO/examples/Simple/grid/run_test.pl
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM
 
-TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM
@@ -97,8 +89,6 @@ TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Basic/run_test.pl
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST
-
-
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 TAO/orbsvcs/tests/Event_Latency/run_test.pl

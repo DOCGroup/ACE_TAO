@@ -6,7 +6,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LSRC = CosEvent_Service.cpp
+LSRC = CosEvent_Service.cpp \
 
 ES_OBJS=$(LSRC:.cpp=.o)
 

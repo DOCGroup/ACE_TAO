@@ -22,9 +22,7 @@
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PortableServer,
-           Object_Adapter,
-           "$Id$")
+ACE_RCSID(tao, Object_Adapter, "$Id$")
 
 // Timeprobes class
 #include "tao/Timeprobe.h"
@@ -520,13 +518,18 @@ TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
 void
 TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Only set the auto_ptr if poa_manager is allocated here.
+  auto_ptr<TAO_POA_Manager> safe_poa_manager;
+
   TAO_POA_Manager *poa_manager;
   ACE_NEW_THROW_EX (poa_manager,
                     TAO_POA_Manager (*this),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  PortableServer::POAManager_var safe_poa_manager = poa_manager;
+  ACE_AUTO_PTR_RESET (safe_poa_manager,
+                      poa_manager,
+                      TAO_POA_Manager);
 
 #if 0
   TAO_POA_Policies root_poa_policies (this->orb_core_,
@@ -550,9 +553,8 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 #endif /* 0 */
 
   // Construct a new POA
-  TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   ACE_NEW_THROW_EX (this->root_,
-                    TAO_POA (root_poa_name,
+                    TAO_POA (TAO_DEFAULT_ROOTPOA_NAME,
                              *poa_manager,
                              policies,
                              0,
@@ -569,10 +571,11 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // been destroyed yet or not.
   this->root_->_add_ref ();
 
-  // Release the POA_Manager_var since we got here without error.  The
-  // TAO_POA object takes ownership of the POA_Manager object
-  // (actually it shares the ownership with its peers).
-  (void) safe_poa_manager._retn ();
+  // Release the auto_ptr since we got here without error, the TAO_POA
+  // object takes ownership of the POA_Manager object (actually it
+  // shares the ownership with its peers).
+
+  (void) safe_poa_manager.release ();
 }
 
 void
@@ -633,15 +636,17 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
 
-  int result = 0;
-
 #if TAO_HAS_INTERCEPTORS == 1
   TAO_ServerRequestInterceptor_Adapter sri_adapter (
     this->orb_core_.server_request_interceptors (),
     request.interceptor_count ());
 
   TAO_ServerRequestInfo ri (request);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+  int result = 0;
+
+#if TAO_HAS_INTERCEPTORS == 1
   ACE_TRY
     {
       // The receive_request_service_contexts() interception point
@@ -1529,7 +1534,7 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
           if (poa_.orb_core ().get_protocols_hooks ()->
               set_thread_priority (&poa_.orb_core (),
                                    target_priority,
-                                   ACE_TRY_ENV)
+                                   ACE_TRY_ENV) 
               == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 

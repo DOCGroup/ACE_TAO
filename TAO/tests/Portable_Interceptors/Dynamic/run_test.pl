@@ -5,41 +5,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+unshift @INC, '../../../../bin';
+require Process;
+require ACEutils;
+use Cwd;
 
-$status = 0;
-$file = PerlACE::LocalFile ("test.ior");
-
-unlink $file;
-
-$SV = new PerlACE::Process ("server", "-ORBobjrefstyle url -o $file");
-$CL = new PerlACE::Process ("client", "-ORBobjrefstyle url -f file://$file");
+$cwd = getcwd();
+ACE::checkForTarget($cwd);
 
 print STDERR "\n\n==== Running interceptor Dynamic test\n";
 
-$SV->Spawn ();
+$file = "$cwd$DIR_SEPARATOR" . "test.ior";
 
-if (PerlACE::waitforfile_timed ($file, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$file>\n";
-    $SV->Kill ();
-    exit 1;
+unlink $file;
+
+$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
+                       "-ORBobjrefstyle url -o $file");
+if (ACE::waitforfile_timed ($file, 15) == -1) {
+  print STDERR "ERROR: cannot find file <$file>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
+                       "-ORBobjrefstyle url -f file://$file");
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+if ($client == -1 || $server == -1) {
+  exit 1;
 }
 
 unlink $file;
 
-exit $status;
+exit 0;

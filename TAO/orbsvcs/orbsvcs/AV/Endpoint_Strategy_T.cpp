@@ -12,7 +12,9 @@
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  : orb_ (orb),
+    poa_ (poa)
 {
 }
 
@@ -55,12 +57,12 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV)
 {
-
+  
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
+  
   CORBA::Object_var obj =
     this->poa_->id_to_reference (id.in (),
                                  ACE_TRY_ENV);
@@ -70,7 +72,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
     this->orb_->object_to_string (obj.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
+  
   return str._retn ();
 }
 
@@ -137,7 +139,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       anyval <<= this->orb_->object_to_string (media_ctrl->_this (ACE_TRY_ENV),
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       this->vdev_->define_property ("Related_MediaCtrl",
                                     anyval,
                                     ACE_TRY_ENV);
@@ -195,7 +197,8 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 
 //Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (void)
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl> (orb, poa)
 {
 }
 
@@ -204,16 +207,6 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A (void)
 {
-}
-
-
-template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-int
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
-{
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-  this->poa_ = PortableServer::POA::_duplicate (poa);
-  return 0;
 }
 
 // Creates an "A" type streamendpoint, and a vdev and returns the
@@ -276,7 +269,8 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
 // Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (void)
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl> (orb, poa)
 {
 }
 
@@ -284,16 +278,6 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B (void)
 {
-}
-
-
-template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-int
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
-{
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-  this->poa_ = PortableServer::POA::_duplicate (poa);
-  return 0;
 }
 
 // Activate stream_endpoint
@@ -311,7 +295,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
                                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_B::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
-
+      
       this->stream_endpoint_b_ = stream_endpoint_b->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       stream_endpoint_b->_remove_ref (ACE_TRY_ENV);
@@ -365,7 +349,7 @@ TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pro
 // Initializes the ORB, activates the objects, and release the semaphore
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
+TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc, 
                                                                        char **argv,
                                                                        CORBA::ORB_ptr orb,
                                                                        PortableServer::POA_ptr poa)
@@ -376,7 +360,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
       this->orb_ = orb;
 
       this->poa_ = poa;
-
+      
       // create the objects and activate them in the poa
       this->activate_objects (argc,
                               argv,
@@ -413,15 +397,15 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
-TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant,
+TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant, 
                                                                                  CORBA::Environment &ACE_TRY_ENV)
 {
-
+  
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
+  
   CORBA::Object_var obj =
     this->poa_->id_to_reference (id.in (),
                                  ACE_TRY_ENV);
@@ -431,7 +415,7 @@ TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa 
     this->orb_->object_to_string (obj.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
+  
   return str._retn ();
 }
 
@@ -595,10 +579,11 @@ template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_Value *tv)
 {
+  int result = -1;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (tv, ACE_TRY_ENV);
+      result = this->orb_->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -607,7 +592,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_V
       return -1;
     }
   ACE_ENDTRY;
-  return 0;
+  return result;
 }
 
 // release the semaphore the parent is waiting on

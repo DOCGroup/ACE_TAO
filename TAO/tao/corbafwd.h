@@ -479,14 +479,9 @@ TAO_NAMESPACE CORBA
   typedef ACE_CDR::LongDouble LongDouble;
   typedef LongDouble &LongDouble_out;
 
+
   typedef ACE_CDR::Char Char;
   typedef Char &Char_out;
-
-  // CORBA::TypeCode typedefs.
-  typedef CORBA_TypeCode TypeCode;
-  typedef CORBA_TypeCode *TypeCode_ptr;
-  typedef CORBA_TypeCode_var TypeCode_var;
-  typedef CORBA_TypeCode_out TypeCode_out;
 
   // = String memory management.
   TAO_NAMESPACE_INLINE_FUNCTION char *string_alloc (ULong len);
@@ -510,21 +505,19 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WString_out WString_out;
 
   /// String sequence typedefs
+
   typedef CORBA_StringSeq StringSeq;
   typedef CORBA_StringSeq_var StringSeq_var;
   typedef CORBA_StringSeq_out StringSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_StringSeq;
 
   typedef CORBA_WStringSeq WStringSeq;
   typedef CORBA_WStringSeq_var WStringSeq_var;
   typedef CORBA_WStringSeq_out WStringSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_WStringSeq;
 
   /// Octet sequence typedef
   typedef CORBA_OctetSeq OctetSeq;
   typedef CORBA_OctetSeq_var OctetSeq_var;
   typedef CORBA_OctetSeq_out OctetSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_OctetSeq;
 
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
@@ -592,6 +585,11 @@ TAO_NAMESPACE CORBA
 
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
+
+  typedef CORBA_TypeCode TypeCode;
+  typedef CORBA_TypeCode *TypeCode_ptr;
+  typedef CORBA_TypeCode_var TypeCode_var;
+  typedef CORBA_TypeCode_out TypeCode_out;
 
   typedef CORBA_ExceptionList ExceptionList;
   typedef CORBA_ExceptionList_var ExceptionList_var;
@@ -1030,7 +1028,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
 #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
 // #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
-#define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
+// #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
 // #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */
 // #define TAO_TAG_CPCI_PROFILE   0x54414f06U /* Compact/PCI */
 // #define TAO_TAG_VME_PROFILE    0x54414f07U /* VME Bus */
@@ -1038,7 +1036,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
 // #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
 // #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
-#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeing Custom Protocol */
+#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeign Custom Protocol */
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile tagged components in TAO.
@@ -1100,7 +1098,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0AU << 7)
 #define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0BU << 7)
 #define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0CU << 7)
-#define TAO_IMPLREPO_MINOR_CODE                    (0x0DU << 7)
+#define TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION      (0x0DU << 7)
 #define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0EU << 7)
 #define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0FU << 7)
 #define TAO_POLICY_NARROW_CODE                     (0x10U << 7)

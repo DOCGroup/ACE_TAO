@@ -6,9 +6,9 @@
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
-
 ACE_RCSID(collection, rw_locks, "$Id$")
+
+#if defined (ACE_HAS_THREADS)
 
 static ACE_Token_Proxy *global_rlock;
 static ACE_Token_Proxy *global_wlock;

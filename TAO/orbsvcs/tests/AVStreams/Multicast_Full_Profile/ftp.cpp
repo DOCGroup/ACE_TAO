@@ -10,7 +10,7 @@ FTP_Client_Callback::FTP_Client_Callback (void)
 int
 FTP_Client_Callback::handle_end_stream (void)
 {
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
+  TAO_AV_CORE::instance ()->stop_run ();
   return 0;
 }
 
@@ -50,9 +50,8 @@ FTP_Client_Callback::handle_timeout (void *)
                   //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
                   ACE_TRY_CHECK;
-		  // CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-                  //ACE_TRY_CHECK;
-		  ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
+                  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
@@ -181,14 +180,13 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  : client_mmdevice_ (&endpoint_strategy_),
+  : endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
+    client_mmdevice_ (&endpoint_strategy_),
     fdev_ (0),
     address_ (ACE_OS::strdup ("224.9.9.2:10002")),
     fp_ (0),
     protocol_ (ACE_OS::strdup ("UDP"))
 {
-  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
-
 }
 
 
@@ -250,8 +248,6 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_DEBUG ((LM_DEBUG, "Parsed Address TWO%s\n", this->address_));
-      
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Client_FDev,
                       -1);
@@ -305,7 +301,7 @@ Client::run (void)
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       // Bind the client and server mmdevices.
-      ACE_DEBUG ((LM_DEBUG, "Parsed Address ONE%s\n", this->address_));
+
       ACE_INET_Addr addr (this->address_);
       TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
@@ -322,7 +318,6 @@ Client::run (void)
                                      flow_spec,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful ONE\n"));
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
       if (this->bind_to_server ("Server_MMDevice1") == -1)
@@ -334,10 +329,6 @@ Client::run (void)
                                             the_qos.inout (),
                                             flow_spec,
                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful TWO\n"));
-      
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       ACE_TRY_CHECK;
@@ -351,7 +342,6 @@ Client::run (void)
                                             flow_spec,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful THREE\n"));
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
@@ -363,9 +353,8 @@ Client::run (void)
       //TAO_AV_CORE::instance ()->run ();
 
       ACE_Time_Value tv (10000,0);
-      TAO_AV_CORE::instance ()->orb ()->run (tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (TAO_AV_CORE::instance ()->orb ()->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
@@ -384,7 +373,6 @@ int
 main (int argc,
       char *argv[])
 {
-
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
 
@@ -431,5 +419,5 @@ template class TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>;
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>
+#pragma instantiate TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

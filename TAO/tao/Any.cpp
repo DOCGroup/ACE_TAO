@@ -45,22 +45,14 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
     }
 }
 
-// This method is deprecated and will eventually be removed from the
-// spec. It is included here for backward compatibility and its return
-// value may NOT be cast to anything useful. It will only tell whether the
-// Any contains a value or not. Use of >>= is recommended for anything else.
+// TAO doesn't give any guarantees if the value returned by value can
+// be cast to the desired type. This is a deprecated routine and its
+// use must be avoided. Use the >>= operators.
 
 const void *
 CORBA_Any::value (void) const
 {
-  if (this->any_owns_data_)
-    {
-      return this->value_;
-    }
-  else
-    {
-      return this->cdr_;
-    }
+  return this->value_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the

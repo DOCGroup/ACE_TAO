@@ -9,13 +9,9 @@ module Test {
   /// we stick the native high resolution timer value there.
   typedef unsigned long long TimeStamp;
 
-  /// Simulated 
-  typedef sequence<octet> Payload;
-
   /// Define the callback interface
   interface Callback {
-    oneway void response (in TimeStamp time_stamp,
-                          in Payload message_payload);
+    oneway void response (in TimeStamp time_stamp);
   };
 
   /// Define the server interface
@@ -26,8 +22,7 @@ module Test {
 
     /// Send a request, the Callback::response method is invoked with
     /// the @param time_stamp value
-    oneway void request (in TimeStamp time_stamp,
-                         in Payload message_payload);
+    oneway void request (in TimeStamp time_stamp);
 
     /// Shutdown the server, just to make cleanup simpler.
     oneway void shutdown ();

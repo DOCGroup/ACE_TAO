@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  Implementation of the server running the Timeout object.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI_Timeouts
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    Implementation of the server running the Timeout object.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
@@ -19,9 +22,7 @@
 #include "timeout_i.h"
 #include "timeout_client.h"
 
-ACE_RCSID (AMI,
-           server,
-           "$Id$")
+ACE_RCSID(AMI, server, "$Id$")
 
 const char *ior_output_file = 0;
 
@@ -56,17 +57,14 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -119,30 +117,26 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      /*
       TimeoutClient* client = new TimeoutClient (orb,
                                                  timeout_var.in (),
-                                                 timeoutHandler_var.in (),
-                                                 &timeoutHandler_i);
+                                                 timeoutHandler_var.in ());
 
       client->activate ();
-      */
       
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (orb->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      //delete client;
+      delete client;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+                           "Catched exception:");
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

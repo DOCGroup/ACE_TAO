@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_TOKEN_MANAGER_H
 #define ACE_TOKEN_MANAGER_H
 #include "ace/pre.h"
@@ -22,8 +23,6 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 class ACE_Local_Mutex;
 class ACE_Mutex_Token;
@@ -124,8 +123,6 @@ private:
   /// COLLECTION maintains a mapping from token names to ACE_Tokens*.
   COLLECTION collection_;
 };
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Manager.i"

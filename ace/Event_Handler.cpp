@@ -3,7 +3,6 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Message_Block.h"
-#include "ace/OS_Errno.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 
@@ -28,10 +27,7 @@ ACE_Event_Handler::~ACE_Event_Handler (void)
 {
   // ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
   if (this->reactor_ != 0)
-    {
-      ACE_Errno_Guard guard (errno);     // purge may get ENOTSUP
-      this->reactor_->purge_pending_notifications (this);
-    }
+    this->reactor_->purge_pending_notifications (this);
 }
 
 // Gets the file descriptor associated with this I/O device. 

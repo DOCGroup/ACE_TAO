@@ -104,8 +104,7 @@ Manager::init (int argc,
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
@@ -295,8 +294,10 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
 int
 Manager::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->orb_->run (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  if (this->orb_->run (ACE_TRY_ENV) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "Error in run \n"),
+                       -1);
 
   return 0;
 }

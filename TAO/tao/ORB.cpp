@@ -22,10 +22,8 @@
 #include "Priority_Mapping_Manager.h"
 #include "RT_Current.h"
 
-#include "ORBInitInfo.h"
-#include "ORBInitializer_Registry.h"
-
-#include "CodecFactory_ORBInitializer.h"
+# include "ORBInitInfo.h"
+# include "ORBInitializer_Registry.h"
 
 #if TAO_HAS_RT_CORBA == 1
 # include "RT_ORBInitializer.h"         /* @@ This should go away! */
@@ -229,49 +227,49 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
   this->orb_core_ = 0;
 }
 
-void
+int
 CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->run (0, ACE_TRY_ENV);
+  return this->run (0, ACE_TRY_ENV);
 }
 
-void
+int
 CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->run (&tv, ACE_TRY_ENV);
+  return this->run (&tv, ACE_TRY_ENV);
 }
 
-void
+int
 CORBA_ORB::run (ACE_Time_Value *tv,
                 CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
-  this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
+  return this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
 }
 
-void
+int
 CORBA_ORB::perform_work (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->perform_work (0, ACE_TRY_ENV);
+  return this->perform_work (0, ACE_TRY_ENV);
 }
 
-void
+int
 CORBA_ORB::perform_work (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->perform_work (&tv, ACE_TRY_ENV);
+  return this->perform_work (&tv, ACE_TRY_ENV);
 }
 
-void
+int
 CORBA_ORB::perform_work (ACE_Time_Value *tv,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
-  this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
+  return this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
 }
 
 CORBA::Boolean
@@ -495,6 +493,22 @@ CORBA_ORB::resolve_rt_current (CORBA::Environment &/*ACE_TRY_ENV*/)
 #if (TAO_HAS_RT_CORBA == 1)
 
   return this->orb_core_->rt_current ();
+
+#else
+
+  return CORBA_Object::_nil ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+}
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_priority_mapping_manager (CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+    return this->orb_core_->priority_mapping_manager ();
 
 #else
 
@@ -890,6 +904,9 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
     return this->resolve_rt_orb (ACE_TRY_ENV);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_PRIORITYMAPPINGMANAGER) == 0)
+    return this->resolve_priority_mapping_manager (ACE_TRY_ENV);
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
     return this->resolve_rt_current (ACE_TRY_ENV);
 
@@ -1041,23 +1058,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
       ACE_THROW (CORBA::INITIALIZE ());
     }
-
-  // Register the CodecFactory ORBInitializer.
-  PortableInterceptor::ORBInitializer_ptr tmp_cf_initializer;
-  ACE_NEW_THROW_EX (tmp_cf_initializer,
-                    TAO_CodecFactory_ORBInitializer,
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-  PortableInterceptor::ORBInitializer_var cf_initializer =
-    tmp_cf_initializer;
-
-  PortableInterceptor::register_orb_initializer (cf_initializer.in (),
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
 
   // -------------------------------------------------------------
   // @@ These ORB initializer instantiations should go away.  They

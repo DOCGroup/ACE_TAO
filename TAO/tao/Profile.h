@@ -147,11 +147,10 @@ public:
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
-  virtual void policies (CORBA::PolicyList *policy_list,
-                         CORBA::Environment &ACE_TRY_ENV);
+  virtual void policies (CORBA::PolicyList *policy_list);
 
   /// Accessor for the client exposed policies of this profile.
-  virtual CORBA::PolicyList&  policies (CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::PolicyList&  policies (void);
 
   /// Sets the TAO_Stub to which this profile is associated.
   virtual void the_stub (TAO_Stub *stub);

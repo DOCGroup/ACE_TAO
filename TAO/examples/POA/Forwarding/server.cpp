@@ -186,9 +186,7 @@ main (int argc,
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (),
@@ -214,11 +212,14 @@ main (int argc,
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      if (orb->run (ACE_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "CORBA::ORB::run"),
+                          -1);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

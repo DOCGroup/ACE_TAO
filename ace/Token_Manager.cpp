@@ -1,3 +1,4 @@
+// Token_Manager.cpp
 // $Id$
 
 #include "ace/Token_Manager.h"
@@ -6,8 +7,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Manager.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_RCSID(ace, Token_Manager, "$Id$")
 
@@ -39,7 +38,7 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 ACE_Token_Manager *
 ACE_Token_Manager::instance (void)
 {
-  ACE_TRACE ("ACE_Token_Manager::instance");
+  ACE_TRACE ("ACE_Token_Manager::token_manager");
 
   // This first check is to avoid acquiring the mutex in the common
   // case.  Double-Check pattern rules.
@@ -69,7 +68,7 @@ void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
                               const ACE_TCHAR *token_name)
 {
-  ACE_TRACE ("ACE_Token_Manager::get_token");
+  ACE_TRACE ("ACE_Token_Manager::get");
   // Hmm.  I think this makes sense.  We perform our own locking here
   // (see safe_acquire.)  We have to make sure that only one thread
   // uses the collection at a time.
@@ -212,7 +211,7 @@ ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
 void
 ACE_Token_Manager::release_token (ACE_Tokens *&token)
 {
-  ACE_TRACE ("ACE_Token_Manager::release_token");
+  ACE_TRACE ("ACE_Token_Manager::release");
   // again, let's perform our own locking here.
 
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
@@ -276,5 +275,3 @@ template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */

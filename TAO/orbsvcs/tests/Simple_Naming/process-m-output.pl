@@ -4,6 +4,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
+unshift @INC, '../../../../bin';
+require Process;
+require Uniqueid;
+
 # This is a Perl script that processes the output of the multithreaded
 # client test.  Usage: process-m-output.pl output-file-name number-of-threads
 
@@ -25,8 +29,6 @@ else
 {
     die "Usage: process-m-output.pl output-file-name number-of-threads \n";
 }
-
-$errors = 0;
 
 $binds = 0;
 $unbinds = 0;
@@ -103,5 +105,3 @@ else
     print "Number of sucessfule binds is different from number of
 sucessful unbinds\n";
 }
-
-exit $errors;

@@ -6,109 +6,72 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../../bin";
-use PerlACE::Run_Test;
+
+require ACEutils;
+use Cwd;
+
+$cwd = getcwd();
 
 ################################################################################
 # Program locations
 
-$imr_ior = PerlACE::LocalFile ("imr.ior");
-$name_ior = PerlACE::LocalFile ("name.ior");
+$imr_ior = "$cwd$DIR_SEPARATOR" . "imr.ior";
+$name_ior = "$cwd$DIR_SEPARATOR" . "name.ior";
 
-$IMR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
-$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service");
+$imr_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.".."
+              .$DIR_SEPARATOR."ImplRepo_Service"
+              .$DIR_SEPARATOR."ImplRepo_Service".$EXE_EXT;
+
+$name_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.".."
+               .$DIR_SEPARATOR."Naming_Service"
+               .$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
+
 
 if ($^O eq "MSWin32") {
-    $TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
+    # Just find it in the path
+    $tao_imr = "tao_imr".$EXE_EXT;
 }
 else {
-    $TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
+    $tao_imr = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.".."
+               .$DIR_SEPARATOR."ImplRepo_Service"
+               .$DIR_SEPARATOR."tao_imr".$EXE_EXT;
 }
 
-$TEST = new PerlACE::Process ("test");
+$test = $EXEPREFIX."test".$EXE_EXT;
 
 ################################################################################
 
 $errors = 0;
 
+ACE::checkForTarget($cwd);
+
 unlink $imr_ior;
 unlink $name_ior;
 
-################################################################################
-## Start the implementation Repository 
+$IR = Process::Create ($imr_server, "-o $imr_ior -d 0");
 
-$IMR->Arguments ("-o $imr_ior -d 0");
-$IMR->Spawn ();
+ACE::waitforfile ($imr_ior);
 
-if (PerlACE::waitforfile_timed ($imr_ior, 5) == -1) {
-    print STDERR "ERROR: waiting for $imr_ior\n";
-    $IMR->Kill ();
-    exit 1;
-}
-
-################################################################################
-## Register the NameService
-
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
-                    . " add NameService "
-                    ." -c \"" . $NS->Executable () 
+system ($tao_imr." -ORBInitRef ImplRepoService=file://$imr_ior"
+                ." add NameService "
+                ." -c \"$name_server"
                        ." -ORBInitRef ImplRepoService=file://$imr_ior"
                        ." -ORBUseIMR 1 .\"");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+system ($tao_imr." -ORBInitRef ImplRepoService=file://$imr_ior"
+                ." ior NameService -f $name_ior");
 
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (add) returned $tao_imr\n";
+if (system ($test." -ORBInitRef NameService=file://$name_ior")) {
     ++$errors;
 }
 
-################################################################################
-## Create IOR for NameService
+system ($tao_imr." -ORBInitRef ImplRepoService=file://$imr_ior"
+                ." shutdown NameService ");
 
-$TAO_IMR->Arguments ("-ORBInitRef ImplRepoService=file://$imr_ior"
-                     . " ior NameService -f $name_ior");
+$IR->Kill (); $IR->Wait ();
 
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
-
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (ior) returned $tao_imr\n";
-    ++$errors;
+if ($errors > 0) {
+    print "Error: run_test.pl detected $errors errors!\n";
 }
-
-################################################################################
-## Run the test
-
-$TEST->Arguments ("-ORBInitRef NameService=file://$name_ior");
-
-$test = $TEST->SpawnWaitKill (60);
-
-if ($test != 0) {
-    print STDERR "ERROR: test returned $test\n";
-    ++$errors;
-}
-
-
-################################################################################
-## Shutdown the NameService
-
-$TAO_IMR->Arguments ("-ORBInitRef ImplRepoService=file://$imr_ior shutdown "
-                     . "NameService ");
-
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
-
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (shutdown) returned $tao_imr\n";
-    ++$errors;
-}
-
-################################################################################
-## Kill the IMR
-
-$iserver = $IMR->TerminateWaitKill (5); 
-
-if ($iserver != 0) {
-    print STDERR "ERROR: IMR returned $iserver\n";
-    ++$errors;
-}
-
-exit $errors;
+exit ($errors);

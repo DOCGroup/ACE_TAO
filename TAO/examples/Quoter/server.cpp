@@ -211,13 +211,17 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 int
 Quoter_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Server is running\n"));
 
-  orb_manager_.orb()->run (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
+  if (orb_manager_.orb()->run () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "run"),
+                      -1);
   return 0;
 }
 

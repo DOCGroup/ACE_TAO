@@ -22,7 +22,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/RTCORBAC.h"
+#include "tao/RTCORBAS.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -43,9 +43,7 @@
  *
  */
 
-class TAO_Export TAO_RT_Mutex
-  : public RTCORBA::Mutex,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_RT_Mutex : public RTCORBA::Mutex, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -64,26 +62,23 @@ public:
                        TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * Acquire the lock, but only wait up to <max_wait> time.  Note
-   * that this operation may not be available on all OS platforms, so
-   * if you're interested in writing maximally portable programs avoid
-   * using this operation in your program designs.
-   */
+  /// Acquire the lock, but only wait up to <max_wait> time.  Note
+  //that this operation may not be available on all OS platforms, so
+  //if you're interested in writing maximally portable programs avoid
+  //using this operation in your program designs.
   virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait,
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /// Returns the name of the mutex.
-  virtual const char *name (void) const;
 
 protected:
   /// Synchronization lock.
   TAO_SYNCH_MUTEX mu_;
 };
 
-#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
+// Forward reference for the TAO_Named_RT_Mutex class
+class TAO_Named_RT_Mutex_Manager;
+
 /**
  * @class TAO_Named_RT_Mutex
  *
@@ -95,17 +90,20 @@ class TAO_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex (const char *name);
+  TAO_Named_RT_Mutex (const char *name,
+                      TAO_Named_RT_Mutex_Manager &mutex_mgr);
 
-  /// Returns the name of the mutex.
-  virtual const char *name (void) const;
+  /// Destructor.
+  virtual ~TAO_Named_RT_Mutex (void);
 
 protected:
+  // Don't allow unnamed named mutexes
+  TAO_Named_RT_Mutex (void);
 
-  /// My name.
-  ACE_CString name_;
+  char *name_;
+
+  TAO_Named_RT_Mutex_Manager &mutex_mgr_;
 };
-#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

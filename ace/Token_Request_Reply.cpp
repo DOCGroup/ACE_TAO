@@ -1,3 +1,4 @@
+// Token_Request_Reply.cpp
 // $Id$
 
 #include "ace/Token_Request_Reply.h"
@@ -5,8 +6,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_RCSID(ace, Token_Request_Reply, "$Id$")
 
@@ -174,5 +173,3 @@ ACE_Token_Reply::dump (void) const
 	     this->length (), this->errnum ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("arg = %d"), this->arg ()));
 }
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */

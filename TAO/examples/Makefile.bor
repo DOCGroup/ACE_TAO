@@ -8,7 +8,6 @@ DIRS = Buffered_Oneways \
        Event_Comm \
        Load_Balancing \
        Load_Balancing_persistent \
-       PluggableUDP \
        POA \
        Simple
 

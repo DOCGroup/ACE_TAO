@@ -60,6 +60,16 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
   poa_manager->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
+    {
+      ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
+      worker_.orb (this->orb_.in ());
+
+      if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
+                            this->nthreads_) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate client threads\n"), -1);
+    }
   return 0;
 }
 
@@ -77,16 +87,6 @@ Notify_Service::startup (int argc, char *argv[],
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
-  if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
-    {
-      ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
-      worker_.orb (this->orb_.in ());
-
-      if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
-                            this->nthreads_) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"), -1);
-    }
   // Check first if the naming service
   if (this->use_name_svc_)
     {
@@ -234,22 +234,9 @@ Notify_Service::run (void)
               __FILE__));
 
   if (this->nthreads_ > 0)
-    {
-      worker_.thr_mgr ()->wait ();
-      return 0;
-    }
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-    }
-  ACE_ENDTRY;
+    worker_.thr_mgr ()->wait ();
+  else if (this->orb_->run () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
   return 0;
 }
@@ -362,8 +349,6 @@ Notify_Service::parse_args(int argc, char *argv[])
         }
       else
         {
-          /*ACE_DEBUG((LM_DEBUG, "Unrecognized command %s",
-            arg_shifter.get_current ()));*/
             arg_shifter.ignore_arg ();
         }
     }
@@ -385,16 +370,7 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
+  this->orb_->run ();
   return 0;
 }
 

@@ -281,11 +281,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = 0;
-  char tmp_host[MAXHOSTNAMELEN + 1];
-
-  if (port_separator_loc == address)
+  if (ACE_OS::strchr (address, ':') == address)
     {
       // The address is a port number or port name.  No hostname was
       // specified.  The hostname for each network interface and the
@@ -307,28 +303,17 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       else
         return this->open_i (addr);
     }
-  else if (port_separator_loc == 0)
+  else if (ACE_OS::strchr (address, ':') == 0)
     {
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
       if (addr.set ((unsigned short) 0, address) != 0)
         return -1;
-
-      specified_hostname = address;
     }
-  else
-    {
-      // Host and port were specified.
-      if (addr.set (address) != 0)
-        return -1;
+  else if (addr.set (address) != 0)
+    // Host and port were specified.
+    return -1;
 
-      // Extract out just the host part of the address.
-      size_t len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
-      tmp_host[len] = '\0';
-
-      specified_hostname = tmp_host;
-    }
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
@@ -342,8 +327,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   if (this->hostname (orb_core,
                       addr,
-                      this->hosts_[0],
-                      specified_hostname) != 0)
+                      this->hosts_[0]) != 0)
     return -1;
 
   // Copy the addr.  The port is (re)set in
@@ -475,58 +459,30 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
 int
 TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              ACE_INET_Addr &addr,
-                             char *&host,
-                             const char *specified_hostname)
+                             char *&host)
 {
-  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
+  char tmp_host[MAXHOSTNAMELEN + 1];
+
+  if (orb_core->orb_params ()->use_dotted_decimal_addresses ()
+      || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
-      // If dotted decimal addresses are enabled,
-      // just return ours.
-      return this->dotted_decimal_address (addr, host);
+      const char *tmp = addr.get_host_addr ();
+      if (tmp == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("IIOP_Acceptor::hostname ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot determine hostname")));
+          return -1;
+        }
+
+      host = CORBA::string_dup (tmp);
     }
   else
-  if (specified_hostname != 0)
-    {
-      // If the user specified a hostname, pass it back
-      // blindly as it overrides our choice of hostname.
-      host = CORBA::string_dup (specified_hostname);
-    }
-  else
-    {
-      char tmp_host[MAXHOSTNAMELEN + 1];
+    host = CORBA::string_dup (tmp_host);
 
-      // Get the hostname associated with our address
-      if (addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
-        {
-          // On failure, just return the decimal address.
-          return this->dotted_decimal_address (addr, host);
-        }
-      else
-        {
-          host = CORBA::string_dup (tmp_host);
-        }
-    }
-
-  return 0;
-}
-
-int
-TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
-                                           char *&host)
-{
-  const char *tmp = addr.get_host_addr ();
-  if (tmp == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
-                    ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
-      return -1;
-    }
-
-  host = CORBA::string_dup (tmp);
   return 0;
 }
 
