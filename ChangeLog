@@ -1,3 +1,7 @@
+Mon Jul 31 22:51:11 2000  Balachandran  <bala@cs.wustl.edu>
+
+        * ACE version 5.1.6 released.
+
 Sat Jul 29 08:41:48 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Makefile: don't build CDR_Array_Test with
