@@ -511,6 +511,11 @@ template class ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, AC
 template class ACE_Hash_Map_Manager_Ex<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Hash<RTCORBA::ThreadpoolId>, ACE_Equal_To<RTCORBA::ThreadpoolId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<RTCORBA::ThreadpoolId, TAO_Thread_Pool *>;
 template class ACE_Hash_Map_Iterator_Base_Ex<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Hash<RTCORBA::ThreadpoolId>, ACE_Equal_To<RTCORBA::ThreadpoolId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<unsigned int, TAO_Thread_Pool *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<unsigned int, TAO_Thread_Pool *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+
+template class ACE_Auto_Basic_Ptr<TAO_Thread_Pool>;
+template class ACE_Auto_Basic_Array_Ptr<size_t>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -518,6 +523,12 @@ template class ACE_Hash_Map_Iterator_Base_Ex<RTCORBA::ThreadpoolId, TAO_Thread_P
 #pragma instantiate ACE_Hash_Map_Manager_Ex<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Hash<RTCORBA::ThreadpoolId>, ACE_Equal_To<RTCORBA::ThreadpoolId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<RTCORBA::ThreadpoolId, TAO_Thread_Pool *>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Hash<RTCORBA::ThreadpoolId>, ACE_Equal_To<RTCORBA::ThreadpoolId>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<unsigned int, TAO_Thread_Pool *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<unsigned int, TAO_Thread_Pool *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Thread_Pool>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<size_t>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
