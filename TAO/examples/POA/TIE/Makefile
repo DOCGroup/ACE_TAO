@@ -133,7 +133,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -166,15 +165,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -187,6 +177,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Context.h \
@@ -196,6 +190,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -220,8 +217,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -313,7 +308,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -340,9 +334,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  FooC.i FooS.h FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 .obj/FooS.o .obj/FooS.so .shobj/FooS.o .shobj/FooS.so: FooS.cpp FooS.h FooC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -411,7 +402,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -444,15 +434,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -465,6 +446,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Context.h \
@@ -474,6 +459,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -498,8 +486,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -591,7 +577,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -618,9 +603,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  FooC.i FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/streams.h \
@@ -690,7 +672,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -723,15 +704,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -744,6 +716,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Context.h \
@@ -753,6 +729,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -777,8 +756,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -870,7 +847,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -897,9 +873,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  FooC.i FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/streams.h \
@@ -976,7 +949,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -1009,15 +981,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -1030,6 +993,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Context.h \
@@ -1039,6 +1006,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -1063,8 +1033,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1155,7 +1123,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1182,9 +1149,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  FooC.i
 .obj/Foo_i.o .obj/Foo_i.so .shobj/Foo_i.o .shobj/Foo_i.so: Foo_i.cpp Foo_i.h FooS.h FooC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1253,7 +1217,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -1286,15 +1249,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -1307,6 +1261,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Context.h \
@@ -1316,6 +1274,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -1340,8 +1301,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1433,7 +1392,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1460,9 +1418,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  FooC.i FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

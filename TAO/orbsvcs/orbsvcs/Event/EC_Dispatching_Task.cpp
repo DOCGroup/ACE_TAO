@@ -12,10 +12,9 @@ ACE_RCSID(Event, EC_Dispatching, "$Id$")
 int
 TAO_EC_Dispatching_Task::svc (void)
 {
-  int done = 0;
-  while (!done)
+  ACE_TRY_NEW_ENV
     {
-      ACE_TRY_NEW_ENV
+      while (1)
         {
           ACE_Message_Block *mb;
           if (this->getq (mb) == -1)
@@ -40,35 +39,18 @@ TAO_EC_Dispatching_Task::svc (void)
           ACE_Message_Block::release (mb);
 
           if (result == -1)
-            done = 1;
+            break;
         }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "EC (%P|%t) exception in dispatching queue");
-        }
-      ACE_ENDTRY;
+      return 0;
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "EC (%P|%t) exception in dispatching queue");
+      return -1;
+    }
+  ACE_ENDTRY;
   return 0;
-}
-
-void
-TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
-                               RtecEventComm::EventSet& event,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
-
-  if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                 CORBA::COMPLETED_NO));
-
-  ACE_Message_Block *mb =
-    new (buf) TAO_EC_Push_Command (proxy,
-                                   event,
-                                   this->data_block_.duplicate (),
-                                   this->allocator_);
-  this->putq (mb);
 }
 
 // ****************************************************************

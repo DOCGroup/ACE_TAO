@@ -52,7 +52,7 @@ public:
   ~be_valuetype (void);
   // dtor
 
-  virtual void redefine (AST_Interface *from, UTL_StrList *p);
+  virtual void redefine (be_valuetype *from, UTL_StrList *p);
 
   idl_bool opt_accessor ();
   // should generate optimized form ?
@@ -81,7 +81,6 @@ public:
   // retrieve the fully scoped skel class name
 
 
-#if 0
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -93,7 +92,6 @@ public:
 
   virtual long tc_encap_len (void);
   // return length of encapsulation
-#endif
 
   // virtual int traverse_inheritance_graph (tao_code_emitter gen,
   //                                         TAO_OutStream *os);

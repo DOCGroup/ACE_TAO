@@ -70,67 +70,106 @@ CORBA_DefaultValueRefCountBase::_tao_refcount_value (void)
 // Detection of flags in the CDR Stream
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_null_ref (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_null_ref (const CORBA::ULong tag)
 {
-  return (tag == 0);
+  return (tag == Null_ref);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_value_tag (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_value_tag (const CORBA::ULong tag)
 {
-  return ((tag & Value_tag_sigbits) == 0x7FFFFF00L);
+  return ((tag & Value_tag_sigbits) == Value_tag_base);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: has_codebase_url(CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: has_codebase_url(const CORBA::ULong tag)
 {
   return (tag & Codebase_url);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_no_type_info (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_no_type_info (const CORBA::ULong tag)
 {
-  return ((tag & Type_info_sigbits) == Type_info_none);
+  return ((tag & Type_info_sigbits) == Type_info_no);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_single_type_info (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_single_type_info (const CORBA::ULong tag)
 {
   return ((tag & Type_info_sigbits) == Type_info_single);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_list_type_info (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_list_type_info (const CORBA::ULong tag)
 {
   return ((tag & Type_info_sigbits) == Type_info_list);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: is_chunked (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: is_chunked (const CORBA::ULong tag)
 {
-  return (tag & 8);
+  return (tag & Chunked_encoding);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_indirection_tag (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_indirection_tag (const CORBA::ULong tag)
 {
-  return (tag == 0xFFFFFFFFL);
+  return (tag == Indirection_tag);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_indirection (CORBA::ULong value)
+TAO_OBV_GIOP_Flags:: block_size (const CORBA::ULong tag, CORBA::ULong &size)
 {
-  return (0x80000000L < value && value <= (0xFFFFFFFFL - 4));
+  if ((tag >= Block_size_tag_min) &&
+      (tag <= Block_size_tag_max))
+    {
+      size = tag;
+      return 1;
+    }
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_block_size (CORBA::ULong value)
+TAO_OBV_GIOP_Flags:: end_tag_depth (const CORBA::ULong tag,
+                                    CORBA::ULong &depth)
 {
-  return ( 0 < value && value < 0x7fffff00L);
+  if (ACE_static_cast (CORBA::Long, tag)
+          >= (ACE_static_cast (CORBA::Long, End_tag_min)) &&
+      ACE_static_cast (CORBA::Long, tag)
+          <= (ACE_static_cast (CORBA::Long, End_tag_max)))
+    {
+      depth = - ACE_static_cast (CORBA::Long, tag);
+      return 1;
+    }
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: indirection (const CORBA::ULong tag,
+                                  CORBA::Long &jump)
 {
-  return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
+  if (ACE_static_cast (CORBA::Long, tag)
+          >= (ACE_static_cast (CORBA::Long, Indirection_min)) &&
+      ACE_static_cast (CORBA::Long, tag)
+          <= (ACE_static_cast (CORBA::Long, Indirection_max)))
+    {
+      jump = ACE_static_cast (CORBA::Long, tag);
+      return 1;
+    }
+  return 0;
 }
+
+/*
+ACE_INLINE CORBA::Boolean
+TAO_OBV_GIOP_Flags:: (const CORBA::ULong tag)
+{
+  return ( );
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_OBV_GIOP_Flags:: (const CORBA::ULong tag)
+{
+  return ( );
+}
+
+*/

@@ -2,7 +2,7 @@
 // $Id$
 
 #include "CosEventChannelFactory_i.h"
-#include "orbsvcs/CosEvent_Utilities.h"
+#include "FactoryCosEventChannel_i.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/POA.h"
 
@@ -15,48 +15,40 @@ TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
 
 TAO_CosEventChannelFactory_i::~TAO_CosEventChannelFactory_i (void)
 {
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "in TAO_CosEventChannelFactory_i dtor"));
-#endif
   // No-Op.
 }
 
 int
-TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
-                                    const char* child_poa_name,
-                                    CosNaming::NamingContext_ptr naming,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEventChannelFactory_i::init
+(PortableServer::POA_ptr poa,
+ CosNaming::NamingContext_ptr naming,
+ CORBA_Environment &TAO_IN_ENV
+ )
 {
   // Check if we have a parent poa.
-  if (CORBA::is_nil (poa))
+  if (poa == PortableServer::POA::_nil ())
     return -1;
 
-  this->naming_ = CosNaming::NamingContext::_duplicate (naming);
-  // Save the naming context.
-
-  // Create a UNIQUE_ID and USER_ID policy because we want the POA
-  // to detect duplicates for us.
+  // Create a UNIQUE_ID policy
   PortableServer::IdUniquenessPolicy_var idpolicy =
-    poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID,
+    poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, //UNIQUE_ID,
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
-  PortableServer::IdAssignmentPolicy_var assignpolicy =
-    poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  // @@ Pradeep: Why did you end up using the MULTIPLE_ID policy? And
+  //    why doesn't it match with the comment?
 
   // Create a PolicyList
   CORBA::PolicyList policy_list;
-  policy_list.length (2);
+  policy_list.length (1);
   policy_list [0] =
     PortableServer::IdUniquenessPolicy::_duplicate (idpolicy);
-  policy_list [1] =
-    PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy);
+  // @@ Pradeep: maybe a little comment explaining why you don't need
+  //    to override any POA policies would be a good idea.
 
   // Create the child POA.
-  this->poa_ = poa->create_POA (child_poa_name,
+  this->poa_ = poa->create_POA ("CosEC_ChildPOA",
                                 PortableServer::POAManager::_nil (),
                                 policy_list,
                                 ACE_TRY_ENV);
@@ -66,146 +58,144 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   idpolicy->destroy (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  assignpolicy->destroy (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  this->poa_ = poa;
 
-  //this->poa_ =  PortableServer::POA::_duplicate (poa);
-  // uncomment this if we want to use the parent poa for some reason.
-   return 0;
+  // @@ I want to use the child poa but the factoryec::create fails
+  //    with that.
+  //    So use the root poa for the time being. ;(
+  // @@ Pradeep: Maybe it fails because you didn't specify the USER_ID
+  //    policy too?
+  return 0;
 }
 
 CosEventChannelAdmin::EventChannel_ptr
-TAO_CosEventChannelFactory_i::create (const char * channel_id,
-                                      CORBA::Boolean store_in_naming_service,
-                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEventChannelFactory_i::create
+(
+ const char * channel_id,
+ CORBA::Boolean store_in_naming_service,
+ CORBA::Environment &ACE_TRY_ENV
+ )
 {
-  ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
-
-  CosEventChannelAdmin::EventChannel_ptr const ec_nil =
-    CosEventChannelAdmin::EventChannel::_nil ();
+  ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
 
   ACE_TRY
     {
       PortableServer::ObjectId_var oid =
         TAO_POA::string_to_ObjectId (channel_id);
 
-      CosEC_ServantBase *_ec = 0;
+      FactoryCosEventChannel_i *_ec;
 
       ACE_NEW_THROW_EX (_ec,
-                        CosEC_ServantBase (),
+                        FactoryCosEventChannel_i,
                         CORBA::NO_MEMORY ());
+      // @@ Pradeep: you may need to pass more arguments to that
+      //    exception.
       ACE_TRY_CHECK;
 
-      auto_ptr <CosEC_ServantBase> ec (_ec);
-      // @@ Pradeep: could we pass the POA used to activate the
-      //    EC-generated objects as an argument?  The point is that
-      //    the user must be aware that we require a POA with the
-      //    SYSTEM_ID policy....  This is not urgent, but a "wishlist"
+      auto_ptr <FactoryCosEventChannel_i> ec (_ec);
 
-      // @@ Carlos: I'am passing the POA to activate the
-      // generated objects as an argument in <init>.
-      // Do you want the FactoryCosEventChannel_i constructor
-      // to take that?
+      // @@ Pradeep: you may want to store the _ec variable directly
+      //    in the auto_ptr, that way you don't leak memory if the
+      //    constructor raises an exception...
 
-      // let all those contained in FactoryEC use the default POA.
-      // We only need the FactoryEC's to be unique!
-      PortableServer::POA_ptr defPOA = this->_default_POA (ACE_TRY_ENV);
+      // @@ Pradeep: use the auto_ptr to manipulate the ec, that way
+      //    you don't need to change the code if the initialization of
+      //    _ec and ec changes.
+      if (_ec->init (this->poa_,
+                     ACE_TRY_ENV) == -1)
+        return 0;
+      // @@ Pradeep: you have a point here! the POA that the EC needs
+      //    to activate its own objects maybe different from the POA
+      //    where you activate the EC itself, this is because the
+      //    policies required in each case are different....
+
       ACE_TRY_CHECK;
 
-      // @@ Pradeep: I hate to bring this up, but what happens if the
-      //    init() method raises ServantAlreadyActive or something
-      //    similar?  Do we want to convert that into
-      //    DuplicateChannel?  IMHO you should be more careful about
-      //    the exception translation.
+      ACE_CString str_channel_id (channel_id);
 
-      // @@ Carlos: ServantAlreadyActive and ObjectAlreadyActive
-      // mean that duplicates were detected, so i thought that
-      // it made sense to translate them to DuplicateChannel.
+      if (_ec->activate (str_channel_id,
+                         ACE_TRY_ENV) == -1)
+        return 0;
 
-      // @@ Pradeep: right, but you want to report those only if they
-      //    are raised during the activation of the EC, the problem is
-      //    that you are raising the same error if the EC makes a
-      //    mistake and activates the same object twice.
-
-      ec->init (this->poa_.in(),
-                defPOA,
-                0,0,0,
-                ACE_TRY_ENV);
+      this->poa_->activate_object_with_id (oid,
+                                           _ec,
+                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      int retval = ec->activate (channel_id,
-                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (retval == -1)
-        ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                          ec_nil);
-
-      ec.release (); // release the ownership from the auto_ptr.
 
       CORBA::Object_var obj =
-        this->poa_->servant_to_reference (_ec, ACE_TRY_ENV);
+        this->poa_->id_to_reference (oid,
+                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Give the ownership to the POA.
+      _ec->_remove_ref (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      // @@ Pradeep: is this OK? Does the reference count start at 1
+      //     then?
+
       if (store_in_naming_service &&
-          !CORBA::is_nil (this->naming_.in ()))
+          this->naming_ != CosNaming::NamingContext::_nil ())
         {
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
-
-          this->naming_->rebind (name,
-                                 obj.in (),
-                                 ACE_TRY_ENV);
+          this->naming_->bind (name,
+                               obj.in (),
+                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      ec.release (); // release the ownership from the auto_ptr.
 
       return CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
   ACE_CATCH (PortableServer::POA::ServantAlreadyActive, sa_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                        ec_nil);
+      // @@ Pradeep: you shouldn't return 0, but
+      //    CosEventChannelAdmin::EventChannel::_nil () use a
+      //    temporary variable or a macro if it is too much pain.
+      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel,
+                        0);
     }
   ACE_CATCH (PortableServer::POA::ObjectAlreadyActive, oaa_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel,
+                        0);
     }
   ACE_CATCH (PortableServer::POA::WrongPolicy, wp_ex)
     {
       ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        ec_nil);
+                        0);
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ona_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed,
+                        0);
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, nf_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed,
+                        0);
     }
   ACE_CATCH (CosNaming::NamingContext::CannotProceed, cp_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed,
+                        0);
     }
   ACE_CATCH (CosNaming::NamingContext::InvalidName, in_ex)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed,
+                        0);
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ab)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_nil);
+      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed,
+                        0);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (ec_nil);
+  ACE_CHECK_RETURN (0);
 
-  ACE_NOTREACHED (return ec_nil);
+  ACE_NOTREACHED (return 0;)
 }
 
 void
@@ -216,7 +206,7 @@ TAO_CosEventChannelFactory_i::destroy
  CORBA::Environment &ACE_TRY_ENV
  )
 {
-  ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
+  ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
 
   ACE_TRY
     {
@@ -227,44 +217,40 @@ TAO_CosEventChannelFactory_i::destroy
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid,
                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CosEventChannelAdmin::EventChannel_var fact_ec =
-        CosEventChannelAdmin::EventChannel::_narrow (obj.in (),
-                                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      fact_ec->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      ACE_CHECK;
       // Remove from the naming service.
       if (unbind_from_naming_service &&
-          !CORBA::is_nil (this->naming_.in ()))
+          this->naming_ != CosNaming::NamingContext::_nil ())
         {
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
-
           this->naming_->unbind (name,
                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
         }
+      // deactivate from the poa.
+      this->poa_->deactivate_object (oid,
+                                     ACE_TRY_ENV);
+
+      CosEventChannelAdmin::EventChannel_var fact_ec =
+        CosEventChannelAdmin::EventChannel::_narrow (obj.in (),
+                                                     ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // @@ Pradeep: in a completely complaint ORB this will fail: you
+      //    are invoking an operation after the servant was
+      //    deactivated.  It is even possible that the reference count
+      //    went to 0 already and the program crashes.
+      //    We need to either invoke this before or use
+      //    id_to_servant() then a downcast and then operate on the
+      //    servant directly.
+      fact_ec->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, nf_ex)
+  ACE_CATCHANY
     {
-      return; // don't bother the user with exceptions if unbind fails.
-    }
-  ACE_CATCH (CosNaming::NamingContext::CannotProceed, cp_ex)
-    {
-      return; // don't bother the user with exceptions if unbind fails.
-    }
-  ACE_CATCH (CosNaming::NamingContext::InvalidName, in_ex)
-    {
-      return; // don't bother the user with exceptions if unbind fails.
-    }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any other user exception.
-    {
-      ACE_THROW (CosEventChannelFactory::NoSuchChannel ());
+      ACE_THROW (CosEventChannelFactory::NoSuchChannel);
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -277,10 +263,7 @@ TAO_CosEventChannelFactory_i::find
  CORBA::Environment &ACE_TRY_ENV
  )
 {
-  ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
-
-  CosEventChannelAdmin::EventChannel_ptr const ec_nil =
-    CosEventChannelAdmin::EventChannel::_nil ();
+  ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
 
   ACE_TRY
     {
@@ -293,15 +276,16 @@ TAO_CosEventChannelFactory_i::find
       ACE_TRY_CHECK;
       return CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
+  ACE_CATCHANY
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
-                        ec_nil);
+      // @@ Pradeep: same comment about 0 vs. _nil()
+      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel,
+                        0);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (ec_nil);
+  ACE_CHECK_RETURN (0);
 
-  ACE_NOTREACHED (return ec_nil);
+  ACE_NOTREACHED (return 0;)
 }
 
 char*
@@ -311,7 +295,7 @@ TAO_CosEventChannelFactory_i::find_channel_id
  CORBA::Environment &ACE_TRY_ENV
  )
 {
-  ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
+  ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
 
   ACE_TRY
     {
@@ -322,26 +306,145 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
       return TAO_POA::ObjectId_to_string (oid);
     }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
+  ACE_CATCHANY
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
+      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel,
                         0);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
+int
+main (int argc, char *argv [])
+{
+  // @@ Pradeep: can we put the main function on a separate file? That
+  //    will make it easier for the users to integrate the class in
+  //    their system.
+  //    Also: can we give the users some command line options to
+  //    control the name to use in the naming service?
+  const char* Factory_Name = "CosEC_Factory";
+  // The name of the factory registered with the naming service.
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  TAO_CosEventChannelFactory_i *factory_servant_;
+  // The factory servant.
 
-template class auto_ptr <CosEC_ServantBase>;
-template class ACE_Auto_Basic_Ptr <CosEC_ServantBase>;
+  PortableServer::POA_var root_poa_;
+  // Reference to the root poa.
 
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  CORBA::ORB_var orb_;
+  // The ORB that we use.
 
-#pragma instantiate auto_ptr <CosEC_ServantBase>
-#pragma instantiate  ACE_Auto_Basic_Ptr <CosEC_ServantBase>
+  CosEventChannelFactory::ChannelFactory_var factory_;
+  // The corba object after activation.
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  TAO_Naming_Client naming_client_;
+  // Use a naming client.
+
+  // Ref counted servants are on the heap..
+  ACE_NEW_RETURN (factory_servant_,
+                  TAO_CosEventChannelFactory_i (),
+                  1);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      orb_ = CORBA::ORB_init (argc,
+                              argv,
+                              "",
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var poa_object  =
+        orb_->resolve_initial_references("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          -1);
+
+      root_poa_ =
+        PortableServer::POA::_narrow (poa_object.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa_->the_POAManager (ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+
+      // Initialization of the naming service.
+      if (naming_client_.init (orb_.in ()) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          1);
+
+      if (factory_servant_->init (root_poa_.in (),
+                                  naming_client_.get_context (),
+                                 ACE_TRY_ENV) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Unable to initialize "
+                           "the factory. \n"),
+                          1);
+
+      // activate the factory in the root poa.
+      factory_ = factory_servant_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Give the ownership to the POA.
+      factory_servant_->_remove_ref (ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+      CORBA::String_var
+        str = orb_->object_to_string (factory_.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "CosEvent_Service: The Cos Event Channel Factory IOR is <%s>\n",
+                  str.in ()));
+
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (Factory_Name);
+      naming_client_->rebind (name,
+                              factory_.in (),
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Registered with the naming service as %s\n", Factory_Name));
+
+      orb_->run ();
+
+      return 0;
+    }
+  ACE_CATCH (CORBA::UserException, ue)
+    {
+      // @@ Pradeep: there is a macro for this: ACE_PRINT_EXCEPTION.
+      //    print_exception() is a TAO extension, so we shouldn't rely
+      //    on it.
+      ue.print_exception ("cosecfactory: ");
+      return -1;
+    }
+  ACE_CATCH (CORBA::SystemException, se)
+    {
+      se.print_exception ("cosecfactory: ");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  ACE_NOTREACHED (return 0;)
+  // @@ Pradeep: was this intentional or is it just a misplaced
+  //    semi-colon?
+}

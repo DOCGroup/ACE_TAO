@@ -7,7 +7,6 @@
 #include "tao/GIOP.h"
 #include "tao/GIOP_Server_Request.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 #include "tao/POA.h"
 #include "tao/CDR.h"
 
@@ -84,8 +83,7 @@ TAO_IIOP_Handler_Base::resume_handler (ACE_Reactor *)
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
-    orb_core_ (TAO_ORB_Core_instance ()),
-    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
+    orb_core_ (TAO_ORB_Core_instance ())
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
@@ -93,8 +91,7 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
-    orb_core_ (orb_core),
-    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
+    orb_core_ (orb_core)
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
@@ -214,8 +211,19 @@ TAO_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  // Inheriting the ORB_Core tss stuff from the parent thread.
-  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
+  // Inheriting the ORB_Core stuff from the parent thread.  WARNING:
+  // this->orb_core_ is *not* the same as TAO_ORB_Core_instance(),
+  // this thread was just created and we are in fact *initializing*
+  // the ORB_Core based on the resources of the ORB that created
+  // us....
+
+  TAO_ORB_Core *tss_orb_core = TAO_ORB_Core_instance ();
+  tss_orb_core->inherit_from_parent_thread (this->orb_core_);
+
+  // We need to change this->orb_core_ so it points to the TSS ORB
+  // Core, but we must preserve the old value
+  TAO_ORB_Core* old_orb_core = this->orb_core_;
+  this->orb_core_ = tss_orb_core;
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
@@ -231,6 +239,8 @@ TAO_Server_Connection_Handler::svc (void)
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_Server_Connection_Handler::svc end\n"));
+
+  this->orb_core_ = old_orb_core;
 
   return result;
 }
@@ -268,30 +278,30 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
 #if !defined (TAO_NO_IOR_TABLE)
   if (ACE_OS::memcmp (object_key,
-                      &TAO_POA::objectkey_prefix[0],
-                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+		      &TAO_POA::objectkey_prefix[0],
+		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
-                             request.object_key ().length (),
-                             0,
-                             0);
+			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
+			     0,
+			     0);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Simple Object key %s. Doing the Table Lookup ...\n",
-                    object_id.c_str ()));
+	ACE_DEBUG ((LM_DEBUG,
+		    "Simple Object key %s. Doing the Table Lookup ...\n",
+		    object_id.c_str ()));
 
       CORBA::Object_ptr object_reference;
 
       // Do the Table Lookup.
       int status =
-        this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
-                                                         object_reference);
+	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
+							 object_reference);
 
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
+	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
 
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
@@ -366,11 +376,11 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
 // #if !defined (TAO_NO_IOR_TABLE)
 //   if (ACE_OS::memcmp (tmp_key.get_buffer (),
-//                    &TAO_POA::objectkey_prefix[0],
-//                    TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
+// 		      &TAO_POA::objectkey_prefix[0],
+// 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
 //     {
 //       ACE_DEBUG ((LM_DEBUG,
-//                "TAO Object Key Prefix found in the object key.\n"));
+// 		  "TAO Object Key Prefix found in the object key.\n"));
 
 
 //       // Do the Table Lookup. Raise a location forward exception or
@@ -572,7 +582,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               // Write the exception
               CORBA::TypeCode_ptr except_tc = x->_type ();
 
-              CORBA::exception_type extype = CORBA::USER_EXCEPTION;
+              CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
               if (CORBA::SystemException::_narrow (x) != 0)
                 extype = CORBA::SYSTEM_EXCEPTION;
 
@@ -628,8 +638,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   TAO_OutputCDR output (repbuf, sizeof(repbuf),
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->output_cdr_buffer_allocator (),
-                        this->orb_core_->output_cdr_dblock_allocator (),
-                        this->orb_core_->orb_params ()->cdr_memcpy_tradeoff ());
+                        this->orb_core_->output_cdr_buffer_allocator ());
 
   int result = 0;
   int error_encountered = 0;

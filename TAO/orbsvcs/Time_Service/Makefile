@@ -144,7 +144,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -159,15 +158,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -196,9 +186,16 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -233,8 +230,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -326,7 +321,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -353,9 +347,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -466,7 +457,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -481,15 +471,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -518,9 +499,16 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -555,8 +543,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -648,7 +634,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -675,9 +660,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -787,7 +769,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -802,15 +783,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -839,9 +811,16 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -876,8 +855,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -969,7 +946,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -996,9 +972,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1106,7 +1079,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -1121,15 +1093,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1158,9 +1121,16 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1195,8 +1165,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1288,7 +1256,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1315,9 +1282,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1426,7 +1390,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -1441,15 +1404,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1478,9 +1432,16 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1515,8 +1476,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1608,7 +1567,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1635,9 +1593,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/PingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/PingC.i \

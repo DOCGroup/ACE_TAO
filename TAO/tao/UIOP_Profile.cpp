@@ -31,7 +31,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set (addr);
   int l = ACE_OS::strlen (object_key);
@@ -53,7 +54,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set (addr);
   this->create_body ();
@@ -70,7 +72,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set (addr);
   int l = ACE_OS::strlen (object_key);
@@ -93,7 +96,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set (addr);
   this->create_body ();
@@ -109,7 +113,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     object_addr_ (rendezvous_point),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   if (rendezvous_point)
@@ -133,7 +138,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   if (rendezvous_point)
@@ -157,7 +163,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     object_addr_ (rendezvous_point),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   ACE_UNUSED_ARG (version);
 
@@ -177,7 +184,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
     object_addr_(pfile->object_addr_),
     hint_(0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   ACE_NEW (this->rendezvous_point_,
@@ -196,7 +204,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
     object_addr_(pfile.object_addr_),
     hint_(0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   ACE_NEW (this->rendezvous_point_,
@@ -215,7 +224,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 }
 
@@ -229,7 +239,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   parse_string (string, env);
 }
@@ -243,7 +254,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (void)
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 }
 
@@ -283,6 +295,12 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 
   delete [] this->rendezvous_point_;
   this->rendezvous_point_ = 0;
+
+  if (forward_to_)
+    {
+      delete forward_to_;
+    }
+
 }
 
 // return codes:
@@ -600,6 +618,30 @@ TAO_UIOP_Profile::_decr_refcnt (void)
   // delete will call our ~ destructor which in turn deletes stuff.
   delete this;
   return 0;
+}
+
+
+void
+TAO_UIOP_Profile::forward_to (TAO_MProfile *mprofiles)
+{
+  // we assume ownership of the profile list!!
+  if (forward_to_)
+    delete this->forward_to_;
+
+  ACE_NEW (this->forward_to_,
+           TAO_MProfile (mprofiles));
+
+}
+
+TAO_MProfile *
+TAO_UIOP_Profile::forward_to (void)
+{
+  TAO_MProfile *temp;
+
+  ACE_NEW_RETURN (temp,
+                  TAO_MProfile (this->forward_to_),
+                  0);
+  return temp;
 }
 
 CORBA::String

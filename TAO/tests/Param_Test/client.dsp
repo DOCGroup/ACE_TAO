@@ -119,10 +119,6 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\complex_any.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
@@ -256,10 +252,6 @@ SOURCE=.\big_union.h
 # Begin Source File
 
 SOURCE=.\client.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\complex_any.h
 # End Source File
 # Begin Source File
 

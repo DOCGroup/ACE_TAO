@@ -116,8 +116,7 @@ DRV_cpp_putarg(char *str)
 void
 DRV_cpp_init()
 {
-  // @@ There are two "one time" memory leaks in this function.
-  //    They will not blow off the program but should be fixed at some point.
+
   char *cpp_loc;
 
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
@@ -125,26 +124,8 @@ DRV_cpp_init()
 
   if (cpp_path != 0)
       cpp_loc = cpp_path;
-#if defined (_MSC_VER)
-  else
-    {
-      cpp_path.open ("MSVCDir", (char*) 0);
-
-      if (cpp_path != 0)
-        {
-          cpp_loc = new char[BUFSIZ];
-          ACE_OS::strcpy (cpp_loc, cpp_path);
-          ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
-        }
-      else
-        cpp_loc = idl_global->cpp_location();
-    }
-
-#else
   else
       cpp_loc = idl_global->cpp_location();
-#endif /* _MSC_VER */
-
   DRV_cpp_putarg (cpp_loc);
 #if defined (ACE_WIN32)
   DRV_cpp_putarg ("-nologo");
@@ -268,9 +249,8 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 }
 
 /*
- * Strip down a name to the last component, i.e. everything after the
- last
- * '/' or '\' character
+ * Strip down a name to the last component, i.e. everything after the last
+ * '/' character
  */
 static char *
 DRV_stripped_name(char *fn)
@@ -279,13 +259,10 @@ DRV_stripped_name(char *fn)
     long        l;
 
     if (n == NULL)
-      return NULL;
+        return NULL;
     l = strlen(n);
-    int slash_found = 0;
-    for (n += l-1; n >= fn && !slash_found; n--)
-        slash_found = (*n == '/' || *n == '\\');
-    n += 1;
-    if (slash_found) n += 1;
+    for (n += l; l > 0 && *n != '/'; l--, n--);
+    if (*n == '/') n++;
     return n;
 }
 

@@ -591,5 +591,5 @@ Criterion_List_Iterator::next ()
 void
 Criterion_List_Iterator::advance ()
 {
-  (void) iterator_.advance ();
+  return (iterator_.advance ());
 }

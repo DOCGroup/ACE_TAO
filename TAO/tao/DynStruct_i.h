@@ -47,16 +47,16 @@ public:
 
   // Functions specific to DynStruct
 
-  CORBA::FieldName current_member_name (CORBA::Environment &ACE_TRY_ENV);
+  FieldName current_member_name (CORBA::Environment &ACE_TRY_ENV);
   // FieldName is IDL typedef for string
 
   CORBA::TCKind current_member_kind (CORBA::Environment &ACE_TRY_ENV);
 
   // Assign and dump elements using IDL defined type NameValuePairSeq
 
-  CORBA::NameValuePairSeq* get_members (CORBA::Environment &ACE_TRY_ENV);
+  NameValuePairSeq* get_members (CORBA::Environment &ACE_TRY_ENV);
 
-  void set_members (const CORBA::NameValuePairSeq& value,
+  void set_members (const NameValuePairSeq& value,
                     CORBA::Environment &ACE_TRY_ENV);
 
   // Functions common to all Dynamic Any types

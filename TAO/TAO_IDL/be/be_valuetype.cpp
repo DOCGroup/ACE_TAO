@@ -63,9 +63,9 @@ be_valuetype::~be_valuetype (void)
 }
 
 void
-be_valuetype::redefine (AST_Interface *from, UTL_StrList *p)
+be_valuetype::redefine (be_valuetype *from, UTL_StrList *p)
 {
-  this->AST_Interface::redefine (from, p);
+  this->AST_Interface::redefine (from,p);
   abstract_ = from->is_abstract_valuetype();
 }
 
@@ -93,7 +93,7 @@ void
 be_valuetype::set_abstract_valuetype ()
 {
   abstract_ = 1;
-}
+};
 
 // compute stringified fully scoped skeleton name (OBV_name)
 void
@@ -588,7 +588,6 @@ be_valuetype::gen_out_impl (void)
   return 0;
 }
 
-#if 0
 // generate typecode.
 // Typecode for interface comprises the enumerated value followed by the
 // encapsulation of the parameters
@@ -685,7 +684,6 @@ be_valuetype::tc_encap_len (void)
     }
   return this->encap_len_;
 }
-#endif
 
 // for building the pre and postfix of private data fields
 const char*
