@@ -1,3 +1,14 @@
+Tue Nov 18 08:23:53 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp (open): Moved the activate() method
+ 	  from the Thread_Pool constructor to the open() hook since the
+ 	  Thread_Pool class invoked ACE_Task::activate, indirectly invokes
+ 	  Thread_Pool::svc.  There existed a high probability this code
+ 	  would have crashed since the virtual member function
+ 	  Thread_Pool::svc was not correctly initialized in Thread_Pool
+ 	  constructor (i.e., it points to ACE_Task_Base::svc() at this
+ 	  point.  Thanks to Arturo for pointing this out.
+
 Tue Nov 18 05:40:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: add -DACE_PURIFY to
