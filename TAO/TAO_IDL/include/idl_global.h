@@ -589,6 +589,12 @@ public:
   virtual idl_bool exception_support (void);
   // check if real C++ exception support is to be enabled
 
+  virtual void use_raw_throw (idl_bool);
+  // enable replacement of 'ACE_THROW_SPEC' with 'throw'.
+
+  virtual idl_bool use_raw_throw (void);
+  // check if raw 'throw' generation option is set.
+
   virtual void opt_tc (idl_bool);
   // enable optimized typecodes
 
@@ -769,6 +775,9 @@ private:
 
   idl_bool exception_support_;
   // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
+
+  idl_bool use_raw_throw_;
+  // Another possible option if the above is TRUE.
 
   idl_bool opt_tc_;
   // do we generate optimized typecodes?

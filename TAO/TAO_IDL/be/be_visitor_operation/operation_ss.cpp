@@ -281,11 +281,16 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "," << be_nl << "_tao_objref.in ()," << be_nl
       << this->compute_operation_name (node) << "," << be_nl
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_RETHROW;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;" << be_nl
-      << "ACE_CHECK;\n"
+      << ");" << be_uidt_nl;
+
+  if (idl_global->use_raw_throw ())
+    *os << "throw;" << be_uidt_nl;
+  else
+    *os << "ACE_RETHROW;" << be_uidt_nl;
+
+  *os << "}" << be_uidt_nl
+      << "ACE_ENDTRY;" << be_nl;
+  *os << "ACE_CHECK;\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
 
   // check if we are oneway in which case, we are done
@@ -553,14 +558,21 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
   TAO_OutStream *os = this->ctx_->stream ();
 
   os->indent ();
-  *os << "ACE_THROW ("
-      << excep << " (" << completion_status << ") "
+
+  if (idl_global->use_raw_throw ())
+    *os << "throw (";
+  else
+    *os << "ACE_THROW (";
+
+  *os << excep << " (" << completion_status << ") "
       << ");\n";
+
   return 0;
 }
 
 int
-be_visitor_operation_ss::gen_check_exception (be_type *, const char * /* env */)
+be_visitor_operation_ss::gen_check_exception (be_type *, 
+                                              const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

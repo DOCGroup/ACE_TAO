@@ -645,10 +645,15 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'e')
                 {
-                  int option = atoi (av[i+1]);
+                  int option = ACE_OS::atoi (av[i+1]);
 
                   // exception support
-                  idl_global->exception_support (!option);
+                  idl_global->exception_support (option == 0
+                                                 || option == 2);
+
+                  // use of raw 'throw'
+                  idl_global->use_raw_throw (option == 2);
+
                   i++;
                 }
               else if (av[i][2] == 's')
