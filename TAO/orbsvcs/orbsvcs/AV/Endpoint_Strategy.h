@@ -148,11 +148,11 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
 
   virtual int activate (void);
   
-  virtual int activate_stream_endpoint (void);
+  virtual int activate_stream_endpoint (CORBA::Environment &env);
   
-  virtual int activate_vdev (void);
+  virtual int activate_vdev (CORBA::Environment &env);
 
-  virtual int activate_mediactrl (void);
+  virtual int activate_mediactrl (CORBA::Environment &env);
 
   virtual int make_vdev (T_VDev *&vdev);
   // Bridge method to create a vdev, a la Acceptor. Applications
