@@ -245,6 +245,11 @@ Client::init (int argc,char **argv)
     {
       ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
     }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
+                                   this->filename_), -1);
+    }
 
   return 0;
 }
