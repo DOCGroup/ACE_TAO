@@ -17,8 +17,6 @@
 #include "tao/ValueFactory.h"
 #include "tao/ORB.h"
 
-#if (TAO_HAS_VALUETYPE == 1)
-
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueFactory_Map.i"
 #endif /* ! __ACE_INLINE__ */
@@ -142,4 +140,3 @@ template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_VALUETYPE == 1*/

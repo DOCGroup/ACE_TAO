@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_VALUETYPE == 1)
-
 #include "ace/Synch_T.h"
 
 class TAO_Export CORBA_ValueFactoryBase
@@ -112,6 +110,6 @@ private:
 # include "tao/ValueFactory.i"
 #endif /* __ACE_INLINE__) */
 
-#endif /* TAO_HAS_VALUETYPE == 1 */
 #include "ace/post.h"
+
 #endif /* TAO_VALUEFACTORY_H */
