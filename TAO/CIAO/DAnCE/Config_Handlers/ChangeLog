@@ -1,9 +1,30 @@
+Mon Sep 13 12:39:23 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * CRDD_Handler.h:
+  * CRDD_Handler.cpp:
+  * PCD_Handler.cpp:
+  
+    Created a class to handle ConnectionResourceDeploymentDescription.
+    Modified PCD_Handler to use CRDD_Handler.
+    
+Sat Sep 11 18:15:12 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * ERE_Handler.h:
+  * ERE_Handler.cpp:
+  * PCD_Handler.cpp:
+  * PSPE_Handler.h:
+  * PSPE_Handler.cpp:
+  
+    Created a class to handle ExternalReferenceEndpoint.
+    Modified PCD_Handler to use ERE_Handler. Fixed compile errors
+    in PSPE_Handler.
+    
 Sat Sep 11 17:43:34 2004  Jules White <jules@dre.vanderbilt.edu>
 
   * PSPE_Handler.h:
   * PSPE_Handler.cpp:
   * PCD_Handler.cpp:
-  * PCD_Handler.h
+  * PCD_Handler.h:
   
     Created a class to handle PlanSubcomponentPortEndpoint.
     Created a class to hanlde PlanConnectionDescription.
