@@ -71,7 +71,7 @@ private:
   Stream stream_;
 
   // A task which is capable of receiving data on a socket.
-  // Note that this is only useful by client-side applications.
+  // Note that this is only useful by server-side applications.
   Recv *recv_;
 
   Stream &stream (void)

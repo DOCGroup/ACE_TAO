@@ -1,3 +1,15 @@
+Sat Aug 24 12:01:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-lynxos.h: Added some #defines for LynxOS 4.0.  We'll
+	  leave these comments out for now until we figure out how to add
+ 	  them without breaking earlier versions of LynxOS.  Thanks to
+ 	  Umberto Mascia <u.mascia@pxl.it> for reporting this.
+
+	* docs/tutorials/015/Protocol_Stream.h (class Protocol_Stream): 
+	  Changed a comment to say "server-side applications" rather than
+	  "client-side applications."  Thanks to Mark Xu <ltxd@371.net>
+	  for reporting this.
+
 Fri Aug 23 18:20:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-all.h:
