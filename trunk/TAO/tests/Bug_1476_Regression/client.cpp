@@ -133,13 +133,13 @@ main (int argc, char *argv[])
       sender->active_objects ((CORBA::Short) 2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_Transport_Cache_Manager& manager = orb->orb_core()->lane_resources ().transport_cache ();
+      TAO::Transport_Cache_Manager& manager = orb->orb_core()->lane_resources ().transport_cache ();
 
-      TAO_Transport_Cache_Manager::HASH_MAP& cachemap = manager.map();
-      TAO_Transport_Cache_Manager::HASH_MAP_ITER end_iter = cachemap.end ();
+      TAO::Transport_Cache_Manager::HASH_MAP& cachemap = manager.map();
+      TAO::Transport_Cache_Manager::HASH_MAP_ITER end_iter = cachemap.end ();
 
       bool tranportwithqueue = false;
-      for (TAO_Transport_Cache_Manager::HASH_MAP_ITER iter = cachemap.begin ();
+      for (TAO::Transport_Cache_Manager::HASH_MAP_ITER iter = cachemap.begin ();
            iter != end_iter;
            ++iter)
         {
