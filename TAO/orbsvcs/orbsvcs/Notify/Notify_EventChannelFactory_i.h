@@ -19,11 +19,11 @@
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 
 class  TAO_Notify_EventChannelFactory_i :
 public virtual POA_CosNotifyChannelAdmin::EventChannelFactory

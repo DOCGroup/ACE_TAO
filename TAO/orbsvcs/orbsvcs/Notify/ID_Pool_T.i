@@ -7,7 +7,7 @@ ID_Pool<ID_TYPE>::get (void)
 }
 
 template <class ID_TYPE> ACE_INLINE void
-ID_Pool<ID_TYPE>::put (ID_TYPE id)
+ID_Pool<ID_TYPE>::put (ID_TYPE /* id */)
 {
   // TBD:
 }

@@ -1,8 +1,27 @@
+Sat Dec 18 13:54:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.h: made
+          destructor virtual.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+          moved #pragma once to after first #include to, avoid
+          g++ warning.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp,
+          Notify_ConsumerAdmin_i.cpp,
+          Notify_ProxyPushSupplier_i.cpp,
+          ID_Pool_T.i:
+          commented out some unused arguments.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+          explicitly qualified CosNotifyFilter::ConstraintExp, for
+          egcs.  Changed some int loop indices to u_int.
+
 Sat Dec 18 14:21:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Added section on TAO Connection_Handlers.
+          Added section on TAO Connection_Handlers.
 
 Sat Dec 18 14:01:56 1999  David L. Levine  <levine@cs.wustl.edu>
 

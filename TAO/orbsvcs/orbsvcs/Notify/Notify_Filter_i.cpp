@@ -27,7 +27,7 @@ TAO_Notify_Filter_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 
 char*
 TAO_Notify_Filter_i::constraint_grammar (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -55,7 +55,7 @@ TAO_Notify_Filter_i::add_constraints_i (
 
       ACE_TRY
         {
-          const ConstraintExp& constr_exp =
+          const CosNotifyFilter::ConstraintExp& constr_exp =
             constraint_info_seq [index].constraint_expression;
 
           notify_constr_expr = 0;
@@ -80,7 +80,7 @@ TAO_Notify_Filter_i::add_constraints_i (
           // Too bad: undo all the memory allocations done so far.
           delete notify_constr_expr; // first the one that failed us.
 
-          for (int i = 0; i < index; i++) // those from previous iterations.
+          for (u_int i = 0; i < index; i++) // those from previous iterations.
             {
               // Put the id back to the pool.
               constraint_expr_ids_.
@@ -158,7 +158,8 @@ TAO_Notify_Filter_i::modify_constraints (
   ))
 {
   // first check if all the ids are valid.
-  for (int index = 0; index < del_list.length (); ++index)
+  u_int index;
+  for (index = 0; index < del_list.length (); ++index)
     {
       if (constraint_expr_list_.find (del_list [index]) == -1)
         ACE_THROW (CosNotifyFilter::ConstraintNotFound (del_list [index]));
@@ -239,7 +240,7 @@ TAO_Notify_Filter_i::get_constraints (
   auto_ptr<CosNotifyFilter::ConstraintInfoSeq> auto_infoseq (infoseq);
 
   Notify_Constraint_Expr *notify_constr_expr = 0;
-  for (int index = 0; index < id_list.length (); ++index)
+  for (u_int index = 0; index < id_list.length (); ++index)
     {
       if (constraint_expr_list_.find (id_list[index],
                                       notify_constr_expr) == -1)
@@ -275,7 +276,7 @@ CosNotifyFilter::ConstraintInfoSeq * TAO_Notify_Filter_i::get_all_constraints (
   CONSTRAINT_EXPR_LIST_ITER iter (constraint_expr_list_);
   CONSTRAINT_EXPR_ENTRY *entry;
 
-  for (int index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
@@ -302,7 +303,7 @@ void TAO_Notify_Filter_i::remove_all_constraints (
   ACE_Array<Notify_Constraint_Expr*>
     constr_saved (constraint_expr_list_.current_size ());
 
-  for (int index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
