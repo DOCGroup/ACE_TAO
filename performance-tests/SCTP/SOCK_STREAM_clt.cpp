@@ -95,7 +95,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                       1);
 
   // run the test
-  HIST testResultsHistogram = NULL;
+  HIST testResultsHistogram = 0;
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -218,9 +218,9 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  HIST aceStream_hist=NULL;
+  HIST aceStream_hist = 0;
   aceStream_hist = createHistogram(msgLen);
-  if (NULL == aceStream_hist)
+  if (0 == aceStream_hist)
     ACE_ERROR_RETURN((LM_ERROR,
                       "%p\n",
                       "histogram create failed"),
