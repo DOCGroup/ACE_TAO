@@ -44,8 +44,9 @@ Consumer_i::push (const Callback_Quoter::Info &data,
 }
 
 void
-Consumer_i::shutdown (CORBA::Environment &)
+Consumer_i::shutdown ( CORBA::Environment &)
 {
+
   // Instruct the ORB to shutdown.
 
   ACE_DEBUG ((LM_DEBUG,
