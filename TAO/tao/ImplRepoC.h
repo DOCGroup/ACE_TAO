@@ -490,8 +490,7 @@ enum ActivationMode
     NORMAL,
     MANUAL,
     PER_CLIENT,
-    AUTO_START,
-    ActivationMode_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
+    AUTO_START
 };
 typedef ActivationMode &ActivationMode_out;
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ActivationMode;

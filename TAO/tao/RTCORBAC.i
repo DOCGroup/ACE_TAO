@@ -4159,19 +4159,21 @@ CORBA::Boolean TAO_Export operator>> (
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::PriorityModel &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityModel &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (RTCORBA::PriorityModel, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::PriorityBand &_tao_aggregate)

@@ -274,8 +274,7 @@ TAO_NAMESPACE  RTCORBA
   enum PriorityModel
   {
         CLIENT_PROPAGATED,
-        SERVER_DECLARED,
-        PriorityModel_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
+        SERVER_DECLARED
   };
   typedef PriorityModel &PriorityModel_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityModel;

@@ -56,21 +56,21 @@ be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
   *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
-      << "return strm.write_ulong ((CORBA::ULong) _tao_enumval);" << be_uidt_nl
+      << "CORBA::ULong _tao_temp = _tao_enumval;" << be_nl
+      << "return strm << _tao_temp;" << be_uidt_nl
       << "}\n\n";
 
   *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::ULong _tao_temp;" << be_nl
-      << "if (strm.read_ulong (_tao_temp))" << be_nl
+      << "CORBA::ULong _tao_temp = 0;" << be_nl
+      << "CORBA::Boolean _tao_result = strm >> _tao_temp;" << be_nl << be_nl
+      << "if (_tao_result == 1)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));"
-      << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_idt_nl
-      << "return 0;" << be_uidt << be_uidt_nl
+      << "_tao_enumval = ACE_static_cast (" << node->name ()
+      << ", _tao_temp);" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return _tao_result;" << be_uidt_nl
       << "}\n\n";
 
   node->cli_inline_cdr_op_gen (1);
