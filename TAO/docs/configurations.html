@@ -90,7 +90,14 @@ href="Options.html#svcfonf"><code>-ORBsvcconf</code></a> option).</p>
                 <td>Specifies the options for each service in order to utilize this configuration.</td>
               </tr>
             </table>
-      </ul>
+	  </ul>
+	<li><b><a href="#homogenous">Configuration for homogenous
+	      systems</a></b>
+	  <UL>
+	    <LI><A HREF="#homogenous_compile">Compile time options</A></LI>
+	    <LI><A HREF="#homogenous_runtime">Runtime time</A></LI>
+	  </UL>
+	</LI>
 </UL>
 
 
@@ -443,6 +450,45 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 </UL>
 </blockquote>
 
+<HR><P>
+    <h3>Configuration for homogenous systems<a name="homogenous"></a></h3>
+
+    <UL>
+      <LI><P><B>Compile time options<a name="homogenous_compile"></a></B></P>
+	<P>Many real-time applications run on homogenous environments,
+	  TAO can take advantage of this fact by simplifying the server
+	  side demarshaling;
+	  to enable this feature you have to edit the
+	  <CODE>$TAO_ROOT/tao/orbconf.h</CODE> file and enable the macro
+	  <CODE>TAO_DISABLE_SWAP_ON_READ</CODE>.
+	</P>
+	<P>In this systems it is also common that server and the
+	  client startup and shutdown simultaneously,
+	  in those circumstances there is no need to check the
+	  timestamps in the POA,
+	  another macro (<CODE>POA_NO_TIMESTAMP</CODE>) can be used for
+	  this purpose.
+	</P>
+	<P>Users running in embebbed systems may also need to modify
+	  the default options for TAO,
+	  the macros <CODE>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</CODE>,
+	  <CODE>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</CODE>
+	  and <CODE>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</CODE>
+	  can be used for those purposes.
+	  If the footprint size is an issue users may consider writing
+	  custom strategy factories that only create the right
+	  strategies, this eliminates the parsing code for the
+	  different options.
+	</P>
+      </LI>
+      <LI><P><B>Runtime options<a name="homogenous_runtime"></a></B></P>
+	<P>If the only ORB running is TAO and there is no need to be
+	  IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
+	  be used to reduce the message size and the processing time.
+	</P>
+      </LI>
+    </UL>
+
 <HR>
 
 <H3 ALIGN=CENTER>Hints</H3>
@@ -504,39 +550,6 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 	<P></P>
       </LI>
 
-      <LI><B>Special settings for homogenous systems</B>
-	Many real-time applications run on homogenous environments,
-	TAO can take advantage of this fact by simplifying the server
-	side demarshaling;
-	to enable this feature you have to edit the
-	<CODE>$TAO_ROOT/tao/orbconf.h</CODE> file and enable the macro
-	<CODE>TAO_DISABLE_SWAP_ON_READ</CODE>.
-	<P>In this systems it is also common that server and the
-	  client startup and shutdown simultaneously,
-	  in those circumstances there is no need to check the
-	  timestamps in the POA,
-	  another macro (<CODE>POA_NO_TIMESTAMP</CODE> can be used for
-	  this purpose.
-	</P>
-	<P>Users running in embebbed systems may also need to modify
-	  the default options for TAO,
-	  the macros <CODE>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</CODE>,
-	  <CODE>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</CODE>
-	  and <CODE>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</CODE>
-	  can be used for those purposes.
-	  If the footprint size is an issue users may consider writing
-	  custom strategy factories that only create the right
-	  strategies (thus eliminating the option parsing code).
-	</P>
-	<P>If the only ORB running is TAO and there is no need to be
-	  IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
-	  be used to reduce the message size and the processing time.
-	</P>
-	<P>Please remember that the greatest benefits are obtained
-	  from using the right concurrency and locking strategy for
-	  your application.
-	</P>
-      </LI>
     </UL>
 
 <P><HR><P>
