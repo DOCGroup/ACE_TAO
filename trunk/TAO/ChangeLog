@@ -1,9 +1,15 @@
-Thu Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+Fri Apr 04 10:43:55 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Makefile.bor:
+	* orbsvcs/tests/Notify/Test_Filter/Makefile.bor:
+	  Updated.
+
+Fri Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
 	  Use TAO_SYNCH_MUTEX instead of ACE_Condition_Thread_Mutex
 
-Thu Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+Fri Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
