@@ -196,8 +196,10 @@ TAO_IIOP_Interpreter::init_table (void)
 
   // XXX workaround for G++ 2.6.3 bug
   // setup_entry (generic_enum, CORBA::tk_enum);
-  CORBA_TypeCode::table_ [CORBA::tk_enum].size_ = sizeof (generic_enum);
-  CORBA_TypeCode::table_ [CORBA::tk_enum].alignment_ = sizeof (generic_enum);
+  CORBA_IIOP_Interpreter::table_ [CORBA::tk_enum].size_ =
+    sizeof (generic_enum);
+  CORBA_IIOP_Interpreter::table_ [CORBA::tk_enum].alignment_ =
+    sizeof (generic_enum);
 
   setup_entry (CORBA::String, tk_string);
   setup_entry (TAO_opaque, tk_sequence);

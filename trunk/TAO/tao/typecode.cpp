@@ -770,14 +770,16 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
     return 0;
 
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
-    if (ACE_OS::strcmp (my_id, tc_id)) // not same
-      return 0;
+  if (ACE_OS::strlen (my_id) > 1 
+      && ACE_OS::strlen (tc_id) > 1
+      && ACE_OS::strcmp (my_id, tc_id)) // not same
+    return 0;
 
   // compare names if they exist
-  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
-    if (ACE_OS::strcmp (my_name, tc_name)) // not same
-      return 0;
+  if (ACE_OS::strlen (my_name) > 1 
+      && ACE_OS::strlen (tc_name) > 1
+      && ACE_OS::strcmp (my_name, tc_name)) // not same
+    return 0;
 
   // check if the discriminant type is same
   CORBA::TypeCode_ptr my_discrim = this->discriminator_type (env);
