@@ -167,7 +167,7 @@ PortableInterceptor::IORInfo::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/IORInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
