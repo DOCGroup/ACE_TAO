@@ -238,6 +238,30 @@ to Graham for providing the OSE tools!<p>
        subtle errors, because initialization takes place in the order
        of member declaration.<p>
 
+   <li>Initialization is usually cleaner than assignment, especially
+       in a conditional.  So, instead of writing code like this:
+
+       <pre>
+       ssize_t n_bytes;
+
+       // Send multicast of one byte, enough to wake up server.
+       if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
+       </pre>
+
+       Write it like this:
+
+       <pre>
+       ssize_t n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)
+
+       // Send multicast of one byte, enough to wake up server.
+       if (n_bytes == -1)
+       </pre><p>
+
+       But, beware if the initialization is of a static variable.
+       A static variable is only initialized the first time its
+       declaration is seen.  Of course, we should avoid using
+       static variables at all.<p>
+
    <li>Because ACE does not use exception handling, dealing with
        failures requires a bit of care.  This is especially true
        in constructors.  Consider the following approach:
