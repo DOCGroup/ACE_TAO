@@ -95,11 +95,11 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
   this->token_.queueing_strategy (this->strategy_);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT (" (tid = %t) Token_Test::Token_Test (\n"
-                            "    token_type = %s\n"
-                            "        thread = %d\n"
-                            "   invocations = %d\n"),
-              this->strategy_ == ACE_Token::FIFO ? ACE_LIB_TEXT ("FIFO") : ACE_LIB_TEXT ("LIFO"),
+              ACE_TEXT (" (tid = %t) Token_Test::Token_Test (\n"
+              ACE_TEXT ("    token_type = %s\n")
+              ACE_TEXT ("        thread = %d\n")
+              ACE_TEXT ("   invocations = %d\n")),
+              this->strategy_ == ACE_Token::FIFO ? ACE_TEXT ("FIFO") : ACE_TEXT ("LIFO"),
               this->threads_,
               this->invocations_));
 }
@@ -127,7 +127,7 @@ Token_Strategy_Test::svc (void)
   this->barrier_.wait ();
 
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (tid = %t) starting loop\n")));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) starting loop\n")));
   for (int i = 0; i < this->invocations_; i++)
     {
       ACE_GUARD_RETURN (ACE_Token, lock, this->token_, -1);
@@ -137,8 +137,8 @@ Token_Strategy_Test::svc (void)
       // Turn this on to watch each thread grab the token.  LIFO has the interesting
       // behavior that two thread seem to take turns while all the other threads wait.
       if (0)
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (tid = %t) token count = %d, "
-                                            "waiters = %d, loop: %d/%d\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) token count = %d, "
+                              ACE_TEXT ("waiters = %d, loop: %d/%d\n")),
                   this->counter_.value (),
                   this->token_.waiters (), i + 1,
                   this->invocations_));
@@ -167,7 +167,7 @@ Token_Strategy_Test::svc (void)
               stats.std_dev (std_dev);
               stats.mean (mean);
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT (" (tid = %t) mean = %d.%d, std_dev = %d.%d, max = %d, min = %d\n"),
+                          ACE_TEXT (" (tid = %t) mean = %d.%d, std_dev = %d.%d, max = %d, min = %d\n"),
                           mean.whole (), mean.fractional (), std_dev.whole (), std_dev.fractional (),
                           stats.max_value (), stats.min_value ()));
 
@@ -183,7 +183,7 @@ Token_Strategy_Test::svc (void)
                    mean.fractional () > std_dev.fractional ()))
                 {
                   ACE_DEBUG ((LM_ERROR,
-                              ACE_LIB_TEXT (" (tid = %t) LIFO: mean greater than std_dev.\n")));
+                              ACE_TEXT (" (tid = %t) LIFO: mean greater than std_dev.\n")));
                   this->errors_++;
                 }
               if (this->strategy_ == ACE_Token::FIFO &&
@@ -191,7 +191,7 @@ Token_Strategy_Test::svc (void)
                    mean.fractional () < std_dev.fractional ()))
                 {
                   ACE_DEBUG ((LM_ERROR,
-                              ACE_LIB_TEXT (" (tid = %t) FIFO: mean less than std_dev.\n")));
+                              ACE_TEXT (" (tid = %t) FIFO: mean less than std_dev.\n")));
                   this->errors_++;
                 }
             }
@@ -211,7 +211,7 @@ int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
 int
 main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_LIB_TEXT ("Token_Strategy_Test"));
+  ACE_START_TEST (ACE_TEXT ("Token_Strategy_Test"));
   int retval = 0;
 
   if (argc > 3)
@@ -254,6 +254,6 @@ template class ACE_Guard<ACE_Token>;
 int
 main (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("Token_Strategy_Test: your platform doesn't support threads\n")), 1);
+  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Token_Strategy_Test: your platform doesn't support threads\n")), 1);
 }
 #endif /* ACE_HAS_THREADS */
