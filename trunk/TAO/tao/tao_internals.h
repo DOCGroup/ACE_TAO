@@ -48,9 +48,6 @@ public:
   // things down on the last call.  It is fully thread-safe.  Return 0
   // if successful, -1 with errno set if failure.
 
-  static ACE_Thread_Mutex orbinit_lock_;
-  // Mutex used as a monitor in CORBA::ORB_init ()
-  
 protected:
   static int fake_service_entries_i (void);
   // If your platform can't support the Service Configurator's model
@@ -61,11 +58,6 @@ protected:
 private:
   TAO_Internal ();
   // Private CTOR prevents this class from being instantiated.
-
-  static ACE_Thread_Mutex service_lock_;
-  // Monitor for service config
-
-  static int service_open_count_;
 };
 
 #if defined(__ACE_INLINE__)

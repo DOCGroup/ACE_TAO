@@ -1,5 +1,16 @@
 Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/tao_internals.i: Change lock used as monitor for service
+ 	count to use ACE_Static_Object_Lock::instance().  This pleases
+ 	VxWorks (but makes me nauseous).
+
+	* tao/tao_internals.h: Removed static instances of locks to please
+ 	VxWorks.
+
+	* tao/orbobj.cpp (ORB_init): Changed lock used for the monitor
+ 	here to be ACE_Static_Object_Lock::instance().  This pleases 
+ 	VxWorks (but makes me nauseous).
+
 	* tao/orb_core.cpp (init): Merged in changes for new Naming
  	Service-related options that got accidentally overwritten last
  	night.
