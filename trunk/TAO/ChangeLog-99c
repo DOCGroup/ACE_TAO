@@ -1,5 +1,9 @@
 Mon Jun  7 01:11:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/POA/DSI/client.cpp (main): Corrected an overly
+ 	  aggresive removal of "const char *".  Thanks to David for
+ 	  reporting this.
+
 	* orbsvcs/orbsvcs/Naming/Naming_Context.h: Added default
  	  CORBA::Environment & = TAO_default_environment() calls.  Thanks
  	  to Frank Buschmann for reporting this.

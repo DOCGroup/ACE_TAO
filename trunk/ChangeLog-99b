@@ -1,5 +1,12 @@
 Mon Jun  7 00:11:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Service_Configurator/Misc/main.cpp (main): Cast to
+ 	  (ASYS_TCHAR **) rather than (ASYS_THCAR *[]).  Thanks to David
+ 	  for reporting this.
+
+	* examples/IPC_SAP/DEV_SAP/writer/writer.cpp (main): Fixed a stray
+ 	  comma.  Thanks to David for reporting this.
+
 	* tests/Hash_Map_Manager_Test.cpp: Changed the use of ASYS_TCHAR *
  	  to LPCTSTR to ensure const-correctness.
 

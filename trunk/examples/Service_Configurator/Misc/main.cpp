@@ -48,8 +48,9 @@ main (int, ASYS_TCHAR *argv[])
   l_argv[8] = 0;
 
   if (ACE_Service_Config::open (8,
-                                (ASYS_TCHAR *[]) l_argv,
-                                ACE_DEFAULT_LOGGER_KEY, 0) == -1 && errno != ENOENT)
+                                (ASYS_TCHAR **) l_argv,
+                                ACE_DEFAULT_LOGGER_KEY, 0) == -1 
+      && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")),

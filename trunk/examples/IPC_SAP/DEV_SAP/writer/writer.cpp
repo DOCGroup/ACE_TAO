@@ -21,7 +21,7 @@ main (int argc, char *argv[])
                    ACE_DEV_Addr (argv[1])) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 
-,                       "%p\n",
+                       "%p\n",
                        argv[1]),
                       1);
 
