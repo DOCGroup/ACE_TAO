@@ -255,7 +255,7 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
   virtual void insert_val (
       CORBA::ValueBase_ptr value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -265,7 +265,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 
   virtual CORBA::Boolean get_boolean (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -438,7 +438,7 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
   virtual CORBA::ValueBase_ptr get_val (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 

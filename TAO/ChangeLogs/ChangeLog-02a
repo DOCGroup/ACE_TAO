@@ -1,3 +1,23 @@
+Wed Jul  3 11:48:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Added a check around TAO_HAS_VALUETYPE. Further,
+	  the #define is defined as 1 to be very clear.
+	
+	* tao/AbstractBase.h:
+	* tao/AbstractBase.cpp:
+	* tao/ORB.h:
+	* tao/ORB.cpp: 
+	* tao/ValueBase.cpp:
+	* tao/ValueBase.h:
+	* tao/ValueFactory.cpp:
+	* tao/ValueFactory.h:
+	* tao/ValueFactory_Map.h:
+	* tao/ValueFactory_Map.cpp:
+	* tao/corbafwd.h:
+	* tao/DynamicAny/DynCommon.cpp: 
+	* tao/DynamicAny/DynCommon.h: Make a check for TAO_HAS_VALUETYPE
+	  == 1, instead of plain #if defined (..).  
+
 Wed Jul  3 11:31:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Portable_Interceptors/ForwardRequest/Makefile:

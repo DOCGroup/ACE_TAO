@@ -300,8 +300,9 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
-// OBV is in experimental stage
-#define TAO_HAS_VALUETYPE
+#if !defined (TAO_HAS_VALUETYPE)
+#define TAO_HAS_VALUETYPE 1
+#endif /*TAO_HAS_VALUETYPE*/
 
 // Minimum CORBA
 #if !defined (TAO_HAS_MINIMUM_CORBA)
