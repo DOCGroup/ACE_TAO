@@ -239,7 +239,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
     {
       // Obtain the value of the property at index <index>.
       const CORBA::Any& value = this->props_[index].value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       if (type->equal (CosTradingDynamic::_tc_DynamicProp, env))
         return_value = 1;
@@ -337,7 +337,7 @@ TAO_Property_Evaluator::property_type (int index)
     }
   else
     // TypeCode is self-evident at this point.
-    prop_type = this->props_[index].value.type();
+    prop_type = this->props_[index].value.type ();
 
   return prop_type;
 }
@@ -616,7 +616,7 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
       // Extract the desired policy value.
       const CosTrading::Policy* policy = this->policies_[pol];
       const CosTrading::PolicyValue& value = policy->value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       if (!type->equal (CORBA::_tc_ulong, _env))
         TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
@@ -684,7 +684,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
     {
       const CosTrading::Policy* policy = this->policies_[pol];
       const CosTrading::PolicyValue& value = policy->value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       if (!type->equal (CORBA::_tc_boolean, _env))
         TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
@@ -743,7 +743,7 @@ TAO_Policies::starting_trader (CORBA::Environment& _env) const
     {
       CosTrading::Policy* policy = this->policies_[STARTING_TRADER];
       CosTrading::PolicyValue& value = policy->value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       if (! (type->equal (CosTrading::_tc_TraderName, _env) ||
              type->equal (CosTrading::_tc_LinkNameSeq, _env)))
@@ -770,7 +770,7 @@ TAO_Policies::link_follow_rule (CORBA::Environment& _env) const
 
       CosTrading::Policy* policy = this->policies_[LINK_FOLLOW_RULE];
       CosTrading::PolicyValue& value = policy->value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       // Extract the link follow rule
       if (!type->equal (CosTrading::_tc_FollowOption, _env))
@@ -830,7 +830,7 @@ TAO_Policies::request_id (CORBA::Environment& _env) const
     {
       CosTrading::Policy* policy = this->policies_[REQUEST_ID];
       CosTrading::PolicyValue& value = policy->value;
-      CORBA::TypeCode* type = value.type ();
+      CORBA::TypeCode_var type = value.type ();
 
       if (!type->equal (CosTrading::Admin::_tc_OctetSeq, _env))
         {
@@ -1151,7 +1151,7 @@ merge_properties (CosTrading::PropertySeq& modifies,
           if (this->prop_types_.find (prop_name, type_def) == 0)
             {
               CORBA::Environment _env;
-              CORBA::TypeCode* prop_type = prop_eval.property_type (i);
+              CORBA::TypeCode_var prop_type = prop_eval.property_type (i);
 
               if (! type_def->equal (prop_type, _env))
                 TAO_THROW (CosTrading::PropertyTypeMismatch (mname, modifies[i]));

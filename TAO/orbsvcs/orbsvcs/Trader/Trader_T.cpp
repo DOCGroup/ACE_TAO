@@ -334,7 +334,8 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
               
               if (decode_succeded)
                 {
-                  ((CORBA::Any *) &any_value)->replace (any_value.type (),
+                  CORBA::TypeCode_var type = any_value.type ();
+                  ((CORBA::Any *) &any_value)->replace (type,
                                                         seq,
                                                         1,
                                                         TAO_TRY_ENV);
