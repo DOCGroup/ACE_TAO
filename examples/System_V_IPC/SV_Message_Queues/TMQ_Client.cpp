@@ -34,7 +34,8 @@ main (int, char *[])
 
   Message_Data &recv_msg_data = recv_msg.data ();
 
-  ACE_DEBUG (("a message of length %d"
+  ACE_DEBUG ((LM_DEBUG,
+              "a message of length %d"
               " received from server %d"
        		  " (user %s): %s\n",
               recv_msg_data.length (),
