@@ -44,7 +44,7 @@ else
 # variables for parameters
 
 $nsport = 20000 + $uid;
-$clport = 2 ;
+$clport = 20765 + $uid;
 $svport = 20510 + $uid;
 $ffport = 20255 + $uid;
 $gfport = 0;
@@ -149,7 +149,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 		}
 		if ($ARGV[$i] eq "-n")
 		{
-			$n = $ARGV[i + 1];
+			$n = $ARGV[$i + 1];
 			$i++;
 			last SWITCH;
 		}
@@ -160,7 +160,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 		}
 		if ($ARGV[$i] eq "-cm")
 		{
-			$cm = "-m";
+			$cm = "-n ".$num_threads;
 			last SWITCH;
 		}
 		if ($ARGV[$i] eq "-sm")
