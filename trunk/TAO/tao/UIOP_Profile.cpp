@@ -149,7 +149,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
-  if (this->rendezvous_point (rendezvous.in ()) == 0)
+  if (this->object_addr_.set (rendezvous.in ()) == 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
@@ -217,54 +217,6 @@ TAO_UIOP_Profile::addr_to_string (char *buffer, size_t length)
   ACE_OS::strcpy (buffer, this->rendezvous_point ());
 
   return 0;
-}
-
-const char *
-TAO_UIOP_Profile::rendezvous_point (const char *rendezvous)
-{
-  if (!rendezvous || !*rendezvous)
-    return 0;
-
-  // To guarantee portability, local IPC rendezvous points (including
-  // the path and filename) should not be longer than 99 characters
-  // long. Some platforms may support longer rendezvous points,
-  // usually 108 characters including the null terminator, but
-  // Posix.1g only requires that local IPC rendezvous point arrays
-  // contain a maximum of at least 100 characters, including the null
-  // terminator.  If an endpoint is longer than what the platform
-  // supports then it will be truncated so that it fits, and a warning
-  // will be issued.
-
-  // Avoid using relative paths in your UIOP endpoints.  If possible,
-  // use absolute paths instead.  Imagine that the server is given an
-  // endpoint to create using -ORBEndpoint uiop://foobar.  A local IPC
-  // rendezvous point called foobar will be created in the current
-  // working directory.  If the client is not started in the directory
-  // where the foobar rendezvous point exists then the client will not
-  // be able to communicate with the server since its point of
-  // communication, the rendezvous point, was not found. On the other
-  // hand, if an absolute path was used, the client would know exactly
-  // where to find the rendezvous point.  It is up to the user to
-  // make sure that a given UIOP endpoint is accessible by both the
-  // server and the client.
-
-  this->object_addr_.set (rendezvous);
-
-  size_t length = ACE_OS::strlen (this->rendezvous_point ());
-
-  // Check if rendezvous point was truncated by ACE_UNIX_Addr since
-  // most UNIX domain socket rendezvous points can only be less than
-  // 108 characters long.
-  if (length < ACE_OS::strlen (rendezvous))
-    {
-      ACE_DEBUG ((LM_WARNING,
-                  "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
-                  "since it was longer than %d characters long.\n",
-                  this->rendezvous_point (),
-                  length));
-    }
-
-  return this->rendezvous_point ();
 }
 
 void
