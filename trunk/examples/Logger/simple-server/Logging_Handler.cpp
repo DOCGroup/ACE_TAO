@@ -35,12 +35,12 @@ Logging_Handler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-// Perform the logging record receive. 
+// Perform the logging record receive.
 
 int
 Logging_Handler::handle_input (ACE_HANDLE)
 {
-  ssize_t n; 
+  ssize_t n;
   size_t len;
 
   // Perform two recv's to emulate record-oriented semantics.  Note
@@ -53,35 +53,35 @@ Logging_Handler::handle_input (ACE_HANDLE)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-                         "client logger", this->host_name_), -1);      
+                         "client logger", this->host_name_), -1);
       /* NOTREACHED */
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR, 
-			 "(%P|%t) closing log daemon at host %s (fd = %d)\n",
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) closing log daemon at host %s (fd = %d)\n",
                          this->host_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
       {
-	ACE_Log_Record lp;
+        ACE_Log_Record lp;
 
         len = ntohl (len);
-	n = this->cli_stream_.recv_n ((void *) &lp, len);
-	if (n != (ssize_t) len)
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
+        n = this->cli_stream_.recv_n ((void *) &lp, len);
+        if (n != (ssize_t) len)
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
                              "client logger", this->host_name_), -1);
-	/* NOTREACHED */
-	  
-	lp.decode ();
+        /* NOTREACHED */
 
-	if (lp.length () == n)
-	  {
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
-	    lp.print (this->host_name_, 1);
-	  }
-	else
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
+        lp.decode ();
+
+        if (lp.length () == n)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
+            lp.print (this->host_name_, 1);
+          }
+        else
+          ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
                       lp.length (), n));
-	break;
+        break;
       }
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
@@ -104,30 +104,30 @@ int
 Logging_Handler::open (void)
 {
   ACE_INET_Addr addr;
-  
+
   if (this->cli_stream_.get_remote_addr (addr) == -1)
     return -1;
   else
     {
-      ACE_OS::strncpy (this->host_name_, 
-		       addr.get_host_name (), 
-		       MAXHOSTNAMELEN + 1);
+      ACE_OS::strncpy (this->host_name_,
+                       addr.get_host_name (),
+                       MAXHOSTNAMELEN + 1);
 
       if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "(%P|%t) can't register with reactor\n"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) can't register with reactor\n"),
                           -1);
       else if (REACTOR::instance ()->schedule_timer
-               (this, (const void *) this, 
-                ACE_Time_Value (2), 
+               (this, (const void *) this,
+                ACE_Time_Value (2),
                 ACE_Time_Value (2)) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "can'(%P|%t) t register with reactor\n"), 
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "can'(%P|%t) t register with reactor\n"),
+                          -1);
       else
-      	ACE_DEBUG ((LM_DEBUG, 
-		    "(%P|%t) connected with %s\n", 
-		    this->host_name_));
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) connected with %s\n",
+                    this->host_name_));
       return 0;
     }
 }
@@ -136,7 +136,7 @@ Logging_Handler::open (void)
 // ACE_Reactor.
 
 int
-Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   // Must have been allocated dynamically
   delete this;
