@@ -610,13 +610,9 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, int head)
   : map_man_ (&mm),
-    next_ (-1),
-    guard_ (this->map_man_->lock_)
+    next_ (-1)
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base");
-
-  if (this->guard_.locked () == 0) 
-    return;
 
   if (head == 0)
     this->next_ = this->map_man_->cur_size_;
