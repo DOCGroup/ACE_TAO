@@ -1,3 +1,20 @@
+Fri Jun  1 09:22:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/reopened_modules.idl:
+
+          Moved a recently added example from interface.idl to
+          reopened_modules.idl, since it contained a reopened
+          module. Code generated from reopened_modules.idl is
+          protected from compilation on platforms that don't
+          support namespaces.
+          
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+
+          Fixed indentation error in generated code that was causing
+          the indentation to grow with each generated remote proxy
+          impl class declaration.
+
 Thu May 31 21:54:35 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Makefile.bor (OBJFILES):
