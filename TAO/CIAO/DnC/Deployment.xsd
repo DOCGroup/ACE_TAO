@@ -627,8 +627,7 @@
   <xsd:complexType name="Requirement">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="resourceType" type="xsd:string" />
-<!-- property is not in model -->
-<!--     <xsd:element name="property" type="Deployment:Property" />  -->
+     <xsd:element name="property" type="Deployment:Property" />
       <xsl:element name="name" type="xsd:string"/>
       <xsd:element ref="xmi:Extension" />
     </xsd:choice>
