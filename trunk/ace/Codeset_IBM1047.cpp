@@ -17,6 +17,8 @@
 //
 // ============================================================================
 
+#include "ace/inc_user_config.h"
+
 #if defined(ACE_MVS)
 
 #include "ace/Codeset_IBM1047.h"
