@@ -39,7 +39,46 @@ Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/InterOp-Naming/Makefile:         
 	* tests/Portable_Interceptors/Makefile:           
 	* tests/Param_Test/Makefile:
-	  
+	* examples/Buffered_AMI/Makefile:
+	* examples/AMI/FL_Callback/Makefile:
+	* examples/Buffered_Oneways/Makefile:
+	* examples/Callback_Quoter/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Load_Balancing/Makefile:
+	* examples/Load_Balancing_Persistent/Makefile:
+	* examples/POA/Identity/Makefile:
+	* examples/POA/Reference_Counted_Servant/Makefile:
+	* examples/POA/DSI/Makefile:
+	* examples/POA/Loader/Makefile:
+	* examples/POA/RootPOA/Makefile:
+	* examples/POA/Default_Servant/Makefile:
+	* examples/POA/Explicit_Activation/Makefile:
+	* examples/POA/FindPOA/Makefile:  
+	* examples/POA/NewPOA/Makefile: 
+	* examples/POA/On_Demand_Activation/Makefile:
+	* examples/POA/TIE/Makefile:
+	* examples/POA/Forwarding/Makefile:
+	* examples/POA/On_Demand_Loading/Makefile:
+	* examples/Persistent_Grid/Makefile:
+	* examples/Quoter/Makefile:
+	* examples/Simple/bank/Makefile:
+	* examples/Simple/echo/Makefile:
+	* examples/Simple/grid/Makefile:
+	* examples/Simple/time/Makefile:
+	* examples/Simple/time-date/Makefile:
+	* examples/Simple/chat/Makefile:
+	* performance-tests/Cubit/Makefile:
+	* performance-tests/Latency/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/POA/Demux/Makefile:
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/Thruput/TAO/Makefile:
+
 	  Updated dependencies.
 	
 Sun Aug 20 14:27:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
