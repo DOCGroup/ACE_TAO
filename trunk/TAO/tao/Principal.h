@@ -50,6 +50,7 @@ public:
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Principal_ptr _ptr_type;
+  typedef CORBA_Principal_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
 
@@ -73,6 +74,72 @@ private:
   // This de-warns.
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
+};
+
+class TAO_Export CORBA_Principal_var
+{
+  // = TITLE
+  //   The T_var class for Principal
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object Principal must have a T_var class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_Principal_ptr as the _ptr type instead of
+  //   CORBA::Principal_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_Principal_var (void);
+  CORBA_Principal_var (CORBA_Principal_ptr);
+  CORBA_Principal_var (const CORBA_Principal_var &);
+  ~CORBA_Principal_var (void);
+
+  CORBA_Principal_var &operator= (CORBA_Principal_ptr);
+  CORBA_Principal_var &operator= (const CORBA_Principal_var &);
+  CORBA_Principal_ptr operator-> (void) const;
+
+  operator const CORBA_Principal_ptr &() const;
+  operator CORBA_Principal_ptr &();
+  // in, inout, out, _retn
+  CORBA_Principal_ptr in (void) const;
+  CORBA_Principal_ptr &inout (void);
+  CORBA_Principal_ptr &out (void);
+  CORBA_Principal_ptr _retn (void);
+  CORBA_Principal_ptr ptr (void) const;
+
+private:
+  CORBA_Principal_ptr ptr_;
+};
+
+class TAO_Export CORBA_Principal_out
+{
+  // = TITLE
+  //   The T_out class for Principal
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object Principal must have a T_out class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_Principal_ptr as the _ptr type instead of
+  //   CORBA::Principal_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_Principal_out (CORBA_Principal_ptr &);
+  CORBA_Principal_out (CORBA_Principal_var &);
+  CORBA_Principal_out (CORBA_Principal_out &);
+  CORBA_Principal_out &operator= (CORBA_Principal_out &);
+  CORBA_Principal_out &operator= (const CORBA_Principal_var &);
+  CORBA_Principal_out &operator= (CORBA_Principal_ptr);
+  operator CORBA_Principal_ptr &();
+  CORBA_Principal_ptr &ptr (void);
+  CORBA_Principal_ptr operator-> (void);
+
+private:
+  CORBA_Principal_ptr &ptr_;
 };
 
 extern TAO_Export CORBA::Boolean
