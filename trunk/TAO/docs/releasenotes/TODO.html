@@ -105,7 +105,13 @@
       </P>
       </LI>
 
-      <LI><P>Parameterized support for location forwarding
+      <LI><P>Parameterized support for location forwarding, some
+	  applications don't need this feature.
+	</P>
+      </LI>
+
+      <LI><P>Parameterized support nested upcalls, some applications
+	  don't need this feature.
 	</P>
       </LI>
 
@@ -287,6 +293,8 @@ class Foo {
       <LI>Several helper structs for <CODE>Any</CODE> have to be
 	added, mainly: <CODE>to_object</CODE>, <CODE>to_wchar</CODE>,
 	<CODE>to_wstring</CODE> and their <CODE>from_</CODE>
+	<BR>[STATUS] Jeff added several of them, I need to check what
+	is missing.
       <P></LI>
 
       <LI><P>The IDL compiler could generate files with empty
@@ -424,6 +432,18 @@ class Foo {
 	  <CODE>CORBA::Policy</CODE> objects are also locality
 	  constrained.
 	  I could not find a references in the spec.</P>
+      </LI>
+
+      <LI><P>The mapping for the CORBA <CODE>boolean</CODE> type does
+	  not require the <CODE>CORBA::TRUE</CODE> constant,
+	  but it never mentions the <CODE>CORBA::B_TRUE</CODE> constant
+	  either; in fact it recommends the usage of the literals
+	  <CODE>0</CODE> and <CODE>1</CODE>.
+	  We should move to use the <CODE>CORBA::TRUE</CODE> style,
+	  because other ORBs offer the same feature,
+	  but only use the literals,
+	  to show the "Right Way"[tm] of doing CORBA things.
+	</P>
       </LI>
 
       
