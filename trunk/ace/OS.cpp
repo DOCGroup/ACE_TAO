@@ -4239,7 +4239,7 @@ ftruncate (ACE_HANDLE handle, long len)
   fl.l_start = len;
   fl.l_type = F_WRLCK;
 
-  return ::fcntl (handle, F_FREESP, &fl);
+  return ACE_OS::fcntl (handle, F_FREESP, ACE_reinterpret_cast (long, &fl));
 }
 # endif /* ACE_NEEDS_FTRUNCATE */
 
