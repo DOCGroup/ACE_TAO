@@ -921,9 +921,6 @@ run_main ( int argc, ACE_TCHAR *argv[] )
 	testNativeReactor( argc, argv );
 	testQtReactor( argc, argv );
 
-	ACE_ERROR ( (LM_INFO,
-                     ACE_TEXT( "ACE is not configured for Qt on this platform\n" ) ) );
-
 	ACE_END_TEST;
 
 	return 0;
