@@ -1,0 +1,26 @@
+#
+# Makefile for building the ACE Service_Configurator IPC-tests client
+#
+
+NAMES = \
+	local_dgram_client_test \
+	local_stream_client_test \
+	local_pipe_client_test \
+	remote_stream_client_test \
+	remote_thr_stream_client_test \
+	remote_dgram_client_test \
+	local_fifo_client_test \
+	broadcast_client_test \
+	local_spipe_client_test \
+	remote_service_directory_test
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

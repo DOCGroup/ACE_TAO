@@ -1,0 +1,17 @@
+#
+# Makefile for building the workers performance-tests
+#
+
+NAME = workers
+
+OBJFILES = \
+        $(OBJDIR)\workers.obj
+
+CPPDIR = .
+
+CFLAGS = $(ACE_CFLAGS)
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
