@@ -1,14 +1,14 @@
 Mon Mar 30 13:13:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  Fixed cast that dropped constness when only reinterpret_cast was
-	  needed; thanks to David Levine (levine@cs.wustl.edu) for
-	  detecting this.
+        * tao/Typecode.cpp:
+          Fixed cast that dropped constness when only reinterpret_cast was
+          needed; thanks to David Levine (levine@cs.wustl.edu) for
+          detecting this.
 
-	* tao/Server_Request.cpp:
-	  bytes_remaining was called in a debug message (not seen in
-	  Solaris); thanks to Nanbor Wang (nanbor@cs.wustl.edu) for
-	  reporting this.
+        * tao/Server_Request.cpp:
+          bytes_remaining was called in a debug message (not seen in
+          Solaris); thanks to Nanbor Wang (nanbor@cs.wustl.edu) for
+          reporting this.
 
 Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -23,80 +23,80 @@ Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 30 10:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Implemented new classes to manipulate CDR streams, this classes
-	  separate input (interpretation) and output (creation) of the
-	  streams; in an attempt to make the interface more robust.
-	  The new classes provide methods to write and read strings and
-	  arrays, this is currently used in very few places, but it could
-	  provide a big performance boost.
+        * Implemented new classes to manipulate CDR streams, this classes
+          separate input (interpretation) and output (creation) of the
+          streams; in an attempt to make the interface more robust.
+          The new classes provide methods to write and read strings and
+          arrays, this is currently used in very few places, but it could
+          provide a big performance boost.
 
-	  The change affected the following files:
+          The change affected the following files:
 
-	* TAO/tao/Align.h:
-	* TAO/tao/CDR.cpp:
-	* TAO/tao/CDR.h:
-	* TAO/tao/CDR.i:
-	* TAO/tao/Connect.cpp:
-	* TAO/tao/Connect.h:
-	* TAO/tao/Exception.cpp:
-	* TAO/tao/GIOP.cpp:
-	* TAO/tao/GIOP.h:
-	* TAO/tao/GIOP.i:
-	* TAO/tao/IIOP_Interpreter.cpp:
-	* TAO/tao/IIOP_Interpreter.h:
-	* TAO/tao/IIOP_ORB.cpp:
-	* TAO/tao/ORB.h:
-	* TAO/tao/Server_Request.cpp:
-	* TAO/tao/Server_Request.h:
-	* TAO/tao/Server_Request.i:
-	* TAO/tao/Typecode.cpp:
-	* TAO/tao/Typecode.h:
-	* TAO/tao/decode.cpp:
-	* TAO/tao/deep_copy.cpp:
-	* TAO/tao/deep_free.cpp:
-	* TAO/tao/encode.cpp:
-	* TAO/tao/orbconf.h:
-	* TAO/tao/params.h:
-	  In most cases it was only a matter of changing the class name
-	  and the method invocations.
+        * TAO/tao/Align.h:
+        * TAO/tao/CDR.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.i:
+        * TAO/tao/Connect.cpp:
+        * TAO/tao/Connect.h:
+        * TAO/tao/Exception.cpp:
+        * TAO/tao/GIOP.cpp:
+        * TAO/tao/GIOP.h:
+        * TAO/tao/GIOP.i:
+        * TAO/tao/IIOP_Interpreter.cpp:
+        * TAO/tao/IIOP_Interpreter.h:
+        * TAO/tao/IIOP_ORB.cpp:
+        * TAO/tao/ORB.h:
+        * TAO/tao/Server_Request.cpp:
+        * TAO/tao/Server_Request.h:
+        * TAO/tao/Server_Request.i:
+        * TAO/tao/Typecode.cpp:
+        * TAO/tao/Typecode.h:
+        * TAO/tao/decode.cpp:
+        * TAO/tao/deep_copy.cpp:
+        * TAO/tao/deep_free.cpp:
+        * TAO/tao/encode.cpp:
+        * TAO/tao/orbconf.h:
+        * TAO/tao/params.h:
+          In most cases it was only a matter of changing the class name
+          and the method invocations.
 
-	* tests/Param_Test/options.cpp:
-	  Use CORBA::string_copy instead of ACE::strdup because we delete
-	  the buffer with CORBA::string_free.
+        * tests/Param_Test/options.cpp:
+          Use CORBA::string_copy instead of ACE::strdup because we delete
+          the buffer with CORBA::string_free.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp:
-	  I limited the size of the sequences, otherwise the test time
-	  grows non-linearly with the number of loops.
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp:
+          I limited the size of the sequences, otherwise the test time
+          grows non-linearly with the number of loops.
 
-	* tests/Param_Test/README:
-	  The test can also check string sequences, but the option to do
-	  so (-t strseq) was not documented.
+        * tests/Param_Test/README:
+          The test can also check string sequences, but the option to do
+          so (-t strseq) was not documented.
 
-	* tests/CDR/basic_types.cpp:
-	  The test is run several times; this is useful when trying to
-	  verify performance.
+        * tests/CDR/basic_types.cpp:
+          The test is run several times; this is useful when trying to
+          verify performance.
 
 Sun Mar 29 03:09:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_ORB.{h,i,cpp}: Added an optimize_collocation_objects_
-	  flag to turn optimization for collocation objects on and off.
+        * tao/IIOP_ORB.{h,i,cpp}: Added an optimize_collocation_objects_
+          flag to turn optimization for collocation objects on and off.
 
-	* tao/ORB_Core.cpp: Added an initialization argument
-	  -ORBcollocation to make ORB aware of collocation objects or
-	  not.  The default is on.
+        * tao/ORB_Core.cpp: Added an initialization argument
+          -ORBcollocation to make ORB aware of collocation objects or
+          not.  The default is on.
 
-	* doc/Options.html: Added documentation for -ORBcollocation.
+        * doc/Options.html: Added documentation for -ORBcollocation.
 
 Fri Mar 27 20:08:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext):
- 	  Changed to get lock from the ORB.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext):
+          Changed to get lock from the ORB.
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Update the source file list.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Update the source file list.
 
-	* tao/ORB.h: Added TAO_Export to class CORBA_ORB_var.
+        * tao/ORB.h: Added TAO_Export to class CORBA_ORB_var.
 
-	* tao/params.cpp: Removed the extra inclusion of <params.i>.
+        * tao/params.cpp: Removed the extra inclusion of <params.i>.
 
 Fri Mar 27 14:10:34 1998  Steve Huston  <shuston@riverace.com>
 
