@@ -358,7 +358,29 @@ namespace CCF
             f.value_type (), &SemanticAction::Scope::close_scope),
 
           act_value_type_end (
-            f.value_type (), &SemanticAction::ValueType::end)
+            f.value_type (), &SemanticAction::ValueType::end),
+
+
+          // ValueTypeMember
+          //
+          //
+          act_value_type_member_begin_private (
+            f.value_type_member (),
+            &SemanticAction::ValueTypeMember::begin_private),
+
+          act_value_type_member_begin_public (
+            f.value_type_member (),
+            &SemanticAction::ValueTypeMember::begin_public),
+
+          act_value_type_member_type (
+            f.value_type_member (), &SemanticAction::ValueTypeMember::type),
+
+          act_value_type_member_name (
+            f.value_type_member (), &SemanticAction::ValueTypeMember::name),
+
+          act_value_type_member_end (
+            f.value_type_member (), &SemanticAction::ValueTypeMember::end)
+
     {
       language =
         guard
@@ -1200,11 +1222,14 @@ namespace CCF
       //
       //
       value_type_member_decl =
-           (PUBLIC | PRIVATE)
-        >> identifier // [act_member_type]
-        >> simple_identifier // [act_member_name]
-        >> *(COMMA >> simple_identifier /*[act_member_name]*/)
-        >> SEMI
+           (
+               PUBLIC[act_value_type_member_begin_public]
+             | PRIVATE[act_value_type_member_begin_private]
+           )
+        >> identifier[act_value_type_member_type]
+        >> simple_identifier[act_value_type_member_name]
+        >> *(COMMA >> simple_identifier[act_value_type_member_name])
+        >> SEMI[act_value_type_member_end]
         ;
 
       // valuetype factory

@@ -37,7 +37,8 @@ namespace CCF
               type_id_ (ctx_),
               type_prefix_ (ctx_),
               union__ (ctx_),
-              value_type_ (ctx_)
+              value_type_ (ctx_),
+              value_type_member_ (ctx_)
         {
           // Implied translation region with fundamental types.
           //
