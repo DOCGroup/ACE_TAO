@@ -1,11 +1,11 @@
 /* -*- C++ -*- */
-// $Id: stdcpp.h
+// $Id$
 
 // ============================================================================
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    stdcpp.h
 //
@@ -16,7 +16,7 @@
 //    This file contains the portability ugliness for the Standard C++
 //    Library.  As implementations of the "standard" emerge, this file
 //    will need to be updated.
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_STDCPP_H)
@@ -30,7 +30,7 @@
 #   if defined (_MSC_VER)
 #     pragma warning(disable: 4018 4114 4146 4245)
 #     pragma warning(disable: 4663 4664 4665 4511 4512)
-#   endif
+#   endif /* _MSC_VER */
 
     // For some reason, The Standard C++ Library has decided to save space
     // and ommit the file extensions.
@@ -43,7 +43,7 @@
 #   include /**/ <streambuf>
 
 
-/*  As more compilers conform to Draft 2, ACE should be modified to use the 
+/*  As more compilers conform to Draft 2, ACE should be modified to use the
     namespace instead of promoting names to the global namespace.  For those
     compilers that don't support it yet, there could be  a global struct that
     looks like:
@@ -51,31 +51,31 @@
     struct std
     {
       typedef ostream ::ostream;
-      
+
       // ...
     }
 */
 
 // In case iostream.h is not #included before this header . . .
-#   if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) &&		\
-	    (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-      using std::istream; 
+#   if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+               (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+      using std::istream;
       using std::ostream;
       using std::ofstream;
       using std::endl;
       using std::flush;
       using std::iostream;
-      using std::cerr; 
-      using std::cout; 
+      using std::cerr;
+      using std::cout;
       using std::cin;
       using std::streambuf;
       using std::ios;
-#   endif // ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 
+#   endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
 #   if defined (_MSC_VER)
 #     pragma warning(4: 4018 4114 4146 4245)
 #     pragma warning(4: 4663 4664 4665 4512 4511)
-#   endif
+#   endif /* _MSC_VER */
 
 # else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #   include /**/ <fstream.h>
@@ -116,21 +116,22 @@
 # if defined (_MSC_VER)
 #   pragma warning(4: 4018 4114 4146 4245)
 #   pragma warning(4: 4663 4664 4665 4512 4511)
-# endif
+# endif /* _MSC_VER */
 
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
 
 # include /**/ <assert.h>
 # include /**/ <limits.h>
+// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
+# include /**/ <stdarg.h>
 # include /**/ <stdio.h>
 # include /**/ <new.h>
 # include /**/ <ctype.h>
 # include /**/ <signal.h>
 # include /**/ <string.h>
-# include /**/ <stdarg.h>
 # include /**/ <errno.h>
 # include /**/ <stdlib.h>
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#endif // ACE_STDCPP_H
+#endif /* ACE_STDCPP_H */
