@@ -1,3 +1,23 @@
+Mon Mar 29 05:51:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
+
+	  Updated dependencies. 
+	
+	* TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
+
+	  Removed inclusion of Functor.h.
+
+Mon Mar 29 05:46:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
+
+	  Updated dependencies.
+	
+	* TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
+
+
+
 Tue Mar 23 14:34:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
