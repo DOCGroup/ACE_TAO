@@ -40,7 +40,7 @@ sub locateFile {
     return $self->{'ifound'}->{$file};
   }
   else {
-    foreach my $dir ('.', @{$self->{'ipaths'}}) {
+    foreach my $dir (@{$self->{'ipaths'}}) {
       if (-r "$dir/$file") {
         $self->{'ifound'}->{$file} = "$dir/$file";
         return $self->{'ifound'}->{$file};
