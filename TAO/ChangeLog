@@ -1,3 +1,16 @@
+Fri Jan 31 07:47:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Add missing dllflags
+
+        * orbsvcs/IFR_Service/Makefile.BE:
+          Set the correct x_BUILD_DLL define. This is needed for the
+          Cygwin/MingW and Kylix compiler.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+          Adding missing ACE_AS_STATIC_LIBS when building statically
+
 Thu Jan 30 17:30:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
@@ -6,9 +19,9 @@ Thu Jan 30 17:30:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  initializes itself and its base classes without initializing the
 	  transport. This is needed since the derived classes may want to
 	  initialize its own version of the transport.
-	
+
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Use the
-	  new constructor to initialize the base class. 
+	  new constructor to initialize the base class.
 
 	  This fixes [BUG 1421]. Thanks to Jon Reis and Wayne Erchak for
 	  reporting the problem.
