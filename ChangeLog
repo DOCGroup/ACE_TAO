@@ -1,3 +1,8 @@
+Tue May 23 11:53:24 2001  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * docs/exceptions.html: Fix bad reference to OCI devguide:
+          the link was broken and the chapter # was incorrect.
+
 Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	
 	* ace/QoS/QoS_Session.h: 
