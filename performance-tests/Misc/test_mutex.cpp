@@ -103,7 +103,7 @@ class Thread_Mutex_Derived : public Mutex_Base
 {
 public:
   Thread_Mutex_Derived (void);
-  ~Thread_Mutex_Derived (void);
+  virtual ~Thread_Mutex_Derived (void);
   virtual int acquire (void);
   virtual int release (void);
 
