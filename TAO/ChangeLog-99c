@@ -7,11 +7,11 @@ Wed Apr  7 16:32:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp:
 	* TAO_IDL/include/ast_expression.h:
-	  A quick fix for the DEC bug report by Rod Joseph &
-	  Barry Hoggard. More extensive changes are in
-	  progress. This fix just removes the declaration and
-	  definition of AST_Expression constructors taking
-	  ACE_CDR::LongLong and ACE_CDR::ULongLong args.
+	  A quick fix for the DEC bug report by Rod Joseph
+ 	  <rodjoseph@adt.com> and Hoggard <hoggard@cfx.com>. More
+ 	  extensive changes are in progress. This fix just removes the
+ 	  declaration and definition of AST_Expression constructors taking
+ 	  ACE_CDR::LongLong and ACE_CDR::ULongLong args.
 
 Wed Apr  7 16:25:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -23,7 +23,6 @@ Wed Apr  7 16:25:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 Wed Apr  7 15:52:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile.am:
-
 	  Added `clean-local' targets to all Makefile.am files.  Minor
 	  updates to the top-level TAO Makefile.am.
 
@@ -103,20 +102,19 @@ Wed Apr 07 14:34:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
 	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
 	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
-
 	  Should use a simple cast for casting functions and not
 	  reinterpret_cast.
 
 	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
 	  (parse_string): Fixed comparison between signed and unsigned;
-	  <index> should be signed.
+ 	  <index> should be signed.
 
 Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
 	* orbsvcs/orbsvcs/Naming/Naming_Context.{h, cpp}
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
-	Updated to use new exceptions macros.
+	  Updated to use new exceptions macros.
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
 	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
@@ -126,19 +124,19 @@ Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
 	* orbsvcs/Naming_Service/Naming_Service.{h,cpp}
 	* orbsvcs/orbsvcs/Makefile
-	Added the files above, to implement persistent naming service.
+	  Added the files above, to implement persistent naming service.
 
-	The first version of persistent naming service is available.  It
-	uses memory-mapped file to store the persistent state of the
-	naming service.  When starting the Naming Service from
-	orbsvcs/Naming_Service, if -f <file_name> option is provided, the
-	persistent implementation is used, if no -f option is provided, an
-	non-persistent implementation is used.
+	  The first version of persistent naming service is available.  It
+ 	  uses memory-mapped file to store the persistent state of the
+ 	  naming service.  When starting the Naming Service from
+ 	  orbsvcs/Naming_Service, if -f <file_name> option is provided,
+ 	  the persistent implementation is used, if no -f option is
+ 	  provided, an non-persistent implementation is used.
 
-	I'll be adding comments/documentation for the above shortly.  The
-	class structure for the persistent implementation will also change
-	in the near future, as I'll be merging some of
-	persistent/non-persistent classes.
+	  We'll be adding comments/documentation for the above shortly.
+  	  The class structure for the persistent implementation will also
+ 	  change in the near future, as I'll be merging some of
+ 	  persistent/non-persistent classes.
 
 Wed Apr 07 14:11:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -148,7 +146,7 @@ Wed Apr 07 14:11:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Wed Apr  7 13:42:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp (_is_a):
-	Added a ACE_UNSED_ARG to avoid warnings..
+	  Added a ACE_UNSED_ARG to avoid warnings..
 
 Wed Apr 07 13:27:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -161,7 +159,7 @@ Wed Apr 07 13:27:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Wed Apr  7 12:54:49 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.{h,cpp}:
-	Updated the files to use the new exceptions macros.
+	  Updated the files to use the new exceptions macros.
 
 Wed Apr  7 12:40:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
