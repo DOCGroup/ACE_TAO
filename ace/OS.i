@@ -5368,8 +5368,7 @@ ACE_Flow_Spec::priority (int p)
 
 ACE_INLINE
 ACE_QoS::ACE_QoS (void)
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
-    defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
   : sending_flowspec_ (0),
     receiving_flowspec_ (0)
