@@ -1,4 +1,12 @@
-Fri Sep 26 00:54:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Fri Sep 26 01:22:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace/OS: Made a few changes to OS.h and OS.i to stop compiler
+	  warnings.  Thanks to Wei Chiang <chiang@tele.nokia.fi> for
+	  reporting this.
+
+	* ace/config-chorus.h: Added ACE_LACKS_RLIMIT and removed
+ 	  ACE_LACKS_SIGACTION.  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for reporting this.
 
         * ace/TLI_Connector.cpp (complete): Changed the call to
  	  ACE::handle_timed_complete() to use the new parameter.
