@@ -114,7 +114,7 @@ visit_operation (be_operation *node)
   return 0;
 }
 
-int be_visitor_operation_rettype_compiled_marshal::visit_array (be_array *node)
+int be_visitor_operation_rettype_compiled_marshal::visit_array (be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
