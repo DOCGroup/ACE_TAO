@@ -423,7 +423,11 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
           return -1;
         }
 #else
+#  if !defined(_UNICOS)
       int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
+#  else /* _UNICOS */
+      int a_len = sizeof this->inet_addr_.sin_addr;
+#  endif /* ! _UNICOS */
       int error = 0;
 
 #if defined (CHORUS)

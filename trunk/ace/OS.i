@@ -6198,7 +6198,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   // ACE_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined(ACE_LACKS_PTHREAD_KILL)
   ACE_UNUSED_ARG (signum);
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -7506,8 +7506,12 @@ ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (bufsiz);
   ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), int, -1);
+# else
+#   if !defined(ACE_HAS_NONCONST_READLINK)
+      ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), int, -1);
+#   else
+      ACE_OSCALL_RETURN (::readlink ((char *)path, buf, bufsiz), int, -1);
+#   endif
 # endif /* ACE_LACKS_READLINK */
 }
 

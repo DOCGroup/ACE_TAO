@@ -85,6 +85,10 @@ if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
   LynxOS=1
 fi
 
+if [ -x /bin/uname -a `uname -s` = 'unicos' ]; then
+  Unicos=1
+fi
+
 ace_version=`head -1 ../VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
 
 if [ ! "$chorus" ]; then
@@ -107,14 +111,18 @@ run Time_Value_Test                     # tests Time_Value
 run High_Res_Timer_Test                 # tests High_Res_Timer
 run SString_Test                        # tests ACE_CString and ACE_SString
 run Collection_Test                     # tests ACE Collection classes
-test $chorus || test $LynxOS || run Naming_Test # tests ACE_Naming_Context, ACE_WString
+# Naming_Test: UNICOS fails due to feature not supported
+test $chorus || test $LynxOS || test $Unicos || run Naming_Test # tests ACE_Naming_Context, ACE_WString
 
 run Handle_Set_Test                     # tests ACE_Handle_Set
 run OrdMultiSet_Test                    # tests ACE_Ordered_MultiSet
-test $chorus || run Mem_Map_Test        # tests ACE_Mem_Map
+# Mem_Map_Test: UNICOS fails due to feature not supported
+test $chorus || test $Unicos || run Mem_Map_Test        # tests ACE_Mem_Map
 
-run SV_Shared_Memory_Test               # tests ACE_SV_Shared_Memory, fork
-test $chorus || run MM_Shared_Memory_Test # tests ACE_Shared_Memory_MM
+# SV_Shared_Memory_Test: UNICOS fails due to feature not supported
+test $Unicos || run SV_Shared_Memory_Test               # tests ACE_SV_Shared_Memory, fork
+# MM_Shared_Memory_Test: UNICOS fails due to feature not supported
+test $chorus || test $Unicos || run MM_Shared_Memory_Test # tests ACE_Shared_Memory_MM
 
 run Sigset_Ops_Test                     # tests ACE_sigset*() functions
 
@@ -124,7 +132,8 @@ run MT_Reactor_Timer_Test               # tests ACE_Reactor's timer mechanism.
 run SOCK_Connector_Test                 # tests ACE_SOCK_Connector
 
 run Task_Test                           # tests ACE_Thread_Manager, ACE_Task
-run Thread_Manager_Test                 # tests ACE_Thread_Manager, ACE_Task
+# Thread_Manager_Test: UNICOS fails due to no pthread_kill nor pthread_cancel
+test $Unicos || run Thread_Manager_Test                 # tests ACE_Thread_Manager, ACE_Task
 run Thread_Pool_Test                    # tests ACE_Thread_Manager, ACE_Task
 run Future_Test                         # tests ACE_Thread_Manager, ACE_Task
 run RB_Tree_Test                        # tests ACE_RB_Tree, ACE_RB_Tree_Iterator
@@ -150,10 +159,12 @@ run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
 
+# Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/server/main ]; then
-  test $chorus || test $LynxOS || run Time_Service_Test # tests libnetsvcs
+  test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test # tests libnetsvcs
 fi
-test $chorus || test $LynxOS || run Tokens_Test # tests ACE_Token
+# Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
+test $chorus || test $LynxOS || test $Unicos || run Tokens_Test # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Message_Queue_Notifications_Test    # tests ACE_Message_Queue + ACE_Reactor
@@ -165,7 +176,8 @@ test $chorus || run Process_Mutex_Test  # tests ACE_Process_Mutex
 test $chorus || run Thread_Mutex_Test   # tests ACE_Thread_Process_Mutex
 test $chorus || run Process_Strategy_Test # tests ACE_ACE_Strategy_Acceptor
 run Service_Config_Test                 # tests ACE_Service_Config
-run Priority_Task_Test                  # tests ACE_Task with priorities
+# Priority_Task_Test: UNICOS fails due to getprio - feature not supported
+test $Unicos || run Priority_Task_Test                  # tests ACE_Task with priorities
 run IOStream_Test                       # tests ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks

@@ -27,7 +27,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_SYSV_IPC)
+#if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // Shared memory allocator (note that this chews up the
 // ACE_DEFAULT_SEM_KEY).  Hide the allocator inside this function so
@@ -131,7 +131,7 @@ main (int, char *[])
 {
   ACE_START_TEST ("SV_Shared_Memory_Test");
 
-#if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK)
+#if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && !defined(ACE_LACKS_SYSV_SHMEM)
   char *shm = (char *) myallocator ().malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
@@ -148,7 +148,7 @@ main (int, char *[])
     }
 #else
   ACE_ERROR ((LM_INFO,
-              "SYSV IPC and fork are not supported on this platform\n"));
+              "SYSV IPC, SYSV SHMEM, or fork are not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;
   return 0;
