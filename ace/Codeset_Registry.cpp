@@ -22,7 +22,7 @@
 ACE_RCSID(ace, Codeset_Registry, "$Id$");
 
 
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::ULong &codeset_id,
                                             ACE_CDR::UShort *num_sets,
@@ -47,7 +47,7 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
   return 1;
 }
 
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CString &locale,
                                             ACE_CDR::UShort *num_sets,
@@ -72,7 +72,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
   return 1;
 }
 
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {

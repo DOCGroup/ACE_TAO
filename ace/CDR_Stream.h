@@ -323,14 +323,21 @@ public:
    */
   int align_write_ptr (size_t alignment);
 
-  /// Access the codeset translators. They can be nil!
+  /// Access the codeset translators. They can be null!
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
 
-  /// Set the codeset translators.
+  /// Set the char codeset translator.
   void char_translator (ACE_Char_Codeset_Translator *);
+  /// Set the wchar codeset translator.
   void wchar_translator (ACE_WChar_Codeset_Translator *);
+
+  /// set the global size of serialized wchars. This may be different
+  /// than the size of a wchar_t.
   static void wchar_maxbytes (int );
+
+  /// access the serialized size of wchars.
+  static int wchar_maxbytes (void);
 
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
@@ -401,7 +408,7 @@ private:
 
 
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
-					ACE_CDR::ULong length);
+                                        ACE_CDR::ULong length);
 
 
   /**
@@ -917,7 +924,7 @@ private:
    * a default translator.
    */
   ACE_CDR::Boolean read_wchar_array_i (ACE_CDR::WChar * x,
-				       ACE_CDR::ULong length);
+                                       ACE_CDR::ULong length);
 
   /// Move the rd_ptr ahead by <offset> bytes.
   void rd_ptr (size_t offset);
