@@ -37,7 +37,6 @@ PUB_HDRS = \
   Wait_Strategy \
   Transport_Mux_Strategy \
   Reply_Dispatcher \
-  POAS.h \
   IORC \
   IORS \
   IORManipulation
