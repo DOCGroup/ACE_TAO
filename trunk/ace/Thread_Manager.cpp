@@ -411,6 +411,7 @@ ACE_Thread_Exit::~ACE_Thread_Exit (void)
 //
 // o That's where the ACE_Thread_Exit destructor gets called.
 
+#if defined(ACE_USE_THREAD_MANAGER_ADAPTER)
 extern "C" void *
 ace_thread_manager_adapter (void *args)
 {
@@ -453,6 +454,7 @@ ace_thread_manager_adapter (void *args)
 
   return status;
 }
+#endif
 
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
 // called with the lock_ held...
@@ -497,7 +499,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_Thread_Adapter *thread_args =
     new ACE_Thread_Adapter (func,
                             args,
+#if defined(ACE_USE_THREAD_MANAGER_ADAPTER)
                             (ACE_THR_C_FUNC) ace_thread_manager_adapter,
+#else
+                            (ACE_THR_C_FUNC) ace_thread_adapter,
+#endif
                             this,
                             new_thr_desc);
   if (thread_args == 0)
