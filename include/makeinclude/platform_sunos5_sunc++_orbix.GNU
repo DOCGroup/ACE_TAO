@@ -1,5 +1,5 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.0.1 or earlier
-# *using* Orbix
+# *using* MT Orbix
 CC              = cc
 CXX             = CC
 CFLAGS          += $(DCFLAGS) +w -mt
@@ -10,7 +10,7 @@ LD		= $(CXX)
 INCLDIRS	= -I$(ORBIX_ROOT)/include
 PIC		= -PIC
 LDFLAGS		+= $(PIC) -L$(ORBIX_ROOT)/lib -R $(WRAPPER_ROOT)/ace -R $(ORBIX_ROOT)/lib
-LIBS		+= -lITsrv -lsocket -ldl -lnsl -lthread -lgen
+LIBS		+= -orbixmt -lsocket -ldl -lnsl -lthread -lgen
 AR		= CC
 ARFLAGS		= -xar -o
 RANLIB		= echo

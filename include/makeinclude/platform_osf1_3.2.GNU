@@ -2,12 +2,12 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS		+= $(DCFLAGS) -ptr ptrepository
+CFLAGS          += $(DCFLAGS) -ptr $(WRAPPER_ROOT)/ptrepository
 CCFLAGS		+= $(CFLAGS) -x cxx -w0
 DCFLAGS		+= -g -threads
 DLD		= ld -shared -expect_unresolved '*'
 LD		= $(CXX)
-LIBS		+= -lpthreads -lmach -lsys5 -lxti -ltli -lcxx -lexc -lc
+LIBS		+= -lpthreads -lmach -lsys5 -lxti -ltli -lcxx -lexc -lc -lrt
 PIC		= -pic
 ARFLAGS		= ruv
 RANLIB		= ranlib
