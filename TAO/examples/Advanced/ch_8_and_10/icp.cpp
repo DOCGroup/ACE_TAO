@@ -125,7 +125,11 @@ static
 short
 vary_temp(short temp)
 {
+#if defined (__BORLANDC__)
     long r = rand() % 50;
+#else
+    long r = lrand48() % 50;
+#endif
     long delta;
     if (r < 5)
         delta = 3;
@@ -135,7 +139,11 @@ vary_temp(short temp)
         delta = 1;
     else
         delta = 0;
+#if defined (__BORLANDC__)
     if (rand() % 2)
+#else
+    if (lrand48() % 2)
+#endif
         delta = -delta;
     return temp + delta;
 }
