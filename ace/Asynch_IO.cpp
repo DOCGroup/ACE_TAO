@@ -73,6 +73,12 @@ ACE_Asynch_Result::priority (void) const
   return this->implementation ()->priority ();
 }
 
+int
+ACE_Asynch_Result::signal_number (void) const
+{
+  return this->implementation ()->signal_number ();
+}
+
 ACE_Asynch_Result::ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation)
   : implementation_ (implementation)
 {
@@ -196,12 +202,14 @@ int
 ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                               u_long bytes_to_read,
                               const void *act,
-                              int priority)
+                              int priority,
+                              int signal_number)
 {
   return this->implementation ()->read (message_block,
                                         bytes_to_read,
                                         act,
-                                        priority);
+                                        priority,
+                                        signal_number);
 }
 
 ACE_Asynch_Read_Stream_Impl *
@@ -300,12 +308,14 @@ int
 ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                 u_long bytes_to_write,
                                 const void *act,
-                                int priority)
+                                int priority,
+                                int signal_number)
 {
   return this->implementation ()->write (message_block,
                                          bytes_to_write,
                                          act,
-                                         priority);
+                                         priority,
+                                        signal_number);
 }
 
 ACE_Asynch_Write_Stream_Impl *
@@ -406,14 +416,16 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
                             u_long offset,
                             u_long offset_high,
                             const void *act,
-                            int priority)
+                            int priority,
+                            int signal_number)
 {
   return this->implementation ()->read (message_block,
                                         bytes_to_read,
                                         offset,
                                         offset_high,
                                         act,
-                                        priority);
+                                        priority,
+                                        signal_number);
 }
 
 ACE_Asynch_Read_File_Impl *
@@ -496,14 +508,16 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
                               u_long offset,
                               u_long offset_high,
                               const void *act,
-                              int priority)
+                              int priority,
+                              int signal_number)
 {
   return this->implementation ()->write (message_block,
                                          bytes_to_write,
                                          offset,
                                          offset_high,
                                          act,
-                                         priority);
+                                         priority,
+                                         signal_number);
 }
 
 ACE_Asynch_Write_File_Impl *
@@ -585,13 +599,15 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                            u_long bytes_to_read,
                            ACE_HANDLE accept_handle,
                            const void *act,
-                           int priority)
+                           int priority,
+                           int signal_number)
 {
   return this->implementation ()->accept (message_block,
                                           bytes_to_read,
                                           accept_handle,
                                           act,
-                                          priority);
+                                          priority,
+                                          signal_number);
 }
 
 ACE_Asynch_Accept_Impl *
@@ -700,7 +716,8 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                          u_long bytes_per_send,
                                          u_long flags,
                                          const void *act,
-                                         int priority)
+                                         int priority,
+                                         int signal_number)
 {
   return this->implementation ()->transmit_file (file,
                                                  header_and_trailer,
@@ -710,7 +727,8 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                  bytes_per_send,
                                                  flags,
                                                  act,
-                                                 priority);
+                                                 priority,
+                                                 signal_number);
 }
 
 ACE_Asynch_Transmit_File_Impl *
