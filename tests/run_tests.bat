@@ -7,6 +7,16 @@ rem    msvc tests are run.
 rem    You can provide an optional second parameter, the name of
 rem    the test to be run.
 rem    An optional first argument of "purify" can be provided as well.
+rem    If you specify that the borland tests are to run you must also
+rem    specify the build configuration to be tested. There are three
+rem    options that may be set: DEBUG, STATIC, and PASCAL. Each is Off
+rem    by default. These options may be switched on by using environment
+rem    variables, for example: set DEBUG=1 and turned off again:
+rem    set DEBUG=.
+rem      * DEBUG - if defined means run tests built with debug info
+rem      * STATIC - if defined means run statically linked tests
+rem      * PASCAL - if defined means run the VCL-compatible runtime
+rem                 library tests
 
 setlocal
 
@@ -36,7 +46,20 @@ goto setupmsc
 shift
 :setupbor
 set arg=%1
-set exedir=.\Dynamic\Release\
+
+set STATIC_DIR=Dynamic
+if not "%STATIC%" == "" set STATIC_DIR=Static
+set DEBUG_DIR=Release
+if not "%DEBUG%" == "" set DEBUG_DIR=Debug
+set PASCAL_DIR=.
+if not "%PASCAL%" == "" set PASCAL_DIR=Pascal
+if "%STATIC_DIR%" == "Static" goto continue_setupbor
+set corebindir=%ACE_ROOT%\bin\%STATIC_DIR%\%DEBUG_DIR%\%PASCAL_DIR%
+set PATH=%PATH%;%corebindir%
+
+:continue_setupbor
+set exedir=.\%STATIC_DIR%\%DEBUG_DIR%\%PASCAL_DIR%\
+
 set PATH=%PATH%;%exedir%
 rem Set deco to whatever decoration you have for the executables
 set deco=
