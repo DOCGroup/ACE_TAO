@@ -240,7 +240,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i stub_export.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  stub_export.h \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
   $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
@@ -304,7 +305,8 @@ endif
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
-  DiamondC.i $(TAO_ROOT)/tao/Exception_Data.h \
+  DiamondC.i \
+  $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.inl \
@@ -549,7 +551,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i stub_export.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  stub_export.h \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
   $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
@@ -1022,7 +1025,8 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i stub_export.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  stub_export.h \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
   $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
