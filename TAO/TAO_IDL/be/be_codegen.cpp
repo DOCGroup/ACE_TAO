@@ -675,6 +675,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
+  // To get ACE_UNUSED_ARGS
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/config-all.h");
 
 
 
@@ -1557,7 +1560,7 @@ TAO_CodeGen::gen_arg_file_includes (void)
 }
 
 void
-TAO_CodeGen::gen_cond_file_include (ACE_UINT64 mask, 
+TAO_CodeGen::gen_cond_file_include (ACE_UINT64 mask,
                                     const char *filepath,
                                     TAO_OutStream *stream)
 {

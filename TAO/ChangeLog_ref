@@ -1,3 +1,18 @@
+Fri Aug  8 08:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp: #included config-all.h for getting
+	  the declaration of ACE_UNUSED_ARG
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	  Removed an argument name to prevent unused variable warnings. 
+	
+	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp: Removed
+	  exception specification. We should use the "right" exception
+	  specifications. Need to discuss this with Jeff. 
+	
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	  Removed an argument name to prevent unused variable warnings. 
+
 Thu Aug  7 17:15:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ci.cpp:

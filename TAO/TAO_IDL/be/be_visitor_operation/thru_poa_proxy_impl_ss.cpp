@@ -72,7 +72,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Object_out forward," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << be_nl
+      << "int " << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -174,7 +174,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     }
 
   *os << be_uidt << be_uidt_nl
-      << "ACE_CHECK;" << be_uidt_nl
+      << "ACE_CHECK;" << be_nl
+      << "ACE_UNUSED_ARG (args); " << be_uidt_nl
       << "}";
 
   return 0;
@@ -214,7 +215,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
       *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (arg->field_type (), 
+      this->gen_arg_template_param_name (arg->field_type (),
                                          os);
 
       *os << ">::";
