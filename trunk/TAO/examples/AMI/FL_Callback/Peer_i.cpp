@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Peer_i.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(FL_Callback, Peer_i, "$Id$")
 
