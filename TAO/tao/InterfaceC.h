@@ -12,7 +12,7 @@
 #define TAO_IDL_INTERFACEC_H
 #include "ace/pre.h"
 
-#include "ace/Singleton.h"
+#include "tao/TAO_Singleton.h"
 #include "tao/corbafwd.h"
 #include "tao/ifrfwd.h"
 #include "tao/Any.h"
@@ -172,7 +172,7 @@ class TAO_CORBA_IRObject_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_CORBA_IRObject_Default_Proxy_Factory *df,
@@ -202,7 +202,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CORBA_IRObject_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CORBA_IRObject_PROXY_FACTORY_ADAPTER;
   class TAO_CORBA_IRObject_Smart_Proxy_Base : public virtual CORBA_IRObject
   {
   public:
@@ -588,7 +588,7 @@ class TAO_IR_Contained_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_Contained_Default_Proxy_Factory *df,
@@ -618,7 +618,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Contained_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Contained_PROXY_FACTORY_ADAPTER;
   class TAO_IR_Contained_Smart_Proxy_Base : public virtual IR_Contained
   {
   public:
@@ -4259,7 +4259,7 @@ class TAO_IR_Container_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_Container_Default_Proxy_Factory *df,
@@ -4289,7 +4289,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Container_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Container_PROXY_FACTORY_ADAPTER;
   class TAO_IR_Container_Smart_Proxy_Base : public virtual IR_Container
   {
   public:
@@ -4555,7 +4555,7 @@ class TAO_IR_IDLType_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_IDLType_Default_Proxy_Factory *df,
@@ -4585,7 +4585,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_IDLType_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_IDLType_PROXY_FACTORY_ADAPTER;
   class TAO_IR_IDLType_Smart_Proxy_Base : public virtual IR_IDLType
   {
   public:
@@ -5014,7 +5014,7 @@ class TAO_IR_Repository_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_Repository_Default_Proxy_Factory *df,
@@ -5044,7 +5044,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Repository_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_Repository_PROXY_FACTORY_ADAPTER;
   class TAO_IR_Repository_Smart_Proxy_Base : public virtual IR_Repository
   {
   public:
@@ -5267,7 +5267,7 @@ class TAO_IR_ComponentRepository_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ComponentRepository_Default_Proxy_Factory *df,
@@ -5297,7 +5297,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ComponentRepository_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ComponentRepository_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ComponentRepository_Smart_Proxy_Base : public virtual IR_ComponentRepository
   {
   public:
@@ -5400,7 +5400,7 @@ class TAO_IR_ModuleDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ModuleDef_Default_Proxy_Factory *df,
@@ -5430,7 +5430,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ModuleDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ModuleDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ModuleDef_Smart_Proxy_Base : public virtual IR_ModuleDef
   {
   public:
@@ -5610,7 +5610,7 @@ class TAO_IR_ConstantDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ConstantDef_Default_Proxy_Factory *df,
@@ -5640,7 +5640,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ConstantDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ConstantDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ConstantDef_Smart_Proxy_Base : public virtual IR_ConstantDef
   {
   public:
@@ -5867,7 +5867,7 @@ class TAO_IR_TypedefDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_TypedefDef_Default_Proxy_Factory *df,
@@ -5897,7 +5897,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_TypedefDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_TypedefDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_TypedefDef_Smart_Proxy_Base : public virtual IR_TypedefDef
   {
   public:
@@ -6053,7 +6053,7 @@ class TAO_IR_StructDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_StructDef_Default_Proxy_Factory *df,
@@ -6083,7 +6083,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_StructDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_StructDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_StructDef_Smart_Proxy_Base : public virtual IR_StructDef
   {
   public:
@@ -6218,7 +6218,7 @@ class TAO_IR_UnionDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_UnionDef_Default_Proxy_Factory *df,
@@ -6248,7 +6248,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_UnionDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_UnionDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_UnionDef_Smart_Proxy_Base : public virtual IR_UnionDef
   {
   public:
@@ -6383,7 +6383,7 @@ class TAO_IR_EnumDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_EnumDef_Default_Proxy_Factory *df,
@@ -6413,7 +6413,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EnumDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EnumDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_EnumDef_Smart_Proxy_Base : public virtual IR_EnumDef
   {
   public:
@@ -6523,7 +6523,7 @@ class TAO_IR_AliasDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_AliasDef_Default_Proxy_Factory *df,
@@ -6553,7 +6553,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_AliasDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_AliasDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_AliasDef_Smart_Proxy_Base : public virtual IR_AliasDef
   {
   public:
@@ -6646,7 +6646,7 @@ class TAO_IR_NativeDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_NativeDef_Default_Proxy_Factory *df,
@@ -6676,7 +6676,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_NativeDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_NativeDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_NativeDef_Smart_Proxy_Base : public virtual IR_NativeDef
   {
   public:
@@ -6760,7 +6760,7 @@ class TAO_IR_PrimitiveDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_PrimitiveDef_Default_Proxy_Factory *df,
@@ -6790,7 +6790,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PrimitiveDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PrimitiveDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_PrimitiveDef_Smart_Proxy_Base : public virtual IR_PrimitiveDef
   {
   public:
@@ -6891,7 +6891,7 @@ class TAO_IR_StringDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_StringDef_Default_Proxy_Factory *df,
@@ -6921,7 +6921,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_StringDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_StringDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_StringDef_Smart_Proxy_Base : public virtual IR_StringDef
   {
   public:
@@ -7031,7 +7031,7 @@ class TAO_IR_WstringDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_WstringDef_Default_Proxy_Factory *df,
@@ -7061,7 +7061,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_WstringDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_WstringDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_WstringDef_Smart_Proxy_Base : public virtual IR_WstringDef
   {
   public:
@@ -7188,7 +7188,7 @@ class TAO_IR_FixedDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_FixedDef_Default_Proxy_Factory *df,
@@ -7218,7 +7218,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FixedDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FixedDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_FixedDef_Smart_Proxy_Base : public virtual IR_FixedDef
   {
   public:
@@ -7370,7 +7370,7 @@ class TAO_IR_SequenceDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_SequenceDef_Default_Proxy_Factory *df,
@@ -7400,7 +7400,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_SequenceDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_SequenceDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_SequenceDef_Smart_Proxy_Base : public virtual IR_SequenceDef
   {
   public:
@@ -7560,7 +7560,7 @@ class TAO_IR_ArrayDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ArrayDef_Default_Proxy_Factory *df,
@@ -7590,7 +7590,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ArrayDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ArrayDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ArrayDef_Smart_Proxy_Base : public virtual IR_ArrayDef
   {
   public:
@@ -7733,7 +7733,7 @@ class TAO_IR_ExceptionDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ExceptionDef_Default_Proxy_Factory *df,
@@ -7763,7 +7763,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ExceptionDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ExceptionDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ExceptionDef_Smart_Proxy_Base : public virtual IR_ExceptionDef
   {
   public:
@@ -8253,7 +8253,7 @@ class TAO_IR_AttributeDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_AttributeDef_Default_Proxy_Factory *df,
@@ -8283,7 +8283,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_AttributeDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_AttributeDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_AttributeDef_Smart_Proxy_Base : public virtual IR_AttributeDef
   {
   public:
@@ -8869,7 +8869,7 @@ class TAO_IR_OperationDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_OperationDef_Default_Proxy_Factory *df,
@@ -8899,7 +8899,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_OperationDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_OperationDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_OperationDef_Smart_Proxy_Base : public virtual IR_OperationDef
   {
   public:
@@ -9547,7 +9547,7 @@ class TAO_IR_InterfaceDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_InterfaceDef_Default_Proxy_Factory *df,
@@ -9577,7 +9577,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_InterfaceDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_InterfaceDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_InterfaceDef_Smart_Proxy_Base : public virtual IR_InterfaceDef
   {
   public:
@@ -10083,7 +10083,7 @@ class TAO_IR_ValueMemberDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ValueMemberDef_Default_Proxy_Factory *df,
@@ -10113,7 +10113,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueMemberDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueMemberDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ValueMemberDef_Smart_Proxy_Base : public virtual IR_ValueMemberDef
   {
   public:
@@ -10403,7 +10403,7 @@ class TAO_IR_ValueDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ValueDef_Default_Proxy_Factory *df,
@@ -10433,7 +10433,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ValueDef_Smart_Proxy_Base : public virtual IR_ValueDef
   {
   public:
@@ -10771,7 +10771,7 @@ class TAO_IR_ValueBoxDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ValueBoxDef_Default_Proxy_Factory *df,
@@ -10801,7 +10801,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueBoxDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ValueBoxDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ValueBoxDef_Smart_Proxy_Base : public virtual IR_ValueBoxDef
   {
   public:
@@ -10902,7 +10902,7 @@ class TAO_IR_ProvidesDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ProvidesDef_Default_Proxy_Factory *df,
@@ -10932,7 +10932,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ProvidesDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ProvidesDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ProvidesDef_Smart_Proxy_Base : public virtual IR_ProvidesDef
   {
   public:
@@ -11095,7 +11095,7 @@ class TAO_IR_UsesDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_UsesDef_Default_Proxy_Factory *df,
@@ -11125,7 +11125,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_UsesDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_UsesDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_UsesDef_Smart_Proxy_Base : public virtual IR_UsesDef
   {
   public:
@@ -11539,7 +11539,7 @@ class TAO_IR_EventDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_EventDef_Default_Proxy_Factory *df,
@@ -11569,7 +11569,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EventDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EventDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_EventDef_Smart_Proxy_Base : public virtual IR_EventDef
   {
   public:
@@ -11725,7 +11725,7 @@ class TAO_IR_EmitsDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_EmitsDef_Default_Proxy_Factory *df,
@@ -11755,7 +11755,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EmitsDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_EmitsDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_EmitsDef_Smart_Proxy_Base : public virtual IR_EmitsDef
   {
   public:
@@ -11831,7 +11831,7 @@ class TAO_IR_PublishesDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_PublishesDef_Default_Proxy_Factory *df,
@@ -11861,7 +11861,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PublishesDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PublishesDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_PublishesDef_Smart_Proxy_Base : public virtual IR_PublishesDef
   {
   public:
@@ -11937,7 +11937,7 @@ class TAO_IR_ConsumesDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ConsumesDef_Default_Proxy_Factory *df,
@@ -11967,7 +11967,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ConsumesDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ConsumesDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ConsumesDef_Smart_Proxy_Base : public virtual IR_ConsumesDef
   {
   public:
@@ -12177,7 +12177,7 @@ class TAO_IR_ComponentDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_ComponentDef_Default_Proxy_Factory *df,
@@ -12207,7 +12207,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ComponentDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_ComponentDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_ComponentDef_Smart_Proxy_Base : public virtual IR_ComponentDef
   {
   public:
@@ -12505,7 +12505,7 @@ class TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_PrimaryKeyDef_Default_Proxy_Factory *df,
@@ -12535,7 +12535,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PrimaryKeyDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_PrimaryKeyDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_PrimaryKeyDef_Smart_Proxy_Base : public virtual IR_PrimaryKeyDef
   {
   public:
@@ -12691,7 +12691,7 @@ class TAO_IR_FactoryDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_FactoryDef_Default_Proxy_Factory *df,
@@ -12721,7 +12721,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FactoryDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FactoryDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_FactoryDef_Smart_Proxy_Base : public virtual IR_FactoryDef
   {
   public:
@@ -12797,7 +12797,7 @@ class TAO_IR_FinderDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_FinderDef_Default_Proxy_Factory *df,
@@ -12827,7 +12827,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FinderDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_FinderDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_FinderDef_Smart_Proxy_Base : public virtual IR_FinderDef
   {
   public:
@@ -12989,7 +12989,7 @@ class TAO_IR_HomeDef_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_IR_HomeDef_Default_Proxy_Factory *df,
@@ -13019,7 +13019,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_HomeDef_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_IR_HomeDef_PROXY_FACTORY_ADAPTER;
   class TAO_IR_HomeDef_Smart_Proxy_Base : public virtual IR_HomeDef
   {
   public:
@@ -13483,7 +13483,7 @@ class TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_CORBA_TypeCodeFactory_Default_Proxy_Factory *df,
@@ -13513,7 +13513,7 @@ protected:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CORBA_TypeCodeFactory_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CORBA_TypeCodeFactory_PROXY_FACTORY_ADAPTER;
   class TAO_CORBA_TypeCodeFactory_Smart_Proxy_Base : public virtual CORBA_TypeCodeFactory
   {
   public:

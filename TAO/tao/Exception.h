@@ -384,6 +384,10 @@ private:
   // typecodes.  Since at the time, the ORB is mostly still not
   // available.  Using a separate allocator prevent CDR routine from
   // accessing the optimized allocators from the ORB.
+
+  static int initialized_;
+  // Flag that denotes that the TAO's CORBA exceptions have been
+  // initialized.
 };
 
 class CORBA_ExceptionList;

@@ -314,12 +314,24 @@ CORBA::TypeCode_ptr TC_ServiceContextList = 0;
 #endif /* 0 */
 CORBA::TypeCode_ptr TC_completion_status = 0;
 
-// initialize all the ORB owned TypeCode constants. This
-// routine will be invoked by the ORB_init method.
+// Flag that denotes that the TAO TypeCode constants have been
+// initialized.
+int TAO_TypeCodes::initialized_ = 0;
+
+// Initialize all the ORB owned TypeCode constants. This routine will
+// be invoked by the ORB_init method.
 void
 TAO_TypeCodes::init (void)
 {
   // Initialize all the standard typecodes owned by the ORB
+
+  // Not thread safe.  Caller must provide synchronization.
+
+  // Do not execute code after this point more than once.
+  if (initialized_ != 0)
+    return;
+
+  initialized_ = 1;
 
   // Null and void
   CORBA::_tc_null = new CORBA::TypeCode (CORBA::tk_null);
@@ -1858,7 +1870,7 @@ TAO_TypeCodes::init (void)
 void
 TAO_TypeCodes::fini (void)
 {
-  // Initialize all the standard typecodes owned by the ORB
+  // Release all the standard typecodes owned by the ORB.
 
   // Null and void
   CORBA::release (CORBA::_tc_null);

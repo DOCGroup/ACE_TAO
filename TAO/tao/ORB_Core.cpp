@@ -26,7 +26,6 @@
 #include "tao/Priority_Mapping_Manager.h"
 #include "tao/RT_Current.h"
 
-#include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -1291,8 +1290,9 @@ TAO_ORB_Core::fini (void)
   //    this method is invoked?  Specifically, is it possible that
   //    the Server_Strategy_Factory will already have been unloaded?
   if (this->server_factory ()->activate_server_connections () == 0)
-    (void) this->reactor ()->remove_handler (this->handle_set_,
-                                             ACE_Event_Handler::ALL_EVENTS_MASK);
+    (void) this->reactor ()->remove_handler (
+                                this->handle_set_,
+                                ACE_Event_Handler::ALL_EVENTS_MASK);
 
   TAO_Internal::close_services ();
 
@@ -2407,12 +2407,6 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
       (*i).int_id_->_decr_refcnt ();
     }
   this->table_.close ();
-
-  // free up all the ORB owned Exceptions
-  TAO_Exceptions::fini ();
-
-  // free up all the ORB owned TypeCodes
-  TAO_TypeCodes::fini ();
 }
 
 TAO_ORB_Table::Iterator
@@ -2457,7 +2451,6 @@ TAO_ORB_Table::unbind (const char *orb_id)
   int result = this->table_.unbind (id, orb_core);
   if (result == 0)
     {
-      orb_core->_decr_refcnt ();
       if (orb_core == this->first_orb_)
         {
           Iterator begin = this->begin ();
@@ -2467,7 +2460,10 @@ TAO_ORB_Table::unbind (const char *orb_id)
           else
             this->first_orb_ = 0;
         }
+
+      orb_core->_decr_refcnt ();
     }
+
   return result;
 }
 
@@ -2486,11 +2482,21 @@ TAO_ORB_Core_instance (void)
 
       if (orb_table->first_orb () == 0)
         {
+          // Calling CORBA::ORB_init() returns a duplicated ORB
+          // reference, so make sure that reference is stored in an
+          // ORB_var so that no leak occurs.  The duplicate ORB
+          // reference isn't needed outside the scope of this function
+          // since the corresponding ORB Core instance will still
+          // exist in the ORB table after the ORB reference is
+          // destroyed.
+
+          CORBA::ORB_var orb;
+
           int argc = 0;
           ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {
-              (void) CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
+              orb = CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -2514,11 +2520,11 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
-template class ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
+template class TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
-template class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+template class TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
 template class ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>;
 template class ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
@@ -2533,11 +2539,11 @@ template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 
-#pragma instantiate ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
 
-#pragma instantiate ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>
 #pragma instantiate ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>

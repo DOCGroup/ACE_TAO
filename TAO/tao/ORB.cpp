@@ -1,12 +1,10 @@
 // $Id$
 
 #include "tao/ORB.h"
-#include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
@@ -174,15 +172,12 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 
 CORBA_ORB::~CORBA_ORB (void)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
-                     tao_mon,
-                     *ACE_Static_Object_Lock::instance ()));
-
-  CORBA_ORB::orb_init_count_--;
+  // This destructor is only invoked when the last ORB reference (not
+  // instance) is being destroyed.
 
 # ifdef TAO_HAS_VALUETYPE
   // delete valuetype_factory_map_;
-  // not really, its a singleton
+  // @@ not really, its a singleton
 # endif /* TAO_HAS_VALUETYPE */
 }
 
@@ -303,7 +298,11 @@ CORBA_ORB::create_list (CORBA::Long count,
   // Create an empty list
   ACE_NEW_THROW_EX (new_list,
                     CORBA::NVList,
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // If count is greater than 0, create a list of NamedValues.
@@ -316,7 +315,11 @@ CORBA_ORB::create_list (CORBA::Long count,
           CORBA::NamedValue_ptr nv = 0;
           ACE_NEW_THROW_EX (nv,
                             CORBA::NamedValue,
-                            CORBA::NO_MEMORY ());
+                            CORBA::NO_MEMORY (
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
           ACE_CHECK;
 
           new_list->values_.enqueue_tail (nv);
@@ -332,7 +335,11 @@ CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_NEW_THROW_EX (list, CORBA::ExceptionList (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 }
 
 void
@@ -340,7 +347,11 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &environment,
                                CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_NEW_THROW_EX (environment, CORBA::Environment (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 }
 
 CORBA::Boolean
@@ -348,8 +359,11 @@ CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
                                     CORBA::ServiceInformation_out /* service_information */,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -359,54 +373,76 @@ CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv,
 {
   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 }
 
 void
 CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA_SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 void
 CORBA_ORB::get_default_context (CORBA::Context_ptr &,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA_SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 void
 CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
                                           CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA_SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 void
 CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
                                             CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA_SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 void
 CORBA_ORB::get_next_response (CORBA_Request_ptr &,
                               CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA_SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 CORBA::Boolean
 CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -793,7 +829,7 @@ CORBA_ORB::multicast_query (char *&buf,
 //    in order to support pluggable protocols!  But, it does use
 //    UDP and multicast.  Not all transport protocols may support
 //    this, connectionless and multicast. fredk
-// @@ FRED: Should define a flag, something like Protocol_Has_Multicast
+ // @@ FRED: Should define a flag, something like Protocol_Has_Multicast
 //    If there is no multicast, then this functionality is not available
 //    and we return NULL.
 
@@ -1235,58 +1271,56 @@ CORBA_WString_var::operator= (const CORBA_WString_var& r)
 void
 CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon,
-                     *ACE_Static_Object_Lock::instance ()));
+  // This method should be invoked atomically.  It is the caller's
+  // responsibility to ensure that this condition is satisfied.
 
-  // Put these initializations here so that exceptions are enabled
-  // immediately.
+  // Prevent multiple initializations.
+  if (CORBA::ORB::orb_init_count_ != 0)
+    return;
+  else
+    CORBA::ORB::orb_init_count_++;
 
-  if (CORBA_ORB::orb_init_count_ == 0)
-    {
 #if defined(ACE_HAS_EXCEPTIONS)
-      set_unexpected (CORBA_ORB::_tao_unexpected_exception);
+  set_unexpected (CORBA_ORB::_tao_unexpected_exception);
 #endif /* ACE_HAS_EXCEPTIONS */
 
-      // initialize the system TypeCodes
-      TAO_TypeCodes::init ();
+  // initialize the system TypeCodes
+  TAO_TypeCodes::init ();
 
-      // initialize the system exceptions
-      TAO_Exceptions::init (ACE_TRY_ENV);
-      ACE_CHECK;
+  // initialize the system exceptions
+  TAO_Exceptions::init (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      // Verify some of the basic implementation requirements.  This
-      // test gets optimized away by a decent compiler (or else the
-      // rest of the routine does).
-      //
-      // NOTE:  we still "just" assume that native floating point is
-      // IEEE.
-      if (sizeof (CORBA::Short) != 2
-          || sizeof (CORBA::Long) != 4
-          || sizeof (CORBA::LongLong) != 8
-          || sizeof (CORBA::Float) != 4
-          || sizeof (CORBA::Double) != 8
-          || sizeof (CORBA::LongDouble) != 16
-          || sizeof (CORBA::WChar) < 2
-          || sizeof (void *) != ACE_SIZEOF_VOID_P)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s; ERROR: unexpected basic type size; "
-                      "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
-                      "please reconfigure TAO\n",
-                      __FILE__,
-                      sizeof (CORBA::Short),
-                      sizeof (CORBA::Long),
-                      sizeof (CORBA::LongLong),
-                      sizeof (CORBA::Float),
-                      sizeof (CORBA::Double),
-                      sizeof (CORBA::LongDouble),
-                      sizeof (CORBA::WChar),
-                      sizeof (void *)));
+  // Verify some of the basic implementation requirements.  This test
+  // gets optimized away by a decent compiler (or else the rest of the
+  // routine does).
+  //
+  // NOTE:  we still "just" assume that native floating point is IEEE.
+  if (sizeof (CORBA::Short) != 2
+      || sizeof (CORBA::Long) != 4
+      || sizeof (CORBA::LongLong) != 8
+      || sizeof (CORBA::Float) != 4
+      || sizeof (CORBA::Double) != 8
+      || sizeof (CORBA::LongDouble) != 16
+      || sizeof (CORBA::WChar) < 2
+      || sizeof (void *) != ACE_SIZEOF_VOID_P)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s; ERROR: unexpected basic type size; "
+                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
+                  "please reconfigure TAO\n",
+                  __FILE__,
+                  sizeof (CORBA::Short),
+                  sizeof (CORBA::Long),
+                  sizeof (CORBA::LongLong),
+                  sizeof (CORBA::Float),
+                  sizeof (CORBA::Double),
+                  sizeof (CORBA::LongDouble),
+                  sizeof (CORBA::WChar),
+                  sizeof (void *)));
 
-          ACE_THROW (CORBA::INITIALIZE ());
-        }
+      ACE_THROW (CORBA::INITIALIZE ());
     }
-  CORBA_ORB::orb_init_count_++;
 }
 
 void CORBA_ORB::_tao_unexpected_exception (void)
@@ -1301,8 +1335,7 @@ void CORBA_ORB::_tao_unexpected_exception (void)
 
 // ****************************************************************
 
-// ORB initialisation, per OMG document 98-12-01.
-//
+// ORB initialization, per OMG document 98-12-01.
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
@@ -1327,13 +1360,16 @@ CORBA::ORB_init (int &argc,
                             *ACE_Static_Object_Lock::instance (),
                             CORBA::ORB::_nil ()));
 
-  // Make sure initialization of TAO globals only occurs once.
+  // Make sure TAO's singleton manager is initialized.
+  if (TAO_Singleton_Manager::instance ()->init () == -1)
+    return CORBA::ORB::_nil ();
+
   CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // @@ Make sure the following is done after the global ORB
-  //    initialization since we need to have exceptions initialized.
-  //
+  // Make sure the following is done after the global ORB
+  // initialization since we need to have exceptions initialized.
+
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
   // zero.
@@ -1408,13 +1444,15 @@ CORBA::ORB_init (int &argc,
 
     }
 
-  // @@ As part of the ORB re-architecture this will the point where
-  //    we locate the right ORB (from a table) and use that one
-  //    instead of just creating a new one every time.
+  // An ORB corresponding to the desired ORBid doesn't exist so create
+  // a new one.
   ACE_NEW_THROW_EX (oc,
                     TAO_ORB_Core (orbid),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);

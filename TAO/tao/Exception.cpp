@@ -25,6 +25,10 @@ ACE_RCSID(tao, Exception, "$Id$")
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
 ACE_Allocator *TAO_Exceptions::global_allocator_;
 
+// Flag that denotes that the TAO TypeCode constants have been
+// initialized.
+int TAO_Exceptions::initialized_ = 0;
+
 // TAO specific typecode
 extern CORBA::TypeCode_ptr TC_completion_status;
 
@@ -846,6 +850,14 @@ void
 TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
 {
   // This routine should only be called once.
+
+  // Not thread safe.  Caller must provide synchronization.
+
+  if (TAO_Exceptions::initialized_ != 0)
+    return;
+
+  TAO_Exceptions::initialized_ = 1;
+
   // Initialize the start up allocator.
   ACE_NEW (TAO_Exceptions::global_allocator_,
            ACE_New_Allocator);
@@ -889,6 +901,8 @@ void
 TAO_Exceptions::fini (void)
 {
   delete TAO_Exceptions::system_exceptions;
+  TAO_Exceptions::system_exceptions = 0;
+  
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::release (CORBA::_tc_ ## name); \
   CORBA::_tc_ ## name = 0;
@@ -896,7 +910,10 @@ TAO_Exceptions::fini (void)
 #undef TAO_SYSTEM_EXCEPTION
 
   delete CORBA::_tc_UnknownUserException;
+  CORBA::_tc_UnknownUserException = 0;
+
   delete TAO_Exceptions::global_allocator_;
+  TAO_Exceptions::global_allocator_ = 0;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
