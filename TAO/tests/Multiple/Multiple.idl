@@ -28,7 +28,7 @@
 */
 
 
-module Multiple
+module _Multiple
 {
 
   interface Top
