@@ -15,6 +15,9 @@ FILES	=  TS_Server_Handler \
 	   Token_Handler \
 	   Logging_Strategy
 
+# Server_Logging_Handler_T 
+# Log_Message_Receiver 
+
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
