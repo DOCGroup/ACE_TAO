@@ -1,3 +1,8 @@
+Mon Jul 29 07:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.cpp (uname): Only check for PROCESSOR_ARCHITECTURE_IA64
+          when this is defined. The MingW w32api doesn't define this constant.
+
 Sun Jul 28 17:17:50 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* docs/ACE-subsets.html: Updated the breakdown of files to
