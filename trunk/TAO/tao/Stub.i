@@ -267,13 +267,13 @@ STUB_Object::set_fwd_profiles (TAO_MProfile *mprofiles)
   
     if (this->fwd_profiles_)
     {
-      ACE_ERROR ((LM_ERROR,
-                 "(%P|%t) ** Overwriting fwd profiles!!\n"));
+      ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
       TAO_MProfile *old = this->fwd_profiles_;
       TAO_MProfile *prev = old->fwded_mprofile ();
       if (prev->get_current_profile ())
         prev->get_current_profile ()->fwd_profiles (0);
       // @@ FRED: UGLY but for now just one level!
+      delete this->fwd_profiles_;
     }
       
     this->fwd_profiles_ = tmp;
