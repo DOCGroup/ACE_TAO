@@ -27,7 +27,6 @@ Thu May  1 11:25:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/CurrentC.h:
 	* tao/DomainC.cpp:
 	* tao/DomainC.h:
-	* tao/Exception.h:
 	* tao/GIOP_Message_Generator_Parser_10.cpp:
 	* tao/IOP_CodecC.cpp:
 	* tao/IOP_CodecC.h:
