@@ -125,6 +125,8 @@
 // (see NOTES in Linux's select(2) man page).
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
+#define ACE_HAS_TERM_IOCTLS
+
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
