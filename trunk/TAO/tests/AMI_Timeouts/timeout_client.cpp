@@ -46,7 +46,7 @@ TimeoutClient::svc ()
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      
+
       // Tests timeouts for synchronous
       this->synch_test ();
 
@@ -59,7 +59,7 @@ TimeoutClient::svc ()
       // Tests AMI timeouts for influences on non-timeout calls
       this->none_test ();
 
-      // shut down remote ORB 
+      // shut down remote ORB
       timeoutObject_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -82,8 +82,7 @@ TimeoutClient::svc ()
               "TimeoutClient::svc: Done\n\n"));
 
   return 0;
-};
-
+}
 
 int
 TimeoutClient::initialize ()
@@ -130,7 +129,7 @@ TimeoutClient::send (bool async,
               "local: %dms remote: %dms  ... ",
               local_timeout,
               remote_sleep));
-     
+
   CORBA::PolicyList policy_list (1);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -138,7 +137,7 @@ TimeoutClient::send (bool async,
     {
       if (local_timeout != 0)
         {
-          TimeBase::TimeT timeout = 10000 * local_timeout; 
+          TimeBase::TimeT timeout = 10000 * local_timeout;
 
           CORBA::Any any_orb;
           any_orb <<= timeout;
@@ -171,12 +170,12 @@ TimeoutClient::send (bool async,
       if (async)
         {
           timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_.in (),
-                                                remote_sleep, 
+                                                remote_sleep,
                                                 ACE_TRY_ENV);
         }
       else // synch
         {
-          timeoutObject_->sendTimeToWait (remote_sleep, 
+          timeoutObject_->sendTimeToWait (remote_sleep,
                                           ACE_TRY_ENV);
         }
       ACE_TRY_CHECK_EX (normal);
@@ -211,7 +210,7 @@ TimeoutClient::send (bool async,
   ACE_CHECK;
 
   // wait for responses
-  ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000); 
+  ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000);
   ACE_OS::sleep (tv);
 
   ACE_Time_Value &elapsed_time = timeoutHandler_i_->elapsed_time ();
@@ -242,9 +241,9 @@ TimeoutClient::synch_test ()
   this->send (INVOKE_SYNCH,
               timeToWait_,    // local
               timeToWait_*2); // remote
-  // @@ Michael: In the collocated, but using the loopback interface, and 
+  // @@ Michael: In the collocated, but using the loopback interface, and
   //             if the reply to this request times out the replies to the
-  //             asynch invocations do not get dispatched 
+  //             asynch invocations do not get dispatched
   //             to the reply handler. Why?
   this->send (INVOKE_SYNCH,
               0,    // local
@@ -263,8 +262,7 @@ TimeoutClient::synch_test ()
               "TimeoutClient::synch_test - End\n\n"));
 
   return 0;
-};
-
+}
 
 int
 TimeoutClient::accuracy_test ()
@@ -297,8 +295,7 @@ TimeoutClient::accuracy_test ()
               "TimeoutClient::accuracy_test - End\n\n"));
 
   return 0;
-};
-
+}
 
 int
 TimeoutClient::none_test ()
@@ -335,4 +332,4 @@ TimeoutClient::none_test ()
               "TimeoutClient::none_test - End\n\n"));
 
   return 0;
-};
+}

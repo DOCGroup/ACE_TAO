@@ -22,19 +22,18 @@
 Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
-};
+}
 
 Timeout_i::~Timeout_i ()
 {
-
-};
+}
 
 void
 Timeout_i::sendTimeToWait (CORBA::Long msec,
                            CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Timeout_i::sendTimeToWait: invoked with msec = %d\n\n",
               msec));
 
@@ -46,7 +45,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
       ACE_Time_Value tv (0, msec * 1000);
 	    ACE_OS::sleep (tv);
     }
-};
+}
 
 void
 Timeout_i::shutdown (CORBA::Environment &)
@@ -57,8 +56,6 @@ Timeout_i::shutdown (CORBA::Environment &)
               "Timeout_i::shutdown: shut down ORB\n\n"));
 }
 
-
-
 // Reply Handler implementation
 
 TimeoutHandler_i::TimeoutHandler_i ()
@@ -68,12 +65,11 @@ TimeoutHandler_i::TimeoutHandler_i ()
   timer_.reset ();
   timer_.start ();
   timer_.stop ();
-};
+}
 
 TimeoutHandler_i::~TimeoutHandler_i ()
 {
-
-};
+}
 
 void
 TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
@@ -83,7 +79,7 @@ TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
               "reply"));
   reply_counter_++;
   timer_.stop ();
-};
+}
 
 void
 TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *,
@@ -94,7 +90,7 @@ TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *,
               "excep"));
   reply_excep_counter_++;
   timer_.stop ();
-};
+}
 
 void
 TimeoutHandler_i::reset_reply_counter ()
