@@ -8,12 +8,15 @@
 //    for CCIDL.  It demonstrates how a servant implementation for a
 //    session component should look like.
 //
+//    The generated filename for files using this template shoule be
+//       [idl-basename]GS.h         GS --> GlueSession
+//
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ===========================================================
 
-#ifndef [CIAO_Glue_Session_Template]_H
-#define [CIAO_Glue_Session_Template]_H
+#ifndef CIAO_GLUE_SESSION_[idl-basename]GS_H
+#define CIAO_GLUE_SESSION_[idl-basename]GS_H
 #include "ace/pre.h"
 
 #include "[idl-name]S.h"        // Source in the skeletons for component
@@ -45,24 +48,24 @@ namespace CIAO_GLUE
   //    some other CIDL generated files to get the glue code
   //    implementation.
 
-#foreach [facet name] in (all facets defined in the original IDL)
-  class [SERVANT]_Export [facet name]_Servant :
-    : public virtual POA_[facet name], // full skeleton name here
+#foreach [facet type] in (all facet interface types in the original IDL)
+  class [SERVANT]_Export [facet type]_Servant :
+    : public virtual POA_[facet type], // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Constructor and destructor.
-    [facet name]_Servant (CCM_[facet name]_ptr executor);
-    ~[facet name]_Servant ();
+    [facet type]_Servant (CCM_[facet type]_ptr executor);
+    ~[facet tyep]_Servant ();
 
 # foreach [operation] in (all facet operations)
     // Generate operation decls.
 # end foreach [operation]
 
   protected:
-    CCM_[facet name]_var executor_;
+    CCM_[facet type]_var executor_;
   };
-#end foreach [facet name]
+#end foreach [facet type]
 
   //////////////////////////////////////////////////////////////////
   // EventConsumer Glue Code implementation
@@ -84,12 +87,17 @@ namespace CIAO_GLUE
     ~[event type]Consumer_Servant ();
 
 # foreach [type] in ([event type] and all its parent eventtype, if any)
-    void push_[type] (in [type] evt);
+    void push_[type] ([type]_ptr evt
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 # end [type]
 
     // Inherit from ::Compopnents::EventBConsumerBase
-    void push_event (in EventBase ev)
-      raises (::Components::BadEventType);
+    void push_event (EventBase_ptr ev
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::BadEventType));
+
 
   protected:
     CCM_[event type]Consumer_var executor_;
@@ -477,9 +485,9 @@ namespace CIAO_GLUE
 #endif
 
 #if defined (__ACE_INLINE__)
-# include "[CIAO_Glue_Session_Template].inl"
+# include "[idl-basename]GS.inl"
 #endif /* __ACE_INLINE__ */
 
 
 #include "ace/post.h"
-#endif /* [CIAO_Glue_Session_Template]_H */
+#endif /* CIAO_GLUE_SESSION_[idl-basename]GS_H */
