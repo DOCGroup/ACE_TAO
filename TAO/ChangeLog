@@ -142,7 +142,7 @@ Sun Aug 17 13:28:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  "ace/Synch{_T}.h" subsets (e.g. "ace/Thread_Mutex.h") instead of
 	  "ace/Synch{_T}.h" in all cases.
 
-2003-08-17  Jaiganesh Balasubramanian  <jai@tango.dre.vanderbilt.edu>
+Sun Aug 17 12:48:26 2003  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* tests/ICMG_Any_Bug/Test.idl:
 	* tests/ICMG_Any_Bug/Hello.cpp:
@@ -2963,7 +2963,7 @@ Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           No need to include messaging.
 
-2003-07-22  Jaiganesh Balasubramanian  <jai@equus.dre.vanderbilt.edu>
+Tue Jul 22 17:59:26 2003  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
