@@ -24,6 +24,21 @@
 
 #include "orbsvcs/SecurityLevel2C.h"
 
+/**
+ * @class TAO_QOPPolicy
+ *
+ * @brief Implementation of the SecurityLevel2::QOPPolicy interface.
+ *
+ * This policy can be used to affect the quality of protection (QoP)
+ * for invocation on a per-object basis.  For example, it can be set
+ * as a policy override using the standard
+ * CORBA::Object::_set_policy_overrides() method.
+ * @par
+ * This policy can be created by using the CORBA::ORB::create_policy()
+ * method by passing it the Security::SecQOPPolicy policy
+ * type, and the appropriate Security::QOP enumeration (inserted into
+ * a CORBA::Any).
+ */
 class TAO_Security_Export TAO_QOPPolicy
   : public virtual SecurityLevel2::QOPPolicy,
     public virtual TAO_Local_RefCounted_Object

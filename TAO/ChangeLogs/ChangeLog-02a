@@ -5,7 +5,7 @@ Wed Jul 11 18:00:13 2001  Ossama Othman  <ossama@uci.edu>
 	  Applied patch from Wayne Erchak <werchak@stentor.com> that fixes
 	  problem where the endpoint list in a given profile was not
 	  iterated through during connection failures.  "Fail-over"
-	  semantics for a non-RTCORBA configure ORB once again work.
+	  semantics for a non-RTCORBA configured ORB once again work.
 	  [Bug 927]
 
 	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
