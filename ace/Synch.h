@@ -1499,7 +1499,8 @@ private:
 #if 0
 // The following two classes are commented out since there doesn't
 // appear to be a portable and robust means of implementing this
-// functionality across platforms.
+// functionality across platforms.  If you know of a portable and
+// robust way to implement this functionality please let us know.
 
 class ACE_Export ACE_Process_Condition
 {
