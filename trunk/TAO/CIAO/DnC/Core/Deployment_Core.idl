@@ -70,8 +70,9 @@ module Deployment
   struct Component_Info
   {
     string component_instance_name;
-    CCMObject component_ref;
+    Components::CCMObject component_ref;
   };
+
   typedef sequence < Component_Info > ComponentInfos;
 
   // This NodeApplication contains the semantic from both Container and
