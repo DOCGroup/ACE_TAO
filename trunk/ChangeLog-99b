@@ -1,3 +1,10 @@
+Tue May 04 16:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.{cpp, h, i}: Added deprecation comments to methods that
+          are going to be replaced by the new Hash_Map_Manager compliant
+	  interface.  Factored out iterator base class, added reverse iterator.
+	  Interim checkin since it all compiles and RB_Tree_Test runs clean.
+	
 Tue May 04 15:56:41 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Re-enabled DllMain (see Mon May 3 entry from Chris

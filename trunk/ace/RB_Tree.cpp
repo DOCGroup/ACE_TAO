@@ -18,14 +18,14 @@
 ACE_RCSID(ace, RB_Tree, "$Id$")
 
 /////////////////////////////////////////////
-// template class ACE_RB_Tree_Node<KEY, T> //
+// template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
 /////////////////////////////////////////////
 
 
 // Constructor.
 
-template <class KEY, class T>
-ACE_RB_Tree_Node<KEY, T>::ACE_RB_Tree_Node (const KEY &k, const T &t)
+template <class EXT_ID, class INT_ID>
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)
   : k_ (k)
   , t_ (t)
   , color_ (RED)
@@ -38,8 +38,8 @@ ACE_RB_Tree_Node<KEY, T>::ACE_RB_Tree_Node (const KEY &k, const T &t)
 
 // Destructor.
 
-template <class KEY, class T>
-ACE_RB_Tree_Node<KEY, T>::~ACE_RB_Tree_Node ()
+template <class EXT_ID, class INT_ID>
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::~ACE_RB_Tree_Node ()
 {
   // Delete left sub-tree.
   delete left_;
@@ -51,26 +51,27 @@ ACE_RB_Tree_Node<KEY, T>::~ACE_RB_Tree_Node ()
 
 
 ////////////////////////////////////////
-// template class ACE_RB_Tree<KEY, T> //
+// template class ACE_RB_Tree<EXT_ID, INT_ID> //
 ////////////////////////////////////////
 
 // Constructor.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree ()
-  : root_ (0)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree ()
+  : root_ (0), 
+    current_size_ (0)
 {
 }
 
 
 // Copy constructor.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt)
-  : root_ (0)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
+  : root_ (0), current_size_ (0)
 {
   // Make a deep copy of the passed tree.
-  ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> iter(rbt);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
   {
     insert (*(iter.key ()), *(iter.item ()));
@@ -80,8 +81,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<KEY,
 
 // Destructor.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
 {
   // Clear away all nodes in the tree.
   clear ();
@@ -90,14 +91,14 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
 
 // Assignment operator.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
 {
   // Clear out the existing tree.
   clear ();
 
   // Make a deep copy of the passed tree.
-  ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> iter(rbt);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
   {
     insert (*(iter.key ()), *(iter.item ()));
@@ -107,8 +108,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<KEY, 
 // Less than comparison function for keys, default
 // functor implementation returns 1 if k1 < k2, 0 otherwise.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::lessthan (const KEY &k1, const KEY &k2)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::lessthan (const EXT_ID &k1, const EXT_ID &k2)
 {
       return this->compare_keys_ (k1, k2);
 }
@@ -117,11 +118,11 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::lessthan (const KEY &k1, const KEY 
 // Returns a pointer to the item corresponding to the
 // given key, or 0 if it cannot find the key in the tree.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> T*
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find (const KEY &k)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> INT_ID*
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 {
   // Find the closest matching node, if there is one.
-  ACE_RB_Tree_Node<KEY, T> *current = find_node (k);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *current = find_node (k);
 
   if (current)
   {
@@ -148,7 +149,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find (const KEY &k)
 
 
 // Inserts a *copy* of the key and the item into the tree:
-// both the key type KEY and the item type T must have well
+// both the key type EXT_ID and the item type INT_ID must have well
 // defined semantics for copy construction and < comparison.
 // This method returns a pointer to the inserted item copy,
 // or 0 if an error occurred.  NOTE: if an identical key
@@ -156,11 +157,11 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find (const KEY &k)
 // the returned pointer addresses the existing item
 // associated with the existing key.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  T*
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  INT_ID*
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert (const EXT_ID &k, const INT_ID &t)
 {
   // Find the closest matching node, if there is one.
-  ACE_RB_Tree_Node<KEY, T> *current = find_node (k);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *current = find_node (k);
   if (current)
   {
     if (this->lessthan (current->key (), k))
@@ -171,21 +172,22 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
         // If there is already a right subtree, complain.
         ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nright subtree already present in "
-                                      "ACE_RB_Tree<KEY, T>::insert\n")), 0);
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert\n")), 0);
       }
       else
       {
         // The right subtree is empty: insert new node there.
-        current->right (new ACE_RB_Tree_Node<KEY, T> (k, t));
+        current->right (new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t));
         if (current->right ())
         {
           // If the node was successfully inserted, set its parent, rebalance
           // the tree, color the root black, and return a pointer to the
           // inserted item.
-          T *item = &(current->right ()->item ());
+          INT_ID *item = &(current->right ()->item ());
           current->right ()->parent (current);
           RB_rebalance (current->right ());
           root_->color (ACE_RB_Tree_Node_Base::BLACK);
+          ++current_size_;
           return item;
         }
         else
@@ -193,7 +195,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
           // Memory allocation failed.
         ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nmemory allocation to current->right_ failed "
-                                      "in ACE_RB_Tree<KEY, T>::insert\n")), 0);
+                                      "in ACE_RB_Tree<EXT_ID, INT_ID>::insert\n")), 0);
         }
       }
     }
@@ -205,21 +207,22 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
         // If there is already a left subtree, complain.
         ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nleft subtree already present in "
-                                      "ACE_RB_Tree<KEY, T>::insert\n")), 0);
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert\n")), 0);
       }
       else
       {
         // The right subtree is empty: insert new node there.
-        current->left (new ACE_RB_Tree_Node<KEY, T> (k, t));
+        current->left (new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t));
         if (current->left ())
         {
           // If the node was successfully inserted, set its parent, rebalance
           // the tree, color the root black, and return a pointer to the
           // inserted item.
-          T *item = &(current->left ()->item ());
+          INT_ID *item = &(current->left ()->item ());
           current->left ()->parent (current);
           RB_rebalance (current->left ());
           root_->color (ACE_RB_Tree_Node_Base::BLACK);
+          ++current_size_;
           return item;
         }
         else
@@ -227,7 +230,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
           // Memory allocation failed.
           ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nmemory allocation to current->left_ failed in "
-                                      "ACE_RB_Tree<KEY, T>::insert\n")), 0);
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert\n")), 0);
         }
       }
     }
@@ -240,17 +243,18 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
   else
   {
     // The tree is empty: insert at the root and color the root black.
-    root_ = new ACE_RB_Tree_Node<KEY, T> (k, t);
+    root_ = new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t);
     if (root_)
     {
       root_->color (ACE_RB_Tree_Node_Base::BLACK);
+      ++current_size_;
       return &(root_->item ());
     }
     else
     {
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                          ASYS_TEXT ("\nmemory allocation to root_ failed in "
-                                    "ACE_RB_Tree<KEY, T>::insert\n")), 0);
+                                    "ACE_RB_Tree<EXT_ID, INT_ID>::insert\n")), 0);
     }
   }
 }
@@ -261,11 +265,11 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
 // and successfully destroyed it, 0 if it did not find the
 // item, or -1 if an error occurred.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  int
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove (const EXT_ID &k)
 {
   // Find a matching node, if there is one.
-  ACE_RB_Tree_Node<KEY, T> *x, *z;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *x, *z;
 
   z = find_node (k);
 
@@ -273,7 +277,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
       && (! this->lessthan (k, z->key ())))
   {
     // There is a matching node: remove and destroy it.
-    ACE_RB_Tree_Node<KEY, T> *y;
+    ACE_RB_Tree_Node<EXT_ID, INT_ID> *y;
     if ((z->left ()) && (z->right ()))
     {
       y = RB_tree_successor (z);
@@ -324,6 +328,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
     y->right (0);
     y->left (0);
     delete y;
+    --current_size_;
     return 1;
   }
   else
@@ -336,24 +341,24 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
 
 // Method for right rotation of the tree about a given node.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  void
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<KEY, T> * x)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
 {
   if (! x)
   {
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("\nerror: x is a null pointer in "
-                                  "ACE_RB_Tree<KEY, T>::RB_rotate_right\n")));
+                                  "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   }
   else if (! (x->left()))
   {
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x->left () is a null pointer in "
-                           "ACE_RB_Tree<KEY, T>::RB_rotate_right\n")));
+                           "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   }
   else
   {
-    ACE_RB_Tree_Node<KEY, T> * y;
+    ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
     y = x->left ();
     x->left (y->right ());
     if (y->right ())
@@ -384,24 +389,24 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<K
 
 // Method for left rotation of the tree about a given node.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree_Node<KEY, T> * x)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
 {
   if (! x)
   {
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x is a null pointer in "
-                           "ACE_RB_Tree<KEY, T>::RB_rotate_left\n")));
+                           "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   }
   else if (! (x->right()))
   {
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x->right () is a null pointer "
-                           "in ACE_RB_Tree<KEY, T>::RB_rotate_left\n")));
+                           "in ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   }
   else
   {
-    ACE_RB_Tree_Node<KEY, T> * y;
+    ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
     y = x->right ();
     x->right (y->left ());
     if (y->left ())
@@ -432,8 +437,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree_Node<KE
 
 // Method for restoring Red-Black properties after deletion.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  void
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<KEY, T> * x)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
 {
   while (x && 
          x->parent () && 
@@ -441,7 +446,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<K
   {
     if (x == x->parent ()->left ())
     {
-      ACE_RB_Tree_Node<KEY, T> *w = x->parent ()->right ();
+      ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = x->parent ()->right ();
       if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
       {
         w->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -480,7 +485,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<K
     }
     else
     {
-      ACE_RB_Tree_Node<KEY, T> *w = x->parent ()->left ();
+      ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = x->parent ()->left ();
       if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
       {
         w->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -530,10 +535,10 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<K
 // if the tree is not empty and there is no such match,
 // or 0 if the tree is empty.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find_node (const KEY &k)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_node (const EXT_ID &k)
 {
-  ACE_RB_Tree_Node<KEY, T> *current = root_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *current = root_;
 
   while (current)
   {
@@ -579,10 +584,10 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find_node (const KEY &k)
 
 // Rebalance the tree after insertion of a node.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY, T> * x)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
 {
-  ACE_RB_Tree_Node<KEY, T> *y = 0;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y = 0;
 
   while (x && 
          x->parent () &&
@@ -593,7 +598,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY,
       // If we got here, something is drastically wrong!
       ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                   ASYS_TEXT ("\nerror: parent's parent is null in "
-                             "ACE_RB_Tree<KEY, T>::RB_rebalance\n")));
+                             "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rebalance\n")));
       return;
     }
 
@@ -655,15 +660,15 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY,
 
 // Method to find the successor node of the given node in the tree.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   if (x->right ())
   {
     return RB_tree_minimum (x->right ());
   }
 
-  ACE_RB_Tree_Node<KEY, T> *y = x->parent ();
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y = x->parent ();
   while ((y) && (x == y->right ()))
   {
     x = y;
@@ -676,15 +681,15 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_Tree_Node
 
 // Method to find the predecessor node of the given node in the tree.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   if (x->left ())
   {
     return RB_tree_maximum (x->left ());
   }
 
-  ACE_RB_Tree_Node<KEY, T> *y = x->parent ();
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y = x->parent ();
   while ((y) && (x == y->left ()))
   {
     x = y;
@@ -697,8 +702,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_No
 
 // Method to find the minimum node of the subtree rooted at the given node.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_minimum (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_minimum (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   while ((x) && (x->left ()))
   {
@@ -711,8 +716,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_minimum (ACE_RB_Tree_Node<K
 
 // Method to find the maximum node of the subtree rooted at the given node.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_maximum (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<EXT_ID, INT_ID> *
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_maximum (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   while ((x) && (x->right ()))
   {
@@ -723,28 +728,80 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_maximum (ACE_RB_Tree_Node<K
 }
 
 
-
-
-//////////////////////////////////////////////////////////
-// template class ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> //
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+// template class                                                    //
+// ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
+///////////////////////////////////////////////////////////////////////
 
 
 // Constructor.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &tree)
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,               int set_first)
   : tree_ (tree), node_ (0)
 {
-  // Position the iterator at the first node in the tree.
-  first ();
+  // Position the iterator at the first (or last) node in the tree.
+  if (set_first)
+    {
+      node_ = tree_.RB_tree_minimum (tree_.root_);
+    }
+  else
+    {
+      node_ = tree_.RB_tree_maximum (tree_.root_);
+    }
 }
 
 
 // Destructor.
 
-template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator ()
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator_Base ()
+{
+}
+
+
+//////////////////////////////////////////////////////////////////
+// template class                                               //
+// ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
+//////////////////////////////////////////////////////////////////
+
+
+// Constructor.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+     int set_first)
+  : ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (tree, set_first)
+{
+}
+
+
+// Destructor.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator ()
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+// template class                                                       //
+// ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
+//////////////////////////////////////////////////////////////////////////
+
+
+// Constructor.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, int set_last)
+  : ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (tree, set_last ? 0 : 1)
+{
+}
+
+
+// Destructor.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Reverse_Iterator ()
 {
 }
 
