@@ -1,5 +1,8 @@
 Sun Oct 26 17:53:25 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* {tao,tests}/Makefile: Commented out the TAO_HAS_TSS_ORBCORE in
+ 	these Makefiles since it is going away anyhow and is confusing...
+
 	* tests/IDL_Cubit/svc.conf,
 	  tests/Cubit/TAO/svc.conf:
 	Changed the default concurrency policy to be reactive so that
