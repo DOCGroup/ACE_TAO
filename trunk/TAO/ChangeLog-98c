@@ -1,7 +1,10 @@
 Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * /orbsvcs/tests/Simulator/Event_Supplier/Makefile:
+        * orbsvcs/tests/Simulator/Event_Supplier/Makefile:
           define TAO_ROOT if not already defined.
+
+        * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+          (DOVE_Supplier): reordered initializers to match declaration order.
 
 Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
