@@ -4,7 +4,8 @@ Fri Apr 16 09:39:47 1999  David L. Levine  <levine@cs.wustl.edu>
           removed unnecessary use of orbsvcs include path and library.
 
         * tests/NestedUpcall/Reactor/Makefile:
-          only build if the orbsvcs library was built with the respective
+          performance-tests/Demux/Makefile:
+          only build if the orbsvcs library was built with the Naming
           TAO_ORBSVCS component.
 
 Fri Apr 16 09:36:14 1999  David L. Levine  <levine@cs.wustl.edu>
