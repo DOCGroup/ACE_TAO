@@ -30,7 +30,7 @@ sub completion_command {
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
                "value_template value_project make_coexistence " .
-               "hierarchy exclude)/' " .
+               "hierarchy exclude name_modifier)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -54,7 +54,7 @@ sub options {
   my(@args)       = @_;
   my(@include)    = ();
   my(@input)      = ();
-  my(@generators) = ();
+  my(@creators)   = ();
   my(@baseprojs)  = ();
   my(%ti)         = ();
   my(%relative)   = ();
@@ -64,6 +64,7 @@ sub options {
   my($global)     = undef;
   my($template)   = undef;
   my($feature_f)  = undef;
+  my($nmodifier)  = undef;
   my($hierarchy)  = 0;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
@@ -98,14 +99,14 @@ sub options {
         if (defined $types->{$type}) {
           my($call)  = $types->{$type};
           my($found) = 0;
-          foreach my $generator (@generators) {
-            if ($generator eq $call) {
+          foreach my $creator (@creators) {
+            if ($creator eq $call) {
               $found = 1;
               last;
             }
           }
           if (!$found) {
-            push(@generators, $call);
+            push(@creators, $call);
           }
         }
         else {
@@ -152,6 +153,16 @@ sub options {
     }
     elsif ($arg eq '-make_coexistence') {
       $makeco = 1;
+    }
+    elsif ($arg eq '-name_modifier') {
+      $i++;
+      my($nmod) = $args[$i];
+      if (!defined $nmod) {
+        $self->optionError('-name_modifier requires a modifier argument');
+      }
+      else {
+        $nmodifier = $nmod;
+      }
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
@@ -265,8 +276,10 @@ sub options {
     }
     elsif ($arg eq '-static') {
       $static  = 1;
+      $dynamic = 0;
     }
     elsif ($arg eq '-static_only') {
+      ## This option is deprecated and will eventually be removed.
       $static  = 1;
       $dynamic = 0;
     }
@@ -278,25 +291,26 @@ sub options {
     }
   }
 
-  my(%options) = ('global'       => $global,
-                  'feature_file' => $feature_f,
-                  'include'      => \@include,
-                  'input'        => \@input,
-                  'generators'   => \@generators,
-                  'baseprojs'    => \@baseprojs,
-                  'template'     => $template,
-                  'ti'           => \%ti,
-                  'dynamic'      => $dynamic,
-                  'static'       => $static,
-                  'relative'     => \%relative,
-                  'reldefs'      => $reldefs,
-                  'toplevel'     => $toplevel,
-                  'recurse'      => $recurse,
-                  'addtemp'      => \%addtemp,
-                  'addproj'      => \%addproj,
-                  'coexistence'  => $makeco,
-                  'hierarchy'    => $hierarchy,
-                  'exclude'      => \@exclude,
+  my(%options) = ('global'        => $global,
+                  'feature_file'  => $feature_f,
+                  'include'       => \@include,
+                  'input'         => \@input,
+                  'creators'      => \@creators,
+                  'baseprojs'     => \@baseprojs,
+                  'template'      => $template,
+                  'ti'            => \%ti,
+                  'dynamic'       => $dynamic,
+                  'static'        => $static,
+                  'relative'      => \%relative,
+                  'reldefs'       => $reldefs,
+                  'toplevel'      => $toplevel,
+                  'recurse'       => $recurse,
+                  'addtemp'       => \%addtemp,
+                  'addproj'       => \%addproj,
+                  'coexistence'   => $makeco,
+                  'hierarchy'     => $hierarchy,
+                  'exclude'       => \@exclude,
+                  'name_modifier' => $nmodifier,
                  );
 
   return \%options;

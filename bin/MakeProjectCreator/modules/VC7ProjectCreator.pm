@@ -19,12 +19,6 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
-# Data Section
-# ************************************************************
-
-my($sname) = '_Static';
-
-# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -47,7 +41,7 @@ sub translate_value {
 
     ## Only write dependencies for non-static projects
     ## and static exe projects
-    if ($self->get_writing_type() == 0 || $self->exe_target()) {
+    if ($self->get_static() == 0 || $self->exe_target()) {
       foreach my $entry (@$arr) {
         $val .= '"' . $entry . '" ';
       }
@@ -102,13 +96,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.vcproj";
-}
-
-
-sub static_project_file_name {
-  my($self) = shift;
-  return $self->project_name() . "$sname.vcproj";
+  return $self->get_modified_project_file_name($name, '.vcproj');
 }
 
 
