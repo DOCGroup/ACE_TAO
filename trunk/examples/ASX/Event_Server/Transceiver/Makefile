@@ -10,15 +10,9 @@
 
 BIN   	= transceiver
 
-LSRC	= $(addsuffix .cpp,$(BIN))
-
-LDLIBS	= 
- 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)
-
-INSTALL =
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -28,7 +22,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
