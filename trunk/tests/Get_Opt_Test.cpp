@@ -75,36 +75,36 @@ parse_args (int test_number,
   if (get_opt.long_option (ACE_TEXT ("flag"),
                            'f',
                            ACE_Get_Opt::NO_ARG) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'f' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("requires_arg"),
                            'r',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'r' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("optional_arg"),
                            'o',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'o' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_option"),
                            'l',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'l' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_only"),
                            -11,
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
                        ACE_TEXT ("\"long_only\" \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_no_arg")) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
                        ACE_TEXT ("\"long_no_arg\" \n")), 1);
 
@@ -115,13 +115,13 @@ parse_args (int test_number,
   if (get_opt.long_option (ACE_TEXT ("non_alpha-num_short"),
                            -10,
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
                        ACE_TEXT ("\"non_alpha_short\" \n")), 1);
 
   // We print out the optstring here because adding long_options that
   // have corresponding short options that aren't yet present, are added.
-  ACE_DEBUG ((LM_INFO, 
+  ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("      optstring: \"%s\"  skip_argv: %d\n"),
               get_opt.optstring (),  skip_argv));
 
@@ -138,9 +138,9 @@ parse_args (int test_number,
 
           ACE_DEBUG ((LM_INFO, "   Found long option \"%s\" %s %s\n",
                       get_opt.long_option (),
-                      get_opt.opt_arg () ? ACE_TEXT ("with argument:") 
+                      get_opt.opt_arg () ? ACE_TEXT ("with argument:")
                                          : ACE_TEXT (""),
-                      get_opt.opt_arg () ? get_opt.opt_arg () 
+                      get_opt.opt_arg () ? get_opt.opt_arg ()
                                          : ACE_TEXT ("")));
           break;
         case 'f':
@@ -148,12 +148,12 @@ parse_args (int test_number,
           // long_option().
         case 's':
           // This one is only short and has no long option.
-          ACE_DEBUG ((LM_INFO, "   Found option flag '%s'\n", 
+          ACE_DEBUG ((LM_INFO, "   Found option flag '%s'\n",
                       get_opt.last_option ()));
           break;
         case 'r':
           // This one has a required argument, we wouldn't be here if the
-          // arg were missing.  Note that we call get_opt.opt_arg () to return 
+          // arg were missing.  Note that we call get_opt.opt_arg () to return
           // the argument, but we could have used get_opt.opt_arg () since
           // opt_arg () is defined as "opt_arg ()".
           ACE_DEBUG ((LM_INFO,
@@ -166,7 +166,7 @@ parse_args (int test_number,
           // This short options was set automatically added to optstring.
           ACE_DEBUG ((LM_INFO,
                       "   Found option '%s' with optional argument \"%s\"\n",
-                      get_opt.last_option (), 
+                      get_opt.last_option (),
                       get_opt.opt_arg () ? get_opt.opt_arg ()
                                          : ACE_TEXT ("default")));
           break;
@@ -181,7 +181,7 @@ parse_args (int test_number,
           // we found the short option that isn't alpha numeric.
           ACE_DEBUG ((LM_INFO,
                       "   Found option '%s' with optional argument \"%s\"\n",
-                      get_opt.last_option (), 
+                      get_opt.last_option (),
                       get_opt.opt_arg () ? get_opt.opt_arg ()
                                          : ACE_TEXT ("default")));
           break;

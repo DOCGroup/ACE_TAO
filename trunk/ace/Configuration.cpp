@@ -247,7 +247,7 @@ ACE_Configuration::validate_value_name (const ACE_TCHAR* name)
 {
   if (name == 0 || *name == this->NULL_String_)
     return 0;
- 
+
   return this->validate_name (name);
 }
 
@@ -1853,7 +1853,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
  (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, t_name);
       ACE_TCHAR* pers_value =
