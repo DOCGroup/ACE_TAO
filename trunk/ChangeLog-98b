@@ -1,14 +1,19 @@
 Tue Sep 22 13:58:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-g++.h: 
-	  Added some missing defines, thanks to JM Strauss
-	  <jms97@club-internet.fr> for pointing them out. Also fixed a
-	  test for the N32 ABI, it said _NABI32 and should be _ABIN32.
+        * ace/config-irix6.x-g++.h:
+          Added some missing defines, thanks to JM Strauss
+          <jms97@club-internet.fr> for pointing them out. Also fixed a
+          test for the N32 ABI, it said _NABI32 and should be _ABIN32.
 
 Tue Sep 22 11:42:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added ACE_HAS_POWERPC_TIMER with
           __powerpc__, but commented it out because it requires an OS patch.
+
+        * ace/OS.i (fstat): put a :: in front of the call to the
+          system fstat if it's not defined as a macro.  Thanks to
+          Ossama for reporting that MM_Shared_Memory_Test failed
+          otherwise.
 
 Tue Sep 22 10:58:04 1998  Ossama Othman <othman@astrosun.tn.cornell.edu>
 
