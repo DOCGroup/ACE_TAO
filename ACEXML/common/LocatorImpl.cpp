@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "Common/LocatorImpl.h"
+#include "common/LocatorImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Common/LocatorImpl.i"
+# include "common/LocatorImpl.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (void)

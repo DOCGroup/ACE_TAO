@@ -3,7 +3,7 @@
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H
 
-#include "Common/Attributes.h"
+#include "common/Attributes.h"
 #include "ace/Containers_T.h"
 
 #if !defined ACEXML_AttributesImpl_Default_Size
@@ -215,6 +215,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/AttributesImpl.i"
+# include "common/AttributesImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_ATTRIBUTESIMPL_H */

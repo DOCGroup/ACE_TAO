@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "Common/NamespaceSupport.h"
+#include "common/NamespaceSupport.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Common/NamespaceSupport.i"
+# include "common/NamespaceSupport.i"
 #endif /* __ACEXML_INLINE__ */
 
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = {'x', 'm', 'l', 'n', 's', 0};

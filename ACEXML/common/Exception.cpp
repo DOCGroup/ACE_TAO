@@ -1,11 +1,11 @@
 // -*- C++ -*- $Id$
 
-#include "Common/Exception.h"
+#include "common/Exception.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Common/Exception.i"
+# include "common/Exception.i"
 #endif /* __ACEXML_INLINE__ */
 
 static const ACEXML_Char ACEXML_Exception_name[] = {

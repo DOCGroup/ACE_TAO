@@ -3,7 +3,7 @@
 #ifndef _ACEXML_XMLFILTER_H_
 #define _ACEXML_XMLFILTER_H_
 
-#include "Common/XMLReader.h"
+#include "common/XMLReader.h"
 
 class ACEXML_Export ACEXML_XMLFilter : public ACEXML_XMLReader
 {

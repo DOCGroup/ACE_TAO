@@ -3,8 +3,8 @@
 #ifndef _ACEXML_ENTITYHANDLER_H_
 #define _ACEXML_ENTITYHANDLER_H_
 
-#include "Common/Env.h"
-#include "Common/InputSource.h"
+#include "common/Env.h"
+#include "common/InputSource.h"
 
 class ACEXML_Export ACEXML_EntityResolver
 {

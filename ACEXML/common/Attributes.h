@@ -3,7 +3,7 @@
 #ifndef _ACEXML_ATTRIBUTES_H_
 #define _ACEXML_ATTRIBUTES_H_
 
-#include "Common/XML_Types.h"
+#include "common/XML_Types.h"
 
 class ACEXML_Export ACEXML_Attributes
 {

@@ -3,7 +3,7 @@
 
 #ifndef _ACEXML_ENV_H_
 #define _ACEXML_ENV_H_
-#include "Common/Exception.h"
+#include "common/Exception.h"
 
 class ACEXML_Export ACEXML_Env
 {
@@ -41,6 +41,6 @@ private:
 #define ACEXML_CHECK_RETURN(VAL) if (xmlenv.exception ()) return VAL;
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/Env.i"
+# include "common/Env.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_ENV_H_ */

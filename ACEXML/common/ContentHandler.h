@@ -3,10 +3,10 @@
 #ifndef _ACEXML_CONTENTHANDLER_H_
 #define _ACEXML_CONTENTHANDLER_H_
 
-#include "Common/Env.h"
-#include "Common/SAXExceptions.h"
-#include "Common/Locator.h"
-#include "Common/Attributes.h"
+#include "common/Env.h"
+#include "common/SAXExceptions.h"
+#include "common/Locator.h"
+#include "common/Attributes.h"
 
 class ACEXML_Export ACEXML_ContentHandler
 {

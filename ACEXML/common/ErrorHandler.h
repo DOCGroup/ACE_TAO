@@ -3,8 +3,8 @@
 #ifndef _ACEXML_ERRORHANDLER_H_
 #define _ACEXML_ERRORHANDLER_H_
 
-#include "Common/Env.h"
-#include "Common/SAXExceptions.h"
+#include "common/Env.h"
+#include "common/SAXExceptions.h"
 
 class ACEXML_Export ACEXML_ErrorHandler
 {

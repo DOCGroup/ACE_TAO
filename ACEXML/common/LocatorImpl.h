@@ -3,7 +3,7 @@
 #ifndef ACEXML_LOCALTORIMPL_H
 #define ACEXML_LOCALTORIMPL_H
 
-#include "Common/Locator.h"
+#include "common/Locator.h"
 
 class ACEXML_Export ACEXML_LocatorImpl : public ACEXML_Locator
 {
@@ -74,6 +74,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/LocatorImpl.i"
+# include "common/LocatorImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_LOCALTORIMPL_H */

@@ -3,7 +3,7 @@
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_
 
-#include "Common/Exception.h"
+#include "common/Exception.h"
 
 class ACEXML_Export ACEXML_SAXException : public ACEXML_Exception
 {
@@ -129,6 +129,6 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/SAXExceptions.i"
+# include "common/SAXExceptions.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_SAXEXCEPTIONS_H_ */

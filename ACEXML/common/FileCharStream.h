@@ -3,7 +3,7 @@
 #ifndef _ACEXML_FILECHARSTREAM_H_
 #define _ACEXML_FILECHARSTREAM_H_
 
-#include "Common/CharStream.h"
+#include "common/CharStream.h"
 #include "ace/streams.h"
 
 /**
