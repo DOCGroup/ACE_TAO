@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="MT_Cubit Client" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,13 +17,12 @@ CFG=MT_Cubit Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "MT_Cubit Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "MT_Cubit Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -68,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -94,6 +93,14 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cubit_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cubit_Task.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cubitC.cpp
 # End Source File
 # Begin Source File
@@ -102,7 +109,15 @@ SOURCE=.\cubitS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Globals.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Task_Client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer.cpp
 # End Source File
 # Begin Source File
 
@@ -142,6 +157,7 @@ SOURCE=.\cubit.idl
 
 !IF  "$(CFG)" == "MT_Cubit Client - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__CUBIT="..\..\..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
@@ -180,6 +196,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "MT_Cubit Client - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__CUBIT="..\..\..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
