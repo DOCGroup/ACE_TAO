@@ -26,7 +26,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   Implementation_Repository::INET_Addr *new_addr;
-  STUB_Object *new_stub_obj = 0;
+  TAO_Stub *new_stub_obj = 0;
 
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -54,7 +54,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                       0);
 
       // create new obj, pfile will be copied!
-      new_stub_obj = new STUB_Object (stub_obj->type_id, new_pfile);
+      new_stub_obj = new TAO_Stub (stub_obj->type_id, new_pfile);
 
       delete new_pfile;
 
