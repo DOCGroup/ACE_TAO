@@ -2,13 +2,13 @@
 // $Id$
 
 // The following configuration file is designed to work for the
-// Digital UNIX V4.0a platforms with the DEC 5.4 and later either the
-// GNU g++ or DEC cxx compilers.  It is configured to use the IEEE Std
-// 1003.1c-1995, POSIX System Application Program Interface, or DCE
-// threads (with cxx only); it automatically selects the proper thread
-// interface depending on whether the cxx -pthread or -threads option
-// was specified.  By 4.0a the version is meant that is called "V4.0
-// 464" by uname -a.
+// Digital UNIX V4.0a platforms with either the GNU g++, DEC cxx 5.4
+// and later, or Rational RCC (2.4.1) compilers.
+// It is configured to use the IEEE Std 1003.1c-1995, POSIX System
+// Application Program Interface, or DCE threads (with cxx only); it
+// automatically selects the proper thread interface depending on whether
+// the cxx -pthread or -threads option was specified.  By 4.0a the version
+// is meant that is called "V4.0 464" by uname -a.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -54,9 +54,19 @@
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
 # endif /* __DECCXX_VER >= 60090010 */
-#else  /* ! __GNUG__ && ! __DECCXX */
+#elif defined (RATIONAL)
+# define ACE_HAS_REENTRANT_FUNCTIONS
+# define ACE_HAS_ONEARG_SIGWAIT
+
+# define ACE_HAS_ANSI_CASTS
+# define ACE_HAS_EXCEPTIONS
+# define ACE_HAS_STDCPP_STL_INCLUDES
+# define ACE_HAS_TEMPLATE_SPECIALIZATION
+// # define ACE_HAS_TEMPLATE_TYPEDEFS
+# define ACE_HAS_TYPENAME_KEYWORD
+#else  /* ! __GNUG__ && ! __DECCXX && ! RATIONAL */
 # error unsupported compiler on Digital Unix
-#endif /* ! __GNUG__ && ! __DECCXX */
+#endif /* ! __GNUG__ && ! __DECCXX && ! RATIONAL */
 
 #if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
   // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
