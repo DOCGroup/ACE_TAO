@@ -7,21 +7,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use Getopt::Std;
 use English;
+use FileHandle;
+use strict;
 
-if (!getopts ('bc:hm:pt') || $opt_h) {
+use vars qw/$opt_b $opt_c $opt_h $opt_i $opt_m $opt_o $opt_p $opt_t/;
+
+if (!getopts ('bc:hi:m:o:pt') || $opt_h) {
     print "Output Beautifier\n";
     print "\n";
-    print "make_pretty.pl [-bpthr] [-c compiler] [-m msg]\n";
+    print "make_pretty.pl [-bpthr] [-c compiler] [-m msg] [-i file] [-o file]\n";
     print "    -b           Brief-ify the output (only errors and warnings)\n";
-    print "    -c compiler  Specify the compiler type [msvc (default)/makefile]\n";
+    print "    -c compiler  Specify the compiler type [msvc/makefile]\n";
     print "    -h           Show this help output\n";
+    print "    -i file      Use file as input (defaults to stdin)\n";
     print "    -m           Message to attach to the end of the output\n";
+    print "    -o file      Use file as output (defaults to stdout)\n";
     print "    -p           Plain text mode (default is html)\n";
     print "    -t           Only give totals for warnings and errors (auto -b)\n";
     exit (1);
 }
 
-if (!$opt_c) {
+if (!defined $opt_c) {
   $opt_c = 'makefile';
   $opt_c = 'msvc' if ($OSNAME eq 'Win32');
 }
@@ -31,7 +37,55 @@ if ($opt_c ne 'makefile' && $opt_c ne 'msvc') {
     exit (1);
 }
 
+my $input;
+my $output;
+
+if (!defined $opt_i) {
+    $input = *STDIN;
+}
+else {
+    $input = new FileHandle ("$opt_i", "r");
+    if (!defined $input) {
+        print STDERR "Error: Could not open file <$opt_i> for input\n";
+        exit 1;
+    }
+ }
+
+if (!defined $opt_o) {
+    $output = *STDOUT;
+}
+else {
+    $output = new FileHandle ("$opt_o", "w");
+    if (!defined $output) {
+        print STDERR "Error: Could not open file <$opt_o> for output\n";
+        exit 1;
+    }
+ }
+
 $opt_b = 1 if ($opt_t);
+
+my $header;
+my $trailer;
+my $bookmark_table_header;
+my $bookmark_table_config;
+my $bookmark_table_cvs;
+my $bookmark_table_compiler;
+my $bookmark_table_tests;
+my $bookmark_table_footer;
+my $bookmark_config;
+my $bookmark_cvs;
+my $bookmark_compiler;
+my $bookmark_tests;
+my $pre_section_title;
+my $post_section_title;
+my $pre_error;
+my $post_error;
+my $pre_warning;
+my $post_warning;
+my $pre_config;
+my $post_config;
+my $line_break;
+my $separator;
 
 ###############################################################################
 sub set_html_output ()
@@ -45,14 +99,18 @@ sub set_html_output ()
 
     $trailer = "</TT></body></html>";
 
-    $bookmark_table = "<hr>".
-                      "<h2>Quick links</h2>".
-                      "<ul>".
-                      "<li><a href=\"#cvs\">CVS</a>".
-                      "<li><a href=\"#compiler\">Compilation</a>".
-                      "<li><a href=\"#tests\">Tests</a>".
-                      "</ul>";
+    $bookmark_table_header = "<hr>".
+                             "<h2>Quick links</h2>".
+                             "<ul>";
 
+    $bookmark_table_config   = "<li><a href=\"#config\">Config</a>";
+    $bookmark_table_cvs      = "<li><a href=\"#cvs\">CVS</a>";
+    $bookmark_table_compiler = "<li><a href=\"#compiler\">Compilation</a>";
+    $bookmark_table_tests    = "<li><a href=\"#tests\">Tests</a>";
+                      
+    $bookmark_table_footer = "</ul>";
+
+    $bookmark_config = "<a name=\"config\"></a>";
     $bookmark_cvs = "<a name=\"cvs\"></a>";
     $bookmark_compiler = "<a name=\"compiler\"></a>";
     $bookmark_tests = "<a name=\"tests\"></a>";
@@ -78,7 +136,12 @@ sub set_text_output ()
     $header = "" ;
     $trailer = "" ;
 
-    $bookmark_table = "";
+    $bookmark_table_header = "";
+    $bookmark_table_config = "";
+    $bookmark_table_cvs = "";
+    $bookmark_table_compiler = "";
+    $bookmark_table_tests = "";
+    $bookmark_table_footer = "";
 
     $bookmark_cvs = "";
     $bookmark_compiler = "";
@@ -214,13 +277,34 @@ sub print_build_header ($$)
     my $directory = shift;
     my $config = shift;
 
-    print "$separator$line_break";
-    print "$pre_config$directory$post_config$line_break\n";
-    print "$pre_config$config$post_config$line_break$line_break";
+    print $output "$separator$line_break";
+    print $output "$pre_config$directory$post_config$line_break\n";
+    print $output "$pre_config$config$post_config$line_break$line_break";
 }
 
 ################################################################################
-sub cvs_output ()
+sub config_output (@)
+{
+    if (!$opt_t) {
+        print $output $separator;
+        print $output $bookmark_config;
+        print $output $pre_section_title."Configuration".$post_section_title;
+    }
+    
+    foreach (@_) {
+        s/</&lt;/g if !$opt_p;
+        s/>/&gt;/g if !$opt_p;
+
+        if (m/^\s*MAKE_PRETTY_COMPILER\:\s*(.*)\s*$/) {
+            $opt_c = $1;
+        }
+        elsif (!$opt_b) {
+            print $output "$_$line_break";
+        }
+    }
+}
+
+sub cvs_output (@)
 {
     my $patched = 0;
     my $updated = 0;
@@ -229,12 +313,14 @@ sub cvs_output ()
     my $unknown = 0;
 
     if (!$opt_t) {
-        print $separator;
-        print $bookmark_cvs;
-        print $pre_section_title."CVS".$post_section_title;
+        print $output $separator;
+        print $output $bookmark_cvs;
+        print $output $pre_section_title."CVS".$post_section_title;
     }
 
-    LOOP: while (<>) {
+    foreach (@_) {
+        my $error = 0;
+
         ++$patched if (/^P /);
         ++$updated if (/^U /);
         ++$modified if (/^M /);
@@ -242,33 +328,40 @@ sub cvs_output ()
         ++$unknown if (/^\? /);
 
         ### Isn't really a conflict, but easiest place to put it.
-        ++$conflicts if (/aborted/);
-
-        last LOOP if (/^####################/);
-
+        if (/aborted/i || /cannot access/i || /no such file/i) {
+            $error = 1;
+            ++$conflicts;
+        }
+        
         if ($opt_t) {
         }
-        elsif (/aborted/) {
-            print "$pre_error$_$post_error$line_break";
+        elsif ($error) {
+            print $output "$pre_error$_$post_error$line_break";
         }
         elsif (/^C /) {
-            print "$pre_error$_$post_error$line_break";
+            print $output "$pre_error$_$post_error$line_break";
         }
         elsif  (/^M /) {
-            print "$pre_warning$_$post_warning$line_break";
+            print $output "$pre_warning$_$post_warning$line_break";
         }
         elsif (!$opt_b) {
-            print "$_$line_break";
+            print $output "$_$line_break";
         }
     }
 
-    print $line_break;
-    print "\nCVS Totals: ";
-    print " Patched: $patched  Updated:$updated  Modified: $modified ".
-          " Conflicts: $conflicts Unknown: $unknown\n\n$line_break";
+    print $output $line_break;
+    print $output "\nCVS Totals: ";
+    print $output " Patched: $patched  Updated:$updated  Modified: $modified ".
+                  " Conflicts: $conflicts  Unknown: $unknown\n\n$line_break";
 }
 
-sub msvc_compiler_output ()
+sub compiler_output (@)
+{
+    makefile_compiler_output (@_) if ($opt_c eq 'makefile');
+    msvc_compiler_output (@_) if ($opt_c eq 'msvc');
+}
+
+sub msvc_compiler_output (@)
 {
     my $project = "NULL";
     my $configuration = "NULL";
@@ -280,15 +373,12 @@ sub msvc_compiler_output ()
     my $bogus_errors = 0;
 
     if (!$opt_t) {
-        print $separator;
-        print $bookmark_compiler;
-        print $pre_section_title."Compilation".$post_section_title;
+        print $output $separator;
+        print $output $bookmark_compiler;
+        print $output $pre_section_title."Compilation".$post_section_title;
     }
 
-    LOOP: while (<>)
-    {
-        last LOOP if (/^####################/);
-
+    foreach (@_) {
         s/</&lt;/g if !$opt_p;
         s/>/&gt;/g if !$opt_p;
 
@@ -296,13 +386,13 @@ sub msvc_compiler_output ()
         my $is_error = is_error ();
 
         if (/^Auto_compiling (.*)/) {
-            print "$separator$line_break$pre_config$_$post_config$line_break"
+            print $output $separator, $line_break, $pre_config, $_, $post_config, $line_break
                 if (!$opt_b && !$opt_t);
             $dsp = $1;
             $first_problem = 1;
         }
         elsif (/^--------------------Configuration: (.*) - (.*)--------------------/) {
-            print $pre_config.$_.$post_config.$line_break
+            print $output $pre_config.$_.$post_config.$line_break
                 if (!$opt_b && !$opt_t);
             $project = $1;
             $configuration = $2;
@@ -311,10 +401,10 @@ sub msvc_compiler_output ()
         elsif (/\- (.*) error\(s\)\, (.*) warning\(s\)/) {
             my $errors = $1 - $bogus_errors;
             my $warnings = $2 - $bogus_warnings;
-            print "$project - $errors error(s), $warnings warnings(s)$line_break\n"
+            print $output "$project - $errors error(s), $warnings warnings(s)$line_break\n"
                 if (!$opt_b || ($opt_t && ($errors > 0 || $warnings > 0)));
             $total_errors = $total_errors + $errors;
-            $total_warnings = $total_warnings +$warnings;
+            $total_warnings = $total_warnings + $warnings;
 
             $bogus_warnings = 0;
             $bogus_errors = 0;
@@ -327,7 +417,7 @@ sub msvc_compiler_output ()
                 print_build_header ($dsp, "$project: $configuration")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
-                print "$pre_error$_$post_error$line_break";
+                print $output $pre_error, $_, $post_error, $line_break;
             }
         }
         elsif ($is_warning == 3) {
@@ -338,22 +428,24 @@ sub msvc_compiler_output ()
                 print_build_header ($dsp, "$project: $configuration")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
-                print "$pre_warning$_$post_warning$line_break";
+                print $output $pre_warning, $_, $post_warning, $line_break;
             }
         }
         else
         {
-            print "$_$line_break"
+            print $output $_, $line_break
                 if (!$opt_b && !$opt_t);
         }
     }
-    print $line_break;
-    print "\nCompiler Totals: ";
-    print " Errors: $total_errors  Warnings: $total_warnings\n\n$line_break";
+    print $output $line_break;
+    print $output "\nCompiler Totals: ";
+    print $output " Errors: $total_errors  Warnings: $total_warnings\n\n$line_break";
 }
 
-sub makefile_compiler_output ()
+sub makefile_compiler_output (@)
 {
+    use vars qw/$directory $total_warnings $total_errors/;
+    use vars qw/$project_warnings $project_errors/;
     local $directory = 'NULL';
     my $first_problem = 1;
     local $total_warnings = 0;
@@ -362,14 +454,14 @@ sub makefile_compiler_output ()
     local $project_errors = 0;
 
     if (!$opt_t) {
-        print $separator;
-        print $bookmark_compiler;
-        print $pre_section_title."Compilation".$post_section_title;
+        print $output $separator;
+        print $output $bookmark_compiler;
+        print $output $pre_section_title."Compilation".$post_section_title;
     }
 
     sub print_summary ()
     {
-        print $_.$line_break if (!$opt_b);
+        print $output $_.$line_break if (!$opt_b);
         $total_errors = $total_errors + $project_errors;
         $total_warnings = $total_warnings + $project_warnings;
         $project_errors = 0;
@@ -398,10 +490,7 @@ sub makefile_compiler_output ()
         $directory = $dir;
     }
 
-    LOOP: while (<>)
-    {
-        last LOOP if (/^####################/);
-
+    foreach (@_) {
         s/</&lt;/g if !$opt_p;
         s/>/&gt;/g if !$opt_p;
 
@@ -411,7 +500,7 @@ sub makefile_compiler_output ()
         if (/Entering directory (.*)/) {
             print_summary () if ($directory ne 'NULL');
 
-            print $pre_config.$1.$post_config."\n".$line_break
+            print $output $pre_config, $1, $post_config, "\n", $line_break
                 if (!$opt_b && !$opt_t);
             set_directory ($1);
             $first_problem = 1;
@@ -425,7 +514,7 @@ sub makefile_compiler_output ()
                 print_build_header ($directory, "")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
-                print "$pre_error$_$post_error$line_break";
+                print $output $pre_error, $_, $post_error, $line_break;
             }
             if ($is_error == 1) {
                 ++$project_errors;
@@ -439,26 +528,26 @@ sub makefile_compiler_output ()
                 print_build_header ($directory, "")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
-                print "$pre_warning$_$post_warning$line_break";
+                print $output $pre_warning, $_, $post_warning, $line_break;
             }
             if ($is_warning == 1) {
                 ++$project_warnings;
             }
         }
-        else
-        {
-            print "$_$line_break"
+        else {
+            print $output $_, $line_break
                 if (!$opt_b && !$opt_t);
         }
     }
     print_summary () if ($directory ne 'NULL');
-    print $line_break;
-    print "\nCompiler Totals: ";
-    print " Errors: $total_errors  Warnings: $total_warnings\n\n$line_break";
+    print $output $line_break;
+    print $output "\nCompiler Totals: ";
+    print $output " Errors: $total_errors  Warnings: $total_warnings\n\n$line_break";
 }
 
-sub tests_output ()
+sub tests_output (@)
 {
+    use vars qw/$first_problem $run_test $tests_failed/;
     local $first_problem = 1;
     local $run_test = 'NULL';
     local $tests_failed = 0;
@@ -467,28 +556,26 @@ sub tests_output ()
     {
         if ($first_problem == 0) {
             if ($opt_t) {
-                print $pre_error."Failure in $run_test\n".$post_error.$line_break;
+                print $output $pre_error."Failure in $run_test\n".$post_error.$line_break;
             }
             ++$tests_failed;
         }
     }
 
     if (!$opt_t) {
-        print $separator;
-        print $bookmark_tests;
-        print $pre_section_title."Tests".$post_section_title;
+        print $output $separator;
+        print $output $bookmark_tests;
+        print $output $pre_section_title."Tests".$post_section_title;
     }
 
-    LOOP: while (<>) {
-        last LOOP if (/^####################/);
-
+    foreach (@_) {
         s/</&lt;/g if !$opt_p;
         s/>/&gt;/g if !$opt_p;
 
         if (/auto_run_tests: (.*)/) {
             check_result ();
 
-            print $pre_config.$1.$post_config."\n".$line_break
+            print $output $pre_config.$1.$post_config."\n".$line_break
                 if (!$opt_b && !$opt_t);
             $run_test = $1;
             $first_problem = 1;
@@ -500,20 +587,20 @@ sub tests_output ()
                || m/pure virtual /i) {
             if (!$opt_t) {
                 print_build_header ($run_test, "") if ($first_problem && $opt_b);
-                print "$pre_error$_$post_error$line_break";
+                print $output "$pre_error$_$post_error$line_break";
             }
             $first_problem = 0;
         }
         else
         {
-            print "$_$line_break"
+            print $output "$_$line_break"
                 if (!$opt_b && !$opt_t);
         }
     }
     check_result ();
 
-    print $line_break;
-    print "\nTest Failures: $tests_failed\n\n$line_break";
+    print $output $line_break;
+    print $output "\nTest Failures: $tests_failed\n\n$line_break";
 }
 
 ##############################################################################
@@ -524,19 +611,84 @@ else {
     set_html_output ();
 }
 
-print $header;
-print $bookmark_table;
+my @configdata;
+my @cvsdata;
+my @compiledata;
+my @testdata;
 
-LOOP: while (<>) {
-   last LOOP if (/^####################/);
+my %statemap = (nowhere     => -1,
+                unknown     => -2,
+                cvsdata     => 1,
+                configdata  => 2,
+                compiledata => 3,
+                testdata    => 4);
+             
+my $state = 0;
+
+my $endfound = 1;
+my $multiplelogs = 0;
+
+# Read in the input
+
+while (<$input>) {
+    if (m/^#################### CVS/) {
+        $state = %statemap->{cvsdata};
+    }
+    elsif (m/^#################### Config/) {
+        $state = %statemap->{configdata};
+    }
+    elsif (m/^#################### Compile/) {
+        $state = %statemap->{compiledata};
+    }
+    elsif (m/^#################### Tests/) {
+        $state = %statemap->{testdata};
+    }
+    elsif (m/^#################### End/) {
+        $state = %statemap->{nowhere};
+        $endfound++;
+    }
+    elsif (m/^####################/) {
+        $state = %statemap->{unknown};
+    }
+    
+    # if we find that we are starting a new log in the
+    # same file, delete the 
+    if ($state != %statemap->{nowhere} && $endfound > 0) {
+        $endfound = 0;
+        @cvsdata = ();
+        @configdata = ();
+        @compiledata = ();
+        @testdata = ();
+    }
+    
+    next if (m/^####################/);
+        
+    if ($state == %statemap->{cvsdata}) {  #CVS
+        push @cvsdata, $_;
+    }
+    elsif ($state == %statemap->{configdata}) {  #Config
+        push @configdata, $_;
+    }
+    elsif ($state == %statemap->{compiledata}) {  #Compile
+        push @compiledata, $_;
+    }
+    elsif ($state == %statemap->{testdata}) {  #Test
+        push @testdata, $_;
+    }
 }
 
-cvs_output ();
+print $output $header;
+print $output $bookmark_table_header;
+print $output $bookmark_table_config   if ($#configdata >= 0);
+print $output $bookmark_table_cvs      if ($#cvsdata >= 0); 
+print $output $bookmark_table_compiler if ($#compiledata >= 0);
+print $output $bookmark_table_tests    if ($#testdata >= 0);
+print $output $bookmark_table_footer;
 
-makefile_compiler_output () if ($opt_c eq 'makefile');
-msvc_compiler_output () if ($opt_c eq 'msvc');
+config_output (@configdata)    if ($#configdata >= 0);
+cvs_output (@cvsdata)          ;  # CVS Section isn't optional
+compiler_output (@compiledata) if ($#compiledata >= 0);
+tests_output (@testdata)       if ($#testdata >= 0);
 
-tests_output ();
-
-print "$line_break\n\n$opt_m\n\n$line_break" if $opt_m;
-print $trailer;
+print $output "$line_break\n\n$opt_m\n\n$line_break" if $opt_m;
+print $output $trailer;
