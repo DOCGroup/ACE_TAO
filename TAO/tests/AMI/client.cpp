@@ -107,7 +107,7 @@ public:
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
-                      result, 
+                      result,
                       out_l));
         }
 
@@ -135,7 +135,7 @@ public:
       ACE_CHECK;
     };
 
-  void get_yadda (CORBA::Long result, 
+  void get_yadda (CORBA::Long result,
                   CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -155,7 +155,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
-    
+
   void set_yadda (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -208,7 +208,7 @@ main (int argc, char *argv[])
         }
 
       // Activate POA to handle the call back.
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -217,7 +217,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -236,7 +236,7 @@ main (int argc, char *argv[])
                            "Cannot activate client threads\n"),
                           1);
 
-      // Main thread collects replies. It needs to collect 
+      // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
       number_of_replies = nthreads * niterations;
 
@@ -246,7 +246,7 @@ main (int argc, char *argv[])
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
                       number_of_replies));
         }
-      
+
       // ORB loop.
       while (orb->work_pending (ACE_TRY_ENV) && number_of_replies > 0)
         {
@@ -278,7 +278,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
