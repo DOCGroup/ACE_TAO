@@ -165,4 +165,3 @@ Fri Aug  1 19:23:52 1997  Mike MacFaden  (mrm@mrm-ss20)
         * transaction class:
           - implement get/getnext timeout and retry logic using ACE
           Reactor class, ACE_Time_Value
-
