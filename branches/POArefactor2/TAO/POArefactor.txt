@@ -1,3 +1,20 @@
+Wed Nov 17 10:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Added get_servant_i()
+
+Wed Nov 17 07:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Moved the POArefactor2 branch to the latest version of these files.
+          Jeff fixes some issues
+
+        * tao/*C.{h,cpp,inl}:
+        * tao/PortableServer/*C.{h,cpp,inl}:
+          Regenerated all files with the fixes above
+
 Tue Nov 16 14:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{cpp,h}:

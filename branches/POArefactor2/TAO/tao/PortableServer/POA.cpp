@@ -2555,6 +2555,16 @@ TAO_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr
 }
 
 PortableServer::Servant
+TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::NoServant,
+                   PortableServer::POA::WrongPolicy))
+{
+  return this->active_policy_strategies_.request_processing_strategy()->
+    get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+PortableServer::Servant
 TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::NoServant,
@@ -2564,8 +2574,8 @@ TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
   TAO_POA_GUARD_RETURN (0);
 
   PortableServer::Servant servant =
-    this->active_policy_strategies_.request_processing_strategy()->
-      get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (servant != 0)
     {
