@@ -1,3 +1,17 @@
+Sat Sep 25 10:25:57 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Made sure IDL files use custom
+          build commands (otherwise MSVC6 will try to use MIDL).
+
+        * orbsvcs/tests/ImplRepo/run_test.pl: Changed the startup 
+          commands to include "./" so the test will work when the
+          current directory isn't in the path.  Thanks to Sandro 
+          Doro <doro.s@flashnet.it> for catching this.
+
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw: Added tao_ir to this
+          workspace also.  Thanks to Yarmit, Gregory <Gregory.Yarmit@hboc.com>
+          for reminding me to do this.
+
 Fri Sep 24 21:18:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
