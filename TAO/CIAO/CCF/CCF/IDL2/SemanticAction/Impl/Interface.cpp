@@ -187,6 +187,7 @@ namespace CCF
                                  i);
 
               ctx.tu ().new_edge<Inherits> (now (), i);
+              ctx.tu ().new_edge<Extends> (now (), i);
             }
             catch (Resolve const&)
             {
