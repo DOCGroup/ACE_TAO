@@ -83,6 +83,11 @@ Thu Oct 23 23:19:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 Thu Oct 23 22:52:17 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (shutdown_timer): 
+	  Added a line to call the cancel method on the timer queue task
+	  when we are shutting down; this is wrapped around #if's to only
+	  include this only when the platformm supports pthread_cancel().
+
 	* ace/Timer_Queue_Adapters.cpp (svc): Added some POSIX thread
  	  cancellation points to make sure the mutex that the condition
  	  variable uses is unlocked before the thread is cancelled.
