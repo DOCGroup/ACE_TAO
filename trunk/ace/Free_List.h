@@ -27,7 +27,7 @@ class ACE_Free_List
   //      This class maintains a free list of nodes of type T.
 {
 public:
-  virtual ~ACE_Free_List (void) = 0;
+  virtual ~ACE_Free_List (void);
   // Destructor - removes all the elements from the free_list
 
   virtual void add (T *element) = 0;
