@@ -109,10 +109,6 @@ protected:
    ACE_TYPENAME Proxy_Traits::ID proxy_id_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Peer_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Peer_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
