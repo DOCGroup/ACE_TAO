@@ -59,17 +59,6 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
       return -1;
     }
 
-  // Grab the id now, it may not be available later..
-  int t_id = transport->id ();
-
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - LF_Connect_Strategy::wait, "
-                  "waiting for Transport[%d]\n",
-                  t_id));
-    }
-
   TAO_Leader_Follower &leader_follower =
     this->orb_core_->leader_follower ();
 
@@ -81,14 +70,6 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
   // Set the result.
   if (!ch->successful () && result != -1)
     result = -1;
-
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - LF_Connect_Strategy::wait, "
-                  "wait done for Transport[%d], result = %d\n",
-                  t_id, result));
-    }
 
   // @@todo We need to use a auto_ptr<>-like object here!
   // TAO_Transport::release(transport);

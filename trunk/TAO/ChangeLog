@@ -1,3 +1,23 @@
+Mon Jan 20 18:05:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_Connect_Strategy.cpp: Removed debugging statements that
+	  needed access to the transport object. The transport object
+	  could dissappear even before the thread gets to this point  and
+	  it is only chaos after that.
+	  
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection): 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added debugging
+	  statements to make up for the loss from the above change. 
+
+	* tao/Leader_Follower.cpp: Added comments and also made sure that
+	  we access the transport object only when debugging is turned on.
+
+	  Thanks to Duane Binder for sharing his purify logs from his runs
+	  that he ran for a long time (which wouldnt have been possible at
+	  all for us)
+	
 Mon Jan 20 16:42:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp (bind_dispatcher): Added a lock to synchronize
