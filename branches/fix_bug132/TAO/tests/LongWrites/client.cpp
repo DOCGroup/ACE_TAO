@@ -8,10 +8,12 @@ ACE_RCSID(LongWrites, client, "$Id$")
 
 const char *ior = "file://test.ior";
 
+int test_type = Sender::TEST_ONEWAY;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,11 +22,25 @@ parse_args (int argc, char *argv[])
       case 'k':
 	ior = get_opts.optarg;
 	break;
+      case 't':
+        if (ACE_OS_String::strcasecmp(get_opts.optarg, "ONEWAY") == 0)
+          test_type = Sender::TEST_ONEWAY;
+        else if (ACE_OS_String::strcasecmp(get_opts.optarg, "WRITE") == 0)
+          test_type = Sender::TEST_WRITE;
+        else if (ACE_OS_String::strcasecmp(get_opts.optarg, "READ_WRITE") == 0)
+          test_type = Sender::TEST_READ_WRITE;
+        else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unknown test type %s\n",
+                             get_opts.optarg), 1);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
 			   "-k <ior>"
+			   "-t <test_type (ONEWAY,WRITE,READ_WRITE)>"
                            "\n",
                            argv [0]),
                           -1);
@@ -86,7 +102,7 @@ main (int argc, char *argv[])
 
       Sender *sender_impl;
       ACE_NEW_RETURN (sender_impl,
-                      Sender,
+                      Sender (test_type),
                       1);
       PortableServer::ServantBase_var sender_owner_transfer(sender_impl);
 
@@ -107,6 +123,7 @@ main (int argc, char *argv[])
           orb->run (tv, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - client event loop done\n"));
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -122,5 +139,6 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - client finished\n"));
   return 0;
 }

@@ -163,6 +163,13 @@ private:
    */
   TAO_Message_Sent_Callback *callback_;
 
+  /// The current message block
+  /**
+   * The message may be set in multiple writev() operations.  This
+   * point keeps track of the next message to send out.
+   */
+  ACE_Message_Block *current_block_;
+
   /// Implement an intrusive double-linked list for the message queue
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;

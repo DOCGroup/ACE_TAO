@@ -5,8 +5,9 @@
 
 ACE_RCSID(LongWrites, Sender, "$Id$")
 
-Sender::Sender (void)
-  : receiver_count_ (0)
+Sender::Sender (int test_type)
+  : test_type_ (test_type)
+  , receiver_count_ (0)
   , receiver_length_ (16)
   , shutdown_called_ (0)
 {
@@ -59,9 +60,25 @@ Sender::send_events (CORBA::Long event_count,
         {
           ACE_TRY
             {
-              this->receivers_[j]->receive_data (payload,
-                                                 ACE_TRY_ENV);
-              ACE_TRY_CHECK;
+              if (this->test_type_ == Sender::TEST_ONEWAY)
+                {
+                  this->receivers_[j]->receive_data_oneway (payload,
+                                                            ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+              else if (this->test_type_ == Sender::TEST_WRITE)
+                {
+                  this->receivers_[j]->receive_data (payload,
+                                                     ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+              else
+                {
+                  Test::Payload_var retval =
+                    this->receivers_[j]->return_data (payload,
+                                                      ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
             }
           ACE_CATCHANY
             {
@@ -75,7 +92,7 @@ void
 Sender::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down\n"));
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down\n"));
   this->shutdown_called_ = 1;
 }
