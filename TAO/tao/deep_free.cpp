@@ -211,11 +211,25 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       alignment = param->alignment (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
+      // MSVC built code works with either of these, but Borland
+      // Builder needs the first one, whereas Sun compilers
+      // need the second one.
+#if defined (WIN32)
+      align_offset =
+        (ptr_arith_t) ptr_align_binary (source, alignment)
+        - (ptr_arith_t) source
+        - (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - (ptr_arith_t) start_addr;
+      if (align_offset < 0)
+        align_offset += alignment;
+#else
       align_offset =
         (ptr_arith_t) ptr_align_binary (source, alignment)
         - (ptr_arith_t) source
         + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
         - (ptr_arith_t) start_addr;
+#endif
+
       // if both the start_addr and data are not aligned as per
       // the alignment, we do not add the offset
       source = (const void *) ((ptr_arith_t) source +
