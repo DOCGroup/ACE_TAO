@@ -1,3 +1,13 @@
+Mon Dec  6 14:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+          The RootPOA is now not a TAO_POA, so a dynamic cast of the root
+          poa to TAO_POA will fail. This fixes the IORinterceptor test. As a
+          result of this, it seems the safest to rename TAO_POA to
+          TAO_Regular_POA, that way we know for sure that code that does a
+          dynamic cast is identified by the compiler instead of having obscure
+          runtime crashes
+
 Mon Dec  6 11:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.{h,cpp}:
