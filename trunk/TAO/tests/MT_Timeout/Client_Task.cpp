@@ -86,12 +86,14 @@ Client_Task::svc (void)
           else if (retval == 0)
             timed_out_calls++;
 
+#if 0
           if (i % 50 == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) - Client_Task::svc %d / %d iterations\n",
                           i, this->iterations_));
             }
+#endif /* 0 */
         }
     }
   ACE_CATCHANY
@@ -168,13 +170,15 @@ Client_Task::one_iteration (CORBA::Environment &ACE_TRY_ENV)
               CORBA::ULong difference =
                 elapsed_milliseconds - max_milliseconds;
 
+              // If the different is more than 10 milliseconds we are
+              // *way* off, this is an error.
               if (difference > 10)
                 {
                   ACE_ERROR ((LM_ERROR,
                               "ERROR: Elapsed time = %d, expected %d\n",
                               elapsed_milliseconds, max_milliseconds));
+                  return -1;
                 }
-              return -1;
             }
         }
 

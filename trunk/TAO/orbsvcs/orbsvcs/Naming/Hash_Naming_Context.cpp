@@ -504,10 +504,19 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
     }
   ACE_CATCHANY
     {
+      // If the bind() operation fails we must destroy the recently
+      // created context, should any exceptions be raised by the
+      // destroy() operation we want to ignore them.
       {
         ACE_DECLARE_NEW_CORBA_ENV;
-        result->destroy (ACE_TRY_ENV);
+        ACE_TRY_EX(DESTROY)
+          {
+            result->destroy (ACE_TRY_ENV);
+            ACE_TRY_CHECK_EX(DESTROY);
+          }
+        ACE_CATCHANY {} ACE_ENDTRY;
       }
+      // Re-raise the exception in bind_context()
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
