@@ -1,3 +1,9 @@
+Thu Jul 09 23:02:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (create_internal_lock): Change method to watch out
+ 	  for platforms without threads.  Thanks to Hongyin Quan
+ 	  <hq1@arl.wustl.edu> for pointing this out.
+
 Thu Jul  9 17:48:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* docs/implrepo.html: Carlos's comments have been addressed.
