@@ -83,6 +83,7 @@
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_PARAM_H
+#define ACE_LACKS_TRUNCATE
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
