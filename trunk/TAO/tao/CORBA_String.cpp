@@ -134,6 +134,9 @@ operator<< (ostream &os, const CORBA::String_var &sv)
 istream &
 operator>> (istream &is, CORBA::String_var &sv)
 {
+  is.seekg (0, ios::end);
+  sv = CORBA::string_alloc (is.tellg ());
+  is.seekg (0, ios::beg);
   is >> sv.inout ();
   return is;
 }
@@ -148,6 +151,9 @@ operator<< (ostream &os, CORBA::String_out &so)
 istream &
 operator>> (istream &is, CORBA::String_out &so)
 {
+  is.seekg (0, ios::end);
+  so = CORBA::string_alloc (is.tellg ());
+  is.seekg (0, ios::beg);
   is >> so.ptr ();
   return is;
 }
@@ -160,10 +166,12 @@ ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
   CORBA::ULong len = ACE_OS::wslen (wsv.in ());
-  for (CORBA::ULong i = 0; i < len; i++)
+
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       os << wsv[i];
     }
+
   return os;
 }
 
@@ -173,12 +181,14 @@ operator>> (istream &is, CORBA::WString_var &wsv)
   CORBA::ULong i = 0;
   CORBA::WChar wc;
   is >> wc;
+
   while (wc)
     {
       wsv[i] = wc;
-      i++;
+      ++i;
       is >> wc;
     }
+
   wsv[i] = 0;
   return is;
 }
@@ -188,10 +198,12 @@ operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
   CORBA::ULong len = ACE_OS::wslen (tmp);
-  for (CORBA::ULong i = 0; i < len; i++)
+
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       os << tmp[i];
     }
+
   return os;
 }
 
@@ -201,12 +213,14 @@ operator>> (istream &is, CORBA::WString_out &wso)
   CORBA::ULong i = 0;
   CORBA::WChar wc;
   is >> wc;
+
   while (wc)
     {
       wso.ptr ()[i] = wc;
-      i++;
+      ++i;
       is >> wc;
     }
+
   wso.ptr ()[i] = 0;
   return is;
 }
