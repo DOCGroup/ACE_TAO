@@ -44,6 +44,7 @@ TAO::TypeCode::Struct<StringType,
 // Member specializations
 // -------------------------------------------------------------
 
+template<>
 ACE_INLINE TAO::TypeCode::Struct_Field<CORBA::String_var> const *
 TAO::TypeCode::Struct<
   CORBA::String_var,
@@ -54,6 +55,7 @@ TAO::TypeCode::Struct<
   return this->fields_.get ();
 }
 
+template<>
 ACE_INLINE TAO::TypeCode::Struct_Field<CORBA::String_var> const *
 TAO::TypeCode::Struct<
   CORBA::String_var,
