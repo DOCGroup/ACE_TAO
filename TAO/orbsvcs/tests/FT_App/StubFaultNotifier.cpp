@@ -22,9 +22,9 @@ StubFaultNotifier::~StubFaultNotifier ()
 }
 
 
-::PortableServer::POA_ptr StubFaultNotifier::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+::PortableServer::POA_ptr StubFaultNotifier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
 
 PortableServer::ObjectId StubFaultNotifier::objectId()const
@@ -107,38 +107,31 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 /**
  * Prepare to exit.
  */
-int StubFaultNotifier::fini ()
+int StubFaultNotifier::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   if(this->ns_name_ != 0)
   {
-    ACE_TRY_NEW_ENV
-    {
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    CORBA::Object_var naming_obj =
+      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
 
-      if (CORBA::is_nil(naming_obj.in ())){
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%T %n (%P|%t) Unable to find the Naming Service\n"),
-                          1);
-      }
-
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CosNaming::Name this_name (1);
-      this_name.length (1);
-      this_name[0].id = CORBA::string_dup (this->ns_name_);
-
-      naming_context->unbind (this_name
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    if (CORBA::is_nil(naming_obj.in ())){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                       "%T %n (%P|%t) Unable to find the Naming Service\n"),
+                       1);
     }
-    ACE_CATCHANY
-    {
-    }
-    ACE_ENDTRY;
+
+    CosNaming::NamingContext_var naming_context =
+      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN(-1);
+
+    CosNaming::Name this_name (1);
+    this_name.length (1);
+    this_name[0].id = CORBA::string_dup (this->ns_name_);
+
+    naming_context->unbind (this_name
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN(-1);
   }
   return 0;
 }
@@ -352,14 +345,14 @@ const char * StubFaultNotifier::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubFaultNotifier::shutdown_i ()
+void StubFaultNotifier::shutdown_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void StubFaultNotifier::push_structured_fault (
     const CosNotification::StructuredEvent & event
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -409,7 +402,8 @@ void StubFaultNotifier::push_sequence_fault (
   ))
 {
   ACE_UNUSED_ARG (constraint_grammar);
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  return 0;
 }
 
 
@@ -425,7 +419,8 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  return 0;
 }
 
 
@@ -441,7 +436,8 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  return 0;
 }
 
 void StubFaultNotifier::disconnect_consumer (
@@ -458,13 +454,13 @@ void StubFaultNotifier::disconnect_consumer (
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
-CORBA::Boolean StubFaultNotifier::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean StubFaultNotifier::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
 }
 
-int StubFaultNotifier::idle(int & result)
+int StubFaultNotifier::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;
@@ -472,7 +468,9 @@ int StubFaultNotifier::idle(int & result)
   {
     if(!CORBA::is_nil(this->factory_.in ()))
     {
-      if (!this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER))
+      int ok = this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (!ok)
       {
         quit = 1;
       }

@@ -74,7 +74,7 @@ namespace
 #define KEVORKIAN(value, method)                                   \
   if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
     suicide (#value " in method " #method);                        \
-    ACE_THROW (FAULT_CODE (                                \
+    ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
             TAO_DEFAULT_MINOR_CODE,                                \
             EFAULT),                                               \
@@ -84,11 +84,33 @@ namespace
 #define KEVORKIAN_DURING(method)                                   \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
     suicide ("read-only method " #method);                         \
-    ACE_THROW (FAULT_CODE (                                \
+    ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
             TAO_DEFAULT_MINOR_CODE,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO));                                 \
+    } else ;
+
+#define KEVORKIAN_RETURN(value, method, result)                    \
+  if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
+    suicide (#value " in method " #method);                        \
+    ACE_THROW_RETURN (FAULT_CODE (                                 \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO_DEFAULT_MINOR_CODE,                                \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO),                                  \
+      result);                                                     \
+    } else ;
+
+#define KEVORKIAN_DURING_RETURN(method, result)                    \
+  if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
+    suicide ("read-only method " #method);                         \
+    ACE_THROW_RETURN (FAULT_CODE (                                 \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO_DEFAULT_MINOR_CODE,                                \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO),                                  \
+            result);                                               \
     } else ;
 
 
@@ -153,9 +175,9 @@ unsigned long FT_TestReplica_i::factory_id()const
   return this->factory_id_;
 }
 
-::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
 
 PortableServer::ObjectId FT_TestReplica_i::object_id()const
@@ -214,11 +236,11 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   return 0;
 }
 
-void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
 {
   //////////////////////////////////////////////////
   // WARNING: The following call invokes fini then deletes this object
-  this->factory_->remove_replica(this->factory_id_, this);
+  this->factory_->remove_replica(this->factory_id_, this ACE_ENV_ARG_PARAMETER);
 }
 
 int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -233,7 +255,7 @@ int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 CORBA::Boolean FT_TestReplica_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(DURING_IS_ALIVE, is_alive)
+  KEVORKIAN_RETURN(DURING_IS_ALIVE, is_alive, 0)
   ACE_ERROR ((LM_ERROR,
     "%s@%s#%d: is_alive: %d\n",
     this->name_.c_str(),
@@ -247,10 +269,10 @@ CORBA::Boolean FT_TestReplica_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Updateable interface
-FT::State * FT_TestReplica_i::get_update ()
+FT::State * FT_TestReplica_i::get_update (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable))
 {
-  KEVORKIAN(DURING_GET_UPDATE, get_update)
+  KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
@@ -258,7 +280,7 @@ FT::State * FT_TestReplica_i::get_update ()
   return vState._retn();
 }
 
-void FT_TestReplica_i::set_update (const FT::State & s)
+void FT_TestReplica_i::set_update (const FT::State & s ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidUpdate))
 {
 #if defined(FT_TEST_LACKS_UPDATE)
@@ -273,13 +295,13 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Checkpointable interface
-::FT::State * FT_TestReplica_i::get_state ()
+::FT::State * FT_TestReplica_i::get_state (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable))
 {
 #if defined(FT_TEST_LACKS_STATE)
   ACE_THROW( FT::NoStateAvailable () );
 #else // FT_TEST_LACKS_STATE
-  KEVORKIAN(DURING_GET_STATE, get_state)
+  KEVORKIAN_RETURN(DURING_GET_STATE, get_state, 0)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
@@ -288,7 +310,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 #endif // FT_TEST_LACKS_STATE
 }
 
-void FT_TestReplica_i::set_state (const FT::State & s)
+void FT_TestReplica_i::set_state (const FT::State & s ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState))
 {
 #if defined(FT_TEST_LACKS_STATE)
@@ -333,18 +355,18 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(BEFORE_STATE_CHANGE, increment)
+  KEVORKIAN_RETURN(BEFORE_STATE_CHANGE, increment, 0)
   long counter = load ();
   counter += delta;
   store (counter);
-  KEVORKIAN(BEFORE_REPLY, increment)
+  KEVORKIAN_RETURN(BEFORE_REPLY, increment, 0)
   return counter;
 }
 
 CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_DURING(get)
+  KEVORKIAN_DURING_RETURN(get, 0)
   long counter = load ();
   return counter;
 }
@@ -352,7 +374,7 @@ CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_DURING([get]counter)
+  KEVORKIAN_DURING_RETURN([get]counter, 0)
   long counter = load ();
   return counter;
 }
@@ -370,22 +392,24 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location()
+    << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
 
   this->death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
 }
 
-void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Shut down requested" << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location()
+    << '#' << this->factory_id_ << " Shut down requested" << std::endl;
   this->death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
 //////////////////////////////////////////////
 // FT_TestReplica_i public non-CORBA interface
-int FT_TestReplica_i::idle (int & result)
+int FT_TestReplica_i::idle (int & result ACE_ENV_ARG_DECL)
 {
   int quit = 0;
   if (this->death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
@@ -429,7 +453,8 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
-      std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << ": " << counter << std::endl;
+      std::cout << name_.c_str() << '@' << this->factory_->location()
+        << '#' << this->factory_id_ << ": " << counter << std::endl;
     }
     delete[] buffer;
     buffer = 0;

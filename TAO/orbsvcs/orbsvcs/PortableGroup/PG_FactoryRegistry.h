@@ -99,7 +99,7 @@ namespace TAO
      * @param result is a place to return status to be returned by the process
      * @returns 0 to continue.  1 to quit.
      */
-    int idle(int & result);
+    int idle(int & result ACE_ENV_ARG_DECL);
 
     /**
      * Identify this object.

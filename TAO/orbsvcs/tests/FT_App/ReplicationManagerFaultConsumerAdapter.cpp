@@ -361,7 +361,8 @@ int ReplicationManagerFaultConsumerAdapter::fini (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-int ReplicationManagerFaultConsumerAdapter::idle(int & result)
+int ReplicationManagerFaultConsumerAdapter::idle(int & result
+    ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;

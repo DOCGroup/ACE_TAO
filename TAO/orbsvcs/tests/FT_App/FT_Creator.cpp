@@ -139,9 +139,11 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // if a factory IOR was specified on command line
   if ( this->registry_ior_ != 0)
   {
-    CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_ior_  ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var registry_obj
+      = this->orb_->string_to_object (this->registry_ior_  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    PortableGroup::FactoryRegistry_var registry = PortableGroup::FactoryRegistry::_narrow(registry_obj.in ()  ACE_ENV_ARG_PARAMETER);
+    PortableGroup::FactoryRegistry_var registry
+      = PortableGroup::FactoryRegistry::_narrow(registry_obj.in ()  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
     if (! CORBA::is_nil (registry.in ()))
     {
@@ -240,7 +242,8 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
     const char * role = this->unregister_roles_[nType].c_str();
-    result = this->creator_.unregister_role (role);
+    result = this->creator_.unregister_role (role ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
   }
 
   return result;
@@ -257,7 +260,7 @@ main (int argc, char *argv[])
   int result = 0;
   ACE_TRY_NEW_ENV
   {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
     ACE_TRY_CHECK;
     FTAPP::FT_Creator app;
     result = app.parse_args(argc, argv);

@@ -59,7 +59,7 @@ public:
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result);
+  int idle(int &result ACE_ENV_ARG_DECL);
 
   /**
    * Prepare to exit.

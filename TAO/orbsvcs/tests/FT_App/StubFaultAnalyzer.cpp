@@ -134,15 +134,15 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // register fault consumers
   if (result == 0)
   {
-    result = this->faultConsumer_.init (orb, this->notifier_ 
-		                        ACE_ENV_ARG_PARAMETER);
+    result = this->faultConsumer_.init (orb, this->notifier_
+                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
   }
 
   if (result == 0)
   {
     result = this->batchConsumer_.init (orb, this->notifier_
-		                        ACE_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
   }
 
@@ -256,7 +256,7 @@ int StubFaultAnalyzer::fini (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-int StubFaultAnalyzer::idle(int & result)
+int StubFaultAnalyzer::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;
