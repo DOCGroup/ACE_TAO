@@ -1,14 +1,10 @@
-#!/pkg/gnu/bin/perl -I../../../bin
-#
-# If your perl installation isn't in /pkg/gnu/bin/perl,
-# please make the change accordingly
-#
+#$Id$
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-
-use Process;
+unshift @INC, '../../../bin';
+require Process;
 
 # Get the userid (or ip on NT)
 

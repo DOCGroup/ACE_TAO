@@ -1,10 +1,10 @@
-#!/pkg/gnu/bin/perl -I../../../../../bin
 #$Id$
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-use Process;
+unshift @INC, '../../../../../bin';
+require Process;
 
 if ($^O eq "MSWin32")
 {
