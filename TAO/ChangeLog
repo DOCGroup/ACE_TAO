@@ -2,7 +2,7 @@ Thu Aug  7 12:06:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Object.h:
 
-	  Removed unnecessary "tao/Object_KeyC.h" include, a
+	  Removed unnecessary "tao/Object_KeyC.h" include.  A
 	  "TAO::ObjectKey" forward declaration is enough.
 
 	  Removed obsolete "TAO_ObjectKey" declaration.
