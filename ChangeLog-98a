@@ -1,3 +1,7 @@
+Wed Dec 24 18:37:49 1997    <nw1@JIG>
+
+	* ace/Synch.i (get_thread_id,get_nesting_level): Added ACE_INLINE.
+
 Wed Dec 24 18:31:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.10, released Wed Dec 24 18:31:31 1997.
