@@ -80,7 +80,7 @@ public:
   const char *local_name (void) const;
   // Return the local name.
 
-  virtual const char *full_name (void) const;
+  virtual const char *full_name (void);
   // Return the stringified full name.
 
   const char *flat_name (void) const;
