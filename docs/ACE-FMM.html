@@ -197,6 +197,48 @@
 
 
 
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+Infinite recursion when you invoke ACE_Reactor::remove_handler()
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+You are invoking remove_handler() from within handle_close() (or a
+method  invoked by handle_close()) but you have not specified the
+DONT_CALL flag.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+Be sure to <b>OR</b> in the DONT_CALL flag in this situation.<br>
+e.g. --<br>
+<ul><pre>
+int MyHandler::handle_close (ACE_HANDLE handle,
+                             ACE_Reactor_Mask close_mask)
+{
+    ...
+    my_reactor_->remove_handler( this,
+                                ACE_Event_Handler::READ_MASK |
+                                ACE_Event_Handler::DONT_CALL );
+    ...
+    return 0;
+}
+</pre></ul>
+
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
 <!--
 
 <tr>

@@ -25,10 +25,10 @@ was born.)
 Kirthika says:
 <UL>
 The cool thing about this "cooler" client is how we use a C++ trick for
-streaming incoming data by using the operator<<() metod. Also the
+streaming incoming data by using the operator<<() method. Also the
 Connector portion is wrapped in the open() method which now takes in the 
-server hostname and port. The result is a cleaner-looking client which
-successfully interacts with the server, when connection is established.
+server hostname and port. The result is a cleaner looking client which
+successfully interacts with the server when connection is established.
 </UL>
 <HR WIDTH="100%">
 <PRE>
@@ -76,7 +76,7 @@ public:
 
   <font color=red>/*
     This is where the coolness lies.  Most C++ folks are familiar
-    with "<font color=green>cout &lt;&lt; some-data</font>".  It's a very handy and easy way to
+    with "<font color=green>cout &lt;&lt; some-data.</font>"  It's a very handy and easy way to
     toss data around.  By adding these method calls, we're able
     to do the same thing with a socket connection.
    */</font>
@@ -257,13 +257,13 @@ int main (int argc, char *argv[])
   <font color=red>/*
     Use the basic constructor since the other isn't really very safe.
    */</font>
-  Client server;
+  Client peer;
   
   <font color=red>/*
     Open the server connection.  Notice how this is simpler than Tutorial 3
     since we only have to provide a host name and port value.
    */</font>
-  if( server.open(server_host,server_port) == -1 )
+  if( peer.open(server_host,server_port) == -1 )
   {
     ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
   }
@@ -274,12 +274,12 @@ int main (int argc, char *argv[])
       Tell the server which iteration we're on.  No more mucking aroudn with
       sprintf at this level!  It's all hidden from us.
      */</font>
-    server &lt;&lt; "<font color=green>message = </font>" &lt;&lt; i+1;
+    peer &lt;&lt; "<font color=green>message = </font>" &lt;&lt; i+1;
 
     <font color=red>/*
       Everything OK?
      */</font>
-    if ( server.error() )
+    if ( peer.error() )
     {
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>send</font>"), -1);
     }
@@ -289,7 +289,7 @@ int main (int argc, char *argv[])
     }
   }
 
-  if (server.close () == -1)
+  if (peer.close () == -1)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>close</font>"), -1);
   }
@@ -302,7 +302,7 @@ int main (int argc, char *argv[])
 <P>Ok, now we're done with that.  As you can see, it really isn't
 so hard to create an object that makes sending data much more "natural"
 than the typical send() or send_n() invocation.  You can even build
-up arbitrary objects &amp; do some neat tricks with C++ templates to stream
+up arbitrary objects and do some neat tricks with C++ templates to stream
 their data out as well.  (We may go into that a little later.) 
 Of course, writting the full implementation such that these streams are
 interchangable with the standard C++ ostreams is quite a bit more difficult. 

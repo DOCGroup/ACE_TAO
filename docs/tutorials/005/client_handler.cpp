@@ -35,7 +35,7 @@ Client_Handler::Client_Handler (void)
 Client_Handler::~Client_Handler (void)
 {
         // Make sure that our peer closes when we're deleted.  This
-        // will probably happend when the peer is deleted but it
+        // will probably happened when the peer is deleted but it
         // doesn't hurt to be explicit.
     this->peer ().close ();
 }
@@ -100,7 +100,7 @@ int Client_Handler::open (void *_acceptor)
   /*
      Our ACE_Svc_Handler baseclass gives us the peer() method as a way to
      access our underlying ACE_SOCK_Stream.  On that object, we can invoke the
-     get_remote_addr() method to get get an ACE_INET_Addr having our client's
+     get_remote_addr() method to get an ACE_INET_Addr having our client's
      address information. As with most ACE methods, we'll get back (and return) 
      a -1 if there was any kind of error.  Once we have the ACE_INET_Addr, we
      can query it to find out the clien's host name, TCP/IP address, TCP/IP
@@ -121,7 +121,7 @@ int Client_Handler::open (void *_acceptor)
      any case, the test above should always be done to ensure that the
      connection is worth keeping.
 
-     Now, regiser ourselves with a reactor and tell that reactor that we want
+     Now, register ourselves with a reactor and tell that reactor that we want
      to be notified when there is something to read.  Remember, we took our
      reactor value from the acceptor which created us in the first place.
      Since we're exploring a single-threaded implementation, this is the
@@ -220,10 +220,13 @@ int Client_Handler::process (char *_rdbuf, int _rdbuf_len)
   switch (this->peer ().recv (_rdbuf, _rdbuf_len))
     {
     case -1:
+            // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client"), -1);
     case 0:
+            // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing daemon (fd = %d)\n", this->get_handle ()), -1);
     default:
+            // Show the data
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));
     }
 

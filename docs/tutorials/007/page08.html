@@ -85,7 +85,7 @@ int <font color=#008888>Thread_Pool::close</font>( u_long flags )
 
 <font color=red>/*
    When an object wants to do work in the pool, it should call the enqueue() method.
-   We introduce the ACE_Message_Block here but, unfortunately, we seriously missuse it.
+   We introduce the ACE_Message_Block here but, unfortunately, we seriously misuse it.
  */</font>
 int <font color=#008888>Thread_Pool::enqueue</font>( ACE_Event_Handler * _handler )
 {

@@ -80,7 +80,7 @@ public:
   <font color=red>/*
      Most ACE objects have an open() method.  That's how you make them ready
      to do work.  ACE_Event_Handler has a virtual open() method which allows us
-     to create this overrride.  ACE_Acceptor&lt;> will invoke this method after
+     to create an override.  ACE_Acceptor&lt;> will invoke this method after
      creating a new Client_Handler when a client connects. Notice that the
      parameter to open() is a void*.  It just so happens that the pointer
      points to the acceptor which created us.  You would like for the parameter
@@ -110,12 +110,12 @@ protected:
   <font color=red>/*
      When we register with the reactor, we're going to tell it that we want to
      be notified of READ events.  When the reactor sees that there is read
-     activity for us, our handle_input() will be invoked. The _handleg
+     activity for us, our handle_input() will be invoked. The _handle
      provided is the handle (file descriptor in Unix) of the actual connection
      causing the activity.  Since we're derived from ACE_Svc_Handler&lt;> and it
-     maintains it's own peer (ACE_SOCK_Stream) object, this is redundant for
+     maintains its own peer (ACE_SOCK_Stream) object, this is redundant for
      us.  However, if we had been derived directly from ACE_Event_Handler, we
-     may have chosen not to contain the peer.  In that case, the _handleg
+     may have chosen not to contain the peer.  In that case, the _handle
      would be important to us for reading the client's data.
    */</font>
   int handle_input (ACE_HANDLE _handle);
@@ -123,7 +123,7 @@ protected:
   <font color=red>/*
      This has nothing at all to do with ACE.  I've added this here as a worker
      function which I will call from handle_input().  That allows me to
-     introduce concurrencly in later tutorials with a no changes to the worker
+     introduce concurrency in later tutorials with no changes to the worker
      function.  You can think of process() as application-level code and
      everything else as application-framework code.
    */</font>

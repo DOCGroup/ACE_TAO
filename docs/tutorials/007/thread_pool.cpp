@@ -64,7 +64,7 @@ int Thread_Pool::close( u_long flags )
 
 /*
    When an object wants to do work in the pool, it should call the enqueue() method.
-   We introduce the ACE_Message_Block here but, unfortunately, we seriously missuse it.
+   We introduce the ACE_Message_Block here but, unfortunately, we seriously misuse it.
  */
 int Thread_Pool::enqueue( ACE_Event_Handler * _handler )
 {

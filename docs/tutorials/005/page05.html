@@ -60,7 +60,7 @@ rest of the application all together.
 <font color=#008888>Client_Handler::~Client_Handler</font> (void)
 {
         <font color=red>// Make sure that our peer closes when we're deleted.  This</font>
-        <font color=red>// will probably happend when the peer is deleted but it</font>
+        <font color=red>// will probably happened when the peer is deleted but it</font>
         <font color=red>// doesn't hurt to be explicit.</font>
     this->peer ().close ();
 }
@@ -125,7 +125,7 @@ int <font color=#008888>Client_Handler::open</font> (void *_acceptor)
   <font color=red>/*
      Our ACE_Svc_Handler baseclass gives us the peer() method as a way to
      access our underlying ACE_SOCK_Stream.  On that object, we can invoke the
-     get_remote_addr() method to get get an ACE_INET_Addr having our client's
+     get_remote_addr() method to get an ACE_INET_Addr having our client's
      address information. As with most ACE methods, we'll get back (and return) 
      a -1 if there was any kind of error.  Once we have the ACE_INET_Addr, we
      can query it to find out the clien's host name, TCP/IP address, TCP/IP
@@ -146,7 +146,7 @@ int <font color=#008888>Client_Handler::open</font> (void *_acceptor)
      any case, the test above should always be done to ensure that the
      connection is worth keeping.
 
-     Now, regiser ourselves with a reactor and tell that reactor that we want
+     Now, register ourselves with a reactor and tell that reactor that we want
      to be notified when there is something to read.  Remember, we took our
      reactor value from the acceptor which created us in the first place.
      Since we're exploring a single-threaded implementation, this is the
@@ -245,10 +245,13 @@ int <font color=#008888>Client_Handler::process</font> (char *_rdbuf, int _rdbuf
   switch (this->peer ().recv (_rdbuf, _rdbuf_len))
     {
     case -1:
+            <font color=red>// Complain and leave</font>
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) %p bad read\n</font>", "<font color=green>client</font>"), -1);
     case 0:
+            <font color=red>// Complain and leave</font>
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) closing daemon (fd = %d)\n</font>", this->get_handle ()), -1);
     default:
+            <font color=red>// Show the data</font>
       ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) from client: %s</font>", _rdbuf));
     }
 
