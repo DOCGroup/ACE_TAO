@@ -33,22 +33,14 @@ shared_libs =
 static_libs = 1
 
 CC      = $(GHS_DIR)/cxch68
-
 CXX     = $(CC)
-
-CFLAGS  = -groot= -alttools=$(GHS_DIR) -68040 -X445 -fprecise -D__cpluplus=1 \
+CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -X445 -fprecise \
           -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
           -I$(MVME_INCL)/CC
-CCFLAGS += $(CFLAGS) --no_rtti --multibyte_chars --wchar_t_keyword -tnone
-
-# CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -X445 -fprecise \
-#           -D__cpluplus=1 -eel -stdl
-
-# CFLAGS  = -groot=$(GHS_DIR) -alttools=$(GHS_DIR) -stdl -eel -v
-# CCFLAGS = -groot=$(MVME_DIR) --using_std --stdl -classix -supervisor
-
+CCFLAGS += $(CFLAGS) --mkctors --multibyte_chars --no_rtti --wchar_t_keyword \
+           -tnone
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -59,21 +51,15 @@ LDFLAGS = --no_auto_instantiation \
           $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedg.a \
           $(MVME_DIR)/lib/classix/libcx.s.a
-
 OFLAGS  += -O -OM -OL
 AR      = $(GHS_DIR)/gnuch68/bin/ar
 ARFLAGS = rv
-RANLIB  = /bin/true
+RANLIB  = @true
 
-
-POSTLINK = ; $(MVME_DIR)/dtool/mkctors $@ > ctorsdtors.s; \
-           $(CC) $(CFLAGS) -c ctorsdtors.s -o .obj/ctorsdtors.o; \
-           rm -f ctorsdtors.s; \
-           $(CC) -groot= -alttools=$(GHS_DIR) -68040 -O -nostartfiles \
-           -nostdlib -e __start -o $@.final \
+POSTLINK = ; $(CC) -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 \
+           -O -nostartfiles -nostdlib -e __start -o $@.final \
            $(MVME_DIR)/lib/crt/crth.s.o $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
-           .obj/ctorsdtors.o \
            $(MVME_DIR)/lib/crt/crtn.o \
            -locatedprogram -r; \
            mv -f $@.final $@
