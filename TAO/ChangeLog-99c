@@ -1,3 +1,16 @@
+Mon Nov  8 23:21:35 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp: 
+	Made a minor correction in use of ORBSVCS_Time
+	Thanks to Keith Brown <kalbrown@ix.netcom.com> for providing
+	the solution
+	* orbsvcs/orbsvcs/Log/BasicLog_i:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h: Added a
+	  #pragma warning(disable:4250) so that MSVC++ won't complain
+ 	  about "dominance violations".  Thanks to Dominish, Derek
+	  <Derek.Dominish@Australia.Boeing.com> for reporting this and
+	  providing the solution.
+
 Mon Nov 08 22:10:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Interceptors/run_test.pl: Added -ORBobjrefStyle url to
