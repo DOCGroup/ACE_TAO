@@ -694,6 +694,8 @@ template class
 template class TAO_Seq_Var_Base_T<PortableServer::IDs,
                                   PortableServer::ObjectId>;
 
+template class TAO_Unbounded_Sequence<CORBA::OctetSeq>;
+
 template class
   TAO_Seq_Out_T<
       PortableServer::IDs,
@@ -710,6 +712,9 @@ template class
     >
 # pragma instantiate TAO_Seq_Var_Base_T<PortableServer::IDs,
       PortableServer::ObjectId>
+
+# pragms instantiate TAO_Unbounded_Sequence<CORBA::OctetSeq>
+
 # pragma instantiate \
   TAO_Seq_Out_T< \
       PortableServer::IDs, \
