@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TypeCode_Base_Attributes.h"
-#include "tao/TypeCode_Default_Case.h"
+
 
 namespace TAO
 {
@@ -47,17 +47,17 @@ namespace TAO
     {
     public:
 
-      typedef TAO::TypeCode::Case<StringType> case_type;
+      /// @typedef Type of individual case array element, not the
+      ///          array itself.
+      typedef TAO::TypeCode::Case<StringType> const case_type;
 
       /// Constructor.
       Union (char const * id,
              char const * name,
              CORBA::TypeCode_ptr const * discriminant_type,
-             case_type const * cases,
+             case_type * const * cases,
              CORBA::ULong ncases,
-             CORBA::Long default_index,
-             char const * default_member_name,
-             CORBA::TypeCode_ptr const * default_member_type);
+             CORBA::Long default_index);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -149,7 +149,7 @@ namespace TAO
       Base_Attributes<StringType> const base_attributes_;
 
       /// Type of IDL @c union discriminant.
-      CORBA::TypeCode_ptr * const discriminant_type_;
+      CORBA::TypeCode_ptr const * const discriminant_type_;
 
       /// Index of the default union case.
       /**
@@ -165,12 +165,6 @@ namespace TAO
       /// Array of @c TAO::TypeCode::Case representing structure of
       /// the OMG IDL defined @c union.
       CaseArrayType const cases_;
-
-      /// IDL @c union @c default case.
-      /**
-       * @note Only valid if @c this->default_index_ @c >= @c 0.
-       */
-      Default_Case<StringType> const default_case_;
 
       //@}
 

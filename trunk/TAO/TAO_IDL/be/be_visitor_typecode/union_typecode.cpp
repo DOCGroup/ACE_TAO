@@ -111,7 +111,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
                       == AST_UnionLabel::UL_default);
 
           os << "static TAO::TypeCode::Default_Case<char const *> const "
-             << fields_name.c_str () << "_" << i << "(";        
+             << fields_name.c_str () << "_" << i << "(";
         }
 
       os << "\"" << branch->original_local_name () << "\", "
