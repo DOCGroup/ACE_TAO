@@ -62,7 +62,7 @@ ACE_Addr::set_type (int type)
   this->addr_type_ = type;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE unsigned long 
 ACE_Addr::hash (void) const
 {
   return 0;

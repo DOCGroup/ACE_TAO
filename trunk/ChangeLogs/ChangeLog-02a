@@ -1,3 +1,11 @@
+Wed Apr 10 11:16:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Addr.h (hash):
+	* ace/Addr.i (hash):
+
+	  Use "unsigned long" instead of the "u_long" typedef to avoid
+	  including "ace/OS.h".
+
 Wed Apr 10 11:07:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Method_Request.h:
