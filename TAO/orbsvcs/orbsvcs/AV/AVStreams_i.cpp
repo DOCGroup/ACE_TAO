@@ -1619,8 +1619,8 @@ TAO_Base_StreamEndPoint::get_control_callback (const char * /*flowname*/,
 }
 
 void
-TAO_Base_StreamEndPoint::set_handler (const char *flowname,
-                                      TAO_AV_Flow_Handler *handler)
+TAO_Base_StreamEndPoint::set_handler (const char */*flowname*/,
+                                      TAO_AV_Flow_Handler */*handler*/)
 {
 }
 
@@ -1646,6 +1646,10 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                              AVStreams::streamQoS &qos,
                              const AVStreams::flowSpec &the_spec,
                              CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   AVStreams::noSuchFlow,
+                   AVStreams::QoSRequestFailed,
+                   AVStreams::streamOpFailed))
 {
   CORBA::Boolean retv = 0;
   this->peer_sep_ = AVStreams::StreamEndPoint::_duplicate (responder);
@@ -3867,8 +3871,8 @@ TAO_FlowEndPoint::TAO_FlowEndPoint (const char *flowname,
 }
 
 void
-TAO_FlowEndPoint::set_handler (const char *flowname,
-                               TAO_AV_Flow_Handler *handler)
+TAO_FlowEndPoint::set_handler (const char */*flowname*/,
+                               TAO_AV_Flow_Handler */*handler*/)
 {
 }
 
@@ -4381,8 +4385,8 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
 }
 
 int
-TAO_FlowEndPoint::set_protocol_object (const char *flowname,
-                                       TAO_AV_Protocol_Object *object)
+TAO_FlowEndPoint::set_protocol_object (const char */*flowname*/,
+                                                     TAO_AV_Protocol_Object */*object*/)
 {
   return 0;
 }
@@ -4406,7 +4410,7 @@ TAO_FlowProducer::TAO_FlowProducer (const char *flowname,
 
 // gets the reverse channel for feedback.
 char *
-TAO_FlowProducer::get_rev_channel (const char *pcol_name,
+TAO_FlowProducer::get_rev_channel (const char */*pcol_name*/,
                                    CORBA::Environment &/* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
