@@ -118,15 +118,15 @@ private:
 
   /// Allows iterations through collection_
   /**
-   * @note Deprecated typedef.  Use COLLECTION::ITERATOR trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use COLLECTION::ITERATOR trait
+   * instead.
    */
   typedef COLLECTION::ITERATOR COLLECTION_ITERATOR;
 
   /// Allows iterations through collection_
   /**
-   * @note Deprecated typedef.  Use COLLECTION::ENTRY trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use COLLECTION::ENTRY trait
+   * instead.
    */
   typedef COLLECTION::ENTRY COLLECTION_ENTRY;
 

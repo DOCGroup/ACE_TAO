@@ -41,6 +41,7 @@
 
 #define ACE_LACKS_STRRECVFD
 #define ACE_HAS_STRERROR
+#define ACE_HAS_STRPTIME
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
