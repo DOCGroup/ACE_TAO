@@ -289,28 +289,20 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
   }
 
   Header_Files {
-    Arg_Traits_T.h
-    CONV_FRAMES.h
-    GIOPS.h
-    IOPS.h
-    BooleanSeqS.h
-    FloatSeqS.h
-    OctetSeqS.h
-    PolicyS.h
-    PollableS.h
-    ServicesS.h
-    ShortSeqS.h
-    StringSeqS.h
-    TAOS.h
-    TimeBaseS.h
-    UShortSeqS.h
-    ULongSeqS.h
-    Auto_Functor.h
+    *.h
+  }
+
+  Inline_Files {
+    *.i
+    *.inl
   }
 
   Template_Files {
-      TAO_Singleton.cpp
-      Condition.cpp
-      orb.idl
+    *_T.cpp
+    Acceptor_Impl.cpp
+    Condition.cpp
+    Connector_Impl.cpp
+    TAO_Singleton.cpp
+    orb.idl
   }
 }
