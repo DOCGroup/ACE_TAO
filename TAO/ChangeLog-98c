@@ -1,3 +1,9 @@
+Thu Mar 19 05:26:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/typecode.cpp: In private_member_name, the return value of
+	"skip_typecode ()" was incorrectly compared with TRAVERSE_CONTINUE
+	rather than with a boolean value. This is now fixed.
+
 Wed Mar 18 21:43:46 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/typecode.cpp: private_equal method had a big error. I had
