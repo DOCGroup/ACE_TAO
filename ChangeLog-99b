@@ -1,3 +1,12 @@
+Thu May 20 13:52:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: build with threads if
+          _POSIX_C_SOURCE >= 199506L or #ifdef _POSIX_PTHREAD_SEMANTICS.
+          Added #define ACE_LACKS_RWLOCK_T if _POSIX_PTHREAD_SEMANTICS
+          is #defined (and therefore ACE_HAS_STHREADS is not #defined).
+          The rwlock functions are a Solaris threads interface, and
+          are not POSIX.
+
 Thu May 20 12:12:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Sched_Params.cpp: with ACE_HAS_PRIOCNTL,
