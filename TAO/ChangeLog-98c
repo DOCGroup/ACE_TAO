@@ -1,3 +1,7 @@
+Tue Sep 22 03:22:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.13 released.
+
 Tue Sep 22 02:40:33 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* examples/Simple/grid: Printout the process id and thread id
