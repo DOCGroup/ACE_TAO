@@ -6,9 +6,9 @@
 #include "tao/Object_Argument_T.h"
 
 ACE_RCSID (tao,
-           String_Argument_T,
+           Object_Argument_T,
            "$Id$")
-
+#if 0
 template<typename S_ptr>
 TAO::In_Object_Argument_T<S_ptr>::In_Object_Argument_T (S_ptr x)
   : x_ (x)
@@ -54,6 +54,7 @@ template<typename S_ptr>
 CORBA::Boolean
 TAO::Inout_Object_Argument_T<S_ptr>::demarshal (TAO_InputCDR & cdr)
 {
+  CORBA::release (this->x_);
   return cdr >> this->x_;
 }
 
@@ -272,10 +273,10 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_replace (
 }
 
 template<typename S_ptr, typename S_var>
-S_ptr&
+S_ptr &
 TAO::Ret_Object_SArgument_T<S_ptr,S_var>::arg (void)
 {
   return this->x_.out ();
 }
-
+#endif
 #endif /* TAO_OBJECT_ARGUMENT_T_C */

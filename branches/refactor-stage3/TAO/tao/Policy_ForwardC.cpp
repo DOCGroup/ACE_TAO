@@ -173,12 +173,12 @@ template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
           > \
       >
 
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
+# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
                                                   TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>,
                                                   CORBA::tao_Policy_life,
                                                   CORBA::tao_Policy_cast>
 
-#pragms instantiate TAO_Seq_Var_Base_T<CORBA::PolicyList,
+# pragma instantiate TAO_Seq_Var_Base_T<CORBA::PolicyList,
                                        TAO_Object_Manager<CORBA::Policy,
                                                           TAO_Objref_Var_T<CORBA::Policy,
                                                                            CORBA::tao_Policy_life>,

@@ -15,15 +15,15 @@
 #define TAO_OBJECT_ARGUMENT_T_H
 
 #include "ace/pre.h"
+#include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Argument.h"
-
 namespace TAO
 {
+
   /**
    * @class In_Object_Argument_T
    *
@@ -213,6 +213,7 @@ namespace TAO
    * @brief Template class for argument traits of objects.
    *
    */
+
   template<typename T_ptr, typename T_var, typename T_out>
   struct Object_Arg_Traits_T
   {

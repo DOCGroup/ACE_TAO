@@ -3719,16 +3719,18 @@ template class ACE_Hash_Map_Manager_Ex<const char *,
                                        ACE_Hash<const char *>,
                                        ACE_Equal_To<const char *>,
                                        ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *,
-                                             ACE_Unbounded_Queue<CORBA::Long> *,
-                                             ACE_Hash<const char *>,
-                                             ACE_Equal_To<const char *>,
-                                             ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
-                                                ACE_Unbounded_Queue<CORBA::Long> *,
-                                                ACE_Hash<const char *>,
-                                                ACE_Equal_To<const char *>,
-                                                ACE_Null_Mutex>;
+template class 
+  ACE_Hash_Map_Iterator_Base_Ex<const char *,
+                                ACE_Unbounded_Queue<CORBA::Long> *,
+                                ACE_Hash<const char *>,
+                                ACE_Equal_To<const char *>,
+                                ACE_Null_Mutex>;
+template class 
+  ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
+                                   ACE_Unbounded_Queue<CORBA::Long> *,
+                                   ACE_Hash<const char *>,
+                                   ACE_Equal_To<const char *>,
+                                   ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<const char *,
                                         ACE_Unbounded_Queue<CORBA::Long> *,
                                         ACE_Hash<const char *>,
@@ -3738,17 +3740,47 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
 template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
 template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
+template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                                        CORBA::TypeCode_var,
+                                        CORBA::TypeCode_out>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var>
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, \
+                                              CORBA::TypeCode_var>
 
-#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Unbounded_Queue<CORBA::Long> *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Nullv_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<const char *, \
+                                       ACE_Unbounded_Queue<CORBA::Long> *>
+#pragma instantiate \
+  ACE_Hash_Map_Manager_Ex<const char *, \
+                          ACE_Unbounded_Queue<CORBA::Long> *, \
+                          ACE_Hash<const char *>, \
+                          ACE_Equal_To<const char *>, \
+                          ACE_Null_Mutex>
+#pragma instantiate \
+  ACE_Hash_Map_Iterator_Base_Ex<const char *, \
+                                ACE_Unbounded_Queue<CORBA::Long> *, \
+                                ACE_Hash<const char *>, \
+                                ACE_Equal_To<const char *>, \
+                                ACE_Nullv_Mutex>
+#pragma instantiate \
+  ACE_Hash_Map_Reverse_Iterator_Ex<const char *, \
+                                   ACE_Unbounded_Queue<CORBA::Long> *, \
+                                   ACE_Hash<const char *>, \
+                                   ACE_Equal_To<const char *>, \
+                                   ACE_Null_Mutex>
+#pragma instantiate \
+  ACE_Hash_Map_Iterator_Ex<const char *, \
+                           ACE_Unbounded_Queue<CORBA::Long> *, \
+                           ACE_Hash<const char *>, \
+                           ACE_Equal_To<const char *>, \
+                           ACE_Null_Mutex>
 
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::TypeCode>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>
+
+#pragma instantiate TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
+                                             CORBA::TypeCode_var, \
+                                             CORBA::TypeCode_out>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
