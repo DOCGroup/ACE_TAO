@@ -109,10 +109,10 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_LIB_TEXT("-ORBClientConnectionHandler")) == 0
+                                   ACE_TEXT("-ORBClientConnectionHandler")) == 0
                ||
                ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_LIB_TEXT("-ORBWaitStrategy")) == 0)
+                                   ACE_TEXT("-ORBWaitStrategy")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -129,7 +129,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_TEXT("RW")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_READ;
               else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("MT_NOUPCALL")) == 0)
+                                           ACE_TEXT("MT_NOUPCALL")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
               else
                 this->report_option_value_error (ACE_TEXT("-ORBClientConnectionHandler"), name);

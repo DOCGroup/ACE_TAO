@@ -1,3 +1,14 @@
+Thu Sep  2 14:41:42 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Connection_Handler.cpp (handle_input_eh): Updated to be
+	  consistent with the OCI 1.3a version.  Somehow during the merge
+	  an older version from the OCI repo got in here.  Thanks to
+	  Johnny Willemsen for spotting this.
+
+	* tao/default_client.cpp (parse_args): Changed ACE_LIB_TEXT usage
+	  to ACE_TEXT.  The merge of MT_NOUPCALL brought in uses of the
+	  ACE_LIB_TEXT macro.
+
 Thu Sep  2 09:41:28 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar_i.cpp:
