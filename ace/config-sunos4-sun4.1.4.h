@@ -74,6 +74,9 @@
 // Platform has ACE_TLI.
 // #define ACE_HAS_TLI
 
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_LACKS_SIGNED_CHAR
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
