@@ -258,7 +258,8 @@ private:
 int 
 ACE_Client_Logging_Connector::fini (void)
 {
-  this->handler_->close (0);
+  if (this->handler_ != 0)
+    this->handler_->close (0);
   return 0;
 }
 
@@ -295,8 +296,11 @@ ACE_Client_Logging_Connector::init (int argc, char *argv[])
   if (this->connect (this->handler_, 
 		     this->server_addr_, 
 		     ACE_Synch_Options::synch) == -1)
-    ACE_ERROR ((LM_ERROR, "%p, using stdout\n", 
-		"can't connect to logging server"));
+    {
+      ACE_ERROR ((LM_ERROR, "%p, using stdout\n", 
+		  "can't connect to logging server"));
+      this->handler_ = 0;
+    }
   return 0;
 }
 
