@@ -35,6 +35,7 @@ use Getopt::Std;
 @files_h = ();
 @files_html = ();
 @files_dsp = ();
+@files_dsw = ();
 @files_gnu = ();
 @files_idl = ();
 @files_pl = ();
@@ -106,6 +107,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(dsp|vcp)$/i) {
         push @files_dsp, ($name);
+    }
+    elsif ($name =~ /\.(dsw|vcp)$/i) {
+        push @files_dsw, ($name);
     }
     elsif ($name =~ /\.(pidl|idl)$/i) {
         push @files_idl, ($name);
@@ -235,7 +239,7 @@ sub check_for_newline ()
 sub check_for_noncvs_files ()
 {
     print "Running non cvs files check\n";
-    foreach $file (@files_noncvs) {
+    foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile) {
         print_error ("File $file should not be in cvs!");
     }
 }
