@@ -12,7 +12,7 @@ Thu Aug  7 17:15:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Sequence_T.h:
         * tao/Sequence_T.i:
 
-          Changed over all remaingin ORB code and generated code to
+          Changed over all remaining ORB code and generated code to
           use TAO::Objref_Traits<> or TAO::Array_Traits<>, instead
           of the generated structs used previously. Changes to TAO
           sequence classes affect only array sequences in this checkin.
