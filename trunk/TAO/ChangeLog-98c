@@ -1,3 +1,9 @@
+Fri Jan 30 11:42:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* announcement: Added this boilerplate for release announcement.
+  	Actually, it's a sciprt which can be piped to something like
+ 	'mailx'.
+
 Fri Jan 30 01:55:59 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/COOL/IDL_Cubit/README: 
