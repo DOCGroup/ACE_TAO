@@ -17,7 +17,9 @@ Tue Oct  1 23:27:48 2002  Ossama Othman  <ossama@uci.edu>
 	  graceful shutdown of the LoadMonitor executable.
 
 	* orbsvcs/LoadBalancer/LoadMonitor.bor (OBJFILES):
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor (SRC):
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor (SRC)
+	* orbsvcs/LoadBalancer/LoadMonitor.dsp:
+	* orbsvcs/LoadBalancer/LoadMonitor_Static.dsp:
 
 	  Added `Monitor_Signal_Handler' and `Signal_Handler' to the list
 	  of source/object files.
