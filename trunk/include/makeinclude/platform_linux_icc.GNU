@@ -69,6 +69,9 @@ endif
 ifeq (8.0,$(findstring 8.0,$(CXX_VERSION)))
   CFLAGS += -wd1476,1505
 endif
+ifeq (8.1,$(findstring 8.1,$(CXX_VERSION)))
+  CFLAGS += -wd1476,1505 -no-gcc
+endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
