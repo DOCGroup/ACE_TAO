@@ -40,8 +40,10 @@ public:
   AV_Null_MediaCtrl (void);
 };
 
-class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
-  : public virtual POA_AVStreams::Basic_StreamCtrl
+
+class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
+  : public virtual POA_AVStreams::Basic_StreamCtrl,
+    public virtual TAO_PropertySet
 // = DESCRIPTION
 //    Base class for StreamCtrl, implements basic stream start
 //    and stop functionality
@@ -72,7 +74,7 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   // Changes the QoS associated with the stream
   // Empty the_spec means apply operation to all flows
 
-  virtual void push_event (const char *the_event,
+  virtual void push_event (const struct CosPropertyService::Property & the_event,  
                            CORBA::Environment &env);
   // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
   // E.g., loss of flow, reestablishment of flow, etc..
@@ -205,7 +207,8 @@ public:
 
 class TAO_ORBSVCS_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint, // The POA class
-    public virtual TAO_Base_StreamEndPoint
+    public virtual TAO_Base_StreamEndPoint,
+    public virtual TAO_PropertySet
 {
   // = DESCRIPTION
   //    The Stream EndPoint. Used to implement one endpoint of a stream

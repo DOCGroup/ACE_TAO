@@ -348,8 +348,8 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
       TAO_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
       return -1;
     }
-  return 0;
   TAO_ENDTRY;
+  return 0;
 }
 
 // Gets the B type stream_endpoint from the Naming service
