@@ -1,3 +1,9 @@
+Sun May 02 11:55:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h, i} (new)
+          orbsvcs\orbsvcs\Scheduler_Factory.h: Very early draft
+	  of the reconfigurable scheduler implementation.
+
 Sun May 02 08:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Context.cpp: removed ACE_Unbounded_Queue<char *>
