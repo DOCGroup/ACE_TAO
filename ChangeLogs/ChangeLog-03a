@@ -1,3 +1,26 @@
+Wed Mar  6 18:30:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.h:
+          Reimplemented the Logging_Server::run method. Because the
+          handle_connections() method spawns a new thread to run the
+          logging session, and it calls handle_data(), the call to
+          handle_data() from Logging_Server::run() is incorrect. Thanks
+          to Raghuram Shetty <Raghuram.Shetty@comverse.com> for reporting
+          this issue.
+
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+          Fix wait_for_multiple_events() to correctly check error return
+          from select().  Also, in handle_connections(), sync the code
+          with the book to clear acceptor handles from the active_handles_
+          after accepting all ready connections.
+
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h (handle_connections):
+          Clear acceptor's handle from active_read_handles_ to keep from
+          dispatching it as a data handle. See, this is why you should use
+          the Reactor framework - so be sure to buy vol 2 ;-)
+
+        * THANKS: Added Raghuram Shetty to the Hall of Fame.
+
 Wed Mar 06 17:06:43 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cached_Accept_Conn_Test.cpp:
