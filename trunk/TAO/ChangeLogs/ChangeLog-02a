@@ -1,3 +1,11 @@
+Sun Mar 31 21:48:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Cache_Entries.h:
+
+	  Re-exported the TAO_Cache_IntId class.  VC 6 Release builds
+	  whine about unresolved symbols in pluggable protocols despite
+	  the fact the class isn't directly used in them.
+
 Sun Mar 31 21:37:15 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:
