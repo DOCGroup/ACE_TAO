@@ -40,6 +40,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 
+LDFLAGS      += -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
