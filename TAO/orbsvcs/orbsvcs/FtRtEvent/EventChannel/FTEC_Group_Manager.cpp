@@ -188,7 +188,6 @@ void TAO_FTEC_Group_Manager::add_member (
       // update the info list again
       new_impl->info_list.length(new_impl->my_position+2);
       new_impl->info_list[new_impl->my_position+1] = info;
-      FTRT::ManagerInfo& tp = new_impl->info_list[new_impl->my_position+1];
 
       /// group_info = publisher->set_info(..) should be enough.
       /// However, GCC 2.96 is not happy with that.
