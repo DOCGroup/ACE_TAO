@@ -11,6 +11,13 @@ Receiver::Receiver (void)
 {
 }
 
+CORBA::ULong
+Receiver::message_count (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  return this->message_count_;
+}
+
 void
 Receiver::dump_results ()
 {
@@ -31,7 +38,8 @@ Receiver::receive_data (const Test::Payload &payload,
   this->message_count_++;
   this->byte_count_ += payload.length ();
 
-  ACE_DEBUG ((LM_DEBUG, "Receiver::receive_data\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Receiver::receive_data %d\n",
+              this->message_count_));
 }
 
 void

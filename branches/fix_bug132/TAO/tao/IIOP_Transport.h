@@ -64,8 +64,12 @@ public:
   /// Return the connection service handler
   TAO_IIOP_SVC_HANDLER *service_handler (void);
 
-  ///  The TAO_Transport methods, please check the documentation in
-  ///  "tao/Pluggable.h" for more details.
+  /** @name The TAO_Transport methods
+   *
+   * Please check the documentation in "tao/Transport.h" for more
+   * details.
+   */
+  //@{
   virtual ACE_HANDLE handle (void);
 
   virtual ACE_Event_Handler *event_handler (void);
@@ -74,26 +78,19 @@ public:
 
   virtual int idle (void);
 
-  /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0);
 
-  /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
   virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
                                     int block =0);
 
   virtual int register_handler (void);
 
-  /// @@TODO: These methods IMHO should have more meaningful
-  /// names. The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -124,12 +121,14 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
-  /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
-  /// Open the service context list and process it.
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+
+  virtual int schedule_output (void);
+  virtual int cancel_output (void);
+  //@}
 
 private:
 

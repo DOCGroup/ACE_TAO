@@ -71,35 +71,27 @@ TAO_Transport::handle_output ()
   // The reactor is asking us to send more data, first check if
   // there is a current message that needs more sending:
   int result = this->send_current_message ();
-  if (result == 0)
-    return 0;
 
-  if (result > 0)
+  while (result > 0)
     {
       // ... there is no current message or it was completely
       // sent, time to check the queue....
       result = this->dequeue_next_message ();
-      if (result == 0)
-        return 0;
+      if (result == 1)
+        {
+          (void) this->cancel_output ();
+          return 0;
+        }
+      result = this->send_current_message ();
     }
   // else { there was an error.... }
 
-  if (result > 0)
-    {
-      // ... no more data to send ... remove ourselves from the
-      // reactor ...
-      result = this->cancel_output ();
-    }
-
   if (result == -1)
     return -1; // There was an error, return -1 so the Reactor
-  else if (result == 0)
-    return 0;  // There is no more data or socket blocked, just return 0
 
-  // else if (result > 0)
-  // There is more data to be sent, don't try right now, let the
-  // reactor handle it, because it can handle starvation better
-  return 0;
+  // There is no more data or socket blocked, just return 0
+  /* if (result >= 0) */
+  return 0; 
 }
 
 int
@@ -178,6 +170,8 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
 int
 TAO_Transport::send_current_message (void)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+
   if (this->current_message_ == 0)
     return 1;
 
@@ -215,8 +209,7 @@ TAO_Transport::send_current_message (void)
       // ... timeouts and flow control are not real errors, the
       // connection is still valid and we must continue sending the
       // current message ...
-      if (errno == EWOULDBLOCK
-          || errno == ETIME)
+      if (errno == EWOULDBLOCK || errno == ETIME)
         return 0;
 
       return -1;
@@ -268,7 +261,22 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         || !stub->sync_strategy ().must_queue (queue_empty));
 
   TAO_Queued_Message *queued_message = 0;
-  if (non_queued_message)
+  if (non_queued_message == 0)
+    {
+      // ... simply queue the message ...
+      size_t length = message_block->total_length ();
+      ACE_Message_Block *copy =
+        new ACE_Message_Block (length);
+      for (const ACE_Message_Block *i = message_block;
+           i != 0;
+           i = i->cont ())
+        copy->copy (i->rd_ptr (), i->length ());
+
+      queued_message =
+        new TAO_Queued_Message (copy, 1);
+      queued_message->push_back (this->head_, this->tail_);
+    }
+  else
     {
       // ... in this case we must try to send the message first ...
 
@@ -283,8 +291,14 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
                                                   max_wait_time);
       if (n == 0)
         return -1;
-      else if (n == -1 && errno != EWOULDBLOCK)
-        return -1;
+      else if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            {
+              return this->schedule_output ();
+            }
+          return -1;
+        }
 
       // ... let's figure out if the complete message was sent ...
       if (message_block->total_length () == byte_count)
@@ -297,8 +311,11 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
           return 0;
         }
 
-      // ... the message was only partially sent, set it as the
-      // current message ...
+      // ... the message was only partially sent, schedule reactive
+      // output...
+      this->schedule_output ();
+
+      // ... and set it as the current message ...
       if (twoway_flag)
         {
           // ... we are going to block, so there is no need to clone
@@ -310,20 +327,21 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         }
       else
         {
+          size_t length = message_block->total_length ();
+          ACE_Message_Block *copy =
+            new ACE_Message_Block (length);
+          for (const ACE_Message_Block *i = message_block;
+               i != 0;
+               i = i->cont ())
+            copy->copy (i->rd_ptr (), i->length ());
+          
           queued_message =
-            new TAO_Queued_Message (message_block->clone (), 1);
+            new TAO_Queued_Message (copy, 1);
         }
       // @@ Revisit message queue allocations
 
       queued_message->bytes_transferred (byte_count);
       this->current_message_ = queued_message;
-    }
-  else
-    {
-      // ... otherwise simply queue the message ...
-      queued_message =
-        new TAO_Queued_Message (message_block->clone (), 1);
-      queued_message->push_back (this->head_, this->tail_);
     }
 
   // ... two choices, this is a twoway request or not, if it is

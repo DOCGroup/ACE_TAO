@@ -206,6 +206,12 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
+{
+  return this->transport ()->handle_output ();
+}
+
+int
 TAO_IIOP_Connection_Handler::close (u_long)
 {
   this->decr_ref_count ();

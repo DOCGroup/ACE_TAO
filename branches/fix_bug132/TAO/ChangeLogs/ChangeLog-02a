@@ -1,3 +1,53 @@
+Fri Mar 02 15:29:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Continue implementation of reactive output.
+          On this pass I fixed the code to deal with several error
+          conditions, invoke schedule_output() if the connection returns
+          an EWOULDBLOCK, also cancel the output if there is no data to
+          send.
+          Fix syncronization on send_queued_message()
+          Fix memory allocation for message blocks contained in
+          Queued_Message, they cannot be cloned() because that would
+          allocate from TSS.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement schedule_output() and cancel_output() methods.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Do not re-insert the transport into the reactor on each wait,
+          once is enough.
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+          Implement a handle_output() callback, delegate on the
+          TAO_Transport
+
+        * tao/IIOP_Endpoint.cpp:
+          Remove unused #include
+
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.cpp:
+        * tests/LongWrites/svc.conf:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Sender_Task.cpp:
+          Add support for multi-threaded clients.
+          Try to count the number of incoming messages and only exit when
+          all have been received.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Removed a number of unused files from this unit test.
+
 Sun Feb 25 10:22:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:

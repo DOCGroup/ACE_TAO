@@ -8,13 +8,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 use Cwd;
+use Getopt::Std;
 
 my $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
-foreach $i ("ONEWAY", "READ", "READ_WRITE") {
+local ($opt_i, $opt_p);
 
-  my $SV = new PerlACE::Process ("server", "-o $iorfile");
+if (!getopts ('i:p:')) {
+    print "Usage: run_test.pl [-p payload_size] [-i iterations]\n";
+    exit 1;
+}
+
+my $server_args = "";
+if (defined $opt_i) {
+    $server_args .= " -i ".$opt_i;
+}
+if (defined $opt_p) {
+    $server_args .= " -p ".$opt_p;
+}
+
+foreach my $i ("ONEWAY", "WRITE", "READ_WRITE") {
+
+  print "================ Running test $i ================\n";
+
+  my $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
 
   $SV->Spawn ();
 
