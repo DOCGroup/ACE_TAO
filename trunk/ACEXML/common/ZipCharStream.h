@@ -28,7 +28,6 @@
 
 // Ugly wart to get aroung a macro version of read defined in zziplib.h. Evil...
 #ifdef read
-#define ACEXML_save_read read
 #undef read
 #endif
 
@@ -139,11 +138,6 @@ private:
 };
 
 #include "ace/post.h"
-
-#ifdef ACEXML_save_read
-#define read ACEXML_save_read
-#undef ACEXML_save_read
-#endif
 
 #endif /* ACEXML_HAS_ZZIPLIB */
 
