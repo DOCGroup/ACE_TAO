@@ -344,7 +344,7 @@ server (void *arg = 0)
       if (buf.length () > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "%s ",
-                    ASYS_WIDE_STRING (buf.c_str ())));
+                    buf.c_str ()));
     }
 
   ACE_DEBUG ((LM_DEBUG,
