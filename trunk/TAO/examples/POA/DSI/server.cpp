@@ -33,11 +33,6 @@ parse_args (int argc, char **argv)
       case 'f':
         ior_output_file = get_opts.optarg;
         break;
-
-      case 'd':
-	TAO_debug_level++;
-	break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

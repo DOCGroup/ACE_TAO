@@ -1,3 +1,15 @@
+Mon Oct 26 14:22:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* examples/POA/DSI/README
+	* examples/POA/DSI/run_test.pl
+	* examples/POA/DSI/server.cpp
+	* examples/POA/DSI/client.cpp
+	* tests/Multiple_Inheritance/run_test.pl
+	* tests/Multiple_Inheritance/server.cpp
+	* tests/Multiple_Inheritance/client.cpp
+	  Fixed command line arguments to conform to Irfan's
+	  specifications. 
+	
 Mon Oct 26 12:01:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 

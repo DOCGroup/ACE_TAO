@@ -1,5 +1,4 @@
 $Id$
 Note: If you run the test, and nothing happens, that's a good thing. This
 is more of an example than a test, and therefore is not very
-verbose.If you pass the [-d] argument to the server, it will print out 
-some generic debugging info (multiple [-d]'s alter the output).
+verbose.
