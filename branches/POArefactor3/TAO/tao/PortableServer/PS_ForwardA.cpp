@@ -27,6 +27,8 @@
 
 #include "PS_ForwardC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:295

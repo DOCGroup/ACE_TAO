@@ -72,7 +72,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -89,7 +89,7 @@ namespace PortableServer
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_CURRENT__VAR_OUT_CH_)
 #define _PORTABLESERVER_CURRENT__VAR_OUT_CH_
@@ -139,7 +139,7 @@ namespace PortableServer
     
     static Current_ptr _nil (void)
     {
-      return (Current_ptr)0;
+      return static_cast<Current_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -163,8 +163,10 @@ namespace PortableServer
       static void _tao_any_destructor (void *);
       
       static NoContext *_downcast (CORBA::Exception *);
+      static const NoContext *_downcast (CORBA::Exception const *);
+      
       static CORBA::Exception *_alloc (void);
-
+      
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void) const;
@@ -180,7 +182,7 @@ namespace PortableServer
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:125
+      // be\be_visitor_exception/exception_ch.cpp:127
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
@@ -306,7 +308,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Portab
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::Current::NoContext *&);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "PS_CurrentC.inl"

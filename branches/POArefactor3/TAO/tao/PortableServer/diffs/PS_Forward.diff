@@ -3,17 +3,17 @@
 @@ -68,11 +68,25 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
- 
+
 +class TAO_ServantBase;
 +class TAO_ServantBase_var;
 +class TAO_RefCountServantBase;
 +class TAO_Local_ServantBase;
-+class TAO_POA;
++class TAO_Root_POA;
 +class TAO_DynamicImplementation;
 +
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:48
- 
+
  namespace PortableServer
  {
 +   typedef TAO_ServantBase ServantBase;
@@ -23,6 +23,6 @@
 +
 +   typedef TAO_Local_ServantBase LocalServantBase;
 +   typedef TAO_DynamicImplementation DynamicImplementation;
-   
+
    // TAO_IDL - Generated from
    // be\be_visitor_typedef/typedef_ch.cpp:435

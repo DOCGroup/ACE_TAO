@@ -72,6 +72,7 @@ class TAO_ServantBase;
 class TAO_ServantBase_var;
 class TAO_RefCountServantBase;
 class TAO_Local_ServantBase;
+class TAO_Root_POA;
 class TAO_DynamicImplementation;
 
 // TAO_IDL - Generated from
@@ -88,7 +89,7 @@ namespace PortableServer
    typedef TAO_DynamicImplementation DynamicImplementation;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:472
 
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
@@ -100,7 +101,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_POA__VAR_OUT_CH_)
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
@@ -136,21 +137,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface_fwd/any_op_ch.cpp:65
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POA_ptr); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POA_ptr *); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface_fwd/cdr_op_ch.cpp:66
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::POA_ptr );
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA_ptr &);
-
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "PS_ForwardC.inl"

@@ -1,6 +1,8 @@
 // $Id$
 
 #include "Active_Object_Map.h"
+#include "Active_Object_Map_Entry.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Active_Object_Map.i"
@@ -8,18 +10,9 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, Active_Object_Map, "$Id$")
-
-
-TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
-  : user_id_ (),
-    system_id_ (),
-    servant_ (0),
-    reference_count_ (1),
-    deactivated_ (0),
-    priority_ (-1)
-{
-}
+ACE_RCSID(PortableServer,
+          Active_Object_Map,
+          "$Id$")
 
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
@@ -333,7 +326,7 @@ TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_i
                                           int &priorities_match,
                                           int &deactivated)
 {
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->user_id_map_->find (user_id,
                                          entry);
   if (result == 0)
@@ -378,7 +371,7 @@ int
 TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
                                            int &deactivated)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
                                                              entry);
   if (result == 0)
@@ -401,7 +394,7 @@ int
 TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                                             const PortableServer::ObjectId &user_id,
                                             CORBA::Short priority,
-                                            TAO_Active_Object_Map::Map_Entry *&entry)
+                                            TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->user_id_map_->find (user_id,
                                                              entry);
@@ -418,7 +411,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
   else
     {
       ACE_NEW_RETURN (entry,
-                      TAO_Active_Object_Map::Map_Entry,
+                      TAO_Active_Object_Map_Entry,
                       -1);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
@@ -458,7 +451,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 int
 TAO_Unique_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
   if (result == 0)
@@ -480,7 +473,7 @@ int
 TAO_Unique_Id_Strategy::find_user_id_using_servant (PortableServer::Servant servant,
                                                     PortableServer::ObjectId_out user_id)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
                                                              entry);
   if (result == 0)
@@ -501,7 +494,7 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
                                                       PortableServer::ObjectId_out system_id,
                                                       CORBA::Short &priority)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
                                                              entry);
   if (result == 0)
@@ -542,7 +535,7 @@ int
 TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                                               const PortableServer::ObjectId &user_id,
                                               CORBA::Short priority,
-                                              TAO_Active_Object_Map::Map_Entry *&entry)
+                                              TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->user_id_map_->find (user_id,
                                                              entry);
@@ -554,7 +547,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
   else
     {
       ACE_NEW_RETURN (entry,
-                      TAO_Active_Object_Map::Map_Entry,
+                      TAO_Active_Object_Map_Entry,
                       -1);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
@@ -583,7 +576,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 int
 TAO_Multiple_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
   if (result == 0)
@@ -627,7 +620,7 @@ TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant
        ++iter)
     {
       TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
-      TAO_Active_Object_Map::Map_Entry *entry = map_pair.second ();
+      TAO_Active_Object_Map_Entry *entry = map_pair.second ();
 
       if (entry->servant_ == servant)
         return 1;
@@ -650,7 +643,7 @@ int
 TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                                   const PortableServer::ObjectId &user_id,
                                                                   PortableServer::Servant &servant,
-                                                                  TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                  TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
@@ -690,7 +683,7 @@ int
 TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                                    const PortableServer::ObjectId &user_id,
                                                                    PortableServer::Servant &servant,
-                                                                   TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                   TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
@@ -738,7 +731,7 @@ TAO_Id_Assignment_Strategy::set_active_object_map (TAO_Active_Object_Map *active
 int
 TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
                                             CORBA::Short,
-                                            TAO_Active_Object_Map::Map_Entry *&)
+                                            TAO_Active_Object_Map_Entry *&)
 {
   return -1;
 }
@@ -746,10 +739,10 @@ TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
 int
 TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
                                                              CORBA::Short priority,
-                                                             TAO_Active_Object_Map::Map_Entry *&entry)
+                                                             TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
-                  TAO_Active_Object_Map::Map_Entry,
+                  TAO_Active_Object_Map_Entry,
                   -1);
 
   int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
@@ -789,10 +782,10 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
 int
 TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
                                                                CORBA::Short priority,
-                                                               TAO_Active_Object_Map::Map_Entry *&entry)
+                                                               TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
-                  TAO_Active_Object_Map::Map_Entry,
+                  TAO_Active_Object_Map_Entry,
                   -1);
   int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
                                                                         entry->user_id_);
@@ -841,7 +834,7 @@ TAO_Active_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id
 }
 
 int
-TAO_Active_Hint_Strategy::bind (TAO_Active_Object_Map::Map_Entry &entry)
+TAO_Active_Hint_Strategy::bind (TAO_Active_Object_Map_Entry &entry)
 {
   entry.system_id_ = entry.user_id_;
 
@@ -850,14 +843,14 @@ TAO_Active_Hint_Strategy::bind (TAO_Active_Object_Map::Map_Entry &entry)
 }
 
 int
-TAO_Active_Hint_Strategy::unbind (TAO_Active_Object_Map::Map_Entry &entry)
+TAO_Active_Hint_Strategy::unbind (TAO_Active_Object_Map_Entry &entry)
 {
   return this->system_id_map_.unbind (entry.system_id_);
 }
 
 int
 TAO_Active_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
-                                TAO_Active_Object_Map::Map_Entry *&entry)
+                                TAO_Active_Object_Map_Entry *&entry)
 {
   return this->system_id_map_.find (system_id,
                                     entry);
@@ -871,7 +864,7 @@ TAO_Active_Hint_Strategy::hint_size (void)
 
 int
 TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
-                                     TAO_Active_Object_Map::Map_Entry &entry)
+                                     TAO_Active_Object_Map_Entry &entry)
 {
   ACE_NEW_RETURN (system_id,
                   PortableServer::ObjectId (entry.system_id_),
@@ -900,7 +893,7 @@ TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
 }
 
 int
-TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map::Map_Entry &entry)
+TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
 
@@ -908,7 +901,7 @@ TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map::Map_Entry &entry)
 }
 
 int
-TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map::Map_Entry &entry)
+TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
 
@@ -917,7 +910,7 @@ TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map::Map_Entry &entry)
 
 int
 TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
-                            TAO_Active_Object_Map::Map_Entry *&entry)
+                            TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_UNUSED_ARG (system_id);
   ACE_UNUSED_ARG (entry);
@@ -933,7 +926,7 @@ TAO_No_Hint_Strategy::hint_size (void)
 
 int
 TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
-                                 TAO_Active_Object_Map::Map_Entry &entry)
+                                 TAO_Active_Object_Map_Entry &entry)
 {
   ACE_NEW_RETURN (system_id,
                   PortableServer::ObjectId (entry.user_id_),
@@ -966,7 +959,7 @@ template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>;
 // Common typedefs.
 typedef PortableServer::ObjectId id;
 typedef PortableServer::Servant servant;
-typedef TAO_Active_Object_Map::Map_Entry *value;
+typedef TAO_Active_Object_Map_Entry *value;
 
 typedef ACE_Pair<id, value> id_expanded_value;
 typedef ACE_Reference_Pair<const id, value> id_value_type;
@@ -1073,7 +1066,7 @@ template class ACE_Map_Entry<servant, value>;
 // Common typedefs.
 typedef PortableServer::ObjectId id;
 typedef PortableServer::Servant servant;
-typedef TAO_Active_Object_Map::Map_Entry * value;
+typedef TAO_Active_Object_Map_Entry * value;
 
 typedef ACE_Pair<id, value> id_expanded_value;
 typedef ACE_Reference_Pair<const id, value> id_value_type;
