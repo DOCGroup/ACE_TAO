@@ -773,7 +773,8 @@ be_interface::gen_operation_table (const char *flat_name,
         os->indent ();
 
         // Start the table generation.
-        *os << "static const TAO_operation_db_entry " << flat_name
+        *os << be_nl << be_nl
+            << "static const TAO_operation_db_entry " << flat_name
             << "_operations [] = {" << be_idt_nl;
 
         // Make sure the queues are empty.
