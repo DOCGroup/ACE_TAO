@@ -228,6 +228,23 @@ TAO_IDLFLAGS += <%idlflags%>
 #       Local targets
 #----------------------------------------------------------------------------
 <%marker(local)%>
+<%if(custom_types)%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+GENERATED_DIRTY += <%foreach(custom_type->input_file->output_files)%><%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%endif%><%custom_type->input_file->output_file%><%endfor%>
+<%foreach(custom_type->input_file->output_files)%>
+<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%endif%><%custom_type->input_file->output_file%>: <%custom_type->input_file%>
+	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $^ <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+
+<%endfor%>
+<%endfor%>
+<%endfor%>
+ifneq ($(GENERATED_DIRTY),)
+.PRECIOUS: $(GENERATED_DIRTY)
+all: $(GENERATED_DIRTY)
+endif
+
+<%endif%>
 <%comptarget%>
 <%if(idl_files)%>
 
@@ -286,5 +303,8 @@ realclean: clean <%compclean%>
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
+ifneq ($(GENERATED_DIRTY),)
+	-$(RM) $(GENERATED_DIRTY)
+endif
 
 <%marker(bottom)%>

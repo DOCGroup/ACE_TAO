@@ -102,11 +102,13 @@ sub generate_default_input {
   my($status) = 0;
   my($error)  = '';
 
-  ## We are throwing away the error string.  In both Workspace and
-  ## Project creators, we don't care about this error string just the
-  ## status.
   ($status, $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
   ($status, $error) = $self->parse_line(undef, '}');
+
+  if (!$status) {
+    print STDERR "$error\n";
+  }
+
   return $status;
 }
 

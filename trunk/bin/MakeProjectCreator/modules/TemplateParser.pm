@@ -218,7 +218,7 @@ sub relative {
   my($rel)   = $self->{'prjc'}->get_relative();
   my(@keys)  = keys %$rel;
 
-  if (defined $value && defined $keys[0] && $value =~ /\$/) {
+  if (defined $value && defined $keys[0]) {
     if (UNIVERSAL::isa($value, 'ARRAY')) {
       my(@built) = ();
       foreach my $val (@$value) {
@@ -226,7 +226,7 @@ sub relative {
       }
       $value = \@built;
     }
-    else {
+    elsif ($value =~ /\$/) {
       my($cwd)   = $self->getcwd();
       my($start) = 0;
       my($fixed) = 0;
@@ -289,6 +289,24 @@ sub relative {
 }
 
 
+sub get_nested_value {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = undef;
+
+  if ($name =~ /^(.*)\->(\w+)/) {
+    my($pre)  = $1;
+    my($post) = $2;
+    my($base) = $self->get_value($pre);
+    if (defined $base) {
+      $value = $self->{'prjc'}->get_custom_value($post, $base);
+    }
+  }
+
+  return $value;
+}
+
+
 sub get_value {
   my($self)    = shift;
   my($name)    = shift;
@@ -306,9 +324,8 @@ sub get_value {
 
   if (!defined $value) {
     ## Next, check for a template value
-    my($ti) = $self->{'ti'};
-    if (defined $ti) {
-      $value = $ti->get_value($name);
+    if (defined $self->{'ti'}) {
+      $value = $self->{'ti'}->get_value($name);
       if (defined $value) {
         $value = $self->adjust_value($name, $value);
       }
@@ -333,6 +350,9 @@ sub get_value {
             ## Call back onto the project creator to allow
             ## it to fill in the value before defaulting to undef.
             $value = $self->{'prjc'}->fill_value($name);
+            if (!defined $value && $name =~ /\->/) {
+              $value = $self->get_nested_value($name);
+            }
           }
         }
       }
@@ -501,32 +521,43 @@ sub get_flag_overrides {
   my($prjc)  = $self->{'prjc'};
   my($fo)    = $prjc->{'flag_overrides'};
 
-  foreach my $key (keys %$fo) {
-    if ($key =~ /^$name/) {
-      foreach my $of (keys %{$$fo{$key}}) {
-        my($cv) = $of;
-        if ($prjc->convert_slashes()) {
-          $cv = $prjc->slash_to_backslash($of);
-        }
-        if ($cv eq $file) {
-          foreach my $ma (keys %{$prjc->{'matching_assignments'}}) {
-            if ($ma eq $key) {
-              foreach my $aname (@{$prjc->{'matching_assignments'}->{$ma}}) {
-                if ($aname eq $type &&
-                    defined $$fo{$key}->{$of}->{$aname}) {
-                  $value = $$fo{$key}->{$of}->{$aname};
-                  last;
-                }
-              }
-              last;
-            }
-          }
-          last;
-        }
+  if (defined $file) {
+    ## Replace the custom_type key with the actual custom type
+    if ($name =~ /^custom_type\->/) {
+      my($ct) = $self->get_value('custom_type');
+      if (defined $ct) {
+        $name = $ct;
       }
-      last;
+    }
+
+    foreach my $key (keys %$fo) {
+      if ($key =~ /^$name/) {
+        foreach my $of (keys %{$$fo{$key}}) {
+          my($cv) = $of;
+          if ($prjc->convert_slashes()) {
+            $cv = $prjc->slash_to_backslash($of);
+          }
+          if ($cv eq $file) {
+            foreach my $ma (keys %{$prjc->{'matching_assignments'}}) {
+              if ($ma eq $key) {
+                foreach my $aname (@{$prjc->{'matching_assignments'}->{$ma}}) {
+                  if ($aname eq $type &&
+                      defined $$fo{$key}->{$of}->{$aname}) {
+                    $value = $$fo{$key}->{$of}->{$aname};
+                    last;
+                  }
+                }
+                last;
+              }
+            }
+            last;
+          }
+        }
+        last;
+      }
     }
   }
+
   return $value;
 }
 
@@ -580,9 +611,11 @@ sub handle_else {
 
 
 sub handle_foreach {
-  my($self)   = shift;
-  my($val)    = shift;
-  my($name)   = 'endfor';
+  my($self)        = shift;
+  my($val)         = shift;
+  my($name)        = 'endfor';
+  my($status)      = 1;
+  my($errorString) = '';
 
   push(@{$self->{'lstack'}}, $self->line_number());
   if (!$self->{'if_skip'}) {
@@ -594,6 +627,15 @@ sub handle_foreach {
       $vname =~ s/\s+$//;
       $val   =~ s/^\s+//;
       $val   =~ s/\s+$//;
+
+      ## Due to the way flag_overrides works, we can't allow
+      ## the user to name the foreach variable when dealing
+      ## with custom types.
+      if ($val =~ /^custom_type\->/ || $val eq 'custom_types') {
+        $status = 0;
+        $errorString = 'ERROR: The foreach variable can not be ' .
+                       'named when dealing with custom types';
+      }
     }
 
     push(@{$self->{'sstack'}}, $name);
@@ -608,6 +650,8 @@ sub handle_foreach {
   else {
     push(@{$self->{'sstack'}}, "*$name");
   }
+
+  return $status, $errorString;
 }
 
 
@@ -750,7 +794,7 @@ sub process_name {
 
   if ($line eq '') {
   }
-  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+,\s*[^\)]+\))\))?%>/) {
+  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+,\s*[^\)]+\))\)|\->\w+([\w\-\>]+)?)?%>/) {
     my($name, $val) = $self->split_name_value($line);
 
     $length += length($name);
@@ -769,7 +813,7 @@ sub process_name {
         $self->handle_else();
       }
       elsif ($name eq 'foreach') {
-        $self->handle_foreach($val);
+        ($status, $errorString) = $self->handle_foreach($val);
       }
       elsif ($name eq 'fornotlast'  || $name eq 'forlast' ||
              $name eq 'fornotfirst' || $name eq 'forfirst') {
@@ -994,7 +1038,7 @@ sub parse_file {
 
   if (!$status) {
     my($linenumber) = $self->line_number();
-    $errorString = "$input: line $linenumber: $errorString\n";
+    $errorString = "$input: line $linenumber:\n$errorString\n";
   }
 
   return $status, $errorString;

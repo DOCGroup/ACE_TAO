@@ -118,7 +118,7 @@ sub parse_line {
           ## Generate the project files
           my($gstat, $generator) = $self->generate_project_files();
           if ($gstat) {
-            $self->write_workspace($generator, 1);
+            ($status, $errorString) = $self->write_workspace($generator, 1);
             $self->{'assign'} = {};
           }
           else {
@@ -455,6 +455,7 @@ sub write_workspace {
   my($generator) = shift;
   my($addfile)   = shift;
   my($status)    = 1;
+  my($error)     = '';
 
   if ($self->get_toplevel()) {
     my($name) = $self->transform_file_name($self->workspace_file_name());
@@ -481,7 +482,8 @@ sub write_workspace {
         }
       }
       else {
-        print STDERR "ERROR: Unable to open $name for output\n";
+        $error = 'ERROR: Unable to open ' . $self->getcwd() .
+                 "/$name for output";
         $status = 0;
       }
     }
@@ -491,7 +493,7 @@ sub write_workspace {
     }
   }
 
-  return $status;
+  return $status, $error;
 }
 
 
@@ -615,7 +617,11 @@ sub generate_project_files {
             $self->{'project_info'} = \%perpi;
 
             ## Write our per project workspace
-            $self->write_workspace($generator);
+            my($error) = '';
+            ($status, $error) = $self->write_workspace($generator);
+            if (!$status) {
+              print STDERR "$error\n";
+            }
 
             ## Reset our project information to empty
             $self->{'projects'}     = [];
