@@ -16,7 +16,7 @@ namespace TAO
 
   void
   POA_ThreadPolicy::init (
-    const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    const CORBA::Any &value ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::PolicyError))
   {
     PortableServer::ThreadPolicyValue thrvalue;
@@ -48,7 +48,7 @@ namespace TAO
   }
 
   CORBA::Policy_ptr
-  POA_ThreadPolicy::copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  POA_ThreadPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     POA_ThreadPolicy *thread_policy_copy = 0;
@@ -63,20 +63,20 @@ namespace TAO
   }
 
   void
-  POA_ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  POA_ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   PortableServer::ThreadPolicyValue
-  POA_ThreadPolicy::value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  POA_ThreadPolicy::value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return value_->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
   CORBA::PolicyType
-  POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return PortableServer::THREAD_POLICY_ID;

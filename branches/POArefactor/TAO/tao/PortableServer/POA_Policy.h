@@ -41,11 +41,11 @@ namespace TAO
 
     // @@Johnny, why aren't the following methods implemented?
     /// Return the cached policy type for this policy.
-    TAO_Cached_Policy_Type _tao_cached_type (void) const;
+    virtual TAO_Cached_Policy_Type _tao_cached_type (void) const = 0;
 
     /// Returns the scope at which this policy can be applied. See
     /// orbconf.h.
-    TAO_Policy_Scope _tao_scope (void) const;
+    virtual TAO_Policy_Scope _tao_scope (void) const = 0;
   };
 }
 

@@ -32,7 +32,7 @@ namespace TAO
   PortableServer::ThreadPolicy_ptr
   Loadable_Thread_Policy::create (
     const CORBA::Any &value
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError))
   {
     POA_ThreadPolicy* policy = 0;
@@ -45,6 +45,18 @@ namespace TAO
     ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
     return policy;
+  }
+
+  TAO_Cached_Policy_Type
+  Loadable_Thread_Policy::_tao_cached_type (void) const
+  {
+    return TAO_CACHED_POLICY_THREAD;
+  }
+
+  TAO_Policy_Scope
+  Loadable_Thread_Policy::_tao_scope (void) const
+  {
+    return TAO_POLICY_POA_SCOPE;
   }
 
   ACE_STATIC_SVC_DEFINE (
