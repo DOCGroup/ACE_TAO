@@ -168,7 +168,7 @@ class ACE_Export ACE_Location_Node
   //     Keep track of where a shared library is located.
 public:
   ACE_Location_Node (void);
-  virtual void *symbol (void) = 0;
+  virtual void *symbol (ACE_Service_Object_Exterminator * = 0) = 0;
   virtual void set_symbol (void *h);
   ACE_SHLIB_HANDLE handle (void) const;
   void handle (const ACE_SHLIB_HANDLE h);
@@ -206,7 +206,7 @@ class ACE_Export ACE_Object_Node : public ACE_Location_Node
   //   Keeps track of the symbol name for a shared object.
 public:
   ACE_Object_Node (const char *pathname, const char *obj_name);
-  virtual void *symbol (void);
+  virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Object_Node (void);
 
   void dump (void) const;
@@ -226,7 +226,7 @@ class ACE_Export ACE_Function_Node : public ACE_Location_Node
   //     Keeps track of the symbol name of for a shared function.
 public:
   ACE_Function_Node (const char *pathname, const char *func_name);
-  virtual void *symbol (void);
+  virtual void *symbol (ACE_Service_Object_Exterminator *gobbler = 0);
   virtual ~ACE_Function_Node (void);
 
   void dump (void) const;
@@ -269,7 +269,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   //     application. 
 public:
   ACE_Static_Function_Node (const char *func_name);
-  virtual void *symbol (void);
+  virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Static_Function_Node (void);
 
   void dump (void) const;

@@ -1364,6 +1364,8 @@ private:
 #undef ctime
 #endif /* ACE_HAS_BROKEN_CTIME */
 
+typedef void (*ACE_Service_Object_Exterminator)(void *);
+
 // Static service macros
 #define ACE_STATIC_SVC_DECLARE(X) extern ACE_Static_Svc_Descriptor ace_svc_desc_##X ;
 #define ACE_STATIC_SVC_DEFINE(X, NAME, TYPE, FN, FLAGS, ACTIVE) \
@@ -1377,12 +1379,16 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 
 
 // More generic dynamic/static service macros.
-#define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (void);
-#define ACE_FACTORY_DEFINE(CLS,X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+#define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *);
+#define ACE_FACTORY_DEFINE(CLS,X) \
+extern "C" void _gobble_##X (void *p) { delete p;} \
+extern "C" ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *gobbler) \
+{ ACE_TRACE (#X); \
+if (gobbler != 0) *gobbler = _gobble_##X; return new X; }
 
 // Dynamic/static service macros.
 #define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
-#define ACE_SVC_INVOKE(X) _make_##X ()
+#define ACE_SVC_INVOKE(X) _make_##X (0)
 #define ACE_SVC_NAME(X) _make_##X
 #define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 

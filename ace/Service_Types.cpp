@@ -24,10 +24,12 @@ ACE_Service_Type_Impl::dump (void) const
 
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so, 
                                               const ASYS_TCHAR *s_name, 
-                                              u_int f)
+                                              u_int f,
+                                              void (*gobbler)(void*))
   : name_ (0),
     obj_ (so), 
-    flags_ (f)
+    flags_ (f),
+    gobbler_ (gobbler)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
   this->name (s_name);
@@ -54,7 +56,12 @@ ACE_Service_Type_Impl::fini (void) const
 
 #if 1
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
-    operator delete ((void *) this->object ());	// cast to remove const-ness
+    {
+      if (gobbler_ != 0)
+        gobbler_ (this->object ());
+      else
+        operator delete ((void *) this->object ());	// cast to remove const-ness
+    }
 #endif /* 0 */
 
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
@@ -65,8 +72,9 @@ ACE_Service_Type_Impl::fini (void) const
 
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
 						  const ASYS_TCHAR *s_name,
-						  u_int f)
-  : ACE_Service_Type_Impl (so, s_name, f)
+						  u_int f,
+                                                  void (*gobbler)(void *))
+  : ACE_Service_Type_Impl (so, s_name, f, gobbler)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
 }

@@ -198,12 +198,13 @@ svc_location
       u_int flags
         = ACE_Service_Type::DELETE_THIS
         | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      void *sym = $3->symbol ();
+      ACE_Service_Object_Exterminator gobbler;
+      void *sym = $3->symbol (&gobbler);
 
       if (sym != 0)
         {
           ACE_Service_Type_Impl *stp
-            = ace_create_service_type (ASYS_WIDE_STRING ($1), $2, sym, flags);
+            = ace_create_service_type (ASYS_WIDE_STRING ($1), $2, sym, flags, gobbler);
           $$ = new ACE_Service_Type (ASYS_WIDE_STRING ($1), stp, $3->handle (), $4);
         }
       else
@@ -343,7 +344,8 @@ ACE_Service_Type_Impl *
 ace_create_service_type (const ASYS_TCHAR *name,
                          int type,
                          void *symbol,
-                         u_int flags)
+                         u_int flags,
+                         ACE_Service_Object_Exterminator gobbler = 0)
 {
   ACE_Service_Type_Impl *stp = 0;
 
@@ -356,7 +358,8 @@ ace_create_service_type (const ASYS_TCHAR *name,
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
-                                               ASYS_WIDE_STRING (name), flags),
+                                               ASYS_WIDE_STRING (name), flags,
+                                               gobbler),
                       0);
       break;
     case ACE_MODULE_T:
