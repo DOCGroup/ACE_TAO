@@ -1,3 +1,16 @@
+Mon Nov  6 12:28:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/include/ast_union.h:
+
+	  Had to move default_index_, default_index() and
+	  compute_default_index() from be_union to ast_union,
+	  in order to fix problems caused by a similar move
+	  of default_value_, default_value() and 
+	  compute_default_value() recently.
+
 Mon Nov  6 09:50:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout): 
