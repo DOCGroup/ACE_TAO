@@ -1,3 +1,9 @@
+Tue Jul  6 11:39:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Updated the comment for ACE_ADAPT_RETVAL to
+	  clarify why it is needed.  Thanks to Elias Sreih
+ 	  <sealstd1@nortelnetworks.com> for motivating this clarification.
+	
 Tue Jul  6 10:42:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test_config.h (ACE_INIT_LOG): Fixed a typo in VxWorks'
