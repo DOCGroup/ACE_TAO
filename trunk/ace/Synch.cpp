@@ -317,9 +317,7 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 
 ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
 {
-// ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
-  //  if (this->remove () == -1)
-  //    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Process_Mutex::~ACE_Process_Mutex")));
+  // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
 }
 
 // Explicitly destroy the semaphore.
