@@ -23,7 +23,7 @@
 #include "NotifierS.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 
 class Notifier_Input_Handler : public ACE_Event_Handler
 {

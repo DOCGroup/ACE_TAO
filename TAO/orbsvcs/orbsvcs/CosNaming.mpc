@@ -18,9 +18,10 @@ project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
       Naming/Entries.cpp
       Naming/Flat_File_Persistence.cpp
       Naming/Hash_Naming_Context.cpp
+      Naming/Naming_Client.cpp
       Naming/Naming_Context_Interface.cpp
       Naming/Naming_Loader.cpp
-      Naming/Naming_Utils.cpp
+      Naming/Naming_Server.cpp
       Naming/Persistent_Context_Index.cpp
       Naming/Persistent_Entries.cpp
       Naming/Persistent_Naming_Context.cpp
@@ -32,6 +33,8 @@ project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
   }
   
   Header_Files {
-	Naming/naming_export.h
+    Naming/naming_export.h
+    Naming/Naming_Client.h
+    Naming/Naming_Server.h
   }
 }

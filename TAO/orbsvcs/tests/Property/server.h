@@ -22,6 +22,6 @@
 
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 #endif /* COSPROPERTYSERVICE_SERVER_H */
