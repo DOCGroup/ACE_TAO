@@ -1,10 +1,40 @@
+Tue Dec 23 10:03:38 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SemanticGraph.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Enum.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Enum.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Enum.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+	* CCF/CCF/IDL2/Traversal/Enum.cpp:
+	* CCF/CCF/IDL2/Traversal/Enum.hpp:
+
+          Added support for IDL enum type.
+
+	* CCF/CCF/IDL2/SemanticGraph/Member.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Exception.hpp:
+	* CCF/CCF/IDL2/Traversal/Attribute.hpp:
+
+ 	  Cosmetic changes.
+
 Mon Dec 22 16:50:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
 	* CIDLC/ExecutorMappingGenerator.hpp:
 
 	  New version of local executor mapping generator.
-	
+
 	* CIDLC/cidlc.cpp:
 
 	  New version of CIDL compiler driver with temporarily disabled

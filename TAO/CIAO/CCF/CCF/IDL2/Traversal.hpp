@@ -8,6 +8,7 @@
 #include "CCF/IDL2/Traversal/Elements.hpp"
 
 #include "CCF/IDL2/Traversal/Attribute.hpp"
+#include "CCF/IDL2/Traversal/Enum.hpp"
 #include "CCF/IDL2/Traversal/Exception.hpp"
 #include "CCF/IDL2/Traversal/Fundamental.hpp"
 #include "CCF/IDL2/Traversal/Interface.hpp"

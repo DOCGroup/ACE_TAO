@@ -31,6 +31,7 @@ namespace CCF
       keyword_table_.insert ("attribute" );
       keyword_table_.insert ("const"     );
       keyword_table_.insert ("exception" );
+      keyword_table_.insert ("enum"      );
       keyword_table_.insert ("factory"   );
       keyword_table_.insert ("in"        );
       keyword_table_.insert ("include"   );

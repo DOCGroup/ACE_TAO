@@ -29,6 +29,7 @@ namespace CCF
             : ctx_ (context.get ("trace-semantic-action", false), tu),
 
               attribute_ (ctx_),
+              enum__ (ctx_),
               exception_ (ctx_),
               include_ (ctx_),
               interface_ (ctx_),

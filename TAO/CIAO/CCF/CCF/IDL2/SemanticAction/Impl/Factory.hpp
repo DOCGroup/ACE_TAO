@@ -16,6 +16,7 @@
 //@@ It would be nice to move this includes into .cpp
 //
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Enum.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Exception.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
@@ -51,6 +52,12 @@ namespace CCF
           attribute ()
           {
             return attribute_;
+          }
+
+          virtual SemanticAction::Enum&
+          enum_ ()
+          {
+            return enum__;
           }
 
           virtual SemanticAction::Exception&
@@ -124,6 +131,7 @@ namespace CCF
 
         private:
           Attribute attribute_;
+          Enum enum__;
           Exception exception_;
           Include include_;
           Interface interface_;

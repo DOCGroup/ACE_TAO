@@ -8,6 +8,7 @@
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
 #include "CCF/IDL2/SemanticGraph/Attribute.hpp"
+#include "CCF/IDL2/SemanticGraph/Enum.hpp"
 #include "CCF/IDL2/SemanticGraph/Exception.hpp"
 #include "CCF/IDL2/SemanticGraph/Fundamental.hpp"
 #include "CCF/IDL2/SemanticGraph/Interface.hpp"
