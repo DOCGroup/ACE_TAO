@@ -768,7 +768,7 @@ nobase_include_HEADERS += \
   Managed_Types.i \
   Marshal.i \
   Messaging_PolicyValueC.i \
-  Messaging_SyncScopeC.i \
+  Messaging_SyncScopeC.inl \
   NVList.i \
   ORB.i \
   ORBInitInfo.inl \
@@ -956,7 +956,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST = \
   tao.rc
 
-## Makefile.BiDir_GIOP.am 
+## Makefile.BiDir_GIOP.am
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
@@ -997,7 +997,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
-## Makefile.PortableServer.am 
+## Makefile.PortableServer.am
 
 lib_LTLIBRARIES += libTAO_PortableServer.la
 
@@ -1107,7 +1107,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
 
-## Makefile.IFR_Client.am 
+## Makefile.IFR_Client.am
 
 lib_LTLIBRARIES += libTAO_IFR_Client.la
 
@@ -1156,7 +1156,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
 
-## Makefile.Domain.am 
+## Makefile.Domain.am
 
 lib_LTLIBRARIES += libTAO_Domain.la
 
@@ -1190,7 +1190,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Domain/TAO_Domain.rc
 
-## Makefile.DynamicAny.am 
+## Makefile.DynamicAny.am
 
 lib_LTLIBRARIES += libTAO_DynamicAny.la
 
@@ -1238,7 +1238,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
 
-## Makefile.Valuetype.am 
+## Makefile.Valuetype.am
 
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
@@ -1290,7 +1290,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
 
-## Makefile.Messaging.am 
+## Makefile.Messaging.am
 
 lib_LTLIBRARIES += libTAO_Messaging.la
 
@@ -1367,7 +1367,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
-## Makefile.DynamicInterface.am 
+## Makefile.DynamicInterface.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1429,7 +1429,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
 
-## Makefile.ObjRefTemplate.am 
+## Makefile.ObjRefTemplate.am
 
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
 
@@ -1471,7 +1471,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
 
-## Makefile.IORInterceptor.am 
+## Makefile.IORInterceptor.am
 
 lib_LTLIBRARIES += libTAO_IORInterceptor.la
 
@@ -1518,7 +1518,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
 
-## Makefile.IORManipulation.am 
+## Makefile.IORManipulation.am
 
 lib_LTLIBRARIES += libTAO_IORManip.la
 
@@ -1553,7 +1553,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
 
-## Makefile.IORTable.am 
+## Makefile.IORTable.am
 
 lib_LTLIBRARIES += libTAO_IORTable.la
 
@@ -1589,7 +1589,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
 
-## Makefile.RTCORBA.am 
+## Makefile.RTCORBA.am
 
 if BUILD_RT_CORBA
 
@@ -1700,7 +1700,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
 
-## Makefile.RTPortableServer.am 
+## Makefile.RTPortableServer.am
 
 if BUILD_RT_CORBA
 
@@ -1754,7 +1754,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
 
-## Makefile.RTScheduler.am 
+## Makefile.RTScheduler.am
 
 if BUILD_RT_CORBA
 if BUILD_CORBA_MESSAGING
@@ -1810,7 +1810,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
 
-## Makefile.SmartProxies.am 
+## Makefile.SmartProxies.am
 
 lib_LTLIBRARIES += libTAO_SmartProxies.la
 
@@ -1839,7 +1839,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc
 
-## Makefile.Strategies.am 
+## Makefile.Strategies.am
 
 lib_LTLIBRARIES += libTAO_Strategies.la
 
@@ -1964,7 +1964,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
-## Makefile.TypeCodeFactory.am 
+## Makefile.TypeCodeFactory.am
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
@@ -2001,7 +2001,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
 
-## Makefile.Utils.am 
+## Makefile.Utils.am
 
 lib_LTLIBRARIES += libTAO_Utils.la
 
