@@ -1,3 +1,9 @@
+Sat Dec 27 12:55:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/SOCK_Dgram_Mcast.h:
+	  Added @deprecated to the deprecated methods in this file so that
+	  they appear on the doxygen deprecated page.
+
 Sat Dec 27 10:32:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
