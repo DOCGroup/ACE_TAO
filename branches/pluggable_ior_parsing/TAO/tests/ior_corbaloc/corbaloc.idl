@@ -1,0 +1,21 @@
+// $Id$
+
+module corbaloc
+{
+  
+  interface Status
+  {
+    // = TITLE
+    //     A simple interface to check the status of 
+    //     connection between the client and the server.
+    //
+    // = DESCRIPTION
+    //     Prints out the status.
+
+    void print_status ();
+    // Print <connected> if the server received the 
+    // request from the client.
+        
+  };
+};
+

@@ -10,6 +10,7 @@
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
+//   Priyanka Gontla (pgontla@uci.edu)
 //
 // ============================================================================
 
@@ -17,7 +18,41 @@
 #define TAO_CORBALOC_PARSER_H
 #include "ace/pre.h"
 
+#include "tao/ORB.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Connector_Registry.h"
 #include "tao/IOR_Parser.h"
+#include "tao/Parser_Registry.h"
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
+#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Read_Buffer.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Arg_Shifter.h"
+
+#include "tao/Object.h"
+#include "tao/Typecode.h"
+#include "tao/NVList.h"
+#include "tao/Stub.h"
+#include "tao/DynAny_i.h"
+#include "tao/ORB_Core.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/debug.h"
+#include "tao/TAO_Internal.h"
+#include "tao/CDR.h"
+#include "tao/IOR_LookupTable.h"
+#include "tao/Object_Adapter.h"
+#include "tao/POA.h"
+#include "tao/Request.h"
+#include "tao/MProfile.h"
+
+#include "tao/IOR_Parser.h"
+#include "tao/Pluggable.h"
+
 #include "ior_corbaloc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -49,6 +84,8 @@ public:
                                           CORBA::ORB_ptr orb,
                                           CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual int check_prefix (const char *endpoint);
 };
 
 #if defined (__ACE_INLINE__)
