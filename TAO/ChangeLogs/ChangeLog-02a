@@ -1,3 +1,10 @@
+Wed Apr 25 12:34:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+          Replaced an overlooked 'IR_InterfaceDef' with
+          'CORBA::InterfaceDef'.
+
 Wed Apr 25 12:15:58 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IORManipulation/IORC.h:
