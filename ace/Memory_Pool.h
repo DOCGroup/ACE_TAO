@@ -433,12 +433,13 @@ protected:
 
   virtual size_t round_up (size_t nbytes);
 
-  virtual int commit_backing_store_name (size_t rounded_bytes, off_t &file_offset);
-  // Compute the new file_offset of the backing store and commit the
+  virtual int commit_backing_store_name (size_t rounded_bytes,
+                                         off_t &map_size);
+  // Compute the new <map_size> of the backing store and commit the
   // memory.
 
-  virtual int map_file (off_t file_offset);
-  // Memory map the file up to <file_offset> bytes.
+  virtual int map_file (off_t map_size);
+  // Memory map the file up to <map_size> bytes.
 
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Handle SIGSEGV and SIGBUS signals to remap shared memory
