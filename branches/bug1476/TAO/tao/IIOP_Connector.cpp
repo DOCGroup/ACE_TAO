@@ -201,57 +201,21 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
+  TAO_Transport *transport =
+    svc_handler->transport ();
+
   if (result == -1 && errno == EWOULDBLOCK)
     {
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                      "going to wait for connection completion on local"
-                      "handle [%d]\n",
-                      svc_handler->get_handle ()));
-        }
-
-      // Poll for connection completion. When the connection is complete
-      // in the connection handler the connected will be set.
-      result =
-        this->active_connect_strategy_->wait (svc_handler,
-                                              timeout);
-
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                    "wait done for handle[%d], result = %d\n",
-                    svc_handler->get_handle (), result));
-
-      // @TODO, Check this with Bala
-      if (result == -1 && !r->blocked () && errno == ETIME)
-        {
-          // If we did a non blocking connect, just ignore
-          // any timeout errors
-          // @@ Johnny, please see my comments in Transport_Connector.cpp.
-          result = 0;
-
-          // @@ Johnny why are you setting the result to zero here?
-          // @@ Bala, I do this, else the check_connection_close will close
-          // the connection,
-        }
-
-      // There are three possibilities when wait() returns: (a)
-      // connection succeeded; (b) connection failed; (c) wait()
-      // failed because of some other error.  It is easy to deal with
-      // (a) and (b).  (c) is tricky since the connection is still
-      // pending and may get completed by some other thread.  The
-      // following method deals with (c).
-      if (result == -1)
-        {
-          result =
-            this->check_connection_closure (svc_handler);
-        }
+      // Try to wait until connection completion. Incase we block, then we
+      // get a connected transport or not. In case of non block we get
+      // a connected or not connected transport
+      transport = this->wait_for_connection_completion (r,
+                                                        transport,
+                                                        timeout);
     }
 
-  // In case of errors.
-  if (result == -1)
+  // In case of errors transport is zero
+  if (transport == 0)
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
@@ -266,21 +230,16 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  TAO_Transport *transport =
-    svc_handler->transport ();
-
   // At this point, the connection has be successfully created
-  // connected or not.
+  // connected or not connected, but we have a connection.
   if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                  "new %s connection to <%s:%d> on Transport[%d]\n",
-                  transport->is_connected() ? "connected" : "not connected",
-                  iiop_endpoint->host (),
-                  iiop_endpoint->port (),
-                  svc_handler->peer ().get_handle ()));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                "new %s connection to <%s:%d> on Transport[%d]\n",
+                transport->is_connected() ? "connected" : "not connected",
+                iiop_endpoint->host (),
+                iiop_endpoint->port (),
+                svc_handler->peer ().get_handle ()));
 
   // Add the handler to Cache
   int retval =

@@ -141,10 +141,10 @@ protected:
       TAO_Connection_Handler *connection_handler);
 
   /**
-   * Wait for connection. We have a transport that is not connected yet,
-   * wait until it is connected.
+   * Wait for connection completion. We have a transport that is not
+   * connected yet, wait until it is connected.
    */
-  virtual TAO_Transport* wait_for_connection(
+  virtual TAO_Transport* wait_for_connection_completion(
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport *base_transport,
       ACE_Time_Value *timeout);

@@ -1,8 +1,14 @@
+Mon Aug  2 18:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:
-          Added wait_for_connection() which now contains the code from connect
-          that handles the waiting until the connection is ready. Left all
-          comments, just small refactoring
+          Added wait_for_connection_completion() which now contains the code
+          from connect that handles the waiting until the connection is
+          completed. The only thing is the result value, maybe add a bool as
+          return value and pass Transport by *&, what about that?
+
+        * tao/IIOP_Connector.cpp:
+          Use the new Transport_Connector::wait_for_connection_completion
+          instead of doing everything here again
 
 Mon Aug  2 13:52:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

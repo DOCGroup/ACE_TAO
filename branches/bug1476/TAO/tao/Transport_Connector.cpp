@@ -254,16 +254,24 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   if (base_transport->is_connected ())
     return base_transport;
 
-  return this->wait_for_connection (r,
-                                    base_transport,
-                                    timeout);
+  return this->wait_for_connection_completion (r,
+                                               base_transport,
+                                               timeout);
 }
 
 TAO_Transport*
-TAO_Connector::wait_for_connection (TAO::Profile_Transport_Resolver *r,
-                                    TAO_Transport *base_transport,
-                                    ACE_Time_Value *timeout)
+TAO_Connector::wait_for_connection_completion (
+    TAO::Profile_Transport_Resolver *r,
+    TAO_Transport *base_transport,
+    ACE_Time_Value *timeout)
 {
+  if (TAO_debug_level > 2)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                  "going to wait for connection completion on transport"
+                  "[%d]\n",
+                  base_transport->id ()));
+
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
@@ -281,9 +289,9 @@ TAO_Connector::wait_for_connection (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport_Connector::wait_for_connection, "
-                "wait done result = %d\n",
-                result));
+                "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                "transport [%d], wait done result = %d\n",
+                base_transport->id(), result));
 
   // There are three possibilities when wait() returns: (a)
   // connection succeeded; (b) connection failed; (c) wait()
@@ -292,58 +300,33 @@ TAO_Connector::wait_for_connection (TAO::Profile_Transport_Resolver *r,
   // pending and may get completed by some other thread.  The
   // following method deals with (c).
 
-  // @@ Johnny why don't you consider using the call
-  // transport->event_handler_i () too. All you need is a
-  // ACE_Svc_Handler and that would prevent a bunch of canypptions
-  // in the code. BTW, I would also recommend changing the method
-  // name event_handler_i () to event_handler ().
-  //
-  // @@ Johnny, here is what I meant. When you pass the connection
-  // handler alone, to check_connection_closure (), you are slightly
-  // handicapped. If you calling cancel_svc_handler (), you land up
-  // doing dynamic cast and stuff. Since you have the information
-  // already available here, why don't you just use it. Extract the
-  // event/svc_handler handler and connection handler and pass it to
-  // the check_connection_closure (). Then you should be just fine.
   if (result == -1)
     {
-
-      // @bala, what is the best way to check this, we did a wait of zero time
-      // on a non blocking connection, -1 doesn't then indicate a connection
-      // failure
-
-
-      // When we need to get a connected transport
       if (!r->blocked () && errno == ETIME)
         {
-          // @bala, this part I really am in doubt
-          // @@ Johnny, I don't think solves anything other than
-          // adding to the confusion. Just take a look at code in
-          // Profile_Transport_Resolver.cpp and you will know what I
-          // mean.
           // If we did a non blocking connect, just ignore
           // any timeout errors
           result = 0;
         }
       else
         {
+          // When we need to get a connected transport
           result =
             this->check_connection_closure (
               base_transport->connection_handler ());
         }
 
       // In case of errors.
-      // @@ Johnny this error is mistated. This is not a connection
-      // problem, but a problem while trying to check connection
-      // closure.
       if (result == -1)
         {
           // Report that making the connection failed, don't print errno
           // because we touched the reactor and errno could be changed
-          if (TAO_debug_level > 3)
+          if (TAO_debug_level > 2)
             ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) - Transport_Connector::wait_for_connection, "
-                        "connection failed.\n"));
+                        "TAO (%P|%t) - Transport_Connector::"
+                        "wait_for_connection_completion, "
+                        "transport [%d], wait for completion failed\n",
+                        base_transport->id()));
           return 0;
         }
     }
