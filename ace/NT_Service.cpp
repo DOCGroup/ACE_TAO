@@ -15,6 +15,21 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 
+
+// ACE_NT_Service destructor.
+
+ACE_NT_Service::~ACE_NT_Service (void)
+{
+  if (svc_sc_handle_ != 0)
+  {
+    CloseServiceHandle(svc_sc_handle_);
+    svc_sc_handle_ = 0;
+  }
+  delete[] desc_;
+  delete[] name_;
+}
+
+
 // This default implementation of ACE_NT_Service::open sets the service's
 // status to START_PENDING with the estimated time until STARTED set to the
 // value given when this object was constructed.  Then the svc function is
@@ -94,6 +109,238 @@ ACE_NT_Service::handle_control (DWORD control_code)
 }
 
 
+void
+ACE_NT_Service::name (LPCTSTR name, LPCTSTR desc)
+{
+
+  delete[] desc_;
+  delete[] name_;
+
+  if (desc == 0)
+    desc = name;
+
+  name_ = ACE::strnew(name);
+  desc_ = ACE::strnew(desc);
+
+  return;
+
+}
+
+
+int
+ACE_NT_Service::insert (DWORD start_type,
+                        DWORD error_control,
+                        LPCTSTR exe_path,
+                        LPCTSTR group_name,
+                        LPDWORD tag_id,
+                        LPCTSTR dependencies,
+                        LPCTSTR account_name,
+                        LPCTSTR password)
+{
+
+TCHAR this_exe[MAXPATHLEN];
+
+  if (exe_path == 0)
+    {
+      if (GetModuleFileName(0, this_exe, sizeof(this_exe)) == 0)
+        return -1;
+      exe_path = this_exe;
+    }	
+
+  SC_HANDLE sc_mgr = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+  if (sc_mgr == 0)
+    return -1;
+
+  SC_HANDLE sh = CreateService(sc_mgr,
+                               this->name(),
+                               this->desc(),
+                               SERVICE_ALL_ACCESS,
+                               svc_status_.dwServiceType,
+                               start_type,
+                               error_control,
+                               exe_path,
+                               group_name,
+                               tag_id,
+                               dependencies,
+                               account_name, password);
+  CloseServiceHandle(sc_mgr);
+  if (sh == 0)
+    return -1;
+
+  this->svc_sc_handle_ = sh;
+
+  return 0;
+
+}
+
+
+int
+ACE_NT_Service::remove (void)
+{
+
+  if (this->svc_sc_handle() == 0)
+    return -1;
+
+  if (DeleteService(this->svc_sc_handle()) == 0 &&
+      GetLastError() != ERROR_SERVICE_MARKED_FOR_DELETE)
+    return -1;
+
+  return 0;
+
+}
+
+
+// Sets the startup type for the service.  Returns -1 on error, 0 on success.
+int
+ACE_NT_Service::startup (DWORD startup)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  BOOL ok = ChangeServiceConfig (svc,
+                                 SERVICE_NO_CHANGE,// No change to service type
+                                 startup,          // New startup type
+                                 SERVICE_NO_CHANGE,// No change to error ctrl
+                                 0,                // No change to pathname
+                                 0,                // No change to load group
+                                 0,                // No change to tag
+                                 0,                // No change to dependencies
+                                 0, 0,             // No change to acct/passwd
+                                 0);               // No change to name
+
+  return ok ? 0 : -1;
+
+}
+
+
+// Returns the current startup type.
+DWORD
+ACE_NT_Service::startup (void)
+{
+
+// The query buffer will hold strings as well as the defined struct.  The
+// string pointers in the struct point to other areas in the passed memory
+// area, so it has to be large enough to hold the struct plus all the strings.
+char                     cfgbuff[1024];
+LPQUERY_SERVICE_CONFIG   cfg;
+DWORD                    cfgsize, needed_size;
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  cfgsize = sizeof(cfgbuff);
+  cfg = (LPQUERY_SERVICE_CONFIG)cfgbuff;
+  BOOL ok = QueryServiceConfig (svc, cfg, cfgsize, &needed_size);
+  if (ok)
+    return cfg->dwStartType;
+  return 0;
+
+}
+
+
+int
+ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
+                           DWORD *svc_state,
+                           DWORD argc, LPCTSTR *argv)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  if (!StartService(svc, argc, argv))
+    return -1;
+
+  wait_for_service_state (SERVICE_RUNNING, wait_time);
+  if (svc_state != 0)
+    *svc_state = this->svc_status_.dwCurrentState;
+
+  return 0;
+
+}
+
+
+int
+ACE_NT_Service::stop_svc (ACE_Time_Value *wait_time, DWORD *svc_state)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  if (!ControlService (svc, SERVICE_CONTROL_STOP, &this->svc_status_))
+    return -1;
+
+  wait_for_service_state (SERVICE_STOPPED, wait_time);
+  if (svc_state != 0)
+    *svc_state = this->svc_status_.dwCurrentState;
+
+  return 0;
+
+}
+
+
+int
+ACE_NT_Service::pause_svc (ACE_Time_Value *wait_time, DWORD *svc_state)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  if (!ControlService (svc, SERVICE_CONTROL_PAUSE, &this->svc_status_))
+    return -1;
+
+  wait_for_service_state (SERVICE_PAUSED, wait_time);
+  if (svc_state != 0)
+    *svc_state = this->svc_status_.dwCurrentState;
+
+  return 0;
+
+}
+
+
+int
+ACE_NT_Service::continue_svc (ACE_Time_Value *wait_time, DWORD *svc_state)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  if (!ControlService (svc, SERVICE_CONTROL_CONTINUE, &this->svc_status_))
+    return -1;
+
+  wait_for_service_state (SERVICE_RUNNING, wait_time);
+  if (svc_state != 0)
+    *svc_state = this->svc_status_.dwCurrentState;
+
+  return 0;
+
+}
+
+
+DWORD
+ACE_NT_Service::state (ACE_Time_Value *wait_hint)
+{
+
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return 0;
+
+  QueryServiceStatus (svc, &this->svc_status_);
+  if (wait_hint != 0)
+    {
+      wait_hint->msec(this->svc_status_.dwWaitHint);
+    }
+
+  return this->svc_status_.dwCurrentState;
+
+}
+
 
 // report_status
 //
@@ -142,6 +389,42 @@ DWORD save_controls = 0;
     ++this->svc_status_.dwCheckPoint;
 
   return retval;
+
+}
+
+
+SC_HANDLE
+ACE_NT_Service::svc_sc_handle (void)
+{
+
+  if (svc_sc_handle_ == 0)
+    {
+      SC_HANDLE sc_mgr = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+      if (sc_mgr != 0)
+        {
+          svc_sc_handle_ = OpenService(sc_mgr,
+                                       this->name(),
+                                       SERVICE_ALL_ACCESS);
+          CloseServiceHandle(sc_mgr);
+        }
+    }
+
+  return svc_sc_handle_;
+
+}
+
+
+void
+ACE_NT_Service::wait_for_service_state (DWORD desired_state,
+                                        ACE_Time_Value *wait_time)
+{
+
+// Doing the right thing with these needs to be added.
+ACE_UNUSED_ARG(desired_state);
+ACE_UNUSED_ARG(wait_time);
+
+  QueryServiceStatus (this->svc_sc_handle_, &this->svc_status_);
+  return;
 
 }
 
