@@ -252,16 +252,6 @@ Video_Server::init (int argc,
 {
   int result;
 
-  if (this->initialize_orb (argc,
-                            argv,
-                            env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Video_Server: orb initialization failed!"),
-                      -1);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Video_Server::init () ORB init success \n"));
-  
   // Create the video vdev and video server stream endpoint 
   
   ACE_NEW_RETURN (this->video_vdev_,
@@ -272,6 +262,16 @@ Video_Server::init (int argc,
                   Video_Server_StreamEndPoint,
                   -1);
 
+  if (this->initialize_orb (argc,
+                            argv,
+                            env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Video_Server: orb initialization failed!"),
+                      -1);
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Server::init () ORB init success \n"));
+  
   // @@ Can you please change the use of "fd" to "handle" globally?
   // Set the global socket fd's from the arguments.
   int max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
@@ -312,7 +312,9 @@ Video_Server::init (int argc,
 int
 Video_Server::run (CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Entering ORB event loop\n"));
   return this->orb_manager_.run (env);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ORB event loop done\n"));
 }
 
 int
