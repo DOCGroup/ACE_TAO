@@ -82,4 +82,7 @@
 #define TAO_HAS_AMI 1
 #define TAO_HAS_INTERCEPTORS 1
 
+/// Generate token library documentation
+#define ACE_HAS_TOKENS_LIBRARY
+
 #endif /* ACE_CONFIG_DOXYGEN_H */
