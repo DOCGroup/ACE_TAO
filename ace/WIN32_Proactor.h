@@ -62,13 +62,13 @@ public:
   /// Close the IO completion port.
   virtual int close (void);
 
-  /// This method adds the <handle> to the I/O completion port. This
+  /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -77,8 +77,7 @@ public:
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
+   * Dispatch a single set of events. Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
@@ -100,10 +99,10 @@ public:
   /// Close all dispatch threads.
   int close_dispatch_threads (int wait);
 
-  /// Get number of thread used as a parameter to CreatIoCompletionPort.
+  /// Get number of thread used as a parameter to @c CreateIoCompletionPort.
   size_t number_of_threads (void) const;
 
-  /// Set number of thread used as a parameter to CreatIoCompletionPort.
+  /// Set number of thread used as a parameter to @c CreateIoCompletionPort.
   void number_of_threads (size_t threads);
 
   /// Get the event handle.
@@ -239,7 +238,7 @@ protected:
 			    ACE_Reactor_Mask close_mask);
 
   /**
-   * Dispatch a single set of events.  If <milli_seconds> elapses
+   * Dispatch a single set of events.  If @a milli_seconds elapses
    * before any events occur, return 0. Return 1 if a completion is
    * dispatched. Return -1 on errors.
    */
@@ -253,9 +252,9 @@ protected:
 				  u_long error);
 
   /**
-   * Post <how_many> completions to the completion port so that all
+   * Post @a how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
-   * <run_event_loop>.
+   * run_event_loop().
    */
   virtual int post_wakeup_completions (int how_many);
 
@@ -263,7 +262,7 @@ protected:
   /// ports.
   ACE_HANDLE completion_port_;
 
-  /// This number is passed to the <CreatIOCompletionPort> system
+  /// This number is passed to the @c CreateIOCompletionPort system
   /// call.
   DWORD number_of_threads_;
 
@@ -276,7 +275,7 @@ protected:
   int used_with_reactor_event_loop_;
 
   /// Handler to handle the wakeups. This works in conjunction with the
-  /// <ACE_Proactor::run_event_loop>.
+  /// ACE_Proactor::run_event_loop().
   ACE_Handler wakeup_handler_;
 
   /// Pseudo-task for asynch connect ( NT/2000)
@@ -294,7 +293,6 @@ protected:
  */
 class ACE_Export ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
 {
-
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_WIN32_Proactor;

@@ -55,9 +55,9 @@ public:
   typedef ACE_PEER_STREAM      stream_type;
 
   /**
-   * Constructor initializes the <thr_mgr> and <mq> by passing them
-   * down to the <ACE_Task> base class.  The <reactor> is passed to
-   * the <ACE_Event_Handler>.
+   * Constructor initializes the @a thr_mgr and @a mq by passing them
+   * down to the ACE_Task base class.  The @a reactor is passed to
+   * the ACE_Event_Handler.
    */
   ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
                    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
@@ -67,22 +67,22 @@ public:
   virtual ~ACE_Svc_Handler (void);
 
   /// Activate the client handler.  This is typically called by the
-  /// <ACE_Acceptor> or <ACE_Connector>.
+  /// ACE_Acceptor or ACE_Connector.
   virtual int open (void * = 0);
 
   /**
    * Object termination hook -- application-specific cleanup code goes
    * here. This function is called by the idle() function if the object
    * does not have a ACE_Connection_Recycling_Strategy associated with it.
-   * Also, due to this class's derivation from <ACE_Task>, <close> is
+   * Also, due to this class's derivation from ACE_Task, close() is
    * also called when a thread activated with this object exits. See
-   * <ACE_Task::close> for further details. The default action of this
-   * function is to call <handle_close> with the default arguments.
+   * ACE_Task::close() for further details. The default action of this
+   * function is to call handle_close() with the default arguments.
    */
   virtual int close (u_long flags = 0);
 
   /**
-   * Call this method if you want to recycling the <Svc_Handler>
+   * Call this method if you want to recycling the @c Svc_Handler
    * instead of closing it.  If the object does not have a recycler,
    * it will be closed.
    */
@@ -90,7 +90,7 @@ public:
 
   /**
    * Call this method if you want to get/set the state of the
-   * <Svc_Handler>.  If the object does not have a recycler, this call
+   * @c Svc_Handler.  If the object does not have a recycler, this call
    * will have no effect (and the accessor will return
    * ACE_RECYCLABLE_UNKNOWN).
    */
@@ -99,8 +99,8 @@ public:
 
   /**
    * When the svc_handle is no longer needed around as a hint, call
-   * this method. In addition, reset <*act_holder> to zero if
-   * <act_holder != 0>.
+   * this method. In addition, reset @c *act_holder to zero if
+   * @a act_holder != 0.
    */
   virtual void cleanup_hint (void **act_holder = 0);
 
