@@ -79,11 +79,11 @@ be_interface::be_interface (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,
                  abstract),
+    var_out_seq_decls_gen_ (0),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (-1),
-    var_out_seq_decls_gen_ (0)
+    has_mixed_parentage_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
