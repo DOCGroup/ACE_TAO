@@ -1,3 +1,9 @@
+Mon Nov 13 16:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* */Makefile*:
+
+	  Updated dependencies.
+
 Mon Nov 13 16:50:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp:
