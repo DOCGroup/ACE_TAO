@@ -377,13 +377,13 @@ DRV_parse_args (long ac, char **av)
               idl_global->output_dir (av [i+1]);
               i++;
               break;
-            
-              // Temp directory for the IDL compiler to keep its files.               
+
+              // Temp directory for the IDL compiler to keep its files.
             case 't':
               idl_global->temp_dir (av [i+1]);
               i++;
               break;
-              
+
             case 'D':
             case 'U':
             case 'I':
@@ -679,18 +679,26 @@ DRV_parse_args (long ac, char **av)
       cerr << GTDEVEL ("Bad Combination -St and -Go \n");
       ACE_OS::exit (99);
     }
-  
+
   // Make sure the output directory is valid.
   if (idl_global->temp_dir () == 0)
     {
       const char* tmpdir = getenv (ACE_DEFAULT_TEMP_DIR_ENV);
-              
-      if (tmpdir != 0)
-        idl_global->temp_dir (tmpdir);
-      else
-        idl_global->temp_dir (ACE_DIRECTORY_SEPARATOR_STR_A
-                              "tmp"
-                              ACE_DIRECTORY_SEPARATOR_STR_A);
+
+      if (tmpdir == 0)
+        tmpdir = ACE_DIRECTORY_SEPARATOR_STR_A
+          "tmp"
+          ACE_DIRECTORY_SEPARATOR_STR_A;
+
+      if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+        {
+          cerr << GTDEVEL ("Warning: Can't access temporary directory (")
+               << tmpdir
+               << GTDEVEL ("), using current directory for temp files.\n");
+          tmpdir = ".";
+        }
+
+      idl_global->temp_dir (tmpdir);
     }
 }
 
