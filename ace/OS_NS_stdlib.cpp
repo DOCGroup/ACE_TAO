@@ -26,7 +26,7 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_ctype.h"
 #  include "ace/OS_NS_sys_time.h"
 
-#  if !defined (ACE_HAS_WINCE)
+#  if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS)
 #    include /**/ <limits>
 #  endif
 #endif  /* ACE_LACKS_MKSTEMP */
