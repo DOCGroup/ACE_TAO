@@ -17,6 +17,7 @@ LFLAGS = \
   -L$(CORE_BINDIR)
 
 LIBFILES = \
+	TAO_Messaging$(LIB_DECORATOR).lib \
 	TAO_RTScheduler$(LIB_DECORATOR).lib \
 	TAO_RTPortableServer$(LIB_DECORATOR).lib \
 	TAO_RTCORBA$(LIB_DECORATOR).lib \
