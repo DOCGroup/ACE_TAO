@@ -40,7 +40,6 @@ noinst_HEADERS = \
         Constraint_Nodes.h \
         Constraint_Tokens.h \
         Constraint_Visitors.h \
-        Locking.h \
         Offer_Database.h \
         Offer_Iterators.h \
         Offer_Iterators_T.h \

@@ -847,32 +847,28 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
     }
 }
 
-  // *************************************************************
-  // TAO_Sequence_Extracter_Base
-  // *************************************************************
-
 CORBA::TCKind
 TAO_Sequence_Extracter_Base::
 sequence_type (CORBA::TypeCode* type_code,
-               CORBA::Environment& env)
+               CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TCKind return_value = CORBA::tk_void,
-    type_kind = type_code->kind (env);
+    type_kind = type_code->kind (ACE_TRY_ENV);
 
   if (type_kind == CORBA::tk_alias || type_kind == CORBA::tk_sequence)
     {
       CORBA::TypeCode_ptr base = type_code;
 
-      while (base->kind (env) == CORBA::tk_alias)
-        base = base->content_type (env);
+      while (base->kind (ACE_TRY_ENV) == CORBA::tk_alias)
+        base = base->content_type (ACE_TRY_ENV);
 
-      if (base->kind (env) == CORBA::tk_sequence)
+      if (base->kind (ACE_TRY_ENV) == CORBA::tk_sequence)
         {
-          base = base->content_type (env);
+          base = base->content_type (ACE_TRY_ENV);
           TAO_CHECK_ENV_RETURN (env, return_value);
 
-          return_value = base->kind (env);
+          return_value = base->kind (ACE_TRY_ENV);
         }
     }
 

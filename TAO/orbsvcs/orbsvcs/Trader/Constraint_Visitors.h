@@ -19,10 +19,6 @@
 
 #include "Trader.h"
 
-  // *************************************************************
-  // TAO_Constraint_Visitor
-  // *************************************************************
-
 class TAO_Constraint;
 class TAO_Unary_Constraint;
 class TAO_Binary_Constraint;
@@ -31,22 +27,23 @@ class TAO_Property_Constraint;
 class TAO_Noop_Constraint;
 
 class TAO_Constraint_Visitor
-//
-// = TITLE
-//     This is the base class for all visitors who wish to preform
-//     some operation from the state of the expression tree. Using
-//     double dispatching, subclasses of Constraint expression call
-//     back to the InterpreterVisitor subclass from the accept method.
-//
-// = DESCRIPTION
-//     Traversal of the expression tree uses the "Visitor" pattern. To
-//     "visit" a node, a client invokes the "accept" method on a
-//     subclass of ConstraintExpression, which, in turn, invokes the
-//     appropriate method on the visitor passed to it, based on its
-//     own type. So, the Constraint_Visitor has a method to deal with
-//     each possible type of node in an expression tree; one for each
-//     operator in the grammar.
 {
+  //
+  // = TITLE
+  //     This is the base class for all visitors who wish to preform
+  //     some operation from the state of the expression tree. Using
+  //     double dispatching, subclasses of Constraint expression call
+  //     back to the InterpreterVisitor subclass from the accept
+  //     method.
+  //
+  // = DESCRIPTION
+  //     Traversal of the expression tree uses the "Visitor"
+  //     pattern. To "visit" a node, a client invokes the "accept"
+  //     method on a subclass of ConstraintExpression, which, in turn,
+  //     invokes the appropriate method on the visitor passed to it,
+  //     based on its own type. So, the Constraint_Visitor has a
+  //     method to deal with each possible type of node in an
+  //     expression tree; one for each operator in the grammar.
 public:
 
   virtual ~TAO_Constraint_Visitor (void) {}
@@ -85,13 +82,10 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
-  // *************************************************************
-  // TAO_Constraint_Validator
-  // *************************************************************
-
 #include "Constraint_Nodes.h"
 
 class TAO_Constraint_Validator : public TAO_Constraint_Visitor
+{
   //
   // = TITLE
   //     TAO_Constraint_Validator ensures that in an expression tree
@@ -111,11 +105,10 @@ class TAO_Constraint_Validator : public TAO_Constraint_Visitor
   //    on each operand until all return true or one returns false,
   //    at which point we can back out of the traversal and indicate
   //    failure.
-{
 public:
 
-  TAO_Constraint_Validator
-    (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct);
+  TAO_Constraint_Validator (const CosTradingRepos::ServiceTypeRepository::TypeStruct& 
+                            type_struct);
   // The constructor creates a map of property names to their values
   // from the Type Description retrieved from the
   // ServiceTypeRepository. The ServiceTypeRepository throws
@@ -187,7 +180,7 @@ private:
   // property names with their types.
 
   CORBA::TypeCode* extract_type (TAO_Constraint* expr_type,
-                                TAO_Expression_Type& type);
+                                 TAO_Expression_Type& type);
 
   int expr_returns_boolean (TAO_Expression_Type expr_type);
   // expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
@@ -205,34 +198,31 @@ private:
   TAO_Constraint_Validator& operator= (const TAO_Constraint_Validator&);
 };
 
-  // *************************************************************
-  // TAO_Constraint_Evaluator
-  // *************************************************************
-
 #include "Trader_Utils.h"
 
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
-//
-// = TITLE
-//     TAO_Constraint_Evaluator traverse a constraint expression tree,
-//     and determines whether an offer fits the constraints
-//     represented by the tree
-//
-// = DESCRIPTION
-//     Using the Visitor pattern, the TAO_Constraint_Evaluator has each
-//     node of the expression tree call back to it with the method
-//     designated for its type. In that method, the visitor will
-//     evaluate its operands and perform the operation designated by
-//     that node's type, and return the result. Note: the
-//     TAO_Constraint_Evaluator assumes the tree is semantically correct,
-//     that is, the validate method on TAO_Constraint_Validator return
-//     true. The only possible evaluation time errors are a divide by a
-//     property whose value is zero and undefined properties.
 {
+  //
+  // = TITLE
+  //     TAO_Constraint_Evaluator traverse a constraint expression
+  //     tree, and determines whether an offer fits the constraints
+  //     represented by the tree
+  //
+  // = DESCRIPTION
+  //     Using the Visitor pattern, the TAO_Constraint_Evaluator has
+  //     each node of the expression tree call back to it with the
+  //     method designated for its type. In that method, the visitor
+  //     will evaluate its operands and perform the operation
+  //     designated by that node's type, and return the result. Note:
+  //     the TAO_Constraint_Evaluator assumes the tree is semantically
+  //     correct, that is, the validate method on
+  //     TAO_Constraint_Validator return true. The only possible
+  //     evaluation time errors are a divide by a property whose value
+  //     is zero and undefined properties.
 public:
 
   TAO_Constraint_Evaluator (CosTrading::Offer* offer,
-                           CORBA::Boolean supports_dynamic_properties = 1);
+                            CORBA::Boolean supports_dynamic_properties = 1);
 
   CORBA::Boolean evaluate_constraint (TAO_Constraint* root);
   // Evaluate returns 1 if the offer satisfies the constraints
@@ -241,7 +231,7 @@ public:
   // automatically fails.
 
   int evaluate_preference (TAO_Constraint* root,
-                          TAO_Literal_Constraint& result);
+                           TAO_Literal_Constraint& result);
   // The result of the preference evaluation is stored in result. The
   // method returns 0 upon success, -1 upon failure.
 
@@ -311,10 +301,10 @@ public:
 private:
 
   class Operand_Queue :
-  public ACE_Unbounded_Queue <TAO_Literal_Constraint>
-    // = TITLE
-    // A queue adapter with methods to setting and getting operands
-    // from the expression evaluation results.
+    public ACE_Unbounded_Queue <TAO_Literal_Constraint>
+  // = TITLE
+  // A queue adapter with methods to setting and getting operands
+  // from the expression evaluation results.
   {
   public:
 
@@ -359,45 +349,42 @@ private:
   // The result of a non_boolean operation.
 };
 
-  // *************************************************************
-  // Utilities
-  // *************************************************************
-
 #include "tao/DynSequence_i.h"
 
 // Forward declaration
 template <class ELEMENT_TYPE> class TAO_Element_Equal;
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::Short>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::Short element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::UShort>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::UShort element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::Long>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::Long element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::ULong>
 {
 public:
@@ -408,45 +395,44 @@ public:
 
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::Float>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::Float element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::Double>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::Double element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<CORBA::Boolean>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::Boolean element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class TAO_Element_Equal<const char*>
 {
 public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    const char* element) const;
-  // Calls the correct method on dyn_seq to extract the element type, then
-  // uses the appropriate form of equals comparison.
-
+  // Calls the correct method on dyn_seq to extract the element type,
+  // then uses the appropriate form of equals comparison.
 };
-
 
 #endif /* CONSTRAINT_VISITORS_H */
