@@ -194,7 +194,7 @@ class TAO_Policies
 public:
 
 #define TAO_NUM_POLICIES  11
-  
+
   enum POLICY_TYPE
   {
     STARTING_TRADER,
@@ -209,6 +209,10 @@ public:
     USE_PROXY_OFFERS,
     REQUEST_ID
   };
+  // This enum represents the relative order that properties are
+  // passed from one trader to another. Hence, as recommended by the
+  // spec, the starting_trader policies will be the first element in
+  // the polcy sequence if it's set for a query. 
   
   static const char * POLICY_NAMES[];
   
@@ -400,7 +404,7 @@ public:
   // Policies to forward to the next trader in a federated query.
   
   void copy_to_forward (CosTrading::PolicySeq& policy_seq,
-                        CosTrading::TraderName* name) const;
+                        const CosTrading::TraderName& name) const;
   // Policies to forward to the next trader in a directed query.
 
   void copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
@@ -457,28 +461,48 @@ public:
   // = Routines to set policies.
   
   void search_card (CORBA::ULong scard);
+  // Set the maximum number of offers searched for the query.
   
   void match_card (CORBA::ULong mcard);
+  // Set the maximum number of offers searched for the query.
     
   void return_card (CORBA::ULong rcard);
+  // Set the maximum number of offers rerturned for the query. 
 
+  // A note about cardinalities: The spec implies that these
+  // cardinalities apply to the global office space, that is, all
+  // offers on all linked traders. However, there's no mechanism for
+  // one trader to return to the calling trader the number of offers
+  // searched or matched. Thus, these cardinalities are applied on a
+  // per-trader basis. 
+  
   void use_modifiable_properties (CORBA::Boolean mod_props);
+  // Consider offers with modifiable properties. 
 
   void use_dynamic_properties (CORBA::Boolean dyn_props);
+  // Consider offers with dynamic properties.
 
   void use_proxy_offers (CORBA::Boolean prox_offs);
+  // Consider proxy offers (NOT SUPPORTED).
 
-  void starting_trader (CosTrading::TraderName* name);
+  void starting_trader (const CosTrading::TraderName& name); // Copy
+  void starting_trader (CosTrading::TraderName* name); // Own
+  // Designate a trader at which to begin the query.
   
   void link_follow_rule (CosTrading::FollowOption follow_option);
+  // Specify under what conditions a federated query is appropriate.
 
   void hop_count (CORBA::ULong hop_count);
+  // Limit the breadth of a federated query.
 
-  void request_id (CosTrading::Admin::OctetSeq* reqiest_id);
+  void request_id (const CosTrading::Admin::OctetSeq& request_id);
+  // Set the identifier for this query (clients shouldn't use this).
   
   void exact_type_match (CORBA::Boolean exact_type);
+  // Search only the designated type --- not it's subtypes.
 
   operator const CosTrading::PolicySeq& (void) const;
+  // Return the constructed policy sequence.
 
   const CosTrading::PolicySeq& policy_seq (void) const;
   // Return a PolicySeq suitable for passing to the query method of
@@ -628,6 +652,10 @@ public:
   // concatenated onto the names of limits applied locally and
   // returned. 
   // END SPEC
+
+  CORBA::ULong search_card_remaining (void) const;
+  CORBA::ULong match_card_remaining (void) const;
+  // Accessors to retrieve the adjusted cardinalities.
   
 private:
 

@@ -64,11 +64,19 @@ TAO_Policy_Manager::use_proxy_offers (CORBA::Boolean prox_offs)
 }
 
 void
+TAO_Policy_Manager::starting_trader (const CosTrading::TraderName& name)
+{
+  CosTrading::Policy& policy =
+    this->fetch_next_policy (TAO_Policies::STARTING_TRADER);  
+  policy.value <<= name;  
+}
+
+void
 TAO_Policy_Manager::starting_trader (CosTrading::TraderName* name)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::STARTING_TRADER);  
-  policy.value <<= *name;  
+  policy.value <<= name;  
 }
 
 void
@@ -97,11 +105,11 @@ TAO_Policy_Manager::exact_type_match (CORBA::Boolean exact_type)
 }
 
 void
-TAO_Policy_Manager::request_id (CosTrading::Admin::OctetSeq* request_id)
+TAO_Policy_Manager::request_id (const CosTrading::Admin::OctetSeq& request_id)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::REQUEST_ID);  
-  policy.value <<= *request_id;
+  policy.value <<= request_id;
 }
 
 TAO_Policy_Manager::operator const CosTrading::PolicySeq& (void) const
@@ -122,6 +130,8 @@ TAO_Policy_Manager::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
 
   if (this->poltable_[pol_type] == -1)
     {
+      // Expand the policy sequence, and copy in the policy name into
+      // the new element. 
       CORBA::ULong length = this->policies_.length ();
       this->num_policies_++;
       
@@ -129,8 +139,38 @@ TAO_Policy_Manager::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
 	this->policies_.length (this->num_policies_);
       
       index = this->num_policies_ - 1;
-      this->policies_[index].name = TAO_Policies::POLICY_NAMES[pol_type];
-      this->poltable_[pol_type] = index;
+
+      // Ensure the starting trader policy gets the first slot.
+      if (pol_type != TAO_Policies::STARTING_TRADER || index == 0)
+        {
+          this->policies_[index].name = TAO_Policies::POLICY_NAMES[pol_type];
+          this->poltable_[pol_type] = index;
+        }
+      else
+        {
+          // Copy the element in the first slot to the newly
+          // allocated slot.
+          TAO_Policies::POLICY_TYPE occupying_policy;
+          for (int i = 0; i < this->num_policies_ - 1; i++)
+            {
+              if (this->poltable_[i] == 0)
+                {
+                  occupying_policy =
+                    ACE_static_cast (TAO_Policies::POLICY_TYPE, i);
+                  break;
+                }
+            }
+
+          this->poltable_[occupying_policy] = index;
+          this->poltable_[TAO_Policies::STARTING_TRADER] = 0;
+          this->policies_[index].name =
+            TAO_Policies::POLICY_NAMES[occupying_policy];
+          this->policies_[index].value = this->policies_[0].value;
+          this->policies_[0].name =
+            TAO_Policies::POLICY_NAMES[TAO_Policies::STARTING_TRADER];
+          
+          index = 0;
+        }
     }
   else
     index = this->poltable_[pol_type];
@@ -424,7 +464,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 	  break;
 	case 's':
 	  if (pol_name[1] == 't')
-	    index == STARTING_TRADER;
+	    index = STARTING_TRADER;
 	  else if (pol_name[1] == 'e')
 	    index = SEARCH_CARD;
 	  break;
@@ -618,7 +658,8 @@ TAO_Policies::starting_trader (CORBA::Environment& _env) const
       CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode* type = value.type ();
       
-      if (!type->equal (CosTrading::_tc_TraderName, _env))
+      if (! (type->equal (CosTrading::_tc_TraderName, _env) ||
+             type->equal (CosTrading::_tc_LinkNameSeq, _env)))
 	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			  trader_name);
       else
@@ -821,7 +862,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
 
 void
 TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
-                               CosTrading::TraderName* trader_name) const
+                               const CosTrading::TraderName& trader_name) const
 {
   // Create a new policy sequence, shortening the starting trader
   // policy by one link.
@@ -840,25 +881,35 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
       if (this->policies_[i] != 0)
 	{
 	  // Copy in the existing policies.
-	  if (i == STARTING_TRADER)
+	  if (i == STARTING_TRADER && trader_name.length () > 1)
 	    {
               // Eliminate the first link of the trader name.
-              CORBA::ULong length = trader_name->length ();
+              // Only pass on the property if the sequence
+              // contains more links after us.
               
-              if (length > 1)
+              // The any will sieze control of this memory.
+              // Allocating here avoids copying in the policy
+              // any.
+              CORBA::ULong length = trader_name.length ();
+              CosTrading::TraderName* new_name = 0;
+              CosTrading::LinkName* buf =
+                CosTrading::TraderName::allocbuf (length - 1);
+              
+              if (buf != 0)
                 {
-                  // Only pass on the property if the sequence
-                  // contains more links after us. 
                   for (CORBA::ULong j = 1; j < length; j++)
-                    (*trader_name)[j - 1] = (*trader_name)[j];  
-                      
-                  trader_name->length (length - 1);
+                    buf[j - 1] = CORBA::string_dup (trader_name[j]);
+
                   new_policy.name = this->policies_[i]->name;
-                  new_policy.value <<= trader_name;
+                  ACE_NEW (new_name, CosTrading::TraderName (length - 1,
+                                                             length -1,
+                                                             buf,
+                                                             CORBA::B_TRUE));
+                  new_policy.value <<= new_name;
                   counter++;
                 }
             }
-	  else
+	  else if (i != STARTING_TRADER)
 	    {
               new_policy.name = this->policies_[i]->name;
 	      new_policy.value = this->policies_[i]->value;
@@ -1143,6 +1194,18 @@ TAO_Offer_Filter::matched_offer (void)
 	TAO_Policies::POLICY_NAMES[TAO_Policies::MATCH_CARD];
       this->limits_.insert (return_card);
     }
+}
+
+CORBA::ULong
+TAO_Offer_Filter::search_card_remaining (void) const
+{
+  return this->search_card_;
+}
+
+CORBA::ULong
+TAO_Offer_Filter::match_card_remaining (void) const
+{
+  return this->match_card_;
 }
 
 CosTrading::PolicyNameSeq* 
