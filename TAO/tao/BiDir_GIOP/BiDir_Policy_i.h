@@ -46,8 +46,8 @@
  */
 
 class TAO_BiDirGIOP_Export TAO_BidirectionalPolicy
-  : public BiDirPolicy::BidirectionalPolicy,
-    public TAO_Local_RefCounted_Object
+  : public virtual BiDirPolicy::BidirectionalPolicy,
+    public virtual TAO_Local_RefCounted_Object
 {
 
 public:

@@ -16,15 +16,23 @@ ACE_RCSID (Messaging,
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
-  :  relative_expiry_ (relative_expiry)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , Messaging::RelativeRoundtripTimeoutPolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , relative_expiry_ (relative_expiry)
 {
 }
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TAO_RelativeRoundtripTimeoutPolicy &rhs)
-  : Messaging::RelativeRoundtripTimeoutPolicy (),
-    TAO_Local_RefCounted_Object (),
-    relative_expiry_ (rhs.relative_expiry_)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , Messaging::RelativeRoundtripTimeoutPolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , relative_expiry_ (rhs.relative_expiry_)
 {
 }
 
@@ -177,14 +185,22 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization)
-  : synchronization_ (synchronization)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , Messaging::SyncScopePolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , synchronization_ (synchronization)
 {
 }
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
-  : Messaging::SyncScopePolicy (),
-    TAO_Local_RefCounted_Object (),
-    synchronization_ (rhs.synchronization_)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , Messaging::SyncScopePolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , synchronization_ (rhs.synchronization_)
 {
 }
 

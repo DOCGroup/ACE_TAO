@@ -43,12 +43,14 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServantBase::TAO_ServantBase (void)
-  : optable_ (0)
+  : TAO_Abstract_ServantBase ()
+    , optable_ (0)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : optable_ (rhs.optable_)
+  : TAO_Abstract_ServantBase ()
+    , optable_ (rhs.optable_)
 {
 }
 
@@ -372,14 +374,18 @@ TAO_RefCountServantBase::_ref_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 }
 
 TAO_RefCountServantBase::TAO_RefCountServantBase (void)
-  : ref_count_ (1)
+  : TAO_Abstract_ServantBase ()
+    , TAO_ServantBase ()
+    , ref_count_ (1)
 {
 }
 
 TAO_RefCountServantBase::TAO_RefCountServantBase (
     const TAO_RefCountServantBase &
   )
-  : ref_count_ (1)
+  : TAO_Abstract_ServantBase ()
+    , TAO_ServantBase ()
+    , ref_count_ (1)
 {
 }
 
@@ -495,4 +501,3 @@ TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
 {
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
-
