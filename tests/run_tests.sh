@@ -39,6 +39,7 @@ run SString_Test
 run Naming_Test                         # uses Naming_Context, WString
 
 run Handle_Set_Test                     # uses Handle_Set
+run OrdMultiSet_Test                    # uses Ordered_MultiSet
 run Mem_Map_Test                        # uses Mem_Map
 
 run SV_Shared_Memory_Test               # uses SV_Shared_Memory, fork

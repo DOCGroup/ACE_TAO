@@ -46,6 +46,7 @@ run SString_Test
 
 run Handle_Set_Test                     # uses Handle_Set
 
+run OrdMultiSet_Test
 
 #Mem_Map_Test: mmap: Operation not applicable
 #run Mem_Map_Test                        # uses Mem_Map
