@@ -311,7 +311,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // Set ServantLocator_i object as the servant Manager of
       // secondPOA.
       this->servant_locator_ = temp_servant_locator;
-      second_poa->set_servant_manager (this->servant_locator_),
+      second_poa->set_servant_manager (this->servant_locator_,
                                        ACE_TRY_ENV);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to

@@ -1,3 +1,7 @@
+Sun Apr  8 20:55:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Loader/Server_Manager.cpp: Fixed a typo.
+
 2001-04-08  Yamuna Krishnamurthy  <yamuna@macumbo.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h: 
