@@ -1,3 +1,9 @@
+Mon Jul 09 02:21:32 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated Security Service release notes.
+
 Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.h:
@@ -47,9 +53,9 @@ Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 	  Implementation of the Security::QOPPolicy policy.  This policy
 	  is used to set the desired invocation Quality-of-Protection
 	  (QoP).  It can be created using ORB::create_policy(), and used
-	  in conjunction the standard policy manipulation CORBA features
-	  (e.g. PolicyManager, PolicyCurrent), meaning that this policy
-	  can be set on a per-ORB, per-thread or per-object basis.
+	  in conjunction with the standard policy manipulation CORBA
+	  features (e.g. PolicyManager, PolicyCurrent), meaning that this
+	  policy can be set on a per-ORB, per-thread or per-object basis.
 
 	  This policy makes it possible to, for example, make both secure
 	  and insecure invocations within the same client process.
