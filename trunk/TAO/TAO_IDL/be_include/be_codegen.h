@@ -299,9 +299,10 @@ public:
   enum LOOKUP_STRATEGY
   {
     // various lookup strategies
-    TAO_LINEAR,
+    TAO_LINEAR_SEARCH,
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
+    TAO_BINARY_SEARCH,
     TAO_ACTIVE_DEMUX,
     TAO_USER_DEFINED
   };
