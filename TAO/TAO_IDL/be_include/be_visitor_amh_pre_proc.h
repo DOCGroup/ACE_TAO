@@ -49,9 +49,6 @@ public:
 
   virtual int visit_operation (be_operation *node);
 
-  // @@@ (JP) I don't think this has to be overridden.
-  virtual int visit_scope (be_scope *node);
-
 private:
   /// Create the reponse handler interface
   be_interface *create_response_handler (be_interface *node,
