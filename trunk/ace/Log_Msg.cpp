@@ -101,7 +101,7 @@ ACE_Log_Msg_Manager::get_lock (void)
 void
 ACE_Log_Msg_Manager::close (void)
 {
-#if defined (ACE_HAS_STHREADS) && ! defined (ACE_HAS_TSS_EMULATION) && ! defined (ACE_HAS_EXCEPTIONS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_STHREADS) && ! defined (ACE_HAS_TSS_EMULATION) && ! defined (ACE_HAS_EXCEPTIONS)
   // Delete the (main thread's) Log_Msg instance.  I think that this
   // is only "necessary" if exception handling is not enabled.
   // Without exception handling, main thread TSS destructors don't
