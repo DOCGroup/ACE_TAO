@@ -18,7 +18,7 @@ IDLFILES = testC testS
 BIN = client server st-client
 
 ifdef AMI
-BIN += ami-latency-client
+BIN += ami-latency-client ami-throughput-client
 endif # AMI
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
@@ -29,6 +29,7 @@ SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
 ifdef AMI
 AMI_LATENCY_CLIENT_OBJS = ami-latency-client.o testC.o
+AMI_THROUGHPUT_CLIENT_OBJS = ami-throughput-client.o testC.o
 endif # AMI
 
 BUILD = $(BIN)
@@ -69,6 +70,9 @@ st-client: $(addprefix $(VDIR),$(ST_CLIENT_OBJS))
 
 ifdef AMI
 ami-latency-client: $(addprefix $(VDIR),$(AMI_LATENCY_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+ami-throughput-client: $(addprefix $(VDIR),$(AMI_THROUGHPUT_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 endif # AMI
 
