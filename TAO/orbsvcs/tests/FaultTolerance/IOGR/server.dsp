@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 /nologo /subsystem:console /machine:I386 ../../../../../ace/ACE.lib ../../../../tao/TAO.lib ../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../tao/IORManipulation/TAO_IORManip.lib ../../../../tao/IORTable/TAO_IORTable.lib ../../../orbsvcs/TAO_CosNaming.lib ../../../orbsvcs/TAO_Svc_Utils.lib ../../../orbsvcs/TAO_CosNotification.lib ../../../orbsvcs/TAO_Fault_Tolerance.lib /out:"server.exe" 
+# ADD LINK32 /nologo /subsystem:console /machine:I386 ../../../../../ace/ACE.lib ../../../../tao/TAO.lib ../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../tao/IORManipulation/TAO_IORManip.lib  ../../../orbsvcs/TAO_FT_ORB.lib /out:"server.exe" 
 
 !ELSEIF  "$(CFG)" == "FaultTolerance IOGR server - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /debug /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:console /machine:I386 /debug /pdbtype:sept ../../../../../ace/ACEd.lib ../../../../tao/TAOd.lib ../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../tao/IORManipulation/TAO_IORManipd.lib ../../../../tao/IORTable/TAO_IORTabled.lib ../../../orbsvcs/TAO_CosNamingd.lib ../../../orbsvcs/TAO_Svc_Utilsd.lib ../../../orbsvcs/TAO_CosNotificationd.lib ../../../orbsvcs/TAO_Fault_Toleranced.lib /out:"server.exe" 
+# ADD LINK32 /nologo /subsystem:console /machine:I386 /debug /pdbtype:sept ../../../../../ace/ACEd.lib ../../../../tao/TAOd.lib ../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../tao/IORManipulation/TAO_IORManipd.lib  ../../../orbsvcs/TAO_FT_ORBd.lib /out:"server.exe" 
 
 !ENDIF
 
