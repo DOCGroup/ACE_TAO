@@ -26,7 +26,6 @@ CFG=IDL_Cubit Server - Win32 Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -89,10 +88,6 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
-# Begin Source File
-
-SOURCE=.\Cubit_Client.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\Cubit_i.cpp
