@@ -1,32 +1,37 @@
+Fri Nov 06 10:59:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * VERSION: added reference to BUG-REPORT-FORM.  Thanks to
+          Peter Nordlund <petern@nada.kth.se> for provided the new
+          text.
 
 Thu Nov  5 23:46:42 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/README (TIP): 
-	  Just added a line telling the users about the format for the
-	  input file of the supplier market daemon.
+        * examples/Callback_Quoter/README (TIP):
+          Just added a line telling the users about the format for the
+          input file of the supplier market daemon.
 
 Thu Nov 05 15:52:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Table.cpp (find): Added a check for is_free in the
- 	  find algorithm.  Thanks to Frank Patz <frank@contact.de> for
- 	  sending the bug report.
+        * tao/Object_Table.cpp (find): Added a check for is_free in the
+          find algorithm.  Thanks to Frank Patz <frank@contact.de> for
+          sending the bug report.
 
 Thu Nov 05 04:03:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_to_service): Make sure that the multicast
- 	  sockets are closed properly no matter how the function exits.
-  	  Thanks to Achim Stindt <stindt@inobis.de> for reporting this.
+        * tao/ORB.cpp (multicast_to_service): Make sure that the multicast
+          sockets are closed properly no matter how the function exits.
+          Thanks to Achim Stindt <stindt@inobis.de> for reporting this.
 
 Wed Nov 04 22:46:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Operation_Table.cpp: Added a timeprobe table.
+        * tao/Operation_Table.cpp: Added a timeprobe table.
 
 Wed Nov  4 15:31:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/IIOP_Object.h: Added TAO_Export to Profile so I can use
           it in the Implementation Repository.
 
-        * orbsvcs/ImplRepo_Service/*: The Implementation Repository 
+        * orbsvcs/ImplRepo_Service/*: The Implementation Repository
           (which now supports DSI and Ping Objects) has been moved here.
 
         * orbsvcs/tests/ImplRepo/*: Updated the test to check DSI and
@@ -36,123 +41,123 @@ Wed Nov  4 15:31:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Nov  3 21:02:30 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp
+        * examples/Callback_Quoter/Supplier_Timer_Handler.cpp
           Added a change to Consumer_Input_Handler::quit_consumer_process
-	  by which the consumer exits gracefully even on a communication
-	  failure with the notifier. 
-	  Also, this is a working version of the Callback Quoter example.
-		
+          by which the consumer exits gracefully even on a communication
+          failure with the notifier.
+          Also, this is a working version of the Callback Quoter example.
+
 Tue Nov  3 19:57:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/README: 
-	  Added this file which explains the Callback Quoter example and 
-	  the way the execute it.
+        * examples/Callback_Quoter/README:
+          Added this file which explains the Callback Quoter example and
+          the way the execute it.
 
 Tue Nov  3 17:14:35 1998  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.{h,cpp}: 
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.{h,cpp}:
           Bind to the mpeg client receiver to push the audio and video
-	  device references to the AV mpeg client in load_movie (). The
-	  references to the audio and video mmdevice are obtained from the
-	  mmdevice exporter through the trading service. Added code to
-	  hash the MMDevice_Exporter reference.
-  	
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
-	  Change the method names corresponding to the names generated in
-	  the Server_0005fDiscovery_0005fUtil.h.Declare the jobject array
-  	  server_names as a class member and not within the get_server
-	  method. Initilaize the _movie_class in the get_movie_info method
-	  before allocation of buffer. Added code in load_movie ().
+          device references to the AV mpeg client in load_movie (). The
+          references to the audio and video mmdevice are obtained from the
+          mmdevice exporter through the trading service. Added code to
+          hash the MMDevice_Exporter reference.
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:		 
-	  Changed the way the movie tree was created and accessed. Do an
-	  updateUI() on the table to display it.
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
+          Change the method names corresponding to the names generated in
+          the Server_0005fDiscovery_0005fUtil.h.Declare the jobject array
+          server_names as a class member and not within the get_server
+          method. Initilaize the _movie_class in the get_movie_info method
+          before allocation of buffer. Added code in load_movie ().
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
-	  Change the second parameter passed to load_movie() from
-	  movie_name of String type to movie of Movie class type to pass
-	  the movie info
-	
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}: 
-	  Write a wrapper MMDevice_Exporter to export the audio and video
-	  references and the machine and movie info properties.Add
-	  AV_Video_MMDevice and AV_Audio_MMDevice.
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
+          Changed the way the movie tree was created and accessed. Do an
+          updateUI() on the table to display it.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
-	  Replace the member filename_ with audio_filename_ and
-	  video_filename_.
-	
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
+          Change the second parameter passed to load_movie() from
+          movie_name of String type to movie of Movie class type to pass
+          the movie info
+
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}:
+          Write a wrapper MMDevice_Exporter to export the audio and video
+          references and the machine and movie info properties.Add
+          AV_Video_MMDevice and AV_Audio_MMDevice.
+
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
+          Replace the member filename_ with audio_filename_ and
+          video_filename_.
+
 Tue Nov  3 16:10:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/configurations.html: The macro
- 	  TAO_USE_DOTTED_DECIMAL_ADDRESSES was given as
- 	  TAO_USES_DOTTED_DECIMAL_ADDRESES in docs/configuration.html.
-  	  Thanks to Byron Harris for reporting this!
+        * docs/configurations.html: The macro
+          TAO_USE_DOTTED_DECIMAL_ADDRESSES was given as
+          TAO_USES_DOTTED_DECIMAL_ADDRESES in docs/configuration.html.
+          Thanks to Byron Harris for reporting this!
 
 Tue Nov  3 14:39:05 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/mpeg_shared/Receiver.idl: 
-	  Added a video object reference and video file parameters to the
-	  push_mmdevice method in the Receiver interface.
+        * orbsvcs/tests/AVStreams/mpeg/mpeg_shared/Receiver.idl:
+          Added a video object reference and video file parameters to the
+          push_mmdevice method in the Receiver interface.
 
-	* orbsvcs/tests/AVStreams/mpeg/mpeg_client/Command_Handler.{h,cpp}:
-	  Changed the implementation of the Receiver interface to
-	  implement code for the video reference and videofile parameters
-	  to push_mmdevice method. 
-		
+        * orbsvcs/tests/AVStreams/mpeg/mpeg_client/Command_Handler.{h,cpp}:
+          Changed the implementation of the Receiver interface to
+          implement code for the video reference and videofile parameters
+          to push_mmdevice method.
+
 Mon Nov  2 17:57:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
-	  Make sure the client instructs the server to shutdown no matter
-	  we are using the collocation optimization or not.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+          Make sure the client instructs the server to shutdown no matter
+          we are using the collocation optimization or not.
 
-	* performance-tests/Demux/demux_test_client.cpp (run_linear_test,
-	  run_random_test, run_worst_test, run_best_test): Win32 doesn't
-	  support conversion from unsigned __int64 to double directly.
-	  Therefore, we must use the ACE_UINT64_DBLCAST_ADAPTER to convert
-	  it to __int64 first.  In this case, it'll be safer if we do the
-	  substraction first before multiplying the constant factor.
+        * performance-tests/Demux/demux_test_client.cpp (run_linear_test,
+          run_random_test, run_worst_test, run_best_test): Win32 doesn't
+          support conversion from unsigned __int64 to double directly.
+          Therefore, we must use the ACE_UINT64_DBLCAST_ADAPTER to convert
+          it to __int64 first.  In this case, it'll be safer if we do the
+          substraction first before multiplying the constant factor.
 
-	* performance-tests/Demux/{server,client}.cpp (main): Added
-	  trailing return statements to avoid warnings from VC 6.
+        * performance-tests/Demux/{server,client}.cpp (main): Added
+          trailing return statements to avoid warnings from VC 6.
 
-	* performance-tests/Demux/Demux.dsw:
-	* performance-tests/Demux/{server,client}.dsp:
-	* performance-tests/Demux/CodeGen/CodeGen.dsp: New
-	  project/workspace files.
+        * performance-tests/Demux/Demux.dsw:
+        * performance-tests/Demux/{server,client}.dsp:
+        * performance-tests/Demux/CodeGen/CodeGen.dsp: New
+          project/workspace files.
 
-	* performance-tests/Demux/demux_test_client.cpp (run_random_test):
-	  Replaced srand48 () and lrand48 () with ACE_OS::srand () and
-	  ACE_OS::rand ().
+        * performance-tests/Demux/demux_test_client.cpp (run_random_test):
+          Replaced srand48 () and lrand48 () with ACE_OS::srand () and
+          ACE_OS::rand ().
 
-	* performance-tests/Demux/demux_test_server.cpp
-	  (~Demux_Test_Server): Removed unreferenced local variables.
+        * performance-tests/Demux/demux_test_server.cpp
+          (~Demux_Test_Server): Removed unreferenced local variables.
 
-	* performance-tests/Demux/CodeGen/client.cpp
-	  (gen_client_incl_code): This function should return a value.
+        * performance-tests/Demux/CodeGen/client.cpp
+          (gen_client_incl_code): This function should return a value.
 
-	* performance-tests/Demux/CodeGen/gen_names.cpp (is_present):
-	  Fixed a syntax error.
-	  (gen_rand): Changed lrand48 () to ACE_OS::rand ().
+        * performance-tests/Demux/CodeGen/gen_names.cpp (is_present):
+          Fixed a syntax error.
+          (gen_rand): Changed lrand48 () to ACE_OS::rand ().
 
-	* performance-tests/Demux/CodeGen/codegen.h: Removed inclusion of
-	  <iostream.h> and <fstream.h>.  They caused conflicts with
-	  standard C++ library and should be included by ACE's header
-	  files.
+        * performance-tests/Demux/CodeGen/codegen.h: Removed inclusion of
+          <iostream.h> and <fstream.h>.  They caused conflicts with
+          standard C++ library and should be included by ACE's header
+          files.
 
 1998-11-02  Kirthika Parameswaran  <kirthika@macarena.cs.wustl.edu>
 
-	* examples/Callback_Quoter/Supplier_Timer_Handler.h:
-	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
-		Added these files, for implementing the timer handler for
-	the supplier.
+        * examples/Callback_Quoter/Supplier_Timer_Handler.h:
+        * examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+                Added these files, for implementing the timer handler for
+        the supplier.
 
 Sun Nov 01 19:53:15 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO.h (TAO_ORB_Manager::run): Added default environment to
- 	  this method.  Thanks to Terry Rosenbaum
- 	  <Terry.Rosenbaum@Radiology.MSU.edu> for suggesting this.
+        * tao/TAO.h (TAO_ORB_Manager::run): Added default environment to
+          this method.  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for suggesting this.
 
 Sun Nov 01 09:03:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
