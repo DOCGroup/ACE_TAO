@@ -86,22 +86,59 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
     orb_->orb_core ()->orb_params ()->sched_policy ();
 
   CORBA::Policy_var sched_param;
-    
+  sched_param = CORBA::Policy::_duplicate (this->sched_param (15));
+  const char * name = 0;
+  CORBA::Policy_ptr implicit_sched_param = 0;
+  this->current_->begin_scheduling_segment (name,
+					    sched_param_.in (),
+					    implicit_sched_param
+					    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  ACE_hrtime_t now,elapsed_time,suspension_time;
+  ACE_hrtime_t base_time = ACE_OS::gethrtime ();
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   
   for (int i = 0; i < this->dt_count_; i++)
     {
-      sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
-      dt_list_ [i]->activate_task (current,
-				   sched_param.in (),
-				   flags,
-				   barrier_
-				   ACE_ENV_ARG_PARAMETER);
-      active_dt_count_++;
+      now = gethrtime ();
+      
+      // convert to microseconds
+#if !defined ACE_LACKS_LONGLONG_T
+      
+      ACE_UINT32 elapsed_microseconds = ACE_UINT32((after - before) / gsf);
+      
+#else  /* ! ACE_LACKS_LONGLONG_T */
+      
+      ACE_UINT32 elapsed_microseconds = (after - before) / gsf;
+      
+#endif /* ! ACE_LACKS_LONGLONG_T */
+      
+#if defined (ACE_WIN32)
+      elapsed_microseconds*=1000; // convert to uSec on Win32
+#endif /* ACE_WIN32 */
+      
+      elapsed_microseconds = ACE_UINT32 (now - base_time) / gsf;
+      if (elapsed_time -> dt_list_[i]->start_time ())
+	{
+	  sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
+	  dt_list_ [i]->activate_task (current,
+				       sched_param.in (),
+				       flags,
+				       barrier_
+				       ACE_ENV_ARG_PARAMETER);
+	  active_dt_count_++;
+	}
+      else 
     }
   
-  ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
-  barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG, "Tasks have synched...\n"));
+  this->current_->end_scheduling_segment (name
+					  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+//    ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
+//    barrier_->wait ();
+//    ACE_DEBUG ((LM_DEBUG, "Tasks have synched...\n"));
 
 
 }
