@@ -1,10 +1,17 @@
+Thu Jun 15 13:33:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/Latency/{Full_Profile,Latency,
+          Multicast,Multicast_Full_Profile,Pluggable}/Makefile (CPPFLAGS):
+          added -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV so that builds succeed
+          with Compaq cxx.
+
 Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.h:
+        * tao/Stub.h:
         * tao/Stub.cpp:
 
           Added methods to get client exposed policies, and added
-	  member variable to cache those client exposed policies.
+          member variable to cache those client exposed policies.
 
 Thu Jun 15 12:43:44 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -39,27 +46,27 @@ Wed Jun 14 19:29:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Jun 14 15:21:48 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Regenerated the dependencies yet again since dependencies
-	  related to changes slated for TAO 1.1.5 were inadvertently
-	  committed.
+          Regenerated the dependencies yet again since dependencies
+          related to changes slated for TAO 1.1.5 were inadvertently
+          committed.
 
 Wed Jun 14 14:21:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing (idl_stubs):
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing (idl_stubs):
 
-	  Removed broken "idl_stubs" target.  This fixes the dependency
-	  generation problem encountered when performing a recursive "make
-	  depend."
-	  Reported by Carlos.
+          Removed broken "idl_stubs" target.  This fixes the dependency
+          generation problem encountered when performing a recursive "make
+          depend."
+          Reported by Carlos.
 
 Wed Jun 14 13:56:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Updated dependencies.  The last update inadvertently removed
-	  them.
+          Updated dependencies.  The last update inadvertently removed
+          them.
 
 Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -69,32 +76,32 @@ Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Fixed Memory leaks in <create_stub_object>.
-	
-	* tao/Profile.cpp:
+          Fixed Memory leaks in <create_stub_object>.
 
-	  Fixed potential memory leak in <policies>.
-	
-	* tao/Profile.h:
-		  
-	  Added comment to point out the current assumption of
-	  having only one policy list shared by all profiles,
-	  and whose lifecycle is managed by the TAO_MProfile. 
+        * tao/Profile.cpp:
+
+          Fixed potential memory leak in <policies>.
+
+        * tao/Profile.h:
+
+          Added comment to point out the current assumption of
+          having only one policy list shared by all profiles,
+          and whose lifecycle is managed by the TAO_MProfile.
 
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* */Makefile:
-	  Updated dependencies.
+        * */Makefile:
+          Updated dependencies.
 
 Tue Jun 13 11:13:02 2000  Ossama Othman  <ossama@uci.edu>
 
-	* rules.tao.GNU (ami):
+        * rules.tao.GNU (ami):
 
-	  Disable AMI when Minimum CORBA is enabled.  AMI is not supported
-	  in the Minimum CORBA configuration.  This fixes compile-time
-	  errors in the AMI test directory.
+          Disable AMI when Minimum CORBA is enabled.  AMI is not supported
+          in the Minimum CORBA configuration.  This fixes compile-time
+          errors in the AMI test directory.
 
 Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -102,7 +109,7 @@ Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/Naming_Service/Naming_Server_static.dsw: (added)
 
           Checked in other stuff which used this, so it is probably
-          good to check in these also.          
+          good to check in these also.
 
         * orbsvcs/orbsvcs/AV_Static.dsp:
         * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
@@ -120,7 +127,7 @@ Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
         * orbsvcs/orbsvcs/orbsvcs_static.dsw:
 
-          These were using the non-static versions of tao_idl, 
+          These were using the non-static versions of tao_idl,
           switched to the static versions (tao_idl_static).
 
 Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -130,20 +137,20 @@ Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
           So going back to figuring out how to provide the easiest way
           to build the relevant stuff.  So going back on my services.dsw
           change, I made TAOACE.dsw the big master dsw file for all the
-          libraries and services that can be used by CORBA apps.  
+          libraries and services that can be used by CORBA apps.
 
         * orbsvcs/services.dsw: (removed)
 
-          Well, she lasted a good 4 days.  Since TAOACE now has these 
+          Well, she lasted a good 4 days.  Since TAOACE now has these
           files, this really isn't needed anymore.
 
         * TAOACE.dsw:
         * TAOACE_Static.dsw:
 
-          Beefed up these projects a bit more.  They now have all 
+          Beefed up these projects a bit more.  They now have all
           the orbsvcs libraries and all the services.  So these should
           be your one-stop compilation place for ACE/TAO.  Well, unless
-          you want the examples and tests and stuff (see 
+          you want the examples and tests and stuff (see
           msvc_auto_compile.pl for that).
 
           Thanks to Thaddeus Olczyk <olczyk@interaccess.com> and
@@ -180,12 +187,12 @@ Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Jun 12 13:24:43 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/LoadBalancing/client.dsp:
-	* orbsvcs/tests/LoadBalancing/server.dsp:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
 
-	  Dropped warning level from 4 to 3.  Warning level 4 was too
-	  picky.  It caused warnings to show up in the Win32 headers,
-	  themselves!
+          Dropped warning level from 4 to 3.  Warning level 4 was too
+          picky.  It caused warnings to show up in the Win32 headers,
+          themselves!
 
 Mon Jun 12 10:38:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -1028,9 +1035,9 @@ Tue Jun 06 17:26:41 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Jun 06 14:53:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/ORB_Core.cpp:
-          
+
           Updated method <create_stub_object> to pass a PolicyList pointer
-	  instead of a reference to the TAO_Profile class.
+          instead of a reference to the TAO_Profile class.
 
 Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
