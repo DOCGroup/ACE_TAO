@@ -1,6 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Profile.h"
 #include "tao/debug.h"
@@ -9,7 +13,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, SSLIOP_Connector, "$Id$")
+ACE_RCSID(TAO_SSLIOP, SSLIOP_Connector, "$Id$")
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
@@ -593,3 +597,5 @@ TAO_SSLIOP_Connector::make_profile (const char *endpoint,
 
   ACE_CHECK;
 }
+
+#endif  /* ACE_HAS_SSL */

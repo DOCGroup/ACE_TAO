@@ -23,12 +23,15 @@
 
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pluggable.h"
 #include "tao/operation_details.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/Pluggable_Messaging_Utils.h"
@@ -194,6 +197,8 @@ public:
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
 };
+
+#endif  /* ACE_HAS_SSL */
 
 #include "ace/post.h"
 

@@ -1,6 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Connect.h"
 #include "tao/CDR.h"
@@ -9,7 +13,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, SSLIOP_Profile, "$Id$")
+ACE_RCSID(TAO_SSLIOP, SSLIOP_Profile, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Profile.i"
@@ -132,3 +136,5 @@ TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
   return 1;
 }
+
+#endif  /* ACE_HAS_SSL */

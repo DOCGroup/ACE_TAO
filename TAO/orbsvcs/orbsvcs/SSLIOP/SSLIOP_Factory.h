@@ -19,13 +19,15 @@
 
 #include "ace/pre.h"
 
-#include "tao/Protocol_Factory.h"
-
 #include "SSLIOP_Export.h"
+
+#if defined (ACE_HAS_SSL)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Protocol_Factory.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -67,6 +69,8 @@ private:
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
+
+#endif  /* ACE_HAS_SSL */
 
 #include "ace/post.h"
 
