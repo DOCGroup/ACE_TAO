@@ -573,8 +573,8 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Set the Credentials (X.509 certificates) to be used for this
-  // invocation.
+  // Set the Credentials (X.509 certificates and corresponding private
+  // keys) to be used for this invocation.
   if (!CORBA::is_nil (creds_policy.in ()))
     {
       SecurityLevel2::CredentialsList_var creds_list =
@@ -599,6 +599,28 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
               TAO_SSLIOP_X509_var x509 = ssliop_credentials->x509 ();
               if (::SSL_use_certificate (ssl, x509.in ()) != 1)
                 return -1;
+
+#ifndef NO_RSA
+              TAO_SSLIOP_RSA_var rsa = ssliop_credentials->rsa ();
+              if (rsa.in () != 0
+                  && ::SSL_use_RSAPrivateKey (ssl, rsa.in ()) != 1)
+                {
+                  // Invalidate the certificate we just set.
+                  (void) ::SSL_use_certificate (ssl, 0);
+                  return -1;
+                }
+#endif  /* NO_RSA */
+
+// #ifndef NO_DSA
+//               TAO_SSLIOP_DSA_var dsa = ssliop_credentials->dsa ();
+//               if (dsa.in () != 0
+//                   && ::SSL_use_certificate (ssl, dsa.in ()) != 1)
+//                 {
+//                   // Invalidate the certificate we just set.
+//                   (void) ::SSL_use_certificate (ssl, 0);
+//                   return -1;
+//                 }
+// #endif  /* NO_DSA */
             }
         }
     }
