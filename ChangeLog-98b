@@ -45,6 +45,9 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           code that was in both of the config files.  Thanks to
           Ossama for suggesting it.
 
+        * include/makeinclude/platform_vxworks*.GNU: moved our
+          wind installation from /project/doc/wind to /project/doc/pkg/wind.
+
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
