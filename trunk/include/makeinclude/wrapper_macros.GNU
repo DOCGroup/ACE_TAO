@@ -243,6 +243,7 @@ ifdef purify
              -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX) \
              -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
              -max_threads=100
+  CFLAGS += -DACE_PURIFY
 endif # purify
 
 ifeq ($(quantify),0)
@@ -255,6 +256,7 @@ ifdef quantify
   #### to help avoid occasional link failure.
   PRELINK += quantify -best-effort -max_threads=100 \
              -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX)
+  CFLAGS += -DACE_QUANTIFY
 endif # quantify
 
 
