@@ -526,7 +526,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
   int result = 0;
   int error_encountered = 0;
-  CORBA::Boolean response_required;
+  CORBA::Boolean response_required = 0;
   TAO_SVC_HANDLER *this_ptr = this;
   CORBA::ULong request_id = 0;
 
@@ -569,8 +569,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
             case TAO_GIOP::EndOfFile:
               // Got a EOF
-              errno = EPIPE;
-              response_required = error_encountered = 0;
               result = -1;
               break;
 
@@ -587,7 +585,12 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
               TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
               // FALLTHROUGH
 
+            case TAO_GIOP::CommunicationError:
             case TAO_GIOP::MessageError:
+              // Here, MessageError can either mean condition for
+              // GIOP::MessageError happened or a GIOP message was
+              // not successfully received.  Sending back of
+              // GIOP::MessageError is handled in TAO_GIOP::parse_header.
               error_encountered = 1;
               break;
             }
