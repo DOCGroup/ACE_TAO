@@ -1,3 +1,7 @@
+Sun Aug 12 08:46:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Native_Exceptions/test_i.cpp: Fixed warning with g++. 
+
 Sun Aug 12 00:29:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Native_Exceptions/test_i.cpp: Fixed warning with g++.
