@@ -54,3 +54,9 @@ CORBA_ServerRequest::_tao_reply_byte_order (int byte_order)
   this->orb_server_request_.outgoing ().reset_byte_order (byte_order);
 }
 
+
+ACE_INLINE TAO_ServerRequest &
+CORBA_ServerRequest::_tao_server_request (void)
+{
+  return this->orb_server_request_;
+}
