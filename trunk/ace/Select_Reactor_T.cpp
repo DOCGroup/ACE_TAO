@@ -484,15 +484,28 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler
   return 0;
 }
 
+template <class ACE_SELECT_REACTOR_TOKEN> ACE_Timer_Queue *
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue (void) const
+{
+  return this->timer_queue_;
+}
+
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue
-  (ACE_Timer_Queue *timer_queue)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
+  (ACE_Timer_Queue *tq)
 {
   if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
     delete this->timer_queue_;
-  this->timer_queue_ = timer_queue;
+  this->timer_queue_ = tq;
   this->delete_timer_queue_ = 0;
   return 0;
+}
+
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue
+  (ACE_Timer_Queue *tq)
+{
+  return this->timer_queue (tq);
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN>
