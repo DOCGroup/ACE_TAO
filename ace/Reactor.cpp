@@ -172,6 +172,10 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
       eh = ACE_REACTOR_EVENT_HANDLER (this, handle);
 #endif /* ACE_WIN32 */
     }
+  else
+    // g++ can't figure out that i won't be used below if the handle
+    // is out of range, so keep it happy by defining i here . . .
+    i = 0;
   
   if (eh && index_p != 0)
     *index_p = i;
@@ -449,7 +453,7 @@ int
 ACE_Reactor::initialized (void)
 {
   ACE_TRACE ("ACE_Reactor::initialized");
-  ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
+  ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, 0));
   return this->initialized_;
 }
 
