@@ -1,3 +1,8 @@
+Tue Feb 29 08:48:28 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Time_Service_Test.cpp:  Enabled the test on Win32 and removed
+          a use of ACE_DEFAULT_BACKING_STORE.
+
 Tue Feb 29 08:56:51 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
