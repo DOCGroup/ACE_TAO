@@ -280,7 +280,7 @@ TAO_RTScheduler_Current_i::dt_hash (void)
   return this->dt_hash_;
 }
 
-RTScheduling::Scheduler_ptr
+ RTScheduling::Scheduler_ptr
 TAO_RTScheduler_Current_i::scheduler (void)
 {
   return RTScheduling::Scheduler::_duplicate (this->scheduler_.in ());
@@ -1069,18 +1069,18 @@ const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Equal_To<IdType>;
-template class ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Entry<IdType, RTScheduling::DistributableThread_var>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Equal_To<IdType>;
-#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Hash_Map_Entry<IdType, RTScheduling::DistributableThread_var>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
