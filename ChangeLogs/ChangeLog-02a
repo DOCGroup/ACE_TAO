@@ -1,3 +1,10 @@
+Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
+
+          Fixed up the include paths in these projects.
+
 Fri Jul 21 00:29:38 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* examples/QOS/Receiver_QoS_Event_Handler.h:

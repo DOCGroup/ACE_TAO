@@ -38,8 +38,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\SSL_server"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\SSLIOP" /I "..\..\..\ACE_wrappers" /I "..\..\..\OpenSSL\openssl-0.9.5a\inc32" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "ACE_HAS_SSL" /YX /FD /c
-# SUBTRACT CPP /X
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\SSLIOP" /I "..\..\..\OpenSSL\openssl-0.9.5a\inc32" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "ACE_HAS_SSL" /FD /c
+# SUBTRACT CPP /X /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
