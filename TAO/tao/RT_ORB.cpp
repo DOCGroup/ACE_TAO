@@ -165,7 +165,8 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 
       if (result != 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            RTCORBA::Mutex::_nil ());
         }
     }
 

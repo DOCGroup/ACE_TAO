@@ -1,3 +1,25 @@
+Tue Feb 13 01:14:26 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RT_ORB.cpp (create_named_mutex):
+
+	  Fixed misuse of ACE_THROW macro.  ACE_THROW_RETURN is the
+	  correct macro.  Fixes a compile-time problem.
+
+	* tao/ORB_Core.i (poa_current): 
+
+	  If the cached POACurrent reference is nil then initialize the
+	  RootPOA.  Doing so causes the POACurrent object to be
+	  initialized and cached in the ORB Core.  Fixes problems where it
+	  wasn't possible to obtain the POACurrent reference before the
+	  RootPOA reference.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (pre_init):
+
+	  Moved registration of "SSLIOPCurrent" object reference to the
+	  ORBInitializer::pre_init() method so that it is available to
+	  the resolve_initial_references() mechanism in
+	  ORBInitializer::post_init().
+
 Mon Feb 12 22:52:34 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * tao/RT_Mutex.h:
