@@ -4619,6 +4619,7 @@ DEP_CPP_TASK_=\
 
 SOURCE=.\Thread_Manager_Test.cpp
 DEP_CPP_THREA=\
+	".\Thread_Manager_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
@@ -7455,6 +7456,7 @@ DEP_CPP_PRIORIT=\
 
 SOURCE=.\Reactor_Performance_Test.cpp
 DEP_CPP_REACTOR_P=\
+	".\Reactor_Performance_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\

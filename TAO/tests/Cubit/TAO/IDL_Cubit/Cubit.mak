@@ -326,7 +326,10 @@ SOURCE=.\svr.cpp
 
 DEP_CPP_SVR_C=\
 	".\cubit_i.h"\
+	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
+	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -528,21 +531,29 @@ NODEP_CPP_SVR_C=\
 	"..\..\..\..\tao\tao\factories.h"\
 	
 
-"$(INTDIR)\svr.obj" : $(SOURCE) $(DEP_CPP_SVR_C) "$(INTDIR)" ".\cubitS.h"
+"$(INTDIR)\svr.obj" : $(SOURCE) $(DEP_CPP_SVR_C) "$(INTDIR)" ".\cubitS.h"\
+ ".\cubitC.h" ".\cubitC.i" ".\cubitS.i"
 
 
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
 DEP_CPP_SVR_C=\
 	".\cubit_i.h"\
+	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
+	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -562,6 +573,7 @@ DEP_CPP_SVR_C=\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
@@ -580,6 +592,9 @@ DEP_CPP_SVR_C=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -596,7 +611,9 @@ DEP_CPP_SVR_C=\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
@@ -663,6 +680,7 @@ DEP_CPP_SVR_C=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -726,7 +744,8 @@ NODEP_CPP_SVR_C=\
 	"..\..\..\..\tao\tao\factories.h"\
 	
 
-"$(INTDIR)\svr.obj" : $(SOURCE) $(DEP_CPP_SVR_C) "$(INTDIR)" ".\cubitS.h"
+"$(INTDIR)\svr.obj" : $(SOURCE) $(DEP_CPP_SVR_C) "$(INTDIR)" ".\cubitS.h"\
+ ".\cubitC.h" ".\cubitC.i" ".\cubitS.i"
 
 
 !ENDIF 
@@ -741,6 +760,7 @@ SOURCE=.\cubitS.cpp
 
 DEP_CPP_CUBIT=\
 	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
 	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -945,22 +965,27 @@ NODEP_CPP_CUBIT=\
 	
 
 "$(INTDIR)\cubitS.obj" : $(SOURCE) $(DEP_CPP_CUBIT) "$(INTDIR)" ".\cubitC.h"\
- ".\cubitS.h" ".\cubitS.i"
+ ".\cubitS.h" ".\cubitS.i" ".\cubitC.i"
 
 
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
 DEP_CPP_CUBIT=\
 	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
 	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -980,6 +1005,7 @@ DEP_CPP_CUBIT=\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
@@ -998,6 +1024,9 @@ DEP_CPP_CUBIT=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1014,7 +1043,9 @@ DEP_CPP_CUBIT=\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
@@ -1081,6 +1112,7 @@ DEP_CPP_CUBIT=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -1145,7 +1177,7 @@ NODEP_CPP_CUBIT=\
 	
 
 "$(INTDIR)\cubitS.obj" : $(SOURCE) $(DEP_CPP_CUBIT) "$(INTDIR)" ".\cubitC.h"\
- ".\cubitS.h" ".\cubitS.i"
+ ".\cubitS.h" ".\cubitS.i" ".\cubitC.i"
 
 
 !ENDIF 
@@ -1160,7 +1192,10 @@ SOURCE=.\cubit_i.cpp
 
 DEP_CPP_CUBIT_=\
 	".\cubit_i.h"\
+	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
+	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1362,21 +1397,29 @@ NODEP_CPP_CUBIT_=\
 	"..\..\..\..\tao\tao\factories.h"\
 	
 
-"$(INTDIR)\cubit_i.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitS.h"
+"$(INTDIR)\cubit_i.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitS.h"\
+ ".\cubitC.h" ".\cubitC.i" ".\cubitS.i"
 
 
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
 DEP_CPP_CUBIT_=\
 	".\cubit_i.h"\
+	".\cubitC.h"\
+	".\cubitC.i"\
 	".\cubitS.h"\
+	".\cubitS.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -1396,6 +1439,7 @@ DEP_CPP_CUBIT_=\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
@@ -1414,6 +1458,9 @@ DEP_CPP_CUBIT_=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1430,7 +1477,9 @@ DEP_CPP_CUBIT_=\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
@@ -1497,6 +1546,7 @@ DEP_CPP_CUBIT_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -1560,7 +1610,8 @@ NODEP_CPP_CUBIT_=\
 	"..\..\..\..\tao\tao\factories.h"\
 	
 
-"$(INTDIR)\cubit_i.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitS.h"
+"$(INTDIR)\cubit_i.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitS.h"\
+ ".\cubitC.h" ".\cubitC.i" ".\cubitS.i"
 
 
 !ENDIF 
@@ -1790,9 +1841,13 @@ DEP_CPP_CUBITC=\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -1812,6 +1867,7 @@ DEP_CPP_CUBITC=\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
@@ -1830,6 +1886,9 @@ DEP_CPP_CUBITC=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1846,7 +1905,9 @@ DEP_CPP_CUBITC=\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
@@ -1913,6 +1974,7 @@ DEP_CPP_CUBITC=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -2071,6 +2133,7 @@ SOURCE=.\clnt.cpp
 DEP_CPP_CLNT_=\
 	".\clnt.h"\
 	".\cubitC.h"\
+	".\cubitC.i"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
