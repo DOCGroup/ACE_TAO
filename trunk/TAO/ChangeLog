@@ -1,3 +1,17 @@
+Tue Sep 28 14:13:01 2004  Yan Dai   <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          Correctly cancel timers in the shutdown methods. The timers
+          are scheduled in the activate methods but an
+          ACE_Reactor::remove_handler() call was being made rather
+          than the correct ACE_Reactor::cancel_timer(). This was
+          previously fixed for the CosEvent, but not for the RTEvent.
+          This fixes an access violation in the orbsvcs/tests/Event/Basic
+          test at shutdown on Solaris platforms.
+
 Thu Oct 14 16:10:19 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:

@@ -145,9 +145,11 @@ TAO_EC_Reactive_SupplierControl::activate (void)
 int
 TAO_EC_Reactive_SupplierControl::shutdown (void)
 {
-  int r =
-    this->reactor_->remove_handler (&this->adapter_,
-                                    ACE_Event_Handler::DONT_CALL);
+  int r = 0;
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  r = this->reactor_->cancel_timer (timer_id_);
+#endif /* TAO_HAS_CORBA_MESSAGING */
   this->adapter_.reactor (0);
   return r;
 }
