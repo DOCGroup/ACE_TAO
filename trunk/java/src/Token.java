@@ -65,11 +65,7 @@ public class Token
     {
       try
 	{
-	    while (true) {
-		try {
-		    return this.acquire (null);
-		} catch (InterruptedException e) { }
-	    }
+	    return this.acquire (null);
 	}
       catch (TimeoutException e)
 	{
@@ -90,7 +86,7 @@ public class Token
    * 1 if <sleepHook> is called.
    * -1 if failure occurs (timeout)
    */
-  public int acquire (TimeValue timeout) 
+  public int acquire (TimeValue timeout) throws TimeoutException
     {
       int result = 0;
       WaitObject snl = new WaitObject ();
@@ -115,7 +111,15 @@ public class Token
 	  {
 	      result = 1;
 	      sleepHook();
-	      snl.timedWait(timeout);
+
+	      while (mustWait) { 
+		  try {
+		      snl.timedWait(timeout);
+		      mustWait = false;
+		  } catch (InterruptedException e) {
+		      // must keep waiting
+		  }
+	      }
 	  }
 
 	  // Set the owner of the token
@@ -177,9 +181,8 @@ public class Token
    * entries to skip over before inserting our thread into the list of
    * waiters (e.g.,requeuePosition == 0 means "insert at front of the
    * queue"). 
-   *@exception InterruptedException exception during wait
    */
-  public void renew (int requeuePosition) throws InterruptedException
+  public void renew (int requeuePosition)
   {
     try
       {
@@ -208,10 +211,9 @@ public class Token
    *@param timeout Throw a TimeoutException if the token isn't renewed
    * before this absolute time timeout.
    *@exception TimeoutException exception if timeout occurs
-   *@exception InterruptedException exception during wait
    */
   public void renew (int requeuePosition, TimeValue timeout) 
-    throws InterruptedException, TimeoutException
+    throws TimeoutException
   {
     WaitObject snl = null;
     int saveNestingLevel = 0;
@@ -261,8 +263,15 @@ public class Token
             snl.condition (false);
 	    // Wait until the given absolute time (or until notified
 	    // if the timeout is null)
-	    try {
-		snl.timedWait (timeout);
+	    boolean mustWait = true;
+	    while (mustWait) {
+		try {
+		    snl.timedWait (timeout);
+		    mustWait = false;
+		} catch (InterruptedException e) { 
+		    // must keep waiting
+		}
+	    }
         }
         // Restore the nesting level and current owner of the lock
         this.nestingLevel_ = saveNestingLevel;
