@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable.h"
+#include "tao/Transport.h"
 #include "tao/TAOC.h"
 
 class TAO_Export TAO_Sync_Strategy

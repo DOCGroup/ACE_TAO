@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/GIOP_Message_Generator_Parser_12.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
@@ -15,19 +17,18 @@
 #include "tao/Service_Context.h"
 #include "tao/Pluggable.h"
 #include "tao/ORB_Core.h"
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser_12.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_Gen_Parser_12, "$Id$")
+
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
 // scope.
 static const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
-
-ACE_RCSID(tao, GIOP_Message_Gen_Parser_12, "$Id$")
-
-
 
 int
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
@@ -617,5 +618,4 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
                     context.context_data.length ());
 
   return transport->tear_listen_point_list (cdr);
-
 }

@@ -2,9 +2,9 @@
 
 #include "tao/Exclusive_TMS.h"
 #include "tao/Reply_Dispatcher.h"
-#include "tao/Pluggable.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
+#include "Transport.h"
 
 ACE_RCSID(tao, Exclusive_TMS, "$Id$")
 

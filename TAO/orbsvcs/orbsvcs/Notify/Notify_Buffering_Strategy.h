@@ -27,6 +27,8 @@
 
 #include "Notify_AdminProperties.h"
 
+#include "ace/Message_Queue.h"
+
 class TAO_Notify_Command;
 
 class TAO_Notify_Export TAO_Notify_Buffering_Strategy

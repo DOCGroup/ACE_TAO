@@ -1,3 +1,66 @@
+Tue Jan 16 15:07:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/tao-dll.icc:
+        * tao/tao-lib.icc:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.i:
+        * tao/Pluggable.cpp:
+          Move TAO_Transport class to its own file, Pluggable.{h,i,cpp}
+          were growing too much, and there is no need to expose TAO users
+          to the definition of Transport.
+
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Utils.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/ORB_Core.h:
+        * tao/Sync_Strategies.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+          A few files required explicit #includes for tao/Transport.h
+
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile:
+          Updated dependencies
+
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+          Now we need an explicit #include for ace/Message_Queue.  This is
+          good, before the change all TAO programs were getting
+          Message_Queue for no reason.
+
+        * tests/Faults/client.cpp:
+        * tests/Faults/middle.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/Faults/server.cpp:
+          Fixed typo in error message
+
 Tue Jan 16 14:52:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
@@ -20,8 +83,8 @@ Tue Jan 16 13:25:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jan 16 10:39:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/IIOP_Transport.cpp:
-	  Fixed RCSID macro
+        * tao/IIOP_Transport.cpp:
+          Fixed RCSID macro
 
 Tue Jan 16 12:09:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -37,7 +100,7 @@ Tue Jan 16 12:09:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
           all declarations except those of the Any operators will be
           ignored by the IDL compiler. The exporting of the classes
           in TAO won't help because a 'CORBA_' has been added to all
-          the class names, resulting in compiler errors. The easiest thing 
+          the class names, resulting in compiler errors. The easiest thing
           to do would be to use 'CORBA::(W)StringSeq' in the application
           code, and leave the typedef out of the IDL file altogether, but
           there are many reasons why this wouldn't be possible. Thanks to
@@ -45,31 +108,31 @@ Tue Jan 16 12:09:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue  Jan 16 07:55:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read: New stress test for the SingleRead that we do
-	  in TAO
+        * tests/Single_Read: New stress test for the SingleRead that we do
+          in TAO
 
-	* tests/Single_Read/client.cpp:
-	* tests/Single_Read/test_i.h:
-	* tests/Single_Read/test_i.cpp:
-	* tests/Single_Read/server.cpp:
-	* tests/Single_Read/README:
-	* tests/Single_Read/Single_Read.dsw:
-	* tests/Single_Read/client.dsp:
-	* tests/Single_Read/server.dsp: Files for the stress test. Please
-	  read the README file in the directory for details.
+        * tests/Single_Read/client.cpp:
+        * tests/Single_Read/test_i.h:
+        * tests/Single_Read/test_i.cpp:
+        * tests/Single_Read/server.cpp:
+        * tests/Single_Read/README:
+        * tests/Single_Read/Single_Read.dsw:
+        * tests/Single_Read/client.dsp:
+        * tests/Single_Read/server.dsp: Files for the stress test. Please
+          read the README file in the directory for details.
 
 Tue Jan 16 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Mesage_Base.cpp:
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Handler.h:
-	* tao/GIOP_Message_Handler.inl: Made changes to the way multiple
-	  messages that are read from the stream are handled. Initially,
-	  every message was split and put into a seperate buffer for
-	  processing. Now, we dump the whole message in to a new buffer and
-	  keep reading from that buffer for processing. This fixes some
-	  bizzare problems that we saw in a test which will be checked in
-	  next.
+        * tao/GIOP_Mesage_Base.cpp:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.inl: Made changes to the way multiple
+          messages that are read from the stream are handled. Initially,
+          every message was split and put into a seperate buffer for
+          processing. Now, we dump the whole message in to a new buffer and
+          keep reading from that buffer for processing. This fixes some
+          bizzare problems that we saw in a test which will be checked in
+          next.
 
 Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -93,11 +156,11 @@ Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jan 15 19:26:30 2001  Priyanka Gontla <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp:
-	  Added correct if-def guards to get ORB_Core.cpp compiled when
-	  TAO_HAS_RT_CORBA==0
+        * tao/ORB_Core.cpp:
+          Added correct if-def guards to get ORB_Core.cpp compiled when
+          TAO_HAS_RT_CORBA==0
 
-	  Thanks to David Allen <dallen@storm.com> for reporting this.
+          Thanks to David Allen <dallen@storm.com> for reporting this.
 
 Mon Jan 15 16:02:59 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
@@ -136,73 +199,73 @@ Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Jan 14 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp : A stupid typo that was giving errors
-	  with g++ :(
+        * tao/IIOP_Transport.cpp : A stupid typo that was giving errors
+          with g++ :(
 
 Sat Jan 13 18:25:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp: Fixed a compile error in g++.
+        * tao/IIOP_Transport.cpp: Fixed a compile error in g++.
 
 Sat Jan 13 10:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor): Made hostname ()
-	  public.
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor): Made hostname ()
+          public.
 
-	* tao/IIOP_Transport.cpp: Used TAO_IIOP_Acceptor::hostname () to
-	  get the hostnames in get_listen_point () method. Thanks to
-	  Ossama <ossama@uci.edu> for pointing this out.
+        * tao/IIOP_Transport.cpp: Used TAO_IIOP_Acceptor::hostname () to
+          get the hostnames in get_listen_point () method. Thanks to
+          Ossama <ossama@uci.edu> for pointing this out.
 
-	* tao/Wait_Strategy.h: Added a pure virtual method non_blocking
-	  (). This method will return a true or a false value. This value
-	  will be used by the connection handlers to set the socket to
-	  non_blocking mode. The strategy Wait_On_Read will need the
-	  socket on which it is waiting for a reply to be in blocking
-	  mode.
+        * tao/Wait_Strategy.h: Added a pure virtual method non_blocking
+          (). This method will return a true or a false value. This value
+          will be used by the connection handlers to set the socket to
+          non_blocking mode. The strategy Wait_On_Read will need the
+          socket on which it is waiting for a reply to be in blocking
+          mode.
 
-	* tao/Wait_On_Leader_Follower.h:
-	* tao/Wait_On_Leader_Follower.cpp:
-	* tao/Wait_On_Reactor.h:
-	* tao/Wait_On_Reactor.cpp:
-	* tao/Wait_On_Read.h:
-	* tao/Wait_On_Read.cpp: Implementation for non_blocking ().
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_On_Read.cpp: Implementation for non_blocking ().
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Set the
-	  socket to non_blocking mode based on the return value from the
-	  non_blocking () call from the wait strategy in the corresponding
-	  transports.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Set the
+          socket to non_blocking mode based on the return value from the
+          non_blocking () call from the wait strategy in the corresponding
+          transports.
 
 Fri Jan 12 14:52:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
 
-	  Fixed syntax error.
+          Fixed syntax error.
 
 Fri Jan 12 16:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Pluggable.i:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp: We open the sockets
-	  in non-blocking mode  and but change it to blocking only for the
-	  thread-per-connection option.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Pluggable.i:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp: We open the sockets
+          in non-blocking mode  and but change it to blocking only for the
+          thread-per-connection option.
 
 Fri Jan 12 11:32:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
 
-	  Fixed a memory leak that occured each time a request was
-	  forwarded.  The object reference was duplicated during each
-	  location forward, which isn't necessary since the callee (in
-	  this case the PortableServer::ForwardRequest exception) is
-	  supposed to duplicate the reference if it wishes to retain
-	  ownership.  On top of that, the Object_var that held the object
-	  reference was forced to drop ownership by invoking its _retn()
-	  method, so the object reference was in effect duplicated twice!
-	  I must have had too much chocolate that day. :-)
+          Fixed a memory leak that occured each time a request was
+          forwarded.  The object reference was duplicated during each
+          location forward, which isn't necessary since the callee (in
+          this case the PortableServer::ForwardRequest exception) is
+          supposed to duplicate the reference if it wishes to retain
+          ownership.  On top of that, the Object_var that held the object
+          reference was forced to drop ownership by invoking its _retn()
+          method, so the object reference was in effect duplicated twice!
+          I must have had too much chocolate that day. :-)
 
 Fri Jan 12 07:49:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -211,20 +274,20 @@ Fri Jan 12 07:49:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Jan 11 20:50:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Pluggable.i:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
-	  the place when the sockets were put in non-blocking
-	  mode. Setting the socket to non-blocking mode at connection
-	  initialisation results in poor performance when a RW strategy is
-	  used in the client side.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Pluggable.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
+          the place when the sockets were put in non-blocking
+          mode. Setting the socket to non-blocking mode at connection
+          initialisation results in poor performance when a RW strategy is
+          used in the client side.
 
 Thu Jan 11 15:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.cpp:
-	* tao/IIOP_Transport.cpp: Fixed warnings in g++ build.
+        * tao/GIOP_Message_State.cpp:
+        * tao/IIOP_Transport.cpp: Fixed warnings in g++ build.
 
 Thu Jan 11 12:36:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -249,78 +312,78 @@ Thu Jan 11 14:04:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jan 11 14:02:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	  This set of changes are for making the server side of the
-	  completely reactive. This is achieved by doing a single read on
-	  the socket when the reactor calls the service handler for
-	  reading GIOP messages. The message is first read into a buffer
-	  and then apropriate checking is performed. Then the message is
-	  put into a CDR steam and sent to the higher layers of the ORB
-	  for processing.
+          This set of changes are for making the server side of the
+          completely reactive. This is achieved by doing a single read on
+          the socket when the reactor calls the service handler for
+          reading GIOP messages. The message is first read into a buffer
+          and then apropriate checking is performed. Then the message is
+          put into a CDR steam and sent to the higher layers of the ORB
+          for processing.
 
         * tao/GIOP_Message_Handler.cpp
         * tao/GIOP_Message_Handler.h:
-	* tao/GIOP_Message_Handler.inl: A new class. This class basically
-	  does the following functions (1) reads messages from the socket
-	  in to a buffer (2) checks whether the message is a GIOP message
-	  (3) calculates the size of the payload and figures if any part
-	  of the message has been left unread (4) some memory and buffer
-	  management for the incoming messages.
+        * tao/GIOP_Message_Handler.inl: A new class. This class basically
+          does the following functions (1) reads messages from the socket
+          in to a buffer (2) checks whether the message is a GIOP message
+          (3) calculates the size of the payload and figures if any part
+          of the message has been left unread (4) some memory and buffer
+          management for the incoming messages.
 
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp: Moved some portion of the GIOP header
-	  checking routines like parse_header () to GIOP_Message_handler
-	  class. This class now sends requests to the higher layers by
-	  creating a CDR stream on the stack from the buffer in the
-	  GIOP_Message_Handler class.
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp: Moved some portion of the GIOP header
+          checking routines like parse_header () to GIOP_Message_handler
+          class. This class now sends requests to the higher layers by
+          creating a CDR stream on the stack from the buffer in the
+          GIOP_Message_Handler class.
 
-	* tao/GIOP_Message_State.i:
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.cpp: Removed the Input CDR from this
-	  class. Changed the way fragments are managed.
+        * tao/GIOP_Message_State.i:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp: Removed the Input CDR from this
+          class. Changed the way fragments are managed.
 
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h: This still uses a CDR stream to read
-	  the incoming messages. So moved the CDR stream that is used to
-	  read the incoming messages from the GIOP message state in to
-	  this class.
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h: This still uses a CDR stream to read
+          the incoming messages. So moved the CDR stream that is used to
+          read the incoming messages from the GIOP message state in to
+          this class.
 
-	* tao/IIOP_Connection_Handler.cpp: Made the socket non-blocking.
+        * tao/IIOP_Connection_Handler.cpp: Made the socket non-blocking.
 
-	* tao/IIOP_Transport.cpp: The call process_message () now checks
-	  if more messages are available in the buffer for processing. The
-	  call read_process_message () calls process_message () in a loop
-	  to process all the messages, if the read has read more than one
-	  message in to the buffer .
+        * tao/IIOP_Transport.cpp: The call process_message () now checks
+          if more messages are available in the buffer for processing. The
+          call read_process_message () calls process_message () in a loop
+          to process all the messages, if the read has read more than one
+          message in to the buffer .
 
-	* tao/GIOP_Message_Generator_Parser_Impl.h: Made check_revision ()
-	  a static method.
+        * tao/GIOP_Message_Generator_Parser_Impl.h: Made check_revision ()
+          a static method.
 
 
-	* tao/Pluggable.h:
-	* tao/Pluggable.i: Added a new call read () that does a
-	  non-blocking read on the socket.
+        * tao/Pluggable.h:
+        * tao/Pluggable.i: Added a new call read () that does a
+          non-blocking read on the socket.
 
-	* tao/Pluggable_Messaging.cpp:
-	* tao/Pluggable_Messaging.h: Added a call more_messages () to
-	  check whether any messages need to be processed.
+        * tao/Pluggable_Messaging.cpp:
+        * tao/Pluggable_Messaging.h: Added a call more_messages () to
+          check whether any messages need to be processed.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Added the new files.
-	* tao/Makefile: Added new files and updated dependencies.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Added the new files.
+        * tao/Makefile: Added new files and updated dependencies.
 
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
-	  changes made to IIOP.
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
+          changes made to IIOP.
 
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile:
-	* tao/PortableServer/Makefile:
-	* tao/SmartProxies/Makefile:
-	* tao/Strategies/Makefile: Updated dependencies.
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile: Updated dependencies.
 
 Thu Jan 11 13:44:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
