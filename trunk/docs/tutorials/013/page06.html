@@ -1,5 +1,82 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 013</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
-// $Id$
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 013</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Multiple thread pools</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+Let's take a look now at the new Task object.  This will obviously be
+different from the Tasks we've created before but I think you'll be
+surprised at how relatively simple it actually is.
+<P>
+Remember that the goal of this tutorial was to use the reference
+counting abilities of the ACE_Data_Block.  The only way to show that
+effectively is to have a data block passed between different threads.
+A thread pool isn't really going to do that so, instead, our new Task
+can be part of a chain of tasks.  In that way, each Task can pass the
+data on to another and satisfy our need for moving the ACE_Data_Block
+around.
+If we've done the reference counting correctly then none of our tasks
+will be trying to work with deleted data and we won't have any memory
+leaks at the end.
+<P>
+There's not much to the header, so I've included it and the cpp file
+on this one page.
+<P>
+<HR WIDTH="100%">
+<PRE>
+
+#include "ace/Task.h"
+#include "mld.h"
+
+/*
+  This is much like the Task we've used in the past for implementing a 
+  thread pool.  This time, however, I've made the Task an element in a 
+  singly-linked list.  As the svc() method finishes the process() on a 
+  unit of work, it will enqueue that unit of work to the next_ Task if 
+  there is one.  If the Task does not have a next_ Task, it will
+  invoke the unit of work object's fini() method after invoking process().
+ */
+class Task : public ACE_Task < ACE_MT_SYNCH >
+{
+public:
+
+    typedef ACE_Task < ACE_MT_SYNCH > inherited;
+
+        // Construct ourselves and an optional number of subtasks
+        // chained beyond us.
+    Task ( int sub_tasks = 0 );
+    ~Task (void);
+
+        // Open the Task with the proper thread-pool size
+    int open (int threads = 1 );
+
+        // Take Unit_Of_Work objects from the thread pool and invoke
+        // their process() and/or fini() as appropriate.
+    int svc (void);
+
+        // Shut down the thread pool and it's associated subtasks
+    int close (u_long flags = 0);
+
+        // Wait for the pool and subtasks to close
+    int wait(void);
+    
+protected:
+    ACE_Barrier * barrier_;
+    Task * next_;
+    MLD;
+};
+
+<HR WIDTH="50%">
 
 #include "task.h"
 #include "block.h"
@@ -191,3 +268,19 @@ int Task::svc (void)
 
   return (0);
 }
+</PRE>
+<HR WIDTH="100%">
+<P>
+So you see... it wasn't really that much more complicated.  We really
+just have to remember to pass to <i>next_</i> when we finish working
+on the data.  If your Unit_Of_Work derivative is going to implement a
+state machine be sure that you also implement a fini() method
+<em>or</em> ensure that your chain of subtasks is large enough for all 
+possible states.
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page07.html">Continue
+This Tutorial</A>]</CENTER>
+
+</BODY>
+</HTML>
