@@ -5545,7 +5545,8 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) == 0)
     {
-      if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
+      if (ACE_OS::mutex_init (&rw->lock_, type, name1,
+                              (ACE_mutexaddr_t *arg) == 0
           && ACE_OS::cond_init (&rw->waiting_readers_,
                                 attributes, name2, arg) == 0
           && ACE_OS::cond_init (&rw->waiting_writers_,
