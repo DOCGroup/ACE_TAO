@@ -1,3 +1,10 @@
+Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Added item to IDL compiler section about the newly expanded
+          support of value types.
+
 Tue Jan 15 09:08:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp: 
