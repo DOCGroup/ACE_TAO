@@ -114,6 +114,8 @@ protected:
   ACE_CString output_file_name_;
   // File name of the file into which received data is written.
 
+  ACE_CString addr_file_;
+
   ACE_CString sender_name_;
   // Sender name.
 
