@@ -9,7 +9,6 @@
 #include "ace/Arg_Shifter.h"
 
 #include "tao/TAO_Internal.h"
-#include "tao/IIOP_ORB.h"
 #include "tao/default_client.h"
 #include "tao/default_server.h"
 #include "tao/debug.h"
@@ -572,8 +571,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   ssf->open ();
 
   // Inititalize the "ORB" pseudo-object now.
-  IIOP_ORB_ptr this_orb = 0;
-  ACE_NEW_RETURN (this_orb, IIOP_ORB, 0);
+  CORBA::ORB_ptr this_orb;
+  ACE_NEW_RETURN (this_orb, CORBA_ORB (this), 0);
 
   // Install the ORB * into the ORB Core instance.  Note that if we're
   // running with a "thread-per-rate" concurrency model this ORB *
