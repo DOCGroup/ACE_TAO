@@ -909,26 +909,10 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
               fd,
               result->listen_handle ()));
 
-  // There is not going to be any data read. So we can use the
-  // <message_block> itself to take the <remote_address> as well as
-  // the size of that address.
-
-  // We will have atleast 2 * (sizeof (sockaddr_in) + sizeof (sockaddr)).
-  size_t buffer_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-
-  // Parameters for the <accept> call.
-  int *address_size = (int *)result->message_block ().wr_ptr ();
-  *address_size = buffer_size;
-
-  // Increment the wr_ptr.
-  result->message_block ().wr_ptr (sizeof (int));
-
   // Issue <accept> now.
   // @@ We shouldnt block here since we have already done poll/select
   // thru reactor. But are we sure?
-  ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (),
-                                          (struct sockaddr *) result->message_block ().wr_ptr (),
-                                          address_size);
+  ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (), 0, 0);
   if (new_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p:\n",
@@ -936,14 +920,6 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
                       -1);
 
   // Accept has completed.
-
-  // Update the <wr_ptr> for the <message block>.
-  result->message_block ().wr_ptr (*address_size);
-
-  // @@ Just debugging.
-  ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:Address_size = [%d], New_handle = [%d]\n",
-              *address_size, new_handle));
 
   // Store the new handle.
   result->accept_handle_ = new_handle;
