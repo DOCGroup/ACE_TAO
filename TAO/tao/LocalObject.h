@@ -31,32 +31,32 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export CORBA::LocalObject : public virtual CORBA::Object
+class TAO_Export CORBA_LocalObject : public virtual CORBA_Object
 {
   // @@ NW: It is not clear whether minimum CORBA should support
   //    LocalObject or not.  I think it should.
 public:
-  virtual ~LocalObject (void);
+  virtual ~CORBA_LocalObject (void);
   // destructor
 
-  static CORBA::LocalObject_ptr _duplicate (CORBA::LocalObject_ptr obj);
+  static CORBA_LocalObject_ptr _duplicate (CORBA_LocalObject_ptr obj);
   // increment the ref count
 
-  static CORBA::LocalObject_ptr _nil (void);
+  static CORBA_LocalObject_ptr _nil (void);
   // return a NUL object
 
-  static CORBA::LocalObject_ptr _narrow (CORBA::Object_ptr obj,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ());
-  // @@ Narrowing a CORBA::LocalObject to a CORBA::Object is broken
-  // right now.  The solution seems to be making CORBA::Object an
-  // abstract base class and create a CORBA::RemoteObject for regular
+  static CORBA_LocalObject_ptr _narrow (CORBA_Object_ptr obj,
+                                        CORBA_Environment &ACE_TRY_ENV =
+                                          TAO_default_environment ());
+  // @@ Narrowing a CORBA_LocalObject to a CORBA_Object is broken
+  // right now.  The solution seems to be making CORBA_Object an
+  // abstract base class and create a CORBA_RemoteObject for regular
   // object.  Or, even easier, add a <is_local> member into
-  // CORBA::Object.  I'll take the easier route for now.
+  // CORBA_Object.  I'll take the easier route for now.
 
-  static CORBA::LocalObject_ptr _unchecked_narrow (CORBA::Object_ptr obj,
-                                                   CORBA_Environment &ACE_TRY_ENV =
-                                                     TAO_default_environment ());
+  static CORBA_LocalObject_ptr _unchecked_narrow (CORBA_Object_ptr obj,
+                                                  CORBA_Environment &ACE_TRY_ENV =
+                                                    TAO_default_environment ());
   // no-op it is just here to simplify some templates.
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -111,14 +111,14 @@ public:
 
   CORBA::Policy_ptr _get_policy (
       CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   // throws NO_IMPLEMENT.
 
   CORBA::Policy_ptr _get_client_policy (
       CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   // throws NO_IMPLEMENT.
@@ -126,21 +126,21 @@ public:
   CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   // throws NO_IMPLEMENT.
 
   CORBA::PolicyList * _get_policy_overrides (
       const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   // throws NO_IMPLEMENT.
 
   CORBA::Boolean _validate_connection (
       CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   // throws NO_IMPLEMENT.
@@ -156,7 +156,7 @@ public:
   // different ORB protocols are in use) there is no default
   // implementation.
 
-  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
+  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj,
                                          CORBA_Environment &ACE_TRY_ENV =
                                              TAO_default_environment ())
     ACE_THROW_SPEC (());
@@ -190,13 +190,13 @@ public:
 #endif /* 0 */
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA::LocalObject_ptr _ptr_type;
-  typedef CORBA::LocalObject_var _var_type;
+  typedef CORBA_LocalObject_ptr _ptr_type;
+  typedef CORBA_LocalObject_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
 
 protected:
-  LocalObject (void);
+  CORBA_LocalObject (void);
   // Default constructor.  Make it protected to prevent instantiation
   // of this class.
 
@@ -205,53 +205,53 @@ private:
   // = Unimplemented methods
   // constructor
 
-  LocalObject (const LocalObject &);
-  LocalObject &operator = (const LocalObject &);
+  CORBA_LocalObject (const CORBA_LocalObject &);
+  CORBA_LocalObject &operator = (const CORBA_LocalObject &);
 };
 
-class TAO_Export CORBA::LocalObject_var
+class TAO_Export CORBA_LocalObject_var
 {
 public:
-  LocalObject_var (void); // default constructor
-  LocalObject_var (CORBA::LocalObject_ptr);
-  LocalObject_var (const CORBA::LocalObject_var &); // copy constructor
-  ~LocalObject_var (void); // destructor
+  CORBA_LocalObject_var (void); // default constructor
+  CORBA_LocalObject_var (CORBA_LocalObject_ptr);
+  CORBA_LocalObject_var (const CORBA_LocalObject_var &); // copy constructor
+  ~CORBA_LocalObject_var (void); // destructor
 
-  LocalObject_var &operator= (CORBA::LocalObject_ptr);
-  LocalObject_var &operator= (const CORBA::LocalObject_var &);
-  CORBA::LocalObject_ptr operator-> (void) const;
+  CORBA_LocalObject_var &operator= (CORBA_LocalObject_ptr);
+  CORBA_LocalObject_var &operator= (const CORBA_LocalObject_var &);
+  CORBA_LocalObject_ptr operator-> (void) const;
 
-  operator const CORBA::LocalObject_ptr &() const;
-  operator CORBA::LocalObject_ptr &();
+  operator const CORBA_LocalObject_ptr &() const;
+  operator CORBA_LocalObject_ptr &();
   // in, inout, out, _retn
-  CORBA::LocalObject_ptr in (void) const;
-  CORBA::LocalObject_ptr &inout (void);
-  CORBA::LocalObject_ptr &out (void);
-  CORBA::LocalObject_ptr _retn (void);
-  CORBA::LocalObject_ptr ptr (void) const;
+  CORBA_LocalObject_ptr in (void) const;
+  CORBA_LocalObject_ptr &inout (void);
+  CORBA_LocalObject_ptr &out (void);
+  CORBA_LocalObject_ptr _retn (void);
+  CORBA_LocalObject_ptr ptr (void) const;
 
 private:
-  CORBA::LocalObject_ptr ptr_;
+  CORBA_LocalObject_ptr ptr_;
 };
 
-class TAO_Export CORBA::LocalObject_out
+class TAO_Export CORBA_LocalObject_out
 {
 public:
-  LocalObject_out (CORBA::LocalObject_ptr &);
-  LocalObject_out (CORBA::LocalObject_var &);
-  LocalObject_out (const CORBA::LocalObject_out &);
-  LocalObject_out &operator= (const CORBA::LocalObject_out &);
-  LocalObject_out &operator= (const CORBA::LocalObject_var &);
-  LocalObject_out &operator= (CORBA::LocalObject_ptr);
-  operator CORBA::LocalObject_ptr &();
-  CORBA::LocalObject_ptr &ptr (void);
-  CORBA::LocalObject_ptr operator-> (void);
+  CORBA_LocalObject_out (CORBA_LocalObject_ptr &);
+  CORBA_LocalObject_out (CORBA_LocalObject_var &);
+  CORBA_LocalObject_out (const CORBA_LocalObject_out &);
+  CORBA_LocalObject_out &operator= (const CORBA_LocalObject_out &);
+  CORBA_LocalObject_out &operator= (const CORBA_LocalObject_var &);
+  CORBA_LocalObject_out &operator= (CORBA_LocalObject_ptr);
+  operator CORBA_LocalObject_ptr &();
+  CORBA_LocalObject_ptr &ptr (void);
+  CORBA_LocalObject_ptr operator-> (void);
 
 private:
-  CORBA::LocalObject_ptr &ptr_;
+  CORBA_LocalObject_ptr &ptr_;
 };
 
-class TAO_Export TAO_Local_RefCounted_Object : public virtual CORBA::LocalObject
+class TAO_Export TAO_Local_RefCounted_Object : public virtual CORBA_LocalObject
 {
   //
   // This class adds default reference counting to local objects.

@@ -1,84 +1,94 @@
+Sun Sep 10 04:03:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/corbafwd.h:
+        * tao/LocalObject.{h,i,cpp}: Changed class CORBA::LocalObject and
+          friends to CORBA_LocalObject and typedef the original names in
+          CORBA  namespace instead.  This change fix the compilation
+          problems in OMVS which seems to have problem dealing with nested
+          namespace.  Thanks to <amoderni@viasoft.com> for reporting
+          this.
+
 Fri Sep  8 21:33:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
+        * TAO_IDL/Makefile:
 
-	  New file:
-	* TAO_IDL/Makefile.dependencies:
+          New file:
+        * TAO_IDL/Makefile.dependencies:
 
-	  New simple makefile, called by the top level makefile for
-	  tao_idl, that touches (updates the timestamp) on the tao_idl
-	  executable if either the FE or the BE library has been modfied.
-	  Now that the IDL compiler is in three parts, this is necessary
-	  to cause code regeneration if _any_ part of the IDL compiler
-	  has been mofified. Thanks to Nanbor for his help with this.
-	  Note that a similiar scheme for Win32 platforms must still
-	  be put in place.
+          New simple makefile, called by the top level makefile for
+          tao_idl, that touches (updates the timestamp) on the tao_idl
+          executable if either the FE or the BE library has been modfied.
+          Now that the IDL compiler is in three parts, this is necessary
+          to cause code regeneration if _any_ part of the IDL compiler
+          has been mofified. Thanks to Nanbor for his help with this.
+          Note that a similiar scheme for Win32 platforms must still
+          be put in place.
 
 Fri Sep  8 21:00:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ be/be_visitor_argument/arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
-	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/argument.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+        * TAO_IDL/ be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
 
-	  Started out as a fix of a bug reported by 
-	  Christopher Kohlhoff <chris@kohlhoff.com>. If a nested portable
-	  interceptor class has a private member that's a pointer type (for
-	  example string), we generate the private member as char *&, but
-	  the constructor assigns a char * to this member. Some compilers
-  	  complain about this. The reference seems unnecessary in this case,
-	  so it has been removed in the generated header file.
+          Started out as a fix of a bug reported by
+          Christopher Kohlhoff <chris@kohlhoff.com>. If a nested portable
+          interceptor class has a private member that's a pointer type (for
+          example string), we generate the private member as char *&, but
+          the constructor assigns a char * to this member. Some compilers
+          complain about this. The reference seems unnecessary in this case,
+          so it has been removed in the generated header file.
 
-	  There are also many cosmetic modifications to generated code,
-	  indenting, formatting, etc. in both stub and skeleton. Also 
-	  cosmetic changes to IDL compiler source code.
+          There are also many cosmetic modifications to generated code,
+          indenting, formatting, etc. in both stub and skeleton. Also
+          cosmetic changes to IDL compiler source code.
 
 Fri Sep  8 20:50:00 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
- 	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h: 
-	  Added virtual destructors.
-	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
- 	  Commented unused parameter.
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
+          Added virtual destructors.
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+          Commented unused parameter.
 
 Fri Sep  8 18:54:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
-	* tao/Synch_Reply_Dispatcher.cpp: Initialised the reply_status_
-	  member in the constructor. Thanks to Ossama and his preying eyes
-	  for reporting this :-)
+        * tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
+        * tao/Synch_Reply_Dispatcher.cpp: Initialised the reply_status_
+          member in the constructor. Thanks to Ossama and his preying eyes
+          for reporting this :-)
 
 Fri Sep  8 17:35:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated dependenices in orbsvcs
+        * Updated dependenices in orbsvcs
 
 Fri Sep  8 17:24:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated all the Makefiles in examples/*
+        * Updated all the Makefiles in examples/*
 
 Fri Sep  8 16:58:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated all the Makefiles in tests/*
+        * Updated all the Makefiles in tests/*
 
 Fri Sep  8 16:18:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IORManipulation/TAO_IORManip.dsp:
-	* tao/IORManipulation/TAO_IORManip_Static.dsp:
-	* tao/TAO.dsw: Win32 project files
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/TAO.dsw: Win32 project files
 
 Fri Sep  8 15:51:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 

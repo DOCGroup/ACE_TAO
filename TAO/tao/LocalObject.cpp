@@ -19,18 +19,18 @@
 
 ACE_RCSID(tao, LocalObject, "$Id$")
 
-CORBA::LocalObject::~LocalObject (void)
+CORBA_LocalObject::~CORBA_LocalObject (void)
 {
 }
 
 void
-CORBA::LocalObject::_add_ref (void)
+CORBA_LocalObject::_add_ref (void)
 {
   // Do nothing as per CCM spec.
 }
 
 void
-CORBA::LocalObject::_remove_ref (void)
+CORBA_LocalObject::_remove_ref (void)
 {
   // Do nothing as per CCM spec.
 }
@@ -39,8 +39,8 @@ CORBA::LocalObject::_remove_ref (void)
 // create hash tables.
 
 CORBA::ULong
-CORBA::LocalObject::_hash (CORBA::ULong /* maximum */,
-                           CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_hash (CORBA::ULong /* maximum */,
+                           CORBA_Environment &ACE_TRY_ENV)
 {
   // @@ We need a different hash function here.
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -53,8 +53,8 @@ CORBA::LocalObject::_hash (CORBA::ULong /* maximum */,
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj,
-                                    CORBA::Environment &)
+CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj,
+                                    CORBA_Environment &)
     ACE_THROW_SPEC (())
 {
   return (other_obj == this) ? 1 : 0;
@@ -63,7 +63,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj,
 // TAO's extensions
 
 TAO_ObjectKey *
-CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_key (CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_ERROR((LM_ERROR, ACE_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -71,17 +71,17 @@ CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
 
 #if 0
 void *
-CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
+CORBA_LocalObject::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                    &CORBA::LocalObject::_narrow))
+                                    &CORBA_LocalObject::_narrow))
     retv = ACE_reinterpret_cast (void *, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                         &CORBA::Object::_narrow))
+                                         &CORBA_Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
-                                 ACE_static_cast (CORBA::Object_ptr,
+                                 ACE_static_cast (CORBA_Object_ptr,
                                                   this));
   if (retv)
     this->_add_ref ();
@@ -97,25 +97,25 @@ CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA::LocalObject::_non_existent (CORBA::Environment &)
+CORBA_LocalObject::_non_existent (CORBA_Environment &)
 {
   return 0;                     // Always returns false.
 }
 
 void
-CORBA::LocalObject::_create_request (CORBA::Context_ptr,
+CORBA_LocalObject::_create_request (CORBA::Context_ptr,
                                      const CORBA::Char *,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
                                      CORBA::Request_ptr &,
                                      CORBA::Flags,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void
-CORBA::LocalObject::_create_request (CORBA::Context_ptr,
+CORBA_LocalObject::_create_request (CORBA::Context_ptr,
                                      const CORBA::Char *,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
@@ -123,28 +123,28 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::ContextList_ptr,
                                      CORBA::Request_ptr &,
                                      CORBA::Flags,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA::Request_ptr
-CORBA::LocalObject::_request (const CORBA::Char *,
-                              CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_request (const CORBA::Char *,
+                              CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Request::_nil ());
 }
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 IR_InterfaceDef_ptr
-CORBA::LocalObject::_get_interface (CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_get_interface (CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 #endif /* TAO_HAS_INTERFACE_REPOSITORY */
 
 CORBA::ImplementationDef_ptr
-CORBA::LocalObject::_get_implementation (CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_get_implementation (CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
@@ -167,37 +167,37 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_policy (CORBA::PolicyType,
-                                 CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_get_policy (CORBA::PolicyType,
+                                 CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_client_policy (CORBA::PolicyType,
-                                        CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_get_client_policy (CORBA::PolicyType,
+                                        CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Object_ptr
-CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
+CORBA_LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
                                            CORBA::SetOverrideType,
-                                           CORBA::Environment &ACE_TRY_ENV)
+                                           CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::PolicyList *
-CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &,
-                                           CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &,
+                                           CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Boolean
-CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out,
-                                          CORBA::Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_validate_connection (CORBA::PolicyList_out,
+                                          CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }

@@ -180,6 +180,11 @@ class CORBA_Object_var;
 class CORBA_Object_out;
 typedef class CORBA_Object *CORBA_Object_ptr;
 
+class CORBA_LocalObject;
+class CORBA_LocalObject_var;
+class CORBA_LocalObject_out;
+typedef class CORBA_LocalObject *CORBA_LocalObject_ptr;
+
 class CORBA_Current;
 class CORBA_Current_var;
 class CORBA_Current_out;
@@ -461,10 +466,10 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
 
-  class LocalObject;
-  typedef LocalObject *LocalObject_ptr;
-  class LocalObject_var;
-  class LocalObject_out;
+  typedef CORBA_LocalObject LocalObject;
+  typedef CORBA_LocalObject *LocalObject_ptr;
+  typedef CORBA_LocalObject_var LocalObject_var;
+  typedef CORBA_LocalObject_out LocalObject_out;
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
