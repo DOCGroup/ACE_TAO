@@ -113,7 +113,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (CORBA::ULong length," << be_idt_nl
       << "char* *value," << be_nl
-      << "CORBA::Boolean release = 0)" << be_uidt_nl
+      << "CORBA::Boolean release)" << be_uidt_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, value, release)" << be_nl
       << "{" << be_nl
       << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl

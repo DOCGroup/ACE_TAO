@@ -383,9 +383,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
-	  << "CORBA::Environment &_env = " << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
-	  << be_uidt << be_uidt_nl
+	  << "CORBA::Environment &_env" << be_uidt_nl
 	  << ")" << be_uidt_nl
 	  << "{" << be_idt_nl;
       pt->accept (visitor);
