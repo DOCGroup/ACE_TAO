@@ -1,0 +1,7 @@
+// $Id$
+
+interface test
+{
+  oneway void method ();
+  oneway void shutdown ();
+};
