@@ -1,21 +1,27 @@
+Wed Sep  5 19:51:36 2001  Priyanka Gontla  <gontla_p@ociweb.com>
+
+	* tao/TAO_Static.dsp:
+	* tao/TAO.dsp :
+	  Added the new MCAST_Parser files.
+
 Wed Sep  5 17:26:12 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-	
+
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  
+
 	  Made changes to TAO_StreamEndPoint::change_qos to allow passing
 	  a null AVStreams::QoS to the TAO_AV_Flow_Handler::change_qos.
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.i:	
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
 
 	  Added a missing parameter to the ACE_DEBUG statement to print the flow name.
-	
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:	
+
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 
 	  Facilitated the passing of null AVStreams::QoS to the negotiator.
 
 Wed Sep  5 17:26:12 2001  Anand Krishnan  <anandk@cs.wustl.edu>
 
-	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: 
+	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl:
 	* orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
 	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
 	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.cpp:
@@ -29,12 +35,12 @@ Wed Sep  5 17:26:12 2001  Anand Krishnan  <anandk@cs.wustl.edu>
 	* orbsvcs/tests/Security/MT_SSLIOP/client.conf:
 	* orbsvcs/tests/Security/MT_SSLIOP/server.conf:
 	* orbsvcs/tests/Security/MT_SSLIOP/selfsigncert.pem:
-	* orbsvcs/tests/Security/MT_SSLIOP/pvtkey.pem: 
+	* orbsvcs/tests/Security/MT_SSLIOP/pvtkey.pem:
 	* orbsvcs/tests/Security/MT_SSLIOP/test.idl: A test for a simple
 	  multi-threaded SSLIOP test. This test will not be included in
 	  the daily builds for the upcoming beta, but will be there for
 	  the next beta.
-	
+
 Wed Sep  5 12:10:40 2001  Priyanka Gontla  <gontla_p@ociweb.com>
 
 	This set of changes are for bug 977.
@@ -82,9 +88,9 @@ Wed Sep  5 12:10:40 2001  Priyanka Gontla  <gontla_p@ociweb.com>
 	* orbsvcs/tests/IOR_MCast/server.cpp :
 	* orbsvcs/tests/IOR_MCast/server_i.h :
 	* orbsvcs/tests/IOR_MCast/server_i.cpp :
-	
-	  Simple test to test the new MCAST_Parser. 
-	
+
+	  Simple test to test the new MCAST_Parser.
+
 Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Endpoint.h: Added a lock that is used to lock when a thread
@@ -99,13 +105,13 @@ Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  code first checks for object_addr_.get_type() != AF_INET and, if
 	  so, it calls ACE_INET_Addr::set(). ACE_INET_Addr::set() sets
 	  type field to AF_INET, zeros the inet_addr structure and then
-	  does a hostname lookup.  
+	  does a hostname lookup.
 
 	  If two threads enter the object_addr() method the first may end
 	  up blocked for a while in the hostname lookup.  The second
 	  thread will see that AF_INET is set and return an (zero'ed)
-	  ACE_INET_Addr structure. 
-	  
+	  ACE_INET_Addr structure.
+
 	  The race can happen from TAO_IIOP_Connector::connect() when
 	  multiple threads attempt to talk to the same object.  You will
 	  sometimes see transient exceptions as one of the threads tries
@@ -120,7 +126,7 @@ Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Just added a comment
 	  telling that we shouldnt be holding the lock as the lock is being
 	  held in the IIOP class.
-		
+
 	* tao/IIOP_Transport.cpp:
 	* tao/Strategies/DIOP_Transport.cpp:
 	* tao/Strategies/SHMIOP_Transport.cpp:
