@@ -1,3 +1,10 @@
+Thu Mar  8 10:29:08 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+
+          Added missing ACE_TRY_ENV to resolve_initial_references
+          call.
+
 Thu Mar  8 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	    * tests/AMI_Timeouts/timeout_client.cpp:
