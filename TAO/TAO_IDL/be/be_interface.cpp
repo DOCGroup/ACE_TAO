@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_interface.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -49,7 +49,7 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 
   // compute the full skel name
@@ -72,7 +72,7 @@ be_interface::compute_fullskelname (void)
       // in the first loop compute the total length
       namelen = 4;
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             namelen += 2; // for "::"
@@ -81,7 +81,7 @@ be_interface::compute_fullskelname (void)
           // print the identifier
           namelen += ACE_OS::strlen (i->item ()->get_string ()); //
           // additional 4 for the POA_ characters
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -98,7 +98,7 @@ be_interface::compute_fullskelname (void)
       second - I_FALSE;
       ACE_OS::strcat (this->full_skel_name_, "POA_");
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             ACE_OS::strcat (this->full_skel_name_, "::");
@@ -106,7 +106,7 @@ be_interface::compute_fullskelname (void)
             first = second = I_FALSE;
           // print the identifier
           ACE_OS::strcat (this->full_skel_name_, i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -131,7 +131,7 @@ be_interface::full_skel_name (void)
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// generate the client header 
+// generate the client header
 int be_interface::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
@@ -142,7 +142,7 @@ int be_interface::gen_client_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_CH); // set the current code generation
-                                            // state 
+                                            // state
   ch = cg->client_header ();
   // pass info
   cg->outstream (ch);
@@ -164,7 +164,7 @@ int be_interface::gen_client_header (void)
   if (n_inherits () > 0)  // this interface inherits from other interfaces
     {
       *ch << ": ";
-      for (i = 0; i < n_inherits (); i++) 
+      for (i = 0; i < n_inherits (); i++)
         {
           *ch << "public virtual ";
           *ch << inherits ()[i]->name ();  // dump the scoped name
@@ -173,7 +173,7 @@ int be_interface::gen_client_header (void)
             {
               *ch << ", ";
             }
-        }  // end of for loop 
+        }  // end of for loop
       *ch << nl;
     }
   else
@@ -195,20 +195,20 @@ int be_interface::gen_client_header (void)
   *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
     "CORBA::Object_ptr obj);" << nl;
   *ch << "static " << local_name () << "_ptr " << "_nil (" <<
-    "void);\n\n"; 
+    "void);\n\n";
 
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
   if (be_scope::gen_client_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
 
   // generate the "protected" constructor so that users cannot instantiate
-  // us 
+  // us
   ch->decr_indent ();
   *ch << "protected:\n";
   ch->incr_indent ();
@@ -228,15 +228,15 @@ int be_interface::gen_client_header (void)
   // generate the _var declaration
   if (this->gen_var_defn () == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "be_interface - error generating _var definition\n"));
       return -1;
     }
 
-  // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec 
+  // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
   if (this->gen_out_defn () == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "be_interface - error generating _var definition\n"));
       return -1;
     }
@@ -272,7 +272,7 @@ int be_interface::gen_client_stubs (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_CS); // set the current code generation
-                                            // state 
+                                            // state
 
   cs = cg->client_stubs ();
   //pass info
@@ -297,7 +297,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "} // end of _duplicate" << nl << nl;
 
   // The _narrow method
-  *cs << name () << "_ptr " << name () << 
+  *cs << name () << "_ptr " << name () <<
     "::_narrow (CORBA::Object_ptr obj)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -308,8 +308,8 @@ int be_interface::gen_client_stubs (void)
   *cs << "STUB_Object *istub;" << nl;
   *cs << name () << "_ptr new_obj; // to be returned " << nl;
 #if 0 // XXXASG - I was told that emitting this line of code is the root cause
-      // of all evil 
-  *cs << "obj->Release ();" << 
+      // of all evil
+  *cs << "obj->Release ();" <<
     " // need this since _is_a grabbed an obj reference " << nl;
 #endif
   *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
@@ -318,7 +318,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "return " << name () << "::_nil ();\n";
   cs->decr_indent ();
   *cs << nl;
-  *cs << "obj->Release (); " << 
+  *cs << "obj->Release (); " <<
     "// need this since QueryIntf bumped our refcount" << nl;
   *cs << "new_obj = new " << name () << " (istub); " <<
     "// construct obj ref using the stub object" << nl;
@@ -341,7 +341,7 @@ int be_interface::gen_client_stubs (void)
   // generate code for the elements of the interface
   if (be_scope::gen_client_stubs () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_interface::gen_client_stubs\n")); 
+      ACE_ERROR ((LM_ERROR, "be_interface::gen_client_stubs\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -349,7 +349,7 @@ int be_interface::gen_client_stubs (void)
   // generate the typecode information here
   cs->indent (); // start from current indentation level
   *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-    nl; 
+    nl;
   *cs << "{\n";
   cs->incr_indent (0);
   if (this->gen_typecode () == -1)
@@ -360,9 +360,9 @@ int be_interface::gen_client_stubs (void)
   cs->decr_indent ();
   *cs << "};" << nl;
 
-  *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-    " (CORBA::tk_objref, sizeof (_oc_" <<  this->flatname () << 
-    "), (unsigned char *) &_oc_" << this->flatname () << 
+  *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+    " (CORBA::tk_objref, sizeof (_oc_" <<  this->flatname () <<
+    "), (unsigned char *) &_oc_" << this->flatname () <<
     ", CORBA::B_FALSE);" << nl;
   *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
     this->flatname () << ";\n\n";
@@ -385,7 +385,7 @@ int be_interface::gen_server_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_SH); // set the current code generation
-                                          // state 
+                                          // state
 
   sh = cg->server_header ();
   // pass info
@@ -421,12 +421,12 @@ int be_interface::gen_server_header (void)
     {
       be_interface *intf;
 
-      for (i = 0; i < n_inherits (); i++) 
+      for (i = 0; i < n_inherits (); i++)
         {
           *sh << ", public virtual ";
           intf = be_interface::narrow_from_decl (inherits ()[i]);
           *sh << intf->full_skel_name ();  // dump the scoped name
-        }  // end of for loop 
+        }  // end of for loop
     }
   *sh << nl;
   *sh << "{" << nl;
@@ -440,7 +440,7 @@ int be_interface::gen_server_header (void)
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_interface::gen_server_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_interface::gen_server_header\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -467,7 +467,7 @@ int be_interface::gen_server_skeletons (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_SS); // set the current code generation
-                                          // state 
+                                          // state
 
   ss = cg->server_skeletons ();
   // pass info
@@ -477,10 +477,10 @@ int be_interface::gen_server_skeletons (void)
   // generate the skeleton class name
 
   ss->indent (); // start with whatever indentation level we are at
-      
+
   if (this->gen_operation_table () == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "be_interface::gen_operation_table failure\n"));
       return -1;
     }
@@ -492,16 +492,16 @@ int be_interface::gen_server_skeletons (void)
   if (d && d->node_type () == AST_Decl::NT_root)
     {
       // we are outermost. So the POA_ prefix is prepended to our name
-      *ss << this->full_skel_name () << "::POA_" << this->local_name () << 
+      *ss << this->full_skel_name () << "::POA_" << this->local_name () <<
         " (const char *obj_name)" << nl;
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
-      *ss << this->full_skel_name () << "::" << this->local_name () << 
+      *ss << this->full_skel_name () << "::" << this->local_name () <<
         " (const char *obj_name)" << nl;
     }
-  
+
   *ss << "{\n";
   ss->incr_indent ();
   // code for the skeleton constructor
@@ -512,22 +512,22 @@ int be_interface::gen_server_skeletons (void)
   *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
     "// underlying OA" << nl;
   *ss << "this->optable_ = &tao_" << local_name () << "_optable;" << nl <<
-    nl; 
+    nl;
   *ss << "// set up an IIOP object" << nl;
   *ss << "data = new IIOP_Object (CORBA::string_dup (repoID));" << nl;
   *ss << "data->profile.iiop_version.major = IIOP::MY_MAJOR;" << nl;
   *ss << "data->profile.iiop_version.minor = IIOP::MY_MINOR;" << nl;
   *ss << "const ACE_INET_Addr &addr = orb->params ()->addr ();" << nl;
-  *ss << "data->profile.host = ACE_OS::strdup (" << 
+  *ss << "data->profile.host = ACE_OS::strdup (" <<
     "addr.get_host_name ());" << nl;
   *ss << "data->profile.port = addr.get_port_number ();" << nl;
-  *ss << "data->profile.object_key.length = " << 
+  *ss << "data->profile.object_key.length = " <<
     "ACE_OS::strlen (obj_name);" << nl;
-  *ss << "data->profile.object_key.maximum = " << 
+  *ss << "data->profile.object_key.maximum = " <<
     "data->profile.object_key.length;" << nl;
-  *ss << "data->profile.object_key.buffer = " << 
+  *ss << "data->profile.object_key.buffer = " <<
     "new CORBA::Octet [(size_t)data->profile.object_key.length+1];" << nl;
-  *ss << "ACE_OS::memcpy (data->profile.object_key.buffer, obj_name, " << 
+  *ss << "ACE_OS::memcpy (data->profile.object_key.buffer, obj_name, " <<
     "data->profile.object_key.length); // set the obj key" << nl;
   *ss << "this->set_parent (data); // store the IIOP obj ref with us" <<
     nl;
@@ -540,19 +540,19 @@ int be_interface::gen_server_skeletons (void)
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_skeletons () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_interface::gen_server_skeletons\n")); 
+      ACE_ERROR ((LM_ERROR, "be_interface::gen_server_skeletons\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
 
   // generate code for the _is_a skeleton
   ss->indent ();
-  *ss << "void " << this->full_skel_name () << 
-    "::_is_a_skel (CORBA::ServerRequest &req, " << 
+  *ss << "void " << this->full_skel_name () <<
+    "::_is_a_skel (CORBA::ServerRequest &req, " <<
     "CORBA::Object_ptr obj, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
-  *ss << "const CORBA::String type_id = \"" << this->repoID () << 
+  *ss << "const CORBA::String type_id = \"" << this->repoID () <<
     "\"; // repository ID" << nl;
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
   *ss << "CORBA::NamedValue_ptr nv;" << nl;
@@ -573,7 +573,7 @@ int be_interface::gen_server_skeletons (void)
   * ss << "else" << nl;
   *ss << "\tretval = new CORBA::Boolean (CORBA::B_FALSE);" << nl;
   *ss << "any = new CORBA::Any (CORBA::_tc_boolean, retval, CORBA::B_TRUE);" <<
-    nl; 
+    nl;
   *ss << "req.result (any, env);\n";
   ss->decr_indent ();
   *ss << "}\n\n";
@@ -609,11 +609,11 @@ be_interface::gen_operation_table (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
 	      // we are not imported.
 
@@ -622,7 +622,7 @@ be_interface::gen_operation_table (void)
                   // we are an operation node
                   *ss << "{\"" << d->local_name () << "\", &" << this->full_skel_name
                     () << "::" << d->local_name () << "_skel},"
-                      << nl; 
+                      << nl;
                   count++;
                 }
             }
@@ -639,12 +639,12 @@ be_interface::gen_operation_table (void)
   // demux - for next release
   *ss << "TAO_Dynamic_Hash_OpTable tao_" << local_name () << "_optable " <<
     "(" << local_name () << "_operations, " << count << ", " << 2*count << ");"
-      << nl; 
+      << nl;
   return 0;
 }
 
 // Generates the client-side inline information
-int 
+int
 be_interface::gen_client_inline (void)
 {
   TAO_OutStream *ci; // output stream
@@ -658,18 +658,18 @@ be_interface::gen_client_inline (void)
 
   // generate the constructors and destructor
   *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () << 
+  *ci << this->name () << "::" << this->local_name () <<
     " (void) // default constructor" << nl;
   *ci << "{}" << nl << nl;
 
   *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () << 
+  *ci << this->name () << "::" << this->local_name () <<
     " (STUB_Object *objref) // constructor" << nl;
   *ci << "\t: CORBA::Object (objref)" << nl;
   *ci << "{}" << nl << nl;
-  
+
   *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::~" << this->local_name () << 
+  *ci << this->name () << "::~" << this->local_name () <<
     " (void) // destructor" << nl;
   *ci << "{}\n\n";
 
@@ -692,10 +692,42 @@ be_interface::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_interface::gen_server_inline (void)
 {
   // nothing to be done
+  TAO_OutStream *si; // output stream
+  long i;            // loop index
+  TAO_NL  nl;        // end line
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  si = cg->server_inline ();
+
+  // generate the skeleton class name
+
+  si->indent (); // start with whatever indentation level we are at
+
+  *si << "// skeleton destructor" << nl;
+
+  *si << "ACE_INLINE" << nl;
+  if (!this->is_nested ())
+    {
+      // we are outermost. So the POA_ prefix is prepended to our name
+      *si << this->full_skel_name () << "::~POA_" << this->local_name () <<
+        " (void)" << nl;
+    }
+  else
+    {
+      // the POA_ prefix is prepended to our outermost module name
+      *si << this->full_skel_name () << "::~" << this->local_name () <<
+        " (const char *obj_name)" << nl;
+    }
+
+  *si << "{" << nl;
+  *si << "}\n";
+
   return 0;
 }
 
@@ -732,7 +764,7 @@ be_interface::gen_var_defn (void)
   *ch << namebuf << " (" << local_name () << "_ptr);" << nl;
 
   // copy constructor
-  *ch << namebuf << " (const " << namebuf << 
+  *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
 
   // destructor
@@ -743,7 +775,7 @@ be_interface::gen_var_defn (void)
   *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
 
   // assignment from _var
-  *ch << namebuf << " &operator= (const " << namebuf << 
+  *ch << namebuf << " &operator= (const " << namebuf <<
     " &);" << nl;
 
   // arrow operator
@@ -773,12 +805,12 @@ be_interface::gen_var_defn (void)
 
   ch->decr_indent ();
   *ch << "};\n\n";
-  
+
   return 0;
 }
 
 // implementation of the _var class. All of these get generated in the inline
-// file 
+// file
 int
 be_interface::gen_var_impl (void)
 {
@@ -806,14 +838,14 @@ be_interface::gen_var_impl (void)
 
   ci->indent (); // start with whatever was our current indent level
 
-  *ci << "// *************************************************************" 
+  *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
   // default constr
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << 
+  *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
   *ci << "\t" << ": ptr_ (" << this->name () << "::_nil ())" << nl;
   *ci << "{}\n\n";
@@ -828,9 +860,9 @@ be_interface::gen_var_impl (void)
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname << 
+  *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (" << name () << "::_duplicate (p))" << nl; 
+  *ci << "\t: ptr_ (" << name () << "::_duplicate (p))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -877,7 +909,7 @@ be_interface::gen_var_impl (void)
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << name () << 
+  *ci << fname << "::operator const " << name () <<
     "_ptr &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1017,8 +1049,8 @@ be_interface::gen_encapsulation (void)
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO 
-  *cs << "0, // byte order" << nl; 
+  // TODO
+  *cs << "0, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);

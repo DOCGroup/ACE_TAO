@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_union_branch.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -40,7 +40,7 @@ be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
   // computes the fully scoped name
   compute_fullname ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -48,8 +48,8 @@ be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// Generates the client-side header information for the union_branch 
-int 
+// Generates the client-side header information for the union_branch
+int
 be_union_branch::gen_client_header (void)
 {
   be_type *bt;  // the union_branch type
@@ -69,14 +69,40 @@ be_union_branch::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the union_branch
-int 
+int
 be_union_branch::gen_client_stubs (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+
+  if (!this->cli_stub_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+      cs = cg->client_stubs ();
+
+      cs->indent ();
+      // generate a case stmt
+      if (this->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
+        {
+          *cs << "case " << this->label ()->label_val ()->n ()  << ":\n";
+        }
+      else
+        {
+          *cs << "case " << this->label ()->label_val () << ":\n";
+        }
+      cs->incr_indent ();
+      *cs << "this->" << this->local_name () << "_ = u." << this->local_name ()
+          << "_;" << nl;
+      *cs << "break;\n";
+      cs->decr_indent (0);
+    }
   return 0;
 }
 
-// Generates the server-side header information for the union_branch 
-int 
+// Generates the server-side header information for the union_branch
+int
 be_union_branch::gen_server_header (void)
 {
   // nothing to be done
@@ -84,7 +110,7 @@ be_union_branch::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the union_branch
-int 
+int
 be_union_branch::gen_server_skeletons (void)
 {
   // nothing to be done
@@ -92,7 +118,7 @@ be_union_branch::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_union_branch::gen_client_inline (void)
 {
   be_type *bt;  // the union_branch type
@@ -105,7 +131,7 @@ be_union_branch::gen_client_inline (void)
   s = cg->make_state ();
   if (!s || !bt || (s->gen_code (bt, this) ==  -1))
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
         "be_union_branch: error generating impl of access methods\n"));
       return -1;
     }
@@ -113,7 +139,7 @@ be_union_branch::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_union_branch::gen_server_inline (void)
 {
   // nothing to be done
@@ -176,4 +202,3 @@ be_union_branch::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
 IMPL_NARROW_FROM_DECL (be_union_branch)
-
