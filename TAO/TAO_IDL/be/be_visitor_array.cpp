@@ -26,6 +26,8 @@
 #include "be_string.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
+#include "be_valuetype.h"
+#include "be_valuetype_fwd.h"
 #include "be_structure.h"
 #include "be_union.h"
 #include "be_sequence.h"

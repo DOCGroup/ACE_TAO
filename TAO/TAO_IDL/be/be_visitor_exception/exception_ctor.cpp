@@ -54,8 +54,6 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  os->indent ();
-
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
       *os << node->local_name ();
@@ -194,11 +192,11 @@ int be_visitor_exception_ctor::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
-      *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
+      *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr");
     }
   else
     {
-      *os << "const " << bt->name () << "_ptr ";
+      *os << "const " << bt->name () << "_ptr";
     }
 
   return 0;
@@ -220,11 +218,63 @@ int be_visitor_exception_ctor::visit_interface_fwd (be_interface_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
-      *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
+      *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr");
     }
   else
     {
-      *os << "const " << bt->name () << "_ptr ";
+      *os << "const " << bt->name () << "_ptr";
+    }
+
+  return 0;
+}
+
+int be_visitor_exception_ctor::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    {
+      *os << "const " << bt->nested_type_name (this->ctx_->scope (), " *");
+    }
+  else
+    {
+      *os << "const " << bt->name () << " *";
+    }
+
+  return 0;
+}
+
+int be_visitor_exception_ctor::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    {
+      *os << "const " << bt->nested_type_name (this->ctx_->scope (), " *");
+    }
+  else
+    {
+      *os << "const " << bt->name () << " *";
     }
 
   return 0;

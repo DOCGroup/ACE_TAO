@@ -483,7 +483,6 @@ public:
       TAO_UNION_PUBLIC_CS,
       TAO_UNION_PUBLIC_ASSIGN_CS,
       TAO_UNION_PUBLIC_RESET_CS,
-      TAO_UNION_PUBLIC_ACCESS_CS,
 
       // Emitting code for private members of the union.
       TAO_UNION_PRIVATE_CH,

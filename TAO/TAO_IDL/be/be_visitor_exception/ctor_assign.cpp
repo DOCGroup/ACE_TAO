@@ -95,7 +95,7 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (ACE_OS::strcmp (bd->flat_name (), node->flat_name ()) != 0)
     {
@@ -112,13 +112,13 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
     {
       // Constructor from member args.
       *os << "_copy (this->" << bd->local_name ()
-          << ", _tao_" << bd->local_name () << ");\n";
+          << ", _tao_" << bd->local_name () << ");";
     }
   else
     {
       // Copy constructor and assignment operator.
       *os << "_copy (this->" << bd->local_name ()
-          << ", _tao_excp." << bd->local_name () << ");\n";
+          << ", _tao_excp." << bd->local_name () << ");";
     }
 
   return 0;
@@ -130,17 +130,17 @@ be_visitor_exception_ctor_assign::visit_enum (be_enum *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = _tao_"
-          << bd->local_name () << ";\n";
+          << bd->local_name () << ";";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ";\n";
+          << bd->local_name () << ";";
     }
 
   return 0;
@@ -152,17 +152,17 @@ be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_" << bd->local_name () << ");\n";
+          << "::_duplicate (_tao_" << bd->local_name () << ");";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());\n";
+          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());";
     }
 
   return 0;
@@ -175,18 +175,87 @@ int be_visitor_exception_ctor_assign::visit_interface_fwd (
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_" << bd->local_name () << ");\n";
+          << "::_duplicate (_tao_" << bd->local_name () << ");";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());\n";
+          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());";
     }
+  return 0;
+}
+
+int
+be_visitor_exception_ctor_assign::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_decl *bd = this->ctx_->node ();
+
+  *os << be_nl;
+
+  if (this->ctx_->exception ()) // Special constructor.
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "ACE_const_cast (" << be_idt << be_idt_nl
+          << node->name () << " *," << be_nl
+          << "_tao_" << bd->local_name () << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_" 
+          << bd->local_name () << ";";
+    }
+  else
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "ACE_const_cast (" << be_idt << be_idt_nl
+          << node->name () << " *," << be_nl
+          << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_excp." 
+          << bd->local_name () << ".in ();";
+    }
+
+  return 0;
+}
+
+int be_visitor_exception_ctor_assign::visit_valuetype_fwd (
+    be_valuetype_fwd *node
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_decl *bd = this->ctx_->node ();
+
+  *os << be_nl;
+
+  if (this->ctx_->exception ()) // Special constructor.
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "ACE_const_cast (" << be_idt << be_idt_nl
+          << node->name () << " *," << be_nl
+          << "_tao_" << bd->local_name () << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_" 
+          << bd->local_name () << ";";
+    }
+  else
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "ACE_const_cast (" << be_idt << be_idt_nl
+          << node->name () << " *," << be_nl
+          << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_excp." 
+          << bd->local_name () << ".in ();";
+    }
+
   return 0;
 }
 
@@ -198,7 +267,7 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
   be_decl *bd = this->ctx_->node ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
-  os->indent ();
+  *os << be_nl;
 
   // Check if the type is an any.
   if (pt == AST_PredefinedType::PT_any)
@@ -206,12 +275,12 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
       if (this->ctx_->exception ()) // Special constructor.
         {
           *os << "this->" << bd->local_name () << " = _tao_"
-              << bd->local_name () << ";\n";
+              << bd->local_name () << ";";
         }
       else
         {
           *os << "this->" << bd->local_name () << " = _tao_excp."
-              << bd->local_name () << ";\n";
+              << bd->local_name () << ";";
         }
     }
   else if (pt == AST_PredefinedType::PT_pseudo
@@ -221,13 +290,13 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
         {
           *os << "this->" << bd->local_name () << " = "
               << node->name () << "::_duplicate (_tao_"
-              << bd->local_name () << ");\n";
+              << bd->local_name () << ");";
         }
       else
         {
           *os << "this->" << bd->local_name () << " = "
               << node->name () << "::_duplicate (_tao_excp."
-              << bd->local_name () << ".in ());\n";
+              << bd->local_name () << ".in ());";
         }
     }
   else // Simple predefined types.
@@ -235,12 +304,12 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
       if (this->ctx_->exception ()) // Special constructor.
         {
           *os << "this->" << bd->local_name () << " = _tao_"
-              << bd->local_name () << ";\n";
+              << bd->local_name () << ";";
         }
       else
         {
           *os << "this->" << bd->local_name () << " = _tao_excp."
-              << bd->local_name () << ";\n";
+              << bd->local_name () << ";";
         }
     }
 
@@ -252,17 +321,17 @@ int be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = _tao_" << bd->local_name ()
-          << ";\n";
+          << ";";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ";\n";
+          << bd->local_name () << ";";
     }
 
   return 0;
@@ -273,7 +342,7 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
@@ -281,13 +350,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
         {
           *os << "this->" << bd->local_name ()
               << " = CORBA::string_dup (_tao_"
-              << bd->local_name () << ");\n";
+              << bd->local_name () << ");";
         }
       else
         {
           *os << "this->" << bd->local_name ()
               << " = CORBA::wstring_dup (_tao_"
-              << bd->local_name () << ");\n";
+              << bd->local_name () << ");";
         }
     }
   else
@@ -296,13 +365,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
         {
           *os << "this->" << bd->local_name ()
               << " = CORBA::string_dup (_tao_excp."
-              << bd->local_name () << ".in ());\n";
+              << bd->local_name () << ".in ());";
         }
       else
         {
           *os << "this->" << bd->local_name ()
               << " = CORBA::wstring_dup (_tao_excp."
-              << bd->local_name () << ".in ());\n";
+              << bd->local_name () << ".in ());";
         }
     }
 
@@ -314,17 +383,17 @@ int be_visitor_exception_ctor_assign::visit_structure (be_structure *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = _tao_" << bd->local_name ()
-          << ";\n";
+          << ";";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ";\n";
+          << bd->local_name () << ";";
     }
 
   return 0;
@@ -335,17 +404,17 @@ int be_visitor_exception_ctor_assign::visit_union (be_union *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
 
-  os->indent ();
+  *os << be_nl;
 
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = _tao_" << bd->local_name ()
-          << ";\n";
+          << ";";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ";\n";
+          << bd->local_name () << ";";
     }
 
   return 0;

@@ -197,6 +197,18 @@ be_visitor_array_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_array_cdr_op_ci::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_array_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -583,6 +595,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
+              case AST_Decl::NT_valuetype:
+              case AST_Decl::NT_valuetype_fwd:
                 *os << ".out ()";
                 break;
               case AST_Decl::NT_pre_defined:
@@ -656,6 +670,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
+              case AST_Decl::NT_valuetype:
+              case AST_Decl::NT_valuetype_fwd:
                 *os << ".in ()";
                 break;
               case AST_Decl::NT_pre_defined:

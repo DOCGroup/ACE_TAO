@@ -67,11 +67,13 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
       // only if all cases are not covered AND there is no explicit
       // default, we get the _default () method
-      os->indent ();
       *os << "// the implicit _default () method" << be_nl;
       *os << "ACE_INLINE void " << be_nl
           << bu->name () << "::_default ()" << be_nl
@@ -103,7 +105,6 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       *os << ";" << be_uidt_nl << "}\n\n";
     }
 
-  os->indent ();
   // the set method
   *os << "// accessor to set the discriminant" << be_nl
       << "ACE_INLINE void" << be_nl
@@ -125,8 +126,9 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_union_discriminant_ci::visit_predefined_type (be_predefined_type
-                                                         *node)
+be_visitor_union_discriminant_ci::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   be_union *bu =
     this->ctx_->be_node_as_union ();  // get the enclosing union backend
@@ -155,11 +157,13 @@ be_visitor_union_discriminant_ci::visit_predefined_type (be_predefined_type
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      os->indent ();
 
       *os << "// the implicit _default () method" << be_nl;
       *os << "ACE_INLINE void " << be_nl

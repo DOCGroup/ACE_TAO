@@ -55,7 +55,9 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent (); //start with whatever indentation level we are at now
+
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // This is just declaration so no ACE_INLINE
   *os << be_global->stub_export_macro () << " "
@@ -64,7 +66,7 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
 
   *os << be_global->stub_export_macro () << " "
       << "CORBA::Boolean operator>> (TAO_InputCDR &, "
-      << node->full_name () << " *&);" << be_nl;
+      << node->full_name () << " *&);" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {

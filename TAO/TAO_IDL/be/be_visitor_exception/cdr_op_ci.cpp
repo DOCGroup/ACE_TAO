@@ -67,10 +67,17 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-      << "const " << node->name () << " &_tao_aggregate)" << be_nl
+
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
   // do we have any members?
   if (node->nmembers () > 0)
@@ -80,10 +87,10 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
       field_decl.visit_scope (node);
 
       // some members
-      *os << "// first marshal the repository ID" << be_nl
-          << "if (strm << _tao_aggregate._rep_id ())" << be_nl
+      *os << "// First marshal the repository ID." << be_nl
+          << "if (strm << _tao_aggregate._rep_id ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "// now marshal the members (if any)" << be_nl
+          << "// Now marshal the members (if any)." << be_nl
           << "if (" << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
@@ -95,41 +102,55 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << be_uidt_nl << ")"
+      *os << be_uidt_nl << " )"
           << be_idt_nl
+          << "{" << be_idt_nl
           << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "else" << be_idt_nl
-          << "return 0;" << be_uidt << be_uidt_nl
-          << "}" << be_nl
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl
           << "else" << be_idt_nl
-          << "return 0;" << be_uidt << be_uidt_nl;
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
     }
   else
     {
       // No members.
-      *os << "// first marshal the repository ID" << be_nl
+      *os << "// First marshal the repository ID." << be_nl
           << "if (strm << _tao_aggregate._rep_id ())" << be_idt_nl
+          << "{" << be_idt_nl
           << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "else" << be_idt_nl
-          << "return 0;" << be_uidt << be_uidt_nl;
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
     }
 
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
-  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &";
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &";
 
   if (node->nmembers () > 0)
     {
-      *os << "strm,"
-          << node->name () << " &_tao_aggregate)" << be_nl;
+      *os << "strm," << be_nl
+          << node->name () << " &_tao_aggregate" << be_uidt_nl
+          << ")" << be_uidt_nl;
     }
   else
     {
-      *os << ","
-          << node->name () << "&)" << be_nl;
+      *os << "," << be_nl
+          << node->name () << "&" << be_uidt_nl
+          << ")" << be_uidt_nl;
     }
 
   *os  << "{" << be_idt_nl;
@@ -148,7 +169,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
       field_decl.visit_scope (node);
 
       // Some members.
-      *os << "// now marshal the members" << be_nl
+      *os << "// Demarshal the members." << be_nl
           << "if (" << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
@@ -159,18 +180,22 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
                              "codegen for scope failed\n"), 
                             -1);
         }
-      *os << be_uidt_nl << ")"
+      *os << be_uidt_nl << " )"
           << be_idt_nl
+          << "{" << be_idt_nl
           << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "else" << be_idt_nl
-          << "return 0;" << be_uidt << be_uidt_nl;
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
     }
   else
     {
       *os << "return 1;" << be_uidt_nl;
     }
 
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   node->cli_inline_cdr_op_gen (1);
   return 0;

@@ -383,6 +383,146 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 }
 
 int
+be_visitor_union_branch_public_assign_cs::visit_valuetype (be_valuetype *node)
+{
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch (); // get union branch
+  be_union *bu =
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+  be_type *bt;
+
+  // Check if we are visiting this node via a visit to a typedef node.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_assign_cs::"
+                         "visit_valuetype - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  idl_bool bt_is_defined = node->is_defined ();
+
+  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  // So the template will work with the macro.
+  *os << "typedef "
+      << bt->name () << "_var OBJECT_FIELD;" << be_nl;
+  *os << "CORBA::add_ref (u.u_." << ub->local_name () 
+      << "_->ptr ());" << be_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    {
+      // We are generating the copy constructor.
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ())"
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      // We are generating the assignment operator.
+      *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ()),"
+          << be_nl
+          << "*this" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+
+  *os << "}" << be_uidt << be_uidt_nl;
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_public_assign_cs::visit_valuetype_fwd (
+    be_valuetype_fwd *node
+  )
+{
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch (); // get union branch
+  be_union *bu =
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+  be_type *bt;
+
+  // Check if we are visiting this node via a visit to a typedef node.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_assign_cs::"
+                         "visit_valuetype_fwd - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
+
+  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  // So the template will work with the macro.
+  *os << "typedef "
+      << bt->name () << "_var OBJECT_FIELD;" << be_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    {
+      // We are generating the copy constructor.
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ())"
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      // We are generating the assignment operator.
+      *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ()),"
+          << be_nl
+          << "*this" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+
+  *os << "}" << be_uidt << be_uidt_nl;
+
+  return 0;
+}
+
+int
 be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     be_predefined_type *node
   )
