@@ -1,3 +1,7 @@
+Fri Oct 23 00:27:11 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.63 released.
+
 Thu Oct 22 21:32:14 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Since we've been successfully using MSVC 6.0
