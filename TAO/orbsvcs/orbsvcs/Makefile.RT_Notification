@@ -826,6 +826,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ../../orbsvcs/orbsvcs/ESF/ESF_Worker.h \
@@ -2197,6 +2198,7 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ../../orbsvcs/orbsvcs/ESF/ESF_Worker.h \
@@ -2236,7 +2238,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
   ../../orbsvcs/orbsvcs/NotifyExtS_T.cpp \
   ../../orbsvcs/orbsvcs/NotifyExtS.i Notify/ConsumerAdmin.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
-  Notify/Structured/RT_StructuredProxyPushSupplier.inl \
-  $(TAO_ROOT)/tao/debug.h
+  Notify/Structured/RT_StructuredProxyPushSupplier.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

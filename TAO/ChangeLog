@@ -1,3 +1,15 @@
+Tue Nov 25 20:11:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/Makefile.RT_Notification:
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.Security:
+	* orbsvcs/orbsvcs/Makefile.av:
+
+	  Updated dependencies just for the above files. 
+
 Tue Nov 25 20:01:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
