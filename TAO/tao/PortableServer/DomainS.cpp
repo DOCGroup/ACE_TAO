@@ -785,11 +785,6 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
       ACE_TRY_ENV
     );
 
-  if (_tao_vfr.valid ())
-    {
-      ACE_CHECK;
-    }
-
   ACE_TRY
     {
       ri.request_id (_tao_server_request.request_id ());
@@ -1037,7 +1032,7 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )
-  : TAO_ServerRequest_Info (
+  : TAO_ServerRequestInfo (
         _tao_operation, 
         _tao_service_context_list
       ),
