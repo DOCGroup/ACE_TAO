@@ -2388,7 +2388,10 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !defined (ACE_LACKS_COND_T) || (defined (ACE_HAS_PACE) && ! defined (ACE_HAS_WIN32))
+// If we're using PACE then we want this method unless we're on Windows.
+// Win32 mutexes, semaphores, and condition variables are not yet
+// supported in PACE.
+#if !defined (ACE_LACKS_COND_T) || (defined (ACE_HAS_PACE) && !defined (ACE_WIN32))
 // NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
 // here because the ACE_OS::sema_* functions below need them.
 // However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
@@ -11675,7 +11678,7 @@ ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
   return len == 0 ? 0 : *scan1 - *scan2;
 }
 
-#if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS) && ! defined (ACE_HAS_PACE)
+#if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS) && (!defined (ACE_HAS_PACE) || defined (ACE_WIN32))
 ACE_INLINE long
 ACE_cond_t::waiters (void) const
 {

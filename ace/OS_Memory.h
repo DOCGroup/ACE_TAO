@@ -24,11 +24,9 @@
 
 #include "ace/OS_Export.h"
 #if defined (ACE_HAS_PACE)
-# include /**/ "pace/stddef.h"
 # include /**/ "pace/stdlib.h"
-#else
-# include /**/ <stddef.h>
 #endif /* ACE_HAS_PACE */
+#include /**/ <stddef.h>
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
