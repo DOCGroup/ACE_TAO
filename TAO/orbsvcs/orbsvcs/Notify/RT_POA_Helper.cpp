@@ -19,10 +19,9 @@ TAO_NS_RT_POA_Helper::~TAO_NS_RT_POA_Helper ()
 void
 TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
 {
-  char child_poa_name[32];
-  ACE_OS_String::itoa (ACE_OS::rand (), child_poa_name, 10);
+  ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->init (parent_poa, child_poa_name, tp_params ACE_ENV_ARG_PARAMETER);
+  this->init (parent_poa, child_poa_name.c_str (), tp_params ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -79,10 +78,9 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
 void
 TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
 {
-  char child_poa_name[32];
-  ACE_OS_String::itoa (ACE_OS::rand (), child_poa_name, 10);
+  ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->init (parent_poa, child_poa_name, tpl_params ACE_ENV_ARG_PARAMETER);
+  this->init (parent_poa, child_poa_name.c_str (), tpl_params ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -159,8 +157,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  char child_poa_name[32];
-  ACE_OS_String::itoa (ACE_OS::rand (), child_poa_name, 10);
+  ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->create_i (parent_poa, child_poa_name, policy_list ACE_ENV_ARG_PARAMETER);
+  this->create_i (parent_poa, child_poa_name.c_str (), policy_list ACE_ENV_ARG_PARAMETER);
 }

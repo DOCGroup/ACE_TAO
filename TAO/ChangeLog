@@ -370,6 +370,17 @@ Sun Jun  8 19:53:04 2003  Pradeep Gore  <pradeep@oomworks.com>
 
           Updated.
 
+	* orbsvcs/tests/Notify/Lanes/supplier.conf:
+	* orbsvcs/tests/Notify/Lanes/consumer.conf:
+	  
+	  Corrected the Lane info set in the filter.
+
+	* POA_Helper.cpp:
+	* POA_Helper.h:
+	* RT_POA_Helper.h:
+
+	  Added method <get_unique_id> to generate unique POA names.
+	
 Tue Jun 03 07:52:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAO version 1.3.2 released.
