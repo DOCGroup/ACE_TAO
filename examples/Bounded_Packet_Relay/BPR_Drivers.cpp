@@ -31,8 +31,6 @@
 
 ACE_RCSID(Bounded_Packet_Relay, BPR_Driver, "$Id$")
 
-
-
 // Constructor.
 
 template <ACE_SYNCH_DECL>
@@ -66,11 +64,18 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::send_input (void)
 {
   // Don't block, return immediately if queue is empty.
   ACE_Message_Block *item;
+
+  // @@ Chris, I think you can just say
+  // if (queue_.dequeue_head (item, &ACE_Time_Value::zero) == -1)
+  //   return 1;
+  // rather than having to get the current time of day...
   ACE_Time_Value now = ACE_OS::gettimeofday ();
+
   if (queue_.dequeue_head (item, &now) < 0)
     return 1;
 
   // If a message block was dequeued, send it to the output device.
+
   if (output_wrapper_->write_output_message ((void *) item) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
                        "failed to write to output device object"), 
@@ -88,8 +93,8 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::start_transmission (u_long packet_count,
                                                          u_long arrival_period,
                                                          u_long logging_level)
 {
-  // Serialize access to start and end transmission calls,
-  // statistics reporting calls.
+  // Serialize access to start and end transmission calls, statistics
+  // reporting calls.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->transmission_lock_, -1);
 
   // If a transmission is already in progress, just return.
@@ -169,7 +174,8 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::end_transmission (Transmission_Status statu
                         -1);
     }
 
-  // If all went well, set passed status, stamp end time, return success.
+  // If all went well, set passed status, stamp end time, return
+  // success.
   status_ = status;
   transmission_end_ = ACE_OS::gettimeofday ();  
   return 0;
@@ -235,7 +241,6 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::report_statistics (void)
               duration.sec (),
               duration.usec (),
               packets_sent_));
-
   return 0;
 }
 
@@ -252,7 +257,6 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::receive_input (void * arg)
                       -1);
   return 0;
 }
-
 
 // Constructor.
 
@@ -334,7 +338,7 @@ Input_Device_Wrapper_Base::svc (void)
        is_active_ && count != 0;
        )
     {
-      // make sure there is a send command object
+      // Make sure there is a send command object.
       if (send_input_msg_cmd_ == 0)
         {
           is_active_ = 0;
@@ -343,7 +347,7 @@ Input_Device_Wrapper_Base::svc (void)
                             -1);
         }
 
-      // create an input message to send
+      // Create an input message to send.
       message = create_input_message ();
       if (message == 0)
         {
@@ -353,7 +357,7 @@ Input_Device_Wrapper_Base::svc (void)
                              -1);
         }
 
-      // send the input message
+      // Send the input message.
       if (send_input_msg_cmd_->execute ((void *) message) < 0)
         {
           is_active_ = 0;
@@ -363,9 +367,9 @@ Input_Device_Wrapper_Base::svc (void)
                             -1);
         }
 
-      // If all went well, decrement count of messages to send,
-      // and run the reactor event loop unti we get a timeout
-      // or something happens in a registered upcall.
+      // If all went well, decrement count of messages to send, and
+      // run the reactor event loop unti we get a timeout or something
+      // happens in a registered upcall.
       if (count > 0) 
         --count;
 
@@ -378,9 +382,9 @@ Input_Device_Wrapper_Base::svc (void)
   return 0;
 }
 
-// Sends a newly created message block, carrying data
-// read from the underlying input device, by passing a
-// pointer to the message block to its command execution.
+// Sends a newly created message block, carrying data read from the
+// underlying input device, by passing a pointer to the message block
+// to its command execution.
 
 int 
 Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
@@ -388,14 +392,11 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
   if (send_input_msg_cmd_)
     return send_input_msg_cmd_->execute ((void *) amb);
   else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                         "Input_Device_Wrapper_Base::send_input_message: "
-                         "command object not instantiated"), 
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+                       "Input_Device_Wrapper_Base::send_input_message: "
+                       "command object not instantiated"), 
+                      -1);
 }
-
 
 // Parse the input and execute the corresponding command.
 
@@ -405,7 +406,8 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
   int option;
 
   if (::sscanf (buf, "%d", &option) <= 0)
-    // If there was an error reading the option simply try on the next line.
+    // If there was an error reading the option simply try on the next
+    // line.
     return 0;
 
   switch (option)
@@ -414,13 +416,12 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
         {
           u_long count;
 
-          // We just reread the option, this simplies parsing
-          // (since sscanf can do it for us).
+          // We just reread the option, this simplies parsing (since
+          // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &count) < 2)
-            // If there was not enough information on the line, 
-            // ignore option and try the next line.
+            // If there was not enough information on the line, ignore
+            // option and try the next line.
             return 0;
-
           if (packet_count_cmd_->execute ((void *) &count) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -428,18 +429,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
                               -1);
           break;
         }
-
       case 2:  // Set the arrival period.
         {
           u_long usec;
 
-          // We just reread the option, this simplies parsing
-          // (since sscanf can do it for us).
+          // We just reread the option, this simplies parsing (since
+          // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, 
-            // ignore option and try the next line.
+            // If there was not enough information on the line, ignore
+            // option and try the next line.
             return 0;
-
           if (arrival_period_cmd_->execute ((void *) &usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -447,18 +446,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
                               -1);
           break;
         }
-
       case 3:  // Set transmit period.
         {
           u_long usec;
 
-          // We just reread the option, this simplies parsing
-          // (since sscanf can do it for us).
+          // We just reread the option, this simplies parsing (since
+          // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, 
-            // ignore option and try the next line.
+            // If there was not enough information on the line, ignore
+            // option and try the next line.
             return 0;
-
           if (transmit_period_cmd_->execute ((void *) &usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -466,18 +463,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
                               -1);
           break;
         }
-
       case 4:  // Set duration limit.
         {
           u_long usec;
 
-          // We just reread the option, this simplies parsing
-          // (since sscanf can do it for us).
+          // We just reread the option, this simplies parsing (since
+          // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, 
-            // ignore option and try the next line.
+            // If there was not enough information on the line, ignore
+            // option and try the next line.
             return 0;
-
           if (duration_limit_cmd_->execute ((void *) &usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -485,18 +480,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
                               -1);
           break;
         }
-
       case 5:  // Set logging level.
         {
           u_long level;
 
-          // We just reread the option, this simplies parsing
-          // (since sscanf can do it for us).
+          // We just reread the option, this simplies parsing (since
+          // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &level) < 2)
-            // If there was not enough information on the line, 
-            // ignore option and try the next line.
+            // If there was not enough information on the line, ignore
+            // option and try the next line.
             return 0;
-
           if (logging_level_cmd_->execute ((void *) &level) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -504,27 +497,21 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
                               -1);
           break;
         }
-
       case 6: // Run one transmission.
         return run_transmission_cmd_->execute (0);
         /* NOTREACHED */
-
       case 7: // Report statistics.
         return report_stats_cmd_->execute (0);
         /* NOTREACHED */
-
       case 8: // Shut down the driver.
         return shutdown_cmd_->execute (0);
         /* NOTREACHED */
-
       default:
         // Display an error message.
         ACE_ERROR_RETURN ((LM_ERROR, "invalid input %s\n", buf), 0);
         ACE_NOTREACHED (break);
         /* NOTREACHED */
-
     } /* ENDSWITCH */
-
   return 0;
 }
 
@@ -534,6 +521,8 @@ template <class TQ> int
 Bounded_Packet_Relay_Driver<TQ>::run (void)
 {
   this->init ();
+
+  // Process all the incoming events.
 
   for (;;)
     if (this->get_next_request () == -1)
@@ -551,13 +540,12 @@ Bounded_Packet_Relay_Driver<TQ>::get_next_request (void)
 
   this->display_menu ();
 
-  ACE_DEBUG ((LM_DEBUG, "Please enter your choice: "));
+  ACE_DEBUG ((LM_DEBUG,
+              "Please enter your choice: "));
 
   // Reads input from the user.
   if (this->read_input (buf, sizeof buf) <= 0)
-    {
-      return -1;
-    }
+    return -1;
 
   // Parse and run the command.
   return this->parse_commands (buf);
