@@ -1,3 +1,9 @@
+Fri Mar 23 16:25:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/New_Fail_Test.cpp: Reverted the change from "Fri Mar 23
+	  06:34:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>". The
+	  change fails to comipile when exceptions are on.
+
 Fri Mar 23 08:47:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * apps/Gateway/Gateway/Options.cpp:

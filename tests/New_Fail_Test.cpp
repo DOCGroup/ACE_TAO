@@ -40,31 +40,25 @@ ACE_RCSID(tests, New_Fail_Test, "$Id$")
 // somewhere else in the test.
 
 // 1MB
-static const int BIG_BLOCK = 1024*1024;
+static const int BIG_BLOCK = 1024*1024;       
 
 // about 4GB max in the test
-static const int MAX_ALLOCS_IN_TEST = 4096;
+static const int MAX_ALLOCS_IN_TEST = 4096;   
 
-#if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
-  !defined (ACE_HAS_EXCEPTIONS)
-
-static void
+static void 
 try_ace_new (char **p)
 {
   ACE_NEW (*p, char[BIG_BLOCK]);
   return;
 }
 
-static char *
+static char * 
 try_ace_new_return (void)
 {
   char *p = 0;
   ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
   return p;
 }
-
-#endif /**/
-
 
 int
 main (int, ACE_TCHAR *[])
@@ -83,6 +77,12 @@ main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
   ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
+  // Use the static function addresses, to prevent warnings about the
+  // functions not being used.
+  if (&try_ace_new) 
+    /* NULL */;
+  if (&try_ace_new_return) 
+    /* NULL */;
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
@@ -104,7 +104,7 @@ main (int, ACE_TCHAR *[])
           ACE_ERROR((LM_WARNING,
                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer for deleting.
-          --i;
+          --i;    
         }
       else
         {
@@ -132,7 +132,7 @@ main (int, ACE_TCHAR *[])
           ACE_ERROR ((LM_WARNING,
                       ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer.
-          --i;
+          --i;    
         }
       else
         {
