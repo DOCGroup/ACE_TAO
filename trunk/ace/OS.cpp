@@ -103,8 +103,8 @@ ACE_Time_Value::operator FILETIME () const
   // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
   ULARGE_INTEGER _100ns;
   _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
-		      this->tv_.tv_usec * 10) +
-		     ACE_Time_Value::FILETIME_to_timval_skew);
+                      this->tv_.tv_usec * 10) +
+                     ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
 
 # if defined(__BORLANDC__)
@@ -1976,8 +1976,8 @@ ACE_Thread_Adapter::invoke (void)
       ACE_LOG_MSG->seh_except_handler ()(0);
     }
 #endif /* ACE_WIN32 */
-  // Not reached.  
-  return status;
+
+  ACE_NOTREACHED (return status);
 }
 
 #if defined (ACE_WIN32)
