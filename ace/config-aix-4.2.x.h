@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for OS
 // platforms running AIX 4.2.x using the IBM C++ compiler.
 

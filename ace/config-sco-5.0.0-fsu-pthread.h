@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for SCO UNIX
 // 5.0 with Florida State pthreads.
 
