@@ -1,3 +1,7 @@
+Wed Apr 07 02:04:30 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.34 released.
+
 Tue Apr  6 21:09:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ATM_Addr: Added the ATM_Addr.* files into the CVS
