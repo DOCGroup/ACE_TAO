@@ -1,12 +1,19 @@
+Mon Jan 18 16:51:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	The bank example was throwing an exception if run multiple times.
+	* examples/Simple/bank/Server_i.cpp (init_naming_service):
+	Added the TAO_TRY blocks. Used rebind instead of bind.
+	* examples/Simple/bank/server.cpp : Added a TAO_CHECK_ENV.
+
 Mon Jan 18 11:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp: 
+	* tao/decode.cpp:
 	  Fixed a problem with indirected type codes, thanks to Slava
 	  Galperin <galperin@teknowledge.com> for detecting the problem
 	  and providing us with a patch for it.
 
-	* examples/Simple/time/server.cpp: 
-	* examples/Simple/time/Time_Client_i.cpp: 
+	* examples/Simple/time/server.cpp:
+	* examples/Simple/time/Time_Client_i.cpp:
 	  Added missing template instantiations.
 
 Mon Jan 18 01:16:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
