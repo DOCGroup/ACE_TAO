@@ -1,5 +1,8 @@
 Thu Jun 29 02:38:52 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+	* pace/posix/mman.inl:
+	  Added cast to char* from void* in param passing.
+
 	* pace/posix/stdio.h:
  	* pace/posix/stdio.c:
 	  Changed *printf from macros to functions.
