@@ -629,80 +629,81 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   TAO_MProfile *mp = new TAO_MProfile (profiles);
 
   while (profiles-- != 0 )
-  {
-    // @@ For now we just take IIOP_Profiles,  FRED
-    // We keep decoding until we find a valid IIOP profile.
-    CORBA::ULong tag;
-
-    // get the profile ID tag
-    if ( (continue_decoding = stream->read_ulong (tag)) == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
-        continue;
-      }
-
-    if (tag != TAO_IOP_TAG_INTERNET_IOP ) // || objdata != 0)
-      {
-        continue_decoding = stream->skip_string ();
-        ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
-        continue;
-      }
-
-    // OK, we've got an IIOP profile.  It's going to be
-    // encapsulated ProfileData.  Create a new decoding stream and
-    // context for it, and tell the "parent" stream that this data
-    // isn't part of it any more.
-
-    CORBA::ULong encap_len;
-    // ProfileData is encoded as a sequence of octet. So first get
-    // the length of the sequence.
-    if ( (continue_decoding = stream->read_ulong (encap_len)) == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
-        continue;
-      }
-
-    // Create the decoding stream from the encapsulation in the
-    // buffer, and skip the encapsulation.
-    TAO_InputCDR str (*stream, encap_len);
-
-    continue_decoding =
-      str.good_bit ()
-      && stream->skip_bytes(encap_len);
-
-    if (!continue_decoding)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "problem decoding encapsulated stream, "
-                    "len = %d\n", encap_len));
-        continue;
-      }
-
-    // get the default IIOP Profile and fill in the blanks
-    // with str.
-    TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile;
-
-    // return code will be -1 if an error occurs
-    // otherwise 0 for stop (can't read this profile type or version)
-    // and 1 for continue.
-    // @@ check with carlos about how TRAVERSE_CONTINUE is used!  FRED
-    switch (pfile->parse (str, continue_decoding, env))
     {
-      case -1:
-        pfile->_decr_refcnt ();
-        return CORBA::TypeCode::TRAVERSE_STOP;
-      case 0:
-        break;
-      case 1:
-      default:
-        mp->add_profile (pfile);
-        // all other return values indicate success
-        break;
-    }
-    // get more profiles
-    pfile->_decr_refcnt ();
-    continue;
-  }
+      // @@ For now we just take IIOP_Profiles,  FRED
+      // We keep decoding until we find a valid IIOP profile.
+      CORBA::ULong tag;
+  
+      // get the profile ID tag
+      if ( (continue_decoding = stream->read_ulong (tag)) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
+          continue;
+        }
+  
+      if (tag != TAO_IOP_TAG_INTERNET_IOP ) // || objdata != 0)
+        {
+          continue_decoding = stream->skip_string ();
+          ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
+          continue;
+        }
+  
+      // OK, we've got an IIOP profile.  It's going to be
+      // encapsulated ProfileData.  Create a new decoding stream and
+      // context for it, and tell the "parent" stream that this data
+      // isn't part of it any more.
+  
+      CORBA::ULong encap_len;
+      // ProfileData is encoded as a sequence of octet. So first get
+      // the length of the sequence.
+      if ( (continue_decoding = stream->read_ulong (encap_len)) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
+          continue;
+        }
+  
+      // Create the decoding stream from the encapsulation in the
+      // buffer, and skip the encapsulation.
+      TAO_InputCDR str (*stream, encap_len);
+  
+      continue_decoding =
+        str.good_bit ()
+        && stream->skip_bytes(encap_len);
+  
+      if (!continue_decoding)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "problem decoding encapsulated stream, "
+                      "len = %d\n", encap_len));
+          continue;
+        }
+  
+      // get the default IIOP Profile and fill in the blanks
+      // with str.
+      TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile;
+  
+      // return code will be -1 if an error occurs
+      // otherwise 0 for stop (can't read this profile type or version)
+      // and 1 for continue.
+      // @@ check with carlos about how TRAVERSE_CONTINUE is used!  FRED
+      switch (pfile->parse (str, continue_decoding, env))
+        {
+          case -1:
+            pfile->_decr_refcnt ();
+            return CORBA::TypeCode::TRAVERSE_STOP;
+          case 0:
+            pfile->_decr_refcnt ();
+            break;
+          case 1:
+          default:
+            mp->give_profile (pfile);
+            // all other return values indicate success
+    	// we do not decrement reference count on profile since we are giving
+    	// it to the MProfile!
+            break;
+        } // switch
+        continue;
+    } // while loop
 
   // make sure we got some profiles!
   if (mp->profile_count () == 0)

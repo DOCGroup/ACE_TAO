@@ -856,14 +856,12 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
       // to dealicate pfile
       // Plus we want to return an exception.
       data = new STUB_Object (id, pfile);
+      // pfile is given to STUB_Object!
 
       if (data == 0)
         env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
     }
-
-  pfile->_decr_refcnt ();
-  // STUB_Object will increment the reference count.
 
   return data;
 }

@@ -101,7 +101,7 @@ STUB_Object::STUB_Object (char *repository_id,
 
   base_profiles_.set (1);
   
-  base_profiles_.add_profile (profile);
+  base_profiles_.give_profile (profile);
   
   this->set_profile_in_use_i (this->base_profiles_.get_next ());  
 
