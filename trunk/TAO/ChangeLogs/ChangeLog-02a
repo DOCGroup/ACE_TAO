@@ -1,3 +1,16 @@
+Sun Jul 09 21:41:01 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/client.dsp:
+	* examples/Content_Server/SMI_Iterator/server.dsp:
+	* examples/Content_Server/AMI_Iterator/client.dsp:
+	* examples/Content_Server/AMI_Iterator/server.dsp:
+	* examples/Content_Server/AMI_Observer/client.dsp:
+	* examples/Content_Server/AMI_Observer/server.dsp:
+
+	  Fixed preprocessor include path and library path in the
+	  "Release" configuration.  Removed extraneous directories from
+	  both of these paths in all configurations.
+
 Sun Jul 09 19:31:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * test/Exposed_Policies/Server.dsp:
@@ -471,7 +484,7 @@ Wed Jul  5 20:00:00 2000  Bruce Trask  <brucetrask@aol.com>
           reply send.  Changed TAO_DynamicImplementation::_dispatch so
           that it send the reply after the upcall.
 
-        * tao_idl\be\be_visitor_interface\interface_ss.cpp:
+        * tao_idl/be/be_visitor_interface/interface_ss.cpp:
           Added call to synchronous_upcall_dispatch which will initiate
           the reply for synchronous calls.
 
