@@ -2,6 +2,12 @@
 #
 # ACE one-button test for VxWorks 5.2/3.x.
 # To use:  -> < run_tests.vxworks > run_tests.log
+#
+# NOTE: if you build with a shared ACE library, be sure to load
+# that first:
+#  -> ld < ../ace/libACE.so
+# and unld it after running the tests.
+#
 # The output logs can be checked from a Unix host:
 #    % ./run_tests.check log/*.log
 #
