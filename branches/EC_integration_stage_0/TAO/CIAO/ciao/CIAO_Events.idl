@@ -13,6 +13,7 @@
 
 module CIAO_Events
 {
+  /// A component's UUID.
   typedef long CONNECTION_ID;
 
   enum EventServiceType
@@ -24,6 +25,11 @@ module CIAO_Events
     RTNS
   };
 
+  /// An object for setting consumer QoS requirements. This will be expanded to
+  /// allow filtering, correlation, etc. A Consumer_Config object is passed as
+  /// a parameter to CIAO::Container::_ciao_connect_event_consumer ().
+  /// Consumer_Config objects are created via
+  /// CIAO::Container::_ciao_create_event_consumer_config ().
   interface Consumer_Config
   {
     void set_consumer_id (in CONNECTION_ID connection_id);
@@ -44,6 +50,9 @@ module CIAO_Events
   };
 
 
+  /// An object for setting supplier QoS requirements.
+  /// Passed as a parameter to CIAO::Container::_ciao_connect_event_supplier ().
+  /// Created via CIAO::Container::_ciao_create_event_supplier_config ().
   interface Supplier_Config
   {
     void set_supplier_id (in CONNECTION_ID connection_id);

@@ -84,30 +84,35 @@ namespace CIAO
 
     // Events methods
 
+    /// A factory method for Consumer_Config objects.
     CIAO_Events::Consumer_Config_ptr _ciao_create_event_consumer_config (
         const char * service_type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    /// A factory method for Supplier_Config objects.
     CIAO_Events::Supplier_Config_ptr _ciao_create_event_supplier_config (
         const char * service_type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    /// Connect an event sink.
     virtual void _ciao_connect_event_consumer (
         CIAO_Events::Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    /// Connect an event source.
     virtual void _ciao_connect_event_supplier (
         CIAO_Events::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    /// Disconnect event sink.
     virtual void _ciao_disconnect_event_consumer (
         CIAO_Events::CONNECTION_ID connection_id
         ACE_ENV_ARG_DECL)
@@ -115,6 +120,7 @@ namespace CIAO
                        ::Components::InvalidName,
                        ::Components::InvalidConnection));
 
+    /// Disconnect event source.
     virtual void _ciao_disconnect_event_supplier (
         CIAO_Events::CONNECTION_ID connection_id
         ACE_ENV_ARG_DECL)
@@ -122,6 +128,7 @@ namespace CIAO
                        ::Components::InvalidName,
                        ::Components::InvalidConnection));
 
+    /// Push an event.
     virtual void _ciao_push_event (::Components::EventBase *ev,
                                    CIAO_Events::CONNECTION_ID connection_id
                                    ACE_ENV_ARG_DECL)
@@ -135,14 +142,17 @@ namespace CIAO
     // Reference to the POA
     PortableServer::POA_var poa_;
 
+    /// Mapping of suppliers to an event service implementation.
     ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
                          CIAO_Events::EventServiceBase *,
                          ACE_Null_Mutex> event_service_map_;
 
+    /// Mapping of consumers to state/disconnect info.
     ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
                          CIAO_Events::EventServiceInfo,
                          ACE_Null_Mutex> event_info_map_;
 
+    /// A helper class that encapsulates event service management.
     CIAO_Events::Events_Manager events_manager_;
   };
 

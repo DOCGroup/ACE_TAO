@@ -28,9 +28,11 @@
 namespace CIAO_Events
 {
 
+  // Forward declarations.
   class EventServiceBase;
   class Events_Manager;
 
+  /// Stores information about event consumers. Stored in a map in CIAO::Container.
   struct EventServiceInfo
   {
     EventServiceType type;
@@ -42,6 +44,9 @@ namespace CIAO_Events
       } connection;
   };
 
+  /// An abstract base class. Derived classes will provide appropriate implementations of
+  /// the connect, disconnect, and push methods. Each event source has an associated
+  /// EventServiceBase, stored in a map in CIAO::Container.
   class EventServiceBase
   {
 
@@ -82,6 +87,7 @@ namespace CIAO_Events
 
   };
 
+  /// An implementation of EventServiceBase using TAO's RT Event Channel.
   class RTEventService :
     public virtual EventServiceBase
   {
@@ -133,16 +139,17 @@ namespace CIAO_Events
     /// Reference to the RT event channel
     RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
 
+    /// The type of event
     RtecEventComm::EventType type_id_;
 
+    /// Info for the event publisher
     RtecEventComm::EventSourceID source_id_;
-
     RtecEventComm::PushSupplier_var push_supplier_;
-
     RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
 
   };
 
+  /// An implementation of EventServiceBase using direct communication.
   class DirectEventService :
     public virtual EventServiceBase
   {
@@ -189,6 +196,10 @@ namespace CIAO_Events
     
   };
 
+  /// An implementation of the Consumer_Config IDL interface that configures
+  /// an RT Event Channel. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_consumer_config () when "RTEC" is
+  /// specified as the event service type.
   class RTEvent_Consumer_Config :
     public virtual POA_CIAO_Events::Consumer_Config
   {
@@ -234,6 +245,10 @@ namespace CIAO_Events
     Events_Manager * events_manager_;
   };
 
+  /// An implementation of the Supplier_Config IDL interface that configures
+  /// TAO's RT Event Channel. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_supplier_config () when "RTEC" is
+  /// specified as the event service type.
   class RTEvent_Supplier_Config :
     public virtual POA_CIAO_Events::Supplier_Config
   {
@@ -263,6 +278,10 @@ namespace CIAO_Events
     Events_Manager * events_manager_;
   };
 
+  /// An implementation of the Consumer_Config IDL interface that configures
+  /// direct communication. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_consumer_config () when "DIRECT" is
+  /// specified as the event service type.
   class Direct_Consumer_Config :
     public virtual POA_CIAO_Events::Consumer_Config
   {
@@ -308,6 +327,10 @@ namespace CIAO_Events
     Events_Manager * events_manager_;
   };
 
+  /// An implementation of the Supplier_Config IDL interface that configures
+  /// direct communication. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_supplier_config () when "DIRECT" is
+  /// specified as the event service type.
   class Direct_Supplier_Config :
     public virtual POA_CIAO_Events::Supplier_Config
   {
@@ -337,6 +360,7 @@ namespace CIAO_Events
     Events_Manager * events_manager_;
   };
 
+  /// A helper class that encapsulates management functions for CIAO::Container.
   class Events_Manager
   {
 
@@ -378,6 +402,7 @@ namespace CIAO_Events
 
   };
 
+  /// An implementation for PushSupplier
   class RTEventServiceSupplier_impl :
     public virtual POA_RtecEventComm::PushSupplier,
     public virtual PortableServer::RefCountServantBase
@@ -395,6 +420,7 @@ namespace CIAO_Events
     CORBA::ORB_var orb_;
   };
 
+  /// An implementation for PushConsumer
   class RTEventServiceConsumer_impl :
     public virtual POA_RtecEventComm::PushConsumer,
     public virtual PortableServer::RefCountServantBase
