@@ -115,6 +115,14 @@ SOURCE=.\CC_naming_service.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CC_test_utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CC_test_utils.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CC_tests.cpp
 # End Source File
 # Begin Source File
