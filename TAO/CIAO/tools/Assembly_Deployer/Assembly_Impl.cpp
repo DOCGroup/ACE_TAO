@@ -200,8 +200,9 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
                                           this->assembly_context_,
                                           this->assembly_spec_->componentfiles_,
                                           this->deployment_config_);
-  int build_result = this->assembly_spec_->partitioning_.accept (builder
-                                                                 ACE_ENV_ARG_PARAMETER);
+  int build_result =
+    this->assembly_spec_->partitioning_.accept (builder
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));

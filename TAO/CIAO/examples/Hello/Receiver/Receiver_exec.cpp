@@ -61,6 +61,15 @@ Receiver_Impl::Receiver_exec_i::set_session_context (Components::SessionContext_
 }
 
 void
+Receiver_Impl::Receiver_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver_Impl::Receiver_exec_i::ciao_preactivate\n"));
+}
+
+void
 Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -75,15 +84,24 @@ Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   // explicitly to work around this problem.
   char *argv[1] = { "Receiver_exec"};
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-		                        argv,
-					"" 
-					ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv,
+                                        ""
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(),
-			       Hello::timeout_init,
+                               Hello::timeout_init,
                                Hello::timeout);
+}
+
+void
+Receiver_Impl::Receiver_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver_Impl::Receiver_exec_i::ciao_postactivate\n"));
 }
 
 void
@@ -118,8 +136,8 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
 {
   Components::EnterpriseComponent_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
-		    Receiver_Impl::Receiver_exec_i,
-		    CORBA::NO_MEMORY ());
+                    Receiver_Impl::Receiver_exec_i,
+                    CORBA::NO_MEMORY ());
   return tmp;
 }
 
