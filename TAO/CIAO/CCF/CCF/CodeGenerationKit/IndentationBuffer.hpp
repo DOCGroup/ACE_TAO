@@ -1,5 +1,9 @@
-#ifndef CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER
-#define CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER
+// file      : CCF/CodeGenerationKit/IndentationBuffer.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#ifndef CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER_HPP
+#define CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER_HPP
 
 #include "CCF/CompilerElements/ExH.hpp"
 
@@ -53,4 +57,4 @@ namespace Indentation
   };
 }
 
-#endif // CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER
+#endif // CCF_CODE_GENERATION_KIT_INDENTATION_BUFFER_HPP

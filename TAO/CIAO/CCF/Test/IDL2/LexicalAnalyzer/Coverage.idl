@@ -1,6 +1,6 @@
 // file      : CCF/Test/IDL2/LexicalAnalyzer/Coverage.idl
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 // This file is supposed to cover an IDL2 lexical structure and intended 
 // for IDL2 lexer regression testing.

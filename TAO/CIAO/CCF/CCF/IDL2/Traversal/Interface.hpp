@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/Traversal/Interface.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL2_TRAVERSAL_INTERFACE_HPP
 #define CCF_IDL2_TRAVERSAL_INTERFACE_HPP

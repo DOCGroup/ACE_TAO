@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/SemanticAction.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL2_SEMANTIC_ACTION_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_HPP
