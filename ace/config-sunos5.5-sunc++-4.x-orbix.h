@@ -14,6 +14,6 @@
 #define ACE_HAS_ORBIX 1
 
 // Platform contains the multi-threaded Orbix CORBA implementation.
-//#define ACE_HAS_MT_ORBIX
+#define ACE_HAS_MT_ORBIX 1
 
 #endif /* ACE_CONFIG_ORBIX_H */

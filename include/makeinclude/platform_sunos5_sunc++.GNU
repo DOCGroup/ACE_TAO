@@ -44,8 +44,9 @@ endif # exceptions
 LD              = $(CXX)
 
 ifdef orbix
-  LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/lib -R $(ACE_ROOT)/ace -R $(ORBIX_ROOT)/lib
-  LIBS          += -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
+  LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib -R $(ACE_ROOT)/ace -R $(ORBIX_ROOT)/corba2/lib
+  LIBS          += -lITinimt -liiopmt -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
+  CPPFLAGS	+= -I$(ORBIX_ROOT)/corba2/include
 else
   LDFLAGS       += -R $(ACE_ROOT)/ace
   LIBS          += -lsocket -ldl -lnsl -lgen
