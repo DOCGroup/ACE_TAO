@@ -4,39 +4,6 @@
 #include "Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-TAO_AV_Transport_Factory::TAO_AV_Transport_Factory (void)
-{
-}
-
-TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory (void)
-{
-}
-
-int
-TAO_AV_Transport_Factory::init (int /* argc */,
-                                char * /* argv */ [])
-{
-  return -1;
-}
-
-int
-TAO_AV_Transport_Factory::match_protocol (const char * /* protocol_string */)
-{
-  return 0;
-}
-
-TAO_AV_Acceptor *
-TAO_AV_Transport_Factory::make_acceptor (void)
-{
-  return 0;
-}
-
-TAO_AV_Connector *
-TAO_AV_Transport_Factory::make_connector (void)
-{
-  return 0;
-}
-
 // TAO_AV_Flow_Protocol_Factory
 TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory (void)
 {

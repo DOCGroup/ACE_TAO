@@ -1,3 +1,20 @@
+Fri Dec  9 15:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+
+          Added AV_Core.cpp and Nil.cpp.
+
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+
+          Changed to use "File.h" instead of "AV/File.h".
+
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h:
+
+          Removed the TAO_AV_Transport_Factory since it is also in 
+          Transport.h and Transport.cpp.
+
 Sat Dec  9 07:55:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Fixed some
