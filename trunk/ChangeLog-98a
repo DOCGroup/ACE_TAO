@@ -1,3 +1,9 @@
+Fri May  1 00:35:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU
+	  (ACE_LDSO_Version_Number): Fixed the problem of not able to
+	  parse a formal release number from ace/VERSION.
+
 Thu Apr 30 15:53:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE.{h,i,cpp}:
@@ -43,11 +49,11 @@ Thu Apr 30 15:53:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Added a new macro ASYS_INLINE for platforms that don't
 	  support inline properly.  This is controlled by the macro
-	  ACE_LACKS_INLINE_FUNCTIONS. 
-	 
+	  ACE_LACKS_INLINE_FUNCTIONS.
+
 	  Waklked thru all macros and indented them properly.
-	
-	* ace/README: Added documentation for ACE_LACKS_INLINE_FUNCTIONS. 
+
+	* ace/README: Added documentation for ACE_LACKS_INLINE_FUNCTIONS.
 
 Wed Apr 29 18:55:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
