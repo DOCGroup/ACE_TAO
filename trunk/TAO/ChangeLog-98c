@@ -1,3 +1,23 @@
+Mon Oct 20 16:30:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/tao_internals.cpp (fake_service_entries_i): Based the
+ 	arguments to the faked server service entry for VxWorks on the
+ 	TAO_HAS_TSS_ORBCORE compilation flag.  This should hopefully
+ 	eliminate the problems Boeing was seeing in the early rounds of
+ 	testing the most recent release of TAO.
+
+	* tao/{iiopobj.*,giop.h}: Moved a lock that had been in TAO_GIOP_Invocation
+ 	(why?  I don't know) into IIOP_Object.  It protects the
+ 	fwd_profile_ pointer, which has now become private.  Also added
+ 	accessors for the data member as well as the lock.  Accessors come
+ 	in two flavors--thead-safe (fwd_profile()) and non-thread-safe
+ 	(fwd_profile_i()).  The non-thread-safe variety expect that the
+ 	lock will be taken and held for the duration of their usage, but
+ 	no checking is performed in this respect.
+
+	* tao/giop.cpp: Changed references to the IIOP_Object::fwd_profile
+ 	data member to go through the new accessors (see above).
+
 Mon Oct 20 10:51:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/stub.i: Created new file with inline methods for

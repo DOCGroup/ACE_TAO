@@ -134,46 +134,24 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 DEFINE_GUID (IID_IIOP_Object,
 0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-#if 0
-// Added by BRM: 2/21/97
-// IID_STUB_Object and IID_CORBA::Object were not being defined.
-// Need a central place for all of these macros.
-
-#if 0 //defined(WIN32)
-EXTERN_C ACE_Svc_Export GUID IID_STUB_Object = 
-{0xa201e4c7, 0xf258, 0x11ce, {0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98} };
-#else
-DEFINE_GUID(IID_STUB_Object,
-0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-#endif /* 0 */
-
-// {A201E4C2-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA::Object,
-0xa201e4c2, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-// End - Added by BRM: 2/21/97 IID_STUB_Object and IID_CORBA::Object
-// were not being defined.  Need a central place for all of these
-// macros.
-#endif /* 0 */
-
 ULONG __stdcall
 IIOP_Object::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->IUnknown_lock_, 0));
 
-  return ++refcount_;
+  return ++this->refcount_;
 }
 
 ULONG __stdcall
 IIOP_Object::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->IUnknown_lock_, 0));
 
     ACE_ASSERT (this != 0);
 
-    if (--refcount_ != 0)
-      return refcount_;
+    if (--this->refcount_ != 0)
+      return this->refcount_;
   }
 
   delete this;
