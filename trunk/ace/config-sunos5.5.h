@@ -43,6 +43,12 @@
   // for details.
   // #define ACE_HAS_EXCEPTIONS
 
+#  if defined (ACE_HAS_EXCEPTIONS)
+     // If exceptions are enabled and we are using Sun/CC then
+     // <operator new> throws an exception instead of returning 0.
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif /* ACE_NEW_THROWS_EXCEPTIONS */
+
 #elif defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # define ACE_HAS_STRING_CLASS
