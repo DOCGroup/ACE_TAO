@@ -17,6 +17,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (0, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   CORBA::NVList_ptr list;
