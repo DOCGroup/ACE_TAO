@@ -16,6 +16,7 @@
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
 #include "ace/Framework_Component.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Object_Manager.i"
@@ -183,6 +184,10 @@ ACE_Object_Manager::init (void)
           // Make sure that the ACE_OS_Object_Manager has been created,
           // and register with it for chained fini ().
           ACE_OS_Object_Manager::instance ()->next_ = this;
+
+#     if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+          ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions ();
+#     endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
           // Construct the ACE_Service_Config's signal handler.

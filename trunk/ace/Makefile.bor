@@ -35,6 +35,7 @@ OBJFILES = \
 	$(OBJDIR)\ATM_Params.obj \
 	$(OBJDIR)\ATM_QoS.obj \
 	$(OBJDIR)\ATM_Stream.obj \
+	$(OBJDIR)\Atomic_Op.obj \
 	$(OBJDIR)\Based_Pointer_Repository.obj \
 	$(OBJDIR)\Base_Thread_Adapter.obj \
 	$(OBJDIR)\Basic_Types.obj \
@@ -255,7 +256,6 @@ INCLUDES = \
 	Asynch_Acceptor.cpp \
         Asynch_Connector.cpp \
 	Array_Base.cpp \
-        Atomic_Op.cpp \
 	Node.cpp \
 	Unbounded_Set.cpp \
 	Unbounded_Queue.cpp \

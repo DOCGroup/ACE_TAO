@@ -82,6 +82,7 @@ project : acelib, core {
 
     Threads {
       Activation_Queue.cpp
+      Atomic_Op.cpp
       Process.cpp
       Process_Manager.cpp
       Synch.cpp
@@ -286,6 +287,7 @@ project : acelib, core {
       Acceptor.cpp
       Active_Map_Manager_T.cpp
       Array_Base.cpp
+      Atomic_Op_T.cpp
       Node.cpp
       Unbounded_Set.cpp
       Unbounded_Queue.cpp
