@@ -1,3 +1,9 @@
+Tue Dec 25 22:58:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Fixed
+	  compile error in Win32 static builds. Thanks to Venkita for
+	  pointing the source of problem out.
+
 Tue Dec 25 19:44:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/text: Removed the
