@@ -1,3 +1,11 @@
+Tue Dec  8 19:50:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Shared_Object.cpp: Changed the various default
+ 	  implementations of init()/fini()/info() to return 0 rather than
+ 	  -1 so that users won't have to subclass Service_Object just to
+ 	  change the return value.  Thanks to Eric Newton for motivating
+ 	  this.
+
 Tue Dec  8 16:52:57 1998  Ossama Othman  <ossama@debian.org>
 
 	* ace/OS.{h,i}, ace/README: Added a fsync() method.  Define
