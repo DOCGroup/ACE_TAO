@@ -3,7 +3,7 @@
 
 project(BMDisplay_DnC_stub): ciao_client_dnc {
   after += BasicSP_DnC_stub
-  sharedname = BMDisplay_stub
+  sharedname = BMDisplay_DnC_stub
   idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export -Wb,stub_export_include=BMDisplay_stub_export.h -Wb,skel_export_macro=BMDISPLAY_SVNT_Export -Wb,skel_export_include=BMDisplay_svnt_export.h
   dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
 
@@ -18,8 +18,8 @@ project(BMDisplay_DnC_stub): ciao_client_dnc {
 
 project(BMDisplay_DnC_svnt) : ciao_servant_dnc {
   after += BasicSP_DnC_svnt BMDisplay_DnC_stub
-  sharedname  = BMDisplay_svnt
-  libs    += BMDisplay_stub BasicSP_stub BasicSP_svnt
+  sharedname  = BMDisplay_DnC_svnt
+  libs    += BMDisplay_DnC_stub BasicSP_DnC_stub BasicSP_DnC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export -Wb,export_include=BMDisplay_svnt_export.h
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
@@ -42,8 +42,8 @@ project(BMDisplay_DnC_svnt) : ciao_servant_dnc {
 
 project(BMDisplay_DnC_exec) : ciao_component_dnc {
   after += BMDisplay_DnC_svnt
-  sharedname = BMDisplay_exec
-  libs      += BMDisplay_stub BMDisplay_svnt BasicSP_stub BasicSP_svnt
+  sharedname = BMDisplay_DnC_exec
+  libs      += BMDisplay_DnC_stub BMDisplay_DnC_svnt BasicSP_DnC_stub BasicSP_DnC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMDISPLAY_EXEC_Export -Wb,export_include=BMDisplay_exec_export.h
   dynamicflags   = BMDISPLAY_EXEC_BUILD_DLL
@@ -57,4 +57,3 @@ project(BMDisplay_DnC_exec) : ciao_component_dnc {
     BMDisplay_exec.cpp
   }
 }
-
