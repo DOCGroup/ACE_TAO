@@ -605,7 +605,7 @@ ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
 char *
 ACE::timestamp (char date_and_time[], int date_and_timelen)
 {
-  ACE_TRACE ("ACE::timestamp");
+  //ACE_TRACE ("ACE::timestamp");
 
   if (date_and_timelen < 35)
     {
