@@ -1,8 +1,0 @@
-#
-# Makefile for building orbsvcs security examples
-#
-
-DIRS = \
-        Send_File
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
