@@ -15,6 +15,9 @@ Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  connector lock.  Therefore, it is passed to the cleanup_hint()
 	  function.
 
+	  The above changes should fix BUG 310. Thanks to Eric Mitchell
+	  <emitchell@altaira.com> for reporting it.
+
 Fri Nov 12 08:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Profile.cpp:
