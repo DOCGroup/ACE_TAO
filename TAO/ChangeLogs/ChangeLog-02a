@@ -1,3 +1,35 @@
+Mon Mar 19 03:02:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
+
+	  Fixed memory access violations.
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.h:
+	* orbsvcs/tests/Security/Secure_Invocation/README:
+	* orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.dsw:
+	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client.conf:
+	* orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf:
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+	* orbsvcs/tests/Security/Secure_Invocation/server.conf:
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_none.conf:
+	* orbsvcs/tests/Security/Secure_Invocation/server_nopasswd.conf:
+
+	  New test that verifies secure invocations are working properly,
+	  and to some extent the "SecurityCurrent" object.
+
 Mon Mar 19 00:16:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.dsp:
