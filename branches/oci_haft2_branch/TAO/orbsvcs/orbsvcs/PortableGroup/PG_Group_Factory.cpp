@@ -37,7 +37,14 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
 
 TAO::PG_Group_Factory::~PG_Group_Factory (void)
 {
-  // todo: destroy all members
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * group = (*it).int_id_;
+    delete group;
+  }
+  this->group_map_.unbind_all ();
 }
 
 
@@ -143,91 +150,6 @@ void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id
   {
     ACE_THROW (PortableGroup::ObjectNotFound ());
   }
-}
-
-
-
-
-PortableGroup::GenericFactory::FactoryCreationId *
-TAO::PG_Group_Factory::create_member (
-    PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::FactoryInfo & factory_info,
-    const char * type_id,
-    const CORBA::Boolean propagate_member_already_present
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria,
-                   PortableGroup::MemberAlreadyPresent))
-{
-  PortableGroup::GenericFactory::FactoryCreationId_var fcid;
-
-#if 0
-  CORBA::Object_var member =
-    factory_info.the_factory->create_object (type_id,
-                                             factory_info.the_criteria,
-                                             fcid.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ACE_TRY
-    {
-      // @@ Should an "_is_a()" be performed here?  While it
-      //    appears to be the right thing to do, it can be
-      //    expensive.
-      //
-      // Make sure an Object of the correct type was created.
-      // It is possible that an object of the wrong type was
-      // created if the type_id parameter does not match the
-      // type of object the GenericFactory creates.
-      CORBA::Boolean right_type_id =
-        member->_is_a (type_id
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // @todo Strategize this -- e.g. strict type checking.
-      if (!right_type_id)
-        {
-          // An Object of incorrect type was created.  Delete
-          // it, and throw a NoFactory exception.
-          factory_info.the_factory->delete_object (fcid.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          ACE_TRY_THROW (PortableGroup::NoFactory (factory_info.the_location,
-                                                   type_id));
-        }
-
-      this->object_group_manager_._tao_add_member (
-        object_group,
-        factory_info.the_location,
-        member.in (),
-        type_id,
-        propagate_member_already_present
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // If the member reference is not nil, then the factory
-      // was successfully invoked.  Since an exception was
-      // thrown, clean up the up created member.
-      if (!CORBA::is_nil (member.in ()))
-        {
-          factory_info.the_factory->delete_object (fcid.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-#endif
-  return fcid._retn ();
 }
 
     // insert group.  Take ownership

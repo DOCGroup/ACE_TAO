@@ -1,3 +1,12 @@
+Mon Dec  1 15:24:27 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+          Remove create_member method.  It doesn't belong here.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Remove invalid assert.
+
 Mon Dec  1 13:24:15 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
