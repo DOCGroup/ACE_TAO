@@ -8,6 +8,11 @@ Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	separating command line arguments starting with O. We leave this
 	task to the newly added Arg_Shifter.
 
+	* tao.orbobj.cpp: In ORB_init, the call to
+	TAO_ORb_Core_instance->init needed a char ** argv and we were
+	passing a char * const* argv. So we cast this. g++ was giving this
+	error.
+
 Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Cleaned up lots of places
