@@ -1,3 +1,13 @@
+Tue Mar 12 11:53:53 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/perltest2cpp.pl:
+
+          Corrected the code for array assignments.
+
+        * bin/vxworks_modify.pl:
+
+          Use ACE_ENV_* instead of TAO_ENV_*.
+
 Tue Mar 12 10:45:00 2002  Justin Michel <michel_j@ociweb.com>
  
        * ace/OS.i:
