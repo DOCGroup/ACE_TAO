@@ -117,7 +117,7 @@ GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 
   if (hdr_status)
     {
-      input >> this->requesting_principal_;
+      input >> this->requesting_principal_.out ();
       hdr_status = input.good_bit ();
     }
 
