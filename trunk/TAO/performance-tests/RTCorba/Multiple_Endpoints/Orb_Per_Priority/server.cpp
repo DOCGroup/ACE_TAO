@@ -138,7 +138,7 @@ main (int argc, char *argv[])
       CORBA::Short native_priority = 0;
       pm->to_native (priorities[i], native_priority);
 
-      servers[i].set (&server_impl, native_priority, argc, argv);
+      servers[i].set (&server_impl, priorities[i], argc, argv);
 
       if (servers[i].activate (flags,
                                1, 1,
