@@ -541,14 +541,6 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 }
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if defined (ACE_HAS_MKSTEMP)
-ACE_INLINE ACE_HANDLE
-ACE_OS::mkstemp (ACE_TCHAR *template)
-{
-  return mkstemp (template);
-}
-#endif  /* ACE_HAS_MKSTEMP */
-
 ACE_INLINE int
 ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 {
