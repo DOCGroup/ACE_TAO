@@ -2763,6 +2763,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 # if defined (ACE_HAS_THREADS)
 
+  // *** Set Stack Size
+#   if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+      if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+        stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+#   endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
 #   if !defined (VXWORKS)
   // On VxWorks, the OS will provide a task name if the user doesn't.
   // So, we don't need to create a tmp_thr.  If the caller of this
@@ -2788,12 +2794,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (::pthread_attr_init (&attr) != 0)
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
       return -1;
-
-  // *** Set Stack Size
-#     if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-  if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
-#     endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
 #     if defined (CHORUS)
   // If it is a super actor, we can't set stacksize.  But for the time
