@@ -14,9 +14,9 @@ Mon Feb 21 08:35:58 2000  Chad Elliott  <elliott_c@ociweb.com>
 Sun Feb 20 18:31:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Removed ACED.cpp and ACER.cpp.  These were only
-	  needed by Borland C++Builder 3.0, which is not supported by ACE (i.e., you need
- 	  to upgrade to BCB 4.0 or later).  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for this fix.
+	  needed by Borland C++Builder 3.0, which is not supported by ACE
+	  (i.e., you need to upgrade to BCB 4.0 or later).  Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for this fix.
 
 Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
