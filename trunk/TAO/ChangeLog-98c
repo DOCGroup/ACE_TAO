@@ -1,5 +1,8 @@
 Thu Dec  3 22:41:35 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
+	* performance-tests/Thruput/TAO/README: added info about the perl
+	scripts to the readme file (new_server_test, new_client_test, and new_run_test)
+
 	* performance-tests/Thruput/TAO/ttcp_decl.h: changed psecs to take
 	in a double instead of a long
 
