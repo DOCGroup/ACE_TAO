@@ -23,7 +23,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 0.9,
+                         'version'  => 1.0,
                          'types'    => {},
                          'creators' => \@creators,
                         }, $class;
@@ -240,10 +240,10 @@ sub run {
   if (!defined $global) {
     $global = $self->{'path'} . "/config/global.mpb";
   }
-  if (!defined $include[0]) {
-    push(@include, $self->{'path'} . "/config");
-    push(@include, $self->{'path'} . "/templates");
-  }
+  ## Always add the default include paths
+  unshift(@include, $self->{'path'} . "/config");
+  unshift(@include, $self->{'path'} . "/templates");
+
   if ($reldefs) {
     if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
       $relative{'ACE_ROOT'} = $ENV{ACE_ROOT};

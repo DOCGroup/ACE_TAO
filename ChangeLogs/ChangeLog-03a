@@ -1,3 +1,18 @@
+Tue Jul 23 09:48:15 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Always add the default include paths.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Make sure that idl generated source files go at the front of the
+          file list in auto-generates source lists.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Only add LIB and SHLIB assignments if we are generating a Makefile
+          for libraries.
 Mon Jul 22 22:30:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/XML_Common.dsp: Added the macro definition

@@ -767,6 +767,33 @@ sub generate_default_components {
             $self->{'idl_defaulted'} = 1;
             $self->process_assignment('tao', 1);
           }
+          elsif ($tag eq 'source_files') {
+            ## If we are auto-generating the source_files, then
+            ## we need to make sure that any idl generated source
+            ## files that are added are put at the front of the list.
+            my(@front) = ();
+            my(@copy)  = @$array;
+            my(@exts)  = $self->generated_source_extensions($tag);
+
+            @$array = ();
+            foreach my $file (@copy) {
+              my($found) = 0;
+              foreach my $ext (@exts) {
+                if ($file =~ /$ext$/) {
+                  push(@front, $file);
+                  $found = 1;
+                  last;
+                }
+              }
+              if (!$found) {
+                push(@$array, $file);
+              }
+            }
+
+            if (defined $front[0]) {
+              unshift(@$array, @front);
+            }
+          }
         }
       }
     }
@@ -855,7 +882,6 @@ sub generate_default_idl_generated {
 sub add_source_corresponding_component_files {
   my($self)  = shift;
   my($tag)   = shift;
-#  my($names) = $self->{'source_files'};
   my(@all)   = ();
   my($vc)    = $self->{'valid_components'};
 
