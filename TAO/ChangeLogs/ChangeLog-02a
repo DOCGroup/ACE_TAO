@@ -1,3 +1,10 @@
+Sat Mar 17 19:36:02 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/{client,server}.cpp: Changed "true" to 1 
+	  and "false" to 0 to work on compiler platforms that don't
+ 	  support bool.  Thanks to Craig Rodrigues for suggesting this
+ 	  fix.
+
 Sun Mar 18 02:43:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.dsp:
