@@ -61,7 +61,7 @@ AccountManager_i::open (const char *name,
 
           ACE_NEW_THROW_EX (result,
                             Account_i (name,
-                                       initial_balance)
+                                       initial_balance),
                             CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (Bank::Account::_nil ());
 
