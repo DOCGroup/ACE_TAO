@@ -1,27 +1,41 @@
+Thu Apr  5 14:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MT_Timeout/run_test.pl:
+        * tests/MT_Timeout/client.cpp:
+        * tests/MT_Timeout/server.cpp:
+        * tests/MT_Timeout/Client_Task.cpp:
+          Cleanup the test output
+
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+          Fixed nagging fuzz errors.
+
 Thu Apr  5 15:36:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/PolicyC.h: Added a missing Environment.h. This should fix
-	  problems in  TRU64_XX builds and SunCC builds.
+        * tao/PolicyC.h: Added a missing Environment.h. This should fix
+          problems in  TRU64_XX builds and SunCC builds.
 
 Thu Apr  5 13:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tao/Wait_On_Leader_Follower.cpp:
 
           Carlos and I worked on a fix for [Bug 842]. This involves
-          electing a new leader if a follower got elected but 
+          electing a new leader if a follower got elected but
           concurrently also received a timeout. In such cases
-          a dead-lock could occur, but this fix prevents it 
+          a dead-lock could occur, but this fix prevents it
           from happening, as the leaving follower elects a new
           leader, as itself cannot fulfill that role.
 
-          Such situations are detected by the condition that 
+          Such situations are detected by the condition that
           a timeout occured, remove_follower fails and reply_received
           equals 0. This fix applies exactly in such situations.
 
 Thu Apr  5 13:09:33 2001  Mayur Deshpande <mayur@ics.uci.edu>
-        
+
         * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
-          Added tao_imr path for windows platforms. Also added 
+          Added tao_imr path for windows platforms. Also added
           an extra ImplRepoService  to $TAO_ROOT/orbsvcs/ImplRepo_Service
           path.
 

@@ -18,13 +18,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-	ior_output_file = get_opts.optarg;
-	break;
+        ior_output_file = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-o <iorfile>"
+                           "-o <iorfile>"
                            "\n",
                            argv [0]),
                           -1);
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-	orb->object_to_string (process.in (), ACE_TRY_ENV);
+        orb->object_to_string (process.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-			      1);
+                              1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
@@ -91,7 +91,7 @@ main (int argc, char *argv[])
 
       Server_Task server_task (ACE_Thread_Manager::instance (),
                                orb.in (),
-                               3600);
+                               240);
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 8, 1) == -1)
         {

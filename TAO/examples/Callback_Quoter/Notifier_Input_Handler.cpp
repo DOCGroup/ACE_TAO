@@ -43,8 +43,8 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
       (this->notifier_i_.orb_->orb_core ()->reactor (),
        this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
      ACE_ERROR ((LM_ERROR,
-       	       "%p\n",
-       	       "remove_stdin_handler"));
+               "%p\n",
+               "remove_stdin_handler"));
 
 }
 
@@ -118,7 +118,7 @@ Notifier_Input_Handler::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->using_naming_service_ = 0;
+        this->using_naming_service_ = 0;
         break;
 
       case '?':  // display help for use of the server.
@@ -127,7 +127,7 @@ Notifier_Input_Handler::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-f] <ior_output_file>"
-			   " [-s]"
+                           " [-s]"
                            "\n",
                            argv_ [0]),
                           1);
@@ -176,9 +176,9 @@ Notifier_Input_Handler::init (int argc,
        orb->orb_core ()->reactor (),
        orb->orb_core ()->thr_mgr ()) == -1)
        ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_stdin_handler"),
-		      -1);
+                       "%p\n",
+                       "register_stdin_handler"),
+                      -1);
 
   // Stash our ORB pointer for later reference.
   this->notifier_i_.orb (orb.in ());
@@ -186,8 +186,8 @@ Notifier_Input_Handler::init (int argc,
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
-						 &this->notifier_i_,
-						 ACE_TRY_ENV);
+                                                 &this->notifier_i_,
+                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -217,13 +217,17 @@ Notifier_Input_Handler::run (CORBA::Environment &ACE_TRY_ENV)
 
 
   ACE_DEBUG ((LM_DEBUG,
-	      " Type \"q\" to quit \n "));
+              " Type \"q\" to quit \n "));
 
-  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Notifier_Input_Handler::run"),
-                      -1);
+  int result = this->orb_manager_.run (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+
+  if (result == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Notifier_Input_Handler::run"),
+                        -1);
+    }
 
   return 0;
 }
@@ -242,22 +246,22 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       // and remove the devil from the picture i.e '\n' ! ;)
 
       ssize_t strlen = ACE_OS::read (ACE_STDIN,
-				     buf,
-				     sizeof buf);
+                                     buf,
+                                     sizeof buf);
       if (buf[strlen -1] == '\n')
-	buf[strlen -1] = '\0';
+        buf[strlen -1] = '\0';
 
       ACE_DEBUG ((LM_DEBUG,
-		  "%s",
-         	  buf));
+                  "%s",
+                  buf));
 
       if (tolower(buf[0]) == 'q')
-	{
+        {
           // @@ Please remove this call if it's not used.
-	  // (this->notifier_i_.consumer_map_).close();
-	  this->notifier_i_.shutdown (ACE_TRY_ENV);
+          // (this->notifier_i_.consumer_map_).close();
+          this->notifier_i_.shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-	}
+        }
     }
    ACE_CATCHANY
     {

@@ -20,16 +20,16 @@ if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
-$client = $CL->SpawnWaitKill (1200);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (30);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
