@@ -4,7 +4,7 @@
 #
 CC              = gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -Wall -Wpointer-arith -O2 #### -Winline
+CFLAGS          += $(DCFLAGS) -Wall -Wpointer-arith -O2 -pipe #### -Winline
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 DLD		= $(CXX)
