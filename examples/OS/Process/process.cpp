@@ -544,10 +544,15 @@ main (int argc, char *argv[])
   if (print_file != 0)
     test_more ();
 
+  char buf1[30];
+  char buf2[30];
+  ACE_OS::strcpy(buf1, " -f hi honey -g \"I\'m home\"");
+  ACE_OS::strcpy(buf2, "\"token 1\"\'token 2\'\"token 3\" ");
+
   if (run_tokenizer)
     {
-      tokenize (" -f hi honey -g \"I\'m home\"");
-      tokenize ("\"token 1\"\'token 2\'\"token 3\" ");
+      tokenize ( buf1 );
+      tokenize ( buf2 );
     }
 
   return 0;
