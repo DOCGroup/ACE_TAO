@@ -1,60 +1,65 @@
+Fri Dec 24 07:57:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Makefile: removed Simulator.  It shouldn't
+          have been added yesterday.
+
 Thu Dec 23 18:30:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (~TAO_IIOP_Transport):
-	* tao/UIOP_Transport.cpp (~TAO_UIOP_Transport):
+        * tao/IIOP_Transport.cpp (~TAO_IIOP_Transport):
+        * tao/UIOP_Transport.cpp (~TAO_UIOP_Transport):
 
-	  Only if the socket has not already been closed should we try to
-	  send the buffered messages.
+          Only if the socket has not already been closed should we try to
+          send the buffered messages.
 
-	  Also, since send_buffered_messages() will reset the buffer queue
-	  after sending the data, there is no need to call dequeue_all().
-	  We need to call dequeue_all() only in the case when the socket
-	  is already closed since we won't be calling
-	  send_buffered_messages().
+          Also, since send_buffered_messages() will reset the buffer queue
+          after sending the data, there is no need to call dequeue_all().
+          We need to call dequeue_all() only in the case when the socket
+          is already closed since we won't be calling
+          send_buffered_messages().
 
-	  This fixes the shutdown crash I saw earlier on NT.
+          This fixes the shutdown crash I saw earlier on NT.
 
 Thu Dec 23 16:37:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Buffering_Constraint_Policy.h:
-	* tao/Buffering_Constraint_Policy.cpp:
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Buffering_Constraint_Policy.cpp:
 
-	  Inclusion of Buffering_Constraint_Policy.i should be moved into
-	  the TAO_HAS_CORBA_MESSAGING == 1 section.
+          Inclusion of Buffering_Constraint_Policy.i should be moved into
+          the TAO_HAS_CORBA_MESSAGING == 1 section.
 
-	* tao/Invocation.cpp (TAO_GIOP_Invocation):
-	* tao/ORB.cpp (resolve_policy_current and resolve_policy_manager):
+        * tao/Invocation.cpp (TAO_GIOP_Invocation):
+        * tao/ORB.cpp (resolve_policy_current and resolve_policy_manager):
 
-	  Fixed unused arg warnings for minimum CORBA build.
+          Fixed unused arg warnings for minimum CORBA build.
 
 Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  - Changed the following variables to have a [0/1]
-	  definition. Simply being defined or undefined was not powerful
-	  enough to allow the user to be really selective.
+          - Changed the following variables to have a [0/1]
+          definition. Simply being defined or undefined was not powerful
+          enough to allow the user to be really selective.
 
-	  TAO_HAS_RT_CORBA
-	  TAO_HAS_CORBA_MESSAGING
-	  TAO_HAS_AMI
-	  TAO_HAS_AMI_POLLER
-	  TAO_HAS_AMI_CALLBACK
-	  TAO_HAS_INTERFACE_REPOSITORY
+          TAO_HAS_RT_CORBA
+          TAO_HAS_CORBA_MESSAGING
+          TAO_HAS_AMI
+          TAO_HAS_AMI_POLLER
+          TAO_HAS_AMI_CALLBACK
+          TAO_HAS_INTERFACE_REPOSITORY
 
-	  - These changes are similar to the one Ossama and I made for
-	  TAO_HAS_UIOP.
+          - These changes are similar to the one Ossama and I made for
+          TAO_HAS_UIOP.
 
-	  - This meant that TAO_DISABLE_RT_CORBA was no longer necessary.
+          - This meant that TAO_DISABLE_RT_CORBA was no longer necessary.
 
-	  - Nanbor should probably think about doing the same to
-	  TAO_HAS_INTERCEPTORS.  Also, somebody should look into
-	  TAO_HAS_VALUETYPE.
+          - Nanbor should probably think about doing the same to
+          TAO_HAS_INTERCEPTORS.  Also, somebody should look into
+          TAO_HAS_VALUETYPE.
 
-	  - TAO_HAS_AMI is new and is similar to the <ami> make rule.
+          - TAO_HAS_AMI is new and is similar to the <ami> make rule.
 
-	  - The following files were changed to comply with the above
-	  changes:
+          - The following files were changed to comply with the above
+          changes:
 
             Asynch_Invocation.cpp
             Asynch_Invocation.h
@@ -119,93 +124,93 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
             rtcorbafwd.cpp
             rtcorbafwd.h
 
-	* rules.tao.GNU:
+        * rules.tao.GNU:
 
-	  - If <minimum_corba> is enabled, disable <rt_corba> and
-	  <corba_messaging> by default.  Users can still override this to
-	  enable <rt_corba> and <corba_messaging> even if <minimum_corba>
-	  is enabled.
+          - If <minimum_corba> is enabled, disable <rt_corba> and
+          <corba_messaging> by default.  Users can still override this to
+          enable <rt_corba> and <corba_messaging> even if <minimum_corba>
+          is enabled.
 
-	  - Changed <minimum_corba> to be overriden to 0 if it is not
-	  defined to be 1.  This make <minimum_corba> consistent with
-	  other variables.
+          - Changed <minimum_corba> to be overriden to 0 if it is not
+          defined to be 1.  This make <minimum_corba> consistent with
+          other variables.
 
-	  - Added new flags: <ami_callback> and <ami_poller>.  Both of
-	  these are 0 by default.
+          - Added new flags: <ami_callback> and <ami_poller>.  Both of
+          these are 0 by default.
 
-	  - Added new flag <ami>.  This one flag can be used to control
-	  both <ami_callback> and <ami_poller>.  However, the users can
-	  still control <ami_callback> and <ami_poller> independently.
+          - Added new flag <ami>.  This one flag can be used to control
+          both <ami_callback> and <ami_poller>.  However, the users can
+          still control <ami_callback> and <ami_poller> independently.
 
-	  - Changed -DTAO_DISABLE_RT_CORBA to -DTAO_HAS_RT_CORBA=0.
+          - Changed -DTAO_DISABLE_RT_CORBA to -DTAO_HAS_RT_CORBA=0.
 
-	  - Changed -DTAO_HAS_CORBA_MESSAGING to -DTAO_HAS_CORBA_MESSAGING=1
+          - Changed -DTAO_HAS_CORBA_MESSAGING to -DTAO_HAS_CORBA_MESSAGING=1
 
-	  - Changed -DTAO_HAS_INTERFACE_REPOSITORY to -DTAO_HAS_INTERFACE_REPOSITORY=1
+          - Changed -DTAO_HAS_INTERFACE_REPOSITORY to -DTAO_HAS_INTERFACE_REPOSITORY=1
 
-	  - Added -DTAO_HAS_RT_CORBA=1 when rt_corba=1
+          - Added -DTAO_HAS_RT_CORBA=1 when rt_corba=1
 
-	  - Added -DTAO_HAS_CORBA_MESSAGING=0 when corba_messaging=0
+          - Added -DTAO_HAS_CORBA_MESSAGING=0 when corba_messaging=0
 
-	* TAO: Changed
+        * TAO: Changed
 
-	  ifndef minimum_corba
+          ifndef minimum_corba
 
-	  to:
+          to:
 
-	  ifeq ($(minimum_corba),0)
+          ifeq ($(minimum_corba),0)
 
-	  to make it consistent with the other variables for the following
-	  Makefiles:
+          to make it consistent with the other variables for the following
+          Makefiles:
 
-	  - examples/Makefile
-	  - examples/POA/Makefile
-	  - orbsvcs/Makefile
-	  - orbsvcs/orbsvcs/Makefile
-	  - orbsvcs/tests/Makefile
-	  - performance-tests/Makefile
-	  - performance-tests/Cubit/TAO/Makefile
-	  - tao/Makefile
-	  - tests/Makefile
+          - examples/Makefile
+          - examples/POA/Makefile
+          - orbsvcs/Makefile
+          - orbsvcs/orbsvcs/Makefile
+          - orbsvcs/tests/Makefile
+          - performance-tests/Makefile
+          - performance-tests/Cubit/TAO/Makefile
+          - tao/Makefile
+          - tests/Makefile
 
-	* examples/Buffered_AMI/client.cpp (setup_buffering_constraints):
-	  Changed all ACE_TRY_CHECK to be ACE_CHECK. This is because we
-	  are not in a try block.
+        * examples/Buffered_AMI/client.cpp (setup_buffering_constraints):
+          Changed all ACE_TRY_CHECK to be ACE_CHECK. This is because we
+          are not in a try block.
 
-	* examples/Makefile (DIRS): Compile Buffered_AMI only when
-	  <ami_callback> is 1.
+        * examples/Makefile (DIRS): Compile Buffered_AMI only when
+          <ami_callback> is 1.
 
-	* tests/Makefile (DIRS): Compile the AMI test if <ami_callback> is 1.
+        * tests/Makefile (DIRS): Compile the AMI test if <ami_callback> is 1.
 
 Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
 
-	* TAO/orbsvcs/orbsvcs/: Modified Makefile.bor to include new
-	  source files, and to ensure tao_idl is executed for all .idl
- 	  files before compiling any .cpp files. This change should also
- 	  make it easier to keep the makefile up to date.
+        * TAO/orbsvcs/orbsvcs/: Modified Makefile.bor to include new
+          source files, and to ensure tao_idl is executed for all .idl
+          files before compiling any .cpp files. This change should also
+          make it easier to keep the makefile up to date.
 
-	  [ Note that the tao_idl flag "-I..\..\tao" added in the last
- 	  release has been removed. After further discussions with Mike
- 	  Gingell it was determined that the cause of the problem was
- 	  actually an incorrect TAO_ROOT environment variable. Fixing this
- 	  removed the need for the extra flag. ]
+          [ Note that the tao_idl flag "-I..\..\tao" added in the last
+          release has been removed. After further discussions with Mike
+          Gingell it was determined that the cause of the problem was
+          actually an incorrect TAO_ROOT environment variable. Fixing this
+          removed the need for the extra flag. ]
 
         * TAO/tao: Added files ImplRepo[CS].cpp to Makefile.bor.
 
 Thu Dec 23 12:06:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* utils/NamingViewer/StdAfx.h: Moved the inclusion of corba.h.
-	  ACE headers must come first to avoid conflicts among MFC and
- 	  non-MFC windows header files.
+        * utils/NamingViewer/StdAfx.h: Moved the inclusion of corba.h.
+          ACE headers must come first to avoid conflicts among MFC and
+          non-MFC windows header files.
 
-	  Added macro check against ACE's MFC support.
+          Added macro check against ACE's MFC support.
 
-	* utils/NamingViewer/NamingViewer.dsp: Added ACE_HAS_MFC=1.
+        * utils/NamingViewer/NamingViewer.dsp: Added ACE_HAS_MFC=1.
 
 Thu Dec 23 11:52:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* utils/NamingViewer/NamingViewer.dsp: Updated directory settings
-	  for the project.
+        * utils/NamingViewer/NamingViewer.dsp: Updated directory settings
+          for the project.
 
 Thu Dec 23 08:39:50 1999  David L. Levine  <levine@cs.wustl.edu>
 

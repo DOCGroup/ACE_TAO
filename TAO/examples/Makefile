@@ -18,8 +18,6 @@ DIRS  = Callback_Quoter \
         OBV \
         Load_Balancing
 
-DIRS += Simulator
-
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
