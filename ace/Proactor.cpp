@@ -239,9 +239,6 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   // set the timer queue
   this->timer_queue (tq);
 
-  // Don;t wait for the timer thread.
-  this->thr_mgr_.wait_on_exit (0);
-
   // Create the timer handler
   ACE_NEW (this->timer_handler_, ACE_Proactor_Timer_Handler (*this));
 
@@ -551,8 +548,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
     {
       errno = ::GetLastError ();
 
-      // @@  What's the WIN32 constant for timeout (258)?!?!?!
-      if (errno == 258)
+      if (errno == WAIT_TIMEOUT)
 	{
 	  errno = ETIME;
 	  return 0;
