@@ -42,7 +42,7 @@ DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
-Env_Value_Test: !chorus
+Env_Value_Test: !chorus !WinCE
 FIFO_Test: !Win32
 Framework_Component_Test: !STATIC
 Future_Test
