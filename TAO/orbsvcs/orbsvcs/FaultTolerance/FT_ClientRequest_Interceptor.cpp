@@ -10,7 +10,7 @@
 #include "ace/Synch_Traits.h"
 
 ACE_RCSID (FaultTolerance,
-           FT_ClientRequest_Interceptor.cpp
+           FT_ClientRequest_Interceptor,
            "$Id$")
 
 
