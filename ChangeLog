@@ -1,3 +1,11 @@
+Wed Jun  9 09:36:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Select_Reactor_T.cpp:
+
+          Use prefix {in,dec}rement operators where applicable instead of
+          postfix operators.  The former are more efficient.
+
 Wed Jun 09 09:27:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/WFMO_Reactor.cpp:

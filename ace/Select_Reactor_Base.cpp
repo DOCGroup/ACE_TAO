@@ -90,7 +90,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
                   -1);
 
   // Initialize the ACE_Event_Handler * to { ACE_INVALID_HANDLE, 0 }.
-  for (size_t h = 0; h < size; h++)
+  for (size_t h = 0; h < size; ++h)
     {
       ACE_SELECT_REACTOR_HANDLE (h) = ACE_INVALID_HANDLE;
       ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
@@ -102,7 +102,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
                   -1);
 
   // Initialize the ACE_Event_Handler * to NULL.
-  for (size_t h = 0; h < size; h++)
+  for (size_t h = 0; h < size; ++h)
     ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
 #endif /* ACE_WIN32 */
 
@@ -128,7 +128,7 @@ ACE_Select_Reactor_Handler_Repository::unbind_all (void)
   // Unbind all of the <handle, ACE_Event_Handler>s.
   for (int slot = 0;
        slot < this->max_handlep1_;
-       slot++)
+       ++slot)
     this->unbind (ACE_SELECT_REACTOR_HANDLE (slot),
                   ACE_Event_Handler::ALL_EVENTS_MASK);
 
@@ -167,7 +167,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle,
 #if defined (ACE_WIN32)
       i = 0;
 
-      for (; i < this->max_handlep1_; i++)
+      for (; i < this->max_handlep1_; ++i)
         if (ACE_SELECT_REACTOR_HANDLE (i) == handle)
           {
             eh = ACE_SELECT_REACTOR_EVENT_HANDLER (this, i);
@@ -217,7 +217,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
   int assigned_slot = -1;
 
-  for (ssize_t i = 0; i < this->max_handlep1_; i++)
+  for (ssize_t i = 0; i < this->max_handlep1_; ++i)
     {
       // If handle is already registered.
       if (ACE_SELECT_REACTOR_HANDLE (i) == handle)
@@ -257,7 +257,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
       // Insert at the end of the active portion.
       ACE_SELECT_REACTOR_HANDLE (this->max_handlep1_) = handle;
       ACE_SELECT_REACTOR_EVENT_HANDLER (this, this->max_handlep1_) = event_handler;
-      this->max_handlep1_++;
+      ++this->max_handlep1_;
     }
   else
     {
@@ -384,7 +384,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
           for (i = this->max_handlep1_ - 1;
                i >= 0 && ACE_SELECT_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE;
-               i--)
+               --i)
             continue;
 
           this->max_handlep1_ = i + 1;
@@ -419,7 +419,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
           if (this->max_handlep1_ < suspend_ex_max)
             this->max_handlep1_ = suspend_ex_max;
 
-          this->max_handlep1_++;
+          ++this->max_handlep1_;
         }
 
 #endif /* ACE_WIN32 */
@@ -482,13 +482,13 @@ int
 ACE_Select_Reactor_Handler_Repository_Iterator::advance (void)
 {
   if (this->current_ < this->rep_->max_handlep1_)
-    this->current_++;
+    ++this->current_;
 
   while (this->current_ < this->rep_->max_handlep1_)
     if (ACE_SELECT_REACTOR_EVENT_HANDLER (this->rep_, this->current_) != 0)
       return 1;
     else
-      this->current_++;
+      ++this->current_;
 
   return this->current_ < this->rep_->max_handlep1_;
 }
@@ -707,7 +707,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
           return -1;
         }
 
-      for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; i++)
+      for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
         if (free_queue_.enqueue_head (temp + i) == -1)
           return -1;
 
@@ -808,7 +808,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
         // the first one will be used right now.
         for (size_t i = 1;
              i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE;
-             i++)
+             ++i)
           this->free_queue_.enqueue_head (temp1 + i);
 
         temp = temp1;
@@ -858,7 +858,7 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
   if (read_handle != ACE_INVALID_HANDLE
       && rd_mask.is_set (read_handle))
     {
-      number_of_active_handles--;
+      --number_of_active_handles;
       rd_mask.clr_bit (read_handle);
       return this->handle_input (read_handle);
     }
@@ -1052,7 +1052,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
       // Dispatch the buffer
       // NOTE: We count only if we made any dispatches ie. upcalls.
       if (this->dispatch_notify (buffer) > 0)
-        number_dispatched++;
+        ++number_dispatched;
 
       // Bail out if we've reached the <notify_threshold_>.  Note that
       // by default <notify_threshold_> is -1, so we'll loop until all
