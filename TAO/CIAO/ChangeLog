@@ -1,3 +1,57 @@
+Fri Apr 23 19:45:53 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handler/ADD_Handler.cpp:
+        * DnC/Config_Handler/DP_Handler.cpp:
+        * DnC/Config_Handler/CRDD_Handler.cpp:
+        * DnC/Config_Handler/IDD_Handler.cpp:
+        * DnC/Config_Handler/IRDD_Handler.cpp:
+        * DnC/Config_Handler/MDD_Handler.cpp:
+        * DnC/Config_Handler/RDD_Handler.cpp:
+        * DnC/Config_Handler/PCD_Handler.cpp:
+        * DnC/Config_Handler/DP_Handler.cpp:
+
+          Eliminated the additional copy incurred when sequences are
+          populated by de-referencing pointer to sequence return
+          type. This fixes Andy's comments in the files that unearthed
+          this problem. Please grep for Arvind: comments to see how the
+          problem has been fixed
+
+        * DnC/Config_Handler/Config_Handlers.mpc:
+
+          Commented out DP_Handler.cpp from the list of files to be
+          compiled as it requires CID.h file that is not yet written! This
+          ensures that the Handlers build.
+
+        * DnC/Config_Handler/Any_Handler.h:
+        * DnC/Config_Handler/CEPE_Handler.h:
+        * DnC/Config_Handler/ID_Handler.h:
+        * DnC/Config_Handler/Property_Handler.h:
+        * DnC/Config_Handler/RS_Handler.h:
+        * DnC/Config_Handler/SP_Handler.h:
+        * DnC/Config_Handler/SPK_Handler.h:
+        * DnC/Config_Handler/Requirement_Handler.h:
+
+          Changed the interfaces of each process_<handlerName> methods to
+          take a reference to the required return type rather than return
+          a pointer to the allocated return value. This change was
+          necessary to accommodate the use-cases defined in top level
+          handlers.
+
+        * DnC/Config_Handler/Any_Handler.cpp:
+        * DnC/Config_Handler/CEPE_Handler.cpp:
+        * DnC/Config_Handler/ID_Handler.cpp:
+        * DnC/Config_Handler/Property_Handler.cpp:
+        * DnC/Config_Handler/RS_Handler.cpp:
+        * DnC/Config_Handler/SP_Handler.cpp:
+        * DnC/Config_Handler/SPK_Handler.cpp:
+        * DnC/Config_Handler/Requirement_Handler.cpp:
+
+          Removed all memory allocation for the return types within the
+          Common element handler implementations. In the current use case,
+          all the return types are passed in as references. Therefore, it
+          is now the responsibility of the caller to allocate memory for
+          the corresponding data-types.
+
 Fri Apr 23 10:57:26 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Deployment.idl:
@@ -6,11 +60,11 @@ Fri Apr 23 10:57:26 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	  struct PlanSubcomponentPropertyReference: Replaced instanceRef
 	  field with a field called instance of type
-	  InstanceDeploymentDescription. 
+	  InstanceDeploymentDescription.
 
 	  struct PlanSubcomponentPortEndpoint: Replaced instanceRef and
 	  kind fields with a field called instance of type
-	  InstanceDeploymentDescription. 
+	  InstanceDeploymentDescription.
 
 	  struct PlanConnectionDescription: Added a field called
 	  deployedResource of type ConnectionResourceDeploymentDescriptions.
@@ -18,37 +72,37 @@ Fri Apr 23 10:57:26 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 	* DnC/Config_Handler/IRDD_Handler.h:
 	* DnC/Config_Handler/IRDD_Handler.cpp:
 	  XML handlers for the InstanceResourceDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/IDD_Handler.h:
 	* DnC/Config_Handler/IDD_Handler.cpp:
 	  XML handlers for the InstanceDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/IRDD_Handler.h:
 	* DnC/Config_Handler/IRDD_Handler.cpp:
 	  XML handlers for the ConnectionResourceDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/PCD_Handler.h:
 	* DnC/Config_Handler/PCD_Handler.cpp:
 	  XML handlers for the PlanConnectionDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/PSPE_Handler.h:
 	* DnC/Config_Handler/PSPE_Handler.cpp:
 	  XML handlers for the PlanSubcomponentPortEndpoint artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/PPM_Handler.h:
 	* DnC/Config_Handler/PPM_Handler.cpp:
 	  XML handlers for the PlanPropertyMapping artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/PSPR_Handler.h:
 	* DnC/Config_Handler/PSPR_Handler.cpp:
 	  XML handlers for the PlanSubcomponentPropertyReference artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/Config_Handlers.mpc:
 	  Added IDD_Handler.cpp
@@ -67,7 +121,7 @@ Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	  struct ArtifactDeploymentDescription: Added a field called
 	  deployedResource of type ResourceDeploymentDescriptions
-	  (Issue 6392) 
+	  (Issue 6392)
 
 	  struct ArtifactDeploymentDescription: Changed the field type for
 	  location from string to CORBA::StringSeq (Issue 5957, 6053).
@@ -91,22 +145,22 @@ Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 	* DnC/Config_Handler/DP_Handler.cpp:
 	  Added handling of "infoProperty" (Issue 5967)
 	  Other cosmetic changes, such as fixed usage of an undefined
-	  variable 
+	  variable
 
 	* DnC/Config_Handler/ADD_Handler.h:
 	* DnC/Config_Handler/ADD_Handler.cpp:
 	  XML handlers for the ArtifactDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/MDD_Handler.h:
 	* DnC/Config_Handler/MDD_Handler.cpp:
 	  XML handlers for the MonolithicDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/RDD_Handler.h:
 	* DnC/Config_Handler/RDD_Handler.cpp:
 	  XML handlers for the ResourceDeploymentDescription artifact of
-	  the Execution Model.  
+	  the Execution Model.
 
 	* DnC/Config_Handler/Config_Handlers.mpc:
 	  Added ADD_Handler.cpp
@@ -116,7 +170,7 @@ Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Component.idl:
-        
+
           Added 'typeprefix Components "omg.org";' inside the
           Components module. All openings of an IDL module must
           have the same prefix, and the openings of the Components
@@ -132,7 +186,7 @@ Thu Apr 22 21:32:39 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Config_Handler/DP_Handler.h:
 	* DnC/Config_Handler/DP_Handler.cpp:
-	  XML handlers for the DeploymentPlan artifact of the Execution Model. 
+	  XML handlers for the DeploymentPlan artifact of the Execution Model.
 
 	* DnC/Config_Handler/Config_Handlers.mpc:
 	  Added DP_Handler.cpp
