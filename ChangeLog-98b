@@ -1,3 +1,19 @@
+Tue Aug  4 18:44:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: 
+	Updated the file to recommend the creation of config.h as a
+	regular file that includes the appropriate platform config file,
+	instead of setting it to be a symlink. This is more flexible and
+	allows the user to redefine some of the ACE configuration
+	parameters.
+	
+	* ace/config-linux-common.h: 
+	As an example of the above, now the user can #define
+	ACE_HAS_IP_MULTICAST in his config.h file to 0, and he won't be
+	using multicast under linux. This is clearer than having to edit
+	the config-linux-common.h file, which will now respect the user's
+	settings (if any)..
+
 Tue Aug  4 17:39:12 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE_Library.{mak mdp}: Added TP_Reactor.cpp to the project.
