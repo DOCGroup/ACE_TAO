@@ -1,3 +1,9 @@
+Mon Sep 23 13:14:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Task.h (wait()):
+        * ace/Thread_Manager.h (wait_task()): Improved documentation, also
+          clarifying that the waited-for threads have been joined upon return.
+
 Mon Sep 23 12:05:38 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
