@@ -1,3 +1,17 @@
+Sat Aug 31 17:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+          Created a new config file for the Borland compiler. This will be
+          used on the Win32 platform and the Kylix3 compiler on Linux
+
+        * ace/config-linux-common.h:
+          When the Borland compiler is detected, include the
+          config-borland-common.h file
+
+        * ace/config-win32-borland.h:
+          Moved most of the contents to the config-borland-common.h file,
+          only the lines that are Win32 specific stay here.
+
 Sat Aug 31 10:32:38 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Future.cpp (set): Removed a stray reference to "iterator"
@@ -9,15 +23,15 @@ Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/rules.nested.GNU: Rewritten by Gary Duzan.
 	  If a list of directories is specified with DIRS= for a recursive
-	  make, make will halt immediately and propagate a non-zero 
-	  return code to the shell if an error is encountered in a 
-	  subdirectory.  The present behavior does not propagate any 
-	  errors to make if there is an error in a subdirectory.  If make -k 
-	  is specified, make will keep on going even if it encounters an 
-	  error in a subdirectory, but it will also propagate a non-zero 
-	  return code to make when the make finishes.  The current behavior 
-	  is to keep on going if an error is encountered in a subdirectory, 
-	  but NOT propagate a non-zero return code upon termination of make. 
+	  make, make will halt immediately and propagate a non-zero
+	  return code to the shell if an error is encountered in a
+	  subdirectory.  The present behavior does not propagate any
+	  errors to make if there is an error in a subdirectory.  If make -k
+	  is specified, make will keep on going even if it encounters an
+	  error in a subdirectory, but it will also propagate a non-zero
+	  return code to make when the make finishes.  The current behavior
+	  is to keep on going if an error is encountered in a subdirectory,
+	  but NOT propagate a non-zero return code upon termination of make.
 
 	* ace/Makefile.dirs: (Added) Specifies the DIRS= list of directories
 	  to invoke recursive makes on.
@@ -40,8 +54,8 @@ Fri Aug 30 17:34:00 2002  Justin Michel <michel_j@ociweb.com>
         Reimplemented timer list to be compatible with Itanium. It no longer
         uses a Node* as the timer_id, so the cancel operation is now much
         more expensive. On the plus side I was able to make a few optimizations
-        that improve the speed of the schedule operations. 
-        I also made a small optimization to the timer wheel, and updated 
+        that improve the speed of the schedule operations.
+        I also made a small optimization to the timer wheel, and updated
         the test slightly.
 
 Fri Aug 30 15:53:18 2002  Steve Huston  <shuston@riverace.com>
