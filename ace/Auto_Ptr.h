@@ -81,7 +81,8 @@ class ACE_Auto_Basic_Array_Ptr
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.  This class allows one to work on non-object
-  //     (basic) types
+  //     (basic) types that must be treated as an array, e.g.,
+  //     deallocated via "delete [] foo".
 public:
   // = Initialization and termination methods.
   /* explicit */ ACE_Auto_Basic_Array_Ptr (X *p = 0);

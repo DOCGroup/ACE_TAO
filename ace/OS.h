@@ -750,6 +750,11 @@ typedef struct
 #     define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
 #   endif /* ACE_DEFAULT_BACKING_STORE */
 
+// Used for ACE_FILE_Connector
+#   if !defined (ACE_DEFAULT_TEMP_FILE)
+#     define ACE_DEFAULT_TEMP_FILE "/tmp/ace-file-XXXXXX"
+#   endif /* ACE_DEFAULT_TEMP_FILE */
+
 // Used for logging
 #   if !defined (ACE_DEFAULT_LOGFILE)
 #     define ACE_DEFAULT_LOGFILE "/tmp/logfile"
@@ -2747,6 +2752,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     define ACE_DEFAULT_BACKING_STORE ACE_TEXT ("C:\\temp\\ace-malloc-XXXXXX")
 #   endif /* ACE_DEFAULT_BACKING_STORE */
 
+// Used for ACE_FILE_Connector
+#   if !defined (ACE_DEFAULT_TEMP_FILE)
+#     define ACE_DEFAULT_TEMP_FILE "C:\\temp\\ace-file-XXXXXX"
+#   endif /* ACE_DEFAULT_TEMP_FILE */
+
 // Used for logging
 #   if !defined (ACE_DEFAULT_LOGFILE)
 #     define ACE_DEFAULT_LOGFILE "C:\\temp\\logfile"
@@ -3129,6 +3139,11 @@ typedef char TCHAR;
 #   if !defined (ACE_DEFAULT_BACKING_STORE)
 #     define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
 #   endif /* ACE_DEFAULT_BACKING_STORE */
+
+// Used for ACE_FILE_Connector
+#   if !defined (ACE_DEFAULT_TEMP_FILE)
+#     define ACE_DEFAULT_TEMP_FILE "/tmp/ace-file-XXXXXX"
+#   endif /* ACE_DEFAULT_TEMP_FILE */
 
 // Used for logging
 #   if !defined (ACE_DEFAULT_LOGFILE)

@@ -38,7 +38,7 @@ ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
   this->set (sa);
 }
 
-void
+int
 ACE_FILE_Addr::set (LPCTSTR filename)
 {
   this->ACE_Addr::base_set (AF_FILE,
@@ -46,6 +46,7 @@ ACE_FILE_Addr::set (LPCTSTR filename)
   (void) ACE_OS::strncpy (this->filename_,
                           filename,
                           sizeof this->filename_);
+  return 0;
 }
 
 ACE_FILE_Addr &
