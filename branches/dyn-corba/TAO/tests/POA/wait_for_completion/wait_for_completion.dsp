@@ -89,15 +89,16 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\wait_for_completion.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\testS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\wait_for_completion.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

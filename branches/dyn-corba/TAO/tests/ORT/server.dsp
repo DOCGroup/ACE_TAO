@@ -312,6 +312,7 @@ SOURCE=.\ObjectReferenceFactory.cpp
 # Begin Source File
 
 SOURCE=.\ObjectReferenceFactoryC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -324,6 +325,7 @@ SOURCE=.\ORT_test_IORInterceptor.cpp
 # Begin Source File
 
 SOURCE=.\ORT_testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

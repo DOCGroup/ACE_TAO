@@ -98,6 +98,7 @@ SOURCE=.\PP_Test_Client.cpp
 # Begin Source File
 
 SOURCE=.\PP_TestC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

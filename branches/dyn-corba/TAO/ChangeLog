@@ -1,13 +1,18 @@
 Mon Feb 24 000:27:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * tests/Param_Test/any.cpp:
-        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
-        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Container_i.h:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+
+	  Changed template functions in a non-template utility
+	  class to non-template functions in a template class,
+	  to avoid internal compiler errors with VC6.
+
+        * tests/Param_Test/any.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
         * orbsvcs/orbsvcs/Notify/Service.h:
         * orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
         * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:

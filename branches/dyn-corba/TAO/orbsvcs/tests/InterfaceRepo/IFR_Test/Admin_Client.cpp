@@ -1153,7 +1153,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       // Can't use ACE_ASSERT here because we don't know the order
       // of the results of the search.
     }
-
+    
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
                                     0,

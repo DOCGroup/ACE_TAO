@@ -94,6 +94,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\test_objectC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

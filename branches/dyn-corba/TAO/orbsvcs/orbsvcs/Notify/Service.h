@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "tao/PortableServer/PortableServer.h"
 

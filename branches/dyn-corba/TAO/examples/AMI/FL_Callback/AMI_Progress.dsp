@@ -98,6 +98,7 @@ SOURCE=.\Progress_i.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "AV_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_AV_BUILD_DLL" /D "TAO_ORBSVCS_HAS_Trader" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_AV_BUILD_DLL" /D "TAO_ORBSVCS_HAS_Trader" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -165,6 +165,7 @@ SOURCE=.\AV\AVStreams_i.cpp
 # Begin Source File
 
 SOURCE=.\AVStreamsC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -205,6 +206,7 @@ SOURCE=.\AV\Nil.cpp
 # Begin Source File
 
 SOURCE=.\Null_MediaCtrlC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -245,6 +247,7 @@ SOURCE=.\AV\sfp.cpp
 # Begin Source File
 
 SOURCE=.\sfpC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

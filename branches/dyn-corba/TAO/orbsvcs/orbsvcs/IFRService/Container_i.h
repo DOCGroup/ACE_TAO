@@ -47,7 +47,8 @@ class TAO_IFRService_Export TAO_Container_i : public virtual TAO_IRObject_i
   //    derived from the Contained interface.
   //
 public:
-  friend class TAO_Port_Utils;
+//  template<typename T>
+//  friend class TAO_Port_Utils;
 
   TAO_Container_i (TAO_Repository_i *repo);
   // Constructor.
@@ -404,6 +405,9 @@ public:
     
   static int same_as_tmp_name (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exisits.
+
+  static void tmp_name_holder (const char *name);
+  // Accesses the statis member.
 
 protected:
    void store_label (

@@ -92,6 +92,7 @@ SOURCE=.\common.cpp
 # Begin Source File
 
 SOURCE=.\goC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

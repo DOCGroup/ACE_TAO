@@ -98,6 +98,7 @@ SOURCE=.\Log\RTEventLog_i.cpp
 # Begin Source File
 
 SOURCE=.\RTEventLogAdminC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -728,7 +728,7 @@ ImR_Activator_i::server_is_running (const char *server,
     orb->orb_core ()->lane_resources ().acceptor_registry ();
 
   TAO_MProfile mp;
-  TAO_ObjectKey objkey;
+  TAO::ObjectKey objkey;
 
   // Use a default acceptor filter, all the profiles in the ImR are valid, no
   // matter what the server has.
