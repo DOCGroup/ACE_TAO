@@ -13,7 +13,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "sequence_traits.hpp"
+#include "range_checking.hpp"
 
 #include <algorithm>
 
@@ -22,19 +22,25 @@ namespace TAO
 namespace details
 {
 
-template<class T, class TRAITS>
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
 class generic_sequence
 {
 public:
   typedef T value_type;
-  typedef TRAITS traits;
+  typedef ALLOCATION_TRAITS allocation_traits;
+  typedef ELEMENT_TRAITS element_traits;
+  typedef range_checking<value_type,true> range;
 
   generic_sequence()
-    : maximum_(traits::default_maximum())
+    : maximum_(allocation_traits::default_maximum())
     , length_(0)
-    , buffer_(traits::default_buffer_allocation())
+    , buffer_(allocation_traits::default_buffer_allocation())
     , release_(true)
   {
+    element_traits::zero_range(
+        buffer_, buffer_ + maximum_);
   }
 
   explicit generic_sequence(CORBA::ULong maximum)
@@ -43,6 +49,8 @@ public:
     , buffer_(allocbuf(maximum_))
     , release_(true)
   {
+    element_traits::zero_range(
+        buffer_, buffer_ + maximum_);
   }
 
   generic_sequence(
@@ -65,7 +73,8 @@ public:
   {
     generic_sequence tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
-    std::copy(rhs.buffer_, rhs.buffer_ + rhs.length_, tmp.buffer_);
+    element_traits::copy_range(
+        rhs.buffer_, rhs.buffer_ + rhs.length_, tmp.buffer_);
     swap(tmp);
   }
 
@@ -103,24 +112,34 @@ public:
   {
     if (length < maximum_ || length < length_)
     {
+      if (length_ < length)
+      {
+        // TODO Not exception-safe...
+        element_traits::initialize_range(
+            buffer_ + length_, buffer_ + length);
+      }
       length_ = length;
       return;
     }
 
     generic_sequence tmp(length); tmp.length_ = length;
-    std::copy(buffer_, buffer_ + length_, tmp.buffer_);
+    element_traits::copy_range(
+        buffer_, buffer_ + length_, tmp.buffer_);
+    element_traits::initialize_range(
+        tmp.buffer_ + length_, tmp.buffer_ + length);
+
     swap(tmp);
   }
 
   value_type const & operator[](CORBA::ULong i) const
   {
-    traits::check_index(i, length_, maximum_, "operator[]() const");
+    range::check(i, length_, maximum_, "operator[]() const");
     return buffer_[i];
   }
 
   value_type & operator[](CORBA::ULong i)
   {
-    traits::check_index(i, length_, maximum_, "operator[]() non-const");
+    range::check(i, length_, maximum_, "operator[]() non-const");
     return buffer_[i];
   }
 
@@ -175,12 +194,12 @@ public:
 
   static T * allocbuf(CORBA::ULong maximum)
   {
-    return traits::allocbuf(maximum);
+    return allocation_traits::allocbuf(maximum);
   }
 
   static void freebuf(T * buffer)
   {
-    traits::freebuf(buffer);
+    allocation_traits::freebuf(buffer);
   }
 
 private:

@@ -13,14 +13,26 @@ project(*Bounded_Simple_Types) : taoexe {
   }
 }
 
-project(*Unbounded_Primitive_Types): taoexe, boost_unit_test {
+// project(*Unbounded_String_Sequence): taoexe, boost_unit_test {
+//   Source_Files {
+//    unbounded_string_sequence_ut.cpp
+//  }
+//}
+
+//project(*String_Sequence_Element): taoexe, boost_unit_test {
+//  Source_Files {
+//    string_sequence_element_ut.cpp
+//  }
+//}
+
+project(*Unbounded_Value_Sequence): taoexe, boost_unit_test {
   Source_Files {
-    Unbounded_Primitive_Types.cpp
+    unbounded_value_sequence_ut.cpp
   }
 }
 
-project(*Bounded_Primitive_Types): taoexe, boost_unit_test {
+project(*Bounded_Value_Sequence): taoexe, boost_unit_test {
   Source_Files {
-    Bounded_Primitive_Types.cpp
+    bounded_value_sequence_ut.cpp
   }
 }
