@@ -10,6 +10,8 @@ Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  from ACE_Task_Exit declaration and ACE_Task_Exit::instance ().
 	  ACE_Task_Exit is no longer a template class, so we don't need that.
 
+	* ace/Task_T.h: added missing "*/" at end of comment after #endif.
+
 	* tests/IOStream.cpp (server): added check for 0 strlen of
 	  "buf" to avoid out-of-bound array reference.
 
