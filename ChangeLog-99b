@@ -1,43 +1,50 @@
+Fri Jun 25 12:40:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added/expanded/moved discussions of
+          enabling/increasing virtual memory on Linux and LynxOS.
+          Thanks to Fabrice Podlyski <podlyski@clrhp04.in2p3.fr>
+          for providing detailed information for LynxOS.
+
 Fri Jun 25 11:16:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Makefile: Updated dependencies for Cache_Map_Manager_Test
-	  and Map_Manager_Test.
+        * tests/Makefile: Updated dependencies for Cache_Map_Manager_Test
+          and Map_Manager_Test.
 
 Thu Jun 24 21:33:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Strategies_T.{h, cpp} (class ACE_FIFO_Caching_Strategy): 
-	* ace/Caching_Strategies_T.{h, cpp} (class ACE_LRU_Caching_Strategy):
-	* ace/Caching_Strategies_T.{h, cpp} (class ACE_LFU_Caching_Strategy):
-	  Removed the overloaded clear_cache () method with entries as an
-	  formal argument.
+        * ace/Caching_Strategies_T.{h, cpp} (class ACE_FIFO_Caching_Strategy):
+        * ace/Caching_Strategies_T.{h, cpp} (class ACE_LRU_Caching_Strategy):
+        * ace/Caching_Strategies_T.{h, cpp} (class ACE_LFU_Caching_Strategy):
+          Removed the overloaded clear_cache () method with entries as an
+          formal argument.
 
-	* ace/Caching_Strategy_Utility_T.{h,i,cpp}: Renamed as
-	  Caching_Utiltity.{h, i, cpp}. Also, removed <entries> formal
-	  argument from the clear_cache() method, and made purge_percent
-	  of type double instead of unsigned int.
+        * ace/Caching_Strategy_Utility_T.{h,i,cpp}: Renamed as
+          Caching_Utiltity.{h, i, cpp}. Also, removed <entries> formal
+          argument from the clear_cache() method, and made purge_percent
+          of type double instead of unsigned int.
 
-	* tests/Cache_Map_Manager_Test.cpp: Changed the purge_test and
-	  added a test for the Cache_Map_Manager using the Map_Manager.
+        * tests/Cache_Map_Manager_Test.cpp: Changed the purge_test and
+          added a test for the Cache_Map_Manager using the Map_Manager.
 
-	* tests/Map_Manager_Test.cpp: Changed the template instantiation
-	  in vein with the changes to the names of the Caching_Utility
-	  classes.
+        * tests/Map_Manager_Test.cpp: Changed the template instantiation
+          in vein with the changes to the names of the Caching_Utility
+          classes.
 
-	* tests/Cache_Map_Manager_test.dsp:
-	* tests/tests.dsw:
-	  Made NT project for the test and added it to the tests workspace.
-	
+        * tests/Cache_Map_Manager_test.dsp:
+        * tests/tests.dsw:
+          Made NT project for the test and added it to the tests workspace.
+
 Thu Jun 24 20:43:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_multithreading.cpp
-	  (Task_Handler): Change loop to go from 1 to number_of_handles
-	  instead of 0 to number_of_handles - 1.
+        * examples/Reactor/WFMO_Reactor/test_multithreading.cpp
+          (Task_Handler): Change loop to go from 1 to number_of_handles
+          instead of 0 to number_of_handles - 1.
 
 Thu Jun 24 18:36:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Signal.h: Removed the still-born
-	  ACE_Sig_Action (struct sigaction *) method.  Thanks to Umar
- 	  Syyid for reporting this.
+        * ace/Signal.h: Removed the still-born
+          ACE_Sig_Action (struct sigaction *) method.  Thanks to Umar
+          Syyid for reporting this.
 
 Thu Jun 24 15:47:32 1999  Steve Huston  <shuston@riverace.com>
 
