@@ -68,19 +68,26 @@ VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSR
 VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 
 ifdef static_libs
-  INSTALL += $(VLIB:%=$(INSLIB)/%)
+  LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
   CLEANUP_INSTALL += $(CLEANUP_LIB:%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
-  INSTALL += $(VSHLIB:%=$(INSLIB)/%)
+  LIB_INSTALL += $(VSHLIB:%=$(INSLIB)/%)
   CLEANUP_INSTALL += $(CLEANUP_VSHLIB:%=$(INSLIB)/%)
   CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:%=$(INSLIB)/%)
   ifdef SHLIBA
-    INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
+    LIB_INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
     CLEANUP_INSTALL += $(CLEANUP_SHLIBA:%=$(INSLIB)/%)
   endif
 endif # shared_libs
+
+# Alzays add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
+# is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
+# to use.  Also, make LIB_INSTALL depend on VLIB, so libs get built prior to
+# installation.
+INSTALL += $(LIB_INSTALL)
+$(LIB_INSTALL): $(VLIBS)
 
 ifndef ace_lib_prelink
   ace_lib_prelink = 0

@@ -1,3 +1,12 @@
+Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+          Added new variable, LIB_INSTALL that contains the libraries that
+          should be installed and added it as a dependency of BIN so that
+          the libs will get installed prior to building the BIN that depends
+          on it.
+
 Wed Nov 26 18:36:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/ARGV_Test.cpp:
