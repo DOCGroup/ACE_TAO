@@ -12,7 +12,7 @@ LIBNAME  = libTAO_RTPortableServer
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA
+ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA -lTAO_PortableServer
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -72,8 +72,7 @@ endif # corba_messaging
 
 
 .obj/RTPortableServer.o .obj/RTPortableServer.so .shobj/RTPortableServer.o .shobj/RTPortableServer.so: RTPortableServer.cpp RTPortableServer.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -168,8 +167,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- RTPortableServerC.h \
+ $(TAO_ROOT)/tao/corbafwd.i RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -224,12 +222,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  RTPortableServerC.i RT_Object_Adapter_Factory.h \
  $(TAO_ROOT)/tao/Adapter.h \
@@ -258,8 +250,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
 .obj/RTPortableServerC.o .obj/RTPortableServerC.so .shobj/RTPortableServerC.o .shobj/RTPortableServerC.so: RTPortableServerC.cpp RTPortableServerC.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -409,12 +400,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  RTPortableServerC.i
 
@@ -443,8 +428,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtportableserver_export.h \
+ $(ACE_ROOT)/ace/OS.i rtportableserver_export.h \
  $(TAO_ROOT)/tao/Acceptor_Filter.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -548,12 +532,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -569,15 +547,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
- RT_Acceptor_Filters.i \
- $(TAO_ROOT)/tao/Pluggable.h \
+ RT_Acceptor_Filters.i $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -591,9 +568,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/MProfile.i
 
 .obj/RT_Object_Adapter_Factory.o .obj/RT_Object_Adapter_Factory.so .shobj/RT_Object_Adapter_Factory.o .shobj/RT_Object_Adapter_Factory.so: RT_Object_Adapter_Factory.cpp \
- RT_Object_Adapter_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
+ RT_Object_Adapter_Factory.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -716,8 +691,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RT_POA_Initializer.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_POA_Initializer.h \
  $(TAO_ROOT)/tao/POA_Extension_Initializer.h \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -868,9 +842,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
+.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1108,10 +1080,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  RTPortableServer.h RTPortableServerC.h RTPortableServerC.i RT_POA.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1186,8 +1154,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/RT_POA_Initializer.o .obj/RT_POA_Initializer.so .shobj/RT_POA_Initializer.o .shobj/RT_POA_Initializer.so: RT_POA_Initializer.cpp RT_POA_Initializer.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1283,8 +1250,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- RT_Servant_Dispatcher.h \
+ $(TAO_ROOT)/tao/corbafwd.i RT_Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -1410,13 +1376,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
- RT_Policy_Validator.h \
- $(TAO_ROOT)/tao/ORB_Core.h \
+ RT_Policy_Validator.h $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -1497,8 +1458,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtportableserver_export.h \
+ $(ACE_ROOT)/ace/OS.i rtportableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1721,10 +1681,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
@@ -1732,7 +1688,6 @@ endif # corba_messaging
 
 .obj/RT_Servant_Dispatcher.o .obj/RT_Servant_Dispatcher.so .shobj/RT_Servant_Dispatcher.o .shobj/RT_Servant_Dispatcher.so: RT_Servant_Dispatcher.cpp \
  RT_Servant_Dispatcher.h $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1953,12 +1908,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
- $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
- RT_POA.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i RT_POA.h \
  $(TAO_ROOT)/tao/PortableServer/POA.h \
  $(TAO_ROOT)/tao/PortableServer/POAManager.h \
  $(TAO_ROOT)/tao/PortableServer/POAManager.i \

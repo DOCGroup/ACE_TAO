@@ -109,8 +109,12 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Direct_Priority_Mapping.h rtcorba_export.h Priority_Mapping.h \
+ $(ACE_ROOT)/ace/OS.i Direct_Priority_Mapping.h \
+ rtcorba_export.h Priority_Mapping.h RTCORBAC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -180,8 +184,52 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  Priority_Mapping.i Direct_Priority_Mapping.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
@@ -211,8 +259,12 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Linear_Priority_Mapping.h rtcorba_export.h Priority_Mapping.h \
+ $(ACE_ROOT)/ace/OS.i Linear_Priority_Mapping.h \
+ rtcorba_export.h Priority_Mapping.h RTCORBAC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -282,8 +334,52 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  Priority_Mapping.i Linear_Priority_Mapping.i \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -498,8 +594,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- Pool_Per_Endpoint.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp Pool_Per_Endpoint.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -563,7 +658,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Acceptor_Registry.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h RTCORBAC.h RTCORBAC.i \
  Priority_Mapping.i Priority_Mapping_Manager.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
@@ -593,7 +688,11 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Priority_Mapping.h \
+ $(ACE_ROOT)/ace/OS.i Priority_Mapping.h RTCORBAC.h \
+ rtcorba_export.h $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -663,13 +762,56 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h Priority_Mapping.i
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
+ Priority_Mapping.i
 
 .obj/Priority_Mapping_Manager.o .obj/Priority_Mapping_Manager.so .shobj/Priority_Mapping_Manager.o .shobj/Priority_Mapping_Manager.so: Priority_Mapping_Manager.cpp \
- Priority_Mapping_Manager.h \
- $(ACE_ROOT)/ace/pre.h \
+ Priority_Mapping_Manager.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -694,7 +836,11 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
- Priority_Mapping.h \
+ Priority_Mapping.h RTCORBAC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -764,20 +910,58 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
+ Priority_Mapping.i $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  Priority_Mapping_Manager.i
 
 .obj/Private_Transport_Descriptor.o .obj/Private_Transport_Descriptor.so .shobj/Private_Transport_Descriptor.o .shobj/Private_Transport_Descriptor.so: Private_Transport_Descriptor.cpp \
- Private_Transport_Descriptor.h \
- $(ACE_ROOT)/ace/pre.h \
+ Private_Transport_Descriptor.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -879,8 +1063,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Private_Transport_Descriptor.inl
 
-.obj/RTCORBA.o .obj/RTCORBA.so .shobj/RTCORBA.o .shobj/RTCORBA.so: RTCORBA.cpp RTCORBA.h \
- $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
+.obj/RTCORBA.o .obj/RTCORBA.so .shobj/RTCORBA.o .shobj/RTCORBA.so: RTCORBA.cpp RTCORBA.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1003,12 +1186,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1024,12 +1201,13 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_ORB_Loader.h \
- $(TAO_ROOT)/tao/Object_Loader.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
+ RT_ORB_Loader.h $(TAO_ROOT)/tao/Object_Loader.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1052,10 +1230,12 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RT_Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_Protocols_Hooks.h \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- RT_Protocols_Hooks.i
+ Priority_Mapping_Manager.h Priority_Mapping.h Priority_Mapping.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ Priority_Mapping_Manager.i RT_Protocols_Hooks.i
 
 .obj/RTCORBAC.o .obj/RTCORBAC.so .shobj/RTCORBAC.o .shobj/RTCORBAC.so: RTCORBAC.cpp RTCORBAC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1181,12 +1361,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1202,11 +1376,12 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -1230,6 +1405,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
  $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
@@ -1329,12 +1506,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/TAOS.h \
- $(TAO_ROOT)/tao/TAOS_T.h \
- $(TAO_ROOT)/tao/TAOS_T.i \
- $(TAO_ROOT)/tao/TAOS_T.cpp \
- $(TAO_ROOT)/tao/TAOS.i \
- $(TAO_ROOT)/tao/RequestInfo_Util.h
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/RT_Current.o .obj/RT_Current.so .shobj/RT_Current.o .shobj/RT_Current.so: RT_Current.cpp RT_Current.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1361,8 +1540,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBA.h \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBA.h rtcorba_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1461,12 +1639,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1482,11 +1654,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Current.i \
+ $(TAO_ROOT)/tao/LocalObject.i RT_Current.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -1591,11 +1766,11 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(TAO_ROOT)/tao/Stub.i
+ $(TAO_ROOT)/tao/Stub.i Priority_Mapping.h \
+ Priority_Mapping.i
 
 .obj/RT_Endpoint_Selector_Factory.o .obj/RT_Endpoint_Selector_Factory.so .shobj/RT_Endpoint_Selector_Factory.o .shobj/RT_Endpoint_Selector_Factory.so: RT_Endpoint_Selector_Factory.cpp \
- RT_Endpoint_Selector_Factory.h \
- $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
+ RT_Endpoint_Selector_Factory.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1865,8 +2040,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation.i \
- RT_Endpoint_Utils.h RT_Stub.h
+ $(TAO_ROOT)/tao/Invocation.i RT_Endpoint_Utils.h \
+ RT_Stub.h
 
 .obj/RT_Endpoint_Utils.o .obj/RT_Endpoint_Utils.so .shobj/RT_Endpoint_Utils.o .shobj/RT_Endpoint_Utils.so: RT_Endpoint_Utils.cpp RT_Endpoint_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1964,8 +2139,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h RT_Endpoint_Selector_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.i rtcorba_export.h \
+ RT_Endpoint_Selector_Factory.h \
  $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2240,8 +2415,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i rtcorba_export.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -2414,10 +2588,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation.i \
- RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h Priority_Mapping.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Invocation.i RT_Policy_i.h \
+ RTCORBA.h RTCORBAC.h RTCORBAC.i RT_Policy_i.i \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i RT_Stub.h \
  Private_Transport_Descriptor.h \
@@ -2426,7 +2598,9 @@ endif # corba_messaging
  Private_Transport_Descriptor.inl \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
- RT_Endpoint_Utils.h RT_Protocols_Hooks.h RT_Protocols_Hooks.i
+ RT_Endpoint_Utils.h RT_Protocols_Hooks.h Priority_Mapping_Manager.h \
+ Priority_Mapping.h Priority_Mapping.i Priority_Mapping_Manager.i \
+ RT_Protocols_Hooks.i
 
 .obj/RT_Mutex.o .obj/RT_Mutex.so .shobj/RT_Mutex.o .shobj/RT_Mutex.so: RT_Mutex.cpp RT_Mutex.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2453,8 +2627,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBA.h \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBA.h rtcorba_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2553,12 +2726,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2574,12 +2741,15 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_ORB.h Thread_Pool.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/LocalObject.i RT_ORB.h \
+ Thread_Pool.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2659,11 +2829,9 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Thread_Pool.i \
- RT_ORB.i
+ $(TAO_ROOT)/tao/ORB.i Thread_Pool.i RT_ORB.i
 
-.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2687,8 +2855,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBA.h \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBA.h rtcorba_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2787,12 +2954,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2808,11 +2969,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i Thread_Pool.h \
+ $(TAO_ROOT)/tao/LocalObject.i Thread_Pool.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2893,8 +3057,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Thread_Pool.i \
- RT_ORB.i RT_Policy_i.h RT_Policy_i.i RT_Mutex.h
+ $(TAO_ROOT)/tao/ORB.i Thread_Pool.i RT_ORB.i \
+ RT_Policy_i.h RT_Policy_i.i RT_Mutex.h
 
 .obj/RT_ORBInitializer.o .obj/RT_ORBInitializer.so .shobj/RT_ORBInitializer.o .shobj/RT_ORBInitializer.so: RT_ORBInitializer.cpp RT_ORBInitializer.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2992,8 +3156,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i rtcorba_export.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -3055,16 +3218,16 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- RT_PolicyFactory.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h Priority_Mapping.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.h RT_Policy_i.i \
+ $(TAO_ROOT)/tao/LocalObject.i RT_PolicyFactory.h \
+ RTCORBA.h RTCORBAC.h RTCORBAC.i RT_Policy_i.h RT_Policy_i.i \
  RT_Protocols_Hooks.h \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ Priority_Mapping_Manager.h Priority_Mapping.h Priority_Mapping.i \
+ Priority_Mapping_Manager.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -3082,8 +3245,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RT_Protocols_Hooks.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_Protocols_Hooks.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -3141,11 +3303,9 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- RT_ORB_Loader.h \
+ $(TAO_ROOT)/tao/ORB_Core.i RT_ORB_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Object_Loader.i \
- RT_Stub_Factory.h \
+ $(TAO_ROOT)/tao/Object_Loader.i RT_Stub_Factory.h \
  $(TAO_ROOT)/tao/Stub_Factory.h \
  RT_Endpoint_Selector_Factory.h \
  $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
@@ -3155,7 +3315,11 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/Svc_Conf.h \
  $(ACE_ROOT)/ace/Obstack.h \
- $(ACE_ROOT)/ace/Obstack.i \
+ $(ACE_ROOT)/ace/Obstack_T.h \
+ $(ACE_ROOT)/ace/Obchunk.h \
+ $(ACE_ROOT)/ace/Obchunk.i \
+ $(ACE_ROOT)/ace/Obstack_T.i \
+ $(ACE_ROOT)/ace/Obstack_T.cpp \
  $(ACE_ROOT)/ace/Parse_Node.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Parse_Node.i
@@ -3284,9 +3448,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_ORB.h \
- RTCORBA.h RTCORBAC.h \
- $(TAO_ROOT)/tao/IOPC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_ORB.h RTCORBA.h \
+ RTCORBAC.h $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3309,12 +3472,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3330,11 +3487,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i Thread_Pool.h \
+ $(TAO_ROOT)/tao/LocalObject.i Thread_Pool.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -3393,8 +3553,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Thread_Pool.i \
- RT_ORB.i RT_Current.h RT_Current.i RT_ORBInitializer.h \
+ $(TAO_ROOT)/tao/ORB.i Thread_Pool.i RT_ORB.i \
+ RT_Current.h RT_Current.i RT_ORBInitializer.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/DynamicC.i \
@@ -3407,9 +3567,9 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- RT_PolicyFactory.h Linear_Priority_Mapping.h \
- Linear_Priority_Mapping.i Direct_Priority_Mapping.h \
- Direct_Priority_Mapping.i \
+ RT_PolicyFactory.h Linear_Priority_Mapping.h Priority_Mapping.h \
+ Priority_Mapping.i Linear_Priority_Mapping.i \
+ Direct_Priority_Mapping.h Direct_Priority_Mapping.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -3540,8 +3700,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i rtcorba_export.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -3603,10 +3762,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h Priority_Mapping.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i
+ $(TAO_ROOT)/tao/LocalObject.i RT_Policy_i.h \
+ RTCORBA.h RTCORBAC.h RTCORBAC.i RT_Policy_i.i
 
 .obj/RT_Policy_i.o .obj/RT_Policy_i.so .shobj/RT_Policy_i.o .shobj/RT_Policy_i.so: RT_Policy_i.cpp RT_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3633,8 +3790,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBA.h \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBA.h rtcorba_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3733,12 +3889,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3754,11 +3904,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i \
+ $(TAO_ROOT)/tao/LocalObject.i RT_Policy_i.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -3956,36 +4109,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  Priority_Mapping_Manager.h rtcorba_export.h Priority_Mapping.h \
- Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RT_Protocols_Hooks.i RT_Policy_i.h RTCORBA.h RTCORBAC.h \
- $(TAO_ROOT)/tao/IOPC.h \
+ RTCORBAC.h $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3993,8 +4117,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.i \
@@ -4006,12 +4136,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4026,8 +4150,35 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
- RT_Policy_i.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
+ Priority_Mapping.i $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ Priority_Mapping_Manager.i \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_Protocols_Hooks.i \
+ RT_Policy_i.h RTCORBA.h RT_Policy_i.i \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -4132,8 +4283,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/RT_Stub.o .obj/RT_Stub.so .shobj/RT_Stub.o .shobj/RT_Stub.so: RT_Stub.cpp RT_Stub.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/RT_Stub.o .obj/RT_Stub.so .shobj/RT_Stub.o .shobj/RT_Stub.so: RT_Stub.cpp RT_Stub.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4384,9 +4534,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i rtcorba_export.h \
- RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h Priority_Mapping.i \
- Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i
+ RT_Policy_i.h RTCORBA.h RTCORBAC.h RTCORBAC.i RT_Policy_i.i
 
 .obj/RT_Stub_Factory.o .obj/RT_Stub_Factory.so .shobj/RT_Stub_Factory.o .shobj/RT_Stub_Factory.so: RT_Stub_Factory.cpp RT_Stub_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4484,8 +4632,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- rtcorba_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i rtcorba_export.h \
  $(TAO_ROOT)/tao/Stub_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -4814,8 +4961,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp RTCORBA.h \
- rtcorba_export.h \
- $(TAO_ROOT)/tao/corbafwd.h \
+ rtcorba_export.h $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
@@ -4848,12 +4994,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4864,11 +5004,12 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h \
- Priority_Mapping.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- Priority_Mapping_Manager.i RTCORBAC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -4882,6 +5023,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
  $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
