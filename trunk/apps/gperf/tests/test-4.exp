@@ -1,4 +1,4 @@
-/* C code produced by gperf version 2.7 (GNU C++ version) */
+/* C code produced by gperf version 2.8 (ACE version) */
 /* Command-line: ../src/gperf -D -p -t  */
 /* Command-line: gperf -p -j1 -i 1 -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
 #include <string.h>
