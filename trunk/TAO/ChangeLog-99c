@@ -1,3 +1,13 @@
+Fri Jul 23 16:50:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (_get_collocated_servant): Further simplify the
+	  collocation seach method by pushing the collocation strategy
+	  check into _find_collocated_servant.
+
+	  (_find_collocated_servant): Make sure that we only search the
+	  ORB for the collocation when the strategies used by the ORB
+	  allows us to do it.
+
 Fri Jul 23 15:03:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
@@ -82,12 +92,12 @@ Fri Jul 23 11:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Jul 23 08:53:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_type.cpp (nested_type_name):
-	  There was an error in the computation of the string length that we
-	  use to do string comparison. This error resulted due to a copy/paste which
-	  was causing errors in generated code. This bug report was passed to me by
-	  Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk>
-	  for submitting the bug report.
+	* TAO_IDL/be/be_type.cpp (nested_type_name): There was an error in
+	  the computation of the string length that we use to do string
+	  comparison. This error resulted due to a copy/paste which was
+	  causing errors in generated code. This bug report was passed to
+	  me by Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk> for
+	  submitting the bug report.
 
 Fri Jul 23 02:13:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
