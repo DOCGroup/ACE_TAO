@@ -140,7 +140,7 @@ protected:
   <Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> a_endpoint_strategy_;
   // The reactive strategy of the distributer receiver.
 
-  TAO_MMDevice distributer_mmdevice_;
+  TAO_MMDevice* distributer_mmdevice_;
   // The distributer receiver multimedia device
   
   AVStreams::MMDevice_var receiver_mmdevice_;
@@ -157,9 +157,6 @@ protected:
   int argc_;
   char **argv_;
 
-  ACE_CString filename_;
-  // File from which data is read.
-
   ACE_CString address_;
   // Address of the  distributer host machine or a multicast address - Default is
   // UDP multicast addess
@@ -175,14 +172,12 @@ protected:
   // The flow name of the stream set up between the 
   // receiver and the distributer.
 
-  TAO_StreamCtrl sender_streamctrl_;
+  TAO_StreamCtrl* sender_streamctrl_;
   // Video stream controller for the stream between sender and distributer
   
-  TAO_StreamCtrl receiver_streamctrl_;
+  TAO_StreamCtrl* receiver_streamctrl_;
   // Video stream controller for the stream between receivers and distributer
 
-  int use_sfp_;
-  // If set to 1 then use sfp as the flow carrier protocol.
   ACE_Message_Block mb;
   // Message block into which data is read from a file and then sent.
 

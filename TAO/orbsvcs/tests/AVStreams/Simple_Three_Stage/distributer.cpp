@@ -112,11 +112,13 @@ Distributer::get_protocol_object (const char* flowname)
 
 
 Distributer::Distributer (void)
-  : distributer_mmdevice_ (&a_endpoint_strategy_),
-    count_ (0),
-    protocol_ ("UDP"),
-    stream_count_ (0),
-    done_ (0)
+  :distributer_mmdevice_ (0),
+   count_ (0),
+   protocol_ ("UDP"),
+   sender_streamctrl_ (0),
+   receiver_streamctrl_ (0),
+   stream_count_ (0),
+   done_ (0)
 {
   
   // Get the local host name
@@ -208,10 +210,8 @@ Distributer::init (int,
   
   // Create the Flow protocol name
   ACE_CString flow_protocol_str;
-  if (this->use_sfp_)
-    flow_protocol_str = "sfp:1.0";
-  else
-    flow_protocol_str = "";
+  
+  flow_protocol_str = "";
   
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
@@ -234,12 +234,29 @@ Distributer::init (int,
   flow_spec.length (1);
   flow_spec [0] = CORBA::string_dup (receiver_entry.entry_to_string ());
   
-  AVStreams::MMDevice_var distributer_mmdevice = this->distributer_mmdevice_._this (ACE_TRY_ENV);
+  ACE_NEW_RETURN (this->distributer_mmdevice_,
+                  TAO_MMDevice (&this->a_endpoint_strategy_),
+                  -1);
+  
+  // Servant Reference Counting to manage lifetime
+  PortableServer::ServantBase_var safe_mmdevice =
+    this->distributer_mmdevice_;
+    
+  AVStreams::MMDevice_var distributer_mmdevice = 
+    this->distributer_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  ACE_NEW_RETURN (this->receiver_streamctrl_,
+                  TAO_StreamCtrl,
+                  -1);
+  
+  // Servant Reference Counting to manage lifetime
+  PortableServer::ServantBase_var safe_receiver_streamctrl =
+    this->receiver_streamctrl_;
+  
   // Bind/Connect  the distributer and receiver MMDevices.
   result =
-    this->receiver_streamctrl_.bind_devs (distributer_mmdevice.in (),
+    this->receiver_streamctrl_->bind_devs (distributer_mmdevice.in (),
                                           this->receiver_mmdevice_.in (),
                                           the_qos.inout (),
                                           flow_spec,
@@ -271,21 +288,29 @@ Distributer::init (int,
 
   // Set the flow specification for the stream between sender and distributer
   flow_spec [0] = CORBA::string_dup (sender_entry.entry_to_string ());
-  
+
+  ACE_NEW_RETURN (this->sender_streamctrl_,
+                  TAO_StreamCtrl,
+                  -1);
+
+  // Servant Reference Counting to manage lifetime
+  PortableServer::ServantBase_var safe_sender_streamctrl =
+    this->sender_streamctrl_;
+
   // Bind/Connect  the sender and sitributer MMDevices.
   CORBA::Boolean res =
-    this->sender_streamctrl_.bind_devs (distributer_mmdevice.in (),  
-                                        this->sender_mmdevice_.in (),
-                                        the_qos.inout (),
-                                        flow_spec,
-                                        ACE_TRY_ENV);
+    this->sender_streamctrl_->bind_devs (distributer_mmdevice.in (),  
+                                         this->sender_mmdevice_.in (),
+                                         the_qos.inout (),
+                                         flow_spec,
+                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
   
   if (res == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"Streamctrl::bind_devs failed\n"),-1);
     
   AVStreams::flowSpec start_spec;
-  this->sender_streamctrl_.start (start_spec,ACE_TRY_ENV);
+  this->sender_streamctrl_->start (start_spec,ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
   
   return 0;
@@ -294,13 +319,13 @@ Distributer::init (int,
 TAO_StreamCtrl*
 Distributer::get_receiver_streamctrl (void)
 {
-  return &this->receiver_streamctrl_;
+  return this->receiver_streamctrl_;
 }
 
 TAO_StreamCtrl*
 Distributer::get_sender_streamctrl (void)
 {
-  return &this->sender_streamctrl_;
+  return this->sender_streamctrl_;
 }
 
 
