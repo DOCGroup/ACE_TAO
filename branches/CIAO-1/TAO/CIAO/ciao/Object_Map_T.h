@@ -3,7 +3,11 @@
 /**
  * @file Object_Map_T.h
  *
- * A CIAO implementation of
+ * A CIAO implementation of object reference map which enables
+ * fast insertion/deletion/indexing of object reference thru
+ * map-generated keys.
+ *
+ * @sa ACE_Active_Map_Manager
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
@@ -12,7 +16,8 @@
 #define CIAO_OBJECT_MAP_T_H
 #include "ace/pre.h"
 
-#include "ace/Active_Map_Manager_T.h"
+#include "ciao/Active_Objref_Map.h"
+#include "ciao/CCM_BaseC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +29,10 @@ namespace CIAO
    * @class CIAO::Object_Map
    *
    * @brief An templatized Active Object Map for managing a collection
-   *        of object references indexed by keys.
+   *        of object references indexed by keys.  TYPE needs to be a
+   *        CORBA::Object derived type.
    */
-  template <class TYPE>
+  template <class TYPE, class STRUCTSEQ>
   class Object_Map
   {
   public:
@@ -41,18 +47,17 @@ namespace CIAO
     /// resources.
     ~Object_Map (void);
 
-    /// Initialize the Object_Map with size @c length.
-    int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-              ACE_Allocator *alloc = 0);
+    /// Insert a new object reference and return a cookie object.
+    ::Components::Cookie_ptr insert (TYPE *objref);
 
-    /// Close down the Object_Map and release dynamically allocated
-    /// resources.
-    int close (void);
+    /// Remove an object reference
+    int remove (::Components::Cookie_ptr ck);
 
+    /// Locate an object reference
+    TYPE *find (::Components::Cookie_ptr ck);
 
-
-  protected:
-
+    /// Actual map.  Allow direct access here.
+    Active_Objref_Map map_;
   };
 }
 
