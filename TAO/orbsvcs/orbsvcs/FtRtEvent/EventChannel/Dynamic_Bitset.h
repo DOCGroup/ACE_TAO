@@ -13,6 +13,7 @@
 #define DYNAMIC_BITSET_H
 
 #include "ace/config-all.h"
+#include "ace/OS_NS_string.h"
 
 /**
  *
