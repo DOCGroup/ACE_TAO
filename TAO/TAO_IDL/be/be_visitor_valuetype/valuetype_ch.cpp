@@ -211,7 +211,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "," << be_nl;
             }
 
-          *os << "public virtual Components::ValueBase";
+          *os << "public virtual CORBA::ValueBase";
         }
     }
   else if (n_inherits == 0)
@@ -221,7 +221,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
         }
 
-      *os << "public virtual CORBA_ValueBase";
+      *os << "public virtual CORBA::ValueBase";
     }
 
   if (node->supports_abstract ())

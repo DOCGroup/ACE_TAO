@@ -91,11 +91,6 @@ be_visitor_ccm_pre_proc::visit_root (be_root *node)
 int
 be_visitor_ccm_pre_proc::visit_module (be_module *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -110,11 +105,6 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   if (this->lookup_ccmobject () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -193,11 +183,6 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
 int
 be_visitor_ccm_pre_proc::visit_home (be_home *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
@@ -263,11 +248,6 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
 int
 be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -307,6 +287,7 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
                                     0),
                       -1);
       provides_op->set_defined_in (node);
+      provides_op->set_imported (node->imported ());
       provides_op->set_name (op_name);
       node->be_add_operation (provides_op);
     }
@@ -636,6 +617,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (
                                 0),
                   -1);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   op->set_name (op_full_name);
   Identifier arg_id ("conxn");
   UTL_ScopedName arg_name (&arg_id,
@@ -690,6 +672,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   UTL_ExceptList *disconnect_single = 0;
   ACE_NEW_RETURN (disconnect_single,
                   UTL_ExceptList (this->no_connection_,
@@ -756,6 +739,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   Identifier arg_id ("connection");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -808,6 +792,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -855,6 +840,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   node->be_add_operation (op);
   return 0;
 }
@@ -877,6 +863,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                                 I_FALSE),
                   -1);
   push_op->set_defined_in (consumer);
+  push_op->set_imported (node->imported ());
   push_op->set_name (op_full_name);
   ACE_CString arg_string ("the_",
                           0,
@@ -915,6 +902,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
                                 0),
                   -1);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   op->set_name (op_name);
   
   AST_Interface *i = this->lookup_consumer (pd);
@@ -977,6 +965,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
                                 0),
                   -1);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   op->set_name (op_name);
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
@@ -1019,6 +1008,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
                   -1);
   op->set_name (op_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   AST_Interface *i = this->lookup_consumer (pd);
 
   if (i == 0)
@@ -1082,6 +1072,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
                   -1);
   op->set_name (op_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   UTL_ExceptList *emits_disconnect = 0;
   ACE_NEW_RETURN (emits_disconnect,
                   UTL_ExceptList (this->no_connection_,
@@ -1124,6 +1115,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (
                   -1);
   op->set_name (op_name);
   op->set_defined_in (node);
+  op->set_imported (node->imported ());
   node->be_add_operation (op);
   return 0;
 }
@@ -1180,6 +1172,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
 
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
+  op->set_imported (node->imported ());
   implicit->be_add_operation (op);
   return 0;
 }
@@ -1230,6 +1223,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                   -1);
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
+  op->set_imported (node->imported ());
   implicit->be_add_operation (op);
   return 0;
 }
@@ -1280,6 +1274,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                   -1);
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
+  op->set_imported (node->imported ());
   implicit->be_add_operation (op);
   return 0;
 }
@@ -1313,6 +1308,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
   arg_id.destroy ();
   op->be_add_argument (arg);
   op->set_defined_in (implicit);
+  op->set_imported (node->imported ());
   implicit->be_add_operation (op);
   return 0;
 }
@@ -1481,6 +1477,7 @@ be_visitor_ccm_pre_proc::create_uses_multiple_struct (
                                 0),
                   -1);
   this->connection_->set_defined_in (node);
+  this->connection_->set_imported (node->imported ());
 
   Identifier o_id ("objref");
   UTL_ScopedName o_sn (&o_id,
@@ -1560,6 +1557,7 @@ be_visitor_ccm_pre_proc::create_uses_multiple_sequence (
                               0),
                   -1);
   td->set_defined_in (node);
+  td->set_imported (node->imported ());
 
   if (node->be_add_typedef (td) == 0)
     {
@@ -1651,6 +1649,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
     }
 
   event_consumer->set_defined_in (s);
+  event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
   m->be_add_interface (event_consumer);
   return this->gen_push_op (node,
@@ -1710,6 +1709,7 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                   0);                         
   i->set_name (explicit_name);
   i->set_defined_in (node->defined_in ());
+  i->set_imported (node->imported ());
 
   // Reuse the home's decls in the explicit interface. No need
   // to check for name clashes, redefinition, etc. because it
@@ -1777,6 +1777,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                   0);                         
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
+  i->set_imported (node->imported ());
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
   return i;
@@ -1814,6 +1815,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                   0);
   retval->set_name (equiv_name);
   retval->set_defined_in (s);
+  retval->set_imported (node->imported ());
   UTL_ScopedName *unmangled_name = ACE_static_cast (UTL_ScopedName *,
                                                     node->name ()->copy ());
   UTL_ScopedName *mangled_name =
