@@ -1,0 +1,23 @@
+echo "********* Static Invocation Interface **********"
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T s
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T l
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T o
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T c
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T d
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T S
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T U
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T A
+client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T Q
+#client -i 1 -h mambo -R s -P S -o ssi_marshal -n marshalSSI -T R
+#
+echo "********* Dynamic Invocation Interface **********"
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T s
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T l
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T o
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T c
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T d
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T S
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T U
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T A
+client -i 1 -h mambo -R s -P D -o ssi_marshal -n marshalSSI -T Q
+
