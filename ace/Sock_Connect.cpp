@@ -718,7 +718,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
                     }
                     if (n_interfaces == 0) {
                         ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                            ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - "),
                             ACE_LIB_TEXT ("No adapter found.")),
                             -1);
                     }
@@ -743,28 +743,28 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
         case ERROR_NOT_SUPPORTED: // OS does not support this method
             ACE_ERROR_RETURN ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - "),
                 ACE_LIB_TEXT ("This version of WinCE does not support GetAdapterInfo.")),
                 -1);
             break;
 
         case ERROR_NO_DATA:  // no adapter installed
             ACE_ERROR_RETURN ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - "),
                 ACE_LIB_TEXT ("No network adapter installed.")),
                 -1);
             break;
 
         case ERROR_INVALID_PARAMETER:
             ACE_ERROR_RETURN ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - "),
                 ACE_LIB_TEXT ("Invalid parameter.")),
                 -1);
             break;
 
         default:
             ACE_ERROR_RETURN ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - "),
                 ACE_LIB_TEXT ("Adapter info access permission denied.")),
                 -1);
             break;
@@ -1168,7 +1168,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("ACE::get_ip_interface failed\n"),
+                                 ACE_LIB_TEXT ("ACE::get_ip_interface failed\n")
                                  ACE_LIB_TEXT ("Couldnt get the IP Address\n")),
                                  -1);
             }

@@ -64,7 +64,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<
   //
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__));
+              ACE_LIB_TEXT ("ACE_NOTSUP: %N, line %l\n")));
   errno = ENOTSUP;
 }
 
