@@ -246,10 +246,8 @@ namespace CORBA
     //@}
 
     // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef Object_ptr _ptr_type;
     typedef Object_var _var_type;
-#endif /* __GNUC__ */
 
     //@} End of CORBA specific methods
 
