@@ -133,10 +133,10 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_GIOP_Twoway_Invocation call (this->target_->_stubobj (),
-                                   this->opname_,
-                                   ACE_OS::strlen (this->opname_),
-                                   this->orb_->orb_core ());
+  TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
+                                this->opname_,
+                                ACE_OS::strlen (this->opname_),
+                                this->orb_->orb_core ());
 
   // Loop as needed for forwarding.
   for (;;)

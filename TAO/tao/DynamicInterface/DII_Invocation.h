@@ -11,8 +11,9 @@
 //    The DII invocation classes.
 //
 // = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -31,14 +32,40 @@
 #include "DII_Reply_Dispatcher.h"
 #include "Request.h"
 
+class TAO_GIOP_DII_Invocation : public TAO_GIOP_Twoway_Invocation
+{
+  // = TITLE
+  //    Sends a two-way request using DII.
+  //
+  // = DESCRIPTION
+  //    This class replaces just one method - invoke - of its base
+  //    class with one of a slightly different signature. The class
+  //    is not exported because it is only instantiated by 
+  //    CORBA::Request in this library.
+  //
+public:
+  TAO_GIOP_DII_Invocation (TAO_Stub *data,
+                           const char *operation,
+                           CORBA::ULong opname_len,
+                           TAO_ORB_Core *orb_core);
+  // Constructor.
+
+  int invoke (CORBA::ExceptionList_ptr exceptions,
+              CORBA_Environment &ACE_TRY_ENV =
+                TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
+  // Send request, block until any reply comes back, and unmarshal
+  // reply parameters as appropriate.
+};
+
 class TAO_DynamicInterface_Export TAO_GIOP_DII_Deferred_Invocation
   : public TAO_GIOP_Invocation
 {
   // = TITLE
-  //    Sends a two-way request does not expect the reply.
+  //    Sends a two-way request using DII and does not wait for a reply.
   //
   // = DESCRIPTION
-  //    This class connects (or lookups a connection from the cache) to
+  //    This class connects (or looks up a connection from the cache) to
   //    the remote server, builds the CDR stream for the Request, send
   //    the CDR stream and returns.
   //
@@ -48,19 +75,11 @@ public:
                                     const CORBA::Request_ptr req);
   // Constructor.
 
-  void start (CORBA_Environment &TAO_IN_ENV =
-              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Calls TAO_GIOP_Asynch_Invocation::start.
-
   int invoke (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
-
-  const IOP::ServiceContextList& reply_service_info (void) const;
-  // Accessor to the reply ServiceContextList.
 
 private:
   int invoke_i (CORBA::Environment &ACE_TRY_ENV)

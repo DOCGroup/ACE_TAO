@@ -67,7 +67,10 @@ public:
   //    protocols implement different variants of such ClientReply
   //    class.
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  CORBA::ULong reply_status (void) const;
+  // Get the reply status.
+
+  virtual TAO_GIOP_Message_State *message_state (void) = 0;
   // Get the Message State into which the reply has been read.
 
   virtual void dispatcher_bound (TAO_Transport*) = 0;
@@ -82,6 +85,10 @@ public:
   //    message then we could re-issue the request instead of raising
   //    the exception, it would a matter of simply adding a boolean
   //    argument to this function.
+
+protected:
+  CORBA::ULong reply_status_;
+  // Reply or LocateReply status.
 };
 
 #if defined (__ACE_INLINE__)

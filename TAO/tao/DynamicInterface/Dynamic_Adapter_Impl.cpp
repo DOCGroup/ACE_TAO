@@ -135,49 +135,6 @@ TAO_Dynamic_Adapter_Impl::create_exception_list (
                       ));
 }
 
-CORBA::Exception *
-TAO_Dynamic_Adapter_Impl::decode_user_exception (
-    CORBA::ExceptionList_ptr exceptions,
-    TAO_GIOP_Twoway_Invocation *invocation,
-    const char *buf,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  for (CORBA::ULong i = 0;
-       exceptions != 0 && i < exceptions->count ();
-       i++)
-    {
-      CORBA::TypeCode_ptr tcp = exceptions->item (i, 
-                                                  ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      const char *xid = tcp->id (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      if (ACE_OS::strcmp (buf, xid) != 0)
-        {
-          continue;
-        }
-
-      const ACE_Message_Block *cdr = invocation->inp_stream ().start ();
-
-      CORBA_Any any (tcp, 
-                     0,
-                     invocation->inp_stream ().byte_order (),
-                     cdr);
-
-      CORBA_Exception *exception = 0;
-
-      ACE_NEW_RETURN (exception,
-                      CORBA_UnknownUserException (any),
-                      0);
-
-      return exception;
-    }
-
-  return 0;
-}
-
 int
 TAO_Dynamic_Adapter_Impl::Initializer (void)
 {

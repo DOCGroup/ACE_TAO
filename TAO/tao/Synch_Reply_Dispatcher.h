@@ -44,12 +44,6 @@ public:
   virtual ~TAO_Synch_Reply_Dispatcher (void);
   // Destructor.
 
-  CORBA::ULong reply_status (void) const;
-  // Get the reply status.
-
-  const TAO_GIOP_Version& version (void) const;
-  // Get the GIOP version.
-
   TAO_InputCDR &reply_cdr (void);
   // Return the reply CDR.
 
@@ -60,8 +54,11 @@ public:
                               const TAO_GIOP_Version& version,
                               IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
+
   virtual TAO_GIOP_Message_State *message_state (void);
+
   virtual void dispatcher_bound (TAO_Transport *);
+
   virtual void connection_closed (void);
 
 protected:
@@ -69,12 +66,6 @@ protected:
   // The service context list
 
 private:
-  CORBA::ULong reply_status_;
-  // Reply or LocateReply status.
-
-  // TAO_GIOP_Version version_;
-  // The version
-
   TAO_GIOP_Message_State message_state_;
   // All the state required to receive the input...
   // @@ Having members of type TAO_GIOP* indicates that we
@@ -98,10 +89,6 @@ private:
   // that binds the Reply_Dispatcher to its transport, and then passed
   // to the Waiting_Strategy to do the signalling, if needed.
 };
-
-#if defined (__ACE_INLINE__)
-#include "tao/Synch_Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* TAO_REPLY_DISPATCHER_H */

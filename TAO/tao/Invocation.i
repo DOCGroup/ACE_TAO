@@ -31,23 +31,54 @@ TAO_GIOP_Invocation::restart_flag (CORBA::Boolean flag)
 // ****************************************************************
 
 ACE_INLINE
-TAO_GIOP_Twoway_Invocation::
-TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
-                            const char *operation,
-                            CORBA::ULong opname_len,
-                            TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
-    rd_ (orb_core, this->op_details_.service_info ())
+TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (
+    TAO_Stub *stub,
+    const char *operation,
+    CORBA::ULong opname_len,
+    TAO_ORB_Core *orb_core
+  )
+  : TAO_GIOP_Invocation (stub, 
+                         operation, 
+			 opname_len, 
+			 orb_core),
+    rd_ (orb_core, 
+         this->op_details_.service_info ())
 {
 }
 
 ACE_INLINE TAO_InputCDR &
-TAO_GIOP_Twoway_Invocation::inp_stream (void)
+TAO_GIOP_Synch_Invocation::inp_stream (void)
 {
   return this->rd_.reply_cdr ();
 }
 
 // ****************************************************************
+
+ACE_INLINE
+TAO_GIOP_Twoway_Invocation::TAO_GIOP_Twoway_Invocation (
+    TAO_Stub *stub,
+    const char *operation,
+    CORBA::ULong opname_len,
+    TAO_ORB_Core *orb_core
+  )
+  : TAO_GIOP_Synch_Invocation (stub, 
+			       operation, 
+			       opname_len, 
+			       orb_core)
+{
+}
+
+ACE_INLINE
+TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
+{
+}
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
+{
+}
 
 ACE_INLINE TAO::SyncScope
 TAO_GIOP_Oneway_Invocation::sync_scope (void)
@@ -61,13 +92,14 @@ ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, 0, 0, orb_core),
-    rd_ (orb_core, this->op_details_.service_info ())
+  : TAO_GIOP_Synch_Invocation (stub, 
+			       0, 
+			       0, 
+			       orb_core)
 {
 }
 
-ACE_INLINE TAO_InputCDR &
-TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
+TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
-  return this->rd_.reply_cdr ();
 }
+
