@@ -490,8 +490,8 @@ namespace TAO
 {
   /// Return the unaliased content @c TypeCode of the given
   /// @c TypeCode.
-  CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
-                                          ACE_ENV_ARG_DECL);
+  TAO_Export CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
+                                                     ACE_ENV_ARG_DECL);
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
   /**
@@ -499,8 +499,8 @@ namespace TAO
    *       on the unaliased @c TypeCode returned from
    *       @c unaliased_typecode().
    */
-  CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL);
+  TAO_Export CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
+                                           ACE_ENV_ARG_DECL);
 
 }
 
