@@ -18,6 +18,7 @@ project(mt_server): server, strategies  {
 
   Source_Files {
     mt_server.cpp
+    MT_AMH_Server.cpp
     Base_Server.cpp
     AMH_Servant.cpp
     Timer_Handler.cpp
@@ -29,6 +30,7 @@ project: client, strategies  {
   requires += ami
 
   Source_Files {
+    Client_Task.cpp
     TestC.cpp
     client.cpp
   }
