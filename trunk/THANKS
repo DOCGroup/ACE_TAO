@@ -833,6 +833,8 @@ Zach Frey <zfrey@bright.net>
 Ruibiao Qiu <ruibiao@arl.wustl.edu>
 Marcelo Matus <mmatus@dinha.acms.arizona.edu>
 R Seshardi <rseshadri@lucent.com>
+Alexander Belopolsky <belopolsky@my-deja.com>
+Ben Bourner <ben@orion.no> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
