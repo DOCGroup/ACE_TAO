@@ -1,3 +1,32 @@
+Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.{h cpp} (ACE_Asynch_Accept): Added an optional
+	  addr_family parameter to ACE_Asych_Accept. Defaults to AF_INET
+	  (IPv4) to maintain current functionality.
+	  Doxygen-ized the comments for accept().
+
+	* ace/Asynch_IO_Impl.h (ACE_Asynch_Accept_Impl): Pass the new
+	  addr_family arugment along to the implementation classes.
+
+	* ace/POSIX_Asynch_IO.{h cpp}:
+	* ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Accept::accept): Use
+	  the new addr_family parameter to open a new accept handle if needed.
+	  It is up to the caller to make sure that addr_family matches the
+	  family used when the listen socket was opened.
+	  Also use the address family to scale the required size
+	  of the address area in the specified message block.
+
+	* Asynch_Acceptor.{h cpp}: Added a new addr_family_ member to remember
+	  the in-use address family from open(). Use this value to calculate
+	  the space needed for addresses, as well as passing it to
+	  ACE_Asynch_Accept::accept() to open the correct type of handle
+	  when needed.
+	  Marked the address_size() method deprecated. It assumes use of
+	  IPv4 addresses and since it's static, it can't use the addr_family_
+	  knowledge. Replaced all internal uses of this with the proper
+	  adjustment based on the address family in use.
+	  Close the listen_handle_ when this object is destroyed.
+
 Mon Feb 21 15:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

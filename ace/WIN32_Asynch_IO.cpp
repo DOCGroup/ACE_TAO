@@ -2028,15 +2028,20 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                  ACE_HANDLE accept_handle,
                                  const void *act,
                                  int priority,
-                                 int signal_number)
+                                 int signal_number,
+                                 int addr_family)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   // Sanity check: make sure that enough space has been allocated by
   // the caller.
-  size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-  size_t space_in_use = message_block.wr_ptr () - message_block.base ();
-  size_t total_size = message_block.size ();
-  size_t available_space = total_size - space_in_use;
+  size_t address_size =
+#if defined (ACE_HAS_IPV6)
+    addr_family == AF_INET ? sizeof (sockaddr_in) : sizeof (sockaddr_in6);
+#else
+    sizeof (sockaddr_in);
+#endif /* ACE_HAS_IPV6 */
+  address_size += 16;     // AcceptEx requires address size + 16 (minimum)
+  size_t available_space = message_block.space ();
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("Buffer too small\n")), -1);
@@ -2055,7 +2060,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
   // If the <accept_handle> is invalid, we will create a new socket.
   if (accept_handle == ACE_INVALID_HANDLE)
     {
-      accept_handle = ACE_OS::socket (PF_INET,
+      accept_handle = ACE_OS::socket (addr_family,
                                       SOCK_STREAM,
                                       0);
       if (accept_handle == ACE_INVALID_HANDLE)
@@ -2137,6 +2142,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
   ACE_UNUSED_ARG (act);
   ACE_UNUSED_ARG (priority);
   ACE_UNUSED_ARG (signal_number);
+  ACE_UNUSED_ARG (addr_family);
   ACE_NOTSUP_RETURN (-1);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS) */
 }

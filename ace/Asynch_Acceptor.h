@@ -224,7 +224,9 @@ public:
   /// Set bytes to be read with the <accept> call.
   virtual void bytes_to_read (size_t new_value);
 
-  /// This is required by the AcceptEx call.
+  /// @deprecated address_size() assumes IPv4 use, so is not always valid.
+  /// This method will be removed after ACE 5.5. Internal uses have been
+  /// changes to base needed sizes on the addr_family_ member.
   static size_t address_size (void);
 
 protected:
@@ -271,6 +273,10 @@ private:
 
   /// Bytes to be read with the <accept> call.
   size_t bytes_to_read_;
+
+  /// Address family used to open this object. Obtained from @a address passed
+  /// to @c open().
+  int addr_family_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
