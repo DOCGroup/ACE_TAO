@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_IMPLREPOS_H_
-#define _TAO_IDL_ORIG_IMPLREPOS_H_
+#ifndef _TAO_IDL_IMPLREPOS_H_
+#define _TAO_IDL_IMPLREPOS_H_
 
 #include "ace/pre.h"
 #include "ImplRepoC.h"
@@ -56,7 +56,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   class _TAO_ServerObject_Direct_Proxy_Impl;
   class _TAO_ServerObject_Strategized_Proxy_Broker;
   
-  class TAO_PortableServer_Export ServerObject
+  class TAO_Export ServerObject
     : public virtual PortableServer::ServantBase
   {
   protected:
@@ -147,7 +147,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   //               Strategized Proxy Broker Declaration 
   //
   
-  class TAO_PortableServer_Export _TAO_ServerObject_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Broker
+  class TAO_Export _TAO_ServerObject_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Broker
   {
   public: 
     _TAO_ServerObject_Strategized_Proxy_Broker (void);
@@ -192,7 +192,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   //                    ThruPOA  Impl. Declaration
   //
   
-  class TAO_PortableServer_Export _TAO_ServerObject_ThruPOA_Proxy_Impl : 
+  class TAO_Export _TAO_ServerObject_ThruPOA_Proxy_Impl : 
     public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
@@ -229,7 +229,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ServerObject_Direct_Proxy_Impl : 
+class TAO_Export _TAO_ServerObject_Direct_Proxy_Impl : 
   public virtual ImplementationRepository::_TAO_ServerObject_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {
@@ -269,7 +269,7 @@ class _TAO_Administration_ThruPOA_Proxy_Impl;
 class _TAO_Administration_Direct_Proxy_Impl;
 class _TAO_Administration_Strategized_Proxy_Broker;
 
-class TAO_PortableServer_Export Administration
+class TAO_Export Administration
   : public virtual PortableServer::ServantBase
 {
 protected:
@@ -480,7 +480,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_PortableServer_Export _TAO_Administration_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Broker
+class TAO_Export _TAO_Administration_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Broker
 {
 public: 
   _TAO_Administration_Strategized_Proxy_Broker (void);
@@ -525,7 +525,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_Administration_ThruPOA_Proxy_Impl : 
+class TAO_Export _TAO_Administration_ThruPOA_Proxy_Impl : 
   public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
@@ -642,7 +642,7 @@ public:
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_Administration_Direct_Proxy_Impl : 
+class TAO_Export _TAO_Administration_Direct_Proxy_Impl : 
   public virtual ImplementationRepository::_TAO_Administration_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {
@@ -762,7 +762,7 @@ class _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl;
 class _TAO_ServerInformationIterator_Direct_Proxy_Impl;
 class _TAO_ServerInformationIterator_Strategized_Proxy_Broker;
 
-class TAO_PortableServer_Export ServerInformationIterator
+class TAO_Export ServerInformationIterator
   : public virtual PortableServer::ServantBase
 {
 protected:
@@ -854,7 +854,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Broker
+class TAO_Export _TAO_ServerInformationIterator_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Broker
 {
 public: 
   _TAO_ServerInformationIterator_Strategized_Proxy_Broker (void);
@@ -899,7 +899,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl : 
+class TAO_Export _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl : 
   public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
@@ -938,7 +938,7 @@ public:
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_Direct_Proxy_Impl : 
+class TAO_Export _TAO_ServerInformationIterator_Direct_Proxy_Impl : 
   public virtual ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {

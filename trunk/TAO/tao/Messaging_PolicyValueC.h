@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
-#define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
+#ifndef _TAO_IDL_MESSAGING_POLICYVALUEC_H_
+#define _TAO_IDL_MESSAGING_POLICYVALUEC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 #include "IOPC.h"
 #include "Sequence.h"
 

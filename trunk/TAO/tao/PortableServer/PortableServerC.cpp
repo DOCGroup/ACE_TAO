@@ -7247,16 +7247,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len)
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -7313,16 +7313,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len)
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)

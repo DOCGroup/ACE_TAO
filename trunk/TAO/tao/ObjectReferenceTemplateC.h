@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
-#define _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
+#ifndef _TAO_IDL_OBJECTREFERENCETEMPLATEC_H_
+#define _TAO_IDL_OBJECTREFERENCETEMPLATEC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 #include "OctetSeqC.h"
 #include "StringSeqC.h"
 #include "ValueBase.h"
@@ -176,342 +176,326 @@ TAO_NAMESPACE  PortableInterceptor
     
     virtual CORBA::Object_ptr make_object (
         const char *, const PortableInterceptor::ObjectId & ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        )) = 0;
-    
-  protected:
-    ObjectReferenceFactory ();
-    virtual ~ObjectReferenceFactory ();
-
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-  private:
-    ObjectReferenceFactory (const ObjectReferenceFactory &);
-    void operator= (const ObjectReferenceFactory &);
-    
-  };
+      ) = 0;
   
+protected:
+  ObjectReferenceFactory ();
+  virtual ~ObjectReferenceFactory ();
+
+  // TAO internals
+  virtual void *_tao_obv_narrow (ptr_arith_t);
+  
+private:
+  ObjectReferenceFactory (const ObjectReferenceFactory &);
+  void operator= (const ObjectReferenceFactory &);
+  
+};
+
 #endif /* end #if !defined */
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
-  
-  // Valuetype class
-  class ObjectReferenceTemplate;
-  
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
+
+// Valuetype class
+class ObjectReferenceTemplate;
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_
-  
-  typedef ObjectReferenceTemplate *ObjectReferenceTemplate_ptr;
-  
+
+typedef ObjectReferenceTemplate *ObjectReferenceTemplate_ptr;
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___VAR_CH_
+
+class TAO_Export ObjectReferenceTemplate_var
+{
+public:
+  ObjectReferenceTemplate_var (void); // default constructor
+  ObjectReferenceTemplate_var (ObjectReferenceTemplate*);
+  ObjectReferenceTemplate_var (const ObjectReferenceTemplate*); // (TAO extension)
+  ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &); // copy constructor
+  ~ObjectReferenceTemplate_var (void); // destructor
   
-  class TAO_Export ObjectReferenceTemplate_var
-  {
-  public:
-    ObjectReferenceTemplate_var (void); // default constructor
-    ObjectReferenceTemplate_var (ObjectReferenceTemplate*);
-    ObjectReferenceTemplate_var (const ObjectReferenceTemplate*); // (TAO extension)
-    ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &); // copy constructor
-    ~ObjectReferenceTemplate_var (void); // destructor
-    
-    ObjectReferenceTemplate_var &operator= (ObjectReferenceTemplate*);
-    ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate* operator-> (void) const;
-    
-    operator const ObjectReferenceTemplate* () const;
-    operator ObjectReferenceTemplate* ();
-    // in, inout, out, _retn 
-    ObjectReferenceTemplate* in (void) const;
-    ObjectReferenceTemplate* &inout (void);
-    ObjectReferenceTemplate* &out (void);
-    ObjectReferenceTemplate* _retn (void);
-    ObjectReferenceTemplate* ptr (void) const;
+  ObjectReferenceTemplate_var &operator= (ObjectReferenceTemplate*);
+  ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
+  ObjectReferenceTemplate* operator-> (void) const;
   
-  private:
-    ObjectReferenceTemplate* ptr_;
-  };
-  
-  
+  operator const ObjectReferenceTemplate* () const;
+  operator ObjectReferenceTemplate* ();
+  // in, inout, out, _retn 
+  ObjectReferenceTemplate* in (void) const;
+  ObjectReferenceTemplate* &inout (void);
+  ObjectReferenceTemplate* &out (void);
+  ObjectReferenceTemplate* _retn (void);
+  ObjectReferenceTemplate* ptr (void) const;
+
+private:
+  ObjectReferenceTemplate* ptr_;
+};
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___OUT_CH_
+
+class TAO_Export ObjectReferenceTemplate_out
+{
+public:
+  ObjectReferenceTemplate_out (ObjectReferenceTemplate* &);
+  ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &);
+  ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &);
+  ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_out &);
+  ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_var &);
+  ObjectReferenceTemplate_out &operator= (ObjectReferenceTemplate*);
+  operator ObjectReferenceTemplate* &();
+  ObjectReferenceTemplate* &ptr (void);
+  ObjectReferenceTemplate* operator-> (void);
   
-  class TAO_Export ObjectReferenceTemplate_out
-  {
-  public:
-    ObjectReferenceTemplate_out (ObjectReferenceTemplate* &);
-    ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &);
-    ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_out &);
-    ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate_out &operator= (ObjectReferenceTemplate*);
-    operator ObjectReferenceTemplate* &();
-    ObjectReferenceTemplate* &ptr (void);
-    ObjectReferenceTemplate* operator-> (void);
-    
-  private:
-    ObjectReferenceTemplate* &ptr_;
-  };
-  
-  
+private:
+  ObjectReferenceTemplate* &ptr_;
+};
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_
+
+class TAO_Export ObjectReferenceTemplate
+  : public virtual ObjectReferenceFactory
+{
+public:
   
-  class TAO_Export ObjectReferenceTemplate
-    : public virtual ObjectReferenceFactory
-  {
-  public:
-    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ObjectReferenceTemplate* _ptr_type;
-    typedef ObjectReferenceTemplate_var _var_type;
+  typedef ObjectReferenceTemplate* _ptr_type;
+  typedef ObjectReferenceTemplate_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
-    // The address of static _downcast is implicit used as type id
-
-    // (TAO extensions or internals)
-    static CORBA::Boolean _tao_unmarshal (
-        TAO_InputCDR &,
-        ObjectReferenceTemplate *&
-      );
-    virtual const char* _tao_obv_repository_id () const;
-    static const char* _tao_obv_static_repository_id ();
-    
-    static void _tao_any_destructor (void *);
-    
-    virtual char * server_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        )) = 0;
-    virtual char * orb_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        )) = 0;
-    virtual ::PortableInterceptor::AdapterName * adapter_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        )) = 0;
-    
-  protected:
-    ObjectReferenceTemplate ();
-    virtual ~ObjectReferenceTemplate ();
-
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-  private:
-    ObjectReferenceTemplate (const ObjectReferenceTemplate &);
-    void operator= (const ObjectReferenceTemplate &);
-    
-  };
   
+  static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
+  // The address of static _downcast is implicit used as type id
+
+  // (TAO extensions or internals)
+  static CORBA::Boolean _tao_unmarshal (
+      TAO_InputCDR &,
+      ObjectReferenceTemplate *&
+    );
+  virtual const char* _tao_obv_repository_id () const;
+  static const char* _tao_obv_static_repository_id ();
+  
+  static void _tao_any_destructor (void *);
+  
+  virtual char * server_id (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ) = 0;
+virtual char * orb_id (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+  ) = 0;
+virtual ::PortableInterceptor::AdapterName * adapter_name (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+  ) = 0;
+
+protected:
+  ObjectReferenceTemplate ();
+  virtual ~ObjectReferenceTemplate ();
+
+  // TAO internals
+  virtual void *_tao_obv_narrow (ptr_arith_t);
+  
+private:
+  ObjectReferenceTemplate (const ObjectReferenceTemplate &);
+  void operator= (const ObjectReferenceTemplate &);
+  
+};
+
 #endif /* end #if !defined */
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
-  
-  
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
+
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_)
 #define __TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_
+
+class TAO_EXPORT_MACRO _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
+  : public TAO_Unbounded_Base_Sequence
+{
+public:
+  // = Initialization and termination methods.
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (CORBA::ULong maximum);
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
+      CORBA::ULong maximum,
+      CORBA::ULong length,
+      ObjectReferenceTemplate* *value,
+      CORBA::Boolean release = 0
+    );
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
+      const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+    );
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &operator= (
+      const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+    );
+  virtual ~_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    // = Initialization and termination methods.
-    _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
-    _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (CORBA::ULong maximum);
-    _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        ObjectReferenceTemplate* *value,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
-        const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
-      );
-    _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &operator= (
-        const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
-      );
-    virtual ~_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
-    
-    // = Accessors.
-    TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var> operator[] (CORBA::ULong index) const;
-    
-    // = Static operations.
-    static ObjectReferenceTemplate **allocbuf (CORBA::ULong nelems);
-    static void freebuf (ObjectReferenceTemplate **buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    ObjectReferenceTemplate* *get_buffer (CORBA::Boolean orphan = 0);
-    const ObjectReferenceTemplate* *get_buffer (void) const;
-    virtual void _shrink_buffer (
-        CORBA::ULong nl,
-        CORBA::ULong ol
-      );
-    
-    
-  };
+  // = Accessors.
+  TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var> operator[] (CORBA::ULong index) const;
   
+  // = Static operations.
+  static ObjectReferenceTemplate **allocbuf (CORBA::ULong nelems);
+  static void freebuf (ObjectReferenceTemplate **buffer);
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  virtual void _allocate_buffer (CORBA::ULong length);
+  virtual void _deallocate_buffer (void);
+  ObjectReferenceTemplate* *get_buffer (CORBA::Boolean orphan = 0);
+  const ObjectReferenceTemplate* *get_buffer (void) const;
+  virtual void _shrink_buffer (
+      CORBA::ULong nl,
+      CORBA::ULong ol
+    );
+  
+  
+};
+
 #endif /* end #if !defined */
-  
-  
+
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_
-  
-  class ObjectReferenceTemplateSeq;
-  class ObjectReferenceTemplateSeq_var;
-  
-  // *************************************************************
-  // ObjectReferenceTemplateSeq
-  // *************************************************************
-  
-  class TAO_Export ObjectReferenceTemplateSeq : public 
+
+class ObjectReferenceTemplateSeq;
+class ObjectReferenceTemplateSeq_var;
+
+// *************************************************************
+// ObjectReferenceTemplateSeq
+// *************************************************************
+
+class TAO_Export ObjectReferenceTemplateSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
+_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Valuetype_Sequence<ObjectReferenceTemplate,ObjectReferenceTemplate_var>
+TAO_Unbounded_Valuetype_Sequence<ObjectReferenceTemplate,ObjectReferenceTemplate_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  {
-  public:
-    ObjectReferenceTemplateSeq (void); // default ctor
-    ObjectReferenceTemplateSeq (CORBA::ULong max); // uses max size
-    ObjectReferenceTemplateSeq (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        ObjectReferenceTemplate_ptr *buffer, 
-        CORBA::Boolean release = 0
-      );
-    ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &); // copy ctor
-    ~ObjectReferenceTemplateSeq (void);
-    static void _tao_any_destructor (void*);
-    
+{
+public:
+  ObjectReferenceTemplateSeq (void); // default ctor
+  ObjectReferenceTemplateSeq (CORBA::ULong max); // uses max size
+  ObjectReferenceTemplateSeq (
+      CORBA::ULong max, 
+      CORBA::ULong length, 
+      ObjectReferenceTemplate_ptr *buffer, 
+      CORBA::Boolean release = 0
+    );
+  ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &); // copy ctor
+  ~ObjectReferenceTemplateSeq (void);
+  static void _tao_any_destructor (void*);
+  
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ObjectReferenceTemplateSeq_var _var_type;
+  typedef ObjectReferenceTemplateSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
-  };
   
+  
+};
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___VAR_CH_
+
+// *************************************************************
+// class PortableInterceptor::ObjectReferenceTemplateSeq_var
+// *************************************************************
+
+class TAO_Export ObjectReferenceTemplateSeq_var
+{
+public:
+  ObjectReferenceTemplateSeq_var (void);
+  ObjectReferenceTemplateSeq_var (ObjectReferenceTemplateSeq *);
+  ObjectReferenceTemplateSeq_var (const ObjectReferenceTemplateSeq_var &);
+  ~ObjectReferenceTemplateSeq_var (void);
   
-  // *************************************************************
-  // class PortableInterceptor::ObjectReferenceTemplateSeq_var
-  // *************************************************************
+  ObjectReferenceTemplateSeq_var &operator= (ObjectReferenceTemplateSeq *);
+  ObjectReferenceTemplateSeq_var &operator= (const ObjectReferenceTemplateSeq_var &);
+  ObjectReferenceTemplateSeq *operator-> (void);
+  const ObjectReferenceTemplateSeq *operator-> (void) const;
   
-  class TAO_Export ObjectReferenceTemplateSeq_var
-  {
-  public:
-    ObjectReferenceTemplateSeq_var (void);
-    ObjectReferenceTemplateSeq_var (ObjectReferenceTemplateSeq *);
-    ObjectReferenceTemplateSeq_var (const ObjectReferenceTemplateSeq_var &);
-    ~ObjectReferenceTemplateSeq_var (void);
-    
-    ObjectReferenceTemplateSeq_var &operator= (ObjectReferenceTemplateSeq *);
-    ObjectReferenceTemplateSeq_var &operator= (const ObjectReferenceTemplateSeq_var &);
-    ObjectReferenceTemplateSeq *operator-> (void);
-    const ObjectReferenceTemplateSeq *operator-> (void) const;
-    
-    operator const ObjectReferenceTemplateSeq &() const;
-    operator ObjectReferenceTemplateSeq &();
-    operator ObjectReferenceTemplateSeq &() const;
-    operator ObjectReferenceTemplateSeq *&(); // variable-size base types only
-    
-    TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
-    const ObjectReferenceTemplateSeq &in (void) const;
-    ObjectReferenceTemplateSeq &inout (void);
-    ObjectReferenceTemplateSeq *&out (void);
-    ObjectReferenceTemplateSeq *_retn (void);
-    ObjectReferenceTemplateSeq *ptr (void) const;
+  operator const ObjectReferenceTemplateSeq &() const;
+  operator ObjectReferenceTemplateSeq &();
+  operator ObjectReferenceTemplateSeq &() const;
+  operator ObjectReferenceTemplateSeq *&(); // variable-size base types only
   
-  private:
-    ObjectReferenceTemplateSeq *ptr_;
-  };
+  TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
   
-  
+  // in, inout, out, _retn 
+  const ObjectReferenceTemplateSeq &in (void) const;
+  ObjectReferenceTemplateSeq &inout (void);
+  ObjectReferenceTemplateSeq *&out (void);
+  ObjectReferenceTemplateSeq *_retn (void);
+  ObjectReferenceTemplateSeq *ptr (void) const;
+
+private:
+  ObjectReferenceTemplateSeq *ptr_;
+};
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___OUT_CH_
-  
-  class TAO_Export ObjectReferenceTemplateSeq_out
-  {
-  public:
-    ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq *&);
-    ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq_var &);
-    ObjectReferenceTemplateSeq_out (const ObjectReferenceTemplateSeq_out &);
-    ObjectReferenceTemplateSeq_out &operator= (const ObjectReferenceTemplateSeq_out &);
-    ObjectReferenceTemplateSeq_out &operator= (ObjectReferenceTemplateSeq *);
-    operator ObjectReferenceTemplateSeq *&();
-    ObjectReferenceTemplateSeq *&ptr (void);
-    ObjectReferenceTemplateSeq *operator-> (void);
-    TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
-  
-  private:
-    ObjectReferenceTemplateSeq *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ObjectReferenceTemplateSeq_var &);
-  };
-  
-  
+
+class TAO_Export ObjectReferenceTemplateSeq_out
+{
+public:
+  ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq *&);
+  ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq_var &);
+  ObjectReferenceTemplateSeq_out (const ObjectReferenceTemplateSeq_out &);
+  ObjectReferenceTemplateSeq_out &operator= (const ObjectReferenceTemplateSeq_out &);
+  ObjectReferenceTemplateSeq_out &operator= (ObjectReferenceTemplateSeq *);
+  operator ObjectReferenceTemplateSeq *&();
+  ObjectReferenceTemplateSeq *&ptr (void);
+  ObjectReferenceTemplateSeq *operator-> (void);
+  TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
+
+private:
+  ObjectReferenceTemplateSeq *&ptr_;
+  // Assignment from T_var not allowed.
+  void operator= (const ObjectReferenceTemplateSeq_var &);
+};
+
+
 #endif /* end #if !defined */
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
-  
-  typedef CORBA::Long AdapterManagerId;
-  typedef CORBA::Long_out AdapterManagerId_out;
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterManagerId;
-  
-  typedef CORBA::Short AdapterState;
-  typedef CORBA::Short_out AdapterState_out;
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterState;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short HOLDING;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ACTIVE;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short DISCARDING;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short INACTIVE;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short NON_EXISTENT;
-  
-  
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
+
+typedef CORBA::Long AdapterManagerId;
+typedef CORBA::Long_out AdapterManagerId_out;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterManagerId;
+
+typedef CORBA::Short AdapterState;
+typedef CORBA::Short_out AdapterState_out;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterState;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short HOLDING;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ACTIVE;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short DISCARDING;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short INACTIVE;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short NON_EXISTENT;
+
+
 }
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
 

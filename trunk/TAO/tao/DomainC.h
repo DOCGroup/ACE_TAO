@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_DOMAINC_H_
-#define _TAO_IDL_ORIG_DOMAINC_H_
+#ifndef _TAO_IDL_DOMAINC_H_
+#define _TAO_IDL_DOMAINC_H_
 
 #include "ace/pre.h"
 #include "tao/corba.h"
@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/corbafwd.h"
 #include "PolicyC.h"
 #include "Sequence.h"
 
@@ -136,6 +136,12 @@ TAO_NAMESPACE  CORBA
   
   
 #endif /* end #if !defined */
+  
+  // *************************************************************
+  // CORBA::DomainManager
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/interface_ch.cpp:106
+  // *************************************************************
   
   
 #if !defined (_CORBA_DOMAINMANAGER_CH_)
@@ -428,6 +434,12 @@ TAO_NAMESPACE  CORBA
   
   
 #endif /* end #if !defined */
+  
+  // *************************************************************
+  // CORBA::ConstructionPolicy
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/interface_ch.cpp:106
+  // *************************************************************
   
   
 #if !defined (_CORBA_CONSTRUCTIONPOLICY_CH_)
@@ -829,11 +841,13 @@ CORBA::_TAO_ConstructionPolicy_Proxy_Broker *
   );
 
 // Any operators for interface CORBA::DomainManager
-TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManager_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DomainManager *&);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManager_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManager_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DomainManager_ptr &);
 // Any operators for interface CORBA::ConstructionPolicy
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ConstructionPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstructionPolicy *&);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::ConstructionPolicy_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::ConstructionPolicy_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstructionPolicy_ptr &);
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::DomainManagerList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::DomainManagerList*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DomainManagerList *&); // deprecated

@@ -39,6 +39,10 @@
 #include "ImplRepoC.i"
 #endif /* !defined INLINE */
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:67
+
 int ImplementationRepository::ServerObject::_tao_class_id = 0;
 
 ImplementationRepository::ServerObject_ptr
@@ -780,7 +784,7 @@ ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Broker::select_proxy (
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// be/be_visitor_interface/interface_cs.cpp:198
 
 ImplementationRepository::ServerObject::ServerObject (int collocated)
 {
@@ -2064,6 +2068,10 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ServerInformationList, &_tc_TAO_tc_ImplementationRepository_ServerInformationList)
 TAO_NAMESPACE_END
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:67
 
 int ImplementationRepository::Administration::_tao_class_id = 0;
 
@@ -4826,7 +4834,7 @@ ImplementationRepository::_TAO_Administration_Remote_Proxy_Broker::select_proxy 
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// be/be_visitor_interface/interface_cs.cpp:198
 
 ImplementationRepository::Administration::Administration (int collocated)
 {
@@ -5030,7 +5038,7 @@ ImplementationRepository::Administration::AlreadyRegistered::_tao_duplicate (voi
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      ImplementationRepository::Administration::AlreadyRegistered (*this),
+      ::ImplementationRepository::Administration::AlreadyRegistered (*this),
       0
     );
   return result;
@@ -5174,7 +5182,7 @@ ImplementationRepository::Administration::CannotActivate::_tao_duplicate (void) 
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      ImplementationRepository::Administration::CannotActivate (*this),
+      ::ImplementationRepository::Administration::CannotActivate (*this),
       0
     );
   return result;
@@ -5327,7 +5335,7 @@ ImplementationRepository::Administration::NotFound::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      ImplementationRepository::Administration::NotFound (*this),
+      ::ImplementationRepository::Administration::NotFound (*this),
       0
     );
   return result;
@@ -5627,6 +5635,10 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_Administration, &_tc_TAO_tc_ImplementationRepository_Administration)
 TAO_NAMESPACE_END
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:67
 
 int ImplementationRepository::ServerInformationIterator::_tao_class_id = 0;
 
@@ -6426,7 +6438,7 @@ ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Broker::se
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// be/be_visitor_interface/interface_cs.cpp:198
 
 ImplementationRepository::ServerInformationIterator::ServerInformationIterator (int collocated)
 {
@@ -6652,181 +6664,281 @@ TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ServerInformationIterator, &_tc_TAO_tc_ImplementationRepository_ServerInformationIterator)
 TAO_NAMESPACE_END
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerObject_ptr _tao_elem)
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/any_op_cs.cpp:60
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerObject_ptr _tao_elem
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        ImplementationRepository::_tc_ServerObject, 
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        ImplementationRepository::ServerObject::_duplicate (_tao_elem),
-        ImplementationRepository::ServerObject::_tao_any_destructor
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerObject, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          ImplementationRepository::ServerObject::_duplicate (_tao_elem),
+          ImplementationRepository::ServerObject::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerObject_ptr &_tao_elem)
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerObject_ptr *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerObject, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::ServerObject::_tao_any_destructor
+        );
+    }
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::ServerObject_ptr &_tao_elem
+  )
 {
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::ServerObject::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_ServerObject ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerObject
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
+    
     if (stream >> _tao_elem)
-    {
-      ((CORBA::Any *)&_tao_any)->_tao_replace (
-          ImplementationRepository::_tc_ServerObject,
-          1,
-          _tao_elem,
-          ImplementationRepository::ServerObject::_tao_any_destructor
-        );
-      return 1;
-    }
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerObject,
+            1,
+            _tao_elem,
+            ImplementationRepository::ServerObject::_tao_any_destructor
+          );
+        
+        return 1;
+      }
   }
   ACE_CATCHANY
   {
-    _tao_elem = ImplementationRepository::ServerObject::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  
   _tao_elem = ImplementationRepository::ServerObject::_nil ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>
+  template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentVariable &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::EnvironmentVariable &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_EnvironmentVariable,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentVariable,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::EnvironmentVariable *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentVariable,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::EnvironmentVariable::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::EnvironmentVariable *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::EnvironmentVariable *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::EnvironmentVariable *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_EnvironmentVariable,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::EnvironmentVariable::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::EnvironmentVariable *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const ImplementationRepository::EnvironmentVariable*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentVariable *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::EnvironmentVariable *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_EnvironmentVariable ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_EnvironmentVariable
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const ImplementationRepository::EnvironmentVariable*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::EnvironmentVariable *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::EnvironmentVariable, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::_tc_EnvironmentVariable,
-            1,
-            ACE_static_cast (void *, tmp),
-            ImplementationRepository::EnvironmentVariable::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::EnvironmentVariable*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::EnvironmentVariable *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::EnvironmentVariable,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_EnvironmentVariable,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::EnvironmentVariable::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const ImplementationRepository::EnvironmentList &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        ImplementationRepository::_tc_EnvironmentList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::EnvironmentList *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::EnvironmentList *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_EnvironmentList,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::EnvironmentList::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::EnvironmentList::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::EnvironmentList *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::EnvironmentList *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const ImplementationRepository::EnvironmentList*&,
@@ -6834,56 +6946,76 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentList *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::EnvironmentList *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_EnvironmentList ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_EnvironmentList
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const ImplementationRepository::EnvironmentList*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::EnvironmentList *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::EnvironmentList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::_tc_EnvironmentList,
-            1,
-            ACE_static_cast (void *, tmp),
-            ImplementationRepository::EnvironmentList::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const ImplementationRepository::EnvironmentList*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::EnvironmentList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::EnvironmentList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_EnvironmentList,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::EnvironmentList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
@@ -6927,203 +7059,310 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::StartupOptions &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::StartupOptions &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_StartupOptions,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_StartupOptions,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::StartupOptions *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_StartupOptions,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::StartupOptions::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::StartupOptions *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::StartupOptions *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::StartupOptions *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_StartupOptions,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::StartupOptions::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::StartupOptions *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const ImplementationRepository::StartupOptions*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::StartupOptions *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::StartupOptions *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_StartupOptions ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_StartupOptions
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const ImplementationRepository::StartupOptions*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::StartupOptions *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::StartupOptions, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::_tc_StartupOptions,
-            1,
-            ACE_static_cast (void *, tmp),
-            ImplementationRepository::StartupOptions::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::StartupOptions*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::StartupOptions *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::StartupOptions,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_StartupOptions,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::StartupOptions::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::ServerInformation &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::ServerInformation &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_ServerInformation,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformation,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformation *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformation,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::ServerInformation::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformation *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::ServerInformation *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformation *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_ServerInformation,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::ServerInformation::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformation *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const ImplementationRepository::ServerInformation*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::ServerInformation *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::ServerInformation *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_ServerInformation ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformation
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const ImplementationRepository::ServerInformation*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::ServerInformation *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::ServerInformation, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::_tc_ServerInformation,
-            1,
-            ACE_static_cast (void *, tmp),
-            ImplementationRepository::ServerInformation::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::ServerInformation*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::ServerInformation *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::ServerInformation,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_ServerInformation,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::ServerInformation::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const ImplementationRepository::ServerInformationList &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        ImplementationRepository::_tc_ServerInformationList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformationList *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformationList *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::_tc_ServerInformationList,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::ServerInformationList::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::ServerInformationList::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformationList *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformationList *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const ImplementationRepository::ServerInformationList*&,
@@ -7131,146 +7370,225 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::ServerInformationList *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::ServerInformationList *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_ServerInformationList ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformationList
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const ImplementationRepository::ServerInformationList*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::ServerInformationList *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::ServerInformationList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::_tc_ServerInformationList,
-            1,
-            ACE_static_cast (void *, tmp),
-            ImplementationRepository::ServerInformationList::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const ImplementationRepository::ServerInformationList*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::ServerInformationList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::ServerInformationList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_ServerInformationList,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::ServerInformationList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration_ptr _tao_elem)
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/any_op_cs.cpp:60
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::Administration_ptr _tao_elem
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        ImplementationRepository::_tc_Administration, 
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        ImplementationRepository::Administration::_duplicate (_tao_elem),
-        ImplementationRepository::Administration::_tao_any_destructor
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_Administration, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          ImplementationRepository::Administration::_duplicate (_tao_elem),
+          ImplementationRepository::Administration::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration_ptr &_tao_elem)
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::Administration_ptr *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_Administration, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::Administration::_tao_any_destructor
+        );
+    }
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::Administration_ptr &_tao_elem
+  )
 {
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::Administration::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_Administration ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_Administration
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
+    
     if (stream >> _tao_elem)
-    {
-      ((CORBA::Any *)&_tao_any)->_tao_replace (
-          ImplementationRepository::_tc_Administration,
-          1,
-          _tao_elem,
-          ImplementationRepository::Administration::_tao_any_destructor
-        );
-      return 1;
-    }
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_Administration,
+            1,
+            _tao_elem,
+            ImplementationRepository::Administration::_tao_any_destructor
+          );
+        
+        return 1;
+      }
   }
   ACE_CATCHANY
   {
-    _tao_elem = ImplementationRepository::Administration::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  
   _tao_elem = ImplementationRepository::Administration::_nil ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>
+  template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administration::AlreadyRegistered &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::AlreadyRegistered &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_AlreadyRegistered,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_AlreadyRegistered,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration::AlreadyRegistered *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::Administration::AlreadyRegistered *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_AlreadyRegistered,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_AlreadyRegistered,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const ImplementationRepository::Administration::AlreadyRegistered*&,
@@ -7278,89 +7596,136 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem
+  )
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::Administration::_tc_AlreadyRegistered ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::Administration::_tc_AlreadyRegistered
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (ImplementationRepository::Administration::AlreadyRegistered *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::Administration::AlreadyRegistered *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::Administration::AlreadyRegistered, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      CORBA::String_var interface_repository_id;
-      if (!(stream >> interface_repository_id.out ()))
-        return 0;
-      if (ACE_OS::strcmp (
-          interface_repository_id.in (),
-          "IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0"))
-        return 0;
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::Administration::_tc_AlreadyRegistered,
-            1,
-            tmp,
-            ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor
-          );
-        _tao_elem = tmp;
+        _tao_elem = (ImplementationRepository::Administration::AlreadyRegistered *)_tao_any.value ();
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::Administration::AlreadyRegistered *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::Administration::AlreadyRegistered,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::Administration::_tc_AlreadyRegistered,
+                1,
+                tmp,
+                ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administration::CannotActivate &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::CannotActivate &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_CannotActivate,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_CannotActivate,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration::CannotActivate *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::Administration::CannotActivate *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_CannotActivate,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::Administration::CannotActivate::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_CannotActivate,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::Administration::CannotActivate::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::CannotActivate *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,ImplementationRepository::Administration::CannotActivate *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const ImplementationRepository::Administration::CannotActivate*&,
@@ -7368,89 +7733,136 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::CannotActivate *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::CannotActivate *&_tao_elem
+  )
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::Administration::_tc_CannotActivate ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::Administration::_tc_CannotActivate
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (ImplementationRepository::Administration::CannotActivate *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::Administration::CannotActivate *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::Administration::CannotActivate, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      CORBA::String_var interface_repository_id;
-      if (!(stream >> interface_repository_id.out ()))
-        return 0;
-      if (ACE_OS::strcmp (
-          interface_repository_id.in (),
-          "IDL:ImplementationRepository/Administration/CannotActivate:1.0"))
-        return 0;
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::Administration::_tc_CannotActivate,
-            1,
-            tmp,
-            ImplementationRepository::Administration::CannotActivate::_tao_any_destructor
-          );
-        _tao_elem = tmp;
+        _tao_elem = (ImplementationRepository::Administration::CannotActivate *)_tao_any.value ();
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::Administration::CannotActivate *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::Administration::CannotActivate,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/Administration/CannotActivate:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::Administration::_tc_CannotActivate,
+                1,
+                tmp,
+                ImplementationRepository::Administration::CannotActivate::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administration::NotFound &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::NotFound &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_NotFound,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_NotFound,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration::NotFound *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::Administration::NotFound *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      ImplementationRepository::Administration::_tc_NotFound,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      ImplementationRepository::Administration::NotFound::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::Administration::_tc_NotFound,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::Administration::NotFound::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::NotFound *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,ImplementationRepository::Administration::NotFound *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const ImplementationRepository::Administration::NotFound*&,
@@ -7458,122 +7870,186 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::NotFound *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const ImplementationRepository::Administration::NotFound *&_tao_elem
+  )
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::Administration::_tc_NotFound ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::Administration::_tc_NotFound
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (ImplementationRepository::Administration::NotFound *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ImplementationRepository::Administration::NotFound *tmp;
-      ACE_NEW_RETURN (tmp, ImplementationRepository::Administration::NotFound, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      CORBA::String_var interface_repository_id;
-      if (!(stream >> interface_repository_id.out ()))
-        return 0;
-      if (ACE_OS::strcmp (
-          interface_repository_id.in (),
-          "IDL:ImplementationRepository/Administration/NotFound:1.0"))
-        return 0;
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            ImplementationRepository::Administration::_tc_NotFound,
-            1,
-            tmp,
-            ImplementationRepository::Administration::NotFound::_tao_any_destructor
-          );
-        _tao_elem = tmp;
+        _tao_elem = (ImplementationRepository::Administration::NotFound *)_tao_any.value ();
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        ImplementationRepository::Administration::NotFound *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::Administration::NotFound,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/Administration/NotFound:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::Administration::_tc_NotFound,
+                1,
+                tmp,
+                ImplementationRepository::Administration::NotFound::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformationIterator_ptr _tao_elem)
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/any_op_cs.cpp:60
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformationIterator_ptr _tao_elem
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        ImplementationRepository::_tc_ServerInformationIterator, 
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        ImplementationRepository::ServerInformationIterator::_duplicate (_tao_elem),
-        ImplementationRepository::ServerInformationIterator::_tao_any_destructor
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationIterator, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          ImplementationRepository::ServerInformationIterator::_duplicate (_tao_elem),
+          ImplementationRepository::ServerInformationIterator::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformationIterator_ptr &_tao_elem)
+void operator<<= (
+    CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformationIterator_ptr *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationIterator, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::ServerInformationIterator::_tao_any_destructor
+        );
+    }
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    ImplementationRepository::ServerInformationIterator_ptr &_tao_elem
+  )
 {
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (ImplementationRepository::_tc_ServerInformationIterator ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformationIterator
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
+    
     if (stream >> _tao_elem)
-    {
-      ((CORBA::Any *)&_tao_any)->_tao_replace (
-          ImplementationRepository::_tc_ServerInformationIterator,
-          1,
-          _tao_elem,
-          ImplementationRepository::ServerInformationIterator::_tao_any_destructor
-        );
-      return 1;
-    }
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformationIterator,
+            1,
+            _tao_elem,
+            ImplementationRepository::ServerInformationIterator::_tao_any_destructor
+          );
+        
+        return 1;
+      }
   }
   ACE_CATCHANY
   {
-    _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
-    return 0;
   }
   ACE_ENDTRY;
+  
   _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>
+  template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 CORBA::Boolean operator<< (
@@ -7638,16 +8114,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -7685,16 +8161,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
