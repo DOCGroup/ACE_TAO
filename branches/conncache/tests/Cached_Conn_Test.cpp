@@ -47,6 +47,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Caching_Utility_T.h"
 #include "ace/Cached_Connect_Strategy_T.h"
+#include "Handle_Consumer.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4503)
@@ -166,6 +167,7 @@ static int listen_once = 1;
 static int iterations = 2000;
 static int user_has_specified_iterations = 0;
 static double purge_percentage = 20;
+static size_t keep_available_handles = 10;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 
@@ -174,9 +176,7 @@ static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 static void
 out_of_sockets_handler (void)
 {
-  // ENOBUFS had to be checked on NT while ENOENT check had to be added for
-  // Solaris + Linux.
-  if (errno == EMFILE || errno == ENOBUFS || errno == ENOENT)
+  if (ACE::out_of_handles (errno))
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.
@@ -215,7 +215,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
                       -1);
 
   // Reset Svc_Handler state.
-  svc_handler->state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
+  svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
 
   return 0;
 }
@@ -380,7 +380,7 @@ test_caching_strategy_type (void)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:d");
+  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:a:d");
 
   int cc;
 
@@ -413,6 +413,9 @@ parse_args (int argc, char *argv[])
         if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
           caching_strategy_type = ACE_FIFO;
         break;
+      case 'a':
+        keep_available_handles = atoi (get_opt.optarg);
+        break;
       case '?':
       case 'h':
       default:
@@ -422,7 +425,8 @@ parse_args (int argc, char *argv[])
                     ASYS_TEXT ("[-i (iterations)] ")
                     ASYS_TEXT ("[-l (listen once)] ")
                     ASYS_TEXT ("[-d (addition debugging output)] ")
-                    ASYS_TEXT ("[-p (purge percent)] "),
+                    ASYS_TEXT ("[-p (purge percent)] ")  
+                    ASYS_TEXT ("[-a (keep_available_handles)] "),
                     argv[0]));
         return -1;
       }
@@ -452,6 +456,11 @@ main (int argc,
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+  ACE_Reactor::instance ();
+
+  Handle_Consumer handle_consumer;
+  handle_consumer.consume_handles (keep_available_handles);
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
@@ -499,6 +508,11 @@ main (int argc,
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// = Consume handles
+template class ACE_Node<ACE_HANDLE>;
+template class ACE_Unbounded_Set<ACE_HANDLE>;
+template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
@@ -584,7 +598,15 @@ template class ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
 
+template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// = Consume handles
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
@@ -669,6 +691,9 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
