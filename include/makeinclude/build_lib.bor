@@ -10,6 +10,7 @@
 # LIBFILES - list of (non-system) libraries
 # PASCAL - if defined means link dll against pascal run-time library
 # DEBUG	- if defined means building with debug information
+# UNICODE - if defined when building a unicode lib
 #
 
 !ifdef INSTALL_THIS_TARGET
