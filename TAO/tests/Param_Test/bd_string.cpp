@@ -88,6 +88,9 @@ int
 Test_Bounded_String::reset_parameters (void)
 {
   // release any previously occupied values
+  CORBA::string_free (this->inout_);
+  CORBA::string_free (this->out_);
+  CORBA::string_free (this->ret_);
   this->inout_ = 0;
   this->out_ = 0;
   this->ret_ = 0;
