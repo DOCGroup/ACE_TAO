@@ -9,6 +9,10 @@ Sat Jan  3 17:26:39 2004  Steve Huston  <shuston@riverace.com>
 	* examples/APG/Timers/Upcall.{h cpp}: Changed to match new
 	  timer queue upcall handler API for ACE 5.4.
 
+	* examples/APG/ThreadSafety/Barrier.cpp: Get a random sleep time
+	  using ACE_OS::rand() instead of the thread ID. Thread ID is not
+	  an integral type on some platforms.
+
 Sat Jan  3 14:08:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
