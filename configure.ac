@@ -105,9 +105,9 @@ dnl Check if system supports "#! /bin/sh" line in scripts
 AC_SYS_INTERPRETER
 
 dnl Check the C compiler and preprocessor.
-AC_PROG_CC
-AC_PROG_CPP
-AC_PROG_CC_C_O
+dnl AC_PROG_CC
+dnl AC_PROG_CPP
+dnl AC_PROG_CC_C_O
 
 dnl Check the C++ compiler and preprocessor.
 AC_PROG_CXX
@@ -370,6 +370,10 @@ AC_LIBTOOL_DLOPEN
 dnl Enable support for "clean" DLLs.
 AC_LIBTOOL_WIN32_DLL
 
+dnl Only enable C++ libtool support.  Support for other languages is
+dnl unnecessary.
+AC_LIBTOOL_TAGS([CXX])
+
 dnl FIXME: Temporary hack to make libtool work with g++.
 dnl        Shared library support will only work with GNU g++ and GNU ld
 dnl        right now.
@@ -396,6 +400,11 @@ AC_SEARCH_LIBS([sched_yield],[rt posix4],[ace_has_sched_yield=yes],)
 
 dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
+
+dnl Check for TLS/SSL support.
+if test $ace_user_with_ssl = yes; then
+  ACE_CHECK_TLS
+fi
 
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
@@ -7139,6 +7148,8 @@ the file 'ACE-INSTALL.html'.
      ])
   ])
 
+dnl "
+
 dnl Check for ACE_IOStream support
 ACE_CACHE_CHECK([for ACE_IOStream support],
   [ace_cv_feature_ace_iostream],
@@ -7402,6 +7413,7 @@ AC_CONFIG_FILES([
   apps/gperf/Makefile
   apps/gperf/src/Makefile
   tests/Makefile
+  tests/SSL/Makefile
 ])
 
 AC_CONFIG_COMMANDS([default],[
