@@ -22,23 +22,23 @@ project (Config_Handlers) : taolib {
     Utils.cpp
     CEPE_Handler.cpp
     ERE_Handler.cpp
-    CompIntrDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
+    IR_Handler.cpp
+    CPR_Handler.cpp
     PC_Handler.cpp
     PCI_Handler.cpp
-    Cap_Handler.cpp
+    CompIntrDesc_Handler.cpp
     CompImplDesc_Handler.cpp
-    CPR_Handler.cpp
+    Cap_Handler.cpp
     IAD_Handler.cpp
-    IR_Handler.cpp
     MID_Handler.cpp
     NIA_Handler.cpp
     CAD_Handler.cpp
     Domain_Handler.cpp
     Plan_Handler.cpp
+    Config_Error_Handler.cpp
+    Process_Element.cpp
     DnC_Dump.cpp
     XercesString.cpp
-    Process_Element.cpp
-    Config_Error_Handler.cpp
   }
 }
