@@ -97,6 +97,14 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Server_Task.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Startup_Callback.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestC.cpp
 # End Source File
 # Begin Source File
@@ -110,6 +118,14 @@ SOURCE=.\TestS.cpp
 # Begin Source File
 
 SOURCE=.\Process_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Startup_Callback.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

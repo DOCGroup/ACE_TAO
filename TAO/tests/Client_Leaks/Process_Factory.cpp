@@ -45,7 +45,9 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
     0};
 
   ACE_Process_Options options;
+#if !defined(ACE_WIN32)
   options.avoid_zombies (1);
+#endif /* ACE_WIN32 */
   options.command_line (argv);
 
   ACE_Process child_process;
