@@ -24,6 +24,7 @@
 #include "ace/Signal.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
