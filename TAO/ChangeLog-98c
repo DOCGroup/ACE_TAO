@@ -1,3 +1,8 @@
+Sun Dec  6 14:13:52 1998  Ossama Othman  <ossama@debian.org>
+
+	* TAO_IDL/tao_idl.1:  Created a man page for tao_idl based on
+	  Carlos' HTML tao_idl compiler page.
+
 Sat Dec  6 13:30:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/server_impl.cpp:  Forgot a 
@@ -101,14 +106,14 @@ Fri Dec  4 16:51:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 Fri Dec  4 16:04:56 1998  Ossama Othman  <ossama@debian.org>
 
 	* TAO_IDL/util/utl_global.cpp(IDL_GlobalData constructor):
-	Added support for hardcoding a gperf default path other than
-	$ACE_ROOT/bin/gperf.  This works by #defining the ACE_GPERF
-	macro at compile time to be the desired gperf.
+	  Added support for hardcoding a gperf default path other than
+	  $ACE_ROOT/bin/gperf.  This works by #defining the ACE_GPERF
+	  macro at compile time to be the desired gperf.
 
-  	For example:  -DACE_GPERF=\"/usr/local/bin/gperf-ace\"
+	  For example:  -DACE_GPERF=\"/usr/local/bin/gperf-ace\"
 
-	The actual gperf program must be included in the definition of
-	ACE_GPERF, not just the directory in which it is located.
+	  The actual gperf program must be included in the definition of
+	  ACE_GPERF, not just the directory in which it is located.
 
 Fri Dec 04 12:45:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
