@@ -19,6 +19,9 @@
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
 #include "ace/config-all.h"
+#include "ace/Default_Constants.h"
+#include "ace/Log_Priority.h"
+#include "ace/Basic_Types.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
@@ -27,7 +30,7 @@
 #elif !defined (ACE_ASSERT)
 #define ACE_ASSERT(X) \
   do { if(!(X)) { \
-  int __ace_error = ACE_OS::last_error (); \
+  int __ace_error = ACE_Log_Msg::last_error_adapter (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), \
                ace___->msg_ostream (), ace___->msg_callback ()); \
@@ -46,14 +49,14 @@
 #else
 #define ACE_HEX_DUMP(X) \
   do { \
-    int __ace_error = ACE_OS::last_error (); \
+    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log_hexdump X; \
   } while (0)
 #define ACE_RETURN(Y) \
   do { \
-    int __ace_error = ACE_OS::last_error (); \
+    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, Y, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
@@ -61,7 +64,7 @@
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
-    int __ace_error = ACE_OS::last_error (); \
+    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X; \
@@ -69,14 +72,14 @@
   } while (0)
 #define ACE_ERROR(X) \
   do { \
-    int __ace_error = ACE_OS::last_error (); \
+    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
   } while (0)
 #define ACE_DEBUG(X) \
   do { \
-    int __ace_error = ACE_OS::last_error (); \
+    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
@@ -89,7 +92,6 @@
 #define ACE_ERROR_BREAK(X) { ACE_ERROR (X); break; }
 #endif /* ACE_NLOGGING */
 
-#include "ace/Log_Record.h"
 #include "ace/OS_Log_Msg_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -116,6 +118,7 @@ class ACE_Log_Msg_Backend;
 
 // Forward declaration
 class ACE_Thread_Descriptor;
+class ACE_Log_Record;
 
 /**
  * @class ACE_Log_Msg
@@ -180,6 +183,9 @@ public:
 
   /// Returns a pointer to the Singleton.
   static ACE_Log_Msg *instance (void);
+
+  /// Returns last error.
+  static int last_error_adapter (void);
 
   /// Returns non-null if an ACE_Log_Msg exists for the calling thread.
   static int exists (void);
@@ -547,7 +553,7 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to <log>.
-  ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
+  ACE_TCHAR msg_[ACE_MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
@@ -649,7 +655,7 @@ private:
   /// Return the TSS singleton thread descriptor
   static ACE_OS_Thread_Descriptor *thr_desc_hook (void);
 
-  friend void ACE_OS::cleanup_tss (const u_int);
+  //friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);

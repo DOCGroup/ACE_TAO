@@ -24,6 +24,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "Bool_Array.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(src, Bool_Array, "$Id$")
 
@@ -59,7 +60,7 @@ Bool_Array::open (u_long s)
                   u_long[s],
                   -1);
 
-  ACE_OS::memset (storage_array_,
+  ACE_OS_String::memset (storage_array_,
                   0,
                   s * sizeof *storage_array_);
 
@@ -93,9 +94,9 @@ Bool_Array::reset (void)
                     "(re-initializing bool_array)..."));
 
       this->generation_number_ = 1;
-      ACE_OS::memset (storage_array_,
-                      0,
-                      size_ * sizeof *storage_array_);
+      ACE_OS_String::memset (storage_array_,
+                             0,
+                             size_ * sizeof *storage_array_);
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
