@@ -13,11 +13,10 @@ ACE_RCSID (PortableServer,
 #endif /* __ACE_INLINE__ */
 
 #include "ServerRequestInfo.h"
-//#include "PICurrent.h"
+#include "tao/PortableServer/PICurrent_Guard.h"
 
 
-TAO_ServerRequestInterceptor_Adapter::
-~TAO_ServerRequestInterceptor_Adapter (void)
+TAO_ServerRequestInterceptor_Adapter::~TAO_ServerRequestInterceptor_Adapter (void)
 {
 }
 
@@ -37,8 +36,8 @@ TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
       // used to make the copy also occur if an exception is thrown.
-      TAO_PICurrent_Guard pi_guard (ri->server_request (),
-                                    0 /* Copy RSC to TSC */);
+      TAO::PICurrent_Guard pi_guard (ri->server_request (),
+                                     false /* Copy RSC to TSC */);
 
       oc = 0;
 
@@ -141,8 +140,8 @@ receive_request_service_contexts (
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
       // used to make the copy also occur if an exception is thrown.
-      TAO_PICurrent_Guard pi_guard (ri->server_request (),
-                                    0 /* Copy RSC to TSC */);
+      TAO::PICurrent_Guard pi_guard (ri->server_request (),
+                                     false /* Copy RSC to TSC */);
 
       for (size_t i = 0 ; i < this->len_; ++i)
         {

@@ -4,10 +4,12 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
-ACE_RCSID(Notify, RedGreen_Test, "$Id$")
+ACE_RCSID (Notify, 
+           RedGreen_Test, 
+           "$Id$")
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"

@@ -48,5 +48,6 @@ PRELIB          = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
+pipes ?= 1
+CFLAGS          += -W -Wall -Wpointer-arith #### -Winline
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

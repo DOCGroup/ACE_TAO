@@ -89,7 +89,18 @@ namespace
     {
       os << endl << STRS[ENV_ARG] << ");";
     }
-
+    
+    /// If we don't do this, the comma() method just below
+    /// gets used not only with the arguments, but also
+    /// in raises(). Even though we are not generating the
+    /// exception list here, the front end iterator still
+    /// executes, and picks up the overridden comma(). So
+    /// we override raises() itself to do nothing.
+    virtual void
+    raises (Type&)
+    {
+    }
+    
     virtual void
     comma (Type&)
     {
@@ -221,12 +232,8 @@ namespace
       operation_emitter.edge_traverser (receives);
       operation_emitter.edge_traverser (returns);
 
-      ParameterExecEmitter<Traversal::InParameter> in_param (os);
-      ParameterExecEmitter<Traversal::InOutParameter> inout_param (os);
-      ParameterExecEmitter<Traversal::OutParameter> out_param (os);
-      receives.node_traverser (in_param);
-      receives.node_traverser (inout_param);
-      receives.node_traverser (out_param);
+      ParameterExecEmitter<Traversal::Parameter> param (os);
+      receives.node_traverser (param);
 
       OpExecReturnEmitter return_emitter (os);
       returns.node_traverser (return_emitter);
@@ -454,6 +461,11 @@ namespace
         interface_emitter.edge_traverser (defines_);
         interface_emitter.edge_traverser (inherits_);
 
+        AttributeEmitter<SemanticGraph::Interface> attribute_emitter (ctx, i);
+        ReadOnlyAttributeEmitter<SemanticGraph::Interface> read_only_attribute_emitter (ctx, i);
+        defines_.node_traverser (attribute_emitter);
+        defines_.node_traverser (read_only_attribute_emitter);
+
         OperationEmitter<SemanticGraph::UnconstrainedInterface> operation_emitter (ctx, i);
         defines_.node_traverser (operation_emitter);
         inherits_.node_traverser (interface_emitter);
@@ -562,7 +574,7 @@ namespace
         os << "_ptr" << endl
            << u.scoped_name ().scope_name ().simple_name () << "_Context::get_connection_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return ";
@@ -897,7 +909,7 @@ namespace
       os << "::Components::CCMHome_ptr" << endl
          << t.name () << "_Context::"
          << "get_CCM_home (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "return ::Components::CCMHome::_duplicate (this->home_.in ());"
@@ -997,10 +1009,27 @@ namespace
 
         names (t, defines);
       }
+      
+      os << "// CIAO-specific." << endl << endl
+         << "::CIAO::Session_Container *" << endl
+         << t.name () << "_Context::"
+         << "_ciao_the_Container (void) const" << endl
+         << "{"
+         << "return this->container_;" << endl
+         << "}" << endl;
+         
+      os << t.name () << "_Context *" << endl
+         << t.name () << "_Context::_narrow (" << endl
+         << "::Components::SessionContext_ptr p" << endl
+         << STRS[ENV_SRC_NOTUSED] << ")" << endl
+         << "{"
+         << "return dynamic_cast<" << t.name () << "_Context *> (p);"
+         << endl
+         << "}" << endl;
     }
 
     virtual void
-    post (Type&)
+    post (Type& t)
     {
       // Namespace closer.
       os << "}" << endl;
@@ -1366,14 +1395,18 @@ namespace
       virtual void
       traverse (SemanticGraph::Type& t)
       {
-        os << "::CIAO_GLUE";
+        os << "CIAO_GLUE";
 
         ScopedName scope (t.scoped_name ().scope_name ());
-        Name stripped (scope.begin () + 1, scope.end ());
 
-        if (!stripped.str ().empty ())
+        if (!scope.simple ())
         {
-          os << "_" << stripped;
+//          os << "_" << Name (scope.begin () + 1, scope.end ());
+          
+          for (Name::Iterator i (scope.begin () + 1); i != scope.end (); ++i)
+          {
+            os << "_" << i->str ();
+          }
         }
 
         os << "::" << t.name () << "_Servant";
@@ -1405,7 +1438,7 @@ namespace
         os << "_ptr" << endl
            << p.scoped_name ().scope_name ().simple_name ()
            << "_Servant::provide_" << p.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ")" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "if (::CORBA::is_nil (this->provide_"
@@ -1616,7 +1649,7 @@ namespace
 
         os << " (" << endl
            << "ev_type.in ()" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << STRS[ENV_ARG] << ");" << endl
            << "return;" << endl
            << "}" << endl
            << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
@@ -2016,7 +2049,7 @@ namespace
          << t.name () << "_Servant::connect_consumer ("
          << endl
          << "const char * /* emitter_name */," << endl
-         << STRS[COMP_ECB] << "_ptr consumer" << endl
+         << STRS[COMP_ECB] << "_ptr /*consumer*/" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
@@ -2072,6 +2105,8 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
          << "{"
+	 << "// Just in case there are no if blocks" << endl
+	 << "ACE_UNUSED_ARG (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
@@ -2101,6 +2136,8 @@ namespace
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
          << "{"
+	 << "// Just in case there are no if blocks" << endl
+	 << "ACE_UNUSED_ARG (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
@@ -2189,7 +2226,7 @@ namespace
       os << "void" << endl
          << t.name ()
          << "_Servant::configuration_complete (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_ICF] << "))" << endl
@@ -2199,7 +2236,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_Servant::remove (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
@@ -2316,6 +2353,11 @@ namespace
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
 
+        AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<SemanticGraph::Component> read_only_attribute_emitter (ctx, t);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+
         OperationEmitter<SemanticGraph::Component> operation_emitter (ctx, t);
         defines.node_traverser (operation_emitter);
         inherits.node_traverser (interface_emitter);
@@ -2369,7 +2411,7 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type& t)
     {
       // Namespace closer.
       os << "}" << endl;
@@ -2410,7 +2452,7 @@ namespace
       {}
 
       virtual void
-      returns (SemanticGraph::HomeFactory&)
+      returns (SemanticGraph::HomeFactory& hf)
       {
         ReturnTypeNameEmitter manages_emitter (os);
         Traversal::Manages manages_;
@@ -2431,7 +2473,7 @@ namespace
       receives_none (SemanticGraph::HomeFactory&)
       {
         os << " (" << endl
-           << STRS[ENV_SNGL_HDR] << ")" << endl;
+           << STRS[ENV_SNGL_SRC] << ")" << endl;
       }
 
       virtual void
@@ -2443,7 +2485,7 @@ namespace
       virtual void
       receives_post (SemanticGraph::HomeFactory&)
       {
-        os << endl << STRS[ENV_HDR] << ")" << endl;
+        os << endl << STRS[ENV_SRC] << ")" << endl;
       }
 
       virtual void
@@ -2544,6 +2586,18 @@ namespace
         os << "::_narrow (" << endl
            << "_ciao_ec.in ()" << endl
            << STRS[ENV_ARG] << ");" << endl;
+
+        os << "ACE_CHECK_RETURN (";
+
+        {
+          TypeNameEmitter manages_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (manages_emitter);
+
+          manages (scope_, manages_);
+        }
+
+        os << "::_nil ());" << endl;
 
         os << "return this->_ciao_activate_component (" << endl
            << "_ciao_comp.in ()" << endl
@@ -2809,7 +2863,7 @@ namespace
          << "{"
          << "ACE_THROW (CORBA::INTERNAL ());" << endl
          << "}" << endl
-         << "_ciao_comp->remove (" << STRS[ENV_ARG] << ");"
+         << "_ciao_comp->remove (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "this->_ciao_passivate_component (" << endl
          << "_ciao_comp.in ()" << endl
@@ -2870,7 +2924,7 @@ namespace
          << endl
          << "::Components::CCMHome_var home =" << endl
          << "::Components::CCMHome::_narrow (" << endl
-         << "hobj" << endl
+         << "hobj.in ()" << endl
          << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (";
 
@@ -2995,7 +3049,7 @@ namespace
       }
 
       os << "_ptr comp" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "PortableServer::ObjectId_var oid;" << endl
@@ -3056,12 +3110,34 @@ namespace
          << "}" << endl
          << "return new" << endl;
 
-      os << "::CIAO_GLUE"
+      os << "CIAO_GLUE"
          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
          << "::" << t.name () << "_Servant (" << endl
          << "x.in ()," << endl
          << "c);" << endl
          << "}" << endl;
+    }
+  };
+
+  //@@ There is exactly the same code in header generator.
+  //
+  struct CompositionEmitter : Traversal::Composition, EmitterBase
+  {
+    CompositionEmitter (Context& c)
+      : EmitterBase (c)
+    {
+    }
+
+    virtual void
+    pre (Type& t)
+    {
+      os << "namespace " << t.name () << "{";
+    }
+
+    virtual void
+    post (Type& t)
+    {
+      os << "}";
     }
   };
 }
@@ -3077,9 +3153,9 @@ ServantSourceEmitter::ServantSourceEmitter (std::ostream& os_,
 {}
 
 void
-ServantSourceEmitter::pre (TranslationUnit&)
+ServantSourceEmitter::pre (TranslationUnit& u)
 {
-  os << COPYRIGHT << endl << endl;
+  os << COPYRIGHT;
 
   string file_name ("");
 
@@ -3104,6 +3180,8 @@ void
 ServantSourceEmitter::generate (TranslationUnit& u)
 {
   pre (u);
+
+  Context c (os, export_macro_);
 
   Traversal::TranslationUnit unit;
 
@@ -3136,7 +3214,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Module module;
-  Traversal::Composition composition;
+  CompositionEmitter composition (c);
   defines.node_traverser (module);
   defines.node_traverser (composition);
 
@@ -3150,6 +3228,8 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   Traversal::HomeExecutor home_executor;
   composition_defines.node_traverser (component_executor);
   composition_defines.node_traverser (home_executor);
+  
+  module.edge_traverser (defines);
 
   // Layer 5
   //
@@ -3158,7 +3238,6 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   home_executor.edge_traverser (implements);
 
   //--
-  Context c (os, export_macro_);
   ContextEmitter context_emitter (c);
   ServantEmitter servant_emitter (c);
   HomeEmitter home_emitter (c);

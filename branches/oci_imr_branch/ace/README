@@ -419,6 +419,8 @@ ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
                                         non-const timeval* (only found
                                         on Linux right now)
+ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
+                                        const src argument
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)

@@ -2,7 +2,7 @@
 
 #include "distributer.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 
 typedef ACE_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 

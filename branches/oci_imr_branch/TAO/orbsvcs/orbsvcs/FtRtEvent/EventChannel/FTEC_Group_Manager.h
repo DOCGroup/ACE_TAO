@@ -13,7 +13,7 @@
 #ifndef TAO_FTEC_GROUP_MANAGER_H
 #define TAO_FTEC_GROUP_MANAGER_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "FTEC_Fault_Listener.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,11 +33,8 @@ public:
   virtual CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   void create_group (
     const FTRT::ManagerInfoList & info_list,
@@ -71,6 +68,7 @@ private:
   virtual void connection_closed();
 
 protected:
+  FTRT::FaultListener_var listener_;
   TAO_FTEC_Group_Manager_Impl* impl_;
 };
 

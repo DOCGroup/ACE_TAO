@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "FT_ReplicationManagerLib_export.h"
-#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 
 namespace TAO
 {

@@ -158,7 +158,7 @@
 
 
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
-// listenly ignored by the OS, i.e., setsockopt does not fail, and you
+// silently ignored by the OS, i.e., setsockopt does not fail, and you
 // get stuck with the default size of 8k.
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
@@ -555,6 +555,9 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
 #define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_LSTAT
+// Looks like Win32 has a non-const swab function
+#define ACE_HAS_NONCONST_SWAB
 
 // If we are using winsock2 then the SO_REUSEADDR feature is broken
 // SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an

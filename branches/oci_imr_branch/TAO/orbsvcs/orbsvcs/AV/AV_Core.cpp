@@ -1,22 +1,22 @@
 // $Id$
 
-#include "orbsvcs/AV/AV_Core.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/Transport.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/TCP.h"
-#include "orbsvcs/AV/RTP.h"
-#include "orbsvcs/AV/RTCP.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/default_resource.h"
+#include "orbsvcs/orbsvcs/AV/AV_Core.h"
+#include "orbsvcs/orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/orbsvcs/AV/Transport.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/UDP.h"
+#include "orbsvcs/orbsvcs/AV/TCP.h"
+#include "orbsvcs/orbsvcs/AV/RTP.h"
+#include "orbsvcs/orbsvcs/AV/RTCP.h"
+#include "orbsvcs/orbsvcs/AV/sfp.h"
+#include "orbsvcs/orbsvcs/AV/default_resource.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
-#include "orbsvcs/AV/QoS_UDP.h"
+#include "orbsvcs/orbsvcs/AV/QoS_UDP.h"
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
 #if defined (ACE_HAS_SCTP)
-#include "orbsvcs/AV/SCTP_SEQ.h"
+#include "orbsvcs/orbsvcs/AV/SCTP_SEQ.h"
 #endif // ACE_HAS_SCTP
 
 #include "tao/debug.h"

@@ -10,7 +10,6 @@
 #include "tao/Muxed_TMS.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
-#include "tao/Auto_Functor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Asynch_Invocation_Adapter.inl"
@@ -38,7 +37,7 @@ namespace TAO
                           p,
                           TAO_TWOWAY_INVOCATION,
                           m)
-      , rd_ (0)
+      , safe_rd_ ()
   {
   }
 
@@ -68,12 +67,16 @@ namespace TAO
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
 
+        TAO_Asynch_Reply_Dispatcher *rd = 0;
+
         // @@ Need to use memory pool here..
-        ACE_NEW_THROW_EX (this->rd_,
+        ACE_NEW_THROW_EX (rd,
                           TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
                                                        reply_handler_ptr,
                                                        stub->orb_core ()),
                           CORBA::NO_MEMORY ());
+
+        this->safe_rd_.reset (rd);
       }
 
     Invocation_Adapter::invoke (0, 0 ACE_ENV_ARG_PARAMETER);
@@ -101,10 +104,10 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    if (this->rd_)
+    if (this->safe_rd_.get ())
       {
         // Cache the  transport in the reply dispatcher
-        this->rd_->transport (r.transport ());
+        this->safe_rd_->transport (r.transport ());
 
         // AMI Timeout Handling Begin
         ACE_Time_Value tmp;
@@ -112,22 +115,21 @@ namespace TAO
         if (this->get_timeout (r.stub (),
                                tmp))
           {
-            TAO::Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
-              TAO::ARDB_Refcount_Functor> safe_rd (this->rd_);
-
-            this->rd_->schedule_timer (op.request_id (),
-                                       *max_wait_time
-                                       ACE_ENV_ARG_PARAMETER);
+            this->safe_rd_->schedule_timer (
+                op.request_id (),
+                *max_wait_time
+                ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-            safe_rd.release ();
           }
       }
 
-    TAO::Asynch_Remote_Invocation asynch (effective_target,
-                                          r,
-                                          op,
-                                          this->rd_);
+    // Loose ownership of the reply dispatcher
+    TAO::Asynch_Remote_Invocation asynch (
+       effective_target,
+       r,
+       op,
+       this->safe_rd_.release ());
+
     Invocation_Status s =
       asynch.remote_invocation (max_wait_time
                                 ACE_ENV_ARG_PARAMETER);

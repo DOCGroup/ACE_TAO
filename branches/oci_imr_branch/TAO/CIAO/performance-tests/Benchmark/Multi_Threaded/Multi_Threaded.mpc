@@ -11,6 +11,7 @@ project (Multi_Threaded_client) : ciao_client, valuetype , strategies{
   }
 
   Source_Files {
-    client.cpp, Client_Task.cpp
+    client.cpp
+    Client_Task.cpp
   }
 }

@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/AV/Policy.h"
 
 
 class Receiver_Callback : public TAO_AV_Callback
@@ -41,6 +41,10 @@ public:
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
+
+  // Called when the sender is done sending data and wants to close
+  // down the connection.
+  int handle_destroy (void);
 
 private:
   int frame_count_;

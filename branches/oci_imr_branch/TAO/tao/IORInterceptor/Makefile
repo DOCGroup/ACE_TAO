@@ -72,6 +72,7 @@ endif
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -158,12 +159,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -179,6 +174,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -348,13 +349,13 @@ endif
 
 .obj/IORInterceptor_Adapter_Impl.o .obj/IORInterceptor_Adapter_Impl.so .shobj/IORInterceptor_Adapter_Impl.o .shobj/IORInterceptor_Adapter_Impl.so: IORInterceptor_Adapter_Impl.cpp \
   IORInterceptor_Adapter_Impl.h \
-  $(ACE_ROOT)/ace/pre.h \
-  IORInterceptorC.h \
+  $(ACE_ROOT)/ace/pre.h IORInterceptorC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -441,12 +442,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -462,6 +457,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -713,9 +714,9 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/IORInterceptor_List.o .obj/IORInterceptor_List.so .shobj/IORInterceptor_List.o .shobj/IORInterceptor_List.so: IORInterceptor_List.cpp IORInterceptor_List.h \
-  $(ACE_ROOT)/ace/pre.h \
-  iorinterceptor_export.h \
+  $(ACE_ROOT)/ace/pre.h iorinterceptor_export.h \
   $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -805,12 +806,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -825,6 +820,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -1003,13 +1004,13 @@ endif
 .obj/IORInterceptor_Adapter_Factory_Impl.o .obj/IORInterceptor_Adapter_Factory_Impl.so .shobj/IORInterceptor_Adapter_Factory_Impl.o .shobj/IORInterceptor_Adapter_Factory_Impl.so:  \
  IORInterceptor_Adapter_Factory_Impl.cpp \
   IORInterceptor_Adapter_Factory_Impl.h \
-  $(ACE_ROOT)/ace/pre.h \
-  IORInterceptorC.h \
+  $(ACE_ROOT)/ace/pre.h IORInterceptorC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1096,12 +1097,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1117,6 +1112,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \

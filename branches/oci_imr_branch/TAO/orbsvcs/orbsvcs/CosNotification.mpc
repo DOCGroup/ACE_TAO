@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany, portableserver {
+project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany {
   sharedname   = TAO_CosNotification
   // Warning : The idlflags must match exactly those used in CosEvent, because
   //           we don't know which project will actually generate the IDL.
@@ -13,8 +13,6 @@ project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany, portab
   dynamicflags = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
 
   tagchecks   += Notify
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     CosEventComm.idl

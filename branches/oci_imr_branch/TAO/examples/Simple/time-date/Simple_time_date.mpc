@@ -1,12 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(*lib): portableserver {
+project(*lib): portableserver, taolib_with_idl {
   sharedname    = Time_Date
   // The svc conf files assume that the dll is in the current directory
   libout        = .
+  idlflags += -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h
   dynamicflags += ACE_BUILD_SVC_DLL Alt_Resource_Factory_BUILD_DLL
-  idlflags     += -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h
   Source_Files {
     Time_Date.cpp
     Time_Date_i.cpp
@@ -33,6 +33,6 @@ project(*client): taoclient, namingexe {
     client.cpp
     Time_Date_Client_i.cpp
   }
-  idl_files {
+  IDL_Files {
   }
 }

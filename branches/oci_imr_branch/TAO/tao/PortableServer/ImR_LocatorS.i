@@ -27,9 +27,11 @@
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::activate_server_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -46,9 +48,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_with_startup_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::activate_server_with_startup_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -65,9 +69,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_with_star
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::register_server_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::register_server_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -84,9 +90,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::register_server_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::reregister_server_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::reregister_server_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -103,9 +111,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::reregister_server_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::remove_server_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::remove_server_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -122,9 +132,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::remove_server_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::shutdown_server_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::shutdown_server_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -141,9 +153,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::shutdown_server_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::server_is_running_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::server_is_running_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -160,9 +174,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::server_is_running_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::server_is_shutting_down_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::server_is_shutting_down_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -179,9 +195,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::server_is_shutting_down_s
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::find_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::find_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -198,9 +216,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::find_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::list_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::list_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -217,9 +237,11 @@ ACE_INLINE void POA_ImplementationRepository::Locator::list_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1953
+// be/be_interface.cpp:2023
 
-ACE_INLINE void POA_ImplementationRepository::Locator::find_ior_skel (
+ACE_INLINE
+void
+POA_ImplementationRepository::Locator::find_ior_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -236,7 +258,7 @@ ACE_INLINE void POA_ImplementationRepository::Locator::find_ior_skel (
 }
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server (
@@ -261,7 +283,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server (
@@ -286,7 +308,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_with_startup (
@@ -311,7 +333,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_w
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_with_startup (
@@ -336,7 +358,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_wi
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::register_server (
@@ -361,7 +383,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::register_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::register_server (
@@ -386,7 +408,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::register_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::reregister_server (
@@ -411,7 +433,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::reregister_server
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::reregister_server (
@@ -436,7 +458,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::reregister_server 
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server (
@@ -460,7 +482,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server (
@@ -484,7 +506,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_server (
@@ -508,7 +530,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_server (
@@ -532,7 +554,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_server (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_running (
@@ -556,7 +578,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_running
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_running (
@@ -580,7 +602,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_running 
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down (
@@ -604,7 +626,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shuttin
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down (
@@ -628,7 +650,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find (
@@ -652,7 +674,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find (
@@ -676,7 +698,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::list (
@@ -699,7 +721,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::list (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::list (
@@ -722,7 +744,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::list (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find_ior (
@@ -746,7 +768,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::find_ior (
 
 
 // TAO_IDL - Generated from
-// .\be\be_interface.cpp:1262
+// be/be_interface.cpp:1331
 
 ACE_INLINE void
 POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::find_ior (

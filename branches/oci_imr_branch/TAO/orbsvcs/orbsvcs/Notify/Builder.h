@@ -22,8 +22,8 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 #include "AdminProperties.h"
 

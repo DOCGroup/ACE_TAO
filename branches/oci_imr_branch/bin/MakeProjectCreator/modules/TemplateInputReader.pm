@@ -45,7 +45,7 @@ sub parse_line {
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($current)     = $self->{'current'};
 
   if ($line eq '') {
@@ -67,7 +67,7 @@ sub parse_line {
     }
     else {
       $status = 0;
-      $errorString = 'ERROR: Unmatched curly brace';
+      $errorString = 'Unmatched curly brace';
     }
   }
   elsif ($line =~ /^(\w+)\s*(\+=|=)\s*(.*)?/) {
@@ -79,28 +79,12 @@ sub parse_line {
       $value = $self->create_array($value);
     }
     else {
-      $value = '';
+      $value = [];
     }
 
     if ($op eq '+=') {
-      my($ref) = $$current[$self->{'cindex'}]->{$name};
-      if (defined $ref) {
-        if (UNIVERSAL::isa($ref, 'ARRAY')) {
-          if (UNIVERSAL::isa($value, 'ARRAY')) {
-            push(@$ref, @$value);
-          }
-          else {
-            push(@$ref, $value);
-          }
-        }
-        else {
-          if (UNIVERSAL::isa($value, 'ARRAY')) {
-            $$current[$self->{'cindex'}]->{$name} .= " @$value";
-          }
-          else {
-            $$current[$self->{'cindex'}]->{$name} .= $value;
-          }
-        }
+      if (defined $$current[$self->{'cindex'}]->{$name}) {
+        push(@{$$current[$self->{'cindex'}]->{$name}}, @$value);
       }
       else {
         $$current[$self->{'cindex'}]->{$name} = $value;
@@ -112,7 +96,7 @@ sub parse_line {
       }
       else {
         $status = 0;
-        $errorString = "ERROR: Redifinition of '$name'";
+        $errorString = "Redifinition of '$name'";
       }
     }
   }
@@ -126,7 +110,7 @@ sub parse_line {
   }
   else {
     $status = 0;
-    $errorString = "ERROR: Unrecognized line: $line";
+    $errorString = "Unrecognized line: $line";
   }
 
   return $status, $errorString;

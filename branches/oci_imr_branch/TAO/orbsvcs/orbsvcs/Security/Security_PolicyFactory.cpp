@@ -6,7 +6,7 @@ ACE_RCSID (Security,
            Security_PolicyFactory,
            "$Id$")
 
-#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
 
 #include "QOPPolicy.h"
 #include "EstablishTrustPolicy.h"

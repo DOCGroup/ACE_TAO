@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -2,11 +2,13 @@
 
 #include "ace/High_Res_Timer.h"
 #include "tao/Timeprobe.h"
-#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 
 #include "ReactorTask.h"
 
-ACE_RCSID(Event, ReactorTask, "$Id$")
+ACE_RCSID (Event, 
+           ReactorTask, 
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

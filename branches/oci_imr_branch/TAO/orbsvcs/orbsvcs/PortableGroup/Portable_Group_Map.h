@@ -23,7 +23,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 
 #include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #include "tao/Object_KeyC.h"
 

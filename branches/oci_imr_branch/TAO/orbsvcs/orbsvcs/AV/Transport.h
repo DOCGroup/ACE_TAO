@@ -22,7 +22,7 @@
 #include "ace/Connector.h"
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
-#include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/orbsvcs/AV/AV_export.h"
 #include "FlowSpec_Entry.h"
 #include "AV_Core.h"
 

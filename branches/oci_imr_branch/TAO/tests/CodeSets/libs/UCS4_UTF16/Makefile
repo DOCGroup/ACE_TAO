@@ -47,6 +47,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DUCS4_UTF16_BUILD_DLL
+endif
+endif
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------

@@ -40,7 +40,7 @@ VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VLIB to VLIBS if building static_libs.
-ifdef static_libs 
+ifdef static_libs
   VLIBS += $(VLIB)
 endif
 
@@ -79,13 +79,17 @@ else # VLIBS
   endif # IDL_SRC
 endif # !VLIBS
 
-VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSRC)))))
+VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(LSRC))))
 ifdef LSRC2
   LSRC += $(LSRC2)
 endif
 
-VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
-VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
+VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
+
+ifneq ($(IDL_SRC),)
+  $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+endif
 
 ifdef static_libs
   LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)

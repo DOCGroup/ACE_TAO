@@ -1,11 +1,13 @@
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(CosEC_Simple, Service, "$Id$")
+ACE_RCSID (CosEC_Simple, 
+           Service, 
+           "$Id$")
 
 const char *ior_output_file = "ec.ior";
 

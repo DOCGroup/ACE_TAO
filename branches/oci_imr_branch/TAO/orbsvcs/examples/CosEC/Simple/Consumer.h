@@ -17,7 +17,7 @@
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
-#include "orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

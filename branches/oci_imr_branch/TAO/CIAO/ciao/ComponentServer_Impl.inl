@@ -3,9 +3,13 @@
 
 ACE_INLINE
 CIAO::ComponentServer_Impl::ComponentServer_Impl (CORBA::ORB_ptr o,
-                                                  PortableServer::POA_ptr p)
+                                                  PortableServer::POA_ptr p,
+                                                  int static_config_flag,
+                                                  const Static_Config_EntryPoints_Maps* static_entrypts_maps)
   : orb_ (CORBA::ORB::_duplicate (o)),
-    poa_ (PortableServer::POA::_duplicate (p))
+    poa_ (PortableServer::POA::_duplicate (p)),
+    static_config_flag_ (static_config_flag),
+    static_entrypts_maps_ (static_entrypts_maps)
 {
 }
 
@@ -41,6 +45,9 @@ CIAO::ComponentServer_Impl::get_component_installation (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->installation_.in ()))
     {
+      if (this->static_config_flag_ == 1)
+        return 0;
+
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
       CORBA::Object_var tmp = this->orb_->resolve_initial_references ("ComponentInstallation"

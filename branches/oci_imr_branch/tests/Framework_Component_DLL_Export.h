@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (FRAMEWORK_COMPONENT_DLL_HAS_DLL)
+#  define FRAMEWORK_COMPONENT_DLL_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ! TEST_HAS_DLL */
+
 #if !defined (FRAMEWORK_COMPONENT_DLL_HAS_DLL)
 #  define FRAMEWORK_COMPONENT_DLL_HAS_DLL 1
 #endif /* ! FRAMEWORK_COMPONENT_DLL_HAS_DLL */

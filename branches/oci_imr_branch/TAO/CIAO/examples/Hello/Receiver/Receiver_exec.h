@@ -11,14 +11,11 @@
 #ifndef RECEIVER_EXEC_H
 #define RECEIVER_EXEC_H
 
-#include "ReceiverEIC.h"
+#include "ReceiverEC.h"
+#include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
-#ifdef linux
-//#define RECEIVER_EXEC_Export
-#endif
-
-namespace MyImpl
+namespace Receiver_Impl
 {
 
   /**
@@ -28,7 +25,7 @@ namespace MyImpl
    */
 
   class RECEIVER_EXEC_Export Receiver_exec_i :
-    public virtual Hello::Receiver_Exec,
+          public virtual Receiver_Exec,
 	  public virtual TAO_Local_RefCounted_Object
   {
 
@@ -65,7 +62,7 @@ namespace MyImpl
 
   protected:
     /// Copmponent specific context
-    Hello::CCM_Receiver_Context_var context_;
+    Receiver_Exec_Context_var context_;
   private:
     CORBA::String_var message_;
   };
@@ -76,7 +73,7 @@ namespace MyImpl
    * Receiver home executor implementation class.
    */
   class RECEIVER_EXEC_Export ReceiverHome_exec_i :
-    public virtual Hello::CCM_ReceiverHome,
+    public virtual ReceiverHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

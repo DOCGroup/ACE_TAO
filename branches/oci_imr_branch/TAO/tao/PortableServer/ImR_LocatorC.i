@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR___CI_
@@ -63,7 +63,7 @@ ImplementationRepository::Locator::Locator (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -76,7 +76,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_Locator_ServerNameList_I_
 #define _TAO_CDR_OP_ImplementationRepository_Locator_ServerNameList_I_

@@ -138,12 +138,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -159,6 +153,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -243,8 +243,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
-  $(TAO_ROOT)/tao/Typecode.h \
+.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -445,14 +444,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -463,8 +462,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -600,12 +598,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -615,6 +607,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1263,12 +1261,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1284,6 +1276,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1368,8 +1366,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
-  $(TAO_ROOT)/tao/Typecode.h \
+.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -1570,14 +1567,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -1588,8 +1585,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1725,12 +1721,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1740,6 +1730,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \

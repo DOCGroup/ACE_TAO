@@ -18,7 +18,7 @@ noinst_PROGRAMS = \
   main
 
 main_SOURCES = main.cpp
-main_LDADD = $(top_builddir)/netsvcs/clients/Naming/Client/libClient_Test.a \
+main_LDADD = libClient_Test.a \
              $(top_builddir)/ace/libACE.la
 
 noinst_DATA = svc.conf svc2.conf

@@ -4,11 +4,13 @@
 
 #include "FT_ClientPolicyFactory.h"
 #include "FT_ClientPolicy_i.h"
-#include "orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 
 
-ACE_RCSID (FaultTolerance, FT_ClientPolicyFactory, "$Id$")
+ACE_RCSID (FaultTolerance, 
+           FT_ClientPolicyFactory, 
+           "$Id$")
 
 
 CORBA::Policy_ptr

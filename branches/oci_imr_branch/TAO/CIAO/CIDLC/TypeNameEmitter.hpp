@@ -33,6 +33,7 @@ class TypeNameEmitter : public Traversal::Void,
                         public Traversal::Object,
                         public Traversal::ValueBase,
                         public Traversal::Any,
+                        public Traversal::Enum,
                         public Traversal::Struct,
                         public Traversal::Union,
                         public Traversal::UnboundedSequence,
@@ -73,6 +74,7 @@ public:
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
@@ -108,6 +110,7 @@ public:
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
@@ -143,6 +146,7 @@ public:
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
@@ -178,6 +182,7 @@ public:
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);

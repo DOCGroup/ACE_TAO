@@ -1323,8 +1323,8 @@ ACE_CDR::Boolean
 ACE_InputCDR::read_16 (ACE_CDR::LongDouble *x)
 {
   char *buf;
-  if (this->adjust (ACE_CDR::LONGLONG_SIZE,
-                    ACE_CDR::LONGLONG_ALIGN,
+  if (this->adjust (ACE_CDR::LONGDOUBLE_SIZE,
+                    ACE_CDR::LONGDOUBLE_ALIGN,
                     buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
@@ -1537,7 +1537,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 
   // If the size of the data that needs to be copied are higher than
   // what is available, then do a reallocation.
-  if (wr_bytes > this->start_.size ())
+  if (wr_bytes > (this->start_.size () - ACE_CDR::MAX_ALIGNMENT))
     {
       // @@NOTE: We need to probably add another method to the message
       // block interface to simplify this

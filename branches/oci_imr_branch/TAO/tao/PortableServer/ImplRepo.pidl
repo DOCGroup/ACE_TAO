@@ -54,10 +54,6 @@ module ImplementationRepository
     string value;
   };
   
-  typedef string Address;
-  // This is used in places that require a partial IOR with
-  // just the ObjectKey missing. 
-
   typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
 
@@ -86,17 +82,15 @@ module ImplementationRepository
   struct ServerInformation
   // All the information about one server.
   {
-    /// The logical server this server is part of.
-    string logical_server;
-
     /// Server name.
     string server;
     
     /// How to start up the server.
     StartupOptions startup;
     
-    /// Where the server is located currently.
-    Address location;
+    /// This is used in places that require a partial IOR with
+    /// just the ObjectKey missing. 
+    string partial_ior;
   };
 
   typedef sequence <ServerInformation> ServerInformationList;
@@ -163,11 +157,11 @@ module ImplementationRepository
     // in the Implementation Repository.
     
     void server_is_running (in string server,
-                               in Address addr,
-                               in ServerObject server_object)
+                            in string partial_ior,
+                            in ServerObject server_object)
       raises (NotFound);
     // Used to notify the Implementation Repository that <server> is alive
-    // and well at <addr>.
+    // and well at <partial_ior>.
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.

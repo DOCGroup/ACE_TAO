@@ -1,9 +1,9 @@
-#include "orbsvcs/Log/Log_i.h"
+#include "orbsvcs/orbsvcs/Log/Log_i.h"
 
-#include "orbsvcs/Log/Iterator_i.h"
-#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/Log/Log_Constraint_Visitors.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Log/Iterator_i.h"
+#include "orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h"
+#include "orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
@@ -12,7 +12,6 @@
 ACE_RCSID (Log,
            Log_i,
            "$Id$")
-
 
 #define QUERY_LANG_SUPPORTED_BY_LOG "TCL"
 

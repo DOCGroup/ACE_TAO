@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
-#include "orbsvcs/RtecUDPAdminC.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -13,7 +13,7 @@
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -27,7 +27,7 @@
 #include "ace/INET_Addr.h"
 
 #include "tao/IIOP_Endpoint.h"
-#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/orbsvcs/SSLIOPC.h"
 
 #include "SSLIOP_Credentials.h"
 

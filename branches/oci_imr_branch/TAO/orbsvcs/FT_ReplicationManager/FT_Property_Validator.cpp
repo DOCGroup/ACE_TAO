@@ -1,6 +1,6 @@
 #include "FT_Property_Validator.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h"
-#include "orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/orbsvcs/FT_ReplicationManagerC.h"
 
 
 ACE_RCSID (PortableGroup,

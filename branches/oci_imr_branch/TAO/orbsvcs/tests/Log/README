@@ -1,9 +1,8 @@
+Telecom Logging Service Tests
+=============================
 
-Logging Service
-===============
-
-Please see the README documents in each of the above folders for details
-on how to execute the respective services.
+Please see the README document in the Basic_Log_Test subdirectory for
+details on how to execute the Telecom Logging Service tests.
 
 Author:
 -------

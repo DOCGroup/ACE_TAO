@@ -54,7 +54,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Schedule timers to go off 3 & 4 seconds from now
   // and then with an interval of 1.1 seconds.
   const ACE_Time_Value curr_tv = ACE_OS::gettimeofday ();
-  ACE_Time_Value interval = ACE_Time_Value (1, 1000);
+  ACE_Time_Value interval = ACE_Time_Value (1, 100000);
 
   atimer.schedule (&cb1,
                    &arg1,

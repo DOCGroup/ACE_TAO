@@ -39,9 +39,11 @@ else  # ! i86pc
   DCFLAGS         += -g
 endif # ! i86pc
 
+pipes ?= 1
+
 CC              = gcc
 CXX             = g++
-CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
+CFLAGS          += -W -Wall -Wpointer-arith #### -Winline
 
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT

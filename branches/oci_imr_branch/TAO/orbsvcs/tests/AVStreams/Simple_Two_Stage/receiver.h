@@ -18,10 +18,11 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/AV/Policy.h"
+#include "Receiver_Stats.h"
 
 class Receiver_Callback : public TAO_AV_Callback
 {
@@ -45,9 +46,14 @@ public:
   // down the connection.
   int handle_destroy (void);
 
+  void dump_samples (const char* file);
+
 private:
   int frame_count_;
   // Keeping a count of the incoming frames.
+
+  Receiver_Stats stats_;
+
 };
 
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
@@ -65,6 +71,7 @@ public:
 private:
   Receiver_Callback callback_;
   // Receiver application callback.
+
 };
 
 class Receiver
@@ -87,6 +94,7 @@ public:
             ACE_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
 
+
 protected:
   TAO_Naming_Client naming_client_;
   // The Naming Service Client.
@@ -97,4 +105,6 @@ protected:
 
   TAO_MMDevice *mmdevice_;
   // Receiver MMDevice.
+
+
 };

@@ -41,12 +41,11 @@ ACE_RCSID (tao,
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (
-    TAO_ORB_Core *orb_core,
-    void *arg,
-    CORBA::Boolean flag
-  )
-  : orb_core_ (orb_core),
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
+                                                           void *arg,
+                                                           CORBA::Boolean flag)
+  : ACE_Creation_Strategy<SVC_HANDLER> (0, orb_core->reactor()),
+    orb_core_ (orb_core),
     arg_ (arg),
     lite_flag_ (flag)
 {
@@ -121,11 +120,13 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       TAO_Thread_Per_Connection_Handler *tpch = 0;
 
       ACE_NEW_RETURN (tpch,
-                      TAO_Thread_Per_Connection_Handler (sh),
+                      TAO_Thread_Per_Connection_Handler (sh,
+                                                         this->orb_core_),
                       -1);
 
-      result = tpch->activate (f->server_connection_thread_flags (),
-                               f->server_connection_thread_count ());
+      result =
+        tpch->activate (f->server_connection_thread_flags (),
+                        f->server_connection_thread_count ());
     }
   else
     {
@@ -163,11 +164,11 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
          {
-           const char *error = 0;
+           const ACE_TCHAR *error = 0;
            if (f->activate_server_connections ())
-             error = "could not activate new connection";
+             error = ACE_LIB_TEXT("could not activate new connection");
            else
-             error = "could not register new connection in the reactor";
+             error = ACE_LIB_TEXT("could not register new connection in the reactor");
 
            ACE_ERROR ((LM_ERROR,
                        "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "

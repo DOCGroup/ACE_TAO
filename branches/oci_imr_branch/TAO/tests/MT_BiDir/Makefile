@@ -74,8 +74,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -148,8 +147,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  Receiver_i.h ReceiverS.h ReceiverC.h \
+  $(ACE_ROOT)/ace/Get_Opt.i Receiver_i.h \
+  ReceiverS.h ReceiverC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -192,12 +191,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -211,6 +204,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -270,8 +269,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -344,8 +342,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(TAO_ROOT)/tao/BiDir_GIOP/BiDirPolicyC.h \
   $(TAO_ROOT)/tao/BiDir_GIOP/BiDirPolicyC.i \
-  Client_Task.h \
-  $(ACE_ROOT)/ace/Task.h \
+  Client_Task.h $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -401,8 +398,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -475,8 +471,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  Sender_i.h SenderS.h ReceiverS.h ReceiverC.h \
+  $(ACE_ROOT)/ace/Get_Opt.i Sender_i.h SenderS.h \
+  ReceiverS.h ReceiverC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -519,12 +515,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -538,6 +528,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -597,8 +593,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -671,8 +666,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(TAO_ROOT)/tao/BiDir_GIOP/BiDirPolicyC.h \
   $(TAO_ROOT)/tao/BiDir_GIOP/BiDirPolicyC.i \
-  Server_Task.h \
-  $(ACE_ROOT)/ace/Task.h \
+  Server_Task.h $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -802,8 +796,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Manual_Event.inl
 
 .obj/Receiver_i.o .obj/Receiver_i.so .shobj/Receiver_i.o .shobj/Receiver_i.so: Receiver_i.cpp Receiver_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  ReceiverS.h ReceiverC.h \
+  $(ACE_ROOT)/ace/pre.h ReceiverS.h ReceiverC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -895,12 +888,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -916,6 +903,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -977,8 +970,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -998,9 +990,8 @@ realclean: clean
   ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
 
 .obj/Sender_i.o .obj/Sender_i.so .shobj/Sender_i.o .shobj/Sender_i.so: Sender_i.cpp Sender_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  SenderS.h ReceiverS.h ReceiverC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/pre.h SenderS.h ReceiverS.h \
+  ReceiverC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1091,12 +1082,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1112,6 +1097,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1173,8 +1164,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1453,16 +1443,16 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1741,16 +1731,16 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1772,8 +1762,8 @@ realclean: clean
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  Sender_i.h SenderS.h ReceiverS.h ReceiverC.h ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i Sender_i.h SenderS.h \
+  ReceiverS.h ReceiverC.h ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1962,12 +1952,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1983,6 +1967,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2044,8 +2034,8 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.h ReceiverC.i SenderC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.h \
+  ReceiverC.i SenderC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -2104,6 +2094,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -2215,12 +2206,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2236,6 +2221,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2297,8 +2288,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2685,12 +2675,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2706,6 +2690,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2767,8 +2757,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -3050,12 +3039,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3071,6 +3054,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3132,8 +3121,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  ReceiverC.i \
+  $(TAO_ROOT)/tao/ORB.i ReceiverC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

@@ -72,7 +72,7 @@ module ImplementationRepository
       
     void server_is_running_in_activator (in string server,
                                             in string activator,
-                                            in Address addr,
+                                            in string partial_ior,
                                             in ServerObject server_object)
       raises (NotFound);
     

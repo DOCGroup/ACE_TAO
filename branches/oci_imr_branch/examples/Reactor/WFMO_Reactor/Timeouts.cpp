@@ -42,6 +42,7 @@ public:
                               const void *arg)
     // Print out when timeouts occur.
     {
+      ACE_UNUSED_ARG(tv);
       ACE_DEBUG ((LM_DEBUG,
                   "%d timeout occurred for %s.\n",
                   ++count_,
@@ -75,6 +76,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value run_time (12);
   if (ACE_Reactor::run_event_loop(run_time) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+
+  ACE_Reactor::instance ()->cancel_timer(&handler);
 
   return 0;
 }

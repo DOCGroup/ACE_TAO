@@ -30,6 +30,8 @@
 
 # include "ace/config-win32-common.h"
 
+// Borland on win32 has swab
+# undef ACE_LACKS_SWAB
 
 # define ACE_LACKS_MODE_MASKS 1
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
@@ -90,6 +92,7 @@
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 # define ACE_HAS_ITOA 1
+# define ACE_HAS_NONCONST_SWAB
 #endif
 
 #include /**/ "ace/post.h"

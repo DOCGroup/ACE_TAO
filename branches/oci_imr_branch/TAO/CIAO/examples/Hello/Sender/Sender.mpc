@@ -50,11 +50,9 @@ project(Hello_Base_Sender_exec) : ciao_component {
   dynamicflags   = SENDER_EXEC_BUILD_DLL
 
   IDL_Files {
-    SenderEI.idl
   }
 
   Source_Files {
-    SenderEIC.cpp
     Sender_exec.cpp
   }
 }

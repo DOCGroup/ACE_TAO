@@ -29,7 +29,7 @@
 #include "ace/QoS/QoS_Decorator.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 
 
 class TAO_AV_Export TAO_AV_UDP_QoS_Factory : public TAO_AV_Transport_Factory

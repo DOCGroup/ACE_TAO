@@ -16,6 +16,14 @@ ACE_RCSID (ace,
 // Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
 
+// Accessor method for zero for exported use (since some compilers,
+// i.e. MingW, have trouble handling exported class data members).
+const ACE_Time_Value&
+ACE_Time_Value::zero_time_value (void)
+{
+  return zero;
+}
+
 // Constant for maximum time representable.  Note that this time
 // is not intended for use with select () or other calls that may
 // have *their own* implementation-specific maximum time representations.
@@ -24,6 +32,14 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
                                                ACE_ONE_SECOND_IN_USECS - 1);
+
+// Accessor method for max_time for exported use (since some compilers,
+// i.e. MingW, have trouble handling exported class data members).
+const ACE_Time_Value&
+ACE_Time_Value::max_time_value (void)
+{
+  return max_time;
+}
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 

@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosConcurrencyControlS.h"
+#include "orbsvcs/orbsvcs/CosConcurrencyControlS.h"
 #include "concurrency_export.h"
 
 /**

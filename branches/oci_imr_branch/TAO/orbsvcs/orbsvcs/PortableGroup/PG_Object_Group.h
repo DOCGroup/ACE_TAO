@@ -37,7 +37,7 @@ namespace TAO
 
 /////////////////////////////////
 // Includes needed by this header
-#include <orbsvcs/PortableGroupC.h>
+#include <orbsvcs/orbsvcs/PortableGroupC.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <ace/Hash_Map_Manager_T.h>
 #include "PG_Location_Hash.h"

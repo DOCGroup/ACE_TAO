@@ -21,7 +21,7 @@
 
 #include "Peer.h"
 
-#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 class TAO_Notify_ProxyConsumer;
 
 /**

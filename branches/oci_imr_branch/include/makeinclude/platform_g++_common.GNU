@@ -25,10 +25,14 @@ ifndef templates
       ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
         templates = automatic
       else
-        ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
-          templates = explicit
+        ifeq (2.9-gnupro, $(findstring 2.9-gnupro, $(CXX_VERSION)))
+          templates = automatic
         else
-          templates = explicit
+          ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
+            templates = explicit
+          else
+            templates = explicit
+          endif
         endif
       endif
     endif

@@ -2,13 +2,15 @@
 
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h"
 
-ACE_RCSID(EC_Tests, Gateway, "$Id$")
+ACE_RCSID (EC_Tests, 
+           Gateway, 
+           "$Id$")
 
 int
 main (int argc, char* argv[])

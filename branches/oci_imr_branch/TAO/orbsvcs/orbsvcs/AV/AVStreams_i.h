@@ -27,20 +27,20 @@
 #include "ace/SOCK_Acceptor.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/CosPropertyServiceS.h"
-#include "orbsvcs/AVStreamsS.h"
-#include "orbsvcs/Property/CosPropertyService_i.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/AV/AV_Core.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/Null_MediaCtrlS.h"
+#include "orbsvcs/orbsvcs/AV/AV_export.h"
+#include "orbsvcs/orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/orbsvcs/AVStreamsS.h"
+#include "orbsvcs/orbsvcs/Property/CosPropertyService_i.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/AV/AV_Core.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/Null_MediaCtrlS.h"
 
 #if defined (TAO_ORBSVCS_HAS_Trader)
-#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/orbsvcs/Trader/Trader.h"
 #endif /* TAO_ORBSVCS_HAS_Trader */
 
-#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/orbsvcs/AV/FlowSpec_Entry.h"
 
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
@@ -524,12 +524,15 @@ public:
 
   TAO_AV_QoS &qos (void);
 
+  void protocol_object_set (void);
+  int is_protocol_object_set (void);
 
 protected:
+
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
-
+  int protocol_object_set_;
 };
 
 // Forward declarations.

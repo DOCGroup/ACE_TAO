@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_sys_utsname.h"
@@ -129,6 +130,61 @@ ACE_OS::chdir (const wchar_t *path)
 }
 #endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
+
+ACE_INLINE int
+ACE_OS::rmdir (const ACE_TCHAR * path)
+{
+#if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_PSOS)
+  //The pSOS remove_dir fails if the last character is a '/'
+  int location;
+  char *phile_path;
+
+  phile_path = (char *) ACE_OS::malloc (strlen (path));
+  if (phile_path == 0)
+    {
+//       ACE_OS::printf ("malloc in remove_dir failed: [%X]\n",
+//                       errno);
+      return -1;
+    }
+  else
+    {
+      ACE_OS::strcpy (phile_path, path);
+    }
+
+  location = ACE_OS::strlen (phile_path);
+  if (phile_path[location-1] == '/')
+    {
+      phile_path[location-1] = 0;
+    }
+
+  unsigned long result;
+  result = ::remove_dir ((char *) phile_path);
+  if (result != 0)
+    {
+      result = -1;
+    }
+
+  ACE_OS::free (phile_path);
+
+  return (int) result;
+
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (::rmdir ((char *) path), int, -1);
+#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
+#elif defined (ACE_HAS_WINCE)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
+                                          ace_result_),
+                        int, -1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wrmdir (path), int, -1);
+#else
+  ACE_OSCALL_RETURN (::rmdir (path), int, -1);
+#endif /* ACE_HAS_PACE */
+}
 
 // @todo: which 4 and why???  dhinton
 // NOTE: The following four function definitions must appear before
@@ -302,7 +358,6 @@ ACE_OS::fork (void)
 #endif /* ACE_LACKS_FORK */
 }
 
-#if !defined (ACE_WIN32)
 ACE_INLINE int
 ACE_OS::fsync (ACE_HANDLE handle)
 {
@@ -310,11 +365,12 @@ ACE_OS::fsync (ACE_HANDLE handle)
 # if defined (ACE_LACKS_FSYNC)
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
+# elif defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushFileBuffers (handle), ace_result_), int, -1);
 # else
   ACE_OSCALL_RETURN (::fsync (handle), int, -1);
 # endif /* ACE_LACKS_FSYNC */
 }
-#endif /* ACE_WIN32 */
 
 ACE_INLINE int
 ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
@@ -1036,6 +1092,9 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #if defined (ACE_WIN32)
   ::Sleep (tv.msec ());
   return 0;
+#elif defined (ACE_HAS_CLOCK_GETTIME)
+  timespec_t rqtp = tv;
+  ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
 #else
 # if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // Copy the timeval, because this platform doesn't declare the timeval
@@ -1051,6 +1110,40 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, tvp), int, -1);
 # endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
 #endif /* ACE_WIN32 */
+}
+
+ACE_INLINE void
+ACE_OS::swab (const void *src,
+              void *dest,
+              ssize_t length)
+{
+#if defined (ACE_LACKS_SWAB)
+  const char *from = ACE_static_cast (const char*,
+                                              src);
+  char *to = ACE_static_cast (char *,
+                              dest);
+  ssize_t ptr = 0;
+  for (ptr = 1; ptr < length; ptr += 2)
+    {
+      char p = from[ptr];
+      char q = from[ptr-1];
+      to[ptr-1] = p;
+      to[ptr  ] = q;
+    }
+  if (ptr == length) /* I.e., if length is odd, */
+    to[ptr-1] = 0;   /* then pad with a NUL. */
+#elif defined (ACE_HAS_NONCONST_SWAB)
+  const char *tmp = ACE_static_cast (const char*,
+                                             src);
+  char *from = ACE_const_cast (char *,
+                                   tmp);
+  char *to = ACE_static_cast (char *,
+                                  dest);
+  ::swab (from, to, length);
+#else
+  ::swab (src, dest, length);
+#endif /* ACE_LACKS_SWAB */
+
 }
 
 ACE_INLINE long
@@ -1232,9 +1325,8 @@ ACE_OS::write (ACE_HANDLE handle,
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
     return (ssize_t) bytes_written;
   else
-    return -1;
+    ACE_FAIL_RETURN (-1);
 #else
   return ACE_OS::write (handle, buf, nbyte);
 #endif /* ACE_WIN32 */
 }
-

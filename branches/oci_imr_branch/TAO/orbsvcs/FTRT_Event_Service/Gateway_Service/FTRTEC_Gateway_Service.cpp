@@ -2,18 +2,17 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
-#include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/Utils/resolve_init.h"
 /// include this file to statically linked with FT ORB
-#include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
+#include "orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
 /// include this file to statically linked with Transaction Depth
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
 ACE_RCSID (Gateway_Service,
            FTRTEC_Gateway_Service,
            "$Id$")
-
 
 namespace {
   CORBA::ORB_var orb;

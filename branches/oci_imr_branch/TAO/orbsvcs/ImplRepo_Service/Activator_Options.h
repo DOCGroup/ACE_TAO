@@ -15,40 +15,33 @@
 #ifndef ACTIVATOR_OPTIONS_H
 #define ACTIVATOR_OPTIONS_H
 
-#include "Repository_Configuration.h"
+#include "activator_export.h"
 
-#include "tao/ORB.h"
-#include "tao/PortableServer/ImplRepoC.h"
-
-#include "ace/Singleton.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
-
-// Forward declarations
-class ACE_ARGV;
 
 /**
  * @class Options
  *
  * @brief Maintains the global options.
  *
- * This is where all the settings for TAO's Implementation Repository is
+ * This is where all the settings for TAO's Implementation Repository are
  * stored.
  */
-class Options
+class Activator_Export Options
 {
 public:
-  enum REPO_MODE {
+  enum SERVICE_COMMAND {
+    SC_NONE,
+    SC_INSTALL,
+    SC_REMOVE,
+    SC_INSTALL_NO_LOCATOR
+  };
+
+  enum RepoMode {
     REPO_NONE,
     REPO_XML_FILE,
     REPO_HEAP_FILE,
     REPO_REGISTRY
-  };
-
-  enum SERVICE_COMMAND {
-    SC_NONE,
-    SC_INSTALL,
-    SC_REMOVE
   };
 
   /// Default Constructor
@@ -56,6 +49,8 @@ public:
 
   /// Parse the command-line arguments and initialize the options.
   int init (int argc, char *argv[]);
+  /// This version should only be used when run as an nt service.
+  int init_from_registry();
 
   /// Service Mode
   bool service (void) const;
@@ -64,21 +59,12 @@ public:
   unsigned int debug (void) const;
 
   /// Returns the file where the IOR should be stored.
-  ACE_CString output_filename (void) const;
+  const ACE_CString& ior_filename (void) const;
 
-  /// Returns the configuration  object.
-  Repository_Configuration* config (void) const;
-
-  int repository_mode (void);
+  RepoMode repository_mode (void) const;
 
   /// Returns the file name.
-  ACE_CString file_name (void) const;
-
-  /// Converts the activation mode to a const char *. Needed to put
-  /// the activation mode into the XML file or print it out.
-  const char *convert_str (ImplementationRepository::ActivationMode mode);
-
-  ImplementationRepository::ActivationMode convert_mode (const char *mode);
+  const ACE_CString& file_name (void) const;
 
   /// Returns the timeout value for program starting.
   ACE_Time_Value startup_timeout (void) const;
@@ -86,14 +72,19 @@ public:
   /// Returns the timeout value for program starting.
   ACE_Time_Value ping_interval (void) const;
 
-  /// Returns a pointer to the ORB.
-  CORBA::ORB_ptr orb (void) const;
-
   /// Will we listen for multicast location requests?
   bool multicast (void) const;
 
   /// Do we allow modifications to the servers?
   bool readonly (void) const;
+
+  /// The nt service command to run (install/remove)
+  SERVICE_COMMAND service_command(void) const;
+
+  /// Save the command line arguments as registry settings. (Windows only)
+  int save_registry_options ();
+
+  const ACE_CString& cmdline(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -102,36 +93,19 @@ private:
   /// Print the usage information.
   void print_usage (void) const;
 
-  /// Wrapper for the other initialize_persistence() methods
-  int initialize_persistence(void);
+  /// Loads options from the registry
+  int load_registry_options ();
 
-  /// Initialize heap file persistence.
-  int initialize_heap_persistence (void);
+private:
 
-  /// Initialize Registry persistence.
-  int initialize_registry_persistence (void);
+  /// Our extra command line arguments
+  ACE_CString cmdline_;
 
-  /// Initialize default heap for no persistence.
-  int initialize_non_persistence (void);
-
-  /// Initialize XML file persistence
-  int initialize_xml_persistence (void);
-
-  /// Run a service command.
-  int run_service_command (const ACE_CString& cmdline);
-
-  /// Loads ORB options from the registry
-  int load_registry_options (char*& cmdline, ACE_ARGV& argv);
-  int save_registry_options (const ACE_CString& cmdline);
-
-  /// The persistent configuration object.
-  auto_ptr<Repository_Configuration> repo_config_;
-
-  /// Mode of the Server Repository: if XML (x) or non-XML (n)
-  int repo_mode_;
+  // xml, heap, or registry
+  RepoMode repo_mode_;
 
   /// The persistent file option.
-  ACE_CString file_name_;
+  ACE_CString persist_file_name_;
 
   /// Debug level.
   unsigned int debug_;
@@ -142,13 +116,10 @@ private:
   /// Will we listen for multicast location requests?
   bool multicast_;
 
-  /// The ORB for the Implementation Repository.
-  CORBA::ORB_var orb_;
-
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;
 
-  /// Are we running as a service?
+  /// Should we run as a service?
   bool service_;
 
   /// The amount of time to wait for a server to response after starting it.
@@ -158,9 +129,7 @@ private:
   bool readonly_;
 
   /// SC_NONE, SC_INSTALL, SC_REMOVE, ...
-  int service_command_;
+  SERVICE_COMMAND service_command_;
 };
-
-typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
 
 #endif

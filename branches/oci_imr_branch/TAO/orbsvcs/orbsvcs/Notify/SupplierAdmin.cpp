@@ -6,9 +6,11 @@
 #include "SupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_SupplierAdmin, "$Id$")
+ACE_RCSID (RT_Notify, 
+           TAO_Notify_SupplierAdmin, 
+           "$Id$")
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Builder.h"
 #include "Proxy.h"
 #include "EventChannel.h"

@@ -9,8 +9,8 @@
 #include "ORB_Task.h"
 #include "ORB_Task_Activator.h"
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
@@ -19,7 +19,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(TAO_PERF_RTEC_Roundtrip, server, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC_Roundtrip, 
+           server, 
+           "$Id$")
 
 const char *ior_output_file = "test.ior";
 int use_rt_corba = 0;

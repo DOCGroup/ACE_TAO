@@ -40,13 +40,30 @@ sub convert_slashes {
 }
 
 
+sub list_mpc_files {
+  my($self)  = shift;
+  my($hash)  = shift;
+  my(@files) = ();
+
+  foreach my $key (keys %$hash) {
+    push(@files, $self->reverse_relative($key), $self->list_mpc_files($$hash{$key}));
+  }
+
+  return @files;
+}
+
+
 sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
   my($value) = undef;
   my($names) = $self->{'source_files'};
 
-  if ($name eq 'vpath') {
+  if ($name eq 'mpc_files') {
+    my(@mpc_files) = $self->list_mpc_files($self->get_inheritance_tree());
+    $value = \@mpc_files;
+  }
+  elsif ($name eq 'vpath') {
     my(%vpath) = ();
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
@@ -59,7 +76,7 @@ sub fill_value {
         }
       }
     }
-    my($str) = join(':', sort keys %vpath);
+    my($str) = join(':', keys %vpath);
     if ($str ne '') {
       $value = 'VPATH = .:' . $str . $self->crlf();
     }
@@ -69,6 +86,12 @@ sub fill_value {
     my($libs) = $self->get_assignment('libpaths');
     $value = ((defined $incs && $incs =~ /tao/i) ||
               (defined $libs && $libs =~ /tao/i));
+  }
+  elsif ($name eq 'ciao') {
+      my($incs) = $self->get_assignment('includes');
+      my($libs) = $self->get_assignment('libpaths');
+    $value = ((defined $incs && $incs =~ /ciao/i) ||
+              (defined $libs && $libs =~ /ciao/i));
   }
 
   return $value;

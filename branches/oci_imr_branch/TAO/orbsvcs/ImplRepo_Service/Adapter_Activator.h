@@ -30,7 +30,7 @@ class ImR_Adapter_Activator : public PortableServer::AdapterActivator
 {
 public:
   /// Constructor
-  ImR_Adapter_Activator (PortableServer::ServantLocator_ptr servant);
+  ImR_Adapter_Activator();
 
   /// Called when a POA needs to be created.
   virtual CORBA::Boolean unknown_adapter (
@@ -40,6 +40,7 @@ public:
   )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void init(PortableServer::ServantLocator_ptr servant);
 private:
   /// The ServantLocator registered in each new POA.
   PortableServer::ServantLocator_ptr servant_locator_;

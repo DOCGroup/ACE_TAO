@@ -29,10 +29,6 @@ SRC = $(IDL_SRC) common.cpp \
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
 
 TAO_IDLFLAGS += -Ge 1
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Notify
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -41,6 +37,10 @@ endif # Notify
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Notify
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
@@ -68,12 +68,14 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/goC.o .obj/goC.so .shobj/goC.o .shobj/goC.so: goC.cpp goC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+.obj/goC.o .obj/goC.so .shobj/goC.o .shobj/goC.so: goC.cpp goC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -158,12 +160,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -179,6 +175,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -195,7 +197,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -216,15 +218,17 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -297,6 +301,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -315,6 +320,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -399,12 +407,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -420,6 +422,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -436,7 +444,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -457,15 +465,17 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -631,8 +641,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Manual_Event.inl \
   $(ACE_ROOT)/ace/Mutex.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Semaphore.h \
@@ -664,6 +672,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -749,9 +760,6 @@ realclean: clean
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
   $(TAO_ROOT)/tao/Object_T.h \
   $(TAO_ROOT)/tao/Object_T.cpp \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Basic_Arguments.h \
@@ -767,7 +775,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
-  $(ACE_ROOT)/ace/Dynamic_Service.cpp
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/ace/Malloc_Allocator.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/common.o .obj/common.so .shobj/common.o .shobj/common.so: common.cpp common.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
@@ -778,6 +788,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -862,12 +875,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -883,6 +890,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -899,7 +912,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -920,15 +933,17 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -966,6 +981,20 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -1022,6 +1051,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
@@ -1049,6 +1080,9 @@ realclean: clean
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1142,15 +1176,17 @@ realclean: clean
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1314,7 +1350,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1322,14 +1358,18 @@ realclean: clean
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -1376,9 +1416,6 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
@@ -1394,6 +1431,20 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -1410,9 +1461,6 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
@@ -1445,8 +1493,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/NotifyExtC.i \
   ../lib/Supplier_T.h ../lib/Peer_T.h ../lib/Peer.h ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   ../lib/Options_Parser.h ../lib/Supplier_T.inl ../lib/Supplier_T.cpp \
   ../lib/SequencePushSupplier.inl goS.h goC.h goC.i goS_T.h goS_T.i \
@@ -1457,6 +1505,9 @@ realclean: clean
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1567,12 +1618,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1586,6 +1631,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1602,7 +1653,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1621,15 +1672,17 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1677,6 +1730,20 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
@@ -1723,6 +1790,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
@@ -1753,10 +1822,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  ../lib/Peer.inl ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
+  ../lib/Peer_T.inl ../lib/Peer_T.cpp \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -1788,6 +1857,9 @@ realclean: clean
   Notify_Sequence_Push_Consumer.h ../lib/Notify_SequencePushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   ../lib/SequencePushConsumer.h ../lib/notify_test_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1879,12 +1951,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1900,6 +1966,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1916,7 +1988,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1937,15 +2009,17 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1983,6 +2057,20 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -2039,6 +2127,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
@@ -2069,10 +2159,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  ../lib/Peer.inl ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
+  ../lib/Peer_T.inl ../lib/Peer_T.cpp \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -2107,7 +2197,6 @@ realclean: clean
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  common.h \
-  $(TAO_ROOT)/tao/debug.h
+  common.h $(TAO_ROOT)/tao/debug.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

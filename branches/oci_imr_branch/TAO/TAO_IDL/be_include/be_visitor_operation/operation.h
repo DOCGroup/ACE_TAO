@@ -105,7 +105,8 @@ protected:
                               TAO_OutStream *os,
                               idl_bool ami = I_FALSE);
 
-  void gen_arg_template_param_name (AST_Type *bt,
+  void gen_arg_template_param_name (AST_Decl *scope,
+                                    AST_Type *bt,
                                     TAO_OutStream *os);
 };
 

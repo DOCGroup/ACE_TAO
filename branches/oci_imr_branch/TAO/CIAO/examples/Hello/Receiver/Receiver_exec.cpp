@@ -8,16 +8,16 @@
 #include "Receiver_exec.h"
 #include "CIAO_common.h"
 
-MyImpl::Receiver_exec_i::Receiver_exec_i ()
+Receiver_Impl::Receiver_exec_i::Receiver_exec_i ()
 {
 }
 
-MyImpl::Receiver_exec_i::~Receiver_exec_i ()
+Receiver_Impl::Receiver_exec_i::~Receiver_exec_i ()
 {
 }
 
 void
-MyImpl::Receiver_exec_i::push_click_in (Hello::timeout *
+Receiver_Impl::Receiver_exec_i::push_click_in (Hello::timeout *
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26,14 +26,14 @@ MyImpl::Receiver_exec_i::push_click_in (Hello::timeout *
               "Receiver - Informed by the Sender \n"));
 
   Hello::message_var rev
-    = this->context_->get_connection_read_message (ACE_ENV_ARG_PARAMETER);
+    = this->context_->get_connection_read_message (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (rev.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
   CORBA::String_var str =
-    rev->get_message (ACE_ENV_ARG_PARAMETER);
+    rev->get_message (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -43,15 +43,15 @@ MyImpl::Receiver_exec_i::push_click_in (Hello::timeout *
 
 // Operations from Components::SessionComponen
 void
-MyImpl::Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+Receiver_Impl::Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx
+                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Receiver_exec_i::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::set_session_context\n"));
 
   this->context_ =
-    Hello::CCM_Receiver_Context::_narrow (ctx
+    Receiver_Impl::Receiver_Exec_Context::_narrow (ctx
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -61,11 +61,11 @@ MyImpl::Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx
 }
 
 void
-MyImpl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Receiver_exec_i::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_activate\n"));
 
   // @@ This hack work around a missing feature in CIAO's assembly
   // mechanism where a Softpkg descriptor can specify it's dependency
@@ -75,7 +75,11 @@ MyImpl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // explicitly to work around this problem.
   char *argv[1] = { "Receiver_exec"};
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+		                        argv,
+					"" 
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(),
 			       Hello::timeout_init,
@@ -83,41 +87,45 @@ MyImpl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_Impl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Receiver_exec_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_passivate\n"));
 }
 
 void
-MyImpl::Receiver_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_Impl::Receiver_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Receiver_exec_i::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_remove\n"));
 }
 
 
-MyImpl::ReceiverHome_exec_i::ReceiverHome_exec_i ()
+Receiver_Impl::ReceiverHome_exec_i::ReceiverHome_exec_i ()
 {
 }
 
-MyImpl::ReceiverHome_exec_i::~ReceiverHome_exec_i ()
+Receiver_Impl::ReceiverHome_exec_i::~ReceiverHome_exec_i ()
 {
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new MyImpl::Receiver_exec_i;
+  Components::EnterpriseComponent_ptr tmp;
+  ACE_NEW_THROW_EX (tmp,
+		    Receiver_Impl::Receiver_exec_i,
+		    CORBA::NO_MEMORY ());
+  return tmp;
 }
 
 
 extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createReceiverHome_Impl (void)
 {
-  return new MyImpl::ReceiverHome_exec_i ();
+  return new Receiver_Impl::ReceiverHome_exec_i ();
 }

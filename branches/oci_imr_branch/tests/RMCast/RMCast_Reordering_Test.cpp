@@ -1,11 +1,11 @@
 // $Id$
 
 #include "../test_config.h"
+#include "ace/OS_NS_time.h"
+#include "ace/ACE.h"
+#include "ace/Task.h"
 #include "ace/RMCast/RMCast_Proxy.h"
 #include "ace/RMCast/RMCast_Reordering.h"
-#include "ace/OS_NS_time.h"
-
-#include "ace/Task.h"
 
 ACE_RCSID(tests, RMCast_Reordering_Test, "$Id$")
 

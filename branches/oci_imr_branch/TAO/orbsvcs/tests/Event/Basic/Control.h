@@ -14,7 +14,7 @@
 #define EC_CONTROL_H
 
 #include "Counting_Consumer.h"
-#include "orbsvcs/Channel_Clients.h"
+#include "orbsvcs/orbsvcs/Channel_Clients.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

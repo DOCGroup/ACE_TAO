@@ -367,8 +367,9 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                               0,
                               SEEK_CUR) > this->max_size_)
 #else
-  if ((size_t) this->log_msg_->msg_ostream ()->tellp () 
-      > this->max_size_)
+  const std::streampos pos = this->log_msg_->msg_ostream ()->tellp ();
+  const std::streamoff ofst = std::streamoff (pos);
+  if ((size_t) ofst > this->max_size_)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     {
       // Lock out any other logging.

@@ -1,13 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, core, naming, iormanip, portablegroup, messaging, ami {
+project : orbsvcslib, core, naming, iormanip, portablegroup, ami {
   sharedname   = TAO_CosLoadBalancing
   idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h
   dynamicflags = TAO_LOADBALANCING_BUILD_DLL
   tagchecks   += CosLoadBalancing
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
   avoids      += minimum_corba
 
   IDL_Files {

@@ -1,14 +1,13 @@
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/orbsvcs/Log/LogRecordStore.h"
 
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h"
+#include "orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
            LogRecordStore,
            "$Id$")
-
 
 TAO_LogRecordStore::TAO_LogRecordStore (CORBA::ULongLong max_size,
                                         DsLogAdmin::LogId logid,

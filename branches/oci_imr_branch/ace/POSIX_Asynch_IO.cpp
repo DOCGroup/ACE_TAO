@@ -6,12 +6,14 @@
 #include "ace/POSIX_Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/ACE.h"
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_Pseudo_Task.h"
 #include "ace/POSIX_Proactor.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (ace,
            POSIX_Asynch_IO,
@@ -2499,21 +2501,35 @@ ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram (void)
 
 ssize_t
 ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
-                                   size_t &number_of_bytes_recvd,
+                                   size_t & /*number_of_bytes_recvd*/,
                                    int flags,
                                    int protocol_family,
                                    const void *act,
                                    int priority,
                                    int signal_number)
 {
-  ACE_UNUSED_ARG (message_block);
-  ACE_UNUSED_ARG (number_of_bytes_recvd);
-  ACE_UNUSED_ARG (flags);
-  ACE_UNUSED_ARG (protocol_family);
-  ACE_UNUSED_ARG (act);
-  ACE_UNUSED_ARG (priority);
-  ACE_UNUSED_ARG (signal_number);
-  ACE_NOTSUP_RETURN (-1);
+  size_t space = message_block->space ();
+  // Create the Asynch_Result.
+  ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
+  ACE_NEW_RETURN (result,
+                  ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
+						      this->handle_,
+						      message_block,
+						      space,
+						      flags,
+						      protocol_family,
+						      act,
+						      proactor->get_handle (),
+						      priority,
+						      signal_number),
+                  -1);
+
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
+  if (return_val == -1)
+    delete result;
+
+  return return_val;
 }
 
 ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor)
@@ -2531,21 +2547,40 @@ ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram (void)
 
 ssize_t
 ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
-                                    size_t &number_of_bytes_sent,
+                                    size_t &/*number_of_bytes_sent*/,
                                     int flags,
-                                    const ACE_Addr &addr,
+                                    const ACE_Addr &/*addr*/,
                                     const void *act,
                                     int priority,
                                     int signal_number)
 {
-  ACE_UNUSED_ARG (message_block);
-  ACE_UNUSED_ARG (number_of_bytes_sent);
-  ACE_UNUSED_ARG (flags);
-  ACE_UNUSED_ARG (addr);
-  ACE_UNUSED_ARG (act);
-  ACE_UNUSED_ARG (priority);
-  ACE_UNUSED_ARG (signal_number);
-  ACE_NOTSUP_RETURN (-1);
+  size_t len = message_block->length ();
+  if (len == 0)
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+      -1);
+
+  ACE_POSIX_Asynch_Write_Dgram_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
+  ACE_NEW_RETURN (result,
+                  ACE_POSIX_Asynch_Write_Dgram_Result (*this->handler_,
+						       this->handle_,
+						       message_block,
+						       len,
+						       flags,
+						       act,
+						       proactor->get_handle (),
+						       priority,
+						       signal_number),
+                  -1);
+
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
+  if (return_val == -1)
+    delete result;
+
+  return return_val;
 }
 
 ACE_POSIX_Asynch_Write_Dgram::ACE_POSIX_Asynch_Write_Dgram

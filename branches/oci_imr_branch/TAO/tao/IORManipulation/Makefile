@@ -68,8 +68,7 @@ endif
 
 
 .obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORManip_Loader.h \
-  $(ACE_ROOT)/ace/pre.h \
-  ior_manip_export.h \
+  $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -244,8 +243,7 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  IORC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h IORC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -276,12 +274,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -291,6 +283,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -312,8 +310,7 @@ endif
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  IORC.i \
+  $(TAO_ROOT)/tao/ORB.i IORC.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -327,6 +324,7 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -336,8 +334,7 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp
 
 .obj/IORManip_Loader.o .obj/IORManip_Loader.so .shobj/IORManip_Loader.o .shobj/IORManip_Loader.so: IORManip_Loader.cpp IORManip_Loader.h \
-  $(ACE_ROOT)/ace/pre.h \
-  ior_manip_export.h \
+  $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -512,8 +509,7 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  IORC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h IORC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -544,12 +540,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -559,6 +549,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -580,8 +576,8 @@ endif
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  IORC.i IORManipulation.h \
+  $(TAO_ROOT)/tao/ORB.i IORC.i \
+  IORManipulation.h \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i
 
@@ -710,12 +706,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -727,6 +717,12 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -823,8 +819,7 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  IORC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h IORC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -832,8 +827,7 @@ endif
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  IORC.i \
+  $(TAO_ROOT)/tao/ORB.i IORC.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \

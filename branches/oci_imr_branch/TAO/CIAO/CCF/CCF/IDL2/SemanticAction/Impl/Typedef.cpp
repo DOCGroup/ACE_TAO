@@ -113,6 +113,32 @@ namespace CCF
         }
 
         void Typedef::
+        begin_bounded_string ()
+        {
+          if (ctx.trace ()) cerr << "typedef string<" << ">" << endl;
+
+          define_ = false; // this should actually be true
+
+          Name name ("::string");
+          ScopedName from (ctx.scope ().scoped_name ());
+
+          type_ = &resolve<Type> (from, name);
+        }
+
+        void Typedef::
+        begin_bounded_wstring ()
+        {
+          if (ctx.trace ()) cerr << "typedef wstring<" << ">" << endl;
+
+          define_ = false; // this should actually be true
+
+          Name name ("::wstring");
+          ScopedName from (ctx.scope ().scoped_name ());
+
+          type_ = &resolve<Type> (from, name);
+        }
+
+        void Typedef::
         declarator (SimpleIdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << " " << id << endl;

@@ -1090,19 +1090,93 @@ sub check_for_ptr_arith_t ()
     }
 }
 
+# This test checks for the #include <ace/...>
+# This check is suggested by Don Hinton to force user to use
+# " " instead of <> to avoid confict with Doxygen.
+sub check_for_include ()
+{
+    print "Running the include check\n";
+    foreach $file (@files_h, @files_cpp, @files_inl, @files_idl) {
+        my $bad_occurance = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_include/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_include/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (/^\s*#\s*include\s*<ace\/.*>/) {
+                        print_error ("<ace\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+		    if (/^\s*#\s*include\s*<tao\/.*>/) {
+                        print_error ("<tao\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+		    if (/^\s*#\s*include\s*<ciao\/.*>/) {
+                        print_error ("<ciao\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+                }
+            }
+            close (FILE);
+
+            if ($disable == 0 && $bad_occurance > 0 ) {
+                print_error ("found #include <> usage of ace\/tao $file.\n");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+
 ##############################################################################
 
-use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_m $opt_v/;
+use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m $opt_v/;
 
-if (!getopts ('cdhl:mv') || $opt_h) {
-    print "fuzz.pl [-cdhm] [-l level] [file1, file2, ...]\n";
+if (!getopts ('cdhl:t:mv') || $opt_h) {
+    print "fuzz.pl [-cdhm] [-l level] [-t test_name][file1, file2, ...]\n";
     print "\n";
-    print "    -c         only look at the files passed in\n";
-    print "    -d         turn on debugging\n";
-    print "    -h         display this help\n";
-    print "    -l level   set detection level (default = 5)\n";
-    print "    -m         only check locally modified files (uses cvs)\n";
-    print "    -v         verbose mode\n";
+    print "    -c             only look at the files passed in\n";
+    print "    -d             turn on debugging\n";
+    print "    -h             display this help\n";
+    print "    -l level       set detection level (default = 5)\n";
+    print "    -t test_name   specify any single test to run. This will disable the run level setting\n";
+    print "    -m             only check locally modified files (uses cvs)\n";
+    print "    -v             verbose mode\n";
+    print "======================================================\n";
+    print "list of the tests that could be run:\n";
+    print "\t   check_for_noncvs_files
+           check_for_synch_include
+           check_for_OS_h_include
+           check_for_streams_include
+           check_for_dependency_file
+           check_for_makefile_variable
+           check_for_inline_in_cpp
+           check_for_id_string
+           check_for_newline
+           check_for_inline
+           check_for_math_include
+           check_for_line_length
+           check_for_preprocessor_comments
+           check_for_tchar
+           check_for_pre_and_post
+           check_for_push_and_pop
+           check_for_mismatched_filename
+           check_for_bad_run_test
+           check_for_absolute_ace_wrappers
+           check_for_bad_ace_trace
+           check_for_missing_rir_env
+           check_for_ace_check
+           check_for_changelog_errors
+           check_for_ptr_arith_t
+           check_for_include\n";
     exit (1);
 }
 
@@ -1120,6 +1194,11 @@ elsif ($opt_m) {
 }
 else {
     find_files ();
+}
+
+if ($opt_t) {
+    &$opt_t();
+    exit (1);
 }
 
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
@@ -1149,6 +1228,7 @@ check_for_missing_rir_env () if ($opt_l >= 5);
 check_for_ace_check () if ($opt_l >= 3);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
+check_for_include () if ($opt_l >= 5);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 

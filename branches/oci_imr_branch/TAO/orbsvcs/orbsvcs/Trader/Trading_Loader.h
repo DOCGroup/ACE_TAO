@@ -24,9 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IOR_Multicast.h"
-#include "orbsvcs/Trader/Trader.h"
-#include "orbsvcs/Trader/Service_Type_Repository.h"
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/orbsvcs/Trader/Trader.h"
+#include "orbsvcs/orbsvcs/Trader/Service_Type_Repository.h"
 
 class TAO_Trading_Export TAO_Trading_Loader : public TAO_Object_Loader
 {

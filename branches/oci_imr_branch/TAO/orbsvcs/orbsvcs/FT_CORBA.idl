@@ -11,18 +11,18 @@
 //  FT_Replica.idl
 
 // The next include is TAO specific.
-#include "orbsvcs/FT_CORBA_ORB.idl"
+#include "orbsvcs/orbsvcs/FT_CORBA_ORB.idl"
 
 #define FT_USES_PORTABLE_GROUP
 
 #ifdef FT_USES_PORTABLE_GROUP
-# include "orbsvcs/PortableGroup.idl"
+# include "orbsvcs/orbsvcs/PortableGroup.idl"
 #else // FT_USES_PORTABLE_GROUP
-#include "orbsvcs/CosNaming.idl" // 98-10-19.idl
+#include "orbsvcs/orbsvcs/CosNaming.idl" // 98-10-19.idl
 #endif // FT_USES_PORTABLE_GROUP
 
-#include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
-#include "orbsvcs/CosNotifyFilter.idl"
+#include "orbsvcs/orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
+#include "orbsvcs/orbsvcs/CosNotifyFilter.idl"
 
 #pragma prefix "omg.org"
 

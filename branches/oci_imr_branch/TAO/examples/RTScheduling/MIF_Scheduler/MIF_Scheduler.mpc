@@ -2,9 +2,12 @@
 // $Id$
 
 project(*Starter): namingexe, rtscheduling_server {
+  idlflags += -o ..
+  
   IDL_Files {
     ../Synch.idl
   }
+  
   Source_Files {
     ../Starter.cpp  
     ../Synch_i.cpp
@@ -16,10 +19,13 @@ project(*Starter): namingexe, rtscheduling_server {
 }
 
 project(*test) : namingexe, rtscheduling_server {
+  idlflags += -o ..
+  
   IDL_Files {
     ../Synch.idl
     ../Job.idl
   }
+  
   Source_Files {
     test.cpp
     MIF_DT_Creator.cpp

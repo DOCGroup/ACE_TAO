@@ -9,7 +9,9 @@
 #include "Loopback_Supplier.h"
 #include "Implicit_Deactivator.h"
 
-ACE_RCSID(TAO_PERF_RTEC, Loopback_Supplier, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC, 
+           Loopback_Supplier, 
+           "$Id$")
 
 Loopback_Supplier::Loopback_Supplier (CORBA::Long experiment_id,
                                       CORBA::Long response_type,

@@ -2,10 +2,12 @@
 
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
 
-ACE_RCSID(CEC_Tests_Basic, Push_Event, "$Id$")
+ACE_RCSID (CEC_Tests_Basic, 
+           Push_Event, 
+           "$Id$")
 
 int
 main (int argc, char* argv[])

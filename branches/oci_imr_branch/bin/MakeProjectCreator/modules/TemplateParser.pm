@@ -39,6 +39,7 @@ my(%keywords) = ('if'              => 1,
                  'marker'          => 1,
                  'uc'              => 1,
                  'lc'              => 1,
+                 'ucw'             => 1,
                 );
 
 # ************************************************************
@@ -81,16 +82,13 @@ sub new {
 sub basename {
   my($self) = shift;
   my($file) = shift;
-  for(my $i = length($file) - 1; $i >= 0; --$i) {
-    my($ch) = substr($file, $i, 1);
-    if ($ch eq '/' || $ch eq '\\') {
-      ## The template file may use this value (<%basename_found%>)
-      ## to determine whether a basename removed the directory or not
-      $self->{'values'}->{'basename_found'} = 1;
-      return substr($file, $i + 1);
-    }
+
+  if ($file =~ s/.*[\/\\]//) {
+    $self->{'values'}->{'basename_found'} = 1;
   }
-  delete $self->{'values'}->{'basename_found'};
+  else {
+    delete $self->{'values'}->{'basename_found'};
+  }
   return $file;
 }
 
@@ -113,16 +111,16 @@ sub dirname {
 
 
 sub strip_line {
-  my($self) = shift;
-  my($line) = shift;
+  #my($self) = shift;
+  #my($line) = shift;
 
   ## Override strip_line() from Parser.
   ## We need to preserve leading space and
   ## there is no comment string in templates.
-  ++$self->{'line_number'};
-  $line =~ s/\s+$//;
+  ++$_[0]->{'line_number'};
+  $_[1] =~ s/\s+$//;
 
-  return $line;
+  return $_[1];
 }
 
 
@@ -132,10 +130,9 @@ sub strip_line {
 sub append_current {
   my($self)  = shift;
   my($value) = shift;
-  my($index) = $self->{'foreach'}->{'count'};
 
-  if ($index >= 0) {
-    $self->{'foreach'}->{'text'}->[$index] .= $value;
+  if ($self->{'foreach'}->{'count'} >= 0) {
+    $self->{'foreach'}->{'text'}->[$self->{'foreach'}->{'count'}] .= $value;
   }
   else {
     $self->{'built'} .= $value;
@@ -150,40 +147,47 @@ sub adjust_value {
 
   ## Perform any additions, subtractions
   ## or overrides for the template values.
-  my($addtemp) = $self->{'addtemp'};
-  foreach my $at (keys %$addtemp) {
-    if ($at eq $name) {
-      my($val) = $$addtemp{$at};
-      if ($$val[0] > 0) {
-        if (UNIVERSAL::isa($value, 'ARRAY')) {
-          $value = [ $$val[1], @$value ];
-        }
-        else {
-          $value = "$$val[1] $value";
-        }
-      }
-      elsif ($$val[0] < 0) {
-        my($parts) = undef;
-        if (UNIVERSAL::isa($value, 'ARRAY')) {
-          my(@copy) = @$value;
-          $parts = \@copy;
-        }
-        else {
-          $parts = $self->create_array($value);
-        }
-
-        $value = '';
-        foreach my $part (@$parts) {
-          if ($part ne $$val[1] && $part ne '') {
-            $value .= "$part ";
-          }
-        }
-        $value =~ s/^\s+//;
-        $value =~ s/\s+$//;
+  if (defined $self->{'addtemp'}->{$name}) {
+    my($val) = $self->{'addtemp'}->{$name};
+    my($arr) = $self->create_array($$val[1]);
+    if ($$val[0] > 0) {
+      if (UNIVERSAL::isa($value, 'ARRAY')) {
+        ## We need to make $value a new array reference ($arr)
+        ## to avoid modifying the array reference pointed to by $value
+        unshift(@$arr, @$value);
+        $value = $arr;
       }
       else {
-        $value = $$val[1];
+        $value .= " $$val[1]";
       }
+    }
+    elsif ($$val[0] < 0) {
+      my($parts) = undef;
+      if (UNIVERSAL::isa($value, 'ARRAY')) {
+        $parts = $value;
+      }
+      else {
+        $parts = $self->create_array($value);
+      }
+
+      $value = [];
+      foreach my $part (@$parts) {
+        if ($part ne '') {
+          my($found) = 0;
+          foreach my $ae (@$arr) {
+            if ($part eq $ae) {
+              $found = 1;
+              last;
+            }
+          }
+          if (!$found) {
+            push(@$value, $part);
+          }
+        }
+      }
+    }
+    else {
+      $value = $arr;
     }
   }
 
@@ -296,22 +300,20 @@ sub get_value_with_default {
   my($name)  = shift;
   my($value) = $self->get_value($name);
 
-  if (defined $value) {
-    if (UNIVERSAL::isa($value, 'ARRAY')) {
-      $value = "@$value";
-    }
-  }
-  else {
+  if (!defined $value) {
     $value = $self->{'defaults'}->{$name};
-    if (!defined $value) {
-#      print "DEBUG: WARNING: $name defaulting to empty string\n";
-      $value = '';
+    if (defined $value) {
+      $value = $self->{'prjc'}->relative(
+                       $self->adjust_value($name, $value));
     }
     else {
-#      print "DEBUG: WARNING: $name using default value of $value\n";
-      $value = $self->adjust_value($name, $value);
+      #$self->warning("$name defaulting to empty string.");
+      $value = '';
     }
-    $value = $self->{'prjc'}->relative($value);
+  }
+
+  if (UNIVERSAL::isa($value, 'ARRAY')) {
+    $value = "@$value";
   }
 
   return $value;
@@ -323,11 +325,13 @@ sub process_foreach {
   my($index)  = $self->{'foreach'}->{'count'};
   my($text)   = $self->{'foreach'}->{'text'}->[$index];
   my($status) = 1;
-  my($errorString) = '';
+  my($error)  = undef;
   my(@values) = ();
   my($names)  = $self->create_array($self->{'foreach'}->{'names'}->[$index]);
   my($name)   = $self->{'foreach'}->{'name'}->[$index];
 
+  ## Get the values for all of the variable names
+  ## contained within the foreach
   foreach my $n (@$names) {
     my($vals) = $self->get_value($n);
     if (defined $vals && $vals ne '') {
@@ -348,10 +352,10 @@ sub process_foreach {
   if (defined $values[0]) {
     my($scope) = $self->{'foreach'}->{'scope'}->[$index];
 
-    $$scope{'forlast'}     = 0;
+    $$scope{'forlast'}     = '';
     $$scope{'fornotlast'}  = 1;
     $$scope{'forfirst'}    = 1;
-    $$scope{'fornotfirst'} = 0;
+    $$scope{'fornotfirst'} = '';
 
     ## If the foreach values are mixed (HASH and SCALAR), then
     ## remove the SCALAR values.
@@ -379,12 +383,12 @@ sub process_foreach {
       ## Set the special values that only exist
       ## within a foreach
       if ($i != 0) {
-        $$scope{'forfirst'}    = 0;
+        $$scope{'forfirst'}    = '';
         $$scope{'fornotfirst'} = 1;
       }
       if ($i == $#values) {
         $$scope{'forlast'}    = 1;
-        $$scope{'fornotlast'} = 0;
+        $$scope{'fornotlast'} = '';
       }
       $$scope{'forcount'} = $i + 1;
 
@@ -402,7 +406,7 @@ sub process_foreach {
       ## Now parse the line of text, each time
       ## with different values
       ++$self->{'foreach'}->{'processing'};
-      ($status, $errorString) = $self->parse_line(undef, $text);
+      ($status, $error) = $self->parse_line(undef, $text);
       --$self->{'foreach'}->{'processing'};
       if (!$status) {
         last;
@@ -410,35 +414,59 @@ sub process_foreach {
     }
   }
 
-  return $status, $errorString;
+  return $status, $error;
 }
 
 
-sub handle_end {
-  my($self)        = shift;
-  my($name)        = shift;
-  my($status)      = 1;
-  my($errorString) = '';
-  my($end)         = pop(@{$self->{'sstack'}});
+sub handle_endif {
+  my($self) = shift;
+  my($name) = shift;
+  my($end)  = pop(@{$self->{'sstack'}});
   pop(@{$self->{'lstack'}});
 
   if (!defined $end) {
-    $status = 0;
-    $errorString = "ERROR: Unmatched $name\n";
+    return 0, "Unmatched $name";
   }
-  elsif ($end eq 'endif') {
-    $self->{'if_skip'} = 0;
-  }
-  elsif ($end eq 'endfor') {
-    my($index) = $self->{'foreach'}->{'count'};
-    ($status, $errorString) = $self->process_foreach();
-    if ($status) {
-      --$self->{'foreach'}->{'count'};
-      $self->append_current($self->{'foreach'}->{'text'}->[$index]);
+  else {
+    my($in) = index($end, $name);
+    if ($in == 0) {
+      $self->{'if_skip'} = 0;
+    }
+    elsif ($in == -1) {
+      return 0, "Unmatched $name";
     }
   }
 
-  return $status, $errorString;
+  return 1, undef;
+}
+
+
+sub handle_endfor {
+  my($self) = shift;
+  my($name) = shift;
+  my($end)  = pop(@{$self->{'sstack'}});
+  pop(@{$self->{'lstack'}});
+
+  if (!defined $end) {
+    return 0, "Unmatched $name";
+  }
+  else {
+    my($in) = index($end, $name);
+    if ($in == 0) {
+      my($index) = $self->{'foreach'}->{'count'};
+      my($status, $error) = $self->process_foreach();
+      if ($status) {
+        --$self->{'foreach'}->{'count'};
+        $self->append_current($self->{'foreach'}->{'text'}->[$index]);
+      }
+      return $status, $error;
+    }
+    elsif ($in == -1) {
+      return 0, "Unmatched $name";
+    }
+  }
+
+  return 1, undef;
 }
 
 
@@ -492,79 +520,80 @@ sub get_flag_overrides {
 }
 
 
+sub process_compound_if {
+  my($self)   = shift;
+  my($str)    = shift;
+  my($status) = 0;
+
+  if ($str =~ /\|\|/) {
+    my($ret) = 0;
+    foreach my $v (split(/\s*\|\|\s*/, $str)) {
+      $ret |= $self->process_compound_if($v);
+      if ($ret != 0) {
+        return 1;
+      }
+    }
+  }
+  elsif ($str =~ /\&\&/) {
+    my($ret) = 1;
+    foreach my $v (split(/\s*\&\&\s*/, $str)) {
+      $ret &&= $self->process_compound_if($v);
+      if ($ret == 0) {
+        return 0;
+      }
+    }
+    $status = 1;
+  }
+  else {
+    ## See if we need to reverse the return value
+    my($not) = 0;
+    if ($str =~ /^!(.*)/) {
+      $not = 1;
+      $str = $1;
+    }
+
+    ## Get the value based on the string
+    my($val) = ($str =~ /flag_overrides\(([^\)]+),\s*([^\)]+)\)/ ?
+                               $self->get_flag_overrides($1, $2) :
+                               $self->get_value($str));
+
+    ## See if any portion of the value is defined and not empty
+    my($ret) = 0;
+    if (defined $val) {
+      if (UNIVERSAL::isa($val, 'ARRAY')) {
+        foreach my $v (@$val) {
+          if ($v ne '') {
+            $ret = 1;
+            last;
+          }
+        }
+      }
+      elsif ($val ne '') {
+        $ret = 1;
+      }
+    }
+    return ($not ? !$ret : $ret);
+  }
+
+  return $status;
+}
+
+
 sub handle_if {
   my($self)   = shift;
   my($val)    = shift;
   my($name)   = 'endif';
 
   push(@{$self->{'lstack'}}, $self->get_line_number() . " $val");
-  if (!$self->{'if_skip'}) {
-    my($true)  = 1;
-    push(@{$self->{'sstack'}}, $name);
-    if ($val !~ /\|\|/ && $val =~ /^!(.*)/) {
-      $val = $1;
-      $val =~ s/^\s+//;
-      $true = 0;
-    }
-
-    if ($val =~ /flag_overrides\(([^\)]+),\s*([^\)]+)\)/) {
-      $val = $self->get_flag_overrides($1, $2);
-    }
-    else {
-      if ($val =~ /\|\|/) {
-        my($str) = $val;
-        $val = undef;
-        foreach my $v (split(/\s*\|\|\s*/, $str)) {
-          my($p) = 0;
-          if ($v =~ /^!(.*)/) {
-            $p = $self->get_value($v);
-            if (defined $p) {
-              $p = undef;
-            }
-            else {
-              $p = 'some value';
-            }
-          }
-          else {
-            $p = $self->get_value($v);
-          }
-          if (defined $p && $p ne '') {
-            $val = $p;
-          }
-        }
-      }
-      else {
-        $val = $self->get_value($val)
-      }
-    }
-
-    if (defined $val) {
-      if (UNIVERSAL::isa($val, 'ARRAY')) {
-        my($empty) = 1;
-        foreach my $v (@$val) {
-          if ($v ne '') {
-            $empty = 0;
-            last;
-          }
-        }
-        if ($empty) {
-          $val = undef;
-        }
-      }
-      elsif ($val eq '') {
-        $val = undef;
-      }
-    }
-
-    if (!defined $val) {
-      $self->{'if_skip'} = $true;
-    }
-    else {
-      $self->{'if_skip'} = !$true;
-    }
+  if ($self->{'if_skip'}) {
+    push(@{$self->{'sstack'}}, "*$name");
   }
   else {
-    push(@{$self->{'sstack'}}, "*$name");
+    ## Determine if we are skipping the portion of this if statement
+    ## $val will always be defined since we won't get into this method
+    ## without properly parsing the if statement.
+    $self->{'if_skip'} = !$self->process_compound_if($val);
+    push(@{$self->{'sstack'}}, $name);
   }
 }
 
@@ -587,7 +616,7 @@ sub handle_foreach {
   my($val)         = shift;
   my($name)        = 'endfor';
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   push(@{$self->{'lstack'}}, $self->get_line_number());
   if (!$self->{'if_skip'}) {
@@ -605,12 +634,12 @@ sub handle_foreach {
       ## with custom types.
       if ($val =~ /^custom_type\->/ || $val eq 'custom_types') {
         $status = 0;
-        $errorString = 'ERROR: The foreach variable can not be ' .
+        $errorString = 'The foreach variable can not be ' .
                        'named when dealing with custom types';
       }
       elsif ($val =~ /^grouped_.*_file\->/ || $val =~ /^grouped_.*files$/) {
         $status = 0;
-        $errorString = 'ERROR: The foreach variable can not be ' .
+        $errorString = 'The foreach variable can not be ' .
                        'named when dealing with grouped files';
       }
     }
@@ -653,8 +682,7 @@ sub handle_uc {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = uc($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(uc($self->get_value_with_default($name)));
   }
 }
 
@@ -664,7 +692,22 @@ sub handle_lc {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = lc($self->get_value_with_default($name));
+    $self->append_current(lc($self->get_value_with_default($name)));
+  }
+}
+
+
+sub handle_ucw {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = $self->get_value_with_default($name);
+    substr($val, 0, 1) = uc(substr($val, 0, 1));
+    while($val =~ /[_\s]([a-z])/) {
+      my($uc) = uc($1);
+      $val =~ s/(_|\s)([a-z])/$1$uc/;
+    }
     $self->append_current($val);
   }
 }
@@ -687,8 +730,8 @@ sub handle_dirname {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = $self->dirname($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(
+              $self->dirname($self->get_value_with_default($name)));
   }
 }
 
@@ -698,8 +741,8 @@ sub handle_basename {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = $self->basename($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(
+              $self->basename($self->get_value_with_default($name)));
   }
 }
 
@@ -745,50 +788,38 @@ sub handle_marker {
 }
 
 
-## Given a line that starts with an identifier, we split
-## then name from the possible value stored inside ()'s and
-## we stop looking at the line when we find the %> ending
-sub split_name_value {
-  my($self)   = shift;
-  my($line)   = shift;
-  my($name)   = undef;
-  my($val)    = undef;
-
-  if ($line =~ /([^%\(]+)(\(([^%]+)\))?%>/) {
-    $name = $1;
-    $val  = $3;
-  }
-
-  return lc($name), $val;
-}
-
-
 sub process_name {
   my($self)        = shift;
   my($line)        = shift;
   my($length)      = 0;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   if ($line eq '') {
   }
   elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+,\s*[^\)]+\))\)|\->\w+([\w\-\>]+)?)?%>/) {
-    my($name, $val) = $self->split_name_value($line);
+    ## Split the line into a name and value
+    my($name, $val) = ();
+    if ($line =~ /([^%\(]+)(\(([^%]+)\))?%>/) {
+      $name = lc($1);
+      $val  = $3;
+    }
 
     $length += length($name);
     if (defined $val) {
+      ## Add the length of the value plus 2 for the surrounding ()
       $length += length($val) + 2;
     }
 
     if (defined $keywords{$name}) {
-      if ($name eq 'endif' || $name eq 'endfor') {
-        ($status, $errorString) = $self->handle_end($name);
+      if ($name eq 'endif') {
+        ($status, $errorString) = $self->handle_endif($name);
       }
       elsif ($name eq 'if') {
         $self->handle_if($val);
       }
-      elsif ($name eq 'else') {
-        $self->handle_else();
+      elsif ($name eq 'endfor') {
+        ($status, $errorString) = $self->handle_endfor($name);
       }
       elsif ($name eq 'foreach') {
         ($status, $errorString) = $self->handle_foreach($val);
@@ -797,32 +828,38 @@ sub process_name {
              $name eq 'fornotfirst' || $name eq 'forfirst') {
         $self->handle_special($name, $self->process_special($val));
       }
-      elsif ($name eq 'comment') {
-        ## Ignore the contents of the comment
+      elsif ($name eq 'else') {
+        $self->handle_else();
       }
       elsif ($name eq 'flag_overrides') {
         $self->handle_flag_overrides($val);
       }
-      elsif ($name eq 'marker') {
-        $self->handle_marker($val);
-      }
-      elsif ($name eq 'uc') {
-        $self->handle_uc($val);
-      }
-      elsif ($name eq 'lc') {
-        $self->handle_lc($val);
-      }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);
       }
-      elsif ($name eq 'dirname') {
-        $self->handle_dirname($val);
+      elsif ($name eq 'basenoextension') {
+        $self->handle_basenoextension($val);
       }
       elsif ($name eq 'basename') {
         $self->handle_basename($val);
       }
-      elsif ($name eq 'basenoextension') {
-        $self->handle_basenoextension($val);
+      elsif ($name eq 'marker') {
+        $self->handle_marker($val);
+      }
+      elsif ($name eq 'dirname') {
+        $self->handle_dirname($val);
+      }
+      elsif ($name eq 'comment') {
+        ## Ignore the contents of the comment
+      }
+      elsif ($name eq 'uc') {
+        $self->handle_uc($val);
+      }
+      elsif ($name eq 'ucw') {
+        $self->handle_ucw($val);
+      }
+      elsif ($name eq 'lc') {
+        $self->handle_lc($val);
       }
     }
     else {
@@ -830,9 +867,7 @@ sub process_name {
         if (defined $val && !defined $self->{'defaults'}->{$name}) {
           $self->{'defaults'}->{$name} = $self->process_special($val);
         }
-
-        $val = $self->get_value_with_default($name);
-        $self->append_current($val);
+        $self->append_current($self->get_value_with_default($name));
       }
     }
   }
@@ -847,7 +882,7 @@ sub process_name {
       }
     }
     $status = 0;
-    $errorString = "ERROR: Unable to parse line starting at $error";
+    $errorString = "Unable to parse line starting at $error";
   }
 
   return $status, $errorString, $length;
@@ -898,41 +933,30 @@ sub collect_data {
 }
 
 
-sub is_only_keyword {
-  my($self) = shift;
-  my($line) = shift;
-
-  ## Does the line contain only a keyword?
-  ## Checking for spaces allows nesting in the template.
-  if ($line =~ /^\s*<%(.*)%>$/) {
-    my($part) = $1;
-    if ($part !~ /%>/) {
-      $part =~ s/\(.*//;
-      return (defined $keywords{$part} ? 1 : 0);
-    }
-  }
-  return 0;
-}
-
-
 sub parse_line {
   my($self)        = shift;
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($length)      = length($line);
   my($name)        = 0;
-  my($startempty)  = ($line eq '' ? 1 : 0);
+  my($startempty)  = ($length == 0 ? 1 : 0);
   my($append_name) = 0;
 
   ## If processing a foreach or the line only
   ## contains a keyword, then we do
   ## not need to add a newline to the end.
-  if ($self->{'foreach'}->{'processing'} == 0 &&
-      !$self->is_only_keyword($line)) {
-    $line   .= $self->{'crlf'};
-    $length += $self->{'clen'};
+  if ($self->{'foreach'}->{'processing'} == 0) {
+    my($is_only_keyword) = undef;
+    if ($line =~ /^\s*<%(\w+)(\([^\)]+\))?%>$/) {
+      $is_only_keyword = defined $keywords{$1};
+    }
+
+    if (!$is_only_keyword) {
+      $line   .= $self->{'crlf'};
+      $length += $self->{'clen'};
+    }
   }
 
   if ($self->{'foreach'}->{'count'} < 0) {
@@ -958,7 +982,7 @@ sub parse_line {
     elsif ($name) {
       my($substr)  = substr($line, $i);
       my($efcheck) = ($substr =~ /^endfor\%\>/);
-      my($focheck) = ($substr =~ /^foreach\(/);
+      my($focheck) = ($efcheck ? 0 : ($substr =~ /^foreach\(/));
 
       if ($focheck && $self->{'foreach'}->{'count'} >= 0) {
         ++$self->{'foreach'}->{'nested'};
@@ -974,7 +998,7 @@ sub parse_line {
          $nlen) = $self->process_name($substr);
 
         if ($status && $nlen == 0) {
-          $errorString = "ERROR: Could not parse this line at column $i";
+          $errorString = "Could not parse this line at column $i";
           $status = 0;
         }
         if (!$status) {
@@ -1027,13 +1051,13 @@ sub parse_file {
     if (defined $$sstack[0]) {
       my($lstack) = $self->{'lstack'};
       $status = 0;
-      $errorString = "ERROR: missing an $$sstack[0] starting at $$lstack[0]";
+      $errorString = "Missing an $$sstack[0] starting at $$lstack[0]";
     }
   }
 
   if (!$status) {
     my($linenumber) = $self->get_line_number();
-    $errorString = "$input: line $linenumber:\n$errorString\n";
+    $errorString = "$input: line $linenumber:\n$errorString";
   }
 
   return $status, $errorString;

@@ -2,11 +2,9 @@
 #include "server_i.h"
 #include "ace/OS_NS_stdio.h"
 
-
 ACE_RCSID (Callback,
            server,
            "$Id$")
-
 
 int
 main (int argc, char *argv[])

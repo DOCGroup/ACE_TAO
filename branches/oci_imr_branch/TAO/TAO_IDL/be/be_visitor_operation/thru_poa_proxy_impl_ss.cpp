@@ -161,7 +161,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     {
       *os << "((TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (node->return_type (),
+      this->gen_arg_template_param_name (node,
+                                         node->return_type (),
                                          os);
 
       *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
@@ -227,7 +228,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
       *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (arg->field_type (),
+      this->gen_arg_template_param_name (arg,
+                                         arg->field_type (),
                                          os);
 
       *os << ">::";

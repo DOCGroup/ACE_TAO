@@ -17,9 +17,9 @@
 #ifndef COSECMULTIPLE_H
 #define COSECMULTIPLE_H
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 
 class Multiple
 {

@@ -16,8 +16,8 @@
 #define TAO_AV_SFP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/sfpC.h"
+#include "orbsvcs/orbsvcs/AV/AV_export.h"
+#include "orbsvcs/orbsvcs/sfpC.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 

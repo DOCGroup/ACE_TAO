@@ -9,10 +9,7 @@
 //=============================================================================
 
 #include "Locator_Options.h"
-#include "Locator_NT_Service.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Mutex.h"
 
@@ -144,61 +141,29 @@ Options::parse_args (int &argc, char *argv[])
 /**
  * @retval  0 Success
  * @retval -1 Error parsing args
- * @retval  1 Success but we should exit.
  */
 int
 Options::init (int argc, char *argv[])
 {
+  // Make an initial pass through and grab the arguments that we recognize.
+  // This may also run the commands to install or remove the nt service.
   int result = this->parse_args (argc, argv);
-  if (result != 0) {
+  if (result != 0) 
+  {
     return result;
   }
 
-  ACE_ARGV orb_args;   // Save the leftovers to a ACE_ARGV class
-  ACE_CString cmdline; // We'll save this in the registry when installing.
   for (int i = 1; i < argc; ++i)
-    {
-      cmdline += ACE_CString(argv[i]) + ACE_CString(" ");
-      if (orb_args.add (argv[i]) == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Could not save argument"));
-          return -1;
-        }
-    }
+  {
+    this->cmdline_ += ACE_CString(argv[i]) + ACE_CString(" ");
+  }
+  return 0;
+}
 
-  result = run_service_command(cmdline);
-  
-  if (result != 0) 
-    return result;
-
-  char* argv_tmp = 0;
-
-  // Load from the registry. This may replace the args.
-  if (this->load_registry_options(argv_tmp, orb_args) != 0)
-    return -1;
-
-  ACE_Auto_Array_Ptr<char> argv_deleter(argv_tmp);
-
-  int orb_argc = orb_args.argc ();
-  // Now initialize the orb and pass it the leftover arguments
-  ACE_TRY_NEW_ENV
-    {
-      this->orb_ = CORBA::ORB_init (orb_argc,
-                                    orb_args.argv (),
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception \n");
-      ACE_ERROR ((LM_ERROR, "Error: Cannot initialize ORB\n"));
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  // Indicates successful parsing of command line.
+int
+Options::init_from_registry (void)
+{
+  this->load_registry_options();
   return 0;
 }
 
@@ -222,74 +187,8 @@ Options::print_usage (void) const
              );
 }
 
-
-/**
- * Executes the various commands that are useful for a NT service.  Right
- * now these include 'install' and 'remove'.  Others, such as 'start' and
- * 'stop' can be added, but the 'net' program in Windows already handles
- * these commands.
- *
- * @todo Finish implementing Options::run_service_command
- * @todo Update to unicode
- */
-int
-Options::run_service_command (const ACE_CString& cmdline)
-{
-  if (this->service_command_ == SC_NONE) 
-    return 0;
-#if defined (ACE_WIN32)
-  SERVICE::instance ()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
-
-  if (this->service_command_ == SC_INSTALL)
-    {
-      char pathname[_MAX_PATH * 2 + 3];  // +3 for the ' -s' at the end
-
-      if (ACE_TEXT_GetModuleFileName(NULL, pathname, _MAX_PATH * 2) == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name.\n"));
-          return -1;
-        }
-
-      // Append the command used for running the implrepo as
-      ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
-
-      int ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
-                                           SERVICE_ERROR_NORMAL,
-                                           pathname
-                                           );
-      if (ret != -1) {
-        if (debug() > 0) {
-          ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service installed.\n"));
-        }
-        this->save_registry_options(cmdline);
-      } else {
-        ACE_ERROR((LM_ERROR, "Error: Failed to install service.\n"));
-      }
-      if (ret == 0) 
-        return 1;
-    }
-  else if (this->service_command_ == SC_REMOVE)
-    {
-      int ret = SERVICE::instance ()->remove ();
-      if (debug() > 0) {
-        ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service removed.\n"));
-      }
-      if (ret == 0) 
-        return 1; // If successfull, then we don't want to continue.
-    }
-
-  return -1;
-
-#else /* ACE_WIN32 */
-  ACE_UNUSED_ARG (cmdline);
-  ACE_ERROR ((LM_ERROR, "Service not supported on this platform"));
-
-  return -1;
-#endif /* ACE_WIN32 */
-}
-
 int 
-Options::save_registry_options(const ACE_CString& cmdline) 
+Options::save_registry_options() 
 {
 #if defined (ACE_WIN32)
   HKEY key = 0;
@@ -308,7 +207,7 @@ Options::save_registry_options(const ACE_CString& cmdline)
     return -1;
   }
   err = ACE_TEXT_RegSetValueEx(key, "ORBInitOptions", 0, REG_SZ, 
-    (LPBYTE) cmdline.c_str(), cmdline.length() + 1);
+    (LPBYTE) this->cmdline_.c_str(), this->cmdline_.length() + 1);
   ACE_ASSERT(err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx(key, "IORFile", 0, REG_SZ, 
@@ -326,47 +225,14 @@ Options::save_registry_options(const ACE_CString& cmdline)
 
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
-#else
-  ACE_UNUSED_ARG (cmdline);
 #endif
   return 0;
 }
 
-namespace {
-  // This both parses the cmdline by replacing spaces with \0's, and
-  // adds each command to the ACE_ARGV. 
-  void parse_command_line(char* cmdline, ACE_ARGV& argv) {
-    // This tokenizer will replace all spaces with end-of-string
-    // characters and will preserve text between "" and '' pairs.
-    ACE_Tokenizer parser (cmdline);
-    parser.delimiter_replace (' ', '\0');
-    parser.preserve_designators ('\"', '\"');
-    parser.preserve_designators ('\'', '\'');
-
-    for (char *p = parser.next (); p; p = parser.next ()) {
-      argv.add(p);
-    }
-  }
-}
-/**
- *  We will only load from the registry if we are a service.
- *  We load each parameter from individual string keys, and then
- *  we have to parse the cmdline property into the orb_options
- *  so that they can be passed to ORB_init()
- */
 int
-Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
+Options::load_registry_options ()
 {
 #if defined (ACE_WIN32)
-  if (! this->service())
-  {
-    if (this->debug () > 1)
-      ACE_DEBUG ((LM_DEBUG,
-      "Locator_Options::load_registry_options: Not running "
-      "as a service, will not load data from registry\n"));
-    return 0;
-  }
-
   HKEY key = 0;
   // Create or open the parameters key
   LONG err = ACE_TEXT_RegOpenKeyEx (SERVICE_REG_ROOT,
@@ -386,9 +252,8 @@ Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
-    cmdline = new char[sz+1];
-    ACE_OS::strncpy(cmdline, tmpstr, sz);
-    parse_command_line(cmdline, argv);
+    tmpstr[sz - 1] = ACE_TCHAR('\0');
+    this->cmdline_ = tmpstr;
   }
 
   sz = sizeof(tmpstr);
@@ -396,18 +261,19 @@ Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz] = ACE_TCHAR('\0');
-    this->ior_output_file_ = ACE_CString(tmpstr);
+    tmpstr[sz - 1] = ACE_TCHAR('\0');
+    this->ior_output_file_ = tmpstr;
   }
 
   sz = sizeof(debug_);
   err = ACE_TEXT_RegQueryValueEx(key, "DebugLevel", 0, &type, 
-    (LPBYTE) &debug_ , &sz);
+    (LPBYTE) &this->debug_ , &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_DWORD);
   }
 
   DWORD tmp = 0;
+  sz = sizeof(tmp);
   err = ACE_TEXT_RegQueryValueEx(key, "Multicast", 0, &type, 
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS) {
@@ -417,13 +283,8 @@ Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
 
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
-
+#endif
   return 0;
-#else /* ACE_WIN32 */
-  ACE_UNUSED_ARG (cmdline);
-  ACE_UNUSED_ARG (argv);
-  return 0;
-#endif /* ACE_WIN32 */
 }
 
 /**
@@ -456,20 +317,12 @@ Options::debug (void) const
 /**
  * @return The file where the IOR will be stored.
  */
-ACE_CString
-Options::output_filename (void) const
+const ACE_CString&
+Options::ior_filename (void) const
 {
   return this->ior_output_file_;
 }
 
-/**
- * @return A pointer to the ORB.
- */
-CORBA::ORB_ptr
-Options::orb (void) const
-{
-  return CORBA::ORB::_duplicate (this->orb_.in ());
-}
 
 /**
  * @retval false Do not listen for multicast location requests.
@@ -481,8 +334,13 @@ Options::multicast (void) const
   return this->multicast_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Options, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Options, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+Options::SERVICE_COMMAND
+Options::service_command(void) const
+{
+  return this->service_command_;
+}
+
+const ACE_CString&
+Options::cmdline(void) const {
+  return this->cmdline_;
+}

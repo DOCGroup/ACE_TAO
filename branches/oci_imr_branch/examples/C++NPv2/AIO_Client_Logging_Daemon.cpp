@@ -36,6 +36,7 @@ public:
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
   // Hook method called when server connection is established.
+  using ACE_Service_Handler::open;
   virtual void open (ACE_HANDLE new_handle,
                      ACE_Message_Block &message_block);
 
@@ -56,7 +57,7 @@ protected:
     (const ACE_Asynch_Write_Stream::Result &result);
 };
 
-typedef ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex> 
+typedef ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>
         OUTPUT_HANDLER;
 
 
@@ -153,7 +154,7 @@ protected:
   SSL *ssl_;
 };
 
-typedef ACE_Unmanaged_Singleton<AIO_CLD_Connector, ACE_Null_Mutex> 
+typedef ACE_Unmanaged_Singleton<AIO_CLD_Connector, ACE_Null_Mutex>
         CLD_CONNECTOR;
 
 
@@ -267,9 +268,9 @@ void AIO_Input_Handler::open
 
 void AIO_Input_Handler::handle_read_stream
     (const ACE_Asynch_Read_Stream::Result &result) {
-  if (!result.success () || result.bytes_transferred () == 0) 
+  if (!result.success () || result.bytes_transferred () == 0)
     delete this;
-  else if (result.bytes_transferred () < result.bytes_to_read ()) 
+  else if (result.bytes_transferred () < result.bytes_to_read ())
     reader_.read (*mblk_, result.bytes_to_read () -
                   result.bytes_transferred ());
   else if (mblk_->length () == LOG_HEADER_SIZE) {
@@ -284,9 +285,9 @@ void AIO_Input_Handler::handle_read_stream
 
     mblk_->size (length + LOG_HEADER_SIZE);
     reader_.read (*mblk_, length);
-  } 
+  }
   else {
-    if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1) 
+    if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1)
       mblk_->release ();
 
     ACE_NEW_NORETURN

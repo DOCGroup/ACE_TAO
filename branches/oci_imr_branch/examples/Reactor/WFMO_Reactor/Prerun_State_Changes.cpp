@@ -32,6 +32,7 @@ class Event_Handler : public ACE_Event_Handler
 public:
   virtual int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
     {
+      ACE_UNUSED_ARG(mask);
       ACE_DEBUG ((LM_DEBUG,
                   "event handler %d closed.\n",
                   (size_t) handle));

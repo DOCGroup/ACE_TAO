@@ -16,9 +16,9 @@
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "notify_test_export.h"
 
 class TAO_NOTIFY_TEST_Export Notify_Test_Client

@@ -1,15 +1,17 @@
 // $Id$
 
 #include "EC.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID(EC_Examples, Supplier, "$Id$")
+ACE_RCSID (EC_Examples, 
+           Supplier, 
+           "$Id$")
 
 static const char* ecname = 0;
 

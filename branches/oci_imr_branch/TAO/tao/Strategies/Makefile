@@ -348,6 +348,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -434,16 +436,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -466,8 +468,7 @@ endif
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
-  $(ACE_ROOT)/ace/SOCK_Stream.i \
-  DIOP_Transport.i \
+  $(ACE_ROOT)/ace/SOCK_Stream.i DIOP_Transport.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   DIOP_Connection_Handler.i \
@@ -651,12 +652,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -673,6 +668,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -796,8 +797,7 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  DIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i DIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
@@ -1112,12 +1112,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -1128,6 +1122,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1252,8 +1252,8 @@ endif
   $(ACE_ROOT)/ace/Svc_Handler.cpp \
   $(ACE_ROOT)/ace/Connection_Recycling_Strategy.h \
   $(ACE_ROOT)/ace/Dynamic.h \
-  $(ACE_ROOT)/ace/Dynamic.i \
-  strategies_export.h DIOP_Transport.i DIOP_Connection_Handler.h \
+  $(ACE_ROOT)/ace/Dynamic.i strategies_export.h \
+  DIOP_Transport.i DIOP_Connection_Handler.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Refcountable.h \
@@ -1270,6 +1270,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -1386,11 +1388,10 @@ endif
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  DIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i DIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  DIOP_Endpoint.i DIOP_Profile.i \
+  $(TAO_ROOT)/tao/Endpoint.i DIOP_Endpoint.i \
+  DIOP_Profile.i \
   $(TAO_ROOT)/tao/Acceptor_Registry.h \
   $(TAO_ROOT)/tao/Acceptor_Registry.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1665,6 +1666,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -1763,16 +1766,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1886,8 +1889,7 @@ endif
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/OS_NS_strings.inl \
-  DIOP_Profile.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  DIOP_Profile.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
@@ -1898,8 +1900,8 @@ endif
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  DIOP_Endpoint.h DIOP_Endpoint.i DIOP_Profile.i
+  $(TAO_ROOT)/tao/Profile.i DIOP_Endpoint.h \
+  DIOP_Endpoint.i DIOP_Profile.i
 
 .obj/DIOP_Acceptor.o .obj/DIOP_Acceptor.so .shobj/DIOP_Acceptor.o .shobj/DIOP_Acceptor.so: DIOP_Acceptor.cpp DIOP_Acceptor.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2129,6 +2131,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -2229,16 +2233,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2362,20 +2366,17 @@ endif
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  DIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i DIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  DIOP_Endpoint.i DIOP_Profile.i \
-  $(TAO_ROOT)/tao/MProfile.h \
+  $(TAO_ROOT)/tao/Endpoint.i DIOP_Endpoint.i \
+  DIOP_Profile.i $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(TAO_ROOT)/tao/Codeset_Manager.h \
   $(ACE_ROOT)/ace/os_include/os_netdb.h
 
 .obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.so .shobj/DIOP_Connection_Handler.o .shobj/DIOP_Connection_Handler.so: DIOP_Connection_Handler.cpp \
-  DIOP_Connection_Handler.h \
-  $(ACE_ROOT)/ace/pre.h \
+  DIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -2595,6 +2596,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -2699,16 +2702,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3065,6 +3068,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -3163,16 +3168,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3188,8 +3193,7 @@ endif
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/SOCK_IO.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i \
-  DIOP_Transport.i \
+  $(ACE_ROOT)/ace/SOCK_Stream.i DIOP_Transport.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   DIOP_Connection_Handler.i \
@@ -3369,8 +3373,7 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  UIOP_Acceptor.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h UIOP_Acceptor.h \
   $(TAO_ROOT)/tao/Transport_Acceptor.h \
   $(TAO_ROOT)/tao/Transport_Acceptor.inl \
   $(ACE_ROOT)/ace/Acceptor.h \
@@ -3441,6 +3444,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -3553,16 +3558,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3845,8 +3850,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl \
-  UIOP_Acceptor.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl UIOP_Acceptor.h \
   $(TAO_ROOT)/tao/Transport_Acceptor.h \
   $(TAO_ROOT)/tao/Transport_Acceptor.inl \
   $(ACE_ROOT)/ace/Acceptor.h \
@@ -3917,6 +3921,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -4029,16 +4035,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4188,8 +4194,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/Lock.inl strategies_export.h \
   $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -4242,12 +4247,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -4264,6 +4263,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4471,6 +4476,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -4568,9 +4575,8 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   UIOP_Transport.i UIOP_Connection_Handler.inl UIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  UIOP_Endpoint.i UIOP_Profile.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
+  UIOP_Profile.i $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/params.h \
@@ -4615,8 +4621,8 @@ endif
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/tao/debug.h \
-  uiop_endpoints.h uiop_endpoints.i
+  $(TAO_ROOT)/tao/debug.h uiop_endpoints.h \
+  uiop_endpoints.i
 
 .obj/UIOP_Transport.o .obj/UIOP_Transport.so .shobj/UIOP_Transport.o .shobj/UIOP_Transport.so: UIOP_Transport.cpp UIOP_Transport.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -4653,8 +4659,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/Lock.inl strategies_export.h \
   $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -4937,16 +4942,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4972,6 +4977,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -5030,12 +5037,10 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  UIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i UIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  UIOP_Endpoint.i UIOP_Profile.i \
-  $(TAO_ROOT)/tao/Timeprobe.h \
+  $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
+  UIOP_Profile.i $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.i \
@@ -5362,6 +5367,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5474,16 +5481,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5497,8 +5504,7 @@ endif
   $(TAO_ROOT)/tao/Connector_Impl.h \
   $(TAO_ROOT)/tao/Connector_Impl.inl \
   $(TAO_ROOT)/tao/Connector_Impl.cpp \
-  UIOP_Profile.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  UIOP_Profile.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
@@ -5540,12 +5546,10 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  UIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i UIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  UIOP_Endpoint.i UIOP_Profile.i \
-  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
+  UIOP_Profile.i $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/params.h \
@@ -5826,6 +5830,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -5952,16 +5958,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6057,8 +6063,7 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
-  UIOP_Profile.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  UIOP_Profile.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
@@ -6067,19 +6072,16 @@ endif
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  UIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i UIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  UIOP_Endpoint.i UIOP_Profile.i \
-  $(TAO_ROOT)/tao/MProfile.h \
+  $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
+  UIOP_Profile.i $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(TAO_ROOT)/tao/Codeset_Manager.h
 
 .obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.so .shobj/UIOP_Connection_Handler.o .shobj/UIOP_Connection_Handler.so: UIOP_Connection_Handler.cpp \
-  UIOP_Connection_Handler.h \
-  $(ACE_ROOT)/ace/pre.h \
+  UIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -6299,6 +6301,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -6428,16 +6432,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6448,8 +6452,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   UIOP_Transport.i UIOP_Connection_Handler.inl UIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.i \
-  UIOP_Endpoint.i \
+  $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
@@ -6643,8 +6646,7 @@ endif
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/Lock.inl \
   $(TAO_ROOT)/tao/Endpoint.i \
-  strategies_export.h \
-  $(ACE_ROOT)/ace/UNIX_Addr.h \
+  strategies_export.h $(ACE_ROOT)/ace/UNIX_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6674,8 +6676,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
-  $(ACE_ROOT)/ace/UNIX_Addr.i \
-  UIOP_Endpoint.i UIOP_Connection_Handler.h \
+  $(ACE_ROOT)/ace/UNIX_Addr.i UIOP_Endpoint.i \
+  UIOP_Connection_Handler.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -6779,6 +6781,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -6899,16 +6903,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6955,8 +6959,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  SCIOP_Acceptor.h \
+  $(ACE_ROOT)/ace/Lock.inl SCIOP_Acceptor.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -7142,6 +7145,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -7254,8 +7259,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  SCIOP_Acceptor.h \
+  $(ACE_ROOT)/ace/Lock.inl SCIOP_Acceptor.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -7441,6 +7445,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -7612,12 +7618,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -7634,6 +7634,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7944,12 +7950,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -7960,6 +7960,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8121,8 +8127,7 @@ endif
   $(ACE_ROOT)/ace/Multihomed_INET_Addr.i \
   $(ACE_ROOT)/ace/SOCK_SEQPACK_Association.i \
   $(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.i \
-  SCIOP_Profile.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  SCIOP_Profile.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
@@ -8156,12 +8161,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -8172,6 +8171,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8455,6 +8460,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -8509,8 +8516,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic.i \
   $(ACE_ROOT)/ace/OS_NS_sys_select.h \
   $(ACE_ROOT)/ace/OS_NS_sys_select.inl \
-  $(TAO_ROOT)/tao/orbconf.h \
-  SCIOP_Profile.h \
+  $(TAO_ROOT)/tao/orbconf.h SCIOP_Profile.h \
   $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -8545,16 +8551,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8696,12 +8702,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8717,6 +8717,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9077,6 +9083,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -9125,8 +9133,7 @@ endif
   $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
   $(TAO_ROOT)/tao/Connection_Handler.inl \
-  SHMIOP_Transport.h \
-  $(ACE_ROOT)/ace/MEM_Stream.h \
+  SHMIOP_Transport.h $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
   $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
@@ -9148,6 +9155,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -9207,16 +9216,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9375,8 +9384,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/Lock.inl strategies_export.h \
   $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -9429,12 +9437,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -9451,6 +9453,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9574,8 +9582,7 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  SHMIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i SHMIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
@@ -9586,9 +9593,8 @@ endif
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/MEM_Addr.h \
-  $(ACE_ROOT)/ace/MEM_Addr.i \
-  SHMIOP_Endpoint.i SHMIOP_Profile.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
+  SHMIOP_Profile.i $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -9742,8 +9748,7 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/Lock.inl strategies_export.h \
   $(ACE_ROOT)/ace/Svc_Handler.h \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Time_Value.h \
@@ -9974,6 +9979,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -10045,16 +10052,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -10080,6 +10087,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -10138,13 +10147,12 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  SHMIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i SHMIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   $(ACE_ROOT)/ace/MEM_Addr.h \
-  $(ACE_ROOT)/ace/MEM_Addr.i \
-  SHMIOP_Endpoint.i SHMIOP_Profile.i \
+  $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
+  SHMIOP_Profile.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
@@ -10395,6 +10403,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -10505,6 +10515,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10609,16 +10621,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -10632,8 +10644,7 @@ endif
   $(TAO_ROOT)/tao/Connector_Impl.h \
   $(TAO_ROOT)/tao/Connector_Impl.inl \
   $(TAO_ROOT)/tao/Connector_Impl.cpp \
-  SHMIOP_Profile.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  SHMIOP_Profile.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
@@ -10675,8 +10686,7 @@ endif
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  SHMIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i SHMIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   SHMIOP_Endpoint.i SHMIOP_Profile.i \
@@ -10963,6 +10973,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -11048,6 +11060,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -11107,16 +11121,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -11232,8 +11246,7 @@ endif
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  SHMIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Profile.i SHMIOP_Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   SHMIOP_Endpoint.i SHMIOP_Profile.i \
@@ -11464,6 +11477,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -11550,6 +11565,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -11612,16 +11629,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -11717,10 +11734,8 @@ endif
   $(TAO_ROOT)/tao/Base_Transport_Property.inl \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
-  SHMIOP_Endpoint.h \
-  $(ACE_ROOT)/ace/MEM_Addr.h \
-  $(ACE_ROOT)/ace/MEM_Addr.i \
-  SHMIOP_Endpoint.i \
+  SHMIOP_Endpoint.h $(ACE_ROOT)/ace/MEM_Addr.h \
+  $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
   $(TAO_ROOT)/tao/Resume_Handle.h \
   $(TAO_ROOT)/tao/Resume_Handle.inl \
   $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
@@ -11826,8 +11841,7 @@ endif
   $(TAO_ROOT)/tao/Endpoint.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  strategies_export.h \
-  $(ACE_ROOT)/ace/INET_Addr.h \
+  strategies_export.h $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
@@ -11840,8 +11854,8 @@ endif
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/MEM_Addr.h \
-  $(ACE_ROOT)/ace/MEM_Addr.i \
-  SHMIOP_Endpoint.i SHMIOP_Connection_Handler.h \
+  $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
+  SHMIOP_Connection_Handler.h \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
@@ -11966,6 +11980,8 @@ endif
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
+  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -12028,8 +12044,7 @@ endif
   $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
   $(TAO_ROOT)/tao/Connection_Handler.inl \
-  SHMIOP_Transport.h \
-  $(ACE_ROOT)/ace/MEM_Stream.h \
+  SHMIOP_Transport.h $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
   $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -12049,6 +12064,8 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -12101,16 +12118,16 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -12125,8 +12142,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_netdb.h
 
 .obj/uiop_endpoints.o .obj/uiop_endpoints.so .shobj/uiop_endpoints.o .shobj/uiop_endpoints.so: uiop_endpoints.cpp uiop_endpoints.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -12321,12 +12337,10 @@ endif
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
-  uiop_endpoints.i
+  $(TAO_ROOT)/tao/CDR.i uiop_endpoints.i
 
 .obj/sciop_endpoints.o .obj/sciop_endpoints.so .shobj/sciop_endpoints.o .shobj/sciop_endpoints.so: sciop_endpoints.cpp sciop_endpoints.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -12525,8 +12539,7 @@ endif
   sciop_endpoints.i
 
 .obj/advanced_resource.o .obj/advanced_resource.so .shobj/advanced_resource.o .shobj/advanced_resource.so: advanced_resource.cpp advanced_resource.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -12959,8 +12972,7 @@ endif
 
 .obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.so .shobj/LFU_Connection_Purging_Strategy.o .shobj/LFU_Connection_Purging_Strategy.so: LFU_Connection_Purging_Strategy.cpp \
   LFU_Connection_Purging_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13146,12 +13158,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -13162,6 +13168,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -13173,8 +13185,7 @@ endif
 
 .obj/FIFO_Connection_Purging_Strategy.o .obj/FIFO_Connection_Purging_Strategy.so .shobj/FIFO_Connection_Purging_Strategy.o .shobj/FIFO_Connection_Purging_Strategy.so: FIFO_Connection_Purging_Strategy.cpp \
   FIFO_Connection_Purging_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13360,12 +13371,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -13376,6 +13381,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -13387,8 +13398,7 @@ endif
 
 .obj/NULL_Connection_Purging_Strategy.o .obj/NULL_Connection_Purging_Strategy.so .shobj/NULL_Connection_Purging_Strategy.o .shobj/NULL_Connection_Purging_Strategy.so: NULL_Connection_Purging_Strategy.cpp \
   NULL_Connection_Purging_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13574,12 +13584,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -13590,6 +13594,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -13600,8 +13610,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl
 
 .obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.so .shobj/LF_Strategy_Null.o .shobj/LF_Strategy_Null.so: LF_Strategy_Null.cpp LF_Strategy_Null.h \
-  $(ACE_ROOT)/ace/pre.h \
-  strategies_export.h \
+  $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \

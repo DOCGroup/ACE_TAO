@@ -5,9 +5,9 @@
 #include "StubFaultAnalyzer.h"
 #include <ace/Get_Opt.h>
 #include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
-#include <iostream>
-#include <fstream>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
 
 StubFaultAnalyzer::StubFaultAnalyzer ()
   : readyFile_(0)
@@ -115,7 +115,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << std::endl;
+    cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << endl;
     result = -1;
   }
 
@@ -125,7 +125,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj.in ());
   if (CORBA::is_nil(this->notifier_.in ()))
   {
-    std::cerr << "Can't resolve Notifier IOR " << this->notifier_ior_ << std::endl;
+    cerr << "Can't resolve Notifier IOR " << this->notifier_ior_ << endl;
     result = -1;
   }
 
@@ -161,7 +161,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(rep_obj.in ());
       if (CORBA::is_nil(replica.in ()))
       {
-        std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
+        cerr << "Can't resolve Replica IOR " << iorName << endl;
         result = -1;
       }
       else
@@ -228,8 +228,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     if (result == 0 && this->readyFile_ != 0)
     {
-      std::ofstream ready(this->readyFile_, ios::out);
-      ready << "ready" << std::endl;
+      ofstream ready(this->readyFile_, ios::out);
+      ready << "ready" << endl;
       ready.close();
     }
   }

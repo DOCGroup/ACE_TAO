@@ -668,7 +668,7 @@ RTCosScheduling_ServerScheduler_i::resources(
     }
 
 
-  char line[BUF_MAX], key[16];
+  char line[BUF_MAX], key[64];
   ACE_OS::strncpy(key, "Node ", sizeof("Node "));
   ACE_OS::strcat(key, node_name);
 
@@ -676,41 +676,42 @@ RTCosScheduling_ServerScheduler_i::resources(
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);
-    }
-  while (ACE_OS::strncmp(line,key,ACE_OS::strlen(key)) != 0);
-  /// Make sure we did not hit the end of file
   if (ACE_OS::last_error() == EOF)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        "Node %s not found in config file, aborting\n",
+                            "Node %s not found in config file\n",
                         node_name),
                         0);
+          break;
     }
 
+    }
+  while (ACE_OS::strncmp(line,key,ACE_OS::strlen(key)) != 0);
 
   /// Skip to the appropriate Task section of the node
   ACE_OS::clearerr(fp);
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);
+  /// Make sure we did not hit the end of file
+  if (ACE_OS::last_error() == EOF)
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                            "Task list not found for node %s\n",
+                        node_name),
+                        0);
+          break;
+        }
+
     }
   while (ACE_OS::strncmp(line,
                          "Resources:",
                          ACE_OS::strlen("Resources:")
                         ) != 0);
 
-  /// Make sure we did not hit the end of file
-  if (ACE_OS::last_error() == EOF)
-    {
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "Resource list not found for node %s, aborting\n",
-                        node_name),
-                        0);
-    }
-
   CORBA::Short done = 0;
   COS_SCHEDULING_RESOURCE_KEY name;
-  COS_SCHEDULING_RESOURCE_VALUE priority;
+  COS_SCHEDULING_RESOURCE_VALUE priority = 0;
   u_int delimiter;
 
   /// read each activity/priority pair from the config file
@@ -724,7 +725,11 @@ RTCosScheduling_ServerScheduler_i::resources(
         {
           name      = ACE_CString(line);
           delimiter = name.find('\t');
-          priority  = ACE_OS::atoi(ACE_OS::strchr(line, '\t'));
+          char *p = ACE_OS::strchr(line, '\t');
+          if (p)
+              priority  = ACE_OS::atoi(p);
+          if (priority == 0)
+              priority = RTCORBA::minPriority;
           if (delimiter < name.length() && delimiter > 0)
             {
               resource_map->bind(name.substr(0, delimiter), priority);

@@ -11,8 +11,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include  /**/ <ace/pre.h>
 
-#include <orbsvcs/FT_NotifierS.h>
-#include <orbsvcs/FT_FaultDetectorFactoryC.h>
+#include <orbsvcs/orbsvcs/FT_NotifierS.h>
+#include <orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h>
 #include <ace/Vector_T.h>
 
 //////////////////////

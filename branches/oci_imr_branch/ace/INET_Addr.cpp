@@ -331,7 +331,8 @@ static int get_port_number_from_name (const char port_name[],
   char *endp = 0;
   port_number = ACE_static_cast (int,
                                  ACE_OS::strtol (port_name, &endp, 10));
-  if (port_number > 0 && *endp == '\0')
+
+  if (port_number >= 0 && *endp == '\0')
     {
       // Ok, port_name was really a number, and nothing else.  We
       // store that value as the port number.  NOTE: this number must
@@ -475,6 +476,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 
   if (addr->sin_family == AF_INET)
     {
+      int maxlen = ACE_static_cast (int, sizeof (this->inet_addr_.in4_));
+      if (len > maxlen)
+        len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in4_, addr, len);
       this->base_set (AF_INET, len);
       return 0;
@@ -482,6 +486,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 #if defined (ACE_HAS_IPV6)
   else if (addr->sin_family == AF_INET6)
     {
+      int maxlen = ACE_static_cast (int, sizeof (this->inet_addr_.in6_));
+      if (len > maxlen)
+        len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in6_, addr, len);
       this->base_set (AF_INET6, len);
       return 0;
@@ -930,11 +937,24 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
           return ACE_OS::inet_ntop (AF_INET, &addr, dst, size);
         }
 
+#  if defined (ACE_WIN32)
+      if (0 == ::getnameinfo (ACE_reinterpret_cast (const sockaddr*,
+                                                    &this->inet_addr_.in6_),
+                              this->get_size (),
+                              dst,
+                              size,
+                              0, 0,    // Don't want service name
+                              NI_NUMERICHOST))
+        return dst;
+      ACE_OS::set_errno_to_wsa_last_error ();
+      return 0;
+#  else
       const char *ch = ACE_OS::inet_ntop (AF_INET6,
                                           &this->inet_addr_.in6_.sin6_addr,
                                           dst,
                                           size);
       return ch;
+#  endif /* ACE_WIN32 */
     }
 #endif /* ACE_HAS_IPV6 */
 

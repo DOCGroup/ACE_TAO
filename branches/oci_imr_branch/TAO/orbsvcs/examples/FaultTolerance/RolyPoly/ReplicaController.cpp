@@ -118,7 +118,7 @@ ReplicaController (CORBA::ORB_ptr orb)
   ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
               uuid.to_string ()->c_str ()));
 
-  group_.reset (new TMCast::Group (address, uuid.to_string ()->c_str ()));
+  ACE_AUTO_PTR_RESET (group_, new TMCast::Group (address, uuid.to_string ()->c_str ()), TMCast::Group);
 
   int r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);
@@ -211,7 +211,7 @@ resolve_poa (PortableInterceptor::AdapterName const&)
 }
 
 
-void* ReplicaController::
+ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
   ReplicaController* obj = reinterpret_cast<ReplicaController*> (p);
@@ -354,7 +354,7 @@ ReplicaController::send_reply (
       {
         CORBA::Any_var tmp = target->get_state ();
 
-        if (tmp != 0) state = tmp._retn ();
+        if (tmp.ptr () != 0) state = tmp._retn ();
       }
     }
 
@@ -365,7 +365,7 @@ ReplicaController::send_reply (
     cdr << ftr->client_id.in ();
     cdr << ftr->retention_id;
     cdr << reply.in ();
-    cdr << *state;
+    cdr << state.in ();
 
     size_t size = cdr.total_length ();
 
@@ -376,7 +376,7 @@ ReplicaController::send_reply (
     msg->length (size);
 
     {
-      CORBA::Octet* buf (msg->get_buffer ());
+      CORBA::Octet* buf = msg->get_buffer ();
 
       for (ACE_Message_Block const* mb = cdr.begin ();
            mb != 0;
@@ -387,7 +387,7 @@ ReplicaController::send_reply (
       }
     }
 
-    CORBA::Octet* buf (msg->get_buffer ());
+    CORBA::Octet* buf = msg->get_buffer ();
 
     // Crash point 1.
     //

@@ -23,10 +23,10 @@ public:
     TEST_WRITELOCK
   };
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Standard initializing method for Baseline Test.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parsing the svc.conf file arguments.
 
   virtual int acquire () = 0;
@@ -75,7 +75,7 @@ public:
   Baseline_Test_Options (void);
   // ctor.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse and set the Baseline_Test options and flags.
 
   int reset_params (size_t iteration, int yield);
@@ -124,7 +124,7 @@ class ACE_Svc_Export Baseline_Test : public Benchmark_Method_Base
 {
 public:
   Baseline_Test (void);
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int pre_run_test (Benchmark_Base *bp);
   virtual int run_test (void);
   virtual int post_run_test (void);

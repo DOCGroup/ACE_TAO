@@ -70,7 +70,8 @@ ACE_Task_Base::activate (long flags,
                          ACE_hthread_t thread_handles[],
                          void *stack[],
                          size_t stack_size[],
-                         ACE_thread_t thread_ids[])
+                         ACE_thread_t thread_ids[],
+                         bool inherit_priority)
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
@@ -115,7 +116,8 @@ ACE_Task_Base::activate (long flags,
                                task,
                                thread_handles,
                                stack,
-                               stack_size);
+                               stack_size,
+                               inherit_priority);
   else
     // thread names were specified
     grp_spawned =
@@ -129,7 +131,8 @@ ACE_Task_Base::activate (long flags,
                                stack,
                                stack_size,
                                thread_handles,
-                               task);
+                               task,
+                               inherit_priority);
   if (grp_spawned == -1)
     {
       // If spawn_n fails, restore original thread count.
@@ -155,6 +158,7 @@ ACE_Task_Base::activate (long flags,
     ACE_UNUSED_ARG (stack);
     ACE_UNUSED_ARG (stack_size);
     ACE_UNUSED_ARG (thread_ids);
+    ACE_UNUSED_ARG (inherit_priority);
     ACE_NOTSUP_RETURN (-1);
   }
 #endif /* ACE_MT_SAFE */

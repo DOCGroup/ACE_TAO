@@ -27,7 +27,7 @@
 
 #include "EC_Defaults.h"
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 
 template<class> class TAO_ESF_Worker;
 

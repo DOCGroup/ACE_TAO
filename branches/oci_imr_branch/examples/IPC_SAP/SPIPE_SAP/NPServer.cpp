@@ -8,7 +8,7 @@
 ACE_RCSID(SPIPE_SAP, NPServer, "$Id$")
 
 #if defined (ACE_WIN32)
-#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\"#X
+#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\" X
 #else
 #define MAKE_PIPE_NAME(X) X
 #endif
@@ -20,8 +20,7 @@ main (int /* argc */, ACE_TCHAR * /* argv */ [])
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
   int  n;
-  const char *pipe_name = "acepipe";
-  const char *rendezvous = MAKE_PIPE_NAME (pipe_name);
+  const char *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   // Initialize named pipe listener.
 

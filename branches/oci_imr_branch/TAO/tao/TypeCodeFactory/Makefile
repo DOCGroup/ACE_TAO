@@ -163,12 +163,6 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -184,6 +178,12 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -299,6 +299,7 @@ realclean: clean
   TypeCodeFactoryC.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -323,8 +324,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TypeCodeFactory_Loader.h typecodefactory_export.h \
+  $(ACE_ROOT)/ace/pre.h TypeCodeFactory_Loader.h \
+  typecodefactory_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -500,8 +501,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  TypeCodeFactoryC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  TypeCodeFactoryC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -531,12 +531,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -546,6 +540,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -604,8 +604,7 @@ realclean: clean
 
 .obj/TypeCodeFactory_Adapter_Impl.o .obj/TypeCodeFactory_Adapter_Impl.so .shobj/TypeCodeFactory_Adapter_Impl.o .shobj/TypeCodeFactory_Adapter_Impl.so: TypeCodeFactory_Adapter_Impl.cpp \
   TypeCodeFactory_Adapter_Impl.h \
-  $(ACE_ROOT)/ace/pre.h \
-  typecodefactory_export.h \
+  $(ACE_ROOT)/ace/pre.h typecodefactory_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -785,8 +784,7 @@ realclean: clean
   TypeCodeFactory_i.h TypeCodeFactory_Loader.h \
   $(TAO_ROOT)/tao/Object_Loader.h \
   $(TAO_ROOT)/tao/Object_Loader.i \
-  TypeCodeFactoryC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  TypeCodeFactoryC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -815,12 +813,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -830,6 +822,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -963,8 +961,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/TypeCodeFactory_Loader.o .obj/TypeCodeFactory_Loader.so .shobj/TypeCodeFactory_Loader.o .shobj/TypeCodeFactory_Loader.so: TypeCodeFactory_Loader.cpp \
-  TypeCodeFactory_Loader.h \
-  $(ACE_ROOT)/ace/pre.h \
+  TypeCodeFactory_Loader.h $(ACE_ROOT)/ace/pre.h \
   typecodefactory_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -1141,8 +1138,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  TypeCodeFactoryC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  TypeCodeFactoryC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1172,12 +1168,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1187,6 +1177,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \

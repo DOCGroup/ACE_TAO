@@ -244,7 +244,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("DIOP_Acceptor::open - "),
+                         ACE_TEXT ("DIOP_Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -358,7 +358,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("DIOP_Acceptor::open_default - "),
+                         ACE_TEXT ("DIOP_Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -429,7 +429,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) DIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      this->hosts_[i],
+                      ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -713,7 +713,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
+                               ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -729,14 +729,13 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
-                                 value.c_str ()),
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
                                 -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
-                               name.c_str ()),
+                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
                               -1);
         }
     }

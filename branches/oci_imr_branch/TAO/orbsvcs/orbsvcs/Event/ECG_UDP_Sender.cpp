@@ -9,14 +9,16 @@
  *
  */
 
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_Sender, "$Id$")
+ACE_RCSID (Event,
+           ECG_UDP_Sender,
+           "$Id$")
 
 // ****************************************************************
 
@@ -230,9 +232,9 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template void activate<>(TAO_Objref_Var_T<RtecEventComm::PushConsumer, RtecEventComm::tao_PushConsumer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
+template void activate<TAO_Objref_Var_T<RtecEventComm::PushConsumer> >(TAO_Objref_Var_T<RtecEventComm::PushConsumer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void activate<>(TAO_Objref_Var_T<RtecEventComm::PushConsumer, RtecEventComm::tao_PushConsumer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
+#pragma instantiate void activate<TAO_Objref_Var_T<RtecEventComm::PushConsumer> >(TAO_Objref_Var_T<RtecEventComm::PushConsumer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

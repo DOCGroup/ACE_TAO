@@ -1,19 +1,22 @@
 // $Id$
 
 #include "Properties.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, TAO_Notify_Properties, "$Id$")
+ACE_RCSID (Notify,
+           TAO_Notify_Properties,
+           "$Id$")
 
 TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
   , builder_ (0)
   , asynch_updates_ (0)
+  , updates_ (1)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =

@@ -278,7 +278,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
-                         ACE_TEXT ("IIOP_Acceptor::open, "),
+                         ACE_TEXT ("IIOP_Acceptor::open, ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -365,7 +365,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
-                      this->hostname_in_ior_));
+                      ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
         }
       if (this->hostname (orb_core,
                           addr,
@@ -409,7 +409,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("IIOP_Acceptor::open_default - "),
+                         ACE_TEXT ("IIOP_Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -723,7 +723,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Overriding address in IOR with %s\n"),
-                          this->hostname_in_ior_));
+                          ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
             }
           if (this->hostname (orb_core,
                               if_addrs[i],
@@ -796,7 +796,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT ("TAO (%P|%t) TAO_IIOP_Acceptor::object_key - ")
-                      ACE_LIB_TEXT ("error while decoding host/port")));
+                      ACE_LIB_TEXT ("error while decoding host/port\n")));
         }
       return -1;
     }
@@ -874,7 +874,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
+                               ACE_TEXT_CHAR_TO_TCHAR ( opt.c_str ())),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -890,8 +890,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
-                                 value.c_str ()),
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
                                 -1);
             }
           else if (name == "portspan")
@@ -903,7 +902,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                                    ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
                                    ACE_TEXT ("portspan: <%s>\n")
                                    ACE_TEXT ("Valid range 1 -- %d\n"),
-                                   value.c_str (), ACE_MAX_DEFAULT_PORT),
+                                   ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()), ACE_MAX_DEFAULT_PORT),
                                   -1);
 
               this->port_span_ = ACE_static_cast (u_short, range);
@@ -915,7 +914,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
-                               name.c_str ()),
+                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
                               -1);
         }
     }

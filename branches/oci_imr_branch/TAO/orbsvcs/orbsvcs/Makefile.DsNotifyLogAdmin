@@ -170,12 +170,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -191,6 +185,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -321,6 +321,20 @@ endif
   CosNotificationS_T.cpp \
   CosNotificationS.i \
   CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosNotifyCommS.h \
   CosNotifyCommC.h \
   CosNotifyCommC.i \
@@ -369,6 +383,8 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   CosNotifyFilterC.i \
   CosNotifyFilterS_T.h \
   CosNotifyFilterS_T.i \
@@ -523,12 +539,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -544,6 +554,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -675,6 +691,20 @@ endif
   CosNotificationS_T.cpp \
   CosNotificationS.i \
   CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosNotifyCommS.h \
   CosNotifyCommC.h \
   CosNotifyCommC.i \
@@ -723,6 +753,8 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   CosNotifyFilterC.i \
   CosNotifyFilterS_T.h \
   CosNotifyFilterS_T.i \
@@ -872,12 +904,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -893,6 +919,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1024,6 +1056,20 @@ endif
   CosNotificationS_T.cpp \
   CosNotificationS.i \
   CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosNotifyCommS.h \
   CosNotifyCommC.h \
   CosNotifyCommC.i \
@@ -1072,6 +1118,8 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   CosNotifyFilterC.i \
   CosNotifyFilterS_T.h \
   CosNotifyFilterS_T.i \
@@ -1221,12 +1269,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1242,6 +1284,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1381,6 +1429,20 @@ endif
   CosNotificationS_T.cpp \
   CosNotificationS.i \
   CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosNotifyCommS.h \
   CosNotifyCommC.h \
   CosNotifyCommC.i \
@@ -1429,6 +1491,8 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   CosNotifyFilterC.i \
   CosNotifyFilterS_T.h \
   CosNotifyFilterS_T.i \
@@ -1549,12 +1613,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1570,6 +1628,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1637,8 +1701,8 @@ endif
   CosEventCommC.i CosEventChannelAdminC.i DsLogAdminC.h Log/log_export.h \
   TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
   CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -1683,6 +1747,10 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   CosNotifyCommC.h CosNotifyCommC.i CosNotifyFilterC.i \
   CosNotifyChannelAdminC.i DsNotifyLogAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
@@ -1701,6 +1769,7 @@ endif
   $(TAO_ROOT)/tao/Stub.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -1728,9 +1797,8 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/DsNotifyLogAdminS.o .obj/DsNotifyLogAdminS.so .shobj/DsNotifyLogAdminS.o .shobj/DsNotifyLogAdminS.so: DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  DsEventLogAdminS.h CosEventChannelAdminS.h CosEventCommS.h \
-  CosEventCommC.h \
+  $(ACE_ROOT)/ace/pre.h DsEventLogAdminS.h \
+  CosEventChannelAdminS.h CosEventCommS.h CosEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1822,12 +1890,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1843,6 +1905,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1926,15 +1994,14 @@ endif
   CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
   CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i DsLogAdminS.h \
-  TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
+  TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
   TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h Log/log_export.h \
   DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i DsLogAdminS_T.cpp \
   DsLogAdminS.i DsEventLogAdminC.h Log/eventlog_export.h \
@@ -1943,6 +2010,20 @@ endif
   CosNotificationS.h CosNotificationC.h Notify/notify_export.h \
   CosNotificationC.i CosNotificationS_T.h CosNotificationS_T.i \
   CosNotificationS_T.cpp CosNotificationS.i CosNotifyFilterS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/StringSeqS.h \
+  $(TAO_ROOT)/tao/PolicyS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   CosNotifyCommS.h CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
   CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
   CosNotifyFilterC.h \
@@ -1986,6 +2067,8 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   CosNotifyFilterC.i CosNotifyFilterS_T.h CosNotifyFilterS_T.i \
   CosNotifyFilterS_T.cpp CosNotifyFilterS.i CosNotifyChannelAdminC.h \
   CosNotifyChannelAdminC.i CosNotifyChannelAdminS_T.h \
@@ -2134,8 +2217,6 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \

@@ -65,7 +65,7 @@ ClientRequestInterceptor::send_request (
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Extracted <%d> from slot %u\n",
+                  "(%P|%t) Extracted <%d> from RSC slot %u\n",
                   number,
                   this->slot_id_));
 

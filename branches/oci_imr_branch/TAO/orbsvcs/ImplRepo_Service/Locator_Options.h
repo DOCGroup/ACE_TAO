@@ -15,17 +15,10 @@
 #ifndef LOCATOR_OPTIONS_H
 #define LOCATOR_OPTIONS_H
 
-#include "Repository_Configuration.h"
+#include "locator_export.h"
 
-#include "tao/ORB.h"
-
-#include "ace/Singleton.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
 
-
-// Forward declarations
-class ACE_ARGV;
 
 /**
  * @class Options
@@ -34,7 +27,7 @@ class ACE_ARGV;
  *
  * This is where the settings for TAO's Implementation Repository are stored.
  */
-class Options
+class Locator_Export Options
 {
 public:
   enum SERVICE_COMMAND {
@@ -48,6 +41,8 @@ public:
 
   /// Parse the command-line arguments and initialize the options.
   int init (int argc, char *argv[]);
+  /// This version should only be used when run as an nt service.
+  int init_from_registry();
 
   /// Service Mode
   bool service (void) const;
@@ -56,13 +51,17 @@ public:
   unsigned int debug (void) const;
 
   /// Returns the file where the IOR should be stored.
-  ACE_CString output_filename (void) const;
-
-  /// Returns a pointer to the ORB.
-  CORBA::ORB_ptr orb (void) const;
+  const ACE_CString& ior_filename (void) const;
 
   /// Will we listen for multicast location requests?
   bool multicast (void) const;
+
+  /// The nt service command to run (install/remove)
+  SERVICE_COMMAND service_command(void) const;
+
+  int save_registry_options();
+
+  const ACE_CString& cmdline(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -74,9 +73,8 @@ private:
   /// Run a service command.
   int run_service_command (const ACE_CString& cmdline);
 
-  /// Loads ORB options from the registry
-  int load_registry_options (char*& cmdline, ACE_ARGV& argv);
-  int save_registry_options (const ACE_CString& cmdline);
+  int load_registry_options();
+private:
 
   /// Debug level.
   unsigned int debug_;
@@ -87,16 +85,14 @@ private:
   /// Will we listen for multicast location requests?
   bool multicast_;
 
-  /// The ORB for the Implementation Repository.
-  CORBA::ORB_var orb_;
-
   /// Are we running as a service?
   bool service_;
 
   /// SC_NONE, SC_INSTALL, SC_REMOVE, ...
-  int service_command_;
-};
+  SERVICE_COMMAND service_command_;
 
-typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
+  /// Our extra command line arguments
+  ACE_CString cmdline_;
+};
 
 #endif 

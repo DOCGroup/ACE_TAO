@@ -43,6 +43,22 @@ template class ACE_Hash_Map_Manager<ACE_CString,
                                     int, 
                                     ACE_Null_Mutex>;
 
+template class ACE_Hash_Map_Entry<ACE_CString, 
+                                  char *>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, 
+                                             char *, 
+                                             ACE_Hash<ACE_CString>, 
+                                             ACE_Equal_To<ACE_CString>, 
+                                             ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, 
+                                       char *, 
+                                       ACE_Hash<ACE_CString>, 
+                                       ACE_Equal_To<ACE_CString>, 
+                                       ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, 
+                                    char *, 
+                                    ACE_Null_Mutex>;
+
 template class ACE_Hash_Map_Manager<ACE_CString, 
                                     ACE_CString, 
                                     ACE_Null_Mutex>;
@@ -132,6 +148,22 @@ template class ACE_Unbounded_Queue_Iterator<AST_Type *>;
                                             ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, 
                                          int, 
+                                         ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, 
+                                       char *>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, 
+                                                  char *, 
+                                                  ACE_Hash<ACE_CString>, 
+                                                  ACE_Equal_To<ACE_CString>, 
+                                                  ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, 
+                                            char *, 
+                                            ACE_Hash<ACE_CString>, 
+                                            ACE_Equal_To<ACE_CString>, 
+                                            ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, 
+                                         char *, 
                                          ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, 

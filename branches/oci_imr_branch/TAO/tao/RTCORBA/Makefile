@@ -137,8 +137,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -197,12 +196,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -218,6 +211,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -279,12 +278,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i Continuous_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i Continuous_Priority_Mapping.i \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i
 
@@ -382,12 +380,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -403,6 +395,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -464,12 +462,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i Direct_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i Direct_Priority_Mapping.i \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i
 
@@ -568,12 +566,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -589,6 +581,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -650,12 +648,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i Linear_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i Linear_Priority_Mapping.i \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
@@ -1095,9 +1092,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  Priority_Mapping.h RTCORBAC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/Lock.inl Priority_Mapping.h \
+  RTCORBAC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
@@ -1154,12 +1150,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1175,6 +1165,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1236,12 +1232,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i
 
 .obj/Priority_Mapping_Manager.o .obj/Priority_Mapping_Manager.so .shobj/Priority_Mapping_Manager.o .shobj/Priority_Mapping_Manager.so: Priority_Mapping_Manager.cpp \
   Priority_Mapping_Manager.h \
@@ -1279,8 +1275,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -1339,12 +1334,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1360,6 +1349,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1421,12 +1416,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   Priority_Mapping_Manager.i
@@ -1526,12 +1520,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1547,6 +1535,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1608,12 +1602,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Network_Priority_Mapping.i Linear_Network_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Network_Priority_Mapping.i Linear_Network_Priority_Mapping.i \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
@@ -1714,12 +1707,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1735,6 +1722,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1796,12 +1789,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Network_Priority_Mapping.i
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Network_Priority_Mapping.i
 
 .obj/Network_Priority_Mapping_Manager.o .obj/Network_Priority_Mapping_Manager.so .shobj/Network_Priority_Mapping_Manager.o .shobj/Network_Priority_Mapping_Manager.so: Network_Priority_Mapping_Manager.cpp \
   Network_Priority_Mapping_Manager.h \
@@ -1839,8 +1832,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -1899,12 +1891,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1920,6 +1906,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1981,21 +1973,18 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Network_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Network_Priority_Mapping.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   Network_Priority_Mapping_Manager.i
 
 .obj/RT_Transport_Descriptor.o .obj/RT_Transport_Descriptor.so .shobj/RT_Transport_Descriptor.o .shobj/RT_Transport_Descriptor.so: RT_Transport_Descriptor.cpp \
-  RT_Transport_Descriptor.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
+  RT_Transport_Descriptor.h $(ACE_ROOT)/ace/pre.h \
+  rtcorba_export.h $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2111,8 +2100,7 @@ endif # corba_messaging
 
 .obj/RT_Transport_Descriptor_Property.o .obj/RT_Transport_Descriptor_Property.so .shobj/RT_Transport_Descriptor_Property.o .shobj/RT_Transport_Descriptor_Property.so: RT_Transport_Descriptor_Property.cpp \
   RT_Transport_Descriptor_Property.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2184,8 +2172,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/RTCORBA.o .obj/RTCORBA.so .shobj/RTCORBA.o .shobj/RTCORBA.so: RTCORBA.cpp RTCORBA.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2237,8 +2224,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/default_environment.h \
-  $(TAO_ROOT)/tao/Environment.i \
-  RTCORBAC.h \
+  $(TAO_ROOT)/tao/Environment.i RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2278,12 +2264,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2299,6 +2279,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2360,12 +2346,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i RT_ORB_Loader.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  RT_ORB_Loader.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2434,8 +2419,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Reactor_Impl.h
 
 .obj/RTCORBAC.o .obj/RTCORBAC.so .shobj/RTCORBAC.o .shobj/RTCORBAC.so: RTCORBAC.cpp RTCORBA.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2487,8 +2471,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/default_environment.h \
-  $(TAO_ROOT)/tao/Environment.i \
-  RTCORBAC.h \
+  $(TAO_ROOT)/tao/Environment.i RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2528,12 +2511,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2549,6 +2526,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2610,12 +2593,10 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -2660,6 +2641,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -2709,8 +2691,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  RTCORBAC.h \
+  $(ACE_ROOT)/ace/Lock.inl RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2768,12 +2749,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2789,6 +2764,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2850,15 +2831,14 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  RT_Current.i Priority_Mapping.h Priority_Mapping.i \
+  $(TAO_ROOT)/tao/LocalObject.i RT_Current.i \
+  Priority_Mapping.h Priority_Mapping.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
@@ -3027,8 +3007,7 @@ endif # corba_messaging
 
 .obj/RT_Endpoint_Selector_Factory.o .obj/RT_Endpoint_Selector_Factory.so .shobj/RT_Endpoint_Selector_Factory.o .shobj/RT_Endpoint_Selector_Factory.so: RT_Endpoint_Selector_Factory.cpp \
   RT_Endpoint_Selector_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3234,12 +3213,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3249,6 +3222,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3270,12 +3249,10 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   RT_Invocation_Endpoint_Selectors.i RT_Endpoint_Utils.h RT_Stub.h \
@@ -3290,8 +3267,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Protocols_Hooks.h
 
 .obj/RT_Endpoint_Utils.o .obj/RT_Endpoint_Utils.so .shobj/RT_Endpoint_Utils.o .shobj/RT_Endpoint_Utils.so: RT_Endpoint_Utils.cpp RT_Endpoint_Utils.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3536,12 +3512,10 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   RT_Invocation_Endpoint_Selectors.i RT_Stub.h \
@@ -3556,8 +3530,7 @@ endif # corba_messaging
 
 .obj/RT_Invocation_Endpoint_Selectors.o .obj/RT_Invocation_Endpoint_Selectors.so .shobj/RT_Invocation_Endpoint_Selectors.o .shobj/RT_Invocation_Endpoint_Selectors.so: RT_Invocation_Endpoint_Selectors.cpp \
   RT_Invocation_Endpoint_Selectors.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3609,9 +3582,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/default_environment.h \
-  $(TAO_ROOT)/tao/Environment.i \
-  RTCORBA.h RTCORBAC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Environment.i RTCORBA.h \
+  RTCORBAC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
@@ -3650,12 +3622,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3671,6 +3637,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3732,12 +3704,10 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   RT_Invocation_Endpoint_Selectors.i RT_Policy_i.h \
@@ -3776,9 +3746,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i RT_Stub.h \
-  $(TAO_ROOT)/tao/Stub.h \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
+  RT_Stub.h $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
@@ -3980,8 +3949,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  RTCORBAC.h \
+  $(ACE_ROOT)/ace/Lock.inl RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -4039,12 +4007,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4060,6 +4022,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4121,15 +4089,13 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  RT_ORB.h \
+  $(TAO_ROOT)/tao/LocalObject.i RT_ORB.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -4163,8 +4129,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  RT_ORB.i
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp RT_ORB.i
 
 .obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -4201,8 +4166,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  RTCORBAC.h \
+  $(ACE_ROOT)/ace/Lock.inl RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -4260,12 +4224,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4281,6 +4239,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4342,12 +4306,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -4383,9 +4346,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  RT_ORB.i RT_Policy_i.h \
-  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp RT_ORB.i \
+  RT_Policy_i.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -4394,8 +4356,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i RT_Mutex.h Priority_Mapping_Manager.h Priority_Mapping.h \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
+  RT_Mutex.h Priority_Mapping_Manager.h Priority_Mapping.h \
   Priority_Mapping.i Priority_Mapping_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
@@ -4590,8 +4552,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -4643,12 +4604,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -4665,6 +4620,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -4804,9 +4765,9 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i RT_Protocols_Hooks.h Priority_Mapping_Manager.h \
-  Priority_Mapping.h Priority_Mapping.i Priority_Mapping_Manager.i \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
+  RT_Protocols_Hooks.h Priority_Mapping_Manager.h Priority_Mapping.h \
+  Priority_Mapping.i Priority_Mapping_Manager.i \
   Network_Priority_Mapping_Manager.h Network_Priority_Mapping.h \
   Network_Priority_Mapping.i Network_Priority_Mapping_Manager.i \
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
@@ -4948,6 +4909,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_stat.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -4962,8 +4925,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/RT_ORB_Loader.o .obj/RT_ORB_Loader.so .shobj/RT_ORB_Loader.o .shobj/RT_ORB_Loader.so: RT_ORB_Loader.cpp RT_ORB_Loader.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/pre.h rtcorba_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -5162,12 +5124,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5177,6 +5133,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -5273,8 +5235,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -5325,12 +5286,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -5347,6 +5302,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -5468,12 +5429,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  RT_Policy_i.h RTCORBAC.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/LocalObject.i RT_Policy_i.h \
+  RTCORBAC.h rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -5483,8 +5443,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/RT_Policy_i.o .obj/RT_Policy_i.so .shobj/RT_Policy_i.o .shobj/RT_Policy_i.so: RT_Policy_i.cpp RT_Policy_i.h \
@@ -5522,8 +5481,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  RTCORBAC.h \
+  $(ACE_ROOT)/ace/Lock.inl RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -5581,12 +5539,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5602,6 +5554,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5663,12 +5621,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/SString.h \
@@ -5704,8 +5661,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -5931,12 +5887,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5952,6 +5902,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6013,12 +5969,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i Priority_Mapping.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
+  Priority_Mapping.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   Priority_Mapping_Manager.i Network_Priority_Mapping_Manager.h \
@@ -6271,8 +6226,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -6331,12 +6285,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6352,6 +6300,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6420,12 +6374,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
-  $(TAO_ROOT)/tao/Stub.i \
-  RT_Policy_i.h RTCORBAC.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/Stub.i RT_Policy_i.h \
+  RTCORBAC.h rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/SString.h \
@@ -6461,8 +6414,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  RT_Policy_i.i \
+  $(ACE_ROOT)/ace/SString.i RT_Policy_i.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -6625,8 +6577,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  rtcorba_export.h \
+  $(ACE_ROOT)/ace/Lock.inl rtcorba_export.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -6775,8 +6726,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  RT_Stub.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h RT_Stub.h \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -6799,12 +6749,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6814,6 +6758,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6880,8 +6830,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl \
-  RTCORBAC.h \
+  $(ACE_ROOT)/ace/Lock.inl RTCORBAC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -6939,12 +6888,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6960,6 +6903,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7021,12 +6970,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  rtcorba_export.h rtcorba_typedefs.h \
+  $(TAO_ROOT)/tao/ORB.i rtcorba_export.h \
+  rtcorba_typedefs.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  RTCORBAC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i RTCORBAC.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -7149,8 +7097,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  Thread_Pool.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h Thread_Pool.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/SString.h \

@@ -1,12 +1,10 @@
-#include "orbsvcs/Log/EventLog_i.h"
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/LogNotification.h"
-
+#include "orbsvcs/orbsvcs/Log/EventLog_i.h"
+#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
 
 ACE_RCSID (Log,
            EventLogConsumer,
            "$Id$")
-
 
 TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
 : log_ (log)
