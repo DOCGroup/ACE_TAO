@@ -932,7 +932,7 @@ ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
 
   this->orb_->_tao_register_IOR_table_callback (regular, 1);
 
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       this->imr_poa_->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;

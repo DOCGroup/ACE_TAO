@@ -1,3 +1,10 @@
+Tue Jun  6 21:27:11 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (fini):
+
+          Changed a ACE_TRY_NEW_ENV to ACE_TRY, since fini has an
+          ACE_TRY_ENV argument already.  
+
 Tue Jun 06 22:20:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp:
