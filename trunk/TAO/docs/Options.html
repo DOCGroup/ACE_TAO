@@ -144,6 +144,13 @@ If not specified, the system-dependent default is used.</TD></TR>
 <TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
 <TD>Specifies the IOR for the Naming Service.</TD></TR>
 <TR>
+<TD><CODE>-ORBtradingserviceior"</CODE> <EM>ior</EM></TD>
+<TD>Specifiles the IOR for the Trading Service.</TD></TR>
+<TR>
+<TD><CODE>-ORBtradingserviceport"</CODE> <EM>portspec</EM></TD>
+<TD>Specifies to which port the tradingservice is listening
+    on.</TD></TR>
+<TR>
 <TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
 <TR>
@@ -154,7 +161,7 @@ be established, a warning is announced and it continues with the
 next listed.  Listing the same combination multiple times will
 properly establish multiple connections to that endpoint.</TD></TR>
 <TR>
-<TD><CODE>-ORBCDRtradeoff</CODE> <EM>maxsize</EM></TD>
+<TD><CODE>-ORBcdrtradeoff</CODE> <EM>maxsize</EM></TD>
 <TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
 between copy vs no copy marshalling of octet sequences.
 If an octet sequence is smaller than <EM>maxsize</EM> and the current
