@@ -581,8 +581,7 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
+ POA.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -599,29 +598,10 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -645,53 +625,14 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
+ Protocol_Factory.h \
  params.h \
  params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i \
+ Server_Request.h \
+ Server_Request.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -1023,8 +964,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
+ POA.i \
+ ORB_Core.h \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -1041,29 +982,9 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1087,6 +1008,13 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Stub.h \
  MProfile.h \
  Profile.h \
  Tagged_Components.h \
@@ -1096,44 +1024,9 @@ realclean:
  Profile.i \
  MProfile.i \
  Stub.i \
- params.h \
- params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
  debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
+ ImplRepoC.h \
  ImplRepoC.i \
- POA.i \
  ImplRepoS.h \
  ImplRepoS_T.h \
  ImplRepoS_T.i \
@@ -1318,8 +1211,9 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
+ POA.i \
+ Invocation.h \
+ ORB_Core.h \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -1336,29 +1230,9 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1382,30 +1256,29 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
+ Protocol_Factory.h \
  params.h \
  params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
  Reply_Dispatcher.h \
+ Request.h \
+ NVList.h \
+ NVList.i \
+ Context.h \
+ Context.i \
+ MessagingC.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ MessagingC.i \
+ Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
  Pluggable_Messaging_Utils.h \
@@ -1420,15 +1293,16 @@ realclean:
  target_specification.h \
  target_specification.i \
  Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i
+ Stub.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ Stub.i
 
 .obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
  POAS.h \
@@ -1807,116 +1681,6 @@ realclean:
  Object_Adapter.i \
  Object_KeyC.h \
  Object_KeyC.i \
- ImplRepoC.h \
- corba.h \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- IORS.i \
- Interceptor.h \
- InterceptorC.h \
- IOPC.h \
- IOPC.i \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
- params.h \
- params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
  POA.i
 
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp \
@@ -2301,30 +2065,7 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
+ POA.i \
  Stub.h \
  MProfile.h \
  Profile.h \
@@ -2335,33 +2076,8 @@ realclean:
  Profile.i \
  MProfile.i \
  Stub.i \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i
+ Server_Request.h \
+ Server_Request.i
 
 .obj/Forwarding_Servant.o .obj/Forwarding_Servant.so .shobj/Forwarding_Servant.o .shobj/Forwarding_Servant.so: Forwarding_Servant.cpp \
  Forwarding_Servant.h \
@@ -2517,7 +2233,11 @@ realclean:
 
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h \
- corba.h \
+ Object.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2533,10 +2253,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2595,22 +2311,34 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Environment.h \
- Environment.i \
- ORB.h \
+ Object.i \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.h \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  Exception.h \
  Exception.i \
- IOR_LookupTable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ Environment.h \
+ Environment.i \
+ CDR.h \
+ CDR.i \
+ Any.h \
+ Any.i \
+ Typecode.h \
+ Typecode.i \
+ ImplRepoC.i \
+ Stub.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2627,22 +2355,48 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ IOPC.h \
+ IOPC.i \
+ Pluggable.i \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ ORB.h \
+ IOR_LookupTable.h \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
  Services.i \
  IORManipulation.h \
- Object.h \
- Object.i \
  IORS.h \
  IORC.h \
- CDR.h \
- CDR.i \
  IORC.i \
  Servant_Base.h \
  POAC.h \
@@ -2655,17 +2409,37 @@ realclean:
  IORS.i \
  Interceptor.h \
  InterceptorC.h \
- IOPC.h \
- IOPC.i \
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Any.h \
- Any.i \
+ Stub.i \
  NVList.h \
  NVList.i \
- Principal.h \
- Principal.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ POA_CORBA.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DomainC.h \
+ DomainC.i \
+ PollableC.h \
+ PollableC.i \
+ InterfaceC.h \
+ ifrfwd.h \
+ InterfaceC.i \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Invocation.h \
+ Reply_Dispatcher.h \
  Request.h \
  Context.h \
  Context.i \
@@ -2676,109 +2450,10 @@ realclean:
  ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
- PollableC.h \
- PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
  MessagingC.i \
  Request.i \
- Server_Request.h \
- Object_KeyC.h \
- Object_KeyC.i \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Typecode.h \
- Typecode.i \
- POA.h \
- Object_Adapter.h \
- Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map.i \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair.i \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- Key_Adapters.i \
- Server_Strategy_Factory.h \
- poa_macros.h \
- POAS.h \
- POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
- POAS.i \
- Active_Object_Map.h \
- Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
- ImplRepoC.h \
- POA.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
- params.h \
- params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
  Pluggable_Messaging_Utils.h \
@@ -2791,21 +2466,19 @@ realclean:
  operation_details.h \
  operation_details.i \
  target_specification.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
  target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i
+ Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
  $(ACE_ROOT)/ace/pre.h \
  ImplRepoC.h \
- corba.h \
+ Object.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2821,10 +2494,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2883,12 +2552,35 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Environment.h \
- Environment.i \
- ORB.h \
+ Object.i \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.h \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  Exception.h \
  Exception.i \
- IOR_LookupTable.h \
+ Environment.h \
+ Environment.i \
+ CDR.h \
+ CDR.i \
+ Any.h \
+ Any.i \
+ Typecode.h \
+ Typecode.i \
+ ImplRepoC.i \
+ POAC.h \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ PolicyC.i \
+ POAC.i \
+ Servant_Base.h \
+ Servant_Base.i \
+ ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i \
+ Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2915,70 +2607,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Services.i \
- IORManipulation.h \
- Object.h \
- Object.i \
- IORS.h \
- IORC.h \
- CDR.h \
- CDR.i \
- IORC.i \
- Servant_Base.h \
- POAC.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- PolicyC.i \
- POAC.i \
- Servant_Base.i \
- IORS.i \
  Interceptor.h \
  InterceptorC.h \
  IOPC.h \
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- ORB.i \
- Any.h \
- Any.i \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Object_KeyC.h \
- Object_KeyC.i \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Typecode.h \
- Typecode.i \
- POA.h \
  Object_Adapter.h \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -3008,6 +2642,8 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
+ PollableC.h \
+ PollableC.i \
  InterfaceC.h \
  ifrfwd.h \
  InterfaceC.i \
@@ -3015,10 +2651,6 @@ realclean:
  Active_Object_Map.h \
  Active_Object_Map.i \
  Object_Adapter.i \
- POAManager.h \
- POAManager.i \
- ImplRepoC.h \
- POA.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -3051,44 +2683,47 @@ realclean:
  Tagged_Components.i \
  Profile.i \
  MProfile.i \
+ ORB.h \
+ IOR_LookupTable.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ IORS.i \
+ ORB.i \
  Stub.i \
- params.h \
- params.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
+ GIOP_Server_Request.h \
+ Server_Request.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ Server_Request.i \
+ Principal.h \
+ Principal.i \
+ GIOP_Message_Base.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i
+ GIOP_Message_Base.i \
+ GIOPC.h \
+ GIOPC.i \
+ GIOP_Server_Request.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ NVList.h \
+ NVList.i
 
 .obj/Pluggable.o .obj/Pluggable.so .shobj/Pluggable.o .shobj/Pluggable.so: Pluggable.cpp \
  Pluggable.h \
@@ -4832,54 +4467,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- Stub.i \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i
+ POA.i \
+ debug.h
 
 .obj/IIOP_Transport.o .obj/IIOP_Transport.so .shobj/IIOP_Transport.o .shobj/IIOP_Transport.so: IIOP_Transport.cpp \
  IIOP_Transport.h \
@@ -6855,56 +6444,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- Stub.i \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i
+ POA.i \
+ debug.h
 
 .obj/UIOP_Transport.o .obj/UIOP_Transport.so .shobj/UIOP_Transport.o .shobj/UIOP_Transport.so: UIOP_Transport.cpp \
  UIOP_Transport.h \
@@ -8617,56 +8158,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- Stub.i \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i
+ POA.i \
+ debug.h
 
 .obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.so .shobj/SHMIOP_Transport.o .shobj/SHMIOP_Transport.so: SHMIOP_Transport.cpp \
  SHMIOP_Transport.h \
@@ -13895,10 +13388,7 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- Principal.h \
- Principal.i \
+ POA.i \
  Request.h \
  Context.h \
  Context.i \
@@ -13913,36 +13403,6 @@ realclean:
  Smart_Proxies.i \
  MessagingC.i \
  Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Operation_Table.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i \
  Object_Loader.h \
  Object_Loader.i \
  ValueFactory_Map.h \
@@ -13958,6 +13418,8 @@ realclean:
  Messaging_Policy_i.i \
  Client_Priority_Policy.h \
  TAOS.h \
+ TAOC.h \
+ TAOC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -18030,61 +17492,16 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Operation_Table.h \
- Invocation.h \
- Reply_Dispatcher.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
  POA.i \
  Priority_Mapping.h \
  rtcorbafwd.h \
  rtcorbafwd.i \
  Priority_Mapping.i \
  Sync_Strategies.h \
+ TAOC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ TAOC.i \
  Sync_Strategies.i
 
 .obj/Leader_Follower.o .obj/Leader_Follower.so .shobj/Leader_Follower.o .shobj/Leader_Follower.so: Leader_Follower.cpp \
@@ -26925,65 +26342,15 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
- Operation_Table.h \
- debug.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
  POA.i \
+ debug.h \
  GIOP_Utils.h \
  GIOP_Utils.i \
  GIOP_Server_Request.h \
+ Server_Request.h \
+ Server_Request.i \
+ Principal.h \
+ Principal.i \
  GIOP_Server_Request.i
 
 .obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.so .shobj/GIOP_Message_Accept_State.o .shobj/GIOP_Message_Accept_State.so: GIOP_Message_Accept_State.cpp \
@@ -28015,65 +27382,23 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- ImplRepoC.h \
- corba.h \
- NVList.h \
- NVList.i \
- Principal.h \
- Principal.i \
- Request.h \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- Server_Request.h \
- Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- Stub.i \
- Operation_Table.h \
- Client_Strategy_Factory.h \
- Invocation.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
+ POA.i \
  operation_details.h \
  operation_details.i \
- target_specification.h \
- target_specification.i \
- Invocation.i \
- InconsistentTypeCodeC.h \
- DynAny_i.h \
- ObjectIDList.h \
- ObjectIDList.i \
- WrongTransactionC.h \
- BoundsC.h \
- BoundsC.i \
- ImplRepoC.i \
- POA.i \
  GIOP_Server_Request.h \
+ Server_Request.h \
+ Server_Request.i \
+ Principal.h \
+ Principal.i \
  GIOP_Message_Base.h \
  GIOP_Message_Base.i \
  GIOPC.h \
  GIOPC.i \
  GIOP_Server_Request.i \
  GIOP_Message_Headers.h \
- GIOP_Message_Headers.i
+ GIOP_Message_Headers.i \
+ target_specification.h \
+ target_specification.i
 
 .obj/GIOP_Message_State.o .obj/GIOP_Message_State.so .shobj/GIOP_Message_State.o .shobj/GIOP_Message_State.so: GIOP_Message_State.cpp \
  GIOP_Message_State.h \

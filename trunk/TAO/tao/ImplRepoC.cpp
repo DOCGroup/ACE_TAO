@@ -8,6 +8,11 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ImplRepoC.h"
+#include "tao/Stub.h"
+#include "tao/NVList.h"
+#include "tao/Interceptor.h"
+#include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ImplRepoC.i"

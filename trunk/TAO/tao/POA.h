@@ -46,14 +46,6 @@
 // POA Manager
 #include "tao/POAManager.h"
 
-//
-// ImplRepo related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-// Implementation Repository
-#  include "tao/ImplRepoC.h"
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
