@@ -21,18 +21,27 @@ main (int argc, char *argv[])
       if (lb_server.create_object_group () == -1)
         return 1;
 
-      Basic basic_servant1 (lb_server.object_group (),
-                            lb_server.load_manager (),
-                            lb_server.orb (),
-                            location1);
+      Basic *basic_servant1;
+      Basic *basic_servant2;
 
-      Basic basic_servant2 (lb_server.object_group (),
-                            lb_server.load_manager (),
-                            lb_server.orb (),
-                            location2);
+      ACE_NEW_RETURN (basic_servant1,
+		      Basic (lb_server.object_group (),
+			     lb_server.load_manager (),
+			     lb_server.orb (),
+			     location1),
+		      1);
+      PortableServer::ServantBase_var owner_transfer1(basic_servant1);
 
-      if (lb_server.register_servant (&basic_servant1, location1) == -1
-          || lb_server.register_servant (&basic_servant2, location2) == -1)
+      ACE_NEW_RETURN (basic_servant2,
+		      Basic (lb_server.object_group (),
+			     lb_server.load_manager (),
+			     lb_server.orb (),
+			     location2),
+		      1);
+      PortableServer::ServantBase_var owner_transfer2(basic_servant2);
+
+      if (lb_server.register_servant (basic_servant1, location1) == -1
+          || lb_server.register_servant (basic_servant2, location2) == -1)
         {
           (void) lb_server.destroy ();
           return 1;
