@@ -1,3 +1,10 @@
+Tue Jul  6 12:03:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* netsvcs/lib/Token_Handler.cpp (parse_args): The inherited
+	  ACE_Strategy_Acceptor::service_port_ member was removed prior
+	  to ACE 5.3. Use a local variable instead. Thanks to Johnny
+	  Willemsen for reporting this.
+
 Mon Jul  5 11:45:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/UUID.cpp (ACE_Utils):
