@@ -1,3 +1,24 @@
+Thu Jul 10 15:47:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/: Removed the following obsolete files: README.apm,
+ 	BUILDING, and TESTS.
+	
+	* tao/params.*: Moved the instance() methods into the .cpp from
+ 	the .i, as well as the declaration for the singleton locks.
+  	Having the singleton locks declared in the .i file caused much
+ 	consternation when ACE inlining was turned on.
+
+	* tao/iiopobj.cpp: #ifdef'd the IID_STUB_Object declaration added
+ 	a few days ago so that it happens one way on NT, and another in
+ 	the rest of the Universe.  I would have preferred to find a more
+ 	general solution, but didn't find one quickly enough to satisfy my
+ 	current requirements.
+
+	* tao/roa.*: Removed get_request() method.  This should improve
+ 	our McCabe scores ;-)
+	
+	* tao/boa.h: Removed get_request() method.
+
 Wed Jul  9 14:44:31 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-Install: Added installation instructions for NT
