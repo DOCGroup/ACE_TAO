@@ -16,9 +16,21 @@
 //
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Log_Msg.h"
-#include "ace/Basic_Types.h"
+#include "ace/OS.h"
+
+#if defined (ACE_HAS_MINIMAL_ACE_OS)
+  // Redefine these macros to allow the test to print out useful info.
+# undef ACE_DEBUG
+# define ACE_DEBUG(x) ACE_OS::fprintf x
+# define LM_DEBUG stdout
+# undef ACE_ERROR
+# define ACE_ERROR(x) ACE_OS::fprintf x
+# define LM_ERROR stderr
+# define ACE_START_TEST(x) ACE_OS::printf (x ASYS_TEXT ("\n"))
+# define ACE_END_TEST
+#else  /* ! ACE_HAS_MINIMAL_ACE_OS */
+# include "test_config.h"
+#endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 
@@ -26,6 +38,7 @@ ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 
 static
 u_int
@@ -50,10 +63,12 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Basic_Types_Test"));
 
+#if !defined (ACE_HAS_MINIMAL_ACE_OS)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
               ACE::beta_version()));
+#endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
   u_int errors = 0;
 
