@@ -91,10 +91,11 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("o:n:xrtd"));
+      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:xrtd"));
       int opt;
       const ACE_TCHAR *service_name = ACE_LIB_TEXT("CosEventService");
       const ACE_TCHAR *ior_file = 0;
+      const ACE_TCHAR *pid_file = 0;
       this->bind_to_naming_service_ = 1;
       int use_rebind = 0;
 
@@ -109,12 +110,16 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
         {
           switch (opt)
             {
+            case 'n':
+              service_name = get_opt.opt_arg ();
+              break;
+
             case 'o':
               ior_file = get_opt.opt_arg ();
               break;
 
-            case 'n':
-              service_name = get_opt.opt_arg ();
+            case 'p':
+              pid_file = get_opt.opt_arg ();
               break;
 
             case 'x':
@@ -141,6 +146,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s "
                           "-n service_name "
+                          "-o ior_file_name "
+                          "-p pid_file_name "
                           "-x [disable naming service bind] "
                           "-r [rebind, no AlreadyBound failures] "
                           "-t [enable typed event channel] "
@@ -151,6 +158,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s "
                           "-n service_name "
+                          "-o ior_file_name "
+                          "-p pid_file_name "
                           "-x [disable naming service bind] "
                           "-r [rebind, no AlreadyBound failures] "
                           "\n",
@@ -207,9 +216,25 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           CORBA::String_var ior =
             orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          FILE *file = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
-          ACE_OS::fprintf (file, "%s\n", ior.in ());
-          ACE_OS::fclose (file);
+
+          FILE *iorf = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
+          if (iorf != 0) 
+            {
+              ACE_OS::fprintf (iorf, "%s\n", ior.in ());
+              ACE_OS::fclose (iorf);
+            }
+        }
+
+      if (pid_file != 0) 
+        {
+          FILE *pidf = ACE_OS::fopen (pid_file, "w");
+          if (pidf != 0)
+            {
+              ACE_OS::fprintf (pidf, 
+                               "%ld\n",
+                               ACE_static_cast (long, ACE_OS::getpid ()));
+              ACE_OS::fclose (pidf);
+            }
         }
 
       // ****************************************************************
@@ -326,9 +351,25 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               CORBA::String_var ior =
                 orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
-              FILE *file = ACE_OS::fopen (ior_file, "w");
-              ACE_OS::fprintf (file, "%s\n", ior.in ());
-              ACE_OS::fclose (file);
+
+              FILE *iorf = ACE_OS::fopen (ior_file, "w");
+              if (iorf != 0) 
+                {
+                  ACE_OS::fprintf (iorf, "%s\n", ior.in ());
+                  ACE_OS::fclose (iorf);
+                }
+            }
+
+          if (pid_file != 0) 
+            {
+              FILE *pidf = ACE_OS::fopen (pid_file, "w");
+              if (pidf != 0)
+                {
+                  ACE_OS::fprintf (pidf, 
+                                   "%ld\n",
+                                   ACE_static_cast (long, ACE_OS::getpid ()));
+		  ACE_OS::fclose (pidf);
+                }
             }
 
           // ****************************************************************

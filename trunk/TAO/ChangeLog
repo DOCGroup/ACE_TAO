@@ -1,10 +1,18 @@
+Wed Jan 12 19:53:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+
+	  Changed to not crash if ior file can not be opened.
+
+	  Added '-p' command line option to write process id to file.
+
 Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
-  
+
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
-        
-        Fixed unused variable warning. Thanks to Jonny Willemsen
+
+        Fixed unused variable warning. Thanks to Johnny Willemsen
         <jwillemsen@remedy.nl> for pointing out.
-        
+
 Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp:
@@ -13,26 +21,26 @@ Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  being set. Thanks to Lother Werzinger for reporting this.
 
 Tue Jan 11 20:44:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
-  
+
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGRMaker.h
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGRMaker.cpp
-          
-          Fixed problem with the scenario when the secondary event 
+
+          Fixed problem with the scenario when the secondary event
           channel crashes and a new backup joins in the object group.
-          Thanks to Thia Chang Chao <tchangch@dso.org.sg> for reporting 
+          Thanks to Thia Chang Chao <tchangch@dso.org.sg> for reporting
           the problem.
-          
+
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
         * orbsvcs/FTRT_Event_Service/ftec
         * orbsvcs/FTRT_Event_Service/supplier
-        
+
           Added debug options.
 
 Tue Jan 11 14:49:40 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Added close of temporary file created only inside
           #ifndef ACE_LACKS_MKSTEMP guard. Thanks to
           M. C. Gahan <mcgahan@sparta.com> for reporting the
@@ -43,7 +51,7 @@ Tue Jan 11 12:17:26 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming.mpc:
 
-          List the naming_serv_export.h instead of Naming_Server.h. 
+          List the naming_serv_export.h instead of Naming_Server.h.
           Naming_Server.h gets added automatically.
 
         * orbsvcs/orbsvcs/FaultTolerance.mpc:
