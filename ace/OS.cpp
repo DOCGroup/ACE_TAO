@@ -323,8 +323,10 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
 #else
-	ACE_UNUSED_ARG(mutex);
+  ACE_UNUSED_ARG (mutex);
 #endif /* ACE_HAS_DCETHREADS */
+#else
+  ACE_UNUSED_ARG (mutex);
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -619,6 +621,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 				       result),
 		     int, -1);
 #else
+  ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 }
@@ -1691,7 +1694,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #endif /* ACE_HAS_STHREADS */
 #else
-      ACE_NOTSUP_RETURN (-1);
+  ACE_UNUSED_ARG (func);
+  ACE_UNUSED_ARG (args);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (thr_handle);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (stack);
+  ACE_UNUSED_ARG (stacksize);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		
 }
 
@@ -1714,7 +1725,7 @@ ACE_OS::thr_exit (void *status)
   *((int *) status) = ::taskDelete (tid);
 #endif /* ACE_HAS_STHREADS */
 #else
-  ;
+  ACE_UNUSED_ARG (status);
 #endif /* ACE_HAS_THREADS */		     
 }
 
@@ -1746,6 +1757,8 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
@@ -1774,6 +1787,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
@@ -1821,6 +1835,8 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (dest);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }

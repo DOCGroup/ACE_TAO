@@ -192,7 +192,6 @@ ACE_Sched_Params::next_priority (const Policy policy,
                                  const int scope)
 {
 #if defined (VXWORKS)
-  ACE_UNUSED_ARG (policy);
   return priority > priority_max (policy, scope)
            ?  priority - 1
            :  priority_max (policy, scope);
@@ -225,6 +224,7 @@ ACE_Sched_Params::next_priority (const Policy policy,
 #else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
@@ -268,6 +268,7 @@ ACE_Sched_Params::previous_priority (const Policy policy,
 #else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }

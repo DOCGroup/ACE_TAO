@@ -733,6 +733,7 @@ ACE_Reactor::notify (ACE_Event_Handler *eh,
 #else
   ACE_UNUSED_ARG (eh);
   ACE_UNUSED_ARG (mask);
+  ACE_UNUSED_ARG (timeout);
 #endif /* ACE_MT_SAFE */
   return n == -1 ? -1 : 0;
 }
@@ -1387,6 +1388,8 @@ ACE_Reactor::dispatch_notification_handlers (int &number_of_active_handles,
 						  dispatch_set.rd_mask_);
   return this->state_changed_ ? -1 : number_dispatched;
 #else
+  ACE_UNUSED_ARG (number_of_active_handles);
+  ACE_UNUSED_ARG (dispatch_set);
   return 0;
 #endif /* ACE_MT_SAFE */
 }
