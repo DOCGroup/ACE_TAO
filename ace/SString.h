@@ -533,6 +533,12 @@ protected:
   // preserve designator.
 
 private:
+  ACE_Tokenizer (const ACE_Tokenizer &);
+  ACE_Tokenizer & operator= (const ACE_Tokenizer & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   LPTSTR buffer_;
   int index_;
 

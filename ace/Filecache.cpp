@@ -46,13 +46,14 @@ ACE_Filecache_Handle::init (void)
 }
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (void)
+  : file_ (0), handle_ (0), mapit_ (0)
 {
   this->init ();
 }
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
                                             ACE_Filecache_Flag mapit)
-  : mapit_ (mapit)
+  : file_ (0), handle_ (0), mapit_ (mapit)
 {
   this->init ();
   // Fetch the file from the Virtual_Filesystem let the
@@ -66,7 +67,7 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
 ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
                                             int size,
                                             ACE_Filecache_Flag mapit)
-  : mapit_ (mapit)
+  : file_ (0), handle_ (0), mapit_ (mapit)
 {
   this->init ();
   // Since this is being opened for a write, simply create a new
@@ -417,8 +418,9 @@ ACE_Filecache_Object::init (void)
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (void)
-  : stale_ (0),
-    lock_ (junklock_)
+  : tempname_ (0), mmap_ (0), handle_ (0), stat_ (), size_ (0),
+    action_ (0), error_ (0), stale_ (0), sa_ (),
+    junklock_ (), lock_ (junklock_)
 {
   this->init ();
 }
@@ -427,9 +429,9 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
-  : stale_ (0),
-    sa_ (sa),
-    lock_ (lock)
+  : tempname_ (0), mmap_ (0), handle_ (0), stat_ (), size_ (0),
+    action_ (0), error_ (0), stale_ (0), sa_ (sa), junklock_ (),
+    lock_ (lock_)
 {
   this->init ();
 

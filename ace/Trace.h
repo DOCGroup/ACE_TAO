@@ -57,6 +57,12 @@ public:
   // Dump the state of an object.
 
 private:
+  ACE_Trace (const ACE_Trace &);
+  ACE_Trace & operator= (const ACE_Trace & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   // Keeps track of how deeply the call stack is nested (this is
   // maintained in thread-specific storage to ensure correctness in
   // multiple threads of control.

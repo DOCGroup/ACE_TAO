@@ -6,6 +6,7 @@
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
+  : sigset_ ()
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
@@ -18,6 +19,7 @@ ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (int fill)
+  : sigset_ ()
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
@@ -29,6 +31,7 @@ ACE_Sig_Set::ACE_Sig_Set (int fill)
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (ACE_Sig_Set *ss)
+  : sigset_ ()
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
@@ -193,6 +196,7 @@ ACE_Sig_Action::operator ACE_SIGACTION * ()
 
 ACE_INLINE
 ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Action &s)
+  : sa_ ()
 {
   ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   *this = s; // structure copy.
@@ -226,6 +230,7 @@ ACE_Sig_Action::restore_action (int signum, ACE_Sig_Action &oaction)
 
 ACE_INLINE
 ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
+  : omask_ ()
 {
   //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
 
