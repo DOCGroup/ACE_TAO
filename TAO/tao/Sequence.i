@@ -375,8 +375,20 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
       ACE_Message_Block msgb (*mb,
                               ACE_CDR::MAX_ALIGNMENT);
 
+      // Get the base pointer of the incoming message block
+      char *start = ACE_ptr_align_binary (mb->base (),
+                                          ACE_CDR::MAX_ALIGNMENT);
+
+      // Get the read and write displacements in the incoming stream
+      size_t rd_pos = mb->rd_ptr () - start;
+      size_t wr_pos = mb->wr_ptr () - start;
+
       this->mb_ = ACE_Message_Block::duplicate (&msgb);
+
+      this->mb_->rd_ptr (rd_pos);
+      this->mb_->wr_ptr (wr_pos);
     }
+
   this->buffer_ = this->mb_->rd_ptr ();
   this->maximum_ = length;
   this->length_ = length;
