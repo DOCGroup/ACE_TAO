@@ -15,7 +15,8 @@ Fri Mar  5 15:56:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  These changes were due to a bug report submitted by Abhi
 	  <abhi@qualcomm.com> and thanks to him for reporting the
-	  problem. 
+	  problem and also providing patches that were useful for this
+	  fix. 
 
 Fri Mar  5 18:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
