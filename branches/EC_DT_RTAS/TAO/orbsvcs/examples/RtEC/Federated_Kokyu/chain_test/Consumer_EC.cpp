@@ -164,7 +164,7 @@ public:
     // *************************************************************
     // Create Supplier, intialize its RT_Info structures, and
     // connnect to the event channel....
-
+    /*
     //// SUPPLIER 3 ////
     Supplier * supplier_impl3;
     ACE_NEW(supplier_impl3,
@@ -180,11 +180,11 @@ public:
     // *************************************************************
     // Create a consumer, intialize its RT_Info structures, and
     // connnect to the event channel....
-    /*
+
     Timeout_Consumer * timeout_consumer_impl3;
     ACE_NEW(timeout_consumer_impl3,
             Timeout_Consumer(supplier_impl3));
-    */
+
     Supplier_Timeout_Handler * timeout_handler_impl3;
     ACE_NEW(timeout_handler_impl3,
             Supplier_Timeout_Handler(supplier_impl3));
@@ -203,7 +203,7 @@ public:
                         timeout_handler_impl3,
                         tv
                         );
-    /*
+
     task3_trigger->init(this,
                         supplier_impl3,
                         timeout_consumer_impl3,
@@ -212,7 +212,7 @@ public:
                         info.criticality,
                         info.importance
                         );
-    */
+
     once_ = task3_trigger;
     //need specify period, criticality, importance for supplier_impl3, since timeout not yet registered
     RtecScheduler::Scheduler_ptr sched = this->scheduler();
@@ -249,17 +249,16 @@ public:
                  ACE_ENV_ARG_PARAMETER
                  );
     ACE_CHECK;
-
+    */
     //// CONSUMER 3 ////
     Consumer * consumer_impl3;
     ACE_NEW(consumer_impl3,
             Consumer);
 
-    tv.set(1,800000);
+    tv.set(1,0);
     consumer_impl3->setWorkTime(tv);
-    //consumer's rate will get propagated from the supplier.
-    //so no need to specify a period here.
-    tv.set(0,0); //period
+    //consumer's rate specified remotely, so need to specify a period here.
+    tv.set(4,0); //period
     add_consumer(consumer_impl3,
                  "consumer3",
                  tv,
@@ -269,11 +268,6 @@ public:
                  ACE_ENV_ARG_PARAMETER
                  );
     ACE_CHECK;
-
-    //TODO: Delay activation of Supplier3 for 5.1 seconds (phase offset)
-
-    //Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-    //ACE_CHECK;
   } //set_up_supp_and_cons()
 
 private:
@@ -293,13 +287,12 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
-  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
+  //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
+  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
 #ifdef ACE_HAS_DSUI
   //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
-  //  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
+  //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -378,10 +371,9 @@ main (int argc, char* argv[])
 
 #ifdef ACE_HAS_DSUI
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
+      //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
+      DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
 #ifdef ACE_HAS_DSUI

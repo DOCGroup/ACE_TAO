@@ -56,29 +56,29 @@
 
 
 #ifdef CONFIG_DSTREAM_TEST_ONE
-#define DSUI_EVENT_LOG_TEST_ONE_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_TEST_ONE_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(TEST_ONE_FAM, (event) ) ) \
             dsui_event_log( TEST_ONE_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_TEST_ONE_FAM( event, tag , len, data )
+#define DSTRM_EVENT_TEST_ONE_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_WORKER_GROUP
-#define DSUI_EVENT_LOG_WORKER_GROUP_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_WORKER_GROUP_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(WORKER_GROUP_FAM, (event) ) ) \
             dsui_event_log( WORKER_GROUP_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_WORKER_GROUP_FAM( event, tag , len, data )
+#define DSTRM_EVENT_WORKER_GROUP_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_MAIN_GROUP
-#define DSUI_EVENT_LOG_MAIN_GROUP_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_MAIN_GROUP_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(MAIN_GROUP_FAM, (event) ) ) \
             dsui_event_log( MAIN_GROUP_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_MAIN_GROUP_FAM( event, tag , len, data )
+#define DSTRM_EVENT_MAIN_GROUP_FAM( event, tag , len, data )
 #endif
 #endif /* _DSUI_FAMILIES_H */
