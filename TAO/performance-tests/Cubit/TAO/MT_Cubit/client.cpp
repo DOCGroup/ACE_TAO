@@ -84,10 +84,10 @@ do_priority_inversion_test (Task_State &ts)
               ts.thread_count_ - 1,
               priority));
 
-  for (u_int i = 0; i < ts.thread_count_ - 1; i++)
+  for (i = 0; i < ts.thread_count_ - 1; i++)
     {
       // The first thread starts at the lowest priority of all the low
-      // priority clients.      
+      // priority clients.
       if (low_priority_client.activate (THR_BOUND,
                                         1,
                                         1,
@@ -130,18 +130,27 @@ do_priority_inversion_test (Task_State &ts)
 	   ACE_OS::getpid (),
 	   ts.use_sysbench_ == 1? "SB": "__",
 	   ts.thread_count_);
-  printf("--->Output file for latency data is \"%s\"\n",latency_file);
+  ACE_DEBUG ((LM_DEBUG, 
+              "--->Output file for latency data is \"%s\"\n",
+              latency_file));
   
-  latency_file_handle = fopen (latency_file, "w");
+  latency_file_handle = ACE_OS::fopen (latency_file, "w");
   
+  // @@ What does this loop do?
   for (u_int j = 0; j < ts.start_count_; j ++)
     {
-      sprintf(buffer, "%s #%d", j==0? "High Priority": "Low Priority", j);
+      sprintf (buffer,
+               "%s #%d",
+               j == 0 ? "High Priority": "Low Priority", 
+               j);
+
       for (u_int i = 0; i < ts.loop_count_; i ++)
 	{
-	  sprintf(buffer+strlen(buffer), "\t%u\n", ts.global_jitter_array_[j][i]);
-	  fputs (buffer, latency_file_handle);
-	  buffer[0]=0;
+	  sprintf (buffer + ACE_OS::strlen (buffer),
+                   "\t%u\n", ts.global_jitter_array_[j][i]);
+	  ACE_OS::fputs (buffer,
+                         latency_file_handle);
+	  buffer[0] = 0;
 	}
     }
   
@@ -243,17 +252,18 @@ do_thread_per_rate_test (Task_State &ts)
     // Wait for all the threads to exit.
     ACE_Thread_Manager::instance ()->wait ();
 
-    ACE_OS::printf ("Test done.\n"
-                    "40Hz client latency : %d usec\n"
-                    "20Hz client latency : %d usec\n"
-                    "10Hz client latency : %d usec\n"
-                    "5Hz client latency : %d usec\n"
-                    "1Hz client latency : %d usec\n",
-                    CB_40Hz_client.get_latency (0),
-                    CB_20Hz_client.get_latency (1),
-                    CB_10Hz_client.get_latency (2),
-                    CB_5Hz_client.get_latency (3),
-                    CB_1Hz_client.get_latency (4));
+    ACE_DEBUG ((LM_DEBUG,
+                "Test done.\n"
+                "40Hz client latency : %d usec\n"
+                "20Hz client latency : %d usec\n"
+                "10Hz client latency : %d usec\n"
+                "5Hz client latency : %d usec\n"
+                "1Hz client latency : %d usec\n",
+                CB_40Hz_client.get_latency (0),
+                CB_20Hz_client.get_latency (1),
+                CB_10Hz_client.get_latency (2),
+                CB_5Hz_client.get_latency (3),
+                CB_1Hz_client.get_latency (4)));
     return 0;
 }
 
