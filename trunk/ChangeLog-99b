@@ -1,3 +1,13 @@
+Wed Jul 21 21:45:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Reactor.cpp: Applied ACE_NOTREACHED to several
+	  run_*_event_loop methods.
+
+	* docs/ACE-guidelines.html: Updated ASYS_TEXT usage.
+
+	* ace/RB_Tree.cpp:
+	* tests/Cache_Map_Manager_Test.cpp: Applied ASYS_TEXT liberally.
+
 Wed Jul 21 21:19:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note about ACE support for
