@@ -4,6 +4,7 @@
 // SV_Message.i
 
 #include "ace/Global_Macros.h"
+#include "ace/config-all.h"
 
 ACE_INLINE
 ACE_SV_Message::ACE_SV_Message (long t)
