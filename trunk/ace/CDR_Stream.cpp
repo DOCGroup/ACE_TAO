@@ -358,11 +358,11 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
       // Convert to Intel format (12345678 => 56781234)
       const char *orig = ACE_reinterpret_cast (const char *, x);
       char *target = buf;
-      register ACE_UINT32 x = 
+      register ACE_UINT32 x =
         *ACE_reinterpret_cast (const ACE_UINT32 *, orig);
       register ACE_UINT32 y =
         *ACE_reinterpret_cast (const ACE_UINT32 *, orig + 4);
-      *ACE_reinterpret_cast (ACE_UINT32 *, target) = y;  
+      *ACE_reinterpret_cast (ACE_UINT32 *, target) = y;
       *ACE_reinterpret_cast (ACE_UINT32 *, target + 4) = x;
       return 1;
 #else
@@ -441,17 +441,17 @@ ACE_OutputCDR::write_array (const void *x,
           switch (size)
             {
             case 2:
-	      ACE_CDR::swap_2_array (source, buf, length);
-	      return 1;
+              ACE_CDR::swap_2_array (source, buf, length);
+              return 1;
             case 4:
-	      ACE_CDR::swap_4_array (source, buf, length);
-	      return 1;
+              ACE_CDR::swap_4_array (source, buf, length);
+              return 1;
             case 8:
-	      ACE_CDR::swap_8_array (source, buf, length);
-	      return 1;
+              ACE_CDR::swap_8_array (source, buf, length);
+              return 1;
             case 16:
-	      ACE_CDR::swap_16_array (source, buf, length);
-	      return 1;
+              ACE_CDR::swap_16_array (source, buf, length);
+              return 1;
             default:
               // TODO: print something?
               this->good_bit_ = 0;
@@ -758,16 +758,16 @@ ACE_InputCDR::read_array (void* x,
           switch (size)
             {
             case 2:
- 	      ACE_CDR::swap_2_array (buf, target, length);
-	      break;
+              ACE_CDR::swap_2_array (buf, target, length);
+              break;
             case 4:
-	      ACE_CDR::swap_4_array (buf, target, length);
+              ACE_CDR::swap_4_array (buf, target, length);
               break;
             case 8:
-	      ACE_CDR::swap_8_array (buf, target, length);
+              ACE_CDR::swap_8_array (buf, target, length);
               break;
             case 16:
-	      ACE_CDR::swap_16_array (buf, target, length);
+              ACE_CDR::swap_16_array (buf, target, length);
               break;
             default:
               // TODO: print something?
@@ -992,13 +992,25 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
 void
 ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
 {
+#if 0
   this->do_byte_swap_ = cdr.do_byte_swap_;
   this->start_.data_block (cdr.start_.data_block ()->duplicate ());
   this->start_.rd_ptr (cdr.start_.rd_ptr ());
   this->start_.wr_ptr (cdr.start_.wr_ptr ());
-
+#endif
+  this->steal_data (cdr);
   cdr.reset_contents ();
 }
+
+void
+ACE_InputCDR::steal_data (ACE_InputCDR &cdr)
+{
+  this->do_byte_swap_ = cdr.do_byte_swap_;
+  this->start_.data_block (cdr.start_.data_block ()->duplicate ());
+  this->start_.rd_ptr (cdr.start_.rd_ptr ());
+  this->start_.wr_ptr (cdr.start_.wr_ptr ());
+}
+
 
 ACE_Message_Block*
 ACE_InputCDR::steal_contents (void)

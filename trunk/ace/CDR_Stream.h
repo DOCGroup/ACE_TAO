@@ -105,7 +105,7 @@ public:
 
   /**
    * Disambiguate overload when inserting booleans, octets, chars, and
-   * bounded strings. 
+   * bounded strings.
    */
   //@{ @name Helper classes
 
@@ -181,7 +181,7 @@ public:
   //@}
 
   /// Note: the portion written starts at <x> and ends
-  ///       at <x + length>. 
+  ///       at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
@@ -261,7 +261,7 @@ public:
   /// Return the <current_> message block in chain.
   const ACE_Message_Block *current (void) const;
 
-  /** 
+  /**
    * Access the underlying buffer (read only).    NOTE: This
    * method only returns a pointer to the first block in the
    * chain.
@@ -492,7 +492,7 @@ public:
   ~ACE_InputCDR (void);
 
   /// Disambiguate overloading when extracting octets, chars,
-  /// booleans, and bounded strings 
+  /// booleans, and bounded strings
   //@{ @name Helper classes
 
   struct ACE_Export to_boolean
@@ -662,6 +662,15 @@ public:
   /// Steal the contents of <cdr> and make a shallow copy into this
   /// stream.
   void steal_from (ACE_InputCDR &cdr);
+
+  /// Steal the contents of <cdr> in to this stream and leave the
+  /// <cdr> untouched.
+  /// NOTE: This is a slight modification of the steal_from ()
+  /// method. It doesn't invoke reset_contents () after stealing the
+  /// contents and can be used where new data blocks for the <cdr> are
+  /// not needed.
+  void steal_data (ACE_InputCDR &cdr);
+
 
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
