@@ -31,6 +31,7 @@ override TAO_IDLFLAGS += \
 IDL_SRCS= \
 	CosConcurrencyControl \
 	CosNaming \
+	TimeService \
 	CosLifeCycle \
 	CosPropertyService \
 	CosTimeBase \
@@ -60,6 +61,12 @@ FILES= $(IDL_FILES) \
 	Naming/CosNaming_i \
 	Naming/Entries \
 	Naming/Naming_Utils \
+	\
+	Time/TAO_Time_Service_Server \
+	Time/TAO_Time_Service_Clerk \
+	Time/TAO_UTO \
+	Time/TAO_TIO \
+	Time/Timer_Helper \
 	\
 	Event/BCU \
 	Event/Dispatching_Modules \
@@ -111,7 +118,7 @@ FILES= $(IDL_FILES) \
 	AV/Endpoint_Strategy \
 	AV/Endpoint_Strategy_T
 
-VPATH=.:Naming:Event:Sched:AV:Property:Trader:Concurrency:Log
+VPATH=.:Naming:Time:Event:Sched:AV:Property:Trader:Concurrency:Log:
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
