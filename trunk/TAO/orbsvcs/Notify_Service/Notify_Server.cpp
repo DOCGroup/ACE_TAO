@@ -19,7 +19,8 @@ extern "C" void handler (int signum)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  // ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  // Not handling signals. the shutdown code and event handler is maintained in case we want to address this in the future.
 
   // Init factories.
 

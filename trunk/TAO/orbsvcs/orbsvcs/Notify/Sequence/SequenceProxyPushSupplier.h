@@ -53,6 +53,11 @@ public:
   /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
+  /// Override, TAO_NS_ProxySupplier::push method.
+  /// This implementation executes fiter evaluation in the invoking thread.
+  /// Dispatching for Sequences will be initiated via a timer.
+  virtual void push (TAO_NS_Event_var &event);
+
   /// = Servant methods
   virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((

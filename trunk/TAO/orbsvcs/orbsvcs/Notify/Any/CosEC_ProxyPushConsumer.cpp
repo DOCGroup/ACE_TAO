@@ -40,6 +40,13 @@ TAO_NS_CosEC_ProxyPushConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
+TAO_NS_CosEC_ProxyPushConsumer::push (TAO_NS_Event_var &/*event*/)
+{
+  // This should never be called.
+  ACE_ASSERT (1);
+}
+
+void
 TAO_NS_CosEC_ProxyPushConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException

@@ -31,100 +31,147 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
 
   const ACE_TCHAR *current_arg = 0;
 
+  int dispatching_threads = 0;
+  int listener_threads = 0;
+  int source_threads = 0;
+  int lookup_threads = 0;
+  int task_per_proxy = 0;
+
   while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-Updates")) == 0) // -Updates update_period_uS
-        {
-          arg_shifter.consume_arg ();
-
-          current_arg = arg_shifter.get_current ();
-
-          if (current_arg != 0)
-            {
-              ACE_Time_Value update_period (0, ACE_OS::atoi (current_arg));
-
-              TAO_NS_PROPERTIES::instance()->updates (1);
-              TAO_NS_PROPERTIES::instance()->update_period (update_period);
-            }
-        }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NoUpdates")) == 0) // No Updates
-        {
-          arg_shifter.consume_arg ();
-
-          TAO_NS_PROPERTIES::instance()->updates (0);
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
-        {
-          int dispatching_threads = ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-
-          if (dispatching_threads > 0)
-            {
-              NotifyExt::ThreadPoolParams tp_params =
-                {0, (unsigned)dispatching_threads, 0, 0, 0, 0, 0 };
-              CosNotification::QoSProperties ec_qos;
-
-              ec_qos.length (1);
-              ec_qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-              ec_qos[0].value <<= tp_params;
-
-              TAO_NS_PROPERTIES::instance()->default_event_channel_qos_properties (ec_qos);
-            }
-        }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTDispatching")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTDispatching")) == 0)
         {
           // If Dispatching Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
+        {
+          dispatching_threads = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTSourceEval")) == 0)
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          source_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTLookup")) == 0)
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          lookup_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTListenerEval")) == 0)
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
         {
-          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          listener_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AsynchUpdates")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          TAO_NS_PROPERTIES::instance()->updates (1);
-
-          ACE_Time_Value update_period (0, TAO_NS_DEFAULT_UPDATES_PERIOD);
-
-          TAO_NS_PROPERTIES::instance()->update_period (update_period);
+          TAO_NS_PROPERTIES::instance()->asynch_updates (1);
         }
-      else if (ACE_OS::strcasecmp (current_arg, ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
+       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
         {
-          // Not supported any more.
+          task_per_proxy = 1;
           arg_shifter.consume_arg ();
         }
     }
 
+  if (task_per_proxy == 0)
+    {
+      this->set_consumer_admin_threads (dispatching_threads + listener_threads);
+      this->set_supplier_admin_threads (lookup_threads + source_threads);
+    }
+  else
+    {
+      this->set_proxy_supplier_threads (dispatching_threads + listener_threads);
+      this->set_proxy_consumer_threads (source_threads); // lookup thread per proxy doesn't make sense.
+    }
+
   return 0;
+}
+
+void
+TAO_NS_Notify_Service::set_consumer_admin_threads (int threads)
+{
+  if (threads > 0)
+    {
+      NotifyExt::ThreadPoolParams tp_params =
+        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+      CosNotification::QoSProperties qos;
+
+      qos.length (1);
+      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+      qos[0].value <<= tp_params;
+
+      TAO_NS_PROPERTIES::instance()->default_consumer_admin_qos_properties (qos);
+    }
+}
+
+void
+TAO_NS_Notify_Service::set_supplier_admin_threads (int threads)
+{
+  if (threads > 0)
+    {
+      NotifyExt::ThreadPoolParams tp_params =
+        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+      CosNotification::QoSProperties qos;
+
+      qos.length (1);
+      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+      qos[0].value <<= tp_params;
+
+      TAO_NS_PROPERTIES::instance()->default_supplier_admin_qos_properties (qos);
+    }
+}
+
+void
+TAO_NS_Notify_Service::set_proxy_consumer_threads (int threads)
+{
+  if (threads > 0)
+    {
+      NotifyExt::ThreadPoolParams tp_params =
+        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+      CosNotification::QoSProperties qos;
+
+      qos.length (1);
+      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+      qos[0].value <<= tp_params;
+
+      TAO_NS_PROPERTIES::instance()->default_proxy_consumer_qos_properties (qos);
+    }
+}
+
+void
+TAO_NS_Notify_Service::set_proxy_supplier_threads (int threads)
+{
+  if (threads > 0)
+    {
+      NotifyExt::ThreadPoolParams tp_params =
+        {0, (unsigned)threads, 0, 0, 0, 0, 0 };
+      CosNotification::QoSProperties qos;
+
+      qos.length (1);
+      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+      qos[0].value <<= tp_params;
+
+      TAO_NS_PROPERTIES::instance()->default_proxy_supplier_qos_properties (qos);
+    }
 }
 
 int

@@ -48,6 +48,21 @@ TAO_NS_PropertyBase_T<TYPE>::operator=(const TYPE& value)
   return *this;
 }
 
+template <class TYPE> ACE_INLINE void
+TAO_NS_PropertyBase_T<TYPE>:: invalidate (void)
+{
+  this->valid_ = 0;
+}
+
+/******************************************************************************/
+
+template <class TYPE> ACE_INLINE TAO_NS_Property_T<TYPE>&
+TAO_NS_Property_T<TYPE>::operator=(const TYPE& value)
+{
+  this->TAO_NS_PropertyBase_T<TYPE>::operator= (value);
+  return *this;
+}
+
 /******************************************************************************/
 
 template <class TYPE> ACE_INLINE const TYPE&

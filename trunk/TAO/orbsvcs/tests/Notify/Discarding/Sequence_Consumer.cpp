@@ -19,8 +19,8 @@
 
 static const char* ior = "file://supplier.ior";
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
-static unsigned int low = 10;
-static unsigned int high = 13;
+static unsigned int low = 2;
+static unsigned int high = 20;
 
 // ******************************************************************
 // Subroutine Section
@@ -199,7 +199,7 @@ int main (int argc, char* argv[])
                   // See if we can get any more events
                   if (client.done ())
                     {
-                      ACE_OS::sleep (3);
+                      ACE_OS::sleep (1);
                       try_count++;
                       if (try_count >= try_max)
                         break;

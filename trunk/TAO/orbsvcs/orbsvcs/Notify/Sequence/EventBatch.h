@@ -55,6 +55,9 @@ public:
   /// Populate <event_batch> with <event_collection>
   static void populate (const TAO_NS_Event_Collection& event_collection, CosNotification::EventBatch& event_batch);
 
+  /// The size of the batch.
+  int size (void);
+
 protected:
   // Event Batch
   TAO_NS_Event_Collection event_collection_;

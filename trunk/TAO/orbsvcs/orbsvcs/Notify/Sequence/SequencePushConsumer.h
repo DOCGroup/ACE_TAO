@@ -26,7 +26,6 @@
 #include "../Consumer.h"
 #include "EventBatch.h"
 
-class ACE_Reactor;
 class TAO_NS_ProxySupplier;
 class TAO_NS_QoSProperties;
 
@@ -78,14 +77,8 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value& current_time,
                               const void* act = 0);
 
-  /// Dispatch events immediately if no pacing is set.
-  void dispatch_immediate (void);
-
   /// Schedule timer
-  void schedule_timer (ACE_Reactor* reactor);
-
-  /// Cancel timer. Return 1 on success.
-  int cancel_timer (ACE_Reactor* reactor);
+  void schedule_timer (void);
 
   /// The Pacing Interval
   TAO_NS_Property_Time pacing_interval_;

@@ -19,11 +19,8 @@ unlink $namingior;
 
 $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
                                 "-o $namingior");
-$Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
-                                      "-ORBInitRef NameService=file://$namingior " .
-                                      "-IORoutput $notifyior " .
-                                      "-ORBSvcConf ../../../Notify_Service/svc.conf");
-@tests = 
+
+@tests =
   (
    "AdminProperties",
    "ConnectDisconnect",
@@ -36,41 +33,56 @@ $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
    "Updates",
   );
 
+@test_configs =
+  (
+   "notify.mt.conf",
+   "notify.reactive.conf",
+   );
+
 $Naming->Spawn ();
 
 if (PerlACE::waitforfile_timed ($namingior, $startup_timeout) == -1) {
-    print STDERR "ERROR: waiting for the naming service to start\n";
-    $Naming->Kill ();
-    exit 1;
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $Naming->Kill ();
+  exit 1;
 }
 
-$Notification->Spawn ();
-
-if (PerlACE::waitforfile_timed ($notifyior, $startup_timeout) == -1) {
-    print STDERR "ERROR: waiting for the notify service to start\n";
-    $Notification->Kill ();
-    $Naming->Kill ();
-    exit 1;
-}
-
-for $name (@tests)
+for $config (@test_configs)
   {
-    print STDERR "\nTesting $name....\n\n";
-    $test = new PerlACE::Process ("./$name",
-                                  "-ORBInitRef NameService=file://$namingior ");
-    $test->Spawn ();
+    print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
 
-    $status = $test->WaitKill ($experiment_timeout);
-
-    if ($status != 0) 
-    {
-        print STDERR "ERROR: $name returned $status\n";
-        break;
+    $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
+                                          "-ORBInitRef NameService=file://$namingior " .
+                                          "-IORoutput $notifyior " .
+                                          "-ORBSvcConf $config");
+    $Notification->Spawn ();
+    
+    if (PerlACE::waitforfile_timed ($notifyior, $startup_timeout) == -1) {
+      print STDERR "ERROR: waiting for the notify service to start\n";
+      $Notification->Kill ();
+      $Naming->Kill ();
+      exit 1;
     }
+    
+    for $name (@tests)
+      {
+        print STDERR "\nTesting $name....\n\n";
+        $test = new PerlACE::Process ("./$name",
+                                  "-ORBInitRef NameService=file://$namingior ");
+        $test->Spawn ();
+
+        $status = $test->WaitKill ($experiment_timeout);
+
+        if ($status != 0) 
+          {
+            print STDERR "ERROR: $name returned $status\n";
+            break;
+          }
+      }
+    
+    $Notification->Kill ();
   }
 
-
-$Notification->Kill ();
 $Naming->Kill ();
 
 unlink $namingior;

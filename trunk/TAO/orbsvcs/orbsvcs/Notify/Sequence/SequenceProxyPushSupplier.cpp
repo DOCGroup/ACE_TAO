@@ -44,6 +44,16 @@ TAO_NS_SequenceProxyPushSupplier::release (void)
 }
 
 void
+TAO_NS_SequenceProxyPushSupplier::push (TAO_NS_Event_var &event)
+{
+  TAO_NS_Method_Request_Dispatch request (event, this);
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+  
+  request.execute(ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
 TAO_NS_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException

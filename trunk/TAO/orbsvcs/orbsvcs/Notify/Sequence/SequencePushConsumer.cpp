@@ -43,7 +43,7 @@ TAO_NS_SequencePushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_Reactor* reactor = orb->orb_core ()->reactor ();
 
-  this->cancel_timer (reactor);
+  reactor->cancel_timer (this);
 }
 
 void
@@ -64,6 +64,13 @@ TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_proper
   this->pacing_interval_ = qos_properties.pacing_interval ();
 
   if (!this->pacing_interval_.is_valid ())
+    this->pacing_interval_ = 0;
+}
+
+void
+TAO_NS_SequencePushConsumer::schedule_timer (void)
+{
+  if (this->pacing_interval_ == 0)
     return;
 
   // Get the ORB
@@ -71,27 +78,6 @@ TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_proper
 
   ACE_Reactor* reactor = orb->orb_core ()->reactor ();
 
-  if (this->cancel_timer (reactor) != 1) // Cancel existing timer.
-    return;
-
-  ///Yamuna: Added the following so the comparison works
-  ACE_Time_Value pacing_interval (this->pacing_interval_.value ());
-  if (pacing_interval != ACE_Time_Value::zero)
-    this->schedule_timer (reactor);
-}
-
-int
-TAO_NS_SequencePushConsumer::cancel_timer (ACE_Reactor* reactor)
-{
-  if (this->timer_id_ == -1)
-    return 1;
-  else
-    return reactor->cancel_timer (this->timer_id_);
-}
-
-void
-TAO_NS_SequencePushConsumer::schedule_timer (ACE_Reactor* reactor)
-{
   TimeBase::TimeT pacing_interval = this->pacing_interval_.value();
 
 # if defined (ACE_CONFIG_WIN32_H)
@@ -101,13 +87,8 @@ TAO_NS_SequencePushConsumer::schedule_timer (ACE_Reactor* reactor)
 # endif /* ACE_CONFIG_WIN32_H */
 
   // Schedule the timer.
-  this->timer_id_ = reactor->schedule_timer (this, 0, interval, interval);
-
-  if (this->timer_id_ == -1)
-    {
-      // Failed to set the timer, treat as if no timer was required.
-      //this->pacing_interval_ = 0;//ACE_Time_Value::zero;
-    }
+  if (reactor->schedule_timer (this, 0, interval, interval) == -1)
+    this->pacing_interval_ = 0;
 }
 
 void
@@ -116,10 +97,14 @@ TAO_NS_SequencePushConsumer::push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_D
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
     this->event_batch_.insert (event);
+
+    if (this->event_batch_.size () == 1)
+      this->schedule_timer ();
   }
 
-  if (this->timer_id_ == -1 && this->is_suspended_ == 0)
-    this->dispatch_immediate ();
+  // If pacing is zero, there is no timer, hence dispatch immediately
+  if (this->pacing_interval_ == 0 )
+    this->handle_timeout (ACE_Time_Value::zero, 0);
 }
 
 void
@@ -134,20 +119,6 @@ TAO_NS_SequencePushConsumer::push (const CosNotification::StructuredEvent& /*not
   //NOP
 }
 
-void
-TAO_NS_SequencePushConsumer::dispatch_immediate (void)
-{
-  TAO_NS_Event_Collection event_collection;
-
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon,  *this->proxy_lock ());
-    this->event_batch_.extract (event_collection);
-  }
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->push (event_collection ACE_ENV_ARG_PARAMETER);
-}
-
 int
 TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_time*/,
                                              const void* /*act*/)
@@ -156,6 +127,10 @@ TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_tim
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), 0);
+
+    if (this->event_batch_.size () == 0)
+      return -1; // Cancel the timer.
+
     this->event_batch_.extract (event_collection);
   }
 
