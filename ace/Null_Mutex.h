@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+#include "ace/OS_Memory.h"
 
 class ACE_Time_Value;
 
@@ -194,6 +195,24 @@ public:
   int tryacquire_read (void) { return 0; }
   int tryacquire (void) { return 0; }
   void dump (void) const {}
+};
+
+template <class T> class ACE_Malloc_Lock_Adapter_T;
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
+ *
+ */
+class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
+{
+public:
+  ACE_Null_Mutex * operator () (const ACE_TCHAR *name)
+  {
+    ACE_Null_Mutex *p;
+    ACE_NEW_RETURN (p, ACE_Null_Mutex (name), 0);
+    return p;
+  }
 };
 
 #include /**/ "ace/post.h"

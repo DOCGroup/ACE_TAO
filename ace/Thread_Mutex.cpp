@@ -76,11 +76,13 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
 template class ACE_Guard<ACE_Thread_Mutex>;
 template class ACE_Read_Guard<ACE_Thread_Mutex>;
 template class ACE_Write_Guard<ACE_Thread_Mutex>;
+template class ACE_Malloc_Lock_Adapter_T<ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // These are only instantiated with ACE_HAS_THREADS.
 #pragma instantiate ACE_Guard<ACE_Thread_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Thread_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Thread_Mutex>
+#pragma instantiate ACE_Malloc_Lock_Adapter_T<ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
