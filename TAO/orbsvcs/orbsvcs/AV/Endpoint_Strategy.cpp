@@ -375,7 +375,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
   }
   ACE_CATCHANY
     { 
-      ACE_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
       return -1;
     }
   ACE_ENDTRY;

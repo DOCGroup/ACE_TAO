@@ -1069,7 +1069,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name,
       CORBA::Object_ptr fep_entry = 0;
       // Remove the fep from the hash table.
       if (this->fep_map_.unbind (fep_name_key,fep_entry)!= 0)
-        TAO_THROW_ENV (AVStreams::streamOpFailed (),ACE_TRY_ENV);
+        ACE_THROW (AVStreams::streamOpFailed ());
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0,j=0 ; i <this->flows_.length (); i++)
