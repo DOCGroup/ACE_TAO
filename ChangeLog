@@ -1,3 +1,8 @@
+Tue Mar 27 19:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Unbounded_Queue.h:
+          Add required #include for Chorus builds.
+
 Tue Mar 27 10:08:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Select_Reactor_Base.h:
