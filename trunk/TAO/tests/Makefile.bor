@@ -4,6 +4,7 @@
 
 DIRS = \
         AMI \
+        Bidirectional \
 	CDR \
 	Collocation \
 	Connection_Purging \
