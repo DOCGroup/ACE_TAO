@@ -1,3 +1,13 @@
+Thu Aug 22 21:20:01 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU (realclean.local):
+
+          Remove older cruft when doing a realclean. Note this is a
+          sledgehammer (libfoo.so*). Don't blame me if you shoot yourself
+          in the feet, which technically shouldn't happen as long as you
+          have the sources to the libraries that you built. Thanks to
+          Ossama for pointing out that cruft was left behind.
+
 Thu Aug 22 19:14:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.i (fgetwc, ungetwc):
