@@ -1,3 +1,20 @@
+Fri Mar 02 07:40:28 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
+
+	  Added this missing file.  I neglected to commit it with my
+	  previous set of changes for this test.
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+
+	  Added missing `ServerRequestInterceptor.idl' related rules to
+	  these Makefiles.
+
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+
+	  Added missing header files to the header file list.
+
 Fri Mar 02 07:25:50 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (destroy_interceptors):
