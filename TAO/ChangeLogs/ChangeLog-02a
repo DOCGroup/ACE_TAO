@@ -1,3 +1,19 @@
+Mon Oct 30 15:00:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+
+	  Modified redefinition of forward declared interface
+	  to handle the case where an interface is defined in
+	  a reopening of the module where it is forward declared,
+	  then referenced in a different module. Thanks to
+	  Vsevolod Novikov <novikov@df.nnov.rfnet.ru> for reporting
+	  this bug and sending in an example IDL file.
+
+	* tests/IDL_Test/reopened_modules.idl:
+
+	  Added the above example to IDL_Test.
+
 Mon Oct 30 12:04:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/time-date/Makefile:
