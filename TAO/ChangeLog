@@ -1,3 +1,10 @@
+Fri Jan  2 11:37:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        *
+          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        Made changes to fix the CannotMeetCriteria exception being
+        thrown in some builds.
+
 Fri Jan  2 10:00:48 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV.mpc:
