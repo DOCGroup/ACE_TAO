@@ -327,8 +327,9 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
     return -1;
 
   // Spawn a new thread of control to handle logging records with the
-  // client.  Note that this implicitly uses the
-  // ACE_Thread_Manager::instance () to control all the threads.
+  // client using a thread-per-connection concurrency model.  Note
+  // that this implicitly uses the <ACE_Thread_Manager::instance> to
+  // control all the threads.
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
