@@ -77,9 +77,9 @@ ACE_SOCK_SEQPACK_Association::recv_n (void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::recvv_n (iovec iov[],
-                          size_t n,
-                          const ACE_Time_Value *timeout,
-                          size_t *bytes_transferred) const
+                                       int n,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::recvv_n");
   return ACE::recvv_n (this->get_handle (),
@@ -121,9 +121,9 @@ ACE_SOCK_SEQPACK_Association::send_n (const void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::sendv_n (const iovec iov[],
-                          size_t n,
-                          const ACE_Time_Value *timeout,
-                          size_t *bytes_transferred) const
+                                       int n,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::sendv_n");
   return ACE::sendv_n (this->get_handle (),

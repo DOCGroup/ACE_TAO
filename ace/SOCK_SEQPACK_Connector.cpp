@@ -88,7 +88,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
     {
       sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
                                               local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
+      int size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_association.get_handle (),
                         laddr,
@@ -200,10 +200,11 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 #else
 
       // Call bind
+      size_t name_len = (sizeof sockaddr_in) * num_addresses;
       if (ACE_OS::bind (new_association.get_handle (),
                         ACE_reinterpret_cast (sockaddr *,
                                               local_inet_addrs),
-                        (sizeof (sockaddr_in))*num_addresses) == -1)
+                        ACE_static_cast (int, name_len)) == -1)
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);

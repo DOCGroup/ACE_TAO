@@ -1,3 +1,48 @@
+Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
+
+	These are all to quiet the 64-bit compiler on Win64.
+
+	* ace/CDR_Stream.i (write_wstring): cast size_t return from
+	  ACE_OS::strlen() to ACE_CDR::ULong to correct types.
+
+	* ace/OS_NS_stropts.inl (putmsg): ACE_OS::write() returns ssize_t;
+	  cast it back to int for return to caller.
+
+	* ace/OS_NS_sys_uio.{h, inl, .cpp}: writev() returns ssize_t. Thus,
+	  the writev_emulation() method also must return ssize_t. Also
+	  corrected the ACE_OSCALL_RETURN 'type' argument from int to ssize_t.
+
+	* ace/Process.cpp (spawn): When forming the +H command line options,
+	  use %I64d, not %d, on Win64.
+
+	* ace/SOCK_SEQPACK_Acceptor.cpp (shared_open): Cast the 'namelen'
+	  argument to ACE_OS::bind() to int to match the signature.
+
+	* ace/SOCK_SEQPACK_Association.{h i} (recvv_n, sendv_n): The iovec
+	  count was changed from size_t to int to be consistent with the
+	  other analogous methods in ACE.
+
+	* ace/SOCK_SEQPACK_Association.cpp (get_local_addrs, get_remote_addrs):
+	  Correct usage of int/size_t types.
+
+	* ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Use 'int',
+	  not 'size_t' as address length argument to ACE_OS::bind().
+
+	* ace/UUID.cpp (to_string): Change UUID_STRING_LENGTH from int to
+	  size_t to match string handling length types.
+
+=======
+=======
+=======
+=======
+=======
+=======
+Thu Apr 22 07:58:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+=======
+=======
+=======
+=======
+=======
 Thu Apr 29 06:13:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadSafety/Tokens_Deadlock.cpp:
