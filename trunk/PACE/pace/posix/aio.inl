@@ -65,7 +65,7 @@ pace_aio_suspend (const pace_aiocb * const list[],
                   int nent,
                   const pace_timespec * timeout)
 {
-  return aio_suspend (PACE_NONCONST_ARG_CAST (struct aiocb **) list,
+  return aio_suspend (PACE_AIO_SUSPEND_LIST_ARG_CAST list,
                       nent,
                       PACE_NONCONST_ARG_CAST (struct timespec *) timeout);
 }
