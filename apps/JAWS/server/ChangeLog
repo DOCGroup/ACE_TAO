@@ -1,3 +1,12 @@
+Wed Jun  4 22:30:41 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* main.cpp (main): Changed SIGCLD to SIGCHLD for better
+	  portability.
+
+	* IO.cpp (transmit_file): The third argument passed
+	  ACE_Asynch_Transmit_File::Header_And_Trailer() should be an
+	  address (&).  
+
 Mon Jun  2 16:35:18 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* HTTP_Helpers.cpp: Serious bug in base64 decoder routine
