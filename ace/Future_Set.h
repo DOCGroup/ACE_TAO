@@ -17,11 +17,10 @@
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
 
-#include "ace/Map_Manager.h"
-#include "ace/Strategies_T.h"
 #include "ace/Thread.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -53,7 +52,7 @@ public:
   // 0 otherwise
 
   int insert (ACE_Future<T> &future);
-  // Enqueues the given ACE_Future into this objects queue when it is
+  // Enqueus the given ACE_Future into this objects queue when it is
   // readable.
   //
   // Returns 0 if the future is successfully inserted, 1 if the
@@ -82,25 +81,23 @@ private:
   // Copy constructor binds <this> and <r> to the same
   // <ACE_Future_Set>. An <ACE_Future_Set> is created if necessary.
 
-  typedef ACE_Future<T>
-          FUTURE;
+  typedef ACE_Future<T> FUTURE;
 
-  typedef ACE_Future_Rep<T>
-          FUTURE_REP;
+  typedef ACE_Future_Rep<T> FUTURE_REP;
 
-  typedef ACE_Future_Holder<T>
-          FUTURE_HOLDER;
+  typedef ACE_Future_Holder<T> FUTURE_HOLDER;
 
-  typedef ACE_Map_Manager<FUTURE_REP*, FUTURE_HOLDER *, ACE_Null_Mutex>
-          FUTURE_MAP;
+  typedef ACE_Pointer_Hash<FUTURE_REP *> FUTURE_REP_HASH;
 
-  typedef ACE_Map_Iterator<FUTURE_REP*, FUTURE_HOLDER *, ACE_Null_Mutex>
-          FUTURE_ITERATOR;
+  typedef ACE_Equal_To<FUTURE_REP *> FUTURE_REP_COMPARE;
 
-  typedef ACE_Map_Entry<FUTURE_REP*, FUTURE_HOLDER *>
-          FUTURE_ENTRY;
+  typedef ACE_Hash_Map_Manager_Ex<FUTURE_REP *,
+                                  FUTURE_HOLDER *,
+                                  FUTURE_REP_HASH,
+                                  FUTURE_REP_COMPARE,
+			          ACE_Null_Mutex> FUTURE_HASH_MAP;
 
-  FUTURE_MAP future_map_;
+  FUTURE_HASH_MAP future_map_;
   // Map of ACE_Futures, subjects, which have not been written to by
   // client's writer thread.
 

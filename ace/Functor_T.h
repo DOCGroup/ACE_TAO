@@ -10,9 +10,9 @@
 //    Functor_T.h
 //
 // = DESCRIPTION
-//     Templatized classes for implementing function objects that are used in 
-//     various places in ACE.  There are currently two major categories of  
-//     function objects in ACE: GOF Command Pattern objects, and STL-style 
+//     Templatized classes for implementing function objects that are used in
+//     various places in ACE.  There are currently two major categories of
+//     function objects in ACE: GOF Command Pattern objects, and STL-style
 //     functors for comparison of container elements.  The command objects
 //     are invoked via an execute () method, while the STL-style functors are
 //     invoked via an operator() () method.
@@ -91,8 +91,20 @@ class ACE_Hash
   //     Function object for hashing
   //
 public:
-  u_long operator () (const TYPE &t) const;  
+  u_long operator () (const TYPE &t) const;
   // Simply calls t.hash ()
+};
+
+template <class TYPE>
+class ACE_Pointer_Hash
+{
+  // = TITLE
+  //
+  //     Function object for hashing pointers
+  //
+public:
+  u_long operator () (TYPE t) const;
+  // Simply returns t.
 };
 
 template <class TYPE>
@@ -100,12 +112,12 @@ class ACE_Equal_To
 {
   // = TITLE
   //
-  //     Function object for comparing two objects of 
+  //     Function object for comparing two objects of
   //     the given type for equality.
   //
 public:
   int operator () (const TYPE &lhs,
-                   const TYPE &rhs) const;  
+                   const TYPE &rhs) const;
   // Simply calls operator==
 };
 
@@ -122,7 +134,6 @@ public:
                    const TYPE &rhs) const;
   // Simply calls operator<
 };
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_T.i"
