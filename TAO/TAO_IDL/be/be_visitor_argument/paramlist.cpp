@@ -90,9 +90,10 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
     }
  
   // Just to make the length var unique.     
-  *os << "CORBA::ULong length_" << node->local_name ()
-      << " = this->parameter_list_.length ();" << be_nl
-      << "this->parameter_list_.length (length_"
+  *os << be_nl
+      << "CORBA::ULong length_" << node->local_name ()
+      << " = parameter_list->length ();" << be_nl
+      << "parameter_list->length (length_"
       << node->local_name () << " + 1);" << be_nl;
 
   // Amazed by the zillion os operators below? Its just to combat
@@ -112,13 +113,13 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
         *os << "(const ::" << bt->name () << "_slice *) ";
       *os << "this->";
       *os << node->local_name () << "_));" << be_nl;
-      *os << "this->parameter_list_[length_"
+      *os << "(*parameter_list)[length_"
           << node->local_name () << "].argument <<= _tao_forany_" ;
       *os << node->local_name () << ";" << be_nl;
     }
   else
     {  
-      *os << "this->parameter_list_[length_"
+      *os << "(*parameter_list)[length_"
           << node->local_name () << "].argument ";
       // Insertion into an Any has some special cases which need to be 
       // dealt with.
@@ -152,17 +153,17 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "this->parameter_list_[length_"
+      *os << "(*parameter_list)[length_"
           << node->local_name () 
           << "].mode = Dynamic::PARAM_IN;" << be_nl;
       break;
     case AST_Argument::dir_OUT:
-      *os << "this->parameter_list_[length_"
+      *os << "(*parameter_list)[length_"
           << node->local_name () 
           << "].mode = Dynamic::PARAM_OUT;" << be_nl;
       break;
     case AST_Argument::dir_INOUT:
-      *os << "this->parameter_list_[length_"
+      *os << "(*parameter_list)[length_"
           << node->local_name () 
           << "].mode = Dynamic::PARAM_INOUT;" << be_nl;
       break;
@@ -172,8 +173,6 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                          "visit_argument - "
                          "Bad context\n"),
                         -1);
-     
-
     }
 
   return 0;

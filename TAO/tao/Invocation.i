@@ -1,7 +1,6 @@
-// This	may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 //
 // $Id$
-//
 
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_Invocation::service_info (void)
@@ -13,6 +12,12 @@ ACE_INLINE CORBA::ULong
 TAO_GIOP_Invocation::request_id	(void)
 {
   return this->op_details_.request_id ();
+}
+
+ACE_INLINE const char *
+TAO_GIOP_Invocation::operation (void)
+{
+  return this->op_details_.opname ();
 }
 
 ACE_INLINE TAO_OutputCDR &
@@ -28,19 +33,57 @@ TAO_GIOP_Invocation::restart_flag (CORBA::Boolean flag)
   this->restart_flag_ =	flag;
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_GIOP_Invocation::forward_reference (void)
+{
+  return CORBA::Object::_duplicate (this->forward_reference_.in ());
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_Invocation::received_location_forward (void) const
+{
+  return this->received_location_forward_;
+}
+
 ACE_INLINE void
-TAO_GIOP_Invocation::init_inconsistent_policies (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Invocation::init_inconsistent_policies (
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (this->inconsistent_policies_,
                     CORBA::PolicyList (0),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 }
 
 ACE_INLINE CORBA::PolicyList *
 TAO_GIOP_Invocation::get_inconsistent_policies (void)
 {
   return this->inconsistent_policies_._retn ();
+}
+
+ACE_INLINE void
+TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
+                                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  /**
+   * Add the profiles in the given stub object to the list of forward
+   * profiles.
+   */
+  if (stubobj == 0)
+    ACE_THROW (CORBA::INTERNAL ());
+
+  // Modify the state as appropriate to include new forwarding profiles.
+  this->endpoint_selector_->forward (this,
+                                     stubobj->base_profiles (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->received_location_forward_ = 1;
 }
 
 // ****************************************************************

@@ -179,8 +179,7 @@ class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
     public:
       friend class CORBA_DomainManager;
       TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy (
-          const char *_tao_operation,
-          IOP::ServiceContextList &_tao_service_context_list,
+          TAO_GIOP_Invocation *_tao_invocation,
           CORBA::Object *_tao_target,
           CORBA::PolicyType& policy_type
         );
@@ -213,7 +212,7 @@ class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
       CORBA::PolicyType &policy_type_;
       void result (CORBA_Policy_ptr  result);
       // update the result
-      CORBA_Policy_ptr  result_;
+      CORBA_Policy_ptr  _result;
     };
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -341,8 +340,7 @@ private:
   public:
     friend class CORBA_ConstructionPolicy;
     TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
-        const char *_tao_operation,
-        IOP::ServiceContextList &_tao_service_context_list,
+        TAO_GIOP_Invocation *_tao_invocation,
         CORBA::Object *_tao_target,
         IR_InterfaceDef *object_type,
         CORBA::Boolean &constr_policy,

@@ -1,20 +1,23 @@
-#include "tao/GIOP_Message_Generator_Parser_10.h"
-#include "tao/GIOP_Utils.h"
+// -*- C++ -*-
 
-#include "tao/GIOP_Message_Headers.h"
+#include "GIOP_Message_Generator_Parser_10.h"
+#include "GIOP_Utils.h"
 
-#include "tao/operation_details.h"
-#include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/debug.h"
-#include "tao/OctetSeqC.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/GIOP_Message_State.h"
+#include "GIOP_Message_Headers.h"
+
+#include "operation_details.h"
+#include "CDR.h"
+#include "Any.h"
+#include "debug.h"
+#include "OctetSeqC.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "TAO_Server_Request.h"
+#include "GIOP_Message_State.h"
+#include "CORBA_String.h"
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_10.inl"
+# include "GIOP_Message_Generator_Parser_10.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, GIOP_Message_Gen_Parser_10, "$Id$")

@@ -57,8 +57,8 @@ be_visitor_operation_interceptors_result::visit_array (be_array *node)
     }
 
   *os << bt->name () <<  "_forany _tao_forany_result"
-      << " (this->result_);" << be_nl
-      << "this->result_val_ <<= _tao_forany_result;"<< be_nl;
+      << " (this->_result);" << be_nl
+      << "(*result_any) <<= _tao_forany_result;"<< be_nl;
 
   return 0;
 }
@@ -68,7 +68,7 @@ be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -78,7 +78,7 @@ be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -88,7 +88,7 @@ be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd 
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -101,7 +101,7 @@ be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 
   // TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  // *os << "this->result_val_ <<= this->result_;";
+  // *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -113,7 +113,7 @@ be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd 
 
   // TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  // *os << "this->result_val_ <<= this->result_;";
+  // *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -125,21 +125,21 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= ";
+  *os << "(*result_any) <<= ";
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "CORBA::Any::from_boolean (this->result_);" << be_nl;
+      *os << "CORBA::Any::from_boolean (this->_result);" << be_nl;
       break;
     case AST_PredefinedType::PT_char:
-      *os << "CORBA::Any::from_char (this->result_);"<<be_nl;
+      *os << "CORBA::Any::from_char (this->_result);"<<be_nl;
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "CORBA::Any::from_wchar (this->result_);"<<be_nl;
+      *os << "CORBA::Any::from_wchar (this->_result);"<<be_nl;
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "CORBA::Any::from_octet (this->result_);"<<be_nl;
+      *os << "CORBA::Any::from_octet (this->_result);"<<be_nl;
       break;
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
@@ -152,7 +152,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
     case AST_PredefinedType::PT_float:
     case AST_PredefinedType::PT_double:
     case AST_PredefinedType::PT_longdouble:
-      *os << "this->result_;"<<be_nl;
+      *os << "this->_result;"<<be_nl;
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -171,7 +171,7 @@ be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }
@@ -181,7 +181,7 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= ";
+  *os << "(*result_any) <<= ";
 
   // we need to make a distinction between bounded and unbounded strings
   if (node->max_size ()->ev ()->u.ulval != 0)
@@ -196,13 +196,13 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
           *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
         }
 
-      *os <<"this->result_, "
+      *os <<"this->_result, "
           << node->max_size ()->ev ()->u.ulval
           << ");";
     }
   else
     {
-      *os << "this->result_; ";
+      *os << "this->_result; ";
     }
 
 return 0;
@@ -213,7 +213,7 @@ be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 
@@ -224,7 +224,7 @@ be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << "this->result_val_ <<= this->result_;";
+  *os << "(*result_any) <<= this->_result;";
 
   return 0;
 }

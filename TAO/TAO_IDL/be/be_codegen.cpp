@@ -421,6 +421,33 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"\n\n";
 
+  // Include the RequestInfo_Util utility header.  Used by the
+  // PortableInterceptor::RequestInfo subclasses.
+  *this->client_stubs_ << "#if TAO_HAS_INTERCEPTORS == 1\n"
+                        << "#include ";
+
+  if (be_global->changing_standard_include_files () == 1)
+    {
+      *this->client_stubs_ << "\"";
+    }
+  else
+    {
+      *this->client_stubs_ << "<";
+    }
+
+  *this->client_stubs_ << "tao/RequestInfo_Util.h";
+
+  if (be_global->changing_standard_include_files () == 1)
+    {
+      *this->client_stubs_ << "\"\n";
+    }
+  else
+    {
+      *this->client_stubs_ << ">\n";
+    }
+
+  *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+
   // Generate the code that includes the inline file if not included in the
   // header file.
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
@@ -632,8 +659,8 @@ TAO_CodeGen::start_server_header (const char *fname)
         << "#include \"tao/PortableServer/PortableServer.h\"\n"
         << "#include \"tao/PortableServer/Servant_Base.h\"\n"
         << "#include \"tao/PortableServer/Collocated_Object.h\"\n"
-	      << "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
-	      << "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
+        << "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
+        << "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
         << "#include \"tao/PortableServer/ServerRequestInfo.h\"\n"
         << "\n";
 
@@ -828,6 +855,34 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << "#include \"tao/PortableServer/Object_Adapter.h\"\n"
     << "#include \"tao/PortableServer/Operation_Table.h\"\n"
     << "\n";
+
+  // Include the RequestInfo_Util utility header.  Used by the
+  // PortableInterceptor::RequestInfo subclasses.
+  *this->server_skeletons_ << "#if TAO_HAS_INTERCEPTORS == 1\n"
+                        << "#include ";
+
+  if (be_global->changing_standard_include_files () == 1)
+    {
+      *this->server_skeletons_ << "\"";
+    }
+  else
+    {
+      *this->server_skeletons_ << "<";
+    }
+
+  *this->server_skeletons_ << "tao/RequestInfo_Util.h";
+
+  if (be_global->changing_standard_include_files () == 1)
+    {
+      *this->server_skeletons_ << "\"\n";
+    }
+  else
+    {
+      *this->server_skeletons_ << ">\n";
+    }
+
+  *this->server_skeletons_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+
 
   // Generate the code that includes the inline file if not included in the
   // header file.

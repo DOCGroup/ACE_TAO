@@ -59,6 +59,10 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   // Start with the current indentation level.
   os->indent ();
 
+  // -----------------------------------------------------------------
+  // Constructor
+  // -----------------------------------------------------------------
+
   // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
   if (node->is_nested ())
@@ -135,8 +139,24 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os << " (" << be_idt << be_idt_nl
-      << "const char *_tao_operation," << be_nl
-      << "IOP::ServiceContextList &_tao_service_context_list";
+      << "TAO_ServerRequest &_tao_server_request," << be_nl;
+
+  be_interface *intf;
+  intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
+
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ss::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
+  // Get the right object implementation.
+  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -161,8 +181,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
-  *os << ": TAO_ServerRequestInfo (_tao_operation, "
-      << "_tao_service_context_list)";
+  *os << ": TAO_ServerRequestInfo (_tao_server_request)," << be_nl
+      << "  _tao_impl (tao_impl)";
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS);
@@ -183,6 +203,9 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   os->decr_indent ();
   *os << be_nl << "{}\n\n";
 
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ServerRequestInfo::arguments()
+  // -----------------------------------------------------------------
   *os << "Dynamic::ParameterList *" << be_nl;
 
   if (node->is_nested ())
@@ -225,10 +248,15 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::arguments (CORBA::Environment &)" << be_idt_nl
+  *os << "::arguments (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "// Generate the arg list on demand" << be_nl;
+      << "// Generate the argument list on demand." << be_nl
+      << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
+      << "TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);"
+      << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl
+      << be_nl;
 
   if (node->argument_count () == 0 ||
       // Now make sure that we have some in and inout
@@ -237,10 +265,13 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
        !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
-      *os << "return 0;\n}\n\n" << be_nl;
+      *os << "return parameter_list;" << be_uidt_nl;
     }
   else
     {
+      *os << "Dynamic::ParameterList_var safe_parameter_list = "
+          << "parameter_list;" << be_nl;
+
       // The insertion operator is different for different nodes.
       // We change our scope to go to the argument scope to
       // be able to decide this.
@@ -260,11 +291,17 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
         delete visitor;
 
-        *os << be_nl << "return &this->parameter_list_;" << be_uidt_nl
-            << "}\n\n";
+        *os << be_nl
+            << "return safe_parameter_list._retn ();" << be_uidt_nl;
     }
 
+  *os << "}\n\n";
+
   os->decr_indent ();
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ServerRequestInfo::exceptions()
+  // -----------------------------------------------------------------
   *os << "Dynamic::ExceptionList *" << be_nl;
 
   if (node->is_nested ())
@@ -307,18 +344,25 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::exceptions (CORBA::Environment &)" << be_idt_nl
+  *os << "::exceptions (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "// Generate the exception list on demand" << be_nl;
+      << "// Generate the exception list on demand." << be_nl
+      << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
+      << "TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);"
+      << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl
+      << be_nl;
 
   if (!node->exceptions ())
     {
-      *os << "return 0;" << be_uidt_nl
-          << "}\n\n";
+      *os << "return exception_list;" << be_uidt_nl;
     }
   else
     {
+      *os << "Dynamic::ExceptionList_var safe_exception_list = "
+          << "exception_list;" << be_nl;
+
       // We change our scope to be able to generate the exceptionlist.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
@@ -337,11 +381,16 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       delete visitor;
 
       *os << be_nl
-          << "return &this->exception_list_;" << be_uidt_nl
-          << "}\n\n";
+          << "return safe_exception_list._retn ();" << be_uidt_nl;
     }
 
+  *os << "}\n\n";
+
   os->decr_indent ();
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ServerRequestInfo::result()
+  // -----------------------------------------------------------------
   *os << "CORBA::Any * " << be_nl;
 
   if (node->is_nested ())
@@ -349,10 +398,10 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       be_decl *parent =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      *os << "POA_" <<parent->full_name () << "::";
+      *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
+  *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
     // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -384,26 +433,41 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::result (CORBA::Environment &)"<< be_idt_nl
+  *os << "::result (CORBA::Environment &ACE_TRY_ENV)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "// Generate the result on demand" << be_nl;
+      << "// Generate the result on demand." << be_nl;
 
   bt = be_type::narrow_from_decl (node->return_type ());
 
   if (this->void_return_type (bt))
     {
-      *os << "CORBA::TypeCode tc (CORBA::tk_void);" << be_nl
-          << "this->result_val_.type (&tc);" << be_nl;
+      // Return an Any with tk_void TypeCode.
+      *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
+          << "CORBA::Any *result_any ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl
+          << "return result_any;" << be_uidt_nl;
     }
   else
     {
+      *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
+          << "CORBA::Any *result_any ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_any (0, ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl
+          << "CORBA::Any_var safe_result_any = "
+          << "result_any;" << be_nl << be_nl;
+
       // Generate the insertion of result into Any.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
       visitor = tao_cg->make_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!visitor || (bt->accept (visitor) == -1))
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -414,11 +478,121 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
 
       delete visitor;
-    }
-  *os << be_nl
-      << "return &this->result_val_;" << be_uidt_nl
-      << "}\n\n";
 
+      *os << be_nl
+          << "return safe_result_any._retn ();" << be_uidt_nl;
+    }
+
+  *os << "}\n\n";
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ServerRequestInfo::target_most_derived_interface()
+  // -----------------------------------------------------------------
+  *os << "char *" << be_nl;
+
+  if (node->is_nested ())
+    {
+      be_decl *parent =
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+
+      *os << "POA_" << parent->full_name () << "::";
+    }
+
+  *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
+
+    // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+
+      // Grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        {
+          *os << "_get";
+        }
+      else
+        {
+          *os << "_set";
+        }
+    }
+
+  *os << "::target_most_derived_interface ("
+      << be_idt << be_idt_nl
+      << "CORBA::Environment &)" << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return" << be_idt_nl
+      << "CORBA::string_dup (this->_tao_impl->_interface_repository_id ());"
+      << be_uidt << be_uidt_nl << "}" << be_nl << be_nl;
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ServerRequestInfo::target_is_a()
+  // -----------------------------------------------------------------
+  *os << "CORBA::Boolean" << be_nl;
+
+  if (node->is_nested ())
+    {
+      be_decl *parent =
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+
+      *os << "POA_" << parent->full_name () << "::";
+    }
+
+  *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
+
+    // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+
+      // Grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        {
+          *os << "_get";
+        }
+      else
+        {
+          *os << "_set";
+        }
+    }
+
+  *os << "::target_is_a (" << be_idt << be_idt_nl
+      << "const char * id," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV)" << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return this->_tao_impl->_is_a (id, ACE_TRY_ENV);"
+      << be_uidt_nl << "}" << be_nl << be_nl;
+
+  // -----------------------------------------------------------------
   os->decr_indent ();
 
   // Update the result.
@@ -500,8 +674,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       os->indent ();
       *os << " result)" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "// update the result " << be_nl
-          << " this->result_ = result;" << be_uidt_nl
+          << "// Update the result." << be_nl
+          << " this->_result = result;" << be_uidt_nl
           << "}\n\n";
     }
 

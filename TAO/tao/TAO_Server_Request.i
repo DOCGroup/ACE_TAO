@@ -129,6 +129,13 @@ TAO_ServerRequest::profile (void)
   return this->profile_;
 }
 
+ACE_INLINE void
+TAO_ServerRequest::forward_location (CORBA::Object_ptr forward_reference)
+{
+  this->forward_location_ =
+    CORBA::Object::_duplicate (forward_reference);
+}
+
 ACE_INLINE CORBA::Object_ptr
 TAO_ServerRequest::forward_location (void)
 {
@@ -170,3 +177,11 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 {
   this->argument_flag_ = flag;
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
+ACE_INLINE size_t &
+TAO_ServerRequest::interceptor_count (void)
+{
+  return this->interceptor_count_;
+}
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */

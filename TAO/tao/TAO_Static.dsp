@@ -635,6 +635,10 @@ SOURCE=.\Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RequestInfo_Util.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
@@ -1928,6 +1932,10 @@ SOURCE=.\Remote_Object_Proxy_Impl.cpp
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RequestInfo_Util.cpp
 # End Source File
 # Begin Source File
 
