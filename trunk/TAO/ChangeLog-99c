@@ -1,3 +1,10 @@
+Tue Sep 21 23:29:30 1999  Mike Moran  <mm4@cs.wustl.edu>
+
+	* tests/Explicit_Event_Loop/: 
+
+	  Added ACE_TRY macros so the test will run without exceptions=1,
+	  and enhanced the documentation and ACE-style compliance.
+	
 Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (create_interface_tc,
