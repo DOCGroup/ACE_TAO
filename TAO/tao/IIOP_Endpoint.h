@@ -150,6 +150,9 @@ private:
   /// Preferred path for this endpoint.
   TAO::IIOP_Endpoint_Info preferred_path_;
 
+  /// Is this endpoint created encodable as part of the IOR?
+  bool is_encodable_;
+
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;

@@ -31,6 +31,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
   , object_addr_ (addr)
   , object_addr_set_ (0)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -47,6 +48,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , object_addr_ (addr)
   , object_addr_set_ (0)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
 }
@@ -58,6 +60,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (void)
   , object_addr_ ()
   , object_addr_set_ (0)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
 }
@@ -71,6 +74,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , object_addr_ ()
   , object_addr_set_ (0)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
   this->priority (priority);
@@ -88,6 +92,7 @@ TAO_SCIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
   , object_addr_ (rhs.object_addr_)
   , object_addr_set_ (rhs.object_addr_set_)
   , preferred_path_  (rhs.preferred_path_)
+  , is_encodable_ (rhs.is_encodable_)
   , next_ (0)
 {
 }
@@ -316,7 +321,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
           TAO_Endpoint *tmp_ep =
             latest->duplicate ();
 
-          latest->next_ = dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
+          latest->next_ = dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
           if (latest->next_ == 0) return count;
 
@@ -331,7 +336,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       TAO_Endpoint *tmp_ep = latest->duplicate ();
 
       latest->next_ =
-        dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
+        dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
       if (latest->next_ == 0) return count;
 
