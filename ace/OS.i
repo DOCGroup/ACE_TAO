@@ -2041,6 +2041,8 @@ ACE_OS::event_wait (ACE_event_t *event)
 #if defined (ACE_WIN32)
   switch (::WaitForSingleObject (*event, INFINITE))
     {
+    case WAIT_OBJECT_0:
+      return 0;
     case WAIT_ABANDONED:
       errno = WAIT_ABANDONED;
       return -1;
