@@ -24,7 +24,6 @@ static const char corbaloc_prefix[] = "corbaloc:";
 int
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
-  cout << "in match prefix" << endl;
   return (ACE_OS::strncmp (ior_string,
                            corbaloc_prefix,
                            sizeof corbaloc_prefix - 1) == 0);
@@ -42,94 +41,145 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
   const char *corbaloc_name =
     ior + sizeof corbaloc_prefix - 1;
 
-  cout << "After removing the prefix: the string is" << corbaloc_name
-       << endl;
-  // What does this function do ????
   // First separates each <obj_addr> from the list of the obj_addr
-  // Then concatenates the obj. key to the end of each one and tries
-  // to find a binding .........
-  // First seperate ...
-
+  // Then concatenates the obj. key to the end of each one and 
+  // tries to find a binding .........
+ 
   // Find the position where '/' seperator btn <obj_addr_list> and
   // <key_string>
 
+  cout << "The corbaloc name is " << corbaloc_name << endl;
   CORBA::ULong count_addr = 0;
   CORBA::ULong pos = 0;
   CORBA::Boolean start_key_string = 1;
 
-  cout << "It is coming here" << endl;
+  const char rir_prefix [] = "rir:/";
 
-  char *key_string = CORBA::string_alloc (sizeof (corbaloc_name));
-  char *key_stringPtr = key_string;
-
-
-  for (const char *i = corbaloc_name; *i != '\0'; ++i)
+  // If the protocol is "rir:", there is no need to do any of this.
+  //
+  if (ACE_OS::strncmp (corbaloc_name, rir_prefix, 
+                       sizeof (rir_prefix)-1) != 0)
     {
-      if (*i == ',')
+      
+      char *key_string = CORBA::string_alloc (sizeof (corbaloc_name));
+      char *key_stringPtr = key_string;
+      
+      for (const char *i = corbaloc_name; *i != '\0'; ++i)
         {
-          // Increment the count of the addresses in the list
-        ++count_addr;
+          if (*i == ',')
+            {
+              // Increment the count of the addresses in the list
+              ++count_addr;
+            }
+          
+          if (*i == '/')
+            {
+              if (*(i+1) == '/')
+                {
+                  ++i;
+                  ++pos;
+                }
+              else if (*(i+1) != '/')
+                {
+                  // This is the last addr and will not be terminated with a
+                  // ',' ..but need to count it too.
+                  ++count_addr;
+                  // Indication that the next characters are to be
+                  // assigned to key_string
+                  start_key_string = 0;
+                }
+            }
+          
+          if (start_key_string == 1)
+            {
+              ++pos;
+            }
+          else
+            {
+              *key_stringPtr = *i;
+              ++key_stringPtr;
+            }
+          
         }
-
-      if (*i == '/' && *(i-1) != '/')
-        {
-          // This is the last addr and will not be terminated with a
-          // ',' ..but need to count it too.
-          ++count_addr;
-          start_key_string = 0;
-        }
-
-      if (start_key_string == 1)
-        {
-          ++pos;
-        }
-      else
-        {
-          *key_stringPtr = *i;
-          ++key_stringPtr;
-        }
-
-    }
-
-  cout << "The position of the seperation btn obj_list and key_string
- is" << pos << endl;
-
-  // Copy the <obj_addr_list> to cloc_name.
-  char *cloc_name = CORBA::string_alloc (pos+1);
-  cloc_name = ACE_OS::strncpy (cloc_name, corbaloc_name, pos);
-
-  ACE_DEBUG ((LM_DEBUG, "The obj_addr_list is %s\n", cloc_name));
-
-  // Declare an array of addr.
-  char *addr [count_addr];
-
-  CORBA::ULong current_addr = 0;
-
-  addr [current_addr] = CORBA::string_alloc (pos);
-  addr [current_addr] = ACE_OS::strtok (cloc_name, ",");
-  addr [current_addr] = ACE_OS::strcat (addr [current_addr], key_string);
-  cout << "The addr[0] is " << addr [current_addr] << endl;
-
-  while ( addr [current_addr] != NULL)
-    {
-      ++current_addr;
-
+      
+      // Copy the <obj_addr_list> to cloc_name.
+      char *cloc_name = CORBA::string_alloc (pos);
+      cloc_name = ACE_OS::strncpy (cloc_name, corbaloc_name, pos);
+      
+      ACE_DEBUG ((LM_DEBUG, "The obj_addr_list is %s\n", cloc_name));
+      
+      // Declare an array of addr.
+      char *addr [count_addr];
+      char *cloc_namePtr;
+      
+      CORBA::ULong current_addr = 0;
+      
       addr [current_addr] = CORBA::string_alloc (pos);
+      // Tokenize using "," as the seperator
+      cloc_namePtr = ACE_OS::strtok (cloc_name, ",");
+      
+      const char file_prefix[] = "iiop://";
+      
+      while (cloc_namePtr != NULL)
+        {
 
-      // Now that presumably I have seperated the fields ... append the
-      // <key_string> at the end of each of them.
-      addr [current_addr] = ACE_OS::strcat (addr [current_addr], key_string);
-      addr [current_addr] = ACE_OS::strtok (NULL, ",");
-      ACE_DEBUG ((LM_DEBUG, "The obj_addr %d is %s\n", current_addr,
-                  addr [current_addr]));
-
+          addr [current_addr] = ACE_OS::strcpy (addr [current_addr],
+                                                "\0");
+          
+          if (ACE_OS::strncmp (cloc_namePtr, file_prefix, 
+                               sizeof (file_prefix)-1) != 0)
+            {
+              // If there is no explicit protocol specified, use the
+              // default "iiop://"
+              addr [current_addr] = ACE_OS::strcat (addr [current_addr],
+                                                    file_prefix);
+              
+            }
+          
+          addr [current_addr] = ACE_OS::strcat(addr [current_addr],
+                                               cloc_namePtr);
+          
+          addr [current_addr] = ACE_OS::strcat (addr [current_addr],
+                                                key_string);
+          
+          addr [current_addr] = ACE_OS::strcat (addr [current_addr],
+                                                "\0");
+          
+          ACE_DEBUG ((LM_DEBUG, "The obj_addr [%d] is %s\n", current_addr,
+                      addr [current_addr]));
+          
+          ++current_addr;
+          
+          addr [current_addr] = CORBA::string_alloc (pos);
+          cloc_namePtr = ACE_OS::strtok (NULL, ",");
+        }
     }
-
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
 
+  if (ACE_OS::strncmp (corbaloc_name, rir_prefix, 
+                       sizeof (rir_prefix)-1) == 0)
+    {
+      // "rir" protocol used ... pass the key string as an
+      // argument to the resolve_initial_references ()
+      const char *key_string =
+        corbaloc_name + sizeof (rir_prefix) -1;
+      
+      ACE_TRY 
+        {
+          ACE_DEBUG ((LM_DEBUG, "The key string is %s\n", key_string));
+          object = orb->resolve_initial_references (key_string, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::SystemException, ex)
+        {
+          ACE_PRINT_EXCEPTION (ex, "CORBALOC_Parser");
+        }
+      ACE_ENDTRY;
+     
+    }
+  
   return object;
-
 }
 
 ACE_FACTORY_DEFINE (TAO_IOR_CORBALOC, TAO_CORBALOC_Parser)
