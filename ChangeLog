@@ -1,3 +1,26 @@
+Wed Dec  3 12:14:51 2003  Steve Huston  <shuston@riverace.com>
+
+	Pulled in these changes from the 5.3 stream:
+
+	Tue Dec  2 14:43:28 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Vector_T.{h cpp i}: Added operator== and operator!= methods
+	  that take the correct vector length into account. The inherited
+	  ACE_Array methods run the whole array max length.
+	
+	Thu Sep 04 12:20:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Vector_T.{h, i, cpp}: Added new ACE_Vector_Iterator<T> class
+	  to correctly detect end of the vector content. Use this new class as
+	  ACE_Vector<>::Iterator. ACE_Vector previously used ACE_Array_Iterator
+	  as the iterator, but it doesn't notice the end of the legit vector
+	  area.
+
+	* tests/Vector_Test.cpp: Added a test of the ACE_Vector::Iterator
+	  range to be sure it gets all legit vector elements, and no more.
+	  Thanks to Yann Steff <Yann.Steff@jci.com> for this test addition
+	  and for diagnosing the failure cause.
+
 Wed Dec  3 15:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Misc/basic_perf.bor:
