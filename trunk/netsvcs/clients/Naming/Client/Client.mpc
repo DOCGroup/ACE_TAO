@@ -1,0 +1,16 @@
+project(Client_Test): acelib {
+  sharedname    = Client_Test
+  dynamicflags += ACE_CLIENT_TEST_BUILD_DLL
+  Source_Files {
+    Client_Test.cpp
+  }
+}
+
+project(main) : aceexe {
+  exename = main
+  libs    += Client_Test
+  after   += Client_Test
+  Source_Files {
+    main.cpp
+  }
+}
