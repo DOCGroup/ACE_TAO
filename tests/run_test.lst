@@ -31,6 +31,7 @@ Capabilities_Test
 CDR_Test
 CDR_File_Test
 CDR_Array_Test
+Codecs_Test
 Collection_Test
 Config_Test
 Conn_Test: !chorus
