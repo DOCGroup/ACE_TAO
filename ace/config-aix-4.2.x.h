@@ -126,6 +126,9 @@
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SIZET_SOCKET_LEN
 
+// Keep an eye on this as the compiler and standards converge...
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 // BSD 4.4 interface fixes nabbed from config-linux.h
 #if !defined (msg_accrights)
 #undef msg_control
