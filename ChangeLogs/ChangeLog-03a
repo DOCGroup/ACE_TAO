@@ -1,3 +1,10 @@
+Mon Sep 30 10:19:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.bin.GNU:
+          Added special part for Kylix. The Kylix linker expects that the
+          object files and the name of the executable are separated using
+          a comma.
+
 Sun Sep 29 08:19:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/examples/SAXPrint/Makefile: Removed inclusion of
