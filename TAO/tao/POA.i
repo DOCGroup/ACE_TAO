@@ -97,7 +97,7 @@ TAO_Creation_Time::creation_time_length (void)
 #endif /* POA_NO_TIMESTAMP */
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
 {
   // Convert seconds and micro seconds into string
@@ -107,7 +107,7 @@ TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
                    creation_time.usec ());
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Creation_Time::TAO_Creation_Time (void)
 {
   ACE_OS::memset (this->time_stamp_,
@@ -189,7 +189,7 @@ TAO_Creation_Time::operator!= (const TAO_Temporary_Creation_Time &rhs) const
   return rhs != *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Temporary_Creation_Time::TAO_Temporary_Creation_Time (void)
   : time_stamp_ (0)
 {
@@ -252,24 +252,6 @@ TAO_POA::create_POA (const TAO_POA::String &adapter_name,
                              env);
 }
 
-ACE_INLINE PortableServer::POA_ptr
-TAO_POA::find_POA (const char *adapter_name,
-                   CORBA::Boolean activate_it,
-                   CORBA::Environment &env)
-{
-  // Don't copy string
-  TAO_POA::String name (adapter_name, 0, 0);
-
-  TAO_POA *result = this->find_POA (name,
-                                    activate_it,
-                                    env);
-
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
-
-  return result->_this (env);
-}
-
 ACE_INLINE TAO_POA *
 TAO_POA::find_POA (const TAO_POA::String &adapter_name,
                    CORBA::Boolean activate_it,
@@ -286,6 +268,24 @@ TAO_POA::find_POA (const TAO_POA::String &adapter_name,
                                      activate_it,
                                      env);
 
+}
+
+ACE_INLINE PortableServer::POA_ptr
+TAO_POA::find_POA (const char *adapter_name,
+                   CORBA::Boolean activate_it,
+                   CORBA::Environment &env)
+{
+  // Don't copy string
+  TAO_POA::String name (adapter_name, 0, 0);
+
+  TAO_POA *result = this->find_POA (name,
+                                    activate_it,
+                                    env);
+
+  if (env.exception () != 0)
+    return PortableServer::POA::_nil ();
+
+  return result->_this (env);
 }
 
 ACE_INLINE TAO_POA *
@@ -585,7 +585,7 @@ TAO_POA_Manager::clone (void)
   return new TAO_POA_Manager;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Strategy_POA::~TAO_Strategy_POA (void)
 {
   delete this->lock_;
@@ -627,7 +627,7 @@ TAO_Strategy_POA::lock (void)
   return *this->lock_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Strategy_POA_Manager::~TAO_Strategy_POA_Manager (void)
 {
   delete this->lock_;
@@ -730,4 +730,3 @@ TAO_POA_Current::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
 {
   this->cookie_ = cookie;
 }
-
