@@ -26,21 +26,7 @@
  */
 
 #include "ace/OS.h"
-#include <stdio.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#ifdef ULTRIX
-#include <fcntl.h>
-#else
-#include <sys/fcntl.h>
-#endif
-#include <time.h>
-#include <signal.h>
-#include <sys/time.h>
-#include <limits.h>
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
@@ -137,6 +123,7 @@ static void compute_sendPattern(void);
 int
 OurCmdRead(char *buf, int size)
 {
+
   int val;
   if (size == 0) return 0;
   if (cmdBytes > 0)
@@ -146,8 +133,10 @@ OurCmdRead(char *buf, int size)
     cmdBuffer += size;
     return 0;
   }
-  while ((val = ACE_OS::read (cmdSocket, (buf), (size))) <= 0)
+  errno =0;
+  while ((val = ACE_OS::read (cmdSocket, buf, (size))) <= 0)
     {
+    ACE_OS::printf("val is: %d\n", val);
     if (val == -1 && errno == EINTR) return 1;
     if (!val) {
      ACE_OS::perror ("CTR error, EOF reached unexpected within CmdRead()");
@@ -156,7 +145,7 @@ OurCmdRead(char *buf, int size)
      ACE_OS::perror ("CTR CmdRead() from UI through CmdSocket");
     }
     ACE_OS::exit (1);
-  }
+  } 
   return 0;
 }
 
@@ -806,7 +795,7 @@ static void on_exit_routine(void)
 int CTRmain(int argc,
             char **argv)
 {
-  int sv[2];
+  ACE_HANDLE sv[2];
   extern void set_exit_routine_tag(int tag);
 
 

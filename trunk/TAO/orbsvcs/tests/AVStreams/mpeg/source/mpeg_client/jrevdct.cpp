@@ -183,7 +183,7 @@ j_rev_dct_sparse (DCTBLOCK data, int pos)
   register DCTELEM *dataptr;
   short int val;
   DCTELEM *ndataptr;
-  int scale, coeff, rr;
+  int /*scale,*/ coeff, rr;
   register int *dp;
   register int v;
 

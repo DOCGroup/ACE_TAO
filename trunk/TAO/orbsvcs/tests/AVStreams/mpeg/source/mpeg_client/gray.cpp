@@ -53,7 +53,7 @@ GrayDitherImage(unsigned char *lum, unsigned char *cr,
 		unsigned char *cb, unsigned char *out,
 		int h, int w)
 {
-
+  ACE_UNUSED_ARG(cr); ACE_UNUSED_ARG(cb);
   int i, max = w*h/16;
 
   for (i=0; i<max; i++) {

@@ -183,6 +183,7 @@ MonoDitherImage(register unsigned char *lum, unsigned char *cr,
 		unsigned char *cb, unsigned char *out,
 		int h, int w)
 {
+  ACE_UNUSED_ARG(cr); ACE_UNUSED_ARG(cb);
   register unsigned int bit;
   register unsigned int data;
   register int j;
@@ -237,6 +238,7 @@ MonoThresholdImage(unsigned char *lum, unsigned char *cr,
 		   unsigned char *cb, unsigned char *out,
 		   int h, int w)
 {
+  ACE_UNUSED_ARG(cr); ACE_UNUSED_ARG(cb);
   unsigned char	bit;
   unsigned char	data;
 
