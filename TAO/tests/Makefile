@@ -25,7 +25,8 @@ DIRS  = CDR \
         ORB_init \
         Smart_Proxies \
         Nested_Event_Loop \
-        Leader_Followers
+        Leader_Followers \
+	Object_Loader
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

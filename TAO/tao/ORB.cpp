@@ -31,6 +31,7 @@
 #include "tao/POA.h"
 #include "tao/Request.h"
 #include "tao/MProfile.h"
+#include "tao/Object_Loader.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #  include "tao/InterfaceC.h"
@@ -68,6 +69,7 @@ ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
+static const char dll_prefix[] = "DLL:";
 
 // = Static initialization.
 
@@ -1686,7 +1688,7 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
-  
+
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1696,6 +1698,11 @@ CORBA_ORB::string_to_object (const char *str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1,
+                                       ACE_TRY_ENV);
+  else if (ACE_OS::strncmp (str,
+                            dll_prefix,
+                            sizeof dll_prefix - 1) == 0)
+    return this->dll_string_to_object (str + sizeof dll_prefix - 1,
                                        ACE_TRY_ENV);
   else
     return this->url_ior_string_to_object (str, ACE_TRY_ENV);
@@ -1823,7 +1830,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
-  
+
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
@@ -1867,6 +1874,29 @@ CORBA_ORB::file_string_to_object (const char* filename,
 
   return object;
 }
+
+// ****************************************************************
+
+CORBA::Object_ptr
+CORBA_ORB::dll_string_to_object (const char *str,
+                                 CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance (str);
+  if (loader == 0)
+    {
+      ACE_THROW_RETURN
+        (CORBA::INV_OBJREF
+         (CORBA_SystemException::_tao_minor_code
+          (TAO_NULL_POINTER_MINOR_CODE, 0),
+          CORBA::COMPLETED_NO),
+         CORBA::Object::_nil ());
+    }
+
+  return loader->create_object (this, ACE_TRY_ENV);
+}
+
+// ****************************************************************
 
 // Convert an URL style IOR in an object
 

@@ -190,7 +190,8 @@ ORB_CORE_FILES = \
   GIOPC \
   BoundsC \
   TAOC \
-  TAOS
+  TAOS \
+  Object_Loader
 
 DYNAMIC_ANY_FILES =
 
