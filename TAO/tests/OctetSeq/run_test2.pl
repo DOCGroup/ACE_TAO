@@ -9,7 +9,7 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfile = PerlACE::LocalFile ("test2.ior");
 
 unlink $iorfile;
 
