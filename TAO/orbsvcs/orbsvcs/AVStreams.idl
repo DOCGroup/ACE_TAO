@@ -106,12 +106,12 @@ module AVStreams
   exception notSupported 
     {
       // Used to indicate that an operation is not supported.
-    }
+    };
 
   exception PropertyException 
     {
       // Property exception: raised by VDev::configure ().
-    }
+    };
 
   exception FPError 
     { 
