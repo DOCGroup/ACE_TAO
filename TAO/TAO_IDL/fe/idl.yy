@@ -1132,12 +1132,33 @@ unary_expr
 primary_expr
         : scoped_name
         {
-          /*
-           * An expression which is a scoped name is not resolved now,
-           * but only when it is evaluated (such as when it is assigned
-           * as a constant value)
-           */
-          $$ = idl_global->gen()->create_expr($1);
+          // An expression which is a scoped name is not resolved now,
+          // but only when it is evaluated (such as when it is assigned
+          // as a constant value).
+          UTL_Scope *s = idl_global->scopes()->top_non_null ();
+          AST_Decl *d = 0;
+          AST_Constant *c = 0;
+
+          d = s->lookup_by_name ($1,
+                                 1);
+
+          if (d != 0)
+            {
+              c = AST_Constant::narrow_from_decl (d);
+            }
+
+          // If an array dim, string bound, or sequence bound is an
+          // IDL constant, the constant's value and type must be
+          // assigned to this expression so they can be checked later.
+          if (c != 0)
+            {
+              $$ = idl_global->gen()->create_expr (c->constant_value (),
+                                                   c->et ());
+            }
+          else
+            {
+              $$ = idl_global->gen()->create_expr ($1);
+            }
         }
         | literal
         | '(' const_expr ')'
@@ -1191,8 +1212,56 @@ literal
 positive_int_expr :
         const_expr
         {
-            $1->evaluate(AST_Expression::EK_const);
-            $$ = idl_global->gen()->create_expr($1, AST_Expression::EV_ulong);
+          int good_expression = 1;
+
+          switch ($1->ev ()->et)
+          {
+            case AST_Expression::EV_ushort:
+              if ($1->ev ()->u.usval == 0)
+                {
+                  good_expression = 0;
+                }
+              break;
+            case AST_Expression::EV_ulong:
+              if ($1->ev ()->u.ulval == 0)
+                {
+                  good_expression = 0;
+                }
+              break;
+            case AST_Expression::EV_ulonglong:
+              if ($1->ev ()->u.ullval == 0)
+                {
+                  good_expression = 0;
+                }
+              break;
+            case AST_Expression::EV_octet:
+              if ($1->ev ()->u.oval == 0)
+                {
+                  good_expression = 0;
+                }
+              break;
+            case AST_Expression::EV_bool:
+              if ($1->ev ()->u.bval == 0)
+                {
+                  good_expression = 0;
+                }
+              break;
+            default:
+              good_expression = 0;
+              break;
+          }
+
+          if (good_expression)
+            {
+              $1->evaluate (AST_Expression::EK_const);
+              $$ = 
+                idl_global->gen()->create_expr ($1, 
+                                                AST_Expression::EV_ulong);
+            }
+          else
+            {
+              idl_global->err ()->syntax_error (idl_global->parse_state ());
+            }
         }
         ;
 
