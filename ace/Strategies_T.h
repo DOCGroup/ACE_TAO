@@ -765,11 +765,12 @@ public:
 
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version). This method needs to be public
-  // as it is used in the cleanup of handlers where teh locked version causes 
+  // as it is used in the cleanup of handlers where teh locked version causes
   // a deadlock.
 
-  virtual int cleanup_hint (const void *recycling_act);
-  // Cleanup hint.
+  virtual int cleanup_hint (const void *recycling_act,
+                            void **act_holder = 0);
+  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
   // = Define some useful typedefs.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
@@ -826,8 +827,9 @@ protected:
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
   // Get/Set <recycle_state> (non-locking version).
 
-  virtual int cleanup_hint_i (const void *recycling_act);
-  // Cleanup hint.
+  virtual int cleanup_hint_i (const void *recycling_act,
+                              void **act_holder);
+  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
   // = Helpers
   int check_hint_i (SVC_HANDLER *&sh,

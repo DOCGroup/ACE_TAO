@@ -28,7 +28,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::open");
 
-  if (this->delete_svc_handler_ 
+  if (this->delete_svc_handler_
       && this->svc_handler_ != 0)
     delete this->svc_handler_;
 
@@ -641,6 +641,11 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
           // of the completion of connect().
           if (errno == EWOULDBLOCK)
             errno = ENOTSUP;
+
+          // Close the svc handler and reset <sh>.
+          sh->close (0);
+          sh = 0;
+
           return -1;
         }
       else
@@ -649,7 +654,13 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
           if (this->connection_map_.bind (search_addr,
                                           sh,
                                           entry) == -1)
-            return -1;
+            {
+              // Close the svc handler and reset <sh>.
+              sh->close (0);
+              sh = 0;
+
+              return -1;
+            }
 
           // Set the recycler and the recycling act
           this->assign_recycler (sh, this, entry);
@@ -970,18 +981,26 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_c
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint (const void *recycling_act)
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint (const void *recycling_act,
+                                                                                     void **act_holder)
 {
   // Excluded other threads from changing cache while we take this
   // entry out.
   ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
-  return this->cleanup_hint_i (recycling_act);
+  return this->cleanup_hint_i (recycling_act,
+                               act_holder);
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint_i (const void *recycling_act)
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint_i (const void *recycling_act,
+                                                                                       void **act_holder)
 {
+  // Reset the <*act_holder> in the confines and protection of the
+  // lock.
+  if (act_holder)
+    *act_holder = 0;
+
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
 

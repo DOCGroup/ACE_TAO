@@ -412,11 +412,10 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect");
 
-  SH* new_sh = sh;
   // If the user hasn't supplied us with a <SVC_HANDLER> we'll use the
   // factory method to create one.  Otherwise, things will remain as
   // they are...
-  if (this->make_svc_handler (new_sh) == -1)
+  if (this->make_svc_handler (sh) == -1)
     return -1;
 
   ACE_Time_Value *timeout;
@@ -429,7 +428,7 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
 
   int result;
   if (sh_copy == 0)
-    result = this->connect_svc_handler (new_sh,
+    result = this->connect_svc_handler (sh,
                                         remote_addr,
                                         timeout,
                                         local_addr,
@@ -437,7 +436,7 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
                                         flags,
                                         perms);
   else
-    result = this->connect_svc_handler (new_sh,
+    result = this->connect_svc_handler (sh,
                                         *sh_copy,
                                         remote_addr,
                                         timeout,
@@ -459,7 +458,6 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           // here because if something goes wrong that will reset
           // errno this will be detected by the caller (since -1 is
           // being returned...).
-          sh = new_sh;
           this->create_AST (sh, synch_options);
         }
       else
@@ -468,15 +466,14 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           ACE_Errno_Guard error (errno);
           // Make sure to close down the Channel to avoid descriptor
           // leaks.
-          if (new_sh)
-            new_sh->close (0);
+          if (sh)
+            sh->close (0);
         }
       return -1;
     }
   else
     {
       // Activate immediately if we are connected.
-      sh = new_sh;
       return this->activate_svc_handler (sh);
     }
 }

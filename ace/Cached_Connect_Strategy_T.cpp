@@ -50,7 +50,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
 #if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   cleanup ();
-#else 
+#else
   // Close down all cached service handlers.
   for (ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
@@ -188,6 +188,10 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
                                 flags,
                                 perms) == -1)
         {
+          // Close the svc handler and reset <sh>.
+          sh->close (0);
+          sh = 0;
+
           return -1;
         }
       else
@@ -196,7 +200,13 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
           if (this->connection_cache_.bind (search_addr,
                                             sh,
                                             entry) == -1)
-            return -1;
+            {
+              // Close the svc handler and reset <sh>.
+              sh->close (0);
+              sh = 0;
+
+              return -1;
+            }
 
           // Set the recycler and the recycling act
           this->assign_recycler (sh, this, entry);
@@ -401,8 +411,14 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::mark_as_closed_i (const void *recycling_
 }
 
 template <ACE_T1> int
-ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup_hint_i (const void *recycling_act)
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup_hint_i (const void *recycling_act,
+                                                        void **act_holder)
 {
+  // Reset the <*act_holder> in the confines and protection of the
+  // lock.
+  if (act_holder)
+    *act_holder = 0;
+
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
