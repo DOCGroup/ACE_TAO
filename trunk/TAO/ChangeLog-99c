@@ -1,3 +1,25 @@
+Wed Apr 28 03:20:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.{h,i,cpp}: Added a new class
+	  CORBA_ExceptionList_var and changed the class
+	  CORBA_ExceptionList to enable reference counting.
+	  Fixed the constructor's signature of all CORBA_SystemException's
+	  derived classes.  Thanks to
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Added a typedef
+	  TAO_EC_Unlock to avoid MSVC errors.
+	  (reactive_push_to_consumer): Declared reverse_lock as
+	  TAO_EC_Unlock.
+
+	* tao/corbafwd.h: Added typedef of ExceptionList_ptr and
+	  ExceptionList_var in CORBA's namespace.
+	  Added a macro definition TAO_DEFAULT_MINOR_CODE.
+
+	* orbsvcs/orbsvcs/Trader/Locking.h: Changed system exception
+	  initialization signature using TAO_DEFAULT_MINOR_CODE.
+
+	* lots of *.cpp files: Fixed system exception instantiations.
+
 Wed Apr 28 02:07:42 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* created the directories orbsvcs/examples/CosEC/Factory
