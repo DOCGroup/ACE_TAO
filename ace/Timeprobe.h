@@ -97,7 +97,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
 #  define ACE_TIMEPROBE_PRINT ACE_TIMEPROBE_SINGLETON::instance ()->print_times ()
 #  define ACE_TIMEPROBE_PRINT_ABSOLUTE ACE_TIMEPROBE_SINGLETON::instance ()->print_absolute_times ()
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static int ace_timeprobe_##descriptions##_return = ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static int ace_timeprobe_##descriptions##_return = ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id);
 #  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
 #else /* ACE_ENABLE_TIMEPROBES */
