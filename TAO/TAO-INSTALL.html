@@ -42,14 +42,14 @@
 
 <P>Any UNIX/POSIX/Win32 variation is a potential target platform for
 ACE.  If you have <A
-HREF="http://www.cs.wustl.edu/~schmidt/docs/ACE-porting.html">porting
+HREF="../docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the ACE wrappers on the
 platforms shown above please send email to either <A
 HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
 try to help you fix the problems.  You can also submit bug reports and
 enhancement requests in our
-<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a>.<P>
+<a href="../docs/usage-bugzilla.html">bug tracking system</a>.<P>
 
 TAO can be obtained <A
 HREF="http://www.cs.wustl.edu/~schmidt/TAO-obtain.html">electronically</A>
@@ -70,7 +70,7 @@ likely unpredictable and erroneous results. <P>
 
 <OL>
   <LI>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in
-      the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+      the <a href="../ACE-INSTALL.html">ACE
       installation notes</A>.<P>
 
   <LI>Build and install ACE under <CODE>$ACE_ROOT</CODE>.<P>
@@ -130,7 +130,7 @@ GNU Make can be obtained from various places in source form.<P>
 
 If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
+href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
 
 Cross-compiling TAO is not much different than building it for
 self-host.  The one major difference is that TAO's IDL compiler must
@@ -196,7 +196,7 @@ be found in the <a href="docs/compiler.html#idl_env">TAO_IDL documentation.</a><
 
 <P>It is also advisable to set either the <CODE>ACE_ROOT</CODE> environment
 variable as outlined in the
-<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+<a href="../ACE-INSTALL.html">ACE
 installation notes</A> or the <code>TAO_ROOT</code> environment variable.
 This is only required if you are planning to use the &lt;orb.idl&gt;
 standard include in your IDL code.  Notice that some of the TAO services
@@ -209,7 +209,7 @@ href="http://www.torus-software.com/corba/">CORBA Page</a>
 which contains very helpful information on setting MSVC project
 settings for TAO applications.</P>
 
-Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set
+Remember to <a href="../ACE-INSTALL.html">set
 up ACE</A> before building TAO.
 
 <H4>Visual C++ 5.0/6.0</H4>
@@ -244,21 +244,9 @@ files in the correct place.</P>
 <H4><A NAME="taoace">TAOACE.dsw and other collection dsw files</A></H4>
 
 <P>TAOACE.dsw is a Visual C++ 5.0/6.0 workspace that loads the projects
-ACE, TAO, TAO_IDL (the compiler), gperf, the Naming Service executable, and
-the orbsvcs libraries needed by the Naming Service. </P>
-
-<P>TAOACE.dsw does not compile all the libraries and services though.  For
-this you'll also need to load <CODE>orbsvcs\orbsvcs\orbsvcs.dsw</CODE> and 
-<CODE>orbsvcs\services.dsw</CODE>.  Like TAOACE, these workspaces have
-dependencies set up between their processes, so they get compiled in the
-right order (but you still need to make sure that you compile TAOACE before
-orbsvcs, and orbsvcs before services).</P>
-
-<P>The difference between orbsvcs and services is that orbsvcs.dsw produces 
-the libraries for use of the services within executables, whereas 
-services.dsw creates separate executables for some of the services. With
-orbsvcs you get the ability to have colocated services, and with services
-you get stand-alone services.</P>
+ACE, TAO, TAO_IDL (the compiler), gperf, the orb services libraries, and
+the standalone executables (such as Naming Service, etc.).  It can be 
+used to build all the files needed to build/run TAO applications.</P>
 
 <H4>Borland C++ Builder</H4> <P>
 
@@ -283,18 +271,18 @@ C/C++ settings under Input.</P>
 <H4>Creating Static Libraries (*.lib)</H4>
 
 <P>TAO, orbsvcs, TAO_IDL, and the Simple Test all have extra project files
-for static library builds.  TAOACE_static.dsw contains all these projects,
-and is set up much like <A HREF="#taoace">TAOACE.dsw</A>.  To use the static
-libraries in a project, make sure to the following settings are used in
-the Project Settings.</P>
+for static library builds.  TAOACE_static.dsw contains some of these projects,
+and is set up much like <A HREF="#taoace">TAOACE.dsw</A>, except that there
+are not as many static projects as their are dynamic projects and their 
+isn't the same dependencies set up.</P>
+
+<P> To use the static libraries in a project, make sure to the following 
+settings are used in the Project Settings.</P>
 
 <UL>
   <LI><strong>C/C++ | General:</strong> Add the Preprocessor Definitions
-      <CODE>TAO_HAS_DLL=0</CODE>, <CODE>ACE_HAS_DLL=0</CODE> and
-      <CODE>__ACE_INLINE__=0</CODE>
-  <LI><strong>C/C++ | Code Generation:</strong> Change Run-time
-      library to <CODE>Debug Multithreaded</CODE> (or
-      <CODE>Multithreaded</CODE> for Release)
+      <CODE>ACE_HAS_DLL=0</CODE>, <CODE>ACE_OS_HAS_DLL=0</CODE> and whatever
+	  other libraries that are included (such as <CODE>TAO_HAS_DLL=0</CODE>)
   <LI><strong>Link:</strong> Link with the static libs, such as
       TAOs.lib or TAOsd.lib
 </UL>
