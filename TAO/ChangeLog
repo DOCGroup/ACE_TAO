@@ -1,3 +1,9 @@
+Fri Oct 22 17:43:45 2004  Olli Savia  <ops@iki.fi>
+
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/options.cpp:
+          Added explicit static template member instantiations.
+
 Fri Oct 22 08:18:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Muxed_GIOP_Versions/server.cpp:
