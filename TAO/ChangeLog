@@ -9,12 +9,18 @@ Mon Nov 18 14:50:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
 
           Added the operations of Components::CCMObject to the operation
           table and *_skel method generation for component equivalent 
           interfaces. Thanks to Nanbor <nanbor@cse.wustl.edu> for uncovering
           this bug.
+
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_sh.h:
+
+          Added conditional generation of AMH classes for component 
+          equivalent interfaces.
 
         * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
 
