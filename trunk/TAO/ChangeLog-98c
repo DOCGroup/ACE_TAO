@@ -1,3 +1,29 @@
+Tue Jan 05 15:40:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb):
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init):
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+	  Removed explicit call to <TAO_Internal::open_services> when
+	  building static lib version on Win32 since we can now use them
+	  as static service (and configure them thru svc.conf.static
+	  file.)
+
+	* performance_tests/Cubit/TAO/IDL_Cubit/svc.conf.static:
+	* performance_tests/Cubit/TAO/MT_Cubit/svc.conf.static: Added two
+	  example svc.conf files to show how to use static services.
+
+	* tao/orbconf.h: Changed the format of XXX_FACTORY_ARGS strings for
+	  platforms without svc.conf support to a single char string.
+	  These entries should look like this now:
+
+	   "static TAO_Foobar_Factory \"-ORBsettings a -ORBset b\""
+
+	* tao/TAO_Internal.{h,cpp}: Removed method open_services which
+	  takes separate argument lists for each of the TAO default
+	  service.  Service initialization is now done in a more general
+	  way.
+
 Tue Jan 05 14:32:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object.i (_narrow): _narrow must increase the reference
