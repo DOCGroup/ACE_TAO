@@ -131,7 +131,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
     }
 
   // for anonymous arrays, the type name has a _ prepended. We compute the
-  // fullname with or without the underscore and use it later on.
+  // full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
@@ -148,18 +148,18 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
         {
           be_decl *parent =
                  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", bt->fullname ());
+          ACE_OS::sprintf (fname, "_%s", bt->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", bt->fullname ());
+      ACE_OS::sprintf (fname, "%s", bt->full_name ());
     }
 
   // set method

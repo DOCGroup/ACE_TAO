@@ -81,7 +81,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
                       -1);
 
   // Generate the scope::operation name.
-  *os << parent->fullname ()
+  *os << parent->full_name ()
       << "::"
       << "sendc_"
       << node->local_name ()->get_string ();
@@ -369,7 +369,7 @@ be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () <<
+  *os << node->flat_name () <<
     "_paramdata [] = " << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -390,7 +390,7 @@ be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
     }
   *os << "\n";
   os->decr_indent ();
-  *os << "}; // " << node->flatname () << "_paramdata\n\n";
+  *os << "}; // " << node->flat_name () << "_paramdata\n\n";
 
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
@@ -423,7 +423,7 @@ be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname ()
+  *os << node->flat_name ()
       << "_calldata = " << be_nl
       << "{"
       << "\"";
@@ -461,7 +461,7 @@ be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_paramdata, ";
+  *os << node->flat_name () << "_paramdata, ";
 
       // insert exception list (if any) - node for attributes
   if (this->ctx_->attribute ())
@@ -471,7 +471,7 @@ be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
       if (node->exceptions ())
         {
           *os << node->exceptions ()->length ()
-              << ", _tao_" << node->flatname () << "_exceptiondata};\n\n";
+              << ", _tao_" << node->flat_name () << "_exceptiondata};\n\n";
         }
       else
         *os << "0, 0};\n\n";
@@ -537,7 +537,7 @@ be_interpretive_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_calldata," << be_nl
+  *os << node->flat_name () << "_calldata," << be_nl
       << "_tao_arguments" << be_uidt_nl
       << ");\n";
 
@@ -731,7 +731,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
     {
       if (node->exceptions ())
         {
-          *os << "_tao_call.invoke (_tao_" << node->flatname ()
+          *os << "_tao_call.invoke (_tao_" << node->flat_name ()
               << "_exceptiondata, "
               << node->exceptions ()->length ()
               << ", ACE_TRY_ENV);";

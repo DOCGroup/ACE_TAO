@@ -9,8 +9,9 @@
 
 ACE_RCSID(Latency, test_i, "$Id$")
 
-void
-Test_i::test_method (CORBA::Environment&) ACE_THROW_SPEC (())
+CORBA::ULongLong
+Test_i::test_method (CORBA::ULongLong stamp,
+                     CORBA::Environment&) ACE_THROW_SPEC (())
 {
   ACE_Time_Value tv (0, 0);
   for (int i = 0; i != this->workload_; ++i)
@@ -19,6 +20,7 @@ Test_i::test_method (CORBA::Environment&) ACE_THROW_SPEC (())
       ACE::is_prime (n, 2, n / 2);
       ACE_OS::sleep (tv);
     }
+  return stamp;
 }
 
 void

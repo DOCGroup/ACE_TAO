@@ -44,10 +44,11 @@ be_visitor_interface_direct_collocated_ss::~be_visitor_interface_direct_collocat
 
 int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   this->ctx_->node (node);
 
+  os->indent ();
   *os << node->full_coll_name (be_interface::DIRECT) << "::"
       << node->local_coll_name (be_interface::DIRECT) << " (\n";
 

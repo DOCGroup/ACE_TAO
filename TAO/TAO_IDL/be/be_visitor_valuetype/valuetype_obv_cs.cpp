@@ -62,7 +62,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       os->indent ();
       *os << "CORBA::Boolean " << be_nl
           << node->full_obv_skel_name ()
-          << "::_tao_marshal__" << node->flatname ()
+          << "::_tao_marshal__" << node->flat_name ()
           <<    " (TAO_OutputCDR &strm)"
           << "{" << be_idt_nl
           <<   "return " << node->full_obv_skel_name ()
@@ -71,7 +71,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
       *os << "CORBA::Boolean "
           << node->full_obv_skel_name ()
-          << "::_tao_unmarshal__" << node->flatname ()
+          << "::_tao_unmarshal__" << node->flat_name ()
           <<    " (TAO_InputCDR &strm)"
           << "{" << be_idt_nl
           <<   "return " << node->full_obv_skel_name ()

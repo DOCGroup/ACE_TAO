@@ -430,23 +430,24 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
-      
     case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CH);
       break;
-
+    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CS);
+      break;
     case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH);
       break;
-
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS:
+   case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS);
       break;
-
-    case TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_CH:
-      ctx.state (TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH);
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CS);
       break;
-
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CH);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:

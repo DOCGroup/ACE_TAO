@@ -60,7 +60,7 @@ public:
 
   void dump_stats (const char* msg, ACE_UINT32 gsf);
   // Accumulate the throughput statistics into <throughput>
-  
+
   int svc (void);
   // Run the test...
 
@@ -179,8 +179,8 @@ Client::svc (void)
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
-          server_->test_method (ACE_TRY_ENV);
+          ACE_hrtime_t latency_base =
+            server_->test_method (ACE_OS::gethrtime (), ACE_TRY_ENV);
           ACE_hrtime_t now = ACE_OS::gethrtime ();
 
           ACE_TRY_CHECK;

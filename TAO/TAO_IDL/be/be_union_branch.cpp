@@ -95,7 +95,8 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   // we must prefix the enum value with something...
   be_decl* decl =
     scope->decl ();
-  *os << decl->fullname () << "::" << e->n ();
+
+  *os << decl->full_name () << "::" << e->n ();
   return 0;
 }
 
@@ -113,7 +114,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
                          "computing default value failed\n"),
                         -1);
     }
-  
+
   switch (bu->udisc_type ())
     {
       case AST_Expression::EV_short:
@@ -158,7 +159,6 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
                            "bad or unimplemented discriminant type\n"),
                           -1);
     }
-
   return 0;
 }
 

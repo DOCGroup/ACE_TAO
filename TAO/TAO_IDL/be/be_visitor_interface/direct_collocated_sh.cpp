@@ -46,7 +46,7 @@ int be_visitor_interface_direct_collocated_sh::visit_interface (be_interface *no
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flatname (), "_direct_collocated");
+  os->gen_ifdef_macro (node->flat_name (), "_direct_collocated");
 
   // output the class defn
   os->indent ();

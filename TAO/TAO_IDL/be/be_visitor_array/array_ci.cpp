@@ -126,8 +126,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_var", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_var", node->full_name ());
       ACE_OS::sprintf (lname, "%s_var",
                        node->local_name ()->get_string ());
     }
@@ -139,17 +139,17 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_var", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_var", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_var",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_var", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_var", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_var",
                            node->local_name ()->get_string ());
         }
@@ -335,8 +335,8 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_out", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_out", node->full_name ());
       ACE_OS::sprintf (lname, "%s_out",
                        node->local_name ()->get_string ());
     }
@@ -348,17 +348,17 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_out", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_out", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_out",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_out", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_out", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_out",
                            node->local_name ()->get_string ());
         }
@@ -469,8 +469,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_forany", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_forany", node->full_name ());
       ACE_OS::sprintf (lname, "%s_forany",
                        node->local_name ()->get_string ());
     }
@@ -482,17 +482,17 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_forany", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_forany", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_forany",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_forany", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_forany", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_forany",
                            node->local_name ()->get_string ());
         }

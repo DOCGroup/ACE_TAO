@@ -21,7 +21,7 @@ static int quiet = 0;
 static int number_of_threads = 1;
 // Number of client threads.
 
-class Client_Task : public ACE_Task_Base
+class Client_Task
 {
 public:
   Client_Task (client_ptr c,
@@ -169,17 +169,8 @@ main (int argc,
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());
-
-      result = client_tasks.activate (THR_BOUND,
-                                      number_of_threads);
-
-      if (result != 0)
-        return result;
-
-      result = ACE_Thread_Manager::instance ()->wait ();
-
-      if (result != 0)
-        return result;
+      
+      client_tasks.svc ();
 
       if (shutdown_server)
         {

@@ -13,10 +13,14 @@ const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
 
+int sleep_flag = 0;
+
+ACE_Time_Value sleep_time (0, 10000);
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:i:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -30,6 +34,9 @@ parse_args (int argc, char *argv[])
         break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 's':
+        sleep_flag = 1;
         break;
       case '?':
       default:
@@ -204,14 +211,26 @@ Client::svc (void)
 
       for (int i = 0; i < this->niterations_; ++i)
         {
+          // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
-          server_->test_method (ACE_TRY_ENV);
+
+          // Invoke method.
+          server_->test_method (latency_base,
+                                ACE_TRY_ENV);
+
+          // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
+
+          // Record statistics.
+          this->throughput_.sample (now - throughput_base,
+                                    now - latency_base);
 
           ACE_TRY_CHECK;
 
-          this->throughput_.sample (now - throughput_base,
-                                    now - latency_base);
+          // Sleep for 10 msecs.
+          if (sleep_flag)
+            ACE_OS::sleep (sleep_time);
+
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));

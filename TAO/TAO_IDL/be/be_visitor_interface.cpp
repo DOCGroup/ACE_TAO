@@ -45,10 +45,13 @@
 #include "be_visitor_interface/cdr_op_cs.cpp"
 #include "be_visitor_interface/ami_handler_fwd_ch.cpp"
 #include "be_visitor_interface/ami_handler_fwd_ci.cpp"
-#include "be_visitor_interface/ami_handler_servant_ch.cpp"
-#include "be_visitor_interface/ami_handler_servant_cs.cpp"
 #include "be_visitor_interface/ami_handler_stub_ch.cpp"
 #include "be_visitor_interface/ami_handler_stub_cs.cpp"
+
+#if 0 /* We are using normal servant code */
 #include "be_visitor_interface/collocated_ami_handler_ch.cpp"
+#include "be_visitor_interface/ami_handler_servant_ch.cpp"
+#include "be_visitor_interface/ami_handler_servant_cs.cpp"
+#endif /* 0 */
 
 ACE_RCSID(be, be_visitor_interface, "$Id$")
