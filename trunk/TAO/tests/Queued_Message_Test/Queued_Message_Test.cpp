@@ -9,6 +9,7 @@
 // ============================================================================
 
 #include "tao/Asynch_Queued_Message.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(tests, Queued_Message_Test, "$Id$")
 
