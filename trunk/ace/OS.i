@@ -2630,8 +2630,9 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   state.relock_count_ = 0;
   while (m->LockCount > 0
 #      if !defined (ACE_HAS_WINCE)    /* WinCE doesn't have RecursionCount */
-         && m->RecursionCount > 1)
+         && m->RecursionCount > 1
 #      endif
+         )
     {
       // This may fail if the current thread doesn't own the mutex. If it
       // does fail, it'll be on the first try, so don't worry about resetting
