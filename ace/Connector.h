@@ -333,6 +333,21 @@ public:
 
   virtual int close (void);
   // Close down the Connector
+  
+  // = Define some useful typedefs traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> 
+          CREATION_STRATEGY;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          CONNECT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          SUPER;
+
+  // = Strategies accessors 
+  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
+  virtual ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *connect_strategy (void) const;
+  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
 
 protected:
   // = The following three methods define the <Connector>'s strategies
@@ -370,16 +385,6 @@ protected:
   // sophisticated concurrency activations (such as creating the
   // <SVC_HANDLER> as an "active object" via multi-threading or
   // multi-processing).
-
-  // = Define some useful typedefs traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> 
-          CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
-          CONNECT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
-          CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
-          SUPER;
 
   // = Strategy objects.
 

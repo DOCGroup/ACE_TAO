@@ -31,7 +31,7 @@ class TAO_OA_Parameters;
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
-class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
+class TAO_Export TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
@@ -40,13 +40,13 @@ public:
   // = Intialization method.
   TAO_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
 
-  ~TAO_Client_Connection_Handler ();
+  virtual ~TAO_Client_Connection_Handler (void);
 
   // = <Connector> hook.
   virtual int open (void *);
   // Activation template method.
 
-  int send_request (TAO_OutputCDR &stream, int is_twoway);
+  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,
@@ -65,10 +65,11 @@ public:
   virtual int close (u_long flags = 0);
   // Object termination hook.
 
-private:
-  typedef TAO_SVC_HANDLER BASECLASS;
-  // Trait indicating the base class.
+protected:
   
+  int check_unexpected_data (void);
+  // This method checks for unexpected data
+
   int expecting_response_;
   // State flag which, if non-zero, indicates that this handler is
   // looking to get input.  Otherwise, any input received is
@@ -77,7 +78,48 @@ private:
   int input_available_;
   // Flag indicating whether or not input is available.  Only valid
   // when <expecting_response_> is non-zero.
-  
+};
+
+class TAO_Export TAO_ST_Client_Connection_Handler : public TAO_Client_Connection_Handler
+{
+public:
+  TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
+
+  virtual ~TAO_ST_Client_Connection_Handler (void);
+
+  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
+  // Send the request in <stream>.  If it is a twoway invocation, then
+  // this re-enters the reactor event loop so that incoming requests
+  // can continue to be serviced.  This insures that a nested upcall,
+  // i.e., an invocation coming back from the remote during this
+  // invocation, will still be handled and deadlock averted.
+
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Called when a a response from a twoway invocation is available.
+
+protected:
+
+};
+
+class TAO_Export TAO_MT_Client_Connection_Handler : public TAO_Client_Connection_Handler
+{
+public:
+  TAO_MT_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
+
+  virtual ~TAO_MT_Client_Connection_Handler (void);
+
+  virtual int send_request (TAO_OutputCDR &stream, int is_twoway);
+  // Send the request in <stream>.  If it is a twoway invocation, then
+  // this re-enters the reactor event loop so that incoming requests
+  // can continue to be serviced.  This insures that a nested upcall,
+  // i.e., an invocation coming back from the remote during this
+  // invocation, will still be handled and deadlock averted.
+
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Called when a a response from a twoway invocation is available.
+
+protected:
+
   ACE_thread_t calling_thread_;
   // the thread ID of the thread we were running in.
   
@@ -89,7 +131,7 @@ private:
 
 class TAO_ORB_Core;
 
-class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
+class TAO_Export TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
 {
   // = TITLE
   //   Handles requests on a single connection in a server.

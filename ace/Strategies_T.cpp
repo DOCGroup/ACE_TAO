@@ -780,6 +780,24 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   return 0;
 }
 
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Creation_Strategy<SVC_HANDLER> *
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::creation_strategy (void) const
+{
+  return this->creation_strategy_;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recycling_Strategy<SVC_HANDLER> *
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycling_strategy (void) const
+{
+  return this->recycling_strategy_;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Concurrency_Strategy<SVC_HANDLER> *
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy (void) const
+{
+  return this->concurrency_strategy_;
+}
+
 template <class SVC_HANDLER> void
 ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
 {

@@ -234,10 +234,10 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     
     while (TAO_ORB_Core_instance ()->leader_available ())
       {
-	      if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
-	        ACE_ERROR ((LM_ERROR,
-		                  "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-	      this->cond_become_leader_->wait ();     
+        if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ORB::run: Failed to add a follower thread\n"));
+        this->cond_become_leader_->wait ();     
       }
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
@@ -300,9 +300,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   if (result != -1)
     {
       if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-                                -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) ORB::run: Failed to add a follower thread\n"),
+                          -1);
       return 0;
       // nothing went wrong
     }
@@ -655,7 +655,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
 TAO_Leader_Follower_Info &
 CORBA_ORB::leader_follower_info (void)
-// get access to the leader_follower_info
+  // get access to the leader_follower_info
 {
   return leader_follower_info_;
 }
@@ -802,7 +802,7 @@ CORBA::ORB_init (int &argc,
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
       ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
-                            "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
                   __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
