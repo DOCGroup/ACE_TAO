@@ -1,3 +1,11 @@
+Mon Oct 04 15:20:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
+	  tao/MessagingC.h:
+	  Fixed the usage of the "_var_type" typedef on 
+	  anonymous sequences.
+
 Mon Oct  4 14:46:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_test/params.idl:
@@ -39,7 +47,7 @@ Mon Oct  4 11:08:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/exception_ctor.cpp:
 	  Cosmetic changes to generated code.
 
-Mon Oct 03 08:40:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+Mon Oct 04 08:40:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
 	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:

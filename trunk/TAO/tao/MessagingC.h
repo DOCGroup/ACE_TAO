@@ -1667,7 +1667,11 @@ TAO_NAMESPACE  Messaging
     // *************************************************************
     // _tao_seq_Octet
     // *************************************************************
-    
+
+    class _tao_seq_Octet;
+    class _tao_seq_Octet_var;
+    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;    
+
     class TAO_Export _tao_seq_Octet : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
       TAO_Unbounded_Sequence<CORBA::Octet>
@@ -1687,6 +1691,11 @@ TAO_NAMESPACE  Messaging
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef _tao_seq_Octet_ptr _ptr_type;
+    typedef _tao_seq_Octet_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
 #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
@@ -1696,7 +1705,6 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
-    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
 
 #endif /* end #if !defined */
 
@@ -1767,7 +1775,6 @@ TAO_NAMESPACE  Messaging
 
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _marshaled_exception_seq;
-    typedef _tao_seq_Octet_var _marshaled_exception_seq_var;
 #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
     virtual void marshaled_exception (const _tao_seq_Octet &) = 0;    // set
