@@ -152,11 +152,27 @@ protected:
   static void remove_handle (ACE_HANDLE);
   // Remove a descriptor from the ACE_Reactor that Orbix has just deleted.
 
+  static void instance_cleaner (void *object, void *param);
+  // Clean up the singleton at program rundown.
+
   static ACE_ST_CORBA_Handler *instance_;
   // ACE_ST_CORBA_Handler is a singleton object.
 
   size_t iterations_;
   // Number of iterations to process per <processNextEvent> call.
+
+  // If the user has complete control of all Orbix callback processing and
+  // really, really knows how to handle all of the involved interworkings,
+  // they can set up to daisy-chain Orbix callbacks from this class to
+  // other handlers established outside the control of this class. This is
+  // an intrinsically dangerous thing to do, and is most often the wrong
+  // thing to do. But if you must, set ACE_TAKEOVER_ORBIX_CALLBACKS in the
+  // config.h file before including the platform's config file.
+# if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
+  static int set_callbacks_;
+  static OrbixIOCallback previous_orbix_open_callback_;
+  static OrbixIOCallback previous_orbix_close_callback_;
+# endif /* ACE_TAKEOVER_ORBIX_CALLBACKS */
 };
 
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)

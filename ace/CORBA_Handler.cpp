@@ -4,10 +4,7 @@
 #define ACE_BUILD_DLL
 #include "ace/CORBA_Handler.h"
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager.h"
-#endif /* ACE_MT_SAFE */
-
+#include "ace/Object_Manager.h"
 #include "ace/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
@@ -70,6 +67,14 @@ ACE_CORBA_Handler::ACE_CORBA_Handler (void)
 /* static */ 
 ACE_ST_CORBA_Handler *ACE_ST_CORBA_Handler::instance_ = 0;
 
+#if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
+// Define the class statics
+int             ACE_ST_CORBA_Handler::set_callbacks_ = 0;
+OrbixIOCallback ACE_ST_CORBA_Handler::previous_orbix_open_callback_ = 0;
+OrbixIOCallback ACE_ST_CORBA_Handler::previous_orbix_close_callback_ = 0;
+#endif /* ACE_TAKEOVER_ORBIX_CALLBACKS */
+
+
 // Insert a descriptor into the ACE_Reactor that Orbix has just added.
 
 /* static */ 
@@ -78,6 +83,14 @@ ACE_ST_CORBA_Handler::insert_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_ST_CORBA_Handler::insert_handle");
 //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++ inserting %d\n"), handle));
+
+#if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
+  if (ACE_ST_CORBA_Handler::previous_orbix_open_callback_ != 0)
+    ACE_ST_CORBA_Handler::previous_orbix_open_callback_ (handle);
+#endif /* ACE_TAKEOVER_ORBIX_CALLBACKS */
+
+  if (ACE_ST_CORBA_Handler::instance_ == 0)
+    return;
 
   if (ACE_ST_CORBA_Handler::instance_->reactor() != 0)
     ACE_ST_CORBA_Handler::instance_->reactor()->register_handler 
@@ -96,6 +109,14 @@ ACE_ST_CORBA_Handler::remove_handle (ACE_HANDLE handle)
   ACE_TRACE ("ACE_ST_CORBA_Handler::remove_handle");
 //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("--- removing %d\n"), handle));
 
+#if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
+  if (ACE_ST_CORBA_Handler::previous_orbix_close_callback_ != 0)
+    ACE_ST_CORBA_Handler::previous_orbix_close_callback_ (handle);
+#endif /* ACE_TAKEOVER_ORBIX_CALLBACKS */
+
+  if (ACE_ST_CORBA_Handler::instance_ == 0)
+    return;
+
   if (ACE_ST_CORBA_Handler::instance_->reactor () != 0)
     ACE_ST_CORBA_Handler::instance_->reactor ()->remove_handler
       (handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
@@ -103,6 +124,15 @@ ACE_ST_CORBA_Handler::remove_handle (ACE_HANDLE handle)
     ;
 //    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remove_handle: reactor NULL\n")));
 }
+
+/* static */
+void ACE_ST_CORBA_Handler::instance_cleaner (void *object, void *param)
+{
+  ACE_UNUSED_ARG (param);
+  delete ACE_reinterpret_cast (ACE_ST_CORBA_Handler *, object);
+  return;
+}
+
 
 // Process the next Orbix event.
 
@@ -176,10 +206,20 @@ ACE_ST_CORBA_Handler::ACE_ST_CORBA_Handler (void)
 
   // Set up the callbacks so that we get informed when Orbix changes
   // its descriptors.
-  ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::insert_handle, 
-                                   FD_OPEN_CALLBACK);
-  ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::remove_handle, 
-                                   FD_CLOSE_CALLBACK);
+  OrbixIOCallback old_open, old_close;
+
+  old_open = ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::insert_handle, 
+                                                     FD_OPEN_CALLBACK);
+  old_close = ACE_CORBA_1 (Orbix.registerIOCallback) ((OrbixIOCallback) &ACE_ST_CORBA_Handler::remove_handle, 
+                                                      FD_CLOSE_CALLBACK);
+#if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
+  if (ACE_ST_CORBA_Handler::set_callbacks_ == 0)
+    {
+      ACE_ST_CORBA_Handler::previous_orbix_open_callback = old_open;
+      ACE_ST_CORBA_Handler::previous_orbix_close_callback = old_close;
+      ACE_ST_CORBA_Handler::set_callbacks_ = 1;
+    }
+#endif
 }      
 
 void
@@ -309,6 +349,16 @@ ACE_ST_CORBA_Handler::instance (void)
       ACE_NEW_RETURN (ACE_ST_CORBA_Handler::instance_,
                       ACE_ST_CORBA_Handler,
                       0);
+      // Set up so that instance_cleaner() is called to destroy the instance
+      // at program shutdown when the static objects are destroyed.
+      // This should be _before_ the singleton reactor is destroyed since
+      // cleanup objects are destroyed in LIFO order, and if the reactor
+      // is not yet created, it will be by ACE_CORBA_Handler's constructor,
+      // executed during ACE_NEW_RETURN, above.
+      ACE_Object_Manager::at_exit (ACE_ST_CORBA_Handler::instance_,
+                                   &ACE_ST_CORBA_Handler::instance_cleaner,
+                                   0);
+
       ACE_ST_CORBA_Handler::instance_->get_orbix_descriptors ();
     }
 
