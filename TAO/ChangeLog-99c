@@ -1,3 +1,11 @@
+Tue Jun 22 10:29:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	  There is no need to deactivate the gateway every time we modify
+	  its QoS parameters, the same object reference is still valid.
+	  The UDP gateway case is a little different and requires a closer 
+	  look.
+
 Tue Jun 22 09:52:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp (lookup_value_factory): removed unused arg ACE_TRY_ENV.
