@@ -1000,7 +1000,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 
 int
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
-                          const ASYS_TCHAR *buffer,
+                          const char *buffer,
                           int size,
                           const ASYS_TCHAR *text)
 {

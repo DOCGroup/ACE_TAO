@@ -323,7 +323,7 @@ public:
   // sinks.
 
   int log_hexdump (ACE_Log_Priority log_priority,
-		   const ASYS_TCHAR *buffer,
+		   const char *buffer,
 		   int size,
 		   const ASYS_TCHAR *text = 0);
   // Method to log hex dump.  This is useful for debugging.  Calls
