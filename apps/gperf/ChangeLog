@@ -1,3 +1,9 @@
+Sun Oct  4 20:42:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src: Fixed yet another problem with switching from array-based
+ 	  lookups to switch-based lookups.  Thanks to Carlos for reporting
+ 	  this.
+
 Sat Oct  3 19:36:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.h:
