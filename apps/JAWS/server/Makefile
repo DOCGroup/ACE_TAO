@@ -18,15 +18,9 @@ FILES  	= \
 	VFS \
 	IO 
 
-TEMPLATE_FILES = \
-
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
-
-#CPPFLAGS += -gstabs++
-#CPPFLAGS += -DACE_HAS_STL
-#CPPFLAGS += -DACE_INLINE
 
 INCLDIRS += -I../..
 
