@@ -5708,7 +5708,8 @@ public:
   static ACE_TCHAR *mktemp (ACE_TCHAR *t);
   static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
   static int rename (const ACE_TCHAR *old_name,
-                     const ACE_TCHAR *new_name);
+                     const ACE_TCHAR *new_name,
+                     int flags = -1);
   static int unlink (const ACE_TCHAR *path);
   static ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
                              const ACE_TCHAR *pfx = 0);
