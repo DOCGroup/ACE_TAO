@@ -220,11 +220,7 @@ TAO_Muxed_TMS::clear_cache (void)
          this->dispatcher_table_.begin ();
        i != end;
        ++i)
-    {
-      CORBA::ULong request_id = (*i).ext_id_;
-
       ubs.push ((*i).int_id_);
-    }
 
   this->dispatcher_table_.unbind_all ();
   size_t sz =  ubs.size ();
