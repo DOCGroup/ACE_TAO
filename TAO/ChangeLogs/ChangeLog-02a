@@ -1,3 +1,24 @@
+Mon Oct 16 18:54:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/include/ast_decl.h:
+
+	  Added boolean member to AST_Decl indicating
+	  whether or not the IDL type is anonymous. Also
+	  added accessor method, and an optional argument in
+	  the constructor. Finally, extra arguments were added
+	  to the call to the AST_Decl constructor for the supported
+	  node types which are anonymous (array, primitive type,
+	  string, wstring, and sequence).
+
 Mon Oct 16 16:15:15 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Pluggable.cpp
