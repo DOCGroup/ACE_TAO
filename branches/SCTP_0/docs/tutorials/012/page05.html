@@ -1,0 +1,234 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 012</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 012</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Passing classes through ACE_Message_Queue</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+The Task is the only object we've not been through yet.  I'll go ahead
+and show both the header and cpp on this one page since the header
+isn't very large.
+<P>
+<HR WIDTH="100%">
+<HR width=50%><P><center>task.h</center><HR width=50%>
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>TASK_H</font>
+<font color=blue>#define</font> <font color=purple>TASK_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Task.h">ace/Task.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=red>/*
+  This is our basic thread-pool Task.  We have a choice of pool size
+  on the open() and the usual svc() and close() methods.
+
+  A new addition is the ACE_Barrier object.  This will allow the
+  synchronization of our svc() methods so that they all start at the
+  "<font color=green>same</font>" time.  The normal case may allow one thread to start working
+  earlier than others.  There's no real harm in it but you can get
+  better "<font color=green>work by thread</font>" statistics if they start out together.
+*/</font>
+class Task : public ACE_Task &lt; ACE_MT_SYNCH >
+{
+public:
+
+    typedef ACE_Task &lt; ACE_MT_SYNCH > inherited;
+
+    Task (void);
+    ~Task (void);
+
+    <font color=red>/*
+      I really wanted this to be called open() but that was already
+      claimed by the Task framework.  start() will kick off our thread
+      pool for us.
+    */</font>
+    int start (int threads = 1);
+
+    virtual int svc (void);
+
+    virtual int close (u_long flags = 0);
+
+protected:
+    ACE_Barrier * barrier_;
+};
+
+<font color=blue>#endif</font>
+</PRE>
+<HR width=50%><P><center>task.cpp</center><HR width=50%>
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>task.h</font>"
+<font color=blue>#include</font> "<font color=green>block.h</font>"
+<font color=blue>#include</font> "<font color=green>work.h</font>"
+
+<font color=red>/*
+  Boring default constructor.  Be sure our barrier_ is initialized in
+  case we get destructed before opened.
+*/</font>
+<font color=#008888>Task::Task</font> (void)
+: barrier_ (0)
+{
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task ctor 0x%x\n</font>", (void *) this));
+}
+
+<font color=red>/*
+  You'll see in the svc() method that when we get a shutdown request,
+  we always putq() it back into our message queue.  The last thread in
+  the pool will do this also and result in there always being one
+  shutdown request left in the queue when we get here.  Just to be
+  polite, we'll go ahead and get that message and release it.
+
+  We also delete the barrier_ object we used to synch the svc()
+  methods.
+*/</font>
+<font color=#008888>Task::~Task</font> (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task dtor 0x%x\n</font>", (void *) this));
+
+  ACE_Message_Block *message;
+  this->getq (message);
+  message->release ();
+
+  delete barrier_;
+}
+
+<font color=red>/*
+  The ACE_Barrier needs to know how many threads it will be working
+  for.  For that reason, we have to put off it's construction until we
+  get here.  We then pass the thread count through to our base class'
+  activate().
+*/</font>
+int <font color=#008888>Task::start</font> (int threads)
+{
+  barrier_ = new ACE_Barrier (threads);
+  return this->activate (THR_NEW_LWP, threads);
+}
+
+<font color=red>/*
+  We don't really do anything here but I wanted to provide a message
+  in the output.
+*/</font>
+int <font color=#008888>Task::close</font> (u_long flags)
+{
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task close 0x%x\n</font>", (void *) this));
+  return <font color=#008888>inherited::close</font> (flags);
+}
+
+<font color=red>/*
+  Now the svc() method where everything interesting happens.
+*/</font>
+int <font color=#008888>Task::svc</font> (void)
+{
+     <font color=red>/*
+       All of the threads will block here until the last thread
+       arrives.  They will all then be free to begin doing work.
+     */</font>
+  this->barrier_->wait ();
+
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task 0x%x starts in thread %u\n</font>", (void *) this, <font color=#008888>ACE_Thread::self</font> ()));
+
+   <font color=red>// Where we getq() the message</font>
+  ACE_Message_Block *message;
+   <font color=red>// What we really put into the queue is a Message_Block, so we'll</font>
+   <font color=red>// cast the 'message' to 'message_block' after getting it.  I'm</font>
+   <font color=red>// going through some extra steps here just to be explicit</font>
+  Message_Block * message_block;
+   <font color=red>// The baseclass of the work object we put into the queue.  Notice</font>
+   <font color=red>// that we can use this and not bother with the Work object at all.</font>
+  Unit_Of_Work * unit_of_work;
+
+  while (1)
+  {
+       <font color=red>// Get the message...</font>
+    if (this->getq (message) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>getq</font>"), -1);
+    }
+
+     <font color=red>// Is it a shutdown request?</font>
+    if (message->msg_type () == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>)
+    {
+         <font color=red>// Send the shutdown to all of our pool peers</font>
+      this->putq (message);
+      break;
+    }
+
+     <font color=red>// Cast the pointer to our specialized Message_Block.  We could</font>
+     <font color=red>// have done this at the getq() call but I wanted to be explicit</font>
+     <font color=red>// about what we're doing here</font>
+    message_block = (Message_Block*)message;
+
+     <font color=red>/*
+       Since we left alone the ACE_Data_Block used by the
+       Message_Block we have chosen to use it to send arbitrary data
+       as well.
+     */</font>
+    const char *cp = message_block->rd_ptr ();
+     <font color=red>// Don't forget to skip the NULL we inserted</font>
+    message_block->rd_ptr (strlen (cp) + 1);
+
+     <font color=red>/*
+       Get the Unit_Of_Work pointer out of our specialized
+       Message_Block.  Since the methods of interest are virtual, we
+       don't have to know what kind of work we're to do.
+     */</font>
+    unit_of_work = message_block->data();
+
+    <font color=red>/*
+       Invoke a couple of method calls on the object we constructed.
+     */</font>
+    unit_of_work->who_am_i ();
+    unit_of_work->what_am_i ();
+
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Block 0x%x contains (%s)\n</font>", (void *) message, cp));
+
+     <font color=red>/*
+       Pretend that the work takes a little time to process.  This
+       prevents one thread from getting all of the action.  In a real
+       system you wouldn't need to do this since the work really
+       would take time to complete.
+     */</font>
+    <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 5000));
+
+     <font color=red>/*
+       Release the message block and allow the unit of work to also go
+       away.
+     */</font>
+    message->release ();
+  }
+
+  return (0);
+}
+</PRE>
+<HR WIDTH="100%">
+<P>
+Like main() this is actually simpler than the previous tutorial.  It's
+much cleaner to carry around a pointer to the object we're working
+with than to try copying data.
+<P>
+The only complication is the new ACE_Barrier.  It's a pretty simple
+object that makes it easy for you to synch threads in this way.  You
+could do some fancy tricks with mutexes, counters & semaphores but why
+bother when the Barrier already exists.
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>
+

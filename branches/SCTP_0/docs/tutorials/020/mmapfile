@@ -1,0 +1,8 @@
+root     tty2     Dec 13 19:43
+jcej     tty5     Dec 14 20:36
+dialout  modem    Dec 28 15:51 (/usr/sbin/diald -daemon -f /etc/diald.lads)
+jcej     ttyp1    Dec 22 00:31 (:0.0)
+jcej     ttyp2    Dec 22 11:22 (:0.0)
+jcej     ttyp7    Dec 22 18:22 (:0.0)
+jcej     ttyp9    Dec 24 00:04 (:0.0)
+jcej     ttyp8    Dec 22 18:47 (:0.0)

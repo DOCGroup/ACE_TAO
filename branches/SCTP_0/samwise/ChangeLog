@@ -1,0 +1,73 @@
+Sun Apr 14 13:48:14 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* Add 'samwise' to the repository.  Samwise is a tool to generate
+	  Makefiles and project files from a single source.
+
+	* samwise/README.txt:
+	  The documentation.
+
+	* samwise/TODO.txt:
+	  Things that need to be done.
+
+	* samwise/create_sam.pl:
+	  A reverse engineering script to generate the sam.xml file from
+	  .dsp project files.
+
+	* samwise/PerlACE/MSProject.pm:
+	* samwise/PerlACE/MSProject/DSP.pm:
+	  Helper modules for create_sam.pl, based on the ones in
+	  $ACE_ROOT/bin/PerlACE, but with improvements.  We probably want
+	  to merge those later.
+
+	* samwise/libs.xml:
+	  The library properties.
+
+	* samwise/sam.dtd:
+	  A DTD for the sam.xml file format.
+
+	* samwise/sam.pl:
+	  The main script, parse a sam.xml file and generate the project
+	  files.
+
+	* samwise/PerlSam/Generator.pm:
+	  Base class for the target project file/Makefile generators.
+
+	* samwise/PerlSam/Generator/Borland.pm:
+	  Generate .bor files for Borland make.
+
+	* samwise/PerlSam/Generator/GNUMake.pm:
+	  Generate GNUmakefile (for the workspace) and <project_name>.gnu
+	  for GNU/make.
+
+	* samwise/PerlSam/Generator/MSVC6.pm:
+	  Generate .dsp and .dsw files for MSVC6.
+
+	* samwise/PerlSam/Generator/View.pm:
+	  Dump the contents of sam.xml to the stdout, useful for
+	  debugging.
+
+	* samwise/PerlSam/Generator/Automake.pm:
+	  Generate Makefile.am files for automake, this is still
+	  work-in-progress.
+
+	* samwise/PerlSam/Generator/VisualAge.pm:
+	  Generate project files for VisualAge, very much
+	  work-in-progress.
+
+	* samwise/PerlSam/Parser.pm:
+	* samwise/PerlSam/Parser/Simple.pm:
+	  Parser for the sam.xml files.
+
+	* samwise/makeinclude/executable.GNU:
+	* samwise/makeinclude/library.GNU:
+	* samwise/makeinclude/macros.GNU:
+	* samwise/makeinclude/rules.common.GNU:
+	* samwise/makeinclude/rules.makefiles.GNU:
+	* samwise/makeinclude/rules.nomakefiles.GNU:
+	* samwise/makeinclude/workspace.GNU:
+	  Helper includes for GNU/Makefiles, make the generated files
+	  smaller.
+
+	* samwise/makeinclude/vacpp_setup.icc:
+	  Helper file for VisualAge projects.
+

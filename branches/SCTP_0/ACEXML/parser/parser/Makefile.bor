@@ -1,0 +1,20 @@
+# Makefile for building the parser
+
+NAME = ACEXML_Parser
+
+OBJFILES = \
+        $(OBJDIR)\Parser.obj \
+        $(OBJDIR)\Entity_Manager.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(ACE_XML_CFLAGS) \
+        -DACEXML_PARSER_BUILD_DLL
+
+CPPDIR = .;..
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(ACE_XML_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

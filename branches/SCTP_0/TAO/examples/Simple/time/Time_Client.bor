@@ -1,0 +1,29 @@
+#
+# Makefile for building the Time example
+#
+
+NAME = client
+
+OBJFILES = \
+	$(OBJDIR)\TimeC.obj \
+	$(OBJDIR)\TimeS.obj \
+	$(OBJDIR)\Time_Client_i.obj \
+	$(OBJDIR)\Simple_util.obj \
+	$(OBJDIR)\client.obj
+
+IDLFILES = \
+        $(IDLDIR)\Time.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TimeC.cpp $(IDLDIR)\TimeS.cpp: $(IDLDIR)\Time.idl
+	$(TAO_IDL) $**
+
