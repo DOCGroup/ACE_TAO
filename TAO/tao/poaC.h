@@ -1348,10 +1348,10 @@ class POAManager;
 
 #endif // end #if !defined
 
-    virtual void  activate (CORBA::Environment &env);
-    virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-    virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-    virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
+    virtual void  activate (CORBA::Environment &env) = 0;
+    virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
+    virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
+    virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     POAManager (
@@ -1449,7 +1449,7 @@ class AdapterActivator;
     static AdapterActivator_ptr _nil (void);
     static AdapterActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA::Environment &env);
+    virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     AdapterActivator (
@@ -1644,8 +1644,8 @@ class ServantActivator;
     static ServantActivator_ptr _nil (void);
     static ServantActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA::Environment &env);
-    virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env);
+    virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA::Environment &env) = 0;
+    virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantActivator (
@@ -1746,8 +1746,8 @@ class ServantLocator;
     static ServantLocator_ptr _nil (void);
     static ServantLocator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA::Environment &env);
-    virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env);
+    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA::Environment &env) = 0;
+    virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantLocator (
@@ -2144,36 +2144,36 @@ class POA;
 
 #endif // end #if !defined
 
-    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const PolicyList &policies, CORBA::Environment &env);
-    virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env);
-    virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-    virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA::Environment &env);
-    virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA::Environment &env);
-    virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA::Environment &env);
-    virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA::Environment &env);
-    virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA::Environment &env);
-    virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA::Environment &env);
-    virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA::Environment &env);
-    virtual char * the_name (CORBA::Environment &env);
-    virtual POA_ptr  the_parent (CORBA::Environment &env);
-    virtual POAManager_ptr  the_POAManager (CORBA::Environment &env);
-    virtual AdapterActivator_ptr  the_activator (CORBA::Environment &env);
-    virtual void the_activator(AdapterActivator_ptr the_activator, CORBA::Environment &env);
-    virtual ServantManager_ptr  get_servant_manager (CORBA::Environment &env);
-    virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA::Environment &env);
-    virtual Servant  get_servant (CORBA::Environment &env);
-    virtual void  set_servant (Servant p_servant, CORBA::Environment &env);
-    virtual ObjectId * activate_object (Servant p_servant, CORBA::Environment &env);
-    virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA::Environment &env);
-    virtual void  deactivate_object (const ObjectId &oid, CORBA::Environment &env);
-    virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA::Environment &env);
-    virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA::Environment &env);
-    virtual ObjectId * servant_to_id (Servant p_servant, CORBA::Environment &env);
-    virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA::Environment &env);
-    virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA::Environment &env);
-    virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA::Environment &env);
-    virtual Servant  id_to_servant (const ObjectId &oid, CORBA::Environment &env);
-    virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA::Environment &env);
+    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const PolicyList &policies, CORBA::Environment &env) = 0;
+    virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env) = 0;
+    virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
+    virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA::Environment &env) = 0;
+    virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA::Environment &env) = 0;
+    virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA::Environment &env) = 0;
+    virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA::Environment &env) = 0;
+    virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA::Environment &env) = 0;
+    virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA::Environment &env) = 0;
+    virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA::Environment &env) = 0;
+    virtual char * the_name (CORBA::Environment &env) = 0;
+    virtual POA_ptr  the_parent (CORBA::Environment &env) = 0;
+    virtual POAManager_ptr  the_POAManager (CORBA::Environment &env) = 0;
+    virtual AdapterActivator_ptr  the_activator (CORBA::Environment &env) = 0;
+    virtual void the_activator(AdapterActivator_ptr the_activator, CORBA::Environment &env) = 0;
+    virtual ServantManager_ptr  get_servant_manager (CORBA::Environment &env) = 0;
+    virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA::Environment &env) = 0;
+    virtual Servant  get_servant (CORBA::Environment &env) = 0;
+    virtual void  set_servant (Servant p_servant, CORBA::Environment &env) = 0;
+    virtual ObjectId * activate_object (Servant p_servant, CORBA::Environment &env) = 0;
+    virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA::Environment &env) = 0;
+    virtual void  deactivate_object (const ObjectId &oid, CORBA::Environment &env) = 0;
+    virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA::Environment &env) = 0;
+    virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA::Environment &env) = 0;
+    virtual ObjectId * servant_to_id (Servant p_servant, CORBA::Environment &env) = 0;
+    virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA::Environment &env) = 0;
+    virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA::Environment &env) = 0;
+    virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA::Environment &env) = 0;
+    virtual Servant  id_to_servant (const ObjectId &oid, CORBA::Environment &env) = 0;
+    virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     POA (

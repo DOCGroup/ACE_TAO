@@ -1081,9 +1081,9 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
     return PortableServer::POAManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::POAManager_ptr
-    new_obj = new PortableServer::POAManager (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::POAManager::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -1145,102 +1145,6 @@ static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
 static CORBA::TypeCode _tc__tc_PortableServer_POAManager_AdapterInactive (CORBA::tk_struct, sizeof (_oc_PortableServer_POAManager_AdapterInactive), (unsigned char *) &_oc_PortableServer_POAManager_AdapterInactive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive = &_tc__tc_PortableServer_POAManager_AdapterInactive;
 
-static const TAO_Param_Data PortableServer_POAManager_activate_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POAManager_activate_calldata =
-{"activate", 1, 1, PortableServer_POAManager_activate_paramdata, 0, 0};
-
-void  PortableServer::POAManager::activate (CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POAManager_activate_calldata, 0);
-  return; // no value
-
-}
-
-static const TAO_Param_Data PortableServer_POAManager_hold_requests_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POAManager_hold_requests_calldata =
-{"hold_requests", 1, 2, PortableServer_POAManager_hold_requests_paramdata, 0, 0};
-
-void  PortableServer::POAManager::hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POAManager_hold_requests_calldata, 0, &wait_for_completion);
-  return; // no value
-
-}
-
-static const TAO_Param_Data PortableServer_POAManager_discard_requests_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POAManager_discard_requests_calldata =
-{"discard_requests", 1, 2, PortableServer_POAManager_discard_requests_paramdata, 0, 0};
-
-void  PortableServer::POAManager::discard_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POAManager_discard_requests_calldata, 0, &wait_for_completion);
-  return; // no value
-
-}
-
-static const TAO_Param_Data PortableServer_POAManager_deactivate_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POAManager_deactivate_calldata =
-{"deactivate", 1, 3, PortableServer_POAManager_deactivate_paramdata, 0, 0};
-
-void  PortableServer::POAManager::deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POAManager_deactivate_calldata, 0, &etherealize_objects, &wait_for_completion);
-  return; // no value
-
-}
-
 CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
@@ -1279,9 +1183,9 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
     return PortableServer::AdapterActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::AdapterActivator_ptr
-    new_obj = new PortableServer::AdapterActivator (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::AdapterActivator::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -1307,33 +1211,6 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_bind (co
       return PortableServer::AdapterActivator::_nil ();
     }
   return PortableServer::AdapterActivator::_narrow (objref, env);
-}
-
-static const TAO_Param_Data PortableServer_AdapterActivator_unknown_adapter_paramdata [] =
-{
-  {CORBA::_tc_boolean, PARAM_RETURN, 0},
-  {PortableServer::_tc_POA, PARAM_IN, 0},
-  {CORBA::_tc_string, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_AdapterActivator_unknown_adapter_calldata =
-{"unknown_adapter", 1, 3, PortableServer_AdapterActivator_unknown_adapter_paramdata, 0, 0};
-
-CORBA::Boolean  PortableServer::AdapterActivator::unknown_adapter (PortableServer::POA_ptr parent, const char *name, CORBA::Environment &env)
-{
-  CORBA::Boolean retval;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return retval;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  CORBA::Object_ptr _tao_base_parent = parent; // cast it
-  istub->do_call (env, &PortableServer_AdapterActivator_unknown_adapter_calldata, &retval, &_tao_base_parent, &name);
-  return retval;
-
 }
 
 CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1374,9 +1251,9 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
     return PortableServer::ServantManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::ServantManager_ptr
-    new_obj = new PortableServer::ServantManager (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::ServantManager::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -1442,9 +1319,9 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
     return PortableServer::ServantActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::ServantActivator_ptr
-    new_obj = new PortableServer::ServantActivator (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::ServantActivator::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -1470,20 +1347,6 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_bind (co
       return PortableServer::ServantActivator::_nil ();
     }
   return PortableServer::ServantActivator::_narrow (objref, env);
-}
-
-PortableServer::Servant PortableServer::ServantActivator::incarnate (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-void  PortableServer::ServantActivator::etherealize (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, PortableServer::Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return;
-
 }
 
 CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1525,9 +1388,9 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
     return PortableServer::ServantLocator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::ServantLocator_ptr
-    new_obj = new PortableServer::ServantLocator (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::ServantLocator::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -1553,20 +1416,6 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_bind (const 
       return PortableServer::ServantLocator::_nil ();
     }
   return PortableServer::ServantLocator::_narrow (objref, env);
-}
-
-PortableServer::Servant PortableServer::ServantLocator::preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie & the_cookie, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-void  PortableServer::ServantLocator::postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return;
-
 }
 
 CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1608,9 +1457,9 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
     return PortableServer::POA::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    PortableServer::POA_ptr
-    new_obj = new PortableServer::POA (obj->_get_parent ()); // construct obj ref using the stub object
-    return new_obj;
+    // This can only be colocated
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    return PortableServer::POA::_nil ();
   } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -2024,606 +1873,6 @@ static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
 static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongPolicy (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_WrongPolicy), (unsigned char *) &_oc_PortableServer_POA_WrongPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy = &_tc__tc_PortableServer_POA_WrongPolicy;
 
-static const TAO_Param_Data PortableServer_POA_create_POA_paramdata [] =
-{
-  {PortableServer::_tc_POA, PARAM_RETURN, 0},
-  {CORBA::_tc_string, PARAM_IN, 0},
-  {PortableServer::_tc_POAManager, PARAM_IN, 0},
-  {PortableServer::_tc_PolicyList, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_POA_calldata =
-{"create_POA", 1, 4, PortableServer_POA_create_POA_paramdata, 0, 0};
-
-PortableServer::POA_ptr  PortableServer::POA::create_POA (const char *adapter_name, PortableServer::POAManager_ptr a_POAManager, const PortableServer::PolicyList &policies, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::POA::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  CORBA::Object_ptr _tao_base_a_POAManager = a_POAManager; // cast it
-  istub->do_call (env, &PortableServer_POA_create_POA_calldata, &retval, &adapter_name, &_tao_base_a_POAManager, &policies);
-  return PortableServer::POA::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_find_POA_paramdata [] =
-{
-  {PortableServer::_tc_POA, PARAM_RETURN, 0},
-  {CORBA::_tc_string, PARAM_IN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_find_POA_calldata =
-{"find_POA", 1, 3, PortableServer_POA_find_POA_paramdata, 0, 0};
-
-PortableServer::POA_ptr  PortableServer::POA::find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::POA::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_find_POA_calldata, &retval, &adapter_name, &activate_it);
-  return PortableServer::POA::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_destroy_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0},
-  {CORBA::_tc_boolean, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_destroy_calldata =
-{"destroy", 1, 3, PortableServer_POA_destroy_paramdata, 0, 0};
-
-void  PortableServer::POA::destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_destroy_calldata, 0, &etherealize_objects, &wait_for_completion);
-  return; // no value
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_thread_policy_paramdata [] =
-{
-  {PortableServer::_tc_ThreadPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_ThreadPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_thread_policy_calldata =
-{"create_thread_policy", 1, 2, PortableServer_POA_create_thread_policy_paramdata, 0, 0};
-
-PortableServer::ThreadPolicy_ptr  PortableServer::POA::create_thread_policy (PortableServer::ThreadPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::ThreadPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_thread_policy_calldata, &retval, &value);
-  return PortableServer::ThreadPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_lifespan_policy_paramdata [] =
-{
-  {PortableServer::_tc_LifespanPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_LifespanPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_lifespan_policy_calldata =
-{"create_lifespan_policy", 1, 2, PortableServer_POA_create_lifespan_policy_paramdata, 0, 0};
-
-PortableServer::LifespanPolicy_ptr  PortableServer::POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::LifespanPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_lifespan_policy_calldata, &retval, &value);
-  return PortableServer::LifespanPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_id_uniqueness_policy_paramdata [] =
-{
-  {PortableServer::_tc_IdUniquenessPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_IdUniquenessPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_id_uniqueness_policy_calldata =
-{"create_id_uniqueness_policy", 1, 2, PortableServer_POA_create_id_uniqueness_policy_paramdata, 0, 0};
-
-PortableServer::IdUniquenessPolicy_ptr  PortableServer::POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::IdUniquenessPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_id_uniqueness_policy_calldata, &retval, &value);
-  return PortableServer::IdUniquenessPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_id_assignment_policy_paramdata [] =
-{
-  {PortableServer::_tc_IdAssignmentPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_IdAssignmentPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_id_assignment_policy_calldata =
-{"create_id_assignment_policy", 1, 2, PortableServer_POA_create_id_assignment_policy_paramdata, 0, 0};
-
-PortableServer::IdAssignmentPolicy_ptr  PortableServer::POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::IdAssignmentPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_id_assignment_policy_calldata, &retval, &value);
-  return PortableServer::IdAssignmentPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_implicit_activation_policy_paramdata [] =
-{
-  {PortableServer::_tc_ImplicitActivationPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_ImplicitActivationPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_implicit_activation_policy_calldata =
-{"create_implicit_activation_policy", 1, 2, PortableServer_POA_create_implicit_activation_policy_paramdata, 0, 0};
-
-PortableServer::ImplicitActivationPolicy_ptr  PortableServer::POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::ImplicitActivationPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_implicit_activation_policy_calldata, &retval, &value);
-  return PortableServer::ImplicitActivationPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_servant_retention_policy_paramdata [] =
-{
-  {PortableServer::_tc_ServantRetentionPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_ServantRetentionPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_servant_retention_policy_calldata =
-{"create_servant_retention_policy", 1, 2, PortableServer_POA_create_servant_retention_policy_paramdata, 0, 0};
-
-PortableServer::ServantRetentionPolicy_ptr  PortableServer::POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::ServantRetentionPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_servant_retention_policy_calldata, &retval, &value);
-  return PortableServer::ServantRetentionPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_request_processing_policy_paramdata [] =
-{
-  {PortableServer::_tc_RequestProcessingPolicy, PARAM_RETURN, 0},
-  {PortableServer::_tc_RequestProcessingPolicyValue, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_request_processing_policy_calldata =
-{"create_request_processing_policy", 1, 2, PortableServer_POA_create_request_processing_policy_paramdata, 0, 0};
-
-PortableServer::RequestProcessingPolicy_ptr  PortableServer::POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::RequestProcessingPolicy::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_request_processing_policy_calldata, &retval, &value);
-  return PortableServer::RequestProcessingPolicy::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data _get_PortableServer_POA_the_name_paramdata [] =
-{
-  {CORBA::_tc_string, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_POA_the_name_calldata =
-{"_get_the_name", 1, 1, _get_PortableServer_POA_the_name_paramdata, 0, 0};
-
-char * PortableServer::POA::the_name(CORBA::Environment &env)
-{
-  char *retval = 0;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return 0;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_POA_the_name_calldata, &retval);
-  return retval;
-
-}
-
-static const TAO_Param_Data _get_PortableServer_POA_the_parent_paramdata [] =
-{
-  {PortableServer::_tc_POA, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_POA_the_parent_calldata =
-{"_get_the_parent", 1, 1, _get_PortableServer_POA_the_parent_paramdata, 0, 0};
-
-PortableServer::POA_ptr  PortableServer::POA::the_parent(CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::POA::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_POA_the_parent_calldata, &retval);
-  return PortableServer::POA::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data _get_PortableServer_POA_the_POAManager_paramdata [] =
-{
-  {PortableServer::_tc_POAManager, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_POA_the_POAManager_calldata =
-{"_get_the_POAManager", 1, 1, _get_PortableServer_POA_the_POAManager_paramdata, 0, 0};
-
-PortableServer::POAManager_ptr  PortableServer::POA::the_POAManager(CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::POAManager::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_POA_the_POAManager_calldata, &retval);
-  return PortableServer::POAManager::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data _get_PortableServer_POA_the_activator_paramdata [] =
-{
-  {PortableServer::_tc_AdapterActivator, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_POA_the_activator_calldata =
-{"_get_the_activator", 1, 1, _get_PortableServer_POA_the_activator_paramdata, 0, 0};
-
-PortableServer::AdapterActivator_ptr  PortableServer::POA::the_activator(CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::AdapterActivator::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &_get_PortableServer_POA_the_activator_calldata, &retval);
-  return PortableServer::AdapterActivator::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data _set_PortableServer_POA_the_activator_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {PortableServer::_tc_AdapterActivator, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data _set_PortableServer_POA_the_activator_calldata =
-{"_set_the_activator", 1, 2, _set_PortableServer_POA_the_activator_paramdata, 0, 0};
-
-void PortableServer::POA::the_activator(PortableServer::AdapterActivator_ptr the_activator, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  CORBA::Object_ptr _tao_base_the_activator = the_activator; // cast it
-  istub->do_call (env, &_set_PortableServer_POA_the_activator_calldata, 0, &_tao_base_the_activator);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_get_servant_manager_paramdata [] =
-{
-  {PortableServer::_tc_ServantManager, PARAM_RETURN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_get_servant_manager_calldata =
-{"get_servant_manager", 1, 1, PortableServer_POA_get_servant_manager_paramdata, 0, 0};
-
-PortableServer::ServantManager_ptr  PortableServer::POA::get_servant_manager (CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::ServantManager::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_get_servant_manager_calldata, &retval);
-  return PortableServer::ServantManager::_narrow (retval, env);
-
-}
-
-static const TAO_Param_Data PortableServer_POA_set_servant_manager_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {PortableServer::_tc_ServantManager, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_set_servant_manager_calldata =
-{"set_servant_manager", 1, 2, PortableServer_POA_set_servant_manager_paramdata, 0, 0};
-
-void  PortableServer::POA::set_servant_manager (PortableServer::ServantManager_ptr imgr, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  CORBA::Object_ptr _tao_base_imgr = imgr; // cast it
-  istub->do_call (env, &PortableServer_POA_set_servant_manager_calldata, 0, &_tao_base_imgr);
-  return; // no value
-
-}
-
-PortableServer::Servant PortableServer::POA::get_servant (CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-void  PortableServer::POA::set_servant (PortableServer::Servant p_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return;
-
-}
-
-PortableServer::ObjectId * PortableServer::POA::activate_object (PortableServer::Servant p_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-void  PortableServer::POA::activate_object_with_id (const PortableServer::ObjectId &id, PortableServer::Servant p_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return;
-
-}
-
-static const TAO_Param_Data PortableServer_POA_deactivate_object_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0},
-  {PortableServer::_tc_ObjectId, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_deactivate_object_calldata =
-{"deactivate_object", 1, 2, PortableServer_POA_deactivate_object_paramdata, 0, 0};
-
-void  PortableServer::POA::deactivate_object (const PortableServer::ObjectId &oid, CORBA::Environment &env)
-{
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_deactivate_object_calldata, 0, &oid);
-  return; // no value
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_reference_paramdata [] =
-{
-  {CORBA::_tc_Object, PARAM_RETURN, 0},
-  {PortableServer::_tc_RepositoryId, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_reference_calldata =
-{"create_reference", 1, 2, PortableServer_POA_create_reference_paramdata, 0, 0};
-
-CORBA::Object_ptr  PortableServer::POA::create_reference (const char *intf, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return 0;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_reference_calldata, &retval, &intf);
-  return retval;
-
-}
-
-static const TAO_Param_Data PortableServer_POA_create_reference_with_id_paramdata [] =
-{
-  {CORBA::_tc_Object, PARAM_RETURN, 0},
-  {PortableServer::_tc_ObjectId, PARAM_IN, 0},
-  {PortableServer::_tc_RepositoryId, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_create_reference_with_id_calldata =
-{"create_reference_with_id", 1, 3, PortableServer_POA_create_reference_with_id_paramdata, 0, 0};
-
-CORBA::Object_ptr  PortableServer::POA::create_reference_with_id (const PortableServer::ObjectId &oid, const char *intf, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return 0;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_create_reference_with_id_calldata, &retval, &oid, &intf);
-  return retval;
-
-}
-
-PortableServer::ObjectId * PortableServer::POA::servant_to_id (PortableServer::Servant p_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-CORBA::Object_ptr  PortableServer::POA::servant_to_reference (PortableServer::Servant p_servant, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-PortableServer::Servant PortableServer::POA::reference_to_servant (CORBA::Object_ptr reference, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-static const TAO_Param_Data PortableServer_POA_reference_to_id_paramdata [] =
-{
-  {PortableServer::_tc_ObjectId, PARAM_RETURN, sizeof (PortableServer::ObjectId)},
-  {CORBA::_tc_Object, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_reference_to_id_calldata =
-{"reference_to_id", 1, 2, PortableServer_POA_reference_to_id_paramdata, 0, 0};
-
-PortableServer::ObjectId * PortableServer::POA::reference_to_id (CORBA::Object_ptr reference, CORBA::Environment &env)
-{
-  PortableServer::ObjectId *retval = 0;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return 0;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_reference_to_id_calldata, &retval, &reference);
-  return retval;
-
-}
-
-PortableServer::Servant PortableServer::POA::id_to_servant (const PortableServer::ObjectId &oid, CORBA::Environment &env)
-{
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  return 0;
-
-}
-
-static const TAO_Param_Data PortableServer_POA_id_to_reference_paramdata [] =
-{
-  {CORBA::_tc_Object, PARAM_RETURN, 0},
-  {PortableServer::_tc_ObjectId, PARAM_IN, 0}
-};
-
-static const TAO_Call_Data PortableServer_POA_id_to_reference_calldata =
-{"id_to_reference", 1, 2, PortableServer_POA_id_to_reference_paramdata, 0, 0};
-
-CORBA::Object_ptr  PortableServer::POA::id_to_reference (const PortableServer::ObjectId &oid, CORBA::Environment &env)
-{
-  CORBA::Object_ptr retval;
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return 0;
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_POA_id_to_reference_calldata, &retval, &oid);
-  return retval;
-
-}
-
 CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
@@ -2726,28 +1975,10 @@ static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
 static CORBA::TypeCode _tc__tc_PortableServer_Current_NoContext (CORBA::tk_struct, sizeof (_oc_PortableServer_Current_NoContext), (unsigned char *) &_oc_PortableServer_Current_NoContext, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc__tc_PortableServer_Current_NoContext;
 
-static const TAO_Param_Data PortableServer_Current_get_POA_paramdata [] =
-{
-  {PortableServer::_tc_POA, PARAM_RETURN, 0}
-};
-
-static const TAO_Call_Data PortableServer_Current_get_POA_calldata =
-{"get_POA", 1, 1, PortableServer_Current_get_POA_paramdata, 0, 0};
-
 PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &env)
 {
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-  {
-    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return PortableServer::POA::_nil ();
-  }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &PortableServer_Current_get_POA_calldata, &retval);
-  return PortableServer::POA::_narrow (retval, env);
-
+  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+  return PortableServer::POA::_nil ();
 }
 
 static const TAO_Param_Data PortableServer_Current_get_object_id_paramdata [] =
