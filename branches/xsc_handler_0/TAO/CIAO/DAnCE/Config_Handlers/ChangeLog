@@ -1,3 +1,13 @@
+Tue Sep 28 18:38:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+
+	  Additional changes to accomodate to population of IDL data
+	  structures.
+
 Tue Sep 28 16:08:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/ADD_Handler.cpp:

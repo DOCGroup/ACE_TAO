@@ -15,7 +15,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    void
+    bool
     ADD_Handler::artifact_deployment_descr (
         const ArtifactDeploymentDescription &src,
         Deployment::ArtifactDeploymentDescription &dest,
@@ -113,6 +113,8 @@ namespace CIAO
             src.deployedResource ());
         }
 #endif /* if 0*/
+
+      return true;
     }
 
   }

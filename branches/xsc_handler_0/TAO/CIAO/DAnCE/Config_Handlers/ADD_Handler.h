@@ -47,7 +47,7 @@ namespace CIAO
     class Config_Handlers_Export ADD_Handler
     {
     public:
-      static void artifact_deployment_descr (
+      static bool artifact_deployment_descr (
           const ArtifactDeploymentDescription& desc,
           ::Deployment::ArtifactDeploymentDescription &dest,
           CORBA::ULong l = 0);

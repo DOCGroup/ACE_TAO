@@ -11,7 +11,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    void
+    bool
     MDD_Handler::mono_deployment_description (
         const MonolithicDeploymentDescription& desc,
         Deployment::MonolithicDeploymentDescription& toconfig)
@@ -53,8 +53,10 @@ namespace CIAO
               tmp);
 
           if (!r)
-            // @@MAJO: What should we do if find_ref fails?
-            continue;
+            {
+              // @@MAJO: What should we do if find_ref fails?
+              return false;
+            }
 
           CORBA::ULong len =
             toconfig.artifactRef.length ();
@@ -93,6 +95,8 @@ namespace CIAO
             desc.deployRequirement ());
         }
 #endif /*if 0*/
+
+      return true;
     }
 
   }
