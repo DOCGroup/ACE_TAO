@@ -63,6 +63,8 @@ protected:
 
   /// = More TAO_Connector methods, please check the documentation on
   ///   Transport_Acceptor.h
+  int set_validate_endpoint (TAO_Endpoint *ep);
+
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc);
 

@@ -48,7 +48,7 @@ public:
   ~TAO_UIPMC_Connector (void);
 
   // = The TAO_Connector methods, please check the documentation on
-  // Pluggable.h
+  // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
   int connect (TAO_GIOP_Invocation *invocation,
@@ -62,7 +62,9 @@ public:
 
 protected:
   /// = More TAO_Connector methods, please check the documentation on
-  ///   TAO_Connector.h
+  ///   Transport_Connector.h
+  int set_validate_endpoint (TAO_Endpoint *endpoint);
+
   int make_connection (TAO_GIOP_Invocation *,
                        TAO_Transport_Descriptor_Interface *);
 

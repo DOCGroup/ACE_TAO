@@ -113,6 +113,42 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
+TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+    return -1;
+
+  TAO_SHMIOP_Endpoint *shmiop_endpoint =
+    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
+                      endpoint );
+  if (shmiop_endpoint == 0)
+    return -1;
+
+   const ACE_INET_Addr &remote_address =
+     shmiop_endpoint->object_addr ();
+
+   // Verify that the remote ACE_INET_Addr was initialized properly.
+   // Failure can occur if hostname lookup failed when initializing the
+   // remote ACE_INET_Addr.
+   if (remote_address.get_type () != AF_INET)
+     {
+       if (TAO_debug_level > 0)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_LIB_TEXT ("due to a hostname lookup ")
+                       ACE_LIB_TEXT ("failure.\n")));
+         }
+
+       return -1;
+     }
+
+   return 0;
+
+}
+
+int
 TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                        TAO_Transport_Descriptor_Interface *desc)
 {
@@ -122,37 +158,15 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
-  TAO_Endpoint *endpoint = desc->endpoint ();
-
-  if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
-    return -1;
-
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      endpoint);
+                      desc->endpoint ());
 
   if (shmiop_endpoint == 0)
     return -1;
 
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
-
-  // Verify that the remote ACE_INET_Addr was initialized properly.
-  // Failure can occur if hostname lookup failed when initializing the
-  // remote ACE_INET_Addr.
-  if (remote_address.get_type () != AF_INET)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP connection failed.\n")
-                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
-                      ACE_TEXT ("due to a hostname lookup ")
-                      ACE_TEXT ("failure.\n")));
-        }
-
-      return -1;
-    }
 
   int result = 0;
   TAO_SHMIOP_Connection_Handler *svc_handler = 0;
@@ -194,7 +208,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   if (result == -1)
     {
       char buffer [MAXNAMELEN * 2];
-      endpoint->addr_to_string (buffer,
+      desc->endpoint ()->addr_to_string (buffer,
                                 (MAXNAMELEN * 2) - 1);
 
       // Give users a clue to the problem.
