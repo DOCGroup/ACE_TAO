@@ -229,7 +229,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
               ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
             }
 
-         object_group = group;
+         object_group = group.in ();
        }
 
       return 1;
