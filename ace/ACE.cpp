@@ -1464,6 +1464,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       bcast_addr = host_addr;
       return 0;
     }
+
+  return 0;
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (host_addr);
