@@ -101,8 +101,7 @@ RELEASE_LIB_FILES = \
 ####       4.2, it will not be modified because it is assumed to be for a
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
-  TIMESTAMP = (lynx -dump ACE-INSTALL.html > ACE-INSTALL; \
-                CHANGELOG='ChangeLog'; export CHANGELOG; \
+  TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then \
 		echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
@@ -151,13 +150,13 @@ endif
 
 FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' ! -name '*.MAK' -print
 
-cleanrelease:
+cleanrelease: ACE-INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
 	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
 	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
-release:
+release: ACE-INSTALL
 	@$(TIMESTAMP) (cd ..; \
 	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
 	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
@@ -165,3 +164,6 @@ release:
 	   cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
 	 mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
+
+ACE-INSTALL: ACE-INSTALL.html
+	@lynx -dump $< > $@
