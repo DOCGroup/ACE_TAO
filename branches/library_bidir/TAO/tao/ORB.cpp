@@ -1,8 +1,5 @@
-<<<<<<< ORB.cpp
 // $Id$
-=======
-// $Id$
->>>>>>> 1.376.2.1
+
 
 
 #include "ORB.h"
@@ -78,11 +75,6 @@ using std::set_unexpected;
 
 
 ACE_RCSID(tao, ORB, "$Id$")
-
-<<<<<<< ORB.cpp
-=======
-ACE_RCSID(tao, ORB, "$Id$")
->>>>>>> 1.376.2.1
 
 
 static const char ior_prefix [] = "IOR:";
