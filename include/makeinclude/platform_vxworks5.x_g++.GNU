@@ -120,6 +120,8 @@ ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
   #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
   #### get instantiated.  Wind River knows about this problem (SPR 8483).
+  #### -fno-implicit-templates should be supported on Tornado II, so
+  #### it is added for that platform below.
   BINXSYM_NAME = xsymDec
   CFLAGS += -DCPU=I80486 -m486
   TOOLENV = 386
@@ -222,6 +224,10 @@ endif # ! ACE_CC_VERSION
 ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   ACE_HAS_GNUG_PRE_2_8 := 0
   CFLAGS += -DACE_VXWORKS=0x540
+  ifeq ($(TOOLENV),386)
+    #### Tornado II should support -fno-implicit-templates for pc486.
+    CCFLAGS += -fno-implicit-templates
+  endif # 386
   ifneq (1,$(exceptions))
     #### With exceptions, this is applied in wrapper_macros.GNU.
     #### Without, we do it here.
