@@ -610,26 +610,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -638,30 +640,49 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
+.obj/Time_Value.o .obj/Time_Value.so .shobj/Time_Value.o .shobj/Time_Value.so: Time_Value.cpp \
+ Time_Value.h \
+ pre.h \
+ OS_Export.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ ACE_export.h \
+ Time_Value.inl \
+ Basic_Types.h \
+ Basic_Types.i
+
 .obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -681,21 +702,21 @@ endif # GHS
 .obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
  OS_Dirent.h \
  pre.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
  OS_Errno.h \
- OS_Export.h \
  OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -705,6 +726,8 @@ endif # GHS
  OS.h \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -719,17 +742,16 @@ endif # GHS
 .obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
  OS_Memory.h \
  pre.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
  OS_Errno.h \
- OS_Export.h \
  OS_Errno.inl \
  OS_Memory.inl
 
@@ -739,26 +761,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -769,22 +793,22 @@ endif # GHS
 .obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
  OS_String.h \
  pre.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Memory.inl
 
 .obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
@@ -792,29 +816,27 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
  OS_Export.h \
+ OS_Errno.h \
  OS_Errno.inl \
  OS_TLI.inl
 
 .obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
  OS_Errno.h \
  pre.h \
+ OS_Export.h \
+ config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- OS_Export.h \
- config-all.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
  OS_Errno.inl
@@ -825,30 +847,32 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  streams.h \
+ OS_Export.h \
  OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
  OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -862,32 +886,34 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  streams.h \
+ OS_Export.h \
  OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
  OS_Thread_Adapter.inl \
  Thread_Hook.h \
  OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -899,17 +925,14 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  streams.h \
+ OS_Export.h \
  OS_Log_Msg_Attributes.inl
 
 .obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp \
@@ -917,27 +940,29 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
  OS_Export.h \
- OS_Errno.inl \
  OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -951,26 +976,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -985,26 +1012,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1022,44 +1051,43 @@ endif # GHS
 .obj/Copy_Disabled.o .obj/Copy_Disabled.so .shobj/Copy_Disabled.o .shobj/Copy_Disabled.so: Copy_Disabled.cpp \
  Copy_Disabled.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1143,40 +1171,42 @@ endif # GHS
 .obj/Active_Map_Manager.o .obj/Active_Map_Manager.so .shobj/Active_Map_Manager.o .shobj/Active_Map_Manager.so: Active_Map_Manager.cpp \
  Active_Map_Manager.h \
  pre.h \
- OS.h \
+ OS_String.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
+ Active_Map_Manager.i \
+ Active_Map_Manager_T.h \
+ Map_Manager.h \
+ Synch.h \
+ ACE.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Dirent.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Active_Map_Manager.i \
- Active_Map_Manager_T.h \
- Map_Manager.h \
- Synch.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -1271,62 +1301,52 @@ endif # GHS
 .obj/Arg_Shifter.o .obj/Arg_Shifter.so .shobj/Arg_Shifter.o .shobj/Arg_Shifter.so: Arg_Shifter.cpp \
  Arg_Shifter.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
  OS_String.h \
+ OS_Export.h \
  Basic_Types.h \
  Basic_Types.i \
  OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i
+ OS_Errno.h \
+ OS_Errno.inl
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1361,71 +1381,58 @@ endif # GHS
 .obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
  Argv_Type_Converter.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
+ Argv_Type_Converter.inl \
  OS_String.h \
+ OS_Export.h \
  Basic_Types.h \
  Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Argv_Type_Converter.inl
+ OS_String.inl
 
 .obj/Capabilities.o .obj/Capabilities.so .shobj/Capabilities.o .shobj/Capabilities.so: Capabilities.cpp \
  Map_Manager.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Synch.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Synch.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -1516,12 +1523,12 @@ endif # GHS
  Svc_Conf_Tokens.h \
  Capabilities.h \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Containers.h \
@@ -1535,21 +1542,31 @@ endif # GHS
  Capabilities.i
 
 .obj/Containers.o .obj/Containers.so .shobj/Containers.o .shobj/Containers.so: Containers.cpp \
- OS.h \
+ Containers.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
+ Containers.i \
+ Containers_T.h \
+ Node.h \
+ Node.cpp \
+ Array_Base.h \
+ Global_Macros.h \
  OS_Export.h \
- OS_Errno.inl \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Malloc_Base.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -1559,33 +1576,13 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Node.h \
- Node.cpp \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
  Unbounded_Set.h \
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
@@ -1608,26 +1605,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1701,12 +1700,12 @@ endif # GHS
  SString.i \
  Hash_Map_With_Allocator_T.h \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
@@ -1743,26 +1742,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1836,12 +1837,12 @@ endif # GHS
  SString.i \
  Hash_Map_With_Allocator_T.h \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
@@ -1872,18 +1873,18 @@ endif # GHS
 .obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
  Dirent.h \
  pre.h \
- OS_Dirent.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
+ OS_Dirent.h \
  OS_Export.h \
+ OS_Errno.h \
  OS_Errno.inl \
  OS_Dirent.inl \
  Dirent.i \
@@ -1898,6 +1899,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1914,26 +1917,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -1950,26 +1955,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2016,20 +2023,20 @@ endif # GHS
 
 .obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -2039,6 +2046,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2055,26 +2064,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2126,26 +2137,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2174,26 +2187,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2281,37 +2296,40 @@ endif # GHS
 .obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.so .shobj/Hash_Map_Manager.o .shobj/Hash_Map_Manager.so: Hash_Map_Manager.cpp \
  Hash_Map_Manager.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Hash_Map_Manager_T.h \
+ Default_Constants.h \
+ Functor.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
- Default_Constants.h \
+ Time_Value.h \
+ Time_Value.inl \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Functor.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -2327,7 +2345,6 @@ endif # GHS
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
@@ -2411,52 +2428,29 @@ endif # GHS
  Connection_Recycling_Strategy.h \
  pre.h \
  Recyclable.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Recyclable.inl
 
 .obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp \
  Hashable.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
  Hashable.inl
 
 .obj/Notification_Strategy.o .obj/Notification_Strategy.so .shobj/Notification_Strategy.o .shobj/Notification_Strategy.so: Notification_Strategy.cpp \
@@ -2467,26 +2461,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2510,54 +2506,48 @@ endif # GHS
 .obj/Recyclable.o .obj/Recyclable.so .shobj/Recyclable.o .shobj/Recyclable.so: Recyclable.cpp \
  Recyclable.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Recyclable.inl
 
 .obj/Refcountable.o .obj/Refcountable.so .shobj/Refcountable.o .shobj/Refcountable.so: Refcountable.cpp \
  Refcountable.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Refcountable.inl
 
 .obj/Handle_Ops.o .obj/Handle_Ops.so .shobj/Handle_Ops.o .shobj/Handle_Ops.so: Handle_Ops.cpp \
  Handle_Ops.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -2567,6 +2557,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2578,20 +2570,22 @@ endif # GHS
 .obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
  Init_ACE.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Init_ACE.i \
+ Object_Manager.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -2601,14 +2595,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Init_ACE.i \
- Object_Manager.h \
  Object_Manager.i \
  Managed_Object.h \
  Managed_Object.i \
@@ -2620,26 +2614,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2661,26 +2657,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2752,35 +2750,17 @@ endif # GHS
 .obj/Method_Request.o .obj/Method_Request.so .shobj/Method_Request.o .shobj/Method_Request.so: Method_Request.cpp \
  Method_Request.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
  Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i
+ OS_Export.h
 
 .obj/Object_Manager.o .obj/Object_Manager.so .shobj/Object_Manager.o .shobj/Object_Manager.so: Object_Manager.cpp \
  Object_Manager.h \
@@ -2788,26 +2768,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2911,16 +2893,6 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h \
  Local_Tokens.h \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
  Local_Tokens.i \
  Token_Manager.i \
  Service_Manager.h \
@@ -2937,9 +2909,16 @@ endif # GHS
  INET_Addr.i \
  SOCK_Stream.i \
  SOCK_Acceptor.h \
- Time_Value.h \
  SOCK_Acceptor.i \
- Service_Manager.i
+ Service_Manager.i \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Containers_T.i \
+ Containers_T.cpp
 
 .obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp \
  Registry.h \
@@ -2947,26 +2926,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -2977,18 +2958,15 @@ endif # GHS
 .obj/String_Base_Const.o .obj/String_Base_Const.so .shobj/String_Base_Const.o .shobj/String_Base_Const.so: String_Base_Const.cpp \
  String_Base_Const.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
  Malloc.h \
@@ -2997,26 +2975,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3095,26 +3075,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3155,17 +3137,14 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  Sample_History.inl \
  Basic_Stats.h \
@@ -3174,6 +3153,9 @@ endif # GHS
  Log_Record.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -3181,6 +3163,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3200,26 +3184,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3256,12 +3242,12 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
@@ -3335,26 +3321,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3400,28 +3388,30 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3502,7 +3492,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Log_Msg_NT_Event_Log.h \
  Log_Msg_UNIX_Syslog.h
@@ -3510,51 +3499,42 @@ endif # GHS
 .obj/Log_Msg_Callback.o .obj/Log_Msg_Callback.so .shobj/Log_Msg_Callback.o .shobj/Log_Msg_Callback.so: Log_Msg_Callback.cpp \
  Log_Msg_Callback.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/Log_Msg_Backend.o .obj/Log_Msg_Backend.so .shobj/Log_Msg_Backend.o .shobj/Log_Msg_Backend.so: Log_Msg_Backend.cpp \
  Log_Msg_Backend.h \
  pre.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/Log_Msg_IPC.o .obj/Log_Msg_IPC.so .shobj/Log_Msg_IPC.o .shobj/Log_Msg_IPC.so: Log_Msg_IPC.cpp \
  Log_Msg_IPC.h \
  pre.h \
  Log_Msg_Backend.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  SOCK_Connector.h \
  SOCK_Stream.h \
  SOCK_IO.h \
@@ -3562,6 +3542,9 @@ endif # GHS
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -3571,6 +3554,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3597,7 +3582,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Log_Record.h \
  Log_Priority.h \
@@ -3607,43 +3591,41 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/Log_Msg_UNIX_Syslog.o .obj/Log_Msg_UNIX_Syslog.so .shobj/Log_Msg_UNIX_Syslog.o .shobj/Log_Msg_UNIX_Syslog.so: Log_Msg_UNIX_Syslog.cpp \
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3676,26 +3658,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3727,26 +3711,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3849,22 +3835,25 @@ endif # GHS
  Service_Object.i
 
 .obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp \
- config-all.h \
+ Trace.h \
  pre.h \
+ ACE_export.h \
+ config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
+ Global_Macros.h \
  OS_Export.h \
- OS_Errno.inl \
- Trace.h \
+ Log_Msg.h \
+ Log_Record.h \
  OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -3874,13 +3863,12 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
  streams.h \
  OS.i \
- Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
@@ -3895,26 +3883,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -3996,26 +3986,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4106,26 +4098,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4224,26 +4218,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4285,26 +4281,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4332,26 +4330,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4396,30 +4396,32 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4465,26 +4467,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4518,26 +4522,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4559,26 +4565,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4612,26 +4620,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4706,26 +4716,26 @@ endif # GHS
 .obj/Thread_Adapter.o .obj/Thread_Adapter.so .shobj/Thread_Adapter.o .shobj/Thread_Adapter.so: Thread_Adapter.cpp \
  Thread_Adapter.h \
  pre.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
  streams.h \
+ OS_Export.h \
  OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -4735,6 +4745,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4803,27 +4815,29 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4871,28 +4885,30 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Thread_Control.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -4967,26 +4983,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -5030,26 +5048,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -5153,250 +5173,57 @@ endif # GHS
 .obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
  FlReactor.h \
  pre.h \
- Select_Reactor.h \
- Select_Reactor_T.h \
- Select_Reactor_Base.h \
- Signal.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Handle_Set.h \
- Handle_Set.i \
- Token.h \
- Token.i \
- Pipe.h \
- Pipe.i \
- Reactor_Impl.h \
- Select_Reactor_Base.i \
- Reactor.h \
- Reactor.i \
- Select_Reactor_T.cpp \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- Select_Reactor_T.i
+ ace_wchar.inl
 
 .obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.so .shobj/Msg_WFMO_Reactor.o .shobj/Msg_WFMO_Reactor.so: Msg_WFMO_Reactor.cpp \
  Msg_WFMO_Reactor.h \
  pre.h \
- WFMO_Reactor.h \
- Signal.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor_Impl.h \
- Message_Queue.h \
- Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
- Message_Queue_T.i \
- Message_Queue_T.cpp \
- Notification_Strategy.h \
- Notification_Strategy.inl \
- Message_Queue.i \
- Process_Mutex.h \
- Process_Mutex.inl \
- WFMO_Reactor.i \
- Handle_Set.h \
- Handle_Set.i \
- Reactor.h \
- Reactor.i \
  Msg_WFMO_Reactor.i
 
 .obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
  POSIX_Proactor.h \
- Proactor_Impl.h \
- pre.h \
- OS.h \
  config-all.h \
+ pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Proactor_Impl.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -5543,50 +5370,14 @@ endif # GHS
 .obj/WIN32_Proactor.o .obj/WIN32_Proactor.so .shobj/WIN32_Proactor.o .shobj/WIN32_Proactor.so: WIN32_Proactor.cpp \
  WIN32_Proactor.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- WIN32_Asynch_IO.h \
- Event_Handler.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Event_Handler.i
+ ace_wchar.inl
 
 .obj/Priority_Reactor.o .obj/Priority_Reactor.so .shobj/Priority_Reactor.o .shobj/Priority_Reactor.so: Priority_Reactor.cpp \
  Priority_Reactor.h \
@@ -5595,18 +5386,17 @@ endif # GHS
  Node.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Node.cpp \
  OS_Memory.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Memory.inl \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
@@ -5616,10 +5406,13 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -5709,29 +5502,31 @@ endif # GHS
 .obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp \
  Proactor.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -5910,26 +5705,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -6022,25 +5819,6 @@ endif # GHS
  SString.i \
  Service_Config.i \
  Svc_Conf_Tokens.h \
- WFMO_Reactor.h \
- Message_Queue.h \
- Message_Block.h \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
- Message_Queue_T.i \
- Message_Queue_T.cpp \
- Notification_Strategy.h \
- Notification_Strategy.inl \
- Message_Queue.i \
- Process_Mutex.h \
- Process_Mutex.inl \
- WFMO_Reactor.i \
- Msg_WFMO_Reactor.h \
- Msg_WFMO_Reactor.i \
  Select_Reactor.h \
  Select_Reactor_T.h \
  Select_Reactor_Base.h \
@@ -6078,26 +5856,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -6175,26 +5955,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -6264,7 +6046,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Acceptor.i \
  SOCK_Connector.h \
  SOCK_Connector.i \
@@ -6280,174 +6061,15 @@ endif # GHS
 
 .obj/SUN_Proactor.o .obj/SUN_Proactor.so .shobj/SUN_Proactor.o .shobj/SUN_Proactor.so: SUN_Proactor.cpp \
  SUN_Proactor.h \
- POSIX_Proactor.h \
- Proactor_Impl.h \
- pre.h \
- OS.h \
  config-all.h \
+ pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Asynch_IO.h \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
- Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Event_Handler.h \
- Event_Handler.i \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Signal.h \
- Signal.i \
- Reactor.i \
- Reactor_Impl.h \
- Pipe.h \
- Pipe.i \
- POSIX_Asynch_IO.h \
- Asynch_IO_Impl.h \
- Asynch_IO_Impl.i \
- Select_Reactor.h \
- Select_Reactor_T.h \
- Select_Reactor_Base.h \
- Token.h \
- Token.i \
- Select_Reactor_Base.i \
- Select_Reactor_T.cpp \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- Select_Reactor_T.i \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Task.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- Thread_Manager.h \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Singleton.h \
- Singleton.i \
- Singleton.cpp \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.h \
- Managed_Object.i \
- Managed_Object.cpp \
- Thread_Manager.i \
- Task.i \
- Task_T.h \
- Message_Queue.h \
- Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
- Message_Queue_T.i \
- Message_Queue_T.cpp \
- Notification_Strategy.h \
- Notification_Strategy.inl \
- Message_Queue.i \
- Task_T.i \
- Task_T.cpp \
- Module.h \
- Module.i \
- Module.cpp \
- Stream_Modules.h \
- Stream_Modules.cpp \
- POSIX_Asynch_IO.i \
- POSIX_Proactor.i
+ ace_wchar.inl
 
 .obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
  TP_Reactor.h \
@@ -6461,26 +6083,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -6551,486 +6175,81 @@ endif # GHS
  TP_Reactor.i
 
 .obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
- Synch_T.h \
+ TkReactor.h \
  pre.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- SOCK_Acceptor.h \
- SOCK_Stream.h \
- SOCK_IO.h \
- SOCK.h \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
- SOCK_IO.i \
- INET_Addr.h \
- INET_Addr.i \
- SOCK_Stream.i \
- Time_Value.h \
- SOCK_Acceptor.i \
- SOCK_Connector.h \
- SOCK_Connector.i \
- TkReactor.h \
- Select_Reactor.h \
- Select_Reactor_T.h \
- Select_Reactor_Base.h \
- Signal.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Handle_Set.h \
- Handle_Set.i \
- Token.h \
- Token.i \
- Pipe.h \
- Pipe.i \
- Reactor_Impl.h \
- Select_Reactor_Base.i \
- Reactor.h \
- Reactor.i \
- Select_Reactor_T.cpp \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- Select_Reactor_T.i
+ ace_wchar.inl
 
 .obj/WFMO_Reactor.o .obj/WFMO_Reactor.so .shobj/WFMO_Reactor.o .shobj/WFMO_Reactor.so: WFMO_Reactor.cpp \
  WFMO_Reactor.h \
  pre.h \
- Signal.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor_Impl.h \
- Message_Queue.h \
- Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
- Message_Queue_T.i \
- Message_Queue_T.cpp \
- Notification_Strategy.h \
- Notification_Strategy.inl \
- Message_Queue.i \
- Process_Mutex.h \
- Process_Mutex.inl \
- WFMO_Reactor.i \
- Handle_Set.h \
- Handle_Set.i \
- Reactor.h \
- Reactor.i \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Timer_Heap_T.cpp
+ ace_wchar.inl
 
 .obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
- Synch_T.h \
+ XtReactor.h \
  pre.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- SOCK_Acceptor.h \
- SOCK_Stream.h \
- SOCK_IO.h \
- SOCK.h \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
- SOCK_IO.i \
- INET_Addr.h \
- INET_Addr.i \
- SOCK_Stream.i \
- Time_Value.h \
- SOCK_Acceptor.i \
- SOCK_Connector.h \
- SOCK_Connector.i \
- XtReactor.h \
- Select_Reactor.h \
- Select_Reactor_T.h \
- Select_Reactor_Base.h \
- Signal.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Handle_Set.h \
- Handle_Set.i \
- Token.h \
- Token.i \
- Pipe.h \
- Pipe.i \
- Reactor_Impl.h \
- Select_Reactor_Base.i \
- Reactor.h \
- Reactor.i \
- Select_Reactor_T.cpp \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- Select_Reactor_T.i
+ ace_wchar.inl
 
 .obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp \
  QtReactor.h \
  pre.h \
- Select_Reactor.h \
- Select_Reactor_T.h \
- Select_Reactor_Base.h \
- Signal.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
- Signal.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Handle_Set.h \
- Handle_Set.i \
- Token.h \
- Token.i \
- Pipe.h \
- Pipe.i \
- Reactor_Impl.h \
- Select_Reactor_Base.i \
- Reactor.h \
- Reactor.i \
- Select_Reactor_T.cpp \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- Select_Reactor_T.i
+ ace_wchar.inl
 
 .obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
  Asynch_IO.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7148,66 +6367,70 @@ endif # GHS
  INET_Addr.i
 
 .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
- OS.h \
+ Asynch_IO_Impl.h \
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Asynch_IO.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Asynch_IO_Impl.h \
- Asynch_IO.h \
  Asynch_IO_Impl.i
 
 .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
  POSIX_Asynch_IO.h \
- OS.h \
- pre.h \
  config-all.h \
+ pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7369,52 +6592,35 @@ endif # GHS
 .obj/WIN32_Asynch_IO.o .obj/WIN32_Asynch_IO.so .shobj/WIN32_Asynch_IO.o .shobj/WIN32_Asynch_IO.so: WIN32_Asynch_IO.cpp \
  WIN32_Asynch_IO.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i
+ ace_wchar.inl
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ Addr.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -7424,15 +6630,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Addr.i \
- Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
@@ -7445,26 +6650,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7496,20 +6703,20 @@ endif # GHS
  IPC_SAP.h \
  pre.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -7519,6 +6726,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7537,31 +6746,33 @@ endif # GHS
 .obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
  LSOCK.h \
  pre.h \
- SOCK.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ SOCK.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7595,34 +6806,36 @@ endif # GHS
 .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.so .shobj/LSOCK_Acceptor.o .shobj/LSOCK_Acceptor.so: LSOCK_Acceptor.cpp \
  LSOCK_Acceptor.h \
  pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
  SOCK_Acceptor.h \
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
  ACE.h \
  OS.h \
- config-all.h \
- config.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7649,7 +6862,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Acceptor.i \
  UNIX_Addr.h \
  Log_Msg.h \
@@ -7667,32 +6879,34 @@ endif # GHS
 .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.so .shobj/LSOCK_CODgram.o .shobj/LSOCK_CODgram.so: LSOCK_CODgram.cpp \
  LSOCK_CODgram.h \
  pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
  LSOCK.h \
  SOCK.h \
  ACE.h \
  OS.h \
- config-all.h \
- config.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7733,34 +6947,36 @@ endif # GHS
 .obj/LSOCK_Connector.o .obj/LSOCK_Connector.so .shobj/LSOCK_Connector.o .shobj/LSOCK_Connector.so: LSOCK_Connector.cpp \
  LSOCK_Connector.h \
  pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
  SOCK_Connector.h \
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
  ACE.h \
  OS.h \
- config-all.h \
- config.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7787,7 +7003,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  LSOCK_Stream.h \
  UNIX_Addr.h \
@@ -7806,32 +7021,34 @@ endif # GHS
 .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.so .shobj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp \
  LSOCK_Dgram.h \
  pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
  SOCK_Dgram.h \
  SOCK.h \
  ACE.h \
  OS.h \
- config-all.h \
- config.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7870,33 +7087,35 @@ endif # GHS
 .obj/LSOCK_Stream.o .obj/LSOCK_Stream.so .shobj/LSOCK_Stream.o .shobj/LSOCK_Stream.so: LSOCK_Stream.cpp \
  LSOCK_Stream.h \
  pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
  ACE.h \
  OS.h \
- config-all.h \
- config.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -7935,32 +7154,35 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8000,26 +7222,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8046,7 +7270,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Acceptor.i \
  Log_Msg.h \
  Log_Record.h \
@@ -8076,26 +7299,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8135,26 +7360,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8243,26 +7470,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8289,7 +7518,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Log_Msg.h \
  Log_Record.h \
@@ -8307,26 +7535,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8380,26 +7610,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8443,26 +7675,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8498,26 +7732,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8553,26 +7789,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -8603,384 +7841,105 @@ endif # GHS
 .obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
  ATM_Addr.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- ATM_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ ace_wchar.inl
 
 .obj/ATM_Acceptor.o .obj/ATM_Acceptor.so .shobj/ATM_Acceptor.o .shobj/ATM_Acceptor.so: ATM_Acceptor.cpp \
  ATM_Acceptor.h \
  pre.h \
- Time_Value.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- ATM_Stream.h \
- ATM_Addr.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- ATM_Addr.i \
- ATM_Params.h \
- ATM_QoS.h
+ ace_wchar.inl
 
 .obj/ATM_Connector.o .obj/ATM_Connector.so .shobj/ATM_Connector.o .shobj/ATM_Connector.so: ATM_Connector.cpp \
- Handle_Set.h \
+ ATM_Connector.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Handle_Set.i \
- ATM_Connector.h \
- ATM_Stream.h \
- ATM_Addr.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- ATM_Addr.i \
- ATM_Params.h \
- ATM_QoS.h
+ ace_wchar.inl
 
 .obj/ATM_Params.o .obj/ATM_Params.so .shobj/ATM_Params.o .shobj/ATM_Params.so: ATM_Params.cpp \
  ATM_Params.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i
+ ace_wchar.inl
 
 .obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp \
  ATM_QoS.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i
+ ace_wchar.inl
 
 .obj/ATM_Stream.o .obj/ATM_Stream.so .shobj/ATM_Stream.o .shobj/ATM_Stream.so: ATM_Stream.cpp \
  ATM_Stream.h \
  pre.h \
- ATM_Addr.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- ATM_Addr.i \
- ATM_Params.h
+ ace_wchar.inl
 
 .obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.so .shobj/XTI_ATM_Mcast.o .shobj/XTI_ATM_Mcast.so: XTI_ATM_Mcast.cpp \
  XTI_ATM_Mcast.h \
  pre.h \
- TLI_Connector.h \
- TLI_Stream.h \
- TLI.h \
- IPC_SAP.h \
- Flag_Manip.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.i \
- IPC_SAP.i \
- Addr.h \
- Addr.i \
- INET_Addr.h \
- ACE.h \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- ATM_Addr.h \
- ATM_Addr.i
+ ace_wchar.inl
 
 .obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -8990,6 +7949,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9072,20 +8033,22 @@ endif # GHS
  DEV_Addr.h \
  pre.h \
  Addr.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Addr.i \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9095,14 +8058,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Addr.i \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -9177,20 +8140,20 @@ endif # GHS
  DEV.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9200,6 +8163,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9286,20 +8251,20 @@ endif # GHS
  DEV.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9309,6 +8274,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9388,24 +8355,25 @@ endif # GHS
  DEV.i \
  DEV_IO.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ FIFO.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9415,6 +8383,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9447,20 +8417,20 @@ endif # GHS
  FIFO.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9470,6 +8440,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9504,20 +8476,20 @@ endif # GHS
  FIFO.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9527,6 +8499,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9561,20 +8535,20 @@ endif # GHS
  FIFO.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9584,6 +8558,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9618,20 +8594,20 @@ endif # GHS
  FIFO.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9641,6 +8617,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9673,20 +8651,22 @@ endif # GHS
  FILE_Addr.h \
  pre.h \
  Addr.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Addr.i \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9696,14 +8676,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Addr.i \
- Flag_Manip.h \
  Flag_Manip.i \
  FILE_Addr.i \
  SString.h \
@@ -9771,24 +8751,25 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ FILE.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9798,6 +8779,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9883,20 +8866,20 @@ endif # GHS
  FILE.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -9906,6 +8889,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -9992,20 +8977,20 @@ endif # GHS
  FILE.h \
  IO_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10015,6 +9000,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10098,20 +9085,20 @@ endif # GHS
  IO_SAP.h \
  pre.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10121,6 +9108,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10139,29 +9128,31 @@ endif # GHS
 .obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
  IOStream.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10190,32 +9181,35 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
+ Pipe.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10247,7 +9241,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Acceptor.i \
  SOCK_Connector.h \
  SOCK_Connector.i \
@@ -10266,26 +9259,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10328,7 +9323,6 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp \
  Containers.h \
- Malloc_Base.h \
  Containers.i \
  Containers_T.h \
  Node.h \
@@ -10336,6 +9330,7 @@ endif # GHS
  Array_Base.h \
  Array_Base.inl \
  Array_Base.cpp \
+ Malloc_Base.h \
  Unbounded_Set.h \
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
@@ -10349,20 +9344,22 @@ endif # GHS
  SPIPE_Addr.h \
  pre.h \
  Addr.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Addr.i \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10372,14 +9369,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Addr.i \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -10452,20 +9449,20 @@ endif # GHS
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10475,6 +9472,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10560,20 +9559,20 @@ endif # GHS
  SPIPE.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10583,6 +9582,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10669,20 +9670,20 @@ endif # GHS
  SPIPE.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10692,6 +9693,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10778,20 +9781,20 @@ endif # GHS
  SPIPE.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -10801,6 +9804,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10887,26 +9892,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10933,26 +9940,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -10988,26 +9997,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11041,26 +10052,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11093,26 +10106,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11142,20 +10157,20 @@ endif # GHS
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -11165,6 +10180,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11188,20 +10205,20 @@ endif # GHS
  TLI.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -11211,6 +10228,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11221,7 +10240,6 @@ endif # GHS
  IPC_SAP.i \
  Addr.h \
  Addr.i \
- Time_Value.h \
  TLI_Stream.h \
  INET_Addr.h \
  ACE.h \
@@ -11248,26 +10266,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11309,20 +10329,20 @@ endif # GHS
  TLI.h \
  IPC_SAP.h \
  Flag_Manip.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -11332,6 +10352,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11361,26 +10383,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11469,21 +10493,24 @@ endif # GHS
 .obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
  UNIX_Addr.h \
  pre.h \
- Addr.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Addr.h \
+ ACE_export.h \
+ Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -11493,15 +10520,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Addr.i \
- Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
@@ -11529,26 +10555,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11617,7 +10645,6 @@ endif # GHS
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
- Time_Value.h \
  Module.h \
  Task_T.h \
  Message_Queue.h \
@@ -11695,26 +10722,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11783,7 +10812,6 @@ endif # GHS
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
- Time_Value.h \
  Module.h \
  Task_T.h \
  Message_Queue.h \
@@ -11859,26 +10887,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -11947,7 +10977,6 @@ endif # GHS
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
- Time_Value.h \
  Module.h \
  Task_T.h \
  Message_Queue.h \
@@ -12023,26 +11052,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12069,7 +11100,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Acceptor.i \
  MEM_Stream.h \
  MEM_IO.h \
@@ -12157,26 +11187,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12217,26 +11249,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12263,7 +11297,6 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  MEM_Stream.h \
  MEM_IO.h \
@@ -12351,26 +11384,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12475,26 +11510,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12583,26 +11620,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12705,23 +11744,23 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  Basic_Stats.inl \
  Log_Msg.h \
  Log_Record.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -12729,6 +11768,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12747,26 +11788,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12825,26 +11868,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12862,7 +11907,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Time_Value.h \
  High_Res_Timer.h \
  High_Res_Timer.i \
  Profile_Timer.i \
@@ -12879,26 +11923,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -12967,20 +12013,24 @@ endif # GHS
  Time_Request_Reply.h \
  pre.h \
  Time_Value.h \
- OS.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ ACE_export.h \
+ Time_Value.inl \
+ SString.h \
+ String_Base.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -12996,9 +12046,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- SString.h \
- String_Base.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -13068,26 +12115,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13104,26 +12153,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13193,26 +12244,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13276,26 +12329,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13347,20 +12402,29 @@ endif # GHS
 .obj/Timer_Queue.o .obj/Timer_Queue.so .shobj/Timer_Queue.o .shobj/Timer_Queue.so: Timer_Queue.cpp \
  Containers.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
+ Containers.i \
+ Containers_T.h \
+ Node.h \
+ Node.cpp \
+ Array_Base.h \
+ Global_Macros.h \
  OS_Export.h \
- OS_Errno.inl \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Malloc_Base.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -13370,32 +12434,13 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Node.h \
- Node.cpp \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
  Unbounded_Set.h \
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
@@ -13412,6 +12457,18 @@ endif # GHS
  Containers_T.cpp \
  Timer_Queue.h \
  Synch.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -13445,26 +12502,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13520,26 +12579,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13568,20 +12629,24 @@ endif # GHS
 .obj/Dynamic_Service_Base.o .obj/Dynamic_Service_Base.so .shobj/Dynamic_Service_Base.o .shobj/Dynamic_Service_Base.so: Dynamic_Service_Base.cpp \
  Dynamic_Service_Base.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Service_Config.h \
+ Service_Object.h \
+ Shared_Object.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -13591,16 +12656,14 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -13699,26 +12762,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -13869,26 +12934,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14015,7 +13082,6 @@ endif # GHS
  INET_Addr.i \
  SOCK_Stream.i \
  SOCK_Acceptor.h \
- Time_Value.h \
  SOCK_Acceptor.i \
  Service_Manager.i \
  Service_Repository.h \
@@ -14043,26 +13109,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14183,26 +13251,9 @@ endif # GHS
  INET_Addr.i \
  SOCK_Stream.i \
  SOCK_Acceptor.h \
- Time_Value.h \
  SOCK_Acceptor.i \
  Service_Manager.i \
- WFMO_Reactor.h \
- Message_Queue.h \
- Message_Block.h \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
- Message_Queue_T.i \
- Message_Queue_T.cpp \
- Notification_Strategy.h \
- Notification_Strategy.inl \
- Message_Queue.i \
- Process_Mutex.h \
- Process_Mutex.inl \
- WFMO_Reactor.i
+ WFMO_Reactor.h
 
 .obj/Service_Object.o .obj/Service_Object.so .shobj/Service_Object.o .shobj/Service_Object.so: Service_Object.cpp \
  Service_Types.h \
@@ -14213,26 +13264,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14283,26 +13336,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14358,26 +13413,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14488,7 +13545,6 @@ endif # GHS
  Module.cpp \
  Stream_Modules.cpp \
  Stream.h \
- Time_Value.h \
  Stream.i \
  Stream.cpp
 
@@ -14504,26 +13560,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14666,7 +13724,6 @@ endif # GHS
  Module.cpp \
  Stream_Modules.cpp \
  Stream.h \
- Time_Value.h \
  Stream.i \
  Stream.cpp
 
@@ -14677,26 +13734,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14721,26 +13780,28 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -14861,26 +13922,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15029,7 +14092,6 @@ endif # GHS
  Stream_Modules.h \
  Stream_Modules.cpp \
  Stream.h \
- Time_Value.h \
  Stream.i \
  Stream.cpp
 
@@ -15044,26 +14106,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15171,22 +14235,22 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  Message_Block.h \
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -15194,6 +14258,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15268,22 +14334,22 @@ endif # GHS
  CDR_Base.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  Message_Block.h \
  ACE.h \
  OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -15291,6 +14357,8 @@ endif # GHS
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15374,16 +14442,12 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl
+ ace_wchar.inl
 
 .obj/Message_Queue.o .obj/Message_Queue.so .shobj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
  Message_Queue.h \
@@ -15393,26 +14457,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15496,26 +14562,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15571,7 +14639,8 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
@@ -15579,26 +14648,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15710,37 +14781,39 @@ endif # GHS
 .obj/Based_Pointer_Repository.o .obj/Based_Pointer_Repository.so .shobj/Based_Pointer_Repository.o .shobj/Based_Pointer_Repository.so: Based_Pointer_Repository.cpp \
  Map_Manager.h \
  pre.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Synch.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Synch.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -15846,26 +14919,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -15940,26 +15015,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16045,26 +15122,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16114,26 +15193,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16203,26 +15284,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16255,26 +15338,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16350,26 +15435,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16443,26 +15530,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16535,26 +15624,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16657,26 +15748,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16703,26 +15796,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16752,26 +15847,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16794,141 +15891,17 @@ endif # GHS
  Shared_Memory_SV.i
 
 .obj/Local_Tokens.o .obj/Local_Tokens.so .shobj/Local_Tokens.o .shobj/Local_Tokens.so: Local_Tokens.cpp \
- Thread.h \
+ Local_Tokens.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Local_Tokens.h \
- Synch_T.h \
- Synch.h \
- Synch.i \
- Synch_T.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Node.h \
- Node.cpp \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Unbounded_Set.h \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
- Map_Manager.h \
- Map_Manager.i \
- Map_Manager.cpp \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- SString.h \
- String_Base.h \
- String_Base_Const.h \
- String_Base.i \
- String_Base.cpp \
- Auto_Ptr.h \
- Auto_Ptr.i \
- Auto_Ptr.cpp \
- SString.i \
- Service_Config.i \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor.i \
- Reactor_Impl.h \
- Svc_Conf_Tokens.h \
- Local_Tokens.i \
- Token_Manager.h \
- Token_Manager.i
+ Local_Tokens.i
 
 .obj/Remote_Tokens.o .obj/Remote_Tokens.so .shobj/Remote_Tokens.o .shobj/Remote_Tokens.so: Remote_Tokens.cpp \
  Remote_Tokens.h \
@@ -16938,26 +15911,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -16987,14 +15962,18 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Synch_Options.h \
  Synch_Options.i \
  Local_Tokens.h \
- Synch_T.h \
+ Local_Tokens.i \
+ Token_Request_Reply.h \
+ Token_Request_Reply.i \
+ Remote_Tokens.i \
+ Singleton.h \
  Synch.h \
  Synch.i \
+ Synch_T.h \
  Synch_T.i \
  Thread.h \
  Thread_Adapter.h \
@@ -17009,81 +15988,6 @@ endif # GHS
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Node.h \
- Node.cpp \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Unbounded_Set.h \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Map_Manager.h \
- Map_Manager.i \
- Map_Manager.cpp \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- SString.h \
- String_Base.h \
- String_Base_Const.h \
- String_Base.i \
- String_Base.cpp \
- Auto_Ptr.h \
- Auto_Ptr.i \
- Auto_Ptr.cpp \
- SString.i \
- Service_Config.i \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor.i \
- Reactor_Impl.h \
- Svc_Conf_Tokens.h \
- Local_Tokens.i \
- Token_Request_Reply.h \
- Token_Request_Reply.i \
- Remote_Tokens.i \
- Singleton.h \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -17096,37 +16000,39 @@ endif # GHS
  Token_Collection.h \
  pre.h \
  Map_Manager.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ Synch.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
  streams.h \
  Trace.h \
  OS.i \
- Synch.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -17216,16 +16122,6 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h \
  Local_Tokens.h \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
  Local_Tokens.i \
  Token_Collection.i
 
@@ -17237,26 +16133,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -17353,16 +16251,6 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h \
  Local_Tokens.h \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
  Local_Tokens.i \
  Object_Manager.h \
  Object_Manager.i \
@@ -17378,26 +16266,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -17494,16 +16384,6 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h \
  Local_Tokens.h \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
  Local_Tokens.i \
  Token_Manager.i \
  Object_Manager.h \
@@ -17516,138 +16396,19 @@ endif # GHS
  Token_Request_Reply.h \
  pre.h \
  Local_Tokens.h \
- Synch_T.h \
- Synch.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- Basic_Types.h \
- Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch.i \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Node.h \
- Node.cpp \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Unbounded_Set.h \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Containers_T.i \
- Containers_T.cpp \
- Synch_Options.h \
- Synch_Options.i \
- Map_Manager.h \
- Map_Manager.i \
- Map_Manager.cpp \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- SString.h \
- String_Base.h \
- String_Base_Const.h \
- String_Base.i \
- String_Base.cpp \
- Auto_Ptr.h \
- Auto_Ptr.i \
- Auto_Ptr.cpp \
- SString.i \
- Service_Config.i \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor.i \
- Reactor_Impl.h \
- Svc_Conf_Tokens.h \
  Local_Tokens.i \
  Time_Value.h \
+ OS_Export.h \
+ ACE_export.h \
+ Time_Value.inl \
  Token_Request_Reply.i
 
 .obj/Local_Name_Space.o .obj/Local_Name_Space.so .shobj/Local_Name_Space.o .shobj/Local_Name_Space.so: Local_Name_Space.cpp \
@@ -17656,26 +16417,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -17764,7 +16527,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Service_Config.h \
  Service_Object.h \
@@ -17801,12 +16563,12 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Local_Name_Space_T.cpp \
@@ -17823,26 +16585,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -17872,7 +16636,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Service_Config.h \
  Service_Object.h \
@@ -17958,20 +16721,24 @@ endif # GHS
  Name_Request_Reply.h \
  pre.h \
  Time_Value.h \
- OS.h \
+ OS_Export.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
+ ACE_export.h \
+ Time_Value.inl \
+ SString.h \
+ String_Base.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
@@ -17987,9 +16754,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- SString.h \
- String_Base.h \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -18061,26 +16825,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -18166,7 +16932,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Service_Config.h \
  Service_Object.h \
@@ -18201,26 +16966,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -18323,7 +17090,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Service_Config.h \
  Service_Config.i \
@@ -18348,12 +17114,12 @@ endif # GHS
  Local_Name_Space_T.h \
  Local_Name_Space.h \
  Hash_Map_Manager.h \
+ Hash_Map_Manager_T.h \
  Functor.h \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
  Functor_T.cpp \
- Hash_Map_Manager_T.h \
  Hash_Map_Manager_T.i \
  Hash_Map_Manager_T.cpp \
  Local_Name_Space_T.cpp \
@@ -18369,26 +17135,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -18403,26 +17171,28 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
- ACE_export.h \
- svc_export.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
  OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
+ ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
  Default_Constants.h \
  Global_Macros.h \
  Min_Max.h \
@@ -18508,7 +17278,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i \
- Time_Value.h \
  SOCK_Connector.i \
  Service_Config.h \
  Service_Object.h \
