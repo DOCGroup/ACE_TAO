@@ -155,6 +155,7 @@
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 #define ACE_HAS_SIGWAIT
+#define ACE_HAS_DIRENT
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
