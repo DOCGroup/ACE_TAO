@@ -1,9 +1,26 @@
+Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Arg_Shifter.h: Doxygen-ized some comments.
+
+        * ace/Date_Time.i (update): Add 1900 to years value to convert from
+          localtime's years-since-1900 value to now. Add 1 to the month
+          to convert localtime's 0-11 range to 1-12. Thanks to Syed
+          Wasim Ali <syed.ali@neustar.com> for reporting this.
+
+        * tests/Date_Time_Test.(cpp dsp icc): New test for ACE_Date_Time.
+
+        * tests/tests.dsw:
+        * tests/tests.icp:
+        * tests/Makefile[.bor]: Added Date_Time_Test.
+
+        * tests/run_test.lst: Added Arg_Shifter_Test and Date_Time_Test.
+
 Thu Nov  8 11:53:00 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Arg_Shifter_Test.(cpp dsp icc): New test for ACE_Arg_Shifter.
 
         * tests/tests.dsw:
-        * tests/tests.icc:
+        * tests/tests.icp:
         * tests/Makefile[.bor]: Added Arg_Shifter_Test.
 
 Thu Nov  8 13:05:12 2001  Chad Elliott  <elliott_c@ociweb.com>

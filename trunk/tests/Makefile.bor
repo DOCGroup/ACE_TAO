@@ -22,6 +22,7 @@ NAMES = \
 	Collection_Test \
 	Conn_Test \
 	Config_Test \
+        Date_Time_Test \
 	Dirent_Test \
 	DLL_Test \
 	DLList_Test \

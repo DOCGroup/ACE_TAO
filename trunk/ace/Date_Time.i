@@ -12,8 +12,8 @@ ACE_Date_Time::update (void)
   ACE_OS::time (&time);
   struct tm *tm_time = ACE_OS::localtime (&time);
   this->day_ = tm_time->tm_mday;
-  this->month_ = tm_time->tm_mon;
-  this->year_ = tm_time->tm_year;
+  this->month_ = tm_time->tm_mon + 1;    // localtime's months are 0-11
+  this->year_ = tm_time->tm_year + 1900; // localtime reports years since 1900
   this->hour_ = tm_time->tm_hour;
   this->minute_ = tm_time->tm_min;
   this->second_ = tm_time->tm_sec;

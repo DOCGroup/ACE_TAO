@@ -21,30 +21,43 @@
 /**
  * @class ACE_Arg_Shifter
  *
- * @brief This ADT shifts known args to the back of the argv vector, so
- * deeper levels of argument parsing can locate the yet
+ * @brief This ADT operates on a specified set of arguments (@a argv).
+ * As known arguments are scanned, they are shifted to the back of the
+ * @a argv vector, so deeper levels of argument parsing can locate the yet
  * unprocessed arguments at the beginning of the vector.
  *
- * The <ACE_Arg_Shifter> copies the pointers of the argv vector
- * into a temporary array. As the <ACE_Arg_Shifter> iterates over
- * the temp, is places known arguments in the rear of the argv
- * and unknown ones in the beginning. So, after having visited
- * all the arguments in the temp vector, <ACE_Arg_Shifter> has
- * placed all the unknown arguments in their original order at
- * the front of argv.
+ * The @c ACE_Arg_Shifter copies the pointers of the @a argv vector
+ * into a temporary array. As the @c ACE_Arg_Shifter iterates over
+ * the copied vector, it places known arguments in the rear of the
+ * vector, leaving the unknown ones in the beginning. So, after having
+ * visited all the arguments in the temporary vector, @c ACE_Arg_Shifter
+ * has placed all the unknown arguments in their original order at
+ * the front of original @a argv.
  */
 class ACE_Export ACE_Arg_Shifter
 {
 public:
   // = Initialization and termination methods.
   /**
-   * Initialize the <ACE_Arg_Shifter> to the vector over which to
-   * iterate, also providing the temporary array if the client doesn't
-   * want the arg_shifter to dynamically allocate its own. If internal
-   * dynamic allocation fails, the <ACE_Arg_Shifter> will set all the
-   * indices to the end of the vector, forbidding iteration. Following
-   * iteration over argv, the argc value will contain the number of
+   * Initialize the ACE_Arg_Shifter to the vector over which to
+   * iterate. Optionally, also provide the temporary array for
+   * use in shifting the arguments. If ACE_Arg_Shifter must allocate
+   * the temporary vector internally and dynamic allocation fails, the
+   * ACE_Arg_Shifter will set all indicators to end of the vector,
+   * forbidding iteration. Following iteration over @a argv, the
+   * @a argc value will be updated to contain the number of
    * unconsumed arguments.
+   * @arg argc The number of strings in @a argv. @a argc will be
+   *    updated to reflect the number of unconsumed arguments.
+   * @arg argv The argument vector to shift. The string pointers in
+   *    the vector will be reordered to place the @a argc unconsumed
+   *    arguments at the front of the vector.
+   * @arg temp A vector of @c ACE_TCHAR pointers at least @a argc
+   *    elements long. The vector will be used for argument shifting as
+   *    the specified @a argv vector is consumed. The vector must not
+   *    be modified while this object exists. If this argument is 0
+   *    (the default) the object will allocate and free the temporary
+   *    vector transparently.
    */
   ACE_Arg_Shifter (int& argc,
                    ACE_TCHAR **argv,

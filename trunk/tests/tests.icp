@@ -78,6 +78,10 @@ subproject Conn_Test icc "Conn_Test.icc", ics "Conn_Test.ics"
 {
 }
 
+subproject Date_Time_Test icc "Date_Time_Test.icc", ics "Date_Time_Test.ics"
+{
+}
+
 subproject DLL_Test icc "DLL_Test.icc", ics "DLL_Test.ics"
 {
 }
