@@ -187,7 +187,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
   CORBA::Long size, alignment, align_offset;
 
   void *start_addr = (void *)source;
@@ -256,13 +256,13 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_wchar:
           break;
         case CORBA::tk_any:
-          retval = TAO_Marshal_Any::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Any::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_TypeCode:
-          retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_TypeCode::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_Principal:
-          retval = TAO_Marshal_Principal::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Principal::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
 
         case CORBA::tk_objref:
@@ -328,7 +328,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_ptr member_tc;
+  CORBA::TypeCode_var member_tc;
   CORBA::Any_ptr member_label;
   const void *discrim_val;
   CORBA::ULong member_count;
@@ -439,7 +439,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
                               CORBA::TypeCode::TRAVERSE_STOP);
 
           // marshal according to the matched typecode
-          return DEEP_FREE (member_tc,
+          return DEEP_FREE (member_tc.in (),
                             member_val,
                             data2,
                             ACE_TRY_ENV);

@@ -577,7 +577,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = 1;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
   CORBA::Long size, alignment, align_offset;
 
   void *start_addr = (void *)data;
@@ -673,13 +673,13 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_except:
         case CORBA::tk_string:
         case CORBA::tk_wstring:
-          retval = stream->decode (param, data, 0, ACE_TRY_ENV);
+          retval = stream->decode (param.in (), data, 0, ACE_TRY_ENV);
           break;
 
         case CORBA::tk_objref:
           {
             CORBA_Object_ptr object;
-            retval = stream->decode (param, &object, 0, ACE_TRY_ENV);
+            retval = stream->decode (param.in (), &object, 0, ACE_TRY_ENV);
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
             if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -723,7 +723,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
   CORBA::TypeCode_var discrim_tc;
-  CORBA::TypeCode_ptr member_tc = 0;
+  CORBA::TypeCode_var member_tc = 0;
   CORBA::Any_ptr member_label;
   CORBA::ULong discrim_size_with_pad;
   const void *discrim_val;
@@ -859,7 +859,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
             {
               CORBA_Object_ptr object;
               int retval =
-                stream->decode (member_tc, &object, data2, ACE_TRY_ENV);
+                stream->decode (member_tc.in (), &object, data2, ACE_TRY_ENV);
               ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1431,7 +1431,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = 1;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
   CORBA::Long size, alignment;
 
   data = (char *) data + sizeof (CORBA::Exception);
@@ -1514,7 +1514,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_alias:
         case CORBA::tk_except:
         case CORBA::tk_wstring:
-          retval = stream->decode (param, data, 0, ACE_TRY_ENV);
+          retval = stream->decode (param.in (), data, 0, ACE_TRY_ENV);
           // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
           break;
