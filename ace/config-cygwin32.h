@@ -36,14 +36,9 @@
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_SYSTIME_H
-#define ACE_LACKS_SYSV_SHMEM
 
-#define ACE_HAS_BROKEN_MAP_FAILED
-
-#define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RLIMIT
-#define ACE_LACKS_FCNTL
 
 #define ACE_HAS_SELECT_H
 
@@ -68,15 +63,11 @@
 #endif /* __GNUG__ */
 
 #define ACE_HAS_POSIX_TIME
-#define ACE_LACKS_TIMESPEC_T
 #define ACE_HAS_MSG
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-#define ACE_LACKS_SETREUID
-#define ACE_LACKS_SETREGID
 #define ACE_LACKS_GETHOSTENT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_LACKS_GETPGID_PROTOTYPE
-#define ACE_LACKS_UNIX_SIGNALS
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 // Compiler/platform supports alloca().
@@ -139,13 +130,27 @@
 // Cygwin has no ucontext.h
 #define ACE_LACKS_UCONTEXT_H
 
-#define ACE_LACKS_STDINT_H
-#define ACE_LACKS_INTTYPES_H
-#define ACE_LACKS_SYS_IPC_H
-#define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
+
+#if (((CYGWIN_VERSION_API_MAJOR == 0) && (CYGWIN_VERSION_API_MINOR >= 108)) || (CYGWIN_VERSION_API_MAJOR > 0))
+# define ACE_HAS_SIGWAIT
+# define ACE_HAS_SIGINFO_T
+#else
+# define ACE_HAS_BROKEN_MAP_FAILED
+# define ACE_LACKS_FCNTL
+# define ACE_LACKS_SYSV_SHMEM
+# define ACE_LACKS_TIMESPEC_T
+# define ACE_LACKS_STDINT_H
+# define ACE_LACKS_INTTYPES_H
+# define ACE_LACKS_SYS_IPC_H
+# define ACE_LACKS_SYS_SEM_H
+# define ACE_LACKS_SETREUID
+# define ACE_LACKS_SETREGID
+# define ACE_LACKS_SEMBUF_T
+# define ACE_LACKS_UNIX_SIGNALS
+#endif
 
 // Cygwin DLL suffix is .dll
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
@@ -159,17 +164,20 @@
 // Compiler/platform has thread-specific storage
 #   define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-#  if !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-#    define ACE_LACKS_RWLOCK_T
-#  endif  /* !ACE_HAS_PTHREADS_UNIX98_EXT */
+#   define ACE_HAS_PTHREADS_UNIX98_EXT
 
 // ... and the final standard even!
 #  define ACE_HAS_PTHREADS_STD
-// Cygwin (see pthread.h): Not supported or implemented.
 #  define ACE_LACKS_THREAD_STACK_ADDR
+# if ((CYGWIN_VERSION_API_MAJOR == 0) && (CYGWIN_VERSION_API_MINOR < 108))
+// Cygwin (see pthread.h): Not supported or implemented.
 #  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_SETDETACH
 #  define ACE_LACKS_PTHREAD_CANCEL
+# else
+#  define ACE_HAS_POSIX_SEM
+#  define ACE_HAS_PTHREADS_DRAFT6
+# endif
 #endif  /* ACE_MT_SAFE */
 
 // Include math.h here so that it will be included before ACE.h.  math.h defines
