@@ -461,8 +461,13 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   char namebuf [NAMEBUFSIZE];  // names
   be_type *bt;  // base type
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_var", node->local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (namebuf, 
+                   "%s_var", 
+                   node->local_name ()->get_string ());
 
   os = this->ctx_->stream ();
 
@@ -500,6 +505,14 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // copy constructor
   *os << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << be_nl;
+
+  // fixed-size base types only
+  if (bt->size_type () == be_decl::FIXED)
+    {
+      *os << namebuf << " (const " << node->local_name () 
+          << " &); // fixed-size base types only" << be_nl;
+    }
+
   // destructor
   *os << "~" << namebuf << " (void); // destructor" << be_nl;
   *os << be_nl;
@@ -508,6 +521,13 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // assignment from _var
   *os << namebuf << " &operator= (const " << namebuf <<
     " &);" << be_nl;
+
+  // fixed-size base types only
+  if (bt->size_type () == be_decl::FIXED)
+    {
+      *os << namebuf << " &operator= (const " << node->local_name () 
+          << " &); // fixed-size base types only" << be_nl;
+    }
 
   // arrow operator
   *os << node->local_name () << " *operator-> (void);" << be_nl;
@@ -521,6 +541,13 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << "operator " << node->local_name () << " &();" << be_nl;
   *os << "operator " << node->local_name () << " &() const;" << be_nl;
 
+  if (bt->size_type () == be_decl::VARIABLE)
+    {
+      *os << "operator " << node->local_name () 
+          << " *&(); // variable-size base types only" << be_nl;
+    }
+
+  *os << be_nl;
   // overloaded [] operator. The const version is not required for sequences
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH);

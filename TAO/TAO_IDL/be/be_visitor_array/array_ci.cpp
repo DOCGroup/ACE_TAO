@@ -239,12 +239,16 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}\n\n";
 
-  os->indent ();
-  *os << "ACE_INLINE " << be_nl;
-  *os << fname << "::operator " << nodename << "_slice *&() // cast " << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  if (node->size_type () == be_decl::VARIABLE)
+    {
+      os->indent ();
+      *os << "ACE_INLINE " << be_nl;
+      *os << fname << "::operator " << nodename 
+          << "_slice *&() // cast " << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return this->ptr_;" << be_uidt_nl;
+      *os << "}\n\n";
+    }
 
   // two operator []s instead of ->
   os->indent ();
@@ -290,7 +294,15 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}\n\n";
 
   os->indent ();
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  if (node->size_type () == be_decl::FIXED)
+    {
+      *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+    }
+  else
+    {
+      *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
+    }
+
   *os << fname << "::inout (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;

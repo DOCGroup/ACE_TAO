@@ -35,7 +35,9 @@ be_union::be_union (void)
   this->has_constructor (I_TRUE);  // always the case
 }
 
-be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
+be_union::be_union (AST_ConcreteType *dt, 
+                    UTL_ScopedName *n, 
+                    UTL_StrList *p)
   : AST_Union (dt, n, p),
     AST_Structure (AST_Decl::NT_union, n, p),
     AST_Decl (AST_Decl::NT_union, n, p),
@@ -59,7 +61,8 @@ be_union::compute_member_count (void)
   if (this->nmembers () > 0)
     {
       // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      si = new UTL_ScopeActiveIterator (this, 
+                                        UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
         {
@@ -88,7 +91,8 @@ be_union::compute_default_index (void)
   if (this->nmembers () > 0)
     {
       // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      si = new UTL_ScopeActiveIterator (this, 
+                                        UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
         {
@@ -143,8 +147,13 @@ be_union::gen_var_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (namebuf, 
+                   "%s_var", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -164,47 +173,72 @@ be_union::gen_var_defn (char *)
   // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
   // constr
-  *ch << namebuf << " (" << local_name () << " *);" << nl;
+  *ch << namebuf << " (" << this->local_name () << " *);" << nl;
   // copy constructor
   *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
+
+  // fixed-size types only
+  if (this->size_type () == be_decl::FIXED)
+    {
+      *ch << namebuf << " (const " << this->local_name () 
+          << " &); // fixed-size types only" << nl;
+    }
+
   // destructor
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
   // assignment operator from a pointer
-  *ch << namebuf << " &operator= (" << local_name () << " *);" << nl;
+  *ch << namebuf << " &operator= (" 
+      << this->local_name () << " *);" << nl;
   // assignment from _var
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
 
+  // fixed-size types only
+  if (this->size_type () == be_decl::FIXED)
+    {
+      *ch << namebuf << " &operator= (const " << this->local_name () 
+          << " &); // fixed-size types only" << nl;
+    }
+
   // arrow operator
   *ch << local_name () << " *operator-> (void);" << nl;
-  *ch << "const " << local_name () << " *operator-> (void) const;" << nl;
+  *ch << "const " << this->local_name () 
+      << " *operator-> (void) const;" << nl;
   *ch << nl;
 
   // other extra types (cast operators, [] operator, and others)
-  *ch << "operator const " << local_name () << " &() const;" << nl;
-  *ch << "operator " << local_name () << " &();" << nl;
-  *ch << "operator " << local_name () << " &() const;" << nl;
+  *ch << "operator const " << this->local_name () << " &() const;" << nl;
+  *ch << "operator " << this->local_name () << " &();" << nl;
+  *ch << "operator " << this->local_name () << " &() const;" << nl;
+
+  if (this->size_type () == be_decl::VARIABLE)
+    {
+      *ch << "operator " << this->local_name () 
+          << " *&(); // variable-size types only" << nl;
+    }
+
+  *ch << nl;
   *ch << "// in, inout, out, _retn " << nl;
   // the return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << "const " << local_name () << " &in (void) const;" << nl;
-      *ch << local_name () << " &inout (void);" << nl;
-      *ch << local_name () << " &out (void);" << nl;
-      *ch << local_name () << " _retn (void);" << nl;
+      *ch << this->local_name () << " &inout (void);" << nl;
+      *ch << this->local_name () << " &out (void);" << nl;
+      *ch << this->local_name () << " _retn (void);" << nl;
     }
   else
     {
-      *ch << "const " << local_name () << " &in (void) const;" << nl;
-      *ch << local_name () << " &inout (void);" << nl;
-      *ch << local_name () << " *&out (void);" << nl;
-      *ch << local_name () << " *_retn (void);" << nl;
+      *ch << "const " << this->local_name () << " &in (void) const;" << nl;
+      *ch << this->local_name () << " &inout (void);" << nl;
+      *ch << this->local_name () << " *&out (void);" << nl;
+      *ch << this->local_name () << " *_retn (void);" << nl;
     }
 
   // generate an additional member function that returns the underlying pointer
-  *ch << local_name () << " *ptr(void) const;\n";
+  *ch << this->local_name () << " *ptr(void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
@@ -212,7 +246,7 @@ be_union::gen_var_defn (char *)
   // generate the private section
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << local_name () << " *ptr_;\n";
+  *ch << this->local_name () << " *ptr_;\n";
   ch->decr_indent ();
   *ch << "};\n\n";
 
@@ -222,18 +256,29 @@ be_union::gen_var_defn (char *)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_union::gen_var_impl (char *, char *)
+be_union::gen_var_impl (char *, 
+                        char *)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_var", 
+                   this->full_name ());
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_var", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -257,7 +302,7 @@ be_union::gen_var_impl (char *, char *)
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << " *p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->name () << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -275,6 +320,21 @@ be_union::gen_var_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
+  // fixed-size types only
+  if (this->size_type () == be_decl::FIXED)
+    {
+      *ci << "// fixed-size types only" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << fname << "::" << lname << " (const " 
+          << this->name () << " &p)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "ACE_NEW (this->ptr_, " << this->name () 
+          << " (p));\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+    }
+
   // destructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
@@ -288,7 +348,7 @@ be_union::gen_var_impl (char *, char *)
   // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << name () <<
+  *ci << fname << "::operator= (" << this->name () <<
     " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -309,12 +369,36 @@ be_union::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, " << this->name () << " (*p.ptr_), *this);\n";
+  *ci << "ACE_NEW_RETURN (this->ptr_, " << this->name () 
+      << " (*p.ptr_), *this);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
+
+  // fixed-size types only
+  if (this->size_type () == be_decl::FIXED)
+    {
+      ci->indent ();
+      *ci << "// fixed-size types only" << nl;
+      *ci << "ACE_INLINE " << fname << " &" << nl;
+      *ci << fname << "::operator= (const " << this->name () 
+          << " &p)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "if (this->ptr_ != &p)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "delete this->ptr_;" << nl;
+      *ci << "ACE_NEW_RETURN (this->ptr_, " 
+          << this->name () << " (p), *this);\n";
+      ci->decr_indent ();
+      *ci << "}" << nl;
+      *ci << "return *this;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+    }
 
   // two arrow operators
   ci->indent ();
@@ -338,8 +422,8 @@ be_union::gen_var_impl (char *, char *)
   // other extra methods - 3 cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << name () <<
-    " &() const // cast" << nl;
+  *ci << fname << "::operator const " << this->name () 
+      << " &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return *this->ptr_;\n";
@@ -348,7 +432,7 @@ be_union::gen_var_impl (char *, char *)
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << name () << " &() // cast " << nl;
+  *ci << fname << "::operator " << this->name () << " &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return *this->ptr_;\n";
@@ -357,16 +441,32 @@ be_union::gen_var_impl (char *, char *)
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << name () << " &() const// cast " << nl;
+  *ci << fname << "::operator " << this->name () 
+      << " &() const// cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return *this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
+
+  // variable-size types only
+  if (this->size_type () == be_decl::VARIABLE)
+    {
+      ci->indent ();
+      *ci << "// variable-size types only" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << fname << "::operator " << this->name () 
+          << " *&() // cast " << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->ptr_;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+    }
 
   // in, inout, out, _retn, and ptr
   ci->indent ();
-  *ci << "ACE_INLINE const " << name () << " &" << nl;
+  *ci << "ACE_INLINE const " << this->name () << " &" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -375,7 +475,7 @@ be_union::gen_var_impl (char *, char *)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << " &" << nl;
+  *ci << "ACE_INLINE " << this->name () << " &" << nl;
   *ci << fname << "::inout (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -388,7 +488,7 @@ be_union::gen_var_impl (char *, char *)
   if (this->size_type () == be_decl::VARIABLE)
     {
       *ci << "// mapping for variable size " << nl;
-      *ci << "ACE_INLINE " << name () << " *&" << nl;
+      *ci << "ACE_INLINE " << this->name () << " *&" << nl;
       *ci << fname << "::out (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -399,7 +499,7 @@ be_union::gen_var_impl (char *, char *)
       *ci << "}\n\n";
 
       ci->indent ();
-      *ci << "ACE_INLINE " << name () << " *" << nl;
+      *ci << "ACE_INLINE " << this->name () << " *" << nl;
       *ci << fname << "::_retn (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -413,7 +513,7 @@ be_union::gen_var_impl (char *, char *)
   else
     {
       *ci << "// mapping for fixed size " << nl;
-      *ci << "ACE_INLINE " << name () << " &" << nl;
+      *ci << "ACE_INLINE " << this->name () << " &" << nl;
       *ci << fname << "::out (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -422,7 +522,7 @@ be_union::gen_var_impl (char *, char *)
       *ci << "}\n\n";
 
       ci->indent ();
-      *ci << "ACE_INLINE " << name () << nl;
+      *ci << "ACE_INLINE " << this->name () << nl;
       *ci << fname << "::_retn (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -433,7 +533,7 @@ be_union::gen_var_impl (char *, char *)
 
   // the additional ptr () member function
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << " *" << nl;
+  *ci << "ACE_INLINE " << this->name () << " *" << nl;
   *ci << fname << "::ptr (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -452,8 +552,13 @@ be_union::gen_out_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (namebuf, 
+                   "%s_out", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -472,9 +577,9 @@ be_union::gen_out_defn (char *)
   // No default constructor
 
   // constructor from a pointer
-  *ch << namebuf << " (" << local_name () << " *&);" << nl;
+  *ch << namebuf << " (" << this->local_name () << " *&);" << nl;
   // constructor from a _var &
-  *ch << namebuf << " (" << local_name () << "_var &);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
   // constructor from a _out &
   *ch << namebuf << " (const " << namebuf << " &);" << nl;
   // assignment operator from a _out &
@@ -482,21 +587,21 @@ be_union::gen_out_defn (char *)
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // assignment
-  *ch << namebuf << " &operator= (" << local_name () << " *);" << nl;
+  *ch << namebuf << " &operator= (" << this->local_name () << " *);" << nl;
   // operator ()
   *ch << "operator " << local_name () << " *&();" << nl;
   // ptr fn
-  *ch << local_name () << " *&ptr (void);" << nl;
+  *ch << this->local_name () << " *&ptr (void);" << nl;
   // operator ->
-  *ch << local_name () << " *operator-> (void);" << nl;
+  *ch << this->local_name () << " *operator-> (void);" << nl;
 
   *ch << "\n";
   ch->decr_indent ();
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << local_name () << " *&ptr_;" << nl;
+  *ch << this->local_name () << " *&ptr_;" << nl;
   *ch << "// assignment from T_var not allowed" << nl;
-  *ch << "void operator= (const " << local_name () << "_var &);\n";
+  *ch << "void operator= (const " << this->local_name () << "_var &);\n";
 
   ch->decr_indent ();
   *ch << "};\n\n";
@@ -504,18 +609,29 @@ be_union::gen_out_defn (char *)
 }
 
 int
-be_union::gen_out_impl (char *, char *)
+be_union::gen_out_impl (char *, 
+                        char *)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_out", 
+                   this->full_name ());
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_out", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -534,7 +650,7 @@ be_union::gen_out_impl (char *, char *)
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << " *&p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->name () << " *&p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -636,7 +752,8 @@ be_union::compute_size_type (void)
     {
       // if there are elements in this scope
 
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      si = new UTL_ScopeActiveIterator (this, 
+                                        UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
       while (!(si->is_done ()))
@@ -755,11 +872,13 @@ be_union::compute_default_value (void)
 
   // instantiate a scope iterator.
   UTL_ScopeActiveIterator *si
-    = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+    = new UTL_ScopeActiveIterator (this, 
+                                   UTL_Scope::IK_decls);
   while (!(si->is_done ()))
     {
       // get the next AST decl node
-      be_union_branch *ub = be_union_branch::narrow_from_decl (si->item ());
+      be_union_branch *ub = 
+        be_union_branch::narrow_from_decl (si->item ());
       if (ub)
         {
           // if the label is a case label, increment by 1
@@ -767,8 +886,7 @@ be_union::compute_default_value (void)
                i < ub->label_list_length ();
                ++i)
             {
-              if (ub->label (i)->label_kind () ==
-                  AST_UnionLabel::UL_label)
+              if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 total_case_members++;
             }
         }

@@ -54,8 +54,13 @@ be_interface_fwd::gen_var_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (namebuf, 
+                   "%s_var", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -75,7 +80,7 @@ be_interface_fwd::gen_var_defn (char *)
 
   // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
-  *ch << namebuf << " (" << local_name () << "_ptr);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_ptr);" << nl;
 
   // copy constructor
   *ch << namebuf << " (const " << namebuf <<
@@ -86,31 +91,33 @@ be_interface_fwd::gen_var_defn (char *)
   *ch << nl;
 
   // assignment operator from a pointer
-  *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
+  *ch << namebuf << " &operator= (" << this->local_name () 
+      << "_ptr);" << nl;
 
   // assignment from _var
   *ch << namebuf << " &operator= (const " << namebuf <<
     " &);" << nl;
 
   // arrow operator
-  *ch << local_name () << "_ptr operator-> (void) const;" << nl;
+  *ch << this->local_name () << "_ptr operator-> (void) const;" << nl;
 
   *ch << nl;
 
   // other extra types (cast operators, [] operator, and others)
-  *ch << "operator const " << local_name () << "_ptr &() const;" << nl;
-  *ch << "operator " << local_name () << "_ptr &();" << nl;
+  *ch << "operator const " << this->local_name () 
+      << "_ptr &() const;" << nl;
+  *ch << "operator " << this->local_name () << "_ptr &();" << nl;
 
   *ch << "// in, inout, out, _retn " << nl;
   // the return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type
-  *ch << local_name () << "_ptr in (void) const;" << nl;
-  *ch << local_name () << "_ptr &inout (void);" << nl;
-  *ch << local_name () << "_ptr &out (void);" << nl;
-  *ch << local_name () << "_ptr _retn (void);" << nl;
+  *ch << this->local_name () << "_ptr in (void) const;" << nl;
+  *ch << this->local_name () << "_ptr &inout (void);" << nl;
+  *ch << this->local_name () << "_ptr &out (void);" << nl;
+  *ch << this->local_name () << "_ptr _retn (void);" << nl;
 
   // generate an additional member function that returns the underlying pointer
-  *ch << local_name () << "_ptr ptr (void) const;\n";
+  *ch << this->local_name () << "_ptr ptr (void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
@@ -118,7 +125,7 @@ be_interface_fwd::gen_var_defn (char *)
   // private
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << local_name () << "_ptr ptr_;\n";
+  *ch << this->local_name () << "_ptr ptr_;\n";
 
   ch->decr_indent ();
   *ch << "};\n\n";
@@ -129,18 +136,29 @@ be_interface_fwd::gen_var_defn (char *)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_interface_fwd::gen_var_impl (char *, char *)
+be_interface_fwd::gen_var_impl (char *, 
+                                char *)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_var", 
+                   this->full_name ());
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_var", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -168,7 +186,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->name () << "_ptr p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -177,7 +195,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr " << nl;
   *ci << fname << "::ptr (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -190,7 +208,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "  : ptr_ (" << this->name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -206,7 +224,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   // assignment operator
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << name () <<
+  *ci << fname << "::operator= (" << this->name () <<
     "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -227,7 +245,8 @@ be_interface_fwd::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << name () << "::_duplicate (p.ptr ());\n";
+  *ci << "this->ptr_ = " << this->name () 
+      << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
@@ -237,7 +256,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << name () <<
+  *ci << fname << "::operator const " << this->name () <<
     "_ptr &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -247,7 +266,8 @@ be_interface_fwd::gen_var_impl (char *, char *)
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << name () << "_ptr &() // cast " << nl;
+  *ci << fname << "::operator " << this->name () 
+      << "_ptr &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -256,7 +276,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
 
   // operator->
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr " << nl;
   *ci << fname << "::operator-> (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -266,7 +286,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
 
   // in, inout, out, and _retn
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr" << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -275,7 +295,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr &" << nl;
   *ci << fname << "::inout (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -284,7 +304,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr &" << nl;
   *ci << fname << "::out (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -295,7 +315,7 @@ be_interface_fwd::gen_var_impl (char *, char *)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+  *ci << "ACE_INLINE " << this->name () << "_ptr " << nl;
   *ci << fname << "::_retn (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -317,8 +337,13 @@ be_interface_fwd::gen_out_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (namebuf, 
+                   "%s_out", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -337,9 +362,9 @@ be_interface_fwd::gen_out_defn (char *)
   // No default constructor
 
   // constructor from a pointer
-  *ch << namebuf << " (" << local_name () << "_ptr &);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_ptr &);" << nl;
   // constructor from a _var &
-  *ch << namebuf << " (" << local_name () << "_var &);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
   // constructor from a _out &
   *ch << namebuf << " (const " << namebuf << " &);" << nl;
   // assignment operator from a _out &
@@ -347,20 +372,22 @@ be_interface_fwd::gen_out_defn (char *)
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // only interface allows assignment from var &
-  *ch << namebuf << " &operator= (const " << local_name () << "_var &);" << nl;
-  *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
+  *ch << namebuf << " &operator= (const " 
+      << this->local_name () << "_var &);" << nl;
+  *ch << namebuf << " &operator= (" 
+      << this->local_name () << "_ptr);" << nl;
   // cast
-  *ch << "operator " << local_name () << "_ptr &();" << nl;
+  *ch << "operator " << this->local_name () << "_ptr &();" << nl;
   // ptr fn
-  *ch << local_name () << "_ptr &ptr (void);" << nl;
+  *ch << this->local_name () << "_ptr &ptr (void);" << nl;
   // operator ->
-  *ch << local_name () << "_ptr operator-> (void);" << nl;
+  *ch << this->local_name () << "_ptr operator-> (void);" << nl;
 
   *ch << "\n";
   ch->decr_indent ();
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << local_name () << "_ptr &ptr_;\n";
+  *ch << this->local_name () << "_ptr &ptr_;\n";
 
   ch->decr_indent ();
   *ch << "};\n\n";
@@ -376,11 +403,21 @@ be_interface_fwd::gen_out_impl (char *, char *)
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_out", 
+                   this->full_name ());
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_out", 
+                   this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -401,7 +438,8 @@ be_interface_fwd::gen_out_impl (char *, char *)
       // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << "_ptr &p)" << nl;
+  *ci << fname << "::" << lname << " (" 
+      << this->name () << "_ptr &p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -450,7 +488,8 @@ be_interface_fwd::gen_out_impl (char *, char *)
     "_var &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = " << this->name () << "::_duplicate (p.ptr ());" << nl;
+  *ci << "this->ptr_ = " << this->name () 
+      << "::_duplicate (p.ptr ());" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";

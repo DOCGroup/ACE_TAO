@@ -320,7 +320,11 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // cast operators
   *os << "operator " << namebuf << "_slice * const &() const;"
       << be_nl;
-  *os << "operator " << namebuf << "_slice *&();" << be_nl;
+
+  if (node->size_type () == be_decl::VARIABLE)
+    {
+      *os << "operator " << namebuf << "_slice *&();" << be_nl;
+    }
 
   // Non-spec helper function used if array is a sequence element.
   *os << "//Calls " << namebuf << "_copy "
@@ -331,7 +335,16 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // in, inout, out and _retn
   *os << "// in, inout, out, _retn " << be_nl;
   *os << "const " << namebuf << "_slice *in (void) const;" << be_nl;
-  *os << namebuf << "_slice *inout (void);" << be_nl;
+
+  if (node->size_type () == be_decl::FIXED)
+    {
+      *os << namebuf << "_slice *inout (void);" << be_nl;
+    }
+  else
+    {
+      *os << namebuf << "_slice *&inout (void);" << be_nl;
+    }
+
   *os << namebuf << "_slice *&out (void);" << be_nl;
   *os << namebuf << "_slice *_retn (void);" << be_nl;
 
