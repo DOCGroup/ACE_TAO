@@ -54,17 +54,16 @@ Test_Unbounded_WString::opname (void) const
 
 void
 Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::Environment &ACE_TRY_ENV)
 {
   req->invoke (ACE_TRY_ENV);
 }
 
 int
-Test_Unbounded_WString::init_parameters (Param_Test_ptr ,
-                                        CORBA::Environment &)
+Test_Unbounded_WString::init_parameters (Param_Test_ptr,
+                                         CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
 
   // release any previously occupied values
   CORBA::wstring_free (this->in_);
@@ -129,6 +128,7 @@ Test_Unbounded_WString::add_args (CORBA::NVList_ptr param_list,
 {
   ACE_TRY
     {
+      // create the parameters
       CORBA::Any in_arg (CORBA::_tc_wstring,
                          &this->in_,
                          0);
@@ -160,6 +160,7 @@ Test_Unbounded_WString::add_args (CORBA::NVList_ptr param_list,
                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // add return value
       CORBA::NamedValue *item = retval->item (0,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -9,7 +9,7 @@
 //    bd_wstring.cpp
 //
 // = DESCRIPTION
-//    tests bounded strings
+//    tests bounded wide strings
 //
 // = AUTHORS
 //      Jeff Parsons
@@ -154,7 +154,7 @@ Test_Bounded_WString::add_args (CORBA::NVList_ptr param_list,
                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      param_list->add_value ("s3",
+      param_list->add_value ("ws3",
                              out_arg,
                              CORBA::ARG_OUT,
                              ACE_TRY_ENV);
@@ -201,6 +201,8 @@ Test_Bounded_WString::check_validity (void)
 CORBA::Boolean
 Test_Bounded_WString::check_validity (CORBA::Request_ptr)
 {
+  // No need to retrieve anything because, for all the args and
+  // the return, we provided the memory and we own it.
   return this->check_validity ();
 }
 
