@@ -452,7 +452,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
       // Handle the exception for this level here and throw it out again.
       dexc (env, "invoke, location forward (decode)");
       this->data_->handler ()->handle_close ();
-      TAO_RETHROW_RETURN_SYS (TAO_GIOP_SYSTEM_EXCEPTION);
+      TAO_RETHROW_SAME_ENV_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
     }
   TAO_ENDTRY;
 
@@ -735,7 +735,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 TAO_CATCH (CORBA_SystemException, ex)
                   {
                     this->data_->handler ()->handle_close ();
-                    TAO_RETHROW_RETURN_SYS (TAO_GIOP_SYSTEM_EXCEPTION);
+                    TAO_RETHROW_SAME_ENV_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
                   }
                 TAO_ENDTRY;
                 if (loop_continue)
@@ -1014,7 +1014,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                 TAO_CATCH (CORBA_SystemException, ex)
                   {
                     this->data_->handler ()->handle_close ();
-                    TAO_RETHROW_RETURN_SYS (TAO_GIOP_SYSTEM_EXCEPTION);
+                    TAO_RETHROW_SAME_ENV_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
                   }
                 TAO_ENDTRY;
                 if (loop_continue)

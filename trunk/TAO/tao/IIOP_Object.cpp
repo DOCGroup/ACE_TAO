@@ -523,7 +523,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                       TAO_GOTO (roundtrip_continue_label);
                     }
                 }
-              TAO_RETHROW_RETURN_VOID_SYS;
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
 
@@ -558,7 +558,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                       TAO_GOTO (roundtrip_continue_label);
                     }
                 }
-              TAO_RETHROW_RETURN_VOID_SYS;
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
 
@@ -683,7 +683,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                       TAO_GOTO (oneway_continue_label);
                     }
                 }
-              TAO_RETHROW_RETURN_VOID_SYS;
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
 
