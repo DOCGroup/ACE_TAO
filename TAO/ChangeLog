@@ -1,3 +1,15 @@
+Tue Apr 13 10:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Default_ORT.pidl:
+        * tao/PortableServer/Default_ORTC.{h,cpp,i}:
+        * tao/PortableServer/ImplRepoC.{h,cpp,i}:
+        * tao/PortableServer/ImplRepoS.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/PortableServer/ImR_Locator.pidl
+        * tao/PortableServer/ImplRepo.pidl:
+          Updated regeneration message
+
 Tue Apr 13 08:13:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocateRequest_Invocation_Adapter.h:
