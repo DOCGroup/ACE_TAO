@@ -1,3 +1,10 @@
+Fri Jul 13 22:29:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.cpp (print_error):
+
+	  The OpenSSL ERR_error_string_n() function is only supported in
+	  OpenSSL 0.9.6 or better.
+
 Fri Jul 13 14:59:18 2001  Alexander Libman <alexander.libman@baltimore.com>
 
 	* ace/WIN32_Asynch_IO.h (ACE_WIN32_Asynch_Result):
