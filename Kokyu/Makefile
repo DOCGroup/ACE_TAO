@@ -14,7 +14,8 @@ CPP_SRCS += \
 	Dispatcher_Impl \
 	Dispatcher_Task \
 	Default_Dispatcher_Impl \
-	DSRT_Dispatcher_Impl 
+	DSRT_Dispatcher_Impl \
+	DSRT_Schedulers
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
