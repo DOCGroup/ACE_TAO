@@ -1102,7 +1102,7 @@ public:
 
   // = Iteration methods.
 
-  int next (T *&next_item);
+  int next (T *&next_item) const;
   // Pass back the <next_item> that hasn't been seen in the ordered multiset.
   // Returns 0 when all items have been seen, else 1.
 
