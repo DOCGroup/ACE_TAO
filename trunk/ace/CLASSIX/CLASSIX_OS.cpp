@@ -49,12 +49,14 @@ ACE_Recursive_Thread_Mutex ACE_CLASSIX_OS::lock_;
 
 ACE_CLASSIX_OS::ACE_CLASSIX_OS(void)
 {
-    ACE_Reactor *r = 
-	ACE_Reactor::instance
-	(new ACE_Reactor(new ACE_CLASSIX_Select_Reactor(), 1), 1);
-
-    // Fills in a null KnUniqueId so that it can be referenced when required
-    this->null_KnUniqueId_.uiHead = this->null_KnUniqueId_.uiTail = 0;
+  // Create a actor-wide CLASSIX reactor
+  ACE_Reactor *r = 
+    ACE_Reactor::instance
+    (new ACE_Reactor(new ACE_CLASSIX_Select_Reactor(), 1), 1);
+  delete r;
+  
+  // Fills in a null KnUniqueId so that it can be referenced when required
+  this->null_KnUniqueId_.uiHead = this->null_KnUniqueId_.uiTail = 0;
 }
 
 ssize_t
