@@ -1,3 +1,10 @@
+Tue Jan  2 14:19:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/run_test_dii.pl:
+          Invokes the run_test.pl script with the -i dii option.  This is
+          useful in the nightly builds where the scripts must be invoked
+          without any options.
+
 Tue Jan  2 12:06:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
@@ -14,78 +21,78 @@ Tue Jan  2 12:06:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
           For the special cases of object sequences and string
           sequences, the above change was already made. Thanks to
           Bogdan Jeram <bjeram@eso.org> for reporting this bug.
-                                                      
+
 Sun Dec 31 13:59:35 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/server.cpp (main):
+        * tests/Portable_Interceptors/ForwardRequest/server.cpp (main):
 
-	  Fixed warnings about passing "CORBA::String_var" through a "..."
-	  vararg that g++ was exhibiting.
+          Fixed warnings about passing "CORBA::String_var" through a "..."
+          vararg that g++ was exhibiting.
 
 Sun Dec 31 13:45:15 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Pluggable_Messaging_Utils.cpp (TAO_Pluggable_Reply_Params):
+        * tao/Pluggable_Messaging_Utils.cpp (TAO_Pluggable_Reply_Params):
 
-	  Initialize the "argument_flag_" attribute to zero in the base
-	  member initializer list.  Previously it was not initialized, and
-	  was causing "reading uninitialized memory" errors.  This also
-	  fixes unnecessary byte boundary alignment in GIOP 1.2 messages.
+          Initialize the "argument_flag_" attribute to zero in the base
+          member initializer list.  Previously it was not initialized, and
+          was causing "reading uninitialized memory" errors.  This also
+          fixes unnecessary byte boundary alignment in GIOP 1.2 messages.
 
-	* tests/Portable_Interceptors/Makefile (DIRS):
-	* tests/Portable_Interceptors/Makefile.bor (DIRS):
+        * tests/Portable_Interceptors/Makefile (DIRS):
+        * tests/Portable_Interceptors/Makefile.bor (DIRS):
 
-	  Added new `ForwardRequest' test directory to the list of
-	  directories to build.
+          Added new `ForwardRequest' test directory to the list of
+          directories to build.
 
-	* tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.h:
-	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ForwardRequest/ForwardRequest.dsw:
-	* tests/Portable_Interceptors/ForwardRequest/Makefile:
-	* tests/Portable_Interceptors/ForwardRequest/Makefile.bor:
-	* tests/Portable_Interceptors/ForwardRequest/README:
-	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ForwardRequest/client.bor:
-	* tests/Portable_Interceptors/ForwardRequest/client.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
-	* tests/Portable_Interceptors/ForwardRequest/run_test.pl:
-	* tests/Portable_Interceptors/ForwardRequest/server.bor:
-	* tests/Portable_Interceptors/ForwardRequest/server.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
-	* tests/Portable_Interceptors/ForwardRequest/test.idl:
-	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/test_i.h:
+        * tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/ForwardRequest.dsw:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile.bor:
+        * tests/Portable_Interceptors/ForwardRequest/README:
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/client.bor:
+        * tests/Portable_Interceptors/ForwardRequest/client.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/client.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/run_test.pl:
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/server.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/server.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/test.idl:
+        * tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/test_i.h:
 
-	  New test that verifies that the
-	  PortableInterceptor::ForwardRequest exception support is working
-	  properly.
+          New test that verifies that the
+          PortableInterceptor::ForwardRequest exception support is working
+          properly.
 
-	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
 
-	  Corrected erroneous class description.
+          Corrected erroneous class description.
 
 Sat Dec 30 11:31:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
-	* tao/Typecode.cpp. Added patches provided by J. Russell
-	  Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1.
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * tao/Typecode.cpp. Added patches provided by J. Russell
+          Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1.
 
 Sat Dec 30 10:39:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/test_i.cpp:
-	* tests/BiDirectional_NestedUpcall/test_i.cpp: Fixed warnings in
-	  g++ builds. 
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp: Fixed warnings in
+          g++ builds.
 
 Fri Dec 29 12:05:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/test_i.cpp: Changed the wrong usage of
-	  ACE_ASSERT statement. Thanks to Darrel for pointing this out.  
+        * tests/BiDirectional/test_i.cpp: Changed the wrong usage of
+          ACE_ASSERT statement. Thanks to Darrel for pointing this out.
 
 Fri Dec 29 09:10:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -97,220 +104,220 @@ Fri Dec 29 09:10:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Dec 29 07:38:27 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tests/Policies/Manipulation.cpp:
-	* orbsvcs/tests/Time/Client_i.cpp:
-	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
-	* orbsvcs/examples/Log/test/BasicLog_Test.cpp:
-	  Fixed compile errors under VxWorks due to lack of support
-	  for 64 bit integers.
+        * tests/Policies/Manipulation.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * orbsvcs/examples/Log/Client/TLS_Client.cpp:
+        * orbsvcs/examples/Log/test/BasicLog_Test.cpp:
+          Fixed compile errors under VxWorks due to lack of support
+          for 64 bit integers.
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	* orbsvcs/tests/Interoperable_Naming/client.cpp:
-	  Fixed compile warnings due to missing return statements.
-	
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+          Fixed compile warnings due to missing return statements.
+
 Thu Dec 28 10:05:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf: 
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf:
 
-	* tests/RTCORBA/Explicit_Binding/svc.conf: 
-	* tests/RTCORBA/Client_Protocol/svc.conf: 
-	  Added the new files.
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+          Added the new files.
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: 
-	  Added the new entry to use MMapFilePrefix for SHMIOP in all the
-	  above conf files. Updated the perl script to use the
-	  corresponding conf file.
-	
-	
-	* tao/Strategies/advanced_resource.cpp (init): 
-	  Moving the call to set the resource_factory to
-	  "Advanced_Resource_Factory" back to the constructor of
-	  TAO_Resource_Factory_Changer.	
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+          Added the new entry to use MMapFilePrefix for SHMIOP in all the
+          above conf files. Updated the perl script to use the
+          corresponding conf file.
+
+
+        * tao/Strategies/advanced_resource.cpp (init):
+          Moving the call to set the resource_factory to
+          "Advanced_Resource_Factory" back to the constructor of
+          TAO_Resource_Factory_Changer.
 
 Wed Dec 27 21:02:25 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
-	* tao/Makefile.bor:
-	  Added missing source file RT_ORB_Loader.
+        * tao/Makefile.bor:
+          Added missing source file RT_ORB_Loader.
 
-	* tests/Portable_Interceptors/IORInterceptor/server.bor:
-	  Fixed error in OBJFILES macro and added missing library.
+        * tests/Portable_Interceptors/IORInterceptor/server.bor:
+          Fixed error in OBJFILES macro and added missing library.
 
-	* orbsvcs/IFR_Service/IFR_Service.bor:
-	  Added missing library.
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+          Added missing library.
 
 Wed Dec 27 18:00:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Protocol/run_test.pl :
-	  Updated the perl script to use server_shmiop.conf is all cases
-	  using SHMIOP.
-	
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
-	  Added the new MMAPFilePrefix option.
-	
+        * tests/RTCORBA/Server_Protocol/run_test.pl :
+          Updated the perl script to use server_shmiop.conf is all cases
+          using SHMIOP.
+
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+          Added the new MMAPFilePrefix option.
+
 Wed Dec 27 17:37:39 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Protocols_Hooks.cpp : 
-	* tao/Protocols_Hooks.h : 
-	* tao/Default_Protocols_Hooks.cpp : 
-	* tao/Default_Protocols_Hooks.h : 
-	* tao/RT_Protocols_Hooks.cpp : 
-	* tao/RT_Protocols_Hooks.h : 
-	  This change is to remove the dependency of
-	  IIOP/UIOP_Connector/Acceptor on RTCORBA. 
+        * tao/Protocols_Hooks.cpp :
+        * tao/Protocols_Hooks.h :
+        * tao/Default_Protocols_Hooks.cpp :
+        * tao/Default_Protocols_Hooks.h :
+        * tao/RT_Protocols_Hooks.cpp :
+        * tao/RT_Protocols_Hooks.h :
+          This change is to remove the dependency of
+          IIOP/UIOP_Connector/Acceptor on RTCORBA.
 
-	  Changed the signature of the call_client(server)_protocols_hook
-	  to use three int variables instead and changed the signature of
-	  Client(Server)_Protocols_Hook in RT_Protocols_Hooks.h
-		  
-	* tao/RT_Policy_i.cpp : 
-	* tao/RT_Policy_i.h : 
-	  Correspondingly changed the signatures of
-	  TAO_Client(Server)ProtocolPolicy::hook methods and made
-	  appropriate changes to the implementation to assign values to the
-	  int variables send_buffer_size, recv_buffer_size and no_delay.
+          Changed the signature of the call_client(server)_protocols_hook
+          to use three int variables instead and changed the signature of
+          Client(Server)_Protocols_Hook in RT_Protocols_Hooks.h
 
-	* tao/Strategies/UIOP_Connector.cpp : 
-	* tao/Strategies/UIOP_Acceptor.cpp : 
-	* tao/IIOP_Connector.cpp : 
-	* tao/IIOP_Acceptor.cpp : 
-	  Changed the implementation of init_iiop(uiop)_properties
-	  accordingly.
-	  
+        * tao/RT_Policy_i.cpp :
+        * tao/RT_Policy_i.h :
+          Correspondingly changed the signatures of
+          TAO_Client(Server)ProtocolPolicy::hook methods and made
+          appropriate changes to the implementation to assign values to the
+          int variables send_buffer_size, recv_buffer_size and no_delay.
+
+        * tao/Strategies/UIOP_Connector.cpp :
+        * tao/Strategies/UIOP_Acceptor.cpp :
+        * tao/IIOP_Connector.cpp :
+        * tao/IIOP_Acceptor.cpp :
+          Changed the implementation of init_iiop(uiop)_properties
+          accordingly.
+
 Wed Dec 27 15:13:27 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/RT_Protocols_Hooks.cpp: 
-	  Updated the equivalent values for all RTCORBA:: Policy types as
-	  the previous way of assignment is throwing exceptions even when
-	  not needed.
-	
-	* tao/Stub.cpp (get_policy): 
-	  Updated accordingly to check the values.
-	
+        * tao/RT_Protocols_Hooks.cpp:
+          Updated the equivalent values for all RTCORBA:: Policy types as
+          the previous way of assignment is throwing exceptions even when
+          not needed.
+
+        * tao/Stub.cpp (get_policy):
+          Updated accordingly to check the values.
+
 Wed Dec 27 13:44:14 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Stub.cpp (set_policy_overrides): 
-	  Undid the previous change and corrected it. Thanks to Carlos for
-	  pointing out.
+        * tao/Stub.cpp (set_policy_overrides):
+          Undid the previous change and corrected it. Thanks to Carlos for
+          pointing out.
 
 Wed Dec 27 10:29:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Stub.cpp (set_policy_overrides): 
-	  Used parenthesis to clarify a doubt of precedence for Win32
-	  builds.
+        * tao/Stub.cpp (set_policy_overrides):
+          Used parenthesis to clarify a doubt of precedence for Win32
+          builds.
 
 Tue Dec 26 15:09:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/IORInterceptor/client.bor:
-	* tests/Portable_Interceptors/IORInterceptor/server.bor:
+        * tests/Portable_Interceptors/IORInterceptor/client.bor:
+        * tests/Portable_Interceptors/IORInterceptor/server.bor:
 
-	  Added these missing Borland C++ Makefiles.
+          Added these missing Borland C++ Makefiles.
 
 Tue Dec 26 14:55:27 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.i (receive_request):
+        * tao/PortableInterceptor.i (receive_request):
 
-	  Removed unnecessary use of "ACE_UNUSED_ARG" macro.  The
-	  CORBA::Environment argument is actually used by the recently
-	  added run-time integrity check.
+          Removed unnecessary use of "ACE_UNUSED_ARG" macro.  The
+          CORBA::Environment argument is actually used by the recently
+          added run-time integrity check.
 
-	* tests/Portable_Interceptors/IORInterceptor/
-	  FOO_ClientRequestInterceptor.cpp (send_poll, receive_reply,
-	  receive_exception, receive_other):
+        * tests/Portable_Interceptors/IORInterceptor/
+          FOO_ClientRequestInterceptor.cpp (send_poll, receive_reply,
+          receive_exception, receive_other):
 
-	  Fixed unused argument warnings.
+          Fixed unused argument warnings.
 
 Tue Dec 26 13:40:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Corrected misinterpretation of the Portable Interceptor spec.
-	  The send_reply() interception is always invoked upon successful
-	  completion of an operation invocation, regardless of whether or
-	  not the operation is a one-way or two-way request.
+          Corrected misinterpretation of the Portable Interceptor spec.
+          The send_reply() interception is always invoked upon successful
+          completion of an operation invocation, regardless of whether or
+          not the operation is a one-way or two-way request.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp
-	  (gen_exceptlist):
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp
+          (gen_exceptlist):
 
-	  Improved the generated code so that the exception list length is
-	  set prior to the loop that sets each exception list element.
-	  Previously, the length was increased by one during each loop
-	  iteration.  The new scheme is more efficient since only one
-	  allocation is performed, instead of potentially many, in
-	  addition to reducing the number of function calls.
+          Improved the generated code so that the exception list length is
+          set prior to the loop that sets each exception list element.
+          Previously, the length was increased by one during each loop
+          iteration.  The new scheme is more efficient since only one
+          allocation is performed, instead of potentially many, in
+          addition to reducing the number of function calls.
 
-	* tao/PortableInterceptor.i (receive_request):
+        * tao/PortableInterceptor.i (receive_request):
 
-	  Added a run-time integrity check.  This method (i.e. the
-	  receive_request() interception point) should only be invoked if
-	  all of the interceptors registered with the ORB were pushed on
-	  to the flow stack by one of the starting endpoints (such as
-	  receive_request_service_contexts()).  If all of the interceptors
-	  were not pushed on to the flow stack, then it is likely that a
-	  starting interception point was never invoked.  This is of
-	  course, an internal error that must be corrected.
+          Added a run-time integrity check.  This method (i.e. the
+          receive_request() interception point) should only be invoked if
+          all of the interceptors registered with the ORB were pushed on
+          to the flow stack by one of the starting endpoints (such as
+          receive_request_service_contexts()).  If all of the interceptors
+          were not pushed on to the flow stack, then it is likely that a
+          starting interception point was never invoked.  This is of
+          course, an internal error that must be corrected.
 
-	* tests/PortableInterceptor/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
-	* tests/PortableInterceptor/IORInterceptor/FOO_ClientRequestInterceptor.h:
-	* tests/PortableInterceptor/IORInterceptor/FOO_Client_ORBInitializer.cpp:
-	* tests/PortableInterceptor/IORInterceptor/FOO_Client_ORBInitializer.h:
-	* tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor.cpp:
-	* tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor.h:
-	* tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor_ORBInitializer.cpp:
-	* tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor_ORBInitializer.h:
-	* tests/PortableInterceptor/IORInterceptor/IORInterceptor.dsw:
-	* tests/PortableInterceptor/IORInterceptor/Makefile:
-	* tests/PortableInterceptor/IORInterceptor/Makefile.bor:
-	* tests/PortableInterceptor/IORInterceptor/README:
-	* tests/PortableInterceptor/IORInterceptor/client.cpp:
-	* tests/PortableInterceptor/IORInterceptor/client.dsp:
-	* tests/PortableInterceptor/IORInterceptor/run_test.pl:
-	* tests/PortableInterceptor/IORInterceptor/server.cpp:
-	* tests/PortableInterceptor/IORInterceptor/server.dsp:
-	* tests/PortableInterceptor/IORInterceptor/test.idl:
-	* tests/PortableInterceptor/IORInterceptor/test_i.cpp:
-	* tests/PortableInterceptor/IORInterceptor/test_i.h:
+        * tests/PortableInterceptor/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
+        * tests/PortableInterceptor/IORInterceptor/FOO_ClientRequestInterceptor.h:
+        * tests/PortableInterceptor/IORInterceptor/FOO_Client_ORBInitializer.cpp:
+        * tests/PortableInterceptor/IORInterceptor/FOO_Client_ORBInitializer.h:
+        * tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor.cpp:
+        * tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor_ORBInitializer.cpp:
+        * tests/PortableInterceptor/IORInterceptor/FOO_IORInterceptor_ORBInitializer.h:
+        * tests/PortableInterceptor/IORInterceptor/IORInterceptor.dsw:
+        * tests/PortableInterceptor/IORInterceptor/Makefile:
+        * tests/PortableInterceptor/IORInterceptor/Makefile.bor:
+        * tests/PortableInterceptor/IORInterceptor/README:
+        * tests/PortableInterceptor/IORInterceptor/client.cpp:
+        * tests/PortableInterceptor/IORInterceptor/client.dsp:
+        * tests/PortableInterceptor/IORInterceptor/run_test.pl:
+        * tests/PortableInterceptor/IORInterceptor/server.cpp:
+        * tests/PortableInterceptor/IORInterceptor/server.dsp:
+        * tests/PortableInterceptor/IORInterceptor/test.idl:
+        * tests/PortableInterceptor/IORInterceptor/test_i.cpp:
+        * tests/PortableInterceptor/IORInterceptor/test_i.h:
 
-	  New test that exercises TAO's IORInterceptor support.
+          New test that exercises TAO's IORInterceptor support.
 
-	* tests/Portable_Interceptors/Makefile (DIRS):
-	* tests/Portable_Interceptors/Makefile.bor (DIRS):
+        * tests/Portable_Interceptors/Makefile (DIRS):
+        * tests/Portable_Interceptors/Makefile.bor (DIRS):
 
-	  Added new IORInterceptor test directory to the list of
-	  directories to build.
+          Added new IORInterceptor test directory to the list of
+          directories to build.
 
 Sun Dec 24 06:49:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed link errors
-	  in MSVC buid. 
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed link errors
+          in MSVC buid.
 
 Sat Dec 23 11:54:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed compile
-	  errors. 
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed compile
+          errors.
 
 Fri Dec 22 17:31:24 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/RT_ORB_Loader.cpp: 
-	* tao/RT_ORB_Loader.h: 
-	  Added and Committed missing files.
-	
+        * tao/RT_ORB_Loader.cpp:
+        * tao/RT_ORB_Loader.h:
+          Added and Committed missing files.
+
 Fri Dec 22 15:26:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB.cpp (resolve_rt_orb):
-	  Added ACE_UNUSED_ARG (ACE_TRY_ENV) to remove a warning in the
-	  RT_CORBA==0 case.
+        * tao/ORB.cpp (resolve_rt_orb):
+          Added ACE_UNUSED_ARG (ACE_TRY_ENV) to remove a warning in the
+          RT_CORBA==0 case.
 
 Fri Dec 22 16:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -321,141 +328,141 @@ Fri Dec 22 16:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Dec 22 15:11:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp: 
-	  Added TAO_HAS_RT_CORBA guard.
-	
+        * tao/ORB_Core.cpp:
+          Added TAO_HAS_RT_CORBA guard.
+
 Fri Dec 22 15:02:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.h : 
-	* tao/ORB_Core.i: 
-	  Added TAO_HAS_CORBA_MESSAGING guards around get_default_policies
-	  which returns TAO_Policy_Manager_Impl *.
-	
+        * tao/ORB_Core.h :
+        * tao/ORB_Core.i:
+          Added TAO_HAS_CORBA_MESSAGING guards around get_default_policies
+          which returns TAO_Policy_Manager_Impl *.
+
 Fri Dec 22 14:24:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
-	  Added the new files: RT_ORB_Loader.{h,cpp} .
-	 
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
+          Added the new files: RT_ORB_Loader.{h,cpp} .
+
 Fri Dec 22 14:13:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.h :
-	* tao/ORB_Core.cpp :
-	* tao/ORB_Core.i: 
+        * tao/ORB_Core.h :
+        * tao/ORB_Core.cpp :
+        * tao/ORB_Core.i:
 
-	  This change is aimed at making ORB_Core not-dependent on RT_ORB,
-	  RT_Current, Priority_Mapping_Manager and RT_Policy_i.
+          This change is aimed at making ORB_Core not-dependent on RT_ORB,
+          RT_Current, Priority_Mapping_Manager and RT_Policy_i.
 
-	  Removed the set_default_policies method. It now is in
-	  Protocols_Hooks and derived classes. The default implementation
-	  does nothing and the RT_Protocols_Hooks implementation does the
-	  actual setting of the policies. With this change, ORB_Core doesnt
-	  depend on RT_Policy_i.
+          Removed the set_default_policies method. It now is in
+          Protocols_Hooks and derived classes. The default implementation
+          does nothing and the RT_Protocols_Hooks implementation does the
+          actual setting of the policies. With this change, ORB_Core doesnt
+          depend on RT_Policy_i.
 
-	  Similar is the case with get_thread_priority and
-	  set_thread_priority methods.
+          Similar is the case with get_thread_priority and
+          set_thread_priority methods.
 
-	  Added resolve_rt_orb_i (CORBA::Environment &) method.
-	  This method creates the RT_ORB with the help of the
-	  TAO_RT_ORB_Loader class. And also helps set the RT_Current
-	  object. This method is called by TAO_ORB_Core::rt_orb ().
+          Added resolve_rt_orb_i (CORBA::Environment &) method.
+          This method creates the RT_ORB with the help of the
+          TAO_RT_ORB_Loader class. And also helps set the RT_Current
+          object. This method is called by TAO_ORB_Core::rt_orb ().
 
-	  Added and modified accessor methods for
-	  TAO_Priority_Mapping_Manager.
-	  CORBA::Object_ptr priority_mapping_manager (void);
-	  void priority_mapping_manager (CORBA::Object_ptr obj);
+          Added and modified accessor methods for
+          TAO_Priority_Mapping_Manager.
+          CORBA::Object_ptr priority_mapping_manager (void);
+          void priority_mapping_manager (CORBA::Object_ptr obj);
 
-	  The set method is called from RT_ORBInitializer which sets the
-	  static variable CORBA::Object_ptr priority_mapping_manager_.
+          The set method is called from RT_ORBInitializer which sets the
+          static variable CORBA::Object_ptr priority_mapping_manager_.
 
-	  Added a accessor method to retrieve the protected
-	  TAO_Policy_Manager_Impl *default_policies_.
+          Added a accessor method to retrieve the protected
+          TAO_Policy_Manager_Impl *default_policies_.
 
-	  The methods rt_orb and rt_current return CORBA::Object_ptr.
-	  Modified the corresponding variables to be CORBA::Object_ptr's.
+          The methods rt_orb and rt_current return CORBA::Object_ptr.
+          Modified the corresponding variables to be CORBA::Object_ptr's.
 
-	  Changed the signature of rt_orb to take CORBA::Environment as an
-	  argument.
+          Changed the signature of rt_orb to take CORBA::Environment as an
+          argument.
 
-	* tao/RT_ORB_Loader.h: 
-	* tao/RT_ORB_Loader.cpp: 
-	  The factory class that helps create an RT_ORB object and set the
-	  RT_Current object.
-	
-	* tao/ORB.cpp (resolve_rt_current):
-	  Started using the unused ACE_TRY_ENV in resolve_rt_orb.
-	  Passed ACE_TRY_ENV as an argument when invoking
-	  TAO_ORB_Core::rt_orb.
+        * tao/RT_ORB_Loader.h:
+        * tao/RT_ORB_Loader.cpp:
+          The factory class that helps create an RT_ORB object and set the
+          RT_Current object.
 
-	* tao/RT_Protocols_Hooks.cpp :
-	* tao/RT_Protocols_Hooks.h :
-	* tao/Default_Protocols_Hooks.cpp :
-	* tao/Default_Protocols_Hooks.h :
-	* tao/Protocols_Hooks.cpp :
-	* tao/Protocols_Hooks.h :
+        * tao/ORB.cpp (resolve_rt_current):
+          Started using the unused ACE_TRY_ENV in resolve_rt_orb.
+          Passed ACE_TRY_ENV as an argument when invoking
+          TAO_ORB_Core::rt_orb.
 
-	  Added the following virtual functions. As before, the default
-	  implementation does nothing and the RT implementation does the
-	  needful.
+        * tao/RT_Protocols_Hooks.cpp :
+        * tao/RT_Protocols_Hooks.h :
+        * tao/Default_Protocols_Hooks.cpp :
+        * tao/Default_Protocols_Hooks.h :
+        * tao/Protocols_Hooks.cpp :
+        * tao/Protocols_Hooks.h :
 
-	  int get_thread_priority (TAO_ORB_Core *,
+          Added the following virtual functions. As before, the default
+          implementation does nothing and the RT implementation does the
+          needful.
+
+          int get_thread_priority (TAO_ORB_Core *,
           int set_thread_priority (TAO_ORB_Core *,
-	  int set_default_policies (TAO_ORB_Core *orb_core);
-	      These methods are moved from ORB_Core.
+          int set_default_policies (TAO_ORB_Core *orb_core);
+              These methods are moved from ORB_Core.
 
           void set_priority_mapping (TAO_ORB_Core *,
-	       This method is called from ORB_Core to set the
-	  priority_mapping. Added this new method to not use
-	  TAO_Priority_Mapping_Manager class in ORB_Core.
+               This method is called from ORB_Core to set the
+          priority_mapping. Added this new method to not use
+          TAO_Priority_Mapping_Manager class in ORB_Core.
 
-	* tao/Invocation_Endpoint_Selectors.cpp :
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/Strategies/Reactor_Per_Priority.cpp:
-	* tao/RT_Current.cpp:
-	* tao/Pool_Per_Endpoint.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp :
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/Strategies/Reactor_Per_Priority.cpp:
+        * tao/RT_Current.cpp:
+        * tao/Pool_Per_Endpoint.cpp:
 
-	  Changed the signatures and the way the methods are invoked
-	  according to the changes done with regards to the modified
-	  methods.
+          Changed the signatures and the way the methods are invoked
+          according to the changes done with regards to the modified
+          methods.
 
-	* tao/Makefile: 
-	  Added the new files. RT_ORB_Loader.{h.cpp}
+        * tao/Makefile:
+          Added the new files. RT_ORB_Loader.{h.cpp}
 
-	* tao/Stub.cpp :
-	  Fixed the KCC warnings related to the previous change.
-	  Added some comments regarding the way I am throwing exceptions.	
-	* tao/RT_Protocols_Hooks.cpp (validate_policy_type):
-	  Set type_value=3 in the other 'if' case so that I can check on
-	  the value of type_value to throw the needed exception.
-	
+        * tao/Stub.cpp :
+          Fixed the KCC warnings related to the previous change.
+          Added some comments regarding the way I am throwing exceptions.
+        * tao/RT_Protocols_Hooks.cpp (validate_policy_type):
+          Set type_value=3 in the other 'if' case so that I can check on
+          the value of type_value to throw the needed exception.
+
 Fri Dec 22 15:25:51 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Added bidirectional
-	  support for SSLIOP.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Added bidirectional
+          support for SSLIOP.
 
 Fri Dec 22 14:56:24 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/operation_details.h:
-	* tao/operation_details.cpp: Modified the request_id's so that we
-	  have unique id's flying over the connection when we have
-	  BiDirectional connections setup. This is as per the
-	  recommendation of the BiDirectional GIOP sepc.
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/operation_details.h:
+        * tao/operation_details.cpp: Modified the request_id's so that we
+          have unique id's flying over the connection when we have
+          BiDirectional connections setup. This is as per the
+          recommendation of the BiDirectional GIOP sepc.
 
 Fri Dec 22 13:00:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/run_test.pl: 
-	* tests/BiDirectional_NestedUpcall/run_test.pl: Added these perl
-	  scripts. 
+        * tests/BiDirectional/run_test.pl:
+        * tests/BiDirectional_NestedUpcall/run_test.pl: Added these perl
+          scripts.
 
 Fri Dec 22 12:22:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall: New test for BiDirectional
-	  connections that tests for callbacks in an upcall.
+        * tests/BiDirectional_NestedUpcall: New test for BiDirectional
+          connections that tests for callbacks in an upcall.
 
         * tests/BiDirectional_NestedUpcall/README:
         * tests/BiDirectional_NestedUpcall/client.cpp:
@@ -481,8 +488,8 @@ Fri Dec 22 07:30:37 2000  Johnny Willemsen
 
 Fri Dec 22 01:01:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Restore file
-	  permission setting for temp file.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Restore file
+          permission setting for temp file.
 
 Thu Dec 21 19:33:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -715,7 +722,7 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ThreadpoolPolicy *threadpool (void);
           TAO_PriorityModelPolicy *priority_model (void);
           TAO_ServerProtocolPolicy *server_protocol (void);
-	  }
+          }
           }
 
         * tao/Policy_Manager.h :
@@ -735,22 +742,22 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
 
-	* tao/Policy_Manager.h :
-	* tao/Policy_Manager.i :
-	* tao/Policy_Manager.cpp :
+        * tao/Policy_Manager.h :
+        * tao/Policy_Manager.i :
+        * tao/Policy_Manager.cpp :
 
-	  Changed the return values of the following functions to return
-	  CORBA::Policy * in all the classes.
+          Changed the return values of the following functions to return
+          CORBA::Policy * in all the classes.
 
-	  {
-	  TAO_PriorityModelPolicy *priority_model (void) const;
-	  TAO_ThreadpoolPolicy *threadpool (void) const;
-	  TAO_PrivateConnectionPolicy *private_connection (void) const;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
-	  (void) const;
-	  TAO_ServerProtocolPolicy *server_protocol (void) const;
+          {
+          TAO_PriorityModelPolicy *priority_model (void) const;
+          TAO_ThreadpoolPolicy *threadpool (void) const;
+          TAO_PrivateConnectionPolicy *private_connection (void) const;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+          (void) const;
+          TAO_ServerProtocolPolicy *server_protocol (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
-	  }
+          }
           and
           {
           TAO_PrivateConnectionPolicy *private_connection (void) const;
@@ -758,37 +765,37 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
-	  and
-	  {
-	  TAO_PrivateConnectionPolicy *private_connection (void) const;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
-	  (void) const;
-	  TAO_ClientProtocolPolicy *client_protocol (void) const;
-	  }
+          and
+          {
+          TAO_PrivateConnectionPolicy *private_connection (void) const;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+          (void) const;
+          TAO_ClientProtocolPolicy *client_protocol (void) const;
+          }
 
-	  And all these variables are now CORBA::Policy *
-	  {
-	  TAO_PriorityModelPolicy *priority_model_;
-	  TAO_ThreadpoolPolicy *threadpool_;
-	  TAO_PrivateConnectionPolicy *private_connection_;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
-	  TAO_ServerProtocolPolicy *server_protocol_;
-	  TAO_ClientProtocolPolicy *client_protocol_;
-	  }
+          And all these variables are now CORBA::Policy *
+          {
+          TAO_PriorityModelPolicy *priority_model_;
+          TAO_ThreadpoolPolicy *threadpool_;
+          TAO_PrivateConnectionPolicy *private_connection_;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
+          TAO_ServerProtocolPolicy *server_protocol_;
+          TAO_ClientProtocolPolicy *client_protocol_;
+          }
 
-	  In TAO_Policy_Manager_Impl::copy_from implementation, instead of
-	  calling ACE_NEW_THROW_EX for a new instance of all
-	  classes related to RTCORBA (which are in the #if guard of
-	  TAO_HAS_RT_CORBA==1), invoked the copy function of the
-	  respective classes.
+          In TAO_Policy_Manager_Impl::copy_from implementation, instead of
+          calling ACE_NEW_THROW_EX for a new instance of all
+          classes related to RTCORBA (which are in the #if guard of
+          TAO_HAS_RT_CORBA==1), invoked the copy function of the
+          respective classes.
 
-	  In TAO_Policy_Manager_Impl::set_policy_overrides, for the
-	  sections related to RTCORBA, removed unneeded narrows and casts
-	  now that the variables are CORBA::Policy *.
+          In TAO_Policy_Manager_Impl::set_policy_overrides, for the
+          sections related to RTCORBA, removed unneeded narrows and casts
+          now that the variables are CORBA::Policy *.
 
-	* tao/Invocation.h:
-	* tao/Invocation.i :
-	* tao/Invocation.cpp :
+        * tao/Invocation.h:
+        * tao/Invocation.i :
+        * tao/Invocation.cpp :
 
           And all these variables are now CORBA::Policy *
           {
