@@ -1,3 +1,17 @@
+Thu Sep 03 23:06:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/driver.{h,cpp}: Stop instantiating Driver class
+	  as a singleton object.  Instead, put it in main's local stack.
+  	  This was causing trouble because we used the singleton Driver to
+ 	  initialize the ORB, which in turn, instantiated TAO_ORB_Core by
+ 	  creating a TSS_Singleton object of it and then initialized it.
+  	  What this implies is TAO_ORB_Core would get removed from
+ 	  Object_Manager's cleanup stack before Driver.  Since Driver
+ 	  contains an ORB_var, it needs to access TAO_ORB_Core when
+ 	  removing the ORB.  The result is ORB destructor ended up using
+ 	  an newly created but uninitialized ORB_Core to perform the
+	  shutdown.  
+	
 Thu Sep  3 22:52:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* utils/catior/catior.cpp: 
