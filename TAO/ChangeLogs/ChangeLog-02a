@@ -1,3 +1,4 @@
+
 Fri Dec  8 13:06:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
@@ -351,6 +352,7 @@ Thu Dec  7 19:48:42 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Transport.i: 
 	* orbsvcs/orbsvcs/AV/Transport.cpp: 
+	* orbsvcs/orbsvcs/AV/Transport.h: 
 
 	  Moved the TAO_AV_Core class definitions to AV_Core.cpp
 	
