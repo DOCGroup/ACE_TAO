@@ -1,3 +1,7 @@
+Wed Sep  4 16:31:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Wheel_T.cpp: Formatting tweaks for ACE coding style.
+
 Wed Sep  4 20:08:54 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
 	* ace/Framework_Component.cpp (close):
