@@ -1,3 +1,34 @@
+Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AbstractBase.h:
+        * tao/AbstractBase.inl:
+        * tao/Environment.h:
+        * tao/Environment.i:
+        * tao/LocalObject.h:
+        * tao/LocalObject.i:
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/Principal.cpp:
+        * tao/Principal.h:
+        * tao/Principal.i:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory.i:
+        * tao/corbafwd.h:
+
+	  Converted the _var and _out classes of most of
+	  the CORBA pseudo objects to the new template
+	  format.
+
+        * tao/Pseudo_Value_Varout_T.cpp:
+        * tao/Pseudo_Value_Varout_T.h:
+        * tao/Pseudo_Value_Varout_T.inl:
+
+	  New template classes to typedef _var and _out
+	  implementations for ValueBase and ValueFactoryBase.
+
 Thu Mar 27 18:55:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence.cpp:

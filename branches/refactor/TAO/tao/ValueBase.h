@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
-#include "tao/Value_VarOut_T.h"
+#include "tao/Pseudo_Value_VarOut_T.h"
 
 #include "ace/Basic_Types.h"           /* for ptr_arith_t */
 #include "ace/Synch_T.h"
@@ -36,16 +36,8 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
   TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 
-  class ValueBase;
-
-  struct TAO_Export tao_ValueBase_life
-  {
-    static void tao_add_ref (ValueBase *);
-    static void tao_remove_ref (ValueBase *);
-  };
-
-  typedef TAO_Value_Var_T<ValueBase, tao_ValueBase_life> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase, tao_ValueBase_life> ValueBase_out;
+  typedef TAO_Pseudo_Value_Var_T<ValueBase> ValueBase_var;
+  typedef TAO_Pseudo_Value_Out_T<ValueBase, ValueBase_var> ValueBase_out;
 
   /**
    * @class ValueBase

@@ -27,7 +27,7 @@ CORBA::Principal::~Principal (void)
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA::Principal* x)
+operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
 {
   if (x != 0)
     {
@@ -39,14 +39,16 @@ operator<< (TAO_OutputCDR& cdr, CORBA::Principal* x)
     {
       cdr.write_ulong (0);
     }
+
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Principal*& x)
+operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
 {
   CORBA::ULong length;
   cdr.read_ulong (length);
+
   if (length == 0 || !cdr.good_bit ())
     {
       x = 0;
@@ -57,5 +59,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::Principal*& x)
       x->id.length (length);
       cdr.read_octet_array (x->id.get_buffer (), length);
     }
+
   return (CORBA::Boolean) cdr.good_bit ();
 }

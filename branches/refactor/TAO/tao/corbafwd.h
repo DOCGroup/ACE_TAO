@@ -194,18 +194,12 @@ namespace CORBA
   class OctetSeq_out;
   extern TAO_Export TypeCode_ptr _tc_OctetSeq;
 
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
-
   class Any;
   class Any_var;
   class Any_out;
   typedef Any * Any_ptr;
 
   class Environment;
-  class Environment_var;
-  class Environment_out;
   typedef Environment * Environment_ptr;
 
   class Exception;
@@ -220,13 +214,9 @@ namespace CORBA
 
   class NamedValue;
   typedef NamedValue * NamedValue_ptr;
-  class NamedValue_var;
-  class NamedValue_out;
 
   class NVList;
   typedef NVList * NVList_ptr;
-  class NVList_var;
-  class NVList_out;
 
   class Context;
   typedef Context * Context_ptr;
@@ -243,13 +233,9 @@ namespace CORBA
 
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
-  class LocalObject_var;
-  class LocalObject_out;
 
   class Principal;
   typedef Principal *Principal_ptr;
-  class Principal_var;
-  class Principal_out;
 
   class ORB;
   typedef ORB *ORB_ptr;
@@ -278,9 +264,7 @@ namespace CORBA
 
   class ValueBase;
   class ValueFactoryBase;
-  class ValueFactoryBase_var;
   typedef ValueFactoryBase *ValueFactory;
-  typedef ValueFactoryBase_var ValueFactory_var;
   class DefaultValueRefCountBase;
 
   typedef CORBA::Short Visibility;
@@ -301,8 +285,6 @@ namespace CORBA
 
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
-  class AbstractBase_var;
-  class AbstractBase_out;
 
   enum CompletionStatus
   {
