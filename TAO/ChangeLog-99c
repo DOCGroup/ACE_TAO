@@ -1,3 +1,11 @@
+Mon Jul 12 23:06:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface.cpp (compute_coll_name): Fixed
+	  the misgenerating collocation class names problem when compile
+	  multiple-inherited interfaces.  Thanks to Francois Bernier
+	  <fbernier@gel.ulaval.ca> for reporting the bug.
+
 Mon Jul 12 21:42:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_request):
@@ -35,7 +43,7 @@ Mon Jul 12 20:40:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	  Use an ORB-per-thread to minimize contention and simplify memory 
+	  Use an ORB-per-thread to minimize contention and simplify memory
 	  managment of per-ORB-per-thread resources.
 
 	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
