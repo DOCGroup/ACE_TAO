@@ -1,3 +1,15 @@
+Thu Jan 15 17:27:26 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.{h,i}: Added the poa_current() method and internal
+ 	structure so that state is available to the POA and to the upcall.
+
+	* tao/orbobj.{h,cpp}: Added resolve_poa_current() in order to
+ 	return the POACurrent state context.  Added the "POACurrent" to
+ 	one of the things for which resolve_initial_references() works.
+  	Changed resolve_poa() so that things can compile; the impl isn't
+ 	correct but when the POA stuff gets committed, this will be
+ 	changed accordingly.
+
 Tue Jan 13 12:15:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_operation.h: 
