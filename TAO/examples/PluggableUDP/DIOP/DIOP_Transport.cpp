@@ -188,13 +188,14 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                                                   iovcnt,
                                                   addr);
 
-      /*
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_DIOP_Transport::send_i: sent %d bytes to %s:%d\n",
-                  bytes_transferred,
-                  addr.get_host_name (),
-                  addr.get_port_number ()));
-      */
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_DIOP_Transport::send_i: sent %d bytes to %s:%d\n",
+                      bytes_transferred,
+                      addr.get_host_name (),
+                      addr.get_port_number ()));
+        }
 
       // Errors.
       // @@ John Mackenzie. We cannot propogate errors up in DIOP
@@ -230,12 +231,15 @@ TAO_DIOP_Transport::recv_i (char *buf,
                                                         len,
                                                         from_addr);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
-              n,
-              from_addr.get_host_name (),
-              from_addr.get_port_number (),
-              errno));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
+                  n,
+                  from_addr.get_host_name (),
+                  from_addr.get_port_number (),
+                  errno));
+    }
 
   // Remember the from addr to eventually use it as remote
   // addr for the reply.
