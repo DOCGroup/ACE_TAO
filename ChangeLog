@@ -5,6 +5,8 @@ Fri Apr  5 11:30:00 2002  Justin Michel  <michel_j@ociweb.com>
 
           SO_REUSEADDR fix brought over from 1.2a
           FD_SETSIZE fix brought over from 1.2a
+	  Thanks to Juergen Pfreundt <Juergen.Pfreundt@gft.com> for 
+	  motivating this. 
 
 Fri Apr  5 07:45:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
