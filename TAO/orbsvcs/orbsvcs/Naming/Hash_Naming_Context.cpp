@@ -17,7 +17,8 @@
 
 ACE_RCSID(Naming, Hash_Naming_Context, "$Id:")
 
-TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
+TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (TAO_Naming_Context *interface,
+                                                  PortableServer::POA_ptr poa,
                                                   const char *poa_id,
                                                   size_t default_hash_table_size,
                                                   int root)
@@ -28,7 +29,7 @@ TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
     root_ (root),
     lock_ (0),
     hash_table_size_ (default_hash_table_size),
-    interface_ (0)
+    interface_ (interface)
 {
   // Get the lock from the ORB, which knows what type is appropriate.
   // This method must be called AFTER the ORB has been initialized via
@@ -36,6 +37,8 @@ TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
   // work correctly...
   ACE_ALLOCATOR (this->lock_,
                  TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ());
+
+  interface_->impl (this);
 }
 
 TAO_Hash_Naming_Context::~TAO_Hash_Naming_Context (void)
@@ -51,7 +54,7 @@ TAO_Hash_Naming_Context::_default_POA (void)
 
 CosNaming::NamingContext_ptr
 TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
-                                      CORBA::Environment &TAO_IN_ENV)
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
   // The naming context we will return.
   CosNaming::NamingContext_var result =
@@ -66,19 +69,19 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
                              ACE_const_cast
                              (CosNaming::NameComponent*,
                               name.get_buffer ()));
-  TAO_TRY
+  ACE_TRY
     {
       // Resolve the name.
       CORBA::Object_var context = resolve (comp_name,
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Try narrowing object reference to a context type.
       result = CosNaming::NamingContext::_narrow (context.in (),
-                                                  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
+  ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       // Add the last component of the name, which was stripped before
       // the call to resolve.
@@ -89,13 +92,10 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
       if (ex.why == CosNaming::NamingContext::not_object)
         ex.why = CosNaming::NamingContext::missing_node;
 
-      TAO_RETHROW_RETURN (result._retn ());
+      ACE_RETHROW;
     }
-  TAO_CATCHANY
-    {
-      TAO_RETHROW_RETURN (result._retn ());
-    }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (result._retn ());
 
   // This has to be outside the TRY block, othewise we'll catch our
   // own exception.
@@ -105,7 +105,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
       rest.length (2);
       rest[0] = name[len - 2];
       rest[1] = name[len - 1];
-      TAO_THROW_RETURN (CosNaming::NamingContext::NotFound
+      ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
                         (CosNaming::NamingContext::not_context,
                          rest),
                         result._retn());
@@ -118,11 +118,11 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
 void
 TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
                                CORBA::Object_ptr obj,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock,
-                   ace_mon, *this->lock_,
-                   CORBA::INTERNAL (CORBA::COMPLETED_NO));
+                      ace_mon, *this->lock_,
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -130,30 +130,22 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName());
+    ACE_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
   // target context.
   if (len > 1)
     {
-      TAO_TRY
-        {
-          CosNaming::NamingContext_var context =
-            this->get_context (n, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CosNaming::NamingContext_var context =
+        this->get_context (n, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          CosNaming::Name simple_name;
-          simple_name.length (1);
-          simple_name[0] = n[len - 1];
-          context->bind (simple_name, obj, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      context->bind (simple_name, obj, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -164,18 +156,18 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
       // Try binding the name.
       int result = this->context_.bind (name, entry);
       if (result == 1)
-        TAO_THROW (CosNaming::NamingContext::AlreadyBound());
+        ACE_THROW (CosNaming::NamingContext::AlreadyBound());
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
 void
 TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
                                  CORBA::Object_ptr obj,
-                                 CORBA::Environment &TAO_IN_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
@@ -187,30 +179,22 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName());
+    ACE_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
   // on target context.
   if (len > 1)
     {
-      TAO_TRY
-        {
-          CosNaming::NamingContext_var context =
-            get_context (n, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CosNaming::NamingContext_var context =
+        get_context (n, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          CosNaming::Name simple_name;
-          simple_name.length (1);
-          simple_name[0] = n[len - 1];
-          context->rebind (simple_name, obj, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      context->rebind (simple_name, obj, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
@@ -229,14 +213,14 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
                                           oldentry);
       // Something went wrong with the internal structure
       if (result == -1)
-        TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
 void
 TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
                                        CosNaming::NamingContext_ptr nc,
-                                       CORBA::Environment &TAO_IN_ENV)
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
@@ -248,30 +232,22 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName());
+    ACE_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
   // target context.
   if (len > 1)
     {
-      TAO_TRY
-        {
-          CosNaming::NamingContext_var context =
-            get_context (n, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CosNaming::NamingContext_var context =
+        get_context (n, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          CosNaming::Name simple_name;
-          simple_name.length (1);
-          simple_name[0] = n[len - 1];
-          context->bind_context (simple_name, nc, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      context->bind_context (simple_name, nc, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -282,18 +258,18 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
       // Try binding the name.
       int result = this->context_.bind (name, entry);
       if (result == 1)
-        TAO_THROW (CosNaming::NamingContext::AlreadyBound());
+        ACE_THROW (CosNaming::NamingContext::AlreadyBound());
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
 void
 TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
                                          CosNaming::NamingContext_ptr nc,
-                                         CORBA::Environment &TAO_IN_ENV)
+                                         CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
@@ -305,30 +281,22 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName());
+    ACE_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
   // on target context.
   if (len > 1)
     {
-      TAO_TRY
-        {
-          CosNaming::NamingContext_var context =
-            get_context (n, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CosNaming::NamingContext_var context =
+        get_context (n, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          CosNaming::Name simple_name;
-          simple_name.length (1);
-          simple_name[0] = n[len - 1];
-          context->rebind_context (simple_name, nc, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      context->rebind_context (simple_name, nc, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   // If we received a simple name, we need to rebind it in this
   // context.
@@ -344,13 +312,13 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
                                  entry,
                                  oldname,
                                  oldentry) < 0)
-        TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
 CORBA::Object_ptr
 TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
-                                  CORBA::Environment &TAO_IN_ENV)
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Object_ptr result = CORBA::Object::_nil ();
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
@@ -362,7 +330,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
+    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
                       result);
 
   // Resolve the first component of the name.
@@ -371,7 +339,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
 
   if (this->context_.find (name,
                            entry) == -1)
-    TAO_THROW_RETURN (CosNaming::NamingContext::NotFound
+    ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
                       (CosNaming::NamingContext::not_object,
                        n),
                       result);
@@ -388,24 +356,16 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
         CosNaming::NamingContext::_nil ();
       if (entry.type_ == CosNaming::ncontext)
         {
-          TAO_TRY
-            {
-              context = CosNaming::NamingContext::_narrow (result,
-                                                           TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-            }
-          TAO_CATCHANY
-            {
-              TAO_RETHROW_RETURN (context._retn ());
-            }
-          TAO_ENDTRY;
+          context = CosNaming::NamingContext::_narrow (result,
+                                                       ACE_TRY_ENV);
+          ACE_CHECK_RETURN (context._retn ());
         }
       else
-        TAO_THROW_RETURN (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context,
+        ACE_THROW_RETURN (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context,
                                                               n),
                           context._retn ());
       if (CORBA::is_nil (context.in ()))
-        TAO_THROW_RETURN (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context,
+        ACE_THROW_RETURN (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context,
                                                               n),
                           context._retn ());
       else
@@ -424,7 +384,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
              + 1);
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name,
-                                   TAO_IN_ENV);
+                                   ACE_TRY_ENV);
         }
     }
   // If the name we had to resolve was simple, we just need to return
@@ -435,7 +395,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
 
 void
 TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
-                                 CORBA::Environment &TAO_IN_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                       CORBA::INTERNAL (CORBA::COMPLETED_NO));
@@ -446,30 +406,22 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName());
+    ACE_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the unbinding should take place, then perform the unbinding
   // on target context.
   if (len > 1)
     {
-      TAO_TRY
-        {
-          CosNaming::NamingContext_var context =
-            get_context (n, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CosNaming::NamingContext_var context =
+        get_context (n, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          CosNaming::Name simple_name;
-          simple_name.length (1);
-          simple_name[0] = n[len - 1];
-          context->unbind (simple_name, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      context->unbind (simple_name, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   // If we received a simple name, we need to unbind it in this
   // context.
@@ -478,14 +430,14 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
       TAO_ExtId name (n[0].id, n[0].kind);
       // Try unbinding the name.
       if (this->context_.unbind (name) == -1)
-        TAO_THROW (CosNaming::NamingContext::NotFound
+        ACE_THROW (CosNaming::NamingContext::NotFound
                    (CosNaming::NamingContext::not_object,
                     n));
     }
 }
 
 CosNaming::NamingContext_ptr
-TAO_Hash_Naming_Context::new_context (CORBA::Environment &TAO_IN_ENV)
+TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
@@ -502,80 +454,89 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &TAO_IN_ENV)
                    this->poa_id_.c_str (),
                    this->counter_++);
 
-  ACE_NEW_THROW_EX (c_impl,
-                    TAO_Hash_Naming_Context (poa_.in (),
-                                             poa_id,
-                                             this->hash_table_size_),
+  ACE_NEW_THROW_EX (c,
+                    TAO_Naming_Context,
                     CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (result._retn ());
 
   // Put c_impl into the auto pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Hash_Naming_Context> impl_temp (c_impl);
+  ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
-  ACE_NEW_THROW_EX (c,
-                    TAO_Naming_Context (c_impl),
+  ACE_NEW_THROW_EX (c_impl,
+                    TAO_Hash_Naming_Context (c,
+                                             poa_.in (),
+                                             poa_id,
+                                             this->hash_table_size_),
                     CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (result._retn ());
 
   // Allocation succeeded, get rid of auto pointer.
-  impl_temp.release ();
+  temp.release ();
 
-  // Set implementation's pointer to it's abstraction.
-  c_impl->interface (c);
-
-  TAO_TRY
+  ACE_TRY
     {
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
                                            c,
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      result = c->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      result = c->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       delete c;
-      TAO_RETHROW_RETURN (result._retn ());
+      ACE_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (result._retn ());
 
   return result._retn ();
 }
 
 CosNaming::NamingContext_ptr
 TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
-                                           CORBA::Environment &TAO_IN_ENV)
+                                           CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_GUARD_THROW_EX (ACE_Lock,
+                      ace_mon,
+                      *this->lock_,
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
   CosNaming::NamingContext_var result =
     CosNaming::NamingContext::_nil ();
 
-  result = new_context (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, CosNaming::NamingContext::_nil ());
+  result = new_context (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
-  TAO_TRY
+  ACE_TRY
     {
       bind_context (n,
                     result.in (),
-                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      result->destroy (TAO_IN_ENV);
-      TAO_RETHROW_RETURN (CosNaming::NamingContext::_nil ());
+      {
+        ACE_DECLARE_NEW_CORBA_ENV;
+        result->destroy (ACE_TRY_ENV);
+      }
+      ACE_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   return result._retn ();
 }
 
 void
-TAO_Hash_Naming_Context::destroy (CORBA::Environment &TAO_IN_ENV)
+TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   {
     ACE_GUARD_THROW_EX (ACE_Lock,
@@ -585,31 +546,23 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &TAO_IN_ENV)
     ACE_CHECK;
 
     if (this->context_.current_size () != 0)
-      TAO_THROW (CosNaming::NamingContext::NotEmpty());
+      ACE_THROW (CosNaming::NamingContext::NotEmpty());
 
     if (this->root_ != 0)
       return; // Destroy is a no-op on a root context.
     else
       {
-        TAO_TRY
-          {
-            PortableServer::POA_var poa =
-              this->_default_POA ();
+        PortableServer::POA_var poa =
+          this->_default_POA ();
 
-            PortableServer::ObjectId_var id =
-              poa->servant_to_id (interface_,
-                                  TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+        PortableServer::ObjectId_var id =
+          poa->servant_to_id (interface_,
+                              ACE_TRY_ENV);
+        ACE_CHECK;
 
-            poa->deactivate_object (id.in (),
-                                    TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-          }
-        TAO_CATCHANY
-          {
-            TAO_RETHROW;
-          }
-        TAO_ENDTRY;
+        poa->deactivate_object (id.in (),
+                                ACE_TRY_ENV);
+        ACE_CHECK;
       }
   }
 
@@ -626,9 +579,9 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &TAO_IN_ENV)
 
 void
 TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
-                                  CosNaming::BindingList_out &bl,
-                                  CosNaming::BindingIterator_out &bi,
-                                  CORBA::Environment &TAO_IN_ENV)
+                               CosNaming::BindingList_out &bl,
+                               CosNaming::BindingIterator_out &bi,
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -677,7 +630,7 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
       if (populate_binding (hash_entry, bl[i]) == 0)
         {
           delete hash_iter;
-          TAO_THROW (CORBA::NO_MEMORY(CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::NO_MEMORY(CORBA::COMPLETED_NO));
         }
     }
 
@@ -695,10 +648,10 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
       if (bind_iter == 0)
         {
           delete hash_iter;
-          TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
         }
 
-      TAO_TRY
+      ACE_TRY
         {
           char poa_id[BUFSIZ];
           ACE_OS::sprintf (poa_id,
@@ -711,26 +664,21 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
 
           this->poa_->activate_object_with_id (id.in (),
                                                bind_iter,
-                                               TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-          bi = bind_iter->_this (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          bi = bind_iter->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
           delete bind_iter;
-          TAO_RETHROW;
+          ACE_RETHROW;
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
+      ACE_CHECK;
     }
-}
-
-void
-TAO_Hash_Naming_Context::interface (TAO_Naming_Context *i)
-{
-  interface_ = i;
 }
 
 TAO_Hash_Binding_Iterator::TAO_Hash_Binding_Iterator (TAO_Hash_Naming_Context::HASH_MAP::ITERATOR *hash_iter,
@@ -757,7 +705,7 @@ TAO_Hash_Binding_Iterator::_default_POA (CORBA::Environment &/*env*/)
 
 CORBA::Boolean
 TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
-                                     CORBA::Environment &TAO_IN_ENV)
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   CosNaming::Binding *binding;
 
@@ -783,7 +731,7 @@ TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
       hash_iter_->next (hash_entry);
 
       if (TAO_Hash_Naming_Context::populate_binding (hash_entry, *binding) == 0)
-        TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+        ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
       hash_iter_->advance ();
       return 1;
@@ -820,7 +768,7 @@ TAO_Hash_Naming_Context::populate_binding (TAO_Hash_Naming_Context::HASH_MAP::EN
 CORBA::Boolean
 TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
                                    CosNaming::BindingList_out bl,
-                                   CORBA::Environment &TAO_IN_ENV)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // We perform an allocation before obtaining the lock so that an out
   // parameter is allocated in case we fail to obtain the lock.
@@ -853,7 +801,7 @@ TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
           hash_iter_->next (hash_entry);
 
           if (TAO_Hash_Naming_Context::populate_binding (hash_entry, bl[i]) == 0)
-            TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
           if (hash_iter_->advance () == 0)
             {
@@ -868,7 +816,7 @@ TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_Hash_Binding_Iterator::destroy (CORBA::Environment &TAO_IN_ENV)
+TAO_Hash_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   {
     ACE_GUARD_THROW_EX (ACE_Lock,
@@ -877,26 +825,18 @@ TAO_Hash_Binding_Iterator::destroy (CORBA::Environment &TAO_IN_ENV)
                         CORBA::INTERNAL (CORBA::COMPLETED_NO));
     ACE_CHECK;
 
-    TAO_TRY
-      {
-        PortableServer::POA_var poa =
-          this->_default_POA (TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+    PortableServer::POA_var poa =
+      this->_default_POA (ACE_TRY_ENV);
+    ACE_CHECK;
 
-        PortableServer::ObjectId_var id =
-          poa->servant_to_id (this,
-                              TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (this,
+                          ACE_TRY_ENV);
+    ACE_CHECK;
 
-        poa->deactivate_object (id.in (),
-                                TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-      }
-    TAO_CATCHANY
-      {
-        TAO_RETHROW;
-      }
-    TAO_ENDTRY;
+    poa->deactivate_object (id.in (),
+                            ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   // Let go of the lock and commit suicide: must have been dynamically allocated
