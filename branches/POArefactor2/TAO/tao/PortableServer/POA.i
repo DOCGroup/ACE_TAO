@@ -33,20 +33,6 @@ TAO_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     return PortableServer::POA::_nil ();
 }
 
-ACE_INLINE PortableServer::POAManager_ptr
-TAO_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return PortableServer::POAManager::_duplicate (&this->poa_manager_);
-}
-
-ACE_INLINE PortableInterceptor::AdapterManagerId
-TAO_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return this->poa_manager_.get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
 ACE_INLINE PortableInterceptor::AdapterName *
 TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

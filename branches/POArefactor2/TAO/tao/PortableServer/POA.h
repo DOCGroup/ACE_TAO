@@ -35,9 +35,6 @@
 // Object Adapter
 #include "Object_Adapter.h"
 
-// POAManager
-#include "POAManager.h"
-
 // POA Policy Set
 #include "POA_Policy_Set.h"
 
@@ -94,6 +91,8 @@ namespace TAO
 
 namespace PortableServer
 {
+  class POAManager;
+  typedef POAManager *POAManager_ptr;
 }
 
 /**

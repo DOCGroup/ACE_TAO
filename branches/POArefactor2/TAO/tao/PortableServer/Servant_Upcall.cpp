@@ -7,6 +7,7 @@
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Thread_Strategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "tao/PortableServer/POAManager.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"

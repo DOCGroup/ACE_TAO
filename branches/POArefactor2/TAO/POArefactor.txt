@@ -1,3 +1,49 @@
+Mon Nov  1 11:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+          Moved methods that use the POAManager to the cpp file, this way we
+          don't need to include POAManager in the header file.
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Added include of POAManager.h because it is now not done in POA.h
+          anymore
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+          Removed the active object map completely from the POA, it is now
+          only available in the Retain Servant Retention Strategy. The Request
+          Processing strategy still uses this map, just rewrote the code there
+          to get the servant retention strategy instead of the POA, this will
+          be rewritter later.
+
+        * tao/PortableServer/POA.{cpp,i}:
+        * tao/IORInterceptor/IORInfo.cpp:
+          Removed get_manager_id from the POA, let the IORInfo just retrieve
+          the POA Manager and call get_manager_id on that.
+
+        * tao/PortableServer/POA.{cpp,i}:
+          Moved all methods that acquire the POA lock to the cpp file, that
+          also prevents us from including the poa_macros and POA_Guard.h files
+          in this inline file
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Moved create_reference and create_reference_with_id to the servant
+          retention strategy
+
+Mon Nov  1 09:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Removed is_servant_in_map
+
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+        * tao/PortableServer/Id_Uniqueness_Strategy.cpp:
+          Use servantretentionstrategy::is_servant_in_map instead of POA
+          version
+
 Mon Nov  1 09:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

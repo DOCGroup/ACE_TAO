@@ -23,6 +23,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/POAManager.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
@@ -2661,6 +2662,21 @@ TAO_POA::ort_adapter_factory_name (void)
 {
   return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
 }
+
+PortableServer::POAManager_ptr
+TAO_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return PortableServer::POAManager::_duplicate (&this->poa_manager_);
+}
+
+PortableInterceptor::AdapterManagerId
+TAO_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->poa_manager_.get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
 
 // Initialize instance_ to 0, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so

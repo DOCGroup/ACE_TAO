@@ -18,6 +18,7 @@
 #include "RequestProcessingPolicyC.h"
 #include "ServantRetentionPolicyC.h"
 #include "ThreadPolicyC.h"
+#include "POAManager.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
