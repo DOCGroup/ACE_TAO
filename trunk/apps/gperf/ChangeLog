@@ -1,3 +1,10 @@
+Mon Apr 26 15:42:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/test-{1,2,3,4,5}.exp:
+
+	  Forgot to update the expected test output to reflect the
+	  version string update listed below.
+
 Mon Apr 26 10:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* src/Version.cpp (version_string): 
