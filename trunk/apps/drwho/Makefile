@@ -113,11 +113,8 @@ endif #VxWorks
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -125,19 +122,15 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Options.h global.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -146,18 +139,19 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Time_Value.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SML_Client.h \
- SM_Client.h PM_Client.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Client.h Comm_Manager.h \
- Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
- SMR_Client.h
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
+ PM_Server.h CM_Server.h SMR_Client.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -182,10 +176,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
+ PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -204,8 +197,6 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Protocol_Manager.o .obj/Protocol_Manager.so .shobj/Protocol_Manager.o .shobj/Protocol_Manager.so: Protocol_Manager.cpp \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -215,19 +206,15 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Options.h global.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -236,15 +223,17 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Time_Value.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h
 
 .obj/Drwho_Node.o .obj/Drwho_Node.so .shobj/Drwho_Node.o .shobj/Drwho_Node.so: Drwho_Node.cpp Drwho_Node.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -274,8 +263,6 @@ endif #VxWorks
 .obj/Rwho_DB_Manager.o .obj/Rwho_DB_Manager.so .shobj/Rwho_DB_Manager.o .shobj/Rwho_DB_Manager.so: Rwho_DB_Manager.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -301,8 +288,7 @@ endif #VxWorks
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i Options.h \
- Rwho_DB_Manager.h \
- $(ACE_ROOT)/ace/Dirent.h \
+ Rwho_DB_Manager.h $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -313,8 +299,6 @@ endif #VxWorks
 .obj/Multicast_Manager.o .obj/Multicast_Manager.so .shobj/Multicast_Manager.o .shobj/Multicast_Manager.so: Multicast_Manager.cpp Multicast_Manager.h \
  global.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -350,8 +334,6 @@ endif #VxWorks
 .obj/Protocol_Record.o .obj/Protocol_Record.so .shobj/Protocol_Record.o .shobj/Protocol_Record.so: Protocol_Record.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -376,9 +358,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Protocol_Record.h Drwho_Node.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i Protocol_Record.h \
+ Drwho_Node.h $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
@@ -386,8 +367,6 @@ endif #VxWorks
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -412,8 +391,7 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Multicast_Manager.h \
+ $(ACE_ROOT)/ace/OS.i Multicast_Manager.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -495,8 +473,6 @@ endif #VxWorks
 .obj/File_Manager.o .obj/File_Manager.so .shobj/File_Manager.o .shobj/File_Manager.so: File_Manager.cpp File_Manager.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -568,8 +544,6 @@ endif #VxWorks
 .obj/Hash_Table.o .obj/Hash_Table.so .shobj/Hash_Table.o .shobj/Hash_Table.so: Hash_Table.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -604,8 +578,6 @@ endif #VxWorks
 .obj/Binary_Search.o .obj/Binary_Search.so .shobj/Binary_Search.o .shobj/Binary_Search.so: Binary_Search.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -640,8 +612,6 @@ endif #VxWorks
 .obj/Search_Struct.o .obj/Search_Struct.so .shobj/Search_Struct.o .shobj/Search_Struct.so: Search_Struct.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -676,8 +646,6 @@ endif #VxWorks
 .obj/Single_Lookup.o .obj/Single_Lookup.so .shobj/Single_Lookup.o .shobj/Single_Lookup.so: Single_Lookup.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -722,11 +690,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SML_Server.o .obj/SML_Server.so .shobj/SML_Server.o .shobj/SML_Server.so: SML_Server.cpp SML_Server.h SM_Server.h PM_Server.h \
- Protocol_Manager.h \
- $(ACE_ROOT)/ace/OS.h \
+ Protocol_Manager.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -751,15 +716,13 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- global.h Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ $(ACE_ROOT)/ace/OS.i Options.h global.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
  Comm_Manager.h Select_Manager.h
 
 .obj/SM_Server.o .obj/SM_Server.so .shobj/SM_Server.o .shobj/SM_Server.so: SM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -784,9 +747,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMS_All.h \
- PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_Flo.h PMS_Usr.h PMS_Ruser.h SM_Server.h CM_Server.h \
+ $(ACE_ROOT)/ace/OS.i PMS_All.h PM_Server.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ PMS_Flo.h PMS_Usr.h PMS_Ruser.h SM_Server.h CM_Server.h \
  Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -796,8 +759,6 @@ endif #VxWorks
 .obj/PMS_Usr.o .obj/PMS_Usr.so .shobj/PMS_Usr.o .shobj/PMS_Usr.so: PMS_Usr.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -845,8 +806,6 @@ endif #VxWorks
 .obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -878,8 +837,6 @@ endif #VxWorks
 .obj/PMS_Flo.o .obj/PMS_Flo.so .shobj/PMS_Flo.o .shobj/PMS_Flo.so: PMS_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -927,8 +884,6 @@ endif #VxWorks
 .obj/PM_Server.o .obj/PM_Server.so .shobj/PM_Server.o .shobj/PM_Server.so: PM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -953,8 +908,7 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Rwho_DB_Manager.h \
+ $(ACE_ROOT)/ace/OS.i Rwho_DB_Manager.h \
  $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -979,8 +933,6 @@ endif #VxWorks
  Protocol_Record.h Drwho_Node.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1023,8 +975,6 @@ endif #VxWorks
  Protocol_Record.h Drwho_Node.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1054,8 +1004,6 @@ endif #VxWorks
 .obj/PMS_All.o .obj/PMS_All.so .shobj/PMS_All.o .shobj/PMS_All.so: PMS_All.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1080,10 +1028,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h \
- Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_All.h \
- PM_Server.h Protocol_Manager.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i HT_Server.h Hash_Table.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_All.h PM_Server.h \
+ Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1103,8 +1050,6 @@ endif #VxWorks
 .obj/PMS_Ruser.o .obj/PMS_Ruser.so .shobj/PMS_Ruser.o .shobj/PMS_Ruser.so: PMS_Ruser.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1129,9 +1074,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h \
- Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMS_Ruser.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i HT_Server.h Hash_Table.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_Ruser.h \
+ PM_Server.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1152,8 +1097,6 @@ endif #VxWorks
 .obj/SMR_Server.o .obj/SMR_Server.so .shobj/SMR_Server.o .shobj/SMR_Server.so: SMR_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1178,10 +1121,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
+ PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1190,8 +1132,6 @@ endif #VxWorks
 .obj/CM_Client.o .obj/CM_Client.so .shobj/CM_Client.o .shobj/CM_Client.so: CM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1216,8 +1156,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- Multicast_Manager.h CM_Client.h Comm_Manager.h \
+ $(ACE_ROOT)/ace/OS.i Multicast_Manager.h \
+ CM_Client.h Comm_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1226,8 +1166,6 @@ endif #VxWorks
 .obj/SM_Client.o .obj/SM_Client.so .shobj/SM_Client.o .shobj/SM_Client.so: SM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1252,9 +1190,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SM_Client.h CM_Client.h \
+ $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ PMC_Flo.h PMC_Usr.h PMC_Ruser.h SM_Client.h CM_Client.h \
  Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1264,8 +1202,6 @@ endif #VxWorks
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1290,10 +1226,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h \
- CM_Client.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h CM_Client.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1302,8 +1238,6 @@ endif #VxWorks
 .obj/PM_Client.o .obj/PM_Client.so .shobj/PM_Client.o .shobj/PM_Client.so: PM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1351,8 +1285,6 @@ endif #VxWorks
  Protocol_Record.h Drwho_Node.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1394,8 +1326,6 @@ endif #VxWorks
 .obj/BS_Client.o .obj/BS_Client.so .shobj/BS_Client.o .shobj/BS_Client.so: BS_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1468,8 +1398,6 @@ endif #VxWorks
 .obj/PMC_All.o .obj/PMC_All.so .shobj/PMC_All.o .shobj/PMC_All.so: PMC_All.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1494,9 +1422,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i Options.h HT_Client.h \
+ Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h PMC_All.h \
+ PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1517,8 +1445,6 @@ endif #VxWorks
 .obj/PMC_Flo.o .obj/PMC_Flo.so .shobj/PMC_Flo.o .shobj/PMC_Flo.so: PMC_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1566,8 +1492,6 @@ endif #VxWorks
 .obj/PMC_Usr.o .obj/PMC_Usr.so .shobj/PMC_Usr.o .shobj/PMC_Usr.so: PMC_Usr.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1615,8 +1539,6 @@ endif #VxWorks
 .obj/SL_Client.o .obj/SL_Client.so .shobj/SL_Client.o .shobj/SL_Client.so: SL_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1647,8 +1569,6 @@ endif #VxWorks
 .obj/PMC_Ruser.o .obj/PMC_Ruser.so .shobj/PMC_Ruser.o .shobj/PMC_Ruser.so: PMC_Ruser.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1673,9 +1593,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i Options.h HT_Client.h \
+ Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ PMC_Ruser.h PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1696,8 +1616,6 @@ endif #VxWorks
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1722,10 +1640,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h \
- CM_Client.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h CM_Client.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1734,8 +1652,6 @@ endif #VxWorks
 .obj/SML_Client.o .obj/SML_Client.so .shobj/SML_Client.o .shobj/SML_Client.so: SML_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1760,16 +1676,14 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SML_Client.h \
- SM_Client.h PM_Client.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Client.h Comm_Manager.h \
- Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h
+ $(ACE_ROOT)/ace/OS.i SML_Client.h SM_Client.h \
+ PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h \
+ SM_Server.h PM_Server.h CM_Server.h
 
 .obj/CM_Server.o .obj/CM_Server.so .shobj/CM_Server.o .shobj/CM_Server.so: CM_Server.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1794,9 +1708,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- CM_Server.h Comm_Manager.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i Options.h CM_Server.h \
+ Comm_Manager.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1813,11 +1726,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1825,19 +1735,15 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Options.h global.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -1846,18 +1752,19 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Time_Value.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SML_Client.h \
- SM_Client.h PM_Client.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Client.h Comm_Manager.h \
- Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
- SMR_Client.h
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
+ PM_Server.h CM_Server.h SMR_Client.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1882,10 +1789,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
+ PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
