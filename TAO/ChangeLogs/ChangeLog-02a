@@ -1,3 +1,17 @@
+Fri Jun 22 13:20:19 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/Connection_Handler.h:
+        * tao/Pluggable.h:
+        * tao/Profile.h:
+        * tao/Transport.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Fix some pluggable protocol-related comments.  Most of the
+          changes were trivial typo or grammar fixes but the
+          TAO_Transport::send_i() Doxygen documentation was fixed to
+          reflect the current reality.
+
 Fri Jun 22 09:24:54 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Protocols_Hooks.cpp:
@@ -53,7 +67,7 @@ Thu Jun 21 20:38:47 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Forgot to add changed DSP file from previous Explicit_Binding
           checkin.
 
-Wed Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+Thu Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp:
 	* tao/PortableServer/PAO.h:

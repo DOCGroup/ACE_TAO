@@ -57,7 +57,7 @@ class TAO_Transport;
  *
  * @brief Abstract Acceptor class used for pluggable protocols.
  *
- * Base class for the Acceptor bridge calss.
+ * Base class for the Acceptor bridge class.
  */
 class TAO_Export TAO_Acceptor
 {
@@ -171,7 +171,7 @@ public:
   ///  Initialize object and register with reactor.
   virtual int open (TAO_ORB_Core *orb_core) = 0;
 
-  /// Shutdown Connector bridge and concreate Connector.
+  /// Shutdown Connector bridge and concrete Connector.
   virtual int close (void) = 0;
 
   /**

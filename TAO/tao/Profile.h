@@ -136,7 +136,7 @@ public:
                              CORBA::Environment &ACE_TRY_ENV) = 0;
 
   /**
-   * This method is used to get the IOP::taggedProfile. The profile
+   * This method is used to get the IOP::TaggedProfile. The profile
    * information that is received from the server side would have
    * already been decoded. So this method will just make a
    * IOP::TaggedProfile struct from the existing information and

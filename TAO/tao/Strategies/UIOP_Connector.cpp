@@ -396,11 +396,6 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 TAO_Profile *
 TAO_UIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
-  // The endpoint should be of the form:
-  //    N.n@rendezvous_point|object_key
-  // or:
-  //    rendezvous_point|object_key
-
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
                     TAO_UIOP_Profile (this->orb_core ()),
