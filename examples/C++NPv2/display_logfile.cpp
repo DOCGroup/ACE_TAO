@@ -17,7 +17,6 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 
-
 template <class TASK>
 class Logrec_Module : public ACE_Module<ACE_MT_SYNCH>
 {
@@ -30,10 +29,8 @@ public:
 private:
   TASK task_;
 };
-
 #define LOGREC_MODULE(NAME) \
   typedef Logrec_Module<NAME> NAME##_Module (#NAME)
-
 
 class Logrec_Reader : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -42,7 +39,7 @@ private:
   ACE_FILE_IO logfile_;  // File containing log records.
 
 public:
-  enum {MB_CLIENT  = ACE_Message_Block::MB_USER,
+  enum {MB_CLIENT = ACE_Message_Block::MB_USER,
         MB_TYPE, MB_PID, MB_TIME, MB_TEXT};
 
   Logrec_Reader (const ACE_TString &file): filename_ (file) {}
@@ -56,6 +53,7 @@ public:
   }
 
   virtual int svc () {
+    // Steve, can we please use a macro, const, or enum here?
     ACE_Message_Block mblk (8*1024);
  
     for (;; mblk.crunch ()) {
@@ -71,19 +69,18 @@ public:
       // arranged like so:
       //    hostname\0
       //    CDR-encoded log record
-      // So, first we scan for the end of the host name, then initialize
-      // another ACE_Message_Block aligned for CDR demarshaling and
-      // copy the remainder of the block into it. We can't use
-      // duplicate() because we need to be sure the data pointer is
-      // aligned properly for CDR demarshaling.
-      // If at any point, there's not enough data left in the message
-      // block to extract what's needed, crunch the block to move all
-      // remaining data to the beginning and read more from the file.
+      // So, first we scan for the end of the host name, then
+      // initialize another ACE_Message_Block aligned for CDR
+      // demarshaling and copy the remainder of the block into it. We
+      // can't use duplicate() because we need to be sure the data
+      // pointer is aligned properly for CDR demarshaling.  If at any
+      // point, there's not enough data left in the message block to
+      // extract what's needed, crunch the block to move all remaining
+      // data to the beginning and read more from the file.
       for (;;) {
         size_t name_len =
           ACE_OS_String::strnlen (mblk.rd_ptr (), mblk.length ());
-        if (name_len == mblk.length ())
-          break;
+        if (name_len == mblk.length ()) break;
 
         ACE_Message_Block *rec, *head, *temp;
 
@@ -96,32 +93,26 @@ public:
         ACE_CDR::mb_align (rec);
         rec->copy (mblk.rd_ptr (), mblk.length ());
 
-        // Now rec contains the remaining data we've read so far from the
-        // file. Create an ACE_InputCDR to start demarshaling the log
-        // record, header first to find the length, then the data.
+        // Now rec contains the remaining data we've read so far from
+        // the file. Create an ACE_InputCDR to start demarshaling the
+        // log record, header first to find the length, then the data.
         // The cdr 'read' methods return 0 on failure, 1 on success.
         ACE_InputCDR cdr (rec);
         ACE_CDR::Boolean byte_order;
         if (!cdr.read_boolean (byte_order)) {
-          head->release ();
-          rec->release ();
-          break;
+          head->release (); rec->release (); break;
         }
         cdr.reset_byte_order (byte_order);
 
-        // Now read the length of the record. From there, we'll know if
-        // rec contains the complete record or not.
+        // Now read the length of the record. From there, we'll know
+        // if rec contains the complete record or not.
         ACE_CDR::ULong length;
         if (!cdr.read_ulong (length)) {
-          head->release ();
-          rec->release ();
-          break;
+          head->release (); rec->release (); break;
         }
 
         if (length > rec->length ()) {
-          head->release ();
-          rec->release ();
-          break;
+          head->release (); rec->release (); break;
         }
 
         // The complete record is in rec... grab all the fields into
@@ -154,8 +145,8 @@ public:
         temp->wr_ptr (2 * sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
-        // Demarshal the length of the message text, then demarshal the
-        // text into the block.
+        // Demarshal the length of the message text, then demarshal
+        // the text into the block.
         ACE_CDR::ULong text_len;
         cdr >> text_len;
         cdr.read_char_array (temp->wr_ptr (), text_len);
@@ -165,9 +156,9 @@ public:
         if (put_next (head) == -1) break;
 
         // Move the file-content block's read pointer up past whatever
-        // was just processed. This works because ACE_InputCDR has been
-        // moving rec's rd_ptr to reflect demarshaled content, so it's
-        // length now reflects what is left.
+        // was just processed. This works because ACE_InputCDR has
+        // been moving rec's rd_ptr to reflect demarshaled content, so
+        // it's length now reflects what is left.
         mblk.rd_ptr (mblk.length () - rec->length ());
       }
    }
@@ -188,7 +179,6 @@ public:
 private:
   Logrec_Reader task_;
 };
-
 
 class Logrec_Writer : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -213,8 +203,11 @@ private:
   typedef void (*FORMATTER[5])(ACE_Message_Block *,
                                ACE_CDR::Boolean);
   static FORMATTER format_; // Array of format static methods.
+
 public:
   virtual int put (ACE_Message_Block *mblk, ACE_Time_Value &) {
+    // Steve, if we convert stuff into host byte order in the
+    // Logrec_Reader class can we simplify the code here?!
     if (mblk->type () != Logrec_Reader::MB_CLIENT) return -1;
     ACE_InputCDR cdr (mblk); ACE_CDR::Boolean byte_order;
     cdr >> ACE_InputCDR::to_boolean (byte_order);
@@ -228,6 +221,7 @@ public:
     return put_next (mblk);
   }
 
+  // Steve, is it valid to define static methods inline?!
   static void format_client (ACE_Message_Block *mblk,
                              ACE_CDR::Boolean byte_order) {
     ACE_InputCDR cdr (mblk); cdr.reset_byte_order (byte_order);
@@ -284,7 +278,6 @@ Logrec_Formatter::FORMATTER Logrec_Formatter::format_[] = {
 
 LOGREC_MODULE (Logrec_Formatter);
 
-
 class Logrec_Separator : public ACE_Task<ACE_MT_SYNCH>
 {
 private:
@@ -312,9 +305,9 @@ public:
     separator->release ();
     return result;
   }
+};
 
 LOGREC_MODULE (Logrec_Separator);
-
 
 int main (int argc, char *argv[])
 {
