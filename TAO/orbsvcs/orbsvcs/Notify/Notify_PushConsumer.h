@@ -29,6 +29,13 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
@@ -100,5 +107,9 @@ class TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public P
     CosNotifyChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
     // The proxy that we are connected to.
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_NOTIFY_PUSHCONSUMER_H */

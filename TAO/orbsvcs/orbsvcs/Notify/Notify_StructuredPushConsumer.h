@@ -22,6 +22,13 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
@@ -93,4 +100,9 @@ protected:
   PortableServer::POA_ptr default_POA_;
   // The default POA.
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* NOTIFY_STRUCTUREDPUSHCONSUMER_H */
