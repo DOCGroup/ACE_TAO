@@ -355,15 +355,15 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         // Can we assume there is an argument after the option?
         // curarg++;
         ACE_ERROR ((LM_ERROR,
-                    "Default_Resource_Factory - "
-                    "unknown option <%s>\n",
+                    ACE_LIB_TEXT ("Default_Resource_Factory - ")
+                    ACE_LIB_TEXT ("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "Default_Resource_Factory - "
-                    "ignoring option <%s>\n",
+                    ACE_LIB_TEXT ("Default_Resource_Factory - ")
+                    ACE_LIB_TEXT ("ignoring option <%s>\n"),
                     argv[curarg]));
       }
 
@@ -511,7 +511,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("TAO (%P|%t) Unable to add ")
                       ACE_LIB_TEXT ("<%s> to protocol factory set.\n"),
-                      item->protocol_name ().c_str ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -552,7 +552,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
                              ACE_LIB_TEXT ("protocol <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), ""),
+                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), 
+                             ACE_LIB_TEXT ("")),
                             -1);
         }
 

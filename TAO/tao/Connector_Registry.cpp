@@ -85,9 +85,9 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
               delete connector;
 
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) unable to open connector for ")
-                                 ACE_TEXT ("<%s>.\n"),
-                                 (*factory)->protocol_name ().c_str ()),
+                                 ACE_LIB_TEXT ("TAO (%P|%t) unable to open connector for ")
+                                 ACE_LIB_TEXT ("<%s>.\n"),
+                                 ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
                                 -1);
             }
 
@@ -132,7 +132,7 @@ TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) Unable to preprocess the preconnections.\n")));
+                    ACE_LIB_TEXT ("TAO (%P|%t) Unable to preprocess the preconnections.\n")));
 
       return -1;
     }
@@ -358,7 +358,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Unknown profile tag 0x%x\n"),
+                      ACE_LIB_TEXT ("TAO (%P|%t) Unknown profile tag 0x%x\n"),
                       tag));
         }
 
