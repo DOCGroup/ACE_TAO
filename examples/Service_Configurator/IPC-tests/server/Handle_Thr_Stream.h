@@ -25,10 +25,6 @@ public:
   virtual int fini (void);
 
 private:
-  typedef Handle_Thr_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> inherited;
-
-  static u_short DEFAULT_PORT_;
-
   ACE_Thread_Manager thr_mgr_;
   // Thread manager.
 

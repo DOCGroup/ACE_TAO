@@ -22,7 +22,7 @@ LD		= $(CXX)
 # Basic flags
 CPPFLAGS	+= -D_SGI_MP_SOURCE
 CCFLAGS		+= -O
-CCFLAGS		+= +pp -woff 3203,3209,3161,3262,3665
+CCFLAGS		+= +pp -woff 3203,3209,3161,3262,3665,3937,3259,3920
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
 # not build due to missing template instantiations.
 #CCFLAGS		+= -ptall
@@ -33,8 +33,7 @@ CCFLAGS		+= +pp -woff 3203,3209,3161,3262,3665
 # Instantiate no templates automatically, do not run prelinker
 CCFLAGS		+= -ptnone -no_prelink
 LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
-LDFLAGS		+= -Wl,-woff,15
-LDFLAGS		+= -Wl,-woff,85
+LDFLAGS		+= -Wl,-woff,15 -Wl,-woff,84 -Wl,-woff,85
 LIBS		+= -lpthread
 PIC		= -KPIC
 AR		= ar

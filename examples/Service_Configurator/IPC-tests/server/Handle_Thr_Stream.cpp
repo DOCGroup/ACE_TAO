@@ -55,7 +55,7 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::info (char **strp,
 template <class SH, PR_AC_1> int
 Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
 {
-  ACE_INET_Addr local_addr (inherited::DEFAULT_PORT_);
+  ACE_INET_Addr local_addr (ACE_DEFAULT_THR_PORT);
   int n_threads = ACE_DEFAULT_THREADS;
 
   ACE_Get_Opt get_opt (argc, argv, "p:t:", 0);
@@ -179,10 +179,6 @@ CLI_Stream<PR_ST_2>::svc (void)
 
 typedef CLI_Stream <THR_STREAM> CLI_STREAM;
 typedef Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR> HANDLE_THR_ACCEPTOR;
-
-// Static class variables.
-
-u_short HANDLE_THR_ACCEPTOR::DEFAULT_PORT_ = ACE_DEFAULT_THR_PORT;
 
 // Service object.
 HANDLE_THR_ACCEPTOR remote_thr_stream;
