@@ -23,10 +23,11 @@
 
 #include "EC_Gateway.h"
 #include "orbsvcs/RtecSchedulerC.h"
+#include "sched_event_export.h"
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
+class TAO_RTSchedEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
 //
 // = TITLE
 //   Extend the EC_Gateway_IIOP interface to support scheduling.

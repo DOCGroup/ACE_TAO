@@ -439,10 +439,6 @@ BuildCmds= \
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\Event\Dispatching_Modules.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_And_Filter.i
 # End Source File
 # Begin Source File
@@ -543,14 +539,6 @@ SOURCE=.\Event\EC_Prefix_Filter_Builder.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Priority_Dispatching.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.i
 # End Source File
 # Begin Source File
@@ -572,14 +560,6 @@ SOURCE=.\Event\EC_Reactive_SupplierControl.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_Timeout_Generator.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.i
 # End Source File
 # Begin Source File
 
@@ -619,31 +599,7 @@ SOURCE=.\Event\EC_Type_Filter.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\Event_Channel.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Event_Manip.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event_Utilities.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\GPlot_File.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Local_ESTypes.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Memory_Pools.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\RT_Task.i
 # End Source File
 # Begin Source File
 
@@ -693,22 +649,10 @@ SOURCE=.\RtecUDPAdminS.i
 
 SOURCE=.\RtecUDPAdminS_T.i
 # End Source File
-# Begin Source File
-
-SOURCE=.\Event\Timer_Module.i
-# End Source File
 # End Group
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
-# Begin Source File
-
-SOURCE=.\Event\BCU.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Dispatching_Modules.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_And_Filter.cpp
@@ -815,14 +759,6 @@ SOURCE=.\Event\EC_Prefix_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Priority_Dispatching.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.cpp
 # End Source File
 # Begin Source File
@@ -844,14 +780,6 @@ SOURCE=.\Event\EC_Reactive_SupplierControl.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_Timeout_Generator.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
@@ -895,39 +823,7 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\Event_Channel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Event_Manip.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event_Utilities.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\GPlot_File.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Local_ESTypes.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Memory_Pools.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Module_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ReactorTask.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\RT_Task.cpp
 # End Source File
 # Begin Source File
 
@@ -961,26 +857,10 @@ SOURCE=.\RtecUDPAdminC.cpp
 
 SOURCE=.\RtecUDPAdminS.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\Event\Timer_Module.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Event\BCU.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Debug_Macros.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Dispatching_Modules.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_And_Filter.h
@@ -1091,14 +971,6 @@ SOURCE=.\Event\EC_Prefix_Filter_Builder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Priority_Dispatching.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.h
 # End Source File
 # Begin Source File
@@ -1120,14 +992,6 @@ SOURCE=.\Event\EC_Reactive_SupplierControl.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_Timeout_Generator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.h
 # End Source File
 # Begin Source File
 
@@ -1171,47 +1035,11 @@ SOURCE=.\Event\EC_UDP_Admin.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\Event_Channel.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\event_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\Event_Manip.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event_Utilities.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Fast_Reactor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\GPlot_File.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Local_ESTypes.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Memory_Pools.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Module_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ReactorTask.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\RT_Task.h
 # End Source File
 # Begin Source File
 
@@ -1260,10 +1088,6 @@ SOURCE=.\RtecUDPAdminS.h
 # Begin Source File
 
 SOURCE=.\RtecUDPAdminS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Timer_Module.h
 # End Source File
 # End Group
 # End Target
