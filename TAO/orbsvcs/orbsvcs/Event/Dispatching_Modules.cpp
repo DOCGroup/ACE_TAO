@@ -251,7 +251,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
   RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Sub_Priority subpriority;
+  RtecScheduler::Preemption_Subpriority subpriority;
   RtecScheduler::Preemption_Priority preemption_priority;
 
   if (request->rt_info () != 0)

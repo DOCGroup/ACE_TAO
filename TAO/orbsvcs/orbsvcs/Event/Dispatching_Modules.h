@@ -164,7 +164,7 @@ public:
 
   void set (ACE_ES_Dispatching_Base *dispatching_module,
 	    RtecScheduler::OS_Priority priority,
-	    RtecScheduler::Sub_Priority sub_priority);
+	    RtecScheduler::Preemption_Subpriority sub_priority);
   // For multi-threaded implementations, <dispatching_module> is
   // called back when a request is dequeued.  <priority> is the
   // dispatch priority of the event.  <sub_priority> is the enqueue

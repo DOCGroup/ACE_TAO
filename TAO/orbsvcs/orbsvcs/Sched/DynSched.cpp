@@ -290,7 +290,7 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
 int ACE_DynScheduler::priority (
   const RtecScheduler::handle_t handle,
   RtecScheduler::OS_Priority &priority,
-  RtecScheduler::Sub_Priority &subpriority,
+  RtecScheduler::Preemption_Subpriority &subpriority,
   RtecScheduler::Preemption_Priority &preemption_prio)
 {
   // look up the RT_Info that has the given handle
@@ -299,7 +299,7 @@ int ACE_DynScheduler::priority (
   {
     // copy the priority values from the RT_Info 
     priority = rt_info->priority;
-    subpriority = rt_info->static_subpriority;
+    subpriority = rt_info->preemption_subpriority;
     preemption_prio = rt_info->preemption_priority;
 
     return 0;
@@ -416,10 +416,9 @@ void ACE_DynScheduler::export(RT_Info& info, FILE* file)
 
     }
 
-  (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n%d\n\n",
+  (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n\n",
                           info.priority,
-                          info.dynamic_subpriority,
-                          info.static_subpriority);
+                          info.preemption_subpriority);
 
 
 }
@@ -784,6 +783,12 @@ ACE_DynScheduler::setup_task_entries (void)
 {
   // store number of tasks, based on registrations
   tasks (rt_info_entries_.size ());
+
+  // bail out if there are no tasks registered
+  if (tasks () <= 0)
+  {
+    return ST_UNKNOWN_TASK;
+  }
 
   // clear the decks of any previous scheduling information
   reset ();
