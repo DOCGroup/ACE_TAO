@@ -34,12 +34,19 @@ ACE_Mem_Map::close (void)
 
   this->unmap ();
 
+  return this->close_handle ();
+}
+
+int
+ACE_Mem_Map::close_handle (void)
+{
   if (this->close_handle_)
     {
       this->close_handle_ = 0;
       return ACE_OS::close (this->handle_);
     }
-  return 0;
+  else
+    return 0;
 }
 
 ACE_Mem_Map::~ACE_Mem_Map (void) 
