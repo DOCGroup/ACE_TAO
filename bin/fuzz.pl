@@ -425,8 +425,8 @@ sub check_for_push_and_pop ()
 {
     print "Running #pragma warning(push)/(pop) test\n";
     foreach $file (@files_h) {
-        my $push = 0;
-        my $pop = 0;
+        my $push_count = 0;
+        my $pop_count = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
@@ -438,17 +438,17 @@ sub check_for_push_and_pop ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-                    if (/^\s*#\s*pragma\s*warning\s*\(\s*push\s*\)/) {
-                        ++$push;
+                    if (/^\s*#\s*pragma\s*warning\s*\(\s*push[,1-4]*\s*\)/) {
+                        ++$push_count;
                     }
                     if (/^\s*#\s*pragma\s*warning\s*\(\s*pop\s*\)/) {
-                        ++$pop;
+                        ++$pop_count;
                     }
                 }
             }
             close (FILE);
 
-            if ($disable == 0 && $push != $pop) {
+            if ($disable == 0 && $push_count != $pop_count) {
 	        print_error ("#pragma warning(push)/(pop) mismatch in $file");
             }
         }
