@@ -1,3 +1,7 @@
+Wed Nov 27 13:45:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h: Fixed conflicts the files.  
+
 Tue Nov 26 17:03:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.cpp:
