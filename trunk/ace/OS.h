@@ -6031,7 +6031,7 @@ private:
 # define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->~CLASS (); DEALLOCATOR (POINTER); } while (0)
 
-# if !defined (ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR)
+# if !defined (ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR) && !defined (__GNUG__)
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      POINTER->~ T_CLASS ()
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
@@ -6046,7 +6046,7 @@ private:
 // @@ Notice that the workaround here only eliminate the compilation errors.
 //    It won't fix the "real problem."  If the destructor is virtual, it won't
 //    work corrrectly.
-//#   warning Memory leak possible.  The compiler needs to be fixed!!!
+//    WARNING: memory leak possible.  The compiler needs to be fixed!!!
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      POINTER -> T_CLASS T_PARAMETER ::~ T_CLASS ()
 
