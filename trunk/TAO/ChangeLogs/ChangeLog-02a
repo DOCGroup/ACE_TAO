@@ -1,3 +1,103 @@
+Wed Oct  4 13:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+
+	  The GIOP_Server_Request.* files have been renamed.
+	  Class TAO_GIOP_ServerRequest is now
+	  TAO_ServerRequest. It no longer inherits from 
+	  CORBA::ServerRequest and contains no DSI-specific
+	  members or functions. Likewise the CORBA::ServerRequest
+	  class contains only DSI-specific functionality.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+	  Relevant files changed to use 'TAO_ServerRequest' in generating
+	  skeleton code.
+
+	* examples/POA/DSI/Database_i.cpp:
+
+	  Added #include for Server_Request.h, since this file is no longer
+	  included in corba.h.
+
+	* orbsvcs/IFR_Service/InterfaceS.cpp:
+	* orbsvcs/IFR_Service/InterfaceS.h:
+	* orbsvcs/IFR_Service/InterfaceS.i:
+	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+
+	  Necessary changes to hand-crafted skeleton code.
+
+	* tao/Abstract_Servant_Base.h:
+	* tao/Adapter.cpp:
+	* tao/Adapter.h:
+	* tao/GIOP_Message_Accept_State.cpp:
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	* tao/NVList.cpp:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.i:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/Server_Request.cpp:
+	* tao/Server_Request.h:
+	* tao/Server_Request.i:
+	* tao/corba.h:
+	* tao/corbafwd.h:
+
+	  Changes to TAO library files. Besides the changes mentioned
+	  above, TAO_Pluggable_Reply_Params has been modified to
+	  no longer include an NVList member, but instead includes a
+	  a boolean and a ptr_arith_t member used in CDR stream padding
+	  for DSI requests in the message acceptors.
+
+	* tao/IORTable/Table_Adapter.cpp:
+	* tao/IORTable/Table_Adapter.h:
+
+	  Corresponding changes to the IORTable library.
+
+	* tao/PortableServer/DomainS.cpp:
+	* tao/PortableServer/DomainS.h:
+	* tao/PortableServer/DomainS.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h:
+	* tao/PortableServer/POA_CORBA.h:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+
+	  Corresponding changes to the PortableServer library.
+	  Also, TAO_DynamicImplementation now instantiates
+	  a CORBA::ServerRequest and passes it up to the
+	  DSI application.
+
+	* tao/diffs/MessagingS.cpp.diff:
+	* tao/diffs/PolicyS.cpp.diff:
+
+	  Corresponding changes to the diff files.
+
+	* tests/DSI_Gateway/test_dsi.h:
+
+	  Added #include of Server_Request.h, since this file is
+	  no longer included in corba.h.
+
+	  The next step will be to move all the DII/DSI files and
+	  classes out of the TAO library and into a library of
+	  their own.
+
 Wed Oct 04 13:15:39 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Exposed_Policies/Policy_Tester.cpp:
