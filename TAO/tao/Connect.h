@@ -39,7 +39,8 @@ class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
 public:
   // = Intialization method.
   TAO_Client_Connection_Handler (ACE_Thread_Manager * = 0);
-  // Do-nothing constructor.
+
+  ~TAO_Client_Connection_Handler ();
 
   // = <Connector> hook.
   virtual int open (void *);
@@ -67,14 +68,20 @@ private:
   typedef TAO_SVC_HANDLER BASECLASS;
   // Trait indicating the base class.
 
-  u_char expecting_response_;
+  int expecting_response_;
   // State flag which, if non-zero, indicates that this handler is
   // looking to get input.  Otherwise, any input received is
   // unexpected.
 
-  u_char input_available_;
+  int input_available_;
   // Flag indicating whether or not input is available.  Only valid
   // when <expecting_response_> is non-zero.
+
+  ACE_thread_t calling_thread_;
+  // the thread ID of the thread we were running in.
+
+  ACE_SYNCH_CONDITION* cond_response_available_;
+  // wait on reponse if the leader-follower model is active
 };
 
 class TAO_ORB_Core;
