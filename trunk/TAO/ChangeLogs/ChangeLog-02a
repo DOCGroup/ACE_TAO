@@ -1,3 +1,17 @@
+Thu Mar 29 17:58:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.cpp:
+
+          Made const the parameter for assignment from T_var for
+          TAO_Pseudo_Object_Manager, similarly to the change for
+          TAO_Object_Manager in
+
+          Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>.
+
+          Again, thanks to Derek Dominish <Derek.Dominish@Australia.Boeing.com> 
+          for pointing this out.
+
 Thu Mar 29 14:18:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Crashed_Callback/run_test.pl:
