@@ -8,7 +8,7 @@
 #include "tao/TAO_Internal.h"
 #include "RTI_IO.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
+ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_Client.cpp,v 1.31 1999/08/04 07:15:14 nanbor Exp")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -45,8 +45,13 @@ ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
   "Cubit_Client::cube_many_sequence - end",
 
   "Cubit_Client::cube_rti_data - start",
-  "Cubit_Client::cube_rti_data - end"
+  "Cubit_Client::cube_rti_data - end",
 
+  "Cubit_Client::cube_any - start",
+  "Cubit_Client::cube_any - end",
+
+  "Cubit_Client::cube_any_struct - start",
+  "Cubit_Client::cube_any_struct - end"
 };
 
 enum
@@ -83,7 +88,13 @@ enum
   CUBIT_CLIENT_CUBE_MANY_SEQUENCE_END,
 
   CUBIT_CLIENT_CUBE_RTI_DATA_START,
-  CUBIT_CLIENT_CUBE_RTI_DATA_END
+  CUBIT_CLIENT_CUBE_RTI_DATA_END,
+
+  CUBIT_CLIENT_CUBE_ANY_START,
+  CUBIT_CLIENT_CUBE_ANY_END,
+
+  CUBIT_CLIENT_CUBE_ANY_STRUCT_START,
+  CUBIT_CLIENT_CUBE_ANY_STRUCT_END
 };
 
 // Setup Timeprobes
@@ -109,6 +120,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 #define TAO_ENABLE_CUBIT_MIXIN             1 << 12
 #define TAO_ENABLE_CUBIT_RTI_DATA          1 << 13
 #define TAO_ENABLE_CUBIT_ONE_WAY           1 << 14
+#define TAO_ENABLE_CUBIT_ANY               1 << 15
+#define TAO_ENABLE_CUBIT_ANY_STRUCT        1 << 16
 // Bitmask to enable all tests
 #define TAO_ENABLE_CUBIT_ALL \
         TAO_ENABLE_CUBIT_VOID | \
@@ -125,7 +138,9 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
         TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ | \
         TAO_ENABLE_CUBIT_MIXIN | \
         TAO_ENABLE_CUBIT_RTI_DATA |  \
-        TAO_ENABLE_CUBIT_ONE_WAY
+        TAO_ENABLE_CUBIT_ONE_WAY  |  \
+        TAO_ENABLE_CUBIT_ANY      |  \
+        TAO_ENABLE_CUBIT_ANY_STRUCT
 
 // Constructor.
 Cubit_Client::Cubit_Client (int shutdown)
@@ -323,6 +338,10 @@ Cubit_Client::opt_to_mask (const char *test_type)
     return TAO_ENABLE_CUBIT_RTI_DATA;
   else if (ACE_OS::strcasecmp (test_type, "one_way") == 0)
     return TAO_ENABLE_CUBIT_ONE_WAY;
+  else if (ACE_OS::strcasecmp (test_type, "any") == 0)
+    return TAO_ENABLE_CUBIT_ANY;
+  else if (ACE_OS::strcasecmp (test_type, "any_struct") == 0)
+    return TAO_ENABLE_CUBIT_ANY_STRUCT;
 
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Incorrect test: %s\n"
@@ -330,7 +349,7 @@ Cubit_Client::opt_to_mask (const char *test_type)
                      "  void, octet, short, long, struct, union,\n"
                      "  small_octet_seq, small_long_seq, small_struct_seq\n"
                      "  large_octet_seq, large_long_seq, large_struct_seq\n"
-                     "  mixin, rti_data, one_way\n",
+                     "  mixin, rti_data, one_way, any, any_struct\n",
                      test_type),
                     0);  // Zero since unsigned int return type
 }
@@ -1002,6 +1021,126 @@ Cubit_Client::cube_rti_data (int,
   ACE_CHECK;
 }
 
+
+// calculate the cube from long contained in an any
+
+void
+Cubit_Client::cube_any (int i,
+                        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      CORBA::Long arg_long = this->func (i);
+
+      // Cube a long inside an any.
+      CORBA::Long ret_long;
+      CORBA::Any  arg_any;
+      CORBA::Any * ret_any;
+      // Should the timing include the packing and unpacking of the any? NO.
+      arg_any <<= arg_long;
+      {
+        ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ANY_START);
+        ret_any = this->cubit_->cube_any (arg_any,
+                                          ACE_TRY_ENV);
+      }
+      ACE_TRY_CHECK;
+
+      *ret_any >>= ret_long;
+
+      this->call_count_++;
+
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "cube any (long):  %d --> %d\n",
+                      arg_long,
+                      ret_long));
+        }
+
+      arg_long = arg_long * arg_long * arg_long;
+
+      if (arg_long != ret_long)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "** cube_any(%d)  ERROR (got %d, expect %d) \n",
+                      (CORBA::Long) this->func (i),
+                      ret_long, arg_long));
+
+          this->error_count_++;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "from cube_any");
+      this->error_count_++;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+
+// Cube the numbers in a struct
+
+void
+Cubit_Client::cube_any_struct (int i,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      Cubit::Many arg_struct;
+      Cubit::Many * ret_struct;
+
+      this->call_count_++;
+
+      arg_struct.l = this->func (i);
+      arg_struct.s = this->func (i);
+      arg_struct.o = this->func (i);
+
+      // Cube a "struct" in an any ...
+      CORBA::Any arg_any;
+      CORBA::Any * ret_any;
+      arg_any <<= arg_struct;
+      {
+        ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ANY_STRUCT_START);
+        ret_any = this->cubit_->cube_any_struct (arg_any,
+                                                 ACE_TRY_ENV);
+      }
+      ACE_TRY_CHECK;
+
+      *ret_any >>= ret_struct;
+
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "cube any struct ..."));
+        }
+
+      arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
+      arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
+      arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
+
+      if (arg_struct.l != ret_struct->l
+          || arg_struct.s != ret_struct->s
+          || arg_struct.o != ret_struct->o)
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_any_struct ERROR -- %d should be %d\n",
+                      ret_struct->l, arg_struct.l));
+
+          this->error_count_++;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "from cube_any_struct");
+      this->error_count_++;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+
 void
 Cubit_Client::print_stats (const char *call_name,
                            ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
@@ -1386,6 +1525,45 @@ Cubit_Client::run ()
       timer.elapsed_time (elapsed_time);
 
       this->print_stats ("cube_oneway",
+                         elapsed_time);
+    }
+
+  // ANY - LONG
+  if (this->check_enabled (TAO_ENABLE_CUBIT_ANY))
+    {
+      this->call_count_ = 0;
+      this->error_count_ = 0;
+      timer.start ();
+
+      for (i = 0; i < this->loop_count_; ++i)
+        {
+          this->cube_any (i,
+                           ACE_TRY_ENV);
+        }
+
+      timer.stop ();
+      timer.elapsed_time (elapsed_time);
+      this->print_stats ("cube_any",
+                         elapsed_time);
+    }
+
+  // ANY - STRUCT
+  if (this->check_enabled (TAO_ENABLE_CUBIT_ANY_STRUCT))
+    {
+      this->call_count_ = 0;
+      this->error_count_ = 0;
+      timer.start ();
+
+      for (i = 0; i < this->loop_count_; ++i)
+        {
+          this->cube_any_struct (i,
+                             ACE_TRY_ENV);
+        }
+
+      timer.stop ();
+      timer.elapsed_time (elapsed_time);
+
+      this->print_stats ("cube_any_struct",
                          elapsed_time);
     }
 

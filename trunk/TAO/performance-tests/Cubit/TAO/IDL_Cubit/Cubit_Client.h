@@ -125,6 +125,14 @@ private:
                       CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence <l> is the length of the sequence.
 
+  void cube_any_struct (int i,
+                    CORBA::Environment &ACE_TRY_ENV);
+  // calculate the cube from a struct in an any.
+
+  void cube_any (int i,
+                 CORBA::Environment &ACE_TRY_ENV);
+  // calculate the cube from a long in an any.
+
   int shutdown_server (int do_shutdown,
                        CORBA::Environment &ACE_TRY_ENV);
   // Invoke the method with <do_shutdown> != 0 to shutdown the server.

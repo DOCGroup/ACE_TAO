@@ -97,6 +97,16 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
+  virtual CORBA::Any * cube_any (const CORBA::Any & any,
+                                CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Cube a long in an any
+
+  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any,
+                                       CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Cube a struct in an any
+
   virtual void shutdown (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown routine.
