@@ -1,3 +1,12 @@
+Fri May 26 12:13:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Fixed two leaks in the CDR << operator for Anys. Both
+	  cases were calls to Any::type() without putting the
+	  result into a _var. Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for sending in the example
+	  that helped track this down.
+
 Fri May 26 08:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/RT_Policy_i.cpp:
