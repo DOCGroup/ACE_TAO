@@ -68,9 +68,6 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
 
       ACE_CString flowname (entry.flowname ());
 
-      int result =
-        connection_manager->streamctrls ().find (flowname);
-
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);
