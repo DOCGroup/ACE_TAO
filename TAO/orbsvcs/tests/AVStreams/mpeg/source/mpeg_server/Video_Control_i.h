@@ -56,7 +56,7 @@ public:
   virtual CORBA::Boolean stop (CORBA::Long cmdsn,
                                CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Short set_peer (const char *peer,
+  virtual CORBA::UShort set_peer (const char *peer,
                                  CORBA::Environment &_tao_environment);
   // called by the client to inform us about it's ip and 
   // udp address.
