@@ -17,6 +17,9 @@
 
 #include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
+
+// @@ Jai, can't you use a forward declaration instead of including
+// the header file?
 #include "ciao/Dynamic_Component_Servant_Base.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"

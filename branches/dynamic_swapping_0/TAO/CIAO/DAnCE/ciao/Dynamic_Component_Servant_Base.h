@@ -29,6 +29,8 @@ namespace CIAO
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
+    // @@ Jai, where are the implementations of the following
+    // operations?
     explicit Dynamic_Component_Servant_Base (void);
 
     virtual ~Dynamic_Component_Servant_Base (void);
@@ -36,16 +38,7 @@ namespace CIAO
     virtual PortableServer::Servant create (void) = 0;
 
   };
-/*
-  template<typename COMP_SERVANT>
-  class Dynamic_Component_Servant : public Dynamic_Component_Servant_Base
-  {
-  public:
-    virtual PortableServer::Servant create (void)
-    {
-      return new COMP_SERVANT;
-    }
-*/
+
 }
 
 #include /**/ "ace/post.h"

@@ -80,6 +80,10 @@ namespace CIAO
                                             PortableServer::POA_ptr root
                                             ACE_ENV_ARG_DECL)
   {
+    // @@ Jai, the whole policy length stuff is not going to work. See
+    // below.
+
+    // @@ Jai, policy length is initialized zero.
     CORBA::PolicyList policies (0);
 
     if (p != 0)
@@ -89,7 +93,12 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+    // @@Jai, if you are lucky you will get zero or some arbitrary
+    // number. Let us assume that you get zero.
+
     CORBA::ULong policy_length = policies.length ();
+
+    // @@ Jai, you are setting the length of the policy length to 1.
     policies.length (policy_length + 1);
 
     policies[policy_length] =
@@ -97,19 +106,29 @@ namespace CIAO
                                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+    // @@ Jai, tell what are you doing here. It is 1 here
+    // again.. Right?
     policies.length (policy_length + 1);
+
+    // @@ Jai, you are overriding teh value at position zero it again
+    // here.
     policies[policy_length] =
-     root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                              ACE_ENV_ARG_PARAMETER);
+     root->create_request_processing_policy (
+       PortableServer::USE_SERVANT_MANAGER
+       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // Servant Retention Policy
+
+    // @@ Jai, tell What is going on here?
     policies.length (policy_length + 1);
     policies[policy_length] =
       root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+    // @@ Jai, if you want to copy code please do it properly. The
+    // above is GUARANTEED NOT to work.
     this->component_poa_ =
       root->create_POA (name,
                         poa_manager.in (),

@@ -54,6 +54,10 @@ namespace CIAO
   private:
 
     /// Create POA  for the component.
+    // @@ Jai, do you want to rename this method? BTW, why don't you
+    // share the implementation of create_facet_consumer_POA ()? This
+    // implementation is totally wrong and atleast sharing code would
+    // help you.
     void create_component_POA (const char *name,
                                const CORBA::PolicyList *p,
                                PortableServer::POA_ptr root
@@ -61,6 +65,7 @@ namespace CIAO
   protected:
     long number_;
 
+    // @@ Jai, why should this be static?
     static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
 
     Dynamic_Component_Activator *dsa_;
