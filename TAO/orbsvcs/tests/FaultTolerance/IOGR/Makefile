@@ -47,7 +47,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
-TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_IORManip -lTAO_DynamicAny
+TAO_FT_LIBS = -lTAO_FTORB -lTAO_IORManip 
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
