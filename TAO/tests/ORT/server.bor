@@ -47,4 +47,4 @@ $(IDLDIR)\ORT_testS.cpp $(IDLDIR)\ORT_testC.cpp: $(IDLDIR)\ORT_test.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\ObjectReferenceFactoryC.cpp: $(IDLDIR)\ObjectReferenceFactory.idl
-        $(TAO_IDL) -Gv -DCORBA3 -I..\.. $**
+        $(TAO_IDL) -DCORBA3 -I..\.. $**
