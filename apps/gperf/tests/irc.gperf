@@ -10,7 +10,7 @@ extern int m_linreply(), m_notice(), m_lusers(), m_voice(), m_grph();
 extern int m_xtra(), m_motd();
 %}
 struct Message {
-  char *cmd;
+  const char *cmd;
   int (* func)();
   int count;
   int parameters;

@@ -154,10 +154,10 @@ private:
   int total_keys;
   // Total number of keys, counting duplicates.
 
-  static char *const default_array_type;
+  static const char *const default_array_type;
   // Default type for generated code.
 
-  static char *const default_return_type;
+  static const char *const default_return_type;
   // in_word_set return type, by default.
 
   static int field_width;
