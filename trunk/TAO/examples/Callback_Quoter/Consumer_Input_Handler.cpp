@@ -96,7 +96,7 @@ Consumer_Input_Handler::register_consumer ()
 				     stockname,
 				     sizeof stockname - 1);
 
-	  // Taking care of platforms where an carriage return is padded with newline.
+      // Taking care of platforms where an carriage return is padded with newline.
       if (stockname[strlen -2] == '\n' || stockname[strlen -2] == '\r')
 		stockname[strlen -2] = '\0';
 	  else
