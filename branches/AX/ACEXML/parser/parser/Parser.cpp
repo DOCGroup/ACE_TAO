@@ -1216,8 +1216,7 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
 {
-  if (this->get () != 'E' ||
-      this->get () != 'L' ||
+  if (this->get () != 'L' ||
       this->get () != 'E' ||
       this->get () != 'M' ||
       this->get () != 'E' ||
@@ -1264,20 +1263,22 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
           return -1;
         }
       break;
-    case '#':                   // MIXED with #PCDATA
-      break;
     case '(':                   // children
-      this->parse_children_definition ();
+      this->parse_children_definition (xmlenv);
+      if (xmlenv.exception () != 0)
+        return -1;
       break;
     default:                    // error
       xmlenv.exception (new ACEXML_SAXParseException
                         ("Error reading ELEMENT definition."));
       return -1;
     }
-  if (this->skip_whitespace () != '>')
+  if (this->skip_whitespace (0) != '>')
+    {
       xmlenv.exception (new ACEXML_SAXParseException
                         ("Expecting '>' in ELEMENT definition."));
       return -1;
+    }
   return 0;
 }
 
@@ -1629,7 +1630,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 
           do {
             ACEXML_Char *token_name = this->read_name (); // @@ need a special read_nmtoken?
-            if (notation_name == 0)
+            if (token_name == 0)
               {
                 xmlenv.exception (new ACEXML_SAXParseException
                                   ("Error reading enumerated nmtoken name while defining ATTLIST."));
@@ -1737,8 +1738,10 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
         default:
           break;
         }
-      this->skip_whitespace_count (nextch);
+      this->skip_whitespace_count (&nextch);
     };
+
+  this->get ();                 // consume closing '>'
 
   return 0;
 }
@@ -1855,5 +1858,170 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
                         ("Expecting either keyword `SYSTEM' or `PUBLIC'."));
       return -1;
     }
+  return 0;
+}
+
+int
+ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
+{
+  int level = 1;
+  this->get ();                 // consume the '('
+
+  ACEXML_Char nextch;
+  int subelement_number = 0;
+  this->skip_whitespace_count (&nextch);
+
+  switch (nextch)
+    {
+    case '#':                   // Mixed element,
+      if (this->get () != '#' ||
+          this->get () != 'P' ||
+          this->get () != 'C' ||
+          this->get () != 'D' ||
+          this->get () != 'A' ||
+          this->get () != 'T' ||
+          this->get () != 'A')
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword `#PCDATA' while defining an element."));
+          return -1;
+        }
+
+      this->skip_whitespace_count (&nextch);
+
+      while (nextch != ')')
+        {
+          if (this->get () != '|')
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Expecting end of Mixed section while defining an element."));
+              return -1;
+            }
+          this->skip_whitespace_count ();
+
+          ACEXML_Char *name = this->read_name ();
+          ++subelement_number;
+          // @@ Install Mixed element name into the validator.
+          this->skip_whitespace_count (&nextch);
+        }
+
+      if (this->get () != ')' ||
+          (subelement_number && this->get () != '*'))
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting closing `)*' or ')' while defining an element."));
+          return -1;
+        }
+      // @@ close the element definition in the validator.
+      break;
+    default:
+      if (this->parse_child (1, xmlenv) != 0 ||
+          xmlenv.exception () != 0)
+        return -1;
+    }
+
+  return 0;
+}
+
+int
+ACEXML_Parser::parse_child (int skip_open_paren,
+                            ACEXML_Env &xmlenv)
+{
+  // Conditionally consume the open paren.
+  if (skip_open_paren == 0 &&
+      this->get () != '(')
+    {
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Expecting opening `(' while defining an element."));
+      return -1;
+    }
+
+  ACEXML_Char node_type = 0;
+  ACEXML_Char nextch;
+
+  do {
+    this->skip_whitespace_count (&nextch);
+    switch (nextch)
+      {
+      case '(':
+        this->parse_child (0, xmlenv);
+        if (xmlenv.exception != 0)
+          return -1;
+        break;
+      default:
+        // must be an element name here.
+        ACEXML_Char *subelement = this->read_name ();
+        if (subelement == 0)
+          {
+            xmlenv.exception (new ACEXML_SAXParseException
+                              ("Error reading sub-element name while defining an element."));
+            return -1;
+          }
+        // @@ Inform validator of the new element here.
+        break;
+      }
+
+    this->skip_whitespace_count (&nextch);
+    switch (nextch)
+      {
+      case '|':
+        switch (node_type)
+          {
+          case 0:
+            node_type = '|';
+            // @@ inform validator of this new type??
+            break;
+          case '|':
+            break;
+          default:
+            xmlenv.exception (new ACEXML_SAXParseException
+                              ("Expecting `,', `|', or `)' while defining an element."));
+            return -1;
+          }
+        break;
+      case ',':
+        switch (node_type)
+          {
+          case 0:
+            node_type = ',';
+            // @@ inform validator of this new type??
+            break;
+          case ',':
+            break;
+          default:
+            xmlenv.exception (new ACEXML_SAXParseException
+                              ("Expecting `,', `|', or `)'while defining an element."));
+            return -1;
+          }
+      case ')':
+        break;
+      default:
+        xmlenv.exception (new ACEXML_SAXParseException
+                          ("Expecting `,', `|', or `)' while defining an element."));
+        return -1;
+      }
+    this->get ();               // consume , | or )
+  } while (nextch != ')');
+
+  // Check for trailing '?', '*', '+'
+  nextch = this->peek ();
+  switch (nextch)
+    {
+    case '?':
+      // @@ Consume the character and inform validator as such,
+      this->get ();
+      break;
+    case '*':
+      // @@ Consume the character and inform validator as such,
+      this->get ();
+      break;
+    case '+':
+      // @@ Consume the character and inform validator as such,
+      this->get ();
+      break;
+    default:
+      break;                    // not much to do.
+    }
+
   return 0;
 }
