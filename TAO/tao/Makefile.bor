@@ -162,9 +162,12 @@ OBJFILES = \
 	$(OBJDIR)\RequestInfo_Util.obj \
 	$(OBJDIR)\RT_Current.obj \
 	$(OBJDIR)\RT_Endpoint_Selector_Factory.obj \
+        $(OBJDIR)\RT_Endpoint_Utils.obj \
 	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \
+        $(OBJDIR)\RT_Stub.obj \
+        $(OBJDIR)\RT_Stub_Factory.obj \
 	$(OBJDIR)\Thread_Pool.obj \
 	$(OBJDIR)\RT_ORBInitializer.obj \
 	$(OBJDIR)\RT_ORB_Loader.obj \
@@ -181,6 +184,7 @@ OBJFILES = \
 	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
 	$(OBJDIR)\Stub.obj \
+        $(OBJDIR)\Stub_Factory.obj \
 	$(OBJDIR)\Sync_Strategies.obj \
 	$(OBJDIR)\Synch_Queued_Message.obj \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
