@@ -9,7 +9,7 @@
 //   ex3.cpp
 //
 // = DESCRIPTION
-//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for intra-process 
+//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for intra-process
 //    communication.  This example uses char buffers as input/output
 //    interface to the <ACE_UPIPE_Stream>.
 //
@@ -45,7 +45,7 @@ supplier (void *)
   if (con.connect (s_stream, c_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
-		"ACE_UPIPE_Acceptor.connect failed"));
+                "ACE_UPIPE_Acceptor.connect failed"));
 
   ACE_Auto_Basic_Ptr <char> mybuf = new char[size];
 
@@ -93,7 +93,7 @@ consumer (void *)
 
   if (acc.accept (c_stream) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n",
-		"ACE_UPIPE_Acceptor.accept failed"));
+                "ACE_UPIPE_Acceptor.accept failed"));
 
   // Ensure deletion upon exit.
   ACE_Auto_Basic_Ptr <char> mybuf = new char[size];
@@ -109,7 +109,7 @@ consumer (void *)
     {
       result = c_stream.recv (mybuf, size);
       if (result <= 0)
-	break;
+        break;
     }
 
   if (result == -1)
@@ -120,9 +120,9 @@ consumer (void *)
   time_t secs = (time_t) currsec - start;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Transferred %d blocks of size %d\n"
-	      "The program ran %d seconds\n",
-	      blocks,
+              "(%t) Transferred %d blocks of size %d\n"
+              "The program ran %d seconds\n",
+              blocks,
               size,
               secs));
   c_stream.close ();

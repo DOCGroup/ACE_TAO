@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
-//    intra-process communication.  
+//    intra-process communication.
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
@@ -50,7 +50,7 @@ supplier (void *)
   if (con.connect (s_stream, c_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
-		"ACE_UPIPE_Acceptor.connect failed"));
+                "ACE_UPIPE_Acceptor.connect failed"));
 
   // Test asynchronicity (the "acausal principle" ;-)).
   s_stream.enable (ACE_SIGIO);
@@ -104,7 +104,7 @@ consumer (void *)
   ACE_UPIPE_Addr serv_addr ("pattern");
 
   // accept will wait up to 4 seconds
-  ACE_UPIPE_Acceptor acc (serv_addr);  
+  ACE_UPIPE_Acceptor acc (serv_addr);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) consumer spawning the supplier thread\n"));
@@ -124,7 +124,7 @@ consumer (void *)
   if (acc.accept (c_stream) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
-		"ACE_UPIPE_Acceptor.accept failed"));
+                "ACE_UPIPE_Acceptor.accept failed"));
 
   // Time measurement.
   time_t currsec;
@@ -142,9 +142,9 @@ consumer (void *)
   time_t secs = (time_t) currsec - start;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Transferred %d blocks of size %d\n"
-	      "The program ran %d seconds\n",
-	      received_messages, size, secs));
+              "(%t) Transferred %d blocks of size %d\n"
+              "The program ran %d seconds\n",
+              received_messages, size, secs));
   c_stream.close ();
   return 0;
 }
@@ -182,4 +182,3 @@ template class ACE_Auto_Basic_Ptr <char>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr <char>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
