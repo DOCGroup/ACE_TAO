@@ -1,3 +1,14 @@
+Thu Apr 29 06:13:23 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	  struct ComponentImplementationDescription: Added new field called
+	  infoProperty of type Properties (Issue 5967).
+
+	  struct ImplementationRequirement: added a new struct (Issue 6392)
+	
+	* Dnc/ConfigHandlers/CompImplDesc_Handler.cpp:
+	  Fixed compilation errors due to incorrect naming usage of a typedef.
+
 Mon Apr 26 23:40:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Cookies.cpp:
@@ -25,7 +36,6 @@ Mon Apr 26 23:40:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ciao/CIAO_Value.idl:
 
 	  Added note for deprecation. 
-
 	
  	* CIDLC/ServantSourceGenerator.cpp:
 

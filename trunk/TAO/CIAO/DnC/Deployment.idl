@@ -177,6 +177,8 @@ module Deployment {
     ResourceUsesPort
   };
 
+  typedef sequence < ResourceUsageKind > ResourceUsageKinds;
+
   // @@Issue 6392@@ added new
   struct InstanceResourceDeploymentDescription {
     ResourceUsageKind resourceUsage;
@@ -514,12 +516,23 @@ module Deployment {
 
   typedef sequence < Capability > Capabilities;
 
+  // added (issue 6392). All the fields are supposed to have
+  // cardinality 0 or 1. Thus, a bounded sequence could be better
+  struct ImplementationRequirement {
+    ::CORBA::StringSeq resourcePort;
+    ::CORBA::StringSeq componentPort;
+    ResourceUsageKinds resourceUsage;
+  };
+
+  typedef sequence < ImplementationRequirement > ImplementationRequirements; 
+
   struct ComponentImplementationDescription {
     string label;
     string UUID;
     ComponentInterfaceDescription implements;
     ComponentAssemblyDescriptions assemblyImpl;
     MonolithicImplementationDescriptions monolithicImpl;
+    Properties infoProperty; // issue 5967
     Properties configProperty;
     Capabilities capability;
     ImplementationDependencies dependsOn;
