@@ -50,15 +50,15 @@ namespace TAO
   {
   public:
     /**
-     * @param otarget, The original target on which this invocation
+     * @param otarget The original target on which this invocation
      * was started. This is there to be passed up to its parent
      * class.
      *
-     * @param resolver, The profile and transport holder.
+     * @param resolver The profile and transport holder.
      *
-     * @param op, operation details of the invocation on the target
+     * @param detail Pperation details of the invocation on the target
      *
-     * @param response_expected, flag to indicate whether the
+     * @param response_expected Flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
      */
     Remote_Invocation (CORBA::Object_ptr otarget,
