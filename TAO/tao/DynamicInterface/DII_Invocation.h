@@ -71,7 +71,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#  include "tao/DII_Invocation.inl"
+#  include "DII_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
