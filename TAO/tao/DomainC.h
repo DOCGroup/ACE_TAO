@@ -530,12 +530,17 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_DomainManager *
 extern TAO_Export CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
+
+#ifndef __ACE_INLINE__
+
 // Any operators for interface CORBA_ConstructionPolicy
 TAO_Export void operator<<= (CORBA::Any &, CORBA_ConstructionPolicy_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ConstructionPolicy *&);
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstructionPolicy_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ConstructionPolicy_ptr &);
+
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
