@@ -45,12 +45,8 @@ LDFLAGS    += -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
 
-ifdef quantify
-LDFLAGS	+= -L/pkg/purify/quantify-2.1-solaris2/ -lquantify_stubs
-endif
-
 ifdef debug
-CPPFLAGS += -DDEBUG
+  CPPFLAGS += -DDEBUG
 endif
 
 server:	$(addprefix $(VDIR),$(TAO_DEMUX_SERVER_OBJS))
@@ -62,4 +58,3 @@ client:	$(addprefix $(VDIR),$(TAO_DEMUX_CLIENT_OBJS))
 clean:
 	$(MAKE) realclean
 	rm -fr tao_demux* gperf* *.i client server
-
