@@ -344,6 +344,9 @@ module PortableInterceptor
   <li>Implemented most of the remaining
       <CODE>ClientRequestInfo</CODE>, <CODE>ServerRequestInfo</CODE>
       and <CODE>IORInfo</CODE> methods.
+  <li>Added support for the
+      <CODE>PortableInterceptor::ForwardRequest</CODE>
+      exception on both the client and server sides.
 </ul>
 
 <hr><P>
@@ -364,6 +367,8 @@ module PortableInterceptor
       to create the <CODE>octet</CODE> sequence that is part of an
       <CODE>IOP::TaggedComponent</CODE>.  This means that it could
       compliment the IOR interceptor support.
+  <li>Add interception points for AMI requests.
+  <li>Add interception points for DII/DSI invocations.
   <li>The <CODE>send_poll</CODE> request interception point
       implementation will most likely be deferred until TII is
       supported in TAO.
