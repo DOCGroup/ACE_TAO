@@ -35,6 +35,11 @@ sub client
 {
   my $args = " -k file://$iorfile -ORBdebuglevel 1";
 
+  if ($^O eq "MSWin32")
+  {
+     my $args = " -k file://$iorfile -ORBdebuglevel 1 -ORBSvcconf client_nt.conf ";
+  }
+
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ", $args);
 
   $client = $CL->TimedWait (60);
@@ -53,8 +58,9 @@ sub client
      "-ORBsvcconf server.conf -ORBEndpoint uiop:// "
      ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
      ." -p 1413566208",
-     "-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -p 1413566210 -ORBsvcconf server.conf");
+     "-ORBsvcconf server.conf -ORBEndpoint uiop:// "
+     ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
+     ." -p 1413566210 ");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
