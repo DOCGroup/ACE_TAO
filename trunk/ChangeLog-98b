@@ -13,7 +13,7 @@ Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
           wrap so that errno isn't disturbed.  On VxWorks, convert
           S_objLib_OBJ_TIMEOUT errno to ETIME.
 
-        * tests/run_tests.vxworks: added Semaphore_Test.
+        * tests/run_tests.{sh,vxworks}: added Semaphore_Test.
 
 Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
 
