@@ -169,7 +169,9 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
     &call,
     _invoke_status);
 
-  TAO_DII_ClientRequestInfo _tao_ri (&call,this->target_ ,this);
+  TAO_DII_ClientRequestInfo _tao_ri (&call,
+                                     this->target_,
+                                     this);
 #endif  /* TAO_HAS_INTERCEPTORS */
 
   // Loop as needed for forwarding.

@@ -13,9 +13,9 @@ ACE_RCSID (DynamicInterface,
 TAO_DII_ClientRequestInfo::TAO_DII_ClientRequestInfo (
   TAO_GIOP_Invocation *_tao_invocation,
   CORBA::Object_ptr _tao_target,
-  CORBA::Request * request)
+  CORBA::Request_ptr request)
   : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
-    request_ (CORBA::Request::_duplicate (request)),
+    request_ (request),
     result_ (0)
 {
 }

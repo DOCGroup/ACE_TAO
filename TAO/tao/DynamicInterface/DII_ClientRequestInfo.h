@@ -71,7 +71,7 @@ private:
 
 private:
 
-  CORBA::Request_var request_;
+  CORBA::Request_ptr request_;
   CORBA::Long result_;
 
 };
