@@ -1,3 +1,11 @@
+Thu May  1 14:16:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+
+          Regenerated these files.
+
 Thu May  1 11:25:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
