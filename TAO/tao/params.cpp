@@ -65,7 +65,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
       int begin = 0;
       int end = endpoints.find (endpoints_delimiter);
 
-      for (int i = 1; i < endpoints_count; ++i)
+      for (int i = 0; i < endpoints_count; ++i)
         {
           if (end == 0)
             {

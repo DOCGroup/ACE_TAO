@@ -115,6 +115,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
 
+  // Initialize the container for the ORB parameters.
+  // orb_params_ must be initialized before the command line parsing loop
+  // since some of the parsing code expects it to have been already
+  // initialized.
+  if (this->orb_params_ == 0)
+    ACE_NEW_RETURN (this->orb_params_, TAO_ORB_Parameters, 0);
+
   // @@ This should be an IIOP default, more generally each
   //    loaded protocol should have it's own default defined by the
   //    implemention.  This is currently defined to be a zero, fredk
@@ -254,7 +261,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
           if (arg_shifter.is_parameter_next())
             {
-              this->orb_params ()->endpoints ((arg_shifter.get_current ()));
+              ACE_CString endpts (arg_shifter.get_current ());
+
+              this->orb_params ()->endpoints (endpts);
               arg_shifter.consume_arg ();
             }
         }
@@ -491,7 +500,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
               ACE_CString p;
 
-              if (ACE_OS::strstr ("://", preconnections) == 0)
+              if (ACE_OS::strstr (preconnections, "://") == 0)
                 {
                   // Handle old style preconnects for backward compatibility
 
@@ -668,10 +677,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // we might have to discuss that.
   //this->leader_follower_lock_ptr_ =  this->client_factory ()
   //                                       ->create_leader_follower_lock ();
-
-  // Initialize the container for the ORB parameters.
-  if (this->orb_params_ == 0)
-    ACE_NEW_RETURN (this->orb_params_, TAO_ORB_Parameters, 0);
 
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
