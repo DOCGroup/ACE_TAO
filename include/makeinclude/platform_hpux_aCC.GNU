@@ -45,16 +45,21 @@ CC		= /bin/cc
 CXX		= aCC
 
 # Extract the compiler version number. If it's A.03.27 (on HP-UX 11) or
-# A.01.27 (on HP-UX 10.20) then we can turn on the standard C++ library
-# usage, else we need to stick with the old one.
+# A.01.27 (on HP-UX 10.20) (or higher) then we can turn on the standard
+# C++ library usage, else we need to stick with the old one.
 CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
 CXXVERS := $(word 8, $(CXXVERS_WORDS))
 ifneq (27,$(CXXVERS))
+ifneq (30,$(CXXVERS))
   stdcpplib = 0
+endif
 endif
 
 ifeq (1,$(stdcpplib))
-  CCFLAGS += -AA -DACE_HAS_STANDARD_CPP_LIBRARY
+  CCFLAGS += -AA -DACE_HAS_STANDARD_CPP_LIBRARY=1
+ifeq (1, $(threads))
+  CCFLAGS += -D_RWSTD_MULTI_THREAD -D_REENTRANT
+endif
 # Compile errors using -AA and +noeh together - HP support call 3100620459
 # -- Steve Huston, April 10, 2001.
   exceptions = 1
