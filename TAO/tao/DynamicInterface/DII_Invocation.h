@@ -29,6 +29,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Asynch_Invocation.h"
+#include "Unknown_User_Exception.h"
 #include "DII_Reply_Dispatcher.h"
 #include "Request.h"
 
