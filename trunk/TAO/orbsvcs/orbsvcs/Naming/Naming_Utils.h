@@ -160,7 +160,9 @@ public:
   // Returns a pointer to the root Naming Context.
 
   CosNaming::NamingContext_ptr get_context (void) const;
-  // Returns a pointer to the root Naming Context.
+  // Returns a pointer to the root Naming Context.  This ptr is
+  // duplicated via <_duplicate> so that it can be stored into a
+  // <*_var>.
 
 protected:
   CosNaming::NamingContext_var naming_context_;
