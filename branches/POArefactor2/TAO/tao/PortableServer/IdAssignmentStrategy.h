@@ -35,11 +35,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Id_Assignment_Strategy :
+    class TAO_PortableServer_Export IdAssignmentStrategy :
        public virtual Policy_Strategy
     {
     public:
-      virtual ~Id_Assignment_Strategy (void);
+      virtual ~IdAssignmentStrategy (void);
 
       void strategy_init(TAO_POA *poa);
 
@@ -62,26 +62,6 @@ namespace TAO
       char key_type_length (void) const;
 
       void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
-    };
-
-    class TAO_PortableServer_Export User_Id_Assignment_Strategy :
-       public virtual Id_Assignment_Strategy
-    {
-    public:
-      virtual ~User_Id_Assignment_Strategy (void);
-
-      virtual char id_assignment_key_type (void) const;
-
-    private:
-    };
-
-    class TAO_PortableServer_Export System_Id_Assignment_Strategy :
-       public virtual Id_Assignment_Strategy
-    {
-    public:
-      virtual ~System_Id_Assignment_Strategy (void);
-
-      virtual char id_assignment_key_type (void) const;
     };
   }
 }

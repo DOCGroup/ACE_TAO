@@ -15,6 +15,7 @@
 #include "ThreadStrategyFactory.h"
 #include "RequestProcessingStrategy.h"
 #include "IdAssignmentStrategy.h"
+#include "IdAssignmentStrategyFactory.h"
 #include "LifespanStrategy.h"
 #include "LifespanStrategyFactory.h"
 #include "IdUniquenessStrategy.h"
@@ -106,21 +107,24 @@ namespace TAO
 
       request_processing_strategy_->strategy_init (poa);
 
-      switch (policies.id_assignment())
-      {
-        case ::PortableServer::USER_ID :
-        {
-          ACE_NEW (id_assignment_strategy_, User_Id_Assignment_Strategy);
-          break;
-        }
-        case ::PortableServer::SYSTEM_ID :
-        {
-          ACE_NEW (id_assignment_strategy_, System_Id_Assignment_Strategy);
-          break;
-        }
-      }
+      /**/
 
-      id_assignment_strategy_->strategy_init (poa);
+      IdAssignmentStrategyFactory *id_assignment_strategy_factory =
+        ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
+
+      if (id_assignment_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdAssignmentStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_IdAssignmentStrategyFactoryImpl()"));
+          id_assignment_strategy_factory =
+            ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
+        }
+
+      if (id_assignment_strategy_factory != 0)
+        id_assignment_strategy_ = id_assignment_strategy_factory->create (policies.id_assignment());
+
+      if (id_assignment_strategy_ != 0)
+        id_assignment_strategy_->strategy_init (poa);
 
       /**/
 

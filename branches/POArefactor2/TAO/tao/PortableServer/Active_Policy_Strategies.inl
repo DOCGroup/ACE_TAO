@@ -19,7 +19,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Id_Assignment_Strategy *
+    IdAssignmentStrategy *
     Active_Policy_Strategies::id_assignment_strategy (void) const
     {
       return id_assignment_strategy_;
