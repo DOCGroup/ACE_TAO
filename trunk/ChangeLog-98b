@@ -1,3 +1,9 @@
+Thu Dec 24 00:59:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Added a more complete
+	  documentation of the deprecated <at_exit> method.  Thanks to
+	  Keith Brown <kalbrown@ix.netcom.com> for reporting this.
+
 Wed Dec 23 16:37:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h,include/makeinclude/platform_sunos5_ghs.GNU:
