@@ -102,6 +102,10 @@ SOURCE=.\bd_str_seq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\bd_string.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\bd_struct_seq.cpp
 # End Source File
 # Begin Source File
