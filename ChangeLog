@@ -1,10 +1,15 @@
+Mon May 17 13:29:11 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Web_Crawler/URL.h: Changed return type of send_request()
+	  to ssize_t, matching change to HTTP_URL.h from:
+	  Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
 
 Mon May 17 19:19:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * tests/SOCK_Dgram_Bcast_Test.cpp (run_auto_test):
-	Removed warning on declared, but not used function.
-	Added OS_NS_unistd.h include to make sure ACE_OD::sleep is
-	declared.
+	  Removed warning on declared, but not used function.
+	  Added OS_NS_unistd.h include to make sure ACE_OS::sleep is
+	  declared.
 
 Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
 

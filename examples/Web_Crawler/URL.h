@@ -44,7 +44,7 @@ public:
   // visitation strategy on the URL.  This method is part of the
   // Visitor pattern.
 
-  virtual int send_request (void) = 0;
+  virtual ssize_t send_request (void) = 0;
   // Send a <GET> command to fetch the contents in the URI from the
   // server.
   
