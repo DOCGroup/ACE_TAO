@@ -100,8 +100,7 @@ Cubit_Client::parse_args (void)
 void
 Cubit_Client::cube_union_stub (void)
 {
-  Cubit_ptr cubit = Cubit::_narrow (this->objref_);
-
+  CORBA::Environment env;
   Cubit::oneof u, r;
 
   this->call_count_++;
@@ -109,7 +108,7 @@ Cubit_Client::cube_union_stub (void)
   u.l (3); // use the long union branch
 
   // Cube a "union" ...
-  r = cubit->cube_union (u, this->env_);
+  r = this->cubit_->cube_union (u, this->env_);
 
   if (this->env_.exception () != 0)
     {
@@ -143,7 +142,7 @@ Cubit_Client::cube_union_stub (void)
   u.cm ().o = 3;
 
   // Cube another "union" which uses the default arm ... NOT tested yet
-  r = cubit->cube_union (u, this->env_);
+  r = this->cubit_->cube_union (u, this->env_);
 
   if (this->env_.exception () != 0)
     {
@@ -177,7 +176,7 @@ Cubit_Client::cube_union_dii (void)
 
   this->call_count_++;
 
-  req = this->objref_->_request ((const CORBA::String) "cube_union", this->env_);
+  req = this->cubit_->_request ((const CORBA::String) "cube_union", this->env_);
 
   if (this->env_.exception () != 0)
     {
@@ -542,21 +541,8 @@ Cubit_Client::run (void)
 
   // ------------------>
   // Two more tests, using the "cube_union" function
-#if 0
-  timer.start ();
 
-  this->cube_union_dii ();
-
-  timer.stop ();
-  timer.elapsed_time (elapsed_time);
-  ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
-	      "user_time\t= %0.06f ms, \t"
-	      "system_time\t= %f ms\n",
-	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
-
+  // unions using stubs
   timer.start ();
 
   this->cube_union_stub ();
@@ -570,8 +556,21 @@ Cubit_Client::run (void)
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
 	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
-  // ------------------> uncomment when unions are supported.
-#endif
+
+  // union DII
+  timer.start ();
+
+  this->cube_union_dii ();
+
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  ACE_DEBUG ((LM_DEBUG,
+	      "cube_union_dii() call:\treal_time\t= %0.06f ms, \t"
+	      "user_time\t= %0.06f ms, \t"
+	      "system_time\t= %f ms\n",
+	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
 
   if (this->exit_later_)
     {
@@ -614,7 +613,7 @@ Cubit_Client::init (int argc, char **argv)
 
   if (this->cubit_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%s: must specify an object reference using -k <key>\n",
+               "%s: must specify an object reference using -k <key>\n",
 		       this->argv_[0]),
 		      -1);
 
@@ -643,7 +642,7 @@ Cubit_Client::init (int argc, char **argv)
   // narrow <objref> because <_bind> will return us the
   // <Cubit_Factory> pointer.  However, we do it so that we can
   // explicitly test the _narrow function.
-  this->factory_ = Cubit_Factory::_narrow (this->objref_);
+  this->factory_ = Cubit_Factory::_narrow (this->objref_, this->env_);
 
   if (this->factory_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -673,7 +672,7 @@ int
 main (int argc, char **argv)
 {
   Cubit_Client cubit_client;
- 
+
   if (cubit_client.init (argc, argv) == -1)
     return 1;
   else
