@@ -1,3 +1,9 @@
+Fri Jun 14 14:39:33 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Filecache.cpp: Removed excessive ACE_DEBUG statements.
+	  Thanks to Charles F. Frasch <cfrasch@spawar.navi.mil> for
+	  reporting them.
+
 Fri Jun 14 12:04:17 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
