@@ -1,4 +1,4 @@
-Project Delcarations
+Project Declarations
 --------------------
 
 project(project_name) : baseproject, anotherbaseproject {
