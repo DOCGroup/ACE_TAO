@@ -32,7 +32,9 @@ LIBS	= -lACE
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
+BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
+
+ESO	= YES
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -24,8 +24,20 @@
 // ACE supports threads.
 #define ACE_HAS_THREADS
 
+// Include XtReactor into the library.
+#define ACE_HAS_XT
+
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r
+// functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
+// Platform does not support reentrant netdb functions (getprotobyname_r,
+// getprotobynumber_r, gethostbyaddr_r, gethostbyname_r,
+// getservbyname_r).
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 //Sockets may be called in multi-threaded programs
 #define ACE_HAS_MT_SAFE_SOCKETS
@@ -38,6 +50,9 @@
 
 // Platform supports the tid_t type (e.g., AIX and Irix 6.2)
 #define ACE_HAS_TID_T
+
+// uses ctime_r & asctime_r with only two parameters vs. three
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 // Platform has no implementation of pthread_condattr_setpshared(),
 // even though it supports pthreads! (like Irix 6.2)

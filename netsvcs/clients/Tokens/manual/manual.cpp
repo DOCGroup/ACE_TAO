@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -17,10 +17,10 @@
 // ============================================================================
 
 #include "ace/OS.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Remote_Tokens.h"
+#include "ace/Singleton.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
 #include "ace/Token_Collection.h"

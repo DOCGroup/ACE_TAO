@@ -11,7 +11,7 @@ CC              = gcc -w
 CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
 DLD             = $(CXX)
 LD		= $(CXX) 
-LIBS            += -lpthread -lstdc++
+LIBS            += -ldl -lpthread -lstdc++
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
@@ -19,6 +19,10 @@ RANLIB          = ranlib
 
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+# Added line below to support "Executable Shared Object" files (as
+# needed by the service configurator).
+# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
 PRELIB  = (echo "int main() { return 0; }" > gcctemp.c && \
           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
           $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LIBS); \

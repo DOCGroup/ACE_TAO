@@ -52,8 +52,10 @@ ACE_SOCK_Acceptor::dump (void) const
 // General purpose routine for performing server ACE_SOCK creation.
 
 int
-ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap, int reuse_addr,
-			 int protocol_family, int backlog, 
+ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap, 
+			 int reuse_addr,
+			 int protocol_family, 
+			 int backlog, 
 			 int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");

@@ -112,6 +112,9 @@ endif # debug
 
 COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS)  -c
 COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)  -c
+# 960905 Marius Kjeldahl <marius@funcom.com>
+# Added the line below to be used for compiling executable shared objects
+COMPILEESO.cc   =$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 LINK.c		=$(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
 LINK.cc		=$(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 SOLINK.cc	=$(LINK_COMMAND) $(DLD) $(SOFLAGS)

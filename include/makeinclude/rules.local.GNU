@@ -53,9 +53,17 @@ $(VDIR)%.o:	%.cpp
 # built via the same rule.  SOLINK is required for the repository under
 # gcc.
 ifndef SOLINK
-$(VSHDIR)%.so:	%.cpp
+# I added the "Executable Shared Object (ESO)" define to separate between
+# normal shared object files and executable shared object files (the kind
+# that the service configurator needs to be able to function).
+# 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ifndef ESO
+$(VSHDIR)%.so: %.cpp
 	$(SOBUILD)
 else
+$(VSHDIR)%.so: %.cpp
+	$(ESOBUILD)
+endif
 $(VSHDIR)%.o:	%.cpp
 	$(COMPILE.cc) $(PIC) -o $@ $<
 $(VSHDIR)%.o:	%.cc
