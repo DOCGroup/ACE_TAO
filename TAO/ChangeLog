@@ -1,3 +1,10 @@
+Fri Oct 11 09:59:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (remove_member):
+
+	  Added implementations for this method.
+
 Fri Oct 11 09:41:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
