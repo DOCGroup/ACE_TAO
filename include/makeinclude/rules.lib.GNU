@@ -82,43 +82,14 @@ ifdef PRELIB
 endif
 	$(AR) $(ARFLAGS) $@ $?
 ifdef TEMPINCDIR
-# This is required for AIX!!!
-	if test -e xxx; \
-	then  \
-		rm xxx; \
+# This is required to get AIX xlC to instantiate and compile the needed
+# templates.
+	if test -s ./$(TEMPINCDIR)/*.C; \
+	then \
+		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $@ $(LIBS); \
+		$(RM) dummy; \
+		$(AR) $(ARFLAGS) $@ tempinc/*.o; \
 	fi
-	(if test -s ./$(TEMPINCDIR)/*.C; \
-	then  \
-		while ! test -e xxx; \
-		do  \
-			touch xxx; \
-			cd ./$(TEMPINCDIR); \
-			for temp in *.C; \
-	 		do  \
-				if ! test -d ./$(TEMPINCDIR); \
-				then  \
-					cd ..; \
-				fi; \
-				if $(COMPILE.cc) -o $(VDIR)$$temp.o ./$(TEMPINCDIR)/$$temp; \
-				then  \
-					$(AR) $(ARFLAGS) $@ $(VDIR)$$temp.o;\
-				else  \
-					rm $@; \
-					rm xxx; \
-					exit; \
-				fi \
-	 		done;  \
-			for temp in ./$(TEMPINCDIR)/*.C; \
-	 		do  \
-				if test $$temp -nt xxx; \
-				then \
-					rm xxx; \
-					break; \
-				fi \
-	 		done  \
-	 	done;  \
-	fi)
-	rm xxx
 endif
 	-chmod a+r $@
 	-$(RANLIB) $@
