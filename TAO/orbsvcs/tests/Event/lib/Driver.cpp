@@ -93,37 +93,19 @@ EC_Driver::run (int argc, char* argv[])
       if (this->allocate_consumers () == -1)
         return 1;
 
-      this->connect_consumers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected consumer(s)\n"));
-
       if (this->allocate_suppliers () == -1)
         return 1;
 
-      this->connect_suppliers (ACE_TRY_ENV);
+      this->connect_clients (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected supplier(s)\n"));
 
       this->execute_test (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->dump_results ();
 
-      this->disconnect_consumers (ACE_TRY_ENV);
+      this->disconnect_clients (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers disconnected\n"));
-
-      this->disconnect_suppliers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers disconnected\n"));
 
       this->destroy_ec (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -478,6 +460,26 @@ EC_Driver::allocate_supplier (int i)
 }
 
 void
+EC_Driver::connect_clients (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->connect_consumers (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->connect_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+EC_Driver::disconnect_clients (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->disconnect_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->disconnect_consumers (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
 EC_Driver::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -489,6 +491,8 @@ EC_Driver::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
       this->connect_consumer (consumer_admin.in (), i, ACE_TRY_ENV);
       ACE_CHECK;
     }
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected consumer(s)\n"));
 }
 
 void
@@ -545,6 +549,9 @@ EC_Driver::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
       this->connect_supplier (supplier_admin.in (), i, ACE_TRY_ENV);
       ACE_CHECK;
     }
+
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected supplier(s)\n"));
 }
 
 void
@@ -668,6 +675,8 @@ EC_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
       this->suppliers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
     }
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers disconnected\n"));
 }
 
 void
@@ -678,6 +687,8 @@ EC_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
       this->consumers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
     }
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers disconnected\n"));
 }
 
 void

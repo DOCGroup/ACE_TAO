@@ -81,6 +81,14 @@ public:
   // Construct the EC and its helper objects, also activates the EC in
   // the RootPOA.
 
+  virtual void connect_clients (CORBA::Environment& env);
+  // By default connect the consumers and then the suppliers, other
+  // orders should work too.
+
+  virtual void disconnect_clients (CORBA::Environment &env);
+  // By default disconnect the suppliers and then the consumers, other
+  // orders should work too.
+
   virtual void connect_consumers (CORBA::Environment& env);
   // Connect all the consumers, by default it lets each consumer
   // connect itself.
