@@ -1,3 +1,12 @@
+Fri Dec  1 15:15:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.i:
+	* tao/diffs/InterfaceC.i.diff:
+
+	  Removed the use of the scoped name for IRObject_var and
+	  IRObject_out constructors and destructor, and used the
+	  flat name instead. Error reported by Sun egcs compiler.
+
 Fri Dec  1 14:44:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
