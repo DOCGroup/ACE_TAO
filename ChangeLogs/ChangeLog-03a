@@ -1,3 +1,8 @@
+Wed Oct 23 22:24:59 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/parser/parser/Parser.cpp: Fixed a stupid thinko in array
+          initialization.
+
 Wed Oct 23 17:27:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/Encoding.cpp:
