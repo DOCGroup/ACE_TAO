@@ -77,13 +77,5 @@
 #include "tao/PortableInterceptorC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#if !defined (ACE_NESTED_CLASS)
-#if defined (ACE_WIN32)
-#define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
-#else /* !ACE_WIN32 */
-#define ACE_NESTED_CLASS(SCOPE,CLASS) SCOPE::CLASS
-#endif /* ACE_WIN32 */
-#endif /* ACE_NESTED_CLASS */
-
 #include "ace/post.h"
 #endif /* TAO_MASTER_CORBA_H */
