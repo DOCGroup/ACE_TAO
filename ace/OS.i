@@ -8398,7 +8398,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
   result = ACE_OS::hostname(char_name, maxnamelen);
-  ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name));
+  ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name).wchar_rep ());
 
   delete [] char_name;
   return result;
