@@ -30,7 +30,38 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::StartError))
 {
-  //@@ Call CCM_activate ....
+  //@@ Note: set_session_context will be called when the servant is created.
+
+  Funct_Ptr functor = & Components::CCMObject::ciao_preactivate;
+  start_i (functor);
+  ACE_CHECK;
+
+  functor = & Components::CCMObject::ciao_activate;
+  start_i (functor);
+  ACE_CHECK;
+
+  functor = & Components::CCMObject::ciao_postactivate;
+  start_i (functor);
+  ACE_CHECK;
+}
+
+void
+CIAO::NodeApplication_Impl::
+start_i (Funct_Ptr functor
+	 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Deployment::StartError))
+{
+  Component_Iterator iter (this->component_map_.begin ());
+  for (;
+       iter != this->component_map_.end ();
+       ++iter)
+  {
+    //@@ I don't know what if Components::InvalidConfiguration
+    //   is thrown from here, so it's ignored for now.  --Tao
+    (((*iter).int_id_)->*functor) ();
+    ACE_CHECK;
+  }
 }
 
 ::Deployment::Properties *
@@ -61,6 +92,45 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 		   ::Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos_var retv;
+  ACE_NEW_THROW_EX (retv,
+		    Deployment::ComponentInfos,
+		    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong len = impl_infos.length ();
+  retv->length (len);
+
+  Components::CCMHome_var home;
+  Components::CCMObject_var comp;
+
+  for (CORBA::ULong i = 0; i < len; ++i)
+  {
+    home = install_home (impl_infos [len]);
+    ACE_CHECK;
+
+    Components::KeylessCCMHome_var kh =
+      Components::KeylessCCMHome::_narrow (home.in ()
+					   ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (CORBA::is_nil (kh.in ()))
+	ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+
+    // @@ Note, here we are missing the CreateFailure.
+    // Sometime I will come back to add exception rethrow.
+    comp = kh->create_component ();//_component ();
+    ACE_CHECK;
+
+    if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
+				   comp.in ()))
+      ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+
+    // Set the return value.
+    (*retv)[i].component_instance_name
+      = impl_infos[i].component_instance_name.in ();
+
+    (*retv)[i].component_ref = comp.in ();
+  }
   return retv._retn ();
 }
 
@@ -86,15 +156,15 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
   ACE_CHECK_RETURN (0);
 
   // Bind the home in the map.
-  // Note: The bind will duplicate the ObjectRef.
   if (this->home_map_.bind (impl_info.component_instance_name.in (),
-			    Components::CCMHome::_duplicate (newhome.in ())));
-      ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+			    Components::CCMHome::_duplicate (newhome.in ())))
+    ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
   //Note: If the return value will be discarded, it must be kept in a var or
   //      release () will have to be called explicitly.
   return newhome._retn ();
 }
+
 
 void
 CIAO::NodeApplication_Impl::
@@ -106,8 +176,6 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   Home_Iterator iter (this->home_map_.begin ());
 
   // Remove all components first.
-  // Of course we can call remove on the home to remove the component
-  // but this is easier.
   remove_components ();
   ACE_CHECK;
 
@@ -137,6 +205,9 @@ remove_home (const char * comp_ins_name
 
   if (this->home_map_.find (str, home) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
+
+  // We should remove all components created by this home as well.
+  // This is not implemented yet.
 
   this->container_->ciao_uninstall_home (home);
   ACE_CHECK;
@@ -219,15 +290,18 @@ remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   //Remove all the components in the NodeApplication/Container
   Component_Iterator iter (this->component_map_.begin ());
-  PortableServer::ObjectId_var oid;
 
   // Release all component servant object.
   for (;
        iter != this->component_map_.end ();
        ++iter)
   {
-    this->container_->uninstall_component ((*iter).int_id_,
-					   oid.out ());
+    Components::CCMHome_ptr home;
+    if (this->home_map_.find ( (*iter).ext_id_, home) != 0)
+      ACE_THROW (CORBA::BAD_PARAM ());
+
+    // This will call ccm_passivate on the component executor.
+    home->remove_component ((*iter).int_id_);
     ACE_CHECK;
 
     CORBA::release ( (*iter).int_id_);
@@ -247,14 +321,25 @@ remove_component (const char * comp_ins_name
 		   Components::RemoveFailure))
 {
   Components::CCMObject_ptr comp;
+  Components::CCMHome_ptr home;
 
   ACE_CString str (comp_ins_name);
-  PortableServer::ObjectId_var oid;
+
+  /* Before we do remove component we have to inform the homeservant so
+   * Component::ccm_passivate ()
+   * constainer::ninstall_component () ->deactivate_object () will be called.
+   *
+   * ccm_remove will be called when the poa destroys the servant.
+   */
 
   if (this->component_map_.find (str, comp) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  this->container_->uninstall_component (comp, oid.out ());
+  if (this->home_map_.find (str, home) != 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
+  // This will call ccm_passivate on the component executor.
+  home->remove_component (comp);
   ACE_CHECK;
 
   // If the previous calls failed, what should we do here??
