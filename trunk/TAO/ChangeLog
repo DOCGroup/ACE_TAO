@@ -1,24 +1,30 @@
+Wed Sep  8 12:55:30 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+          Add explicit Resource_Files sections to associate
+          rc files with the correct project.
+
 Wed Sep  8 09:53:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
 
-	  Added support for getting load average on NetBSD.
+          Added support for getting load average on NetBSD.
 
 Wed Sep  8 09:02:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Changed *_Skel project to inherit from portableserver.
+          Changed *_Skel project to inherit from portableserver.
 
 Wed Sep  8 08:58:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
 
-	  Fixed tipo -- the export macro was not changed when export
-	  header was.
+          Fixed tipo -- the export macro was not changed when export
+          header was.
 
 Wed Sep  8 10:28:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
