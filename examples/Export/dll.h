@@ -35,20 +35,32 @@ public:
 // the singleton will be used (which defeats the purpose of a Singleton).
 //
 // This occurs because the ACE_Singleton template is expanded in both
-// places because Visual C++ does this automatically by including
-// the template source.  This in turn creates two copies of the static
-// member variable.
+// places because Visual C++ and Borland C++ do this automatically by
+// including the template source.  This in turn creates two copies of
+// the static member variable.
 //
 // So to get around this problem, the *_SINGLETON_DECLARE macro is 
 // used to instruct the compiler to not create the second copy in the
-// program.
+// program.  This macro solution does not work for Borland C++, so for
+// this compiler you must explicitly disable the template instantiation
+// using a #pragma (or use the other workaround below).
 //
 // Another workaround for this is to not to expose the Singleton itself
 // to the outside world, but to instead supply a function or static
 // member function that returns the singleton to the executable
 // (like get_dll_singleton () does below).
 
+#if defined (__BORLANDC__)
+# if !defined (TEST_BUILD_DLL)
+#   pragma option push -Jgx
+# endif
+#endif
 typedef ACE_Singleton<test_class, ACE_Null_Mutex> TEST_SINGLETON;
 TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex);
+#if defined (__BORLANDC__)
+# if !defined (TEST_BUILD_DLL)
+#   pragma option pop
+# endif
+#endif
 
 Test_Export test_class *get_dll_singleton ();

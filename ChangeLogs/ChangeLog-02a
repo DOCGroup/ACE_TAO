@@ -1,3 +1,13 @@
+Thu Sep  6 02:30:14 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * examples/Export/Makefile.bor:
+        * examples/Export/export_dll.bor:
+        * examples/Export/test.bor:
+        * examples/Export/dll.h:
+          Added makefiles for this example and fixed a template problem with
+          Borland C++. Thanks to Charles Frasch <cfrasch@spawar.navy.mil> for
+          contributing this.
+
 Wed Sep  5 19:48:34 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/SOCK_Dgram.cpp (set_nic): 
