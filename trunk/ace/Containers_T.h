@@ -976,7 +976,7 @@ public:
   // Delegates to ACE_Double_Linked_List_Iterator.
 
 private:
-  ACE_DLList<T> &list_;
+  ACE_DLList<T> *list_;
 };
 
 template <class T>
@@ -1027,7 +1027,7 @@ public:
   // Delegates to ACE_Double_Linked_List_Iterator.
 
 private:
-  ACE_DLList<T> &list_;
+  ACE_DLList<T> *list_;
 };
 
 template <class T>
