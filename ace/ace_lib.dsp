@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (ALPHA) Static Library" 0x0604
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=ACE LIB - Win32 PharLap ETS Debug
+CFG=ACE LIB - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE
@@ -14,7 +14,7 @@ CFG=ACE LIB - Win32 PharLap ETS Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE
-!MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE LIB - Win32 PharLap ETS Debug"
+!MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE LIB - Win32 Debug"
 !MESSAGE
 !MESSAGE Possible choices for configuration are:
 !MESSAGE
