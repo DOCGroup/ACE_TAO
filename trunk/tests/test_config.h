@@ -190,7 +190,8 @@ ACE_Test_Output::set_output (const char *filename, int append)
   if (test_dir == 0)
     test_dir = "";
 
-  ACE_OS::sprintf (temp, "%s%s%s%s",
+  ACE_OS::sprintf (temp,
+                   "%s%s%s%s",
                    test_dir,
                    ACE_LOG_DIRECTORY_A,
                    ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
