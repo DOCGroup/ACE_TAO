@@ -1,3 +1,9 @@
+Mon Jan  8 10:59:25 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
+
+          Updated the IDL custom build command for Release configuration.
+
 Mon Jan  8 09:31:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/orbsvcs.html:
