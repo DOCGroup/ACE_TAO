@@ -55,14 +55,12 @@ project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
-    
-    VPATH = $(TAO_ROOT)/TAO_IDL $(TAO_ROOT)/TAO_IDL/driver
   }
 
   Source_Files {
-    $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
-    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
-    $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
+    drv_args.cpp
+    drv_preproc.cpp
+    tao_idl.cpp
   }
   
   Header_Files {
