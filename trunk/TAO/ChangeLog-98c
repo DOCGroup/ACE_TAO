@@ -1,3 +1,7 @@
+	* examples/Simple/bank/run_test.pl: Added this script 
+	  with proper sleep time between server and client.
+
+
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/run_test.pl: 
