@@ -1,3 +1,8 @@
+Tue Feb 18 17:15:24 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/ace.mdp, ace/mak: Modified release configuration to build
+	  acer.dll.
+
 Tue Feb 18 11:43:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: removed destructor because it's not declared
