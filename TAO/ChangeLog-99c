@@ -1,339 +1,344 @@
+Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>
+
+        * TAO/tao/orbconf.h,TAO/tao/DynAnyC.{h,cpp}:
+          updates for Cray UNICOS port.
+
 Thu Jun 24 21:43:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POAC.cpp (_narrow): Fixed use of try macros.
+        * tao/POAC.cpp (_narrow): Fixed use of try macros.
 
-	* tao/ORB.cpp: Even though MSVC has support for standard C++
-	  library, the set_unexpected() function is not in the std
-	  namespace.
+        * tao/ORB.cpp: Even though MSVC has support for standard C++
+          library, the set_unexpected() function is not in the std
+          namespace.
 
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/Repository.cpp: Added an explicit
-	  template instantiation parameter for ACE_Equal_To<>.
+        * orbsvcs/ImplRepo_Service/Repository.cpp: Added an explicit
+          template instantiation parameter for ACE_Equal_To<>.
 
 Thu Jun 24 21:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	* tao/Context.cpp:
-	* tao/CurrentC.cpp:
-	* tao/CurrentS.cpp:
-	* tao/Exception.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/Invocation.cpp:
-	* tao/NVList.cpp:
-	* tao/ORB.cpp:
-	* tao/PolicyS.cpp:
-	  More exception handling changes and some cosmetic changes.
+        * tao/Any.cpp:
+        * tao/Context.cpp:
+        * tao/CurrentC.cpp:
+        * tao/CurrentS.cpp:
+        * tao/Exception.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Invocation.cpp:
+        * tao/NVList.cpp:
+        * tao/ORB.cpp:
+        * tao/PolicyS.cpp:
+          More exception handling changes and some cosmetic changes.
 
 Thu Jun 24 21:03:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Guarded the definition of all TAO try macros
-	  with TAO_USES_DEPRECATED_TAO_TRY_MACROS.  This is now defined in
-	  the file.  After we depricate the use of TAO try macros, one
-	  will need to define TAO_USES_DEPRECATED_TAO_TRY_MACROS
-	  explicitly in order to compile their code.
+        * tao/try_macros.h: Guarded the definition of all TAO try macros
+          with TAO_USES_DEPRECATED_TAO_TRY_MACROS.  This is now defined in
+          the file.  After we depricate the use of TAO try macros, one
+          will need to define TAO_USES_DEPRECATED_TAO_TRY_MACROS
+          explicitly in order to compile their code.
 
-	* Exception.cpp:
-	* Forwarding_Servant.cpp:
-	* GIOP_Server_Request.cpp:
-	* Invocation.cpp:
-	* NVList.cpp:
-	* ORB.cpp:
-	* POAC.cpp:
-	* Request.cpp:
-	* Stub.cpp:
-	* TAO.cpp: Fixed the use of TAO_IN_ENV, and native exception
-	  support.
+        * Exception.cpp:
+        * Forwarding_Servant.cpp:
+        * GIOP_Server_Request.cpp:
+        * Invocation.cpp:
+        * NVList.cpp:
+        * ORB.cpp:
+        * POAC.cpp:
+        * Request.cpp:
+        * Stub.cpp:
+        * TAO.cpp: Fixed the use of TAO_IN_ENV, and native exception
+          support.
 
 Thu Jun 24 20:02:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
-	  The IDL compiler was not generating exception safe code in a
-	  couple of places.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
+          The IDL compiler was not generating exception safe code in a
+          couple of places.
 
-	* tao/poa_macros.h:
-	* tao/Object_Adapter.i:
-	* tao/POA.cpp:
-	* tao/POA.i:
-	* tao/POAManager.i:
-	  The POA was implicitly using the obsolete TAO_TRY macros through
-	  its TAO_POA_GUARD_* stuff, updated to use ACE_GUARD_* and
-	  friends.
+        * tao/poa_macros.h:
+        * tao/Object_Adapter.i:
+        * tao/POA.cpp:
+        * tao/POA.i:
+        * tao/POAManager.i:
+          The POA was implicitly using the obsolete TAO_TRY macros through
+          its TAO_POA_GUARD_* stuff, updated to use ACE_GUARD_* and
+          friends.
 
-	* tao/DomainC.cpp:
-	* tao/IORC.cpp:
-	* tao/MessagingC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	  More exception handling fixes.
+        * tao/DomainC.cpp:
+        * tao/IORC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+          More exception handling fixes.
 
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html (pseudo-object): Added a todo item
+        * docs/releasenotes/TODO.html (pseudo-object): Added a todo item
 
 Thu Jun 24 19:41:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	* tao/CDR_Interpreter.cpp:
-	* tao/CurrentC.cpp:
-	* tao/CurrentS.cpp:
-	* tao/DynAny_i.cpp:
-	* tao/DynArray_i.cpp:
-	* tao/DynEnum_i.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.cpp:
-	* tao/append.cpp:
-	* tao/deep_free.cpp:
-	* tao/encode.cpp:
-	* tao/skip.cpp:
-	  Another pass fixing exception handling problems
+        * tao/Any.cpp:
+        * tao/CDR_Interpreter.cpp:
+        * tao/CurrentC.cpp:
+        * tao/CurrentS.cpp:
+        * tao/DynAny_i.cpp:
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * tao/append.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+        * tao/skip.cpp:
+          Another pass fixing exception handling problems
 
 Thu Jun 24 18:27:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/CDR_Interpreter.h:
-	* tao/CDR_Interpreter.cpp:
-	* tao/DynAny_i.h:
-	* tao/DynAny_i.cpp:
-	* tao/DynArray_i.h:
-	* tao/DynArray_i.cpp:
-	* tao/DynSequence_i.h:
-	* tao/DynSequence_i.cpp:
-	* tao/DynEnum_i.h:
-	* tao/DynEnum_i.cpp:
-	* tao/DynStruct_i.h:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.h:
-	* tao/DynUnion_i.cpp:
-	  Fixed much of the ACE_TRY stuff. There are still some
-	  ACE_CHECK-related things to add and some code to
-	  rearrange.
+        * tao/CDR_Interpreter.h:
+        * tao/CDR_Interpreter.cpp:
+        * tao/DynAny_i.h:
+        * tao/DynAny_i.cpp:
+        * tao/DynArray_i.h:
+        * tao/DynArray_i.cpp:
+        * tao/DynSequence_i.h:
+        * tao/DynSequence_i.cpp:
+        * tao/DynEnum_i.h:
+        * tao/DynEnum_i.cpp:
+        * tao/DynStruct_i.h:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.h:
+        * tao/DynUnion_i.cpp:
+          Fixed much of the ACE_TRY stuff. There are still some
+          ACE_CHECK-related things to add and some code to
+          rearrange.
 
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Made the method
-	  CORBA::ORB::InvalidName::_narrow static as needed by the spec.
+        * tao/ORB.h (CORBA_ORB): Made the method
+          CORBA::ORB::InvalidName::_narrow static as needed by the spec.
 
 Thu Jun 24 17:44:39 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Fixed a few nested calls with ACE_TRY_ENV. Added appropriate
-	  ACE_TRY_CHECK after these statements. Thanks to Paul Calabrese
-	  <calabrese_p@ociweb.com> for reporting these problems.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed a few nested calls with ACE_TRY_ENV. Added appropriate
+          ACE_TRY_CHECK after these statements. Thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for reporting these problems.
 
 Thu Jun 24 17:29:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
-	  Fixed problems with exception handling, thanks to Paul Calabrese
-	  <calabrese_p@ociweb.com> for pointing this out.
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+          Fixed problems with exception handling, thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for pointing this out.
 
 Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* orbsvcs/Makefile
-	* orbsvcs/orbsvcs/Makefile
-	* orbsvcs/tests/Makefile
-	  Removed all references to the Logging service or Logging tests
+        * orbsvcs/Makefile
+        * orbsvcs/orbsvcs/Makefile
+        * orbsvcs/tests/Makefile
+          Removed all references to the Logging service or Logging tests
 
-	* examples/Makefile
-	  Added entry for the new Logging example directory
+        * examples/Makefile
+          Added entry for the new Logging example directory
 
-	* orbsvcs/Logging_Service/Logging_Service.cpp
-	* orbsvcs/Logging_Service/Logging_Service_i.cpp,h
-	* orbsvcs/Logging_Service/Makefile
-	* orbsvcs/Logging_Service/Makefile.am
-	* orbsvcs/orbsvcs/Logger.idl
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp,h
-	* orbsvcs/orbsvcs/Log/Makefile.am
-	* orbsvcs/tests/Logger/Logger.dsw
-	* orbsvcs/tests/Logger/Logging_Test.cpp
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp,h
-	* orbsvcs/tests/Logger/Makefile
-	* orbsvcs/tests/Logger/README
-	* orbsvcs/tests/Logger/client.cpp,h
-	* orbsvcs/tests/Logger/client.dsp
-	* orbsvcs/tests/Logger/client_i.cpp,h
-	* orbsvcs/tests/Logger/run_test.pl
-	* orbsvcs/tests/Logger/server.cpp
-	* orbsvcs/tests/Logger/server.dsp
-	* orbsvcs/tests/Logger/server_i.cpp,h
-	  Removed all these files. They were the Logging_Service and all
-	  related tests.
-	* orbsvcs/orbsvcs/Log
-	* orbsvcs/Logging_Service
-	* orbsvcs/tests/Logger
-	  Removed these directories
+        * orbsvcs/Logging_Service/Logging_Service.cpp
+        * orbsvcs/Logging_Service/Logging_Service_i.cpp,h
+        * orbsvcs/Logging_Service/Makefile
+        * orbsvcs/Logging_Service/Makefile.am
+        * orbsvcs/orbsvcs/Logger.idl
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp,h
+        * orbsvcs/orbsvcs/Log/Makefile.am
+        * orbsvcs/tests/Logger/Logger.dsw
+        * orbsvcs/tests/Logger/Logging_Test.cpp
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp,h
+        * orbsvcs/tests/Logger/Makefile
+        * orbsvcs/tests/Logger/README
+        * orbsvcs/tests/Logger/client.cpp,h
+        * orbsvcs/tests/Logger/client.dsp
+        * orbsvcs/tests/Logger/client_i.cpp,h
+        * orbsvcs/tests/Logger/run_test.pl
+        * orbsvcs/tests/Logger/server.cpp
+        * orbsvcs/tests/Logger/server.dsp
+        * orbsvcs/tests/Logger/server_i.cpp,h
+          Removed all these files. They were the Logging_Service and all
+          related tests.
+        * orbsvcs/orbsvcs/Log
+        * orbsvcs/Logging_Service
+        * orbsvcs/tests/Logger
+          Removed these directories
 
-	* examples/Logging
-	  Added this directory to hold the moved logging service
+        * examples/Logging
+          Added this directory to hold the moved logging service
 
-	* examples/Logging/Logger.idl
-	* examples/Logging/Logger_i.cpp,h
-	* examples/Logging/Logging_Service.cpp
-	* examples/Logging/Logging_Service_i.cpp,h
-	* examples/Logging/Logging_Test.cpp
-	* examples/Logging/Logging_Test_i.cpp,h
-	* examples/Logging/Makefile
-	* examples/Logging/README
-	* examples/Logging/run_test.pl
-	  These files are the modified versions of the original
-	  Logging_Service and Logger test files. I've removed the old
-	  TAO_THROW macros and added a POA_Manager activation. Also, I've
-	  adjusted the README and Makefiles accordingly.
+        * examples/Logging/Logger.idl
+        * examples/Logging/Logger_i.cpp,h
+        * examples/Logging/Logging_Service.cpp
+        * examples/Logging/Logging_Service_i.cpp,h
+        * examples/Logging/Logging_Test.cpp
+        * examples/Logging/Logging_Test_i.cpp,h
+        * examples/Logging/Makefile
+        * examples/Logging/README
+        * examples/Logging/run_test.pl
+          These files are the modified versions of the original
+          Logging_Service and Logger test files. I've removed the old
+          TAO_THROW macros and added a POA_Manager activation. Also, I've
+          adjusted the README and Makefiles accordingly.
 
-	I fear that this may break things, but I've tried to keep it safe
-	and I've tested my changes. Let us hope.
+        I fear that this may break things, but I've tried to keep it safe
+        and I've tested my changes. Let us hope.
 
 Thu Jun 24 17:22:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/orb_creation.cpp:
-	* tests/NestedUpcall/Reactor/client.cpp:
-	* tests/NestedUpcall/Reactor/client.h:
-	* tests/NestedUpcall/Reactor/mt_client.h:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* performance-tests/Thruput/TAO/client.cpp:
-	* performance-tests/Thruput/TAO/ttcp_decl.h:
-	* performance-tests/Thruput/TAO/utils.cpp:
-	* examples/OBV/Typed_Events/Client_i.h:
-	* examples/OBV/Typed_Events/Client_i.cpp:
-	  Fixed several Sun/CC 5.0 warnings and errors.
+        * tests/MT_Client/orb_creation.cpp:
+        * tests/NestedUpcall/Reactor/client.cpp:
+        * tests/NestedUpcall/Reactor/client.h:
+        * tests/NestedUpcall/Reactor/mt_client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/Thruput/TAO/client.cpp:
+        * performance-tests/Thruput/TAO/ttcp_decl.h:
+        * performance-tests/Thruput/TAO/utils.cpp:
+        * examples/OBV/Typed_Events/Client_i.h:
+        * examples/OBV/Typed_Events/Client_i.cpp:
+          Fixed several Sun/CC 5.0 warnings and errors.
 
 Thu Jun 24 17:01:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/MProfile.cpp:
-	  Fixed syntax errors, thanks to Ossama for pointing them out.
+        * tao/MProfile.cpp:
+          Fixed syntax errors, thanks to Ossama for pointing them out.
 
 Thu Jun 24 16:38:09 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* tao/Any.i:
-	  Changed all references to the deprecated "ACE_TRY_NEW_ENV" to
-	  "ACE_DECLARE_NEW_CORBA_ENV; ACE_TRY"
+        * tao/Any.i:
+          Changed all references to the deprecated "ACE_TRY_NEW_ENV" to
+          "ACE_DECLARE_NEW_CORBA_ENV; ACE_TRY"
 
 Thu Jun 24 15:25:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Added '-*- C++ -*-' line so that Emacs will be in C++ mode when
-	  editing the file in it.
+          Added '-*- C++ -*-' line so that Emacs will be in C++ mode when
+          editing the file in it.
 
-	* tao/ORB.h:
+        * tao/ORB.h:
 
-	  Changed inclusion of "IORManipulation.h" to
-	  "tao/IORManipulation.h".
+          Changed inclusion of "IORManipulation.h" to
+          "tao/IORManipulation.h".
 
-	* tao/{IIOP,UIOP}*:
+        * tao/{IIOP,UIOP}*:
 
-	  Fixed old style of exception handling.
+          Fixed old style of exception handling.
 
-	* tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.h:
 
-	  Comment updates.
+          Comment updates.
 
 Thu Jun 24 16:03:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DomainS_T.i:
-	* tao/MProfile.cpp:
-	* tao/Makefile:
-	* tao/MessagingC.cpp:
-	  More exception managment changes.
+        * tao/DomainS_T.i:
+        * tao/MProfile.cpp:
+        * tao/Makefile:
+        * tao/MessagingC.cpp:
+          More exception managment changes.
 
 Thu Jun 24 14:53:32 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Invocation.cpp (TAO_GIOP_Invocation::invoke and
-	  TAO_GIOP_Locate_Request_Invocation::invoke):  Now that
-	  GIOP::send_message() is not closing the transport on error, we
-	  have do so here.
+        * tao/Invocation.cpp (TAO_GIOP_Invocation::invoke and
+          TAO_GIOP_Locate_Request_Invocation::invoke):  Now that
+          GIOP::send_message() is not closing the transport on error, we
+          have do so here.
 
-	* tao/Stub: Added an extra ORB_var to the Stub.  This extra
-	  ORB_var is required for reference counting.  It will help us
-	  keep the ORB that created us around until the CORBA::Object we
-	  represent dies.  This will eliminate the need for making sure
-	  that all CORBA objects dies before the ORB dies.
+        * tao/Stub: Added an extra ORB_var to the Stub.  This extra
+          ORB_var is required for reference counting.  It will help us
+          keep the ORB that created us around until the CORBA::Object we
+          represent dies.  This will eliminate the need for making sure
+          that all CORBA objects dies before the ORB dies.
 
-	* tao/UIOP_Connect.cpp (handle_input):
-	* tao/IIOP_Connect.cpp (handle_input):
+        * tao/UIOP_Connect.cpp (handle_input):
+        * tao/IIOP_Connect.cpp (handle_input):
 
-	  Only reset the message state of the transport on success. On
-	  failures, the transport will be closed anyway.
+          Only reset the message state of the transport on success. On
+          failures, the transport will be closed anyway.
 
-	* tao/GIOP.cpp: Many of the GIOP functions were closing the
-	  transport on failure.  In addition, -1 was also being returned
-	  to the Reactor, which further called handle_close() on the
-	  transport.  This would typically result in a double delete.
+        * tao/GIOP.cpp: Many of the GIOP functions were closing the
+          transport on failure.  In addition, -1 was also being returned
+          to the Reactor, which further called handle_close() on the
+          transport.  This would typically result in a double delete.
 
-	  The solution was to not close the transport on failure but
-	  return the error result to the caller.  If the caller was the
-	  Reactor, it will call handle_close() and clean up the
-	  transport. If the caller was the client-side, it will have to do
-	  the correct cleanup.
+          The solution was to not close the transport on failure but
+          return the error result to the caller.  If the caller was the
+          Reactor, it will call handle_close() and clean up the
+          transport. If the caller was the client-side, it will have to do
+          the correct cleanup.
 
-	  Thanks to Gildo Medeiros Junior <gildo@siemens.com.br> for
-	  pointing out this problem.
+          Thanks to Gildo Medeiros Junior <gildo@siemens.com.br> for
+          pointing out this problem.
 
-	* tao/POAS.cpp:
-	* tao/POAS.i:
-	* tao/Forwarding_Servant.cpp:
+        * tao/POAS.cpp:
+        * tao/POAS.i:
+        * tao/Forwarding_Servant.cpp:
 
-	  Fixed old style of exception handling.
+          Fixed old style of exception handling.
 
 Thu Jun 24 13:46:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	  Added an unexpected() function to transform unexpected
-	  exceptions into CORBA::UNKNOWN
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Added an unexpected() function to transform unexpected
+          exceptions into CORBA::UNKNOWN
 
-	* tests/Param_Test/client.cpp:
-	* tests/Param_Test/except.cpp:
-	* tests/Param_Test/param_test_i.h:
-	* tests/Param_Test/param_test_i.cpp:
-	  The test was broken but SII and DII (!) exceptions where ok.
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+          The test was broken but SII and DII (!) exceptions where ok.
 
 Thu Jun 24 12:20:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	  Use the new Event Service by default.
-	  Activate the POA before doing anything else, thanks to Byron
-	  Harris <harris_b@ociweb.com> for figuring this out.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Use the new Event Service by default.
+          Activate the POA before doing anything else, thanks to Byron
+          Harris <harris_b@ociweb.com> for figuring this out.
 
-	* tao/IORC.cpp:
-	* tao/MessagingS_T.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* tao/Sequence_T.cpp:
-	* tao/Typecode.cpp:
-	* tao/varout.cpp:
-	  Fixed several exception handling problems.
+        * tao/IORC.cpp:
+        * tao/MessagingS_T.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Typecode.cpp:
+        * tao/varout.cpp:
+          Fixed several exception handling problems.
 
 Thu Jun 24 10:12:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IR_Helper.cpp:
-	  Removed syntax error, probably a typo.
+        * orbsvcs/orbsvcs/IR_Helper.cpp:
+          Removed syntax error, probably a typo.
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.h:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	  Removed the unused arguments altogether.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.h:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          Removed the unused arguments altogether.
 
-	* orbsvcs/Time_Service/Makefile:
-	* orbsvcs/tests/AVStreams/sfp/Makefile:
-	* orbsvcs/tests/ImplRepo/Makefile:
-	* examples/Simple/time-date/Makefile:
-	  Several minor fixes, such as outdated dependencies and
-	  typos. Things are happy now.
+        * orbsvcs/Time_Service/Makefile:
+        * orbsvcs/tests/AVStreams/sfp/Makefile:
+        * orbsvcs/tests/ImplRepo/Makefile:
+        * examples/Simple/time-date/Makefile:
+          Several minor fixes, such as outdated dependencies and
+          typos. Things are happy now.
 
 Thu Jun 24 07:44:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IR_Helper.cpp:
-	  Fixed unused arg warnings.
+        * orbsvcs/orbsvcs/IR_Helper.cpp:
+          Fixed unused arg warnings.
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_{Consumer,Supplier}.cpp:
-	  Fixed unused arg warnings.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_{Consumer,Supplier}.cpp:
+          Fixed unused arg warnings.
 
 Thu Jun 24 06:43:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
