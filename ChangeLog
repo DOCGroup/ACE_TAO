@@ -1,3 +1,9 @@
+Thu Aug 12 16:12:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+
+	  Priority of synch.h inclusion is reduced.
+
 Thu Aug 12 13:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
