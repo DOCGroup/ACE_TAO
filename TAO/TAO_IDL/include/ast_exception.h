@@ -91,9 +91,11 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Exception();
-  AST_Exception(UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Exception() {}
+  AST_Exception ();
+  AST_Exception (UTL_ScopedName *n, 
+                 UTL_StrList *p);
+
+  virtual ~AST_Exception (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Exception, AST_Structure);

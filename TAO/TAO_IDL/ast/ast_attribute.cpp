@@ -97,6 +97,10 @@ AST_Attribute::AST_Attribute(idl_bool ro,
 {
 }
 
+AST_Attribute::~AST_Attribute (void)
+{
+}
+
 /*
  * Private operations
  */

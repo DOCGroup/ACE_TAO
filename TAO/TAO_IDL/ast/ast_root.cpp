@@ -81,13 +81,18 @@ ACE_RCSID(ast, ast_root, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Root::AST_Root()
+AST_Root::AST_Root ()
 {
 }
 
-AST_Root::AST_Root(UTL_ScopedName *n, UTL_StrList *p)
+AST_Root::AST_Root (UTL_ScopedName *n, 
+                    UTL_StrList *p)
 	: AST_Decl(AST_Decl::NT_module, n, p),
 	  UTL_Scope(AST_Decl::NT_module)
+{
+}
+
+AST_Root::~AST_Root (void)
 {
 }
 

@@ -89,9 +89,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Type();
-  AST_Type(AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Type() {}
+  AST_Type ();
+
+  AST_Type (AST_Decl::NodeType nt, 
+            UTL_ScopedName *n, 
+            UTL_StrList *p);
+
+  virtual ~AST_Type (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);

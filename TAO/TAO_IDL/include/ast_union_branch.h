@@ -84,12 +84,14 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_UnionBranch();
-  AST_UnionBranch(UTL_LabelList *ll,
-                  AST_Type *ft,
-                  UTL_ScopedName *n,
-                  UTL_StrList *p);
-  virtual ~AST_UnionBranch() {}
+  AST_UnionBranch ();
+
+  AST_UnionBranch (UTL_LabelList *ll,
+                   AST_Type *ft,
+                   UTL_ScopedName *n,
+                   UTL_StrList *p);
+
+  virtual ~AST_UnionBranch (void);
 
   // Data Accessors
   AST_UnionLabel *label (unsigned long index = 0);

@@ -83,15 +83,20 @@ ACE_RCSID(ast, ast_predefined_type, "$Id$")
 /*
  * Constructor(s)
  */
-AST_PredefinedType::AST_PredefinedType()
-		  : pd_pt(PT_long)
+AST_PredefinedType::AST_PredefinedType ()
+	: pd_pt(PT_long)
 {
 }
 
-AST_PredefinedType::AST_PredefinedType(PredefinedType t, UTL_ScopedName *n,
-				       UTL_StrList *p)
-		   : AST_Decl(AST_Decl::NT_pre_defined, n, p),
-		     pd_pt(t)
+AST_PredefinedType::AST_PredefinedType (PredefinedType t, 
+                                        UTL_ScopedName *n,
+				                                UTL_StrList *p)
+ : AST_Decl(AST_Decl::NT_pre_defined, n, p),
+	 pd_pt(t)
+{
+}
+
+AST_PredefinedType::~AST_PredefinedType (void)
 {
 }
 

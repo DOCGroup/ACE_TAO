@@ -83,10 +83,14 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_String();
-  AST_String(AST_Expression *max_size);
-  AST_String(AST_Expression *max_size, long wide);
-  virtual ~AST_String() {}
+  AST_String ();
+
+  AST_String (AST_Expression *max_size);
+
+  AST_String (AST_Expression *max_size, 
+              long wide);
+
+  virtual ~AST_String (void);
 
   // Data Accessors
   AST_Expression *max_size();

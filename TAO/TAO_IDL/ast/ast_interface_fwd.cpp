@@ -81,15 +81,15 @@ ACE_RCSID(ast, ast_interface_fwd, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_InterfaceFwd::AST_InterfaceFwd()
-                : pd_full_definition(NULL)
+AST_InterfaceFwd::AST_InterfaceFwd ()
+  : pd_full_definition (NULL)
 {
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
                                     UTL_ScopedName *n, 
                                     UTL_StrList *p)
-                 : AST_Decl(AST_Decl::NT_interface_fwd, n, p)
+  : AST_Decl (AST_Decl::NT_interface_fwd, n, p)
 {
   /*
    * Create a dummy placeholder for the forward declared interface. This
@@ -107,6 +107,10 @@ AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
    * delcared interface
    */
 //  AST_record_fwd_interface(this);
+}
+
+AST_InterfaceFwd::~AST_InterfaceFwd (void)
+{
 }
 
 /*

@@ -83,9 +83,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Array();
-  AST_Array(UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims);
-  virtual ~AST_Array() {}
+  AST_Array ();
+  AST_Array (UTL_ScopedName *n, 
+             unsigned long ndims, 
+             UTL_ExprList *dims);
+
+  virtual ~AST_Array (void);
 
   // Data Accessors
   unsigned long n_dims();

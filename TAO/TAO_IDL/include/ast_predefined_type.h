@@ -105,9 +105,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_PredefinedType();
-  AST_PredefinedType(PredefinedType t, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_PredefinedType() {}
+  AST_PredefinedType ();
+
+  AST_PredefinedType (PredefinedType t, 
+                      UTL_ScopedName *n, 
+                      UTL_StrList *p);
+
+  virtual ~AST_PredefinedType (void);
 
   // Data Accessors
   PredefinedType        pt();

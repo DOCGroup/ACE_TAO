@@ -170,6 +170,15 @@ AST_Constant::AST_Constant(AST_Expression::ExprType t,
 {
 }
 
+AST_Constant::~AST_Constant (void)
+{
+  if (this->pd_constant_value)
+    {
+      delete this->pd_constant_value;
+      this->pd_constant_value = 0;
+    }
+}
+
 /*
  * Private operations
  */

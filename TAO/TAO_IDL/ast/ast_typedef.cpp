@@ -82,14 +82,20 @@ ACE_RCSID(ast, ast_typedef, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Typedef::AST_Typedef()
-	   : pd_base_type(NULL)
+AST_Typedef::AST_Typedef ()
+ : pd_base_type(NULL)
 {
 }
 
-AST_Typedef::AST_Typedef(AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
-	   : AST_Decl(AST_Decl::NT_typedef, n, p),
-	     pd_base_type(bt)
+AST_Typedef::AST_Typedef (AST_Type *bt, 
+                          UTL_ScopedName *n, 
+                          UTL_StrList *p)
+ : AST_Decl (AST_Decl::NT_typedef, n, p),
+	 pd_base_type(bt)
+{
+}
+
+AST_Typedef::~AST_Typedef (void)
 {
 }
 

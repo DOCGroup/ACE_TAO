@@ -82,9 +82,11 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Enum();
-  AST_Enum(UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Enum() {}
+  AST_Enum ();
+  AST_Enum (UTL_ScopedName *n, 
+            UTL_StrList *p);
+
+  virtual ~AST_Enum (void);
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Enum, AST_ConcreteType, UTL_Scope);

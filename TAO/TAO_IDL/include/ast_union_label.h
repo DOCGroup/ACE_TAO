@@ -89,9 +89,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_UnionLabel();
-  AST_UnionLabel(UnionLabel lk, AST_Expression *lv);
-  virtual ~AST_UnionLabel() {}
+  AST_UnionLabel ();
+
+  AST_UnionLabel (UnionLabel lk, 
+                  AST_Expression *lv);
+
+  virtual ~AST_UnionLabel (void);
 
   // Data Accessors
   UnionLabel label_kind();
