@@ -1,11 +1,17 @@
+Mon May 17 11:31:48 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+	Added "ACE_UNUSED_ARG (c_impl);" to avoid DEC compiler warning.
+
 Mon May 17 11:04:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/tests/Param_Test/ub_any_seq.cpp:
 	  Changed the logic of check_validity() so that *all* the
 	  elements of the sequence get checked instead of just the
-	  first one (this should also get rid of a DU warning), 
+	  first one (this should also get rid of a DU warning),
 	  added a constant representing the number of possible
-	  types tested in the sequence, and removed some 
+	  types tested in the sequence, and removed some
 	  unnecessary switch cases in init_parameters() and
 	  reset_parameters().
 
