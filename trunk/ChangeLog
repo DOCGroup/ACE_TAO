@@ -1,3 +1,9 @@
+Fri Nov 12 06:33:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Removed a duplicated #elif clause.
+
 Fri Nov 11 12:29:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
