@@ -1,3 +1,10 @@
+Thu Sep  9 19:18:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/RT_Notification.mpc:
+
+	  Changed project to inherit from notify_serv.  Removed
+	  unused dependency on dynamicany and svc_utils.
+
 Thu Sep  9 19:13:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/Log/Event/Log_Event.mpc:
