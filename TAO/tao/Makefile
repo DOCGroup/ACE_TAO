@@ -101,6 +101,7 @@ ORB_CORE_FILES = \
   WrongTransactionC \
   Environment \
   Object \
+  ObjectIDList \
   ORB \
   corbafwd \
   PolicyC \
@@ -160,8 +161,7 @@ ORB_CORE_FILES += \
   Context \
   Request \
   Services \
-  NVList \
-  ObjectIDList
+  NVList
 
 DYNAMIC_ANY_FILES += \
   DynAnyC \
