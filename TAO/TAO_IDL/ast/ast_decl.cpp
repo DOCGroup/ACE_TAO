@@ -943,6 +943,12 @@ AST_Decl::anonymous (void) const
   return this->anonymous_;
 }
 
+void
+AST_Decl::anonymous (idl_bool val)
+{
+  this->anonymous_ = val;
+}
+
 idl_bool
 AST_Decl::typeid_set (void) const
 {

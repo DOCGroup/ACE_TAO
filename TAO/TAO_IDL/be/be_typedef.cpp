@@ -56,6 +56,13 @@ be_typedef::be_typedef (AST_Type *bt,
     be_type (AST_Decl::NT_typedef,
              n)
 {
+  AST_Type *pbt = this->primitive_base_type ();
+  AST_Decl::NodeType nt = pbt->node_type ();
+
+  if (nt = AST_Decl::NT_sequence)
+    {
+      pbt->anonymous (I_FALSE);
+    }
 }
 
 void
