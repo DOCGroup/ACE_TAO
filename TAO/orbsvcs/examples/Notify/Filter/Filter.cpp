@@ -232,18 +232,6 @@ FilterClient:: create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
 
   consumer_admin_->add_filter (ca_filter.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  // Setup the CA to receive all type of events
-  CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (0);
-  added.length (1);
-  removed.length (0);
-
-  added[0].domain_name =  CORBA::string_dup ("*");
-  added[0].type_name = CORBA::string_dup ("*");
-
-  this->consumer_admin_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
