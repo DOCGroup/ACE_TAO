@@ -105,11 +105,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
 #endif /* CREAD */
 
       c_oflag=0;
-      c_iflag=IGNPAR|INPCK|ISTRIP;
+      c_iflag = IGNPAR | INPCK;
+      if (arg->databits < 8)
+	c_iflag |= ISTRIP;
       c_lflag=0;
 
-      ivmin_cc4 =(u_char)0;
-      ivtime_cc5=(u_char)(arg->readtimeoutmsec/100); 
+      ivmin_cc4 =(u_char) 0;
+      ivtime_cc5=(u_char) (arg->readtimeoutmsec / 100); 
       devpar.c_iflag = c_iflag;
       devpar.c_oflag = c_oflag;
       devpar.c_cflag = c_cflag;
