@@ -897,7 +897,7 @@ Config_Test::testEquality ()
 static int
 iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 {
-  int rc = 1; // start by guessing they are equal
+  bool rc = true; // start by guessing they are equal
 
   int         sectionIndex = 0;
   ACE_TString sectionName;
@@ -920,13 +920,13 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                  originalSection) != 0)
         // If the original object does not contain the section then we
         // are not equal.
-        rc = 0;
+        rc = false;
       else if (fromFile.open_section (fromFileRoot,
                                       sectionName.c_str (),
                                       0,
                                       fromFileSection) != 0)
         // if there is some error opening the section in the fromFile
-        rc = 0;
+        rc = false;
       else
         {
           // Well the sections match
@@ -948,7 +948,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                        originalType) != 0)
                 // We're not equal if the same value cannot be found
                 // in the original object.
-                rc = 0;
+                rc = false;
               else
                 {
                   ACE_TString fromFileString, originalString;
@@ -958,7 +958,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                                  valueName.c_str (),
                                                  fromFileString) != 0)
                     // we're not equal if we cannot get this string
-                    rc = 0;
+                    rc = false;
                   else if (originalType != ACE_Configuration::STRING)  // If the original type is not a string
                     {
                       // convert original data to a string.
@@ -972,7 +972,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                                            valueName.c_str (),
                                                            intValue) != 0)
                             // we're not equal if we cannot get rhs int
-                            rc = 0;
+                            rc = false;
 
                           ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), intValue);
                           originalString = int_value;
@@ -987,7 +987,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                                          binary_data,
                                                          binary_length))
                             // we're not equal if we cannot get this string
-                            rc = 0;
+                            rc = false;
                           else
                             {
                               ACE_TCHAR bin_value[3];
@@ -1010,7 +1010,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                         }// end if originalType was binary
                       else
                         // if the type is invalid, then go ahead and fail it.
-                        rc = 0;
+                        rc = false;
 
                     }// end if the original type was not a string.
                   else
@@ -1020,7 +1020,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                                      originalString) != 0)
                         {
                           // we're not equal if we cannot get rhs string
-                          rc = 0;
+                          rc = false;
                         }
 
                     }
