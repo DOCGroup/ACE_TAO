@@ -200,3 +200,85 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
     }
 }
 
+TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
+  : federated_ (0),
+    quiet_ (0),
+    ior_ (0)
+{
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      char *current_arg = arg_shifter.get_current ();
+      
+      if (ACE_OS::strcmp (current_arg, "-f") == 0 ||
+          ACE_OS::strcmp (current_arg, "-federate") == 0)
+        {
+          arg_shifter.consume_arg ();
+          this->federated_ = 1;
+        }
+      else if (ACE_OS::strcmp (current_arg, "-q") == 0 ||
+               ACE_OS::strcmp (current_arg, "-quiet") == 0)
+        {
+          arg_shifter.consume_arg ();
+          this->quiet_ = 1;
+        }
+      else if (ACE_OS::strcmp (current_arg, "-i") == 0 ||
+               ACE_OS::strcmp (current_arg, "-iorfile") == 0)
+        {
+          arg_shifter.consume_arg ();
+          FILE* ior_file = 0;
+          
+          if (arg_shifter.is_parameter_next ())
+            {              
+              char* file_name = arg_shifter.get_current ();
+              ior_file = ACE_OS::fopen (file_name, "r");
+
+              if (ior_file == 0)
+                ACE_ERROR ((LM_ERROR,
+                            "Unable to open %s for reading: %p\n",
+                            file_name));              
+
+              arg_shifter.consume_arg ();
+            }
+          else
+            ior_file = ACE_OS::fdopen (ACE_STDIN, "r");
+
+          if (ior_file != 0)
+            {
+              ACE_Read_Buffer read_buffer (ior_file, 1);
+              this->ior_ = read_buffer.read ();
+            }
+          else
+            ACE_ERROR ((LM_ERROR, "Couldn't load ior.\n"));
+        }
+      else
+        arg_shifter.ignore_arg ();
+    }
+}
+
+TT_Parse_Args::~TT_Parse_Args ()
+{
+  // Reclaim the ior string's memory.
+  ACE_Allocator* alloc = ACE_Allocator::instance ();
+  alloc->free (this->ior_);
+}
+
+int
+TT_Parse_Args::federated () const
+{
+  return this->federated_;
+}
+
+int
+TT_Parse_Args::quiet () const
+{
+  return this->quiet_;
+}
+
+char*
+TT_Parse_Args::ior () const
+{
+  return this->ior_;
+}
+

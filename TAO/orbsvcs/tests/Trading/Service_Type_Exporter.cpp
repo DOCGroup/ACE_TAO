@@ -413,7 +413,6 @@ TAO_Service_Type_Exporter::create_types (void)
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::PLOTTER].props[3].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
-
   this->type_structs_[TT_Info::PLOTTER].props[4].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
   this->type_structs_[TT_Info::PLOTTER].props[4].value_type =
@@ -432,7 +431,8 @@ TAO_Service_Type_Exporter::create_types (void)
   TT_Info::Printer pr;
   this->type_structs_[TT_Info::PRINTER].props.length (7);
   this->type_structs_[TT_Info::PRINTER].super_types.length (1);
-  this->type_structs_[TT_Info::PRINTER].super_types[0] = TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
+  this->type_structs_[TT_Info::PRINTER].super_types[0] = 
+    TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
   this->type_structs_[TT_Info::PRINTER].props[0].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR];
   this->type_structs_[TT_Info::PRINTER].props[0].value_type =
@@ -481,7 +481,8 @@ TAO_Service_Type_Exporter::create_types (void)
   TT_Info::File_System fs;
   this->type_structs_[TT_Info::FILESYSTEM].props.length (3);
   this->type_structs_[TT_Info::FILESYSTEM].super_types.length (1);
-  this->type_structs_[TT_Info::FILESYSTEM].super_types[0] = TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
+  this->type_structs_[TT_Info::FILESYSTEM].super_types[0] =
+    TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
   this->type_structs_[TT_Info::FILESYSTEM].props[0].name       =
     TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE];
   this->type_structs_[TT_Info::FILESYSTEM].props[0].value_type =

@@ -40,7 +40,7 @@ main (int argc, char** argv)
         
       // Initialize ORB.
       CORBA::ORB_var orb = orb_manager.orb ();
-      
+
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
       auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
@@ -53,7 +53,7 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Run the Service Type Exporter tests
-      ACE_DEBUG ((LM_DEBUG, "Running the Service Type Exporter tests.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose,
@@ -76,7 +76,7 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Run the Offer Exporter tests
-      ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
 	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose,
@@ -112,14 +112,14 @@ main (int argc, char** argv)
 
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;      
-      
+
       // Run the Offer Importer tests
-      ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer
 	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
-      
+
       offer_importer.perform_queries (TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
