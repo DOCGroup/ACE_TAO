@@ -14,7 +14,7 @@
     
     <P>In this section, we will improve the <a href = ../Server/server.cpp> 
     simple server</a>  which we have developed before. We will use POA policies
-    to create a persistent object reference. </P>
+    to create an object with a persistent object reference. </P>
     <P>
     The characteristics of a POA are controlled via POA policies. These POA 
     policies are specified when the POA is created. POA policies have the 
@@ -32,7 +32,7 @@
       that any application that needs to support persistent objects must create
       at least another POA with the Persistent life span policy. 
     </P>
-    <P> Lets create a new child POA with the RootPOA as its 
+    <P> Let's create a new child POA with the RootPOA as its 
       parent. We will create two policies for this childPOA. One policy is the 
       Life Span Policy which we will set to be Persistent. The second policy 
       is the Id Assignment Policy. 
@@ -44,7 +44,7 @@
       This Object identification is controlled by the IdAssignmentPolicy. If
       the policy value is set to be <CODE>USER_ID</CODE>, the application has 
       the choice. Else, if this policy value is set to be 
-      <CODE>SYSTEM_ID</CODE>, the RootPOA creates the ObjectIDs. Lets give our 
+      <CODE>SYSTEM_ID</CODE>, the RootPOA creates the ObjectIDs. Let's give our 
       application a choice for the creation of its Object's IDs. 
     </P>
     <P>For more about POA and its policies, please refer Advanced CORBA 
@@ -71,8 +71,8 @@
     poa_manager->activate ();
  </PRE>
     
-    <P>The policies of a POA are stored in a sequence. Lets first create a 
-      CORBA::PolicyList sequence. Since we are creating two policies, lets 
+    <P>The policies of a POA are stored in a sequence. Let's first create a 
+      CORBA::PolicyList sequence. Since we are creating two policies, let's 
       initialize its length to be 2.
     </P> 
  <PRE>
@@ -105,7 +105,7 @@
     policies[1] = 
       PortableServer::LifespanPolicy::_duplicate (lifespan);
  </PRE>
-    <P> Now lets come to the actual creation of the child POA. We create a POA
+    <P> Now let's come to the actual creation of the child POA. We create a POA
       by invoking the <CODE>create_POA</CODE> on the POA for which we want to 
       create the new child POA. Here, in our case, the RootPOA is the parent 
       POA and the child POA is its child. So, we will invoke the 
@@ -133,7 +133,7 @@
     lifespan->destroy ();
  </PRE>
     <H3> Activating Objects in the child POA </H3>
-    <P>Now that we have created a new POA, lets use this POA to activate the
+    <P>Now that we have created a new POA, let's use this POA to activate the
       stock objects. The first step would be to create an instance of the 
       stock factory implementation. 
   <PRE>
@@ -218,7 +218,7 @@
  <PRE>
     $ ./client file://server.ref MSFT RHAT
  </PRE>
-    <P>For testing the persistency of the POA, lets kill the server. Then 
+    <P>For testing the persistency of the POA, let's kill the server. Then 
       direct the object reference into a new foo.ref.
     </P>
  <PRE> 
@@ -232,8 +232,8 @@
  <PRE>
     $ ./client file://server.ref MSFT RHAT
  </PRE>
-    <P>What happens if we donot tell the server to listen from the same port?
-      Lets compile and run as we did in our simple server.
+    <P>What happens if we don't tell the server to listen from the same port?
+      Let's compile and run as we did in our simple server.
     </P>
  <PRE>
     $ ./server > server.ref &
@@ -256,7 +256,7 @@
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
 <!-- Created: Wed Mar  1 20:29:59 PST 2000 -->
 <!-- hhmts start -->
-Last modified: Fri Mar 24 10:41:47 PST 2000
+Last modified: Mon Apr  3 02:17:32 CDT 2000
 <!-- hhmts end -->
   </body>
 </html>
