@@ -2,53 +2,141 @@
 <html>
 <body text="#000000" bgcolor="#FFFFFF">
 
-  <head>
-    <title>Object-by-Value status</title>
-    <!-- $Id$ -->
-  </head>
+    <head>
+      <title>Object-by-Value status</title>
+      <!-- $Id$ -->
+    </head>
 
-  <body>
-    <center>
-      <h1><a name="orb"></a>Object-by-Value</h1>
+    <body>
+      <center>
+        <h1><a name="orb"></a>Objects-by-Value</h1>
+        Point of contact: <a href="mailto: coryan@cs.wustl.edu">Carlos O'Ryan</a>
 
-      Point of contact: <a href="mailto: coryan@cs.wustl.edu">Carlos O'Ryan</a>
+        <p>Last Update: $Date$</p>
+      </center>
 
-      <p>Last Update: $Date$</p>
+      <p>Objects-by-Value (OBV) describes the new type <em>valuetype</em>.
+        It is introduced in CORBA 2.3.
+        <br>(Core:
+        <a href="http://www.omg.org/docs/ptc/98-12-04.pdf">ptc/98-12-04.pdf
+        </a> Mapping to C++:
+        <a href="http://www.omg.org/docs/ptc/98-09-03.pdf">ptc/98-09-03.pdf</a>
+        )
+      </p>
+      <p>This first implementation has been contributed from
+        <a href="mailto: kuepper2@uni-wuppertal.de">Torsten Kuepper </a>.
+      </p>
 
-    </center>
+      <p>Valuetypes are like structures extended with basically
+        this features:</p>
+      <ul>
+        <li><p>Encapsulate state and operations with local implementation.</p>
+        </li>
+        <li><p>Single inheritance from a valuetype and multiple inheritance
+           from abstract valuetypes. Eventually support of an interface.</p>
+        </li>
+        <li><p>References to other valuetypes, with the possibility of
+           null references or shared (aliased) references.</p>
+        </li>
+      </ul>
 
-    <a name="current"><h3>Current status:</h3></a>
-    
-    <ul>
-      <li><p>Thanks to the efforts of Torsten Kuepper we have a first
-	  implementation of the Object-by-Value spec.
-	</p>
-      </li>
-    </ul>
+      <p>They are likely to be used for implementing abstract datatypes (ADT),
+        which could be copied to another process. Naturally all processes,
+        which know the valuetype, must have an implementation for it, since
+        moving code is not provided.</p>
 
-    <a name="issues"><h3>Known issues:</h3></a>
+      <a name="current"><h3>Current status:</h3></a>
 
-    <ul>
-      <li><p>No support for <code>TypeCodes</code> of
-	  <code>valuetype</code> objects
-	</p>
-      </li>
+      <ul>
+        <li><p>The IDL compiler understands valuetype, if it was compiled
+            with IDL_HAS_VALUETYPE defined. New options of tao_idl are<br>
+            -Gv Enable OBV support<br>
+            -Sv Disable OBV support (default)<br>
+            -Wb,obv_opt_accessor Make accessor and modifier functions inline.
+            Overriding them is not allowed in this mode.
+          <p>libTAO must be compiled with TAO_HAS_VALUETYPE.</p>
+        </li>
+        <li><p>Valuetypes can be used as arguments in CORBA invocations.
+            There is an example in
+            $TAO_ROOT/TAO/examples/OBV/Typed_Events.
+            Valuetypes could even reference other valuetype objects
+            (but without sharing).
+          </p>
+        </li>
+      </ul>
 
-      <li><p>No support for abstract interfaces.
-	</p>
-      </li>
+      <a name="issues"><h3>Known issues:</h3></a>
 
-      <li><p>No support for valueboxes
-	</p>
-      </li>
+      <ul>
+        <li><p>No support for <code>TypeCodes</code> of
+            <code>valuetype</code> objects
+          </p>
+        </li>
 
-      <li><p>No support for valuetype graphs
-	</p>
-      </li>
+        <li><p>Valuetypes work only in conjunction with
+            compiled marshalling (-Gc, currently default for tao_idl).
+          </p>
+        </li>
 
-    </ul>
+        <li><p>No support for <code>TypeCodes</code> of
+            <code>valuetype</code> objects. Hence moving it into an
+            <code>any</code> is not possible yet.
+          </p>
+        </li>
 
-    <a href="#toc">Back to TOC</a>
+        <li><p>Valuetypes can not be contained in other types like
+            struct, union, sequence or array.
+          </p>
+        </li>
 
-  </body>
+        <li><p>No support for sharing (aliasing).
+          </p>
+        </li>
+
+        <li><p>Forward and typedef'd declaration does not work.</p>
+        </li>
+
+        <li><p>Inheritance (support) from an ordinary interface
+            not implemented.</p>
+        </li>
+
+        <li><p>No support for abstract interfaces.
+          </p>
+        </li>
+
+        <li><p>No support for valueboxes
+          </p>
+        </li>
+
+        <li><p>No support for fragmentation (chunking) of the marshalled
+            valuetype object. Hence no support for truncation or
+            custom marshalling.</p>
+        </li>
+
+        <li><p>The marshal engine accesses the state members directly and
+            does not utilize the accessor/modifier functions. This not
+            like in the CORBA specs and needs a change. But the
+            optimized mode  (-Wb,obv_opt_accessor) should be
+            unaffected of that.
+          </p>
+        </li>
+
+        <li><p>Obtaining a repository id of a valuetype is currently
+            non-standard. Hashed repository ids are not implemented.
+          </p>
+        </li>
+
+        <li><p>The map of valuetype factories needs some revision to
+            provide proper locking. Currently the registration of
+            factories is best completed before unmarshalling
+            valuetypes.<br>
+            There is one map of factories for the whole process. This
+            will once be changed to conform to the specs, which
+            suggests one per ORB.
+          </p>
+        </li>
+      </ul>
+
+      <a href="#toc">Back to TOC</a>
+    </body>
 </html>
