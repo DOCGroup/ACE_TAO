@@ -108,9 +108,20 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         *os << "_get_";
     }
   *os << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-      << "void *_tao_object_reference, " << be_nl
+      << "_skel (" << be_idt << be_idt_nl;
+
+  if (!this->void_return_type (bt) ||
+      this->has_param_type (node, AST_Argument::dir_INOUT) ||
+      this->has_param_type (node, AST_Argument::dir_OUT))
+    {
+      *os << "CORBA::ServerRequest &/* _tao_server_request */, " << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::ServerRequest &_tao_server_request, " << be_nl;
+    }
+
+  *os << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt << be_uidt_nl
       << ")" << be_nl;
