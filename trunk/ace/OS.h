@@ -1307,6 +1307,7 @@ typedef sema_t ACE_sema_t;
 #    endif /* !ACE_HAS_POSIX_SEM */
 #  endif /* !ACE_HAS_STHREADS */
 #elif defined (ACE_HAS_STHREADS)
+// Solaris threads, without PTHREADS.
 // Typedefs to help compatibility with Windows NT and Pthreads.
 typedef thread_t ACE_thread_t;
 typedef thread_key_t ACE_thread_key_t;
@@ -1323,6 +1324,10 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #  define THR_CANCEL_ENABLE       0
 #  define THR_CANCEL_DEFERRED     0
 #  define THR_CANCEL_ASYNCHRONOUS 0
+#  define THR_JOINABLE            0
+#  define THR_SCHED_FIFO          0
+#  define THR_SCHED_RR            0
+#  define THR_SCHED_DEFAULT       0
 #elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
@@ -1346,7 +1351,7 @@ struct sockaddr_un {
 
 #define MAXPATHLEN  1024
 #define MAXNAMLEN   255
-#define NSIG _NSIGS
+#define NSIG (_NSIGS + 1)
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
@@ -1417,6 +1422,9 @@ typedef HANDLE ACE_sema_t;
 #  define THR_JOINABLE    0       /* ?? ignore in most places */
 #  define THR_SUSPENDED   CREATE_SUSPENDED
 #  define THR_USE_AFX             0x01000000
+#  define THR_SCHED_FIFO          0
+#  define THR_SCHED_RR            0
+#  define THR_SCHED_DEFAULT       0
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 
 #if defined (ACE_LACKS_COND_T)
@@ -1511,11 +1519,15 @@ typedef rwlock_t ACE_rwlock_t;
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
+#define THR_JOINABLE    0       /* ?? ignore in most places */
 #define THR_DETACHED    0       /* ?? ignore in most places */
 #define THR_DAEMON      0       /* ?? ignore in most places */
 #define THR_BOUND       0       /* ?? ignore in most places */
 #define THR_NEW_LWP     0       /* ?? ignore in most places */
 #define THR_SUSPENDED   0       /* ?? ignore in most places */
+#define THR_SCHED_FIFO          0
+#define THR_SCHED_RR            0
+#define THR_SCHED_DEFAULT       0
 #define USYNC_THREAD 0
 #define USYNC_PROCESS 0
 // These are dummies needed for class OS.h
