@@ -5574,7 +5574,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   // ACE_TRACE ("ACE_OS::thr_setcanceltype");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int old;
   old = pthread_setasynccancel(new_type);
@@ -5603,7 +5603,11 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   ACE_UNUSED_ARG (new_type);
   ACE_UNUSED_ARG (old_type);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
+  ACE_UNUSED_ARG (new_type);
+  ACE_UNUSED_ARG (old_type);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (new_type);
   ACE_UNUSED_ARG (old_type);
@@ -5633,7 +5637,10 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
+  ACE_UNUSED_ARG (thr_id);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
