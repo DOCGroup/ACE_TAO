@@ -1,3 +1,16 @@
+Tue Jan  4 17:38:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+	* Release:
+	* configure.ac:
+
+	  Updated for removal of ace-config.in and ace-config.1.in.
+
+	* ace-config.in:
+	* ace-config.1.in:
+
+	  Removed.
+
 Tue Jan  4 18:19:11 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE_export.h: Adjusted ACE_NAMESPACE_INLINE_FUNCTION to include
