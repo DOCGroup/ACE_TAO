@@ -782,11 +782,12 @@ Sat Oct 03 09:24:45 1998  Susan Liebeskind <shl@cc.gatech.edu>
           default flags.
 
           On the boxes which implement POSIX 1003.1.b (Solaris, Digital Unix)
-          threads spawned using default flags provided by those methods are
-          created *joinable*.
+          threads spawned using default flags provided by those methods were,
+          and still are, created *joinable*.
 
-          On the box which implements Draft 7 (AIX), the spawned threads are
-          *detached*.
+          On the box which implements Draft 7 (AIX), the spawned threads were
+          *detached*.  With this change, they'll be created *joinable*,
+          instead.
 
           This change ensures consistent behavior across all platforms.
 
