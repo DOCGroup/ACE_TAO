@@ -66,15 +66,9 @@
 
 // egcs or really modern gcc
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 90)
-
-// Compiler/platform has correctly prototyped header files.
-# define ACE_HAS_CPLUSPLUS_HEADERS
-
-# define ACE_LACKS_ACE_IOSTREAM
-
-// Compiler supports to-be-ANSI casts
 # define ACE_HAS_ANSI_CASTS
-
+# define ACE_HAS_CPLUSPLUS_HEADERS
+# define ACE_HAS_STDCPP_STL_INCLUDES
 #endif /* EGCS */
 
 
