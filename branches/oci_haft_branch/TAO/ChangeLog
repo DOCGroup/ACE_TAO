@@ -1,3 +1,15 @@
+Wed Aug 20 09:38:28 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * tests/FT_App/FT_Replica.cpp:
+          let orb parse args first.
+        * tests/FT_App/run_test_notifier.pl:
+          --debug_build option to use debug build
+          --no_simulate option to disable client-simulated fault tolerance
+          -v option to make the perl script verbose.
+
+        These changes were made in the oci_haft branch.
+
+
 Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         ***Move oci_haft change log entries from $ACE_ROOT/ChangeLog to here
 
