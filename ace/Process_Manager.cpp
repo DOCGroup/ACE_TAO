@@ -14,7 +14,7 @@
 
 ACE_RCSID(ace, Process_Manager, "$Id$")
 
-class ACE_Managed_Process : public ACE_Process 
+class ACE_Managed_Process : public ACE_Process
 {
   // = TITLE
   //   <ACE_Managed_Process> is just an <ACE_Process> with an
@@ -755,7 +755,8 @@ ACE_Process_Manager::wait (pid_t pid,
                       HANDLE[current_count_],
                       ACE_INVALID_PID);
 
-      for (size_t i = 0;
+      size_t i;
+      for (i = 0;
            i < current_count_;
            ++i)
         handles[i] =
@@ -861,7 +862,7 @@ ACE_Process_Manager::wait (pid_t pid,
                         pid));
           else
             {
-              this->notify_proc_handler (idx, 
+              this->notify_proc_handler (idx,
                                          *status);
               this->remove_proc (idx);
             }
