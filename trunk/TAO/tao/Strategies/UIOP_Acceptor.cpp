@@ -152,7 +152,7 @@ TAO_UIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
   TAO_Profile *pfile = 0;
   TAO_UIOP_Profile *uiop_profile = 0;
 
-  // First see if <mprofile> already contains a SHMIOP profile.
+  // First see if <mprofile> already contains a UIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
