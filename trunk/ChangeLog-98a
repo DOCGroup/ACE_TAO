@@ -1,3 +1,18 @@
+Fri Apr 03 10:01:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.cpp (handle_timed_complete): On AIX, always check a
+	  completed non-blocking connect() because AIX sets only the write
+	  handle from select regardless of whether the connect succeeded
+	  or not.
+
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: Removed
+	  the #include <fstream.h> - this is taken care of via ace/OS.h.
+	  Having the #include in Dump_Restore.cpp caused some very weird
+	  compile errors on DG/UX.
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Fixed template instantiations
+	  for Base_Optimizer, non-static logging cases.
+
 Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_yield): on VxWorks, changed argument of
