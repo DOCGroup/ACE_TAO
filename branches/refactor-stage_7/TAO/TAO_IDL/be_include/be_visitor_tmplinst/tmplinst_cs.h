@@ -48,6 +48,8 @@ public:
 
   virtual int visit_union (be_union *node);
 
+  virtual int visit_exception(be_exception*);
+
 protected:
   virtual idl_bool this_mode_generated (be_decl *node) const;
   virtual void this_mode_generated (be_decl *node, 
