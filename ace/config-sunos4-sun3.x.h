@@ -7,6 +7,8 @@
 #if !defined (ACE_CONFIG_H)
 
 #define ACE_LACKS_GETPGID
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_LACKS_POSIX_PROTOTYPES
 #define ACE_HAS_UNION_WAIT

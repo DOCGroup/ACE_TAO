@@ -13,6 +13,9 @@
 #include <sys/bsd_types.h>
 #define _BSD_TYPES
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 

@@ -26,6 +26,9 @@
 #  define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // ACE_HAS_EXCEPTIONS precludes -noex in
 // include/makeinclude/platform_macros.GNU.  But beware, we have
 // seen problems with exception handling on multiprocessor

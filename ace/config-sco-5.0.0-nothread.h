@@ -13,6 +13,8 @@
 #endif /* SCO */
 
 #define ACE_HAS_SIG_MACROS
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #if defined (SCO) && !defined (MAXPATHLEN)
 #define MAXPATHLEN 1023

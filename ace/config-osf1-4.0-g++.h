@@ -24,6 +24,8 @@
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_UALARM
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Compiler's template mechanism must see source code (i.e., .C
 // files).
