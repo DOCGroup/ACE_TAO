@@ -19,6 +19,8 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   this->orb_->shutdown (0,
                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);

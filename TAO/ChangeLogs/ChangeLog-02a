@@ -1,3 +1,18 @@
+Mon Oct 30 18:35:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/POA/Forwarding/Servant_Activator.cpp:
+
+          Added a TAO_ENV_ARG_DEFN so we have an ACE_TRY_ENV when
+          native exceptions are used.
+
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+
+          Removed hardcoded OpenSSL include directories.
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+
+          Fixed the include directories.
+
 Mon Oct 30 17:47:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Policy_Manager.h: 
