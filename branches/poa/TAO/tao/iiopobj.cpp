@@ -322,11 +322,11 @@ IIOP_Object::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-//TAO extensions
-const char *
-IIOP_Object::_get_name (CORBA::Environment &)
+// TAO extensions
+TAO_ObjectKey_ptr
+IIOP_Object::key (CORBA::Environment &)
 {
-  return (const char *) this->profile.object_key.buffer;
+  return &this->profile.object_key;
 }
 
 // It will usually be used by the _bind call.

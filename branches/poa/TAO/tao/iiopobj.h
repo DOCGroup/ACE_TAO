@@ -211,11 +211,9 @@ public:
   TAO_HRESULT  QueryInterface (REFIID type_id,
                                void **ppv);
 
-  virtual const char *_get_name (CORBA::Environment &env);
-  // Get the underlying object key, which is stored as a
-  // NUL-terminated character string.  Note that this does not
-  // allocate any new memory, so this return value should not be
-  // changed by the caller.
+  virtual TAO_ObjectKey_ptr key (CORBA::Environment &env);
+  // Return the object key as an out parameter.  Caller should release
+  // return value when finished with it.
 
   IIOP::Profile profile;
   // Profile for this object.

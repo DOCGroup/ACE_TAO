@@ -422,6 +422,50 @@ CORBA_ORB::resolve_initial_references (CORBA::String name)
     return CORBA_Object::_nil ();
 }
 
+// Create an objref
+
+CORBA::Object_ptr
+CORBA_ORB::key_to_object (const TAO_ObjectKey_ptr key,
+                          CORBA::String type_id,
+                          CORBA::Environment &env)
+{
+  if (key == 0)
+    {
+      env.exception (new CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  
+  CORBA::String id;
+  IIOP_Object *data;
+
+  if (type_id)
+    id = CORBA::string_copy (type_id);
+  else
+    id = 0;
+
+  data = new IIOP_Object (id,
+                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
+                                         *key));
+  if (data != 0)
+    env.clear ();
+  else
+    {
+      env.exception (new CORBA_NO_MEMORY (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  // Return the CORBA::Object_ptr interface to this objref.
+  CORBA::Object_ptr new_obj;
+
+  if (data->QueryInterface (IID_CORBA_Object,
+			    (void **) &new_obj) != TAO_NOERROR)
+    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+
+  data->Release ();
+  return new_obj;
+}
+
+
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;

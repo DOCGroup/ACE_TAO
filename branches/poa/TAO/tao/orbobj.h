@@ -108,6 +108,29 @@ public:
   // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
   // currently supported.
 
+  // = TAO-specific Extensions
+
+  CORBA_Object_ptr key_to_object (const TAO_ObjectKey_ptr key,
+                                  CORBA::String type_id,
+                                  CORBA::Environment &env);
+  // Convert key into an object reference.  Return Object_ptr as out
+  // parameter.  Errors will come through the environment.
+  //
+  // Object IDs are assigned and used by servers to identify objects.
+  //
+  // Type IDs are repository IDs, assigned as part of OMG-IDL
+  // interface definition to identify specific interfaces and their
+  // relationships to other OMG-IDL interfaces.  It's OK to provide a
+  // null type ID.  Providing a null object key will result in an
+  // INV_OBJREF exception.
+  //
+  // Clients which invoke operations using one of these references
+  // when the server is not active (or after the last reference to the
+  // POA is released) will normally see an OBJECT_NOT_EXIST exception
+  // reported by the ORB.  If the POA is a "Named POA" the client's
+  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
+  // reports that fault.
+
   // = <IUnknown> Support
   //
   // Stuff required for COM IUnknown support ... this class is

@@ -254,10 +254,11 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
   return 0;
 }
 
-void CORBA_POA::dispatch (CORBA::OctetSeq &key,
-                          CORBA::ServerRequest &req,
-                          void *context,
-                          CORBA::Environment &env)
+void
+CORBA_POA::dispatch (CORBA::OctetSeq &key,
+                     CORBA::ServerRequest &req,
+                     void *context,
+                     CORBA::Environment &env)
 {
   ACE_UNUSED_ARG(context);
 
@@ -321,123 +322,6 @@ CORBA_POA::bind (const CORBA::OctetSeq &key,
   return objtable_->bind (key, obj);
 }
 
-void
-CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
-                           CDR &request_body,
-                           CDR &response,
-                           TAO_Dispatch_Context *some_info,
-                           CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (some_info);
-
-  IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
-
-  // Why are we copying this when we can just pass in a handle to the
-  // hdr?
-  svr_req.opname_ = hdr.operation;
-
-  this->dispatch (hdr.object_key,
-                  svr_req,
-                  0, // this is IIOP residue
-                  env);
-
-  svr_req.release ();
-
-  // If no reply is necessary (i.e., oneway), then return!
-  if (hdr.response_expected == 0)
-    return;
-
-  // Otherwise check for correct parameter handling, and reply as
-  // appropriate.
-  //
-  // NOTE: if "env" is set, it takes precedence over exceptions
-  // reported using the mechanism of the ServerRequest.  Only system
-  // exceptions are reported that way ...
-  //
-  // XXX Exception reporting is ambiguous; it can be cleaner than
-  // this.  With both language-mapped and dynamic/explicit reporting
-  // mechanisms, one of must be tested "first" ... so an exception
-  // reported using the other mechanism could be "lost".  Perhaps only
-  // the language mapped one should be used for system exceptions.
-
-  TAO_GIOP::start_message (TAO_GIOP_Reply, response);
-  TAO_GIOP_ServiceContextList resp_ctx;
-  resp_ctx.length = 0;
-  response.encode (&TC_ServiceContextList, &resp_ctx, 0, env);
-  response.put_ulong (hdr.request_id);
-
-  CORBA::TypeCode_ptr tc;
-  const void *value;
-
-  if (!svr_req.params_ && env.exception () == 0)
-    {
-      dmsg ("DSI user error, didn't supply params");
-      env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
-    }
-
-  // Standard exceptions only.
-  if (env.exception () != 0)
-    {
-      CORBA::Environment env2;
-      CORBA::Exception *x = env.exception ();
-      CORBA::TypeCode_ptr except_tc = x->type ();
-
-      response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
-      (void) response.encode (except_tc, x, 0, env2);
-    }
-
-  // Any exception at all.
-  else if (svr_req.exception_)
-    {
-      CORBA::Exception *x;
-      CORBA::TypeCode_ptr except_tc;
-
-      x = (CORBA::Exception *) svr_req.exception_->value ();
-      except_tc = svr_req.exception_->type ();
-
-      // Finish the GIOP Reply header, then marshal the exception.
-      //
-      // XXX x->type () someday ...
-      if (svr_req.ex_type_ == CORBA::SYSTEM_EXCEPTION)
-        response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
-      else
-        response.put_ulong (TAO_GIOP_USER_EXCEPTION);
-
-      (void) response.encode (except_tc, x, 0, env);
-    }
-
-  // Normal reply.
-  else
-    {
-      // First finish the GIOP header ...
-      response.put_ulong (TAO_GIOP_NO_EXCEPTION);
-
-      // ... then send any return value ...
-      if (svr_req.retval_)
-        {
-          tc = svr_req.retval_->type ();
-          value = svr_req.retval_->value ();
-          (void) response.encode (tc, value, 0, env);
-        }
-
-      // ... Followed by "inout" and "out" parameters, left to right
-      for (u_int i = 0;
-           i < svr_req.params_->count ();
-           i++)
-        {
-          CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
-          CORBA::Any_ptr any;
-
-          if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
-            continue;
-
-          any = nv->value ();
-          tc = any->type ();
-          value = any->value ();
-          (void) response.encode (tc, value, 0, env);
-        }
-    }
-}
 
 // IUnknown calls
 ULONG
