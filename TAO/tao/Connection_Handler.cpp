@@ -57,18 +57,25 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 {
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
 
-  if (sock.set_option (SOL_SOCKET,
-                       SO_SNDBUF,
-                       (void *) &snd_size,
-                       sizeof (snd_size)) == -1
+  if (snd_size != 0
+      && sock.set_option (SOL_SOCKET,
+                          SO_SNDBUF,
+                          (void *) &snd_size,
+                          sizeof (snd_size)) == -1
       && errno != ENOTSUP)
+  {
     return -1;
-  else if (sock.set_option (SOL_SOCKET,
-                            SO_RCVBUF,
-                            (void *) &rcv_size,
-                            sizeof (int)) == -1
-           && errno != ENOTSUP)
+  }
+  
+  if (rcv_size != 0
+      && sock.set_option (SOL_SOCKET,
+                          SO_RCVBUF,
+                          (void *) &rcv_size,
+                          sizeof (int)) == -1
+      && errno != ENOTSUP)
+  {
     return -1;
+  }
 #else
    ACE_UNUSED_ARG (snd_size);
    ACE_UNUSED_ARG (rcv_size);
