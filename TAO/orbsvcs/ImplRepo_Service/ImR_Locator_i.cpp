@@ -102,11 +102,11 @@ ImR_Locator_i::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
 
   // Get poa_manager reference
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_ARG_PARAMETER);
+    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Activate it.
-  poa_manager->activate (ACE_ENV_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // We are going to set the policies to be used with the child
@@ -139,7 +139,7 @@ ImR_Locator_i::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
   for (CORBA::ULong i = 0; i < policies.length (); ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_ARG_PARAMETER);
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -247,11 +247,11 @@ ImR_Locator_i::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
     }
 
   // Activate the POA Manager.
-  poa_manager->activate (ACE_ENV_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Run the ORB.
-  orb->run (ACE_ENV_ARG_PARAMETER);
+  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -362,7 +362,7 @@ ImR_Locator_i::register_activator (const char *location,
   if (bind_return == 1)
    {
      ACE_THROW_RETURN (ImplementationRepository::AlreadyRegistered (),
-                       -1);
+                       1);
    }
   else
     {
@@ -376,7 +376,7 @@ ImR_Locator_i::register_activator (const char *location,
             ImplementationRepository::Administration::_narrow (
                  CORBA::Object::_duplicate (object_ref)
                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          ACE_CHECK_RETURN (1);
         }
       return 0;
     }
@@ -397,7 +397,7 @@ ImR_Locator_i::unregister_activator (const char *location,
   if (bind_return == 1)
     {
      ACE_THROW_RETURN (ImplementationRepository::NotFound (),
-                       -1);
+                       1);
     }
   else
     return 0;
@@ -484,7 +484,7 @@ ImR_Locator_i::activate_server_with_startup (const char *server,
             this->helper_for_choosing_activators (server,
                                                   next_entry->ext_id_.c_str ()
                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
 
           if (admin_ref.in () != 0)
             {
@@ -493,7 +493,7 @@ ImR_Locator_i::activate_server_with_startup (const char *server,
                 admin_ref->activate_server_with_startup (server,
                                                          check_startup
                                                          ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              ACE_CHECK_RETURN (0);
 
               return CORBA::string_dup (ior.c_str ());
             }
@@ -504,7 +504,8 @@ ImR_Locator_i::activate_server_with_startup (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Couldnt get a reference to an activator at %s\n",
                   next_entry->ext_id_.c_str ()));
-      ACE_THROW (ImplementationRepository::NotFound ());
+      ACE_THROW_RETURN (ImplementationRepository::NotFound (),
+                        0);
     }
   else
     {
@@ -513,7 +514,7 @@ ImR_Locator_i::activate_server_with_startup (const char *server,
         this->default_admin_ref_->activate_server_with_startup (server,
                                                                 check_startup
                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
     }
 
   return CORBA::string_dup (ior.c_str ());
@@ -806,7 +807,7 @@ ImR_Locator_i::server_is_running (const char *server,
   ImplementationRepository::Administration_var admin_ref =
     this->choose_activator_using_location (hostname.c_str ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Invoke the required operation on that reference.
   char *return_value =
@@ -814,7 +815,7 @@ ImR_Locator_i::server_is_running (const char *server,
                                   location,
                                   server_object
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   return return_value;
 }

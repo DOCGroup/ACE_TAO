@@ -216,6 +216,8 @@ Server_Repository::add (
       ACE_OS::fprintf (fp,
                        server_info.c_str ());
       ACE_OS::fclose (fp);
+
+      return 0;
     }
 }
 
@@ -545,7 +547,7 @@ Server_Repository::remove (const ACE_CString POA_name)
       FILE *fp = ACE_OS::fopen (filename, "r");
 
       /// Have a temporary file
-      ACE_TCHAR *temp_file = "temporary_file";
+      CORBA::String_var temp_file = "temporary_file";
 
       FILE *fp_temp = ACE_OS::fopen (temp_file, "w");
 
@@ -597,7 +599,7 @@ Server_Repository::remove (const ACE_CString POA_name)
       ACE_OS::fclose (fp);
       ACE_OS::fclose (fp_temp);
       ACE_OS::unlink (temp_file);
-
+      return 0;
     }
   /*
             /// There is no support for DTD in the XML parser as of

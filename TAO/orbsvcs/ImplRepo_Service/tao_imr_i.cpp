@@ -821,7 +821,8 @@ TAO_IMR_Op_IOR::run (void)
         }
 
       CORBA::String_var imr_str =
-        this->imr_locator_->_stubobj ()->profile_in_use ()->to_string (ACE_ENV_ARG_PARAMETER);
+        this->imr_locator_->_stubobj ()->
+        profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Search for "corbaloc:" alone, without the protocol.  This code
