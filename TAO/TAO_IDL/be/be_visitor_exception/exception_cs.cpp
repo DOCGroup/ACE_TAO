@@ -80,10 +80,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (!node->is_local ())
         {
           *os << "void "
-              << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+              << node->name () 
+              << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
               << "{" << be_idt_nl
               << node->local_name () << " *tmp = ACE_static_cast ("
-              << node->local_name () << "*,x);" << be_nl
+              << node->local_name () << "*, _tao_void_pointer);" << be_nl
               << "delete tmp;" << be_uidt_nl
               << "}" << be_nl << be_nl;
         }
