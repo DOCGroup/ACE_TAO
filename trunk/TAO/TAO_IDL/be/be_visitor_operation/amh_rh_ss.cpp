@@ -66,7 +66,9 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   buf = 0;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl << "void" << be_nl
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl
+      << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";
 
   // Check if we are an attribute node in disguise
@@ -108,11 +110,14 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // 3) The argument takes an implied valuetype generated from the
   //    original interface
   // 4) The implied valuetype ends in ExceptionHolder
-  if (ACE_OS::strstr (node->full_name (), "_excep") != 0)
+  const char *last_underbar =
+    ACE_OS::strrchr (node->full_name (), '_');
+  if (last_underbar != 0
+      && ACE_OS::strcmp (last_underbar, "_excep") == 0)
     {
       if (node->nmembers () == 1)
         {
-          UTL_ScopeActiveIterator i (node, 
+          UTL_ScopeActiveIterator i (node,
                                      UTL_Scope::IK_decls);
 
           if (!i.is_done ())
@@ -123,10 +128,15 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                 be_valuetype::narrow_from_decl (argument->field_type ());
 
               if (vt != 0
-                  && vt->original_interface () == intf->original_interface ()
-                  && ACE_OS::strstr (vt->full_name (), "ExceptionHolder") != 0)
+                  && vt->original_interface () == intf->original_interface ())
                 {
-                  is_an_exception_reply = 1;
+                  const char *last_E =
+                    ACE_OS::strrchr (vt->full_name (), 'E');
+                  if (last_E != 0
+                      && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+                    {
+                      is_an_exception_reply = 1;
+                    }
                 }
             }
         }
@@ -134,14 +144,26 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   if (is_an_exception_reply)
     {
+      // Remove the trailing '_excep' from the operation name, we know
+      // there is one from the checks above...
+      ACE_CString operation_name (node->full_name ());
+      int idx = operation_name.rfind ('_');
+      ACE_ASSERT (idx != ACE_String_Base_Const::npos);
+      operation_name[idx] = '\0';
+
       *os << "{" << be_idt_nl
+          << "// TAO_IDL - Generated from "
+          << __FILE__ << ":" << __LINE__ << be_nl
           << "ACE_TRY" << be_nl
-          << "{" << be_nl
-          << "ACE_UNUSED_ARG (holder);" << be_nl
+          << "{" << be_idt_nl
+          << "holder->raise_" << operation_name.c_str ()
+          << " (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
+          << "ACE_TRY_CHECK;" << be_uidt_nl
           << "}" << be_nl
           << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
           << "{" << be_nl
-          << "  this->_tao_rh_send_exception (ex);" << be_nl
+          << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" << be_nl
+          << "  ACE_CHECK;" << be_nl
           << "}" << be_nl
           << "ACE_ENDTRY;" << be_uidt_nl
           << "}\n" << be_nl;
@@ -150,12 +172,15 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       // Step 3: Generate actual code for the method
       *os << "{" << be_idt_nl
-          << "this->_tao_rh_init_reply ();" << be_nl << be_nl;
+          << "// TAO_IDL - Generated from "
+          << __FILE__ << ":" << __LINE__ << be_nl
+          << "this->_tao_rh_init_reply ();\n" << be_nl << be_nl;
 
       this->marshal_params (node);
 
-      *os << "this->_tao_rh_send_reply ();" << be_uidt_nl
-          << "}" << be_nl;
+      *os << be_nl
+          << "this->_tao_rh_send_reply ();" << be_uidt_nl
+          << "}\n" << be_nl;
     }
 
   return 0;
@@ -174,8 +199,6 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
-      os->indent ();
-
       // marshal the in and inout arguments
       *os << "if (!(\n" << be_idt;
 
@@ -194,7 +217,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "))\n" << be_idt;
+      *os << be_nl << "))" << be_idt_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
@@ -205,8 +228,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                              "(%N:%l) gen_raise_exception failed\n"),
                             -1);
         }
-
-      *os << be_uidt << "\n";
+      *os << be_uidt << be_uidt;
     }
 
   return 0;
