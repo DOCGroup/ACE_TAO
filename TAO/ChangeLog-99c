@@ -1,3 +1,21 @@
+Mon Mar 15 17:35:14 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp (visit_predefined_type):
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp
+	(visit_predefined_type):
+	  For struct/union members that are object references, we always
+	generate the TAO_Object_Field_T parametrized type. Earlier we were
+	generating CORBA::Object_var if the member was of the type
+	CORBA::Object and the parametrized type for interfaces. However,
+	this was causing runtime errors in the (de)marshaling engine.
+
+	* tao/{encode, decode}.cpp (TAO_Marshal_Struct::{encode,decode}):
+	
+	  Members that are simple CORBA::Object_ptr and not a user defined
+	interface type is also treated in the same way as if it was an
+	interface type. Thus, we can treat everything as a
+	TAO_Object_Field_T<CORBA::Object>* type.
+	
 Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAManager.i: Fixed typos.
