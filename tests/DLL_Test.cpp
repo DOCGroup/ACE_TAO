@@ -113,7 +113,7 @@ main (int argc, char *argv[])
                        ace_dll_obj.error()),
                       -1);
 
-  auto_ptr <Hello> my_hello = f ();
+  auto_ptr <Hello> my_hello (f ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
