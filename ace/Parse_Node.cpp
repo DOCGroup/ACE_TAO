@@ -522,11 +522,9 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       char *function_name = ACE_const_cast (char *,
                                             this->function_name_);
 
-      func =
-        ACE_non_function_ptr_to_function_ptr_cast
-          (void *(*)(ACE_Service_Object_Exterminator *),
+      func = (void *(*)(ACE_Service_Object_Exterminator *))
           ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       ASYS_WIDE_STRING (function_name)));
+                       ASYS_WIDE_STRING (function_name));
 
       if (func == 0)
         {
