@@ -11,7 +11,9 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("lb.ior");
 $mt_conffile = PerlACE::LocalFile ("multi_threaded_event_loop.conf");
+$tp_directive = "static Advanced_Resource_Factory '-ORBreactortype tp'";
 $st_conffile = "";
+$st_directive = "static Advanced_Resource_Factory '-ORBreactortype select_st'";
 
 $SV = new PerlACE::Process ("server");
 $CL = new PerlACE::Process ("client");
@@ -37,53 +39,53 @@ sub run_clients ()
 
     print STDERR "\nSelect Reactor\n\n";
 
-    run_client ("-ORBsvcconf $st_conffile -e 0");
+    run_client ("-ORBsvcconfdirective \"$st_directive\" -e 0");
 
     print STDERR "\nTP Reactor\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 0");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 0");
 
     print STDERR "\n\n*** Single-threaded client event loop: Select Reactor ***\n\n\n";
 
     print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
 
-    run_client ("-ORBsvcconf $st_conffile -e 1 -t 3000");
+    run_client ("-ORBsvcconfdirective \"$st_directive\" -e 1 -t 3000");
 
     print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
 
-    run_client ("-ORBsvcconf $st_conffile -e 1 -t 10000");
+    run_client ("-ORBsvcconfdirective \"$st_directive\" -e 1 -t 10000");
 
     print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
 
-    run_client ("-ORBsvcconf $st_conffile -e 1 -t 20000");
+    run_client ("-ORBsvcconfdirective \"$st_directive\" -e 1 -t 20000");
 
     print STDERR "\n\n*** Single-threaded client event loop: TP Reactor ***\n\n\n";
 
     print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 3000");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 1 -t 3000");
 
     print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 10000");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 1 -t 10000");
 
     print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 20000");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 1 -t 20000");
 
     print STDERR "\n\n*** Multi-threaded client event loop: TP Reactor ***\n\n\n";
 
     print STDERR "\nMulti-threaded client running event loop for 3 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 3000");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 5 -t 3000");
 
     print STDERR "\nMulti-threaded client running event loop for 10 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 10000");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 5 -t 10000");
 
     print STDERR "\nMulti-threaded client running event loop for 20 seconds\n\n";
 
-    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 20000 -x");
+    run_client ("-ORBsvcconfdirective \"$tp_directive\" -e 5 -t 20000 -x");
 }
 
 $single = 1;
@@ -112,7 +114,7 @@ if ($single == 1) {
 
     print STDERR "\n\n*** Single threaded server ***\n\n\n";
 
-    $SV->Arguments ("-o $iorfile");
+    $SV->Arguments ("-o $iorfile -ORBSvcConfDirective \"$st_directive\"");
 
     $SV->Spawn ();
 
@@ -139,7 +141,7 @@ if ($multi == 1) {
     
     print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
-    $SV->Arguments ("-o $iorfile -e 5 -ORBSvcConf $mt_conffile");
+    $SV->Arguments ("-o $iorfile -e 5 -ORBSvcConfDirective \"$tp_directive\"");
 
     $SV->Spawn ();
 
