@@ -335,7 +335,7 @@ ACE_SSL_Context::report_error (unsigned long error_code)
   (void) ::ERR_error_string (error_code, error_string);
 
   ACE_ERROR((LM_ERROR,
-             ACE_TEXT("SSL error: %u %s\n"),
+             ACE_TEXT("ACE_SSL (%P|%t) error code: %u - %s\n"),
              error_code,
              error_string));
 }
