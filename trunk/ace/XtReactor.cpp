@@ -151,8 +151,10 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
 					ACE_Select_Reactor_Handle_Set &wait_set,
 					ACE_Time_Value *)
 {
-  // Check to make sure our handle's are all usable.
+  // Make sure we have a valid context
+  ACE_ASSERT (this->context_ != 0);
 
+  // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
 
   if (ACE_OS::select (width, 
@@ -166,7 +168,7 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
   // wait for a single event.
 
   // Wait for something to happen.
-  ::XtAppProcessEvent (context_, XtIMAll);
+  ::XtAppProcessEvent (this->context_, XtIMAll);
 
   // Reset the width, in case it changed during the upcalls.
   width = this->handler_rep_.max_handlep1 ();
@@ -181,9 +183,15 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
 }
 
 XtAppContext 
-ACE_XtReactor::context (void) 
+ACE_XtReactor::context (void) const
 {
   return this->context_; 
+}
+
+void 
+ACE_XtReactor::context (XtAppContext context)
+{
+  this->context_ = context;
 }
 
 int
@@ -192,6 +200,9 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 				   ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::register_handler_i");
+
+  // Make sure we have a valid context
+  ACE_ASSERT (this->context_ != 0);
 
   int result = ACE_Select_Reactor::register_handler_i (handle,
                                                        handler, mask);
@@ -238,7 +249,7 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
             {
               ::XtRemoveInput (XtID->id_);
 
-              XtID->id_ = ::XtAppAddInput (context_, 
+              XtID->id_ = ::XtAppAddInput (this->context_, 
                                            (int) handle, 
                                            (XtPointer) condition, 
                                            InputCallbackProc, 
@@ -254,7 +265,7 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
                       -1);
       XtID->next_ = this->ids_;
       XtID->handle_ = handle;
-      XtID->id_ = ::XtAppAddInput (context_,
+      XtID->id_ = ::XtAppAddInput (this->context_,
 				  (int) handle, 
 				  (XtPointer) condition, 
 				  InputCallbackProc, 
@@ -341,6 +352,9 @@ ACE_XtReactor::remove_handler_i (const ACE_Handle_Set &handles,
 void 
 ACE_XtReactor::reset_timeout (void)
 {
+  // Make sure we have a valid context
+  ACE_ASSERT (this->context_ != 0);
+
   if (timeout_)
     ::XtRemoveTimeOut (timeout_);
   timeout_ = 0;
@@ -349,7 +363,7 @@ ACE_XtReactor::reset_timeout (void)
     this->timer_queue_->calculate_timeout (0);
 
   if (max_wait_time)
-    timeout_ = ::XtAppAddTimeOut (context_, 
+    timeout_ = ::XtAppAddTimeOut (this->context_, 
                                   max_wait_time->msec (), 
                                   TimerCallbackProc, 
                                   (XtPointer) this);

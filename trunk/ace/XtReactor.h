@@ -50,13 +50,14 @@ class ACE_Export ACE_XtReactor : public ACE_Select_Reactor
   //     dispatcher that uses the X Toolkit functions.
 public:
   // = Initialization and termination methods.
-  ACE_XtReactor (XtAppContext context,
+  ACE_XtReactor (XtAppContext context = 0,
 		 size_t size = DEFAULT_SIZE,
 		 int restart = 0,
 		 ACE_Sig_Handler * = 0);
   virtual ~ACE_XtReactor (void);
 
-  XtAppContext context (void);
+  XtAppContext context (void) const;
+  void context (XtAppContext);
 
   // = Timer operations.
   virtual long schedule_timer (ACE_Event_Handler *handler,
