@@ -1,6 +1,16 @@
+Thu Oct  8 17:40:19 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* src/Gen_Perf.cpp (run): added the linear search changes.
+	* src/Gen_Perf.h        : added the linear search changes.
+	* src/Options.cpp	: added the linear search changes.
+	* src/Options.h		: added the linear search changes.
+	* src/Key_List.cpp	: added the linear search changes.
+	* src/Key_List.h	: added the linear search changes.
+
+
 Wed Oct  7 01:20:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/test-6.exp: 
+	* tests/test-6.exp:
 	  Updated thif file to the current help message. Thanks to Hans
 	  for reporting this.
 
@@ -12,7 +22,7 @@ Tue Oct  6 11:51:47 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 Tue Oct  6 02:48:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	Thanks to Vishal the following things have been done to get Binary
-	Search code generated from GPERF. 
+	Search code generated from GPERF.
 
 	* src/Options.cpp (parse_args): Added the -B option for the binary
 	search.
@@ -54,7 +64,7 @@ Sat Oct  3 19:36:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 Sat Oct  3 17:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/test-6.exp: 
+	* tests/test-6.exp:
 	  Added the new -B option.
 
 Sat Oct  3 13:47:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
@@ -65,7 +75,7 @@ Sat Oct  3 13:47:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 Sat Oct  3 10:11:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Changed the option for binary
-	search to '-B' 
+	search to '-B'
 
 Fri Oct  2 21:38:54 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
