@@ -1,3 +1,9 @@
+Sun Feb 21 17:29:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/bank/server.cpp: 
+	* examples/Simple/bank/AccountManager_i.cpp:
+	Fixed compilation error in EGCS compiler
+
 Sun Feb 21 16:54:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/MProfile.i:
