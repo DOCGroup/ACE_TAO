@@ -502,7 +502,7 @@ namespace CIAO_GLUE
     [eventtype]Consumer_var consumes_[consumer name]_;
 ##end foreach [consumer name] with [eventtype]
 
-};
+  };
 
 
   //////////////////////////////////////////////////////////////////
@@ -516,7 +516,7 @@ namespace CIAO_GLUE
   public:
     // Ctor.
     [home anem]_Servant (CCM_[home name]_ptr exe,
-                       CIAO::Session_Container *c);
+                         CIAO::Session_Container *c);
 
     // Dtor.
     ~[home name]_Servant (void);
@@ -524,10 +524,63 @@ namespace CIAO_GLUE
     // User defined and inherited operations
     // (Factories, Finders, and explicit operations.)
 
+##foreach [operation] in (all explicit operations in [home basename] including its parents)
+
+    // The operation decl here.
+
+## end foreach opeartion
+
+##foreach [factory name]  in (all factory operations in [home basename] including its parents)
+    // for factory operations inherit from parent home(s), they should return
+    // the corresponding component types their homes manage
+    [component name]_ptr [factory name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::CreateFailure,
+                       ....));
+##end foreach [factory name]
+
+##foreach [finder name]  in (all finder operations in [home basename] including its parents)
+    // for finder operations inherit from parent home(s), they should return
+    // the corresponding component types their homes manage
+    [component name]_ptr [finder name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::FinderFailure,
+                       ....));
+##end foreach [finder name]
+
+##  if [home name] is a keyless home
+
     // Operations for KeylessHome interface
     virtual ::Components::CCMObject_ptr create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
+
+##  else [home basename] is keyed home with [key type]
+
+    // We do not support key'ed home at the moment but we might
+    // as well generate the mapping.
+    [component name]_ptr create ([key type]_ptr key)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::CreationFailure,
+                       ::Components::DuplicateKeyValue,
+                       ::Components::InvalidKey));
+
+    [component name]_ptr find_by_primary_key ([key type]_ptr key)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::FinderFailure,
+                       ::Components::UnknownKeyValue,
+                       ::Components::InvalidKey));
+
+    void remove ([key type]_ptr key)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::RemoveFailure,
+                       ::Components::UnknownKeyValue,
+                       ::Components::InvalidKey));
+
+    [key type]_ptr get_primary_key ([component name]_ptr comp)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+##  endif (keyed or keyless home)
 
     // Operations for Implicit Home interface
     virtual [component name]_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -545,6 +598,12 @@ namespace CIAO_GLUE
                        Components::RemoveFailure));
 
   protected:
+    // Helper method for factory operations.
+    [component name]_ptr _ciao_create_helper (::Components::EnterpriseComponent_ptr c
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CreateFailure));
+
     // My Executor.
     CCM_[home name]_var executor_;
 

@@ -162,6 +162,21 @@ module [module_name] {
       , [interface name]
 ##  end foreach [interface name]
   {
+##foreach [operation] in (all explicit operations defined in [home basename])
+
+    // The operation decl here.
+
+## end foreach opeartion
+
+##foreach [factory name]  in (all factory operations defined in [home basename])
+    ::Enterprise::EnterpriseComponent [factory name] (....)
+      raise (Components::CreateFailure, ....);
+##end foreach [factory name]
+
+##foreach [finder name]  in (all finder operations defined in [home basename])
+    ::Enterprise::EnterpriseComponent [finder name] (....)
+      raise (Components::FinderFailure, ....);
+##end foreach [finder name]
   };
 
   local interface CCM_[home basename]Implicit
