@@ -1,3 +1,8 @@
+Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
+ 	  Flexer <danif@ivory-sw.com> for updating this.
+
 Thu Nov 20 14:19:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.h: 
