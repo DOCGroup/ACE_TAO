@@ -1,3 +1,23 @@
+Sat Jun  5 16:48:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-common.h
+	* ace/config-irix6.x-sgic++-nothreads.h
+	* ace/config-irix6.x-sgic++.h
+	* include/makeinclude/platform_irix6.x-sgic++.GNU
+	* include/makeinclude/platform_irix6.x_common.GNU
+	* include/makeinclude/platform_irix6.x_g++.GNU
+	* include/makeinclude/platform_irix6.x_kcc.GNU
+	* include/makeinclude/platform_irix6.x_sgic++.GNU
+	  On IRIX 6.5 we must not define
+	  ACE_LACKS_NETDB_REENTRANT_FUNCTIONS, thanks to Bob Laferriere
+	  <laferrie@gsao.med.ge.com> for pointing this out.
+	  Created a new platform_*.GNU file that auto detects the IRIX
+	  version (couldn't find a pre-processor macro to do it); also
+	  renamed the platform_irix6.x-sgic++.GNU file to use underscore
+	  instead of '-'; that way it is more consistent with the other
+	  files.
+	  
+
 Sat Jun  5 13:29:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Codeset_IBM1047: Minor reformatting to conform to ACE
