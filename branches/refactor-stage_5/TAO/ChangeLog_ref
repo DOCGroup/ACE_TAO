@@ -32,6 +32,7 @@ Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_sequence.cpp:
         * TAO_IDL/be/be_visitor_root.cpp:
         * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
@@ -45,6 +46,7 @@ Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_codegen.h:
         * TAO_IDL/be_include/be_decl.h:
         * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
 
           - Changed generated code to call the appropriate templatized
             static function for _narrow(), and removed generation of
@@ -56,6 +58,9 @@ Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           - Moved generation of arg traits class specializations, and
             the includes they need, from *C.h to *C.cpp (and to *S.cpp, if
             either kind of collocation is supported).
+
+          - Moved generation of explicit template instantiation for 
+            exception Any operators to the template instantiation visitor.
 
           - Cosmetic changes to the generated _tao_any_destructors.
 
