@@ -1,3 +1,15 @@
+Thu Aug 28 18:10:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+
+          Added #include of tao/CDR.h to fully define TAO_InputCDR.
+
+        * tao/Utils/RIR_Narrow.cpp:
+
+          Added explicit 'typename' to return type of each class
+          method, since they are typedefs inside template classes,
+          and gcc 3.3.1 is no longer tolerant of implicit typenames.
+
 Thu Aug 28 22:24:51 UTC 2003  Scott Harris <harris_s@ociweb.com>
 
 	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
