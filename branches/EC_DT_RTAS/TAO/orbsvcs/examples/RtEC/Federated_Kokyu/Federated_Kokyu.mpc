@@ -7,14 +7,22 @@ project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, 
     Kokyu_EC.cpp
     Consumer_EC.cpp
     Consumer.cpp
+    Supplier.cpp
     federated_dsui_vars.cpp
   }
 }
 
-project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+//Can't inherit from kokyu because we want to use the RG version!
+project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent {
   exename = Supplier_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-  libs += wrappers
+
+  //except for "libs += wrappers", this is copied from kokyu project:
+  after    += RGKokyu
+  libs     += wrappers RGKokyu dsui
+  libpaths += $(DATASTREAM_ROOT)/lib
+  includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include
+  //end copy
 
   Source_Files {
     Consumer.cpp
@@ -24,4 +32,3 @@ project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, 
     federated_dsui_vars.cpp
   }
 }
-
