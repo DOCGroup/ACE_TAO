@@ -1915,7 +1915,7 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
   // trailing .idl.
   // @@@ (JP) I guess it's a safe assumption that the tail of the
   // suffix will be .idl.
-  string suffix = cl_.get_value ("lem-file-suffix", "_exec.idl");
+  string suffix = cl_.get_value ("lem-file-suffix", "E.idl");
   suffix = regex::perl_s (suffix,
                           "/(\\.idl)?$//");
 
