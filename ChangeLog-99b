@@ -1,9 +1,9 @@
 Mon Jul 12 15:27:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1.h,config-osf1-4.0.h,
-          include/makeinclude/platform_osf1_cxx.GNU: added
-          support for DU 4.0f.  It needs the same #defines
-          that we use on DU 5.0. [Bug 65]
+          include/makeinclude/platform_osf1_cxx.GNU,
+          ACE-INSTALL.html: added support for DU 4.0f.  It needs the
+          same #defines that we use on DU 5.0. [Bug 65]
 
 Mon Jul 12 14:41:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
