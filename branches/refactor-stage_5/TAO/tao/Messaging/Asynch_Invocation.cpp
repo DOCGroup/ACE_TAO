@@ -96,8 +96,26 @@ namespace TAO
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+#if TAO_HAS_INTERCEPTORS == 1
+        // If the above call returns a restart due to connection
+        // failure then call the receive_other interception point
+        // before we leave.
+        if (s == TAO_INVOKE_RESTART)
+          {
+            s =
+              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+#endif /*TAO_HAS_INTERCEPTORS */
+
         if (s != TAO_INVOKE_SUCCESS)
           return s;
+
+        // For some strategies one may want to release the transport
+        // back to  cache. If the idling is successfull let the
+        // resolver about that.
+        if (this->resolver_.transport ()->idle_after_send ())
+          this->resolver_.transport_released ();
 
         // @@ In all MT environments, there's a cancellation point lurking
         // here; need to investigate.  Client threads would frequently be
@@ -115,7 +133,11 @@ namespace TAO
         // according to POSIX, all C stack frames must also have their
         // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
         // environment.
-
+#if TAO_HAS_INTERCEPTORS == 1
+        s =
+          this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+#endif /*TAO_HAS_INTERCEPTORS */
       }
     ACE_CATCHANY
       {

@@ -93,6 +93,10 @@ namespace TAO
     TAO_Transport *transport (void) const;
     //@}
 
+    /// Signal to let the resolver know that the transport has been
+    /// released back to the cache.
+    void transport_released (void) const;
+
     /// This is a callback method used by the endpoint selectors, to
     /// delegate the responsibility of reserving a transport from the
     /// connection cache for this invocation.
@@ -119,6 +123,9 @@ namespace TAO
 
     /// The profile that has been selected for this invocation.
     TAO_Profile *profile_;
+
+    /// Has the transport been idled?
+    mutable bool is_released_;
   };
 } // TAO namespace end
 

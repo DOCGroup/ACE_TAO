@@ -28,6 +28,7 @@ namespace TAO
       , stub_ (stub)
       , transport_ (0)
       , profile_ (0)
+      , is_released_ (false)
   {
   }
 
@@ -38,8 +39,10 @@ namespace TAO
 
     if (this->transport_)
       {
-        this->transport_->make_idle ();
         this->transport_->remove_reference ();
+
+        if (this->is_released_ == false)
+          this->transport_->make_idle ();
       }
   }
 

@@ -1,3 +1,71 @@
+Tue Aug 26 16:42:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Asynch_Reply_Dispatcher_Base.cpp: Removed the call to
+	  idle_after_reply () since it is taken care by the transport
+	  resolver. 
+
+	* tao/Asynch_Reply_Dispatcher_Base.i: Cosmetic fix
+
+	* tao/Exclusive_TMS.cpp:
+	* tao/Exclusive_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h:
+	* tao/Transport_Mux_Strategy.h: Changed the signature of
+	  idle_after_send () and idle_after_reply () to return a
+	  bool instead of an int.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Remove the output CDR allocators from the
+	  TSS. They now go into the lanes. This is needed since the CDR's
+	  are now housed within the transport. 
+
+	* tao/Thread_Lane_Resources.cpp:
+	* tao/Thread_Lane_Resources.h: The output CDR's are now here
+	  instead of the TSS. 
+
+	* tao/GIOP_Message_Base.cpp: Cosmetic fix.
+	
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: Added a new method
+	  transport_released () method that sets a flag is_released_ to
+	  true. The flag is used to indicate whether the transport has
+	  been released to the transport cache or not. 
+	
+	* tao/IIOP_Transport.cpp: 
+	* tao/Strategies/SCIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp: The method send_message ()
+	  does not call idle_after_send () anymore. This is taken care
+	  elsewhere. 
+
+	* tao/Remote_Invocation.cpp: Cosmetic fix.
+
+	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.cpp: Call idle_after_send () and
+	  idle_after_reply () on the transport after sending and receiving
+	  the replies. This is used to release the transport in case
+	  errors occur. 
+
+	* tao/Transport.cpp: Added a debug statement
+
+	* tao/Transport_Cache_Manager.cpp: Cosmetic fix. 
+	
+	* tao/default_resource.cpp: The output cdr now uses global locked
+	  allocater instead of the non-locked ones that were used. Removed
+	  the typedef's of the lock free allocators. 
+	
+	* tao/orbconf.h: Added a #if defined for local memory pools. This
+	  is in reference to this change "Fri Jul 18 17:26:32 2003  Chris
+	  Cleeland  <cleeland_c@ociweb.com>". The above change always set
+	  the allocator to use the the ACE_New_Allocator. 
+
+	  With the addition to orbconf.h file, the user can choose to use
+	  the type of allocator at compile time. The option now defaults
+	  to use the local memory pool. It would be better to use a
+	  runtime option instead of this compile time option. Will get to
+	  that later. 
+
 Tue Aug 26 10:05:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: Included the new header for AMI

@@ -25,4 +25,10 @@ namespace TAO
   {
     return this->transport_;
   }
+
+  ACE_INLINE void
+  Profile_Transport_Resolver::transport_released (void) const
+  {
+    this->is_released_ = true;
+  }
 }

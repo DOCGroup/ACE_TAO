@@ -782,10 +782,7 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 }
 
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
-typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
-
-#if TAO_USE_LOCAL_MEMORY_POOL
+#if TAO_USE_LOCAL_MEMORY_POOL == 1
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
 typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
 #else
@@ -835,7 +832,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -843,7 +842,9 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -851,7 +852,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 

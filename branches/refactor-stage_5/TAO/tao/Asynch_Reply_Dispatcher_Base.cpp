@@ -36,11 +36,9 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core
 // Destructor.
 TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 {
+  // Release the transport that we own
   if (this->transport_ != 0)
-    {
-      this->transport_->idle_after_reply ();
-      this->transport_->remove_reference ();
-    }
+    this->transport_->remove_reference ();
 }
 
 // Must override pure virtual method in TAO_Reply_Dispatcher.

@@ -132,14 +132,6 @@ private:
 
 public:
 
-
-  /// The allocators for the output CDR streams.
-  //@{
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  ACE_Allocator *output_cdr_msgblock_allocator_;
-  //@}
-
   /**
    * @todo
    * The rest of the resources are not currently in use, just a plan
@@ -176,9 +168,7 @@ public:
 };
 
 
-
 // ****************************************************************
-
 /**
  * @class TAO_ORB_Core
  *
