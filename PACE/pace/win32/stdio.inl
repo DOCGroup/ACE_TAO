@@ -15,6 +15,7 @@
 
 #include <stdarg.h>
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 void
 pace_clearerr (FILE * stream)
@@ -22,14 +23,27 @@ pace_clearerr (FILE * stream)
   clearerr (stream);
   return;
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fclose (FILE * stream)
 {
   return fclose (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DS_UOF)
+PACE_INLINE
+char *
+pace_ctermid (char * s)
+{
+  return ctermid (s);
+}
+#endif /* PACE_HAS_POSIX_DS_UOF */
+
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 FILE *
 pace_fdopen (int fildes,
@@ -38,42 +52,54 @@ pace_fdopen (int fildes,
   return fdopen (fildes,
                  type);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_ferror (FILE * stream)
 {
   return ferror (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_feof (FILE * stream)
 {
   return feof (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fflush (FILE * stream)
 {
   return fflush (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fileno (FILE * stream)
 {
   return fileno (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fgetc (FILE * stream)
 {
   return fgetc (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_fgetpos(PACE_FILE * stream,
@@ -81,7 +107,9 @@ pace_fgetpos(PACE_FILE * stream,
 {
   return fgetpos (stream, pos);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 char *
 pace_fgets (char * s,
@@ -92,7 +120,9 @@ pace_fgets (char * s,
                 n,
                 stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 void
 pace_flockfile (FILE * file)
@@ -105,7 +135,9 @@ pace_flockfile (FILE * file)
 #endif /* ! PACE_HAS_REENTRANT */
   return;
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 FILE *
 pace_fopen (const char * filename,
@@ -114,7 +146,9 @@ pace_fopen (const char * filename,
   return fopen (filename,
                 mode);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fputc (int c,
@@ -123,18 +157,9 @@ pace_fputc (int c,
   return fputc (c,
                 stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
-int
-pace_fprintf (FILE *fp, const char *format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vfprintf (fp, format, ap);
-  va_end (ap);
-  return result;
-}
-
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_fputs (const char * s,
@@ -143,7 +168,9 @@ pace_fputs (const char * s,
   return fputs (s,
                 stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 size_t
 pace_fread (void * ptr,
@@ -156,7 +183,9 @@ pace_fread (void * ptr,
                 number_of_items,
                 stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 FILE *
 pace_freopen (const char * filename,
@@ -167,7 +196,9 @@ pace_freopen (const char * filename,
                   mode,
                   stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 int
 pace_fseek (FILE * stream,
@@ -178,21 +209,27 @@ pace_fseek (FILE * stream,
                 offset,
                 whence);
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos)
 {
   return fsetpos (stream, pos);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 long
 pace_ftell (FILE * stream)
 {
   return ftell (stream);
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 int
 pace_ftrylockfile (FILE * file)
@@ -204,7 +241,9 @@ pace_ftrylockfile (FILE * file)
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_REENTRANT */
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 void
 pace_funlockfile (FILE * file)
@@ -217,7 +256,9 @@ pace_funlockfile (FILE * file)
 #endif /* ! PACE_HAS_REENTRANT */
   return;
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 pace_size_t
 pace_fwrite(const void * ptr,
@@ -226,14 +267,18 @@ pace_fwrite(const void * ptr,
 {
   return fwrite (ptr, size, nmemb, stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_getc (FILE * stream)
 {
   return getc (stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 int
 pace_getc_unlocked (FILE * stream)
@@ -245,14 +290,18 @@ pace_getc_unlocked (FILE * stream)
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_POSIX */
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_getchar ()
 {
   return getchar ();
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 int
 pace_getchar_unlocked ()
@@ -263,14 +312,18 @@ pace_getchar_unlocked ()
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_REENTRANT */
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 char *
 pace_gets (char * s)
 {
   return gets (s);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 void
 pace_perror (const char * s)
@@ -278,18 +331,9 @@ pace_perror (const char * s)
   perror (s);
   return;
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
-int
-pace_printf (const char* format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vprintf (format, ap);
-  va_end (ap);
-  return result;
-}
-
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_putc (int c,
@@ -297,7 +341,9 @@ pace_putc (int c,
 {
   return putc (c, stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 int
 pace_putc_unlocked (int c,
@@ -311,14 +357,18 @@ pace_putc_unlocked (int c,
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_REENTRANT */
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_putchar (int c)
 {
   return putchar (c);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FL_UOF)
 PACE_INLINE
 int
 pace_putchar_unlocked (int c)
@@ -330,21 +380,27 @@ pace_putchar_unlocked (int c)
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_REENTRANT */
 }
+#endif /* PACE_HAS_POSIX_FL_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_puts (const char * s)
 {
   return puts (s);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_remove (const char * path)
 {
   return remove (path);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_rename (const char * old_name,
@@ -353,7 +409,9 @@ pace_rename (const char * old_name,
   return rename (old_name,
                  new_name);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 void
 pace_rewind (FILE * stream)
@@ -361,7 +419,9 @@ pace_rewind (FILE * stream)
   rewind (stream);
   return;
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 void
 pace_setbuf (FILE * stream, char * buf)
@@ -369,7 +429,9 @@ pace_setbuf (FILE * stream, char * buf)
   setbuf (stream, buf);
   return;
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_setvbuf(PACE_FILE * stream,
@@ -378,38 +440,36 @@ pace_setvbuf(PACE_FILE * stream,
 {
   return setvbuf (stream, buf, mode, size);
 }
-int
-pace_sprintf (char* s, const char* format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vsprintf (s, format, ap);
-  va_end (ap);
-  return result;
-}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 FILE *
 pace_tmpfile ()
 {
  return tmpfile ();
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 char *
 pace_tmpnam (char * s)
 {
  return tmpnam (s);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_ungetc (int c, FILE * stream)
 {
  return ungetc (c, stream);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_vfprintf (PACE_FILE * stream,
@@ -422,7 +482,9 @@ pace_vfprintf (PACE_FILE * stream,
   PACE_UNUSED_ARG (arg);
   return -1;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_vprintf (const char * format,
@@ -433,7 +495,9 @@ pace_vprintf (const char * format,
   PACE_UNUSED_ARG (arg);
   return -1;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_vsprintf (char * s,
@@ -446,3 +510,4 @@ pace_vsprintf (char * s,
   PACE_UNUSED_ARG (arg);
   return -1;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

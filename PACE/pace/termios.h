@@ -30,27 +30,97 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /**
+     PACE's implementation of the POSIX function cfgetospeed.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.1.3.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE pace_speed_t pace_cfgetospeed (const pace_termios * termiosp);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function cfsetospeed.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.1.3.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_cfsetospeed (pace_termios * termios_p, pace_speed_t speed);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function cfgetispeed.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.1.3.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE pace_speed_t pace_cfgetispeed (const pace_termios * termios_p);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function cfsetispeed.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.1.3.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_cfsetispeed (pace_termios * termios_p, pace_speed_t speed);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcdrain.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcdrain (int fildes);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcflow.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcflow (int fildes, int action);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcflush.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcflush (int fildes, int queue_selector);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcgetattr.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.1.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcgetattr (int fildes, pace_termios * termios_p);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcsendbreak.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcsendbreak (int fildes, int duration);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+  /**
+     PACE's implementation of the POSIX function tcsetattr.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 7.2.1.
+     */
+#if (PACE_HAS_POSIX_DS_UOF)
   PACE_INLINE int pace_tcsetattr (int fildes,
                                   int optional_actions,
                                   const pace_termios * termios_p);
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
 
 #if defined (PACE_HAS_INLINE)

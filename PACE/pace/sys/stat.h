@@ -32,23 +32,33 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#if (PACE_HAS_POSIX_FA_UOF)
   PACE_INLINE int pace_chmod (const char * path, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_FA_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_fchmod (int fildes, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_fstat (int fildes, pace_stat_s * buf);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_mkdir (const char * path, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_F_UOF)
   PACE_INLINE int pace_mkfifo (const char * path, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_F_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_stat (const char * path, pace_stat_s * buf);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FA_UOF)
   PACE_INLINE pace_mode_t pace_umask (pace_mode_t cmask);
-
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_POSIX_FA_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
@@ -59,5 +69,9 @@ extern "C" {
 #    include "pace/win32/stat.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SYS_STAT_H */

@@ -30,11 +30,9 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#if (PACE_HAS_POSIX_MP_UOF)
   PACE_INLINE pace_clock_t pace_times (pace_tms * buffer);
-
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
@@ -45,4 +43,9 @@ extern "C" {
 #    include "pace/win32/times.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
+
 #endif /* PACE_SYS_TIMES_H */

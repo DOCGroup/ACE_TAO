@@ -20,8 +20,12 @@ ifndef inline
 else
   ifneq (0,$(inline))
     CFLAGS += -DPACE_HAS_INLINE
-  endif # inline
+  else
+    LIBS += -L$(ACE_ROOT)/PACE/pace -lPACE
+  endif # ! inline
 endif # ! inline
+
+CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 
 #----------------------------------------------------------------------------
 #       Local macros

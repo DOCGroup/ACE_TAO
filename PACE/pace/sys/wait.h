@@ -35,20 +35,20 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
      */
+#if (PACE_HAS_POSIX_MP_UOF)
   PACE_INLINE pid_t pace_wait (int * statloc);
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
      PACE's implementation of the POSIX function waitpid.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
      */
+#if (PACE_HAS_POSIX_MP_UOF)
   PACE_INLINE pid_t pace_waitpid (pid_t pid,
                                   int * statloc,
                                   int options);
-
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
@@ -59,5 +59,9 @@ extern "C" {
 #    include "pace/win32/wait.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_WAIT_H */

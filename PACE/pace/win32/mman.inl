@@ -13,20 +13,25 @@
  *
  * ============================================================================= */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_mlock (const void * addr, size_t len)
+pace_mlock (const void * addr, pace_size_t len)
 {
   return mlock (((char*)addr), len);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_mlockall (int flags)
 {
   return mlockall (flags);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 void *
 pace_mmap (void * addr,
@@ -38,14 +43,18 @@ pace_mmap (void * addr,
 {
   return mmap ((char *) addr, len, prot, flags, fildes, off);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_munlock (const void * addr, size_t len)
 {
   return munlock (((char*)addr), len);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_mprotect (void * addr,
@@ -54,7 +63,9 @@ pace_mprotect (void * addr,
 {
   return mprotect ((char*)addr, len, prot);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_msync (void * addr,
@@ -63,21 +74,27 @@ pace_msync (void * addr,
 {
   return msync ((char*)addr, len, flags);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_munlockall ()
 {
   return munlockall ();
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_munmap (void * addr, size_t len)
 {
   return munmap ((char *) addr, len);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_shm_open (const char * name,
@@ -93,7 +110,9 @@ pace_shm_open (const char * name,
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_POSIX_C_SOURCE */
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_shm_unlink (const char * name)
@@ -105,3 +124,4 @@ pace_shm_unlink (const char * name)
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_POSIX_C_SOURCE */
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

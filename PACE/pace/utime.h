@@ -35,8 +35,10 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.6.6.
      */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_utime (const char * path,
                               const pace_utimbuf * times);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)

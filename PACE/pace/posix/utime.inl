@@ -13,6 +13,7 @@
  *
  * ============================================================================= */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_utime (const char * path,
@@ -20,3 +21,4 @@ pace_utime (const char * path,
 {
   return utime (path, times);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
