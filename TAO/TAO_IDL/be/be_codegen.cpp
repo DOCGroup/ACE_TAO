@@ -870,15 +870,15 @@ TAO_CodeGen::start_implementation_header (const char *fname)
             }
 #endif
 
-      *this->implementation_header_
-        << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-        << "#pragma once\n"
-        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
-
       const char* server_hdr =
         IDL_GlobalData::be_get_server_hdr_fname (1);
 
       *this->implementation_header_<< "#include \""<<server_hdr<<"\"\n\n";
+
+      *this->implementation_header_
+        << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+        << "#pragma once\n"
+        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
       return 0;
     }
