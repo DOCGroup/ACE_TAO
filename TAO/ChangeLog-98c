@@ -1,4 +1,7 @@
 Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+	* orbsvcs/test/Simulator: Set the file permissions right.
+
+Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 	* orbsvcs/test/Simulator:
 	  Intruduced new demo, using the Event Service as transport
 	  media for monitoring events.
