@@ -1,3 +1,9 @@
+Sun Sep 20 01:19:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/IIOP_Object.{cpp,i,h}: Fixed the static call to 
+	  revert back to the original profile when the forwarded
+	  profile fails.
+
 Sat Sep 19 21:35:28 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Simple_Naming/client.dsp:
