@@ -962,9 +962,9 @@ ACE_Log_Msg::log (const char *format_str,
 
 int 
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority, 
-			  char *buffer, 
+			  const char *buffer, 
 			  int size,
-			  char *text)
+			  const char *text)
 {
   char buf[ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58];
   // 58 for the HEXDUMP header;

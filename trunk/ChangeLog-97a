@@ -1,10 +1,14 @@
+Sat Apr 19 11:56:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log_hexdump): The char * arguments should be
+ 	  const char *'s.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for reporting this.
+
 Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Memory_Pool.h: Fixed a couple of typos in Memory_Pool
  	  classes.  Thanks to Neil B. Cohen <nbc@metsci.com> for reporting
  	  this.
-
-Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Name_Handler.h: Arrgh, there was still one more
  	  missing #include that I forgot to move into the *.h file.
