@@ -1,5 +1,8 @@
 1998-06-08  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
+	* Updated orbsvcs/tests/Concurrency/CC_command.cpp because of an
+	  error reported by g++
+
 	* Updated orbsvcs/tests/Concurrency/Makefile to reflect the
 	  changed stated below
 
