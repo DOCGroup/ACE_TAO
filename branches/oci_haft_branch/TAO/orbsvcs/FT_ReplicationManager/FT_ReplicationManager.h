@@ -73,7 +73,7 @@ namespace TAO
 
   /**
    * Initialize this object.
-   * @param orbManager our ORB -- we keep var to it.
+   * @param orb Our CORBA::ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
   int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
@@ -98,6 +98,14 @@ namespace TAO
    * @return a string to identify this object for logging/console message purposes.
    */
   const char * identity () const;
+
+  /**
+   * Get the type_id associated with an object group.
+   * @param object_group The ObjectGroup.
+   * @return String identifying the type id associated with the ObjectGroup.
+   */
+  char * type_id (PortableGroup::ObjectGroup_ptr object_group
+      ACE_ENV_ARG_DECL);
 
     /////////////////////////
     // Implementation methods

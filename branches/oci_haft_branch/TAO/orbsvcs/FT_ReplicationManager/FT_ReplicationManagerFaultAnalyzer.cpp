@@ -132,6 +132,18 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   {
     result = this->single_replica_failure (fault_event_desc);
   }
+
+  // All objects at location failed.
+  if ((result == 0) && (fault_event_desc.all_at_location_failed == 1))
+  {
+    result = this->location_failure (fault_event_desc);
+  }
+
+  // All objects of type at location failed.
+  if ((result == 0) && (fault_event_desc.all_of_type_at_location_failed == 1))
+  {
+    result = this->type_failure (fault_event_desc);
+  }
 #endif /* (INTEGRATED_WITH_REPLICATION_MANAGER == 1) */
 
   // Debugging support.
@@ -871,7 +883,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       // @@ DLW SAYS: we need to find out the role played by this object
       // group so we can use the correct set of factories.
       // Get the list of factories for the type of the failed replica.
-//      PortableGroup::FactoryInfos_var factories_by_type =
       CORBA::String_var type_id;
       PortableGroup::FactoryInfos_var factories_by_type =
           factory_registry->list_factories_by_role (
@@ -905,8 +916,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       // the value of the MinimumNumberReplicas property.
       FT::Location_var good_location;
       for (FT_Location_Set::iterator iter (valid_locations);
-           iter.next (good_location.out());
-           iter.advance())
+           iter.next (good_location.out()) &&
+           fault_event_desc.minimum_number_replicas > num_members;
+           iter.advance(), ++num_members)
       {
         // Create a new member of the object group at this location.
         new_iogr = this->replication_manager_->create_member (
@@ -919,8 +931,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
 
         // Stop adding members when we reach the value of the
         // MinimumNumberReplicas property.
-        if (num_members++ >= fault_event_desc.minimum_number_replicas)
-            break;
+        // if (num_members++ >= fault_event_desc.minimum_number_replicas)
+            // break;
       }
 
     }
@@ -930,6 +942,153 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
     ACE_PRINT_EXCEPTION (
       ACE_ANY_EXCEPTION,
       "TAO::FT_ReplicationManagerFaultAnalyzer::add_members: ");
+    result = -1;
+  }
+  ACE_ENDTRY;
+
+  return result;
+}
+
+// Handle a location failure.
+int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
+  TAO::FT_FaultEventDescriptor & fault_event_desc)
+{
+  int result = 0;
+
+  // To handle a location failure, we should:
+  // - Unregister all the factories at that location.
+  //   (We do this first so that we don't try to create a new replica
+  //   at that location for any of the affected object groups.)
+  // - Determine all the object groups that had members at that
+  //   location.
+  // - Handle each one of them as a single replica failure. 
+
+  ACE_TRY_NEW_ENV
+  {
+    // Get the factory registry from the Replication Manager.
+    PortableGroup::Criteria fake_criteria;
+    PortableGroup::FactoryRegistry_var factory_registry =
+      this->replication_manager_->get_factory_registry (
+        fake_criteria ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Unregister all factories at the failed location.
+    factory_registry->unregister_factory_by_location (
+      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Determine all the object groups that had members at that
+    // location.
+    PortableGroup::ObjectGroups_var object_groups_at_location =
+      this->replication_manager_->groups_at_location (
+      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Handle each one of them as a single replica failure.
+    for (CORBA::ULong i=0;
+         result==0 && i<object_groups_at_location->length();
+         ++i)
+    {
+      // Get the object group id.
+      fault_event_desc.object_group_id =
+        this->replication_manager_->get_object_group_id (
+          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Get type id of this object group.
+      fault_event_desc.type_id =
+        this->replication_manager_->type_id (
+          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Handle it as a single replica failure.
+      result = this->single_replica_failure (fault_event_desc);
+    }
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (
+      ACE_ANY_EXCEPTION,
+      "TAO::FT_ReplicationManagerFaultAnalyzer::location_failure: ");
+    result = -1;
+  }
+  ACE_ENDTRY;
+
+  return result;
+}
+
+// Handle a type failure.
+int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
+  TAO::FT_FaultEventDescriptor & fault_event_desc)
+{
+  int result = 0;
+
+  // To handle a type failure, we should:
+  // - Unregister the factory at the location of the failure
+  //   that is associated with the failed type.
+  //   (We do this first so that we don't try to create a new replica
+  //   with that factory for any of the affected object groups.)
+  // - Determine all the object groups that had members at that
+  //   location of that type.
+  // - Handle each one of them as a single replica failure. 
+
+  ACE_TRY_NEW_ENV
+  {
+    // Get the factory registry from the Replication Manager.
+    PortableGroup::Criteria fake_criteria;
+    PortableGroup::FactoryRegistry_var factory_registry =
+      this->replication_manager_->get_factory_registry (
+        fake_criteria ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Unregister the factory at the failed location associated with
+    // the role.
+    //@@ Using type_id as the role for now.
+    factory_registry->unregister_factory (
+      fault_event_desc.type_id.in(),
+      fault_event_desc.location.in()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Get all the object groups that had members at that
+    // location.
+    PortableGroup::ObjectGroups_var object_groups_at_location =
+      this->replication_manager_->groups_at_location (
+      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // For each one, if it was of the same type as the failed type,
+    // handle it as a single replica failure.
+    for (CORBA::ULong i=0;
+         result==0 && i<object_groups_at_location->length();
+         ++i)
+    {
+      // Get the object group id.
+      fault_event_desc.object_group_id =
+        this->replication_manager_->get_object_group_id (
+          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Get type id of this object group.
+      FT::TypeId_var type_id =
+        this->replication_manager_->type_id (
+          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // If the type id is the same as the failed type id...
+      if (ACE_OS::strcmp (type_id.in(), fault_event_desc.type_id.in()) == 0)
+      {
+        // Handle it as a single replica failure.
+        fault_event_desc.type_id = CORBA::string_dup (type_id.in());
+        result = this->single_replica_failure (fault_event_desc);
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (
+      ACE_ANY_EXCEPTION,
+      "TAO::FT_ReplicationManagerFaultAnalyzer::type_failure: ");
     result = -1;
   }
   ACE_ENDTRY;
@@ -949,3 +1108,4 @@ template class ACE_Unbounded_Set_Iterator<FT::Location>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<FT::Location>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
