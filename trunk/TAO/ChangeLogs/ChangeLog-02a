@@ -1,3 +1,50 @@
+Wed Nov  8 11:05:37 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAOACE.dsw:
+
+          Updated the dependencies for the IFR_Service.
+
+        * examples/POA/Generic_Servant/client.dsp:
+        * examples/POA/Generic_Servant/server.dsp:
+
+          Updated the defines for the Release builds.
+
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/tao_idl.dsp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+
+          Disabled precompiled headers.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+
+          Fixed some non-standard uses of ACE_ASSERT which results in errors
+          on release builds.
+
+          Changed stuff like:
+
+          if (foo == 0)
+            ACE_ASSERT (bar () == 0);
+
+          to
+
+          ACE_ASSERT (foo == 0 && bar () == 0);
+
+        * tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+
+          Disabled Precompiled headers and fixed library paths.
+          
 Wed Nov  8 11:02:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/LifeCycle_Service/Makefile:

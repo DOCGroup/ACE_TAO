@@ -1178,10 +1178,8 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
             str.in ()
           ));
 
-      if (i == 0)
-        ACE_ASSERT (!ACE_OS::strcmp (str.in (), "IDL:my_enum:1.0"));
-      else if (i == 1)
-        ACE_ASSERT (!ACE_OS::strcmp (str.in (), "IDL:my_struct:1.0"));
+      ACE_ASSERT (i == 0 && !ACE_OS::strcmp (str.in (), "IDL:my_enum:1.0"));
+      ACE_ASSERT (i == 1 && !ACE_OS::strcmp (str.in (), "IDL:my_struct:1.0"));
     }
 
   svar->name ("your_struct",
@@ -2678,8 +2676,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
                     i,
                     str.in ()));
 
-      if (i == 0)
-        ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::the_union::u_enum"));
+      ACE_ASSERT (i == 0 && !ACE_OS::strcmp (str.in (), "::the_union::u_enum"));
     }
 
   e_var2->move (s_var.in (),
