@@ -252,6 +252,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
   os->gen_endif ();
+  node->cli_hdr_gen (1);
 
   return 0;
 }
