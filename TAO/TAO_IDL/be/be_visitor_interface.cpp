@@ -1788,7 +1788,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 		be_scope::narrow_from_scope (parent->defined_in())->decl ();
 
 	      *os << "  ACE_NESTED_CLASS ("
-		  << scope->name () << ","
+		  << "POA_" << scope->name () << ","
 		  << parent->local_coll_name ()
 		  << ") (servant, stub)," << be_nl;
 	    }
