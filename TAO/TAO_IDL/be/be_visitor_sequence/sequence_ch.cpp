@@ -98,7 +98,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                   be_visitor_context (*this->ctx_),
                   0);
   be_visitor_sequence_base_template_args visitor (ctx, node);
-  //ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
+  ctx->state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   //be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (bt->accept (&visitor) == -1)
