@@ -150,7 +150,7 @@ ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
-  for (i = 0; i < 2 && !feof (this->infile_); ++i)
+  for (; i < 2 && !feof (this->infile_); ++i)
     {
       input[i] = ACE_OS::fgetwc (this->infile_);
     }
@@ -199,7 +199,7 @@ ACEXML_FileCharStream::peek_i (void)
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
-  for (i = 0; i < 2 && !feof (this->infile_); ++i)
+  for (; i < 2 && !feof (this->infile_); ++i)
     {
       input[i] = ACE_OS::fgetwc (this->infile_);
     }
