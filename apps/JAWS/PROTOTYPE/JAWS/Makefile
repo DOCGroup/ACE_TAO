@@ -14,6 +14,8 @@ LIB = libJAWS.a
 SHLIB = libJAWS.$(SOEXT)
 
 MYFILES  	= \
+        Headers \
+        Parse_Headers \
 	Waiter \
 	Reaper \
 	Pipeline \

@@ -241,7 +241,7 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   JAWS_TRACE ("JAWS_Asynch_IO::accept");
 
   JAWS_Data_Block *db = ioh->message_block ();
-  ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
+  //ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
 
   //JAWS_Asynch_IO_Handler *aioh =
   //  ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
