@@ -56,6 +56,37 @@ TAO_ORB_Parameters::name_service_port (void)
   return this->name_service_port_;
 }
 
+
+void 
+TAO_ORB_Parameters::trading_service_ior (CORBA::String ns)
+{
+  this->trading_service_ior_ = ns;
+}
+
+// Set the IOR of our trading service.
+
+CORBA::String 
+TAO_ORB_Parameters::trading_service_ior (void)
+{
+  return this->trading_service_ior_;
+}
+
+// Get the IOR of our trading service.
+
+void 
+TAO_ORB_Parameters::trading_service_port (CORBA::UShort port)
+{
+  this->trading_service_port_ = port;
+}
+
+// Set the port of our trading service.
+
+CORBA::UShort 
+TAO_ORB_Parameters::trading_service_port (void)
+{
+  return this->trading_service_port_;
+}
+
 void 
 TAO_OA_Parameters::demux_strategy (const char* strategy)
 {

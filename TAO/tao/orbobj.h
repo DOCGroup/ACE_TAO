@@ -28,10 +28,17 @@
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return something
 // useful.
-#define TAO_OBJID_NAMESERVICE   "NameService"
-#define TAO_OBJID_ROOTPOA       "RootPOA"
-#define TAO_OBJID_POACURRENT    "POACurrent"
-#define TAO_OBJID_INTERFACEREP  "InterfaceRepository"
+#define TAO_OBJID_NAMESERVICE      "NameService"
+#define TAO_OBJID_TRADINGSERVICE   "TradingService"
+#define TAO_OBJID_ROOTPOA          "RootPOA"
+#define TAO_OBJID_POACURRENT       "POACurrent"
+#define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
+
+typedef enum
+{
+  TAO_SERVICEID_NAMESERVICE,
+  TAO_SERVICEID_TRADINGSERVICE
+} TAO_Service_ID; 
 
 class TAO_Export CORBA_ORB : public TAO_IUnknown
   // = TITLE
@@ -181,12 +188,19 @@ private:
   CORBA_Object_ptr resolve_name_service (void);
   // Resolve the name service object reference.
 
+  CORBA_Object_ptr resolve_trading_service (void);
+  // Resolve the trading object reference.
+
+  CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
+					 u_short port);
+  // Resolve the refernce of a service of type <name>.
+  
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
-
+  
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.
-
+  
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> open_called_;
@@ -208,6 +222,10 @@ private:
   // If this is non-_nil(), then this is the object reference to our
   // configured Event Channel.
 
+  CORBA_Object_ptr trading_service_;
+  // If this is non-_nil(), then this is the object reference to our
+  // configured Trading.
+  
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);
