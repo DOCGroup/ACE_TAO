@@ -22,7 +22,8 @@ ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
 
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core)
-  : message_handler_ (orb_core),
+  : message_handler_ (orb_core,
+                      this),
     output_ (0),
     cdr_buffer_alloc_ (
         orb_core->resource_factory ()->output_cdr_buffer_allocator ()
@@ -198,26 +199,26 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
+  /*if (TAO_debug_level >= 4)
+    {
+      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
+      // At this point we could have parsed the
+      char *buf = this->message_handler_.rd_ptr ();
+      buf -= len;
+      size_t msg_len =
+        state.message_size + len;
+      this->dump_msg ("recv",
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
+                        msg_len);
+                        }*/
 
   int retval =  this->message_handler_.is_message_ready ();
 
   if (retval == 1)
     {
-      if (TAO_debug_level >= 4)
-        {
-          size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
-          char *buf = this->message_handler_.rd_ptr ();
-          buf -= len;
-          size_t msg_len =
-            state.message_size + len;
-
-          this->dump_msg ("recv",
-                          ACE_reinterpret_cast (u_char *,
-                                            buf),
-                          msg_len);
-        }
     }
   return retval;
 }
@@ -248,6 +249,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 
   CORBA::ULong bodylen = total_len - header_len;
 
+  cout << "Length of the message " << bodylen <<endl;
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
 #else
@@ -268,7 +270,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
-                      stream.length ());
+                      bodylen);
     }
 
   return 0;
@@ -1182,26 +1184,11 @@ TAO_GIOP_Message_Base::more_messages (void)
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
-  if (TAO_debug_level >= 4)
-    {
-      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-      char *buf = this->message_handler_.rd_ptr ();
-      buf -= len;
-      size_t msg_len =
-        state.message_size + len;
-
-      this->dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *,
-                                            buf),
-                      msg_len);
-    }
-
   retval =  this->message_handler_.is_message_ready ();
 
   if (retval == 1)
     {
-      if (TAO_debug_level >= 4)
+      /*if (TAO_debug_level >= 4)
         {
           size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
@@ -1214,7 +1201,7 @@ TAO_GIOP_Message_Base::more_messages (void)
                           ACE_reinterpret_cast (u_char *,
                                                 buf),
                           msg_len);
-        }
+                          }*/
 
       // We have a message ready. This can be processed by the higher
       // layers

@@ -40,6 +40,9 @@ TAO_GIOP_Message_Handler::reset (int /*reset_flag*/)
 ACE_INLINE char *
 TAO_GIOP_Message_Handler::rd_ptr (void) const
 {
+  if (this->supp_buffer_.length () > 0)
+    return this->supp_buffer_.rd_ptr ();
+
   return this->current_buffer_.rd_ptr ();
 }
 

@@ -50,7 +50,10 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp Smart_Proxies.h \
- $(ACE_ROOT)/ace/pre.h smartproxies_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ smartproxies_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -150,6 +153,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i Smart_Proxies.inl
+ $(TAO_ROOT)/tao/Object.i \
+ Smart_Proxies.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
