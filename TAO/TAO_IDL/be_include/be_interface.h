@@ -107,6 +107,9 @@ protected:
 
   be_interface *node_;
   // The node we strategize
+
+  int cached_type_;
+  // Current cached collocated name.
 };
 
 
