@@ -43,7 +43,14 @@ CM_Server::receive (int)
 {
   // It would be nice to use ACE_SOCKET_LEN here, but that's only
   // defined in ace/OS.i.
-  u_int sin_len = sizeof this->sin_;
+#if defined (ACE_HAS_SOCKLEN_T)
+  socklen_t sin_len =
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
+  size_t sin_len =
+#else
+  int sin_len =
+#endif /* ACE_HAS_SIZET_SOCKET_LEN */
+    sizeof this->sin_;
 
   if (Options::get_opt (Options::DEBUG) != 0)
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
