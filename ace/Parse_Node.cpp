@@ -630,7 +630,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 {
   ACE_TRACE ("ACE_Static_Function_Node::symbol");
 
-  void *(*func)(ACE_Service_Object_Exterminator *);
+  void *(*func)(ACE_Service_Object_Exterminator *) = 0;
   this->symbol_ = 0;
 
   // Locate the factory function <function_name> in the statically
