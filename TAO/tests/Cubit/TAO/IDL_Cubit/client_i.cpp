@@ -87,7 +87,9 @@ Cubit_Client::Cubit_Client (void)
     error_count_ (0),
     cubit_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1)
+    use_naming_service_ (1),
+    only_void_ (0),
+    only_oneway_ (0)
 {
 }
 
@@ -129,13 +131,19 @@ Cubit_Client::read_ior (char *filename)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "ovdn:f:k:xs");
   int c;
   int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'v':
+	this->only_void_ = 1;
+	break;
+      case 'o':
+	this->only_oneway_ = 1;
+	break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
@@ -647,6 +655,12 @@ Cubit_Client::print_stats (const char *call_name,
 int
 Cubit_Client::run (int testing_collocation)
 {
+  if (this->only_void_)
+    return this->run_void ();
+
+  if (this->only_oneway_)
+    return this->run_oneway ();
+
   u_int i;
 
   ACE_Profile_Timer timer;
@@ -847,6 +861,51 @@ Cubit_Client::run (int testing_collocation)
       dexc (this->env_, "server, please ACE_OS::exit");
     }
 
+
+  return this->error_count_ == 0 ? 0 : 1;
+}
+
+int
+Cubit_Client::run_oneway (void)
+{
+  u_int i;
+
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+  //  ACE_Time_Value before;
+
+
+  // ONEWAY
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_oneway (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_oneway", elapsed_time);
+
+  return this->error_count_ == 0 ? 0 : 1;
+}
+
+int
+Cubit_Client::run_void (void)
+{
+  u_int i;
+
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+  //  ACE_Time_Value before;
+
+  // VOID
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_void (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_void", elapsed_time);
 
   return this->error_count_ == 0 ? 0 : 1;
 }

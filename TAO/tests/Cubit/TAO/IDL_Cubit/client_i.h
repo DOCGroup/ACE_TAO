@@ -90,6 +90,12 @@ private:
   void cube_octet_sequence (int i, int l);
   // Cube a sequence of octets, <l> is the length of the sequence.
 
+  int run_void (void);
+  // This method runs only the cube_void() test.
+
+  int run_oneway (void);
+  // This method runs only the cube_oneway() test.
+
   int argc_;
   // # of arguments on the command line.
 
@@ -135,4 +141,10 @@ private:
   int use_naming_service_;
   // Flag to tell client not to use Namingservice to find the cubit
   // Factory.
+
+  int only_void_;
+  // Run only the cube_void() test.
+
+  int only_oneway_;
+  // Run only the cube_oneway() test.
 };
