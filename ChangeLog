@@ -1,3 +1,9 @@
+Sun Jul 25 22:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+
+	  Makefile with release information.
+
 Fri Jul 23 16:08:21 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (accept): Added a check whether addr == 0
