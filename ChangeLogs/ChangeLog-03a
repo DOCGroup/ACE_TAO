@@ -1,3 +1,10 @@
+Tue Jul 24 10:07:31 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+
+          Add an optimize override to 0 for g++ 3.0.  The compiler breaks on
+          a tremendous amount of files, even with -O.
+
 Tue Jul 24 10:04:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/INET_Addr.cpp:

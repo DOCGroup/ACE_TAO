@@ -66,3 +66,10 @@ PRELIB          = @true
 PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11
 PLATFORM_X11_LDFLAGS=
+
+## Unfortunately, gcc 3.0 fails to many cpp files with
+## optimization enabled.  Even -O causes the compiler
+## to core dump on some files.
+ifeq ($(shell $(CXX) --version),3.0)
+  override optimize = 0
+endif
