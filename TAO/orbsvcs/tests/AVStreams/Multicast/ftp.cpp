@@ -62,7 +62,7 @@ FTP_Client_Callback::handle_timeout (void *)
     }
   if (n == 0)
     {
-      if (::feof (CLIENT::instance ()->file ()))
+      if (feof (CLIENT::instance ()->file ()))
         {
           // wait for sometime for the data to be flushed to the other side.
           this->count_++;
@@ -132,7 +132,7 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
 // {
 //   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
 //   ACE_Time_Value delta = ACE_Time_Value::zero;
-//   this->timer_id_ =  
+//   this->timer_id_ =
 //     TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
 //                                                           0,
 //                                                           delta,
@@ -224,9 +224,9 @@ Client::parse_args (int argc,
                     char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"f:a:p:s");
-  
+
   this->use_sfp_ = 0;
-  char c;
+  int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
@@ -400,7 +400,7 @@ Client::run (void)
                                         &addr);
       flow_spec [0] = entry.entry_to_string ();
       flow_spec.length (1);
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
                                      AVStreams::MMDevice::_nil (),
                                      the_qos.inout (),
@@ -408,7 +408,7 @@ Client::run (void)
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice1") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
                           -1);
       result = this->streamctrl_.bind_devs (AVStreams::MMDevice::_nil (),
@@ -418,7 +418,7 @@ Client::run (void)
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice2") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
                           -1);
       result = this->streamctrl_.bind_devs (AVStreams::MMDevice::_nil (),
@@ -468,6 +468,6 @@ template class TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO
 template class TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
