@@ -15,7 +15,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>::ACE_Timer_List_Iterator_T (ACE_Timer_L
 
 
 template <class TYPE, class FUNCTOR> int
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>::next (NODE *&node,
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>::next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&node,
 						const ACE_Time_Value &cur_time)
 {
   if (this->timer_list_.head_ == 0 
@@ -31,7 +31,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>::next (NODE *&node,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Timer_List_T)
 
-  template <class TYPE, class FUNCTOR> ACE_Timer_Queue_T<TYPE, FUNCTOR>::ITERATOR &
+template <class TYPE, class FUNCTOR> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &
 ACE_Timer_List_T<TYPE, FUNCTOR>::iter (void)
 {
   return this->iterator_;
@@ -41,7 +41,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::iter (void)
 
 template <class TYPE, class FUNCTOR> 
 ACE_Timer_List_T<TYPE, FUNCTOR>::ACE_Timer_List_T (FUNCTOR *upcall_functor)
-  : INHERITED (upcall_functor),
+  : ACE_Timer_Queue_T<TYPE, FUNCTOR> (upcall_functor),
     head_ (0),
     iterator_ (*this),
     timer_id_ (0)
@@ -60,7 +60,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::is_empty (void) const
 }
 
 
-template <class TYPE, class FUNCTOR> ACE_Timer_Queue_T<TYPE, FUNCTOR>::NODE *
+template <class TYPE, class FUNCTOR> ACE_Timer_Node_T<TYPE, FUNCTOR> *
 ACE_Timer_List_T<TYPE, FUNCTOR>::alloc_node (void)
 {
   return new NODE;
@@ -68,7 +68,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::alloc_node (void)
 
 
 template <class TYPE, class FUNCTOR> void
-ACE_Timer_List_T<TYPE, FUNCTOR>::free_node (NODE *node)
+ACE_Timer_List_T<TYPE, FUNCTOR>::free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *node)
 {
   delete node;
 }
@@ -117,7 +117,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::dump (void) const
 
 
 template <class TYPE, class FUNCTOR> void 
-ACE_Timer_List_T<TYPE, FUNCTOR>::reschedule (NODE *expired)
+ACE_Timer_List_T<TYPE, FUNCTOR>::reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *expired)
 {
   ACE_TRACE ("ACE_Timer_List::reschedule");
   if (this->is_empty () 
@@ -250,7 +250,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (int timer_id,
       if (dont_call == 0)
 	// This calls the correct operator () on the functor (the one with
 	// two args)
-	this->upcall_functor_ (*this, curr->type_);
+	this->upcall_functor_.operator () (*this, curr->type_);
       this->free_node (curr);
       return 1;
     }
@@ -283,7 +283,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
 	      && number_of_cancellations == 1)	  
 	    // This calls the correct operator () on the functor (the one with
 	    // two args)
-	    this->upcall_functor_ (*this, curr->type_);
+	    this->upcall_functor_.operator () (*this, curr->type_);
 	  if (prev == 0)
 	    {
 	      this->head_ = curr->next_;
