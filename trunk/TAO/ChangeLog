@@ -1,3 +1,9 @@
+Tue Oct 21 01:39:44 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h:
+          Modified the typedef to Dynamic_Bitset::reference::size_type to
+          make Forte compiler happy.
+
 Tue Oct 21 05:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
@@ -5,25 +11,25 @@ Tue Oct 21 05:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 20 21:55:41 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
-        * orbsvcs/orbsvcs/FtRtEventClientORB/FTRT_ClientORB_Loader.cpp:
-        * orbsvcs/orbsvcs/FtRtEventClientORB/FTRT_ClientORB_Loader.h:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Fault_Detector_Loader.cpp:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Fault_Detector_Loader.h:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Identification_Service.cpp:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Identification_Service.h:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Replication_Service.cpp:
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Replication_Service.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.h:
           Remove redundant semicolon in the ACE_FACTORY_DEFINE, ACE_STATIC_SVC_REQUIRE
           and ACE_STATIC_SVC_DEFINE.
 
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
           Fixed the problem to access pointer to member using var object, Forte compiler
           do not accept it.
 
-        * orbsvcs/orbsvcs/FtRtEventEventChannel/Dynamic_Bitset.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h:
           Added typedef to Dynamic_Bitset::reference::size_type.
 
-        * orbsvcs/orbsvcs/FtRtEventUtils/UUID.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp
           Added missed semicolon.
 
 Mon Oct 20 14:58:00 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
