@@ -18,11 +18,13 @@ ACE_RMCast_Membership::~ACE_RMCast_Membership (void)
 int
 ACE_RMCast_Membership::ack (ACE_RMCast::Ack &ack)
 {
+  //  ACE_DEBUG ((LM_DEBUG, "ACE_RMCast_Membership::ack\n"));
   Proxy_Iterator end = this->proxies_.end ();
   Proxy_Iterator i = this->proxies_.begin ();
   if (i == end)
     return 0;
 
+  // ACE_DEBUG ((LM_DEBUG, "ACE_RMCast_Membership::ack[2]\n"));
   ACE_RMCast::Ack next_ack;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
@@ -30,11 +32,13 @@ ACE_RMCast_Membership::ack (ACE_RMCast::Ack &ack)
       {
         // @@ This violates an invariant of the class, shouldn't
         // happen...
+        // ACE_DEBUG ((LM_DEBUG, "ACE_RMCast_Membership::ack[3]\n"));
         return -1;
       }
     else if (ack.highest_in_sequence == this->highest_in_sequence_)
       {
         // Nothing new, just continue....
+        // ACE_DEBUG ((LM_DEBUG, "ACE_RMCast_Membership::ack[4]\n"));
         return 0;
       }
     // Possible update, re-evaluate the story...
@@ -52,12 +56,15 @@ ACE_RMCast_Membership::ack (ACE_RMCast::Ack &ack)
         if (r > highest_received)
           highest_received = r;
       }
+#if 0
     if (this->highest_in_sequence_ >= highest_in_sequence
-        || this->highest_received_ < highest_received)
+        || this->highest_received_ >= highest_received)
       {
         // No change....
+        // ACE_DEBUG ((LM_DEBUG, "ACE_RMCast_Membership::ack[5]\n"));
         return 0;
       }
+#endif /* 0 */
     this->highest_in_sequence_ = highest_in_sequence;
     this->highest_received_ = highest_received;
     if (this->next () == 0)
@@ -84,10 +91,7 @@ ACE_RMCast_Membership::join (ACE_RMCast::Join &join)
       return -1;
   }
 
-  if (this->next () == 0)
-    return 0;
-
-  return this->next ()->join (join);
+  return this->ACE_RMCast_Module::join (join);
 }
 
 int
@@ -98,18 +102,16 @@ ACE_RMCast_Membership::leave (ACE_RMCast::Leave &leave)
 
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-    if (this->proxies_.remove (leave.source) == -1)
-      return 0;
+    (void) this->proxies_.remove (leave.source);
   }
 
-  if (this->next () == 0)
-    return 0;
-
-  return this->next ()->leave (leave);
+  return this->ACE_RMCast_Module::leave (leave);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Unbounded_Set<ACE_RMCast_Proxy*>;
+template class ACE_Unbounded_Set_Iterator<ACE_RMCast_Proxy*>;
+template class ACE_Node<ACE_RMCast_Proxy*>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
