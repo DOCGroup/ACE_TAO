@@ -1,3 +1,7 @@
+Fri Feb 05 16:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Simulator/README: Documented DualEC_Sup.
+
 Fri Feb 05 16:05:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java:
