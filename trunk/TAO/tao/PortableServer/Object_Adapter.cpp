@@ -357,7 +357,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator end = ipn.end ();
 
   TAO_POA *parent = this->root_;
-  if (parent->name () != *iterator)
+  if (parent == 0 || parent->name () != *iterator)
     ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                       -1);
   else
@@ -426,7 +426,8 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                                poa);
     }
 
-  if (result == 0 && poa->creation_time () != poa_creation_time)
+  if (poa == 0
+      || (result == 0 && poa->creation_time () != poa_creation_time))
     result = -1;
 
   return result;
@@ -588,16 +589,21 @@ TAO_Object_Adapter::close (int wait_for_completion,
   // destroyed. In the case of the POA, this means that all object
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
-  if (this->root_ != 0)
-    {
-      CORBA::Boolean etherealize_objects = 1;
-      this->root_->destroy (etherealize_objects,
-                            wait_for_completion,
-                            ACE_TRY_ENV);
-      ACE_CHECK;
-      CORBA::release (this->root_);
-      this->root_ = 0;
-    }
+
+  TAO_POA *root;
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
+    if (this->root_ == 0)
+      return;
+    root = this->root_;
+    this->root_ = 0;
+  }
+  CORBA::Boolean etherealize_objects = 1;
+  root->destroy (etherealize_objects,
+                 wait_for_completion,
+                 ACE_TRY_ENV);
+  ACE_CHECK;
+  CORBA::release (root);
 }
 
 void
