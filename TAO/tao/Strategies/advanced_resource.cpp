@@ -526,6 +526,9 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
 
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> LOCKED_MALLOC;
+typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
+
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator (void)
 {
@@ -552,9 +555,14 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
-    default:
       ACE_NEW_RETURN (allocator,
                       NULL_LOCK_ALLOCATOR,
+                      0);
+      break;
+    case TAO_ALLOCATOR_THREAD_LOCK:
+    default:
+      ACE_NEW_RETURN (allocator,
+                      LOCKED_ALLOCATOR,
                       0);
       break;
     }

@@ -7,7 +7,7 @@
 #include "ace/Sched_Params.h"
 #include "testC.h"
 
-//#include "tao/Strategies/advanced_resource.h"
+#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(Latency, client, "$Id$")
 
@@ -143,19 +143,25 @@ main (int argc, char *argv[])
 
       Client* client;
       ACE_NEW_RETURN (client, Client[nthreads], 1);
-
+      
       for (int i = 0; i != nthreads; ++i)
         {
           client[i].set (server.in (), niterations);
+          cout << __LINE__ << " " << "i is " << i << endl;
           if (client[i].activate (THR_NEW_LWP | THR_JOINABLE) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot activate client threads\n"),
                               1);
         }
 
+      cout << __FILE__ << __LINE__ << endl;
       ACE_Thread_Manager::instance ()->wait ();
 
+      cout << __FILE__ << __LINE__ << endl;
+
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+
+      cout << __FILE__ << __LINE__ << endl;
 
       ACE_Throughput_Stats throughput;
 
