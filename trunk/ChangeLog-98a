@@ -1,3 +1,10 @@
+Wed Jan 14 06:45:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i: Fixed typo in ACE_Time_Value::operator const timeval *
+          definition.  (select's): cast the ACE_Time_Value to a
+          const timeval * and then to a timeval * so that they will
+          compile.
+
 Tue Jan 13 16:31:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Changed the signature of ACE_Time_Value::operator
