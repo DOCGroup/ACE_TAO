@@ -1028,10 +1028,6 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) consolidate_message [%d] \n",
-              n));
-
   // If we had gooten a EWOULDBLOCK n would be equal to zero. But we
   // have to put the message in the queue anyway. So let us proceed
   // to do that and return...
