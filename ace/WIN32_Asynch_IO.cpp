@@ -236,7 +236,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -467,7 +467,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result (voi
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -687,7 +687,7 @@ ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -910,7 +910,7 @@ ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  (void)
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1151,7 +1151,7 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance 
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1447,7 +1447,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result (v
 {
 }
 
-// Base class operations. These operations are here to kill some
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1616,6 +1616,6 @@ ACE_Proactor *
 ACE_WIN32_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
-}
+} 
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */
