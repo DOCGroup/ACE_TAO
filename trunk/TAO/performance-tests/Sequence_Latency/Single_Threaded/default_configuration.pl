@@ -39,7 +39,7 @@ $SV = new PerlACE::Process ("server",
 $CL = new PerlACE::Process ("client",
                             "-ORBSvcConf $defaultconf"
                             . " -t $type -k file://$iorfile"
-                            . " -i 50000");
+                            . " -i 150000");
 
 $SV->Spawn ();
 
