@@ -541,7 +541,7 @@ TAO_IIOP_Profile::is_equivalent (TAO_Profile *other_profile,
   return (  (this->port_       == op->port_)
          && (this->object_key_ == op->object_key_)
          && (ACE_OS::strcmp (this->host_, op->host_) == 0)
-         && (this->version ()  == op->version ()));
+         && (this->version_    == op->version_));
 }
 
 CORBA::ULong
