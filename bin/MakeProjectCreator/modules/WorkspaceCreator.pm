@@ -61,12 +61,13 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
+  my($hierarchy) = shift;
   my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, 'workspace');
+                                $feature, $hierarchy, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
@@ -593,6 +594,83 @@ sub save_project_info {
 }
 
 
+sub topname {
+  my($self) = shift;
+  my($file) = shift;
+  my($dir)  = '.';
+  my($rest) = $file;
+  if ($file =~ /^([^\/\\]+)[\/\\](.*)/) {
+    $dir  = $1;
+    $rest = $2;
+  }
+  return $dir, $rest;
+}
+
+
+sub generate_hierarchy {
+  my($self)      = shift;
+  my($generator) = shift;
+  my($origproj)  = shift;
+  my($originfo)  = shift;
+  my($current)   = undef;
+  my(@saved)     = ();
+  my(%sinfo)     = ();
+  my($cwd)       = $self->getcwd();
+
+  ## Make a copy of these.  We will be modifying them.
+  my(@projects)  = sort @{$origproj};
+  my(%projinfo)  = %{$originfo};
+
+  foreach my $prj (@projects) {
+    my($top, $rest) = $self->topname($prj);
+
+
+    if (!defined $current) {
+      $current = $top;
+      push(@saved, $rest);
+      $sinfo{$rest} = $projinfo{$prj};
+    }
+    elsif ($top ne $current) {
+      ## Write out the hierachical workspace
+      $self->cd($current);
+      $self->generate_hierarchy($generator, \@saved, \%sinfo);
+
+      $self->{'projects'}       = \@saved;
+      $self->{'project_info'}   = \%sinfo;
+      $self->{'workspace_name'} = $self->base_directory();
+      my($status, $error) = $self->write_workspace($generator);
+      if (!$status) {
+        print STDERR "$error\n";
+      }
+      $self->cd($cwd);
+
+      ## Start the next one
+      $current = $top;
+      @saved = ($rest);
+      %sinfo = ();
+      $sinfo{$rest} = $projinfo{$prj};
+    }
+    else {
+      push(@saved, $rest);
+      $sinfo{$rest} = $projinfo{$prj};
+    }
+  }
+  if (defined $current && $current ne '.') {
+    $self->cd($current);
+    $self->generate_hierarchy($generator, \@saved, \%sinfo);
+
+    $self->{'projects'}       = \@saved;
+    $self->{'project_info'}   = \%sinfo;
+    $self->{'workspace_name'} = $self->base_directory();
+    my($status, $error) = $self->write_workspace($generator);
+    if (!$status) {
+      print STDERR "$error\n";
+    }
+    $self->cd($cwd);
+  }
+}
+
+
 sub generate_project_files {
   my($self)      = shift;
   my($status)    = (scalar @{$self->{'project_files'}} == 0 ? 1 : 0);
@@ -689,7 +767,8 @@ sub generate_project_files {
           ## If we need to generate a workspace file per project
           ## then we generate a temporary project info and projects
           ## array and call write_project().
-          if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
+          if ($dir ne '.' && defined $$gen[0] &&
+              $self->workspace_per_project() && !$self->get_hierarchy()) {
             my(%perpi)       = ();
             my(@perprojects) = ();
             $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
@@ -738,6 +817,12 @@ sub generate_project_files {
       ## This one was excluded, so status is ok
       $status = 1;
     }
+  }
+
+  if ($self->get_hierarchy()) {
+    my($orig) = $self->{'workspace_name'};
+    $self->generate_hierarchy($generator, \@projects, \%pi);
+    $self->{'workspace_name'} = $orig;
   }
 
   $self->{'projects'}     = \@projects;
@@ -943,6 +1028,7 @@ sub project_creator {
                    $parameters{'baseprojs'},
                    $self->{'global_feature_file'},
                    $parameters{'feature_file'},
+                   $parameters{'hierarchy'},
                    $self->make_coexistence());
 }
 
