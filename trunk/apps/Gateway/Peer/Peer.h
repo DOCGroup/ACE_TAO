@@ -100,9 +100,6 @@ protected:
     // We'll allow up to 16 megabytes to be queued per-output
     // channel!!!!  This is clearly a policy in search of
     // refinement...
-
-    DEFAULT_TIMEOUT = 60
-    // By default, disconnect the <Peer_Handler> every minute.
   };
 
   virtual int recv (ACE_Message_Block *&);
