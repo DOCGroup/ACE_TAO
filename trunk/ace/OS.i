@@ -4191,7 +4191,7 @@ ACE_OS::event_reset (ACE_event_t *event)
 ACE_INLINE u_long
 ACE_Flow_Spec::token_rate (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->TokenRate;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4201,7 +4201,7 @@ ACE_Flow_Spec::token_rate (void)
 ACE_INLINE void
 ACE_Flow_Spec::token_rate (u_long tr)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenRate = tr;
 #else
   ACE_UNUSED_ARG (tr);
@@ -4211,7 +4211,7 @@ ACE_Flow_Spec::token_rate (u_long tr)
 ACE_INLINE u_long
 ACE_Flow_Spec::token_bucket_size (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->TokenBucketSize;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4221,7 +4221,7 @@ ACE_Flow_Spec::token_bucket_size (void)
 ACE_INLINE void
 ACE_Flow_Spec::token_bucket_size (u_long tbs)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenBucketSize = tbs;
 #else
   ACE_UNUSED_ARG (tbs);
@@ -4231,7 +4231,7 @@ ACE_Flow_Spec::token_bucket_size (u_long tbs)
 ACE_INLINE u_long
 ACE_Flow_Spec::peak_bandwidth (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->PeakBandwidth;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4241,7 +4241,7 @@ ACE_Flow_Spec::peak_bandwidth (void)
 ACE_INLINE void
 ACE_Flow_Spec::peak_bandwidth (u_long pb)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->PeakBandwidth = pb;
 #else
   ACE_UNUSED_ARG (pb);
@@ -4251,7 +4251,7 @@ ACE_Flow_Spec::peak_bandwidth (u_long pb)
 ACE_INLINE u_long
 ACE_Flow_Spec::latency (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->Latency;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4261,7 +4261,7 @@ ACE_Flow_Spec::latency (void)
 ACE_INLINE void
 ACE_Flow_Spec::latency (u_long l)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->Latency = l;
 #else
   ACE_UNUSED_ARG (l);
@@ -4271,7 +4271,7 @@ ACE_Flow_Spec::latency (u_long l)
 ACE_INLINE u_long
 ACE_Flow_Spec::delay_variation (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->DelayVariation;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4280,7 +4280,7 @@ ACE_Flow_Spec::delay_variation (void)
 ACE_INLINE void
 ACE_Flow_Spec::delay_variation (u_long dv)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->DelayVariation = dv;
 #else
   ACE_UNUSED_ARG (dv);
@@ -4290,7 +4290,8 @@ ACE_Flow_Spec::delay_variation (u_long dv)
 ACE_INLINE ACE_SERVICE_TYPE
 ACE_Flow_Spec::service_type (void)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   return this->ServiceType;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4300,7 +4301,8 @@ ACE_Flow_Spec::service_type (void)
 ACE_INLINE void
 ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   this->ServiceType = st;
 #else
   ACE_UNUSED_ARG (st);
@@ -4310,7 +4312,8 @@ ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
 ACE_INLINE u_long
 ACE_Flow_Spec::max_sdu_size (void)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   return this->MaxSduSize;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4320,7 +4323,8 @@ ACE_Flow_Spec::max_sdu_size (void)
 ACE_INLINE void
 ACE_Flow_Spec::max_sdu_size (u_long mss)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   this->MaxSduSize = mss;
 #else
   ACE_UNUSED_ARG (mss);
@@ -4330,7 +4334,8 @@ ACE_Flow_Spec::max_sdu_size (u_long mss)
 ACE_INLINE u_long
 ACE_Flow_Spec::minimum_policed_size (void)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   return this->MinimumPolicedSize;
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4340,7 +4345,8 @@ ACE_Flow_Spec::minimum_policed_size (void)
 ACE_INLINE void
 ACE_Flow_Spec::minimum_policed_size (u_long mps)
 {
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINSOCK2_GQOS)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   this->MinimumPolicedSize = mps;
 #else
   ACE_UNUSED_ARG (mps);
@@ -4350,7 +4356,7 @@ ACE_Flow_Spec::minimum_policed_size (u_long mps)
 ACE_INLINE ACE_Flow_Spec
 ACE_QoS::sending_flowspec (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (ACE_Flow_Spec &) this->SendingFlowspec;
 #else
   ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
@@ -4360,7 +4366,7 @@ ACE_QoS::sending_flowspec (void)
 ACE_INLINE void
 ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->SendingFlowspec = (FLOWSPEC) fs;
 #else
   ACE_UNUSED_ARG (fs);
@@ -4370,7 +4376,7 @@ ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
 ACE_INLINE ACE_Flow_Spec
 ACE_QoS::receiving_flowspec (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (ACE_Flow_Spec &) this->ReceivingFlowspec;
 #else
   ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
@@ -4380,7 +4386,7 @@ ACE_QoS::receiving_flowspec (void)
 ACE_INLINE void
 ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->ReceivingFlowspec = (FLOWSPEC) fs;
 #else
   ACE_UNUSED_ARG (fs);
@@ -4390,7 +4396,7 @@ ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
 ACE_INLINE iovec
 ACE_QoS::provider_specific (void)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (iovec &) this->ProviderSpecific;
 #else
   ACE_NOTSUP_RETURN (iovec ());
@@ -4400,7 +4406,7 @@ ACE_QoS::provider_specific (void)
 ACE_INLINE void
 ACE_QoS::provider_specific (const iovec &ps)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->ProviderSpecific = (WSABUF) ((iovec &) ps);
 #else
   ACE_UNUSED_ARG (ps);
@@ -4584,7 +4590,7 @@ ACE_OS::accept (ACE_HANDLE handle,
                 int *addrlen,
                 const ACE_Accept_QoS_Params &qos_params)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen,
@@ -4606,7 +4612,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                    int namelen,
                    const ACE_Connect_QoS_Params &qos_params)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
                                       name,
                                       namelen,
@@ -4637,7 +4643,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                    io_control_code,
                                    in_buffer_p,
@@ -4659,7 +4665,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   ACE_UNUSED_ARG (bytes_returned);
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
-  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4698,7 +4704,7 @@ ACE_OS::connect (ACE_HANDLE handle,
                  const ACE_Connect_QoS_Params &qos_params)
 {
   ACE_TRACE ("ACE_OS::connect");
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
                                      (const sockaddr *) addr,
                                      (ACE_SOCKET_LEN) addrlen,
@@ -5147,7 +5153,7 @@ ACE_OS::socket (int domain,
 {
   ACE_TRACE ("ACE_OS::socket");
 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSASocket (domain,
                                     type,
                                     proto,
@@ -6885,7 +6891,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
   DWORD bytes_received = 0;
   int result = 1;
 
-  // Winsock 2 has WSASend and can do this directly, but Winsock 1 needs
+  // Winsock 2 has WSARecv and can do this directly, but Winsock 1 needs
   // to do the recvs piece-by-piece.
 
 # if (ACE_HAS_WINSOCK2 != 0)
