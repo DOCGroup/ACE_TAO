@@ -63,11 +63,9 @@ ACE_RCSID(tao, TAO_Stub, "$Id$")
       orb_core_ (orb_core),
       orb_ (),
       servant_orb_ (),
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+      #if (TAO_HAS_CORBA_MESSAGING == 1)
       policies_ (0),
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+      #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
       addressing_mode_ (0)
 
 {
@@ -962,46 +960,35 @@ TAO_Sync_Strategy &
 TAO_Stub::sync_strategy (void)
 {
 
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 && \
-     TAO_HAS_SYNC_SCOPE_POLICY == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  Messaging::SyncScopePolicy *policy =
-    this->sync_scope ();
+  int has_synchronization;
+  int scope;
 
-  if (policy != 0)
-    {
-      Messaging::SyncScope scope = policy->synchronization ();
+  this->orb_core_->call_sync_scope_hook (this,
+                                         has_synchronization,
+                                         scope);
 
-      if (scope == Messaging::SYNC_WITH_TRANSPORT ||
-          scope == Messaging::SYNC_WITH_SERVER ||
-          scope == Messaging::SYNC_WITH_TARGET)
-        return this->orb_core_->transport_sync_strategy ();
+  if (has_synchronization == 1)
+    return this->orb_core_->get_sync_strategy (this,
+                                               scope);
 
-      if (scope == Messaging::SYNC_NONE ||
-          scope == Messaging::SYNC_EAGER_BUFFERING)
-        return this->orb_core_->eager_buffering_sync_strategy ();
-
-      if (scope == Messaging::SYNC_DELAYED_BUFFERING)
-        return this->orb_core_->delayed_buffering_sync_strategy ();
-    }
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 &&
-          TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   return this->orb_core_->transport_sync_strategy ();
 }
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-TAO_RelativeRoundtripTimeoutPolicy *
+CORBA::Policy *
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
+  CORBA::Policy *result = 0;
+
+  this->policies_ = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
-    result = this->policies_->relative_roundtrip_timeout ();
+      result = this->policies_->relative_roundtrip_timeout ();
 
   // No need to lock, the object is in TSS storage....
   if (result == 0)
@@ -1027,8 +1014,6 @@ TAO_Stub::relative_roundtrip_timeout (void)
 
   return result;
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -1069,44 +1054,20 @@ TAO_Stub::client_priority (void)
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-TAO_Sync_Scope_Policy *
+CORBA::Policy *
 TAO_Stub::sync_scope (void)
 {
-  TAO_Sync_Scope_Policy *result = 0;
+  CORBA::Policy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
     result = this->policies_->sync_scope ();
-
-  // No need to lock, the object is in TSS storage....
-  if (result == 0)
-    {
-      TAO_Policy_Current &policy_current =
-        this->orb_core_->policy_current ();
-      result = policy_current.sync_scope ();
-    }
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->sync_scope ();
-    }
-
-  if (result == 0)
-    result = this->orb_core_->default_sync_scope ();
-
+  
+  this->orb_core_->stubless_sync_scope (result);
+  
   return result;
 }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

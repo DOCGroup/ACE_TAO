@@ -4,11 +4,7 @@ ACE_INLINE
 TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
   : count_ (0)
 {
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
   this->relative_roundtrip_timeout_ = 0;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -16,11 +12,7 @@ TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
   this->sync_scope_ = 0;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -82,16 +74,12 @@ TAO_Policy_Manager::set_policy_overrides (
   this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::relative_roundtrip_timeout (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->impl_.relative_roundtrip_timeout ();
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -104,16 +92,12 @@ TAO_Policy_Manager::client_priority (void)
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE TAO_Sync_Scope_Policy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::sync_scope (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->impl_.sync_scope ();
 }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -187,15 +171,11 @@ TAO_Policy_Current_Impl::get_policy (
   return this->manager_impl_.get_policy (policy, ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current_Impl::relative_roundtrip_timeout (void) const
 {
   return this->manager_impl_.relative_roundtrip_timeout ();
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -207,15 +187,11 @@ TAO_Policy_Current_Impl::client_priority (void) const
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE TAO_Sync_Scope_Policy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current_Impl::sync_scope (void) const
 {
   return this->manager_impl_.sync_scope ();
 }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -286,17 +262,13 @@ TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
   impl.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current::relative_roundtrip_timeout (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
   return impl.relative_roundtrip_timeout ();
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -310,17 +282,13 @@ TAO_Policy_Current::client_priority (void) const
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE TAO_Sync_Scope_Policy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current::sync_scope (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
   return impl.sync_scope ();
 }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

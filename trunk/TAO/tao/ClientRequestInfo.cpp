@@ -163,7 +163,7 @@ TAO_ClientRequestInfo::response_expected (CORBA::Environment &)
 }
 
 # if (TAO_HAS_CORBA_MESSAGING == 1)
-Messaging::SyncScope 
+CORBA::Short
 TAO_ClientRequestInfo::sync_scope (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

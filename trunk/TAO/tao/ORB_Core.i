@@ -309,15 +309,11 @@ TAO_ORB_Core::get_default_policy (
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
   return this->default_policies_->relative_roundtrip_timeout ();
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -329,15 +325,11 @@ TAO_ORB_Core::default_client_priority (void) const
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE TAO_Sync_Scope_Policy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_sync_scope (void) const
 {
   return this->default_policies_->sync_scope ();
 }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

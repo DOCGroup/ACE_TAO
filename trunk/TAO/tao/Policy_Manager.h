@@ -100,11 +100,7 @@ public:
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout (void) const;
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -112,11 +108,7 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope (void) const;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -154,11 +146,7 @@ private:
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout_;
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -166,11 +154,7 @@ private:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope_;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope_;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -229,11 +213,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA_InvalidPolicies));
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout (void);
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -241,11 +221,7 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope (void);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -295,11 +271,7 @@ public:
                              CORBA::Environment &ACE_TRY_ENV =
                              CORBA::Environment::default_environment ());
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout (void) const;
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -307,11 +279,7 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope (void) const;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -367,11 +335,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA_InvalidPolicies));
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout (void) const;
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -379,11 +343,7 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope (void) const;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
