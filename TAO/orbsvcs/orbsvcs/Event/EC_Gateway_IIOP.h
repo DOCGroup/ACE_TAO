@@ -24,6 +24,9 @@
 #include "orbsvcs/Channel_Clients.h"
 #include "ace/Map_Manager.h"
 
+class TAO_ECG_ConsumerEC_Control;
+class TAO_EC_Gateway_IIOP_Factory;
+
 /**
  * @class TAO_EC_Gateway_IIOP
  *
@@ -90,6 +93,10 @@ public:
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Check whether the consumer event channel is non existent or not
+  CORBA::Boolean consumer_ec_non_existent (CORBA::Boolean_out disconnected
+                                           ACE_ENV_ARG_DECL);
+
   /**
    * Cleanup all consumer proxies we have without trying to tell the
    * consumer that we are going to disconnect. This can be used to cleanup
@@ -109,6 +116,8 @@ private:
 
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub
                           ACE_ENV_ARG_DECL);
+
+  CORBA::Boolean is_consumer_ec_connected_i (void) const;
 
   void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                          const RtecEventComm::EventSet& event ACE_ENV_ARG_DECL);
@@ -172,6 +181,10 @@ protected:
   /// We talk to the EC (as a consumer) using this proxy. We receive the events
   /// from these proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+
+  TAO_ECG_ConsumerEC_Control* ec_control_;
+
+  TAO_EC_Gateway_IIOP_Factory* factory_;
 };
 
 #include /**/ "ace/post.h"

@@ -145,9 +145,9 @@ public:
   int insert (const RtecEventChannelAdmin::Dependency &subscribe);
 
   /**
-   * Insert source/type dependency.  <source> of the event (may be
-   * zero), <type> of the event.  <rt_info> describes the method that
-   * will handle the <source>/<type> events.
+   * Insert source/type dependency.  @a source of the event (may be
+   * zero), @a type of the event.  @a rt_info describes the method that
+   * will handle the source/type events.
    */
   int insert (RtecEventComm::EventSourceID source,
               RtecEventComm::EventType type,
@@ -209,8 +209,8 @@ public:
                            int qos_max_len = 0);
 
   /**
-   * Publish <sid> and <type> that is generate by a method described by
-   * <rtinfo>.  The method generates <type> <ncalls> number of times
+   * Publish @a sid and @a type that is generate by a method described by
+   * <rtinfo>.  The method generates @a type @a ncalls number of times
    * per "iteration."
    */
   int insert (RtecEventComm::EventSourceID sid,
@@ -222,7 +222,7 @@ public:
   /// PushSupplierProxy::connect_push_supplier interface.
   const RtecEventChannelAdmin::SupplierQOS &get_SupplierQOS (void);
 
-  /// Calls this->get_SupplierQOS.
+  /// Calls this->get_SupplierQOS().
   operator const RtecEventChannelAdmin::SupplierQOS &(void);
 
   static void debug (const RtecEventChannelAdmin::SupplierQOS& qos);

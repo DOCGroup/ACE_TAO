@@ -40,6 +40,8 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/ECG_UDP_Out_Endpoint.cpp
       Event/ECG_UDP_Receiver.cpp
       Event/ECG_UDP_Sender.cpp
+      Event/ECG_ConsumerEC_Control.cpp
+      Event/ECG_Reactive_ConsumerEC_Control.cpp
       Event/EC_And_Filter.cpp
       Event/EC_Basic_Factory.cpp
       Event/EC_Basic_Filter_Builder.cpp
@@ -62,6 +64,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/EC_Filter_Builder.cpp
       Event/EC_Gateway.cpp
       Event/EC_Gateway_IIOP.cpp
+      Event/EC_Gateway_IIOP_Factory.cpp
       Event/EC_Group_Scheduling.cpp
       Event/EC_Lifetime_Utils.cpp
       Event/EC_Lifetime_Utils_T.cpp
