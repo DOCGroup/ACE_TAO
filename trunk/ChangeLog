@@ -1,11 +1,18 @@
+Thu Aug  5 23:50:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/ec_use_typed_events.mpb:
+          Changed to inherit from dynamicinterface and ifr_client instead
+          of providing libs and after statements so that dependency chain
+          is complete.
+
 Thu Aug  5 13:17:26 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/ACE.cpp (sock_error): Changed the WSAEWOULDBLOCK message
 	  back to "resource temporarily unavailable" to be consistent with
  	  the UNIX error string.  Thanks to Boris Kaminer
  	  <boris_kaminer@mail.ru> for reporting this.
-	
-	* examples/NT_Service/ntsvc.{h,cpp}: Added a destructor to 
+
+	* examples/NT_Service/ntsvc.{h,cpp}: Added a destructor to
 	  Service that cancels the timer.  Thanks to Scott Harris
  	  <harris_s@ociweb.com> for this fix.
 
