@@ -1,5 +1,5 @@
 --- orig/IFR_BasicC.cpp	Tue Apr 24 23:25:50 2001
-+++ IFR_BasicC.cpp	Tue Apr 24 23:02:55 2001
++++ IFR_BasicC.cpp	Fri May 11 01:22:20 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -1218,6 +1218,19 @@
        ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
        if (is_a == 0)
          return CORBA_SequenceDef::_nil ();
+@@ -15591,9 +14879,9 @@
+ CORBA::Boolean CORBA_SequenceDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+ {
+   if (
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_SequenceDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/SequenceDef:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+   return 1; // success using local knowledge
+   else
 @@ -15642,7 +14930,7 @@
  
  const char* CORBA_SequenceDef::_interface_repository_id (void) const
@@ -1688,13 +1701,12 @@
  }
  
  CORBA::TypeCode_ptr CORBA_AttributeDef::type (
-@@ -21134,259 +20117,29 @@
+@@ -21134,243 +20117,13 @@
      );
  }
  
 -static const CORBA::Long _oc_CORBA_AttributeDef[] =
-+void CORBA_AttributeDescription::_tao_any_destructor (void *x)
- {
+-{
 -  TAO_ENCAP_BYTE_ORDER, // byte order
 -  35,
 -  ACE_NTOHL (0x49444c3a), 
@@ -1713,10 +1725,7 @@
 -  ACE_NTOHL (0x75746544), 
 -  ACE_NTOHL (0x65660000),  // name = CORBA_AttributeDef
 -};
-+  CORBA_AttributeDescription *tmp = ACE_static_cast (CORBA_AttributeDescription*,x);
-+  delete tmp;
-+}
- 
+-
 -static CORBA::TypeCode _tc_TAO_tc_CORBA_AttributeDef (
 -    CORBA::tk_objref,
 -    sizeof (_oc_CORBA_AttributeDef),
@@ -1724,24 +1733,12 @@
 -    0,
 -    sizeof (CORBA_AttributeDef)
 -  );
-+void CORBA_ParameterDescription::_tao_any_destructor (void *x)
-+{
-+  CORBA_ParameterDescription *tmp = ACE_static_cast (CORBA_ParameterDescription*,x);
-+  delete tmp;
-+}
- 
+-
 -CORBA::TypeCode_ptr _tc_CORBA_AttributeDef =
 -  &_tc_TAO_tc_CORBA_AttributeDef;
- 
+-
 -static const CORBA::Long _oc_CORBA_AttributeDescription[] =
-+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-+  
-+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CS_)
-+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CS_
-+
-+  void
-+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_allocate_buffer (CORBA::ULong length)
- {
+-{
 -  TAO_ENCAP_BYTE_ORDER, // byte order
 -  43,
 -  ACE_NTOHL (0x49444c3a), 
@@ -1834,12 +1831,12 @@
 -CORBA::TypeCode_ptr _tc_CORBA_AttributeDescription =
 -  &_tc_TAO_tc_CORBA_AttributeDescription;
 -
--void CORBA_AttributeDescription::_tao_any_destructor (void *x)
--{
--  CORBA_AttributeDescription *tmp = ACE_static_cast (CORBA_AttributeDescription*,x);
--  delete tmp;
--}
--
+ void CORBA_AttributeDescription::_tao_any_destructor (void *x)
+ {
+   CORBA_AttributeDescription *tmp = ACE_static_cast (CORBA_AttributeDescription*,x);
+   delete tmp;
+ }
+ 
 -static const CORBA::Long _oc_CORBA_ParameterDescription[] =
 -{
 -  TAO_ENCAP_BYTE_ORDER, // byte order
@@ -1945,27 +1942,10 @@
 -  &_tc_TAO_tc_CORBA_ParameterDescription;
 -
 -void CORBA_ParameterDescription::_tao_any_destructor (void *x)
--{
--  CORBA_ParameterDescription *tmp = ACE_static_cast (CORBA_ParameterDescription*,x);
--  delete tmp;
--}
--
--
--#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  
--#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CS_)
--#define __TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CS_
--
--  void
--  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_allocate_buffer (CORBA::ULong length)
--  {
--    CORBA_ParameterDescription* tmp = 0;
--    tmp = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (length);
-+    CORBA_ParameterDescription* tmp = 0;
-+    tmp = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (length);
-     
-     if (this->buffer_ != 0)
-     {
++void CORBA_ParameterDescription::_tao_any_destructor (void *x)
+ {
+   CORBA_ParameterDescription *tmp = ACE_static_cast (CORBA_ParameterDescription*,x);
+   delete tmp;
 @@ -21472,138 +20225,6 @@
  
  #endif /* end #if !defined */
@@ -2182,7 +2162,7 @@
  }
  
  CORBA::TypeCode_ptr CORBA_OperationDef::result (
-@@ -25085,472 +23667,70 @@
+@@ -25085,951 +23667,98 @@
      );
  }
  
@@ -2223,45 +2203,9 @@
 -  &_tc_TAO_tc_CORBA_OperationDef;
 +#if !defined (_CORBA_REPOSITORYIDSEQ_CS_)
 +#define _CORBA_REPOSITORYIDSEQ_CS_
-+
-+// *************************************************************
-+// CORBA_RepositoryIdSeq
-+// *************************************************************
  
 -static const CORBA::Long _oc_CORBA_OperationDescription[] =
-+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (void)
-+{}
-+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max) // uses max size
-+  : 
-+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-+  TAO_Unbounded_String_Sequence
-+#else /* TAO_USE_SEQUENCE_TEMPLATES */
-+  TAO_Unbounded_String_Sequence
-+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-+ (max)
-+{}
-+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
-+  : 
-+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-+  TAO_Unbounded_String_Sequence
-+#else /* TAO_USE_SEQUENCE_TEMPLATES */
-+  TAO_Unbounded_String_Sequence
-+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-+ (max, length, buffer, release)
-+{}
-+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (const CORBA_RepositoryIdSeq &seq) // copy ctor
-+  : 
-+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-+  TAO_Unbounded_String_Sequence
-+#else /* TAO_USE_SEQUENCE_TEMPLATES */
-+  TAO_Unbounded_String_Sequence
-+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-+ (seq)
-+{}
-+CORBA_RepositoryIdSeq::~CORBA_RepositoryIdSeq (void) // dtor
-+{}
-+void CORBA_RepositoryIdSeq::_tao_any_destructor (void *x)
- {
+-{
 -  TAO_ENCAP_BYTE_ORDER, // byte order
 -  43,
 -  ACE_NTOHL (0x49444c3a), 
@@ -2308,10 +2252,7 @@
 -  ACE_NTOHL (0x72657375), 
 -  ACE_NTOHL (0x6c740000),  // name = result
 -  CORBA::tk_TypeCode,
-+  CORBA_RepositoryIdSeq *tmp = ACE_static_cast (CORBA_RepositoryIdSeq*,x);
-+  delete tmp;
-+}
- 
+-
 -  5,
 -  ACE_NTOHL (0x6d6f6465), 
 -  ACE_NTOHL (0x0),  // name = mode
@@ -2342,7 +2283,7 @@
 -    ACE_NTOHL (0x4f505f4f), 
 -    ACE_NTOHL (0x4e455741), 
 -    ACE_NTOHL (0x59000000),  // name = OP_ONEWAY
- 
+-
 -  9,
 -  ACE_NTOHL (0x636f6e74), 
 -  ACE_NTOHL (0x65787473), 
@@ -2372,10 +2313,8 @@
 -      CORBA::tk_string, 
 -      0U, // string length
 -      0U,
-+#endif /* end #if !defined */
- 
-+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
- 
+-
+-
 -  11,
 -  ACE_NTOHL (0x70617261), 
 -  ACE_NTOHL (0x6d657465), 
@@ -2437,9 +2376,7 @@
 -        ACE_NTOHL (0x74797065), 
 -        ACE_NTOHL (0x0),  // name = type
 -        CORBA::tk_TypeCode,
-+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CS_)
-+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CS_
- 
+-
 -        9,
 -        ACE_NTOHL (0x74797065), 
 -        ACE_NTOHL (0x5f646566), 
@@ -2701,18 +2638,91 @@
 -  {
 -    CORBA_OperationDescription* tmp = 0;
 -    tmp = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (length);
-+  void
-+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_allocate_buffer (CORBA::ULong length)
-+  {
-+    CORBA_OperationDescription* tmp = 0;
-+    tmp = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (length);
-     
-     if (this->buffer_ != 0)
-     {
-@@ -25636,369 +23816,13 @@
- 
- #endif /* end #if !defined */
- 
+-    
+-    if (this->buffer_ != 0)
+-    {
+-      CORBA_OperationDescription *old = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
+-      
+-      for (CORBA::ULong i = 0; i < this->length_; ++i)
+-        tmp[i] = old[i];
+-      
+-      if (this->release_)
+-        _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (old);
+-      
+-    }
+-    this->buffer_ = tmp;
+-  }
+-  
+-  void
+-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_deallocate_buffer (void)
+-  {
+-    if (this->buffer_ == 0 || this->release_ == 0)
+-      return;
+-    
+-    CORBA_OperationDescription *tmp = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
+-    
+-    _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (tmp);
+-    this->buffer_ = 0;
+-  } 
+-  
+-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Dtor.
+-  {
+-    this->_deallocate_buffer ();
+-  }
+-  
+-  
+-#endif /* end #if !defined */
+-
+-
+-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+-
+-#if !defined (_CORBA_OPDESCRIPTIONSEQ_CS_)
+-#define _CORBA_OPDESCRIPTIONSEQ_CS_
+-
+-// *************************************************************
+-// CORBA_OpDescriptionSeq
+-// *************************************************************
+-
+-CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (void)
+-{}
+-CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max) // uses max size
+-  : 
+-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+-#else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+- (max)
+-{}
+-CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_OperationDescription *buffer, CORBA::Boolean release)
+-  : 
+-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+-#else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+- (max, length, buffer, release)
+-{}
+-CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (const CORBA_OpDescriptionSeq &seq) // copy ctor
+-  : 
+-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+-#else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+- (seq)
+-{}
+-CORBA_OpDescriptionSeq::~CORBA_OpDescriptionSeq (void) // dtor
+-{}
+-void CORBA_OpDescriptionSeq::_tao_any_destructor (void *x)
+-{
+-  CORBA_OpDescriptionSeq *tmp = ACE_static_cast (CORBA_OpDescriptionSeq*,x);
+-  delete tmp;
+-}
+-
+-
+-#endif /* end #if !defined */
+-
 -static const CORBA::Long _oc_CORBA_OpDescriptionSeq[] =
 -{
 -  TAO_ENCAP_BYTE_ORDER, // byte order
@@ -3056,7 +3066,10 @@
 -    0U,
 -
 -};
--
++// *************************************************************
++// CORBA_RepositoryIdSeq
++// *************************************************************
+ 
 -static CORBA::TypeCode _tc_TAO_tc_CORBA_OpDescriptionSeq (
 -    CORBA::tk_alias,
 -    sizeof (_oc_CORBA_OpDescriptionSeq),
@@ -3064,18 +3077,168 @@
 -    0,
 -    sizeof (CORBA_OpDescriptionSeq)
 -  );
--
++CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (void)
++{}
++CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max) // uses max size
++  : 
++#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
++  TAO_Unbounded_String_Sequence
++#else /* TAO_USE_SEQUENCE_TEMPLATES */
++  TAO_Unbounded_String_Sequence
++#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
++ (max)
++{}
++CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
++  : 
++#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
++  TAO_Unbounded_String_Sequence
++#else /* TAO_USE_SEQUENCE_TEMPLATES */
++  TAO_Unbounded_String_Sequence
++#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
++ (max, length, buffer, release)
++{}
++CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (const CORBA_RepositoryIdSeq &seq) // copy ctor
++  : 
++#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
++  TAO_Unbounded_String_Sequence
++#else /* TAO_USE_SEQUENCE_TEMPLATES */
++  TAO_Unbounded_String_Sequence
++#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
++ (seq)
++{}
++CORBA_RepositoryIdSeq::~CORBA_RepositoryIdSeq (void) // dtor
++{}
++void CORBA_RepositoryIdSeq::_tao_any_destructor (void *x)
++{
++  CORBA_RepositoryIdSeq *tmp = ACE_static_cast (CORBA_RepositoryIdSeq*,x);
++  delete tmp;
++}
+ 
 -CORBA::TypeCode_ptr _tc_CORBA_OpDescriptionSeq =
 -  &_tc_TAO_tc_CORBA_OpDescriptionSeq;
--
--
--#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  
+ 
++#endif /* end #if !defined */
+ 
+ #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+   
 -#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CS_)
 -#define __TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CS_
--
--  void
++#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CS_)
++#define __TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CS_
+ 
+   void
 -  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_allocate_buffer (CORBA::ULong length)
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_allocate_buffer (CORBA::ULong length)
+   {
+-    CORBA_AttributeDescription* tmp = 0;
+-    tmp = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (length);
++    CORBA_OperationDescription* tmp = 0;
++    tmp = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (length);
+     
+     if (this->buffer_ != 0)
+     {
+-      CORBA_AttributeDescription *old = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
++      CORBA_OperationDescription *old = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
+       
+       for (CORBA::ULong i = 0; i < this->length_; ++i)
+         tmp[i] = old[i];
+       
+       if (this->release_)
+-        _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (old);
++        _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (old);
+       
+     }
+     this->buffer_ = tmp;
+   }
+   
+   void
+-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_deallocate_buffer (void)
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_deallocate_buffer (void)
+   {
+     if (this->buffer_ == 0 || this->release_ == 0)
+       return;
+     
+-    CORBA_AttributeDescription *tmp = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
++    CORBA_OperationDescription *tmp = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
+     
+-    _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
++    _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (tmp);
+     this->buffer_ = 0;
+   } 
+   
+-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Dtor.
+   {
+     this->_deallocate_buffer ();
+   }
+@@ -26040,175 +23769,147 @@
+ 
+ #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ 
+-#if !defined (_CORBA_ATTRDESCRIPTIONSEQ_CS_)
+-#define _CORBA_ATTRDESCRIPTIONSEQ_CS_
++#if !defined (_CORBA_OPDESCRIPTIONSEQ_CS_)
++#define _CORBA_OPDESCRIPTIONSEQ_CS_
+ 
+ // *************************************************************
+-// CORBA_AttrDescriptionSeq
++// CORBA_OpDescriptionSeq
+ // *************************************************************
+ 
+-CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (void)
++CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (void)
+ {}
+-CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max) // uses max size
++CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max) // uses max size
+   : 
+ #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+ #else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
++  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+ #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  (max)
+ {}
+-CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_AttributeDescription *buffer, CORBA::Boolean release)
++CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_OperationDescription *buffer, CORBA::Boolean release)
+   : 
+ #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+ #else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
++  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+ #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  (max, length, buffer, release)
+ {}
+-CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (const CORBA_AttrDescriptionSeq &seq) // copy ctor
++CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (const CORBA_OpDescriptionSeq &seq) // copy ctor
+   : 
+ #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
++  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
+ #else /* TAO_USE_SEQUENCE_TEMPLATES */
+-  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
++  TAO_Unbounded_Sequence<CORBA_OperationDescription>
+ #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  (seq)
+ {}
+-CORBA_AttrDescriptionSeq::~CORBA_AttrDescriptionSeq (void) // dtor
++CORBA_OpDescriptionSeq::~CORBA_OpDescriptionSeq (void) // dtor
+ {}
+-void CORBA_AttrDescriptionSeq::_tao_any_destructor (void *x)
++void CORBA_OpDescriptionSeq::_tao_any_destructor (void *x)
+ {
+-  CORBA_AttrDescriptionSeq *tmp = ACE_static_cast (CORBA_AttrDescriptionSeq*,x);
++  CORBA_OpDescriptionSeq *tmp = ACE_static_cast (CORBA_OpDescriptionSeq*,x);
+   delete tmp;
+ }
+ 
+ 
+ #endif /* end #if !defined */
+ 
+-static const CORBA::Long _oc_CORBA_AttrDescriptionSeq[] =
 +#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 +  
 +#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CS_)
@@ -3083,85 +3246,7 @@
 +
 +  void
 +  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_allocate_buffer (CORBA::ULong length)
-   {
-     CORBA_AttributeDescription* tmp = 0;
-     tmp = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (length);
-@@ -26017,198 +23841,75 @@
-     this->buffer_ = tmp;
-   }
-   
--  void
--  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_deallocate_buffer (void)
--  {
--    if (this->buffer_ == 0 || this->release_ == 0)
--      return;
--    
--    CORBA_AttributeDescription *tmp = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
--    
--    _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
--    this->buffer_ = 0;
--  } 
--  
--  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
--  {
--    this->_deallocate_buffer ();
--  }
--  
--  
--#endif /* end #if !defined */
--
--
--#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
--
--#if !defined (_CORBA_ATTRDESCRIPTIONSEQ_CS_)
--#define _CORBA_ATTRDESCRIPTIONSEQ_CS_
--
--// *************************************************************
--// CORBA_AttrDescriptionSeq
--// *************************************************************
--
--CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (void)
--{}
--CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max) // uses max size
--  : 
--#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
--#else /* TAO_USE_SEQUENCE_TEMPLATES */
--  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
--#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-- (max)
--{}
--CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_AttributeDescription *buffer, CORBA::Boolean release)
--  : 
--#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
--#else /* TAO_USE_SEQUENCE_TEMPLATES */
--  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
--#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-- (max, length, buffer, release)
--{}
--CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (const CORBA_AttrDescriptionSeq &seq) // copy ctor
--  : 
--#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
--#else /* TAO_USE_SEQUENCE_TEMPLATES */
--  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
--#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-- (seq)
--{}
--CORBA_AttrDescriptionSeq::~CORBA_AttrDescriptionSeq (void) // dtor
--{}
--void CORBA_AttrDescriptionSeq::_tao_any_destructor (void *x)
--{
--  CORBA_AttrDescriptionSeq *tmp = ACE_static_cast (CORBA_AttrDescriptionSeq*,x);
--  delete tmp;
--}
--
--
--#endif /* end #if !defined */
--
--static const CORBA::Long _oc_CORBA_AttrDescriptionSeq[] =
--{
+ {
 -  TAO_ENCAP_BYTE_ORDER, // byte order
 -  41,
 -  ACE_NTOHL (0x49444c3a), 
@@ -3234,7 +3319,9 @@
 -      ACE_NTOHL (0x74797065), 
 -      ACE_NTOHL (0x0),  // name = type
 -      CORBA::tk_TypeCode,
--
++    CORBA_AttributeDescription* tmp = 0;
++    tmp = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (length);
+ 
 -      5,
 -      ACE_NTOHL (0x6d6f6465), 
 -      ACE_NTOHL (0x0),  // name = mode
@@ -3266,24 +3353,33 @@
 -        ACE_NTOHL (0x5f524541), 
 -        ACE_NTOHL (0x444f4e4c), 
 -        ACE_NTOHL (0x59000000),  // name = ATTR_READONLY
++    if (this->buffer_ != 0)
++    {
++      CORBA_AttributeDescription *old = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
++      
++      for (CORBA::ULong i = 0; i < this->length_; ++i)
++        tmp[i] = old[i];
++      
++      if (this->release_)
++        _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (old);
++      
++    }
++    this->buffer_ = tmp;
++  }
+ 
 +  void
 +  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_deallocate_buffer (void)
 +  {
 +    if (this->buffer_ == 0 || this->release_ == 0)
 +      return;
  
+-    0U,
 +    CORBA_AttributeDescription *tmp = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
  
--    0U,
+-};
 +    _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
 +    this->buffer_ = 0;
 +  } 
- 
--};
-+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
-+  {
-+    this->_deallocate_buffer ();
-+  }
  
 -static CORBA::TypeCode _tc_TAO_tc_CORBA_AttrDescriptionSeq (
 -    CORBA::tk_alias,
@@ -3292,9 +3388,12 @@
 -    0,
 -    sizeof (CORBA_AttrDescriptionSeq)
 -  );
- 
--CORBA::TypeCode_ptr _tc_CORBA_AttrDescriptionSeq =
--  &_tc_TAO_tc_CORBA_AttrDescriptionSeq;
++  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
++  {
++    this->_deallocate_buffer ();
++  }
++  
++  
 +#endif /* end #if !defined */
 +
 +
@@ -3343,7 +3442,9 @@
 +  CORBA_AttrDescriptionSeq *tmp = ACE_static_cast (CORBA_AttrDescriptionSeq*,x);
 +  delete tmp;
 +}
-+
+ 
+-CORBA::TypeCode_ptr _tc_CORBA_AttrDescriptionSeq =
+-  &_tc_TAO_tc_CORBA_AttrDescriptionSeq;
 +
 +#endif /* end #if !defined */
  
@@ -3913,17 +4014,7 @@
                43,
                ACE_NTOHL (0x49444c3a), 
                ACE_NTOHL (0x6f6d672e), 
--              ACE_NTOHL (0x6f72672f), 
--              ACE_NTOHL (0x434f5242), 
--              ACE_NTOHL (0x415f4578), 
--              ACE_NTOHL (0x63657074), 
--              ACE_NTOHL (0x696f6e44), 
--              ACE_NTOHL (0x65736372), 
--              ACE_NTOHL (0x69707469), 
--              ACE_NTOHL (0x6f6e3a31), 
--              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ExceptionDescription:1.0
--              27,
-+              ACE_NTOHL (0x6f72672f), 
+               ACE_NTOHL (0x6f72672f), 
                ACE_NTOHL (0x434f5242), 
 -              ACE_NTOHL (0x415f4578), 
 +              ACE_NTOHL (0x412f4578), 
@@ -3931,8 +4022,16 @@
                ACE_NTOHL (0x696f6e44), 
                ACE_NTOHL (0x65736372), 
                ACE_NTOHL (0x69707469), 
+               ACE_NTOHL (0x6f6e3a31), 
+-              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ExceptionDescription:1.0
+-              27,
+-              ACE_NTOHL (0x434f5242), 
+-              ACE_NTOHL (0x415f4578), 
+-              ACE_NTOHL (0x63657074), 
+-              ACE_NTOHL (0x696f6e44), 
+-              ACE_NTOHL (0x65736372), 
+-              ACE_NTOHL (0x69707469), 
 -              ACE_NTOHL (0x6f6e0000),  // name = CORBA_ExceptionDescription
-+              ACE_NTOHL (0x6f6e3a31), 
 +              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
 +              21,
 +              ACE_NTOHL (0x45786365), 
@@ -4268,10 +4367,15 @@
        0U,
  
  
-@@ -29078,161 +27137,38 @@
-     );
- }
- 
+@@ -29073,166 +27132,43 @@
+       name,
+       version,
+       type,
+-      mode,
+-      ACE_TRY_ENV
+-    );
+-}
+-
 -CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
 -    const char * id,
 -    const char * name,
@@ -4414,7 +4518,11 @@
 -      0U, // string length
 -      0U,
 -
--
++      mode,
++      ACE_TRY_ENV
++    );
++}
+ 
 -};
 +CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
 +    const char * id,
