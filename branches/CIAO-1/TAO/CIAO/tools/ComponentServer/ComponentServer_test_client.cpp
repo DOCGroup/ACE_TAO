@@ -78,18 +78,18 @@ main (int argc, char *argv[])
       Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
 
       item->name (CORBA::string_dup ("CIAO-servant-UUID"));
-      item->value () <<= CORBA::string_dup ("DCE:05833d92-4783-4b85-ac14-e2575dac26f7");
+      item->value () <<= CORBA::string_dup ("DCE:93D254CF-9538-44e8-BB98-AABCD134ADD3");
       com_config[0] = item;
 
       item = new OBV_Components::ConfigValue ();
       item->name (CORBA::string_dup ("CIAO-servant-entrypt"));
-      item->value () <<= CORBA::string_dup ("createHelloHome_Servant");
+      item->value () <<= CORBA::string_dup ("createRateGenHome_Servant");
       com_config[1] = item;
 
       //      ACE_OS::sleep (2);
 
-      container->install_home ("DCE:530a6305-8181-47ca-bd82-0b834016db97",
-                               "createHelloHome_Impl",
+      container->install_home ("DCE:82C2B032-37F0-4315-A59F-7020D3264E4D",
+                               "createRateGenHome_Impl",
                                com_config
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

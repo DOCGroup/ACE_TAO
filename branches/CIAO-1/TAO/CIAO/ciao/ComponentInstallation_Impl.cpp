@@ -42,7 +42,10 @@ CIAO::ComponentInstallation_Impl::init (const char *fname,
   auto_ptr<ACE_Configuration_Heap> config (tmp);
 
   if (config->open () != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+    {
+      ACE_DEBUG ((LM_ERROR, "Unable to initilize installation datafile\n"));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+    }
 
   ACE_Ini_ImpExp import (*config);
 

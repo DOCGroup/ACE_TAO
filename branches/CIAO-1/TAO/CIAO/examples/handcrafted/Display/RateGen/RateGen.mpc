@@ -53,3 +53,15 @@ project(RateGen_exec) : ciao_server {
     RateGen_exec.cpp
   }
 }
+
+project (RateGen_client) : ciao_client {
+  exename = client
+  depends += RateGen_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}

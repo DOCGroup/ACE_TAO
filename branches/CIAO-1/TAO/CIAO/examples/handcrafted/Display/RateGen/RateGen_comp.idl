@@ -1,0 +1,14 @@
+// $Id$
+
+/**
+ * @file RateGen.idl
+ *
+ * Definition of the RateGen (a rate generator) component.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef RATEGEN_IDL
+#define RATEGEN_IDL
+
+Component implementation

@@ -384,12 +384,12 @@ namespace CIAO_GLUE_HUDisplay
                              ACE_Equal_To<PortableServer::ObjectId>,
                              ACE_SYNCH_MUTEX> component_map_;
   };
-
-  extern "C" RATEGEN_SVNT_Export ::PortableServer::Servant
-  createRateGenHome_Servant (::Components::HomeExecutorBase_ptr p,
-                             CIAO::Session_Container *c
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
+
+extern "C" RATEGEN_SVNT_Export ::PortableServer::Servant
+createRateGenHome_Servant (::Components::HomeExecutorBase_ptr p,
+                           CIAO::Session_Container *c
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #if defined (__ACE_INLINE__)
 # include "RateGen_svnt.inl"

@@ -1,3 +1,43 @@
+Thu Mar 20 21:50:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ComponentInstallation_Impl.cpp: Added a more comprehensive
+	  error printout.
+
+	* docs/index.html: Fixed a broken link.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h: Added the servant
+	  factory entry point function that I missed.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h: Fixed up
+	  the servant DLL entry point.
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen_comp.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Added the
+	  actual implementation for component executor.
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  this deployment datafile.  This file will contain information
+	  describing all the components used in this example.
+
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Added XML
+	  component descriptors.
+
+	* examples/handcrafted/Display/RateGen/client.cpp: Added a test
+	  client program.
+
+	* examples/handcrafted/Display/RateGen/run_test.pl: Added a test
+	  script to test out this single component.
+
+	* tools/ComponentServer/ComponentServer_test_client.cpp: Changed
+	  the client program to debug RateGen component.  We need to make
+	  this test client more robust so we can use it to debug different
+	  component implementations more easily.
+
 Tue Mar 18 16:36:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl:
