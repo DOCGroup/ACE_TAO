@@ -1,3 +1,9 @@
+Mon Dec 28 22:03:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * agent/main.cpp: added #include "ace/inc_user_config.h", for
+          ACE_RCSID definition.  Thanks to wym <wym@dekang.com> for
+          reporting that it won't compile without it.
+
 Tue Oct 27 08:52:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * asnmp/Makefile,tests/Makefile: added SRC definition for make depend,           and updated dependencies.
@@ -297,4 +303,3 @@ Sat Jul  5 19:13:30 1997  Mike MacFaden  (mrm@mrm-ss20)
 
         * convert cmu code to use C++ new/delete from malloc/free so
           entire library uses C++ new constructor
-
