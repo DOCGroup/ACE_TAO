@@ -5,4 +5,4 @@
 # include "tao/GIOP_Message_Version.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(tao, GIOP_Message_Version, "$Id$")
