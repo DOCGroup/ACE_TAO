@@ -1,3 +1,20 @@
+Fri Jan  7 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_math.inl:
+          Replaced ACE_OS:: before each method with namespace ACE_OS {},
+          hopefully this fixes the compile warnings in the SuSE 8 fuzz builds.
+          Thanks to Steve Huston for this idea.
+
+        * ace/config-vxworks5.x.h:
+          Removed ACE_HAS_NONCONST_RMDIR, rmdir has a const char* on VxWorks
+
+        * ace/OS_NS_unistd.inl (rmdir):
+          Removed part with ACE_HAS_NONCONST_RMDIR, there are no config files
+          anymore that define this
+
+        * ace/README:
+          Removed ACE_HAS_NONCONST_RMDIR
+
 Thu Jan  6 18:29:22 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Added check for

@@ -184,8 +184,6 @@ ACE_OS::rmdir (const char *path)
 
   return (int) result;
 
-#elif defined (ACE_HAS_NONCONST_RMDIR)
-  ACE_OSCALL_RETURN (::rmdir (const_cast <char *> (path)), int, -1);
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
