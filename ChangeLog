@@ -1,3 +1,10 @@
+Tue Oct 15 17:27:34 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/docs/bugs.txt:
+        * ACEXML/docs/TODO.txt:
+
+          Updated to reflect the current status.
+
 Tue Oct 15 17:23:43 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * tests/Service_Config_Test.UTF-16.conf.xml: New file added which
