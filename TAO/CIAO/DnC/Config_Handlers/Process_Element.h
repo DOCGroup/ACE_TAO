@@ -59,8 +59,9 @@ using xercesc::DOMNamedNodeMap;
 #include <iostream>
 
 // ID map type definition
-typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REFMAP;
-
+typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
+typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
+typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
 template <typename DATA>
 class Process_Function {
@@ -136,7 +137,7 @@ void process_element (DOMNode* node,
                       DATA& data,
                       VALUE val,
                       Process_Function <DATA>* func,
-                      REFMAP& id_map);
+                      REF_MAP& id_map);
 
 template <typename SEQUENCE, typename DATA>
 void process_sequential_element (DOMNode* node,
@@ -144,7 +145,7 @@ void process_sequential_element (DOMNode* node,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
                                  Process_Function <DATA>* func,
-                                 REFMAP& id_map);
+                                 REF_MAP& id_map);
 
 /*
  *  Process function for member functions
@@ -155,7 +156,7 @@ inline bool
 process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, OBJECT* obj, FUNCTION func,
-                 REFMAP& id_map)
+                 REF_MAP& id_map)
 {
   bool result = (node_name == XStr (ACE_TEXT (name)));
 
@@ -178,7 +179,7 @@ inline bool
 process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, FUNCTION func,
-                 REFMAP& id_map)
+                 REF_MAP& id_map)
 {
   bool result = (node_name == XStr (ACE_TEXT (name)));
 
@@ -187,6 +188,29 @@ process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
       Process_Static_Function<DATA>
         pf(func);
       process_sequential_element (node, doc, iter, seq, &pf, id_map);
+    }
+
+  return result;
+}
+
+inline void
+process_refs(DOMNode*& node,
+             CORBA::ULongSeq& seq,
+             int& index,
+             IDREF_MAP& idref_map);
+
+inline bool
+process_reference(DOMNode* node,
+                  XStr& node_name, const char* name,
+                  CORBA::ULongSeq& seq,
+                  int& index,
+                  IDREF_MAP& idref_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      process_refs (node, seq, index, idref_map);
     }
 
   return result;

@@ -180,8 +180,7 @@ namespace CIAO
                                  Deployment::Interconnect& domain_ic);
 
       /// process the resource attribute
-      void process_resource (DOMDocument* doc,
-                             DOMNodeIterator* iter,
+      void process_resource (DOMNodeIterator* iter,
                              Deployment::Resource& domain_resource);
 
       /// process the node attribute
