@@ -1,3 +1,7 @@
+Tue Mar 30 12:33:06 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.16 released.
+
 Tue Mar 30 11:16:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp
