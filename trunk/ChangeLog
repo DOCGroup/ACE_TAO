@@ -1,3 +1,9 @@
+Sun Jan 23 15:07:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Omit .cvsignore files.
+
 Sun Jan 23 18:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_multiple_loops.cpp:
