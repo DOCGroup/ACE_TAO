@@ -189,10 +189,6 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
 int
 ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
 {
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
@@ -217,10 +213,6 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
 int
 ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_Handle_Set &set)
 {
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
@@ -245,10 +237,6 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_Handle_Set &set)
 int
 ACE_Asynch_Pseudo_Task::suspend_io_handler (ACE_HANDLE handle)
 {
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
