@@ -123,6 +123,7 @@
 
 #   include /**/ <fstream.h>
 #   include /**/ <iostream.h>
+#   include /**/ <iomanip.h>
 
 #   if defined (ACE_WIN32)
 #     if defined(_MSC_VER) // VSB
@@ -130,7 +131,6 @@
 #       include /**/ <streamb.h>
 #       include /**/ <istream.h>
 #       include /**/ <ostream.h>
-#       include /**/ <iomanip.h>
 #     endif /* _MSC_VER */
 #     include /**/ <strstrea.h> // VSB
 #   else
