@@ -34,7 +34,16 @@ namespace CIAO
   struct home_installation_info
   {
     CORBA::String_var executor_dll_;
+
+    //@@ I added executer_entrypt_ to do install home in a single step. --Tao
+    CORBA::String_var executor_entrypt_;
+
     CORBA::String_var servant_dll_;
+
+    //This is a bit awkward here, since the entrypt of the servant dll is
+    //already defined in the CIDL generated code. Supposebably we can derive
+    //this name from the executor name if we can follow some naming agreement.
+    //                 --Tao
     CORBA::String_var servant_entrypt_;
   };
 
@@ -57,9 +66,7 @@ namespace CIAO
     /// Constructor
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
-                    Components::Deployment::ComponentServer_ptr server,
-                    int static_config_flag =0,
-                    const Static_Config_EntryPoints_Maps* static_entrypts_maps=0);
+                    CORBA::Object_ptr nodeapp);
 
     /// Destructor
     virtual ~Container_Impl (void);
@@ -69,23 +76,21 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the container with a name.
-    int init (const Components::ConfigValues &options
-	      //,Components::Deployment::ComponentInstallation_ptr installation
+    int init (const ::Deployment::Properties &properties
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Components::Deployment::Container defined attributes/operations.
-
-    virtual ::Components::ConfigValues * configuration (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Deployment::Properties *
+    con_properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Components::Deployment::ComponentServer_ptr get_component_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::CORBA::Object_ptr
+    get_node_application (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Components::CCMHome_ptr install_home (const char * id,
-                                                    const char * entrypt,
-                                                    const Components::ConfigValues & config
-                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Components::CCMHome_ptr
+    install_home (const ::Deployment::Properties  & properties
+		  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::Deployment::UnknownImplId,
                        Components::Deployment::ImplEntryPointNotFound,
@@ -97,14 +102,14 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
-    virtual ::Components::CCMHomes * get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Components::CCMHomes *
+    get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
-    // ------------------- CIAO Internal Operations ------------------------
     /// Set the cached object reference.
     void set_objref (Components::Deployment::Container_ptr o
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -116,15 +121,15 @@ namespace CIAO
     Components::Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
-    /// parse ConfigValues
-    void parse_config_values (const char *exe_id,
-                              const Components::ConfigValues &options,
+    /// parse The Properties
+    void parse_config_values (const ::Deployment::Properties & properties,
                               struct home_installation_info &component_install_info
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::Deployment::UnknownImplId,
                        Components::Deployment::ImplEntryPointNotFound,
                        Components::InvalidConfiguration));
+
 
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
@@ -136,28 +141,19 @@ protected:
     CIAO::Container *container_;
 
     /// Cached ConfigValues.
-    Components::ConfigValues config_;
+    Deployment::Properties con_properties_;
 
     /// Cached Container reference (of ourselves.)
     Components::Deployment::Container_var objref_;
 
-    /// Cached ComponentServer.
-    Components::Deployment::ComponentServer_var comserv_;
-
-    /// And a reference to the ComponentInstallation that created us.
-    //  Components::Deployment::ComponentInstallation_var installation_;
+    /// Cached NodeApplication ref.
+    CORBA::Object_var nodeapp_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
 
     /// Keep a list of managed CCMHome.
     Object_Set<Components::CCMHome, Components::CCMHome_var> home_set_;
-
-    /// Flag to indicate static configuration.
-    int static_config_flag_;
-
-    /// Reference to CIAO static config entry points map.
-    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 

@@ -5,6 +5,9 @@
 /**
  *  @file    NodeApplicationManager_Impl.h
  *
+ *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
+ *           Tao Lu <lu@dre.vanderbilt.edu>
+ *
  *  This file contains implementation for the servant of
  *  Deployment::NodeApplicationManager. It contains the
  *  the functionality of Components::Deployment::ServerActivator interface.

@@ -17,6 +17,7 @@
 #define CCM_DEPLOYMENT_IDL
 
 #include "CCM_Component.idl"
+#include "../Property.idl"
 
 // *************** Packaging and Deployment ***************
 
@@ -49,36 +50,6 @@ module Components
     interface Container;        // Forward decl.
     typedef sequence<Container> Containers;
 
-    /**
-     * The NodeApplication interface wraps around the ComponentServer.
-     * If necessary the NodeApplication could handle the case when
-     * each componentServer needs to run on seperate thread.
-     * However, this is just a rough idea and will be implemented upon
-     * special user request.                     --Tao
-     */
-    interface ComponentServer
-    {
-      readonly attribute ConfigValues configuration;
-      /**
-       * We don't need this get_server_activator call anymore
-       * The NodeApplication interface will has the information
-       * about both the NodeApplicationManager and the ComponentServer.
-       *                   --Tao
-       */
-      //ServerActivator get_server_activator ();
-      Container create_container (in ConfigValues config)
-        raises (CreateFailure,
-                InvalidConfiguration);
-
-      void remove_container (in Container cref)
-        raises (RemoveFailure);
-
-      Containers get_containers ();
-
-      void remove ()
-        raises (RemoveFailure);
-    };
-
     //@@ Is this exception still necessary?
     //   I would like to keep it since it's more accurate on
     //   describing the situation. --Tao
@@ -86,13 +57,25 @@ module Components
 
     interface Container
     {
-      readonly attribute ConfigValues configuration;
+      readonly attribute ::Deployment::Properties con_properties;
 
-      ComponentServer get_component_server ();
+      //@@ We know that Dployment::NodeApplication will be returned,
+      //   however to avoid the size of the shared object of CIAO_Server.
+      //   we return a Object.
+      Object get_node_application ();
 
-      CCMHome install_home (in UUID id,
-                            in string entrypt,
-                            in ConfigValues config)
+      //@@ The properties will contain
+      //1 dll/so name of the exec
+      //2 entry point of the exec
+      //3 dll/so name of the svnt
+      //4 entry point of the svnt
+      //5 Poosible other configuration for container/home/component
+      //Note:: We have to decide later how container/home/component could be configured.
+      //       These properties could be passed in here or at higher level
+      //       according to the plan(@ NodeApplicationManager/NodeApplication?)
+      //
+      //                                                   --Tao
+      CCMHome install_home (in ::Deployment::Properties properties)
         raises (UnknownImplId,
                 ImplEntryPointNotFound,
                 InstallationFailure,

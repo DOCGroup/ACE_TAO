@@ -1,6 +1,6 @@
 //$Id$
 
-project(Deployment_stub) : ciao_client {
+project(Deployment_stub) : taolib_with_idl {
 
   requires += dnc
   sharedname = Deployment_stub
@@ -11,14 +11,16 @@ project(Deployment_stub) : ciao_client {
 
   IDL_Files {
      Deployment.idl
+     Property.idl
   }
 
   Source_Files {
+    PropertyC.cpp
     DeploymentC.cpp
   }
 }
 
-project(Deployment_svnt) : ciao_server {
+project(Deployment_svnt) : taolib_with_idl {
   requires += dnc
   after +=  Deployment_stub
   sharedname = Deployment_svnt
@@ -29,6 +31,7 @@ project(Deployment_svnt) : ciao_server {
   libpaths += $(ACE_ROOT)/ace
 
   Source_Files {
+    PropertyS.cpp
     DeploymentS.cpp
   }
 }

@@ -2,6 +2,7 @@
 // $Id$
 
 project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
+  requires += dnc
   sharedname  = CIAO_Client
   idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
@@ -28,6 +29,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
 }
 
 project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client {
+  requires += dnc
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
@@ -54,6 +56,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
 }
 
 project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftemplate, valuetype, ifr_client, security {
+  requires += dnc
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client CIAO_Container
@@ -63,24 +66,14 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
 
   IDL_Files {
     CCM_Deployment.idl
-//    CIAO_Servers.idl
-//    HomeRegistrar.idl
   }
 
   Source_Files {
     CCM_DeploymentC.cpp
     CCM_DeploymentS.cpp
-//    CIAO_ServersC.cpp
-//    CIAO_ServersS.cpp
-//    HomeRegistrarC.cpp
-//    HomeRegistrarS.cpp
-//    ComponentInstallation_Impl.cpp
-    ComponentServer_Impl.cpp
     Container_Base.cpp
     Container_Impl.cpp
-//    HomeRegistrar_i.cpp
     Server_init.cpp
-//    ServerActivator_Impl.cpp
   }
 
   Header_Files {
