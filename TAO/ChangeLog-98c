@@ -6,7 +6,7 @@ Thu Aug 06 12:51:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/ORB_Core.cpp (TAO_Default_Reactor): Instantiate TAO_REACTOR
  	  instead of the Select_Reactor. Also made ~TAO_Default_Reactor
  	  virtual. BTW, there is no need to keep a pointer to the
- 	  Reactor_Impl class.  Simple ask the Reactor class to delete it
+ 	  Reactor_Impl class.  Simply ask the Reactor class to delete it
  	  when its done.
 
 Thu Aug  6 09:46:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
