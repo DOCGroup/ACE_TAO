@@ -1,3 +1,13 @@
+Tue Feb 11 14:27:08 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Makefile.am (all-local):
+
+	  Added rules to generate links to the scripts and data files in
+	  the top-level `tests' source directory.  The Scoreboard requires
+	  that `run_test.pl' exists in the current working directory, and
+	  some tests require that their corresponding data files exist in
+	  that directory, too.  Thanks to Steve for pointing this out.
+
 Mon Feb 10 14:42:59 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:

@@ -455,18 +455,22 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 ##  $(tmp)/ace_test_file \
 ##  $(tmp)/Naming_Test*
 
-## Run local targets
-## all-local: log_dir
+## Automake recognized target.  Appends these rules to the "all"
+## target.
+all-local: bin
+	@for p in $(noinst_SCRIPTS) $(noinst_DATA); do \
+	  test -f $$p \
+	  || $(LN_S) $(top_srcdir)/tests/$$p $$p; done
 
-## Create tests `log' directory
-## log_dir:
-## 	if test -d log; then : else mkdir log; fi
+bin:
+	@$(LN_S) $(top_srcdir)/bin $@
 
 ## Clean up template repositories, etc.
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
 
-## Clean up `log' directory , etc.
+## Clean up files and directories created by this Makefile.
 distclean-local:
+	-rm -f bin $(noinst_SCRIPTS) $(noinst_DATA)
 	-rm -rf log
