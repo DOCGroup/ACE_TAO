@@ -29,6 +29,7 @@ main (void)
 
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
+                       "%s",
                       dll.error ()),
                       -1);
   {
@@ -57,7 +58,7 @@ main (void)
   mc = (Magazine_Creator) dll.symbol ("create_magazine");
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       // @@ Kirthika, something is missing here....
+                      "%s",
                        dll.error ()),
                       -1);
   {
