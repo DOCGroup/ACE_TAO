@@ -12,7 +12,11 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\TAO_IORInterceptor.res
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORINTERCEPTOR_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS) \
 	-DTAO_IORINTERCEPTOR_BUILD_DLL
 
 CPPDIR = .
@@ -22,7 +26,10 @@ INCLUDES = \
 	*.h *.i \
 	 IORInterceptor.pidl
 
-LIBFILES = $(TAO_LIB) $(ACE_LIB)
+LIBFILES = \
+	$(TAO_LIB) \
+	$(ACE_LIB) \
+	$(TAO_VALUETYPE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
