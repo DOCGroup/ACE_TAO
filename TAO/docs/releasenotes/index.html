@@ -514,8 +514,8 @@ transport protocols are distributed with TAO:
 <ol>
 <P><li>UIOP: GIOP over local IPC (UNIX domain sockets)</li>
 <P><li>SHMIOP: GIOP over shared memory</li>
-<P><li>SSLIOP: IIOP over SSL (Secure Socket Layer).</li>
-<P><li>DIOP: GIOP over UDP/IP (currently located under <A HREF="../../examples/PluggableUDP/">$TAO_ROOT/examples/PluggableUDP/</A>)</li>
+<P><li>SSLIOP: IIOP over SSL (Secure Socket Layer)</li>
+<P><li>DIOP: GIOP over UDP/IP</li>
 </ol>
 
 <P>
@@ -536,9 +536,10 @@ Current Status:
 <li>
 
 The basic framework to support pluggable transport protocols has been
-completed.  The standard TAO regression tests <tt>MT_Cubit</tt>,
-<tt>Multiple_Inheritance</tt>, <tt>CDR</tt> and <tt>EC_Throughput</tt>
-can be used to verify performance using the new framework.</li>
+completed.  The standard TAO regression tests <tt>Latency</tt>,
+<tt>MT_Cubit</tt>, <tt>Multiple_Inheritance</tt>, <tt>CDR</tt> and
+<tt>EC_Throughput</tt> can be used to verify performance using the new
+framework.</li>
 
 <P><li>
             Multiple endpoint support in the ORB has been added.  A
@@ -1589,9 +1590,11 @@ For up-to-date information, see the project web site
 Implemented Features:
 <UL>
   <LI>
+	<P>
     IIOP over SSL integration via TAO's
     <A HREF="http://doc.ece.uci.edu/TAO/Security/SSLIOP.html">SSLIOP pluggable protocol</A>.
     <UL>
+	  <P>
       <LI>
         Added an <CODE>SSLIOP::Current</CODE> implementation that can
         be used to obtain the SSL session state for the current
@@ -1609,6 +1612,18 @@ Implemented Features:
         Implemented <CODE>SecurityLevel1</CODE> for the SSLIOP
         security mechanism.
       </LI>
+	  <LI>
+	    The Security::QOPPolicy policy has been implemented.  This policy
+	    is used to set the desired invocation Quality-of-Protection
+	    (QoP).  It can be created using ORB::create_policy(), and used
+	    in conjunction with the standard policy manipulation CORBA
+	    features (e.g. PolicyManager, PolicyCurrent), meaning that
+	    this policy can be set on a per-ORB, per-thread or
+	    per-object basis.
+	    <P>
+	      This policy makes it possible to, for example, make both secure
+	      and insecure invocations within the same client process.
+	  </LI>
     </UL>
   </LI>
 </UL>
@@ -1624,12 +1639,7 @@ Current Status:
 Schedule:
 <UL>
   <LI>
-    Provisions for finer-grained, i.e. per-object, secure invocation
-    enforcement are slated for TAO 1.1.15.
-  </LI>
-
-  <LI>
-    <FONT COLOR=BLUE>April 2001</FONT><BR>
+    <FONT COLOR=BLUE>Septempter 2001</FONT><BR>
     The following milestones establish a strong foundation upon which
     the remaining, more "interesting," CORBA Security Service features
     will be built on.  Once they are in place, it will also be
@@ -1641,17 +1651,13 @@ Schedule:
         interface.
       </LI>
       <LI>
-        Full implementation of the <CODE>SecureInvocation</CODE>
-        policies.
-      </LI>
-      <LI>
         SSLIOP performance enhancements.
       </LI>
     </UL>
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>May 2001</FONT>
+    <FONT COLOR=BLUE>October 2001</FONT>
     <UL>
       <LI>
         Request authentication via
@@ -1687,7 +1693,7 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>June 2001</FONT><BR>
+    <FONT COLOR=BLUE>November 2001</FONT><BR>
     The following are slated for post TAO 1.2 betas.
     <UL>
       <LI>
@@ -1703,7 +1709,7 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>August 2001</FONT>
+    <FONT COLOR=BLUE>December 2001</FONT>
     <UL>
       <LI>
         Begin work on the CORBA Non-Repudiation Service.
