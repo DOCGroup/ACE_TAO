@@ -188,8 +188,8 @@ Video_Global::first_packet_send_to_network (int timeToUse)
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
   
-  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
-           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
+  //  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
+  //       ntohl (msghd->packetsn), ntohl (msghd->packetSize));
   
 
   {
@@ -258,9 +258,9 @@ Video_Global::first_packet_send_to_network (int timeToUse)
         msg->msgSize = htonl (min (size, this->msgsize));
         // send the header seperately first
         segsize = sizeof (*msg);
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Sending the header, of size %d\n",
-                    segsize));
+        //        ACE_DEBUG ((LM_DEBUG,
+        //          "(%P|%t) Sending the header, of size %d\n",
+        //          segsize));
           
         while (write (this->videoSocket, 
                       (char *)msg,
@@ -2103,8 +2103,8 @@ Video_Global::send_to_network (int timeToUse)
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
   
-  fprintf (stderr, "VS to send pkt %d of size %d.\n",
-           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
+  //  fprintf (stderr, "VS to send pkt %d of size %d.\n",
+  //           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
   
 
   {
@@ -2171,7 +2171,7 @@ Video_Global::send_to_network (int timeToUse)
 
         segsize = min (size, this->msgsize)+sizeof (*msg);
         if (this->conn_tag != 0) { /* this->packet stream */
-          cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
+          //          cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
           while ((sentsize = write (this->videoSocket, (char *)msg, segsize)) == -1) {
             if (errno == EINTR)
               continue;
