@@ -3,10 +3,10 @@
  * ============================================================================
  *
  * = LIBRARY
- *    pace (posix ace)
+ *    pace ()
  *
  * = FILENAME
- *    pace/posix/grp.h
+ *    pace/win32/grp.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -70,7 +70,7 @@ typedef struct group pace_group;
 # endif /* PACE_HAS_CPLUSPLUS */
 
 # if defined (PACE_HAS_INLINE)
-# include "pace/posix/grp.inl"
+# include "pace/win32/grp.inl"
 # endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_GRP_H */

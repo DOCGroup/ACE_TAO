@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/wait.c
+ *    pace/win32/wait.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sys/wait.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/wait.inl"
+# include "pace/win32/wait.inl"
 #endif /* ! PACE_HAS_INLINE */

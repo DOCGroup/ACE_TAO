@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/mqueue.inl
+ *    pace/win32/mqueue.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/sched.h
+ *    pace/win32/sched.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -94,7 +94,7 @@ typedef struct sched_param pace_sched_param;
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/sched.inl"
+# include "pace/win32/sched.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SCHED_H */

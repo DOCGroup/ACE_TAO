@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stdlib.h
+ *    pace/win32/stdlib.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -163,7 +163,7 @@ typedef ldiv_t pace_ldiv_t;
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/stdlib.inl"
+# include "pace/win32/stdlib.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_STDLIB_H */
