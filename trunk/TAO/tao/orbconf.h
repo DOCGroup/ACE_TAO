@@ -111,7 +111,7 @@
 #endif /* !defined (_WIN32) && !defined (VXWORKS) */
 
 // The number of bytes in a long double.
-#if defined (linux) || defined (ACE_NETBSD) || defined (__FreeBSD__)
+#if defined (linux) || defined (ACE_NETBSD) || defined (__FreeBSD__) || defined(CHORUS)
 #  define SIZEOF_LONG_DOUBLE 12
 #elif defined (_WIN32) || defined (VXWORKS) || defined (M_UNIX)
 #  define SIZEOF_LONG_DOUBLE 8

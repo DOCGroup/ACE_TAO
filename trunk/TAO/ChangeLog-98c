@@ -1,5 +1,12 @@
 Thu Nov 20 10:31:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/orbconf.h (SIZEOF_LONG_DOUBLE): Made sure this is defined
+ 	properly for Chorus.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
+ 	for submitting these!
+
+	* tao/orb_core.cpp (init): Added some changes for Chorus.  Thanks
+ 	to Wei Chiang <chiang@tele.nokia.fi> for submitting these!
+
 	* tao/object.cpp (_is_a): Explicitly specify which conversion
  	operator to use when comparing type_id to 0.
 
