@@ -59,7 +59,8 @@
 // The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
-#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS { "-ORBresources", "tss" }
+#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS { "-ORBresources", "tss", \
+                                            "-ORBreactorlock", "null" }
 #endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
 
 // The default arguments of the client strategy factory for the fake service
