@@ -65,6 +65,11 @@ private:
   void print_stats (const char *call_name,
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
+  void cube_oneway (int i);
+  // Oneway operation test.
+
+  void cube_void (int i);
+  // Twoway operation test.
 
   void cube_union (void);
   // Exercise the union.  Cube a union.
