@@ -146,25 +146,25 @@ namespace ACE_OS {
 
 #if !defined (ACE_LACKS_MKSTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE mkstemp (char *t);
+  ACE_HANDLE mkstemp (char *s);
 
 #  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE mkstemp (wchar_t *t);
+  ACE_HANDLE mkstemp (wchar_t *s);
 #  endif /* ACE_HAS_WCHAR */
 #endif /* !ACE_LACKS_MKSTEMP */
 
 #if !defined (ACE_LACKS_MKTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *mktemp (char *t);
+  char *mktemp (char *s);
 
 #  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *mktemp (wchar_t *t);
+  wchar_t *mktemp (wchar_t *s);
 #  endif /* ACE_HAS_WCHAR */
 #else
   extern ACE_Export
-  ACE_TCHAR *mktemp (ACE_TCHAR *t);
+  ACE_TCHAR *mktemp (ACE_TCHAR *s);
 #endif /* !ACE_LACKS_MSTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
