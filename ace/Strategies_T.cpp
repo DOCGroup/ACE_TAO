@@ -817,7 +817,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
 	// Actively establish the connection.  This is a timed blocking
 	// connect.
-	if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect 
+	if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
 	    (sh->peer (),
 	     remote_addr,
 	     timeout,
