@@ -1,3 +1,14 @@
+Sun Aug  3 17:39:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Collocation_Tests/Collocated_Test.cpp:
+	* tests/File_IO/client.cpp:
+	* tests/File_IO/server.cpp:
+	* tests/POA/Default_Servant/Default_Servant.cpp:
+	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+	* tests/POA/Persistent_ID/server.cpp: Fixed compile errors that
+	  were caused due to recent refactoring. Most of the files needed
+	  an include of "ace/SString.h".
+
 Sun Aug  3 17:33:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: The skeleton files needed an extra
