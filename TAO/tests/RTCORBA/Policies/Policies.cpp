@@ -166,7 +166,7 @@ main (int argc, char **argv)
 
       {
         RTCORBA::PrivateConnectionPolicy_var policy1 =
-          rtorb->create_private_connection_policy (ACE_ENV_ARG_PARAMETER);
+          rtorb->create_private_connection_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         CORBA::Any policy_value;

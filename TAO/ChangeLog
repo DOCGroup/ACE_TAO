@@ -1,3 +1,9 @@
+Tue Sep  3 17:54:41 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tests/RTCORBA/Policies/Policies.cpp: Fixed a compile error in
+	  builds where exceptions are disabled. Funny that this hasnt been
+	  caught in our daily builds.
+
 Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 
