@@ -1,3 +1,20 @@
+Sat Jun 15 12:01:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Obstack_T.cpp (request): Don't lose an initial set of characters
+          if the requested length won't fit. Thanks to Christopher W. Midgley
+          <cmidgley@livevault.com> for this report and fix.
+
+        * tests/Obstack_Test.{cpp dsp icc}: New test for the above, and
+          its MSVC and Visual Age C++ files.
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/run_test.lst:
+        * tests/tests.dsw:
+        * tests/tests.icp: Added new Obstack_Test.
+
+        * THANKS: Added Christopher W. Midgley.
+
 Sat Jun 15 12:41:07  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* THANKS: Added Nick Cross to the hall of fame.

@@ -63,6 +63,7 @@ BIN =   Aio_Platform_Test \
         Message_Queue_Notifications_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
+        Obstack_Test \
         OrdMultiSet_Test \
         OS_Test \
 	Proactor_Scatter_Gather_Test \

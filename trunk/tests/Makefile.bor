@@ -64,6 +64,7 @@ NAMES = \
 	New_Fail_Test \
 	Notify_Performance_Test \
 	Object_Manager_Test \
+	Obstack_Test \
 	OrdMultiSet_Test \
 	OS_Test \
 	Pipe_Test \

@@ -37,15 +37,23 @@ ACE_Obstack_T<CHAR>::request (size_t len)
   // normalize the length.
   len *= sizeof (CHAR);
 
+  // Check to see if there's room for the requested length, including
+  // any part of an existing string, if any.
+  size_t resulting_len =
+    ((this->curr_->cur_ - this->curr_->block_) * sizeof (CHAR)) + len;
+
   // We will always have enough room for null terminating char
   // unless sizeof (char) > 4.
   // There's no way we can handle more than this->size_ of strings.
-  if (this->size_ < len)
+  if (this->size_ < resulting_len)
     return -1;
 
-  // Check whether we need to grow our chunk...
+  // We now know the request will fit; see if it can fit in the current
+  // chunk or will need a new one.
   if (this->curr_->cur_ + len >= this->curr_->end_)
     {
+      // Need a new chunk. Save the current one so the current string can be
+      // copied to the new chunk.
       ACE_Obchunk *temp = this->curr_;
       if (this->curr_->next_ == 0)
         {
@@ -60,16 +68,10 @@ ACE_Obstack_T<CHAR>::request (size_t len)
           this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
         }
 
-      // if there are something in there already.
+      // Copy any initial characters to the new chunk.
       if (temp->cur_ != temp->block_)
         {
-          // @@ Require pointer arithmatic?
-          size_t datasize = temp->cur_ - temp->block_;
-
-          // Check the total length of data again.
-          if (this->size_ < len + datasize)
-            return -1;
-
+          size_t datasize = (temp->cur_ - temp->block_) * sizeof (CHAR);
           ACE_OS::memcpy (this->curr_->block_,
                           temp->block_,
                           datasize);
