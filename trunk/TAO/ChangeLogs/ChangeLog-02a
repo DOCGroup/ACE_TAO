@@ -98,7 +98,6 @@ Wed Jan 10 17:21:12 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  succesfully loaded the necessary instance of TAO_Protocols_Hooks
 	  and if it is unsuccessful, loaded the same in a hard-coded way.
 	
->>>>>>> 1.2313
 Wed Jan 10 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Policy_Manager.cpp:
