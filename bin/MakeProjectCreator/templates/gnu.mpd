@@ -37,9 +37,15 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 <%if(!exename)%>
 <%if(avoids)%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%if(tao)%>
+include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
 <%else%>
 <%if(requires)%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%if(tao)%>
+include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
 <%endif%>
 <%endif%>
 <%if(comps)%>
@@ -124,10 +130,11 @@ endif
 ACE_SHLIBS =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%if(exename)%>
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
-<%if(exename)%>
+
 
 <%if(compname)%>
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
@@ -160,6 +167,16 @@ endif
 
 OBJS   = $(addsuffix .o, <%notdirfiles%>)
 SRC    = $(addsuffix .cpp, $(FILES))
+<%else%>
+<%if(avoids)%>
+<%else%>
+<%if(requires)%>
+<%else%>
+<%if(tao)%>
+include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
+<%endif%>
+<%endif%>
 <%endif%>
 <%if(sharedname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
@@ -181,6 +198,7 @@ else
 endif
 <%endif%>
 <%else%>
+<%if(build)%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
@@ -194,6 +212,7 @@ ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%foreach(comps avoids requires)%>
 endif
 <%endfor%>
+<%endif%>
 <%endif%>
 ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
@@ -335,6 +354,9 @@ all: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
+<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>:
+	-@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+
 <%comptarget%>
 <%if(idl_files)%>
 

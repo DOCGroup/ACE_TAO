@@ -1,3 +1,37 @@
+Tue Jul 15 06:22:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/zlib.mpb:
+
+          Added the zlib feature (disabled by default).  This will allow
+          users to enable the zlib feature and pull in include paths, lib
+          paths and library which will be dependent upon the ZLIB_ROOT
+          environment variable.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug where false warnings would be displayed if
+          MPC_VERBOSE_ORDERING was set.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added a rule to create the libout directory.
+          Fixed a bug in the gnu template that only affected TAO libraries
+          that had 'requires' or 'avoids'.
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Fixed a problem with cppflags and dependencies.
+
+        * bin/depgen.pl:
+
+          Ignore unknown options instead of causing an error.
+
+        * bin/ChangeLogEditor/FileLocator.pm:
+
+          Fixed a bug where the correct CVSROOT value wasn't being used.
+
 Mon Jul 14 18:33:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_errno.h:
