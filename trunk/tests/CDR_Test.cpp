@@ -20,7 +20,7 @@
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_ptr.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/CDR.h"
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530

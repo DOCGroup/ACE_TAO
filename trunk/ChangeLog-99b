@@ -1,3 +1,8 @@
+Mon Feb  1 10:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/CDR_Test.cpp: 
+	  There was a typo in a included filename.
+
 Mon Feb  1 08:39:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Synch.h: Clarified that the ACE_Semaphore::acquire() is in
