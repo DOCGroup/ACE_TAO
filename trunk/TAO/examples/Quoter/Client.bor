@@ -30,7 +30,7 @@ LIBFILES = \
 IDLFILES = \
         $(IDLDIR)\Quoter.idl
 
-CPPDIR = .;..
+CPPDIR = .
 
 IDLDIR = .
 
