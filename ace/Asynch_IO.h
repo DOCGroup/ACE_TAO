@@ -118,8 +118,6 @@ protected:
   // Error if operation failed.
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Operation
 {
   // = TITLE
