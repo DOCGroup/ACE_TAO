@@ -5,7 +5,6 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Synch.h"
 #include "Server_Logging_Handler.h"
 
 ACE_RCSID(lib, Server_Logging_Handler, "$Id$")

@@ -32,7 +32,6 @@
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Functor.h"
 #include "ace/Pair_T.h"
-#include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
 

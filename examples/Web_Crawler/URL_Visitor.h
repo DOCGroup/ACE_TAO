@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "ace/Synch.h"
 #include "HTTP_URL.h"
 #include "Iterators.h"
 #include "ace/Hash_Map_Manager_T.h"

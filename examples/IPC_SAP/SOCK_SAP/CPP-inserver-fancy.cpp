@@ -9,7 +9,6 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_select.h"

@@ -10,7 +10,6 @@
 #include "ace/IOStream.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 

@@ -16,7 +16,6 @@
 #include "ace/Service_Object.h"
 #include "ace/Signal.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Unbounded_Set.h"

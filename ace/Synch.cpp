@@ -8,6 +8,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// FUZZ: disable check_for_synch_include
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 

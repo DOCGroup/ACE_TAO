@@ -27,7 +27,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
 #include "ace/Caching_Utility_T.h"
 #include "ace/Cached_Connect_Strategy_T.h"
 #include "ace/Handle_Gobbler.h"

@@ -34,6 +34,8 @@
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_aio.h"
+#include "ace/OS_NS_string.h"
 
 class Test_Aio
 {
@@ -107,7 +109,7 @@ Test_Aio::init (void)
   
   // Allocate memory for the read buffer.
   ACE_NEW_RETURN (this->buffer_read_,
-                  char [strlen (this->buffer_write_)],
+                  char [ACE_OS::strlen (this->buffer_write_)],
                   -1);
 
   return 0;
@@ -126,7 +128,7 @@ Test_Aio::do_aio (void)
   this->aiocb_write_->aio_fildes = this->out_fd_;
   this->aiocb_write_->aio_offset = 0;
   this->aiocb_write_->aio_buf = this->buffer_write_;
-  this->aiocb_write_->aio_nbytes = strlen (this->buffer_write_);
+  this->aiocb_write_->aio_nbytes = ACE_OS::strlen (this->buffer_write_);
   this->aiocb_write_->aio_reqprio = 0;
   this->aiocb_write_->aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
@@ -146,7 +148,7 @@ Test_Aio::do_aio (void)
   this->aiocb_read_->aio_fildes = this->out_fd_;
   this->aiocb_read_->aio_offset = 0;
   this->aiocb_read_->aio_buf = this->buffer_read_;
-  this->aiocb_read_->aio_nbytes = strlen (this->buffer_write_);
+  this->aiocb_read_->aio_nbytes = ACE_OS::strlen (this->buffer_write_);
   this->aiocb_read_->aio_reqprio = 0;
   this->aiocb_read_->aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;

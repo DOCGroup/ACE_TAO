@@ -49,12 +49,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_non_existent.o .obj/test_non_existent.so .shobj/test_non_existent.o .shobj/test_non_existent.so: test_non_existent.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Naming_Context.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -150,12 +150,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_writers.o .obj/test_writers.so .shobj/test_writers.o .shobj/test_writers.so: test_writers.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Naming_Context.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -252,12 +252,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_multiple_contexts.o .obj/test_multiple_contexts.so .shobj/test_multiple_contexts.o .shobj/test_multiple_contexts.so: test_multiple_contexts.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Naming_Context.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -354,12 +354,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_open.o .obj/test_open.so .shobj/test_open.o .shobj/test_open.so: test_open.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Naming_Context.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \

@@ -14,7 +14,6 @@
 
 #include "ace/Module.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 
 #if defined (ACE_HAS_THREADS)
 

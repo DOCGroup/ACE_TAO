@@ -2,10 +2,13 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Synch.h"
 #include "ace/Token.h"
 #include "ace/Process_Mutex.h"
 #include "ace/RW_Process_Mutex.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Semaphore.h"
+#include "ace/Null_Semaphore.h"
 #include "Baseline_Test.h"
 
 template<class LOCK>

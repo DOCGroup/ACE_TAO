@@ -1,7 +1,9 @@
 // $Id$
 
-#include "ace/OS.h"
-#include "ace/Synch.h"
+#include "ace/config-all.h"
+#include "ace/Guard_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 #define JAWS_BUILD_DLL
 

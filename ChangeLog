@@ -1,3 +1,180 @@
+Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Added extra line feed to the file checks to make them more
+          readable.  Fixed synch check to only pick up Synch.h and
+          Synch_T.h.
+
+        * */Makfile*:
+          Updated dependencies.
+
+        * ACEXML/apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * ACEXML/common/Makefile.ACEXML:
+        * ACEXML/examples/SAXPrint/Makefile.SAXPrint:
+        * ACEXML/parser/parser/Makefile.ACEXML_Parser:
+        * ACEXML/tests/Makefile.ContentHandler_Test:
+        * ACEXML/tests/Makefile.HttpCharStream_Test:
+        * ACEXML/tests/Makefile.NamespaceSupport_Test:
+        * ACEXML/tests/Makefile.Transcoder_Test:
+          Removed DEPENDENCY_FILE variable and updated dependencies.
+
+        * tests/Makefile.libs:
+          Added depend target to get the other makefiles to update depends.
+
+        * tests/Makefile.Service_Config_DLL:
+        * tests/Makefile.DLL_Test:
+        * tests/Makefile.Framework_Component_DLL:
+        * tests/Makefile.Test_Output:
+          Added MAKEFILE variable so depend would update dependencies,
+          then updated them.
+
+        * ace/Synch.cpp:
+        * ace/Synch.h:
+        * ace/Synch_T.cpp:
+        * ace/Synch_T.h:
+          Added FUZZ: disable check_for_synch_include.
+
+        * apps/JAWS2/HTTP_10_Request.cpp:
+          Added #include OS_NS_pwd.h.
+
+        * apps/JAWS2/JAWS/Headers.cpp:
+        * apps/JAWS2/JAWS/Parse_Headers.cpp:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+          Added #include OS_NS_string.h.
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:
+          Added #include Barrier.h.
+
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+          Added #include os_aio.h and OS_NS_string.h.
+
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+          Added #include os_aio.h, OS_SN_signal.h, OS_NS_unistd.h,
+          OS_NS_fcntl.h, Asynch_IO.h.
+
+        * ACEXML/common/Mem_Map_Stream.h:
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * ace/FlReactor.cpp:
+        * ace/Malloc_Allocator.h:
+        * ace/PI_Malloc.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/TkReactor.cpp:
+        * ace/XtReactor.cpp:
+        * ace/CLASSIX/CLASSIX_CO_Acceptor.cpp:
+        * ace/CLASSIX/CLASSIX_Port_Core.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * apps/Gateway/Gateway/Options.h:
+        * apps/JAWS/clients/Caching/ID_Generator.h:
+        * apps/JAWS/server/JAWS_Concurrency.h:
+        * apps/JAWS/server/JAWS_Pipeline.h:
+        * apps/JAWS2/JAWS/Cache_Manager_T.h:
+        * apps/JAWS2/JAWS/Concurrency.h:
+        * apps/JAWS2/JAWS/Pipeline.h:
+        * apps/JAWS2/JAWS/Reaper.h:
+        * apps/JAWS3/jaws3/Concurrency.cpp:
+        * apps/JAWS3/jaws3/Concurrency_T.cpp:
+        * apps/JAWS3/jaws3/FILE.cpp:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket.cpp:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.h:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.h:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.h:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers.h:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/Connection/misc/Connection_Handler.h:
+        * examples/Connection/misc/test_upipe.h:
+        * examples/IOStream/server/iostream_server.h:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.h:
+        * examples/NT_Service/ntsvc.h:
+        * examples/QOS/Simple/Fill_ACE_QoS.h:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * examples/Synch/proc_sema.cpp:
+        * examples/Threads/TSS_Obj.h:
+        * examples/Threads/TSS_Task.h:
+        * examples/Threads/recursive_mutex.cpp:
+        * examples/Threads/task_two.cpp:
+        * examples/Threads/tss1.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+        * examples/Web_Crawler/URL_Visitor.h:
+        * netsvcs/lib/Client_Logging_Handler.h:
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.h:
+        * performance-tests/Misc/test_guard.cpp:
+        * performance-tests/Misc/test_singleton.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+        * performance-tests/Synch-Benchmarks/synch_driver.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Adaptive_Lock_Performance_Test_Base.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_recursive_lock_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_sema_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/condb_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/conds_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/context_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/memory_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/recursive_lock_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/rwrd_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/rwwr_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/sema_test.cpp:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Conn_Test.h:
+        * tests/Framework_Component_DLL.h:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/Lazy_Map_Manager_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.h:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Reactor_Performance_Test.h:
+        * tests/Reactors_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Recursive_Condition_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/TP_Reactor_Test.h:
+        * tests/Test_Output.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.h:
+        * tests/Thread_Pool_Reactor_Test.h:
+        * tests/CLASSIX/CLASSIX_Con_Acc_Test.h:
+        * tests/CLASSIX/CLASSIX_Notify_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.h:
+          Removed #include Synch*.h and added need synch includes (most.
+          almost all, files required no additional includes).
+
 Sun Nov  9 00:25:57 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/QoS/QoS_Session_Impl.cpp: Add include of OS_NS_arpa_inet.h

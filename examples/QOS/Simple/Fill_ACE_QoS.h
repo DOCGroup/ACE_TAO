@@ -19,7 +19,6 @@
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
 #include "ace/ACE.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_QoS.h"

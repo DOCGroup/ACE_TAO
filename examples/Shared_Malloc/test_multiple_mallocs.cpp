@@ -4,7 +4,6 @@
 // rooted at different base addresses.
 
 #include "ace/Malloc.h"
-#include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 

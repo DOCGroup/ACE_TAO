@@ -29,7 +29,6 @@
 
 #include "ace/Task.h"
 #include "ace/Pipe.h"
-#include "ace/Synch.h"
 
 class Time_Handler : public ACE_Task<ACE_SYNCH>
 {

@@ -80,6 +80,12 @@ run_test.vxworks: run_test.lst
 	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES -o run_test.vxworks
 endif
 
+depend:
+	-$(MAKE) -f Makefile.Test_Output depend
+	-$(MAKE) -f Makefile.Framework_Component_DLL depend
+	-$(MAKE) -f Makefile.DLL_Test depend
+	-$(MAKE) -f Makefile.Service_Config_DLL depend
+
 realclean: clean
 	-$(MAKE) -f Makefile.Test_Output realclean
 	-$(MAKE) -f Makefile.Framework_Component_DLL realclean
