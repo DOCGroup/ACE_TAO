@@ -96,7 +96,7 @@ public:
   // timers.  As long as timers don't stay around longer than this
   // there should be no problems with accidentally deleting the wrong
   // timer.  Returns -1 on failure (which is guaranteed never to be a
-  // valid <timer_id>.
+  // valid <timer_id>).
 
   virtual int cancel (ACE_Event_Handler *event_handler);
   // Cancel all <event_handlers> that match the address of

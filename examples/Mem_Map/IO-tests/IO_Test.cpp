@@ -140,8 +140,11 @@ Mmap1_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
       this->tm_.start ();
 
       while (--iterations >= 0)
-	if (ACE_OS::write (fileno (output_fp), src, map_input.size ()) == -1)
-	  return -1;
+	{
+	  if (ACE_OS::write (fileno (output_fp), src, map_input.size ()) == -1)
+	    return -1;
+	  ACE_OS::lseek (fileno (output_fp), 0, SEEK_SET);
+	}
 
       this->tm_.stop ();
     }
@@ -161,7 +164,7 @@ int
 Mmap2_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
 {
   ACE_Mem_Map map_input (fileno (input_fp));
-  int	    size = map_input.size ();
+  int size = map_input.size ();
   ACE_Mem_Map map_output (fileno (output_fp), size, PROT_WRITE, MAP_SHARED);
   void *src = 0;
   void *dst = 0;
