@@ -1,7 +1,7 @@
 1998-12-12  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/tests/Trader/README:
-	* orbsvcs/tests/Trader/Service_Type_Exporter.h:
+	* orbsvcs/tests/Trader/Service_Type_Exporter.cpp:
 	  The trader test no longer prints an exception message in the
 	  unexceptional case that the trader has unregistred test types
 	  when the export_test first tries to remove them. Updated the
