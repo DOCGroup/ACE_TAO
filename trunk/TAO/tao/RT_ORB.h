@@ -38,7 +38,7 @@ class TAO_RT_Mutex;
 /**
  * @class TAO_Named_RT_Mutex_Manager
  *
- * @brief Manages the names of RT Mutexes
+ * @brief Manages the names of named and unnamed RT Mutexes
  *
  */
 
@@ -78,6 +78,7 @@ public:
 
 private:
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   /// Hash map for named RT Mutexes
   ACE_Hash_Map_Manager_Ex<
     ACE_CString,
@@ -87,7 +88,9 @@ private:
     ACE_Null_Mutex> map_;
 
   TAO_SYNCH_MUTEX lock_;
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 };
+
 
 /**
  * @class TAO_RT_ORB
@@ -245,6 +248,7 @@ protected:
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
+
 };
 
 #if defined (__ACE_INLINE__)

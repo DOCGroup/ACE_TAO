@@ -80,7 +80,7 @@ TAO_RT_Mutex::name (void) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
   : name_ (name)
 {
@@ -91,6 +91,7 @@ TAO_Named_RT_Mutex::name (void) const
 {
   return this->name_.c_str ();
 }
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

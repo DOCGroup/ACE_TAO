@@ -482,6 +482,21 @@ enum MCAST_SERVICEID
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_RT_CORBA */
 
+// NAMED_RT_MUTEX support is disabled by default.
+// To explicitly enable NAMED_RT_MUTEX support uncomment the following
+// #define TAO_HAS_NAMED_RT_MUTEXES 1
+// To explicitly disable NAMED_RT_MUTEX support uncomment the following
+// #define TAO_HAS_NAMED_RT_MUTEXES 0
+
+// Default NAMED_RT_MUTEX settings
+#if !defined (TAO_HAS_NAMED_RT_MUTEXES)
+#  define TAO_HAS_NAMED_RT_MUTEXES 0
+#else
+#  if (TAO_HAS_RT_CORBA == 1)
+#  error "tao/orbconf.h: You need RT_CORBA for NAMED_RT_MUTEX support"
+#  endif /* TAO_HAS_RT_CORBA == 1 */
+#endif  /* !TAO_HAS_NAMED_RT_MUTEXES */
+
 // MINIMUM_POA support is disabled by default if TAO is not
 // configured for minimum CORBA.  If TAO is configured for minimum
 // CORBA, then MINIMUM_POA will be enabled by default.
