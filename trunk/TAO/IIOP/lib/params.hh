@@ -35,7 +35,14 @@ class ROA_Parameters
 //     NOT THREAD SAFE!
 {
 public:
-  typedef BOA::dsi_handler UpcallFunc;
+  enum DEMUX_STRATEGY{
+    TAO_LINEAR,
+    TAO_DYNAMIC_HASH,
+    TAO_PERFECT_HASH,
+    TAO_ACTIVE_DEMUX
+  };
+
+  typedef CORBA_BOA::dsi_handler UpcallFunc;
   typedef void (*ForwardFunc)(CORBA_OctetSeq&, CORBA_Object_ptr&, void*, CORBA_Environment&);
 
   ROA_Parameters();
@@ -81,21 +88,26 @@ public:
 				// Haven't figured out what the forwarder
 				// really does...don't really care right now.
 
-  ROA_ptr oa();
+  CORBA_BOA_ptr oa();
 				// Return the handle to the One True Object Adapter.
 				// The code from which <{TAO}> is derived makes a vast
 				// assumption that there will only be one Object Adapter
 				// in process.
-  void oa(ROA_ptr anOA);
+  void oa(CORBA_BOA_ptr anOA);
 				// Set the handle to the One True Object Adapter.
-
+  void addr(ACE_INET_Addr &addr);
+  ACE_INET_Addr addr();
+  void demux_strategy(char *strategy);
+  ROA_Parameters::DEMUX_STRATEGY demux_strategy();
 private:
   int using_threads_;		// If non-zero, threads are used for processing requests
   unsigned int thread_flags_;	// Flags passed to <thr_create> when threads created
   void* context_p_;
   UpcallFunc upcall_;		// Function pointer to application upcall
   ForwardFunc forwarder_;	// 
-  ROA_ptr oa_;			// Pointer to One True Object Adapter
+  CORBA_BOA_ptr oa_;			// Pointer to One True Object Adapter
+  ROA_Parameters::DEMUX_STRATEGY demux_;  // demux strategy
+  ACE_INET_Addr addr_;          // host + port number we are listening on
 };
 
 // Create a type for the singleton
@@ -115,7 +127,6 @@ public:
   SCHEDULING_STRATEGY*  scheduling_strategy();
   
   ROA_Factory();
-
 private:
   CONCURRENCY_STRATEGY* concurrency_strategy_;
   ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;

@@ -8,11 +8,26 @@
 // using an ORB.  All CORBA objects provide this functionality.
 // See the CORBA 2.0 specification for details.
 //
-typedef class CORBA_Object	*CORBA_Object_ptr;
 void				CORBA_release (CORBA_Object_ptr obj);
 CORBA_Boolean			CORBA_is_nil (CORBA_Object_ptr obj);
 
 extern const IID		IID_CORBA_Object;
+
+class TAO_Operation_Table
+  // = TITLE
+  //     Abstract class for maintaining and lookup of CORBA IDL operation names
+{
+public:
+  // = 
+
+  virtual skeleton lookup(const CORBA_String &opname) = 0;
+  // CORBA IDL operation name lookup strategy
+
+  virtual void register_op(const CORBA_String &opname) = 0;
+  // Register a CORBA IDL operation name
+
+  virtual ~TAO_Operation_Table();
+};
 
 class _EXPCLASS CORBA_Object : public IUnknown
 {
@@ -98,7 +113,11 @@ class _EXPCLASS CORBA_Object : public IUnknown
 				CORBA_Object (IUnknown *p);
 				virtual ~CORBA_Object ();
 
-  private:
+    virtual skeleton                    lookup(const CORBA_String &opname) { return
+								       optable_->lookup(opname); } 
+protected:
+    TAO_Operation_Table         *optable_;
+private:
     IUnknown			*const parent;
 
     //

@@ -36,12 +36,106 @@ CORBA_string_copy (const CORBA_Char *const str)
     return ACE_OS::strcpy (retval, str);
 }
 
+CORBA_String
+CORBA_string_dup (const CORBA_Char *const str)
+{
+  return CORBA_string_copy(str);
+}
+
 void
 CORBA_string_free (CORBA_Char *const str)
 {
-    delete str;
+    delete []str;
 }
 
+// ----------------------------------------------------------------------
+// String_var type
+// ----------------------------------------------------------------------
+
+CORBA_String_var::CORBA_String_var()
+{
+  this->ptr_ = 0;
+}
+
+CORBA_String_var::~CORBA_String_var()
+{
+  if (this->ptr_ != 0){
+    CORBA_string_free(this->ptr_);
+  }
+}
+
+CORBA_String_var::CORBA_String_var(char* p)
+{
+  // argument is consumed. p should never be NULL
+  if (this->ptr_ != p){
+    if (this->ptr_ != 0){
+      CORBA_string_free(this->ptr_);
+    }
+    this->ptr_ = p;
+  }
+}
+
+CORBA_String_var::CORBA_String_var(const char* p)
+    : ptr_((char *)p)
+{
+  if (this->ptr_ != 0){
+    CORBA_string_free(this->ptr_);
+  }
+  this->ptr_ = CORBA_string_dup(p);
+}
+
+CORBA_String_var::CORBA_String_var(const CORBA_String_var& r)
+{
+  if (this->ptr_ != 0){
+    CORBA_string_free(this->ptr_);
+  }
+  this->ptr_ = CORBA_string_dup(r.ptr_);
+}
+
+CORBA_String_var&
+CORBA_String_var::operator=(char* p)
+{
+  if (this->ptr_ != p){
+    if (this->ptr_ != 0){
+      CORBA_string_free(this->ptr_);
+    }
+    this->ptr_ = p;
+  }
+  return *this;
+}
+
+CORBA_String_var&
+CORBA_String_var::operator=(const char* p)
+{
+  if (this->ptr_ != 0){
+    CORBA_string_free(this->ptr_);
+  }
+  this->ptr_ = CORBA_string_dup(p);
+
+  return *this;
+}
+
+CORBA_String_var&
+CORBA_String_var::operator=(const CORBA_String_var& r)
+{
+  if (this->ptr_ != 0){
+    CORBA_string_free(this->ptr_);
+  }
+  this->ptr_ = CORBA_string_dup(r.ptr_);
+  return *this;
+}
+
+CORBA_Char& CORBA_String_var::operator[](CORBA_ULong index)
+{
+  // we need to verify bounds else raise some exception
+  return this->ptr_[index];
+}
+
+CORBA_Char CORBA_String_var::operator[](CORBA_ULong index) const
+{
+  // we need to verify bounds else raise some exception
+  return this->ptr_[index];
+}
 
 #if	!defined (HAVE_WIDEC_H)
 //

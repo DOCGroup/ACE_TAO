@@ -46,14 +46,14 @@ ROA_Parameters::forwarder(ROA_Parameters::ForwardFunc f)
   forwarder_ = f;
 }
 
-ACE_INLINE ROA_ptr
+ACE_INLINE CORBA_BOA_ptr
 ROA_Parameters::oa()
 {
   return oa_;
 }
 
 ACE_INLINE void
-ROA_Parameters::oa(ROA_ptr anOA)
+ROA_Parameters::oa(CORBA_BOA_ptr anOA)
 {
   oa_ = anOA;
 }
@@ -68,6 +68,45 @@ ACE_INLINE void
 ROA_Parameters::thread_flags(u_int f)
 {
   thread_flags_ = f;
+}
+
+ACE_INLINE void
+ROA_Parameters::addr(ACE_INET_Addr &addr)
+{
+  this->addr_ = addr;
+}
+
+ACE_INLINE ACE_INET_Addr
+ROA_Parameters::addr()
+{
+  return this->addr_;
+}
+
+ACE_INLINE void
+ROA_Parameters::demux_strategy(char* strategy)
+{
+  if (!ACE_OS::strcmp(strategy, "linear"))
+    {
+      this->demux_ = ROA_Parameters::TAO_LINEAR;
+    }
+  else if (!ACE_OS::strcmp(strategy, "dynamic_hash"))
+    {
+      this->demux_ = ROA_Parameters::TAO_DYNAMIC_HASH;
+    }
+  else if (!ACE_OS::strcmp(strategy, "perfect_hash"))
+    {
+      this->demux_ = ROA_Parameters::TAO_PERFECT_HASH;
+    }
+  else if (!ACE_OS::strcmp(strategy, "active_demux"))
+    {
+      this->demux_ = ROA_Parameters::TAO_ACTIVE_DEMUX;
+    }
+}
+
+ACE_INLINE ROA_Parameters::DEMUX_STRATEGY
+ROA_Parameters::demux_strategy()
+{
+  return this->demux_;
 }
 
 ACE_INLINE

@@ -51,8 +51,8 @@
 #	include	<winsock.h>
 #endif	// unix
 
-#include	<orb.hh>
-#include	<stub.hh>
+#include	"orb.hh"
+#include	"stub.hh"
 
 #include	"connmgr.hh"
 #include	"thread.hh"

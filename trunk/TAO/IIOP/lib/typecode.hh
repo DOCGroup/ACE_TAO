@@ -82,7 +82,7 @@ class CORBA_BadKind : public CORBA_UserException {
 // compiler) that needs to create typecodes from their octet-sequence
 // encodings.
 //
-typedef class CORBA_TypeCode	*CORBA_TypeCode_ptr;
+
 void				CORBA_release (CORBA_TypeCode_ptr);
 CORBA_Boolean			CORBA_is_nil (CORBA_TypeCode_ptr obj);
 

@@ -95,7 +95,7 @@ struct calldata {
 // is currently set up only for Dynamic Skeletons and bridging, for which
 // none of those are real issues.
 //
-typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Environment &);
+//typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Environment &);
 
 struct skel_entry {	// table of these per implementation
     const calldata		*op_descriptor;

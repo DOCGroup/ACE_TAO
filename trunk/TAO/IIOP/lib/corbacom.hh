@@ -94,8 +94,28 @@ typedef CORBA_Char	*CORBA_String;
 
 CORBA_String		CORBA_string_alloc (CORBA_ULong len);
 CORBA_String		CORBA_string_copy (const CORBA_Char *const);
+CORBA_String		CORBA_string_dup (const CORBA_Char *const);
 void			CORBA_string_free (CORBA_Char *const);
 
+class CORBA_String_var
+{
+public:
+  CORBA_String_var();
+  CORBA_String_var(char *p);
+  CORBA_String_var(const char *p);
+  CORBA_String_var(const CORBA_String_var &s);
+  ~CORBA_String_var();
+
+  CORBA_String_var &operator=(char *p);
+  CORBA_String_var &operator=(const char *p);
+  CORBA_String_var &operator=(const CORBA_String_var &s);
+  operator char*() { return ptr_; }
+  operator const char*() const {return ptr_; };
+  char &operator[] (CORBA_ULong index);
+  char operator[] (CORBA_ULong index) const;
+private:
+  char *ptr_;
+};
 //
 // 94-9-32 Appendix A defines 16-bit UNICODE characters as
 // "WChar", and null-terminated strings of them as "WString".

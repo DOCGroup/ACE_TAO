@@ -49,7 +49,7 @@ ROA::init (CORBA_ORB_ptr parent,
 #endif
     
   ROA_ptr rp;
-  ACE_NEW_RETURN (rp, ROA(parent, rendezvous, env), 0);
+  ACE_NEW_RETURN (rp, ROA(parent, env), 0);
   p->oa(rp);
 
   return rp;
@@ -57,7 +57,6 @@ ROA::init (CORBA_ORB_ptr parent,
 
 
 ROA::ROA (CORBA_ORB_ptr owning_orb,
-	  ACE_INET_Addr& rendezvous,
 	  CORBA_Environment &env)
   : do_exit(CORBA_B_FALSE), 
     _orb(owning_orb),
@@ -72,7 +71,7 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
   //
   // Initialize the endpoint ... or try!
   //
-  if (client_acceptor_.open(rendezvous,
+  if (client_acceptor_.open(p->addr(),
 			    ACE_Service_Config::reactor(),
 			    f->creation_strategy(),
 			    f->accept_strategy(),
@@ -82,7 +81,7 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     ;
 
   client_acceptor_.acceptor().get_local_addr(addr);
-
+  this->objtable_ = 0;
   if (env.exception () != 0)
     p->oa(this);
 }
@@ -251,7 +250,7 @@ ROA::clean_shutdown(CORBA_Environment& env)
 // For BOA -- BOA operations for which we provide the vtable entry
 //
 void
-ROA::register_dir (BOA::dsi_handler handler, void* ctx, CORBA_Environment& env)
+ROA::register_dir (CORBA_BOA::dsi_handler handler, void* ctx, CORBA_Environment& env)
 {
   if (handler == 0)
     {
@@ -292,7 +291,7 @@ ROA::get_request(CORBA_Boolean use_threads,
 // OBSOLETE!!!  But stays in b/c the one above calls it.
 void
 ROA::get_request (
-    BOA::dsi_handler	handler,
+    CORBA_BOA::dsi_handler	handler,
     void		check_forward (
 	CORBA_OctetSeq	&key,
 	CORBA_Object_ptr	&fwd_ref,
@@ -607,7 +606,8 @@ request_dispatcher (GIOP::RequestHeader& req,
   (void) ACE_Thread::setspecific(p->oa().req_key_, &req);
 #endif
 
-  helper->skeleton (req.object_key, svr_req, helper->context, env);
+  helper->skeleton (*p->oa(),req.object_key, svr_req, helper->context, env);
+  // is this the correct way to do it? skeleton is a member function
 
   svr_req.release ();
 

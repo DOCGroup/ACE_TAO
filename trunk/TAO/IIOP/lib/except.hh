@@ -56,7 +56,6 @@ private:
   ACE_Thread_Mutex lock_;
   unsigned			_refcnt;
 };
-typedef CORBA_Exception *CORBA_Exception_ptr;
 
 //
 // User exceptions are those defined by application developers
