@@ -144,8 +144,13 @@ ACE_DLL_Handle::close (int unload)
                     ACE_LIB_TEXT ("ACE_DLL_Handle::close: unloading %s\n"),
                     this->dll_name_));
       // First remove any associated Framework Components.
-      ACE_Framework_Repository::instance ()->remove_dll_components (this->dll_name_);
-
+      ACE_Framework_Repository * frPtr= ACE_Framework_Repository::instance ();
+      
+      if (frPtr)
+      {
+         frPtr->remove_dll_components (this->dll_name_);
+      }
+      
       retval = ACE_OS::dlclose (this->handle_);
       this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
