@@ -1,5 +1,10 @@
 Thu Nov 28 00:53:16 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
+	* ace/Pipe.cpp (close): Arrgh!  Fixed a total braino where we
+ 	  weren't using ACE_OS::closesocket() to close down the Win32
+ 	  ACE_Pipe implementation, which uses sockets...  Thanks to Irfan
+ 	  and Tilo for helping me figure this one out!
+
 	* tests/CPP_Test.cpp: Completely reworked this test so that it
  	  should run correctly on Win32 and UNIX.
 

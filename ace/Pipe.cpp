@@ -133,8 +133,11 @@ ACE_Pipe::close (void)
 {
   ACE_TRACE ("ACE_Pipe::close");
 
-  if (ACE_OS::close (this->handles_[0]) == -1
-      || ACE_OS::close (this->handles_[1]) == -1)
+  // Note that the following will work even if we aren't closing down
+  // sockets because ACE_OS::closesocket() will just call ::close() in
+  // that case!
+  if (ACE_OS::closesocket (this->handles_[0]) == -1
+      || ACE_OS::closesocket (this->handles_[1]) == -1)
     return -1;
   else
     return 0;
