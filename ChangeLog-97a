@@ -1,3 +1,10 @@
+Tue Jun 17 15:31:01 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.cpp: Fixed get_ip_interfaces (and count_interfaces) to
+	  work properly on HP-UX (and probably other similar UNIXes).  Needed
+	  to work with non-IP interfaces present, and fixed to copy the
+	  IP address without the fudge factor being applied.
+
 Tue Jun 17 14:02:01 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/{Free_List.h,Free_List.cpp,Timer_Queue_T.h}: Added #include
