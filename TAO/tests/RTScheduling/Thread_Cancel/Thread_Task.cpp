@@ -28,7 +28,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
       CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
-									      ACE_ENV_ARG_PARAMETER);
+                                                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->current_ = RTScheduling::Current::_narrow (current_obj
@@ -135,7 +135,7 @@ Thread_Task::svc (void)
   ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Distributable Thread Cancelled - Expected Exception\n"));
+                  "Distributable Thread Cancelled - Expected Exception\n"));
       {
         ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
         --active_thread_count_;
