@@ -759,38 +759,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSetUID")))
-        {
-          // @@ This option introduces a security hole.  Do not
-          //    reinstate it.
-
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("-ORBSetUID is deprecated.\n")));
-
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA_SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSetGID")))
-        {
-          // @@ This option introduces a security hole.  Do not
-          //    reinstate it.
-
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("-ORBSetGID is deprecated.\n")));
-
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA_SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
-        }
 
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBid")))
@@ -811,6 +779,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
