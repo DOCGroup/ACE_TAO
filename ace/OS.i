@@ -716,10 +716,11 @@ ACE_OS::getuid (void)
 }
 
 ACE_INLINE int
-ACE_OS::isatty (ACE_HANDLE fd)
+ACE_OS::isatty (ACE_HANDLE handle)
 {
 #if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::isatty");
+  int fd = ::_open_osfhandle ((long) handle, 0);
   ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
 #else
   ACE_UNUSED_ARG (fd);
