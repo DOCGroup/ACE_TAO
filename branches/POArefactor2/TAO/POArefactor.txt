@@ -1,3 +1,30 @@
+Fri Jan 28 13:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.cpp:
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * orbsvcs/examples/ORT/Gateway_i.h:
+        * examples/POA/DSI/Database_i.h:
+        * examples/POA/Default_Servant/File_i.cpp:
+        * examples/POA/Forwarding/Servant_Activator.h:
+        * examples/POA/Adapter_Activator/server.cpp:
+        * examples/POA/Loader/Servant_Activator.h:
+        * examples/POA/Loader/Servant_Locator.h:
+        * examples/POA/On_Demand_Activation/Servant_Activator.h:
+        * examples/POA/On_Demand_Activation/Servant_Locator.h:
+        * examples/POA/On_Demand_Loading/Servant_Activator.h:
+        * examples/POA/On_Demand_Loading/Servant_Locator.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h:
+
 Thu Jan 27 17:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/File_IO/File_i.cpp:
