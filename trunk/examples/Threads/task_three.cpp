@@ -15,7 +15,7 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-#include "ace/stdcpp.h"
+#include "ace/streams.h"
 
 #if defined (ACE_HAS_THREADS)
 
