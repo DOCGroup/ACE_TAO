@@ -31,11 +31,11 @@ Util_Thread::svc (void)
               "(%t) Utilization Thread created, "
               "waiting for threads to finish binding\n"));
 
-  // this barrier synchronizes the utilization thread with 
+  // this barrier synchronizes the utilization thread with
   // the client threads
-  // i.e., the Util_thread should wait until all the 
+  // i.e., the Util_thread should wait until all the
   // clients have finished binding, and only then
-  // start measuring the utilization. 
+  // start measuring the utilization.
   this->ts_->barrier_->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -59,12 +59,16 @@ Util_Thread::get_number_of_computations (void)
 void
 Util_Thread::computation (void)
 {
-  // See if this number is prime. 2 and CUBIT_ARBIT_NUMBER / 2 are
+  // This is the number that the Util_Thread uses to check for
+  // primality.
+  const u_long CUBIT_PRIME_NUMBER = 509UL;
+
+  // See if this number is prime.  2 and CUBIT_PRIME_NUMBER / 2 are
   // the recommended values for min_factor and max_factor, as
   // explained in ACE.h (is_prime).
-  ACE::is_prime (CUBIT_ARBIT_NUMBER,
-		 2,
-		 CUBIT_ARBIT_NUMBER / 2);
+  ACE::is_prime (CUBIT_PRIME_NUMBER,
+                 2UL,
+                 CUBIT_PRIME_NUMBER / 2);
 }
 
 // Perform repeated prime factor computations on an arbitrary number.
