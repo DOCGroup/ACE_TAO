@@ -1,3 +1,9 @@
+Wed Oct 27 09:28:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added the HTIOP library to the static order list.
+
 Wed Oct 27 09:16:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
