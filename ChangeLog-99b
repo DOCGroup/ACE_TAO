@@ -1,3 +1,23 @@
+Sat Jan 23 21:13:47 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tests/tests.dsw:
+        * tests/CDR_Test.dsp:
+        * tests/Makefile:
+        * tests/CDR_Test.cpp:
+          New test in the suite for the new ACE CDR classes (see below).
+
+        * TAO/TAOACE.dsw:
+        * TAO/TAOACE_static.dsw:
+        * ace/Makefile:
+        * ace/CDR.{h,i,cpp}:
+        * ace/OS.h:
+        * ace/Basic_Types.h:
+          CDR stuff modified from TAO library. Typedefs, default 
+          constants and macros added to OS.h and Basic_Types.h.
+          There is now complete CDR functionality in ACE, except
+          for the interpreter, and thus also no handling of Any
+          or TypeCode types.
+
 Sat Jan 23 17:50:22 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_SOCK_Test.cpp: 1. Check for EAGAIN as well as EWOULDBLOCK
