@@ -451,6 +451,6 @@ check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
 
-print "\nFuzz.pl - $errors error(s), $warnings warnings(s)\n";
+print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
 exit (1) if $errors > 0;
