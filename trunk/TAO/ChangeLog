@@ -94,9 +94,9 @@ Thu Dec 19 13:45:50 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
 
-          Added a patch sent in by Greg Mulyar <greg_mu@yahoo.com> to make sure that
-          the ACE version of gperf is used when both the ACE and GNU versions of
-          gperf are present.
+          Added a patch sent in by Greg Mulyar <greg_mu@yahoo.com> to make
+	  sure that the ACE version of gperf is used when both the ACE and
+	  GNU versions of gperf are present. This fixes BUG 1406.
 
 Thu Dec 19 08:48:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -135,9 +135,9 @@ Wed Dec 18 14:48:32 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any.h:
         * tao/Any.i:
 
-          Added cast operator to Any& for class Any_var. Thanks to Torsten Kuepper
-          <torsten.kuepper@nokia.com> for pointing out the lack of this spec-required
-          operator.
+          Added cast operator to Any& for class Any_var. Thanks to Torsten
+	  Kuepper <torsten.kuepper@nokia.com> for pointing out the lack of
+	  this spec-required operator. This fixes BUG 1404.
 
 Wed Dec 18 14:46:53 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
