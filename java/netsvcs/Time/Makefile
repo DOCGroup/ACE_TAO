@@ -1,3 +1,4 @@
+
 # Makefile
  
 .SUFFIXES: .java .class
