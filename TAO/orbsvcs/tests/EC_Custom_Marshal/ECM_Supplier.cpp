@@ -31,7 +31,7 @@ ECMS_Driver::ECMS_Driver (void)
 {
 }
 
-
+// ****************************************************************
 
 int
 ECMS_Driver::run (int argc, char* argv[])
@@ -221,7 +221,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
       if (!(cdr << info))
-        ACE_THROW (CORBA::MARSHAL ());
+        ACE_THROW (CORBA::MARSHAL (), 0);
 
       // Here we marshall a non-IDL type.
       cdr << other;
@@ -251,7 +251,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           else
             event[0].header.type = this->event_b_;
 
-          // We use replace to minimize the copies, this should result
+         // We use replace to minimize the copies, this should result
           // in just one memory allocation;
           event[0].data.payload.replace (mblen, mb);
 

@@ -1,176 +1,182 @@
+Thu Mar 23 08:45:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          Changed an ACE_THROW to ACE_THROW_RETURN, thanks to Jeff for
+          pointing out this problem.
+
 Thu Mar 23 10:16:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* utils/catior/catior.cpp:
-	  Removed an unused CORBA::Environment parameter.
+        * utils/catior/catior.cpp:
+          Removed an unused CORBA::Environment parameter.
 
 Thu Mar 23 09:23:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Acceptors.cpp (process_client_request): Fixed a
-	  warning in KAI compiler.
+        * tao/GIOP_Message_Acceptors.cpp (process_client_request): Fixed a
+          warning in KAI compiler.
 
 Wed Mar 22 21:02:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (hostname):
+        * tao/IIOP_Acceptor.cpp (hostname):
 
-	  Fall back on IP address if hostname lookup fails.  This gets
-	  around a system configuration problem on hosts that don't have
-	  the host tables or DNS setup properly.  Thanks to J. Russell
-	  Noseworthy <j.russell.noseworthy@objectsciences.com> for
-	  motivating this feature.  [Bug 503]
+          Fall back on IP address if hostname lookup fails.  This gets
+          around a system configuration problem on hosts that don't have
+          the host tables or DNS setup properly.  Thanks to J. Russell
+          Noseworthy <j.russell.noseworthy@objectsciences.com> for
+          motivating this feature.  [Bug 503]
 
 Wed Mar 22 16:24:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
-	  Fixed bug#502. If the Naming Service is not started, an
- 	  appropriate message is displayed.  Thanks to Andrey Nechypurenko
- 	  <A.Nechypurenko.telesens.de> for reporting this.
+        * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+          Fixed bug#502. If the Naming Service is not started, an
+          appropriate message is displayed.  Thanks to Andrey Nechypurenko
+          <A.Nechypurenko.telesens.de> for reporting this.
 
 Wed Mar 22 14:11:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_struct/struct_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Changed the code generated for the body of
-	  _tao_any_destructor() to generate the datatype's local
-	  name instead of its scoped name. Thanks to Carlos for
-	  reporting this bug.
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_struct/struct_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Changed the code generated for the body of
+          _tao_any_destructor() to generate the datatype's local
+          name instead of its scoped name. Thanks to Carlos for
+          reporting this bug.
 
 Wed Mar 22 13:32:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.h:
-	* tao/InterfaceS.h:
-	  Removed the leading and trailing underbar characters
-	  from the all-caps string made from the filename that
-	  follows #ifndef, #define, etc. This not only follows
-	  the style common to hand-crafted IDL generated files,
-	  but avoids a namespace clash with generated files in
-	  IDL_Test.
+        * tao/InterfaceC.h:
+        * tao/InterfaceS.h:
+          Removed the leading and trailing underbar characters
+          from the all-caps string made from the filename that
+          follows #ifndef, #define, etc. This not only follows
+          the style common to hand-crafted IDL generated files,
+          but avoids a namespace clash with generated files in
+          IDL_Test.
 
 Wed Mar 22 11:53:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp (dump_msg): Added ASYS_TEXT in places
-	  where it was missing.
+        * tao/GIOP_Message_Base.cpp (dump_msg): Added ASYS_TEXT in places
+          where it was missing.
 
 Wed Mar 22 11:38:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp (handle_input): Improper use of '%p'
-	  in a ACE_DEBUG statements. Thanks to Ossama Othman
-	  <ossama@ece.uci.edu> for reporting this.
+        * tao/GIOP_Message_Base.cpp (handle_input): Improper use of '%p'
+          in a ACE_DEBUG statements. Thanks to Ossama Othman
+          <ossama@ece.uci.edu> for reporting this.
 
 Wed Mar 22 09:44:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Lite.cpp;
-	  Removed unreachable 'break' statements (occurre after
-	  'return' statement in a switch case. These were
-	  causing warnings on kai3.3.
+        * tao/Typecode.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp;
+          Removed unreachable 'break' statements (occurre after
+          'return' statement in a switch case. These were
+          causing warnings on kai3.3.
 
 Tue Mar 21 20:13:01 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
-	* tao/IIOP_Acceptor.cpp (open_default, probe_interfaces):
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+        * tao/IIOP_Acceptor.cpp (open_default, probe_interfaces):
 
-	  Moved network interface probing code into a separate helper
-	  function.  This makes the code a bit cleaner, and allows both
-	  open methods (see below) to use the same probing code.
+          Moved network interface probing code into a separate helper
+          function.  This makes the code a bit cleaner, and allows both
+          open methods (see below) to use the same probing code.
 
-	  (open):
+          (open):
 
-	  Open an endpoint with a given port on each network interface for
-	  the case where the endpoint only contains a port, i.e. wildcard
-	  the hosts/interfaces but use the same port for each interface.
-	  For example, given the following network interfaces:
+          Open an endpoint with a given port on each network interface for
+          the case where the endpoint only contains a port, i.e. wildcard
+          the hosts/interfaces but use the same port for each interface.
+          For example, given the following network interfaces:
 
-	  	eth0	foo1.bar.baz
-		eth1	foo2.bar.baz
+                eth0    foo1.bar.baz
+                eth1    foo2.bar.baz
 
-	  and the following "-ORBEndpoint" option:
+          and the following "-ORBEndpoint" option:
 
-		-ORBEndpoint iiop://:1234
+                -ORBEndpoint iiop://:1234
 
-	  The following endpoints will be created (assuming a properly
-	  configured host table and/or DNS):
+          The following endpoints will be created (assuming a properly
+          configured host table and/or DNS):
 
-		foo1.bar.baz:1234
-		foo2.bar.baz:1234
+                foo1.bar.baz:1234
+                foo2.bar.baz:1234
 
-	  Thanks to Chris Hafey <chris@stentorsoft.com> for motivating
-	  this feature.  He points out this feature is useful for
-	  persistent IORs.
+          Thanks to Chris Hafey <chris@stentorsoft.com> for motivating
+          this feature.  He points out this feature is useful for
+          persistent IORs.
 
 Tue Mar 21 21:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.cpp:
-	  Fixed some cut and paste mistakes in the hand-crafted
-	  _tao_any_destructor functions.
+        * tao/InterfaceC.cpp:
+          Fixed some cut and paste mistakes in the hand-crafted
+          _tao_any_destructor functions.
 
 Tue Mar 21 21:16:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/PollableC.cpp:
-	  Fixed typo.
+        * tao/PollableC.cpp:
+          Fixed typo.
 
 Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAnyC.cpp
-	* tao/DynAnyC.h:
-	* tao/DynArray_i.cpp:
-	* tao/DynArray_i.h:
-	* tao/DynSequence_i.cpp:
-	* tao/DynSequence_i.h:
-	* tao/GIOPC.h:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/IOPC.h:
-	* tao/IORC.cpp:
-	* tao/IORC.h:
-	* tao/ImplRepoC.cpp:
-	* tao/ImplRepoC.h:
-	* tao/Interceptor.cpp:
-	* tao/Interceptor.h:
-	* tao/Interceptor.i:
-	* tao/Invocation.cpp:
-	* tao/MessagingC.h:
-	* tao/ORB.h:
-	* tao/Object_KeyC.h:
-	* tao/POAC.cpp:
-	* tao/POAC.h:
-	* tao/PolicyC.h:
-	* tao/Request.h:
-	* tao/Services.h:
-	* tao/corbafwd.h:
-	   Removed all typedefs of foo_ptr to foo::_ptr_type and
-	   all typedefs and use of foo * as foo_ptr, for all datatypes
-	   except interfaces, valuetypes, pseudo objects, and a few
-	   types that appear as foo_ptr in spec examples (NamedValue,
-	   NVList, ExceptionList, etc.). Even though I don't think the
-	   spec intends for these types to have the typedef, I left them
-	   in to hopefully reduce confusion.
+        * tao/DynAnyC.cpp
+        * tao/DynAnyC.h:
+        * tao/DynArray_i.cpp:
+        * tao/DynArray_i.h:
+        * tao/DynSequence_i.cpp:
+        * tao/DynSequence_i.h:
+        * tao/GIOPC.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/IOPC.h:
+        * tao/IORC.cpp:
+        * tao/IORC.h:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/Interceptor.cpp:
+        * tao/Interceptor.h:
+        * tao/Interceptor.i:
+        * tao/Invocation.cpp:
+        * tao/MessagingC.h:
+        * tao/ORB.h:
+        * tao/Object_KeyC.h:
+        * tao/POAC.cpp:
+        * tao/POAC.h:
+        * tao/PolicyC.h:
+        * tao/Request.h:
+        * tao/Services.h:
+        * tao/corbafwd.h:
+           Removed all typedefs of foo_ptr to foo::_ptr_type and
+           all typedefs and use of foo * as foo_ptr, for all datatypes
+           except interfaces, valuetypes, pseudo objects, and a few
+           types that appear as foo_ptr in spec examples (NamedValue,
+           NVList, ExceptionList, etc.). Even though I don't think the
+           spec intends for these types to have the typedef, I left them
+           in to hopefully reduce confusion.
 
-	* tao/TAO.dsp:
-	   Added BoundsC.* to the project file. It had been removed by
-	   a recent checkin.
+        * tao/TAO.dsp:
+           Added BoundsC.* to the project file. It had been removed by
+           a recent checkin.
 
 Tue Mar 21 17:13:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
-	  Somehow this change of mine got lost or was not commited when it
-	  should have.
+          Somehow this change of mine got lost or was not commited when it
+          should have.
           Fixed the export macro to fit the new standard set by Darrell.
 
 Tue Mar 21 19:06:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Changed the function that looks up succesive
-	  components of a scoped name to recursive instead of
-	  iterative. This makes it easier to handle backing
-	  up and trying another path when the IDL file
-	  contains reopened and/or nested and/or #included
-	  modules. Thanks to Florian Lackerbauer
-	  <florian.lackerbauer@mchp.siemens.de> for sending
-	  in the nasty IDL example file.
+        * TAO_IDL/util/utl_scope.cpp:
+          Changed the function that looks up succesive
+          components of a scoped name to recursive instead of
+          iterative. This makes it easier to handle backing
+          up and trying another path when the IDL file
+          contains reopened and/or nested and/or #included
+          modules. Thanks to Florian Lackerbauer
+          <florian.lackerbauer@mchp.siemens.de> for sending
+          in the nasty IDL example file.
 
 Tue Mar 21 12:16:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -772,7 +778,7 @@ Tue Mar 21 13:51:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Mar 21 11:29:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.h: Made some cosmetic changes.
+        * tao/GIOP_Server_Request.h: Made some cosmetic changes.
 
 Tue Mar 21 10:00:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
