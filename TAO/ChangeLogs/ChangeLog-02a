@@ -93,12 +93,12 @@ Mon Mar  5 07:59:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Mon Mar  5 04:42:52 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-        * orbsvcs/tests/AVStreams/Comp_Test/ftp.h:
-        * orbsvcs/tests/AVStreams/Comp_Test/ftp.cpp:
-        * orbsvcs/tests/AVStreams/Comp_Test/server.h:
-        * orbsvcs/tests/AVStreams/Comp_Test/server.cpp:
-        * orbsvcs/tests/AVStreams/Comp_Test/README:
-        * orbsvcs/tests/AVStreams/Comp_Test/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple/ftp.h:
+        * orbsvcs/tests/AVStreams/Simple/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Simple/server.h:
+        * orbsvcs/tests/AVStreams/Simple/server.cpp:
+        * orbsvcs/tests/AVStreams/Simple/README:
+        * orbsvcs/tests/AVStreams/Simple/run_test.pl:
 
           Added a new test to the AVStreams tests in order to demonstrate
           the use of AVStreams Service to pace data at a specified frame rate.
