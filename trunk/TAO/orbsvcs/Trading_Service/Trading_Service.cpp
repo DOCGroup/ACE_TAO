@@ -67,7 +67,7 @@ Trading_Service::run (CORBA::Environment &ACE_TRY_ENV)
   int return_value =
     this->trading_loader_.run (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   return return_value;
 }
 
