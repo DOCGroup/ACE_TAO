@@ -1,8 +1,13 @@
+Mon May 17 14:02:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Conn_Test.cpp (handler): added comment saying that even
+          the ACE_OS::exit () call isn't safe.
+
 Mon May 17 10:31:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Repository.cpp (find_i): A missing pointer check was
-	  causing the remove method to segfault.  Thanks to Tom Arbuckle
-	  <arbuckle@uran.informatik.uni-bonn.de> for pointing this out.
+        * ace/Service_Repository.cpp (find_i): A missing pointer check was
+          causing the remove method to segfault.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for pointing this out.
 
 Mon May 17 10:21:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
