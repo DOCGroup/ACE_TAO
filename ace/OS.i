@@ -2309,8 +2309,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
   // We need to adjust this to make the POSIX and Solaris return
   // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and
-  // down).
-  if (result == -1 && (errno == ETIMEDOUT || errno == EAGAIN))
+  // down); EINTR is from LynxOS.
+  if (result == -1 &&
+      (errno == ETIMEDOUT || errno == EAGAIN || errno == EINTR))
     errno = ETIME;
 
 #   elif defined (ACE_HAS_STHREADS)
@@ -8599,7 +8600,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::read_real_time(&tb, TIMEBASE_SZ);
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
-  return tb.tb_high * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
+  return ACE_hrtime_t(tb.tb_high) * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
 #elif defined (ghs) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
