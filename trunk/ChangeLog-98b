@@ -1,3 +1,17 @@
+Fri Jun 19 23:58:35 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+	* ace/Proactor.h    :
+	* ace/Proactor.cpp  :
+	* ace/Asynch_IO.h   :
+	* ace/Asynch_IO.cpp :
+		- Implemented Asynch_Transmit_File for POSIX4 systems.
+		- Added a new class "ACE_Asynch_Transmit_Handler", which is
+		an auxillary handler class for Asynch_Transmit_File. This
+		does the actual transmission doing file read and stream
+		write asynchronously and finally calling the
+ 		transmit_handler in the application.
+		- Aiocb list is now of size RTSIG_MAX, the maximum number
+		of RT signals that can be queued in a process at a time.
+
 Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release (check_workspace): use cvs checkout instead
