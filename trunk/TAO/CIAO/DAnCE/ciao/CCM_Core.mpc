@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client, ciaoversion {
+project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_DnC_Client
   idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h
   idlflags  += -Wb,stub_export_macro=CIAO_CLIENT_Export
