@@ -1,10 +1,15 @@
+Fri Apr  5 09:32:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tests/Makefile.bor:
+          Added new directory MT_BiDir
+
 Thu Apr  4 13:53:58 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.h: 
-	* tao/PortableServer/AMH_Response_Handler.cpp: 
+	* tao/PortableServer/AMH_Response_Handler.h:
+	* tao/PortableServer/AMH_Response_Handler.cpp:
 	  Removed the inefficient huge locks in each method, split them to
 	  only protect shared variables.
-	
+
 Thu Apr  4 14:21:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAOACE.dsw (Package): Added TAO DLL as a dependency to the
@@ -14,11 +19,11 @@ Thu Apr  4 14:20:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_BiDir/MT_BiDir.dsw:
 	* tests/MT_BiDir/client.dsp:
-	* tests/MT_BiDir/server.dsp: Files for Win32 compilation. 
+	* tests/MT_BiDir/server.dsp: Files for Win32 compilation.
 
 Thu Apr  4 13:25:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Added documentation for the new -ORB option. 
+	* docs/Options.html: Added documentation for the new -ORB option.
 
 Thu Apr  4 13:15:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -48,13 +53,13 @@ Thu Apr  4 12:49:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/MT_BiDir/README: A new test that exercises multiple
 	  threads for a BiDir GIOP connections. The problem such a
 	  scenario faced before was the extra connections that were being
-	  created from the server end when trying to callback the client. 
+	  created from the server end when trying to callback the client.
 
 	  With the new policy that has been added to TAO, it is easier to
 	  control the number of connections opened by the server
 	  end. Making that 1, would prevent the multi-threaded server from
 	  opening up more connections to the client and the server threads
-	  will wait for the available connection to be released. 
+	  will wait for the available connection to be released.
 
 	  This test exercises this feature and is a rigourous test for MT
 	  bidirectional connection.
@@ -62,7 +67,7 @@ Thu Apr  4 12:49:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Apr 03 23:38:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Condition.h: Added a comment
-	* tao/Condition.cpp: Added #ifdef's around the whole file. 
+	* tao/Condition.cpp: Added #ifdef's around the whole file.
 	* tao/Condition.inl: Fixed a compile error on Win32.
 
 Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -71,7 +76,7 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         contains the following:
 
 	1. Couple of bug fixes (#1129 and #1164). They have been verified
-	   and they seem to work fine. 
+	   and they seem to work fine.
 	2. A new policy to regulate the number of connections allowed by
 	   the ORB for every QoS property.
 
@@ -84,7 +89,7 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  you get an error. We used to do only one read before and looks
 	  like this had performance impacts. Thanks to James Kanyok
 	  <james.kanyok@lmco.com> for reporting the problem. This will go
-	  into the main trunk once we get a feedback from James. 
+	  into the main trunk once we get a feedback from James.
 
 	  Tue Feb 19 07:45:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -92,48 +97,48 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  #1129.  Yet, to get a reply whether the fix is right or
 	  wrong. Now, we close the socket with the first call to
 	  handle_close () and delete it when the upcall count gets to
-	  zero.  
+	  zero.
 
 	  Mon Feb 11 14:03:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h: Removed the virtual declaration from the method
 	  bidirectional_flag (). It shouldnt have been virtual to start
-	  with. 
+	  with.
 
 	* tao/Muxed_TMS.h: Removed some old comments
 
-	* tao/Muxed_TMS.cpp (request_id): 
+	* tao/Muxed_TMS.cpp (request_id):
 	* tao/Exclusive_TMS.cpp: Added a condition within request_id
 	  (). The request_id that is generated will obey BiDirGIOP rules,
 	  ie. the originator will send even number requests and the
 	  receiver send odd numbered requests. The old method of
-	  generation was giving problems in MT cases. 
-	
+	  generation was giving problems in MT cases.
+
 	* tao/Invocation.cpp: Minor cosmetic changes.
 	* tao/IIOP_Transport.cpp: Modify the request id only for the first
-	  request during BiDir connection origination. 
+	  request during BiDir connection origination.
 
-	
+
 	Thu Jan 31 11:23:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Cache_Entries.cpp: Did a cosmetic fix.
 
 	* tao/Cache_Entries.h:
 	* tao/Cache_Entries.inl: Added a new method incr_index () to the
-	  TAO_CacheExtId class. 
+	  TAO_CacheExtId class.
 
-	* tao/Resource_Factory.cpp: 
+	* tao/Resource_Factory.cpp:
 	* tao/Resource_Factory.h:Added two new methods,
 	  max_muxed_connections () and locked_transport_cache (). The
 	  former returns the number of user specified muxed connections
 	  with a particular property. The latter returns a boolean value
 	  to indicate whether the transport cache needs to have a lock or
-	  not . 
+	  not .
 
 	* tao/default_resource.cpp:
 	* tao/default_resource.h: Concrete implementations for the methods
 	  declared in Resource_Factory.
-	
+
 	* tao/Transport_Cache_Manager.cpp:
 	* tao/Transport_Cache_Manager.h:
 	* tao/Transport_Cache_Manager.inl: Added support for counted muxed
@@ -143,16 +148,16 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  is free, the thread will wait on a condition variable for the
 	  connection to be released. To accomodate this the following set
 	  of changes were made
-	  
+
 	  - Added a condition variable to the class
-	  
+
 	  - Create the type of lock that needs to be used for the cache
 	    locally and use that lock to create the condition variable. If
 	    the cache is free of any locks we dont create a condition
-	    variable. 
-	  
+	    variable.
+
 	  - The creation of lock has been moved to the
-	    Transport_Cache_Manager from the Resource_Factory. 
+	    Transport_Cache_Manager from the Resource_Factory.
 
 	  - Added two new methods, wait_for_connection () and
 	    is_wakeup_useful (). The wait_for_connection () blocks the
@@ -161,7 +166,7 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	    connections created with the same property. The
 	    is_wakeup_useful () method is called by an unblocked thread to
 	    check whether the transport that was returned is the one the
-	    thread was waiting for. 
+	    thread was waiting for.
 
 	  - Removed a version of rebind () and a couple of version of
 	    unbind () calls as they were not used.
@@ -171,7 +176,7 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Condition.inl: A simple wrapper that wraps a
 	  TAO_SYNCH_CONDITION that can be used with different types of
 	  Mutex classes.
-	  
+
 Tue Apr  3 12:44:51 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	* tao/docs/pluggable_protocols/index.html:
@@ -184,7 +189,7 @@ Tue Apr  3 12:44:51 UTC 2002  Don Hinton <dhinton@ieee.org>
 	  FIFO arguments.  Reorganized init() to use ACE_Arg_Shifter.
 	  And added new option description to the TAO_Advanced_Resource_Factory
 	  section of Options.html.
-	
+
 Tue Apr  2 14:20:38 2002  Steve Totten  <totten_s@ociweb.com>
 
         Applied to following changes on behalf of Rob Martin
