@@ -73,18 +73,10 @@ protected:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
-
-  static int completion_flag_;
-  // A flag indicating the complete instantiation (and writing) of
-  // <singleton_>.  By checking this flag instead of <singleton_>
-  // directly, we avoid the problem of Singleton not being MP safe.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
   // Get pointer to the Singleton instance.
-
-  static int &completion_flag (void);
-  // Access the singleton completion status.
 };
 
 template <class TYPE, class ACE_LOCK>
@@ -127,18 +119,10 @@ protected:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
-
-  static int completion_flag_;
-  // A flag indicating the complete instantiation (and writing) of
-  // <singleton_>.  By checking this flag instead of <singleton_>
-  // directly, we avoid the problem of Singleton not being MP safe.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
   // Get pointer to the TSS Singleton instance.
-
-  static int &completion_flag (void);
-  // Access the singleton completion status.
 };
 
 #if defined (__ACE_INLINE__)
