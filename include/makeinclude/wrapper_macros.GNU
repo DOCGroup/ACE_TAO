@@ -74,11 +74,18 @@
 #  ORBIX_ROOT   Root of IONA's Orbix CORBA implementation
 #  PCFLAGS      C compilation flags for profiling
 #  PCCFLAGS     C++ compilation flags for profiling
-#  PRELINK      Executable to precede linking, such as purify or quantify
+#  PRELINK      Executable to precede linking, such as quantify
+#  PURELINK	If set, contains purify executable as well as all options
+#  PURE_CACHE_BASE_DIR
+#		The base directory in which Pure products will produce instrumented
+#		libraries.
+#  PURE_CACHE_DIR
+#		The full name of the directory in which Pure produces will produce
+#		instrumented libraries.
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
 #  SOFLAGS      Flags used to build a shared library
-#  SOBUILD      Link line necessary to build a share library
+#  SOLINK.cc    Link line necessary to build a share library
 #  VAR          Variant identifier suffix
 #  VDIR         Directory for object code
 #  VSHDIR       Directory for shared object code
@@ -272,13 +279,16 @@ ifeq ($(purify),0)
   override purify =
 endif # purify
 
+PURE_CACHE_BASE_DIR = /tmp/purifycache
+PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
+
 ifdef purify
   #### You might want to adjust the Purify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
   #### SIGINT is used by the ACE Thread_Manager_Test.
-  PRELINK += purify -best-effort -chain-length=20 \
-             -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX) \
+  PURELINK += purify -best-effort -chain-length=20 \
+             -cache-dir=$(PURE_CACHE_DIR) \
              -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
              -max_threads=100
   CFLAGS += -DACE_PURIFY
@@ -293,7 +303,7 @@ ifdef quantify
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
   PRELINK += quantify -best-effort -max_threads=100 \
-             -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX)
+             -cache-dir=$(PURE_CACHE_DIR)
   CFLAGS += -DACE_QUANTIFY
 endif # quantify
 
@@ -312,14 +322,14 @@ COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 ifeq ($(LINK.c),override)
   LINK.c        = $(LINK.c.override)
 else
-  LINK.c        = $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) \
+  LINK.c        = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) \
                   $(LIBS)
 endif # LINK.c.override
 
 ifeq ($(LINK.cc),override)
   LINK.cc       = $(LINK.cc.override)
 else
-  LINK.cc       = $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+  LINK.cc       = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
 SOLINK.cc       = $(PRELINK) $(DLD) $(SOFLAGS)
