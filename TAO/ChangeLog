@@ -1,3 +1,16 @@
+Mon Sep  6 00:42:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Utils/Server_Main.cpp:
+
+	  Include "ace/Time_Value.h" to pull ACE_Time_Value class
+	  declaration.
+
+	  (Server_Main):
+
+	  Fixed emulated exception macro usage for CORBA::ORB_init()
+	  call within an ACE_TRY block, i.e. "ACE_TRY_CHECK", not
+	  "ACE_CHECK_RETURN(...)".
+
 Sun Sep  5 22:46:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_attribute.cpp (be_attribute):
