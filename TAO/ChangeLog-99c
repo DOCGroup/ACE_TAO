@@ -1,3 +1,10 @@
+Wed Jun 16 21:15:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	  Removed bogus ACE_INLINE declarations, thanks to Dave Meyer
+	  <dmeyer@std.saic.com> for pointing this out.
+
 Wed Jun 16 20:14:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:

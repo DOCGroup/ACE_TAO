@@ -197,9 +197,9 @@ public:
     //   + Does it want to receive all changes?
     //
 
-    ACE_INLINE Observer_Entry (void);
-    ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-                               RtecEventChannelAdmin::Observer_ptr o);
+    Observer_Entry (void);
+    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+                    RtecEventChannelAdmin::Observer_ptr o);
 
     RtecEventChannelAdmin::Observer_Handle handle;
     // The handle
