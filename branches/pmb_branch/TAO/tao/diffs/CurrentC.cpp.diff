@@ -1,0 +1,80 @@
+--- orig/CurrentC.cpp	Mon Aug 20 22:39:08 2001
++++ CurrentC.cpp	Mon Aug 20 22:42:05 2001
+@@ -19,39 +19,30 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#include "CurrentC.h"
+-
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/PortableInterceptor.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#include "tao/ClientRequestInfo.h"
+-#include "tao/ClientInterceptorAdapter.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
++#include "tao/CurrentC.h"
++#include "tao/Sequence_T.h"
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus
+ #endif /* __BORLANDC__ */
+ 
+ #if !defined (__ACE_INLINE__)
+-#include "CurrentC.i"
++#include "tao/CurrentC.i"
+ #endif /* !defined INLINE */
+ 
+ int CORBA_Current::_tao_class_id = 0;
+ 
+-CORBA_Current_ptr
++CORBA::Current_ptr
+ tao_CORBA_Current_duplicate (
+-    CORBA_Current_ptr p
++    CORBA::Current_ptr p
+   )
+ {
+-  return CORBA_Current::_duplicate (p);
++  return CORBA::Current::_duplicate (p);
+ }
+ 
+ void
+ tao_CORBA_Current_release (
+-    CORBA_Current_ptr p
++    CORBA::Current_ptr p
+   )
+ {
+   CORBA::release (p);
+@@ -270,6 +261,7 @@
+ // default constructor
+ CORBA_Current::CORBA_Current (void)
+ {}
++
+   // destructor
+   CORBA_Current::~CORBA_Current (void)
+   {}
+@@ -319,7 +311,7 @@
+     (ptr_arith_t,
+       &CORBA_Current::_tao_class_id))
+     retv = ACE_reinterpret_cast (void*, this);
+-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
++  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+     
+@@ -330,7 +322,7 @@
+ 
+ const char* CORBA_Current::_interface_repository_id (void) const
+ {
+-  return "IDL:omg.org/CORBA_Current:1.0";
++  return "IDL:omg.org/CORBA/Current:1.0";
+ }
+ 
+ #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+@@ -339,4 +331,3 @@
+   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+   #  pragma instantiate TAO_Object_Manager<CORBA_Current,CORBA_Current_var>
+ #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+-

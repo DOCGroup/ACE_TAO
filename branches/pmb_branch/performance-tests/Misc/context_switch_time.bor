@@ -1,0 +1,19 @@
+
+#
+# Makefile for building the context_switch_time Misc performance-test
+#
+
+NAME = context_switch_time
+
+OBJFILES = \
+	$(OBJDIR)\context_switch_time.obj
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

@@ -1,0 +1,27 @@
+
+#
+# Makefile for building the POA MT_Servant_Locator test
+#
+
+NAME = MT_Servant_Locator
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\MT_Servant_Locator.obj
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+	$(TAO_IDL) $**

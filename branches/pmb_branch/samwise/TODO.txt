@@ -1,0 +1,258 @@
+Todo:
+
+- Are static-only libraries supported?
+- Are mfc projects supported?
+- Explore use of /Fd, /pdb and /pdbtype for msvc6 release, /Ob2:
+- Do we need ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 for mfc?
+- Add MSVC7 target
+- Create config file support for msvc6 generator
+- Set up testing of samwise.
+- Write documentation (how to use, how to create new targets, how the
+  the scripts work)
+- Add support for edible projects (such as merging ACE subsets into a
+  larger ACE project)
+- Verify that we can use sam.pl outside of the ACE_wrappers tree (as
+  an end-user would use it)
+- Create a generate_sam.pl which helps with automating the creation
+  of a sam.xml from scratch.
+
+- Regenerate ace\QoS\ACE_QoS_Export.h and ace\svc_export.h (add ACE_SVC_BUILD_DLL)
+- Search for ACE_BUILD_SVC_DLL and remove hard coded defines
+
+- Add files in create_sam
+  tao/orb.idl (installed but not compiled)
+  
+- Fix files in create_sam
+  ace/Event_Handler_T.cpp (is it supposed to be template?)
+
+- Borland Generator	
+  + Support for local libraries
+
+  + Figure out what to do with ace\SSL (it is handled differently in ace\makefile.bor)
+    Maybe something like this, using a "configuration" section (also the same for 
+    minimum CORBA
+	!ifdef SSL_ROOT
+	NAME=blah
+	!else
+	!undef NAME
+	!endif
+
+  + Verify correct borland includes
+
+- Work more on GNUMake generator:
+  + Figure out how to get -j x to work correctly in the presence of
+    multiple subprojects
+
+===========================================================================
+Done (03 Dec 2001)
+
+  + Fix the ECTest, CECTest and other local libraries with include
+    paths
+
+  + The order of the subdirectories and the subprojects is important.
+    Need to come up with a way to determine their order, maybe then we
+    can generate their dependencies in the workspace and finally
+    parallelize them.
+
+===========================================================================
+Done (20 Nov 2001)
+
+  + Fix the location of gperf
+    [Temporary fix: set the right path in platform_macros.GNU]
+
+  + Fix the order of the orbsvcs subprojects
+    
+===========================================================================
+Done (07 Sep 2001)
+
+- Add support for exception rules in create_sam.pl 
+
+  Really only could find one exception right now, the name of the ACE
+  library.  That is now fixed.
+  
+- Added support for external projects.
+
+  Changed <project> in the <workspace> section to <projectlink file="">
+  where file is optional (if it isn't there, default to that generated
+  from current file).  
+
+- Change the <ace> in libs.xml to <namespace name="ACE">
+
+- Change <msvc> and <gnu> tags to a base= property and have sam.pl 
+  generate the appropriate name.  If you use libs.xml, you are stuck with 
+  the builtin mangling.
+  
+  Done.  Now the libs.xml is a bit more compressed.
+  
+- Get rid of the libs dir and use full paths to the lib instead.
+
+  Done.  Now has full relative paths to libraries.
+  
+- We have problems if the name of the sources is in quotes (it happens 
+  in the AV orbsvcs library)
+  
+  Fixed.  MSVC puts files that contain forward slashes in quotes.  Now it
+  handles that plus makes sure all slashes are forward slashes.
+  
+- In the orbsvcs makefiles the IDL generated files are listed twice,
+  once because they are listed in the sam.xml file, and another time
+  because we add them in the rules for IDL code...
+  For some reason that was not the case in the test/Hello/*.dsp
+  files, i.e. the files are listed in the project, but they don't
+  show up in the sam.xml file, go figure.
+  
+  Actually, what was happening is the banning logic in create_sam.pl was
+  only working when the project consisted of only one idl file.  If there
+  was more than one, then the file got reinserted.  Logic was fixed
+
+- The IDL options have backslashes in a few DSP files, have to
+  convert them to forward slashes.
+  
+  Fixed.  Also checked for multiple spaces and compressed them down to one 
+  space in the options.
+    
+- Change the <acelib> to <lib namespace="ACE"> type tags.  
+
+  Done.
+
+===========================================================================
+Done (08 Sep 2001)
+
+- Move PerlACE/Sam to PerlSam.  
+
+  Done.
+
+- The order of the libraries is plain wrong.  
+
+  Reversed them in the gnumake generator.
+
+- Make gnumake target a default target.
+
+  Done.  I think it is well past mature enough to be a default.
+  
+- Added basic Borland support.
+
+  Now can generate executable projects that have no IDL files and 
+  nothing too complicated.  It is basic support
+  
+- Switched to generating projects before the workspace.  
+
+  This will help out things with MSVC7 (related to GUIDS) and might be
+  helpful if we need to merge projects and workspaces into one file
+  (which might be the case with Makefile.am's)
+  
+- Added the two IDL libraries to create_sam.pl 
+
+  Put them in their own namespace.  Not sure if this totally works yet,
+  I'll have to double-check later.  I think most of the generators are
+  hardcoded for ACE and TAO namespaces only
+
+- Finish DLL support
+
+  It is in there, not tested too well.  Let's see how it turns out, 
+  Yee Haw!
+
+===========================================================================
+Done (16 Sep 2001)
+
+- Add <libinfo> generation to create_sam.pl
+
+  create_sam now has a huge table in it.  It seems like most of it should
+  be working, but the table might not be fully populated (and I'm not too
+  sure of its ability to handle non-lib.xml libraries
+  
+- Remove ACE_ROOT requirement for create_sam.pl
+
+  Now has the same logic as sam.pl, so it can figure out its own ACE_ROOT,
+  if possible.
+
+- Finish library support for MSVC6 (static stuff needs work)
+
+  Implemented.  Works with ace at least.
+
+- Test out dynamic library support
+
+  Cleaned up and fixed some problems with it.  Is good with ACE.
+  
+- change the default directories in msvc to be Debug\name, or 
+  something like that.
+
+  Settled on Debug, Release, Debug\Static, Release\Static, Debug\MFC,
+  and Release\MFC.  Also appending the project name to the end, so 
+  Debug\project, Release\project, etc.
+  
+===========================================================================
+Done (23 Sep 2001)
+
+- Update format of sam.xml
+
+  * Renamed library to libs
+  * Made name an element instead of an attribute
+  * Renamed source to sources
+  * Made libinfo properties elements
+
+- Parser now ignores blank lines and comments
+
+- Fix the Expand* functions to be smarter.  Return arrays instead
+  of strings.  Support namespaces better.
+  
+  ACE and TAO namespaces are no longer hard coded in.
+
+- Support any number of namespaces for libraries.  This also means
+  we need to figure out a way to make sure the order is preserved.
+
+  There is an order element in libs.xml to preserve the order of
+  namespaces
+  
+- Check to make sure TAO_IDL compiles with msvc6
+
+  I think it is okay now. I'll know for sure once testing begins
+
+- Support local libraries.  Need to generate them via create_sam.pl
+  (which requires some work to figure out the path to the lib) and
+  support them in the generators.  The parser already can handle
+  it.
+
+  This should be working now.  It seems to generate correct output
+  for websvcs, so I'll go on to other things.
+
+===========================================================================
+Done (29 Sep 2001)
+
+- Work on Borland generator
+
+  Added library and idl support.  Most things should work, but there are
+  a handful of cases not fully implemented.  Enough is implemented where
+  I made borland a default.
+
+- Add some missing files to projects
+
+  All orbsvcs now get orbsvcs.rc.
+  And ACE and TAO gets some extra template files
+
+===========================================================================
+Done (30 Nov 2001)
+
+- Don't output "DIRS=" or "MAKEFILES=" unless there is actually dirs or makefiles
+
+  Done.
+
+- Attribute values must have quotes
+
+  Done.
+
+===========================================================================
+Done (02 Dec 2001)
+
+- Remove ACE_ROOT dependency in sam.pl and create_sam.pl
+
+  Done.
+
+- Add debug info to dependency generation in generator.pm
+
+  Done.
+
+- Add dependency output to dsw files
+
+  Done.
+  
