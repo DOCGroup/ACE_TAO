@@ -54,4 +54,10 @@
 #include "be_visitor_operation/compiled_marshal.h"
 #include "be_visitor_operation/rettype_pre_invoke_cs.h"
 
+// #if defined TAO_IDL_HAS_AMI
+#include "be_visitor_operation/operation_ami.h"
+#include "be_visitor_operation/arglist_ami.h"
+// #endif /* TAO_IDL_HAS_AMI */
+
+
 #endif // TAO_BE_VISITOR_OPERATION_H

@@ -263,7 +263,7 @@ public:
     TAO_OPERATION_TIE_SH,
     TAO_OPERATION_TIE_SI,
 
-    TAO_OBV_OPERATION_ARGLIST_CH,      // parameter list in obv op signature
+    TAO_OBV_OPERATION_ARGLIST_CH,            // parameter list in obv op signature
                                              // ... for client header
     TAO_OBV_OPERATION_ARGLIST_OBV_CH,        // ... for OBV_ class
     TAO_OBV_OPERATION_ARGLIST_SH,            // ... for server header
@@ -271,6 +271,14 @@ public:
     TAO_OBV_OPERATION_ARGLIST_IS,            // ... for implementation header
     TAO_OBV_OPERATION_ARGLIST_COLLOCATED_SH,   // ... for collocated server
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
+
+    TAO_OPERATION_AMI,                     // Visit the operation for
+                                           // AMI generation.  
+    TAO_OPERATION_ARGLIST_AMI,             // AMI stubs in client header
+    TAO_OPERATION_ARG_AMI,                 // AMI stub.
+    TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
+    TAO_ARGUMENT_ARGLIST_AMI,              // Arg list in AMI stub.
+
 
     // emitting code for root
     TAO_ROOT_CH,

@@ -55,5 +55,10 @@
 #include "be_visitor_operation/compiled_marshal.cpp"
 #include "be_visitor_operation/rettype_pre_invoke_cs.cpp"
 
+// #if defined (TAO_IDL_HAS_AMI)
+#include "be_visitor_operation/operation_ami.cpp"
+#include "be_visitor_operation/arglist_ami.cpp"
+// #endif /* TAO_IDL_HAS_AMI */
+
 ACE_RCSID(be, be_visitor_operation, "$Id$")
 

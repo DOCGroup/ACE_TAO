@@ -40,4 +40,8 @@
 #include "be_visitor_argument/compiled_marshal_ss.h"
 #include "be_visitor_argument/pre_invoke_cs.h"
 
+// #if defined (TAO_IDL_HAS_AMI)
+#include "be_visitor_argument/arglist_ami.h"
+// #endif /* TAO_IDL_HAS_AMI */
+
 #endif /* _BE_VISITOR_ARGUMENT_H */
