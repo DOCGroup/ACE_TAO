@@ -1,3 +1,12 @@
+Wed Mar  5 16:09:19 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* tao/Codeset_Manager.h:
+	* tao/Codeset_Translaotr_Factory.h:
+	* tao/Codeset_Translator_Factory_T.h: 
+	* tests/CodeSets/simple/server.cpp:
+
+	Fix fuzz errors
+	
 Wed Mar  5 12:53:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO.dsp:
