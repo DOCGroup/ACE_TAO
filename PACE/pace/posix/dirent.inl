@@ -37,14 +37,14 @@ int
 pace_readdir_r (PACE_DIR * dirp, pace_dirent * entry,
                 pace_dirent ** result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_SUNOS)
+  *result = readdir_r (dirp, entry);
+  if (*result == 0)
+    return errno;
+  return 0;
+#else
   return readdir_r (dirp, entry, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (dirp);
-  PACE_UNUSED_ARG (entry);
-  PACE_UNUSED_ARG (result);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_SUNOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
