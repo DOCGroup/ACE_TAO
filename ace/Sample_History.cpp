@@ -3,6 +3,7 @@
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Sample_History.inl"
