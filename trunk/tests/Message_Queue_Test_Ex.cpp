@@ -10,9 +10,12 @@
 //
 // = DESCRIPTION
 //      This is:
-//      1) a simple test of the ACE_Message_Queue_Ex that
-//         executes a performance measurement test for both single-threaded
-//         (null synch) and thread-safe ACE_Message_Queue_Exs.
+//      1. A simple test of the ACE_Message_Queue_Ex that executes
+//         a performance measurement test for both single-threaded
+//         (null synch) and thread-safe ACE_Message_Queue_Ex
+//         instantiations.  
+//      2. An example of using a user-defined class to parameterize
+//         ACE_Message_Queue_Ex.
 //
 // = AUTHORS
 //    Michael Vitlo <mvitalo@sprynet.com>, copied the code from:
@@ -27,9 +30,25 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Message_Block.h"
 
+// User-defined class used for queue data.
+class User_Class
+{
+public:
+  User_Class (const char inputMsg[])
+    : message_ (0)
+  {
+    ACE_NEW (this->message_, char[ACE_OS::strlen (inputMsg) + 1]);
+    ACE_OS::strcpy (this->message_, inputMsg);
+  }
+
+  ~User_Class (void) { delete [] this->message_; }
+private:
+  char *message_;
+};
+
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");
 
-typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH> QUEUE;
+typedef ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH> QUEUE;
 
 static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
@@ -41,7 +60,7 @@ static int max_messages = MAX_MESSAGES;
 static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH> SYNCH_QUEUE;
+typedef ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH> SYNCH_QUEUE;
 
 struct Queue_Wrapper
 {
@@ -55,7 +74,7 @@ struct Queue_Wrapper
   SYNCH_QUEUE *q_;
   // The message queue.
 
-  ACE_Message_Block **send_block_;
+  User_Class **send_block_;
   // Pointer to messages blocks for sender to send to reciever.
 
   Queue_Wrapper (void)
@@ -86,22 +105,22 @@ single_thread_performance_test (void)
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
-  ACE_Message_Block **send_block = 0;
+  User_Class **send_block = 0;
   ACE_NEW_RETURN (send_block,
-                  ACE_Message_Block *[max_messages],
+                  User_Class *[max_messages],
                   -1);
 
   int i;
 
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
-                    ACE_Message_Block (test_message,
-                                       MAX_MESSAGE_SIZE),
+                    User_Class (test_message,
+                               MAX_MESSAGE_SIZE),
                     -1);
 
-  ACE_Message_Block **receive_block_p = 0;
+  UserBlock **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
-                  ACE_Message_Block *[max_messages],
+                  User_Class *[max_messages],
                   -1);
 
   timer->start ();
@@ -152,18 +171,18 @@ receiver (void *arg)
                           arg);
   int i;
 
-  ACE_Message_Block **receive_block_p = 0;
+  User_Class **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
-                  ACE_Message_Block *[max_messages],
+                  User_Class *[max_messages],
                   (void *) -1);
 
 #if defined (VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of stack
   // space available.
-  ACE_Message_Block *receive_block;
+  User_Class *receive_block;
   ACE_NEW_RETURN (receive_block,
-                  ACE_Message_Block[max_messages],
+                  User_Class[max_messages],
                   (void *) -1);
 
   for (i = 0; i < max_messages; ++i)
@@ -225,14 +244,14 @@ performance_test (void)
   // large relative to the amount of stack space available.  Allocate
   // it here instead of in the sender, so that we can delete it after
   // the _receiver_ is done.
-  ACE_Message_Block **send_block = 0;
+  User_Class **send_block = 0;
   ACE_NEW_RETURN (send_block,
-                  ACE_Message_Block *[max_messages],
+                  User_Class *[max_messages],
                   -1);
 
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
-                    ACE_Message_Block (test_message,
+                    User_Class (test_message,
                                        MAX_MESSAGE_SIZE),
                     -1);
 
@@ -295,13 +314,13 @@ main (int argc, ACE_TCHAR *argv[])
       max_messages = ACE_OS::atoi (argv[1]);
 
   // Be sure that the a timed out get sets the error code properly.
-  ACE_Message_Queue_Ex<ACE_Message_Block, ACE_SYNCH> q1;
+  ACE_Message_Queue_Ex<User_Class, ACE_SYNCH> q1;
   if (!q1.is_empty ()) {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("New queue is not empty!\n")));
     status = 1;
   }
   else {
-    ACE_Message_Block *b;
+    User_Class *b;
     ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
     if (q1.dequeue_head (b, &tv) != -1) {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
@@ -345,13 +364,13 @@ main (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>;
+template class ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;
 #if defined (ACE_HAS_THREADS)
-template class ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH>;
+template class ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>;
 #endif /* ACE_HAS_THREADS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>
 #if defined (ACE_HAS_THREADS)
-#pragma instantiate ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH>
+#pragma instantiate ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
