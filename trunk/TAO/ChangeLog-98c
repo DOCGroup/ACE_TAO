@@ -1,3 +1,8 @@
+Tue May 20 14:32:00 1997  Brian Mendel  <bmendel@mdc.com>
+
+	* IIOP/test/*: Commited changes to Cubit Example as a current snapshot
+          of required changes.
+
 Tue May 20 13:55:58 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* IIOP/test/*: Commited this stuff in-process so that Brian
