@@ -1,3 +1,17 @@
+Tue Sep 15 18:00:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/POA/DSI/README: A few caveats for the users. Nothing major.
+
+	* tests/POA/DSI/run_test.pl: New test script. Runs the client and
+	  server. 
+
+	* tests/POA/DSI/server.cpp: Added a parse_args method and changed
+	  to output the IOR to a file. Added an argument to set the
+	  TAO_debug_level
+
+	* tests/POA/DSI/client.cpp: Altered to get the IOR from a file and 
+	  added an argument to set the TAO_debug_level
+
 Tue Sep 15 17:47:07 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/POA/Default_Servant/client.cpp: Added TAO_debug_level
