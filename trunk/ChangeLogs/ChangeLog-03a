@@ -1,3 +1,13 @@
+Fri Oct 13 22:40:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Add new files to the project.
+
+        * ace/Log_Msg.cpp:
+          Fixed typo in management of structured exception handling
+          callbacks.
+
 Fri Oct 13 21:49:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:

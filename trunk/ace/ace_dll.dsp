@@ -1475,6 +1475,63 @@ SOURCE=.\Log_Msg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_Backend.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_Callback.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_IPC.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Record.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2103,6 +2160,25 @@ SOURCE=.\OS.cpp
 # Begin Source File
 
 SOURCE=.\OS_Dirent.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -4538,6 +4614,18 @@ SOURCE=.\Log_Msg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_Backend.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_Callback.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_IPC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Priority.h
 # End Source File
 # Begin Source File
@@ -4707,6 +4795,10 @@ SOURCE=.\OS.h
 # Begin Source File
 
 SOURCE=.\OS_Dirent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.h
 # End Source File
 # Begin Source File
 
@@ -5667,6 +5759,10 @@ SOURCE=.\OS.i
 # Begin Source File
 
 SOURCE=.\OS_Dirent.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.inl
 # End Source File
 # Begin Source File
 
