@@ -6161,7 +6161,9 @@ ACE_OS::truncate (const char *filename,
 {
   ACE_TRACE ("ACE_OS::truncate");
 #if defined (ACE_WIN32)
-  ACE_HANDLE handle = ACE_OS::open (filename, O_WRONLY, 0666);
+  ACE_HANDLE handle = ACE_OS::open (filename,
+                                    O_WRONLY,
+                                    ACE_DEFAULT_FILE_PERMS);
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
   else
