@@ -79,7 +79,7 @@ TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                             const char* constraints,
                             CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalConstraint))
+  ACE_THROW_SPEC ((CosTrading::IllegalConstraint))
   : TAO_Interpreter ()
 {
   TAO_Constraint_Validator type_checker (ts);
@@ -100,7 +100,7 @@ TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter(TAO_Constraint_Validator& validator,
                            const char* constraints,
                            CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalConstraint))
+  ACE_THROW_SPEC ((CosTrading::IllegalConstraint))
 {
   if (TAO_Interpreter::is_empty_string (constraints))
     this->root_ = new TAO_Literal_Constraint ((CORBA::Boolean) 1);
@@ -139,7 +139,7 @@ TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                            const char* preference,
                            CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
+  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
   : TAO_Interpreter ()
 {
   TAO_Constraint_Validator type_checker (ts);
@@ -160,7 +160,7 @@ TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
                            const char* preference,
                            CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
+  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
     : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string (preference))

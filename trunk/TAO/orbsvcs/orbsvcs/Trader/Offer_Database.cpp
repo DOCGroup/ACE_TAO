@@ -145,7 +145,7 @@ template <class LOCK_TYPE> int
 TAO_Offer_Database<LOCK_TYPE>::
 remove_offer (const CosTrading::OfferId offer_id,
               CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
   char* stype = 0;
@@ -165,7 +165,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
               char*& type_name,
               CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
   CORBA::ULong index;
@@ -184,7 +184,7 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
               CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
   char* type_name;
@@ -264,7 +264,7 @@ parse_offer_id (const CosTrading::OfferId offer_id,
                 char*&service_type,
                 CORBA::ULong& id,
                 CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalOfferId))
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
   // Get service type: it is everything from 17th character to the end.
   service_type = (char *) offer_id + 16;

@@ -253,7 +253,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
 CORBA::Any*
 TAO_Property_Evaluator::property_value (int index,
                                         CORBA::Environment& TAO_IN_ENV)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* prop_val = 0;
   CORBA::Boolean in_cache =
@@ -342,7 +342,7 @@ TAO_Property_Evaluator_By_Name::
 TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
                                 CORBA::Environment& TAO_IN_ENV,
                                 CORBA::Boolean supports_dp)
-  TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,
+  ACE_THROW_SPEC ((CosTrading::DuplicatePropertyName,
                    CosTrading::IllegalPropertyName))
     : TAO_Property_Evaluator (properties, supports_dp)
 {
@@ -393,7 +393,7 @@ is_dynamic_property(const char* property_name)
 CORBA::Any*
 TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
                                                 CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   int index = 0;
   CORBA::Any* prop_value = 0;
@@ -465,11 +465,11 @@ construct_dynamic_prop (const char* name,
           this->_remove_ref (TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
-      
+
       dp_struct->eval_if =
         CosTradingDynamic::DynamicPropEval::_duplicate (this->prop_.in ());
       TAO_CHECK_ENV;
-      
+
       dp_struct->returned_type = CORBA::TypeCode::_duplicate (returned_type);
       dp_struct->extra_info = extra_info;
     }
@@ -491,11 +491,11 @@ TAO_Dynamic_Property::destroy (void)
         {
           PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          
+
           PortableServer::ObjectId_var id =
             poa->servant_to_id (this, TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          
+
           poa->deactivate_object (id.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
@@ -503,7 +503,7 @@ TAO_Dynamic_Property::destroy (void)
   TAO_CATCHANY
     {
     }
-  TAO_ENDTRY;  
+  TAO_ENDTRY;
 }
 
   // *************************************************************
@@ -528,7 +528,7 @@ const char* TAO_Policies::POLICY_NAMES[] =
 TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
                             const CosTrading::PolicySeq& policies,
                             CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
+  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
                   CosTrading::DuplicatePolicyName))
   : trader_ (trader)
 {
@@ -600,7 +600,7 @@ TAO_Policies::~TAO_Policies (void)
 CORBA::ULong
 TAO_Policies::ulong_prop (POLICY_TYPE pol,
                           CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CORBA::ULong return_value = 0, max_value = 0;
   const TAO_Import_Attributes_i& import_attrs =
@@ -652,21 +652,21 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
 
 CORBA::ULong
 TAO_Policies::search_card (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (SEARCH_CARD, TAO_IN_ENV);
 }
 
 CORBA::ULong
 TAO_Policies::match_card (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (MATCH_CARD, TAO_IN_ENV);
 }
 
 CORBA::ULong
 TAO_Policies::return_card (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (RETURN_CARD, TAO_IN_ENV);
 }
@@ -674,7 +674,7 @@ TAO_Policies::return_card (CORBA::Environment& TAO_IN_ENV) const
 CORBA::Boolean
 TAO_Policies::boolean_prop (POLICY_TYPE pol,
                             CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CORBA::Boolean def_value = 1,
     return_value = 1;
@@ -724,28 +724,28 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
 
 CORBA::Boolean
 TAO_Policies::use_modifiable_properties (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_MODIFIABLE_PROPERTIES, TAO_IN_ENV);
 }
 
 CORBA::Boolean
 TAO_Policies::use_dynamic_properties (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_DYNAMIC_PROPERTIES, TAO_IN_ENV);
 }
 
 CORBA::Boolean
 TAO_Policies::use_proxy_offers (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_PROXY_OFFERS, TAO_IN_ENV);
 }
 
 CORBA::Boolean
 TAO_Policies::exact_type_match (CORBA::Environment& TAO_IN_ENV) const
-    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (EXACT_TYPE_MATCH, TAO_IN_ENV);
 }
@@ -753,7 +753,7 @@ TAO_Policies::exact_type_match (CORBA::Environment& TAO_IN_ENV) const
 
 CosTrading::TraderName*
 TAO_Policies::starting_trader (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                    CosTrading::Lookup::InvalidPolicyValue))
 {
   CosTrading::TraderName* trader_name = 0;
@@ -777,7 +777,7 @@ TAO_Policies::starting_trader (CORBA::Environment& TAO_IN_ENV) const
 
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (CORBA::Environment& TAO_IN_ENV) const
-    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CosTrading::FollowOption return_value =
     this->trader_.import_attributes ().def_follow_policy ();
@@ -808,7 +808,7 @@ TAO_Policies::link_follow_rule (CORBA::Environment& TAO_IN_ENV) const
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info,
                                 CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                    CosTrading::Lookup::InvalidPolicyValue,
                    CosTrading::Link::IllegalLinkName,
                    CosTrading::Link::UnknownLinkName))
@@ -834,14 +834,14 @@ TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info,
 
 CORBA::ULong
 TAO_Policies::hop_count (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (HOP_COUNT, TAO_IN_ENV);
 }
 
 CosTrading::Admin::OctetSeq*
 TAO_Policies::request_id (CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CosTrading::Admin::OctetSeq* request_id = 0;
 
@@ -868,7 +868,7 @@ TAO_Policies::
 copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
                        const CosTrading::Link::LinkInfo& link_info,
                        CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                    CosTrading::Lookup::InvalidPolicyValue))
 {
   ACE_UNUSED_ARG (TAO_IN_ENV);
@@ -1097,7 +1097,7 @@ void
 TAO_Offer_Modifier::
 delete_properties (const CosTrading::PropertyNameSeq& deletes,
                    CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
+  ACE_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
                   CosTrading::Register::MandatoryProperty,
                   CosTrading::IllegalPropertyName,
                   CosTrading::DuplicatePropertyName))
@@ -1137,7 +1137,7 @@ void
 TAO_Offer_Modifier::
 merge_properties (const CosTrading::PropertySeq& modifies,
                   CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+  ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName,
                    CosTrading::PropertyTypeMismatch,
                    CosTrading::ReadonlyDynamicProperty,
@@ -1417,7 +1417,7 @@ TAO_Offer_Filter::limits_applied (void)
 TAO_Property_Filter::
 TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
                      CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+  ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName))
   : policy_  (desired_props._d ())
 {

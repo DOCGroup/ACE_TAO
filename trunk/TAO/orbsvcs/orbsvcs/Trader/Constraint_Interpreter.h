@@ -76,12 +76,12 @@ public:
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC ((CosTrading::IllegalConstraint));
+    ACE_THROW_SPEC ((CosTrading::IllegalConstraint));
 
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC ((CosTrading::IllegalConstraint));
+    ACE_THROW_SPEC ((CosTrading::IllegalConstraint));
   // This constructor builds an expression tree representing the
   // constraint specified in <constraints>, and throws an Illegal
   // Constraint exception if the constraint given has syntax errors or
@@ -121,12 +121,12 @@ public:
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
+    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
+    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   // Parse the preference string, determining first if it's
   // valid. Throw an IllegalPreference exception if the preference
