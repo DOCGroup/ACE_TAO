@@ -1,3 +1,13 @@
+Thu May  7 14:10:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Timer_Hash_T.h: 
+	* ace/Timer_Hash_T.cpp: 
+	* ace/Timer_Heap_T.cpp: 
+	* ace/Timer_Wheel_T.cpp: 
+	  The classes had a INHERITED typedef for the base class, but
+	  Solaris defines a macro by the same name. This causes very weird
+	  problems with EGCS (and probably other g++ versions).
+
 Thu May 07 04:15:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Profile_Timer.cpp (elapsed_time): Treat Win32 differently
