@@ -1,3 +1,9 @@
+Mon Jun 30 09:33:31 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Deferred/client.bor
+
+          Added this missing BCB makefile client.bor.
+
 Sun Jun 29 02:09:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp: 
@@ -119,9 +125,7 @@ Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/Makefile.dirs
 
 	  Corresponding Makefiles to compile RTScheduler library.
-
 	
->>>>>>> 1.2027
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * TAOACE.mwc:
