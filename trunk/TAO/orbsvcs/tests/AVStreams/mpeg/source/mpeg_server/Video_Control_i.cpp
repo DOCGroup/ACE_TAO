@@ -133,7 +133,7 @@ Video_Control_i::speed (const Video_Control::SPEEDpara &para,
                         CORBA::Environment& env)
 {
   return this->get_video_control_handler ()->speed (para,
-                            env);
+                                                    env);
 }
 
 

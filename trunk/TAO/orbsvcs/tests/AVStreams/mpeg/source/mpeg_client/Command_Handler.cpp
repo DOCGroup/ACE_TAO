@@ -1170,7 +1170,8 @@ Command_Handler::speed (void)
         TAO_TRY
           {
             CORBA::Boolean result =
-              this->video_control_->speed (para.in (),TAO_TRY_ENV);
+              this->video_control_->speed (para.in (),
+                                           TAO_TRY_ENV);
             TAO_CHECK_ENV;
             if (result == (CORBA::B_FALSE))
               // ~~ what about audio if video fails
