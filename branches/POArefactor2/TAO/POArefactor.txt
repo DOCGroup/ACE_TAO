@@ -1,3 +1,27 @@
+Mon Oct 25 17:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Retention_Strategy.{cpp,h}:
+        * tao/PortableServer/Servant_Upcall.{cpp,h}:
+        * tao/PortableServer/Servant_Upcall.h:
+          Started moving functionality out of the POA and to the
+          Servant_Retention_Strategies, in some cases when this strategy can't
+          find a servant it goes to the Request_Processing_Strategy to see if
+          that can fulfill the requested task. Made on some places some
+          methods temporarily public to keep going, later I will revisit
+          those. The current state is just that things compile, this is just a
+          checkin to show the current state, things are now completely broken,
+          a lot of functionality is partly moved, making the code unusable at
+          this moment, when all functionality related to servant_retention and
+          request_processing is moved out, then we can test again.
+
+        * tao/PortableServer/Active_Policy_Strategies.{h,cpp,inl}:
+          Added servant_retention_strategy
+
 Fri Oct 22 14:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current_Impl.{h,inl}:
