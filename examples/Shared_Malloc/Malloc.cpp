@@ -69,10 +69,10 @@ template class ACE_Allocator_Adapter<ST_ALLOCATOR>;
 
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
-#if !defined (ACE_HAS_THREADS)
+#if !defined (ACE_HAS_THREADS) && !defined(ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
 template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
-#endif /* ! ACE_HAS_THREADS */
+#endif /* ! ACE_HAS_THREADS && ! ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 #if defined (ACE_LACKS_SYSV_SHMEM)
 
