@@ -54,6 +54,19 @@ ACE_Singleton<TYPE, LOCK>::singleton_lock_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Singleton_cleanup (void *object, void *)
+{
+  ACE_TRACE ("ACE_Singleton_cleanup");
+
+  // This won't call the object's destructor, but it will deallocate
+  // its storage.  That's better than nothing.
+  // (This function is only used if ACE_HAS_SIG_C_FUNC, e.g., on MVS.)
+  delete object;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
 template <class TYPE, class LOCK> TYPE *
 ACE_Singleton<TYPE, LOCK>::instance (void)
 {
@@ -71,7 +84,11 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
 	  ACE_NEW_RETURN (singleton, TYPE, 0);
 
           // Register for destruction with ACE_Object_Manager.
+#if defined (ACE_HAS_SIG_C_FUNC)
+          ACE_Object_Manager::at_exit (singleton, ACE_Singleton_cleanup, 0);
+#else
           ACE_Object_Manager::at_exit (singleton, cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
         }
     }
 
@@ -98,7 +115,6 @@ ACE_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
   ACE_TRACE ("ACE_Singleton::cleanup");
 
   delete (TYPE *) object;
-  object = 0;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -148,7 +164,13 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 
 #if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
+#if defined (ACE_HAS_SIG_C_FUNC)
+          ACE_Object_Manager::at_thread_exit (instance_,
+                                              ACE_Singleton_cleanup,
+                                              0);
+#else
           ACE_Object_Manager::at_thread_exit (instance_, cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
 #endif /* 0 */
 	}
     }
@@ -161,21 +183,24 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
     {
       ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_TSS_Singleton<TYPE, LOCK>::ace_singleton_lock_), 0);
 
-      if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)             
+      if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
 	{
-          // Please don't fully qualify "instance_" in the following
-          // statement.  It confuses the Sun C++ 4.2 preprocessor:
-          //   do { ACE_TSS_Singleton < TYPE = new LOCK > :: instance_ ;
+          // "instance_" is not fully qualified in the following
+          // statement to avoid confusion with commas in macros.
+          // It is: ACE_TSS_Singleton<TYPE, LOCK>::instance_
           //   if ( ACE_TSS_Singleton < TYPE == 0 ) { ( * ( ___errno ( ) ) ) =
 
           ACE_NEW_RETURN (instance_, ACE_TSS<TYPE>, 0);
 
 #if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_thread_exit (
-            ACE_TSS_Singleton<TYPE, LOCK>::instance_,
-            cleanup,
-            0);
+#if defined (ACE_HAS_SIG_C_FUNC)
+          ACE_Object_Manager::at_thread_exit (instance_,
+                                              ACE_Singleton_cleanup,
+                                              0);
+#else
+          ACE_Object_Manager::at_thread_exit (instance_, cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
 #endif /* 0 */
 	}
     }
@@ -191,7 +216,6 @@ ACE_TSS_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
   ACE_TRACE ("ACE_TSS_Singleton::cleanup");
 
   delete (TYPE *) object;
-  object = 0;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
