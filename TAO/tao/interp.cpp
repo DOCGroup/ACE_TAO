@@ -122,8 +122,8 @@ Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 
   #define setup_entry(x,t) \
     { \
-      CORBA_IIOP_Interpreter::table_ [t].size = sizeof (x); \
-      CORBA_IIOP_Interpreter::table_ [t].alignment_ = 1; \
+      TAO_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      TAO_IIOP_Interpreter::table_ [t].alignment_ = 1; \
     }
 #else  /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
   // unix, ACE_WIN32, VXWORKS, __Lynx__, at least
@@ -138,8 +138,8 @@ Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
   #define setup_entry(x,t) \
     { \
       align_struct_ ## t       align; \
-      CORBA_IIOP_Interpreter::table_ [t].size = sizeof (x); \
-      CORBA_IIOP_Interpreter::table_ [t].alignment_ = \
+      TAO_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      TAO_IIOP_Interpreter::table_ [t].alignment_ = \
       (char *) &align.two - (char *) &align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE; \
     }
 #endif /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
