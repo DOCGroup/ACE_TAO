@@ -878,7 +878,8 @@ Log_i::write_records (const DsLogAdmin::Anys &records
                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogFull,
-                   DsLogAdmin::LogLocked))
+                   DsLogAdmin::LogLocked,
+                   DsLogAdmin::LogDisabled))
 {
   // create a record list..
   DsLogAdmin::RecordList reclist (records.length ());

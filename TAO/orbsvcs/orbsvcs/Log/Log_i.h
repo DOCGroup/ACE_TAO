@@ -265,7 +265,8 @@ public:
 		 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
-                     DsLogAdmin::LogLocked));
+                     DsLogAdmin::LogLocked,
+                     DsLogAdmin::LogDisabled));
 
   /// Write a list of record ids to storage. Raises DsLogAdmin::LogFull
   /// and DsLogAdmin::LogLocked

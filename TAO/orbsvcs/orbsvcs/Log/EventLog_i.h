@@ -74,7 +74,7 @@ class LogConsumer : public virtual POA_CosEventComm::PushConsumer
 };
 
 
-class EventLog_i : public Log_i,    
+class EventLog_i : public Log_i,
                    public POA_DsEventLogAdmin::EventLog,
                    public virtual PortableServer::RefCountServantBase
 {
@@ -114,14 +114,14 @@ public:
   void
   activate (void);
 
-  CosEventChannelAdmin::ConsumerAdmin_ptr 
+  CosEventChannelAdmin::ConsumerAdmin_ptr
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)
 	ACE_THROW_SPEC ((
 		CORBA::SystemException
 	));
   // The CosEventChannelAdmin::EventChannel interface.
 
-  CosEventChannelAdmin::SupplierAdmin_ptr 
+  CosEventChannelAdmin::SupplierAdmin_ptr
   for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 	ACE_THROW_SPEC ((
 		CORBA::SystemException
@@ -133,7 +133,8 @@ public:
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DsLogAdmin::LogFull,
-        DsLogAdmin::LogLocked
+        DsLogAdmin::LogLocked,
+        DsLogAdmin::LogDisabled
       ));
   // Used to write records to the log.
 

@@ -67,13 +67,13 @@ EventLog_i::EventLog_i (LogMgr_i &logmgr_i,
   ACE_UNUSED_ARG (event_log_factory);
 
   ACE_ENV_SINGLE_ARG_DECL
-  
+
   // Create an instance of the event channel.
   PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   TAO_CEC_EventChannel_Attributes attr (poa.in(), poa.in());
 
-  ACE_NEW_THROW_EX (this->event_channel_, 
+  ACE_NEW_THROW_EX (this->event_channel_,
                     TAO_CEC_EventChannel(attr),
                     CORBA::NO_MEMORY ());
 }
@@ -84,7 +84,7 @@ EventLog_i::~EventLog_i ()
 }
 
 
-DsLogAdmin::Log_ptr 
+DsLogAdmin::Log_ptr
 EventLog_i::copy (DsLogAdmin::LogId &id)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -92,7 +92,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
     DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
-  DsEventLogAdmin::EventLog_var log = 
+  DsEventLogAdmin::EventLog_var log =
     eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id);
 
   copy_attributes (log.in ());
@@ -101,7 +101,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 }
 
-DsLogAdmin::Log_ptr 
+DsLogAdmin::Log_ptr
 EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -109,7 +109,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
     DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
-  DsEventLogAdmin::EventLog_var log = 
+  DsEventLogAdmin::EventLog_var log =
     eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_);
 
   copy_attributes (log.in ());
@@ -150,10 +150,19 @@ EventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 EventLog_i::activate (void)
 {
-  ACE_ENV_SINGLE_ARG_DECL
-
-  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+        this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in EventLog_i::activate()");
+    }
+  ACE_ENDTRY;
 
   // Create the PushConsumer that will log the events.
   this->my_log_consumer_ = new LogConsumer (this);
@@ -161,33 +170,27 @@ EventLog_i::activate (void)
 }
 
 
-CosEventChannelAdmin::ConsumerAdmin_ptr 
+CosEventChannelAdmin::ConsumerAdmin_ptr
 EventLog_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException
-	))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CosEventChannelAdmin::SupplierAdmin_ptr 
-EventLog_i::for_suppliers (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+CosEventChannelAdmin::SupplierAdmin_ptr
+EventLog_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->event_channel_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-EventLog_i::write_recordlist (const DsLogAdmin::RecordList & list//,
+EventLog_i::write_recordlist (const DsLogAdmin::RecordList & list
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogFull,
-                   DsLogAdmin::LogLocked
-  ))
+                   DsLogAdmin::LogLocked,
+                   DsLogAdmin::LogDisabled))
 {
   Log_i::write_recordlist (list ACE_ENV_ARG_PARAMETER);
 }

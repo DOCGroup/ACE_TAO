@@ -101,14 +101,14 @@ public:
   // Same as create (), but allows clients to specify the id.
 
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL 
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-        ACE_ENV_SINGLE_ARG_DECL 
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
