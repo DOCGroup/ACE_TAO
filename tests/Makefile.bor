@@ -133,15 +133,19 @@ DIRS =  RMCast \
 DIRS =  RMCast
 !endif
 
-MAKEFILES = DLL_Test.bor Service_Config_DLL.bor Framework_Component_DLL.bor
+MAKEFILES = \
+	Test_Output.bor \
+	DLL_Test.bor \
+	Service_Config_DLL.bor \
+	Framework_Component_DLL.bor
 
-OBJFILES = $(OBJDIR)\$(NAME).obj
+OBJFILES = $(OBJDIR)\$(NAME).obj $(OBJDIR)\Main.obj
 
 CFLAGS = $(ACE_CFLAGS)
 
 CPPDIR = .
 
-LIBFILES = $(ACE_LIB)
+LIBFILES = $(ACE_LIB) $(BINDIR)\Test_Output$(LIB_DECORATOR).lib
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

@@ -146,7 +146,9 @@ const size_t ACE_MAX_THREADS = 4;
 #define OFSTREAM ofstream
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-class ACE_Test_Output
+#include "tests/Test_Output_Export.h"
+
+class Test_Output_Export ACE_Test_Output
 {
 public:
   ACE_Test_Output (void);

@@ -1,3 +1,16 @@
+Sun May 18 17:32:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Makefile.bor:
+        * tests/Test_Output.bor:
+          Added new Borland Makefile, tests/Test_Output.bor and modified
+          Makefile.bor to call it and link Test_Output.lib for all objects
+          and add Main.obj to OBJFILES.
+
+        * tests/test_config.h:
+        * tests/Test_Output_Export.h:
+          Added tests/Test_Output_Export.h and added Test_Output_Export to
+          Test_Output class declaration.
+
 Sun May 18 00:04:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Merged dre_030425 up to the main and rebranched to dre_test_01.
