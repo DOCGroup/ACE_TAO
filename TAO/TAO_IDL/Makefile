@@ -13,22 +13,8 @@
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-
-ifdef VXWORKS
-  all.nested: any
-  debug.nested: any
-  profile.nested: any
-  install.nested: any
-  deinstall.nested: any
-  clean.nested: any
-  realclean.nested: any
-  clobber.nested: any
-  depend.nested: any
-  rcs_info.nested: any
-  any:
-	@echo The IDL compiler won\'t run or build for VxWorks.
-else
+ifndef VXWORKS
+  include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
@@ -47,11 +33,18 @@ BUILD	= $(VBIN)
 #	Local targets
 #----------------------------------------------------------------------------
 
-all:
 ifdef VXWORKS
+all clean realclean:
 	@echo The IDL compiler won\'t run or build for VxWorks.
 else
+all:
 	$(PRELINK) $(CXX) $(CFLAGS) -o $(BIN) $(TAOLIBS) $(LIBS)
+
+clean:
+	rm -f tao_idl
+
+realclean:
+	rm -f tao_idl TAGS
 endif # VXWORKS
 
 tags:
@@ -59,8 +52,3 @@ tags:
 	etags -C include/*.h be_include/*.h
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
-clean:
-	rm -f tao_idl
-
-realclean:
-	rm -f tao_idl TAGS
