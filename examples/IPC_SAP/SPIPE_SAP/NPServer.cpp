@@ -12,7 +12,7 @@
 #endif
 
 int
-main (int argc, char *argv[])
+main (int /* argc */, char * /* argv */ [])
 {
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream	 new_stream;
