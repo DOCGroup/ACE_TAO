@@ -313,7 +313,8 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
                     "so remain in time-sharing class\n"));
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: getprio failed\n%a"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: ACE_OS::sched_params failed\n%a"),
+                          -1);
     }
 
   High_Priority_Task *high_priority_task;
