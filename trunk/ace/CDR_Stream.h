@@ -410,6 +410,9 @@ public:
   const ACE_Message_Block *end (void) const;
   // Return the last message in the chain that is is use.
 
+  const ACE_Message_Block *current (void) const;
+  // Return the <current_> message block in chain.
+
   const char *buffer (void) const;
 
   size_t length (void) const;
