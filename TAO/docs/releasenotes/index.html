@@ -1704,6 +1704,10 @@ Implemented Features:
         invocation by rejecting requests coming in on the insecure
         port if the server is configured to do so (default behavior).
       </LI>
+      <LI>
+        Implemented <CODE>SecurityLevel1</CODE> for the SSLIOP
+        security mechanism.
+      </LI>
     </UL>
   </LI>
 </UL>
@@ -1711,8 +1715,8 @@ Implemented Features:
 Current Status:
 <UL>
   <LI>
-    The level 1 authentication mechanisms detailed in the CORBA
-    Security Service specification are currently under development.
+    Core <CODE>SecurityLevel2</CODE> interfaces such as
+    <CODE>Credentials</CODE> are currently under development.
   </LI>
 </UL>
 
@@ -1720,21 +1724,17 @@ Schedule:
 <UL>
   <LI>
     Provisions for finer-grained, i.e. per-object, secure invocation
-    enforcement are slated for TAO 1.1.12.
+    enforcement are slated for TAO 1.1.15.
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>December 2000</FONT><BR>
+    <FONT COLOR=BLUE>April 2001</FONT><BR>
     The following milestones establish a strong foundation upon which
     the remaining, more "interesting," CORBA Security Service features
     will be built on.  Once they are in place, it will also be
     possible to perform some real research on fault injection, and
     real-time security.
     <UL>
-      <LI>
-        Complete full <CODE>SecurityLevel1</CODE> interface
-        implementation.
-      </LI>
       <LI>
         Partial implementation of <CODE>SecurityManager</CODE>
         interface.
@@ -1750,14 +1750,14 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>February 2001</FONT>
+    <FONT COLOR=BLUE>May 2001</FONT>
     <UL>
       <LI>
         Request authentication via
         <A HREF="http://web.mit.edu/kerberos/www/">Kerberos</A>, as
         detailed in the CORBA Security Service specification.  This
-        requires the SECIOP secure interoperability protocol, but
-        initial experiments will be performed via TAO's existing
+        requires the Common Secure Interoperability protocol (CSIv2),
+        but initial experiments will be performed via TAO's existing
         SSLIOP pluggable protocol.
       </LI>
       <LI>
@@ -1786,13 +1786,13 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>March 2001</FONT><BR>
-    The following are slated for TAO 1.2 or soon after.
+    <FONT COLOR=BLUE>June 2001</FONT><BR>
+    The following are slated for post TAO 1.2 betas.
     <UL>
       <LI>
-        Complete implementation of the SECIOP secure interoperability
-        protocol (at least the client side).  Needed for more advanced
-        features, such as delegation.
+        Complete implementation of the Commone Secure Interoperability
+        protocol (CSIv2).  Needed for more advanced features, such as
+	delegation.
       </LI>
       <LI>
         Begin implementation of a <CODE>DomainManager</CODE> for TAO.
@@ -1802,7 +1802,7 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>May 2001</FONT>
+    <FONT COLOR=BLUE>August 2001</FONT>
     <UL>
       <LI>
         Begin work on the CORBA Non-Repudiation Service.
