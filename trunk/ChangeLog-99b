@@ -1,3 +1,8 @@
+Wed Apr 21 10:06:11 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Moved -lthread from
+          the all-Orbix section to the MT-Orbix section for LIBS.
+
 Wed Apr 21 09:25:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Upgradable_RW_Test.cpp (main): replaced ACE_SCHED_FIFO
