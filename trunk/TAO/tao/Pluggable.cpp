@@ -127,43 +127,43 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
   return profile;
 }
 
-Version::~Version (void)
+TAO_IOP_Version::~TAO_IOP_Version (void)
 {
 }
 
-Version::Version (const Version &src)
+TAO_IOP_Version::TAO_IOP_Version (const TAO_IOP_Version &src)
   : major (src.major),
     minor (src.minor)
 {
 }
 
-Version::Version (CORBA::Octet maj, CORBA::Octet min)
+TAO_IOP_Version::TAO_IOP_Version (CORBA::Octet maj, CORBA::Octet min)
   : major (maj),
     minor (min)
 {
 }
 
 void
-Version::set_version (CORBA::Octet maj, CORBA::Octet min)
+TAO_IOP_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 {
   this->major = maj;
   this->minor = min;
 }
 
 int
-Version::operator== (const Version *&src)
+TAO_IOP_Version::operator== (const TAO_IOP_Version *&src)
 {
   return this->major == src->major && this->minor == src->minor;
 }
 
 int
-Version::operator== (const Version &src)
+TAO_IOP_Version::operator== (const TAO_IOP_Version &src)
 {
   return this->major == src.major && this->minor == src.minor;
 }
 
-Version &
-Version::operator= (const Version &src)
+TAO_IOP_Version &
+TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
 {
   this->major = src.major;
   this->minor = src.minor;

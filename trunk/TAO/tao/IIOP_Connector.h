@@ -31,10 +31,10 @@ typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
+  //   TAO_IIOP_Connector
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   IIOP Specific Connector bridge for pluggable protocols.
 public:
 
   TAO_IIOP_Connector (void);
@@ -42,15 +42,21 @@ public:
   // statically defined?
 
   int preconnect (char *preconnections);
-  //   @@ Fred, please fill in here.
+  // Initial set of connections to be established.
 
-  int open (TAO_Resource_Factory *trf,
-           ACE_Reactor *reactor);
-  //   @@ Fred, please fill in here.
+  int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
+  //  Initialize object and register with reactor. 
+
   int close (void);
-  //   @@ Fred, please fill in here.
+  // Shutdown Connector bridge and concreate Connector.
+
   CORBA::ULong tag (void);
-  //   @@ Fred, please fill in here.
+  // The tag identifying the specific ORB transport layer protocol.
+  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
+  // IOR to identify the type of profile included. IOR -> {{tag0,
+  // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
+  // CORBA::ULong TAO_IOP_Profile_ID;
+
 
   TAO_Transport* connect (TAO_Profile *profile,
                           CORBA::Environment &env);

@@ -28,69 +28,69 @@ class TAO_Client_Connection_Handler;
 class TAO_Server_Connection_Handler;
 class TAO_ORB_Core;
 
-class TAO_IIOP_Transport : public TAO_Transport
+class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
+  //   TAO_IIOP_Transport
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   This class acts as a bridge class to the transport specific 
+  //   connection handler (handler_).  
+  //
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler);
-  // @@ Fred, please fill in here.
+  // Base object's creator method. 
 
   ~TAO_IIOP_Transport (void);
-  // @@ Fred, please fill in here.
+  // Default destructor.
 
   CORBA::ULong tag (void);
-  // @@ Fred, please fill in here.
+  // Returns the specific IOP instance, in this case IIOP.
 
-  // @@ Fred, please rename this to "close_connection".
-  void close_conn (void);
-  // @@ Fred, please fill in here.
+  void close_connection (void);
+  // call the corresponding connection handlers handle_close method.
 
-  void resume_conn (ACE_Reactor *reactor);
-  // @@ Fred, please fill in here.
+  void resume_connection (ACE_Reactor *reactor);
+  // calles the reactors resume_handler on behalf of the corresponding
+  // connection handler.
 
   int idle (void);
-  // @@ Fred, please fill in here.
+  // Idles the corresponding connection handler.
 
   TAO_IIOP_Handler_Base *&handler (void);
-  // @@ Fred, please fill in here.
+  // Return a reference to the corresponding connection handler.
 
-  virtual int is_nil (TAO_Transport *obj);
-  // @@ Fred, please fill in here.
+  int is_nil (TAO_Transport *obj);
+  // returns 0 if the obj is 0.
 
-  virtual TAO_Transport *_nil (void);
-  // @@ Fred, please fill in here.
+  TAO_Transport *_nil (void);
+  // Return a NULL pointer of type TAO_Transport *.
 
   ACE_HANDLE handle (void);
-  // @@ Fred, please fill in here.
+  // Return the underlying connection handle.
 
-  virtual ssize_t send (const ACE_Message_Block *mblk);
-  // @@ Fred, please fill in here.
+  ssize_t send (const ACE_Message_Block *mblk, ACE_Time_Value *s = 0);
+  // Write the contents of the Message_Block to the connection.
 
-  virtual ssize_t send (const u_char *buf, size_t len);
-  // @@ Fred, please fill in here.
+  ssize_t send (const u_char *buf, size_t len, ACE_Time_Value *s = 0);
+  // Write the contents of the buffer of length len to the connection.
 
-  virtual ssize_t send (const iovec *iov, int iovcnt);
-  // @@ Fred, please fill in here.
+  ssize_t send (const iovec *iov, int iovcnt, ACE_Time_Value *s = 0);
+  // Write the contents of iovcnt iovec's to the connection.
 
-  virtual ssize_t receive (char *buf, size_t len);
-  // @@ Fred, please fill in here.
+  ssize_t recv (char *buf, size_t len, ACE_Time_Value *s = 0);
+  // Read len bytes from into buf.
 
-  // @@ Fred, the following method isn't defined in Pluggable.h.
-  // Please check to make sure that this is correct...
-  virtual ssize_t receive (char *buf, size_t len, int flags);
-  // @@ Fred, please fill in here.
+  ssize_t recv (char *buf, size_t len, int flags, ACE_Time_Value *s = 0);
+  // Read len bytes from into buf using flags.
 
-  virtual ssize_t receive (iovec *iov, int iovcnt);
-  // @@ Fred, please fill in here.
+  ssize_t recv (iovec *iov, int iovcnt, ACE_Time_Value *s = 0);
+  //  Read received data into the iovec buffers.
 
-  int send_request (TAO_ORB_Core * /* orb_core */,
-                    TAO_OutputCDR & /* stream */,
-                    int /* twoway */) { return -1; }
-  // @@ Fred, please fill in here.
+  virtual int send_request (TAO_ORB_Core *  /* orb_core */,
+                            TAO_OutputCDR & /* stream   */,
+                            int             /* twoway   */) { return -1; };
+  // Default action to be taken for send request.
 
 protected:
   TAO_IIOP_Handler_Base *handler_;
@@ -100,19 +100,15 @@ protected:
   CORBA::ULong tag_;
   // IIOP tag.
 
-  ssize_t do_sendv (const iovec *iov,
-                    int iovcnt,
-                    int total_bytes);
-  // @@ Fred, please fill in here.
 };
 
-class TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
+class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
-  //
+  //   TAO_IIOP_Client_Transport
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   The Transport class used for Client side communication
+  //   with a server.
 
 public:
   TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler);
@@ -124,41 +120,44 @@ public:
   // destructor
 
   TAO_Client_Connection_Handler *client_handler (void);
-  //   @@ Fred, please fill in here.
+  // return a pointer to the client's connection handler.
 
   int send_request (TAO_ORB_Core *orb_core,
                     TAO_OutputCDR &stream,
                     int twoway);
-  //   @@ Fred, please fill in here.
+  // This is essentially a bridge method for the connection handlers
+  // send_request method.  The connection handler is responsible for
+  // concurrency strategies, typically the leader follower model.
 
 private:
   TAO_Client_Connection_Handler *client_handler_;
-  //   @@ Fred, please fill in here.
+  // pointer to the corresponding client side connection handler.
 };
 
-class TAO_IIOP_Server_Transport : public TAO_IIOP_Transport
+class TAO_Export TAO_IIOP_Server_Transport : public TAO_IIOP_Transport
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
+  //   TAO_IIOP_Server_Transport
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   The Transport class used for server communication with a connected
+  //   client.
 public:
 
   TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler);
-  //   @@ Fred, please fill in here.
+  //  Default creator method.
 
   ~TAO_IIOP_Server_Transport (void);
-  // destructor
+  // Default destructor
 
   TAO_Server_Connection_Handler *server_handler (void);
-  //   @@ Fred, please fill in here.
+  //  Return a pointer to the underlying connection handler. 
 
 //  virtual int send_response (TAO_OutputCDR &response);
 
 private:
   TAO_Server_Connection_Handler *server_handler_;
-  //   @@ Fred, please fill in here.
+  // Pointer to the corresponding connection handler.
 };
 
 #endif  /* TAO_IIOP_TRANSPORT_H */

@@ -45,116 +45,189 @@ public:
   virtual CORBA::ULong tag (void) = 0;
   // The tag, each concrete class will have a specific tag value.
 
-  // @@ Fred, can you please add comments describing each of the
-  // following methods?
+  virtual void close_connection() = 0;
+  // call the corresponding connection handlers handle_close method.
+  
+  virtual void resume_connection (ACE_Reactor *reactor) = 0;
+  // calles the reactors resume_handler on behalf of the corresponding
+  // connection handler.
+
   virtual int idle (void) = 0;
-  virtual void close_conn() = 0;
-  virtual void resume_conn (ACE_Reactor *reactor) = 0;
+  // Idles the corresponding connection handler.
 
-  // @@ Fred, can you please add the ACE_Time_Value *s to the
-  // interfaces of send() and recv() in preparation for the timer
-  // support?
-  virtual ssize_t send (const ACE_Message_Block *mblk) = 0;
-  virtual ssize_t send (const u_char *buf, size_t len) = 0;
-  virtual ssize_t send (const iovec *iov, int iovcnt) = 0;
-
-  // @@ Fred, can you please call this "recv()" to be consistent with
-  // the "ACE way" of naming?
-  virtual ssize_t receive (char *buf, size_t len) = 0;
-  virtual ssize_t receive (iovec *iov, int iovcnt) = 0;
+  virtual int is_nil (TAO_Transport *obj) = 0;
+  // returns 0 if the obj is 0.
 
   virtual TAO_Transport *_nil (void) = 0;
-  virtual int is_nil (TAO_Transport *obj) = 0;
+  // Return a NULL pointer of type TAO_Transport *.
+  
+  virtual ACE_HANDLE handle (void) = 0;
+  // This is primarily used for error and debugging messages!
+
+  virtual ssize_t send (const ACE_Message_Block *mblk, ACE_Time_Value *s = 0) = 0;
+  // Write the contents of the Message_Block to the connection.
+
+  virtual ssize_t send (const u_char *buf, size_t len, ACE_Time_Value *s = 0) = 0;
+  // Write the contents of the buffer of length len to the connection.
+
+  virtual ssize_t send (const iovec *iov, int iovcnt, ACE_Time_Value *s = 0) = 0;
+  // Write the contents of iovcnt iovec's to the connection.
+
+  virtual ssize_t recv (char *buf, size_t len, ACE_Time_Value *s = 0) = 0;
+  // Read len bytes from into buf.
+
+  virtual ssize_t recv (char *buf, size_t len, int flags, ACE_Time_Value *s = 0) = 0;
+  // Read len bytes from into buf using flags.
+
+  virtual ssize_t recv (iovec *iov, int iovcnt, ACE_Time_Value *s = 0) = 0;
+  //  Read received data into the iovec buffers.
+
 
   virtual int send_request (TAO_ORB_Core *orb_core, 
                             TAO_OutputCDR &stream, 
                             int twoway) = 0;
+  // Default action to be taken for send request.
 
 //  virtual int send_response (TAO_OutputCDR &response) = 0;
 
-  virtual ACE_HANDLE handle (void) = 0;
-  // This is primarily used for error and debugging messages!
-
   virtual ~TAO_Transport (void);
+};
+
+class TAO_Export TAO_IOP_Version 
+{
+  // = TITLE
+  //   Version
+  //
+  // = DESCRIPTION
+  //   Major and Minor version number of the Inter-ORB Protocol.
+  //
+public:
+  CORBA::Octet major;
+  // Major version number
+
+  CORBA::Octet minor;
+  // Minor version number
+  
+  TAO_IOP_Version (const TAO_IOP_Version &src);
+  // Copy constructor
+
+  TAO_IOP_Version (CORBA::Octet maj = 0, 
+           CORBA::Octet min = 0);
+  // Default constructor.
+
+  ~TAO_IOP_Version (void);
+  // Destructor.
+
+  void set_version (CORBA::Octet maj, CORBA::Octet min);
+  // Explicitly set the major and minor version.
+
+  TAO_IOP_Version &operator= (const TAO_IOP_Version &src);
+  // Copy operator.
+
+  int operator== (const TAO_IOP_Version &src);
+  // Equality operator
+
+  int operator== (const TAO_IOP_Version *&src);
+  // Equality operator
+
 };
 
 class TAO_Export TAO_Profile
 {
   // = TITLE
-  //   Generic Profile definitions.
-  //   @@ Fred, please add more "meat" here.
+  //   TAO_Profile
   // 
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Generic Profile definitions.
 public:
   virtual CORBA::ULong tag (void) = 0;
   // The tag, each concrete class will have a specific tag value.
 
-  virtual ASYS_TCHAR *addr_to_string(void) = 0;
-  // @@ Fred, please fill in here.
+  virtual TAO_Transport *transport (void) = 0;
+  // return a pointer to the underlying transport object.
+  // this will provide access to lower layer protocols
+  // and processing.
 
   virtual int parse (TAO_InputCDR& cdr, 
                      CORBA::Boolean& continue_decoding, 
                      CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  // initialize this object using the given CDR octet string
 
   virtual int parse_string (const char *string,
                             CORBA::Environment &env) = 0;
-  // Parse the CDR encapsulation in <body>...
-
-  virtual CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
-                                                   CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  // initialize this object using the given input string
 
   virtual CORBA::String to_string (CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  // return a string representation for this profile.
+  // client must deallocate memory.
 
   virtual const TAO_opaque &body (void) const = 0;
   // The body, an octet sequence that represent the marshaled
-  // profile...
+  // profile.
 
-  virtual TAO_ObjectKey *_key (CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  virtual CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
+                                                   CORBA::Environment &env) = 0;
+  // encode this profile in a stream, i.e. marshal it.
 
   virtual const TAO_ObjectKey &object_key (void) const = 0;
+  // @@ deprecated. return a reference to the Object Key.
+
+  TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
+  // @@ deprecated. set the Object Key.
+
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by this object (not given to the caller).
+  
+  virtual void forward_to (TAO_MProfile *mprofiles) = 0;
+  // object will assume ownership for this object!!
 
-  virtual ACE_Addr &object_addr (const ACE_Addr *addr) = 0;
-  // @@ Fred, please fill in here.
-
-  virtual ACE_Addr &object_addr (void) = 0;
-  // @@ Fred, please fill in here.
-
-  virtual TAO_Transport *transport (void) = 0;
-  // @@ Fred, please fill in here.
-
-  virtual TAO_Profile *_nil (void) = 0;
-  // @@ Fred, please fill in here.
-
-  virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  virtual TAO_MProfile *forward_to (void) = 0;
+  // copy of MProfile, user must delete.
 
   virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
                                         CORBA::Environment &env) = 0;
-  // @@ Fred, please fill in here.
+  // return true if this profile is equivalent to other_profile.
+  // Two profiles are equivalent iff their key, port, host, object_key
+  // and version are the same.
+
+  virtual CORBA::ULong hash (CORBA::ULong max,
+                             CORBA::Environment &env) = 0;
+  // return a has value for this object.
+
+  virtual ASYS_TCHAR *addr_to_string(void) = 0;
+  // Return a string representation for the address.
+
+  virtual ACE_Addr &object_addr (const ACE_Addr *addr) = 0;
+  // set the object_addr for the profile.
+
+  virtual ACE_Addr &object_addr (void) = 0;
+  //  return a reference to the object_addr.
+
+  const TAO_IOP_Version *version (void);
+  // return a pointer to this profile's version.  This object
+  // maintains ownership.
+
+  const TAO_IOP_Version *version (TAO_IOP_Version *v);
+  // First set the version then return a pointer to it.  This object
+  // maintains ownership.
 
   virtual void reset_hint (void) = 0;
   // this methoid is used with a connection has been reset requiring the
   // hint to be cleaned up and reset to NULL.
 
-  virtual void forward_to (TAO_MProfile *mprofiles) = 0;
-  // object will assume ownership for this object!!
-
-  virtual TAO_MProfile *get_forward_to (void) = 0;
-  // copy of MProfile, user must delete.
+  virtual TAO_Profile *_nil (void) = 0;
+  // Return a null object pointer.
 
   virtual CORBA::ULong _incr_refcnt (void) = 0;
+  // Increase the reference count by one on this object.
+
   virtual CORBA::ULong _decr_refcnt (void) = 0;
+  // Decrement the object's reference count.  When this count
+  // goes to 0 this object will be deleted.
 
 protected:
-  virtual TAO_MProfile *forward_to (void) = 0;
+  virtual TAO_MProfile *forward_to_i (void) = 0;
   // this object keeps ownership of this object
 
   virtual ~TAO_Profile (void);
@@ -162,49 +235,17 @@ protected:
 
 };
 
-class Version 
-{
-  // = TITLE
-  //   @@ Fred, please fill in here.
-  //
-  // = DESCRIPTION
-  //   @@ Fred, please fill in here.
-public:
-  CORBA::Octet major;
-  // @@ Fred, please fill in here.
-
-  CORBA::Octet minor;
-  // @@ Fred, please fill in here.
-  
-  Version (const Version &src);
-  // @@ Fred, please fill in here.
-  Version (CORBA::Octet maj = 0, 
-           CORBA::Octet min = 0);
-  // @@ Fred, please fill in here.
-  ~Version (void);
-  // @@ Fred, please fill in here.
-
-  void set_version (CORBA::Octet maj, CORBA::Octet min);
-  // @@ Fred, please fill in here.
-  Version &operator= (const Version &src);
-  // @@ Fred, please fill in here.
-  int operator== (const Version &src);
-  // @@ Fred, please fill in here.
-  int operator== (const Version *&src);
-  // @@ Fred, please fill in here.
-};
-
 class TAO_Export TAO_Acceptor
 {
   // = TITLE
-  //     Abstract Acceptor class used for pluggable protocols.
-  //
+  //   TAO_Acceptor
   // = DESCRIPTION
-  // @@ Fred, please fill in here.
+  //   Abstract Acceptor class used for pluggable protocols.
+  //
 public:
 
   virtual TAO_Profile *create_profile (TAO_ObjectKey& object_key) = 0;
-  // @@ Fred, please fill in here.
+  // Create the corresponding profile for this endpoint.
 
   virtual ACE_Event_Handler* acceptor (void) = 0;
   // Return the ACE acceptor...
@@ -213,25 +254,26 @@ public:
   // The tag, each concrete class will have a specific tag value.
 
   virtual ~TAO_Acceptor (void);
-  // @@ Fred, please fill in here.
+  // Destructor
 };
 
 class TAO_Export TAO_Connector
 {
   // = TITLE
-  //   Connector Registry and Generic Connector interface definitions.
-  // 
+  //   TAO_Connector
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Connector Registry and Generic Connector interface definitions.
 public:
 
   virtual int preconnect (char *preconnections) = 0;
-  //   @@ Fred, please fill in here.
+  // Initial set of connections to be established.
+
   virtual int open (TAO_Resource_Factory *trf,
                     ACE_Reactor *reactor) = 0;
-  //   @@ Fred, please fill in here.
+  //  Initialize object and register with reactor.
+
   virtual int close (void) = 0;
-  //   @@ Fred, please fill in here.
+  // Shutdown Connector bridge and concreate Connector. 
 
   virtual CORBA::ULong tag (void) = 0;
   // The tag identifying the specific ORB transport layer protocol.
@@ -253,33 +295,35 @@ public:
 class TAO_Export TAO_Connector_Registry
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
+  //   TAO_Connector_Registry
   // 
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   All loaded ESIOP or GIOP connector bridges must register with this object.
 public:
 
   TAO_Connector_Registry (void);
-  //   @@ Fred, please fill in here.
+  //  Default constructor.
+
   ~TAO_Connector_Registry (void);
-  //   @@ Fred, please fill in here.
+  //  Default destructor. 
 
   TAO_Connector *get_connector (CORBA::ULong tag);
-  //   @@ Fred, please fill in here.
+  // Return the connector bridge corresponding to tag (IOP).
 
   CORBA::Boolean add_connector (TAO_Connector *connector);
   // All TAO_Connectors will have a tag() member which will be
   // used for registering object, as well as type checking.
 
-  int open(TAO_Resource_Factory *trf,
-           ACE_Reactor *reactor);
-  //   @@ Fred, please fill in here.
+  int open (TAO_Resource_Factory *trf,
+            ACE_Reactor *reactor);
+  // Initialize all registered connectors.
 
   int close_all (void);
-  //   @@ Fred, please fill in here.
+  // Close all open connectors.
 
   int preconnect (const char *the_preconnections);
-  //   @@ Fred, please fill in here.
+  // For this list of preconnections call the connector specific preconnect method
+  // for each preconnection.
 
   TAO_Profile *connect (STUB_Object *&obj,
                         CORBA::Environment &env);
