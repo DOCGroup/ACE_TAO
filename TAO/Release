@@ -50,7 +50,7 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
 
 
 .PHONY: INSTALL
-INSTALL: TAO-INSTALL.html
+TAO-INSTALL: TAO-INSTALL.html
 	@lynx -dump $^ > $@; chmod a+r $@
 
 .PHONY: release tag
