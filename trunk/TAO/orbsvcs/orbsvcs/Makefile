@@ -42,11 +42,8 @@ IDL_SRCS= \
 	LifeCycleService \
 	CosTrading \
 	AVStreams \
-	Null_MediaCtrl
-
-# Don't build sfp, for now, because not all compilers
-# can handle the generated output.
-#	sfp
+	Null_MediaCtrl \
+	sfp
 
 IDL_FILES = \
 	$(addsuffix S, $(IDL_SRCS)) \
