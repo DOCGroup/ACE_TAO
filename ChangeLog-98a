@@ -1,3 +1,8 @@
+Wed Feb 18 11:53:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Added netsvcs to auto_compile list.
+
 Tue Feb 17 18:27:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.28, released Tue Feb 17 18:27:15 1998.

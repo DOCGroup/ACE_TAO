@@ -37,6 +37,7 @@ $MODULE='ACE_wrappers';
 
 @BUILD_LIST=
     ('ace',
+     'netsvcs',
      'tests',
      'TAO');
 
