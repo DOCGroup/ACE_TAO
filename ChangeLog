@@ -1,11 +1,12 @@
 Thu Jul 13 14:50:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS.h: Undid the change 
-	
 	  Mon Jun 19 17:33:28 2000  Douglas C. Schmidt 
 
 	  This was creating problems in the IRIX builds. Moreover this
-	  also busted the 'thread-per-connection' strategy in TAO.
+	  also busted the 'thread-per-connection' strategy in TAO. The
+	  change actually removed a conditional check. I have added that
+	  back. 
 
 Thu Jul 13 14:41:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
