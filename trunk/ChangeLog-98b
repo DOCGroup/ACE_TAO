@@ -1,3 +1,13 @@
+Tue Sep 22 21:34:31 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dirent.cpp: Make aCC quit yacking about an empty translation
+	  unit.
+
+	* ace/OS.i: Fix up the conditions for readdir_r on differing pthreads
+	  drafts.
+
+	* ace/config-aix-4.2.x.h: Added ACE_HAS_DIRENT.
+
 Tue Sep 22 17:07:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Message_Queue_Notifications_Test.cpp (Watermark_Test):
