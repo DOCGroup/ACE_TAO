@@ -1,3 +1,9 @@
+Wed Feb 18 12:28:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Thruput/TAO/tmplinst.cpp: 
+	  The templates should be instantiated over the CORBA:: typedefs,
+	  otherwise they fail in weird platforms.
+
 Wed Feb 18 11:57:24 1998  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile (LDLIBS): Removed -lposix4

@@ -8,16 +8,16 @@
 #include "ttcpC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Sequence<double>;
+template class TAO_Unbounded_Sequence<CORBA::Double>;
 template class TAO_Unbounded_Sequence<BinStruct>;
-template class TAO_Unbounded_Sequence<long>;
-template class TAO_Unbounded_Sequence<char>;
-template class TAO_Unbounded_Sequence<short>;
+template class TAO_Unbounded_Sequence<CORBA::Long>;
+template class TAO_Unbounded_Sequence<CORBA::Char>;
+template class TAO_Unbounded_Sequence<CORBA::Short>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Sequence<double>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Double>
 #pragma instantiate TAO_Unbounded_Sequence<BinStruct>
-#pragma instantiate TAO_Unbounded_Sequence<long>
-#pragma instantiate TAO_Unbounded_Sequence<char>
-#pragma instantiate TAO_Unbounded_Sequence<short>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Long>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Char>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Short>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
