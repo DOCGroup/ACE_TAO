@@ -8,14 +8,17 @@ Tue Dec 29 16:24:24 1998  David L. Levine  <levine@cs.wustl.edu>
           the platform defines ACE_LACKS_LONGLONG_T, e.g., GreenHills,
           because it makes a big mess.
 
+        * bin/Hash_Map_Manager.pl,Hash_Map_Manager_Helper.csh:
+          translated/renamed Hash_Map_Manager_Helper.csh from csh to sh.
+
 Tue Dec 29 15:09:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.10 released.
 
 Tue Dec 29 14:57:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/tutorials/{019,020}: Checked out the two new tutorials
-	  from James Johnson.
+        * docs/tutorials/{019,020}: Checked out the two new tutorials
+          from James Johnson.
 
 Tue Dec 29 14:37:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -23,16 +26,16 @@ Tue Dec 29 14:37:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Dec 29 13:32:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_SELF): Changed it's definition from -1 to 0 on NT
-	  to avoid warings from Intel C++.  ACE_SELF is not used on NT.
-	  Thanks to Karel Zuiderveld <kzuiderveld@vitalimages.com> for
-	  reporting this.
+        * ace/OS.h (ACE_SELF): Changed it's definition from -1 to 0 on NT
+          to avoid warings from Intel C++.  ACE_SELF is not used on NT.
+          Thanks to Karel Zuiderveld <kzuiderveld@vitalimages.com> for
+          reporting this.
 
 Tue Dec 29 10:29:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Fixed a bunch of warnings produced by Intel's C++ 4.0
- 	  compiler.  Thanks to Karel Zuidrveld
- 	  <kzuiderveld@vitalimages.com> for reporting these.
+        * ace: Fixed a bunch of warnings produced by Intel's C++ 4.0
+          compiler.  Thanks to Karel Zuidrveld
+          <kzuiderveld@vitalimages.com> for reporting these.
 
 Tue Dec 29 09:47:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
