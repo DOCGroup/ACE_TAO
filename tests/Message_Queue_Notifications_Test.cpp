@@ -216,7 +216,7 @@ Watermark_Test::producer (void)
       i--;
     }
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Producer: High water mark hit ---- \n"));
+              ASYS_TEXT ("(%P|%t) Producer: High water mark hit ---- \n")));
 
   ACE_MT (this->mq_full_.wait ());
 
