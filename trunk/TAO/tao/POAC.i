@@ -3128,7 +3128,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,PortableServer::POAManager::AdapterInactive)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,PortableServer::POAManager::AdapterInactive &)
 {
   return 1;
 }
