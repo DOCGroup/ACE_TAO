@@ -6,8 +6,10 @@
 template <class T> ACE_INLINE T * 
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
-  return ACE_reinterpret_cast (T *,
-                               this);
+  // This should be done using a single reinterpret_cast, but Sun/CC
+  // (4.2) gets awfully confused when T is a char[20] (and maybe other
+  // types).
+  return ACE_static_cast(T*,ACE_static_cast (void*, this));
 }
 
 template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *
