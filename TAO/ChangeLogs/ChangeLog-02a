@@ -143,15 +143,6 @@ Wed Nov 22 17:37:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tests/Multiple/server.cpp:
         * tests/Multiple/run_test.pl:
 
-<<<<<<< ChangeLog
-        * tao/MessagingC.cpp:
-        * tao/MessagingC.h:
-        * tao/PortableServer/MessagingS.cpp:
-        * tao/PortableServer/MessagingS.h:
-
-          Modified code to reflect the change made in the IDL generated
-          code.
-=======
           Cosmetic changes to some file, plus perl script for automatically
           running the test.
 
@@ -172,22 +163,13 @@ Wed Nov 22 14:30:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/MessagingC.h:
         * tao/PortableServer/MessagingS.cpp:
         * tao/PortableServer/MessagingS.h:
->>>>>>> 1.2069
 
-<<<<<<< ChangeLog
-          Thanks to Andy <gokhale@research.bell-labs.com> for the support,
-          and hint.
-=======
           Modified code to reflect the change made in the IDL generated
           code.
->>>>>>> 1.2069
 
-<<<<<<< ChangeLog
-=======
           Thanks to Andy <gokhale@research.bell-labs.com> for the support,
           and hint.
 
->>>>>>> 1.2069
 Wed Nov 22 10:05:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * performance-tests/Latency/server.dsp
