@@ -996,6 +996,143 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
+
+void string2long (const char *str,
+                  ACE_CDR::ULong *&arr,
+                  ACE_CDR::ULong &arrlen);
+
+CORBA_TypeCode_ptr 
+CORBA_ORB::create_interface_tc (const char * id,
+                                const char * name,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_OutputCDR cdr;
+  
+  // The piece of code that follows has been based on the code in the
+  // IDL compiler 
+  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
+
+  // generate the REPO id
+  ACE_CDR::ULong slen = ACE_OS::strlen (id) + 1; // 1 for NULL terminating
+  
+  cdr << slen;
+
+  ACE_CDR::ULong *larr, arrlen;
+
+  string2long (id,larr, arrlen); 
+
+  for (ACE_CDR::ULong i = 0; i < arrlen; i++)
+    cdr << larr [i];
+
+  // Name of the interface
+  slen = ACE_OS::strlen (name) + 1;
+  cdr << slen;
+
+  string2long (name, larr, arrlen);
+  
+  
+  for (ACE_CDR::ULong ind = 0; ind < arrlen; ind++)
+    cdr << larr [ind];
+
+  CORBA_TypeCode_ptr interface_typecode = 0;
+  ACE_NEW_THROW_EX (interface_typecode,
+                    CORBA_TypeCode (CORBA::tk_objref,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+
+  return interface_typecode;
+}
+
+CORBA_TypeCode_ptr 
+CORBA_ORB::create_enum_tc (const char *id,
+                           const char *name,
+                           CORBA_EnumMemberSeq &members,
+                           CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_OutputCDR cdr;
+  
+  // The piece of code that follows has been based on the code in the
+  // IDL compiler 
+  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
+  
+  // generate and massage in the REPO id
+  ACE_CDR::ULong slen = ACE_OS::strlen (id) + 1; // 1 for NULL terminating
+  cdr << slen;
+
+  ACE_CDR::Ulong *larr, arrlen;
+
+  string2long (id, larr, arrlen);
+
+  for (ACE_CDR::Ulong i = 0; i < arrlen; i++)
+    cdr << larr [i];
+
+  // Name of the enum
+  slen = ACE_OS::strlen (name) + 1;
+  cdr << slen;
+
+  // Massage the enums values..
+  string2long (name, larr, arrlen);
+
+  for (ACE_CDR::ULong ind = 0; ind < arrlen; ind++)
+    cdr << larr [ind];
+
+  CORBA::ULong len = members.length ();
+  
+  for (CORBA::ULong index = 0; index < len; index++)
+    {
+      // String length defined inside the enums
+      slen = ACE_OS::strlen (members[index).in ()) + 1;
+      cdr << slen;
+      
+      string2long (members[index].in (), larr, arrlen);
+      
+      // And finally the enums themselves
+      for (ACE_CDR::ULong len = 0; len < arrlen; len++)
+        cdr << larr [i];
+    } 
+
+  CORBA_TypeCode_ptr interface_typecode = 0;
+  ACE_NEW_THROW_EX (interface_typecode,
+                    CORBA_TypeCode (CORBA::tk_enum,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+
+  return interface_typecode;
+}
+
+
+                                   
+static const CORBA::ULong NAMEBUFSIZE = 1024;
+    
+void
+string2long (const char *str,
+             ACE_CDR::ULong *&larr,
+             ACE_CDR::ULong &arrlen)
+{
+  ACE_CDR::ULong slen = ACE_OS::strlen (str) + 1; 
+  
+
+  // compute the number of bytes necessary to hold the name rounded to
+  // the next multiple of 4 (i.e., size of long)
+  const int bytes_per_word = sizeof (ACE_CDR::ULong);
+  arrlen = slen / bytes_per_word + (slen % bytes_per_word ? 1 : 0);
+  
+  ACE_CDR::ULong buf [NAMEBUFSIZE];
+  
+  larr = buf;
+
+  ACE_OS::memset (buf, 0, sizeof (buf));
+  larr = buf;
+  ACE_OS::memcpy (buf, str, slen);
+}
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
