@@ -2,28 +2,8 @@
 // $Id$
 //
 
-/* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Interface that provides additional means for C++
-//    mapping of an interface.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Carlos O'Ryan, Aniruddha Gokhale
-//
-// ============================================================================
-
-#if !defined (TAO_BE_VISITOR_H)
-#define TAO_BE_VISITOR_H
+#ifndef _BE_VISITOR_H
+#define _BE_VISITOR_H
 
 class be_decl;
 class be_scope;
@@ -51,6 +31,8 @@ class be_string;
 class be_typedef;
 class be_root;
 class be_native;
+
+class TAO_OutStream;
 
 class be_visitor
 {
@@ -117,4 +99,4 @@ protected:
   // output stream
 };
 
-#endif // TAO_BE_VISITOR_H
+#endif // _BE_VISITOR_H

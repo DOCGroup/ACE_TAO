@@ -235,9 +235,6 @@ private:
   ACE_ES_MUTEX lock_;
   // Used to lock shared state.
 
-  RtecEventChannelAdmin::EventChannel_ptr me_;
-  // CORBA reference to self.
-
   int destroyed_;
   // Ensures this->destory is executed only once.
 };
@@ -862,8 +859,6 @@ private:
   ACE_EventChannel *channel_;
   // Used to test for shutdown.
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr me_;
-
   ACE_ES_Dispatching_Module *down_;
   // Next module down.
 };
@@ -1126,8 +1121,6 @@ private:
   ACE_ES_MUTEX lock_;
   // Protects access to all_suppliers_ and type_suppliers_;
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr me_;
-
   ACE_ES_Subscription_Module *up_;
 
   ACE_EventChannel *channel_;
@@ -1208,9 +1201,6 @@ private:
   RtecEventComm::EventSourceID source_id_;
   // We keep a proxy of the Supplier source_id_;
   
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr me_;
-  // CORBA reference to self.
-
   RtecEventComm::PushSupplier_ptr push_supplier_;
   // CORBA reference to remote push supplier.
 };
@@ -1280,9 +1270,6 @@ private:
   // A hook so that the Correlation Module can associate correlation
   // information with the consumer.
 
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr me_;
-  // CORBA reference to self.
-  
   RtecEventComm::PushConsumer_ptr push_consumer_;
   // Reference to our push consumer.
   

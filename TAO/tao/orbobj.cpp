@@ -193,6 +193,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
+#if 0
 CORBA::POA_ptr
 CORBA_ORB::POA_init (int &argc,
 		     char **argv,
@@ -237,6 +238,7 @@ CORBA_ORB::POA_init (int &argc,
 
   return rp;
 }
+#endif /* 0 */
 
 int
 CORBA_ORB::perform_work (ACE_Time_Value *tv)
@@ -295,8 +297,53 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
-  ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
+  CORBA::Environment env;
+
+  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
+
+  // Need to do double-checked locking here to cover the case of
+  // multiple threads using a global resource policy.
+  if (poa == 0)
+    {
+      TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
+      TAO_POA_Policies root_poa_policies;
+      root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+
+      // Construct a new POA
+      poa = new TAO_Strategy_POA ("RootPOA",
+                                  *manager,
+                                  root_poa_policies,
+                                  0,
+                                  env);
+
+      if (env.exception () != 0)
+        return CORBA_Object::_nil ();
+
+      // set the poa in the orbcore instance
+      TAO_ORB_Core_instance ()->root_poa (poa);
+    }
+
+  PortableServer::POA_var result = poa->_this (env);
+  if (env.exception () != 0)
+    return CORBA_Object::_nil ();
+  else
+    return result._retn ();  
 }
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_poa_current (void)
+{
+  // Return the pointer to this thread's POACurrent.
+
+  CORBA::Environment env;
+
+  PortableServer::Current_var result = TAO_ORB_Core_instance ()->poa_current ()->_this (env);
+  if (env.exception () != 0)
+    return CORBA_Object::_nil ();
+  else
+    return result._retn ();  
+}
+
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (void)
@@ -435,13 +482,67 @@ CORBA_ORB::resolve_name_service (void)
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name)
 {
-  if (ACE_OS::strcmp (name, "NameService") == 0)
+  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service ();
-  else if (ACE_OS::strcmp (name, "RootPOA") == 0)
+  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_poa ();
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
+    return this->resolve_poa_current ();
   else
     return CORBA_Object::_nil ();
 }
+
+// Create an objref
+
+CORBA::Object_ptr
+CORBA_ORB::key_to_object (const TAO::ObjectKey &key,
+                          const char *type_id,
+                          CORBA::Environment &env)
+{
+  CORBA::String id;
+  IIOP_Object *data;
+
+  if (type_id)
+    id = CORBA::string_copy (type_id);
+  else
+    id = 0;
+
+  // @@ (IRFAN) This is the most likely chunk of code to break because
+  // of this evil cast.  Unfortunately, the generated code for
+  // sequences doesn't give access to the underlying buffer, so I
+  // don't have a way to construct a new OctetSeq instance in the
+  // appropriate manner.  Fortunately, in order for ObjectKey to be
+  // useable internally, we need the same capabilities, and so right
+  // around the time that this conversion could be done properly it
+  // won't have to be done at all.
+  // @@ I (coryan@cs) modified the ORB core to use
+  // PortableServer::ObjectId instead of CORBA::OctetSeq as object
+  // identifiers, if this prove to be wrong I'll take it back.
+  // CORBA::OctetSeq *internal_key = (CORBA::OctetSeq *)key;
+  data = new IIOP_Object (id,
+                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
+                                         key));
+  if (data != 0)
+    env.clear ();
+  else
+    {
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  // Return the CORBA::Object_ptr interface to this objref.
+  CORBA::Object_ptr new_obj;
+  
+  if (data->QueryInterface (IID_CORBA_Object,
+                            (void **) &new_obj) != TAO_NOERROR)
+    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  
+  data->Release ();
+  return new_obj;
+  
+  // return new CORBA::Object (data);
+}
+
 
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -25,15 +25,25 @@
 
 #include "tao/corba.h"
 
+// ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
+// of course, no guarantees are made that the call will return something
+// useful.
+#define TAO_OBJID_NAMESERVICE   "NameService"
+#define TAO_OBJID_ROOTPOA       "RootPOA"
+#define TAO_OBJID_POACURRENT    "POACurrent"
+#define TAO_OBJID_INTERFACEREP  "InterfaceRepository"
+
 class TAO_Export CORBA_ORB : public TAO_IUnknown
   // = TITLE
   // ORB pseudo-objref.
 {
 public:
-  CORBA::POA_ptr POA_init (int &argc,
-                           char **argv,
-                           const char *poa_identifier = 0);
+  /*
+  TAO_POA *POA_init (int &argc, 
+                     char **argv, 
+                     const char *poa_identifier = 0);
   // Initialize the Portable Object Adapter (POA).
+  */
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
@@ -108,6 +118,29 @@ public:
   // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
   // currently supported.
 
+  // = TAO-specific Extensions
+
+  CORBA_Object_ptr key_to_object (const TAO::ObjectKey &key,
+                                  const char *type_id,
+                                  CORBA::Environment &env);
+  // Convert key into an object reference.  Return Object_ptr as out
+  // parameter.  Errors will come through the environment.
+  //
+  // Object IDs are assigned and used by servers to identify objects.
+  //
+  // Type IDs are repository IDs, assigned as part of OMG-IDL
+  // interface definition to identify specific interfaces and their
+  // relationships to other OMG-IDL interfaces.  It's OK to provide a
+  // null type ID.  Providing a null object key will result in an
+  // INV_OBJREF exception.
+  //
+  // Clients which invoke operations using one of these references
+  // when the server is not active (or after the last reference to the
+  // POA is released) will normally see an OBJECT_NOT_EXIST exception
+  // reported by the ORB.  If the POA is a "Named POA" the client's
+  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
+  // reports that fault.
+
   // = <IUnknown> Support
   //
   // Stuff required for COM IUnknown support ... this class is
@@ -141,6 +174,9 @@ private:
 
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
+
+  CORBA_Object_ptr resolve_poa_current (void);
+  // Resolve the POA current.
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;

@@ -69,7 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\\" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -180,6 +180,10 @@ SOURCE=.\object.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objkeyC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objtable.cpp
 # End Source File
 # Begin Source File
@@ -204,6 +208,14 @@ SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\poaC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\principa.cpp
 # End Source File
 # Begin Source File
@@ -213,6 +225,10 @@ SOURCE=.\request.cpp
 # Begin Source File
 
 SOURCE=.\sequence.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\servant_base.cpp
 # End Source File
 # Begin Source File
 
@@ -248,7 +264,7 @@ SOURCE=.\any.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\arg_shifter.h
+SOURCE=.\boa.h
 # End Source File
 # Begin Source File
 
@@ -256,15 +272,7 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\connect.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
@@ -276,15 +284,11 @@ SOURCE=.\debug.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\default_client.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\except.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\factories.h
 # End Source File
 # Begin Source File
 
@@ -300,10 +304,6 @@ SOURCE=.\iioporb.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\managed_types.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
@@ -313,6 +313,10 @@ SOURCE=.\nvlist.h
 # Begin Source File
 
 SOURCE=.\object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objkeyC.h
 # End Source File
 # Begin Source File
 
@@ -328,10 +332,6 @@ SOURCE=.\orb.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\orb_core.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\orbconf.h
 # End Source File
 # Begin Source File
@@ -344,10 +344,6 @@ SOURCE=.\params.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\poa.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\principa.h
 # End Source File
 # Begin Source File
@@ -356,15 +352,11 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\roa.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequence.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\server_factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
@@ -376,18 +368,10 @@ SOURCE=.\svrrqst.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\tao_internals.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\typecode.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\varout.h
-# End Source File
 # End Group
-# Begin Group "Inline Files"
+# Begin Group "Include Files"
 
 # PROP Default_Filter "*.i"
 # Begin Source File
@@ -396,11 +380,11 @@ SOURCE=.\any.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\cdr.i
+SOURCE=.\boa.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_factory.i
+SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
@@ -408,19 +392,7 @@ SOURCE=.\connect.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbacom.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\default_client.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\default_server.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\giop.i
+SOURCE=.\factories.i
 # End Source File
 # Begin Source File
 
@@ -432,19 +404,11 @@ SOURCE=.\iioporb.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\managed_types.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\object.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\orb_core.i
 # End Source File
 # Begin Source File
 
@@ -456,27 +420,11 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\poa.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\sequence.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\server_factory.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\stub.i
+SOURCE=.\roa.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\svrrqst.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\tao_internals.i
 # End Source File
 # Begin Source File
 

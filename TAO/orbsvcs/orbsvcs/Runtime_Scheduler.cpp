@@ -13,8 +13,7 @@
 ACE_Runtime_Scheduler::
 ACE_Runtime_Scheduler (int entry_count,
 		       RtecScheduler::RT_Info* rt_info[])
-:  POA_RtecScheduler::Scheduler ("Static_Scheduler"),
-   entry_count_ (entry_count),
+:  entry_count_ (entry_count),
    rt_info_ (rt_info)
 {
 }
