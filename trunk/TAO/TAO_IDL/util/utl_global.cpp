@@ -82,6 +82,8 @@ ACE_RCSID (util,
 #undef INCREMENT
 #define INCREMENT 64
 
+static long seen_once[INCREMENT] = {0};
+
 IDL_GlobalData::IDL_GlobalData (void)
   : pd_root (0),
     pd_gen (0),
@@ -115,8 +117,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     obv_support_ (I_TRUE),
     case_diff_error_ (I_TRUE),
     nest_orb_ (I_FALSE),
-    idl_flags_ (""),
-    last_seen_index_ (1)
+    idl_flags_ ("")
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -470,6 +471,7 @@ IDL_GlobalData::seen_include_file_before (char *n)
   unsigned long i;
   char *incl = 0;
   char *tmp = n;
+  static retval = 0;
 
   if (n[0] == '.')
     {
@@ -482,13 +484,14 @@ IDL_GlobalData::seen_include_file_before (char *n)
 
       if (ACE_OS::strcmp (tmp, incl) == 0)
         {
+          return seen_once[i]++;
           // We use the index value in the function below. We
           // add 1 so a match on the first try will not return 0.
-          return (long) i + 1;
+//          return (long)i + 1;
         }
     }
 
-  return I_FALSE;
+  return 0;;
 }
 
 // Store the name of an #include file.
@@ -498,12 +501,10 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   UTL_String **o_include_file_names;
   unsigned long o_n_alloced_file_names;
   unsigned long i;
-  long seen = this->seen_include_file_before (n->get_string ());
 
   // Check if we need to store it at all or whether we've seen it already.
-  if (seen)
+  if (this->seen_include_file_before (n->get_string ()))
     {
-      this->last_seen_index_ = seen;
       return;
     }
 
@@ -535,8 +536,8 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
     }
 
   // Store it.
+  seen_once[this->pd_n_include_file_names] = 1;
   this->pd_include_file_names[this->pd_n_include_file_names++] = n;
-  this->last_seen_index_ = this->pd_n_include_file_names;
 }
 
 void
@@ -977,7 +978,7 @@ IDL_GlobalData::update_prefix (char *filename)
   // possibly be changed later.
   if (ACE_OS::strcmp (fstring, main_filename) != 0
       && this->pragma_prefixes_.size () > 1
-      && (this->seen_include_file_before (filename) != 0
+      && (this->seen_include_file_before (filename) == 1
           || ACE_OS::strcmp (filename, main_filename) == 0))
     {
       char *trash = 0;
