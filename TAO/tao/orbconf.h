@@ -289,6 +289,20 @@
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION  "IORManipulation"
 
+// Comma separated list of the above ObjectIDs.
+// DO NOT include unimplemented services!
+// The CORBA_ORB::list_initial_services () method iterates through
+// this list to determine which initial services are available.
+#define TAO_LIST_OF_INITIAL_SERVICES \
+        TAO_OBJID_NAMESERVICE, \
+        TAO_OBJID_TRADINGSERVICE, \
+        TAO_OBJID_IMPLREPOSERVICE, \
+        TAO_OBJID_ROOTPOA, \
+        TAO_OBJID_POACURRENT, \
+        TAO_OBJID_POLICYMANAGER, \
+        TAO_OBJID_POLICYCURRENT, \
+        TAO_OBJID_IORMANIPULATION
+
 // TAO Naming Service.
 
 // Poa id of the root Naming Context in a Naming server.
