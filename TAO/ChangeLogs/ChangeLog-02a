@@ -1,3 +1,14 @@
+Sun Mar 04 10:11:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Smart_Proxies/Policy/server.cpp (shutdown):
+
+	  Added missing ACE_TRY_ENV parameter to the ORB::shutdown() call.
+
+	  (main):
+
+	  Fixed ORB::run() call so that it uses the standard calling
+	  convention (void return).
+
 Sun Mar 04 10:02:18 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Smart_Proxies/Benchmark/server.cpp (box_prices, tickets):
