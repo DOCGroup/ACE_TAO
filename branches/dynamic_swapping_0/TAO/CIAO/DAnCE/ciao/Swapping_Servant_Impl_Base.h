@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Swapping_Servant_Impl_Base.h
+ *  @file    Swapping_Servant_Home_Impl_Base.h
  *
  *  $Id$
  *
@@ -28,24 +28,24 @@ namespace CIAO
   class Swapping_Container;
 
   /**
-   * @class Swapping_Servant_Impl_Base
+   * @class Swapping_Servant_Home_Impl_Base
    *
-   * @brief Non-template base class for Home_Servant_Impl.
-   *
-   * Holds the non-template parts of its child class
-   * Home_Servant_Impl.
    */
   // @@ Jai, why are you inheriting from "home" here? What is the
   // point?
-  class CIAO_SERVER_Export Swapping_Servant_Impl_Base
+  // @@ JAI, probably my class naming convention was the problem.
+  // This is a home implementation and that is why inheriting from
+  // "home".
+  //
+  class CIAO_SERVER_Export Swapping_Servant_Home_Impl_Base
     : public virtual POA_Components::CCMHome
   {
   public:
-    explicit Swapping_Servant_Impl_Base (void);
+    explicit Swapping_Servant_Home_Impl_Base (void);
 
-    Swapping_Servant_Impl_Base (Swapping_Container * c);
+    Swapping_Servant_Home_Impl_Base (Swapping_Container * c);
 
-    virtual ~Swapping_Servant_Impl_Base (void);
+    virtual ~Swapping_Servant_Home_Impl_Base (void);
 
     // Operations for CCMHome interface.
 
