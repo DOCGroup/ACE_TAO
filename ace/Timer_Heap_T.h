@@ -102,7 +102,7 @@ public:
    * time and is more predictable (though it requires more space).
    * Otherwise, timer nodes are allocated as needed.
    * @param freelist is the freelist of timer nodes.
-   * @param upcall_function If 0 Timer Heap will create a default FUNCTOR.
+   * @param upcall_functor If 0 Timer Heap will create a default FUNCTOR.
    */
   ACE_Timer_Heap_T (size_t size,
                     int preallocated = 0,

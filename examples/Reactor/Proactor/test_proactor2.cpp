@@ -433,7 +433,7 @@ ACE_HANDLE Sender::handle (void) const
 
 void Sender::handle (ACE_HANDLE handle)
 {
-  return this->stream_.set_handle (handle);
+  this->stream_.set_handle (handle);
 }
 
 int Sender::open (const ACE_TCHAR *host, u_short port)
