@@ -78,7 +78,7 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 
     if (use_gateway)
     {
-      gateway.reset(new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
+      ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()), TAO_FTRTEC::FTEC_Gateway);
       return gateway->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
     }
     else
