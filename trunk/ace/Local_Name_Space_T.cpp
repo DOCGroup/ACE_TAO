@@ -519,7 +519,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_WSTRING_SET &set,
                                                               const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names_i");
@@ -552,7 +552,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_PWSTRING_SET &
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_WSTRING_SET &set,
                                                            const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values_i");
@@ -585,7 +585,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_PWSTRING_SET 
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_WSTRING_SET &set,
                                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types_i");
@@ -795,7 +795,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (ACE_WSTRING_SET &set,
                                                         const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
@@ -813,7 +813,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (ACE_PWSTRING_SET &se
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (ACE_WSTRING_SET &set,
                                                              const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
@@ -831,7 +831,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (ACE_PWSTRING_SET &s
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (ACE_PWSTRING_SET &set,
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (ACE_WSTRING_SET &set,
                                                             const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
