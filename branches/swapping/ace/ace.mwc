@@ -1,0 +1,10 @@
+//  -*- MPC -*-
+// $Id$
+
+workspace {
+  ace.mpc
+  QoS
+  RMCast
+  SSL
+  TMCast
+}

@@ -1,0 +1,10 @@
+// $Id$
+
+interface simple
+{
+  string op1  (in string name,
+               in any inany,
+               out any outany);
+
+  wstring op2 (in wstring s1);
+};

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <!-- $Id$ -->
+    <title>Adding new IOR Parsers to TAO</title>
+  </head>
+
+  <body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
+
+    <CENTER>
+      <H1>Introduction</H2>
+    </CENTER>
+
+    <h4>What is an IOR Parser?</h4>
+
+    <P>TAO supports several IOR formats, including
+      <CODE>IOR:</CODE>, <CODE>corbaloc:</CODE>,
+      <CODE>corbaname:</CODE> and <CODE>file:</CODE>.
+      However, some applications may benefit from other formats, for
+      example, <CODE>http:</CODE> could allow applications to download
+      an object reference from a web server.
+    </P>
+    <P>Adding new IOR formats to the ORB is a simple task, the ORB
+      takes advantage ACE's
+      <A HREF="http://www.cs.wustl.edu/~schmidt/DSEJ-94.ps.gz">
+        Service Configurator
+      </A>
+      to dynamically load new <EM>IOR Parsers</EM>.
+      The implementation of <CODE>string_to_object()</CODE> queries
+      each available IOR Parser to convert an string into an object
+      reference.
+      Application developers can implement their own parsers and
+      dynamically (or statically) add them to the ORB, without any
+      need to recompile TAO.
+    </P>
+
+    <H4>Why aren't the IOR parsers in TAO enough?</H4>
+
+    <P>TAO provides a basic set of IOR parsers,
+      but it would be detrimental to TAO's footprint to implement a
+      huge collection of IOR parsers into the ORB.
+      Moreover, the DOC group does not have the ability to create all
+      possible IOR parsers: many applications will use proprietary
+      databases to configure the ORB.
+    <P>
+
+    <H4>Why should I use an IOR parser?</H4>
+
+    <P>Using an IOR parser is more convenient than, say,
+      setting up the ad-hoc configuration code in
+      <CODE>main()</CODE>.
+      It also allows for easier integration with other TAO components,
+      such as the <CODE>-ORBInitRef</CODE> options.
+    </P>
+
+    <HR>
+
+    <CENTER>
+      <H1>Implementation</H2>
+    </CENTER>
+
+    <H1>How do you Implement an IOR Parser?</H1>
+
+    <P>Implementing an IOR parser is easy,
+      you must implement a class derived from
+      <CODE>TAO_IOR_Parser</CODE>.
+      As an example we will develop an HTTP IOR parser,
+      the class declaration will probably look like this:
+<PRE>
+class HTTP_Parser : public TAO_IOR_Parser
+{
+public:
+  virtual int match_prefix (const char *ior_string) const;
+  virtual CORBA::Object_ptr parse_string (const char *ior,
+                                          CORBA::ORB_ptr orb,
+                                          CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+};
+</PRE>
+      For maximal portability this class uses the alternative mapping
+      for exception handling, if you are not familiar with the
+      alternative mapping you can safely ignore the
+      <CODE>CORBA::Environment</CODE> argument.
+      Please read the exception handling
+      <A HREF="exceptions.html">
+        documentation
+      </A>
+      for more details.
+    </P>
+
+    <UL>
+      <LI><B>match_prefix</B> This method must recognize all the IOR
+        prefixes that this parser supports.  Normally this is a single
+        prefix, a typical implementation will look like this:
+<PRE>
+int
+HTTP_Parser::match_prefix (const char *ior_string) const
+{
+  static char http_prefix[] = "http:";
+  int cmp = ACE_OS::strncmp (ior_string, http_prefix, sizeof(http_prefix));
+  return (cmp == 0);
+}
+</PRE>
+      </LI>
+      <LI><B>parse_string</B> This method implements the real string
+        parsing, you can safely assume that the string has been
+        validated by the <CODE>match_prefix()</CODE> method.
+        Typically, this method will obtain the IOR string, in our
+        example by downloading the document from the web server,
+        and then uses <CODE>string_to_object()</CODE> to return the
+        object reference:
+<PRE>
+CORBA::Object_ptr
+HTTP_Parser::parse_string (const char *ior,
+                           CORBA::ORB_ptr orb,
+                           CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Parse IOR as if it was an http:-URL
+  ACE_URL_Addr *url_addr =
+    ACE_URL_Addr::create_addr (ior);
+
+  ACE_HTTP_Addr *http_addr =
+    ACE_dynamic_cast(ACE_HTTP_Addr*,url_addr);
+
+  // Connect to the remote host and download the web page, store the
+  // contents in:
+  char *document_contents = ...;
+
+  return orb->string_to_object (document_contents, ACE_TRY_ENV);
+}
+</PRE>
+      </LI>
+    </UL>
+
+    <H4>How do you add an IOR Parser to the ORB?</H4>
+
+    <P>As we mentioned above, TAO uses the ACE Service Configurator
+      framework to find (dynamically or statically) the IOR parsers.
+      You may want to read the
+      <A HREF="../../docs/tutorials/022/page01.html">
+        ACE tutorial
+      </A>
+      on this subject, but the process is mostly mechanic, and
+      described here.
+    </P>
+    <P>First you must declare, in the header file, a factory method
+      and a description of the service,
+      this is easily accomplished via the following ACE macros:
+<PRE>
+ACE_FACTORY_DECLARE (Export_Prefix, HTTP_Parser)
+ACE_STATIC_SVC_DELCARE_EXPORT (Export_Prefix, HTTP_Parser)
+</PRE>
+      If you are only going to use Unix-like compilers and linkers,
+      then you can simply use <CODE>TAO</CODE> in place of
+      <CODE>Export_Prefix</CODE>.
+      However, under Microsoft Windows variants, this string must be
+      the prefix of the DLL export/import macros used by your library.
+      If you are going to statically link your IOR Parser into the
+      application you will also need to add
+      <CODE>ACE_STATIC_SVC_REQUIRE</CODE>, as follows:
+<PRE>
+ACE_FACTORY_DECLARE (Export_Prefix, HTTP_Parser)
+ACE_STATIC_SVC_DELCARE_EXPORT (Export_Prefix, HTTP_Parser)
+ACE_STATIC_SVC_REQUIRE (HTTP_Parser)
+</PRE>
+    </P>
+
+    <P>Next you must implement the services defined above, using some
+      other group of helper macros, in your source file you should
+      add:
+<PRE>
+ACE_STATIC_SVC_DEFINE (HTTP_Parser,
+                       ACE_TEXT ("HTTP_Parser"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (HTTP_Parser),
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
+                       0)
+ACE_FACTORY_DEFINE (Export_Prefix, HTTP_Parser)
+</PRE>
+      The second argument to <CODE>ACE_STATIC_SVC_DEFINE</CODE> is
+      the name of the service in ACE's Service Configurator.
+      It is customary, but not required, to use the name of the class.
+    </P>
+
+    <P>Finally you can dynamically add your IOR parser to the ORB
+      using the <CODE>-ORBIORParser</CODE> option in the
+      Resource Factory
+      (see
+      <A HREF="Options.html">
+        Options for TAO Components
+      </A>
+      for details about ORB and Resource Factory options),
+      for example:
+<PRE>
+# svc.conf file
+static Resource_Factory "-ORBIORPaser HTTP_Parser"
+</PRE>
+      would add our new parser to the ORB.
+    </P>
+<PRE>
+
+</PRE>
+    </P>
+
+    <H4>Are there any complete examples?</H4>
+
+    <P>Yes, the IOR parsers in the ORB can serve as complete examples,
+      please check:
+      <CODE>FILE_Parser.h</CODE>,
+      <CODE>CORBALOC_Parser.h</CODE>,
+      <CODE>CORBANAME_Parser.h</CODE>,
+      or <CODE>DLL_Parser.h</CODE>.
+      Unfortunately there are no examples that show how to dynamically
+      add a new IOR parser into the ORB.
+    </P>
+
+    <hr>
+    <address><a href="mailto:coryan@uci.edu">Carlos O'Ryan</a></address>
+<!-- Created: Tue Feb 20 08:42:57 PST 2001 -->
+<!-- hhmts start -->
+Last modified: Tue Feb 20 16:32:13 PST 2001
+<!-- hhmts end -->
+  </body>
+</html>

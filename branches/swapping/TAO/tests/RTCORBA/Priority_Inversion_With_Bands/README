@@ -1,0 +1,51 @@
+
+$Id$
+
+Description:
+
+This test check for priority inversion when using different RTCORBA
+configurations.  The following four configurations are tested:
+
+(a) Thread lanes without bands
+(b) Thread lanes with bands
+(c) Thread pool without bands
+(d) Thread pool with bands
+
+The server has a servant registered with a POA serviced by a thread
+pool without lanes and another servant registered with a POA serviced
+by a thread pool with lanes.  The thread pool with lanes has a low and
+a high priority lane.
+
+The client makes several oneway low priority invocations followed by
+several oneway high priority invocations.  Each invocation performs
+about 2 seconds of CPU bound work.  Priority inversion occurs if low
+priority invocations get processed before high priority invocations.
+
+(a) shows the best result of high priority requests getting serviced
+before low priority requests even though low priority requests were
+sent before high priority requests.  This is because low priority
+invocations are processed by the low priority lane and high priority
+invocations are processed by the high priority lane.  In addition, low
+priority requests are sent on a different connection than the high
+priority requests since each lane has a different endpoint.
+
+(b) does not improve on (a) since the requests are already sent on
+different connections.
+
+(c) shows priority inversion as low priority requests get processed
+before high priority requests.  This is because only one connection is
+used for both low and high priority requests.  Therefore, the high
+priority requests are queued behind the low priority requests. 
+
+(d) shows improvement on (c) since using bands allows the high
+priority requests to go on a different connection than the low
+priority requests.  However, priority inversion still exists since the
+server does not distinguish between the low priority connection and
+the high priority connection and therefore treats them equally.
+Removing this priority inversion will require two improvements: (1)
+band information needs to be propagated to the server when a banded
+connection is established by the client; (2) server side dispatching
+needs to be based on the priority of the connections.
+
+See run_test.pl to see how to run this test.  The server
+static_threads should be set to the number of CPUs on the machine.
