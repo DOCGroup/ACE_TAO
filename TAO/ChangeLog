@@ -1,3 +1,10 @@
+Thu Sep  4 16:07:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTScheduling/Makefile: Reverted the Makefile changes that
+	  went in by accident when the this "Wed Sep  3 17:37:21 2003
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" checkin was
+	  done. 
+
 Wed Sep  3 21:59:47 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/Options.html:
