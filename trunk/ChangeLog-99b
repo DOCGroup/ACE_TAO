@@ -1,12 +1,19 @@
+Wed Dec 15 21:24:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/config-win32-common.h (ACE_DEFAULT_MAX_SOCKET_BUFSIZ):
+	  Windows doesn't like 65536 ;-) If 65536 is specified, it is
+	  listenly ignored by the OS, i.e., setsockopt does not fail, and
+	  you get stuck with the default size of 8k.
+
 Tue Dec 14 08:57:03 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.h: Added a #ifdef for WINSOCK2_GQOS for removing the 
+	* ace/OS.h: Added a #ifdef for WINSOCK2_GQOS for removing the
 	  errors on NT due to the previous change in ACE_Flow_Spec class.
 
 Tue Dec 14 07:49:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/OS.i:
-	* ace/OS.h: Extended the ACE_Flow_Spec and ACE_QoS classes to 
+	* ace/OS.h: Extended the ACE_Flow_Spec and ACE_QoS classes to
  	  accommodate the use of such classes for non-Win32
 	  platforms. These changes are motivated by the new ACE QoS
 	  classes that will soon be included with ACE.

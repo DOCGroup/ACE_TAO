@@ -14,6 +14,11 @@
 
 // ---------------- platform features or lack of them -------------
 
+// Windows doesn't like 65536 ;-) If 65536 is specified, it is
+// listenly ignored by the OS, i.e., setsockopt does not fail, and you
+// get stuck with the default size of 8k.
+#define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
+
 //
 // It seems like Win32 does not have a limit on the number of buffers
 // that can be transferred by the scatter/gather type of I/O
