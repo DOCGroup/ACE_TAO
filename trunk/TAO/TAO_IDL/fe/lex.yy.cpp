@@ -1515,6 +1515,9 @@ TAO_YY_RULE_SETUP
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
+                    else {
+                      break;
+                    }
                   }
                   tmp[strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
