@@ -522,7 +522,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>;
+  template class TAO_Object_Field_T<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>;
   template class TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  pragma instantiate TAO_Object_Field_T<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>
@@ -530,3 +530,20 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_NONE, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TRANSPORT, 1)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_SERVER, 2)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TARGET, 3)
+TAO_NAMESPACE_END

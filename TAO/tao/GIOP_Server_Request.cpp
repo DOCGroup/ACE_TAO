@@ -13,6 +13,7 @@
 #include "tao/ORB.h"
 #include "tao/Timeprobe.h"
 #include "tao/Any.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Server_Request.i"
@@ -93,7 +94,11 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
   // Get the rest of the request header ...
 
   hdr_status = hdr_status && input.read_ulong (this->request_id_);
-  hdr_status = hdr_status && input.read_boolean (this->response_expected_);
+
+  CORBA::Octet response_flags;
+  hdr_status = hdr_status && input.read_octet (response_flags);
+  this->response_expected_ = (response_flags != 0);
+  this->sync_with_server_ = (response_flags == 1);
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
@@ -155,7 +160,11 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
   // Get the rest of the request header ...
 
   hdr_status = hdr_status && input.read_ulong (this->request_id_);
-  hdr_status = hdr_status && input.read_boolean (this->response_expected_);
+
+  CORBA::Octet response_flags;
+  hdr_status = hdr_status && input.read_octet (response_flags);
+  this->response_expected_ = (response_flags != 0);
+  this->sync_with_server_ = (response_flags == 1);
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
@@ -701,4 +710,36 @@ TAO_GIOP_ServerRequest::exception_type (void)
 // get the exception type
 {
   return this->exception_type_;
+}
+
+void
+TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
+{
+  TAO_GIOP::start_message (this->version_,
+                           TAO_GIOP::Reply,
+                           *this->outgoing_,
+                           this->orb_core_);
+
+  IOP::ServiceContextList resp_ctx;
+  resp_ctx.length (0);
+
+  *this->outgoing_ << resp_ctx;
+  this->outgoing_->write_ulong (this->request_id_);
+  this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
+
+  int result = TAO_GIOP::send_message (transport,
+                                       *this->outgoing_,
+                                       this->orb_core_);
+     
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          // No exception but some kind of error, yet a response
+          // is required.
+          ACE_ERROR ((LM_ERROR,
+                      "TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n",
+                      "TAO_GIOP_ServerRequest::send_no_exception_reply"));
+        }
+    }                     
 }

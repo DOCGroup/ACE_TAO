@@ -352,6 +352,14 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
+          CORBA::Octet flag =
+            ACE_static_cast (CORBA::Octet,
+                             TAO::SYNC_WITH_TARGET);
+
+          call.prepare_header (flag,
+                               ACE_TRY_ENV);
+          ACE_CHECK;
+
           ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START);
 
           // Make the call ... blocking for the response.
@@ -478,7 +486,11 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0,
+          CORBA::Octet flag = 
+            ACE_static_cast (CORBA::Octet,
+                             call.sync_scope ());
+
+          call.prepare_header (flag,
                                ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -605,7 +617,11 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (1,
+          CORBA::Octet flag =
+            ACE_static_cast (CORBA::Octet,
+                             TAO::SYNC_WITH_TARGET);
+
+          call.prepare_header (flag,
                                ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -667,7 +683,10 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0,
+          CORBA::Octet response_flag = ACE_static_cast (CORBA::Octet,
+                                                        call.sync_scope ());
+
+          call.prepare_header (response_flag,
                                ACE_TRY_ENV);
           ACE_CHECK;
 

@@ -456,19 +456,23 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // Check if there is an exception.
   // Return type is void, so we know what to generate here.
-  *os << "ACE_CHECK;";
+  *os << "ACE_CHECK;" << be_nl;
 
   // Prepare the request header
-  *os << "_tao_call.prepare_header (";
+  *os << "CORBA::Octet flag = " << be_idt_nl
+      << "ACE_static_cast (CORBA::Octet, ";
+
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
-      *os << "0";
+      *os << "_tao_call.sync_scope ());";
       break;
     default:
-      *os << "1";
+      *os << "TAO::SYNC_WITH_TARGET);";
     }
-  *os << ", ACE_TRY_ENV);" << be_nl
+
+  *os << be_uidt_nl 
+      << "_tao_call.prepare_header (flag, ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK;\n" << be_nl;
 
   // Now make sure that we have some in and inout
