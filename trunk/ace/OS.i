@@ -10693,6 +10693,37 @@ ACE_OS::wscpy (WChar *dest, const WChar *src)
   return original_dest;
 }
 
+ACE_INLINE int
+ACE_OS::wscmp (const WChar *s, const WChar *t)
+{
+  const WChar *scan1 = s;
+  const WChar *scan2 = t;
+
+  while (*scan1 != 0 && *scan1 == *scan2)
+    {
+      ++scan1;
+      ++scan2;
+    }
+
+  return *scan1 - *scan2;
+}
+
+ACE_INLINE int
+ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
+{
+  const WChar *scan1 = s;
+  const WChar *scan2 = t;
+
+  while (len != 0 && *scan1 != 0 && *scan1 == *scan2)
+    {
+      ++scan1;
+      ++scan2;
+      --len;
+    }
+
+  return len == 0 ? 0 : *scan1 - *scan2;
+}
+
 #if defined (ACE_HAS_UNICODE)
 
 ACE_INLINE int
