@@ -138,7 +138,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
       ACE_NEW_THROW_EX (consumer,
                         Notify_Sequence_Push_Consumer (
                                          name,
-                                         expected,
+                                         expected * batch_size,
                                          (i + 1 == consumers ? done : dummy)),
                         CORBA::NO_MEMORY ());
 
