@@ -344,6 +344,9 @@ public:
 
   int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
+  
+  int session_component_child (void);
+  // Is Components::SessionComponent an immediate parent?
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
@@ -406,6 +409,9 @@ private:
 
   int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
+  
+  int session_component_child_;
+  // Are we a direct child of Components::SessionComponent?
 };
 
 /**
