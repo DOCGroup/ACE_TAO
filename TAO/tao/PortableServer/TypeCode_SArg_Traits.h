@@ -21,9 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/Object_SArgument_T.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Arg_Traits_T.h"
 
 
 namespace CORBA
@@ -41,7 +40,8 @@ namespace TAO
 {
   template <typename T> class SArg_Traits;
 
-  /// Used in generated code if CORBA::TypeCode is an argument or return type.
+  /// Used in generated code if CORBA::TypeCode is an argument or
+  /// return type.
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export SArg_Traits<CORBA::TypeCode>
     : public Object_SArg_Traits_T<CORBA::TypeCode_ptr,

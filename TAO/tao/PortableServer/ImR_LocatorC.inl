@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR___CI_
@@ -61,4 +61,3 @@ ImplementationRepository::Locator::Locator (
 }
 
 #endif /* end #if !defined */
-
