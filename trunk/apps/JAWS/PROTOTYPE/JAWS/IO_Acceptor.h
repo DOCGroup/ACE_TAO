@@ -81,15 +81,6 @@ private:
   JAWS_IO_SOCK_Acceptor acceptor_;
 };
 
-class JAWS_Export JAWS_Asynch_Acceptor
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-// This only works on Win32 platforms
-  : public ACE_Asynch_Acceptor<JAWS_Asynch_IO_Handler_Factory>
-#endif /* defined (ACE_WIN32) */
-{
-public:
-};
-
 
 class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {

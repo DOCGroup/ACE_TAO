@@ -145,7 +145,7 @@ typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
         JAWS_Synch_IO_Singleton;
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 
 class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
   // = TITLE
