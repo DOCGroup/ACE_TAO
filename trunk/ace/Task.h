@@ -69,7 +69,7 @@ public:
   // information into <open>.
 
   virtual int close (u_long flags = 0);
-  // Hook called from <ACE_Task_Exit> when during thread exit and from
+  // Hook called from <ACE_Thread_Exit> when during thread exit and from
   // the default implemenation of <module_closed>.  In general, this
   // method shouldn't be called directly by an application,
   // particularly if the <Task> is running as an Active Object.
@@ -82,7 +82,7 @@ public:
   // implementation calls forwards the call to close(1).  Please
   // notice the changed value of the default argument of close().
   // This allows tasks to differ between the call has been originated
-  // from <ACE_Task_Exit> or from <module_closed>.  Be aware that
+  // from <ACE_Thread_Exit> or from <module_closed>.  Be aware that
   // close(0) will be also called when a thread associated with the
   // ACE_Task instance exits.
 
@@ -175,7 +175,7 @@ public:
 
   void thr_count_dec (void);
   // Atomically decrement the thread count by 1.  This should only be
-  // called by the <ACE_Task_Exit> class destructor.
+  // called by the <ACE_Thread_Exit> class destructor.
 
   static void *svc_run (void *);
   // Routine that runs the service routine as a daemon thread.
