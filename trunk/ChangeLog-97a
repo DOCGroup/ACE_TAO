@@ -1,13 +1,18 @@
+Tue May 06 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+	  removed #ifdef ACE_HAS_TLI around some template specializations so
+	  that this subproject will build on platforms non-TLI platforms such
+	  as Linux.
+
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
 	  Changed ACE::INVALID_HANDLE to ACE_INVALID_HANDLE.
 	  Thanks to Dani Flexer <danif@alice.actcom.co.il> for
 	  reporting this.
-
-Tue May 06 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
 
 Tue May  6 00:00:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
