@@ -239,11 +239,11 @@ void
 TAO_NS_Periodic_Consumer::dump_stats (ACE_TCHAR* msg)
 {
   char buf[BUFSIZ];
-  ACE_OS::sprintf (buf, "Consumer_%s_%d.dat", this->name_.c_str (), this->proxy_supplier_id_);
+  ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
 
   ACE_CString fname (buf);
 
-  ACE_OS::sprintf (buf,"(%s) Consumer Name = %s, Proxy ID = %d\n",
+  ACE_OS::sprintf (buf,"%s# Consumer Name = %s, Proxy ID = %d\n",
                    msg, this->name_.c_str (), this->proxy_supplier_id_);
 
   stats_.dump_samples (fname.c_str (), buf,

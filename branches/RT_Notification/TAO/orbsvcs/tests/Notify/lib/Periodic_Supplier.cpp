@@ -311,12 +311,11 @@ void
 TAO_NS_Periodic_Supplier::dump_stats (ACE_TCHAR* msg)
 {
   char buf[BUFSIZ];
-  //@@ supplier name is not printing!
-  ACE_OS::sprintf (buf, "Supplier_%s_%d_%s.dat", this->name_.c_str (), this->proxy_consumer_id_, this->event_.type ());
+  ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
 
   ACE_CString fname (buf);
 
-  ACE_OS::sprintf (buf,"(%s) : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d",
+  ACE_OS::sprintf (buf,"%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d\n",
                    msg, this->name_.c_str (), this->proxy_consumer_id_, this->event_.type (), priority_, period_, exec_time_, phase_, iter_, load_);
 
   stats_.dump_samples (fname.c_str (), buf,

@@ -2,6 +2,7 @@
 #include "Task_Stats.h"
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
+#include "ace/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
@@ -68,16 +69,19 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   // next, compose and dump what we want to say.
 
   // calc throughput.
+  double seconds =
+#if defined ACE_LACKS_LONGLONG_T
+    (end_time_ - base_time_) / scale_factor;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+    ACE_static_cast (double,
+                     ACE_UINT64_DBLCAST_ADAPTER((end_time_ - base_time_) / scale_factor));
+#endif /* ! ACE_LACKS_LONGLONG_T */
+  seconds /= ACE_HR_SCALE_CONVERSION;
+  double t_avg = samples_count_ / seconds;
 
-  ACE_TCHAR out_msg[BUFSIZ];
+  char out_msg[BUFSIZ];
 
-  ACE_hrtime_t elapsed_microseconds = (end_time_ - base_time_) / scale_factor;
-  double elapsed_seconds =
-    ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
-  double throughput =
-    double(samples_count_) / elapsed_seconds;
-
-  ACE_OS::sprintf (out_msg, "#Throughtput: %f\n", throughput);
+  ACE_OS::sprintf (out_msg, "# Throughput: %.2f (events/second)\n", t_avg);
   ACE_OS::fprintf (output_file, "%s\n",out_msg);
 
   // dump latency stats.
