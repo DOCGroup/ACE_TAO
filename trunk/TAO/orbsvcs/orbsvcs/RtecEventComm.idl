@@ -60,7 +60,7 @@ module RtecEventComm
     // A time value, the name is a bit misleading, it is used for
     // timestamping but also used to setup timers in the consumer
     // subscriptions.
-#if !defined (TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
+#ifndef TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS
     Time ec_recv_time;
     Time ec_send_time;
     // Some timestamps, they actually belong in the payload, for some

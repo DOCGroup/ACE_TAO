@@ -1,3 +1,12 @@
+Fri Feb 25 10:49:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosConcurrencyControl.idl,
+	  orbsvcs/orbsvcs/RtecDefaultEventData.idl,
+ 	  orbsvcs/orbsvcs/RtecEventComm.idl: Fixed all three of these
+ 	  files so that they use the more portable #ifndef FOO rather than
+ 	  #if !defined (FOO) syntax.  Thanks to W. Craig Trader
+ 	  <ct7@vitelinc.com> for reporting this.
+
 Fri Feb 25 08:59:59 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.cpp (create_mprofile, open_default):
