@@ -1,3 +1,8 @@
+Fri May 21 09:15:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-sunos5.5.h:
+	  Added ACE_HAS_NONCONST_SELECT_TIMEVAL here too
+
 Fri May 21 07:53:58 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-vxworks5.x.h, config-osf1-4.0.h: Added
