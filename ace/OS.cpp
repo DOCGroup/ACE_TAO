@@ -1101,9 +1101,14 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   *key = ::TlsAlloc ();
 
   if (*key != ACE_SYSCALL_FAILED)
-    // Extract out the thread-specific table instance and stash away
-    // the key and destructor so that we can free it up later on...
-    return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
+    {
+      // if TlsAlloc succeeded, TlsSetValue also succeeds.
+      // ::TlsSetValue (*key, inst);
+
+      // Extract out the thread-specific table instance and stash away
+      // the key and destructor so that we can free it up later on...
+      return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
+    }
   else
     ACE_FAIL_RETURN (-1);
     /* NOTREACHED */
