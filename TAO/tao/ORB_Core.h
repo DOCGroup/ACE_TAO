@@ -34,40 +34,14 @@ typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
 
-class TAO_COLTBL_Lock : public ACE_Lock
+class TAO_COLTBL_Lock : public ACE_Adaptive_Lock
 {
-  // = TITLE
-  //    A specialized lock class to facilitate using different lock in
-  //    the global collocation table at run time.
-  //
-  // = DESCRIPTION
-  //    Because the lock used in ACE_Hash_Map_Manager is template
-  //    parameterized, we can only choose the lock to use in it at
-  //    compile time which does not give us enough flexibility.  This
-  //    class uses the Bridge pattern to relay the operations to the
-  //    lock of our choice.
-
+  // TITLE
+  //   This lock class determines the type underlying lock
+  //   when it gets constructed.
 public:
   TAO_COLTBL_Lock (void);
-  // Ctor gets the lock from server resource factory.
-
-  virtual ~TAO_COLTBL_Lock (void);
-  // Dtor deallocate the lock.
-
-  // = Lock/unlock operations.
-
-  virtual int remove (void);
-  virtual int acquire (void);
-  virtual int tryacquire (void);
-  virtual int release (void);
-  virtual int acquire_read (void);
-  virtual int acquire_write (void);
-  virtual int tryacquire_read (void);
-  virtual int tryacquire_write (void);
-  void dump () const;
-
-private:
-  static ACE_Lock *coltbl_lock_;
+  ~TAO_COLTBL_Lock (void);
 };
 
 typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
