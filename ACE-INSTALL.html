@@ -83,7 +83,7 @@ try to help you fix the problems.
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
 
 <UL>
-  <LI> <B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><P>
+  <LI><B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><P>
 
       All of ACE has been ported to the Win32 API (which includes Windows NT
       and Windows '95).  The entire release now compiles using the Microsoft
@@ -92,7 +92,7 @@ try to help you fix the problems.
       dynamic library, using the Win32 installation process described
       below.<P>
 
-  <li> <b>Windows CE</b><p>
+  <li><b>Windows CE</b><p>
 
       Most of ACE has been ported to Windows CE using Visual C++ 5.0 with CE
       Toolkit.  ACE has been tested on x86 Emulator and an HP 360LX
@@ -101,7 +101,7 @@ try to help you fix the problems.
       up-to-date information about ACE on CE.  ACE can only be built as
       DLL library now.<p>
 
-  <LI> <B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
+  <LI><B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
       C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <P>
 
       All the source code and tests should build and run without
@@ -115,7 +115,15 @@ try to help you fix the problems.
       There are likely to be build problems with older versions or
       different patchlevels.<p>
 
-  <LI> <B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
+      Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
+      for providing the following useful information:<p>
+
+      The home page for Sun technical patches is
+      <a href="http://access1.sun.com">http://access1.sun.com</a>.
+      Searching for 104631 will bring you to a page allowing you to access
+      the latest version of the C++ 4.2 patches.<p>
+
+  <LI><B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
       Energize 3.2. </B> <P>
 
       Note that shared libraries do not interact very well with
@@ -166,7 +174,7 @@ try to help you fix the problems.
 
       However, another patch may be needed.  Thanks to
       Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt; for submitting
-      the following useful information.<p>
+      the following useful information:<p>
 
       When building on AIX 4.2.1, using the xlC V3.1 compilers, you may
       get the following error when building the ACE shared library.<p>
@@ -180,8 +188,8 @@ make: *** [libACE.so] Error 8
 
       To fix this error, you need a patch to the supporting xlC related
       libraries.  To obtain this patch, go to the
-      <a href="http://service.software.ibm.com/support/rs6000">
-      IBM public patch website</a>, and retrieve the patch
+      <a href="http://service.software.ibm.com/support/rs6000">IBM
+      public patch website</a>, and retrieve the patch
       PTF U453697, or its successor, for xlC.<p>
 
       You may wish to retrieve this patch with the fixdist tool, also
@@ -281,7 +289,7 @@ make: *** [libACE.so] Error 8
       O32 ABI.
       Please check the config files for the details.<P>
 
-  <LI> <B> HP-UX 9.x, 10.x, and 11.00 </B> <P>
+  <LI><B> HP-UX 9.x, 10.x, and 11.00 </B> <P>
 
       HP sells 2 C++ compilers for HP-UX 10.x and 11.00.  If you are using 9.x,
       there's only the first one.
@@ -301,7 +309,7 @@ make: *** [libACE.so] Error 8
       </UL>
       <P>
 
-  <LI> <B>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</B> <P>
+  <LI><B>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</B> <P>
 
       The OSF/1 C++ 5.4 through 5.7 compilers have problems with ACE's
       templates.  They compile the lib and most of the test programs,
@@ -618,11 +626,11 @@ HREF="#win32">process</A> for Win32 is different).  Here's what you
 need to do:<P>
 
 <OL>
-  <LI> Install GNU make 3.7 or greater on your system (available via
+  <LI>Install GNU make 3.7 or greater on your system (available via
       anonymous ftp from prep.ai.mit.edu in the pub/gnu directory).
       You <EM>must</EM> use GNU make or ACE won't compile.<P>
 
-  <LI> Add an environment variable called ACE_ROOT that contains the
+  <LI>Add an environment variable called ACE_ROOT that contains the
       name of the root of the directory where you keep the ACE wrapper
       source tree.  The ACE recursive Makefile scheme needs this information.
       There are several ways to set the ACE_ROOT variable.  For
@@ -640,13 +648,13 @@ need to do:<P>
       % setenv ACE_ROOT $cwd
       </code></pre>
 
-  <LI> Edit the $ACE_ROOT/ace/OS.h file to update things like default
+  <LI>Edit the $ACE_ROOT/ace/OS.h file to update things like default
       hostname and port numbers you'd like the programs in the
       $ACE_ROOT/{apps,tests} directories to use by default.  Note,
       however that you can normally skip this step because the defaults
       are typically fine for most systems. <P>
 
-  <LI> Create a <code>$ACE_ROOT/ace/config.h</code> file that includes
+  <LI>Create a <code>$ACE_ROOT/ace/config.h</code> file that includes
       the appropriate platform/compiler-specific header configurations
       (such as <code>config-sunos5-sunc++-4.x.h</code>).  This file
       contains the #defines that
@@ -662,13 +670,13 @@ need to do:<P>
       need to make one.  Please send me email if you get it working so I
       can add it to the master ACE release.<P>
 
-  <LI> Set the $ACE_ROOT/include/makeinclude/platform_macros.GNU file
+  <LI>Set the $ACE_ROOT/include/makeinclude/platform_macros.GNU file
       to point to the appropriate platform/compiler-specific Makefile
       configurations, e.g., platform_sunos5_sunc++.GNU.  This file
       contains the compiler and Makefile directives that are
       platform/compiler-specific<P>
 
-  <LI> Note that since ACE builds shared libraries, you'll need to set
+  <LI>Note that since ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
       ACE library.  For example, you probably want to do something like
       the following<P>
@@ -677,7 +685,7 @@ need to do:<P>
       % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
       </code></pre><P>
 
-  <LI> When all this is done, hopefully all you'll need to do is type:<P>
+  <LI>When all this is done, hopefully all you'll need to do is type:<P>
 
       <pre><code>
       % make
@@ -692,7 +700,7 @@ need to do:<P>
       HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/README">``one-button'' tests</A> in
       $ACE_ROOT/tests/.<P>
 
-  <LI> If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
+  <LI>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
       get <A HREF="http://www.cs.wustl.edu/~schmidt/byacc.tar.gz">Berkeley
       YACC</A>.  However, you should rarely, if ever, need to do this.<P>
 
@@ -708,8 +716,8 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
 There are also project group files (BPG) to compile ACE and the
 one-button tests with Borland C++ Builder 3.0. This port has not
 been completed yet, so basically you are on your own here. The
-port was started by <A HREF="mailto:gonzo@ing.puc.cl">
-Gonzalo A. Diethelm</A>, so contact him for any further directions.<P>
+port was started by <A HREF="mailto:gonzo@ing.puc.cl">Gonzalo A.
+Diethelm</A>, so contact him for any further directions.<P>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
 confusion regarding MSVC 5 and its Service Pack 3.  Some ACE
@@ -735,23 +743,23 @@ Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A> for the pointer to
 the STL fixes.
 
 <OL>
-  <LI> Create a directory, e.g., C:\ACE, and copy all of the ACE
+  <LI>Create a directory, e.g., C:\ACE, and copy all of the ACE
       distribution into it.  This directory will be referred to as
       ACE_ROOT in the rest of this discussion.<BR><BR>
-  <LI> Create a file called config.h in the ACE_ROOT\ace directory
+  <LI>Create a file called config.h in the ACE_ROOT\ace directory
       that contains: <BR>
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
       <BR>
-  <LI> Now load up the project file for ACE (ACE_ROOT\ace\ACE_Library.mdp or
+  <LI>Now load up the project file for ACE (ACE_ROOT\ace\ACE_Library.mdp or
       ACE_ROOT\ace\ace.dsw). <BR><BR>
-  <LI> Each project will contain 8 different configurations.  These
+  <LI>Each project will contain 8 different configurations.  These
       are a mixture of Debug/Release, Unicode/non-Unicode, and
       Static/Dynamic library versions for both i386 and Alpha machines.
       <STRONG>Note:</STRONG> If you
       use the dynamic libraries, make sure you include ACE_ROOT\bin
       in your PATH whenever you run programs that use ACE.<BR><BR>
-  <LI> If you are building for Windows NT then you can start building
+  <LI>If you are building for Windows NT then you can start building
       now.  If you are building on Windows 95, then you should add
       the line <BR>
       <BR>
@@ -825,25 +833,25 @@ install TCP/IP and configure it to ignore the absence of a network
 card.  This is one method:<P>
 
 <OL>
-  <LI>  Run Control Panel
-  <LI>  Choose Network from Control Panel
-  <LI>  Add Adapter: MS Loopback Adapter
-  <LI>  Configure MS Loopback Adapter with 802.3 (default)
-  <LI>  Add Protocol: TCP/IP Protocol
-  <LI>  Configure TCP/IP Protocol with a valid IP address and subnet mask.
+  <LI>Run Control Panel
+  <LI>Choose Network from Control Panel
+  <LI>Add Adapter: MS Loopback Adapter
+  <LI>Configure MS Loopback Adapter with 802.3 (default)
+  <LI>Add Protocol: TCP/IP Protocol
+  <LI>Configure TCP/IP Protocol with a valid IP address and subnet mask.
       Leave everything else at the default settings.
-  <LI>  Add Service: Workstation
-  <LI>  Exit and Restart System
-  <LI>  Run Control Panel again
-  <LI> Choose Services from Control Panel
-  <LI> The following services are not necessary and may
+  <LI>Add Service: Workstation
+  <LI>Exit and Restart System
+  <LI>Run Control Panel again
+  <LI>Choose Services from Control Panel
+  <LI>The following services are not necessary and may
       be set to Disabled Startup: <BR>
       Alerter<BR>
       Computer Browser<BR>
       Net logon<BR>
       Messanger<BR>
-  <LI> Choose Network from Control Panel
-  <LI> Confirm the following setup. This is all you need to run ACE:<BR>
+  <LI>Choose Network from Control Panel
+  <LI>Confirm the following setup. This is all you need to run ACE:<BR>
       Installed Software:<BR>
       Computer Browser<BR>
       MS Loopback Adapter Driver<BR>
@@ -1244,7 +1252,7 @@ Here's what you need to do:<P>
 
 <OL>
 
-  <LI> Build and install ACE on UNIX as described <A
+  <LI>Build and install ACE on UNIX as described <A
       HREF="#unix">earlier</A>.  If ACE is built at the root of the ACE
       source tree (and ACE has been ported to your platform, of course) the
       netsvcs static and shared object libraries should be built
@@ -1253,7 +1261,7 @@ Here's what you need to do:<P>
       HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp">
       $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.<P>
 
-  <LI> Set your LD_LIBRARY_PATH environment variable to where the binary
+  <LI>Set your LD_LIBRARY_PATH environment variable to where the binary
       version of the ACE netsvcs library.  For example, you probably
       want to do something like the following<P>
 
