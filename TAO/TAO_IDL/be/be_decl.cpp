@@ -201,7 +201,7 @@ be_decl::compute_full_name  (const char *prefix,
       result_str += suffix_str;
     }
 
-  name = result_str.rep ();
+  name = ACE_OS::strdup (result_str.fast_rep ());
 }
 
 void

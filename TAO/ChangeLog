@@ -1,3 +1,14 @@
+Sun Nov 23 17:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp (compute_full_name):
+        
+          Added a copy operation to the char* return value since it
+          is owned by a locally created ACE_CString. Even though
+          this copy operation is necessary, its omission does not always
+          show up as a problem. Thanks to Malcolm McRoberts 
+          <mmcroberts@ideorlando.org> for pointing out a case and a 
+          platform where it does.
+
 Sun Nov 23 14:31:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
