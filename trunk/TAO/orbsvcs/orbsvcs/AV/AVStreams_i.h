@@ -31,8 +31,8 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
 //    and stop functionality 
 {
  public:
-  TAO_Basic_StreamCtrl (CORBA::ORB_var orb);
-  // Constructor
+  TAO_Basic_StreamCtrl (void);
+  // Default Constructor
 
   virtual void stop (const AVStreams::flowSpec &the_spec,  
                      CORBA::Environment &env);
@@ -104,8 +104,8 @@ class TAO_ORBSVCS_Export TAO_StreamCtrl
 //    by applications that want to provide more control features.
 {
 public:
-  TAO_StreamCtrl (CORBA::ORB_var orb);
-  // Constructor
+  TAO_StreamCtrl (void);
+  // Default Constructor
    
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party, 
                                     AVStreams::MMDevice_ptr b_party, 
@@ -174,10 +174,10 @@ class TAO_ORBSVCS_Export TAO_Client_Base_StreamEndPoint
   : public virtual TAO_Base_StreamEndPoint
 {
 public:
-  virtual CORBA::Boolean handle_preconnect (void) = 0;
+  virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec) = 0;
   // Application needs to define this
 
-  virtual CORBA::Boolean handle_postconnect (void) = 0;
+  virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec) = 0;
   // Application needs to define this
 };
 
@@ -344,14 +344,15 @@ public:
 };
 
 class TAO_ORBSVCS_Export TAO_VDev 
-  : public virtual POA_AVStreams::VDev
+  :public virtual TAO_PropertySet, 
+   public virtual POA_AVStreams::VDev
 // = DESCRIPTION
 //    Implements the VDev interface. One of these is created per connection,
 //    and represents device-specific parameters
 {
  public:
-  TAO_VDev (CORBA::ORB_ptr orb);
-  // Constructor
+  TAO_VDev (void);
+  // Default Constructor
 
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl, 
                                    AVStreams::VDev_ptr the_peer_dev, 
