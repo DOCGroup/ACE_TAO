@@ -16,7 +16,9 @@ extern "C" {
 #include <netinet/sctp.h>
 };
 #else
+#ifndef IPPROTO_SCTP
 #define IPPROTO_SCTP 132
+#endif // !IPPROTO_SCTP
 #define SCTP_NODELAY 1
 #endif
 

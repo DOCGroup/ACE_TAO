@@ -101,7 +101,6 @@ BIN =   ACE_Test \
         Simple_Message_Block_Test \
         SOCK_Test \
         SOCK_Connector_Test \
-	SOCK_SEQPACK_Association_Test \
         SOCK_Send_Recv_Test \
         SPIPE_Test \
         SString_Test \

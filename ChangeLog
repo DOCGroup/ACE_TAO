@@ -1,3 +1,27 @@
+Wed Apr 30 20:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp
+        * performance-tests/SCTP/Options_Manager.cpp
+
+        Corrected IPPROTO_SCTP #define to only occur on platforms
+        that don't have it defined already.
+
+        * performance-tests/SCTP/Makefile
+        * performance-tests/SCTP/SOCK_SEQPACK_Association_Test.cpp
+        * tests/Makefile
+        * tests/SOCK_SEQPACK_Association_Test.cpp
+        * tests/SOCK_SEQPACK_Association_Test.dsp
+        * tests/tests.dsw
+
+        Moved SOCK_SEQPACK_Association_Test from tests/ to
+        performance-tests/SCTP/.  It does not match the philosophy
+        of the tests in the tests directory.
+
 Wed Apr 30 13:43:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
