@@ -50,26 +50,28 @@ clone:
 		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
 
-RELEASE_FILES = TAO/ChangeLog \
-		TAO/INSTALL \
-		TAO/TAO-INSTALL.html \
-		TAO/COPYING \
-		TAO/COPYING.sun \
-		TAO/release.chk \
-		TAO/rules.tao.GNU \
-		TAO/taoconfig.mk \
-		TAO/docs \
-		TAO/LICENSE.sun \
-		TAO/Makefile \
-		TAO/README \
-		TAO/README.sun \
-		TAO/tao \
-		TAO/TAO_IDL \
-		TAO/orbsvcs \
-		TAO/tests \
-		TAO/VERSION
+CONTROLLED_FILES = ChangeLog \
+		   TAO-INSTALL.html \
+		   COPYING \
+		   COPYING.sun \
+		   release.chk \
+		   rules.tao.GNU \
+		   taoconfig.mk \
+		   docs \
+		   LICENSE.sun \
+		   Makefile \
+		   README \
+		   README.sun \
+		   tao \
+		   TAO_IDL \
+		   orbsvcs \
+		   tests \
+		   VERSION
 
-INSTALL:	TAO-INSTALL.html
+RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
+                TAO/INSTALL
+
+INSTALL: TAO-INSTALL.html
 	lynx -dump $^ > $@
 
 #### If creating the "official" TAO release:
@@ -122,5 +124,5 @@ CHECK =
 #### Then, make releasetao is invoked to actually create the kit.
 release: INSTALL
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -t $(REL) \
-	   -c "$(RELEASE_FILES)" -r "$(RELEASE_FILES)"  &&  \
+	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)"  &&  \
 	 cd ..  &&  make releasetao
