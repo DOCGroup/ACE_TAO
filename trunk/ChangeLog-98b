@@ -5,6 +5,10 @@ Thu Jun 11 22:05:31 1998  David L. Levine  <levine@cs.wustl.edu>
           added printout at top.  It never appears, at least on
           g++/Solaris/i386.
 
+        * ace/Malloc.cpp (instance): wrap declaration of local "assertion"
+          with ifndef ACE_NDEBUG, to avoid warning about unused variable
+          with debug=0.
+
 1998-06-11  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/Proactor.h (ACE_Proactor): Put insert_aiocb_list () under
