@@ -1,3 +1,8 @@
+Mon Sep 13 10:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          When using the 8.0 compiler, disable certain warnings about padding
+
 Mon Sep 13 09:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
