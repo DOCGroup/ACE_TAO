@@ -39,6 +39,7 @@ endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
+HPMODEL := $(shell uname -m))
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
@@ -49,11 +50,12 @@ ifeq (,$(stdcpplib))
 # can do -AA, unless it's a .2x version (e.g., 03.24). 03.27 can do -AA,
 # so check for that one explicitly and enable it if so.
   CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
-  CXXVERS := $(word 8, $(CXXVERS_WORDS))
-  ifeq (,$(filter 2%,$(CXXVERS)))
+  CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
+  CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
+  ifeq (,$(filter 2%,$(CXXMINORVERS)))
     stdcpplib = 1
   else
-    ifeq (27,$(CXXVERS))
+    ifeq (27,$(CXXMINORVERS))
       stdcpplib = 1
     else
       stdcpplib = 0
@@ -97,7 +99,7 @@ else
   endif
 endif
 
-ifeq ($(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS))), 1123)
+ifeq ($(HPMODEL), ia64)
   itanium = 1
 endif
 
