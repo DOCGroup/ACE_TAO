@@ -89,18 +89,6 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Config_Scheduler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler_Generic.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Scheduling_Service.cpp
 # End Source File
 # End Group
