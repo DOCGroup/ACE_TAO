@@ -2344,6 +2344,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             return -1;
           }
         }
+
+      // Note: if ACE_LACKS_SETDETACH and THR_DETACHED is enabled, we
+      // call ::pthread_detach () below.  If THR_DETACHED is not
+      // enabled, we call ::pthread_detach () in the Thread_Manager,
+      // after joining with the thread.
 #   endif /* ACE_LACKS_SETDETACH */
 
       // *** Set Policy
@@ -2608,6 +2613,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 thread_args->entry_point (),
                                 thread_args),
               int, -1, result);
+
+#       if defined (ACE_LACKS_SETDETACH)
+  if (ACE_BIT_ENABLED (flags, THR_DETACHED))
+    ::pthread_detach (thr_id);
+#       endif /* ACE_LACKS_SETDETACH */
+
 #     else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
                                                   thread_args->entry_point (),
