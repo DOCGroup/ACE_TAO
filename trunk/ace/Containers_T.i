@@ -219,12 +219,15 @@ ACE_Bounded_Set<T>::is_empty (void) const
   return this->cur_size_ == 0;
 }
 
+#if !defined (__Lynx__)
+ // LynxOS 3.0.0 native g++ compiler raises internal error with this inline.
 template <class T> ACE_INLINE int
 ACE_Bounded_Set<T>::is_full (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::is_full");
   return this->cur_size_ == this->max_size_;
 }
+#endif /* ! __Lynx__ */
 
 // --
 

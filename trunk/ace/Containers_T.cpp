@@ -1319,6 +1319,16 @@ ACE_Bounded_Set<T>::remove (const T &item)
   return -1;
 }
 
+#if defined (__Lynx__)
+ // LynxOS 3.0.0 native g++ compiler raises internal error with this inline.
+template <class T> int
+ACE_Bounded_Set<T>::is_full (void) const
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::is_full");
+  return this->cur_size_ == this->max_size_;
+}
+#endif /* __Lynx__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set_Iterator)
 
 template <class T> void
