@@ -126,6 +126,7 @@ ACE_Thread_Descriptor::terminate ()
 
   if (!terminated_)
    {
+     ACE_Log_Msg* log_msg = this->log_msg_;
      terminated_ = 1;
      // Run at_exit hooks
      this->do_at_exit ();
@@ -164,7 +165,6 @@ ACE_Thread_Descriptor::terminate ()
       }
 
      // Check if we need delete ACE_Log_Msg instance
-     ACE_Log_Msg* log_msg = this->log_msg_;
      // If ACE_TSS_cleanup was not executed first log_msg == 0
      if (log_msg == 0)
       {
