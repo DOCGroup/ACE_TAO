@@ -32,7 +32,7 @@ dnl things going with the auto{conf,make}/libtool integration into the
 dnl ACE source tree.
 
 dnl Platform specific flags
-case "$target" in
+case "$host" in
   *aix3*)
     AC_DEFINE(AIX)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
@@ -129,7 +129,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SGI_MP_SOURCE -D_MODERN_C_"
 
-    case "$target" in
+    case "$host" in
       *irix6.2*)
         dnl Recent versions of IRIX do not appear to require this macro.
         if test "$ace_user_enable_threads" = yes; then
@@ -285,6 +285,7 @@ dnl Check for _POSIX_C_SOURCE macro
     AC_DEFINE(ACE_USE_RCSID, 0)
     ;;
   *cygwin32*)
+    AC_DEFINE(CYGWIN32)
     ;;
   *win32*)
     AC_DEFINE(ACE_WIN32)
@@ -302,7 +303,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
                                                        # filename
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
                                                        # pathname (excl. NULL)
-    case "$target" in
+    case "$host" in
 changequote(, )dnl
       i[3456]86*)
 changequote([, ])dnl

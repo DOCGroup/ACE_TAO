@@ -9,7 +9,7 @@ dnl       general enough for general use.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2000  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
