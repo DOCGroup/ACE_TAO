@@ -1,3 +1,8 @@
+Tue Aug 18 16:50:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp (handle_write_stream): 
+          Fixed incorrect unary minus operator application.
+
 Tue Aug 18 16:43:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.29 released.
