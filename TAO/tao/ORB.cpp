@@ -1763,6 +1763,8 @@ CORBA::Policy_ptr
 CORBA_ORB::create_policy (CORBA::PolicyType type,
                           const CORBA::Any& val
                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
 {
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -1772,6 +1774,22 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
     this->orb_core_->policy_factory_registry ()->create_policy (
       type,
       val
+      ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Policy_ptr
+CORBA_ORB::_create_policy (CORBA::PolicyType type
+                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
+{
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Attempt to obtain the policy from the policy factory registry.
+  return
+    this->orb_core_->policy_factory_registry ()->_create_policy (
+      type
       ACE_ENV_ARG_PARAMETER);
 }
 

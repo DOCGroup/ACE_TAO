@@ -80,6 +80,29 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
                                         ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Policy_ptr
+TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
+                                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
+{
+  PortableInterceptor::PolicyFactory_ptr policy_factory =
+    PortableInterceptor::PolicyFactory::_nil ();
+
+  if (this->factories_.find (type,
+                             policy_factory) == -1)
+    {
+      // Policy factory corresponding to given policy type does not
+      // exist in policy factory map.
+      ACE_THROW_RETURN (
+         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
+         CORBA::Policy::_nil ());
+    }
+
+  return policy_factory->_create_policy (type
+                                         ACE_ENV_ARG_PARAMETER);
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
