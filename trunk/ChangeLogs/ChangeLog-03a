@@ -1,3 +1,9 @@
+Wed Jan 31 06:43:27 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp: Make sure that dequeue_head() returns
+	  the number of items still on the queue.  Thanks to Johnny
+	  Willemsen for reporting this.
+
 Tue Jan 30 21:39:15 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
        * tests/Log_Msg_Test.cpp: In funtion test_ostream(), removed the 
@@ -299,13 +305,13 @@ Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/Message_Queue_T.i,
         * ace/Message_Queue_T.cpp:
           Added the ACE_Message_Queue_Ex, which provides a message queue
-          abstraction whose type is templatized.  Thanks to Michael Vitlo
+          abstraction whose type is templatized.  Thanks to Michael Vitalo
           <mvitalo@sprynet.com> for contributing this.
 
         * tests/run_tests.lst:
         * tests/run_test.lst:
         * tests: Added support for the new Message_Queue_Test_Ex.cpp file.
-          Thanks to Michael Vitlo <mvitalo@sprynet.com> for contributing
+          Thanks to Michael Vitalo <mvitalo@sprynet.com> for contributing
           this.
 
 Fri Jan 26 09:33:20 2001  Carlos O'Ryan  <coryan@uci.edu>
