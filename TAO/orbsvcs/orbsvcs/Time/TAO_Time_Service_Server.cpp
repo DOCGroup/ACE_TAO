@@ -6,7 +6,8 @@
 #include "TAO_Time_Service_Server.h"
 
 // Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server (void)
+TAO_Time_Service_Server::TAO_Time_Service_Server (int shutdown)
+  : shutdown_ (shutdown)
 {
 }
 
@@ -31,7 +32,20 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &_env)
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
 
+  ACE_DEBUG ((LM_DEBUG,
+	      "Returning a UTO\n"));
+
   return uto->_this ();
+
+  // In case we are using the IR.
+  //   if (this->shutdown_ != 0)
+  //       {
+  // 	TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
+  // 	ACE_DEBUG ((LM_DEBUG,
+  // 		    "Shutting down the ORB\n"));
+  //       }
+
 }
 
 // This method returns the current time in a UTO only if the time can
