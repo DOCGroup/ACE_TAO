@@ -92,7 +92,10 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration, CORBA::Long need_ft A
     ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
   #endif
 
-    if((*ptr)!=0) return;
+    if((*ptr)!=0) {
+        DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+	return;
+   }
 
     else *ptr = 2;
   }

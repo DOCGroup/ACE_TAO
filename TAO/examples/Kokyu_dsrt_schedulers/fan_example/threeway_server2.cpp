@@ -87,7 +87,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Server2", "fan_enable.dsui");
+  ds_control ds_cntrl ("DT_Fan_Server2", "fan_enable.dsui");
 
   ACE_DEBUG((LM_DEBUG,"I AM BEGINNING\n"));
   EDF_Scheduler* scheduler = 0;
@@ -242,9 +242,6 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
-//  task_stats.dump_samples ("timeline.txt",
-//                            "Time\t\tGUID",
-//                            ACE_High_Res_Timer::global_scale_factor ());
   return 0;
 }
 

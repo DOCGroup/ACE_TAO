@@ -18,7 +18,7 @@ ACE_RCSID(MT_Server, server, "$Id$")
 const char *ior_output_file = "test2.ior";
 const char *shfile = "shfile.txt";
 
-int nthreads = 2;
+int nthreads = 1;
 int enable_dynamic_scheduling = 1;
 const CORBA::Short max_importance = 100;
 int enable_yield = 1;
@@ -88,7 +88,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Server", "ft_enable.dsui");
+  ds_control ds_cntrl ("DT_FT_Server", "ft_enable.dsui");
 
   ACE_DEBUG((LM_DEBUG,"I AM BEGINNING\n"));
   EDF_Scheduler* scheduler = 0;
@@ -260,9 +260,6 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
-//  task_stats.dump_samples ("timeline.txt",
-//                            "Time\t\tGUID",
-//                            ACE_High_Res_Timer::global_scale_factor ());
   return 0;
 }
 

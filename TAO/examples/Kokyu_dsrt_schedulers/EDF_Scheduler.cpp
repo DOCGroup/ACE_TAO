@@ -454,6 +454,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   int int_guid;
   Object_ID tmp =  ACE_OBJECT_COUNTER->increment();
 
+  ACE_DEBUG((LM_DEBUG,"The current event id is %d\n", tmp.id));
+
   DSTRM_EVENT (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, NULL);
 
 
@@ -558,6 +560,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   qos.pid = tmp.pid;
 
   tmp.guid = int_guid;
+  tmp.task_id = task_id;
   DSTRM_EVENT (EDF_SCHED_FAM, ENTER_SERVER_DISPATCH_SCHED, 0, sizeof(Object_ID), (char*)&tmp);
 
   /*DTTIME:

@@ -83,7 +83,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Middle", "chain_enable.dsui");
+  ds_control ds_cntrl ("DT_Chain_Middle", "chain_enable.dsui");
 
   EDF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;
@@ -255,9 +255,6 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
-  task_stats.dump_samples ("timeline.txt",
-                            "Time\t\tGUID",
-                            ACE_High_Res_Timer::global_scale_factor ());
   return 0;
 }
 
