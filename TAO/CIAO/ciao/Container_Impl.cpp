@@ -45,7 +45,8 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
-  return this->container_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->container_->init (0
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 ::Components::ConfigValues *

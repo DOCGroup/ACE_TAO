@@ -52,7 +52,8 @@ namespace CIAO
     virtual CORBA::ORB_ptr _ciao_the_ORB (void);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0
+    virtual int init (const char *name = 0,
+                      const CORBA::PolicyList *add_policies = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
@@ -87,8 +88,9 @@ namespace CIAO
     virtual ~Session_Container (void);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual int init (const char *name = 0,
+                      const CORBA::PolicyList *add_policies = 0
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
