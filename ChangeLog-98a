@@ -18,6 +18,47 @@ Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
         * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: removed
           unused constant NO_OF_IO_HANDLERS.
 
+        Added Basic_Types:
+        * ace/Basic_Types.*,Makefile: Basic_Types defines the
+          following preprocessor macros:
+
+          Sizes of built-in types:
+            ACE_SIZEOF_CHAR
+            ACE_SIZEOF_WCHAR
+            ACE_SIZEOF_SHORT
+            ACE_SIZEOF_INT
+            ACE_SIZEOF_LONG
+            ACE_SIZEOF_LONG_LONG
+            ACE_SIZEOF_VOID_P
+            ACE_SIZEOF_FLOAT
+            ACE_SIZEOF_DOUBLE
+            ACE_SIZEOF_LONG_DOUBLE
+
+          Wrappers for built-in types of specific sizes:
+            ACE_INT16
+            ACE_UINT16
+            ACE_INT32
+            ACE_UINT32
+            ACE_UINT64
+          (Note: ACE_INT64 is not defined, because there is no ACE_LongLong for
+           platforms that don't have a native 8-byte integer type.)
+
+          Byte-order (endian-ness) determination:
+            ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
+            ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
+
+        * ace/OS.*: moved ACE_U_LongLong to Basic_Types.*.
+
+        * ace/OS.h: added #include <float.h>.
+
+        * ace/config-linux-common.h,README: added ACE_HAS_BYTESEX_H.
+
+        * tests/Basic_Types_Test.cpp,run_tests.{bat,sh,vxworks),Makefile:
+          added new Basic_Types_Test.
+
+        * tests/Time_Value_Test.cpp: removed ACE Version printout because
+          it is now in Basic_Types_Test.
+
 Fri Dec 12 03:00:21 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/config-sunos5.5-egcs-1.0.h: Fundamemntally identical to g++
