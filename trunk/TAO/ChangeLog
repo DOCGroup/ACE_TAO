@@ -1,3 +1,23 @@
+Fri May 09 16:53:10 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * orbsvcs/Event_Service/Event_Service_static.dsp:
+        * orbsvcs/LoadBalancer/LoadManager_Static.dsp:
+        * orbsvcs/LoadBalancer/LoadMonitor_Static.dsp:
+        * orbsvcs/Naming_Service/Naming_Server_static.dsp:
+        * orbsvcs/tests/Notify/Driver/Driver_Static.dsp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+
+          Fixed static build errors from TAO subsetting.
+
 Fri May  9 10:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
@@ -19,6 +39,7 @@ Fri May  9 12:41:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/AMH/Sink_Server/client.bor:
           Fixed these BCB makefiles
 
+>>>>>>> 1.1738
 Fri May 09 10:17:47 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * docs/tutorials/Quoter/AMI/client.dsp:
