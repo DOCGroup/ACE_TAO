@@ -755,7 +755,16 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
     ACE_NEW_RETURN (property, 
                     TAO_TCP_Properties, 
                     0);
+  
+  else if(id == TAO_TAG_SHMEM_PROFILE)
+    ACE_NEW_RETURN (property,
+                    TAO_SMEM_Properties,
+                    0);
 
+  else if (id == TAO_TAG_UIOP_PROFILE)
+    ACE_NEW_RETURN (property,
+                    TAO_Unix_Domain_Properties,
+                    0);
   return property;
 }
 
@@ -769,8 +778,17 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
                     TAO_GIOP_Properties, 
                     0);
   
-
-  return property;
+  // Right now the only supported ORB protocol is GIOP
+  // so we couple this with every protocol property.
+  // The else statement is not necessary, but it
+  // is here just to make clear that as soon as
+  // new ORB protocol are supported other case
+  // should be considered.
+  else 
+    ACE_NEW_RETURN (property, 
+                    TAO_GIOP_Properties, 
+                    0);
+   return property;
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
