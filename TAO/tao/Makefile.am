@@ -10,7 +10,7 @@ TAO_BUILDDIR = $(top_builddir)
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
 
-## Makefile.TAO.am 
+## Makefile.TAO.am
 
 ORB_Core = \
   Abstract_Servant_Base.cpp \
@@ -676,8 +676,8 @@ nobase_include_HEADERS += \
   Basic_Argument_T.inl \
   Basic_SArgument_T.inl \
   Bind_Dispatcher_Guard.i \
-  BooleanSeqC.i \
-  BoundsC.i \
+  BooleanSeqC.inl \
+  BoundsC.inl \
   Buffering_Constraint_Policy.i \
   CDR.i \
   CONV_FRAMEC.i \
