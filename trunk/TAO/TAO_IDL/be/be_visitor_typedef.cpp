@@ -28,6 +28,7 @@
 #include "be_type.h"
 #include "be_typedef.h"
 #include "be_union.h"
+#include "be_valuetype.h"
 #include "be_extern.h"
 #include "be_helper.h"
 

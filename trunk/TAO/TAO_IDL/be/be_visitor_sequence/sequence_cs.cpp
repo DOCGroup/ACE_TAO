@@ -218,19 +218,16 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
     }
       
-  if (! bt->seen_in_sequence ())
+  // basic IDL types are in TAO. Sequences of (w)strings in TAO are
+  // specializations and so are not template classes.
+  if ((nt != AST_Decl::NT_pre_defined
+       && nt != AST_Decl::NT_string
+       && nt != AST_Decl::NT_wstring)
+      || ! node->unbounded ())
     {
-      // basic IDL types are in TAO. Sequences of (w)strings in TAO are
-      // specializations and so are not template classes.
-      if ((nt != AST_Decl::NT_pre_defined
-           && nt != AST_Decl::NT_string
-           && nt != AST_Decl::NT_wstring)
-          || ! node->unbounded ())
+      if (this->gen_base_class_tmplinst (node, bt) == -1)
         {
-          if (this->gen_base_class_tmplinst (node, bt) == -1)
-            {
-              return -1;
-            }
+          return -1;
         }
     }
 
@@ -823,7 +820,7 @@ be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (elem->local_name ()->get_string ());
+  os->gen_ifdef_macro (node->instance_name ());
   os->gen_ifdef_AHETI ();
 
   *os << be_nl << be_nl
