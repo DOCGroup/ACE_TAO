@@ -1,7 +1,13 @@
+Mon Jun 08 13:22:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h: set ACE_SIZEOF_LONG_DOUBLE to 12 if
+          LDBL_MAX_EXP is 16384 and LDBL_DIG is 18.  Thanks to
+          Sree Oggu <dharani@sutmyn.com> for reporting this.
+
 Mon Jun  8 12:12:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/UPIPE_SAP_Test.cpp: 
-	  Template instantiation was not using the ACE_SYNCH macros.
+        * tests/UPIPE_SAP_Test.cpp:
+          Template instantiation was not using the ACE_SYNCH macros.
 
 Mon Jun  8 02:17:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
