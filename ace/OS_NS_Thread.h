@@ -720,8 +720,8 @@ public:
 
 
   // != Comparison operator.
-  int operator== (const ACE_Thread_ID &) const;
-  int operator!= (const ACE_Thread_ID &) const;
+  bool operator== (const ACE_Thread_ID &) const;
+  bool operator!= (const ACE_Thread_ID &) const;
 
 private:
   /// Identify the thread.
@@ -921,10 +921,10 @@ public:
   ACE_TSS_Ref (void);
 
   /// Check for equality.
-  int operator== (const ACE_TSS_Ref &) const;
+  bool operator== (const ACE_TSS_Ref &) const;
 
   /// Check for inequality.
-  int operator!= (const ACE_TSS_Ref &) const;
+  bool operator!= (const ACE_TSS_Ref &) const;
 
 // private:
 
@@ -958,10 +958,10 @@ public:
   void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
 
   /// Check for equality.
-  int operator== (const ACE_TSS_Info &) const;
+  bool operator== (const ACE_TSS_Info &) const;
 
   /// Check for inequality.
-  int operator!= (const ACE_TSS_Info &) const;
+  bool operator!= (const ACE_TSS_Info &) const;
 
   /// Dump the state.
   void dump (void);

@@ -65,10 +65,10 @@ public:
 
   // = Equality/inequality tests
   /// Check for equality.
-  int operator == (const ACE_SPIPE_Addr &SAP) const;
+  bool operator == (const ACE_SPIPE_Addr &SAP) const;
 
   /// Check for inequality
-  int operator != (const ACE_SPIPE_Addr &SAP) const;
+  bool operator != (const ACE_SPIPE_Addr &SAP) const;
 
   // = SPIPE-specific address operations
   /// Pathname of rendezvous point in file system.

@@ -71,22 +71,22 @@ public:
   TYPE operator-= (const TYPE &rhs);
 
   /// Atomically compare <value_> with rhs.
-  int operator== (const TYPE &rhs) const;
+  bool operator== (const TYPE &rhs) const;
 
   /// Atomically compare <value_> with rhs.
-  int operator!= (const TYPE &rhs) const;
+  bool operator!= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> greater than or equal to rhs.
-  int operator>= (const TYPE &rhs) const;
+  bool operator>= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> greater than rhs.
-  int operator> (const TYPE &rhs) const;
+  bool operator> (const TYPE &rhs) const;
 
   /// Atomically check if <value_> less than or equal to rhs.
-  int operator<= (const TYPE &rhs) const;
+  bool operator<= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> less than rhs.
-  int operator< (const TYPE &rhs) const;
+  bool operator< (const TYPE &rhs) const;
 
   /// Atomically assign rhs to <value_>.
   void operator= (const TYPE &rhs);
@@ -183,22 +183,22 @@ public:
   TYPE operator-= (const TYPE &rhs);
 
   /// Atomically compare <value_> with rhs.
-  int operator== (const TYPE &rhs) const;
+  bool operator== (const TYPE &rhs) const;
 
   /// Atomically compare <value_> with rhs.
-  int operator!= (const TYPE &rhs) const;
+  bool operator!= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> greater than or equal to rhs.
-  int operator>= (const TYPE &rhs) const;
+  bool operator>= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> greater than rhs.
-  int operator> (const TYPE &rhs) const;
+  bool operator> (const TYPE &rhs) const;
 
   /// Atomically check if <value_> less than or equal to rhs.
-  int operator<= (const TYPE &rhs) const;
+  bool operator<= (const TYPE &rhs) const;
 
   /// Atomically check if <value_> less than rhs.
-  int operator< (const TYPE &rhs) const;
+  bool operator< (const TYPE &rhs) const;
 
   /// Explicitly return <value_>.
   TYPE value (void) const;

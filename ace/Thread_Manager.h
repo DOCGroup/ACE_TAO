@@ -178,10 +178,10 @@ public:
   // = We need the following operators to make Borland happy.
 
   /// Equality operator.
-  int operator== (const ACE_Thread_Descriptor_Base &rhs) const;
+  bool operator== (const ACE_Thread_Descriptor_Base &rhs) const;
 
   /// Inequality operator.
-  int operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
+  bool operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
 
   /// Group ID.
   int grp_id (void) const;

@@ -96,7 +96,7 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
     }
 }
 
-int
+bool
 ACE_NS_String::operator == (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
@@ -105,7 +105,7 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
                        (void *) s.rep_, this->len_) == 0;
 }
 
-int
+bool
 ACE_NS_String::operator != (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator !=");
@@ -143,7 +143,7 @@ ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, const char *type)
   ACE_TRACE ("ACE_NS_Internal::ACE_NS_Internal");
 }
 
-int
+bool
 ACE_NS_Internal::operator == (const ACE_NS_Internal &s) const
 {
   ACE_TRACE ("ACE_NS_Internal::operator ==");

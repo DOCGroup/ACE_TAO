@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template <class T1, class T2> ACE_INLINE
@@ -49,7 +51,7 @@ ACE_Pair<T1, T2>::second (const T2 &t2)
   this->second_ = t2;
 }
 
-template <class T1, class T2> ACE_INLINE int
+template <class T1, class T2> ACE_INLINE bool
 ACE_Pair<T1, T2>::operator== (const ACE_Pair<T1, T2> &rhs) const
 {
   return (this->first_ == rhs.first_ &&
@@ -76,7 +78,7 @@ ACE_Reference_Pair<T1, T2>::second (void) const
   return this->second_;
 }
 
-template <class T1, class T2> ACE_INLINE int
+template <class T1, class T2> ACE_INLINE bool
 ACE_Reference_Pair<T1, T2>::operator== (const ACE_Reference_Pair<T1, T2> &rhs) const
 {
   return (this->first_ == rhs.first_ &&

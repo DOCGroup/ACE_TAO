@@ -58,15 +58,17 @@ public:
   /// is created if necessary.
   void operator = (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
-  /// Equality operator that returns 1 if both 
-  /// ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> objects point to the same 
-  /// ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> object.  Attention: It 
-  /// also returns 1 if both objects have just been instantiated and 
-  /// not used yet.
-  int operator == (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
+  /// Equality operator that returns @c true if both
+  /// ACE_Refcounted_Auto_Ptr@<X, ACE_LOCK@> objects point to the same
+  /// ACE_Refcounted_Auto_Ptr_Rep@<X, ACE_LOCK@> object
+  /**
+   * @note It also returns @c true if both objects have just been
+   *       instantiated and not used yet.
+   */
+  bool operator == (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
 
   /// Redirection operator
   X *operator-> (void) const;
@@ -77,7 +79,7 @@ public:
 
   /// Sets the pointer value to 0 and returns its old value.
   X *release (void);
-  
+
   /// Invokes delete on the previous pointer value and then sets the
   /// pointer value to the specified value.
   void reset (X *p = 0);
@@ -89,7 +91,7 @@ public:
   int count (void) const;
 
   // = Utility method.
-  
+
   /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
   int null (void) const;
 
@@ -110,7 +112,7 @@ protected:
  * @brief An ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> object
  * encapsulates a pointer to an object of type X.  It is pointed to by
  * ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> object[s] and only accessible
- * through them. 
+ * through them.
  */
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr_Rep
@@ -189,4 +191,3 @@ private:
 
 #include /**/ "ace/post.h"
 #endif /* ACE_REFCOUNTED_AUTO_PTR_H */
-

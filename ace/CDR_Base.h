@@ -211,8 +211,8 @@ public:
            * The canonical comparison operators.
            */
           //@{
-          int operator== (const LongLong &rhs) const;
-          int operator!= (const LongLong &rhs) const;
+          bool operator== (const LongLong &rhs) const;
+          bool operator!= (const LongLong &rhs) const;
           //@}
         };
 #   endif /* no native 64 bit integer type */
@@ -238,7 +238,7 @@ public:
             Float (void);
             Float (const float &init);
             Float & operator= (const float &rhs);
-            int operator!= (const Float &rhs) const;
+            bool operator!= (const Float &rhs) const;
 #         endif /* _UNICOS */
 #       endif /* ACE_SIZEOF_INT != 4 */
       };
@@ -273,8 +273,8 @@ public:
        struct ACE_Export LongDouble
        {
          char ld[16];
-         int operator== (const LongDouble &rhs) const;
-         int operator!= (const LongDouble &rhs) const;
+         bool operator== (const LongDouble &rhs) const;
+         bool operator!= (const LongDouble &rhs) const;
          // @@ also need other comparison operators.
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */

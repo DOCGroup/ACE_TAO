@@ -52,7 +52,7 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
     }
 }
 
-int
+bool
 ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
 {
   ACE_TRACE ("ACE_Name_Binding::operator ==");

@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ATM_Addr.i
 
-// Default dtor.
 ACE_INLINE
 ACE_ATM_Addr::~ACE_ATM_Addr (void)
 {
@@ -47,4 +46,3 @@ ACE_ATM_Addr::set_selector (u_char selector)
   ACE_UNUSED_ARG (selector);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
-

@@ -62,10 +62,10 @@ public:
   int strstr (const ACE_NS_String &) const;
 
   /// Compare an ACE_NS_String.
-  int operator == (const ACE_NS_String &) const;
+  bool operator == (const ACE_NS_String &) const;
 
   /// Compare an ACE_NS_String.
-  int operator != (const ACE_NS_String &) const;
+  bool operator != (const ACE_NS_String &) const;
 
   /// Returns length of the string
   size_t len (void) const;
@@ -104,7 +104,7 @@ public:
   ACE_NS_Internal (ACE_NS_String &value, const char *type);
 
   /// Compare an ACE_NS_Internal
-  int operator == (const ACE_NS_Internal &) const;
+  bool operator == (const ACE_NS_Internal &) const;
 
   /// Return value.
   ACE_NS_String value (void);

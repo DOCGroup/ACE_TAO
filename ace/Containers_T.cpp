@@ -17,7 +17,9 @@
 #include "ace/Containers_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Containers_T, "$Id$")
+ACE_RCSID (ace,
+           Containers_T,
+           "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
 
@@ -1874,19 +1876,20 @@ ACE_DLList<T>::delete_tail (void)
 
 // Compare this array with <s> for equality.
 
-template <class T> int
+template <class T> bool
 ACE_Array<T>::operator== (const ACE_Array<T> &s) const
 {
   if (this == &s)
-    return 1;
+    return true;
   else if (this->size () != s.size ())
-    return 0;
+    return false;
 
-  for (size_t slot = 0; slot < s.size (); slot++)
+  const size_t len = s.size ();
+  for (size_t slot = 0; slot < len; ++slot)
     if ((*this)[slot] != s[slot])
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
 
 // ****************************************************************

@@ -60,10 +60,10 @@ public:
   ACE_Cleanup_Info (void);
 
   /// Equality operator.
-  int operator== (const ACE_Cleanup_Info &o) const;
+  bool operator== (const ACE_Cleanup_Info &o) const;
 
   /// Inequality operator.
-  int operator!= (const ACE_Cleanup_Info &o) const;
+  bool operator!= (const ACE_Cleanup_Info &o) const;
 
   /// Point to object that gets passed into the <cleanup_hook_>.
   void *object_;

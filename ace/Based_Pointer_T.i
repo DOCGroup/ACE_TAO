@@ -35,7 +35,7 @@ ACE_Based_Pointer<CONCRETE>::operator = (CONCRETE *rhs)
                      - ((char *) this - this->base_offset_));
 }
 
-template <class CONCRETE> ACE_INLINE CONCRETE 
+template <class CONCRETE> ACE_INLINE CONCRETE
 ACE_Based_Pointer_Basic<CONCRETE>::operator *(void) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator *");
@@ -79,42 +79,42 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator += (int index)
   this->base_offset_ += (index * sizeof (CONCRETE));
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator == (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator ==");
   return ACE_COMPUTE_BASED_POINTER (this) == ACE_COMPUTE_BASED_POINTER (&rhs);
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator != (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator !=");
   return !(*this == rhs);
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator < (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator <");
   return ACE_COMPUTE_BASED_POINTER (this) < ACE_COMPUTE_BASED_POINTER (&rhs);
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator <= (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator <=");
   return ACE_COMPUTE_BASED_POINTER (this) <= ACE_COMPUTE_BASED_POINTER (&rhs);
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator > (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator >");
   return ACE_COMPUTE_BASED_POINTER (this) > ACE_COMPUTE_BASED_POINTER (&rhs);
 }
 
-template <class CONCRETE> ACE_INLINE int 
+template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator >= (const ACE_Based_Pointer_Basic<CONCRETE> &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator >=");
@@ -134,4 +134,3 @@ ACE_Based_Pointer<CONCRETE>::operator= (const ACE_Based_Pointer<CONCRETE> &rhs)
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator=");
   *this = rhs.addr ();
 }
-

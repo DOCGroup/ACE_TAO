@@ -1,11 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// FILE_Addr.i
-
-// Do nothing constructor.
-
-// Transform the current address into string format.
 
 #include "ace/SString.h"
 
@@ -19,7 +15,7 @@ ACE_FILE_Addr::get_addr (void) const
 
 // Compare two addresses for equality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_FILE_Addr::operator == (const ACE_FILE_Addr &sap) const
 {
   return ACE_OS::strcmp (this->filename_, sap.filename_) == 0;
@@ -27,7 +23,7 @@ ACE_FILE_Addr::operator == (const ACE_FILE_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_FILE_Addr::operator != (const ACE_FILE_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)
@@ -40,4 +36,3 @@ ACE_FILE_Addr::get_path_name (void) const
 {
   return this->filename_;
 }
-

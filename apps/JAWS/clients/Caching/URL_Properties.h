@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // $Id$
 
@@ -78,10 +78,10 @@ public:
   ACE_URL_Property &operator= (const ACE_URL_Property &rhs);
   // Assignment operator.
 
-  int operator== (const ACE_URL_Property &rhs) const;
+  bool operator== (const ACE_URL_Property &rhs) const;
   // Equals operator.
 
-  int operator!= (const ACE_URL_Property &rhs) const;
+  bool operator!= (const ACE_URL_Property &rhs) const;
   // Inequality operator.
 
   // = Query property name.
@@ -148,10 +148,10 @@ public:
   ACE_URL_Offer &operator= (const ACE_URL_Offer &rhs);
   // Assignment operator.
 
-  int operator== (const ACE_URL_Offer &rhs) const;
+  bool operator== (const ACE_URL_Offer &rhs) const;
   // Equality operator.
 
-  int operator!= (const ACE_URL_Offer &rhs) const;
+  bool operator!= (const ACE_URL_Offer &rhs) const;
   // Inequality operator.
 
   // = Get URL string.

@@ -703,7 +703,7 @@ public:
   void operator= (const ACE_Token_Name &rhs);
 
   /// Comparison.
-  int operator== (const ACE_Token_Name &rhs) const;
+  bool operator== (const ACE_Token_Name &rhs) const;
 
   /// Get the token name.
   const ACE_TCHAR *name (void) const;

@@ -764,24 +764,24 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::tree (void)
 // Comparison operator: returns 1 if both iterators point to the same position, otherwise 0.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE int
+ACE_INLINE bool
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator==
   (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator==");
-  return (this->node_ == rbt.node_) ? 1 : 0;
+  return (this->node_ == rbt.node_) ? true : false;
 }
 
 
 // Comparison operator: returns 1 if the iterators point to different positions, otherwise 0.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE int
+ACE_INLINE bool
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator!=
   (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator!=");
-  return (this->node_ == rbt.node_) ? 0 : 1;
+  return (this->node_ == rbt.node_) ? false : true;
 }
 
 

@@ -87,10 +87,10 @@ public:
   ~ACE_Event_Tuple (void);
 
   /// Equality operator.
-  int operator== (const ACE_Event_Tuple &rhs) const;
+  bool operator== (const ACE_Event_Tuple &rhs) const;
 
   /// Inequality operator.
-  int operator!= (const ACE_Event_Tuple &rhs) const;
+  bool operator!= (const ACE_Event_Tuple &rhs) const;
 
   /// Handle.
   ACE_HANDLE handle_;

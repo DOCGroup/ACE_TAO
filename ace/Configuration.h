@@ -377,14 +377,14 @@ public:
    * contents of the object on the right hand side.
    * Returns 1 (True) if they are equal and 0 (False) if they are not equal
    */
-  int operator==(const ACE_Configuration& rhs) const;
+  bool operator==(const ACE_Configuration& rhs) const;
 
   /**
    * Determine if the contents of this object are different from the
    * contents of the object on the right hand side.
    * Returns 0 (False) if they are equal and 1 (True) if they are not equal
    */
-  int operator!=(const ACE_Configuration& rhs) const {return !(*this == rhs);}
+  bool operator!=(const ACE_Configuration& rhs) const {return !(*this == rhs);}
 
   /**
    *    *  Represents the "NULL" string to simplify the internal logic.
@@ -536,8 +536,8 @@ public:
   static HKEY resolve_key (HKEY hKey,
                            const ACE_TCHAR* path,
                            int create = 1);
-  virtual int operator== (const ACE_Configuration_Win32Registry &rhs) const;
-  virtual int operator!= (const ACE_Configuration_Win32Registry &rhs) const;
+  virtual bool operator== (const ACE_Configuration_Win32Registry &rhs) const;
+  virtual bool operator!= (const ACE_Configuration_Win32Registry &rhs) const;
 
 protected:
 
@@ -586,10 +586,10 @@ public:
   ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
 
   /// Equality comparison operator (must match name_).
-  int operator==  (const ACE_Configuration_ExtId &rhs) const;
+  bool operator==  (const ACE_Configuration_ExtId &rhs) const;
 
   /// Inequality comparison operator.
-  int operator!= (const ACE_Configuration_ExtId &rhs) const;
+  bool operator!= (const ACE_Configuration_ExtId &rhs) const;
 
   /// Frees the name of the value.  needed since we don't know the
   /// allocator name_ was created in

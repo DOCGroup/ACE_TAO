@@ -117,7 +117,7 @@ ACE_SString::c_str (void) const
 
 // Comparison operator.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SString::operator== (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator==");
@@ -127,31 +127,31 @@ ACE_SString::operator== (const ACE_SString &s) const
 
 // Less than comparison operator.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SString::operator < (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator <");
 
   return (this->rep_ && s.rep_)
     ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
-    : ((s.rep_) ? 1 : 0 );
+    : ((s.rep_) ? true : false);
 }
 
 // Greater than comparison operator.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SString::operator > (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator >");
 
   return (this->rep_ && s.rep_)
     ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
-    : ((this->rep_) ? 1 : 0 );
+    : ((this->rep_) ? true : false );
 }
 
 // Comparison operator.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SString::operator!= (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator!=");

@@ -80,7 +80,7 @@ ACE_INET_Addr::dump (void) const
 
 // Compare two addresses for inequality.
 
-int
+bool
 ACE_INET_Addr::operator != (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_INET_Addr::operator !=");
@@ -89,14 +89,14 @@ ACE_INET_Addr::operator != (const ACE_INET_Addr &sap) const
 
 // Compare two addresses for equality.
 
-int
+bool
 ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_INET_Addr::operator ==");
 
-  if (this->get_type () != sap.get_type () ||
-      this->get_size () != sap.get_size ()    )
-    return 0;
+  if (this->get_type () != sap.get_type ()
+      || this->get_size () != sap.get_size ())
+    return false;
 
   return (ACE_OS::memcmp (&this->inet_addr_,
                           &sap.inet_addr_,

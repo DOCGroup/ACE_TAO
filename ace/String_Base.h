@@ -314,35 +314,36 @@ public:
    *  Equality comparison operator (must match entire string).
    *
    * @param s Input ACE_String_Base string to compare against stored string.
-   * @return Integer value of result (1 = found, 0 = not found).
+   * @return Integer value of result (@c true = found, @c false = not
+   * found).
    */
-  int operator == (const ACE_String_Base<CHAR> &s) const;
+  bool operator == (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Less than comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (1 = less than, 0 = greater than or
-   *  equal).
+   *  @return Integer value of result (@c true = less than, @c false =
+   *  greater than or equal).
    */
-  int operator < (const ACE_String_Base<CHAR> &s) const;
+  bool operator < (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Greater than comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (1 = greater than, 0 = less than or
-   *  equal).
+   *  @return Integer value of result (@c true = greater than, @c
+   *  false = less than or equal).
    */
-  int operator > (const ACE_String_Base<CHAR> &s) const;
+  bool operator > (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Inequality comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (1 = not equal, 0 = equal).
+   *  @return Integer value of result (@c true = not equal, @c false = equal).
    */
-  int operator != (const ACE_String_Base<CHAR> &s) const;
+  bool operator != (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Performs a strncmp comparison.

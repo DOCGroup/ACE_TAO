@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 //$Id$
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
@@ -95,13 +96,13 @@ ACE_Cache_Map_Iterator<ACE_T2>::operator= (const ACE_Cache_Map_Iterator<ACE_T2> 
   return *this;
 }
 
-template <ACE_T1> ACE_INLINE int
+template <ACE_T1> ACE_INLINE bool
 ACE_Cache_Map_Iterator<ACE_T2>::operator== (const ACE_Cache_Map_Iterator<ACE_T2> &rhs) const
 {
   return this->iterator_implementation_ == rhs.iterator_implementation_;
 }
 
-template <ACE_T1> ACE_INLINE int
+template <ACE_T1> ACE_INLINE bool
 ACE_Cache_Map_Iterator<ACE_T2>::operator!= (const ACE_Cache_Map_Iterator<ACE_T2> &rhs) const
 {
   return this->iterator_implementation_ != rhs.iterator_implementation_;
@@ -195,13 +196,13 @@ ACE_Cache_Map_Reverse_Iterator<ACE_T2>::operator= (const ACE_Cache_Map_Reverse_I
   return *this;
 }
 
-template <ACE_T1> ACE_INLINE int
+template <ACE_T1> ACE_INLINE bool
 ACE_Cache_Map_Reverse_Iterator<ACE_T2>::operator== (const ACE_Cache_Map_Reverse_Iterator<ACE_T2> &rhs) const
 {
   return this->reverse_iterator_implementation_ == rhs.reverse_iterator_implementation_;
 }
 
-template <ACE_T1> ACE_INLINE int
+template <ACE_T1> ACE_INLINE bool
 ACE_Cache_Map_Reverse_Iterator<ACE_T2>::operator!= (const ACE_Cache_Map_Reverse_Iterator<ACE_T2> &rhs) const
 {
   return this->reverse_iterator_implementation_ != rhs.reverse_iterator_implementation_;

@@ -261,7 +261,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
     }
   else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != 0)
     {
-      ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address, 
+      ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       entry->h_addr_list[0],
                       ATMNSAP_ADDR_LEN - 1);
     }
@@ -282,7 +282,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
    CSADDR_INFO  csaBuffer;
    WCHAR  tmpWStr[100];
 
-   MultiByteToWideChar (CP_ACP, MB_PRECOMPOSED, sap, -1, tmpWStr, 100);  
+   MultiByteToWideChar (CP_ACP, MB_PRECOMPOSED, sap, -1, tmpWStr, 100);
 
    csaBuffer.LocalAddr.iSockaddrLength = sizeof (struct sockaddr_atm);
    csaBuffer.LocalAddr.lpSockaddr = (struct sockaddr *)&atm_addr_;
@@ -304,26 +304,26 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
    qsRestrictions.lpcsaBuffer             = &csaBuffer;
    qsRestrictions.lpBlob                  = 0; //&blob;
 
-   if (::WSALookupServiceBeginW (&qsRestrictions, LUP_RETURN_ALL, &hLookup) 
+   if (::WSALookupServiceBeginW (&qsRestrictions, LUP_RETURN_ALL, &hLookup)
         == SOCKET_ERROR) {
      ACE_OS::printf ("Error: WSALookupServiceBeginW failed! %d\n",
                      ::WSAGetLastError ());
 	   return -1;
-   }                
+   }
 
    dwValue = sizeof (WSAQUERYSETW);
 
-   if (::WSALookupServiceNextW (hLookup, 0, &dwValue, &qsRestrictions) 
+   if (::WSALookupServiceNextW (hLookup, 0, &dwValue, &qsRestrictions)
         == SOCKET_ERROR) {
      if (WSAGetLastError () != WSA_E_NO_MORE) {
-       ACE_OS::printf ("Error: WSALookupServiceNextW failed! %d\n", 
+       ACE_OS::printf ("Error: WSALookupServiceNextW failed! %d\n",
                        ::WSAGetLastError ());
 	     return -1;
      }
    }
 
    if (WSALookupServiceEnd (hLookup) == SOCKET_ERROR) {
-     ACE_OS::printf ("Error : WSALookupServiceEnd failed! %d \n", 
+     ACE_OS::printf ("Error : WSALookupServiceEnd failed! %d \n",
                      ::WSAGetLastError ());
       errno = EINVAL;
       return -1;
@@ -334,9 +334,9 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
      return -1;
    }
 
-   if (text2atm ((ACE_TCHAR *)sap, 
- (struct sockaddr *)& (atm_addr_.sockaddratmsvc), 
-                 sizeof (atm_addr_.sockaddratmsvc), 
+   if (text2atm ((ACE_TCHAR *)sap,
+ (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
+                 sizeof (atm_addr_.sockaddratmsvc),
                  T2A_SVC | T2A_NAME) < 0) {
      ACE_DEBUG (LM_DEBUG,
                "Error : text2atm failed!\n");
@@ -345,7 +345,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
    }
 #else
   ACE_UNUSED_ARG (sap);
-  
+
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
@@ -384,13 +384,13 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   ACE_TCHAR buffer[MAXNAMELEN + 1];
   int i;
 
-  if (addrlen < ATM_ADDR_SIZE + 1) 
+  if (addrlen < ATM_ADDR_SIZE + 1)
 	  return -1;
 
   for (i = 0; i < ATM_ADDR_SIZE; i++) {
     buffer[ i * 3 ] = '\0';
-	  ACE_OS::sprintf (buffer, ACE_LIB_TEXT ("%s%02x."), 
-                     buffer, 
+	  ACE_OS::sprintf (buffer, ACE_LIB_TEXT ("%s%02x."),
+                     buffer,
                      atm_addr_.satm_number.Addr[ i ]);
   }
 
@@ -403,7 +403,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   int total_len;
   if ((total_len = atm2text (buffer,
                             sizeof buffer,
- (struct sockaddr *)& (atm_addr_.sockaddratmsvc), 
+ (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
                             A2T_PRETTY)) < 0) {
     ACE_DEBUG ((LM_DEBUG,"ACE_ATM_Addr (addr_to_string): atm2text failed\n"));
     return -1;
@@ -455,7 +455,7 @@ ACE_ATM_Addr::set_addr (void *addr, int len)
 
 // Compare two addresses for inequality.
 
-int
+bool
 ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator !=");
@@ -464,7 +464,7 @@ ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
 
 // Compare two addresses for equality.
 
-int
+bool
 ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator ==");

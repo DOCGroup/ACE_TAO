@@ -93,7 +93,7 @@ int Test::svc(void)
     return(0);
 }
 
-/* Test Condition::operator!=()
+/* Test bool Condition::operator!=()
    The task's svc() method will increment the condition variable and
    then wait until the variable's value reaches max_threads_.
  */
@@ -120,7 +120,7 @@ public:
         }
 };
 
-/* Test Condition::operator>=()
+/* Test bool Condition::operator>=()
    Each svc() method will decrement the condition variable and wait
    until it is less than max_threads_.  To do this correctly, we have
    to be careful where we start the condition variable.
@@ -150,7 +150,10 @@ public:
         }
 };
 
-/* Test Condition::operator<=()
+/* Test
+
+     bool Condition::operator<=()
+
    This time we will increment the condition until it is greater than
    max_threads_.  Again, we have to be careful where we start the
    value and how we increment.

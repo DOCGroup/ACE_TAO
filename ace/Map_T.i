@@ -62,13 +62,13 @@ ACE_Iterator<T>::operator= (const ACE_Iterator<T> &rhs)
   return *this;
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE bool
 ACE_Iterator<T>::operator== (const ACE_Iterator<T> &rhs) const
 {
   return this->implementation_->compare (*rhs.implementation_);
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE bool
 ACE_Iterator<T>::operator!= (const ACE_Iterator<T> &rhs) const
 {
   return !this->operator== (rhs);
@@ -142,13 +142,13 @@ ACE_Reverse_Iterator<T>::operator= (const ACE_Reverse_Iterator<T> &rhs)
   return *this;
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE bool
 ACE_Reverse_Iterator<T>::operator== (const ACE_Reverse_Iterator<T> &rhs) const
 {
   return this->implementation_->compare (*rhs.implementation_);
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE bool
 ACE_Reverse_Iterator<T>::operator!= (const ACE_Reverse_Iterator<T> &rhs) const
 {
   return !this->operator== (rhs);

@@ -75,8 +75,8 @@ class ACE_CLASSIX_Group : public ACE_CLASSIX_Addr
     // Inserts/removes the specified port in to the group
     // Returns 0, if successful; returns a negative value otherwise
 
-    int operator == (const ACE_CLASSIX_Group &) const;
-    int operator != (const ACE_CLASSIX_Group &) const;
+    bool operator == (const ACE_CLASSIX_Group &) const;
+    bool operator != (const ACE_CLASSIX_Group &) const;
 
     // = HELPER
     void dump(void) const;
