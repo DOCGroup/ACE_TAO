@@ -1,3 +1,16 @@
+Thu Apr 10 14:14:17 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Allow assignments that are specific to a particular project type.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug in the template where 'libs' is not used but
+          'lit_libs' is.  The 'lit_libs' wouldn't show up.
+
 Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * ace/Makefile.ace ace/OS.h ace/SOCK_Connector.cpp:
@@ -11,7 +24,7 @@ Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
         * include/makeinclude/wrapper_macros.GNU:
 
           Above files modified.
-        
+
         * ace/Multihomed_INET_Addr.cpp ace/Multihomed_INET_Addr.h:
         * ace/Multihomed_INET_Addr.i ace/SOCK_SEQPACK_Acceptor.cpp:
         * ace/SOCK_SEQPACK_Acceptor.i ace/SOCK_SEQPACK_Association.cpp:
@@ -77,12 +90,12 @@ Thu Apr 10 06:52:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Apr 10 13:02:42 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/tests.{dsw,icp}: Added Unbounded_Set_Test_Ex.
+        * tests/tests.{dsw,icp}: Added Unbounded_Set_Test_Ex.
 
-	* tests/Unbounded_Set_Test_Ex.{dsp,icc}: New.
+        * tests/Unbounded_Set_Test_Ex.{dsp,icc}: New.
 
-	Please bear with me, these changes were made "blindly", i.e.
-	I don't have access to those build environments.
+        Please bear with me, these changes were made "blindly", i.e.
+        I don't have access to those build environments.
 
 Thu Apr 10 09:51:59 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
