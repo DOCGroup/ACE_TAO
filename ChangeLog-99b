@@ -1,3 +1,25 @@
+Fri Apr  2 19:19:09 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* bin/autogen: Update NEWS file by copying VERSION.  Temporary
+	  hack to make Automake happy when doing a `make dist'.
+
+Fri Apr  2 18:37:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in: Placed the asynchronous IO checks right after
+	  the thread library checks.  This was done to make sure the
+	  library with AIO support gets added to the link list before
+	  the rest of the tests start, and to make sure that it doesn't
+	  get added if AIO isn't supported or isn't working.
+
+	* Makefile.am (ACE_EXTRA_DIST): Changed directory names to use
+	  `$(top_srcdir)' instead of the current directory `.'.  This
+	  allows a distribution to be made from a directory other than
+	  ACE's top level source directory.
+
+	* m4/compiler.m4: Explicitly add the `-xildoff' flag to Sun CC's
+	  LDFLAGS.  This is just a precautionary measure.  It shouldn't
+	  be needed.
+
 Fri Apr  2 12:41:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Containers_T.h (all of the classes listed below):
