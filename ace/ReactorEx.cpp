@@ -16,11 +16,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Lock the creation of the Singleton.
-static ACE_Thread_Mutex ace_reactorex_lock_;
-#endif /* ACE_MT_SAFE */
-
 // Process-wide ACE_ReactorEx.
 ACE_ReactorEx *ACE_ReactorEx::reactorEx_ = 0;
 
@@ -605,7 +600,8 @@ ACE_ReactorEx::instance (void)
   if (ACE_ReactorEx::reactorEx_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+				*ACE_Static_Object_Lock::get_lock (), 0));
 
       if (ACE_ReactorEx::reactorEx_ == 0)
 	{
@@ -622,7 +618,8 @@ ACE_ReactorEx::instance (ACE_ReactorEx *r)
 {
   ACE_TRACE ("ACE_ReactorEx::instance");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    *ACE_Static_Object_Lock::get_lock (), 0));
   ACE_ReactorEx *t = ACE_ReactorEx::reactorEx_;
   // We can't safely delete it since we don't know who created it!
   ACE_ReactorEx::delete_reactorEx_ = 0;
@@ -636,7 +633,8 @@ ACE_ReactorEx::close_singleton (void)
 {
   ACE_TRACE ("ACE_ReactorEx::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+		     *ACE_Static_Object_Lock::get_lock ()));
 
   if (ACE_ReactorEx::delete_reactorEx_)
     {

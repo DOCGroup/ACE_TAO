@@ -23,11 +23,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 #define ACE_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)])
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Lock the creation of the Singleton.
-static ACE_Thread_Mutex ace_reactor_lock_;
-#endif /* ACE_MT_SAFE */
-
 // Process-wide ACE_Reactor.
 ACE_Reactor *ACE_Reactor::reactor_ = 0;
 
@@ -914,7 +909,8 @@ ACE_Reactor::instance (size_t size /* = ACE_Reactor::DEFAULT_SIZE */)
   if (ACE_Reactor::reactor_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+				*ACE_Static_Object_Lock::get_lock (), 0));
       
       if (ACE_Reactor::reactor_ == 0)
 	{
@@ -930,7 +926,8 @@ ACE_Reactor::instance (ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    *ACE_Static_Object_Lock::get_lock (), 0));
   ACE_Reactor *t = ACE_Reactor::reactor_;
   // We can't safely delete it since we don't know who created it!
   ACE_Reactor::delete_reactor_ = 0;
@@ -944,7 +941,8 @@ ACE_Reactor::close_singleton (void)
 {
   ACE_TRACE ("ACE_Reactor::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+		     *ACE_Static_Object_Lock::get_lock ()));
 
   if (ACE_Reactor::delete_reactor_)
     {

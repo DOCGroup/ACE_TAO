@@ -13,11 +13,6 @@
 
 #include "ace/Synch_T.h"
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Lock the creation of the Singletons.
-static ACE_Thread_Mutex ace_allocator_lock_;
-#endif /* ACE_MT_SAFE */
-
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 
@@ -73,7 +68,8 @@ ACE_Allocator::instance (void)
   if (ACE_Allocator::allocator_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+				*ACE_Static_Object_Lock::get_lock (), 0));
 
       if (ACE_Allocator::allocator_ == 0)
 	{
@@ -90,7 +86,8 @@ ACE_Allocator *
 ACE_Allocator::instance (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Allocator::instance");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    *ACE_Static_Object_Lock::get_lock (), 0));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
   // We can't safely delete it since we don't know who created it!
@@ -105,7 +102,8 @@ ACE_Allocator::close_singleton (void)
 {
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+		     *ACE_Static_Object_Lock::get_lock ()));
 
   if (ACE_Allocator::delete_allocator_)
     {
