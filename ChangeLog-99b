@@ -1,3 +1,9 @@
+Mon Aug 23 10:56:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/cvslog: added this wrapper around cvs log.  It
+          expands ChangeLogTags to their ChangeLog entries.
+          Thanks to Luther for helping greatly with it.
+
 Mon Aug 23 08:46:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.{h,cpp}: replaced the use of
