@@ -157,6 +157,42 @@ SOURCE=.\DsNotifyLogAdmin.idl
 
 !IF  "$(CFG)" == "DsNotifyLogAdmin - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\DsNotifyLogAdmin.idl
+InputName=DsNotifyLogAdmin
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log\notifylog_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "DsNotifyLogAdmin - Win32 Debug"
 
 # PROP Intermediate_Dir "DLL\Debug\DsNotifyLogAdmin"
@@ -166,7 +202,7 @@ InputPath=.\DsNotifyLogAdmin.idl
 InputName=DsNotifyLogAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log\notifylog_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log\notifylog_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
