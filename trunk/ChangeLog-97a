@@ -8,6 +8,14 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  build due to ACE_TimeValue::normalize () "relocations remain
 	  against allocatable but non-writable sections".
 
+	* ace/ACE.cpp (terminate_process): removed used of ACE_OSCALL_RETURN
+	  macro because its defined in OS.i, and so not available if
+	  inlining is disabled.
+
+	* ace/Auto_Ptr.{h,i}: made "p_" protected instead of private so that
+	  it can be accessed with the new class arrangement.  Also, made the
+	  auto_array_ptr operator-> const.
+
 Mon Jun 23 09:12:04 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/Auto_Ptr.i (auto_array_ptr): Fixed a typo.
