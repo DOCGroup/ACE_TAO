@@ -31,27 +31,57 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 int
 TAO_Wait_On_Reactor::wait (void)
 {
-  // Result of the Reactor event loop.
   int result = 0;
 
-  // Flag that tells when we have finished reading the whole of the
-  // incoming message.
-  // int end_loop_flag = 0;
-
-  while (result == 0) //  != -1 && end_loop_flag == 0)
+  while (result == 0)
     {
       // Do the event loop.
       result = this->transport_->orb_core ()->reactor ()->handle_events (/* timeout */);
-
-      // Check for ending the event loop.
-      // if (this->transport_->message_size () == this->transport_->message_offset ())
-      //  end_loop_flag = 1;
     }
 
   if (result == -1)
     return -1;
   else
     return 0;
+}
+
+int
+TAO_Wait_On_Reactor::handle_input (void)
+{
+  int result = 0;
+
+  // Temporarily remove ourself from notification so that if
+  // another sub event loop is in effect still waiting for its
+  // response, it doesn't spin tightly gobbling up CPU.
+  result = this->transport_->suspend_handler ();
+
+  // Ask the Transport object to read the input without blocking. 
+  result = this->transport_->handle_client_input (0);
+
+  // If message is not read fully, resume the handler.
+  if (result == 0)
+    result = this->transport_->resume_handler ();
+  
+  if (result != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO: %N:%l:TAO_Wait_On_Reactor::handle_input:%p\n",
+                       "resume_handler failed"),
+                      -1);
+
+  return 0;
+}  
+
+// Register the handler with the Reactor.
+int
+TAO_Wait_On_Reactor::register_handler (TAO_IIOP_Handler_Base *handler)
+{
+  return this->transport_->register_handler ();
+}
+
+int
+TAO_Wait_On_Reactor::resume_handler (ACE_Reactor *reactor)
+{
+  return this->transport_->resume_handler ();
 }
 
 // *********************************************************************
@@ -117,6 +147,28 @@ TAO_Wait_On_Leader_Follower::wait (void)
   return 0;
 }
 
+// Handle the input. Delegate this job to Transport object. Before
+// that, suspend the handler in the Reactor.
+int
+TAO_Wait_On_Leader_Follower::handle_input (void)
+{
+  return -1;
+}
+
+// Register the handler.
+int
+TAO_Wait_On_Leader_Follower::register_handler (TAO_IIOP_Handler_Base *)
+{
+  return 0;
+} 
+
+// Resume the connection handler. 
+int
+TAO_Wait_On_Leader_Follower::resume_handler (ACE_Reactor *reactor)
+{
+  return -1;
+}
+
 // *********************************************************************
 
 // Constructor.
@@ -145,4 +197,25 @@ TAO_Wait_On_Read::wait (void)
     }
 
   return 0;
+}
+
+// Handle the input. Delegate this job to Transport object.
+// Resume the connection handler. No-op. Returns 0.
+int
+TAO_Wait_On_Read::handle_input (void)
+{
+  return -1;
+}
+
+// No-op.
+int
+TAO_Wait_On_Read::register_handler (TAO_IIOP_Handler_Base *)
+{
+  return 0;
+} 
+
+int
+TAO_Wait_On_Read::resume_handler (ACE_Reactor *reactor)
+{
+  return -1;
 }
