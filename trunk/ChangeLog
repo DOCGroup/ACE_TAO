@@ -1,3 +1,8 @@
+Wed May  7 08:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Just define libflags, no need to define them to 1
+
 Tue May  6 18:06:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Basic_Types.h: Add typedef of ptrdiff_t for WinCE 3. Follow-up:
