@@ -22,14 +22,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"           /* for ptr_arith_t */
-#include "ace/Synch_T.h"
 #include "tao/corbafwd.h"
+
+#include "ace/Basic_Types.h"           /* for ptr_arith_t */
+#include "ace/Synch_T.h"
+
 
 namespace CORBA
 {
-  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (CORBA::ValueBase *val);
-  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (CORBA::ValueBase *val);
+  class ValueBase;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
+  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 
   /**
    * @class ValueBase

@@ -287,8 +287,6 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
   typedef ValueFactoryBase_var ValueFactory_var;
   class DefaultValueRefCountBase;
-  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
-  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
