@@ -167,6 +167,7 @@ TEMPLATE_FILES = \
 	   Svc_Handler \
 	   Synch_T \
 	   Task_T \
+	   Timeprobe \
 	   Timer_Hash_T \
 	   Timer_Heap_T \
 	   Timer_List_T \

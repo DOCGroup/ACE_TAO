@@ -179,7 +179,6 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 #endif /* DEBUG */
     }
   ACE_TIMEPROBE (TAO_GIOP_SEND_REQUEST_FAIL);
-  ACE_TIMEPROBE ();
   return CORBA::B_TRUE;
 }
 

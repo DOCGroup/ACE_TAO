@@ -23,7 +23,7 @@
 #ifndef ACE_DISPATCHING_MODULES_H
 #define ACE_DISPATCHING_MODULES_H
 
-#include "tao/Timeprobe.h"
+#include "ace/Timeprobe.h"
 #include "ReactorTask.h"
 #include "Event_Channel.h"
 
