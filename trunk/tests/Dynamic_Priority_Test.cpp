@@ -693,11 +693,11 @@ main (int, ASYS_TCHAR *[])
   {
     if (ACE_OS::last_error () == EPERM)
       ACE_DEBUG ((LM_MAX,
-                  "preempt: user is not superuser, "
+                  "user is not superuser, "
                   "so remain in time-sharing class\n"));
     else if (ACE_OS::last_error () == ENOTSUP)
       ACE_DEBUG ((LM_MAX,
-                  "preempt: process scope scheduling not supported, "
+                  "process scope scheduling is not available, "
                   "so remain in time-sharing class\n"));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -760,5 +760,3 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
-
