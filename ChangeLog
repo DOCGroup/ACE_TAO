@@ -1,3 +1,10 @@
+Sun Jan 18 10:27:11 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+
+	  Used ACE_UINT64_DBLCAST_ADAPTER  instead of direct casting to a
+	  double to be more portable.
+
 Sun Jan 18 10:13:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Logging/LogManager.h:
