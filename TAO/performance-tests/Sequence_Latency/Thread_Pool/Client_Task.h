@@ -34,12 +34,12 @@ private:
   void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Some performance test methods
-  void test_octet_seq (ACE_ENV_ARG_DECL);
-  void test_long_seq (ACE_ENV_ARG_DECL);
-  void test_short_seq (ACE_ENV_ARG_DECL);
-  void test_char_seq (ACE_ENV_ARG_DECL);
-  void test_longlong_seq (ACE_ENV_ARG_DECL);
-  void test_double_seq (ACE_ENV_ARG_DECL);
+  void test_octet_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_long_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_short_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_char_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_longlong_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_double_seq (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The data type of the sequence load to be tested

@@ -27,32 +27,32 @@ Client_Task::svc (void)
 
       if (ACE_OS::strcmp (this->data_type_, "octet") == 0 )
         {
-          this->test_octet_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_octet_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (ACE_OS::strcmp (this->data_type_, "long") == 0 )
         {
-          this->test_long_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_long_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (ACE_OS::strcmp (this->data_type_, "short") == 0 )
         {
-          this->test_short_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_short_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (ACE_OS::strcmp (this->data_type_, "char") == 0 )
         {
-          this->test_char_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_char_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (ACE_OS::strcmp (this->data_type_, "longlong") == 0 )
         {
-          this->test_longlong_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_longlong_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (ACE_OS::strcmp (this->data_type_, "double") == 0 )
         {
-          this->test_double_seq (ACE_ENV_ARG_PARAMETER);
+          this->test_double_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -91,7 +91,7 @@ Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Client_Task::test_octet_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_octet_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::octet_load ol (this->size_);
   ol.length (this->size_);
@@ -110,7 +110,7 @@ Client_Task::test_octet_seq (ACE_ENV_ARG_DECL)
 }
 
 void
-Client_Task::test_long_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_long_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::long_load ll (this->size_);
   ll.length (this->size_);
@@ -130,7 +130,7 @@ Client_Task::test_long_seq (ACE_ENV_ARG_DECL)
 
 
 void
-Client_Task::test_short_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_short_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::short_load sl (this->size_);
   sl.length (this->size_);
@@ -149,7 +149,7 @@ Client_Task::test_short_seq (ACE_ENV_ARG_DECL)
 }
 
 void
-Client_Task::test_char_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_char_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::char_load cl (this->size_);
   cl.length (this->size_);
@@ -168,7 +168,7 @@ Client_Task::test_char_seq (ACE_ENV_ARG_DECL)
 }
 
 void
-Client_Task::test_longlong_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_longlong_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::longlong_load ll (this->size_);
   ll.length (this->size_);
@@ -187,7 +187,7 @@ Client_Task::test_longlong_seq (ACE_ENV_ARG_DECL)
 }
 
 void
-Client_Task::test_double_seq (ACE_ENV_ARG_DECL)
+Client_Task::test_double_seq (ACE_ENV_SINGLE_ARG_DECL)
 {
   Test::double_load dl (this->size_);
   dl.length (this->size_);
