@@ -2,7 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
-  requires += interceptors
+  requires += interceptors dummy_label
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp
@@ -12,16 +12,14 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoserver, taoclient {
-  requires += interceptors
+  requires += interceptors dummy_label
   Source_Files {
     test_i.cpp
     testC.cpp
     testS.cpp
-//    Client_ORBInitializer.cpp
-//    Server_ORBInitializer.cpp
     interceptors.cpp
     Threaded_Client.cpp
-    
+
     Server_Task.cpp
     Client_Task.cpp
   }
