@@ -128,7 +128,7 @@ TAO_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
 void 
 TAO_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr
-			       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+			       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
