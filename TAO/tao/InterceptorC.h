@@ -12,6 +12,8 @@
 
 #include "tao/orbconf.h"
 #include "tao/IOPC.h"
+#include "tao/Object.h"
+#include "tao/Envrionment.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"

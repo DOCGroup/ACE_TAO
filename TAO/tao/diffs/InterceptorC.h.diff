@@ -1,16 +1,18 @@
---- InterceptorC.h.orig	Wed Apr 26 15:29:09 2000
-+++ InterceptorC.h	Wed Apr 26 15:29:34 2000
-@@ -10,7 +10,8 @@
+--- InterceptorC.h.orig	Wed Apr 26 17:31:42 2000
++++ InterceptorC.h	Wed Apr 26 17:32:40 2000
+@@ -10,7 +10,10 @@
  #ifndef _TAO_IDL_INTERCEPTORC_H_
  #define _TAO_IDL_INTERCEPTORC_H_
  
 -#include "tao/corba.h"
 +#include "tao/orbconf.h"
 +#include "tao/IOPC.h"
++#include "tao/Object.h"
++#include "tao/Envrionment.h"
  
  #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
  #include "ace/streams.h"
-@@ -20,9 +21,6 @@
+@@ -20,9 +23,6 @@
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
  
