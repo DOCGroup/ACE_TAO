@@ -4,28 +4,23 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Map_Test - Win32 DLL Release
+CFG=Map_Test - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Map_Test.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "Map_Test.mak" CFG="Map_Test - Win32 DLL Release"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "Map_Test.mak" CFG="Map_Test - Win32 Release"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "Map_Test - Win32 DLL Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 DLL Unicode Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 static Unicode Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 static Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 DLL Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 DLL Unicode Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 static Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Map_Test - Win32 static Unicode Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "Map_Test - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Map_Test - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Map_Test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -34,171 +29,21 @@ CFG=Map_Test - Win32 DLL Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Map_Test - Win32 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Map_Test\DLL Release"
-# PROP BASE Intermediate_Dir ".\Map_Test\DLL Release"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\DLL Release"
-# PROP Intermediate_Dir ".\DLL Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=1 /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 DLL Unicode Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Map_Test\DLL Unicode Release"
-# PROP BASE Intermediate_Dir ".\Map_Test\DLL Unicode Release"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\DLL Unicode Release"
-# PROP Intermediate_Dir ".\DLL Unicode Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=1 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aceu.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 static Unicode Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Map_Test\static Unicode Release"
-# PROP BASE Intermediate_Dir ".\Map_Test\static Unicode Release"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\static Unicode Release"
-# PROP Intermediate_Dir ".\static Unicode Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 acesu.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 static Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Map_Test\static Release"
-# PROP BASE Intermediate_Dir ".\Map_Test\static Release"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\static Release"
-# PROP Intermediate_Dir ".\static Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 DLL Debug"
+!IF  "$(CFG)" == "Map_Test - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Map_Test\DLL Debug"
-# PROP BASE Intermediate_Dir ".\Map_Test\DLL Debug"
+# PROP BASE Output_Dir ".\Map_Test\Static Debug"
+# PROP BASE Intermediate_Dir ".\Map_Test\Static Debug"
 # PROP BASE Target_Dir ".\Map_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\DLL Debug"
-# PROP Intermediate_Dir ".\DLL Debug"
+# PROP Output_Dir ".\LIB\Debug"
+# PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Map_Test"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=1 /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 DLL Unicode Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Map_Test\DLL Unicode Debug"
-# PROP BASE Intermediate_Dir ".\Map_Test\DLL Unicode Debug"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\DLL Unicode Debug"
-# PROP Intermediate_Dir ".\DLL Unicode Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=1 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aceud.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 static Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Map_Test\static Debug"
-# PROP BASE Intermediate_Dir ".\Map_Test\static Debug"
-# PROP BASE Target_Dir ".\Map_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\static Debug"
-# PROP Intermediate_Dir ".\static Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../" /D "_DEBUG" /D ACE_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -209,44 +54,63 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Map_Test - Win32 static Unicode Debug"
+!ELSEIF  "$(CFG)" == "Map_Test - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Map_Test\static Unicode Debug"
-# PROP BASE Intermediate_Dir ".\Map_Test\static Unicode Debug"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir ".\Map_Test\Static Release"
+# PROP BASE Intermediate_Dir ".\Map_Test\Static Release"
 # PROP BASE Target_Dir ".\Map_Test"
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\static Unicode Debug"
-# PROP Intermediate_Dir ".\static Unicode Debug"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ".\LIB\Release"
+# PROP Intermediate_Dir ".\LIB\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Map_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "../../" /D "NDEBUG" /D ACE_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 acesud.lib user32.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ENDIF
+!ELSEIF  "$(CFG)" == "Map_Test - Win32 Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir ".\Map_Test\Release"
+# PROP BASE Intermediate_Dir ".\Map_Test\Release"
+# PROP BASE Target_Dir ".\Map_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ".\DLL\Release"
+# PROP Intermediate_Dir ".\DLL\Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ".\Map_Test"
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
+
+!ENDIF 
 
 # Begin Target
 
-# Name "Map_Test - Win32 DLL Release"
-# Name "Map_Test - Win32 DLL Unicode Release"
-# Name "Map_Test - Win32 static Unicode Release"
-# Name "Map_Test - Win32 static Release"
-# Name "Map_Test - Win32 DLL Debug"
-# Name "Map_Test - Win32 DLL Unicode Debug"
-# Name "Map_Test - Win32 static Debug"
-# Name "Map_Test - Win32 static Unicode Debug"
-# Begin Group "Source Files"
+# Name "Map_Test - Win32 Static Debug"
+# Name "Map_Test - Win32 Static Release"
+# Name "Map_Test - Win32 Release"# Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
