@@ -46,7 +46,7 @@ int main (int argc, char* argv[])
     poa->destroy (1, 1);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (CORBA::Exception &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

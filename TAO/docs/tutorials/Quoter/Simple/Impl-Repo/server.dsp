@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_IORTable.lib TAO_PortableServer.lib tao.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\IORTable"
+# ADD LINK32 TAO_IORTable.lib TAO_PortableServer.lib tao.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../../../tao/PortableServer" /libpath:"../../../../../../ace" /libpath:"../../../../../tao" /libpath:"../../../../../tao/IORTable"
 
 !ELSEIF  "$(CFG)" == "Quoter Simple ImplRepo - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_IORTabled.lib TAO_PortableServerd.lib taod.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\..\..\ace" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer"
+# ADD LINK32 TAO_IORTabled.lib TAO_PortableServerd.lib taod.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../../../tao/IORTable" /libpath:"../../../../../../ace" /libpath:"../../../../../tao" /libpath:"../../../../../tao/PortableServer"
 
 !ENDIF 
 
@@ -101,11 +101,11 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\Server\Stock_Factory_i.cpp
+SOURCE=.\Stock_Factory_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\Server\Stock_i.cpp
+SOURCE=.\Stock_i.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -113,11 +113,11 @@ SOURCE=..\Server\Stock_i.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\Server\Stock_Factory_i.h
+SOURCE=.\Stock_Factory_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\Server\Stock_i.h
+SOURCE=.\Stock_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
