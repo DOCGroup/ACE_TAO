@@ -1,3 +1,11 @@
+Wed Sep 11 13:03:48 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/Select_Reactor_Base.cpp:
+	  Check the suspend mask before completely forgetting about a
+	  handle, otherwise things do not work correctly with TP_Reactors
+	  and multiply-registered handlers.  This fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1306
+
 Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Obstack_T.cpp:
