@@ -1,3 +1,38 @@
+Wed Jun  2 23:26:41 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/CompImplDesc_Handler.h:
+	* DnC/Config_Handlers/DnC_Dump.h:
+	* DnC/ExecutionManager/ExecutionManager.mpc:
+	* DnC/ExecutionManager/ExecutionManager_Impl.h:
+	* DnC/NodeApplication/NodeApplication.mpc:
+	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+	* DnC/NodeManager/NodeDaemon.mpc:
+	* DnC/NodeManager/NodeDaemon_Impl.cpp:
+	* DnC/RepositoryManager/RepositoryManager.mpc:
+	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+	* DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+	* DnC/tests/NodeApplicationTest/run_test_simple.pl:
+
+	  Updated these files to make it work with the new directory
+	  structure.
+
+	  Now, Let me explain the issue.
+	  When I started implement the new DnC spec I was forced to change
+	  some of the CIAO core implementations. The one very important
+	  CIAO session container implementation is changed but not
+	  significantly. However because we use MPC templates extensively
+	  in CIAO some of the legacy mpb files is causing some trouble. I
+	  catched this mistake when I was actually using some of the newly
+	  provided functionalities in the conatainer, the red light
+	  showed itself as a run time relocation error.
+
+	  Another driving force of these change is from CIDLC. Since in
+	  the generated code ciao/*** is used as the include file name,
+	  there is no way that I can make the new container implementation
+	  link with the servant project of the component implementation.
+
 Wed Jun  2 23:21:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/ciao/CCM_Base.idl:

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "DeploymentC.h"
+#include "Deployment_CoreC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
@@ -121,7 +121,7 @@ main (int argc, char *argv[])
      }
 
      ACE_DEBUG ((LM_DEBUG, "Try removing home\n"));
-     comserv->remove_home (info.component_instance_name); 
+     comserv->remove_home (info.component_instance_name);
      ACE_DEBUG ((LM_DEBUG, "Home removed successfully\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -11,7 +11,7 @@
 #define CompImplDesc_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "../Core/DeploymentC.h"
+#include "ciao/DeploymentC.h"
 #include "Config_Handler_export.h"
 #include "Basic_Handler.h"
 
@@ -48,7 +48,7 @@ BEGIN_DEPLOYMENT_NAMESPACE
 /**
  * @class CompImplDesc_Handler
  *
- * @brief Handler class for <ComponentImplementationDescription> type 
+ * @brief Handler class for <ComponentImplementationDescription> type
  *
  * This class is within the Execution Data Model subpackage of the
  * Deployment & Configuration package.
@@ -71,7 +71,7 @@ class Config_Handler_Export CompImplDesc_Handler: public Basic_Handler
     : Basic_Handler (iter, release) { }
 
   /// constructor
-  CompImplDesc_Handler (DOMDocument* doc, 
+  CompImplDesc_Handler (DOMDocument* doc,
                         DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (doc, iter, release) { }
 

@@ -3,8 +3,6 @@
 
 project(Node_Daemon): ciao_deployment_svnt, ciao_deployment_stub, iortable, naming {
   requires += dnc
-  includes += $(CIAO_ROOT)/DnC/NodeApplicationManager
-  idlflags += -I ../Core 
   after += NodeApplicationManager
   libs += NodeApplicationManager CIAO_Server
   exename = Node_Daemon
