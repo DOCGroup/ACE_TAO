@@ -9,6 +9,7 @@
 #include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Sched_Params.h"
+#include "ace/Malloc_Allocator.h"
 
 #include "Kokyu/Kokyu.h"
 
@@ -19,11 +20,18 @@
 ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec)
-  :dispatcher_ (0),
+  :allocator_ (0),
+   dispatcher_ (0),
    lanes_setup_ (0)
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
+
+  //@@VS - need to revisit this - should be some other allocator
+  if (this->allocator_ == 0)
+    {
+      this->allocator_ = new ACE_New_Allocator ();
+    }
 }
 
 void
@@ -109,30 +117,48 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::PushConsumer_ptr consumer,
                                        RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_ENV_ARG_DECL)
 {
     if (this->dispatcher_.get () == 0)
         this->setup_lanes ();
-  
+    
+    void* buf = 
+      this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
+
+    if (buf == 0)
+      ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                   CORBA::COMPLETED_NO));
+
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
-    new TAO_EC_Kokyu_Push_Command(proxy,consumer,event);
-
+    new (buf) TAO_EC_Kokyu_Push_Command (proxy,
+                                         consumer,
+                                         event, this->allocator_);
+    
+  /*    
+  TAO_EC_Kokyu_Push_Command *cmd =
+    new TAO_EC_Kokyu_Push_Command (proxy,
+                                   consumer,
+                                 event, 0);
+  */
+    
   // Convert TAO_EC_QOS_Info to QoSDescriptor
   RtecScheduler::RT_Info *rt_info = 
     this->scheduler_->get(qos_info.rt_info);
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) : after get returned\n"));
 
   Kokyu::QoSDescriptor qosd;
   qosd.preemption_priority_ = rt_info->preemption_priority;
   qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
-  /*
+  
   ACE_DEBUG ((LM_DEBUG, 
               "(%t) About to drop event into queue. "
               "rt_info = %d, pre_prio = %d\n",
               rt_info->handle, qosd.preemption_priority_));
-  */
+  
   this->dispatcher_->dispatch(cmd,qosd);
 }
 

@@ -1273,10 +1273,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
   return 0;
 }
 
-
-
 ///////////////////////////////////////////////////
-// class TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy //
+// class TAO_RMS_Reconfig_Sched_Strategy //
 ///////////////////////////////////////////////////
 
 
@@ -1286,7 +1284,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
 // second one is higher.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+TAO_RMS_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1322,7 +1320,7 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_priority_comp (const void *s, con
   // then by subpriority.
 
   int result =
-    TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_priority (**first,
+    TAO_RMS_Reconfig_Sched_Strategy::compare_priority (**first,
                                                                **second);
 
   if (result == 0)
@@ -1343,7 +1341,7 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_priority_comp (const void *s, con
 // the second one is higher.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
+TAO_RMS_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
                                                                const void *t)
 {
     // Convert the passed pointers: the double cast is needed to
@@ -1398,7 +1396,7 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
   // Then compare by priority.
 
   int result =
-    TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_criticality (**first,
+    TAO_RMS_Reconfig_Sched_Strategy::compare_criticality (**first,
                                                                **second);
   if (result != 0)
     {
@@ -1433,71 +1431,42 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
                                                            TAO_Reconfig_Scheduler_Entry &rhs)
 {
-  // In MUF, priority is per criticality level: compare criticalities.
-
-  if (lhs.actual_rt_info ()->criticality > rhs.actual_rt_info ()->criticality)
-    {
-      return -1;
-    }
-  else if (lhs.actual_rt_info ()->criticality < rhs.actual_rt_info ()->criticality)
-    {
-      return 1;
-    }
-  else
-  {
-	  return 0;
-  }
+  ACE_UNUSED_ARG (lhs);
+  ACE_UNUSED_ARG (rhs);
+  // In plain RMS, no consideration of criticalities
+  return 0;
 }
 
 // Compares two RT_Info entries by criticality alone.  Returns -1 if the
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
-                                                             TAO_RT_Info_Tuple &rhs)
+TAO_RMS_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
+                                                     TAO_RT_Info_Tuple &rhs)
 {
-  if (lhs.criticality > rhs.criticality)
-    {
-      return -1;
-    }
-  else if (lhs.criticality < rhs.criticality)
-    {
-      return 1;
-    }
-  else
-  {
-	  return 0;
-  }
+  ACE_UNUSED_ARG (lhs);
+  ACE_UNUSED_ARG (rhs);
+  // In plain RMS, no consideration of criticalities
+  return 0;
 }
 
 // Compares two RT_Info entries by priority alone.  Returns -1 if the
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
                                                            TAO_Reconfig_Scheduler_Entry &rhs)
 {
-  // In MUF, priority is per criticality level: compare criticalities.
-  int result = TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_criticality(lhs, rhs);
-
-  if (result != 0)
+  //differentiate by rate.
+  if (lhs.actual_rt_info ()->period < rhs.actual_rt_info ()->period)
     {
-      return result;
+      return -1;
     }
-
-  // Same criticality: if high criticality, differentiate by rate.
-  if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rhs))
+  else if (lhs.actual_rt_info ()->period > rhs.actual_rt_info ()->period)
     {
-      if (lhs.actual_rt_info ()->period < rhs.actual_rt_info ()->period)
-        {
-          return -1;
-        }
-      else if (lhs.actual_rt_info ()->period > rhs.actual_rt_info ()->period)
-        {
-          return 1;
-        }
+      return 1;
     }
 
   // They're the same if we got here.
@@ -1509,32 +1478,17 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Schedule
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
                                                            TAO_RT_Info_Tuple &rhs)
 {
-  // In RMS_Dyn, priority is first partitioned per criticality level:
-  // compare criticalities.
-
-  if (lhs.criticality > rhs.criticality)
+  // In plain RMS, priority is partitioned based on rate:
+  if (lhs.period < rhs.period)
     {
       return -1;
     }
-  else if (lhs.criticality < rhs.criticality)
+  else if (lhs.period > rhs.period)
     {
       return 1;
-    }
-
-  // Same criticality: if high criticality, differentiate by rate.
-  else if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rhs))
-    {
-      if (lhs.period < rhs.period)
-        {
-          return -1;
-        }
-      else if (lhs.period > rhs.period)
-        {
-          return 1;
-        }
     }
 
   // They're the same if we got here.
@@ -1546,7 +1500,7 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lh
 // on the operation characteristics of a representative scheduling entry.
 
 int
-TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
+TAO_RMS_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
                                                         TAO_Reconfig_Scheduler_Entry &rse)
 {
     // Global and thread priority of dispatching queue are simply
@@ -1554,16 +1508,8 @@ TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_In
     info.preemption_priority = rse.actual_rt_info ()->preemption_priority;
     info.thread_priority = rse.actual_rt_info ()->priority;
 
-    // Critical queues are static, and non-critical ones are
-    // laxity-based in this strategy.
-    if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rse))
-      {
-        info.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
-      }
-    else
-      {
-        info.dispatching_type = RtecScheduler::LAXITY_DISPATCHING;
-      }
+    // In plain RMS, all queues are static
+    info.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 
   return 0;
 }

@@ -72,6 +72,8 @@ public:
                             ACE_ENV_ARG_DECL);
 
 private:
+  ACE_Allocator *allocator_;
+
   void setup_lanes (void);
 
   /// The dispatcher
@@ -89,7 +91,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Disp
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (void);
+  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
   virtual int execute (void);
@@ -97,6 +99,7 @@ public:
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
   virtual ~TAO_EC_Kokyu_Shutdown_Command (void);
+
 };
 
 // ****************************************************************
@@ -107,7 +110,8 @@ public:
   /// Constructor
   TAO_EC_Kokyu_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
-                             RtecEventComm::EventSet& event);
+                             RtecEventComm::EventSet& event,
+                             ACE_Allocator* allocator);
 
   /// Command callback
   virtual int execute (void);
