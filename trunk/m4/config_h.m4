@@ -205,20 +205,6 @@ AH_TEMPLATE([ACE_USE_RCSID],[Enable embedding of global RCS ID strings into comp
 AH_TEMPLATE([IP_ADD_MEMBERSHIP],[])
 AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 
-
-dnl Specify sizes of given built-in types.  If a size isn't defined here,
-dnl then ace/Basic_Types.h will attempt to deduce the size.
-dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[Size of native "char" type])
-AH_TEMPLATE([ACE_SIZEOF_WCHAR],[Size of native "wchar_t" type])
-AH_TEMPLATE([ACE_SIZEOF_SHORT],[Size of the native "short" type])
-AH_TEMPLATE([ACE_SIZEOF_INT],[Size of the native "int" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG],[Size of the native "long" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG_LONG],[Size of the native "long long" type])
-AH_TEMPLATE([ACE_SIZEOF_VOID_P],[Size of the native "pointer to void" type])
-AH_TEMPLATE([ACE_SIZEOF_FLOAT],[Size of the native "float" type])
-AH_TEMPLATE([ACE_SIZEOF_DOUBLE],[Size of the native "double" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG_DOUBLE],[Size of the native "long double" type])
-
 AH_VERBATIM([ACE_INT64_TYPEDEF],
 [
 /*
@@ -443,8 +429,6 @@ AH_TEMPLATE([ACE_HAS_LLSEEK],
 
 AH_TEMPLATE([ACE_HAS_HI_RES_TIMER],
 [Compiler/platform supports SunOS high resolution timers])
-
-AH_TEMPLATE([ACE_HAS_IDTYPE_T],[Compiler/platform supports idtype_t.])
 
 AH_TEMPLATE([ACE_HAS_INLINED_OSCALLS],[
 Inline all the static class OS methods to remove call overhead
@@ -697,8 +681,6 @@ AH_TEMPLATE([ACE_HAS_SOCKLEN_T],
 
 AH_TEMPLATE([ACE_HAS_SPARCWORKS_401_SIGNALS],
 [Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...])
-
-AH_TEMPLATE([ACE_HAS_SSIZE_T],[Compiler supports the ssize_t typedef])
 
 AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 
@@ -968,9 +950,6 @@ AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 AH_TEMPLATE([ACE_LACKS_PRAGMA_ONCE],
 [Compiler complains about use of obsolete "pragma once"])
 
-AH_TEMPLATE([ACE_LACKS_PRI_T],
-[Platform lacks pri_t (e.g., Tandem NonStop UNIX).])
-
 AH_TEMPLATE([ACE_LACKS_THREAD_STACK_ADDR],
 [Platform lack pthread_attr_setstackaddr()])
 
@@ -1013,9 +992,6 @@ AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 
 AH_TEMPLATE([ACE_LACKS_SYSV_MSQ_PROTOS],
 [Platform lacks SYSV message queue prototypes])
-
-AH_TEMPLATE([ACE_LACKS_KEY_T],
-[Platform lacks key_t (e.g., Chorus, VxWorks, Win32)])
 
 AH_TEMPLATE([ACE_LACKS_SI_ADDR],
 [Platform lacks the si_addr field of siginfo_t (e.g., VxWorks and
@@ -1080,8 +1056,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 
 AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 [Platform lacks struct utsname (e.g., Win32 and VxWorks)])
-
-AH_TEMPLATE([ACE_LACKS_WCHAR_T],[Platform lacks wchar_t typedef])
 
 AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
 [Platform's wcstok() takes 3 arguments])
