@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
   Source_Files {
     Server_Task.cpp
     Sender_i.cpp

@@ -1,7 +1,13 @@
+Fri Jan  7 18:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Client_Leaks/Client_Leaks.mpc:
+          Simplified this mpc file by using taoserver and taoclient base
+          projects
+
 Fri Jan  7 18:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
-          Simplified this mpc file by using taoserver and taoclient bae
+          Simplified this mpc file by using taoserver and taoclient base
           projects
 
 Fri Jan  7 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
