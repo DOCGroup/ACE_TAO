@@ -1,3 +1,9 @@
+Sun Jan  4 09:55:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+          Added missing type of inheritence from base class. Fixes Tru64
+          warning.
+
 Sun Jan  4 09:23:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
