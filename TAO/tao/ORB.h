@@ -893,10 +893,4 @@ operator>> (istream &, CORBA::WString_out &);
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
 
-#if  defined (_MSC_VER)
-// @@ NW: Disable messing with alignment for now.
-// VC++, goes back to other padding rules
-//# pragma pack (pop)
-#endif /* _MSV_VER */
-
 #endif /* TAO_ORB_H */
