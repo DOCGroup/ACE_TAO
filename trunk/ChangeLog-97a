@@ -7,6 +7,10 @@ Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_OS::thr_create () sets errno and returns -1.  So,
 	  its return value should not be used to set errno.
 
+	* ace/OS.cpp (thr_create): fixed PTHREADS_1003_DOT_1C thread
+	  priority logic.  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for the patch.
+
 	* examples/ASX/Event_Server/Event_Server/Makefile,
 	                            Transceiver/Makefile:
 	  added -lGateway to LIBS to pick up its template
@@ -80,7 +84,7 @@ Thu Mar 27 15:54:10 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	  type for priority arg to spawn*() from u_int to long to
 	  support changes in thr_create indicated below.  Thanks to
 	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for these
-	  changes. 
+	  changes.
 
 	* ace/OS.cpp: Ensure that whenever either a priority of a
 	  scheduling policy is set explicitly, with POSIX threads, the
