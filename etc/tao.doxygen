@@ -119,13 +119,14 @@ SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = TAO .
 PREDEFINED            = 
 EXPAND_AS_DEFINED     = ACE_RCSID \
-			ACE_UNIMPLEMENTED_FUNC
+			ACE_UNIMPLEMENTED_FUNC \
+			ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace
+TAGFILES              = html/ace/ACE.tag=../ace
 GENERATE_TAGFILE      = html/tao/TAO.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl

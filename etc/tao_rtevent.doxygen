@@ -127,7 +127,8 @@ SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = TAO/orbsvcs TAO .
 PREDEFINED            = 
 EXPAND_AS_DEFINED     = ACE_RCSID \
-			ACE_UNIMPLEMENTED_FUNC
+			ACE_UNIMPLEMENTED_FUNC \
+			ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references   
