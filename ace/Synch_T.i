@@ -281,7 +281,7 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire (void)
 {
-  return this->lock_.tryacquire ();
+  return this->lock_.release ();
 }
 
 // Acquire the lock.
@@ -295,35 +295,35 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::release (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_read (void)
 {
-  return this->lock_.acquire_read ();
+  return this->lock_.release ();
 }
 
 // Release the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_write (void)
 {
-  return this->lock_.acquire_write ();
+  return this->lock_.release ();
 }
 
 // Release the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
 {
-  return this->lock_.tryacquire_read ();
+  return this->lock_.release ();
 }
 
 // Release the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
 {
-  return this->lock_.tryacquire_write ();
+  return this->lock_.release ();
 }
 
 // Release the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
 {
-  return this->lock_.tryacquire_write_upgrade ();
+  return this->lock_.release ();
 }
 
 #if defined (ACE_HAS_THREADS)

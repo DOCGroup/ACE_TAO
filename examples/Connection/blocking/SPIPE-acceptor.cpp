@@ -61,13 +61,30 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
 IPC_Server::IPC_Server (void)
   : n_threads_ (1),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
+    shutdown_ (0)
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
 IPC_Server::~IPC_Server (void)
 {
+}
+
+int 
+IPC_Server::handle_signal (int signum,
+                           siginfo_t *,
+                           ucontext_t *)
+{
+  ACE_LOG_MSG->log (LM_INFO,
+                    "IPC_Server::handle_signal().\n");
+
+  // Flag the main <svc> loop to shutdown.
+  this->shutdown_ = 1;
+
+  this->acceptor ().close (); // Close underlying acceptor.
+  // This should cause the <accept> to fail, which will "bounce"
+  // us out of the loop in <svc>.
+  return 0;
 }
 
 int
@@ -87,10 +104,9 @@ IPC_Server::init (int argc, char *argv[])
                        "%p\n",
                        "open"), 1);
 
-  // Register to receive shutdowns.
+  // Register to receive shutdowns using this handler.
   else if (ACE_Reactor::instance ()->register_handler
-      (SIGINT,
-       &this->done_handler_) == -1)
+      (SIGINT, this) == -1)
     return -1;
   else
     return 0;
@@ -152,7 +168,7 @@ int
 IPC_Server::svc (void)
 {
   // Performs the iterative server activities.
-  while (ACE_Proactor::event_loop_done() == 0)
+  while (this->shutdown_ == 0)
     {
       Svc_Handler sh;
 		

@@ -170,11 +170,12 @@ Wed Jun 27 22:02:03 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 Wed Jun 27 14:25:48 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/PortableServer/Operation_Table.cpp (find): Enhanced the
- 	error message reported when the lookup of the operation fails; it
- 	now prints out the operation it was looking for along with the
- 	length.  Also set the 'skelfunc' reference argument to zero in
- 	case of an error, insuring that NOT checking the return value and
- 	using the skelfunc will still get an error closer to the problem.
+ 	  error message reported when the lookup of the operation fails;
+ 	  it now prints out the operation it was looking for along with
+ 	  the length.  Also set the 'skelfunc' reference argument to zero
+ 	  in case of an error, insuring that NOT checking the return value
+ 	  and using the skelfunc will still get an error closer to the
+ 	  problem.
 
 Wed Jun 27 15:18:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -353,7 +354,6 @@ Sun Jun 24 08:42:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tests/Oneways_Invoking_Twoways/run_test.pl:
         * tests/Oneways_Invoking_Twoways/run_test_svc.pl: New files for
           the test.
-
 
 Fri Jun 22 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
