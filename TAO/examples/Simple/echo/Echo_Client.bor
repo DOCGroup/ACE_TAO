@@ -2,7 +2,7 @@
 # Makefile for building the Echo example
 #
 
-NAME = Echo_Client
+NAME = client
 
 OBJFILES = \
 	$(OBJDIR)\EchoC.obj \
