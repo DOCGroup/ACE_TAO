@@ -1,3 +1,12 @@
+Fri Nov  8 13:04:10 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug in MPC where the idl file name could cause
+          an error on Windows if it had a slash in it.  It would be
+          converted to a back slash and then interpreted inside a
+          regular expression which would cause MPC to abort.
+
 Fri Nov  8 13:00:56 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
