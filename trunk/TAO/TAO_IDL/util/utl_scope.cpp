@@ -1006,13 +1006,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       // If we have popped up to a parent scope, we
       // must check the other children, if we haven't 
       // had any luck so far.
-      while (d == NULL && scope_offset > 1)
+      if (d == NULL && scope_offset > 1)
         {
           UTL_ScopeActiveIterator *iter = 
             new UTL_ScopeActiveIterator (this,
                                          UTL_Scope::IK_both);
-
-          scope_offset--;
 
           while (!iter->is_done ()) 
             {
@@ -1032,7 +1030,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                                              treat_as_ref,
                                              0,
                                              0,
-                                             scope_offset);
+                                             scope_offset - 1);
                     }
                   else
                     {
@@ -1083,7 +1081,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                                              treat_as_ref, 
                                              in_parent, 
                                              0, 
-                                             ++scope_offset);
+                                             scope_offset + 1);
                     }
                 }
             }
