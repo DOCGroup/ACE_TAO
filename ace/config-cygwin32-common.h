@@ -49,7 +49,6 @@
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_TEMPNAM
 #define ACE_LACKS_MKTEMP
 
 #if ! defined (__ACE_INLINE__)
