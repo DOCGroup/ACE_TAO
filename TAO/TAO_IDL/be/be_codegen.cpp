@@ -1319,6 +1319,9 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       // with additional checks.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueFactory.h");
+
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Any_Impl_T.h");
     }
 
   this->gen_seq_file_includes ();
