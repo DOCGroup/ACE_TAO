@@ -41,7 +41,6 @@ class ACE_Export ACE_Future_Holder
 {
   // = TITLE
   //     Implementation of object which has holds ACE_Future.
-
 public:
   ACE_Future_Holder (const ACE_Future<T> &future);
   ~ACE_Future_Holder (void);
@@ -169,10 +168,6 @@ private:
   //
   // Precondition (rep != 0 && new_rep != 0)
 
-  // = Constructor and destructor private
-  ACE_Future_Rep (void);
-  ~ACE_Future_Rep (void);
-
   int ready (void);
   // Is result available?
 
@@ -194,6 +189,11 @@ private:
   // = Condition variable and mutex that protect the <value_>.
   ACE_Condition_Thread_Mutex value_ready_;
   ACE_Thread_Mutex value_ready_mutex_;
+
+private:
+  // = Constructor and destructor private.
+  ACE_Future_Rep (void);
+  ~ACE_Future_Rep (void);
 };
 
 template <class T>
