@@ -60,7 +60,7 @@
 #define ACE_HAS_LIMITED_RUSAGE_T
 
 // Platform supports IP MULTICAST
-#define ACE_HAS_MULTICAST
+#define ACE_HAS_IP_MULTICAST
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
