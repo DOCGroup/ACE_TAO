@@ -40,19 +40,16 @@
 // An explicit check for Tornado 2.1, which had very limited release.
 // See include/makeinclude/platform_vxworks5.x_g++.GNU for details
 // on version conventions used by ACE for VxWorks.
-# if defined (ACE_VXWORKS)
-#   if ACE_VXWORKS == 0x542
-      // Older versions of Tornado accidentally omitted math routines from
-      // the link library to support long long arithmetic. These could be
-      // found and used from another library in the distro.
-      // Recent versions of Tornado include these symbols, so we no longer
-      // have a problem.
-#     define ACE_LACKS_LONGLONG_T
-#     define ACE_LACKS_CLEARERR
-#   elif ACE_VXWORKS >= 0x542
-#     define ACE_LACKS_AUTO_PTR
-#   endif /* ACE_VXWORKS == 0x542 */
-# endif /* ACE_VXWORKS */
+# if ACE_VXWORKS == 0x542
+    // Older versions of Tornado accidentally omitted math routines from
+    // the link library to support long long arithmetic. These could be
+    // found and used from another library in the distro.
+    // Recent versions of Tornado include these symbols, so we no longer
+    // have a problem.
+#   define ACE_LACKS_LONGLONG_T
+#   define ACE_LACKS_CLEARERR
+#   define ACE_LACKS_AUTO_PTR
+# endif /* ACE_VXWORKS == 0x542 */
 
 #elif defined (ghs)
   // Processor type, if necessary.  Green Hills defines "ppc".
