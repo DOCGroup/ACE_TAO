@@ -24,9 +24,6 @@ Tue Oct 19 12:55:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (llseek):
 
-	  Use native lseek() if _FILE_OFFSET_BITS macro is defined and set
-	  to 64.
-
 	  Reenabled lseek64() on Linux.  If _LARGEFILE64_SOURCE is not
 	  defined then an external declaration for lseek64() is made in
 	  the config-linux-common.h header.
