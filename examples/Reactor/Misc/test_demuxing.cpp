@@ -124,10 +124,12 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   switch (signum)
     {
+#if !defined (ACE_WIN32)
     case SIGALRM:
       // Rearm the alarm.
       ACE_OS::alarm (4);
       break;
+#endif /* !ACE_WIN32 */
     case SIGINT:
       // Tell the ACE_Reactor to enable the ready bit for
       // this->handle_.  The ACE_Reactor will subsequently call the
@@ -137,7 +139,11 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
         (this->handle_,
          ACE_Event_Handler::READ_MASK,
          ACE_Reactor::ADD_MASK);
+#if defined (ACE_WIN32)
+    case SIGTERM:
+#else
     case SIGQUIT:
+#endif /* ACE_WIN32 */
       ACE_Reactor::end_event_loop ();
       break;
     default:
