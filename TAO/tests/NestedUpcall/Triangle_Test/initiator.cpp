@@ -291,14 +291,14 @@ Initiator_Server::~Initiator_Server (void)
 int
 main (int argc, char *argv[])
 {
-  Initiator_Server initiator_Server;
-
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      Initiator_Server initiator_Server;
+
       int retval =
         initiator_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
