@@ -200,6 +200,13 @@ public:
    */
   static int reset_event_loop (void);
 
+  /**
+   * The singleton proactor is used by the <ACE_Service_Config>.
+   * Therefore, we must check for the reconfiguration request and
+   * handle it after handling an event.
+   */
+  static int check_reconfiguration (ACE_Proactor *);
+
   /// Report if the <ACE_Proactor::instance> event loop is finished.
   static int event_loop_done (void);
 
