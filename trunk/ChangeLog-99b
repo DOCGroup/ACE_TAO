@@ -1,21 +1,27 @@
+Fri Jun 11 14:40:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: run the directory mode value through
+          eval, to convert it from octal to decimal, if necessary.
+          Thanks to Russ Noseworthy for providing the patch.
+
 Fri Jun 11 14:31:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp:
-	  Use ACE_HAS_THR_C_DEST for TSS "destructors", not
-	  ACE_HAS_THR_C_FUNC.
+        * ace/Log_Msg.cpp:
+          Use ACE_HAS_THR_C_DEST for TSS "destructors", not
+          ACE_HAS_THR_C_FUNC.
 
 Fri Jun 11 14:13:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: only set
- 	  TEMPLATE_REPOSITORY for Sun C++ 4.2.  5.0 doesn't need it.
-  	  Thanks to Dennis C. De Mars <demars@mminternet.com> for
- 	  reporting this.
+          TEMPLATE_REPOSITORY for Sun C++ 4.2.  5.0 doesn't need it.
+          Thanks to Dennis C. De Mars <demars@mminternet.com> for
+          reporting this.
 
 Fri Jun 11 13:05:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (main): return error status
- 	  from run_event_loop () call.  And, added a few ACE_ERROR
- 	  printouts.  Thanks to Steve for mentioned this.
+          from run_event_loop () call.  And, added a few ACE_ERROR
+          printouts.  Thanks to Steve for mentioned this.
 
         * ace/config-sunos5.5.h: properly reverted all the changes of today.
           The comments are more helpful this way.
@@ -25,8 +31,8 @@ Fri Jun 11 13:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * bin/ACEutils.pm:
         * bin/Process_Unix.pm:
         * bin/Process_Win32.pm: Added new routines to wait for a process
- 	  with a timeout, ditto for the ACE::waitforfile() routine.  They
- 	  can be used to write more reliable test drivers.
+          with a timeout, ditto for the ACE::waitforfile() routine.  They
+          can be used to write more reliable test drivers.
 
 Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -35,14 +41,14 @@ Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Fri Jun 11 10:09:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: ACE_OS::memchr() should return a const void * rather
- 	  than a void *.  Thanks to Rick Weisner
- 	  <rick.weisner@east.sun.com> for reporting this.
+        * ace/OS: ACE_OS::memchr() should return a const void * rather
+          than a void *.  Thanks to Rick Weisner
+          <rick.weisner@east.sun.com> for reporting this.
 
         * ace/Dirent.i: Don't call closedir() on a NULL dirp because some
- 	  platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
- 	  Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
- 	  this out.
+          platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
+          Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
+          this out.
 
 Fri Jun 11 07:31:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
