@@ -1,3 +1,14 @@
+Wed Jul 21 12:55:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        
+          Updated checks for valid name identifier (passed as an 
+          argument to a create_*_tc() method) to conform to the
+          latest CORBA spec (3.0.3, formal/04-03-01) which rejects
+          a null string and accepts an empty string. Thanks to
+          Frank Pilhofer <fp@mc.com> for pointing out that the spec
+          has changed in this regard. Closes [BUGID:1885].
+
 Wed Jul 21 08:55:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnySeqA.cpp:
