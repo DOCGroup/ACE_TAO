@@ -22,7 +22,9 @@
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Exception, "$Id$")
+ACE_RCSID (TAO,
+           Exception,
+           "$Id$")
 
 // Static initializers.
 
@@ -561,28 +563,17 @@ CORBA_SystemException::_info (void) const
     }
   else if (VMCID == TAO_OMG_VMCID)
     {
-      // @@ This case should go into a subroutine too, it will grow
-      //    over time.
-      const char *minor_description = "*unknown description*";
-
       CORBA::ULong minor_code = this->minor () & 0xFFFU;
 
-      if (this->_is_a ("IDL:omg.org/CORBA/BAD_PARAM:1.0"))
-        {
+      const char *minor_description = 0;
 
-          switch (minor_code)
-            {
-            case TAO_OMG_MINOR_BAD_PARAM_10:
-              minor_description =
-                "string_to_object conversion failed due "
-                "to non-specific reason";
-              break;
-            default:
-              break;
-              // @@ We should add all the standard minor codes from
-            }
-        }
-      /* else if (this->is_a ("IDL:omg.org/CORBA/....")) */
+      if (minor_code > 0)
+        minor_description =
+          CORBA::SystemException::_tao_get_omg_exception_description (
+           *this,
+            minor_code);
+      else
+        minor_description = "*unknown description*";
 
       char buffer[BUFSIZ];
       ACE_OS::sprintf (buffer,
@@ -615,6 +606,196 @@ CORBA_SystemException::_info (void) const
     }
 
   return info;
+}
+
+const char *
+CORBA_SystemException::_tao_get_omg_exception_description (
+  const CORBA::SystemException &exc,
+  CORBA::ULong minor_code)
+{
+  static char *UNKNOWN_TABLE[] =
+    {
+        "Unlisted user exception received by client.",    // 1
+        "Non-standard System Exception not supported."    // 2
+    };
+
+  static char *BAD_PARAM_TABLE[] =
+    {
+        "Failure to register, unregister, or lookup value factory." // 1
+        "RID already defined in IFR.",                              // 2
+        "Name already used in the context in IFR.",                 // 3
+        "Target is not a valid container.",                         // 4
+        "Name clash in inherited context.",                         // 5
+        "Incorrect type for abstract interface.",                   // 6
+        "string_to_object conversion failed due to a bad scheme name.", // 7
+        "string_to_object conversion failed due to a bad address.", // 8
+        "string_to_object conversion failed due to a bad schema specific part.",// 9
+        "string_to_object conversion failed due to non specific reason.", // 10
+        "Attempt to derive abstract interface from non-abstract base interface in the Interface Repository.", // 11
+        "Attempt to let a ValueDef support more than one non-abstract interface in the Interface Repository.", // 12
+        "Attempt to use an incomplete TypeCode as a parameter.",    // 13
+        "Invalid object id passed to POA::create_reference_by_id.", // 14
+        "Bad name argument in TypeCode operation.",                 // 15
+        "Bad RepositoryId argument in TypeCode operation.",         // 16
+        "Invalid member namein TypeCode operation.",                // 17
+        "Duplicate label value in create_union_tc.",                // 18
+        "Incompatible TypeCode of label and discriminator in create_union_tc.", // 19
+        "Supplied discriminator type illegitimate in create_union_tc.", // 20
+        "Any passed to ServerRequest::set_exception does not contain an exception.", // 21
+        "Unlisted user exception passed to ServerRequest::set_exception", // 22
+        "Invalid service context ID in portable interceptor.",      // 23
+        "Attempt to call register_initial_reference with a null Object.", // 24
+        "Invalid component ID in portable interceptor.",            // 25
+        "Invalid profile ID in portable interceptor."               // 26
+    };
+
+  static char *IMP_LIMIT_TABLE[] =
+  {
+        "Unable to use any profile in IOR." // 1
+    };
+
+  static char *INV_OBJREF_TABLE[] =
+    {
+        "wchar Code Set support not specified." // 1
+    };
+
+  static char *MARSHAL_TABLE[] =
+    {
+        "Unable to locate value factory.",  // 1
+        "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
+        "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
+        "Attempt to marshal Local object.", // 4
+    };
+
+  static char *BAD_TYPECODE_TABLE[] =
+    {
+        "Attempt to marshal incomplete TypeCode.",             // 1
+        "Member type code illegitimate in TypeCode operation." // 2
+    };
+
+  static char *NO_IMPLEMENT_TABLE[] =
+    {
+        "Missing local value implementation.", // 1
+        "Incompatible value implementation version.", // 2
+        "Unable to use any profile in IOR.", // 3
+        "Attempt to use DII on Local object." // 4
+    };
+
+  static char *NO_RESOURCE_TABLE[] =
+    {
+        "Portable Interceptor operation not support in this binding." // 1
+    };
+
+  static char *BAD_INV_ORDER_TABLE[] =
+    {
+        "Dependency exists in IFR preventing destruction of this object", // 1
+        "Attempt to destroy indestructible objects in IFR.", // 2
+        "Operation would deadlock.",                         // 3
+        "ORB has shutdown.",                                 // 4
+        "Attempt to invoke \"send\" or \"invoke\" operation of the same \"Request\" object more than once.", // 5
+        "Attempt to set a servant manager after one has already been set.", // 6
+        "ServerRequest::arguments called more than once or after a call to ServerRequest::set_exception.", // 7
+        "ServerRequest::ctx called more than once or before ServerRequest::arguments or after ServerRequest::ctx, ServerRequest::set_result or ServerRequest::set_exception.", // 8
+        "ServerRequest::result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
+        "Invalid portable interceptor call",                 // 10
+        "Service context add failed in portable interceptor because a service context with the given id already exists.", // 11
+        "Registration of PolicyFactory failed because a factory already exists for the given type." // 12
+    };
+
+  static char *TRANSIENT_TABLE[] =
+    {
+        "Request discarded due to resource exhaustion in POA.", // 1
+        "Request cancelled."                                    // 2
+    };
+
+  static char *OBJ_ADAPTER_TABLE[] =
+    {
+        "System exception in POA::unknown_adapter.",              // 1
+        "Servant not found [ServantManager].",                    // 2
+        "No default servant available [POA policy].",             // 3
+        "No servant manager available [POA policy].",             // 4
+        "Violation of POA policy by ServantActivator::incarnate." // 5
+    };
+
+  static char *DATA_CONVERSION_TABLE[] =
+    {
+        "Character does not map to negotiated transmission code set." // 1
+    };
+
+  static char *OBJECT_NOT_EXIST_TABLE[] =
+    {
+        "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
+        "POAManager::incarnate failed to create POA." // 2
+    };
+
+  static char *INV_POLICY_TABLE[] =
+    {
+        "Invalid PolicyType.", // 1
+        "No PolicyFactory has been registered for the given PolicyType." // 2
+    };
+
+  if (minor_code == 0)
+    return 0;
+
+  minor_code--;  // Adjust to match table offset.
+
+  if (exc._is_a ("IDL:omg.org/CORBA/UNKNOWN:1.0")
+      && minor_code < sizeof UNKNOWN_TABLE / sizeof (char *))
+    return UNKNOWN_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/BAD_PARAM:1.0")
+      && minor_code < sizeof BAD_PARAM_TABLE / sizeof (char *))
+    return BAD_PARAM_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/IMP_LIMIT:1.0")
+      && minor_code < sizeof IMP_LIMIT_TABLE / sizeof (char *))
+    return IMP_LIMIT_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/INV_OBJREF:1.0")
+      && minor_code < sizeof INV_OBJREF_TABLE / sizeof (char *))
+    return INV_OBJREF_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/MARSHAL:1.0")
+      && minor_code < sizeof MARSHAL_TABLE / sizeof (char *))
+    return MARSHAL_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/BAD_TYPECODE:1.0")
+      && minor_code < sizeof BAD_TYPECODE_TABLE / sizeof (char *))
+    return BAD_TYPECODE_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/NO_IMPLEMENT:1.0")
+      && minor_code < sizeof NO_IMPLEMENT_TABLE / sizeof (char *))
+    return NO_IMPLEMENT_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/NO_RESOURCE:1.0")
+      && minor_code < sizeof NO_RESOURCE_TABLE / sizeof (char *))
+    return NO_RESOURCE_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/BAD_INV_ORDER:1.0")
+      && minor_code < sizeof BAD_INV_ORDER_TABLE / sizeof (char *))
+    return BAD_INV_ORDER_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/TRANSIENT:1.0")
+      && minor_code < sizeof TRANSIENT_TABLE / sizeof (char *))
+    return TRANSIENT_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/OBJ_ADAPTER:1.0")
+      && minor_code < sizeof OBJ_ADAPTER_TABLE / sizeof (char *))
+    return OBJ_ADAPTER_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/DATA_CONVERSION:1.0")
+      && minor_code < sizeof DATA_CONVERSION_TABLE / sizeof (char *))
+    return DATA_CONVERSION_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0")
+      && minor_code < sizeof OBJECT_NOT_EXIST_TABLE / sizeof (char *))
+    return OBJECT_NOT_EXIST_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/INV_POLICY:1.0")
+      && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
+    return INV_POLICY_TABLE[minor_code];
+
+  return 0;
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is
@@ -803,7 +984,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (TRANSACTION_MODE) \
     TAO_SYSTEM_EXCEPTION (TRANSACTION_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (TRANSACTION_ROLLEDBACK) \
-    TAO_SYSTEM_EXCEPTION (INVALID_TRANSACTION)
+    TAO_SYSTEM_EXCEPTION (INVALID_TRANSACTION) \
+    TAO_SYSTEM_EXCEPTION (CODESET_INCOMPATIBLE) \
+    TAO_SYSTEM_EXCEPTION (BAD_QOS)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
