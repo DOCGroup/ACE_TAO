@@ -1,6 +1,5 @@
+// -*- C++ -*-
 // $Id$
-
-// This may look like C, but it's really -*- C++ -*-
 
 ACE_INLINE CORBA_Request_ptr
 CORBA_Request::_duplicate (CORBA_Request_ptr x)
