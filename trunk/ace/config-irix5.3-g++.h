@@ -7,6 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_NEEDS_SYSTIME_H
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 #define ACE_HAS_STRING_CLASS

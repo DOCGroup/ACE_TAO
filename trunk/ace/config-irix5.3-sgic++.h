@@ -13,6 +13,7 @@
 #include <sys/bsd_types.h>
 #define _BSD_TYPES
 
+#define ACE_NEEDS_SYSTIME_H
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
