@@ -1,5 +1,8 @@
-
+/* -*- C++ -*- */
 // $Id$
+
+// NOTE: If you encounter trouble resolving the Naming Service, try
+// running the Naming Service and the server in the same window. [MJB]
 
 #if !defined (TAO_AV_BENCH_CLIENT_H)
 #define TAO_AV_BENCH_CLIENT_H
@@ -14,6 +17,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/High_Res_Timer.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 #define TCP_PORT 5000
 
@@ -41,13 +45,13 @@ public:
   // called after connecting
   
   virtual int handle_start (const AVStreams::flowSpec &the_spec,  
-                             CORBA::Environment &env) ;
+			    CORBA::Environment &env) ;
 
   virtual int handle_stop (const AVStreams::flowSpec &the_spec,
-                            CORBA::Environment &env) ;
+			   CORBA::Environment &env) ;
   
   virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
-                               CORBA::Environment &env);
+			      CORBA::Environment &env);
   
 };
 
@@ -92,7 +96,7 @@ class ttcp_Endpoint_Reactive_Strategy_A
 {
 public:
   ttcp_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
-                                      Client *client_ptr);
+				     Client *client_ptr);
   // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
 
   virtual int make_stream_endpoint (ttcp_Client_StreamEndPoint *& endpoint);
@@ -122,6 +126,8 @@ private:
 
   TAO_ORB_Manager orb_manager_;
 
+  TAO_Naming_Client my_name_client_;
+  
   //  ttcp_Endpoint_Reactive_Strategy_A reactive_strategy_;
 
   TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;

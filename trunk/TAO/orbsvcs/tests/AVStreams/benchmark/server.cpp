@@ -143,19 +143,13 @@ Server::init (int argc,
   PortableServer::POA_var child_poa = 
     this->orb_manager_.child_poa ();
 
-  // Resolve the Naming service reference. 
-
-  CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService");
-  if (CORBA::is_nil (naming_obj.in ()))
+  // Initialize the naming services
+  if (my_name_client_.init (orb, argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Name Service.\n"),
-                      -1);
-
-  this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env,-1);
-
+		       " (%P|%t) Unable to initialize "
+		       "the TAO_Naming_Client. \n"),
+		      -1);  
+  
   // Register the video mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   //                  TAO_MMDevice (&this->process_strategy_),
@@ -174,14 +168,14 @@ Server::init (int argc,
   server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
   
   // Register the video control object with the naming server.
-  this->naming_context_->bind (server_mmdevice_name,
+  this->my_name_client_->bind (server_mmdevice_name,
                                this->mmdevice_->_this (env),
                                env);
 
   if (env.exception () != 0)
     {
       env.clear ();
-      this->naming_context_->rebind (server_mmdevice_name,
+      this->my_name_client_->rebind (server_mmdevice_name,
                               this->mmdevice_->_this (env),
                               env);
       TAO_CHECK_ENV_RETURN (env,-1);
