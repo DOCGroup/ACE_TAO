@@ -112,6 +112,10 @@ typedef struct timespec
 #include <sys/timers.h>
 #endif /* ACE_HAS_POSIX_TIME */
 
+// #if (!defined (timespec) && !defined (m88k))
+// #define timestruc_t struct timespec
+// #endif /* timespec */
+
 #if !defined (ACE_HAS_SVR4_TIME)
 // Definition per SVr4.
 typedef struct timespec timestruc_t;	

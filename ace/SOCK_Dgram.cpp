@@ -34,7 +34,8 @@ ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
     return -1;
   else if (inlen > 0)
     {
-      io_vec->iov_base = new char[inlen];
+      ACE_NEW_RETURN (io_vec->iov_base, char[inlen], -1);
+
       io_vec->iov_len = ACE_OS::recvfrom (this->get_handle (),
 					  io_vec->iov_base, 
 					  inlen, 

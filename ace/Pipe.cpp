@@ -53,10 +53,10 @@ ACE_Pipe::open (void)
       
   int one = 1;
   // Make sure that the TCP stack doesn't try to buffer small writes.
-  if (this->ACE_SOCK::set_option (IPPROTO_TCP,
-				  TCP_NODELAY,
-				  &one,
-				  sizeof one) == -1)
+  // Since this communication is purely local to the host it doesn't
+  // affect network performance.
+  if (writer.set_option (IPPROTO_TCP, TCP_NODELAY,
+			 &one, sizeof one) == -1)
     return -1;
 
   // Close down the acceptor endpoint since we don't need it anymore.
