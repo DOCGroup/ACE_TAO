@@ -80,7 +80,7 @@ void
 be_interface::compute_coll_name (int type)
 {
 // @@ not thread safe.
-  static cached_type = -1;
+  static int cached_type = -1;
   if (type == cached_type && this->full_coll_name_ != 0)
     return;
   else
