@@ -2245,7 +2245,7 @@ namespace CIAO
 
     void Plan_Handler::update_mdd_refs (Deployment::DeploymentPlan& plan)
     {
-/*      CORBA::ULong x;
+      CORBA::ULong x;
       CORBA::ULong y;
       int ref_value;
       int orig_value;
@@ -2253,49 +2253,44 @@ namespace CIAO
 
       for (x = 0; x < plan.implementation.length (); ++x)
         {
-          for (y = 0; y < plan.implementation[x].artifact.length (); ++y)
+          for (y = 0; y < plan.implementation[x].artifactRef.length (); ++y)
             {
-              ref_value = plan.implementation[x].artifact[y];
+              ref_value = plan.implementation[x].artifactRef[y];
               if (idref_map_.find (ref_value, ref_name) == 0)
                 {
                   if (id_map_.find (ref_name, orig_value) == 0)
                     {
-                      plan.implementation[x].artifact[y] = orig_value;
+                      plan.implementation[x].artifactRef[y] = orig_value;
                     }
                 }
             }  
         }
-*/   }
+   }
 
     void Plan_Handler::update_idd_refs (Deployment::DeploymentPlan& plan)
     {
-/*      CORBA::ULong x;
-      CORBA::ULong y;
+      CORBA::ULong x;
       int ref_value;
       int orig_value;
       ACE_TString ref_name;
 
       for (x = 0; x < plan.instance.length (); ++x)
         {
-          for (y = 0; y < plan.instance[x].implementation.length (); ++y)
+          ref_value = plan.instance[x].implementationRef;
+          if (idref_map_.find (ref_value, ref_name) == 0)
             {
-              ref_value = plan.instance[x].implementation[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
+              if (id_map_.find (ref_name, orig_value) == 0)
                 {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      plan.instance[x].implementation[y] = orig_value;
-                    }
+                  plan.instance[x].implementationRef = orig_value;
                 }
-            }  
+            }
         }
-*/    }
+    }
 
     void Plan_Handler::update_pspe_refs (Deployment::DeploymentPlan& plan)
     {
-/*      CORBA::ULong x;
+      CORBA::ULong x;
       CORBA::ULong y;
-      CORBA::ULong z;
       int ref_value;
       int orig_value;
       ACE_TString ref_name;
@@ -2304,31 +2299,24 @@ namespace CIAO
         {
           for (y = 0; y < plan.connection[x].internalEndpoint.length (); ++y)
             {
-              for (z = 0; 
-                   z < plan.connection[x].internalEndpoint[y].
-                       instance.length ();
-                   ++z)
+              ref_value = plan.connection[x].internalEndpoint[y].
+                          instanceRef;
+              if (idref_map_.find (ref_value, ref_name) == 0)
                 {
-                  ref_value = plan.connection[x].internalEndpoint[y].
-                              instance[z];
-                  if (idref_map_.find (ref_value, ref_name) == 0)
+                  if (id_map_.find (ref_name, orig_value) == 0)
                     {
-                      if (id_map_.find (ref_name, orig_value) == 0)
-                        {
-                          plan.connection[x].internalEndpoint[y].
-                          instance[z] = orig_value;
-                        }
+                      plan.connection[x].internalEndpoint[y].
+                      instanceRef = orig_value;
                     }
                 }
             }  
         }
-*/    }
+    }
 
     void Plan_Handler::update_pspr_refs (Deployment::DeploymentPlan& plan)
     {
-/*      CORBA::ULong x;
+      CORBA::ULong x;
       CORBA::ULong y;
-      CORBA::ULong z;
       int ref_value;
       int orig_value;
       ACE_TString ref_name;
@@ -2337,25 +2325,19 @@ namespace CIAO
         {
           for (y = 0; y < plan.externalProperty[x].delegatesTo.length (); ++y)
             {
-              for (z = 0; 
-                   z < plan.externalProperty[x].delegatesTo[y].
-                       instance.length ();
-                   ++z)
+              ref_value = plan.externalProperty[x].delegatesTo[y].
+                          instanceRef;
+              if (idref_map_.find (ref_value, ref_name) == 0)
                 {
-                  ref_value = plan.externalProperty[x].delegatesTo[y].
-                              instance[z];
-                  if (idref_map_.find (ref_value, ref_name) == 0)
+                  if (id_map_.find (ref_name, orig_value) == 0)
                     {
-                      if (id_map_.find (ref_name, orig_value) == 0)
-                        {
-                          plan.externalProperty[x].delegatesTo[y].
-                          instance[z] = orig_value;
-                        }
+                      plan.externalProperty[x].delegatesTo[y].
+                      instanceRef = orig_value;
                     }
                 }
             }  
         }
-*/    }
+    }
 
   }
 }
