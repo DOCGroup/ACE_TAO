@@ -38,6 +38,7 @@ module PortableGroup {
 
   typedef CORBA::RepositoryId _TypeId;
   typedef Object ObjectGroup;
+  typedef sequence<ObjectGroup> ObjectGroups;
   typedef CosNaming::Name Name;
   typedef any Value;
 
@@ -152,6 +153,8 @@ module PortableGroup {
 
     Locations locations_of_members (in ObjectGroup object_group)
       raises (ObjectGroupNotFound);
+
+    ObjectGroups groups_at_location (in Location the_location);
 
     ObjectGroupId get_object_group_id (in ObjectGroup object_group)
       raises (ObjectGroupNotFound);

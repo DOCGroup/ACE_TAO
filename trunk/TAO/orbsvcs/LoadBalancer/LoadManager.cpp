@@ -180,7 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       props.length (1);
       props[0].nam.length (1);
       props[0].nam[0].id =
-        CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy");
+        CORBA::string_dup ("org.omg.CosLoadBalancing.StrategyInfo");
 
       CosLoadBalancing::StrategyInfo strategy_info;
 

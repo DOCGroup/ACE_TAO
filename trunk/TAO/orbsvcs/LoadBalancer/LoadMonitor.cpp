@@ -214,8 +214,8 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
         monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      manager->register_load_monitor (monitor,
-                                      location.in ()
+      manager->register_load_monitor (location.in (),
+                                      monitor
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

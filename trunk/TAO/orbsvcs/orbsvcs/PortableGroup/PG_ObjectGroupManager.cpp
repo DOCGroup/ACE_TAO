@@ -332,6 +332,40 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   return locations._retn ();
 }
 
+PortableGroup::ObjectGroups *
+TAO_PG_ObjectGroupManager::groups_at_location (
+    const PortableGroup::Location & the_location
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableGroup::ObjectGroups * ogs;
+  ACE_NEW_THROW_EX (ogs,
+                    PortableGroup::ObjectGroups,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  PortableGroup::ObjectGroups_var object_groups = ogs;
+
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+
+  TAO_PG_ObjectGroup_Array * groups;
+  if (this->location_map_.find (the_location, groups) == 0)
+    {
+      const CORBA::ULong len = groups->size ();
+
+      ogs->length (len);
+
+      for (CORBA::ULong i = 0; i < len; ++i)
+        {
+          object_groups[i] =
+            PortableGroup::ObjectGroup::_duplicate (
+              (*groups)[i]->object_group.in ());
+        }
+    }
+
+  return object_groups._retn ();
+}
+
 PortableGroup::ObjectGroupId
 TAO_PG_ObjectGroupManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group
