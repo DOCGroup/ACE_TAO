@@ -2443,6 +2443,7 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_UNUSED_ARG (sa);
+#if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_init (m, 0, name, arg);
 #else
@@ -2457,11 +2458,18 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
       return 0;
     }
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_destroy (m);
 #else
@@ -2472,11 +2480,16 @@ ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
   else
     return 0;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_lock (m);
 #else
@@ -2516,11 +2529,16 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
   errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_trylock (m);
 #else
@@ -2554,11 +2572,16 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
   errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_unlock (m);
 #else
@@ -2600,6 +2623,10 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
