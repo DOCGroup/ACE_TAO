@@ -1,7 +1,10 @@
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* examples/Reactor/Proactor/Makefile: 	
+	New make file which also compiles the test_aiosig_ace.cpp
+	program. 		
+		
 	* ace/POSIX_Asynch_IO.i: 
-
 	rTagged the ACE_wrappers repository with <before_proactor>
 	After the following changes rtagged the repository with
 	<after_proactor> 
@@ -36,7 +39,6 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 		test_aiosig.cpp
 		test_aiosig_ace.cpp
 		README
-
 	Test files for testing out the platforms. 
 
 Mon Feb 15 13:17:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
