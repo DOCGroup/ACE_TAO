@@ -232,9 +232,6 @@ ACE_Thread_Manager::close_singleton (void)
 
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
-#if defined (ACE_WIN32)
-      ACE_Thread_Manager::thr_mgr_->wait_on_exit (0);
-#endif /* ACE_WIN32 */
       // First, we clean up the thread descriptor list.
       ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
@@ -256,17 +253,8 @@ ACE_Thread_Manager::close ()
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-      ACE_Thread_Descriptor *td;
-      while ((td = this->thr_list_.delete_head ()) != 0)
-        {
-#if defined (ACE_WIN32)
-          // We need to let go handles if we want to let the threads
-          // run wild.
-          // @@ Do we need to close down AIX thread handles too?
-          ::CloseHandle (td->thr_handle_);
-#endif /* ACE_WIN32 */
-          delete td;
-        }
+
+      this->remove_thr_all ();
     }
 
   return 0;
@@ -795,6 +783,27 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #endif /* ACE_HAS_THREADS */
 }
 
+// Repeatedly call remove_thr on all table entries until there
+// is no thread left.   Must be called with lock held.
+
+void
+ACE_Thread_Manager::remove_thr_all (void)
+{
+  ACE_Thread_Descriptor *td;
+
+  while ((td = this->thr_list_.delete_head ()) != 0)
+    {
+#if defined (ACE_WIN32)
+      // We need to let go handles if we want to let the threads
+      // run wild.
+      // @@ Do we need to close down AIX thread handles too?
+      ::CloseHandle (td->thr_handle_);
+#endif /* ACE_WIN32 */
+      delete td;
+    }
+
+}
+
 // ------------------------------------------------------------------
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
@@ -1299,28 +1308,36 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    if (abandon_detached_threads != 0)
+    if (ACE_Object_Manager::shutting_down () != 1)
       {
-	ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
-	for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-	     !iter.done ();
-	     iter.advance ())
-	  if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
-	      ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
-	    this->thr_to_be_removed_.enqueue_tail (iter.next ());
-
-	if (! this->thr_to_be_removed_.is_empty ())
+	// Program is not shutting down.  Perform a normal wait on threads.
+	if (abandon_detached_threads != 0)
 	  {
-	    ACE_Thread_Descriptor *td;
-	    while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-	      this->remove_thr (td, 0);
+	    ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
+	    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+		   iter (this->thr_list_);
+		 !iter.done ();
+		 iter.advance ())
+	      if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
+		  ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
+		this->thr_to_be_removed_.enqueue_tail (iter.next ());
+
+	    if (! this->thr_to_be_removed_.is_empty ())
+	      {
+		ACE_Thread_Descriptor *td;
+		while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+		  this->remove_thr (td, 1);
+	      }
 	  }
+
+	while (this->thr_list_.size () > 0)
+	  if (this->zero_cond_.wait (timeout) == -1)
+	    return -1;
       }
-
-    while (this->thr_list_.size () > 0)
-      if (this->zero_cond_.wait (timeout) == -1)
-        return -1;
-
+    else
+	// Program is shutting down, no chance to wait on threads.
+	// Therefore, we'll just remove threads from the list.
+	this->remove_thr_all ();
     // Release the guard, giving other threads a chance to run.
   }
 
