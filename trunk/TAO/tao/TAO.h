@@ -21,7 +21,6 @@
 #define	TAO_H
 
 #include "tao/corba.h"
-#include "tao/Object_KeyC.h"
 
 class TAO_Export TAO_ORB_Manager
 {
@@ -94,12 +93,11 @@ class TAO
   // = TITLE
   //   Defines a namespace for externally visible TAO extensions.
 public:
-  // From objkeyC
-  typedef ObjectKey TAO_ObjectKey;
-  typedef ObjectKey_var TAO_ObjectKey_var;
-  typedef ObjectKey_out TAO_ObjectKey_out;
+  // From Object_KeyC.h
+  typedef TAO_ObjectKey ObjectKey;
+  typedef TAO_ObjectKey_var ObjectKey_var;
+  typedef TAO_ObjectKey_out ObjectKey_out;
 
-  // From tao_util
   typedef TAO_ORB_Manager ORB_Manager;
 
   ACE_CLASS_IS_NAMESPACE (TAO);
