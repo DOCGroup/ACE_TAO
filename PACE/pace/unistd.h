@@ -312,7 +312,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_isatty (PACE_HANDLE fildes);
+  PACE_INLINE int pace_isatty (int fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -330,7 +330,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.5.3.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE pace_off_t pace_lseek (PACE_HANDLE fildes, off_t offset, int whence);
+  PACE_INLINE pace_off_t pace_lseek (int fildes, off_t offset, int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
