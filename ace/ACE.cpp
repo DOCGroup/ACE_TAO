@@ -437,11 +437,11 @@ u_long ACE::crc_table_[] =
 // computes the CRC for it (it stops on the first '\0' character).
 
 // UNICOS UINT32's are 64-bit on the Cray PVP architecture
-#if !defined(_UNICOS)
-#  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
-#else /* ! _UNICOS */
+#if defined(_UNICOS) || (ACE_SIZEOF_LONG == 8)
 #  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
-#endif /* ! _UNICOS */
+#else /* _UNICOS */
+#  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
+#endif /* _UNICOS */
 
 u_long
 ACE::crc32 (const char *string)

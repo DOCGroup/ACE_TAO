@@ -133,7 +133,12 @@ ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1
 else
 ifeq ($(buildbits),64)
-CCFLAGS		+= +DA2.0 +DS2.0
+  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+    ## Without the W, it isn't really a 64-bit build
+    CCFLAGS     += +DA2.0W +DS2.0W
+  else
+    CCFLAGS     += +DA2.0 +DS2.0
+  endif
 LDFLAGS		+= -Wl,+vnocompatwarnings
 else
 CCFLAGS         += +DAportable
@@ -148,7 +153,9 @@ ifeq ($(word 2,$(HPVERS_WORDS)), 11)
 
 #11.x:
 ifeq ($(threads),1)
-LIBS		+= -lxti -lpthread -lrt -ldld
+## -L./ must directly preceed the system libraries for 64-bit builds
+## with aCC 3.27.  Without this change, libpthread.sl can not be found.
+LIBS		+= -L./ -lxti -lpthread -lrt -ldld
 else
 LIBS		+= -lxti -lrt -ldld
 endif
