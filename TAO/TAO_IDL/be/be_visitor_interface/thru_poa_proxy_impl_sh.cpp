@@ -61,7 +61,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (be_interface *node
     *os << node->thru_poa_proxy_impl_name () << " (void);" << be_nl << be_nl;
 
     // Dtor
-    *os << "virtual ~" << node->thru_poa_proxy_impl_name () << " (void);" << be_nl << be_nl;
+    *os << "virtual ~" << node->thru_poa_proxy_impl_name () << " (void) { }" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {

@@ -1,8 +1,23 @@
+Sun Nov 26 01:07:11 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+
+	  Made definition of the destructor for the proxy broker at the
+	  same time of the declaration.
+	  The only reason why this was done was to fix some weird link
+	  problem that gcc-2.72 was having with the current implementation.
+
 Sat Nov 25 21:28:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/Simple.{h,cpp}:
 	* orbsvcs/tests/Notify/Basic/Makefile:
-	
+
 	  Added simple test to show how to use Anys in Notify Service.
 
 Sat Nov 25 21:09:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -21,8 +36,8 @@ Sat Nov 25 21:09:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  problem. The problem was the wrong order in which we were
 	  destroying the handlers and purging the handler from the cache
 	  map. We need to purgethe handler first and then destroy the
-	  handlers. 
-	
+	  handlers.
+
 Sat Nov 25 20:59:07 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
@@ -32,7 +47,7 @@ Sat Nov 25 20:59:07 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.{h,cpp}:
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
 	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
-	
+
 	  Fixed incorrect procedure to destroy event channel.
 	  Thanks to Walt Corey<wcorey@ibm.net> for reporting this problem.
 
@@ -47,11 +62,11 @@ Sat Nov 25 15:06:16 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 Fri Nov 24 19:21:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
-	  
+
 	  Minor Aesthetic fixes for the generated code.
-	
+
 	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
-	  
+
 	  Added implementation of the default ctor, that was chopped away
 	  while fixing the indentation.
 

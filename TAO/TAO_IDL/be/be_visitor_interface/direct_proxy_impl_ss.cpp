@@ -36,12 +36,12 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (be_interface *node)
   *os << node->full_direct_proxy_impl_name () << "::"
       << node->direct_proxy_impl_name () << " (void)"
       << be_nl << "{}" << be_nl << be_nl;
-
+  /*
   // Dtor Implementation
   *os << node->full_direct_proxy_impl_name () << "::"
       << "~" << node->direct_proxy_impl_name () << " (void)"
       << be_nl << "{}" << be_nl << be_nl;
-
+  */
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
