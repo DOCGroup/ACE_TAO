@@ -110,28 +110,30 @@ class Test
 public:
   static void run (CORBA::ORB_ptr orb, 
 		   char *IOR,
-		   CORBA::Environment &env)
+		   CORBA::Environment &ACE_TRY_ENV)
   {
     if (IOR != 0)
       {
         // Get an object reference from the argument string.
-        CORBA::Object_var object = orb->string_to_object (IOR, env);
+        CORBA::Object_var object = orb->string_to_object (IOR, ACE_TRY_ENV);
+        ACE_CHECK;
 
-        if (env.exception () != 0)
+        /*if (env.exception () != 0)
           {
             env.print_exception ("CORBA::ORB::string_to_object");
             return;
           }
-
+        */
         // Try to narrow the object reference to a reference.
-        T_var foo = T::_narrow (object.in (), env);
+        T_var foo = T::_narrow (object.in (), ACE_TRY_ENV);
+        ACE_CHECK;
       
-        if (env.exception () != 0)
+        /*if (env.exception () != 0)
           {
             env.print_exception ("_narrow");
             return;
           }
-
+        */
         ACE_Profile_Timer timer;
         ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
@@ -140,10 +142,11 @@ public:
 
         CORBA::Long result = 0;
         int i = 0;
-        for (i = 0; i < iterations && env.exception () == 0; i++)
+        for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = foo->doit (env);
+            result = foo->doit (ACE_TRY_ENV);
+            ACE_CHECK;
           }
      
         // stop the timer.
@@ -153,12 +156,12 @@ public:
         // compute average time.
         print_stats (elapsed_time, i);
 
-        if (env.exception () != 0)
+        /*if (env.exception () != 0)
           {
             env.print_exception ("doit");
             return;
           }
-  
+        */
         // Print the result of doit () method on the reference.
         ACE_DEBUG ((LM_DEBUG,
                     "%d\n",
@@ -170,47 +173,60 @@ public:
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  //CORBA::Environment env;
 
-  // Initialize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-  if (env.exception () != 0)
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
+        // Initialize the ORB
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      // Initialize options based on command-line arguments.
+      int parse_args_result = parse_args (argc, argv);
+      if (parse_args_result != 0)
+        return parse_args_result;
+  
+      int i = 1;
+
+      Test<A, A_var>::run (orb.in (), 
+                           IOR[i++], 
+                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      Test<Outer::B, Outer::B_var>::run (orb.in (), 
+                                         IOR[i++], 
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
+                                                       IOR[i++], 
+                                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      Test<A, A_var>::run (orb.in (),
+                           IOR[i++], 
+                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      Test<Outer::B, Outer::B_var>::run (orb.in (), 
+                                         IOR[i++], 
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
+                                                       IOR[i++], 
+                                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception Caught in main");
       return -1;
     }
-
-  // Initialize options based on command-line arguments.
-  int parse_args_result = parse_args (argc, argv);
-  if (parse_args_result != 0)
-    return parse_args_result;
-  
-  int i = 1;
-
-  Test<A, A_var>::run (orb.in (), 
-                       IOR[i++], 
-                       env);
-
-  Test<Outer::B, Outer::B_var>::run (orb.in (), 
-                                     IOR[i++], 
-                                     env);
-
-  Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
-                                                   IOR[i++], 
-                                                   env);
-
-  Test<A, A_var>::run (orb.in (),
-                       IOR[i++], 
-                       env);
-
-  Test<Outer::B, Outer::B_var>::run (orb.in (), 
-                                     IOR[i++], 
-                                     env);
-
-  Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
-                                                   IOR[i++], 
-                                                   env);
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
