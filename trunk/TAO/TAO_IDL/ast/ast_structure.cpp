@@ -546,16 +546,16 @@ IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Structure)
 IMPL_NARROW_FROM_SCOPE(AST_Structure)
 
-// ACE_node<AST_Decl *> is already in AST_Module.cpp.
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<AST_Field *>;
 template class ACE_Unbounded_Queue<AST_Field *>;
+template class ACE_Unbounded_Queue_Iterator<AST_Field *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<AST_Decl *>
 #pragma instantiate ACE_Unbounded_Queue<AST_Decl *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Decl *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
