@@ -1,3 +1,8 @@
+Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* release.pl: This script will now move the 'Current' tag to
+	  point to the latest beta release.
+
 Sun Mar  1 10:40:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/{poa, objtable}.cpp: Removed the "Anachronism" warning
