@@ -1,5 +1,11 @@
 // $Id$
 
+ACE_INLINE ACE_Lock &
+TAO_POA_Manager::lock (void)
+{
+  return *this->lock_;
+}
+
 ACE_INLINE void
 TAO_POA_Manager::activate (CORBA_Environment &ACE_TRY_ENV)
 {
@@ -40,12 +46,6 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
   this->deactivate_i (etherealize_objects,
                       wait_for_completion,
                       ACE_TRY_ENV);
-}
-
-ACE_INLINE ACE_Lock &
-TAO_POA_Manager::lock (void)
-{
-  return *this->lock_;
 }
 
 ACE_INLINE TAO_POA_Manager *
