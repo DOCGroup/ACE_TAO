@@ -66,32 +66,32 @@ ACE_RCSID(tao, GIOP, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_GIOP_Timeprobe_Description[] =
-  {
-    "GIOP::send_request - start",
-    "GIOP::send_request - end",
+{
+  "GIOP::send_request - start",
+  "GIOP::send_request - end",
 
-    "GIOP::read_buffer - start",
-    "GIOP::read_buffer - end",
+  "GIOP::read_buffer - start",
+  "GIOP::read_buffer - end",
 
-    "GIOP::LocateRequestHeader_init - start",
-    "GIOP::LocateRequestHeader_init - end"
-  };
+  "GIOP::LocateRequestHeader_init - start",
+  "GIOP::LocateRequestHeader_init - end"
+};
 
 enum
-  {
-    // Timeprobe description table start key
-    TAO_GIOP_SEND_REQUEST_START = 100,
-    TAO_GIOP_SEND_REQUEST_END,
+{
+  // Timeprobe description table start key
+  TAO_GIOP_SEND_REQUEST_START = 100,
+  TAO_GIOP_SEND_REQUEST_END,
 
-    TAO_GIOP_RECV_MESSAGE_START,
-    TAO_GIOP_RECV_MESSAGE_END,
+  TAO_GIOP_RECV_MESSAGE_START,
+  TAO_GIOP_RECV_MESSAGE_END,
 
-    TAO_GIOP_READ_BUFFER_START,
-    TAO_GIOP_READ_BUFFER_END,
+  TAO_GIOP_READ_BUFFER_START,
+  TAO_GIOP_READ_BUFFER_END,
 
-    TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
-    TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
-  };
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
+};
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
@@ -117,13 +117,18 @@ TAO_GIOP_MessageHeader::TAO_GIOP_MessageHeader (void)
     message_type (TAO_GIOP::MessageError),
     message_size (0)
 {
+  // Note that we need to use the ASCII values so the code will be
+  // portable to platforms that use different character sets, such as
+  // MVS (which uses EBCDIC).
   this->magic[0] = 0x47;   // 'G'
   this->magic[1] = 0x49;   // 'I'
   this->magic[2] = 0x4f;   // 'O'
   this->magic[3] = 0x50;   // 'P'
 
-  giop_version.major = TAO_GIOP_MessageHeader::MY_MAJOR;
-  giop_version.minor = TAO_GIOP_MessageHeader::MY_MINOR;
+  giop_version.major =
+    TAO_GIOP_MessageHeader::MY_MAJOR;
+  giop_version.minor =
+    TAO_GIOP_MessageHeader::MY_MINOR;
 }
 
 void
@@ -151,42 +156,47 @@ TAO_GIOP::dump_msg (const char *label,
         {
           // @@ Only works if ServiceContextList is empty....
           const CORBA::ULong *request_id =
-            ACE_reinterpret_cast(const CORBA::ULong*,
-                                 ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG, " = %d\n", *request_id));
+            ACE_reinterpret_cast (const CORBA::ULong *,
+                                  ptr + TAO_GIOP_HEADER_LEN + 4);
+          ACE_DEBUG ((LM_DEBUG,
+                      " = %d\n",
+                      *request_id));
         }
       else if (ptr[7] == TAO_GIOP::Reply)
         {
           const CORBA::ULong *request_id =
-            ACE_reinterpret_cast(const CORBA::ULong*,
-                                 ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG, " = %d\n", *request_id));
+            ACE_reinterpret_cast (const CORBA::ULong *,
+                                  ptr + TAO_GIOP_HEADER_LEN + 4);
+          ACE_DEBUG ((LM_DEBUG,
+                      " = %d\n",
+                      *request_id));
         }
       else
-        ACE_DEBUG ((LM_DEBUG, "\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n"));
 
       if (TAO_debug_level >= 10)
         ACE_HEX_DUMP ((LM_DEBUG,
-                       (const char*)ptr,
+                       (const char *) ptr,
                        len,
                        "GIOP message"));
     }
 }
 
 CORBA::Boolean
-operator<<(TAO_OutputCDR &cdr,
-           const TAO_GIOP_ServiceContext &x)
+operator<< (TAO_OutputCDR &cdr,
+            const TAO_GIOP_ServiceContext &x)
 {
   if (cdr << x.context_id
-       && cdr << x.context_data)
+      && cdr << x.context_data)
     return 1;
   else
     return 0;
 }
 
 CORBA::Boolean
-operator>>(TAO_InputCDR &cdr,
-           TAO_GIOP_ServiceContext &x)
+operator>> (TAO_InputCDR &cdr,
+            TAO_GIOP_ServiceContext &x)
 {
   if (cdr >> x.context_id
       && cdr >> x.context_data)
@@ -212,8 +222,8 @@ operator<< (TAO_OutputCDR &cdr,
 }
 
 CORBA::Boolean
-operator>>(TAO_InputCDR &cdr,
-           TAO_GIOP_ServiceContextList &x)
+operator>> (TAO_InputCDR &cdr,
+            TAO_GIOP_ServiceContextList &x)
 {
   CORBA::ULong length;
 
@@ -237,9 +247,11 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
                          TAO_ORB_Core* orb_core)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::start_message_lite (type, msg);
+    return TAO_GIOP::start_message_lite (type,
+                                         msg);
   else
-    return TAO_GIOP::start_message_std (type, msg);
+    return TAO_GIOP::start_message_std (type,
+                                        msg);
 }
 
 CORBA::Boolean
@@ -247,7 +259,7 @@ TAO_GIOP::write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
                                 CORBA::ULong request_id,
                                 CORBA::Boolean is_roundtrip,
                                 const TAO_opaque& key,
-                                const char* opname,
+                                const char *opname,
                                 CORBA::Principal_ptr principal,
                                 TAO_OutputCDR &msg,
                                 TAO_ORB_Core *orb_core)
@@ -283,7 +295,6 @@ TAO_GIOP::write_locate_request_header (CORBA::ULong request_id,
   return 1;
 }
 
-
 int
 TAO_GIOP::send_message (TAO_Transport *transport,
                         TAO_OutputCDR &stream,
@@ -292,8 +303,12 @@ TAO_GIOP::send_message (TAO_Transport *transport,
 
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
-  char *buf = (char *) stream.buffer (); // ptr to first buffer
-  size_t total_len = stream.total_length ();  // length of all buffers
+  // Ptr to first buffer.
+  char *buf = (char *) stream.buffer (); 
+
+  // Length of all buffers.
+  size_t total_len =
+    stream.total_length ();  
 
   // assert (buflen == (stream.length - stream.remaining));
 
@@ -309,15 +324,14 @@ TAO_GIOP::send_message (TAO_Transport *transport,
 
   size_t header_len = TAO_GIOP_HEADER_LEN;
   // Fred: this is actually a good start to think about pluggable
-  //       "messaging protocols" (maybe this is a bad name, but I want
-  //       to stress the difference with the pluggable "transport
-  //       protocols" that you recently completed).
-  //       For example: it seems that the transport layer needs to
-  //       know the size of the header and somehow needs to determine
-  //       the size of the message from that header, this could be
-  //       virtual methods in the MessagingProtocol class.
-  //       Just a wild thought..... Carlos
-  //
+  // "messaging protocols" (maybe this is a bad name, but I want to
+  // stress the difference with the pluggable "transport protocols"
+  // that you recently completed).  For example: it seems that the
+  // transport layer needs to know the size of the header and somehow
+  // needs to determine the size of the message from that header, this
+  // could be virtual methods in the MessagingProtocol class.  Just a
+  // wild thought..... Carlos
+
   size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
   if (orb_core->orb_params ()->use_lite_protocol ())
     {
@@ -328,7 +342,7 @@ TAO_GIOP::send_message (TAO_Transport *transport,
   CORBA::ULong bodylen = total_len - header_len;
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
+  *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
 #else
   if (!stream->do_byte_swap ())
     *ACE_reinterpret_cast (CORBA::ULong *,
@@ -344,21 +358,21 @@ TAO_GIOP::send_message (TAO_Transport *transport,
   // versions seem to need it though.  Leaving it costs little.
 
   TAO_GIOP::dump_msg ("send",
-                      ACE_reinterpret_cast (u_char *, buf),
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
                       stream.length ());
 
-  // this guarantees to send all data (bytes) or return an error
+  // This guarantees to send all data (bytes) or return an error.
   ssize_t n = transport->send (stream.begin ());
 
   if (n == -1)
     {
       if (TAO_orbdebug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO: (%P|%t) closing conn %d after fault %p\n",
-                      transport->handle (),
-                      "GIOP::send_request ()"));
-      }
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO: (%P|%t) closing conn %d after fault %p\n",
+                    transport->handle (),
+                    "GIOP::send_request ()"));
+
     transport->close_connection ();
     return -1;
   }
@@ -367,12 +381,10 @@ TAO_GIOP::send_message (TAO_Transport *transport,
   if (n == 0)
     {
       if (TAO_orbdebug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO: (%P|%t) GIOP::send_request () "
-                      "EOF, closing conn %d\n",
-                      transport->handle()));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO: (%P|%t) GIOP::send_request () "
+                    "EOF, closing conn %d\n",
+                    transport->handle()));
       transport->close_connection ();
       return -1;
     }
@@ -398,8 +410,12 @@ TAO_GIOP::send_message (TAO_Transport *transport,
 // static CORBA::Octet
 static const char close_message [TAO_GIOP_HEADER_LEN] =
 {
-  // 'G', 'I', 'O', 'P',
-  0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
+  // The following works on non-ASCII platforms, such as MVS (which
+  // uses EBCDIC).
+  0x47, // 'G'
+  0x49, // 'I'
+  0x4f, // 'O' 
+  0x50, // 'P'
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
@@ -408,7 +424,8 @@ static const char close_message [TAO_GIOP_HEADER_LEN] =
 };
 
 void
-TAO_GIOP::close_connection (TAO_Transport *transport, void *)
+TAO_GIOP::close_connection (TAO_Transport *transport,
+                            void *)
 {
   // It's important that we use a reliable shutdown after we send this
   // message, so we know it's received.
@@ -422,17 +439,17 @@ TAO_GIOP::close_connection (TAO_Transport *transport, void *)
 
   // @@ Carlos, can you please check the return value on this?
   ACE_HANDLE which = transport->handle ();
-  if (transport->send ((const u_char *) close_message, TAO_GIOP_HEADER_LEN) == -1)
-  {
+  if (transport->send ((const u_char *) close_message,
+                       TAO_GIOP_HEADER_LEN) == -1)
     if (TAO_orbdebug)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) error closing connection %d\n",
-                    which));
-  }
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) error closing connection %d\n",
+                  which));
 
   transport->close_connection ();
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) shut down transport, handle %d\n", which));
+              "(%P|%t) shut down transport, handle %d\n",
+              which));
 }
 
 // Send an "I can't understand you" message -- again, the message is
@@ -468,12 +485,12 @@ TAO_GIOP::send_error (TAO_Transport *transport)
   // it's reply checked?
   if (transport->send ((const u_char *)error_message,
                        TAO_GIOP_HEADER_LEN) == -1)
-  {
-    if (TAO_orbdebug != 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) error sending error to %d\n",
-                  which));
-  }
+    {
+      if (TAO_orbdebug != 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) error sending error to %d\n",
+                    which));
+    }
 }
 
 ssize_t
@@ -486,15 +503,14 @@ TAO_GIOP::read_buffer (TAO_Transport *transport,
   ssize_t bytes_read = transport->recv (buf, len);
 
   if (bytes_read <= 0 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - %p,\n"
-                  "              transport = %d, "
-                  "bytes = %d, len = %d\n",
-                  "TAO_GIOP::read_buffer",
-                  transport->handle (),
-                  bytes_read, len));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - %p,\n"
+                "              transport = %d, "
+                "bytes = %d, len = %d\n",
+                "TAO_GIOP::read_buffer",
+                transport->handle (),
+                bytes_read,
+                len));
 
   if (bytes_read == -1 && errno == ECONNRESET)
     {
@@ -519,10 +535,8 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
 
   if (msg.read_ulong (this->request_id) == 0
       || (msg >> this->object_key) == 0)
-    {
-      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                 CORBA::COMPLETED_NO));
-    }
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                               CORBA::COMPLETED_NO));
 }
 
 TAO_GIOP_ReplyStatusType
@@ -545,8 +559,6 @@ TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)
     }
 }
 
-// ****************************************************************
-
 int
 TAO_GIOP::read_header (TAO_Transport *transport,
                        TAO_ORB_Core *orb_core,
@@ -568,22 +580,28 @@ TAO_GIOP::read_header (TAO_Transport *transport,
   // problem with the underlying transport, in which case we have more
   // problems than just this small loop.
 
-  char* buf = input.rd_ptr ();
-  int t = header_size;
-  while (t != 0)
+  char *buf = input.rd_ptr ();
+
+  for (int t = header_size;
+       t != 0;
+       t -= n)
     {
+      // @@ Carlos, should this be ssize_r rather than int (please
+      // check the other uses of this call).
       int n = transport->recv (buf, t);
       if (n == -1)
         return -1;
       else if (n == 0 && errno != EWOULDBLOCK)
         return -1;
       buf += n;
-      t -= n;
     }
 
-  if (TAO_GIOP::parse_header (orb_core, input, header) == -1)
+  if (TAO_GIOP::parse_header (orb_core, 
+                              input,
+                              header) == -1)
     return -1;
-  return header_size;
+  else
+    return header_size;
 }
 
 int
@@ -604,11 +622,9 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
                                  input) == -1)
         {
           if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - %p\n",
-                          "TAO_GIOP::handle_input, read_header"));
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - %p\n",
+                        "TAO_GIOP::handle_input, read_header"));
           return -1;
         }
 
@@ -635,11 +651,9 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
   if (n == -1)
     {
       if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - %p\n",
-                      "TAO_GIOP::handle_input, read_buffer[1]"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - %p\n",
+                    "TAO_GIOP::handle_input, read_buffer[1]"));
       return -1;
     }
   else if (n == 0)
@@ -647,11 +661,9 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
       if (errno == EWOULDBLOCK)
         return 0;
       if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - %p\n",
-                      "TAO_GIOP::handle_input, read_buffer[2]"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - %p\n",
+                    "TAO_GIOP::handle_input, read_buffer[2]"));
       return -1;
     }
 
@@ -665,7 +677,7 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
           if (orb_core->orb_params ()->use_lite_protocol ())
             header_len = TAO_GIOP_LITE_HEADER_LEN;
 
-          char* buf = input.rd_ptr ();
+          char *buf = input.rd_ptr ();
           buf -= header_len;
           size_t msg_len = input.length () + header_len;
           TAO_GIOP::dump_msg ("recv",
@@ -690,10 +702,9 @@ TAO_GIOP::parse_reply (TAO_Transport *transport,
     {
     case TAO_GIOP::Request:
       // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
-      // *possible* to receive requests in GIOP 1.2.  Don't handle this
-      // on the firt iteration, leave it for the nearby future...
-      // ERROR too.
-      // @@ this->reply_handler_->error ();
+      // *possible* to receive requests in GIOP 1.2.  Don't handle
+      // this on the firt iteration, leave it for the nearby future...
+      // ERROR too.  @@ this->reply_handler_->error ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO (%P|%t) %N:%l handle_client_input: "
                          "request.\n"),

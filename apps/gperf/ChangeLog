@@ -1,3 +1,8 @@
+Sun Jun  6 10:30:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test-4.exp: Fixed another use of "index".  Thanks to David
+ 	  Levine for reporting this.
+
 Sat Jun  5 23:17:39 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* Replaced all uses of "index" with "slot" to avoid problems with
