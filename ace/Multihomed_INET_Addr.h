@@ -44,7 +44,7 @@ public:
    * already and is passed straight through.  <address_family> can be
    * used to select IPv4/IPv6 if the OS has IPv6 capability
    * (ACE_HAS_IPV6 is defined). To specify IPv6, use the value
-   * AF_INET6. To specify IPv4, use AF_INET.  
+   * AF_INET6. To specify IPv4, use AF_INET.
    */
     ACE_Multihomed_INET_Addr(u_short port_number,
                            const char primary_host_name[],
@@ -66,9 +66,9 @@ public:
                            int encode = 1,
                            const ACE_UINT32 *secondary_ip_addrs = 0,
                            size_t size = 0);
-  
+
   /// Use compiler-generated copy constructor.
-  
+
   /// Use compiler-generated assignment operator.
 
   /// Default dtor.
@@ -87,7 +87,7 @@ public:
    * already and is passed straight through.  <address_family> can be
    * used to select IPv4/IPv6 if the OS has IPv6 capability
    * (ACE_HAS_IPV6 is defined). To specify IPv6, use the value
-   * AF_INET6. To specify IPv4, use AF_INET.  
+   * AF_INET6. To specify IPv4, use AF_INET.
    */
   int set (u_short port_number,
            const char primary_host_name[],
@@ -127,7 +127,7 @@ public:
   /**
    * Initialize user-supplied array <addrs> with the the current
    * primary and secondary addresses.  <size> is taken as the size of
-   * this array.  
+   * this array.
    */
   void get_addresses(sockaddr_in *addrs,
                      size_t size) const;

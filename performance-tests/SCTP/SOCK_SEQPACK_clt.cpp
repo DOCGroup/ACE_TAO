@@ -1,6 +1,6 @@
 // $Id$
 
-// On WIN32, math.h may contain template code, 
+// On WIN32, math.h may contain template code,
 // which cannot be wrapped by 'extern "C"'
 #ifdef WIN32
 #include <math.h>
@@ -262,10 +262,10 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
                        0);
 
     // compute the message latency in micro-seconds
-    messageLatency_usec = 
+    messageLatency_usec =
 
       (ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) - 
+                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
        ACE_static_cast(double,
                        ACE_UINT64_DBLCAST_ADAPTER(startTime)))
 

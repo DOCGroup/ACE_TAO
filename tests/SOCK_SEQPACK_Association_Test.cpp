@@ -9,7 +9,7 @@
 //    SOCK_SEQPACK_Association_Test.cpp
 //
 // = DESCRIPTION
-// 
+//
 //   Tests the methods get_local_addrs and get_remote_addrs of class
 //   ACE_SOCK_SEQPACK_Association.
 //
@@ -51,21 +51,21 @@ int main (int argc, ACE_TCHAR *argv[])
     status = 1;
 
   } else if (serverAddr.set(argv[1])) {
-    
+
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_INET_Addr::set")));
     status = 1;
-    
+
   } else if (connector.connect (dataStream, serverAddr)) {
 
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::connect")));
     status = 1;
-    
+
   } else {
-    
+
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Connected to server at %s\n"),
                 argv[1]));
@@ -105,7 +105,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
   for (i = 0; i < in_out_size; ++i) {
 
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
-      
+
       ACE_ERROR((LM_ERROR,
                  "%p\n",
                  "addr_to_string"));
@@ -117,7 +117,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
                i,
                outbuf));
   }
-  
+
   // Reset in_out_size
   in_out_size = 100;
 
@@ -136,7 +136,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
   for (i = 0; i < in_out_size; ++i) {
 
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
-      
+
       ACE_ERROR((LM_ERROR,
                  "%p\n",
                  "addr_to_string"));
