@@ -1,9 +1,9 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.x
 # *not* using Orbix
-CC		= gcc -w
-#CXX		= g++ -w -frepo -I. -fno-strict-prototypes
-CXX             = g++ -w -I. -fno-strict-prototypes
-CXX		+= -D__m88k__
+CC		= gcc
+CXX             = g++
+CFLAGS		+= -w
+CCFLAGS		+= $(CFLAGS) -D__m88k__ -fno-strict-prototypes    #### -frepo
 DLD		= $(CXX) 
 LD		= $(CXX) 
 INCLDIRS	+= -I$(WRAPPER_ROOT) -I.

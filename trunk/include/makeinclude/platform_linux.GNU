@@ -1,11 +1,12 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-CC              = gcc -w
-CXX		= g++ -w -I. -fno-strict-prototypes 
+CC              = gcc
+CXX		= g++
+CFLAGS		+= -w
+CCFLAGS		+= $(CFLAGS) -fno-strict-prototypes
 DLD             = $(CXX)
 LD		= $(CXX) 
-LIBS            = -lstdc++
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv

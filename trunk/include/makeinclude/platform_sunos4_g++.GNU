@@ -3,13 +3,13 @@
 # SOBUILD - compile into .so directly
 #
 CC	= gcc 
-CXX	= g++ -I. -fno-strict-prototypes   # -frepo 
+CXX	= g++
+CFLAGS  +=  -fno-strict-prototypes
+CCFLAGS += $(CFLAGS)      # -frepo
 DLD	= /bin/ld
 LD	= $(CXX)
 #
 # for G++ v2.6.0
-LIBS	+= -lstdc++ -lm
-# LIBS	+= -lnsl -lg++ 
 PIC	= -fpic
 AR	= ar
 ARFLAGS	= ruv
