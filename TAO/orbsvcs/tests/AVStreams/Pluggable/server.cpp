@@ -215,7 +215,7 @@ main (int argc,
 	}
       }
 
-      orb->shutdown( 1 ACE_ENV_SINGLE_ARG_PARAMETER );
+      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
