@@ -7290,32 +7290,34 @@ ACE_OS::gethrtime (void)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
-#elif defined (linux)
-# if defined (ACE_HAS_PENTIUM)
-  ACE_hrtime_t now;
-
-  // See comments about the RDTSC Pentium instruction for the ACE_WIN32
-  // version of ACE_OS::gethrtime (), below.
-  //
-  // Read the high-res tick counter directly into memory variable "now".
-  // The A constraint signifies a 64-bit int.
-  asm volatile ("rdtsc" : "=A" (now) : : "memory");
-
-  return now;
-# elif defined (__alpha)
-  ACE_hrtime_t now;
-
-  // The following statement is based on code published by:
-  // Mosberger, David, "How to Make Your Applications Fly, Part 1",
-  // Linux Journal Issue 42, October 1997, page 50.
-  // It reads the high-res tick counter directly into memory variable "now".
-  asm volatile ("rpcc %0" : "=r" (now) : : "memory");
-
-  return now;
-# else
-  const ACE_Time_Value now = ACE_OS::gettimeofday ();
-  return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
-# endif /* ACE_HAS_PENTIUM || __alpha */
+// #elif defined (linux)
+// NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
+//       instead.
+// # if defined (ACE_HAS_PENTIUM)
+//   ACE_hrtime_t now;
+//
+//   // See comments about the RDTSC Pentium instruction for the ACE_WIN32
+//   // version of ACE_OS::gethrtime (), below.
+//   //
+//   // Read the high-res tick counter directly into memory variable "now".
+//   // The A constraint signifies a 64-bit int.
+//   asm volatile ("rdtsc" : "=A" (now) : : "memory");
+//
+//   return now;
+// # elif defined (__alpha)
+//   ACE_hrtime_t now;
+//
+//   // The following statement is based on code published by:
+//   // Mosberger, David, "How to Make Your Applications Fly, Part 1",
+//   // Linux Journal Issue 42, October 1997, page 50.
+//   // It reads the high-res tick counter directly into memory variable "now".
+//   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
+//
+//   return now;
+// # else
+//   const ACE_Time_Value now = ACE_OS::gettimeofday ();
+//   return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
+// # endif /* ACE_HAS_PENTIUM || __alpha */
 #elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
