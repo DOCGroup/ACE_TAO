@@ -166,7 +166,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> void
+template <class T> ACE_Unbounded_Set<T> &
 ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::operator=");
@@ -176,6 +176,8 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
+
+  return *this;
 }
 
 template <class T> int

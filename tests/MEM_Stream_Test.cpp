@@ -223,7 +223,7 @@ run_client (u_short port,
 static ACE_THR_FUNC_RETURN
 connect_client (void *arg)
 {
-  u_short *sport =  ACE_reinterpret_cast (u_short *, arg);
+  u_short *sport =  reinterpret_cast <u_short *> (arg);
   run_client (*sport, client_strategy);
   return 0;
 }
@@ -436,9 +436,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
 
 #if defined (ACE_HAS_WINCE)
-      test_reactive (ACE_LIB_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
+      test_reactive (ACE_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
 #else
-      test_reactive (argv[0], server_addr);
+      test_reactive (ACE_TEXT ("MEM_Stream_Test"), server_addr);
 #endif  // ACE_HAS_WINCE
 
       ACE_Reactor::instance ()->reset_reactor_event_loop ();
@@ -450,9 +450,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       reset_handler (NUMBER_OF_MT_CONNECTIONS);
 
 #if defined (ACE_HAS_WINCE)
-      test_concurrent (ACE_LIB_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
+      test_concurrent (ACE_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
 #else
-      test_concurrent (argv[0], server_addr);
+      test_concurrent (ACE_TEXT ("MEM_Stream_Test"), server_addr);
 #endif  // ACE_HAS_WINCE
 
       ACE_END_TEST;
@@ -479,7 +479,7 @@ run_main (int argc, ACE_TCHAR *argv[])
             {
             case 'p':
               iport = ACE_OS::atoi (opts.opt_arg ());
-              port = ACE_static_cast (u_short, iport);
+              port = static_cast <u_short> (iport);
               break;
 
             case 'r':

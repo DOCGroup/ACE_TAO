@@ -940,9 +940,9 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Multicast_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("%s must be run on a platform ")
-              ACE_TEXT ("that support IP multicast.\n"),
-              argv[0]));
+              ACE_TEXT ("This test must be run on a platform ")
+              ACE_TEXT ("that support IP multicast.\n")));
+
   ACE_END_TEST;
   return 1;
 }

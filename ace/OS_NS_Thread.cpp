@@ -139,8 +139,7 @@ ACE_Thread_ID::to_string (char *thr_string)
   ACE_OS::strcpy (fp, "u");
   ACE_OS::sprintf (thr_string,
                    format,
-                   ACE_static_cast (unsigned,
-                                    thread_id_));
+                   static_cast <unsigned> (thread_id_));
 #elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
@@ -333,8 +332,8 @@ u_int
 ACE_TSS_Emulation::total_keys ()
 {
   ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
+    *static_cast <ACE_recursive_thread_mutex_t *>
+                      (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
   return total_keys_;
@@ -344,8 +343,8 @@ int
 ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 {
   ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
+    *static_cast <ACE_recursive_thread_mutex_t *>
+                      (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
   // Initialize the tss_keys_used_ pointer on first use.
@@ -391,8 +390,8 @@ int
 ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
 {
   ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
+    *static_cast <ACE_recursive_thread_mutex_t *>
+                      (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
   if (tss_keys_used_ != 0 &&
@@ -823,7 +822,7 @@ ACE_TSS_Cleanup::thread_exit (void)
 extern "C" void
 ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
 {
-  delete ACE_reinterpret_cast (ACE_TSS_Keys *, tss_keys);
+  delete reinterpret_cast <ACE_TSS_Keys *> (tss_keys);
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
@@ -930,7 +929,6 @@ ACE_TSS_Cleanup::thread_free_key (ACE_thread_key_t key, void *inst)
     ACE_ASSERT (key_index < sizeof(this->table_)/sizeof(this->table_[0])
         && this->table_[key_index].key_ == key);
     ACE_TSS_Info &info = this->table_ [key_index];
-
 
     // sanity check
     if (!info.key_in_use ())
@@ -1051,7 +1049,7 @@ ACE_TSS_Cleanup::tss_keys ()
 
   ACE_TSS_Keys *ts_keys = 0;
   if (ACE_OS::thr_getspecific (in_use_,
-        ACE_reinterpret_cast (void **, &ts_keys)) == -1)
+                               reinterpret_cast <void **> (&ts_keys)) == -1)
     {
       ACE_ASSERT (false);
       return 0; // This should not happen!
@@ -1065,8 +1063,7 @@ ACE_TSS_Cleanup::tss_keys ()
       // Store the dynamically allocated pointer in thread-specific
       // storage.
       if (ACE_OS::thr_setspecific (in_use_,
-            ACE_reinterpret_cast (void *,
-                                  ts_keys)) == -1)
+                                   reinterpret_cast <void *> (ts_keys)) == -1)
         {
           ACE_ASSERT (false);
           delete ts_keys;
@@ -1092,7 +1089,7 @@ ACE_TSS_Cleanup::tss_keys ()
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
 #if defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
-  ACE_thread_key_t ACE_OS::NULL_key = ACE_static_cast (ACE_thread_key_t, -1);
+  ACE_thread_key_t ACE_OS::NULL_key = static_cast <ACE_thread_key_t> (-1);
 #else  /* ! ACE_HAS_TSS_EMULATION */
   ACE_thread_key_t ACE_OS::NULL_key;
 #endif /* ! ACE_HAS_TSS_EMULATION */
@@ -2321,7 +2318,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       size_t size = stacksize;
 
 #   if defined (PTHREAD_STACK_MIN)
-      if (size < ACE_static_cast (size_t, PTHREAD_STACK_MIN))
+      if (size < static_cast <size_t> (PTHREAD_STACK_MIN))
         size = PTHREAD_STACK_MIN;
 #   endif /* PTHREAD_STACK_MIN */
 
@@ -2869,8 +2866,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
       *thr_handle = (void *) ACE_BEGINTHREADEX (0,
-                                                ACE_static_cast
-                                                   (u_int, stacksize),
+                                                static_cast <u_int> (stacksize),
                                                 thread_args->entry_point (),
                                                 thread_args,
                                                 flags,
@@ -3163,7 +3159,7 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 // Leave this in the global scope to allow
 // users to adjust the delay value.
 int ACE_THR_JOIN_DELAY = 5;
@@ -3301,7 +3297,7 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     void *tsdanchor;
 
     ++unique_name;
-    if (::tsd_create (ACE_reinterpret_cast (char *, &unique_name),
+    if (::tsd_create (reinterpret_cast <char *> (&unique_name),
                       0,
                       TSD_NOALLOC,
                       (void ****) &tsdanchor,
@@ -3565,7 +3561,7 @@ ACE_OS::unique_name (const void *object,
   ACE_OS::sprintf (temp_name,
                    ACE_LIB_TEXT ("%p%d"),
                    object,
-                   ACE_static_cast (int, ACE_OS::getpid ()));
+                   static_cast <int> (ACE_OS::getpid ()));
   ACE_OS::strsncpy (name,
                     temp_name,
                     length);

@@ -142,13 +142,6 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_NonBlocking_Connect_Handler<Svc_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
-#endif /* defined (__BORLANDC__) */
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CACHED_CONNECT_STRATEGY
@@ -193,13 +186,6 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Svc_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
-
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
-#endif /* defined (__BORLANDC__) */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

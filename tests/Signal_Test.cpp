@@ -113,7 +113,7 @@ handle_signal (int signum)
 
 // This function handles signals synchronously.
 
-static void *
+static ACE_THR_FUNC_RETURN
 synchronous_signal_handler (void *)
 {
   ACE_Sig_Set sigset;
@@ -146,7 +146,7 @@ synchronous_signal_handler (void *)
 // This function arranges to handle signals asynchronously, which is
 // necessary if an OS platform lacks threads.
 
-static void *
+static ACE_THR_FUNC_RETURN
 asynchronous_signal_handler (void *)
 {
   ACE_Sig_Set sigset;
@@ -174,11 +174,11 @@ asynchronous_signal_handler (void *)
 
 // Function that runs in the child process in its own worker thread.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker_child (void *arg)
 {
   long handle_signals_synchronously =
-    ACE_reinterpret_cast (long, arg);
+    reinterpret_cast <long> (arg);
 
   for (size_t i = 0; i < n_iterations; i++)
     {
@@ -231,12 +231,11 @@ worker_child (void *arg)
 }
 
 // This function runs the parent process in a separate worker thread.
-
-static void *
+static ACE_THR_FUNC_RETURN
 worker_parent (void *arg)
 {
   long handle_signals_synchronously =
-    ACE_reinterpret_cast (long, arg);
+    reinterpret_cast <long> (arg);
   ACE_Process_Options options;
 
   ACE_TCHAR *l_argv[3];
@@ -245,7 +244,7 @@ worker_parent (void *arg)
   // portably.  Also, pass the test number, as well.
   ACE_OS::sprintf (pid_str,
                    ACE_TEXT ("-p %ld -t %d"),
-                   ACE_static_cast (long, parent_pid),
+                   static_cast <long> (parent_pid),
                    test_number);
 
   // We're going to create a new process that runs this program again,
@@ -255,8 +254,7 @@ worker_parent (void *arg)
                        ACE_TEXT ("Signal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
                        ACE_TEXT (" -c");
-  l_argv[0] = ACE_const_cast (ACE_TCHAR *,
-                              t);
+  l_argv[0] = const_cast <ACE_TCHAR *> (t);
   l_argv[1] = pid_str;
   l_argv[2] = 0;
 
@@ -322,8 +320,7 @@ run_test (ACE_THR_FUNC worker,
                     ACE_TEXT ("(%P|%t) spawning worker thread\n")));
         result = ACE_Thread_Manager::instance ()->spawn
           (worker,
-           ACE_reinterpret_cast (void *,
-                                 handle_signals_synchronously),
+           reinterpret_cast <void *> (handle_signals_synchronously),
            THR_DETACHED);
         ACE_ASSERT (result != -1);
 
@@ -362,8 +359,7 @@ run_test (ACE_THR_FUNC worker,
       ACE_UNUSED_ARG (handle_signals_in_separate_thread);
       // Arrange to handle signals asynchronously.
       asynchronous_signal_handler (0);
-      (*worker) (ACE_reinterpret_cast (void *,
-                                       handle_signals_synchronously));
+      (*worker) (reinterpret_cast <void *> (handle_signals_synchronously));
     }
 }
 

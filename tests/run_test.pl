@@ -161,9 +161,9 @@ sub output_vxworks_commands
     print $oh "memShow();\n";
   }
   print $oh "write(2, \"\\n$program\\n\", $length);\n" .
-            "ld < $program\n" .
+            "ld < $program.out\n" .
             "ace_main (0, 0);\n" .
-            "unld \"$program\"\n";
+            "unld \"$program.out\"\n";
 }
 
 ################################################################################

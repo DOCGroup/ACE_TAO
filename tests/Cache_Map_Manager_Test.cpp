@@ -522,7 +522,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("[-d (debug, i.e., addition printouts)] ")
                     ACE_TEXT ("[-p (purge percent)] ")
                     ACE_TEXT ("[-f (number of lookups)] \n"),
-                    argv[0]));
+                    ACE_TEXT ("Cache_Map_Manager_Test")));
         return -1;
       }
     }
