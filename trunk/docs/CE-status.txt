@@ -1,11 +1,11 @@
--*- mode: outline; outline-regexp: "    *\\[" -*-
+-*- mode: outline; outline-regexp: " *\\[" -*-
 
-Legend:
- (.)    Defered.
- (x)    Compiled successfully.
- (@)    Not compile yet.
- (T)    Template codes.
- ( )    ???
+[Legend]
+         (.)    Defered.
+         (x)    Compiled successfully. (Doesn't mean it will run. ;-)
+         (@)    Not compile yet.
+         (T)    Template codes.
+         ( )    ???
 
 [ACE]
         [CORBA]
@@ -44,26 +44,26 @@ Legend:
         [Concurrency]
  ( )            Activation_Queue.h
  ( )            Activation_Queue.cpp
- ( )            Atomic_Op.i
+ (x)            Atomic_Op.i
  ( )            Future.h
  ( )            Future.cpp
  ( )            Method_Object.h
  ( )            Method_Object.cpp
- ( )            Process.cpp
- ( )            Process.h
- ( )            Process.i
- ( )            Process_Manager.cpp
- ( )            Process_Manager.h
- ( )            Process_Manager.i
- ( )            Sched_Params.cpp
- ( )            Sched_Params.h
- ( )            Sched_Params.i
+ (x)            Process.cpp
+ (x)            Process.h
+ (x)            Process.i
+ (x)            Process_Manager.cpp
+ (x)            Process_Manager.h
+ (x)            Process_Manager.i
+ (x)            Sched_Params.cpp
+ (x)            Sched_Params.h
+ (x)            Sched_Params.i
  (x)            Synch.cpp
  (x)            Synch.h
  (x)            Synch.i
- ( )            Synch_Options.cpp
- ( )            Synch_Options.h
- ( )            Synch_Options.i
+ (x)            Synch_Options.cpp
+ (x)            Synch_Options.h
+ (x)            Synch_Options.i
  (T)            Synch_T.cpp
  (T)            Synch_T.h
  (T)            Synch_T.i
@@ -73,9 +73,9 @@ Legend:
  (x)            Thread_Manager.cpp
  (x)            Thread_Manager.h
  (x)            Thread_Manager.i
- ( )            Token.cpp
- ( )            Token.h
- ( )            Token.i
+ (x)            Token.cpp
+ (x)            Token.h
+ (x)            Token.i
         [Config]
  (x)            config.h
  (x)            Basic_Types.cpp
@@ -98,12 +98,12 @@ Legend:
  ( )            Dynamic_Service.cpp
  ( )            Dynamic_Service.h
  ( )            Dynamic_Service.i
- ( )            Strategies.cpp
- ( )            Strategies.h
- ( )            Strategies.i
- ( )            Strategies_T.cpp
- ( )            Strategies_T.h
- ( )            Strategies_T.i
+ (x)            Strategies.cpp
+ (x)            Strategies.h
+ (x)            Strategies.i
+ (T)            Strategies_T.cpp
+ (T)            Strategies_T.h
+ (T)            Strategies_T.i
  ( )            Svc_Handler.cpp
  ( )            Svc_Handler.h
  ( )            Svc_Handler.i
@@ -267,9 +267,9 @@ Legend:
  ( )                    Pipe.cpp
  ( )                    Pipe.h
  ( )                    Pipe.i
- ( )                    Signal.cpp
- ( )                    Signal.h
- ( )                    Signal.i
+ (x)                    Signal.cpp
+ (x)                    Signal.h
+ (x)                    Signal.i
         [Logging and Tracing]
  (x)            Dump.cpp
  (x)            Dump.h
@@ -287,19 +287,19 @@ Legend:
  (x)            Trace.i
         [Memory]
                 [Mem_Map]
- ( )                    Mem_Map.cpp
- ( )                    Mem_Map.h
- ( )                    Mem_Map.i
+ (x)                    Mem_Map.cpp
+ (x)                    Mem_Map.h
+ (x)                    Mem_Map.i
                 [Shared_Malloc]
- ( )                    Malloc.cpp
- ( )                    Malloc.h
- ( )                    Malloc.i
- ( )                    Malloc_T.cpp
- ( )                    Malloc_T.h
- ( )                    Malloc_T.i
- ( )                    Memory_Pool.cpp
- ( )                    Memory_Pool.h
- ( )                    Memory_Pool.i
+ (x)                    Malloc.cpp
+ (x)                    Malloc.h
+ (x)                    Malloc.i
+ (T)                    Malloc_T.cpp
+ (T)                    Malloc_T.h
+ (T)                    Malloc_T.i
+ (x)                    Memory_Pool.cpp
+ (x)                    Memory_Pool.h
+ (x)                    Memory_Pool.i
                 [Shared_Memory]
  ( )                    Shared_Memory.h
  ( )                    Shared_Memory_MM.cpp
@@ -318,15 +318,15 @@ Legend:
  ( )            ARGV.cpp
  ( )            ARGV.h
  ( )            ARGV.i
- ( )            Auto_Ptr.cpp
- ( )            Auto_Ptr.h
- ( )            Auto_Ptr.i
+ (T)            Auto_Ptr.cpp
+ (T)            Auto_Ptr.h
+ (T)            Auto_Ptr.i
  ( )            Date_Time.cpp
  ( )            Date_Time.h
  ( )            Date_Time.i
- ( )            Dynamic.cpp
- ( )            Dynamic.h
- ( )            Dynamic.i
+ (x)            Dynamic.cpp
+ (x)            Dynamic.h
+ (x)            Dynamic.i
  ( )            Get_Opt.cpp
  ( )            Get_Opt.h
  ( )            Get_Opt.i
