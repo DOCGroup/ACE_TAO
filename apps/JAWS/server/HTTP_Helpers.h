@@ -49,7 +49,7 @@ private:
   static char const *alphabet_;
 
   static char *date_string_;
-  static ACE_Thread_Mutex mutex_;
+  static ACE_SYNCH_MUTEX mutex_;
   // Use this sometimes (e.g. HTTP_date)
 };
 
