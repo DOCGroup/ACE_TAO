@@ -1,3 +1,11 @@
+Thu May 11 09:29:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Simulator/Event_Supplier/Makefile:
+	  It should compile against the RTOLDEvent library.
+
+	* orbsvcs/tests/Event_Latency/Makefile:
+	  Add missing library.
+
 Thu May 11 08:44:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
