@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 
 #if defined(_MSC_VER)
@@ -133,10 +132,10 @@ namespace TAO
   #if (TAO_HAS_MINIMUM_POA == 0)
 
       /// Get the Servant Locator's cookie
-      PortableServer::ServantLocator::Cookie locator_cookie (void) const;
+      void* locator_cookie (void) const;
 
       /// Set the Servant Locator's cookie
-      void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
+      void locator_cookie (void* cookie);
 
       /// Get the operation name.
       const char *operation (void) const;
@@ -151,13 +150,6 @@ namespace TAO
 
       /// Get the active_object_map_entry.
       TAO_Active_Object_Map_Entry *active_object_map_entry (void) const;
-
-  #if (TAO_HAS_MINIMUM_POA == 0)
-
-      /// We are using the servant locator for this upcall.
-      void servant_locator (PortableServer::ServantLocator_ptr servant_locator);
-
-  #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       /// Get the priority for the current upcall.
       CORBA::Short priority (void) const;
@@ -182,7 +174,7 @@ namespace TAO
 
     protected:
 
-      void servant_locator_cleanup (void);
+      void post_invoke_servant_cleanup (void);
       void single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL);
       void single_threaded_poa_cleanup (void);
       void servant_cleanup (void);
@@ -210,12 +202,10 @@ namespace TAO
   #if (TAO_HAS_MINIMUM_POA == 0)
 
       /// Servant Locator's cookie
-      PortableServer::ServantLocator::Cookie cookie_;
+      void* cookie_;
 
       /// Operation name for this current.
       const char *operation_;
-
-      PortableServer::ServantLocator_var servant_locator_;
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -179,9 +179,6 @@ namespace TAO
                                                 0);
         }
 
-      // Remember to invoke <postinvoke> on the given locator
-      servant_upcall.servant_locator (servant_locator_.in());
-
       // Remember the cookie
       servant_upcall.locator_cookie (cookie);
 
@@ -223,6 +220,37 @@ namespace TAO
     RequestProcessingStrategyServantLocator::etherealize_objects (
       CORBA::Boolean /*etherealize_objects*/)
     {
+    }
+
+    void
+    RequestProcessingStrategyServantLocator::post_invoke_servant_cleanup(
+      const PortableServer::ObjectId &system_id,
+      const TAO::Portable_Server::Servant_Upcall &servant_upcall)
+    {
+      // @todo This method seems to misbehave according to the corba spec, see
+      // section 11.3.7.2. It says that when postinvoke raises an system
+      // exception the methods normal return is overrriden, the request completes
+      // with the exception
+
+      if (!CORBA::is_nil (this->servant_locator_.in ()))
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              servant_locator_->postinvoke (system_id,
+                                            this->poa_,
+                                            servant_upcall.operation (),
+                                            servant_upcall.locator_cookie (),
+                                            servant_upcall.servant ()
+                                            ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore errors from servant locator ....
+            }
+          ACE_ENDTRY;
+        }
     }
   }
 }

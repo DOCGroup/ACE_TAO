@@ -45,14 +45,14 @@ namespace TAO
 
     #if (TAO_HAS_MINIMUM_POA == 0)
 
-    ACE_INLINE PortableServer::ServantLocator::Cookie
+    ACE_INLINE void*
     Servant_Upcall::locator_cookie (void) const
     {
       return this->cookie_;
     }
 
     ACE_INLINE void
-    Servant_Upcall::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
+    Servant_Upcall::locator_cookie (void* cookie)
     {
       this->cookie_ = cookie;
     }

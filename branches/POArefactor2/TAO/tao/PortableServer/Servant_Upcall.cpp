@@ -6,6 +6,7 @@
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"
@@ -37,7 +38,6 @@ namespace TAO
     #if (TAO_HAS_MINIMUM_POA == 0)
         cookie_ (0),
         operation_ (0),
-        servant_locator_ (),
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
         active_object_map_entry_ (0)
     {
@@ -288,7 +288,7 @@ namespace TAO
           // Cleanup servant locator related state.  Note that because
           // this operation does not change any Object Adapter related
           // state, it is ok to call it outside the lock.
-          this->servant_locator_cleanup ();
+          this->post_invoke_servant_cleanup ();
 
           // Since the object adapter lock was released, we must acquire
           // it.
@@ -333,44 +333,11 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::servant_locator_cleanup (void)
+    Servant_Upcall::post_invoke_servant_cleanup (void)
     {
-    #if (TAO_HAS_MINIMUM_POA == 0)
-      // @todo This method seems to misbehave according to the corba spec, see
-      // section 11.3.7.2. It says that when postinvoke raises an system
-      // exception the methods normal return is overrriden, the request completes
-      // with the exception
-
-      if (!CORBA::is_nil (this->servant_locator_.in ()))
-        {
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
-            {
-              servant_locator_->postinvoke (this->current_context_.object_id (),
-                                            this->poa_,
-                                            this->operation_,
-                                            this->cookie_,
-                                            this->servant_
-                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              // Ignore errors from servant locator ....
-            }
-          ACE_ENDTRY;
-        }
-
-    #endif /* TAO_HAS_MINIMUM_POA == 0 */
+      this->poa_->post_invoke_servant_cleanup (this->current_context_.object_id (),
+                                               *this);
     }
-
-    #if (TAO_HAS_MINIMUM_POA == 0)
-    void
-    Servant_Upcall::servant_locator (PortableServer::ServantLocator_ptr servant_locator)
-    {
-      servant_locator_ = PortableServer::ServantLocator::_duplicate (servant_locator);
-    }
-    #endif /* !TAO_HAS_MINIMUM_POA == 0 */
 
     void
     Servant_Upcall::single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL)

@@ -1319,10 +1319,10 @@ TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  this->active_policy_strategies_.request_processing_strategy()->
+  this->active_policy_strategies_.request_processing_strategy ()->
     etherealize_objects (etherealize_objects);
 
-  this->active_policy_strategies_.servant_retention_strategy()->
+  this->active_policy_strategies_.servant_retention_strategy ()->
     deactivate_all_objects (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -2604,6 +2604,15 @@ TAO_Root_POA::allow_multiple_activations (void) const
 {
   return this->active_policy_strategies_.id_uniqueness_strategy ()->
     allow_multiple_activations ();
+}
+
+void
+TAO_Root_POA::post_invoke_servant_cleanup(
+  const PortableServer::ObjectId &system_id,
+  const TAO::Portable_Server::Servant_Upcall &servant_upcall)
+{
+  this->active_policy_strategies_.request_processing_strategy ()->
+    post_invoke_servant_cleanup (system_id, servant_upcall);
 }
 
 CORBA::Short

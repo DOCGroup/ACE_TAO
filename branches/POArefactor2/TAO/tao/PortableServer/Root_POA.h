@@ -511,6 +511,10 @@ public:
     const PortableServer::ObjectId &user_id
     ACE_ENV_ARG_DECL);
 
+  void post_invoke_servant_cleanup(
+    const PortableServer::ObjectId &system_id,
+    const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
    bool validate_lifespan (
     CORBA::Boolean is_persistent,
     const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;

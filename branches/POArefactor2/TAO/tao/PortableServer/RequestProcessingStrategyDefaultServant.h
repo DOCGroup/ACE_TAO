@@ -97,6 +97,11 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));
+
+      virtual void post_invoke_servant_cleanup(
+        const PortableServer::ObjectId &system_id,
+        const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
     private:
       PortableServer::ServantBase_var default_servant_;
     };

@@ -67,6 +67,10 @@ namespace TAO
         PortableServer::Servant &servant
         ACE_ENV_ARG_DECL);
 
+      virtual void post_invoke_servant_cleanup(
+        const PortableServer::ObjectId &system_id,
+        const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
       virtual PortableServer::Servant locate_servant (
         const char *operation,
         const PortableServer::ObjectId &system_id,

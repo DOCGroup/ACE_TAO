@@ -155,6 +155,14 @@ namespace TAO
     {
       return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
     }
+
+    void
+    RequestProcessingStrategyAOMOnly::post_invoke_servant_cleanup(
+      const PortableServer::ObjectId &/*system_id*/,
+      const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
+    {
+    }
+
   }
 }
 

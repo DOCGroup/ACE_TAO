@@ -80,6 +80,10 @@ namespace TAO
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
+      virtual void post_invoke_servant_cleanup(
+        const PortableServer::ObjectId &system_id,
+        const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
     private:
       PortableServer::Servant incarnate_servant (
         const PortableServer::ObjectId& object_id

@@ -1,3 +1,19 @@
+Fri Dec 10 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+          Added post_invoke_servant_cleanup that calls request processing
+
+        * tao/PortableServer/Servant_Upcall.{h,cpp,inl}:
+          Use RootPOA::post_invoke_servant_cleanup() to call the servant
+          locator postinvoke. The servant locator has been removed as member,
+          the Cookie is now a void*, this way we can reduce the number of
+          includes needed for the servant upcall.
+
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Added post_invoke_servant_cleanup. For servant locator it has an
+          implementation to call postinvoke on the servant locator, for the
+          other strategies it is a noop.
+
 Fri Dec 10 05:02:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/LF_CH_Event.h:
