@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        IPC_SAP \
         Log_Msg \
         Map_Manager \
         Reactor \
