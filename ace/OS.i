@@ -6779,7 +6779,7 @@ ACE_OS::mmap (void *addr,
             {
               // Finally, copy the file contents to the shared memory object.
               return ::read (file_handle, map, (int) filesize) == filesize
-                ? 0 : MAP_FAILED;
+                ? map : MAP_FAILED;
             }
         }
     }
