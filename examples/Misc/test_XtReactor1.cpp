@@ -4,6 +4,7 @@
 // <ecn@clark.net> XtReactor implementation.
 
 #include "ace/XtReactor.h"
+#include "ace/Reactor.h"
 #include "ace/Message_Block.h"
 
 #if defined (ACE_HAS_XT)
@@ -14,16 +15,18 @@ class Stdout : public ACE_Event_Handler
 {
 public:
   Stdout (ACE_Reactor * r)
-    : reactor_ (r), msg_ (1000000) 
+    : reactor_ (r),
+      msg_ (1000000) // Make a very big message block.
   {
-    int flags;
-    flags = ACE_OS::fcntl (ACE_STDOUT, F_GETFL);
+    int flags = ACE_OS::fcntl (ACE_STDOUT, F_GETFL);
 
     if (flags != -1
-	&& ACE_OS::fcntl (ACE_STDOUT, F_SETFL, flags | O_NONBLOCK) != -1)
+	&& ACE_OS::fcntl (ACE_STDOUT,
+                          F_SETFL, flags | O_NONBLOCK) != -1)
       return;
     else
-      ACE_DEBUG ((LM_DEBUG, "Unable to set stdout to non-block."));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unable to set stdout to non-block."));
   }
 
   ACE_HANDLE get_handle (void) const { return ACE_STDOUT; }
@@ -32,15 +35,18 @@ public:
   {
     char *s = msg_.rd_ptr ();
 
-    if (ACE_OS::write (ACE_STDOUT, s, 1)==1)
+    if (ACE_OS::write (ACE_STDOUT, s, 1) == 1)
       {
-	ACE_DEBUG ((LM_DEBUG, "wrote output '%d'\n", (int) *s));
+	ACE_DEBUG ((LM_DEBUG,
+                    "wrote output '%d'\n",
+                    (int) *s));
 	msg_.rd_ptr (1);
       }
 
     if (msg_.length () == 0)
       {
-	reactor_->remove_handler (this, ACE_Event_Handler::WRITE_MASK);
+	reactor_->remove_handler (this,
+                                  ACE_Event_Handler::WRITE_MASK);
 	msg_.rd_ptr (msg_.base ());
 	msg_.wr_ptr (msg_.base ());
       }
@@ -50,7 +56,8 @@ public:
   void put (char c) 
   {
     if (msg_.length () == 0)
-      reactor_->register_handler (this, ACE_Event_Handler::WRITE_MASK);
+      reactor_->register_handler (this,
+                                  ACE_Event_Handler::WRITE_MASK);
 
     if (msg_.wr_ptr () < msg_.end ())
       {
@@ -58,7 +65,8 @@ public:
 	msg_.wr_ptr (1);
       }
     else
-      ACE_DEBUG ((LM_DEBUG, "Oops... data falling off the end of the buffer!\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Oops... data falling off the end of the buffer!\n"));
   }
 
 private:
@@ -86,7 +94,9 @@ public:
 
   int handle_timeout (const ACE_Time_Value &tv, const void *)
   {
-    ACE_DEBUG ((LM_DEBUG, "Timeout! %f\n", (double) (tv.msec ()/1000.)));
+    ACE_DEBUG ((LM_DEBUG,
+                "Timeout! %f\n",
+                (double) (tv.msec () / 1000.)));
     return 0;
   }
 
@@ -97,31 +107,52 @@ private:
 static void 
 ActivateCB (Widget, XtPointer, XtPointer)
 {
-  ACE_DEBUG ((LM_DEBUG, "Button pushed!\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Button pushed!\n"));
 }
 
 int 
 main (int argc, char**argv)
 {
   // The worlds most useless user interface
-  Widget top_level = XtVaAppInitialize (NULL, "buttontest", NULL, 0,
-					&argc, argv, NULL, NULL);
-  Widget button = XmCreatePushButton (top_level, "change", 0, 0);
+  Widget top_level = XtVaAppInitialize (NULL,
+                                        "buttontest",
+                                        NULL,
+                                        0,
+					&argc,
+                                        argv,
+                                        NULL,
+                                        NULL);
+  Widget button = XmCreatePushButton (top_level,
+                                      "change",
+                                      0,
+                                      0);
   XtManageChild (button);
-  XtAddCallback (button, XmNactivateCallback, ActivateCB, NULL);
+  XtAddCallback (button,
+                 XmNactivateCallback,
+                 ActivateCB,
+                 NULL);
 
-  // A reactor beastie
-  ACE_XtReactor reactor (XtWidgetToApplicationContext (top_level));
+  // A reactor beastie.
+  ACE_XtReactor xreactor (XtWidgetToApplicationContext (top_level));
+  ACE_Reactor reactor (&xreactor);
 
   // Print a message when data is recv'd on stdin...
-  ACE_Event_Handler *stdin_ = new Stdin (new Stdout (&reactor));
-  reactor.register_handler (stdin_, ACE_Event_Handler::READ_MASK);
+  ACE_Event_Handler *stdin_;
+  ACE_NEW_RETURN (stdin_,
+                  Stdin (new Stdout (&reactor)),
+                  -1);
+  reactor.register_handler (stdin_,
+                            ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds.
   if (reactor.schedule_timer (stdin_, 0, 
 			      ACE_Time_Value (10), 
 			      ACE_Time_Value (10)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "schedule_timer"),
+                      -1);
 
   // Show the top_level widget.
   XtRealizeWidget (top_level);
@@ -135,7 +166,8 @@ main (int argc, char**argv)
 int 
 main (int, char *[])
 {
-  ACE_ERROR ((LM_ERROR, "XT not configured for this platform\n"));
-  return 0;
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "XT not configured for this platform\n"),
+                    0);
 }
 #endif /* ACE_HAS_XT */
