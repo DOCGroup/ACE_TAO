@@ -283,7 +283,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .obj/DynAnyFactory.o .obj/DynAnyFactory.so .shobj/DynAnyFactory.o .shobj/DynAnyFactory.so: DynAnyFactory.cpp DynAnyFactory.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -507,12 +506,11 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  DynSequence_i.h DynEnum_i.h DynArray_i.h DynUnion_i.h
+  $(ACE_ROOT)/ace/Containers_T.cpp DynSequence_i.h \
+  DynEnum_i.h DynArray_i.h DynUnion_i.h
 
 .obj/DynCommon.o .obj/DynCommon.so .shobj/DynCommon.o .shobj/DynCommon.so: DynCommon.cpp DynCommon.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -741,7 +739,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp DynAny_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -961,7 +958,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp DynStruct_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1185,13 +1181,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynSequence_i.o .obj/DynSequence_i.so .shobj/DynSequence_i.o .shobj/DynSequence_i.so: DynSequence_i.cpp DynSequence_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1415,13 +1410,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp DynEnum_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1645,12 +1639,10 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  DynAnyFactory.h
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
 .obj/DynArray_i.o .obj/DynArray_i.so .shobj/DynArray_i.o .shobj/DynArray_i.so: DynArray_i.cpp DynArray_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1874,13 +1866,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp DynUnion_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h \
-  dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

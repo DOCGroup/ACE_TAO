@@ -578,8 +578,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  DIOP_Endpoint.h $(TAO_ROOT)/tao/Endpoint.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i DIOP_Endpoint.h \
+  $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Services.h \
@@ -1056,8 +1056,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  DIOP_Endpoint.h DIOP_Endpoint.i DIOP_Profile.i \
+  $(TAO_ROOT)/tao/Object_KeyC.i DIOP_Endpoint.h \
+  DIOP_Endpoint.i DIOP_Profile.i \
   $(TAO_ROOT)/tao/Acceptor_Registry.h \
   $(TAO_ROOT)/tao/Acceptor_Registry.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1360,9 +1360,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i \
-  strategies_export.h DIOP_Transport.i \
-  $(ACE_ROOT)/ace/SOCK_Dgram.h \
+  $(ACE_ROOT)/ace/SOCK_Stream.i strategies_export.h \
+  DIOP_Transport.i $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   DIOP_Connection_Handler.i \
   $(ACE_ROOT)/ace/Connector.h \
@@ -1731,9 +1730,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i \
-  strategies_export.h DIOP_Transport.i \
-  $(ACE_ROOT)/ace/SOCK_Dgram.h \
+  $(ACE_ROOT)/ace/SOCK_Stream.i strategies_export.h \
+  DIOP_Transport.i $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   DIOP_Connection_Handler.i \
   $(TAO_ROOT)/tao/Acceptor_Impl.h \
@@ -1825,8 +1823,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  DIOP_Endpoint.h DIOP_Endpoint.i DIOP_Profile.i \
+  $(TAO_ROOT)/tao/Object_KeyC.i DIOP_Endpoint.h \
+  DIOP_Endpoint.i DIOP_Profile.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i
 
@@ -2087,9 +2085,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i \
-  strategies_export.h DIOP_Transport.i \
-  $(ACE_ROOT)/ace/SOCK_Dgram.h \
+  $(ACE_ROOT)/ace/SOCK_Stream.i strategies_export.h \
+  DIOP_Transport.i $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   DIOP_Connection_Handler.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
@@ -2581,8 +2578,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  UIOP_Acceptor.h $(TAO_ROOT)/tao/Pluggable.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h UIOP_Acceptor.h \
+  $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -2946,8 +2943,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  UIOP_Acceptor.h $(TAO_ROOT)/tao/Pluggable.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h UIOP_Acceptor.h \
+  $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -3331,8 +3328,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
-  $(TAO_ROOT)/tao/Profile.i \
-  strategies_export.h \
+  $(TAO_ROOT)/tao/Profile.i strategies_export.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   UIOP_Connection_Handler.h UIOP_Transport.h \
@@ -3826,8 +3822,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  UIOP_Endpoint.h UIOP_Endpoint.i UIOP_Profile.i \
+  $(TAO_ROOT)/tao/Object_KeyC.i UIOP_Endpoint.h \
+  UIOP_Endpoint.i UIOP_Profile.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
@@ -4199,8 +4195,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   strategies_export.h \
   $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
-  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
-  UIOP_Transport.i $(ACE_ROOT)/ace/Acceptor.h \
+  $(ACE_ROOT)/ace/SOCK_Acceptor.i UIOP_Transport.i \
+  $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(TAO_ROOT)/tao/Connection_Handler.h \
   $(TAO_ROOT)/tao/Connection_Handler.inl \
@@ -4227,8 +4223,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  UIOP_Endpoint.h UIOP_Endpoint.i UIOP_Profile.i \
+  $(TAO_ROOT)/tao/Object_KeyC.i UIOP_Endpoint.h \
+  UIOP_Endpoint.i UIOP_Profile.i \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -4674,15 +4670,14 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  UIOP_Endpoint.h UIOP_Endpoint.i UIOP_Profile.i \
+  $(TAO_ROOT)/tao/Object_KeyC.i UIOP_Endpoint.h \
+  UIOP_Endpoint.i UIOP_Profile.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i
 
 .obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.so .shobj/UIOP_Connection_Handler.o .shobj/UIOP_Connection_Handler.so: UIOP_Connection_Handler.cpp \
   UIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
-  UIOP_Transport.h \
-  $(TAO_ROOT)/tao/Transport.h \
+  UIOP_Transport.h $(TAO_ROOT)/tao/Transport.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
@@ -5444,8 +5439,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  SHMIOP_Acceptor.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
+  SHMIOP_Acceptor.h $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -5790,8 +5784,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
-  strategies_export.h \
-  $(TAO_ROOT)/tao/Profile.h \
+  strategies_export.h $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/Any.h \
@@ -5841,8 +5834,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  SHMIOP_Endpoint.h \
-  $(TAO_ROOT)/tao/Endpoint.h \
+  SHMIOP_Endpoint.h $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Services.h \
@@ -6065,8 +6057,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
-  strategies_export.h \
-  $(ACE_ROOT)/ace/Svc_Handler.h \
+  strategies_export.h $(ACE_ROOT)/ace/Svc_Handler.h \
   $(ACE_ROOT)/ace/Synch_Options.h \
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Task.h \
@@ -6262,8 +6253,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/ORB.i \
   $(ACE_ROOT)/ace/MEM_Addr.h \
   $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
-  SHMIOP_Profile.i \
-  $(TAO_ROOT)/tao/Timeprobe.h \
+  SHMIOP_Profile.i $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
   $(TAO_ROOT)/tao/Sync_Strategies.h \
@@ -7131,8 +7121,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/MProfile.i
 
 .obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.so .shobj/SHMIOP_Connection_Handler.o .shobj/SHMIOP_Connection_Handler.so: SHMIOP_Connection_Handler.cpp \
-  SHMIOP_Connection_Handler.h \
-  $(ACE_ROOT)/ace/pre.h \
+  SHMIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
