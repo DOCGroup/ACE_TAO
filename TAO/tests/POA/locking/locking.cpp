@@ -83,7 +83,7 @@ main (int argc, char **argv)
 
   // TAO specific threading policy
   policies[0] =
-    root_poa->create_synchronization_policy (PortableServer::NULL_LOCK, env);
+    root_poa->create_synchronization_policy (PortableServer::DEFAULT_LOCK, env);
 
   if (env.exception () != 0)
     {
