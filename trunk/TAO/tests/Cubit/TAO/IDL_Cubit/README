@@ -8,11 +8,18 @@ factory object reference.
 You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
+Now the server and client can also make use of the Naming service.
+You need to start the 
+	TAO/orbsvcs/Naming_service/Naming_service
+
 server:
 -------
 
 % server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
-           [-n <number-of-cubit-objects>] [-o <ior_output_file>]
+           [-n <number-of-cubit-objects>] [-o <ior_output_file>] [-s]
+
+-s option tells the server to bind the cubit_factory name under the 
+NamingService.
 
 The server cubit factory maintains num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
@@ -36,8 +43,10 @@ Irrespective of the -o option the IOR will be outputted on the screen.
 client:
 -------
 
-% client [-d] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
+% client [-d] [-s] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations> 
 
+	-s flag tells the client to get the cubit_factory key from the NamingService.
+	
 	There are 2 ways of giving the CubitFactory IOR to the client:
 
 	1. From a file using the -f option. (This file can be produced using 
