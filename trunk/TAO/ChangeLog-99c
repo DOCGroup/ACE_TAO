@@ -1,3 +1,9 @@
+Wed Dec  1 12:38:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Exception.h:
+	  Moved the TAO_Export macro in the ostream operator declaration, 
+	  and added an 'extern' as well.
+
 Tue Nov 30 19:35:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
