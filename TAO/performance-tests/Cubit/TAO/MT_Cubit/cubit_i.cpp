@@ -35,7 +35,7 @@ Cubit_i::cube_octet (CORBA::Octet o,
 //       this->util_started_ = 1;
 //       this->ts_->timer_.start ();
 //     }
-  
+fprintf (stderr, ".");  
   return (CORBA::Octet) (o * o * o);
 }
 
@@ -73,7 +73,10 @@ Cubit_i::noop (CORBA::Environment &)
 
 void Cubit_i::shutdown (CORBA::Environment &)
 {
+fprintf (stderr, "\n<------------\n");  
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
+ts_->utilization_task_started_ = 0;
+fprintf (stderr, "\n------------>\n");  
 }
