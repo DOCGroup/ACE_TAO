@@ -23,6 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Base.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
+
 #include "Creation_Time.h"
 
 // Object Adapter
@@ -31,12 +38,16 @@
 // POAManager
 #include "POAManager.h"
 
+#include "Active_Object_Map.h"
+
 // POA Policy Set
 #include "POA_Policy_Set.h"
 
 // Cached POA Policies
 #include "POA_Cached_Policies.h"
 #include "Active_Policy_Strategies.h"
+
+#include "ORT_Adapter.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"
@@ -47,19 +58,8 @@
 // Portable Interceptor
 #include "tao/PI_ForwardC.h"
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Base.h"
-
-// Locking
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
-
 // OctetSeq
 #include "tao/OctetSeqC.h"
-
-#include "ORT_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

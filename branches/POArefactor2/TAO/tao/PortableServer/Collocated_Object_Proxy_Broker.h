@@ -18,12 +18,13 @@
 #define TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_Proxy_Broker.h"
 #include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Object_Proxy_Broker.h"
 
 namespace TAO
 {

@@ -13,11 +13,13 @@
 #define TAO_ADAPTER_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/AdapterActivatorC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/PortableServer/AdapterActivatorC.h"
 
 namespace PortableServer
 {

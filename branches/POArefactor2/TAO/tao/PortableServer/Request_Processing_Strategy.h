@@ -16,6 +16,7 @@
 
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
+#include "Active_Object_Map.h"
 #include "PortableServerC.h"
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"

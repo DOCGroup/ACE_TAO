@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Key_Adapters.h"
-#include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/poa_macros.h"
 
 #include "tao/Adapter.h"
@@ -39,6 +38,8 @@
 
 // Policy Set
 #include "POA_Policy_Set.h"
+
+#include "ace/Map_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
