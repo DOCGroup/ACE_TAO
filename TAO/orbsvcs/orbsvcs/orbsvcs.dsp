@@ -163,554 +163,1997 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\AV\AVStreams_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\AVStreamsC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\AVStreamsS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\BCU.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\Concurrency\CC_LockSet.cpp
-# End Source File
-# Begin Source File
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
-SOURCE=.\Concurrency\CC_LockSetFactory.cpp
-# End Source File
-# Begin Source File
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
-SOURCE=.\Concurrency\Concurrency_Utils.cpp
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched\Config_Scheduler.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_Interpreter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_l.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_Nodes.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_Visitors.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_y.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent\ConsumerAdmin_i.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\CosConcurrencyControlC.cpp
-# End Source File
-# Begin Source File
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
-SOURCE=.\CosConcurrencyControlS.cpp
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent_Utilities.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEventChannelAdminC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEventChannelAdminS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEventCommC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEventCommS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosLifeCycleC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosLifeCycleS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosNamingC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosNamingS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Property\CosPropertyService_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosPropertyServiceC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosPropertyServiceS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingDynamicC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingDynamicS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingReposC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingReposS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Dispatching_Modules.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched\DynSched.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Basic_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Basic_Filter_Builder.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Busy_Lock.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Conjunction_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_ConsumerAdmin.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Default_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Disjunction_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching_Task.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Event_Channel.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Filter_Builder.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_MT_Dispatching.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Null_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Null_Scheduling.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_ObserverStrategy.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Per_Supplier_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Priority_Dispatching.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Priority_Scheduling.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxyConsumer.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxyPushSupplier_Set.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxySupplier.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_QOS_Info.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_Timeout_Generator.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Sched_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Sched_Filter_Builder.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Scheduling_Strategy.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Supplier_Filter_Builder.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_SupplierAdmin.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_SupplierFiltering.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Timeout_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Timeout_Generator.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Trivial_Supplier_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Type_Filter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_UDP_Admin.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\AV\Endpoint_Strategy.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Entries.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Event_Channel.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Event_Manip.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event_Utilities.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent\EventChannel_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Hash_Naming_Context.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\ImplRepoC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\ImplRepoS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOR_Multicast.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IR_Helper.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\LifeCycleServiceC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\LifeCycleServiceS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Local_ESTypes.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Memory_Pools.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Module_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Context.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Utils.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Null_MediaCtrlC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Null_MediaCtrlS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Offer_Iterators.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Context_Index.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Entries.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent\ProxyPushConsumer_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent\ProxyPushSupplier_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\ReactorTask.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\Event\RT_Task.cpp
-# End Source File
-# Begin Source File
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
-SOURCE=.\RtecEventChannelAdminC.cpp
-# End Source File
-# Begin Source File
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
-SOURCE=.\RtecEventChannelAdminS.cpp
-# End Source File
-# Begin Source File
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
-SOURCE=.\RtecEventCommC.cpp
-# End Source File
-# Begin Source File
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
-SOURCE=.\RtecEventCommS.cpp
-# End Source File
-# Begin Source File
+!ENDIF 
 
-SOURCE=.\RtecSchedulerC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RtecSchedulerS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RtecUDPAdminC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RtecUDPAdminS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Runtime_Scheduler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\SchedEntry.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\Scheduler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\Scheduler_Generic.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler_Utilities.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Trader\Service_Type_Repository.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\sfp.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\sfpC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\sfpS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\Reconfig_Scheduler.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched\Reconfig_Sched_Utils.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\RT_Task.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecEventChannelAdminC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecEventChannelAdminS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecEventCommC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecEventCommS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecSchedulerC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecSchedulerS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecUDPAdminC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecUDPAdminS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Runtime_Scheduler.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\SchedEntry.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Scheduler.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Scheduler_Factory.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Scheduler_Generic.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Scheduler_Utilities.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Trader\Service_Type_Repository.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\sfp.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\sfpC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\sfpS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched\Strategy_Scheduler.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosEvent\SupplierAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time\TAO_Time_Service_Clerk.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time\TAO_Time_Service_Server.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time\TAO_TIO.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time\TAO_UTO.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time_Utilities.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\TimeBaseC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\TimeBaseS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time\Timer_Helper.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\Timer_Module.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\TimeServiceC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\TimeServiceS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Trader.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trader\Trader_Utils.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -746,18 +2189,6 @@ SOURCE=.\Naming\Bindings_Iterator_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Concurrency\CC_LockSet.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\CC_LockSetFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\Concurrency_Utils.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Config_Scheduler.h
 # End Source File
 # Begin Source File
@@ -775,14 +2206,6 @@ SOURCE=.\Trader\Constraint_Tokens.h
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_Visitors.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlS.h
 # End Source File
 # Begin Source File
 
@@ -1134,6 +2557,14 @@ SOURCE=.\Event\ReactorTask.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sched\Reconfig_Sched_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\RT_Task.h
 # End Source File
 # Begin Source File
@@ -1199,14 +2630,6 @@ SOURCE=.\sfpC.h
 # Begin Source File
 
 SOURCE=.\sfpS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\Reconfig_Scheduler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sched\Reconfig_Sched_Utils.h
 # End Source File
 # Begin Source File
 
@@ -1284,14 +2707,6 @@ SOURCE=.\Naming\Transient_Naming_Context.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlS.i
-# End Source File
 # Begin Source File
 
 SOURCE=.\CosLifeCycleC.i
@@ -1579,7 +2994,7 @@ SOURCE=.\AVStreams.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -1618,7 +3033,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -1657,7 +3072,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -1696,173 +3111,10 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\AVStreams.idl
 InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControl.idl
-
-!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCONC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../   -Wb,export_macro=TAO_ORBSVCS_Export            -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCONC="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCONC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -i../../   -Wb,export_macro=TAO_ORBSVCS_Export                                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCONC="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
@@ -2231,7 +3483,7 @@ SOURCE=.\CosLifeCycle.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLIFE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSLI="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -2270,7 +3522,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLIFE="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSLI="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -2309,7 +3561,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLIFE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSLI="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -2348,7 +3600,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLIFE="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSLI="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -2394,7 +3646,7 @@ SOURCE=.\CosNaming.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNAMI="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSNA="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -2433,7 +3685,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNAMI="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSNA="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -2472,7 +3724,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNAMI="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSNA="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -2511,7 +3763,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNAMI="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSNA="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -2557,7 +3809,7 @@ SOURCE=.\CosPropertyService.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSPR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -2596,7 +3848,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSPR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -2635,7 +3887,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSPR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -2674,7 +3926,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSPR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -2720,7 +3972,7 @@ SOURCE=.\CosTrading.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -2759,7 +4011,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -2798,7 +4050,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -2837,7 +4089,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -2883,7 +4135,7 @@ SOURCE=.\CosTradingDynamic.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTRA="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -2922,7 +4174,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTRA="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -2961,7 +4213,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTRA="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -3000,7 +4252,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTRA="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -3046,7 +4298,7 @@ SOURCE=.\CosTradingRepos.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -3085,7 +4337,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTRAD="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -3124,7 +4376,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -3163,7 +4415,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSTRAD="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -3372,7 +4624,7 @@ SOURCE=.\LifeCycleService.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFECYC="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__LIFEC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
@@ -3411,7 +4663,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFECYC="..\..\..\bin\tao_idl.exe"	
+USERDEP__LIFEC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
@@ -3450,7 +4702,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFECYC="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__LIFEC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
@@ -3489,7 +4741,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFECYC="..\..\..\bin\tao_idl.exe"	
+USERDEP__LIFEC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
@@ -3698,7 +4950,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENT="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -3737,7 +4989,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENT="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -3776,7 +5028,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENT="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -3815,7 +5067,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENT="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -3861,7 +5113,7 @@ SOURCE=.\RtecEventComm.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENTC="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -3900,7 +5152,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENTC="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -3939,7 +5191,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENTC="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -3978,7 +5230,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENTC="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -4024,7 +5276,7 @@ SOURCE=.\RtecScheduler.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECSCH="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECS="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -4063,7 +5315,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECSCH="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECS="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -4102,7 +5354,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECSCH="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECS="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -4141,7 +5393,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECSCH="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECS="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -4513,7 +5765,7 @@ SOURCE=.\TimeBase.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEBAS="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TIMEB="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -4552,7 +5804,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEBAS="..\..\..\bin\tao_idl.exe"	
+USERDEP__TIMEB="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -4591,7 +5843,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEBAS="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TIMEB="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -4630,7 +5882,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEBAS="..\..\..\bin\tao_idl.exe"	
+USERDEP__TIMEB="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -4880,7 +6132,6 @@ SOURCE=.\ImplRepoS_T.cpp
 
 SOURCE=.\Trader\Offer_Database.cpp
 # PROP Exclude_From_Build 1
-
 # End Source File
 # Begin Source File
 
