@@ -26,7 +26,6 @@
 #define _TAO_IDL_ORIG_IOP_IORC_H_
 
 #include "ace/pre.h"
-
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,8 +33,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/TAO_export.h"
+#include "tao/TAO_Export.h"
 #include "tao/Sequence_T.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

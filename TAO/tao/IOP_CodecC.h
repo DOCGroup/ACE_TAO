@@ -34,9 +34,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/TAO_export.h"
+#include "tao/TAO_Export.h"
 #include "tao/Object.h"
 #include "tao/Exception.h"
+#include "tao/Any.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

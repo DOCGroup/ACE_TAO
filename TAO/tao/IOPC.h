@@ -34,7 +34,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "TAO_export.h"
+#include "TAO_Export.h"
 
 #include "IOP_IORC.h"
 #include "IOP_CodecC.h"
