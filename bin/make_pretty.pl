@@ -118,7 +118,7 @@ sub is_warning ()
     return 2 if (/see declaration of/);
 
     # Look for warnings
-    return 1 if (/warning/i
+    return 1 if ((/warning/i && !/ warning\(s\)/)
                  || /info: /i
                  || /^make.*\*\*\*/);
 
@@ -160,7 +160,7 @@ sub is_error ()
                  || /: multiple definition of/);
 
     # Look for possible errors
-    return 1 if (/error/i
+    return 1 if ((/error/i && !/ error\(s\), /)
                  || /^Fatal\:/
                  || /: fatal:/);
 
@@ -200,9 +200,15 @@ sub cvs_output ()
         ++$conflicts if (/^C /);
         ++$unknown if (/^\? /);
 
+        ### Isn't really a conflict, but easiest place to put it.
+        ++$conflicts if (/aborted/);
+
         last LOOP if (/^####################/);
 
         if ($opt_t) {
+        }
+        elsif (/aborted/) {
+            print "$pre_error$_$post_error$line_break";
         }
         elsif (/^C /) {
             print "$pre_error$_$post_error$line_break";
