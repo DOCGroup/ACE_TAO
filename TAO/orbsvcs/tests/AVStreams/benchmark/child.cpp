@@ -48,21 +48,37 @@ CORBA::Boolean
 Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &/* env */) 
 {
+
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() length =%d\n",
               the_spec.length ()));
 
-  ACE_INET_Addr client_addr (the_spec [0]);
+  TAO_Forward_FlowSpec_Entry *entry;
+  ACE_NEW_RETURN (entry,
+                  TAO_Forward_FlowSpec_Entry,
+                  0);
+
+  entry->parse (the_spec[0]);
+  
+  //  ACE_OS::strcpy(client_address_string, "danzon:5000");
+  ACE_INET_Addr client_addr (entry->address_str ());//client_address_string);
+  char address [BUFSIZ];
+  ACE_OS::strcpy (address, client_addr.get_host_name ());
+  ACE_OS::strcat (address, ":5000");
+
+  ACE_INET_Addr new_client_addr (address);
+
   u_short local_port = 0;
   ACE_INET_Addr local_addr (local_port);
   
   if (this->connector_.connect (this->tcp_stream_,
-                                client_addr,
+                                new_client_addr,
                                 0,
                                 local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Connection to server failed: %p\n",
-                       "connect"),
+                       "connect "),
                       0);
+
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) tcp connect succeeded %d\n",this->tcp_stream_.get_handle ()));
   
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -102,6 +118,7 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   return 1;
 }
 
+
 ttcp_Stream_Handler::ttcp_Stream_Handler (ACE_HANDLE control_fd)
   : control_handle_ (control_fd)
 {
@@ -122,7 +139,7 @@ ttcp_Stream_Handler::handle_input (ACE_HANDLE /* handle */)
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_input ()\n"));
 
   char buf[BUFSIZ];
-  int result =ACE_OS::read (this->control_handle_,buf,BUFSIZ);
+  int result = ACE_OS::read (this->control_handle_,buf,BUFSIZ);
   if (result < 0 )
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Bench_Server_StreamEndPoint::handle_input ()\n"),
