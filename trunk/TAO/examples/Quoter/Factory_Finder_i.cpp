@@ -94,7 +94,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
-      ACE_THROW (new CosLifeCycle::NoFactory (factory_key));
+      ACE_THROW (CosLifeCycle::NoFactory (factory_key));
     }
   ACE_ENDTRY;
 
