@@ -1,3 +1,12 @@
+Mon May 31 18:09:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/InterOp-Naming/InterOp-Naming.dsw:
+	* tests/InterOp-Naming/INS_client.dsp:
+	* tests/InterOp-Naming/INS_server.dsp:
+	* tests/InterOp-Naming/InterOp_test.dsp:
+	  Updated the MSVC project files, thanks to Vishal for updating
+	  this example.
+
 Mon May 31 18:19:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/encode.cpp:
