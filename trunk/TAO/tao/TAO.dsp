@@ -328,6 +328,25 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Reply_Dispatcher.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -632,6 +651,44 @@ SOURCE=.\default_server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DII_Invocation.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DII_Reply_Dispatcher.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -880,6 +937,25 @@ SOURCE=.\Environment.cpp
 # Begin Source File
 
 SOURCE=.\Exception.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Exclusive_TMS.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1678,6 +1754,25 @@ SOURCE=.\MessagingS.cpp
 # Begin Source File
 
 SOURCE=.\MProfile.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Muxed_TMS.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2779,6 +2874,25 @@ SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Reply_Dispatcher.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tagged_Components.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3197,6 +3311,63 @@ SOURCE=.\ValueFactory_Map.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Wait_On_Leader_Follower.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Reactor.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Read.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wait_Strategy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3256,6 +3427,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
@@ -3319,6 +3494,14 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DII_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DII_Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
@@ -3364,6 +3547,10 @@ SOURCE=.\Environment.h
 # Begin Source File
 
 SOURCE=.\Exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Exclusive_TMS.h
 # End Source File
 # Begin Source File
 
@@ -3508,6 +3695,10 @@ SOURCE=.\MessagingS.h
 # Begin Source File
 
 SOURCE=.\MProfile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Muxed_TMS.h
 # End Source File
 # Begin Source File
 
@@ -3747,6 +3938,10 @@ SOURCE=.\Sync_Strategies.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tagged_Components.h
 # End Source File
 # Begin Source File
@@ -3828,6 +4023,18 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varbase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Leader_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Reactor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Read.h
 # End Source File
 # Begin Source File
 
