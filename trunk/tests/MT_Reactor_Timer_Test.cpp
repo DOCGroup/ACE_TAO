@@ -122,7 +122,8 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long time_tag = ACE_reinterpret_cast (long, arg);
+  long time_tag = ACE_static_cast (long,
+                    ACE_reinterpret_cast (size_t, arg));
   ACE_UNUSED_ARG(tv);
 
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
@@ -242,7 +243,8 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 
   ++this->timers_fired_;
 
-  long value = ACE_reinterpret_cast (long, arg);
+  long value = ACE_static_cast (long,
+                 ACE_reinterpret_cast (size_t, arg));
 
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
@@ -278,7 +280,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   for (int i = ACE_MAX_TIMERS; i > 0; i--)
     // Schedule a timeout to expire immediately.
     if (r->schedule_timer (&callback,
-                           ACE_reinterpret_cast (const void *, i),
+                           ACE_reinterpret_cast (const void *,
+                                                 ACE_static_cast (size_t, i)),
                            ACE_Time_Value (0)) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

@@ -1,8 +1,19 @@
+Tue May  6 09:19:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+
+          Remove build warnings on Windows XP 64-bit.
+
 Tue May  6 09:03:32 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
 
-          Reverted my change from Tue May  6 06:54:43 2003.  
+          Reverted my change from Tue May  6 06:54:43 2003.
 
 Tue May  6 06:54:43 2003  Chad Elliott  <elliott_c@ociweb.com>
 

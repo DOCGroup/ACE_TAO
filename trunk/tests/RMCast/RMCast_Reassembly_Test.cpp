@@ -108,8 +108,9 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         for (size_t offset = 0; offset < n; offset += fragment_size)
           {
             if (this->put_fragment (sequence_number,
-                                    offset,
-                                    fragment_size,
+                                    ACE_static_cast (ACE_UINT32, offset),
+                                    ACE_static_cast (ACE_UINT32,
+                                                     fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -156,8 +157,9 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                 offset = n/2;
               }
             if (this->put_fragment (sequence_number,
-                                    offset,
-                                    fragment_size,
+                                    ACE_static_cast (ACE_UINT32, offset),
+                                    ACE_static_cast (ACE_UINT32,
+                                                     fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -169,8 +171,9 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         for (size_t offset = 0; offset < n; offset += fragment_size)
           {
             if (this->put_fragment (sequence_number,
-                                    offset,
-                                    fragment_size,
+                                    ACE_static_cast (ACE_UINT32, offset),
+                                    ACE_static_cast (ACE_UINT32,
+                                                     fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -285,7 +288,7 @@ ACE_RMCast_Reassembly_Tester::put_fragment (ACE_UINT32 sequence_number,
 
   ACE_RMCast::Data data;
   data.sequence_number = sequence_number;
-  data.total_size = total_length;
+  data.total_size = ACE_static_cast (ACE_UINT32, total_length);
   data.fragment_offset = offset;
   data.payload = &p;
   return this->reassembly_.data (data);
