@@ -95,7 +95,10 @@ extern "C" { char * cuserid (char *s); }
 #endif /* __FreeBSD_version >= 300000 */
 
 #if (__FreeBSD_version >= 320000)
-#define ACE_HAS_TIME_R
+#define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
+#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif /* __FreeBSD_version >= 320000 */
 
