@@ -69,7 +69,7 @@ public:
     TAO_ARGUMENT_PRE_UPCALL_SS,              // preprocessing of argument
                                              // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
-    TAO_ARGUMENT_COLLOCATED_UPCALL_SS,                  // passing argument
+    TAO_ARGUMENT_COLLOCATED_UPCALL_SS, // passing argument
                                                         // variable to upcall
     TAO_ARGUMENT_POST_UPCALL_SS,             // postprocessing of argument
                                              // variable after upcall
@@ -81,8 +81,11 @@ public:
     TAO_ATTRIBUTE_IH,                        // in implementation header
     TAO_ATTRIBUTE_SS,                        // in server skeletons
     TAO_ATTRIBUTE_IS,                        // in implementation skeletons
-    TAO_ATTRIBUTE_COLLOCATED_SH,             // in server header for collocated
-    TAO_ATTRIBUTE_COLLOCATED_SS,             // in server skeletons for
+    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH, // in server header for collocated
+    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS,             // in server skeletons for
+                                             // collocated
+    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH, // in server header for collocated
+    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,             // in server skeletons for
                                              // collocated
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
@@ -142,8 +145,10 @@ public:
     TAO_INTERFACE_SI,
     TAO_INTERFACE_SS,
     TAO_INTERFACE_IS,
-    TAO_INTERFACE_COLLOCATED_SH,
-    TAO_INTERFACE_COLLOCATED_SS,
+    TAO_INTERFACE_THRU_POA_COLLOCATED_SH,
+    TAO_INTERFACE_THRU_POA_COLLOCATED_SS,
+    TAO_INTERFACE_DIRECT_COLLOCATED_SH,
+    TAO_INTERFACE_DIRECT_COLLOCATED_SS,
     TAO_INTERFACE_ANY_OP_CH,
     TAO_INTERFACE_ANY_OP_CS,
     TAO_INTERFACE_CDR_OP_CH,
@@ -217,8 +222,10 @@ public:
     TAO_OPERATION_IH,                       // in implementation header
     TAO_OPERATION_SS,                       // in server skeletons
     TAO_OPERATION_IS,                       // in server skeletons
-    TAO_OPERATION_COLLOCATED_SH,            // in collocated server header
-    TAO_OPERATION_COLLOCATED_SS,            // in collocated server skel
+    TAO_OPERATION_THRU_POA_COLLOCATED_SH,            // in collocated server header
+    TAO_OPERATION_THRU_POA_COLLOCATED_SS,            // in collocated server skel
+    TAO_OPERATION_DIRECT_COLLOCATED_SH,            // in collocated server header
+    TAO_OPERATION_DIRECT_COLLOCATED_SS,            // in collocated server skel
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
                                              // signature
     TAO_OPERATION_RETTYPE_IS,                // return type in client header op
@@ -273,13 +280,13 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
     // Emitting code for AMI.
-    TAO_OPERATION_AMI_CH,                  // AMI stub generation.  
-    TAO_OPERATION_AMI_CS,                  // AMI stub generation.  
+    TAO_OPERATION_AMI_CH,                  // AMI stub generation.
+    TAO_OPERATION_AMI_CS,                  // AMI stub generation.
     TAO_OPERATION_AMI_ARGLIST,             // AMI stubs in client header
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
     TAO_ARGUMENT_AMI_ARGLIST,              // Arg list in AMI stub.
-    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
+    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.
     TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
     // @ Alex: FWD does nt make sense.
     //         Should rename it.

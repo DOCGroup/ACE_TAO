@@ -280,14 +280,35 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl
-    //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
-    //      << "return 0;" << be_uidt_nl
-      << "return new " << node->full_coll_name ()
-      << " (this, stub);" << be_uidt_nl;
+      << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
+      << "{" << be_nl
+      << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
-  *os << "}\n\n";
+  // Thru POA stub
+  if (idl_global->gen_thru_poa_collocation ())
+    *os << "return new "
+        << node->full_coll_name (be_interface::THRU_POA) << " (this, stub);" << be_uidt_nl;
+  else
+    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
-  // the _create_collocated_objref method
+  // Direct stub
+  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
+  if (idl_global->gen_direct_collocation ())
+    *os << "return new "
+        << node->full_coll_name (be_interface::DIRECT) << " (this, stub);" << be_uidt_nl;
+  else
+    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
+
+  *os << "default:" << be_idt_nl
+      << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}\n\n";
+
+  // the _create_collocated_objref method.  If the idl compiler does
+  // not generate the type of collocated stub but the orb is asking
+  // for it, simply return null so a remote stub will be used.
+  os->indent ();
+
   *os << "void*" << be_nl
       << node->full_skel_name ()
       << "::_create_collocated_objref (const char* repository_id, "
@@ -296,35 +317,87 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_UNUSED_ARG (type);" << be_nl
       << "if (!ACE_OS::strcmp (\"" << node->repoID ()
       << "\", repository_id))" << be_idt_nl
-      << "return ACE_static_cast (" << be_idt << be_idt_nl
-      << node->name () << "_ptr," << be_nl
-      << "new " << node->full_coll_name () << " (this, stub)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl
+      << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
+      << "{" << be_nl
+      << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
+
+  // Thru POA stub
+  if (idl_global->gen_thru_poa_collocation ())
+    *os << "return ACE_static_cast (" << be_idt << be_idt_nl
+        << node->name () << "_ptr," << be_nl
+        << "new " << node->full_coll_name (be_interface::THRU_POA) << " (this, stub)" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    *os << "return 0;" << be_uidt_nl;
+
+  // Direct stub
+  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
+  if (idl_global->gen_direct_collocation ())
+    *os << "return ACE_static_cast (" << be_idt << be_idt_nl
+        << node->name () << "_ptr," << be_nl
+        << "new " << node->full_coll_name (be_interface::DIRECT) << " (this, stub)" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    *os << "return 0;" << be_uidt_nl;
+
+  *os << "default:" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // generate the collocated class impl
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+  if (idl_global->gen_thru_poa_collocation ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "Bad visitor for collocated class\n"),
-                        -1);
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "Bad visitor for thru_poa collocated class\n"),
+                            -1);
+        }
+
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "codegen for thru_poa collocated class failed\n"),
+                            -1);
+        }
+      delete visitor;
     }
 
-  if (node->accept (visitor) == -1)
+  if (idl_global->gen_direct_collocation ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "codegen for collocated class failed\n"),
-                        -1);
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "Bad visitor for direct collocated class\n"),
+                            -1);
+        }
+
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "codegen for direct collocated class failed\n"),
+                            -1);
+        }
+      delete visitor;
     }
-  delete visitor;
 
   *os << "\n\n";
 
