@@ -1,3 +1,8 @@
+Mon Jun 25 07:20:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways/client.dsp: Fixed a link error in
+	  win32 builds.
+
 Mon Jun 25 06:58:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/Receiever_i.cpp: Fixed a compile
