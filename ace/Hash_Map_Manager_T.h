@@ -646,7 +646,7 @@ public:
 
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1. 
+  /// items in the set have been seen, else 1.
   int advance (void);
 
   /// Dump the state of an object.
@@ -746,7 +746,7 @@ public:
 // Include ace/Hash_Map_Manager_T.i on all platforms excluding SunCC.
 // This nonsense is necessary since SunCC (version 4.2) cannot inline
 // the code in ace/Hash_Map_Manager_T.i (with the fast option).
-# if !defined (__SUNPRO_CC)
+# if (!defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x420))
 #  include "ace/Hash_Map_Manager_T.i"
 # endif /* ! __SUNPRO_CC */
 #endif /* __ACE_INLINE__ */
