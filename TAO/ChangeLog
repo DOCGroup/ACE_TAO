@@ -1,3 +1,10 @@
+Fri May 30 20:29:11 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/configurations.html: Fixed a typo where we claimed
+	  the leader/followers model was the default ORB concurrency
+ 	  configuration.  Thanks to Dave Ryan <djryan@raytheon.com> for
+ 	  detecting this.
+
 Fri May 30 13:56:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: Added a new target 'releaseall'. Please see
