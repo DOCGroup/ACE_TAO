@@ -1356,6 +1356,17 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
 
 # elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+
+  // PharLap ETS can act on the current thread - it can set the quantum also,
+  // unlike Win32. All this only works on the RT version.
+#   if defined (ACE_HAS_PHARLAP_RT)
+  if (id != ACE_SELF)
+    ACE_NOTSUP_RETURN (-1);
+
+  if (sched_params.quantum() != ACE_Time_Value::zero)
+    EtsSetTimeSlice (sched_params.quantum().msec());
+
+#   else
   ACE_UNUSED_ARG (id);
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
@@ -1377,6 +1388,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     {
       return -1;
     }
+#   endif /* ACE_HAS_PHARLAP_RT */
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
