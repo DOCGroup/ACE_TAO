@@ -1,3 +1,11 @@
+Fri Nov 28 22:46:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Invocation.cpp:
+
+	  When sending a AMI call, pass a oneway identifier so that the
+	  required infrastructure within the ORB for request buffering,
+	  non-blocking semantics with LF flushing strategy etc. fires. 
+
 Fri Nov 28 21:39:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
