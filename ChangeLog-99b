@@ -46,9 +46,9 @@ Mon Dec 20 21:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* m4/compiler.m4:
 
-	  Set variable "WERROR" that contains the compiler to convert
-	  warnings to errors.  Eventually, this support should be moved to
-	  its own macro that is AC_REQUIREd by
+	  Set variable "WERROR" that contains the compiler flags to
+	  convert warnings to errors.  Eventually, this support should be
+	  moved to its own macro that is AC_REQUIREd by
 	  ACE_CONVERT_WARNINGS_TO_ERRORS.
 
 	* m4/features.m4 (ACE_CHECK_ASYNCH_IO):
