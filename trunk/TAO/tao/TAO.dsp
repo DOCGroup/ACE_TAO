@@ -100,10 +100,6 @@ SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Arg_Shifter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
