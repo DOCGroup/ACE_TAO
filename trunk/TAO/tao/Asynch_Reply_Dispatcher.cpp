@@ -22,6 +22,7 @@ TAO_Asynch_Reply_Dispatcher::
                                  Messaging::ReplyHandler_ptr reply_handler)
   : reply_handler_skel_ (reply_handler_skel),
     reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
+    message_state_ (0),
     transport_ (0)
 {
 }
