@@ -339,6 +339,10 @@ namespace TAO
     Servant_Upcall::servant_locator_cleanup (void)
     {
     #if (TAO_HAS_MINIMUM_POA == 0)
+      // @todo This method seems to misbehave according to the corba spec, see
+      // section 11.3.7.2. It says that when postinvoke raises an system
+      // exception the methods normal return is overrriden, the request completes
+      // with the exception
 
       if (!CORBA::is_nil (this->servant_locator_.in ()))
         {
