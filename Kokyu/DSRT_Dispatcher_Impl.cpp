@@ -1,13 +1,17 @@
 // $Id$
 
-#include "DSRT_Dispatcher_Impl.h"
 #include "ace/Sched_Params.h"
+#include "ace/Arg_Shifter.h"
+
+#include "DSRT_Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "DSRT_Dispatcher_Impl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Dispatcher_Impl, "$Id$")
+
+  //using namespace Kokyu;
 
 namespace Kokyu
 {
@@ -56,6 +60,59 @@ static Priority_t schedule_MIF (Importance_t imp)
 }
 
 int
+DSRT_Dispatcher_Impl::init_svcs (void)
+{
+  return ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_DSRT_Dispatcher_Impl);
+}
+
+int
+DSRT_Dispatcher_Impl::init (int argc, ACE_TCHAR* argv[])
+{
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      const ACE_TCHAR* arg = arg_shifter.get_current ();
+
+      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-schedtype")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("MIF")) == 0)
+                {
+                  this->sched_type_ = SCHED_MIF;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_LIB_TEXT("DSRT_Dispatcher_Impl - ")
+                              ACE_LIB_TEXT("unsupported sched type <%s>\n"),
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else
+        {
+          arg_shifter.ignore_arg ();
+        }
+    }
+  return 0;
+
+}
+
+int
+DSRT_Dispatcher_Impl::fini (void)
+{
+  return 0;
+}
+
+int
 DSRT_Dispatcher_Impl::init_i (const DSRT_ConfigInfo& config_info)
 {
   //create and init the dispatcher tasks here
@@ -97,7 +154,7 @@ DSRT_Dispatcher_Impl::schedule_i (guid_t guid,
                   const QoSDescriptor& qos_info)
 {
   ACE_UNUSED_ARG (guid);
-  switch (curr_config_info_.scheduler_type_)
+  switch (this->sched_type_)
     {
     case SCHED_MIF:
       ACE_DEBUG ((LM_DEBUG, "(%t) request for MIF schedule\n"));
@@ -125,3 +182,28 @@ DSRT_Dispatcher_Impl::cancel_schedule_i (guid_t guid,
 }
 
 }
+
+// ****************************************************************
+
+ACE_STATIC_SVC_DEFINE (DSRT_Dispatcher_Impl,
+                       ACE_TEXT ("DSRT_Dispatcher_Impl"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (DSRT_Dispatcher_Impl),
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
+                       0)
+//ACE_FACTORY_DEFINE (Kokyu, DSRT_Dispatcher_Impl)
+
+void _gobble_DSRT_Dispatcher_Impl (void *p) { \
+  ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p);
+  ACE_ASSERT (_p != 0);
+  delete _p; }
+extern "C" Kokyu_Export ACE_Service_Object *
+_make_DSRT_Dispatcher_Impl (ACE_Service_Object_Exterminator *gobbler)
+{
+  if (gobbler != 0)
+    *gobbler = (ACE_Service_Object_Exterminator) _gobble_DSRT_Dispatcher_Impl;
+  return new Kokyu::DSRT_Dispatcher_Impl;
+}
+
+// ****************************************************************
