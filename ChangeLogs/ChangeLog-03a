@@ -1,3 +1,12 @@
+Tue Jul 31 22:46:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Service_Config_DLL.dsp:
+	* tests/Service_Config_Test.dsp:
+
+	  Removed the static library configurations.  The
+	  Service_Config_Test currently requires dynamically loadable
+	  objects.  Fixes Win32 "LIB" build failures.
+
 Tue Jul 31 22:10:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Service_Config_Test.cpp (run_test):
