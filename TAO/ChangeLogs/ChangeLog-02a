@@ -1,3 +1,9 @@
+Wed Nov 15 02:20:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.i (tss_cleanup_funcs):
+
+	  Added missing "ACE_INLINE" keyword.
+
 Wed Nov 15 02:13:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Interceptor_List.cpp:
