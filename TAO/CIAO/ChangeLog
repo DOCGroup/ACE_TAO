@@ -1,3 +1,11 @@
+Fri Nov 12 06:21:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/RTCCM/Priority_Test/Controllers/Pulser.h:
+        * tests/RTCCM/Priority_Test/Controllers/Pulser.cpp:
+
+          Changed the open and close method of the Pulser class to match
+          the signature of the ACE_Task_Base.
+
 Thu Nov 11 17:17:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * ciao/Servant_Activator.cpp:
