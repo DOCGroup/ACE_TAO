@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
+#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
 
 #include "ace/streams.h"
 
@@ -496,7 +496,7 @@ typedef ostream& (*__omanip_)(ostream&);
 
 // Include the templates here.
 #include "ace/IOStream_T.h"
-#endif /* !ACE_LACKS_ACE_IOSTREAM */
+#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
 #include "ace/post.h"
 #endif /* ACE_IOSTREAM_H */

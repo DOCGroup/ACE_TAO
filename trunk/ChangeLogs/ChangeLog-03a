@@ -1,3 +1,39 @@
+Tue Apr 10 18:35:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Added a new
+          build option, stdcpplib, which defaults to 1. If set to 1,
+          Sun Workshop 5 and Forte 6 compilers will use the standard
+          C++ library, including standard iostreams. Set to 0 to
+          use the old, classic iostreams.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Added support for
+          the stdcpplib build option. It defaults to 1 if using aC++
+          x.27, or 0 if not. Thanks very much to Istvan Buki <ibuki@fedex.com>
+          for these changes.
+
+        * ace/config-aix-4.x.h: For Visual Age C++ 5, turn on
+          ACE_HAS_STANDARD_CPP_LIBRARY and
+          ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB.
+
+        * ace/config-sunos5.5.h: For Sun Workshop 5 and Forte 6 compilers,
+          take the ACE_USES_OLD_IOSTREAMS setting from the platform_macros.GNU
+          file; don't set it here.
+
+        * ace/config-hpux-11.00.h:
+        * ace/config-hpux-10.x-hpc++.h: If the stdcpplib=1 option was used,
+          then turn on ACE_HAS_STANDARD_CPP_LIB and
+          ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB. Else turn on
+          ACE_USES_OLD_IOSTREAMS.
+
+        * ace/IOStream.{h cpp}: Only try to build this stuff if
+          ACE_LACKS_ACE_IOSTREAM is not defined and ACE_USES_OLD_IOSTREAMS
+          _is_ defined. The check on ACE_USES_OLD_IOSTREAMS can be removed
+          when ACE_IOStream gets ported to standard iostreams.
+
+        * tests/IOStream_Test.cpp: Only try this if ACE_USES_OLD_IOSTREAMS
+          is defined. Remove this if/when ACE_IOStream is ported to new
+          iostreams.
+
 Tue Apr 10 17:51:25 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
