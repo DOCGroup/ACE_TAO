@@ -1,5 +1,7 @@
 Sun Mar 22 08:00:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* Naming_Service.h: Renamed tao_util.h to TAO.h.
+
 	* tao: Removed the CORBA_Cls.* files (since they conflict with the
  	  overall naming scheme) and merged them into the ORB.h class.
 
