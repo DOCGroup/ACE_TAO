@@ -501,7 +501,7 @@ CORBA_ORB::resolve_rt_orb (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
+CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -511,7 +511,6 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
 
 #else
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
