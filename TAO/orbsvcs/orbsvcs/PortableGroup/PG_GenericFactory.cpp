@@ -293,7 +293,7 @@ TAO_PG_GenericFactory::poa (PortableServer::POA_ptr p)
 
 void
 TAO_PG_GenericFactory::populate_object_group (
-  CORBA::ULong fcid, 
+  CORBA::ULong fcid,
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableServer::ObjectId & oid,
   const char * type_id,
@@ -502,7 +502,7 @@ TAO_PG_GenericFactory::process_criteria (
     }
 }
 
-/*
+#if 0
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class auto_ptr<TAO_PG_Factory_Node>;
@@ -524,5 +524,5 @@ template class ACE_Auto_Basic_Ptr<TAO_PG_Factory_Node>;
 
 #  endif  /* ACE_LACKS_AUTO_PTR */
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-*/
+#endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif  /* 0 */
