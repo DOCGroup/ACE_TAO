@@ -1,3 +1,13 @@
+Mon Aug 14 15:42:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp : 
+	  Corrected a typo.
+
+	* orbsvcs/IFR_Service/TCF_Loader.h   : 
+	* orbsvcs/IFR_Service/TCF_Loader.cpp : 
+	  Changed the signature of create_object () to go accordingly with
+	  the change in Object_Loader.h
+	
 Mon Aug 14 12:34:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
