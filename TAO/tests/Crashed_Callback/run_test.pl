@@ -22,9 +22,11 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     exit 1;
 } 
 
-$client = $CL->SpawnWaitKill (60);
+$CL->SpawnWaitKill (60);
 
-if ($client != 0) {
+# The client crashes, therefore it normally exists with status != 0,
+# but a status of -1 would be a serious error.
+if ($client == -1) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
