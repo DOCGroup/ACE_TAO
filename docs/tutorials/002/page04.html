@@ -1,271 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 002</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 002</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 002</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 002<BR>
-Creating a Better Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>Creating a Better Server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>Since we've gone out of our way to make sure that the other parts of
-the program are generic, you may expect that this final piece, the connection
-handler, will be the most complicated. As usual, you are correct:</P>
-
+<P>Well, that's it for the second tutorial. We've found a much easier way
+to create a server, especially the acceptor part. At the same time, we
+introduced more functionality and robustness. Not bad for a day's work.
+<BR>&nbsp;
 <UL>
-<PRE>1.      #include &quot;ace/SOCK_Acceptor.h&quot;
-2.      #include &quot;ace/Reactor.h&quot;
-        
-        
-3.      class Logging_Handler : public ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH&gt;
-        {
-        
-        public:
-        
-4.        Logging_Handler (void)
-                {
-                }
-        
-5.        virtual void destroy (void)
-                {
-6.                g_reactor-&gt;cancel_timer (this);
-7.                this-&gt;peer ().close ();
-                }
-        
-8.        virtual int open (void *)
-                {
-9.                ACE_INET_Addr addr;
-                  
-10.               if (this-&gt;peer ().get_remote_addr (addr) == -1)
-11.                 return -1;
-12.               else
-                    {
-13.                   ACE_OS::strncpy (this-&gt;peer_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
-                
-14.                   if (g_reactor-&gt;register_handler(this, ACE_Event_Handler::READ_MASK) == -1)
-15.                     ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) can't register with reactor\n&quot;), -1);
-        
-16.                   else if (g_reactor-&gt;schedule_timer (this, (const void *) this, ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
-17.                     ACE_ERROR_RETURN ((LM_ERROR, &quot;can'(%P|%t) t register with reactor\n&quot;), -1);
-        
-18.                   else
-19.                     ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) connected with %s\n&quot;, this-&gt;peer_name_));
-        
-20.                   return 0;
-                    }
-                }
-        
-21.       virtual int close (u_long)
-                {
-22.               this-&gt;destroy ();
-23.               return 0;
-                }
-        
-        protected:
-        
-24.       virtual int handle_input (ACE_HANDLE)
-                {
-25.               char buf[128];
-26.               memset(buf,0,sizeof(buf));
-                
-27.               switch( this-&gt;peer().recv(buf,sizeof buf) )
-                  {
-28.               case -1:
-29.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) %p bad read\n&quot;, &quot;client logger&quot;), -1);
-30.               case 0:
-31.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) closing log daemon (fd = %d)\n&quot;, this-&gt;get_handle ()), -1);
-32.               default:
-33.                 ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) from client: %s&quot;,buf));
-                  }
-                  
-34.               return 0;
-                }
-        
-35.       virtual int handle_timeout (const ACE_Time_Value &amp;tv, const void *arg)
-                {
-36.               ACE_ASSERT (arg == this);
-37.               ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) handling timeout from this = %u\n&quot;, this));
-38.               return 0;
-                }
-        
-        private:
-        
-39.       char peer_name_[MAXHOSTNAMELEN + 1];
-        
-        };
-</PRE>
+<LI>
+<A HREF="00SetEnv">Environment
+Settings</A></LI>
+
+<LI>
+<A HREF="Makefile">Makefile</A></LI>
+
+<LI>
+<A HREF="server.cpp">server.cpp</A></LI>
 </UL>
 
-<P>
-<HR WIDTH="100%"></P>
-
-<P>Here's the step-by-step explanation:</P>
-
-<OL>
-<LI>This has no business being here but I refuse to renumber 38 lines of
-source just to get rid of it.</LI>
-
-<LI>Come to think of it, this is probably not needed either. While we use
-the global reactor object (<I>g_reactor</I>) througout this portion of
-code, we don't actually create any new ones. Besides, we'll drop this code
-into one file with <I>main</I> and <I>acceptor</I> and it won't matter.</LI>
-
-<LI>We've apparently decided to be bold and use yet another ACE template
-to create our <I>Logging_Handler</I> object. From the manual, the <I>ACE_Svc_Handler</I>
-template <I>defines the interface for a service that exchanges data with
-its connected peer</I>. The first template argument specifies the kind
-of connection we want to have. As mentioned on the previous page, this
-<B>must</B> be compatible with the data type used to accept the connection.
-As for the second argument, that's way beyond the scope of what we're
-doing here.  Just do it like you see it & we'll get around to explaining
-that in a later tutorial.
-to me.</LI>
-
-<LI>Our default constructor does nothing. We've moved anything with failure
-potential into the <I>open</I> function.
-
-<LI>This should be called instead of <I>delete</I>. It will shut down the
-object gracefully.  The other choice is to have a very busy destructor and
-you typically don't want that.  Even better, if you make your destructor
-protected then <i>delete</i> cannot be used on your object.  Then they have
-to go through <i>destroy()</i> to get rid of it!  There are, of course,
-down sides to that as well...
-
-<LI>Cancel any timer(s) which the reactor associates with this object</LI>
-
-<LI>Close the connection to the client. Notice that we use the <I>peer()</I>
-member function generated by the template. We should never need direct
-access to the actual connection object.</LI>
-
-<LI>The <I>open</I> function contains all of our initialization logic.
-It is called by the acceptor when a new connection is accepted. If we fail
-to initialize for any reason, we will return an error code so that the
-acceptor can respond correctly. This could not be done in a constructor.</LI>
-
-<LI>Create a temporary variable that will hold the address of the client
-system.</LI>
-
-<LI>Ask the connection object to give us the address of the client system.
-This is something you will usually want to do for logging or validation
-purposes whenever a new connection is received. See how easy it is?</LI>
-
-<LI>Tell the acceptor if we could not get the peer's address. Shouldn't
-we have used <I>ACE_ERROR_RETURN</I>? You tell me.</LI>
-
-<LI>But, if the peer's address was gotten...</LI>
-
-<LI>Copy the peer's host name into a member variable. We could have simply
-stored the address object but that has more information than we want to
-keep around for a long time. Notice how the <I>ACE_OS</I> class is used
-to access expected &quot;normal&quot; functions. While that may be a bit
-of overkill, it does give us another level of abstraction from one platform
-to another.</LI>
-
-<LI>As usual, we ultimately register ourselves with a reactor. Since we're
-only interested in responding to the client's data, we only ask for <I>READ</I>
-events to be sent to us.</LI>
-
-<LI>Another possible failure point...</LI>
-
-<LI>Just for giggles, we've decided to register a timer event with the
-reactor also. As shown here, it will delay two seconds before firing the
-first timer event and then be rescheduled every two seconds after that.
-Timer resolutions of milliseconds can be used too!</LI>
-
-<LI>But, of course, any registration may fail.</LI>
-
-<LI>Everything must have worked if we got here</LI>
-
-<LI>so tell the driver about it</LI>
-
-<LI>and return success to the acceptor which invoked us.</LI>
-
-<LI>When we're asked to close ourselves, we first destroy the timer and
-peer connection. It seems to me that we should do a <I>delete this</I>
-at some point. Perhaps <I>destroy</I> should do that?</LI>
-
-<LI>Invoke the destroy method to clean everything up</LI>
-
-<LI>and return a success status.</LI>
-
-<LI><I>handle_input</I> is where you do whatever your application requires
-when data is received from the client system.</LI>
-
-<LI>Create a storage space for the received data</LI>
-
-<LI>and make sure it is empty.</LI>
-
-<LI>Receive as much data as we can but don't overrun our buffer. For this
-simple example, we don't get too fancy. In a real application we would
-probably read some number of bytes (4?) and create a number from them.
-We would then use that number to decide how many more bytes to read. The
-number could be a simple byte count or it could be a packet type indicator
-which implies a bytecount.</LI>
-
-<LI>If <I>recv</I> returns <I>-1</I> then there is something bad wrong
-with the connection so</LI>
-
-<LI>we return an <I>-1</I> to the reactor along with a failure message.
-We cannot continue after this.</LI>
-
-<LI>A <I>0</I> return from <I>recv</I> is not quite so bad. However, <I>handle_input</I>
-wouldn't have been called if there was no data to be read. So, we take
-this to be a sign that the client chose to shutdown the connection.</LI>
-<LI>Like the case above, we need to return a <I>-1</I> to the reactor
-so that we can be shutdown. </LI>
-
-<LI>Any other value from <I>recv</I> is taken to indicate the number of
-bytes received so</LI>
-
-<LI>we display the data to the user. In the real world, we could do an
-infinite number of things with the data.</LI>
-
-<LI>Return <I>0</I> if all is well with the receive so that the reactor
-will allow us to continue functioning.</LI>
-
-<LI><I>handle_timeout</I> is something we haven't seen in any example so
-far. Like <I>handle_input</I>, it is called by the reactor based on an
-event. In this case, the event will be expiration of the timer we set in
-the <I>open</I> function.</LI>
-
-<LI>It seems kind of silly for the handler to get a pointer to <I>this</I>
-when the other handlers don't. Still, when given information of this type,
-it is generally good to check it.</LI>
-
-<LI>Display a simple message to tell the user that we got the timer. In
-your program, you may be expecting periodic data from your client. Simply
-set a timer whenver you are through receiving data and cancel it whenever
-you begin receiving it. If the timer handler is ever called, then you know
-you didn't get data within the time you wanted.</LI>
-
-<LI>Returning <I>0</I> will tell the reactor to reschedule the timer as
-configured in the <I>open</I> function.</LI>
-
-<LI>A simple string to hold the name of the client system. We could have
-kept the entire <I>ACE_INET_Addr</I> object but we really only wanted the
-name &amp; not the extra baggage.</LI>
-</OL>
-
-<P>Obviously this is a bit more complicated than the rest of the program.
-Still, you see there isn't a lot of networking knowlege needed to get this
-up and going. There are unfortunately several questions that I can't answer
-(such as the <I>delete this</I> issue) but given time, I'm sure we'll all
-figure it out.</P>
-
-<P>
-<HR WIDTH="100%"></P>
-
-<CENTER><P>[<A HREF="..">Tutorial
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
 Index</A>] [<A HREF="page03.html">Previous
-Page</A>] [<A HREF="page05.html">Continue
-This Tutorial</A>] </P></CENTER>
+Page</A>]</CENTER>
 
 </BODY>
 </HTML>
