@@ -7,18 +7,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#if !defined (msg_accrights)
-#undef msg_control
-#define msg_accrights msg_control
-#endif /* msg_accrights */
- 
-#if !defined (msg_accrightslen)
-#undef msg_controllen
-#define msg_accrightslen msg_controllen
-#endif /* msg_accrightslen */
-
 // Compiling for AIX.
 #define AIX
+// Use BSD 4.4 socket definitions
 #define _BSD 44
 
 #define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
@@ -43,6 +34,7 @@
 #define ACE_HAS_LONGLONG_T
 #define ACE_HAS_REENTRANT_FUNCTIONS 
 #define ACE_HAS_SYSV_IPC
+#define ACE_HAS_THREAD_SELF
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_TIUSER_H
@@ -58,6 +50,11 @@
 #define ACE_HAS_SELECT_H
 
 #define ACE_HAS_MSG
+
+// The following two #defines may require OS patches.  If you
+// have trouble building ACE, try commenting them out.
+#define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 // This environment requires this thing
 #define _BSD_INCLUDES
@@ -108,7 +105,6 @@
 // EYE assume it does for now.
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREAD_T
 #define ACE_LACKS_RWLOCK_T
 #define ACE_PTHREADS_MAP
 
@@ -120,5 +116,16 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 #define ACE_HAS_STRBUF_T
+
+// BSD 4.4 interface fixes nabbed from config-linux.h
+#if !defined (msg_accrights)
+#undef msg_control
+#define msg_accrights msg_control
+#endif /* msg_accrights */
+ 
+#if !defined (msg_accrightslen)
+#undef msg_controllen
+#define msg_accrightslen msg_controllen
+#endif /* msg_accrightslen */
 
 #endif /* ACE_CONFIG_H */

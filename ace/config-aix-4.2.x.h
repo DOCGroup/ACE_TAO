@@ -34,6 +34,7 @@
 #define ACE_HAS_LONGLONG_T
 #define ACE_HAS_REENTRANT_FUNCTIONS 
 #define ACE_HAS_SYSV_IPC
+#define ACE_HAS_THREAD_SELF
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_TIUSER_H
@@ -51,6 +52,11 @@
 #define ACE_HAS_MSG
 // #define ACE_LACKS_RECVMSG
 // #define ACE_LACKS_SENDMSG
+
+// The following two #defines may require OS patches.  If you
+// have trouble building ACE, try commenting them out.
+#define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 // This environment requires this thing
 #define _BSD_INCLUDES
@@ -101,7 +107,6 @@
 // EYE assume it does for now.
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREAD_T
 #define ACE_PTHREADS_MAP
 
 // include there
