@@ -1213,6 +1213,7 @@ TAO_ORB_Core::fini (void)
           (*eh)->handle_close (ACE_INVALID_HANDLE,
                                ACE_Event_Handler::ALL_EVENTS_MASK);
         }
+      unregistered.reset ();
     }
 
   // Pass reactor back to the resource factory.
