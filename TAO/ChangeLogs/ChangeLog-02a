@@ -1,3 +1,10 @@
+Thu Apr 27 17:51:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OBV/Typed_Events/Event_Types.idl: I accidentally
+	  checked in the forward declaration for the valuetype in this
+	  idl.  Unfortunately, forward_decl for valuetype is not
+	  implemented yet.
+
 Thu Apr 27 15:25:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DynArray_i.cpp:
