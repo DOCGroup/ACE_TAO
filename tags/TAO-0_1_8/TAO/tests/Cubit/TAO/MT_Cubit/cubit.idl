@@ -1,0 +1,24 @@
+interface Cubit 
+{
+  struct Many 
+  {
+    octet o;		// + 3 bytes padding (normally) ...
+    long l;
+    short s;		// + 2 bytes padding (normally) ...
+  };
+    
+  octet	 cube_octet  (in octet o);
+  short	 cube_short  (in short s);
+  long   cube_long   (in long l);
+  Many   cube_struct (in Many values);
+        
+  oneway void noop ();
+
+  oneway void shutdown ();
+};
+
+interface Cubit_Factory 
+{ 
+  string create_cubit (in unsigned short index);
+};
+
