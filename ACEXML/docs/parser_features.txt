@@ -12,9 +12,13 @@ has been activated or not can be queried using @c getFeature.
 Here is a list of supported features:
 
 <OL>
-  <li> None so far.  We are integrating a dummy debug validator into
-  the parser which will use the string "Dummy Debug Validator" to turn
-  the feature on/off.
+  <li> namespaces - When this feature is enabled, ACEXML parser allows
+  access by namespace qualified names.
+
+  <li> namespace_prefixes - Normally the list of attributes returned by the
+  parser will not contain attributes used as namespace declarations
+  (xmlns:foo="bar"). When this feature is enabled, the list of attributes
+  contains the namespace declarations also.
 </OL>
 
 @}

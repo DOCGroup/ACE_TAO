@@ -53,7 +53,7 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event endElement (%s, %s, ) ***************\n"),
+              ACE_LIB_TEXT ("* Event endElement (%s, %s, %s) ***************\n"),
               uri, name, qName));
 }
 

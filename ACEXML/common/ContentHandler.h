@@ -29,19 +29,18 @@
  *
  * @brief ACEXML_ContentHandler
  *
- * This is the main interface that most SAX applications implement: if
- * the application needs to be informed of basic parsing events, it
- * implements this interface and registers an instance with the SAX
- * parser using the setContentHandler method. The parser uses the
- * instance to report basic document-related events like the start and
- * end of elements and character data.
+ * This is the main interface that most SAX applications implement: if the
+ * application needs to be informed of basic parsing events, it implements
+ * this interface and registers an instance with the SAX parser using the
+ * setContentHandler method. The parser uses the instance to report basic
+ * document-related events like the start and end of elements and character
+ * data.
  *
- * The order of events in this interface is very important, and
- * mirrors the order of information in the document itself. For
- * example, all of an element's content (character data, processing
- * instructions, and/or subelements) will appear, in order, between
- * the startElement event and the corresponding endElement event.
-
+ * The order of events in this interface is very important, and mirrors the
+ * order of information in the document itself. For example, all of an
+ * element's content (character data, processing instructions, and/or
+ * subelements) will appear, in order, between the startElement event and
+ * the corresponding endElement event.
  */
 class ACEXML_Export ACEXML_ContentHandler
 {

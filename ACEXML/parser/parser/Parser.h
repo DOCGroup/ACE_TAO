@@ -78,11 +78,31 @@ public:
     //                       ACEXML_SAXNotSupportedException))
     ;
 
+  /**
+   * Activating or deactivating a feature.
+   */
+  virtual void setFeature (const ACEXML_Char *name,
+                           int boolean_value,
+                           ACEXML_Env &xmlenv)
+    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+    //                       ACEXML_SAXNotSupportedException))
+    ;
+
   /*
    * Look up the value of a property.
    */
   virtual void * getProperty (const ACEXML_Char *name,
                               ACEXML_Env &xmlenv)
+    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+    //                       ACEXML_SAXNotSupportedException))
+    ;
+
+  /*
+   * Set the value of a property.
+   */
+  virtual void setProperty (const ACEXML_Char *name,
+                            void *value,
+                            ACEXML_Env &xmlenv)
     //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
     //                       ACEXML_SAXNotSupportedException))
     ;
@@ -100,7 +120,6 @@ public:
    */
   virtual void parse (const ACEXML_Char *systemId,
                       ACEXML_Env &xmlenv)
-    // @@ throw IOException???
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
@@ -123,26 +142,6 @@ public:
    * Allow an application to register an error event handler.
    */
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
-
-  /**
-   * Activating or deactivating a feature.
-   */
-  virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value,
-                           ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
-
-  /*
-   * Set the value of a property.
-   */
-  virtual void setProperty (const ACEXML_Char *name,
-                            void *value,
-                            ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
 
   // *** Helper functions for parsing XML
 
@@ -279,8 +278,7 @@ public:
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
    * character encountered should be the '#' char.
    *
-   * @param buf points to a character buffer for
-   * the result.
+   * @param buf points to a character buffer for the result.
    * @param len specifies the capacities of the buffer.
    *
    * @retval 0 on success and -1 otherwise.
@@ -452,21 +450,37 @@ private:
    * Dispatch errors to ErrorHandler.
    *
    */
-  void report_error (ACEXML_SAXParseException& exception, ACEXML_Env& xmlenv);
+  void report_error (const ACEXML_Char* message, ACEXML_Env& xmlenv);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void report_warning (ACEXML_SAXParseException& exception,
-                       ACEXML_Env& xmlenv);
+  void report_warning (const ACEXML_Char* message, ACEXML_Env& xmlenv);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void report_fatal_error (ACEXML_SAXParseException& exception,
+  void report_fatal_error (const ACEXML_Char* message, ACEXML_Env& xmlenv);
+
+  /**
+   * Dispatch prefix mapping calls to the ContentHandler.
+   *
+   * @param prefix Namespace prefix
+   * @param uri Namespace URI
+   * @param name Local name
+   * @param start 1 => startPrefixMapping 0 => endPrefixMapping
+   */
+  void report_prefix_mapping (const ACEXML_Char* prefix,
+                              const ACEXML_Char* uri,
+                              const ACEXML_Char* name,
+                              int start,
                            ACEXML_Env& xmlenv);
+  /**
+   *  Parse a keyword.
+   */
+  int parse_token (const ACEXML_Char* keyword);
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.
