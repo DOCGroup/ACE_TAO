@@ -74,3 +74,6 @@ LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 
 LINK.cc          = override
 LINK.cc.override = $(PRELINK) $(LD) $(PTDIRS)
+POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) xsymDec < $@ > $@.sym
+
+
