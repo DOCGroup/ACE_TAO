@@ -28,6 +28,12 @@ ACE_SUN_Proactor::~ACE_SUN_Proactor (void)
 }
 
 int
+ACE_SUN_Proactor::handle_events (ACE_Time_Value &wait_time)
+{
+  return this->handle_events (wait_time.msec ());
+}
+
+int
 ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 {
   aio_result_t *result = 0;
