@@ -391,7 +391,7 @@ POA_CORBA::_tao_collocated_PolicyManager::_tao_collocated_PolicyManager (
     POA_CORBA::PolicyManager_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,PolicyManager) (),
+  : CORBA::PolicyManager (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
@@ -506,7 +506,7 @@ POA_CORBA::_tao_collocated_PolicyCurrent::_tao_collocated_PolicyCurrent (
     POA_CORBA::PolicyCurrent_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,PolicyCurrent) (),
+  : CORBA::PolicyCurrent (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_PolicyManager) (servant, stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Current) (servant, stub),
     CORBA_Object (stub, servant, 1),
