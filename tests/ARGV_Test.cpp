@@ -16,6 +16,9 @@
 // ============================================================================
 
 #include "ace/ARGV.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, ARGV_Test, "$Id$")
