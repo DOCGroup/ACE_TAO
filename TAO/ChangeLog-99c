@@ -1,3 +1,9 @@
+Thu Apr 29 10:36:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Servant_Base.{h,cpp}: Changed the type of ref_count_ to
+	  CORBA::ULong and removed the template instantiation for
+	  Atomic_Ops.
+
 Thu Apr 29 09:34:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
