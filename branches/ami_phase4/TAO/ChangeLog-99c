@@ -1,3 +1,8 @@
+Sat Jul 10 16:50:23 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Invocation.h:
+  	* tao/Invocation.cpp:  Added distructors for the Synchronous Invocations classes. 
+
 Sat Jul  10 15:30:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ch.cpp
