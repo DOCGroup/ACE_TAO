@@ -1,3 +1,9 @@
+Wed Jan 28 15:35:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	* tests/Cubit/Makefile: 
+	  Fixed Makefiles so we can invoke the top level Makefile safely.
+
 Wed Jan 28 14:25:29 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Param_Test/run_test: Updated to utilized the new '-o'
