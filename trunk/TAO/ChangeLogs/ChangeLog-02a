@@ -1,3 +1,13 @@
+Fri Feb  8 17:40:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (get_protocols_hooks):
+
+	  Fixed a syntax error.  ACE_CHECK_RETURN, not ACE_CHECK!
+
+	  (run):
+
+	  Fixed an unused argument warning.
+
 Fri Feb  8 16:40:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp :
