@@ -1,3 +1,10 @@
+Wed Jan  3 17:24:11 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+
+          Mistakenly changed the ace_timezone () method to use
+          timezone () instead of timezone.  Changed back.
+
 Wed Jan  3 16:00:22 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp
