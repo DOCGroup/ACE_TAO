@@ -1,3 +1,18 @@
+Mon Dec  6 23:08:12 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+
+	  Changed to use NamingContext instead of NamingContextExt.
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.h:
+
+	  Removed TAO_NOTIFY_USE_NAMING_CONTEXT conditionals to use the
+	  NamingContext instead of the NamingContextExt interface.  Since
+	  use of the latter doesn't buy us anything (and costs a little),
+	  we use the "least common subset" to maximize interoperablity.
+
 Tue Dec  7 08:31:17 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/BiDir_GIOP/BiDirGIOP.cpp:
