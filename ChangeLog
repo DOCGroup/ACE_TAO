@@ -1,3 +1,10 @@
+Wed Jun  9 12:04:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_socket.inl (closesocket): Changed the constant passed
+	  to ACE_OS::shutdown() from SD_SEND to ACE_SHUTDOWN_WRITE to make
+	  it portable for Winsock1 and Winsock2 environments. Thanks to
+	  Weida Ma <weida@flyingdonkey.com> for reporting this problem.
+
 Wed Jun  9 10:47:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dirent_Selector.cpp (close): Regarding this:
