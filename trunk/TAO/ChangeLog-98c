@@ -1,3 +1,7 @@
+Tue Aug 11 17:27:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html : Updated the documentation.
+
 Tue Aug 11 16:18:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* be/be_codegen.cpp
