@@ -57,6 +57,9 @@ CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq)
  (seq)
 {}
 
+CORBA::ServiceDetail::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
+{}
+
 static const CORBA::Long _oc_CORBA_ServiceDetail__tao_seq_Octet[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
