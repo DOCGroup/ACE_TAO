@@ -37,10 +37,10 @@
 	#define ACE_HAS_MFC 0
 #endif
 
-// Define this if you're using MSVC 5.0 and your application relies
-// on the standard c++ library.
-//  Runtime restrictions: You must be using MSVC 5.0 and your application
-//                        must link with the standard libraries.
+// Define this if you're using MSVC 4.2 or above and your application
+// relies on the standard c++ library.
+//  Runtime restrictions: You must be using MSVC 4.2 or above and your
+//                        application must link with the standard libraries.
 #if defined (_MSC_VER) && (_MSC_VER >= 1020)
 	#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 		#define ACE_HAS_STANDARD_CPP_LIBRARY	0
