@@ -2,7 +2,7 @@ Wed Jan 20 01:48:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (symbol): Remembered to pass down the
 	  "gobbler" in a Static_Function_Node.  Thanks to Eric C. Newton
-	  <ecn@smart.net> for reporting and prividing a fix.
+	  <ecn@smart.net> for reporting and prividing the fix.
 
 Tue Jan 19 17:52:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
