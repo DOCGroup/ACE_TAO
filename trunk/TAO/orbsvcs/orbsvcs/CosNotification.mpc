@@ -52,7 +52,7 @@ project(CosNotification) : orbsvcslib, core, event {
 }
 
 
-project(CosNotification_Skel) : orbsvcslib, core, notification, portableserver {
+project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, portableserver {
   sharedname   = TAO_CosNotification_Skel
   dynamicflags = TAO_NOTIFY_SKEL_BUILD_DLL
 
