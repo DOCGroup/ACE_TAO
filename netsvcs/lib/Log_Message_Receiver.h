@@ -79,7 +79,7 @@
 
 
 // Type based log message receiver
-template<ACE_SYNCH_1> 
+template<ACE_SYNCH_DECL> 
 class Static_Log_Message_Receiver
   // = TITLE
   //  Static_Log_Message_Receiver is a simple log message receiver. It
@@ -109,9 +109,9 @@ public:
 
 
 //Forward declaration
-template<ACE_SYNCH_1> class Log_Message_Receiver_Impl;
+template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
 
-template<ACE_SYNCH_1> 
+template<ACE_SYNCH_DECL> 
 class Log_Message_Receiver
   // = TITLE
   //  Log_Message_Receiver is a little more complicated log message receiver.
@@ -137,29 +137,29 @@ class Log_Message_Receiver
 public:
   Log_Message_Receiver (void);
   // Creates a new Log_Message_Receiver
-  Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_2> const &rhs);
+  Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver (void);
   
   void log_record (const char *hostname,
                    ACE_Log_Record &record);  
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver<ACE_SYNCH_2> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver<ACE_SYNCH_USE> &rhs))
   
   // Attributes.
-  Log_Message_Receiver_Impl<ACE_SYNCH_2> *receiver_impl_;
+  Log_Message_Receiver_Impl<ACE_SYNCH_USE> *receiver_impl_;
 };
 
 // Implementation with reference count.
 
-template<ACE_SYNCH_1> 
+template<ACE_SYNCH_DECL> 
 class Log_Message_Receiver_Impl
 {
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // Methods for handling reference count and instance lifetime
   static Log_Message_Receiver_Impl *create (void);
-  static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_2> *body);
-  static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_2> *body);
+  static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
+  static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   
   void log_record (const char *hostname,
                    ACE_Log_Record &record);
@@ -178,8 +178,8 @@ private:
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   // = Not implemeted
-  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (void operator=(const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &rhs))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

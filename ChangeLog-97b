@@ -1,5 +1,21 @@
+Fri Nov  7 01:06:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/DEV_Addr.cpp,
+	  ace/FILE_Addr.cpp,
+	  ace/SPIPE_Addr.cpp,
+	  ace/INET_Addr.cpp,
+	  ace/UNIX_Addr.cpp: Fixed the set(const Foo &) method so that
+	  it correctly detects cases where we're passed in a
+	  ACE_Addr::sap_any.  This is a total hack...
+
+	* ace/{OS.h,Addr.cpp}: Added a new AF_ANY flag, which is set to -1.
+
 Thu Nov  6 23:05:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+        * Changed the obtusely named ACE_SYNCH_1 and ACE_SYNCH_2 macros to
+ 	  ACE_SYNCH_DECL and ACE_SYNCH_USE, respectively.  Thanks to Mike
+ 	  Kamrad <J.M.KAMRAD.II@cdev.com> for suggesting this.
+ 
 	* ace/Select_Reactor.cpp, ace/ACE.cpp: Broaded the comparison so
  	  that we only try to use {set|get}rlimit() if ACE_LACKS_RLIMIT is
  	  *false*.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for

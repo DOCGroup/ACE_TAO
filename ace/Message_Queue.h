@@ -22,10 +22,10 @@
 
 // Forward decls.
 class ACE_Notification_Strategy;
-template <ACE_SYNCH_1> class ACE_Message_Queue_Iterator;
-template <ACE_SYNCH_1> class ACE_Message_Queue_Reverse_Iterator;
+template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;
+template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 
-template <ACE_SYNCH_1>
+template <ACE_SYNCH_DECL>
 class ACE_Message_Queue
   // = TITLE
   //     A threaded message queueing facility, modeled after the
@@ -33,17 +33,17 @@ class ACE_Message_Queue
   //
   // = DESCRIPTION
   //     An <ACE_Message_Queue> is the central queueing facility for
-  //     messages in the ASX framework.  If <ACE_SYNCH_1> is
+  //     messages in the ASX framework.  If <ACE_SYNCH_DECL> is
   //     ACE_MT_SYNCH then all operations are thread-safe.  Otherwise,
   //     if it's <ACE_NULL_SYNCH> then there's no locking overhead.
 {
-friend class ACE_Message_Queue_Iterator<ACE_SYNCH_2>;
-friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>;
+friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
+friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
 public:
 
   // = Traits
-  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_2> ITERATOR;
-  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2> REVERSE_ITERATOR;
+  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> ITERATOR;
+  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> REVERSE_ITERATOR;
 
   // = Default high and low water marks.
   enum 
@@ -273,14 +273,14 @@ protected:
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 };
 
-template <ACE_SYNCH_1>
+template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Iterator
   // = TITLE
   //     Iterator for the <ACE_Message_Queue>.
 {
 public:
   // = Initialization method.
-  ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue);
+  ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);
 
   // = Iteration methods.
   int next (ACE_Message_Block *&entry);
@@ -301,21 +301,21 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Message_Queue <ACE_SYNCH_2> &queue_;
+  ACE_Message_Queue <ACE_SYNCH_USE> &queue_;
   // Message_Queue we are iterating over.
 
   ACE_Message_Block *curr_;           
   // Keeps track of how far we've advanced...
 };
 
-template <ACE_SYNCH_1>
+template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Reverse_Iterator
   // = TITLE
   //     Reverse Iterator for the <ACE_Message_Queue>.
 {
 public:
   // = Initialization method.
-  ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue);
+  ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);
 
   // = Iteration methods.
   int next (ACE_Message_Block *&entry);
@@ -336,7 +336,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Message_Queue <ACE_SYNCH_2> &queue_;
+  ACE_Message_Queue <ACE_SYNCH_USE> &queue_;
   // Message_Queue we are iterating over.
 
   ACE_Message_Block *curr_;           

@@ -21,9 +21,9 @@
 #include "ace/Task_T.h"
 
 // Forward decl.
-// template <ACE_SYNCH_1> class ACE_Task;
+// template <ACE_SYNCH_DECL> class ACE_Task;
 
-template <ACE_SYNCH_1>
+template <ACE_SYNCH_DECL>
 class ACE_Module
   // = TITLE
   //     An abstraction for managing a bi-directional flow of messages.
@@ -61,16 +61,16 @@ public:
   // Shutdown the Module.
 
   ACE_Module (const char *module_name, 
-	      ACE_Task<ACE_SYNCH_2> *writer = 0, 
-	      ACE_Task<ACE_SYNCH_2> *reader = 0, 
+	      ACE_Task<ACE_SYNCH_USE> *writer = 0, 
+	      ACE_Task<ACE_SYNCH_USE> *reader = 0, 
 	      void *args = 0,
 	      int flags = M_DELETE);
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.
 
   int open (const char *module_name, 
-	    ACE_Task<ACE_SYNCH_2> *writer = 0, 
-	    ACE_Task<ACE_SYNCH_2> *reader = 0, 
+	    ACE_Task<ACE_SYNCH_USE> *writer = 0, 
+	    ACE_Task<ACE_SYNCH_USE> *reader = 0, 
 	    void *a = 0,
 	    int flags = M_DELETE);
   // Create an initialized module with <module_name> as its identity
@@ -87,27 +87,27 @@ public:
   // Should not be called from within ACE_Task::module_closed().
   
   // = ACE_Task manipulation routines 
-  ACE_Task<ACE_SYNCH_2> *writer (void);
+  ACE_Task<ACE_SYNCH_USE> *writer (void);
   // Get the writer task.
 
-  void writer (ACE_Task<ACE_SYNCH_2> *q, int flags = M_DELETE_WRITER);
+  void writer (ACE_Task<ACE_SYNCH_USE> *q, int flags = M_DELETE_WRITER);
   // Set the writer task. <flags> can be used to indicate that the
   // module should delete the writer during a call to close or to the
   // destructor. If a previous writer exists, it is closed.  It may
   // also be deleted, depending on the old flags_ value.  Should not
   // be called from within ACE_Task::module_closed().
 
-  ACE_Task<ACE_SYNCH_2> *reader (void);
+  ACE_Task<ACE_SYNCH_USE> *reader (void);
   // Get the reader task.
 
-  void reader (ACE_Task<ACE_SYNCH_2> *q, int flags = M_DELETE_READER);
+  void reader (ACE_Task<ACE_SYNCH_USE> *q, int flags = M_DELETE_READER);
   // Set the reader task. <flags> can be used to indicate that the
   // module should delete the reader during a call to close or to the
   // destructor. If a previous reader exists, it is closed.  It may
   // also be deleted, depending on the old flags_ value.  Should not
   // be called from within ACE_Task::module_closed()
 
-  ACE_Task<ACE_SYNCH_2> *sibling (ACE_Task<ACE_SYNCH_2> *orig); 
+  ACE_Task<ACE_SYNCH_USE> *sibling (ACE_Task<ACE_SYNCH_USE> *orig); 
   // Set and get pointer to sibling <ACE_Task> in an <ACE_Module>
 
   // = Identify the module 
@@ -123,13 +123,13 @@ public:
   void arg (void *);
   // Set the argument passed to the tasks.
 
-  void link (ACE_Module<ACE_SYNCH_2> *m);
+  void link (ACE_Module<ACE_SYNCH_USE> *m);
   // Link to other modules in the ustream stack 
 
-  ACE_Module<ACE_SYNCH_2> *next (void);
+  ACE_Module<ACE_SYNCH_USE> *next (void);
   // Get the next pointer to the module above in the stream.
 
-  void next (ACE_Module<ACE_SYNCH_2> *m);
+  void next (ACE_Module<ACE_SYNCH_USE> *m);
   // Set the next pointer to the module above in the stream.
 
   void dump (void) const;
@@ -143,14 +143,14 @@ private:
   // Implements the close operation for either the reader or the
   // writer task (depending on <which>).
 
-  ACE_Task<ACE_SYNCH_2> *q_pair_[2];   
+  ACE_Task<ACE_SYNCH_USE> *q_pair_[2];   
   // Pair of Tasks that form the "read-side" and "write-side" of the
   // ACE_Module partitioning.
 
   char name_[MAXNAMLEN + 1];
   // Name of the ACE_Module.
 
-  ACE_Module<ACE_SYNCH_2> *next_;
+  ACE_Module<ACE_SYNCH_USE> *next_;
   // Next ACE_Module in the stack.
 
   void *arg_;

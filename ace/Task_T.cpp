@@ -13,10 +13,10 @@
 #include "ace/Task_T.i"
 #endif /* __ACE_INLINE__ */
 
-template <ACE_SYNCH_1> void
-ACE_Task<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Task<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "\nthr_mgr_ = %x", this->thr_mgr_));
   this->msg_queue_->dump ();
@@ -36,30 +36,30 @@ ACE_Task<ACE_SYNCH_2>::dump (void) const
 // If the user doesn't supply a ACE_Message_Queue pointer then we'll
 // allocate one dynamically.  Otherwise, we'll use the one they give.
 
-template<ACE_SYNCH_1>
-ACE_Task<ACE_SYNCH_2>::ACE_Task (ACE_Thread_Manager *thr_man, 
-				 ACE_Message_Queue<ACE_SYNCH_2> *mq)
+template<ACE_SYNCH_DECL>
+ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man, 
+				 ACE_Message_Queue<ACE_SYNCH_USE> *mq)
   : ACE_Task_Base (thr_man), 
     msg_queue_ (0),
     delete_msg_queue_ (0),
     mod_ (0),
     next_ (0)
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::ACE_Task");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::ACE_Task");
 
   if (mq == 0)
     {
-      ACE_NEW (mq, ACE_Message_Queue<ACE_SYNCH_2>);
+      ACE_NEW (mq, ACE_Message_Queue<ACE_SYNCH_USE>);
       this->delete_msg_queue_ = 1;
     }
 
   this->msg_queue_ = mq;
 }
 
-template<ACE_SYNCH_1>
-ACE_Task<ACE_SYNCH_2>::~ACE_Task (void)
+template<ACE_SYNCH_DECL>
+ACE_Task<ACE_SYNCH_USE>::~ACE_Task (void)
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::~ACE_Task");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::~ACE_Task");
   if (this->delete_msg_queue_)
     delete this->msg_queue_;
 
@@ -68,30 +68,30 @@ ACE_Task<ACE_SYNCH_2>::~ACE_Task (void)
   this->delete_msg_queue_ = 0;
 }
 
-template<ACE_SYNCH_1> ACE_Task<ACE_SYNCH_2> *
-ACE_Task<ACE_SYNCH_2>::sibling (void)
+template<ACE_SYNCH_DECL> ACE_Task<ACE_SYNCH_USE> *
+ACE_Task<ACE_SYNCH_USE>::sibling (void)
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::sibling");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::sibling");
   if (this->mod_ == 0)
     return 0;
   else
     return this->mod_->sibling (this);
 }
 
-template<ACE_SYNCH_1> const char *
-ACE_Task<ACE_SYNCH_2>::name (void) const
+template<ACE_SYNCH_DECL> const char *
+ACE_Task<ACE_SYNCH_USE>::name (void) const
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::name");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::name");
   if (this->mod_ == 0)
     return 0;
   else
     return this->mod_->name ();
 }
 
-template<ACE_SYNCH_1> ACE_Module<ACE_SYNCH_2> *
-ACE_Task<ACE_SYNCH_2>::module (void) const
+template<ACE_SYNCH_DECL> ACE_Module<ACE_SYNCH_USE> *
+ACE_Task<ACE_SYNCH_USE>::module (void) const
 {
-  ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::module");
+  ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::module");
   return this->mod_;
 }
 

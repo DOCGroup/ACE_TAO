@@ -13,15 +13,15 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 
-template <ACE_SYNCH_1>
-ACE_Message_Queue_Iterator<ACE_SYNCH_2>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue)
+template <ACE_SYNCH_DECL>
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue)
   : queue_ (queue),
     curr_ (queue_.head_)
 {
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry)
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
@@ -34,16 +34,16 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry)
     return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue_Iterator<ACE_SYNCH_2>::done (void) const
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::done (void) const
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
   return this->curr_ == 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue_Iterator<ACE_SYNCH_2>::advance (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::advance (void)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
@@ -51,22 +51,22 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_2>::advance (void)
   return this->curr_ != 0;
 }
 
-template <ACE_SYNCH_1> void 
-ACE_Message_Queue_Iterator<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void 
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Iterator)
 
-template <ACE_SYNCH_1>
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue)
+template <ACE_SYNCH_DECL>
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue)
   : queue_ (queue),
     curr_ (queue_.tail_)
 {
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry)
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
@@ -79,16 +79,16 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry
     return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::done (void) const
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::done (void) const
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
   return this->curr_ == 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::advance (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::advance (void)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
@@ -96,15 +96,15 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::advance (void)
   return this->curr_ != 0;
 }
 
-template <ACE_SYNCH_1> void 
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
 }
 
-template <ACE_SYNCH_1> void
-ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
               "deactivated = %d\n"
@@ -128,8 +128,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <ACE_SYNCH_1>
-ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm, 
+template <ACE_SYNCH_DECL>
+ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm, 
                                                    size_t lwm,
                                                    ACE_Notification_Strategy *ns)
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
@@ -142,16 +142,16 @@ ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm,
     not_full_cond_ (this->lock_)
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR, "open"));
 }
 
-template <ACE_SYNCH_1>
-ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue (void)
+template <ACE_SYNCH_DECL>
+ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue");
   if (this->head_ != 0 && this->close () == -1)
     ACE_ERROR ((LM_ERROR, "close"));
 }
@@ -160,12 +160,12 @@ ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue (void)
 // once for the same queue, we're in bigger trouble than just
 // concurrency control!
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::open (size_t hwm, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm, 
                                       size_t lwm,
                                       ACE_Notification_Strategy *ns)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::open");
   this->high_water_mark_ = hwm;
   this->low_water_mark_  = lwm;
   this->deactivated_ = 0;
@@ -180,10 +180,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::open (size_t hwm,
 // Implementation of the public deactivate() method
 // (assumes locks are held).
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::deactivate_i (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::deactivate_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i");
   int current_status = 
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
 
@@ -197,10 +197,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::deactivate_i (void)
   return current_status;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::activate_i (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::activate_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::activate_i");
   int current_status = 
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
   this->deactivated_ = 0;
@@ -209,10 +209,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::activate_i (void)
 
 // Clean up the queue if we have not already done so! 
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::close (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::close");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int res = this->deactivate_i ();
@@ -242,8 +242,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::close (void)
   return res;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::signal_enqueue_waiters (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::signal_enqueue_waiters (void)
 {
 #if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->not_full_cond_.signal () != 0)
@@ -258,8 +258,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::signal_enqueue_waiters (void)
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::signal_dequeue_waiters (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::signal_dequeue_waiters (void)
 {
 #if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   // Tell any blocked threads that the queue has a new item!
@@ -278,10 +278,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::signal_dequeue_waiters (void)
 // Actually put the node at the end (no locking so must be called with
 // locks held).
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i");
 
   if (new_item == 0)
     return -1;
@@ -320,10 +320,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
 
 // Actually put the node at the head (no locking) 
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i (ACE_Message_Block *new_item)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i");
 
   if (new_item == 0)
     return -1;
@@ -356,10 +356,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i (ACE_Message_Block *new_item)
 // Actually put the node at its proper position relative to its
 // priority.
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i (ACE_Message_Block *new_item)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
   if (new_item == 0)
     return -1;
@@ -426,10 +426,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i (ACE_Message_Block *new_item)
 // called with locks held).  This method assumes that the queue has at
 // least one item in it when it is called.
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i");
   first_item = this->head_;
   this->head_ = this->head_->next ();
 
@@ -457,11 +457,11 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
 
 // Take a look at the first item without removing it. 
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head (ACE_Message_Block *&first_item, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_item, 
                                                    ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
@@ -491,8 +491,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head (ACE_Message_Block *&first_ite
   return this->cur_count_;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
 						    ACE_Time_Value *tv)
 {
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
@@ -527,8 +527,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T>
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon, 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon, 
 						     ACE_Time_Value *tv)
 {
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
@@ -566,11 +566,11 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T
 // Block indefinitely waiting for an item to arrive,
 // does not ignore alerts (e.g., signals). 
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item, 
                                               ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
@@ -597,11 +597,11 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
 // accordance with its <msg_priority> (0 is lowest priority).  Returns
 // -1 on failure, else the number of items still on the queue.
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item, 
                                               ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
@@ -624,22 +624,22 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
     }
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item, 
                                          ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue");
   return this->enqueue_prio (new_item, tv);
 }
 
 // Block indefinitely waiting for an item to arrive,
 // does not ignore alerts (e.g., signals). 
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item, 
                                               ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
@@ -666,11 +666,11 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
 // indefinitely (or until an alert occurs).  Otherwise, block for upto
 // the amount of time specified by TV. 
 
-template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item, 
+template <ACE_SYNCH_DECL> int 
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item, 
                                               ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
@@ -685,10 +685,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
   return this->dequeue_head_i (first_item);
 }
 
-template <ACE_SYNCH_1> int
-ACE_Message_Queue<ACE_SYNCH_2>::notify (void)
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::notify");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)

@@ -33,6 +33,9 @@ public:
   ACE_FILE_Addr (const ACE_FILE_Addr &sa);
   // Copy constructor.
 
+  int set (const ACE_FILE_Addr &sa);
+  // Acts like a copy constructor.
+
   ACE_FILE_Addr (LPCTSTR filename);
   // Create a ACE_FILE_Addr from a pathname. 
 
