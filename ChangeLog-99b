@@ -1,3 +1,8 @@
+Fri Dec 11 11:13:54 1999  James Hu  <jxh@entera.com>
+
+	* ace/Dirent.i:
+          Constructor with a path passed in was not initializing dirp_.  
+
 Fri Dec 10 17:29:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h:
