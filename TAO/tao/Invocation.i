@@ -15,7 +15,7 @@ TAO_GIOP_Invocation::reply_service_context (void)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_GIOP_Invocation::request_id (void)
+TAO_GIOP_Invocation::request_id (void) const
 {
   return this->op_details_.request_id ();
 }

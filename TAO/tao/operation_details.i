@@ -1,17 +1,18 @@
 // -*- C++ -*-
+//
 //$Id$
+
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
                                               CORBA::Boolean argument_flag)
-  :opname_ (name),
-   opname_len_ (len),
-   request_id_ (0),
-   argument_flag_ (argument_flag),
-   response_flags_ (0),
-   addressing_mode_ (TAO_Target_Specification::Key_Addr)
+  : opname_ (name),
+    opname_len_ (len),
+    request_id_ (0),
+    argument_flag_ (argument_flag),
+    response_flags_ (0),
+    addressing_mode_ (TAO_Target_Specification::Key_Addr)
 {
-  //no-op
 }
 
 ACE_INLINE const char*
@@ -91,14 +92,17 @@ TAO_Operation_Details::request_id (CORBA::ULong id)
 }
 
 ACE_INLINE void
-TAO_Operation_Details::modify_request_id (int flag)
+TAO_Operation_Details::modify_request_id (int originator)
 {
-  // If the flag value is -1 then BiDirectional connection has not
-  // been negotiated
-  if (flag >= 0)
-    {
-      this->request_id_ = (this->request_id_ * 2) + flag;
-    }
+  // originator ==  1 --> originating side
+  // originator ==  0 --> other side
+  // originator == -1 --> no bi-directional connection was negotiated
+
+  // The originating side must have an even request ID, and the other
+  // side must have an odd request ID.  Make sure that is the case.
+  if ((originator == 1 && ACE_ODD (this->request_id_))
+      || (originator == 0 && ACE_EVEN (this->request_id_)))
+    ++(this->request_id_);
 }
 
 ACE_INLINE CORBA::ULong
@@ -144,13 +148,12 @@ TAO_Operation_Details::addressing_mode (void) const
 }
 
 ACE_INLINE void
-TAO_Operation_Details::
-  addressing_mode (CORBA::Short mode)
+TAO_Operation_Details::addressing_mode (CORBA::Short mode)
 {
   if (mode == 0)
-      this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
+    this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
   else if (mode == 1)
     this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
   else if (mode == 2)
-      this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
+    this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
 }

@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
 #include "tao/IIOP_Transport.h"
@@ -22,7 +23,9 @@
 # include "tao/IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, IIOP_Transport, "$Id$")
+ACE_RCSID (TAO,
+           IIOP_Transport,
+           "$Id$")
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
@@ -38,7 +41,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core));
     }
-    else
+  else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -107,7 +110,8 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("IIOP_Transport::read_message, failure in read_message ()")));
+                    ACE_TEXT ("IIOP_Transport::read_message, failure ")
+                    ACE_TEXT ("in read_message ()"))); 
 
       this->tms_->connection_closed ();
       return -1;
@@ -210,7 +214,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-
 int
 TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
                                              TAO_Target_Specification &spec,
@@ -226,7 +229,7 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
     {
       this->set_bidir_context_info (opdetails);
 
-      // Set the flag to 0
+      // Set the flag to 0  (i.e., originating side)
       this->bidirectional_flag (0);
     }
 
@@ -256,14 +259,14 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
 
   IIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
     return -1;
 
   // As we have received a bidirectional information, set the flag to
-  // 1
+  // 1 (i.e., non-originating side)
   this->bidirectional_flag (1);
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
@@ -289,29 +292,30 @@ TAO_IIOP_Transport::process_message (void)
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST)
     {
-      if (this->messaging_object_->process_request_message (this,
-                                                            this->orb_core ()) == -1)
+      if (this->messaging_object_->process_request_message (
+            this,
+            this->orb_core ()) == -1)
         return -1;
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
     {
       TAO_Pluggable_Reply_Params params (this->orb_core ());
+
       if (this->messaging_object_->process_reply_message (params)  == -1)
         {
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                        ACE_TEXT ("IIOP_Transport::process_message, process_reply_message ()")));
+                        ACE_TEXT ("IIOP_Transport::process_message, ")
+                        ACE_TEXT ("process_reply_message ()")));
 
           this->messaging_object_->reset ();
           this->tms_->connection_closed ();
           return -1;
         }
 
-
-      result =
-        this->tms_->dispatch_reply (params);
+      result = this->tms_->dispatch_reply (params);
 
       // @@ Somehow it seems dangerous to reset the state *after*
       //    dispatching the request, what if another threads receives
@@ -341,8 +345,6 @@ TAO_IIOP_Transport::process_message (void)
       //    problems this place needs to be revisited. If someone else
       //    is going to take a look please contact bala@cs.wustl.edu
       //    for details on this-- Bala
-
-
 
       if (result == -1)
         {
@@ -391,8 +393,7 @@ TAO_IIOP_Transport::process_message (void)
 void
 TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
-
-  // Get a handle on to the acceptor registry
+  // Get a handle to the acceptor registry
   TAO_Acceptor_Registry * ar =
     this->orb_core ()->acceptor_registry ();
 
@@ -409,6 +410,8 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
       // Check whether it is a IIOP acceptor
       if ((*acceptor)->tag () == TAO_TAG_IIOP_PROFILE)
         {
+          // @@ Why isn't the return value checked!
+          //      -Ossama
           this->get_listen_point (listen_point_list,
                                   *acceptor);
         }
@@ -419,7 +422,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_OutputCDR cdr;
 
   // Marshall the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)== 0)
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << listen_point_list) == 0)
     return;
 
@@ -430,7 +433,6 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   return;
 }
 
-
 int
 TAO_IIOP_Transport::get_listen_point (
     IIOP::ListenPointList &listen_point_list,
@@ -440,11 +442,11 @@ TAO_IIOP_Transport::get_listen_point (
     ACE_dynamic_cast (TAO_IIOP_Acceptor *,
                       acceptor );
 
-  // Get the array of endpoints serviced by <iiop_acceptor>
+  // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =
     iiop_acceptor->endpoints ();
 
-  // Get the count
+  // Get the endpoint count
   size_t count =
     iiop_acceptor->endpoint_count ();
 
@@ -455,21 +457,21 @@ TAO_IIOP_Transport::get_listen_point (
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" address in set_bidir_context_info () \n")),
+                         ACE_TEXT ("(%P|%t) Could not resolve local ")
+                         ACE_TEXT ("host address in ")
+                         ACE_TEXT ("get_listen_point()\n")), 
                         -1);
     }
-
 
   // Note: Looks like there is no point in sending the list of
   // endpoints on interfaces on which this connection has not
   // been established. If this is wrong, please correct me.
-  char *local_interface = 0;
+  CORBA::String_var local_interface;
 
   // Get the hostname for the local address
   if (iiop_acceptor->hostname (this->orb_core_,
                                local_addr,
-                               local_interface) == -1)
+                               local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
@@ -477,61 +479,50 @@ TAO_IIOP_Transport::get_listen_point (
                         -1);
     }
 
-  ACE_INET_Addr *tmp_addr = ACE_const_cast (ACE_INET_Addr *,
-                                            endpoint_addr);
-
   for (size_t index = 0;
        index <= count;
        index++)
     {
+      ACE_INET_Addr tmp_addr;
+      CORBA::String_var acceptor_interface;
+
       // Get the listen point on that acceptor if it has the same
       // interface on which this connection is established
-      char *acceptor_interface = 0;
-
       if (iiop_acceptor->hostname (this->orb_core_,
-                                   tmp_addr[index],
-                                   acceptor_interface) == -1)
+                                   tmp_addr,
+                                   acceptor_interface.out ()) == -1)
           continue;
 
-      // @@ This is very bad for performance, but it is a one time
-      // affair
-      if (ACE_OS::strcmp (local_interface,
-                          acceptor_interface) == 0)
+      if (local_addr.get_ip_address()
+          == endpoint_addr[index].get_ip_address())
         {
-          // We have the connection and the acceptor endpoint on the
-          // same interface
-          IIOP::ListenPoint point;
-          point.host = CORBA::string_dup (local_interface);
-          point.port = endpoint_addr[index].get_port_number ();
-
           // Get the count of the number of elements
           CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
 
-          // Add the new length to the list
-          listen_point_list[len] = point;
+          // We have the connection and the acceptor endpoint on the
+          // same interface
+          IIOP::ListenPoint &point = listen_point_list[len];
+          point.host = CORBA::string_dup (local_interface.in ());
+          point.port = endpoint_addr[index].get_port_number ();
         }
-
-      // @@ This is bad....
-      CORBA::string_free (acceptor_interface);
     }
 
-  CORBA::string_free (local_interface);
   return 1;
 }
 
 void
 TAO_IIOP_Transport::transition_handler_state_i (void)
 {
-  connection_handler_ = 0;
+  this->connection_handler_ = 0;
 }
 
 #if 0
 TAO_Connection_Handler*
 TAO_IIOP_Transport::connection_handler (void) const
 {
-  return connection_handler_;
+  return this->connection_handler_;
 }
 #endif
