@@ -1,3 +1,13 @@
+Mon Sep 15 11:25:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+
+          Changed the case of the "after +="  ECMcastTests_lib
+          value.  This should make the Debian_Full mpc build in 
+          the correct order.
+
 Mon Sep 15 12:06:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/Valuetype/ValueBase.cpp:
