@@ -1,3 +1,22 @@
+Thu May 11 18:07:53 2000  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/OS.i (malloc): Bug 566.
+	* ace/OS.i (realloc):
+	* ace/OS.i (calloc):
+	* ace/OS.i (free): Use the new macros (below) instead of directly
+	calling malloc-like functions, thereby allowing an installation to 
+	substitute an alternate mallocator for the global (see comment for 
+	OS.h below).
+
+	* ace/OS.i (strdup): Changed the emulation of strdup() to use
+ 	ACE_OS::malloc() rather than ::malloc().
+
+	* ace/OS.h: Added the four macros ACE_MALLOC_FUNC,
+ 	ACE_CALLOC_FUNC, ACE_REALLOC_FUNC, and ACE_FREE_FUNC which default
+ 	to the names of the global ::malloc, ::calloc, ::realloc and
+ 	::free.  Using this, a site can define these in their config.h in
+	order to substitute an alternate malloc-like allocator.
+
 Thu May 11 17:23:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
