@@ -64,7 +64,12 @@ ACE_Pipe::open (void)
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
   // affect network performance.
-  if (writer.set_option (IPPROTO_TCP, TCP_NODELAY,
+# if defined (ACE_HAS_PHARLAP_RT)
+  int level = SOL_SOCKET;
+# else
+  int level = IPPROTO_TCP;
+# endif /* ACE_HAS_PHARLAP_RT */
+  if (writer.set_option (level, TCP_NODELAY,
                          &one, sizeof one) == -1)
     return -1;
 #endif /* ACE_LACKS_TCP_NODELAY */
