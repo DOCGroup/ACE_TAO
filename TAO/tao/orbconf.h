@@ -58,13 +58,11 @@
 #define TAO_MAXBUFSIZE 1024
 #endif /* TAO_MAXBUFSIZE */
 
-// This controls the alignment for TAO structs.
-#if ACE_SIZEOF_LONG > 4
+// This controls the alignment for TAO structs.  It supports built-in
+// types up to and including 16 bytes in size.
+#if !defined (TAO_ALIGNMENT_MAGIC_NUMBER)
 # define TAO_ALIGNMENT_MAGIC_NUMBER 128
-#else  /* ACE_SIZEOF_LONG <= 4 */
-# define TAO_ALIGNMENT_MAGIC_NUMBER 128
-// # define TAO_ALIGNMENT_MAGIC_NUMBER 64
-#endif /* ACE_SIZEOF_LONG <= 4 */
+#endif /* TAO_ALIGNMENT_MAGIC_NUMBER */
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
