@@ -11,9 +11,9 @@
 
 #include <openssl/err.h>
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Connector.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ACE_SSL,
            SSL_SOCK_Connector,
