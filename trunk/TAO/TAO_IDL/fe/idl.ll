@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_private.h"
 
-#include <y.tab.hh>
+#include "y.tab.h"
 
 #include <string.h>
 
