@@ -1,9 +1,14 @@
+Thu Jun 24 06:43:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Reply_Dispatcher.cpp (dispatch_reply): added
+          ACE_UNUSED_ARG (message_state), only with ACE_NDEBUG.
+
 Thu Jun 24 03:30:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
         * orbsvcs/ImplRepo_Service/Repository.cpp:
           Added template instantiation declarations.
-        
+
         * orbsvcs/ImplRepo_Service/tao_ir.dsp:
           Output file spelled wrong.
 
