@@ -1,4 +1,4 @@
-Wed Jan 16 08:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+Wed Jan 16 08:33:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ETCL.bor:
           Added BCB makefile for this new library
@@ -8,6 +8,11 @@ Wed Jan 16 08:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.bor:
           Added ETCL
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.bor:
+        * orbsvcs/tests/FaultTolerance/IOGR/Server.bor:
+          Use the FTORB library instead of the FT library
 
 Tue Jan 15 20:24:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
