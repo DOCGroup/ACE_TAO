@@ -1,3 +1,9 @@
+Tue Jul  8 12:44:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/orbobj.cpp: Put the "*" in before the comment since it is
+	  supposed to be there.  Put a space between it and the comment
+	  to get rid of the warning which VC was giving originally.
+
 Tue Jul  8 10:21:27 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/typecode.cpp: Changed a few loop counters from int to 
