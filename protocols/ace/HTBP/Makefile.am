@@ -34,6 +34,9 @@ libACE_HTBP_la_SOURCES = \
   HTBP_Session.cpp \
   HTBP_Stream.cpp
 
+libACE_HTBP_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACE_HTBP_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

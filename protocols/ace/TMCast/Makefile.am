@@ -31,6 +31,9 @@ libTMCast_la_SOURCES = \
   MTQueue.cpp \
   Protocol.cpp
 
+libTMCast_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libTMCast_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

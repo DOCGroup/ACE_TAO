@@ -52,6 +52,9 @@ libACE_RMCast_la_SOURCES = \
   RMCast_UDP_Reliable_Sender.cpp \
   RMCast_Worker.cpp
 
+libACE_RMCast_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACE_RMCast_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

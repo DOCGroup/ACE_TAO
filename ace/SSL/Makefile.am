@@ -36,6 +36,9 @@ libACE_SSL_la_SOURCES = \
   SSL_SOCK_Connector.cpp \
   SSL_SOCK_Stream.cpp
 
+libACE_SSL_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACE_SSL_la_LIBADD = \
  $(top_builddir)/ace/libACE.la -lssl -lcrypto
 

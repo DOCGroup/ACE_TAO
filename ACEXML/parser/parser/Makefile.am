@@ -27,6 +27,9 @@ libACEXML_Parser_la_SOURCES = \
   ParserContext.cpp \
   ParserInternals.cpp
 
+libACEXML_Parser_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACEXML_Parser_la_LIBADD = \
  $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
 
