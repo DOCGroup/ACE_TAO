@@ -8,7 +8,6 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "testC.h"
-#include "Request_Info.h"
 
 #if !defined (__ACE_INLINE__)
 #include "testC.i"
@@ -102,6 +101,29 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Test_Interceptors)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Silly, &_tc_TAO_tc_Test_Interceptors_Silly)
 TAO_NAMESPACE_END
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+// Every method of Visual will have a request info counterpart 
+
+Test_Interceptors::ClientRequest_Info_normal::ClientRequest_Info_normal (char * operation,
+                                                                         IOP::ServiceContextList &service_context_list,               
+                                                                         CORBA::Object * target,
+                                                                         CORBA::Long &arg, // argument to <normal>
+                                                                         CORBA::Environment &)
+  : ClientRequest_Info (operation, service_context_list, target),
+    arg_ (arg)
+{
+}
+
+Dynamic::ParameterList * 
+Test_Interceptors::ClientRequest_Info_normal::arguments (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Need to create the list on demand
+  return 0;
+}
+#endif /* TAO_HAS_INTERCEPTORS */
+
 void Test_Interceptors::Visual::_tao_any_destructor (void *x)
 {
   Visual *tmp = ACE_static_cast (Visual*,x);
@@ -206,10 +228,11 @@ void Test_Interceptors::Visual::normal (
 
     CORBA::String_var name ("normal");
 
-    ClientRequest_Info ri (ACE_const_cast (char *,
-                                           name.in()),
-                           _tao_call.service_info (), 
-                           (CORBA::Object_ptr) this);
+    ClientRequest_Info_normal ri (ACE_const_cast (char *,
+                                                  name.in()),
+                                  _tao_call.service_info (), 
+                                  (CORBA::Object_ptr) this, 
+                                  arg);
     
     /*    CORBA::NVList_var _tao_interceptor_args;
     if (_tao_vfr.valid ())
@@ -258,10 +281,11 @@ void Test_Interceptors::Visual::normal (
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
-        ClientRequest_Info ri_next (ACE_const_cast (char *,
-                                                    name.in()),
-                                    _tao_call.service_info (), 
-                                    (CORBA::Object_ptr) this);
+        ClientRequest_Info_normal ri_next (ACE_const_cast (char *,
+                                                           name.in()),
+                                           _tao_call.service_info (), 
+                                           (CORBA::Object_ptr) this,
+                                           arg);
         
         TAO_INTERCEPTOR (
                          /*            _tao_vfr.postinvoke (
