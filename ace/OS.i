@@ -53,8 +53,10 @@ typedef char *ACE_SOCKOPT_TYPE1;
 typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
-#if !defined (_BSD_SOURCE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
+#if (!defined (_BSD_SOURCE) && \
+    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED))
+    || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
+
 # if defined (ACE_LACKS_SETREUID_PROTOTYPE)
 extern "C" {
 extern int setreuid (uid_t ruid, uid_t euid);
@@ -66,7 +68,8 @@ extern "C" {
 extern int setregid (gid_t rgid, gid_t egid);
 }
 # endif /* ACE_LACKS_SETREGID_PROTOTYPE */
-#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
+#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
+           || _XOPEN_SOURCE && __GNUC__ */
 
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);

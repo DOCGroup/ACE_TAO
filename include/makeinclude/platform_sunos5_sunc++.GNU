@@ -162,18 +162,11 @@ ifeq ($(templates),)
   ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
     templates = explicit
   else
-    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+    ifeq (C++ 5.3,$(findstring C++ 5.3,$(CC_VERSION)))
+      # Set this to automaic if automatic template instantiation works for you.
       templates = explicit
     else
-      ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
         templates = explicit
-      else
-        # Assume it's Forte Update 1 or later. Implicit template
-        # instantiation seemed to work but I spoke too soon. Maybe a future
-        # version will :-(
-        #
-        templates = explicit
-      endif
     endif
   endif
 endif
@@ -194,7 +187,7 @@ DLD             = $(CXX)
 
 
 #### Sun CC-specific "Pure virtual finction called" bug fix trigger.
-#### XXX: Shouldn't this go into a compiler specific guard ???
+#### XXX: Shouldn't this go into a compiler version specific guard ???
 CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
