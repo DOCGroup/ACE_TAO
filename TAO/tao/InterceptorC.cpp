@@ -7,6 +7,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#if (TAO_HAS_INTERCEPTORS == 1)
 #include "InterceptorC.h"
 
 #if !defined (__ACE_INLINE__)
@@ -402,3 +403,4 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
 {
   return "IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0";
 }
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
