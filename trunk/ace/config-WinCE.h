@@ -99,7 +99,7 @@
 
 #define ACE_MAIN WINAPI WinMain
 
-// SH3 cross-compiler can't handle inline functions correctly 
+// SH3 cross-compiler can't handle inline functions correctly
 // (along with other bugs.)
 #if defined (SH3)
 # define ACE_LACKS_INLINE_FUNCTIONS
@@ -191,7 +191,7 @@
 #define ACE_LACKS_HOSTNAME
 
 #if defined (_WIN32_WCE_EMULATION)
-// @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl) 
+// @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
 // under emulation.  So for right now, exclude it.
 # define ACE_LACKS_QSORT
 #endif  // _WIN32_WCE_EMULATION
@@ -264,6 +264,7 @@ typedef long off_t;
 #define ACE_LACKS_TIME_H
 #define ACE_LACKS_SIGNAL_H
 #define ACE_LACKS_SYS_STAT_H
-include /**/ "ace/post.h"
+
+#include /**/ "ace/post.h"
 
 #endif  // ACE_CONFIG_WINCE_H
