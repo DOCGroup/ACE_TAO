@@ -1,3 +1,9 @@
+Thu Dec 17 14:09:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynAnyC.cpp : Added some AHETI lines at the end to reflect what the
+          updated IDL compiler does. Should fix a build error reported on Dec Alpha.
+          Builds ok on NT, doing further checking on Unix.
+
 Thu Dec 17 04:45:39 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/IIOP_Object.cpp (constructor):
