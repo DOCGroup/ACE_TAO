@@ -4319,7 +4319,8 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 ssize_t
 ACE_OS::read_n (ACE_HANDLE handle,
                 void *buf,
-                size_t len)
+                size_t len,
+                int error_on_eof)
 {
   size_t bytes_transferred;
   ssize_t n;
@@ -4331,8 +4332,18 @@ ACE_OS::read_n (ACE_HANDLE handle,
       n = ACE_OS::read (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred);
-      if (n == -1 || n == 0)
-        return n;
+      if (n == -1)
+        {
+          // Errors.
+          return -1;
+        }
+      else if (n == 0)
+        {
+          if (error_on_eof)
+            return -1;
+          else
+            break;
+        }
     }
 
   return bytes_transferred;
@@ -4344,7 +4355,8 @@ ACE_OS::read_n (ACE_HANDLE handle,
 ssize_t
 ACE_OS::write_n (ACE_HANDLE handle,
                  const void *buf,
-                 size_t len)
+                 size_t len,
+                 int error_on_eof)
 {
   size_t bytes_transferred;
   ssize_t n;
@@ -4356,8 +4368,18 @@ ACE_OS::write_n (ACE_HANDLE handle,
       n = ACE_OS::write (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred);
-      if (n == -1 || n == 0)
-        return n;
+      if (n == -1)
+        {
+          // Errors.
+          return -1;
+        }
+      else if (n == 0)
+        {
+          if (error_on_eof)
+            return -1;
+          else
+            break;
+        }
     }
 
   return bytes_transferred;

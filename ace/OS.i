@@ -1906,7 +1906,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
             ::pthread_mutexattr_setpshared (attributes, type) == 0 &&
 #     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) 
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
             ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
 #     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
             ::pthread_mutex_init (m, attributes) == 0)
@@ -8343,11 +8343,11 @@ ACE_OS::t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 }
 
 ACE_INLINE int
-ACE_OS::t_snd (ACE_HANDLE handle, char *buf, unsigned nbytes, int flags)
+ACE_OS::t_snd (ACE_HANDLE handle, const char *buf, unsigned nbytes, int flags)
 {
   ACE_TRACE ("ACE_OS::t_snd");
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_snd (handle, buf, nbytes, flags), int, -1);
+  ACE_OSCALL_RETURN (::t_snd (handle, (char *) buf, nbytes, flags), int, -1);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
@@ -12413,11 +12413,11 @@ ACE_OS::opendir (const char *filename)
   ACE_NEW_RETURN (dir, DIR, 0);
   ACE_NEW_RETURN (dir->directory_name_,
                   char[ACE_OS::strlen (filename)],
-				  0);
+                                  0);
   ACE_OS::strcpy (dir->directory_name_, filename);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
-  return dir;  
+  return dir;
 #else
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (char *, filename));
@@ -12489,43 +12489,43 @@ ACE_OS::readdir (DIR *d)
 #    if defined (ACE_WIN32)
   if (!d->started_reading_)
     {
-	  d->current_handle_ = ::FindFirstFile (d->directory_name_,
+          d->current_handle_ = ::FindFirstFile (d->directory_name_,
                                             &(d->fdata_));
 
       if (d->current_handle_ != INVALID_HANDLE_VALUE
-	      && d->fdata_.dwFileAttributes !=  FILE_ATTRIBUTE_DIRECTORY)
-	    {
+              && d->fdata_.dwFileAttributes !=  FILE_ATTRIBUTE_DIRECTORY)
+            {
           ::FindClose (d->current_handle_);
           d->current_handle_ = INVALID_HANDLE_VALUE;
-	    }
-	  else // Skip "." and ".."
-	    {
-		  int retval = 1;
-		  while (*(d->fdata_.cFileName) == '.'
-		         && retval
-				 && d->current_handle_ != INVALID_HANDLE_VALUE)
-			{
-			  retval = ::FindNextFile (d->current_handle_, &(d->fdata_));
-			}
-	      if (retval == 0)
-	        d->current_handle_ = INVALID_HANDLE_VALUE;
-		}
+            }
+          else // Skip "." and ".."
+            {
+                  int retval = 1;
+                  while (*(d->fdata_.cFileName) == '.'
+                         && retval
+                                 && d->current_handle_ != INVALID_HANDLE_VALUE)
+                        {
+                          retval = ::FindNextFile (d->current_handle_, &(d->fdata_));
+                        }
+              if (retval == 0)
+                d->current_handle_ = INVALID_HANDLE_VALUE;
+                }
 
-	  d->started_reading_ = 1;
-	}
+          d->started_reading_ = 1;
+        }
   else
     {
       int retval = ::FindNextFile (d->current_handle_,
                                    &(d->fdata_));
-	  if (retval == 0)
-	    d->current_handle_ = INVALID_HANDLE_VALUE;
+          if (retval == 0)
+            d->current_handle_ = INVALID_HANDLE_VALUE;
     }
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
-    { 
+    {
       d->dirent_.d_name = d->fdata_.cFileName;
       return &(d->dirent_);
-	}
+        }
   else
     return 0;
 #    else /* defined (ACE_WIN32) */

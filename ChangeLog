@@ -1,3 +1,43 @@
+Wed Apr 19 00:00:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace: There are two general use cases of the _n() methods:
+
+	  (1) The method keeps looping, until all the data has been
+	  transmitted, or until timeout occurs, or until the handle is
+	  closed.  This use case occurs when one does not know how much
+	  data is coming across in the case of a recv(), or one wants to
+	  know exactly how much data was sent in the case of a send().
+	  And one don't want to treat a premature eof as an error but
+	  wants to know the exact number of bytes that have been
+	  transferred so far.
+
+	  (2) In other cases when one knows exactly how much data is
+	  coming across in the case of recv(), or how much data needs to
+	  be transmitted in the case of a send(). Premature closing of the
+	  handle is usually an error.
+
+	  By adding an additional <error_on_eof> parameter to all the _n()
+	  methods, the above two use cases can be distinguished.  The
+	  following files were modified:
+
+	  - OS
+	  - ACE
+	  - SOCK_Stream
+	  - TLI_Stream
+
+	  The other IO classes such as FIFO, MEM_IO, PIPE, etc., should
+	  also include this change.  However, they should first get fixed
+	  with respect to timeouts.  If <error_on_eof> comes before
+	  timeouts, ordering of the parameters will get messed up.
+
+	  Thanks to Steffen Winther Sorensen <sts@siimnet.dk> for
+	  reporting this second use of the _n() methods.
+
+	* ace/OS.h: t_snd() interface was fixed.  The buffer parameter
+	  should be const.
+
+	* ace/ACE: Added support for TLI I/O functions to the ACE class.
+
 Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-all.h: (added)
@@ -7,9 +47,9 @@ Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-win32-common.h:
         * ace/OS.h:
 
-          Started moving several of the macros from OS.h to config-all.h.  
-          The plan is to eventually split up OS.h, and config-all is a 
-          place where the macros (which are not specific to any part of 
+          Started moving several of the macros from OS.h to config-all.h.
+          The plan is to eventually split up OS.h, and config-all is a
+          place where the macros (which are not specific to any part of
           ACE_OS) can go.  config-all.h also ate inc_user_config.h.
 
         * ASNMP/agent/main.cpp:
@@ -34,7 +74,7 @@ Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/ACE_export.h: (added)
         * ace/svc_export.h: (added)
 
-          Took the existing ACE_Export and ACE_Svc_Export macro and 
+          Took the existing ACE_Export and ACE_Svc_Export macro and
           moved them to separate files.  Also tested out the new
           generate_export_file.pl.
 
@@ -259,27 +299,27 @@ Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/ace_lib.dsp:
 
           The definition of ACE_BUILD_DLL was moved from the .cpp files
-          to the project files - so it is now handled like most of the 
+          to the project files - so it is now handled like most of the
           other libraries in ACE and TAO.
 
 Tue Apr 18 21:32:21 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (sema_init): Fixed another problem that required
-	  a cast to ACE_mutexattr_t *.  Thanks to Priyanka for 
+	  a cast to ACE_mutexattr_t *.  Thanks to Priyanka for
 	  reporting this.
 
 Tue Apr 18 19:39:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Synch.cpp,
-	* ace/OS.cpp: Added a cast to ACE_mutexattr_t *.  Thanks to 
+	* ace/OS.cpp: Added a cast to ACE_mutexattr_t *.  Thanks to
 	  Darrell for pointing this out.
 
 Tue Apr 18 15:18:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h,
-	* ace/OS.i,  
+	* ace/OS.i,
   	* ace/Synch.h,
-    	* ace/Synch.cpp: Updated the ACE_OS::*mutex_init() methods (and the 
+    	* ace/Synch.cpp: Updated the ACE_OS::*mutex_init() methods (and the
 	  corresponding ACE_Thread_Mutex, ACE_Mutex, and
  	  ACE_Recursive_Thread_Mutex classes) so that they now take an
  	  optional ACE_mutexattr_t * rather than just a void *.  This is
@@ -287,8 +327,8 @@ Tue Apr 18 15:18:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  such as the mutex prioceiling attribute, to the underlying
  	  pthreads mutex (assuming we're running on pthreads, of course).
   	  Thanks to lafortg@res.raytheon.com for motivating this.
-	
-	* ace/Containers_T.cpp (copy_nodes): Added a call to the 
+
+	* ace/Containers_T.cpp (copy_nodes): Added a call to the
 	  allocator->malloc() rather than new.  Thanks to Umar Syyid
  	  <usyyid@hns.com> for reporting this.
 
@@ -315,7 +355,7 @@ Tue Apr 18 11:47:57 2000  Ossama Othman  <ossama@uci.edu>
 Tue Apr 18 08:54:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/vc_filter.pl:
-          
+
           Brand spankin' new filter script for Win32 auto build results.
 
 Sun Apr 16 22:24:34 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
@@ -403,7 +443,7 @@ Sat Apr 15 21:49:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp:
         * apps/Gateway/Gateway/Options.cpp:
-          
+
           Nick Pratt <npratt@microstrategy.com> reported two cases where
           we were using sizeof some_string to figure out its length.  This
           of course doesn't work when the string is a wide string, so they
@@ -414,26 +454,26 @@ Sat Apr 15 21:49:04 2000  Darrell Brunsch <brunsch@uci.edu>
         * apps/gperf/src/gperf.dsp:
         * apps/gperf/src/gperf_lib.dsp:
 
-          Changed around the order of the configurations so that in the 
-          default case (such as out of the box) the regular Debug version 
+          Changed around the order of the configurations so that in the
+          default case (such as out of the box) the regular Debug version
           will be the current configuration.
 
 Sat Apr 15 19:35:57 2000  Darrell Brunsch <brunsch@uci.edu>
 
         (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
 
-        * ace/Makefile.bor: 
+        * ace/Makefile.bor:
 
           Added new file QoS_Manager.cpp.
 
         * ace/Basic_Types.h:
-        * ace/Timer_Queue_Adapters.h: 
+        * ace/Timer_Queue_Adapters.h:
 
           Added missing pre/post includes.
 
         * include/makeinclude/ace_flags.bor:
         * include/makeinclude/build_example.bor:
-          
+
           Updated for new orbsvcs libraries.
 
 Sat Apr 15 18:17:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
@@ -441,7 +481,7 @@ Sat Apr 15 18:17:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
 	  Fixed the handle_output() function so that it does the "Right
  	  Thing"[TM] on Windows NT.  Win32 Winsock doesn't trigger
- 	  multiple "You can write now" signals, so we have to assume that      
+ 	  multiple "You can write now" signals, so we have to assume that
  	  we can continue to write until we get another EWOULDBLOCK.
 	  Thanks to Nick Pratt
 
