@@ -1,3 +1,17 @@
+Tue Jul 03 12:26:33 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Reverse_Lock): Added a parameter to the
+	  constructor of the reverse lock.  The ACE_ACQUIRE_METHOD
+	  parameter is used to indicate which acquire() method will be
+	  called on the real lock when the release() method is called on
+	  the reverse lock. REGULAR indicated the acquire() method, READ
+	  indicates the acquire_read() method, and WRITE indicates the
+	  acquire_write() method.  Note that the try_*() methods are not
+	  represented here because we have to make sure that the release()
+	  method on the reverse lock acquires a lock on the real lock.
+
+	  Thanks to Edan Ayal <edana@bandwiz.com> for suggesting this.
+
 Tue Jul  3 06:20:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
   
         * ace/Reactor.h,

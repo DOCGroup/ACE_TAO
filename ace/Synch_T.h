@@ -114,7 +114,7 @@ private:
  * the lock.
  * One motivation for this class is when we temporarily want to
  * release a lock (which we have already acquired) but then
- * reaquire it soon after.  An alternative design would be to
+ * reacquire it soon after.  An alternative design would be to
  * add a Anti_Guard or Reverse_Guard class which would <release>
  * on construction and <acquire> destruction.  However, there
  * are *many* varieties of the Guard class and this design
@@ -125,12 +125,31 @@ template <class ACE_LOCKING_MECHANISM>
 class ACE_Reverse_Lock : public ACE_Lock
 {
 public:
+
+  /**
+   * The ACE_ACQUIRE_METHOD is used to indicate which acquire() method
+   * will be called on the real lock when the release() method is
+   * called on the reverse lock. REGULAR indicated the acquire()
+   * method, READ indicates the acquire_read() method, and WRITE
+   * indicates the acquire_write() method.  Note that the try_*()
+   * methods are not represented here because we have to make sure
+   * that the release() method on the reverse lock acquires a lock on
+   * the real lock.
+   **/
+  enum ACE_ACQUIRE_METHOD
+  {
+    ACE_REGULAR,
+    ACE_READ,
+    ACE_WRITE
+  };
+
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
   // = Initialization/Finalization methods.
 
   /// Constructor. All locking requests will be forwarded to <lock>.
-  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock);
+  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
+                    ACE_ACQUIRE_METHOD acquire_method = ACE_REGULAR);
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
@@ -167,6 +186,9 @@ public:
 private:
   /// The concrete locking mechanism that all the methods delegate to.
   ACE_LOCKING_MECHANISM &lock_;
+
+  /// This indicates what kind of acquire method will be called.
+  ACE_ACQUIRE_METHOD acquire_method_;
 };
 
 /**
@@ -427,14 +449,14 @@ public:
 
   /// Implicitly and automatically acquire (or try to acquire) the
   /// lock.  If <block> is non-0 then <acquire> the <ACE_LOCK>, else
-  /// <tryacquire> it.  
+  /// <tryacquire> it.
   ACE_Guard (ACE_LOCK &l, int block);
 
   /// Initialise the guard without implicitly acquiring the lock. The
   /// <become_owner> parameter indicates whether the guard should release
   /// the lock implicitly on destruction. The <block> parameter is
   /// ignored and is used here to disambiguate with the preceding
-  /// constructor. 
+  /// constructor.
   ACE_Guard (ACE_LOCK &l, int block, int become_owner);
 
   /// Implicitly release the lock.
