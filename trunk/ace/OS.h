@@ -3938,7 +3938,7 @@ public:
                       size_t len);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
-  static int strcasecmp (const wchar_t *s, 
+  static int strcasecmp (const wchar_t *s,
                          const wchar_t *t);
   static int strncasecmp (const wchar_t *s,
                           const wchar_t *t,
@@ -4368,41 +4368,6 @@ private:
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
-#define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-   } while (0)
-#define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-   } while (0)
-
-// Some more useful abstration for expressions involving
-// ACE_Allocator.malloc ().  The difference between these macro with
-// ACE_ALLOCATOR is that we provide construction also.
-#define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
-     else { new (POINTER) CONSTRUCTOR; } \
-   } while (0)
-#define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return;} \
-     else { new (POINTER) CONSTRUCTOR; } \
-   } while (0)
-#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
-   do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
-
-#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-   do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
-        DEALLOCATOR (POINTER); \
-      } while (0)
-#if 0
-#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-   do { POINTER->T_CLASS##T_PARAMETER::~T_CLASS##T_PARAMETER (); \
-        DEALLOCATOR (POINTER); \
-      } while (0)
-#endif /* 0 */
 
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
