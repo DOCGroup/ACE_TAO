@@ -308,7 +308,7 @@ DualEC_Supplier::Terminator::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Run the ORB event loop.
 
-void *
+ACE_THR_FUNC_RETURN
 DualEC_Supplier::run_orb (void *)
 {
   TAO_ORB_Core_instance ()->orb ()->run ();
