@@ -1735,7 +1735,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
                 this->wakeup_one_thread_.signal ();
 
               // Break the loop as we have reached max_notify_iterations_
-              break;
+              return 0;
             }
 	}
     }

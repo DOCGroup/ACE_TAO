@@ -1,3 +1,17 @@
+Wed Apr 15 16:25:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (handle_signal): Changed break to return 0.
+
+	* ace/OS.cpp (uname): We have to make sure that the size of
+ 	  (processor + subtype) is not greater than the size of
+ 	  name->machine.  So we give half the space to the processor and
+ 	  half the space to subtype.  The -1 is necessary for because of
+ 	  the space between processor and subtype in the machine name.
+
+	  Thanks to Andrew Marchewka
+ 	  (Andrew_Marchewka@SRT.CCMAIL.compuserve.com) for suggesting
+ 	  these changes.
+
 Wed Apr 15 08:52:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Exceptions_Test (handle_input): removed
