@@ -173,10 +173,10 @@ BINDIR = <%libout%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
 <%endif%>
-<%if(header_files || template_files || inline_files || idl_files)%>
+<%if(header_files || template_files || inline_files || idl_files || pidl_files)%>
 
 includes_install: $(INCLUDES)
-<%foreach(header_files template_files inline_files idl_files)%>
+<%foreach(header_files template_files inline_files idl_files pidl_files)%>
 	-@if not exist $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%>
 	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> 1> NUL
 <%endfor%>
