@@ -1,3 +1,11 @@
+Sun Jun  4 14:53:05 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ImageProcessing/framework/MedJava.html:
+        * ImageProcessing/framework/test.html:
+        * apps/NexusII/start.html:
+
+          Added in missing CVS Id strings.
+
 Tue Aug 24 13:09:15 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 	* src/*, tests/*, netsvcs/*: Implemented major changes to the
