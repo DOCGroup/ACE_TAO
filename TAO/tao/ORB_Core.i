@@ -4,6 +4,27 @@
 
 #include "ace/Dynamic_Service.h"
 
+ACE_INLINE CORBA::ULong
+TAO_ORB_Core::_incr_refcnt (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->lock_, 0);
+  return this->refcount_++;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_ORB_Core::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  this->fini ();
+  return 0;
+}
+
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
 {
@@ -338,7 +359,7 @@ TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
 {
   ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::reset");
   if (this->get () != p && this->get () != 0)
-    this->get ()->fini ();
+    this->get ()->_decr_refcnt ();
   this->p_ = p;
 }
 
@@ -372,7 +393,7 @@ TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
 {
   ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr");
   if (this->get() != 0)
-    this->get ()->fini ();
+    this->get ()->_decr_refcnt ();
 }
 
 // Accessor methods to the underlying ORB_Core Object
