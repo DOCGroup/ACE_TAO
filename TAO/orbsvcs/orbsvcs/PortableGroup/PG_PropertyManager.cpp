@@ -304,7 +304,8 @@ TAO_PG_PropertyManager::get_properties (
   *tmp_properties = this->default_properties_;
 
   // Override default properties with type-specific properties.
-  TAO_PG::override_properties (*type_properties, *tmp_properties);
+  if (type_properties != 0)
+    TAO_PG::override_properties (*type_properties, *tmp_properties);
 
   // Now override with the dynamic (object group) properties.
   TAO_PG::override_properties (dynamic_properties.in (), *tmp_properties);

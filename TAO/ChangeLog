@@ -1,3 +1,46 @@
+Wed Aug 14 21:22:29 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+
+	  Commented out ACE_STATIC_SVC_REQUIRE macro.  It caused the
+	  LB_Component to always be run by the Service_Configurator, which
+	  is not desirable.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h
+	  (built_in_strategy):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+	  (built_in_strategy):
+
+	  Pass a pointer to a CosLoadBalancing::StrategyInfo to this
+	  method.  It contains strategy-specific property information that
+	  can be used when initializing built-in strategies.
+
+	  (next_member):
+
+	  Extract a CosLoadBalancing::StrategyInfo from the load balancing
+	  strategy property value for the given object group instead of
+	  string.  The former is the correct type.  Fixes a problem where
+	  a CORBA::OBJECT_NOT_EXIST exception was always thrown when
+	  attempting to bind a client to an object group member.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp (preinvoke):
+
+	  Convert PortableGroup::ObjectGroupNotFound and
+	  PortableGroup::MemberNotFound exceptions to
+	  CORBA::OBJECT_NOT_EXIST.  The first two cannot be thrown from
+	  this method.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+
+	  Added some debugging code.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
+	  (get_properties):
+
+	  Do not attempt to override default properties with type
+	  properties if no type properties have been set.  Addresses a
+	  memory access violation.
+
 Wed Aug 14 10:57:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_alert):

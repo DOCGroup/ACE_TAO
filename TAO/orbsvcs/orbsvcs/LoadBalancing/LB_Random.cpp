@@ -87,6 +87,14 @@ TAO_LB_Random::next_member (
 
   ACE_ASSERT (i < len);
 
+//   ACE_DEBUG ((LM_DEBUG,
+//               "** Len = %u\n"
+//               "Location # %u\n"
+//               "Loc Name = %s\n",
+//               len,
+//               i,
+//               locations[i][0].id.in ()));
+
   return load_manager->get_member_ref (object_group,
                                        locations[i]
                                        ACE_ENV_ARG_PARAMETER);
