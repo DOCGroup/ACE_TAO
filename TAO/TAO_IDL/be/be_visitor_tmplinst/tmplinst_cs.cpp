@@ -98,9 +98,20 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
   if (!node->is_local ())
     {
       *os << be_nl << be_nl
-          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Narrow_Utils<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << this->linebreak_ << be_uidt_nl 
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl;
+
+      if (!node->is_abstract ())
+        {
+          *os << "TAO::Narrow_Utils<" << this->linebreak_
+              << be_idt << be_idt_nl;
+        }
+      else
+        {
+          *os << "TAO::AbstractBase_Narrow_Utils<" << this->linebreak_
+              << be_idt << be_idt_nl;
+        }
+
+      *os << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
@@ -170,7 +181,7 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
           << node->name () << " *," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl
           << node->name () << "_out," << this->linebreak_ << be_nl
-          << "TAO::Objref_Traits<" << node->name () << "> " 
+          << "TAO::Objref_Traits<" << node->name () << "> "
           << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
@@ -1129,8 +1140,8 @@ be_visitor_tmplinst_cs::gen_base_class_tmplinst (be_sequence *node)
 
   static char ifdef_suffix [NAMEBUFSIZE];
 
-  ACE_OS::memset (ifdef_suffix, 
-                  '\0', 
+  ACE_OS::memset (ifdef_suffix,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (node->unbounded ())
