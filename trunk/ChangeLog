@@ -1,3 +1,10 @@
+Fri Jan  9 15:24:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  Support for STLPort in ACE Makefile system. Thanks to
+	  John Poplett <John_Poplett@3com.com> for the patches.
+
 Fri Jan  9 20:13:21 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_g++_common.GNU:
