@@ -22,6 +22,7 @@
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "Dynamic_Component_Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
