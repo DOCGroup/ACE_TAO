@@ -78,8 +78,8 @@ $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$
   endif # PATH
 endif # ! LynxOS
 
-LYNXOS_MAJOR = $(shell uname -r | awk -F. '{print $$1;}')
-LYNXOS_MINOR = $(shell uname -r | awk -F. '{print $$2;}')
+LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
+LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
