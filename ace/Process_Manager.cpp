@@ -709,7 +709,7 @@ ACE_Process_Manager::wait (pid_t pid,
 
       ACE_NEW_RETURN (handles,
                       HANDLE[current_count_],
-                      ACE_INVALID_HANDLE);
+                      ACE_INVALID_PID);
 
       for (size_t i = 0;
            i < current_count_;
