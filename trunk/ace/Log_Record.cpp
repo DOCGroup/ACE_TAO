@@ -176,4 +176,50 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
   s.flush ();
   return 0;
 }
+#else /* ACE_HAS_WINCE */
+int
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+		       int verbose, 
+                       ACE_CE_Bridge *log_window)
+{
+  // ACE_TRACE ("ACE_Log_Record::print");
+
+  int ret;
+  CString *msg = new CString ();
+
+  if (verbose)
+    {
+      time_t now = this->time_stamp_.sec ();
+      ASYS_TCHAR ctp[26]; // 26 is a magic number...
+
+      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
+	return -1;
+
+      /* 01234567890123456789012345 */
+      /* Wed Oct 18 14:25:36 1989n0 */
+
+      ctp[19] = '\0'; // NUL-terminate after the time.
+      ctp[24] = '\0'; // NUL-terminate after the date.
+
+      const ASYS_TCHAR *lhost_name = host_name ==
+        0 ? ASYS_TEXT ("<local_host>") : host_name;
+
+      msg->Format (ASYS_TEXT ("%s.%d %s@%s@%d@%d@%s"),
+                  ctp + 4, 
+                  this->time_stamp_.usec () / 1000,
+                  ctp + 20, 
+                  lhost_name, 
+                  this->pid_,
+                  this->type_, 
+                  this->msg_data_);
+    }
+  else
+    msg->Format (ASYS_TEXT ("%s"), this->msg_data_);
+
+  if (log_window == 0)
+    log_window = ACE_CE_Bridge::get_default_winbridge ();
+  log_window->write_msg (msg);
+  
+  return ret;
+}
 #endif /* ! ACE_HAS_WINCE */
