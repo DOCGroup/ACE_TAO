@@ -9,24 +9,26 @@
 #define _PORTABLE_INTERCEPTOR_IDL_
 
 #ifndef CORBA3
-#define local  
+#define local
 #endif
 
-#include "orb.idl"  
+#include "orb.idl"
 
-//#include <CORBA.pidl> // added 
+//#include <CORBA.pidl> // added
 #include <Dynamic.idl>
 
-//#include <IOP_N.idl> 
+//#include <IOP_N.idl>
 
 #define NO_VALUE // necessary to get around compile errors regarding valuetype
 #include "Messaging.pidl" // this is .idl in the spec
 
 module PortableInterceptor {
 
-  typedef string RepositoryId; 
+  typedef string RepositoryId;
   // Did this since couldnt find CORBA::RepositoryId;
   // Have replaced CORBA::RepositoryId with RepositoryId;
+  // @@ Kirthika, can you please document here why you need to
+  //    replace types in CORBA module with local definitions?
 
   typedef sequence<octet> OctetSeq;
   // The spec has it as CORBA::OctetSeq, have replaced this by simply
@@ -178,5 +180,6 @@ module PortableInterceptor {
     void post_init (in ORBInitInfo info);
   };
 };
+// @@ Kirthika, pleasse use traditional C style comments in
+// the following #endif.
 #endif  // _PORTABLE_INTERCEPTOR_IDL_
-
