@@ -40,7 +40,8 @@ class ACE_SSL_Accept_Handler : public ACE_Event_Handler
 public:
 
   /// Constructor.
-  ACE_SSL_Accept_Handler (ACE_SSL_SOCK_Stream &ssl_stream);
+  ACE_SSL_Accept_Handler (ACE_SSL_SOCK_Stream &ssl_stream,
+                          int &handler_closed);
 
   /// Destructor.
   virtual ~ACE_SSL_Accept_Handler (void);
@@ -72,6 +73,11 @@ private:
   /// Reference to the SSL_SOCK_Stream for which the passive
   /// connection is being established.
   ACE_SSL_SOCK_Stream &ssl_stream_;
+
+  /// Flag that is set to true (non-zero) if this event handler is
+  /// closed before the SSL connection is established.
+  int &handler_closed_;
+
 };
 
 
