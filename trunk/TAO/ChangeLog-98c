@@ -1,51 +1,51 @@
 Tue Sep 29 19:17:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Tao/tests/DynAny_Test/server.dsp:
-	* Tao/tests/DynAny_Test/client.dsp:
-	* Tao/tests/DynAny_Test/tckind.idl:
-	* Tao/tests/DynAny_Test/DynAny.idl:
-	* Tao/tests/DynAny_Test/DynAny_i.{h,cpp}:
-	* Tao/tests/DynAny_Test/DynArray_i.{h,cpp}:
-	* Tao/tests/DynAny_Test/DynEnum_i.{h,cpp}:
-	* Tao/tests/DynAny_Test/DynSequence_i.{h,cpp}:
-	* Tao/tests/DynAny_Test/DynStruct_i.{h,cpp}:
-	* Tao/tests/DynAny_Test/DynUnion_i.{h,cpp}:
-	  Removed from repository. Some are going to TAO and some
-	  are just obsolete (new test code will be written).
+        * Tao/tests/DynAny_Test/server.dsp:
+        * Tao/tests/DynAny_Test/client.dsp:
+        * Tao/tests/DynAny_Test/tckind.idl:
+        * Tao/tests/DynAny_Test/DynAny.idl:
+        * Tao/tests/DynAny_Test/DynAny_i.{h,cpp}:
+        * Tao/tests/DynAny_Test/DynArray_i.{h,cpp}:
+        * Tao/tests/DynAny_Test/DynEnum_i.{h,cpp}:
+        * Tao/tests/DynAny_Test/DynSequence_i.{h,cpp}:
+        * Tao/tests/DynAny_Test/DynStruct_i.{h,cpp}:
+        * Tao/tests/DynAny_Test/DynUnion_i.{h,cpp}:
+          Removed from repository. Some are going to TAO and some
+          are just obsolete (new test code will be written).
 
-	* Tao/tests/DynAny_Test/DynAny_Test.dsw:
-	  Updated to reflect removed projects.
+        * Tao/tests/DynAny_Test/DynAny_Test.dsw:
+          Updated to reflect removed projects.
 
 Tue Sep 29 15:33:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Explicit_Activation/run_test.pl: Added the ability
- 	  to pass through extra command line options to the client and
- 	  server.
+        * examples/POA/Explicit_Activation/run_test.pl: Added the ability
+          to pass through extra command line options to the client and
+          server.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf: Added
- 	  ORBclientconnectionhandler ST and changed -ORBconcurrency
- 	  thread-per-connection.
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf: Added
+          ORBclientconnectionhandler ST and changed -ORBconcurrency
+          thread-per-connection.
 
-	* tao/default_client.cpp (parse_args): Added a new option to
- 	  TAO_Default_Client_Strategy_Factory. -ORBclientconnectionhandler
- 	  allows the user to select the correct type of client connection
- 	  handler creation strategy.
-	
-	* tao/ORB_Core.cpp (Pre_Allocated): Initialize the
- 	  <cached_connect_strategy_> correctly with a creation factory
- 	  from <TAO_ORB_CORE::instance ()->client_factory ()>.
+        * tao/default_client.cpp (parse_args): Added a new option to
+          TAO_Default_Client_Strategy_Factory. -ORBclientconnectionhandler
+          allows the user to select the correct type of client connection
+          handler creation strategy.
 
-	* tao/Connect.h (TAO_ST_Client_Connection_Handler and
- 	  TAO_MT_Client_Connection_Handler): Added new classes that
- 	  override handle_input and send_request. The MT class uses the
-	  leader-follower scheme, while the ST class uses the old simple
-	  reactive strategy.
+        * tao/ORB_Core.cpp (Pre_Allocated): Initialize the
+          <cached_connect_strategy_> correctly with a creation factory
+          from <TAO_ORB_CORE::instance ()->client_factory ()>.
 
-	* tao/Client_Strategy_Factory.cpp (create_client_creation_strategy): 
-	* tao/default_client.cpp (create_client_creation_strategy): 
+        * tao/Connect.h (TAO_ST_Client_Connection_Handler and
+          TAO_MT_Client_Connection_Handler): Added new classes that
+          override handle_input and send_request. The MT class uses the
+          leader-follower scheme, while the ST class uses the old simple
+          reactive strategy.
 
-	  Added new method to create the correct type of the client
- 	  connection handler creation strategy.
+        * tao/Client_Strategy_Factory.cpp (create_client_creation_strategy):
+        * tao/default_client.cpp (create_client_creation_strategy):
+
+          Added new method to create the correct type of the client
+          connection handler creation strategy.
 
 Tue Sep 29 13:23:25 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -112,11 +112,14 @@ Tue Sep 29 07:18:28 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Thruput/COOL/ttcp_decl.h,client.cpp,server.cpp:
           replaced USE_QUANTIFY with ACE_HAS_QUANTIFY.
 
-        * performance-tests/Thruput/COOL/client.cpp,server.cpp:
+        * performance-tests/Thruput/COOL/client.cpp,server.cpp,
+          performance-tests/Thruput/CORBAplus/ttcp_i.cpp:
           replaced direct {f,io}stream.h #includes with #include of
           ace/streams.h.
 
         * performance-tests/Thruput/TAO/ttcp_decl.h,ttcp_i.cpp,client.cpp,
+          server.cpp:
+          performance-tests/Thruput/CORBAplus/ttcp_decl.h,client.cpp,
           server.cpp: replaced USE_QUANTIFY with ACE_HAS_QUANTIFY.
 
 Tue Sep 29 00:18:22 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
