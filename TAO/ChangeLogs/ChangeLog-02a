@@ -1,3 +1,14 @@
+Wed Dec 27 21:02:25 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+	* tao/Makefile.bor:
+	  Added missing source file RT_ORB_Loader.
+
+	* tests/Portable_Interceptors/IORInterceptor/server.bor:
+	  Fixed error in OBJFILES macro and added missing library.
+
+	* orbsvcs/IFR_Service/IFR_Service.bor:
+	  Added missing library.
+
 Wed Dec 27 18:00:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Server_Protocol/run_test.pl :

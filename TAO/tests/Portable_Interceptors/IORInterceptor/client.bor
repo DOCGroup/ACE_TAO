@@ -12,14 +12,16 @@ OBJFILES = \
 	$(OBJDIR)\FOO_ClientRequestInterceptor.obj \
 	$(OBJDIR)\FOO_Client_ORBInitializer.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS)
 
 LIBFILES = \
-        $(ACE_LIB) \
-        $(TAO_LIB)
+	$(ACE_LIB) \
+	$(TAO_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\test.idl
+	$(IDLDIR)\test.idl
 
 CPPDIR = .
 
