@@ -399,7 +399,7 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
-DEPGEN ?= $(ACE_ROOT)/bin/g++dep
+DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
