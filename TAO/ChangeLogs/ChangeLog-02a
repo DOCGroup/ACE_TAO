@@ -1,53 +1,59 @@
+Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * rules.tao.GNU:
+          I messed up last time, I disabled ami for all g++ builds, not
+          only for old versions of it.
+
 Sun Jun 11 13:01:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MProfile.i
+        * tao/MProfile.i
 
-	  Fixed member initialization order in the constructor.
+          Fixed member initialization order in the constructor.
 
-	  Added missing return type to method <give_profile>.
+          Added missing return type to method <give_profile>.
 
 Sun Jun 11 01:45:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MProfile.h
+        * tao/MProfile.h
         * tao/MProfile.i
 
           Added member variable <policy_list_> and its relative acessor
-          methods. 
+          methods.
 
         * tao/Profile.h
 
           Added member variable <mprofile_>, and its relative accessor
           methods.
-        
+
         * tao/Profile.cpp
-          
+
           Removed attribute <policy_list_>, now the policy list
           is stored and accessed by the TAO_MProfile.
 
         * tao/ORB_core.cpp
-          
+
           Modifies method <create_stub_object> to set the proper
           relationship between TAO_Profiels the TAO_Stubs that
           own them.
 
         * tao/Stub.h
         * tao/Stub.i
-          
-          Added method  <TAO_MProfile& base_profiles ()>.       
-          
+
+          Added method  <TAO_MProfile& base_profiles ()>.
+
         * tao/POA.cpp
-          
+
           Added ACE_UNUSED_ARG to the method <TAO_POA::client_exposed_policies>
           to fix unused argument warning when compiling without
           RT-CORBA support.
 
 Sat Jun 10 20:44:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * TAO-INSTALL.html: 
-        
-          Revised the section on TAOACE.dsw, since things changed 
-          when we split up orbsvcs into separate libraries.  Thanks 
-          to Tom Ziomek <tomz@cc.comm.mot.com> for pointing this out. 
+        * TAO-INSTALL.html:
+
+          Revised the section on TAOACE.dsw, since things changed
+          when we split up orbsvcs into separate libraries.  Thanks
+          to Tom Ziomek <tomz@cc.comm.mot.com> for pointing this out.
 
 Sat Jun 10 19:56:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -57,11 +63,11 @@ Sat Jun 10 19:56:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Sat Jun 10 18:14:04 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS):
+        * orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS):
 
-	  Only compile the Load Balancer if Minimum CORBA is disabled,
-	  since it requires DSI support which is disabled in the Minimum
-	  CORBA configuration.
+          Only compile the Load Balancer if Minimum CORBA is disabled,
+          since it requires DSI support which is disabled in the Minimum
+          CORBA configuration.
 
 Sat Jun 10 17:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
