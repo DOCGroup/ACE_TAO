@@ -17,12 +17,13 @@ CFG=Nestea Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Nestea Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Nestea Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Nestea Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Nestea Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -125,13 +126,13 @@ SOURCE=.\Nestea.idl
 
 !IF  "$(CFG)" == "Nestea Client - Win32 Release"
 
-USERDEP__AIRPL="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__NESTE="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Nestea.idl
 InputName=Nestea
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -164,13 +165,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Nestea Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AIRPL="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__NESTE="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Nestea.idl
 InputName=Nestea
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gi $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

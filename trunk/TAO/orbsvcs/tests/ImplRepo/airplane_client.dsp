@@ -17,12 +17,13 @@ CFG=Airplane Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Airplane Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Airplane Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Airplane Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Airplane Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -131,7 +132,7 @@ InputPath=.\Airplane.idl
 InputName=Airplane
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -170,7 +171,7 @@ InputPath=.\Airplane.idl
 InputName=Airplane
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
