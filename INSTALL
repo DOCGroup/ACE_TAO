@@ -124,8 +124,47 @@ extensively on the following platforms and compilers:
 
 * VxWorks
 
-     	. David Levine has ported ACE to VxWorks 5.2 and 5.3 using the
-	  GreenHills 1.8.8 compiler. 
+     	. David Levine has ported ACE to VxWorks 5.2/5.3/5.3.1 with the
+	  GreenHills 1.8.8 and g++ 2.7.2 compilers.  Most of the ACE
+	  tests pass, but some do not.  Please see tests/README for
+	  the latest status.
+
+	  In addition to all of the other benefits of ACE, it helps
+	  work around some deficiencies with VxWorks 5.3/5.3.1.
+	  These apply only with g++, at least thru version 2.7.2.
+	  That is the version that is shipped with Tornado 1.0.1/
+	  VxWorks 5.3.1.  The problems are:
+
+	  1) There a gory problem with munch that is severely aggravated
+	     by the presence of a static in the Wind River/g++ iostream.h.
+	     ACE hides this and provides an easy-to-use workaround in the
+	     very unlikely situation where it becomes a problem.
+	     Please see ace/config-vxworks5.2-g++.h for more information.
+
+	  2) Unsigned long long support is not available with the g++ that
+	     is distributed with Tornado 1.0.1/VxWorks 5.3.1.  The
+	     documentation says that it is supported, but try using it :-)
+	     Wind River technical support will verify this.  ACE provides
+	     its own 64-bit unsigned integer type, ACE_hrtime_t, so you
+	     don't even have to worry about this problem if you use it.
+
+	  3) The program entry point cannot be called "main".  ACE
+	     renames it to "ace_main" on VxWOrks.  While this may seem
+	     trivial, it is important with legacy code.  ACE itself ran
+	     into this problem.
+
+	  In addition, as noted below following the discussion of
+	  the g++ -fno-implicit-templates option,
+
+	. On VxWorks only, g++ (thru version 2.7.2, at least, distributed
+	  with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
+	  broken.  In addition, -O2 is not supported on some targets.
+
+	. The current version of ACE, 4.3, has limited support for
+	  destroying static objects after program termination on
+	  VxWorks.  To destroy static objects, the module must be
+	  unloaded, using unld.  Static constructors are called
+	  when loading the module, with ld.
 
 * MVS OpenEdition
 
@@ -166,7 +205,7 @@ If you use the GNU GCC C++ compiler please note the following:
 	  they use internally.)  Examples of template specializations
 	  occur in quite a few ACE .cpp files; see
 	  apps/Gateway/Gateway/Proxy_Handler.cpp for one example.
-	  An easy way to figure out what template instantations are
+	  An easy way to figure out what template instantiations are
 	  need is to try to build your executable and pipe the output
 	  through c++filt.  The linker will report the missing
 	  instantiations as undefined symbols.  Iteration may be
@@ -188,6 +227,10 @@ If you use the GNU GCC C++ compiler please note the following:
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
 	  for reporting the problem with ACE_Singleton on g++, and
 	  for helping to find and implement these solutions.
+
+	. On VxWorks only, g++ (thru version 2.7.2, at least, distributed
+	  with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
+	  broken.  In addition, -O2 is not supported on some targets.
 
 --------------------------------------------------
 
@@ -234,7 +277,7 @@ see the section below).  Here's what you need to do:
 
 6. Note that since ACE builds shared libraries, you'll need to set
    LD_LIBRARY_PATH to whereever you put the binary version of the
-   libraries.  For example, you probably want to do somethink like the
+   libraries.  For example, you probably want to do something like the
    following
 
    % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH 
@@ -428,6 +471,68 @@ card.  This is one method:
                 Workstation
                 Installed Adapter Cards:
                 MS Loopback Adapter
+
+--------------------------------------------------
+
+INSTALLATION PROCESS FOR VxWorks
+
+For the most part, you should be able to follow the instructions
+above to build ACE and applications that use it.  Use the Unix
+instructions for Unix hosts, or Windows NT instructions for
+Windows NT host.
+
+You'll have to let ACE know the target type at compile time.
+There are several ways to do this; please see the
+$ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU
+platform file for detailed information.
+
+The VxWorks platform_vxworks*.GNU files are set up so that shared
+libraries are not built on VxWorks.  Only static libraries,
+with .a extension, are built.  Therefore, it's not necessary
+to set the LD_LIBRARY_PATH environment variable on your host
+system when building for VxWorks targets.
+
+These non-default VxWorks kernel configuration #defines
+are required with ACE:
+
+#define INCLUDE_CPLUS		/* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+
+For completeness, here are the non-default #defines that
+we use for VxWorks 5.3.1/g++ 2.7.2:
+
+#define INCLUDE_CPLUS		/* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_CONFIGURATION_5_2 /* pre-tornado tools */
+#define INCLUDE_DEBUG           /* pre-tornado debugging */
+#define INCLUDE_LOADER          /* object module loading */
+#define INCLUDE_NET_SYM_TBL     /* load symbol table from network */
+#define INCLUDE_SYM_TBL_SYNC	/* synchronize host and target symbol tables */
+#define INCLUDE_NFS             /* nfs package */
+#define INCLUDE_PING		/* ping() utility */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+#define INCLUDE_RDB             /* remote debugging package */
+#define INCLUDE_RLOGIN          /* remote login */
+#define INCLUDE_RPC		/* rpc package */
+#define INCLUDE_SECURITY	/* shell security for network access */
+#define INCLUDE_SHELL           /* interactive c-expression interpreter */
+#define INCLUDE_SHOW_ROUTINES   /* show routines for system facilities*/
+#define INCLUDE_SPY             /* spyLib for task monitoring */
+#define INCLUDE_STARTUP_SCRIPT  /* execute start-up script */
+#define INCLUDE_STAT_SYM_TBL    /* create user-readable error status */
+#define INCLUDE_SYM_TBL         /* symbol table package */
+#define INCLUDE_UNLOADER        /* object module unloading */
+#define INCLUDE_WINDVIEW	/* WindView command server */
+
+It probably wouldn't take much effort to modify the
+ACE library to not require INCLUDE_CPLUS_IOSTREAMS,
+if necessary.
+
+If you're first getting started with ACE and/or VxWorks,
+I recommend just building the ACE library and tests first.
+Then try running the tests.  Please see $ACE_ROOT/tests/README
+for the latest status of the ACE tests on VxWorks.
 
 --------------------------------------------------
 
