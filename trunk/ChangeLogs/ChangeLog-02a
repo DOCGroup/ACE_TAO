@@ -1,8 +1,18 @@
+Fri Mar  9 22:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Svc_Conf.h:
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+          Add new method to the Service Configurator to add static
+          services into the repository, this factors out common code used
+          in the ORB and ACE.  In general it fixes the hacks done this
+          past Feb 20th
+        
 Fri Mar  9 16:47:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* bin/nightlybuilds/builds.lst (LIST):
-	  Added HPUX to the scoreboard.
-	
+        * bin/nightlybuilds/builds.lst (LIST):
+          Added HPUX to the scoreboard.
+        
 Fri Mar  9 14:34:34 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * PACE/Makefile:

@@ -398,6 +398,21 @@ public:
   /// a string.  Returns the number of errors that occurred.
   static int process_directive (const ACE_TCHAR directive[]);
 
+  /// Process one static service definition.
+  /**
+   * Load a new static service into the ACE_Service_Repository.
+   *
+   * @param ssd Service descriptor, see the document of
+   *        ACE_Static_Svc_Descriptor for more details.
+   *
+   * @param force_replace If set the new service descriptor replaces
+   *        any previous instance in the ACE_Service_Repository.
+   *
+   * @return Returns -1 if the service cannot be 'loaded'.
+   */
+  static int process_directive (const ACE_Static_Svc_Descriptor &ssd,
+                                int force_replace = 0);
+
   /**
    * Process (or re-process) service configuration requests that are
    * provided in the svc.conf file(s).  Returns the number of errors
