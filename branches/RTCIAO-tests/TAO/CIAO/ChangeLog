@@ -1,3 +1,16 @@
+Sat Nov 15 00:10:40 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	  Added demo controller implementation and the compute bound
+	  worker's do_work operations.
+
+	* tests/RTCCM/Priority_Test/descriptors/NOTE-win.txt: Added a new
+	  cheat sheet for running this test on windows.
+
+	* tests/RTCCM/Priority_Test/descriptors/demo.cad: Changed to use
+	  CB_Worker to test it out.
+
 Fri Nov 14 16:54:57 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:

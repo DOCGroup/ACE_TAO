@@ -3,6 +3,10 @@
 #include "CB_Worker_exec.h"
 #include "CIAO_common.h"
 
+// This should really be a configurable value.  CIAO doesn't suppor
+// this yet but the new D&C shall support this RSN.
+static local_primer_ = 9619;
+
 /// Default constructor.
 MyImpl::CB_Worker_exec::CB_Worker_exec ()
 {
@@ -30,11 +34,19 @@ MyImpl::CB_Worker_exec::do_work (CORBA::Long work,
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // aux is not use for now, so do something with it.
   CORBA::ULong retv = work + aux;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "MyImpl::CB_Worker_exec::do_work (%d, %d) = %d\n",
-              work, aux, retv));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "CB_Worker::do_work: %hd units of work\n",
+                work));
+
+  for (; work != 0; --work)
+    ACE::is_prime (local_primer_,
+                   2,
+                   local_primer_ / 2);
+
   return retv;
 }
 
