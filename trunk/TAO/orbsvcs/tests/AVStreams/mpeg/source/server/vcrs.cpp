@@ -24,22 +24,12 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
-#include <sys/types.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "ace/OS.h"
 
-#include <errno.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <sys/time.h>
 #include "../include/common.h"
 #include "../mpeg_shared/com.h"    
 #include "../mpeg_shared/routine.h"
-#include "../mpeg_server/proto.h"
+#include "../mpeg_server/server_proto.h"
 
 ACE_RCSID(server, vcrs, "$Id$")
 

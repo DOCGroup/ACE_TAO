@@ -25,27 +25,11 @@
  *         email: scen@cse.ogi.edu
  */
 
-// #include <stdio.h>   
-// #include <errno.h>   
-// #include <stdlib.h>  
-// #include <sys/types.h>
-// #include <unistd.h>  
-// #include <string.h>  
-// #include <netdb.h>   
-// #include <ctype.h>   
-// #include <sys/select.h>
-// #include <sys/socket.h>
-// #include <netinet/in.h>
-// #include <netinet/tcp.h>
-// #include <arpa/inet.h>
-// #include <sys/un.h>  
-// #include <time.h>    
-// #include <sys/time.h>
+#include "ace/OS.h"
 #include "include/common.h"
 #include "fileio.h"
 #include "routine.h"
 #include "com.h"
-#include "ace/OS.h"
 
 #ifdef NATIVE_ATM
 #include "atmcom.h"
@@ -459,7 +443,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       memset((char *)&addressIn, 0, sizeof(addressIn));
 
       i = sizeof(addressIn);
-      if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+      if (ACE_OS::getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
         fprintf(stderr,
                 "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
                 ACE_OS::getpid ());
@@ -491,7 +475,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       }
       
       i = sizeof(addressIn);
-      if (getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
+      if (ACE_OS::getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
         fprintf(stderr,
                 "Error ComOpenConnPair: pid %ld failed to getsocketname on UDP fd:",
                 ACE_OS::getpid ());
@@ -519,7 +503,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       
       
       i = sizeof(addressIn);
-      if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+      if (ACE_OS::getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
         fprintf(stderr,
                 "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
                 ACE_OS::getpid ());
@@ -960,7 +944,7 @@ int VideoComOpenConnPair (char * address,
       memset((char *)&addressIn, 0, sizeof(addressIn));
 
       i = sizeof(addressIn);
-      if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+      if (ACE_OS::getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
         fprintf(stderr,
                 "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
                 ACE_OS::getpid ());
@@ -992,7 +976,7 @@ int VideoComOpenConnPair (char * address,
 //       }
       
 //       i = sizeof(addressIn);
-//       if (getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
+//       if (ACE_OS::getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
 //      fprintf(stderr,
 //              "Error ComOpenConnPair: pid %ld failed to getsocketname on UDP fd:",
 //              ACE_OS::getpid ());
@@ -1020,7 +1004,7 @@ int VideoComOpenConnPair (char * address,
       
 //       /*
 //       i = sizeof(addressIn);
-//       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+//       if (ACE_OS::getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
 //      fprintf(stderr,
 //              "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
 //              ACE_OS::getpid ());
@@ -1651,7 +1635,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   int fd, fdType = -1;
   int addrlen;
   struct sockaddr_in peeraddr_in;
-  struct fd_set read_mask;
+  fd_set read_mask;
   struct timeval tval;
   int nfds;
   
@@ -1720,7 +1704,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fprintf(stderr, "Server to accept a UNIX connection.\n");
     
     addrlen = sizeof(struct sockaddr_un);
-    fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
+    fd = ACE_OS::accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
               "Error ComGetConnPair: pid %ld failed to accpet on fd_unix:",
@@ -1738,7 +1722,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fprintf(stderr, "Server to accept a INET connection.\n");
     
     addrlen = sizeof(struct sockaddr_in);
-    fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
+    fd = ACE_OS::accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
               "Error ComGetConnPair: pid %ld failed to accpet on fd_inet:",
@@ -1862,7 +1846,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     memset((char *)in, 0, sizeof(* in));
     
     addrlen = sizeof(*in);
-    if (getsockname(fd, (struct sockaddr *)in, &addrlen) == -1) {
+    if (ACE_OS::getsockname(fd, (struct sockaddr *)in, &addrlen) == -1) {
       fprintf(stderr,
           "Error ComGetConnPair: pid %ld failed to getsockname of fd:",
          ACE_OS::getpid ());
@@ -1887,7 +1871,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       return -1;
     }
     addrlen = sizeof(*in);
-    if (getsockname(dfd, (struct sockaddr *)in, &addrlen) == -1) {
+    if (ACE_OS::getsockname(dfd, (struct sockaddr *)in, &addrlen) == -1) {
       fprintf(stderr,
           "Error ComGetConnPair: pid %ld failed to getsockname of dfd:",
          ACE_OS::getpid ());
@@ -2025,7 +2009,7 @@ int ComGetConn(int *max_pkt_size)
   int i;
   int fd, fdType = -1;
   int addrlen;
-  struct fd_set read_mask;
+  fd_set read_mask;
   struct timeval tval;
   int nfds;
   
@@ -2080,7 +2064,7 @@ int ComGetConn(int *max_pkt_size)
     fprintf(stderr, "Server to accept a UNIX connection.\n");
 
     addrlen = sizeof(struct sockaddr_un);
-    fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
+    fd = ACE_OS::accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
               "Error ComGetConn: pid %ld failed to accpet on fd_unix:",
@@ -2096,7 +2080,7 @@ int ComGetConn(int *max_pkt_size)
     fprintf(stderr, "Server to accept a INET connection.\n");
 
     addrlen = sizeof(struct sockaddr_in);
-    fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
+    fd = ACE_OS::accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
               "Error ComGetConn: pid %ld failed to accpet on fd_inet:",
@@ -2134,3 +2118,4 @@ int ComGetConn(int *max_pkt_size)
     return -1;
   }
 }
+
