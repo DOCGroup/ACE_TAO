@@ -39,7 +39,7 @@ public:
 
   typedef POA *POA_ptr;
 
-#endif // end #if !defined
+#endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
@@ -71,8 +71,7 @@ public:
   };
 
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
@@ -94,9 +93,7 @@ public:
     POA_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET_CH_
@@ -109,9 +106,7 @@ public:
   typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
   static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET___VAR_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET___VAR_CH_
@@ -148,9 +143,7 @@ public:
     _tao_seq_Octet *ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET___OUT_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET___OUT_CH_
@@ -174,8 +167,7 @@ public:
     void operator= (const _tao_seq_Octet_var &);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   typedef _tao_seq_Octet ObjectId;
   typedef _tao_seq_Octet_var ObjectId_var;
@@ -234,8 +226,7 @@ public:
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_THREADPOLICY___VAR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___VAR_CH_
@@ -265,9 +256,7 @@ public:
     ThreadPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_THREADPOLICY___OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY___OUT_CH_
@@ -289,9 +278,7 @@ public:
     ThreadPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
@@ -307,11 +294,9 @@ public:
     virtual ThreadPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
-    ThreadPolicy (
-                  STUB_Object *objref = 0,
+    ThreadPolicy (STUB_Object *objref = 0,
                   TAO_ServantBase *servant = 0,
-                  CORBA::Boolean collocated = CORBA::B_FALSE
-                  );
+                  CORBA::Boolean collocated = CORBA::B_FALSE);
   public:
     virtual ~ThreadPolicy (void);
   private:
@@ -319,8 +304,7 @@ public:
     void operator= (const ThreadPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ThreadPolicy;
 
@@ -339,8 +323,7 @@ public:
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___VAR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___VAR_CH_
@@ -370,9 +353,7 @@ public:
     LifespanPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___OUT_CH_
@@ -394,9 +375,7 @@ public:
     LifespanPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
@@ -424,8 +403,7 @@ public:
     void operator= (const LifespanPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_LifespanPolicy;
 
@@ -444,8 +422,7 @@ public:
   class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_
@@ -475,9 +452,7 @@ public:
     IdUniquenessPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_
@@ -499,9 +474,7 @@ public:
     IdUniquenessPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_CH_
@@ -529,8 +502,7 @@ public:
     void operator= (const IdUniquenessPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_IdUniquenessPolicy;
 
@@ -549,8 +521,7 @@ public:
   class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_
@@ -580,9 +551,7 @@ public:
     IdAssignmentPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_
@@ -604,9 +573,7 @@ public:
     IdAssignmentPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_CH_
@@ -634,8 +601,7 @@ public:
     void operator= (const IdAssignmentPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_IdAssignmentPolicy;
 
@@ -654,8 +620,7 @@ public:
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_
@@ -685,9 +650,7 @@ public:
     ImplicitActivationPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_
@@ -709,9 +672,7 @@ public:
     ImplicitActivationPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
@@ -739,8 +700,7 @@ public:
     void operator= (const ImplicitActivationPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy;
 
@@ -759,8 +719,7 @@ public:
   class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_
@@ -790,9 +749,7 @@ public:
     ServantRetentionPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_
@@ -814,9 +771,7 @@ public:
     ServantRetentionPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_
@@ -844,8 +799,7 @@ public:
     void operator= (const ServantRetentionPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined /
 
   static CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
 
@@ -865,8 +819,7 @@ public:
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined /
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_
@@ -896,9 +849,7 @@ public:
     RequestProcessingPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_
@@ -920,9 +871,7 @@ public:
     RequestProcessingPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_
@@ -950,8 +899,7 @@ public:
     void operator= (const RequestProcessingPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
 
@@ -977,8 +925,7 @@ public:
   class SynchronizationPolicy;
   typedef SynchronizationPolicy *SynchronizationPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_
@@ -1008,9 +955,7 @@ public:
     SynchronizationPolicy_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_
@@ -1032,14 +977,12 @@ public:
     SynchronizationPolicy_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_)
 #define _PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_
 
-  class TAO_Export SynchronizationPolicy: public virtual CORBA::Policy
+  class TAO_Export SynchronizationPolicy: public virtual ACE_CORBA_1 (Policy)
   {
   public:
     // the static operations
@@ -1062,8 +1005,7 @@ public:
     void operator= (const SynchronizationPolicy&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_SynchronizationPolicy;
 
@@ -1074,8 +1016,7 @@ public:
   class POAManager;
   typedef POAManager *POAManager_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POAMANAGER___VAR_CH_)
 #define _PORTABLESERVER_POAMANAGER___VAR_CH_
@@ -1105,9 +1046,7 @@ public:
     POAManager_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POAMANAGER___OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER___OUT_CH_
@@ -1129,9 +1068,7 @@ public:
     POAManager_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POAMANAGER_CH_)
 #define _PORTABLESERVER_POAMANAGER_CH_
@@ -1151,8 +1088,7 @@ public:
     class AdapterInactive;
     typedef AdapterInactive *AdapterInactive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
@@ -1173,8 +1109,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
     static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
     virtual void  activate (CORBA::Environment &env) = 0;
     virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
@@ -1194,8 +1129,7 @@ public:
     void operator= (const POAManager&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_POAManager;
 
@@ -1206,8 +1140,7 @@ public:
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_
@@ -1237,9 +1170,7 @@ public:
     AdapterActivator_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_
@@ -1261,9 +1192,7 @@ public:
     AdapterActivator_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
@@ -1291,8 +1220,7 @@ public:
     void operator= (const AdapterActivator&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_AdapterActivator;
 
@@ -1303,8 +1231,7 @@ public:
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___VAR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___VAR_CH_
@@ -1334,8 +1261,7 @@ public:
     ServantManager_ptr ptr_;
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___OUT_CH_)
@@ -1358,9 +1284,7 @@ public:
     ServantManager_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
@@ -1387,8 +1311,7 @@ public:
     void operator= (const ServantManager&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ServantManager;
 
@@ -1399,8 +1322,7 @@ public:
   class ServantActivator;
   typedef ServantActivator *ServantActivator_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_
@@ -1430,9 +1352,7 @@ public:
     ServantActivator_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_
@@ -1454,9 +1374,7 @@ public:
     ServantActivator_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR_CH_
@@ -1485,8 +1403,7 @@ public:
     void operator= (const ServantActivator&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ServantActivator;
 
@@ -1497,8 +1414,7 @@ public:
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___VAR_CH_
@@ -1528,9 +1444,7 @@ public:
     ServantLocator_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___OUT_CH_
@@ -1552,9 +1466,7 @@ public:
     ServantLocator_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR_CH_
@@ -1586,8 +1498,7 @@ public:
     void operator= (const ServantLocator&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ServantLocator;
 
@@ -1598,8 +1509,7 @@ public:
   class POA;
   typedef POA *POA_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
@@ -1629,9 +1539,7 @@ public:
     POA_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
@@ -1653,9 +1561,7 @@ public:
     POA_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
@@ -1675,8 +1581,7 @@ public:
     class AdapterAlreadyExists;
     typedef AdapterAlreadyExists *AdapterAlreadyExists_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
@@ -1697,9 +1602,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterAlreadyExists *&);
     static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_
@@ -1707,8 +1610,7 @@ public:
     class AdapterInactive;
     typedef AdapterInactive *AdapterInactive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE_CH_
@@ -1729,9 +1631,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
     static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_
@@ -1739,8 +1639,7 @@ public:
     class AdapterNonExistent;
     typedef AdapterNonExistent *AdapterNonExistent_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
@@ -1761,9 +1660,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterNonExistent *&);
     static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_
@@ -1771,8 +1668,7 @@ public:
     class InvalidPolicy;
     typedef InvalidPolicy *InvalidPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
@@ -1797,9 +1693,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, InvalidPolicy *&);
     static CORBA::TypeCode_ptr _tc_InvalidPolicy;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT___PTR_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT___PTR_CH_
@@ -1807,8 +1701,7 @@ public:
     class NoServant;
     typedef NoServant *NoServant_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
@@ -1829,9 +1722,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, NoServant *&);
     static CORBA::TypeCode_ptr _tc_NoServant;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_
@@ -1839,8 +1730,7 @@ public:
     class ObjectAlreadyActive;
     typedef ObjectAlreadyActive *ObjectAlreadyActive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
@@ -1861,9 +1751,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectAlreadyActive *&);
     static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_
@@ -1871,8 +1759,7 @@ public:
     class ObjectNotActive;
     typedef ObjectNotActive *ObjectNotActive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
@@ -1893,9 +1780,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectNotActive *&);
     static CORBA::TypeCode_ptr _tc_ObjectNotActive;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_
@@ -1903,8 +1788,7 @@ public:
     class ServantAlreadyActive;
     typedef ServantAlreadyActive *ServantAlreadyActive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
@@ -1925,9 +1809,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantAlreadyActive *&);
     static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_
@@ -1935,8 +1817,7 @@ public:
     class ServantNotActive;
     typedef ServantNotActive *ServantNotActive_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
@@ -1957,9 +1838,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantNotActive *&);
     static CORBA::TypeCode_ptr _tc_ServantNotActive;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_
@@ -1967,8 +1846,7 @@ public:
     class WrongAdapter;
     typedef WrongAdapter *WrongAdapter_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
@@ -1989,9 +1867,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongAdapter *&);
     static CORBA::TypeCode_ptr _tc_WrongAdapter;
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_
@@ -1999,8 +1875,7 @@ public:
     class WrongPolicy;
     typedef WrongPolicy *WrongPolicy_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
@@ -2021,8 +1896,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongPolicy *&);
     static CORBA::TypeCode_ptr _tc_WrongPolicy;
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
     virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const CORBA::PolicyList &policies, CORBA::Environment &env) = 0;
     virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env) = 0;
@@ -2077,8 +1951,7 @@ public:
     void operator= (const POA&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_POA;
 
@@ -2089,8 +1962,7 @@ public:
   class Current;
   typedef Current *Current_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_CURRENT___VAR_CH_)
 #define _PORTABLESERVER_CURRENT___VAR_CH_
@@ -2120,9 +1992,7 @@ public:
     Current_ptr ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_CURRENT___OUT_CH_)
 #define _PORTABLESERVER_CURRENT___OUT_CH_
@@ -2144,9 +2014,7 @@ public:
     Current_ptr &ptr_;
   };
 
-
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_CURRENT_CH_)
 #define _PORTABLESERVER_CURRENT_CH_
@@ -2166,8 +2034,7 @@ public:
     class NoContext;
     typedef NoContext *NoContext_ptr;
 
-#endif // end #if !defined
-
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
@@ -2188,8 +2055,7 @@ public:
     friend CORBA::Boolean operator>>= (const CORBA::Any &, NoContext *&);
     static CORBA::TypeCode_ptr _tc_NoContext;
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
     virtual POA_ptr  get_POA (CORBA::Environment &env);
     virtual ObjectId * get_object_id (CORBA::Environment &env);
@@ -2207,8 +2073,7 @@ public:
     void operator= (const Current&);
   };
 
-
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_Current;
 
@@ -2221,6 +2086,6 @@ public:
 
 #if defined (__ACE_INLINE__)
 #include "POAC.i"
-#endif // defined INLINE
+#endif /* defined INLINE */
 
 #endif /* TAO_IDL_POAC_H */

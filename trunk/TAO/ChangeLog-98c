@@ -1,3 +1,12 @@
+Fri Jul 17 09:46:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/POAC.h: Replaced #endif // ... with #endif /* ... */ since
+	  this is more portable...
+	  
+	* tao/POAC.h: Changed CORBA::Policy to ACE_CORBA_1 (Policy) to
+ 	  work around friggin' bugs with MSVC++ 4.2.  Thanks to Ernesto
+ 	  Guisado <eguisado@saincotrafico.com> for reporting this.
+
 Fri Jul 17 08:28:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile (CONTROLLED_FILES): added TAO-inheritance.{pdf,ps}.gz
