@@ -19,6 +19,7 @@
 #include "Default_Collocation_Resolver.h"
 #include "debug.h"
 #include "StringSeqC.h"
+#include "Adapter_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
