@@ -17,6 +17,20 @@
 
 PACE_INLINE
 int
+pace_abs (int val)
+{
+  return abs (val);
+}
+
+PACE_INLINE
+double
+pace_atof (const char * str)
+{
+  return atof (str);
+}
+
+PACE_INLINE
+int
 pace_atoi (const char * str)
 {
   return atoi (str);
@@ -27,6 +41,15 @@ long
 pace_atol (const char * str)
 {
   return atol (str);
+}
+
+PACE_INLINE
+void *
+pace_bsearch (const void *key, const void *base,
+              size_t nel, size_t size,
+              int (*compar)(const void *,const void *))
+{
+  return bsearch (key, base, nel, size, compar);
 }
 
 PACE_INLINE
@@ -42,6 +65,28 @@ char *
 pace_getenv (const char * name)
 {
   return getenv (name);
+}
+
+PACE_INLINE
+void
+pace_qsort (void * base, size_t nel, size_t width,
+            int (*compar)(const void *, const void *))
+{
+  return qsort (base, nel, width, compar);
+}
+
+PACE_INLINE
+int
+pace_rand ()
+{
+  return rand ();
+}
+
+PACE_INLINE
+int
+pace_srand (unsigned int seed)
+{
+  return srand (seed);
 }
 
 PACE_INLINE

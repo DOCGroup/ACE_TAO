@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       $Id$
 #
-#       Makefile for the pace/pace C library release
+#       Makefile for the PACE/pace C library release
 #----------------------------------------------------------------------------
 
 ifndef PACE_ROOT
@@ -194,15 +194,50 @@ POSIX_DS_FILES = \
 POSIX_SD_FILES = \
   grp
 # POSIX_C_LANG_SUPPORT Unit of Functionality (POSIX.1)
-# pace_isalnum is in ??.h;
+# Character handling functions (e.g., isalnum, toupper) are in ctype.h;
+# Mathematics functions (e.g., acos, tanh) are in math.h;
+# Non-local jump functions (i.e., longjmp, setjmp) are in setjmp.h;
+# General utility functions (i.e., abs, srand) are in stdlib.h;
+# String handling functions (i.e., strcat, strtok) are in string.h;
+# Date and Time functions (i.e., asctime, tzset) are in time.h;
 POSIX_CLS_FILES = \
-  ??
+  ctype \
+  math \
+  setjmp \
+  stdlib \
+  time
 # _POSIX_JOB_CONTROL Unit of Functionality (POSIX.1)
 # pace_setpgid is in unistd.h;
 # pace_tcgetpgrp, pace_tcsetpgrp are in sys/termios.h
 _POSIX_JC_FILES = \
   unistd \
   sys/termios
+# POSIX_USER_GROUPS_R Unit of Functionality (POSIX.1)
+# pace_getlogin_r is in unistd.h;
+POSIX_UGR_FILES = \
+  unistd
+# POSIX_FILE_LOCKING Unit of Functionality (POSIX.1)
+# pace_flockfile, pace_ftrylockfile, pace_funlockfile, pace_getc_unlocked,
+# pace_getchar_unlocked, pace_putc_unlocked, pace_putchar_unlocked are in
+# stdio.h;
+POSIX_FL_FILES = \
+  stdio
+# POSIX_C_LANG_SUPPORT_R Unit of Functionality (POSIX.1)
+# pace_asctime_r, pace_ctime_r, pace_gmtime_r, pace_localtime_r are in time.h;
+# pace_rand_r is in stdlib.h;
+# pace_strtok_r is in string.h;
+# pace_readdir_r is in dirent.h;
+POSIX_CLSR_FILES = \
+  time \
+  stdlib \
+  string \
+  dirent
+# POSIX_SYSTEM_DATABASE_R Unit of Functionality (POSIX.1)
+# pace_getgrgid_r, pace_getgrnam_r are in grp.h;
+# pace_getpwnam_r, pace_getpwuid_r are in pwd.h;
+POSIX_SDR_FILES = \
+  grp \
+  pwd
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -268,7 +303,7 @@ ifneq (,$(findstring Posix_sig,$(PACE_COMPONENTS)))
   SHLIB = libPACE_S.$(SOEXT)
 endif # Signals
 
-ifneq (,$(findstring Posix_ug,$(PACE_COMPONENTS)))
+ifneq (,$(findstring Posix_usg,$(PACE_COMPONENTS)))
   FILES = $(POSIX_UG_FILES)
   LIB   = libPACE_UG.a
   SHLIB = libPACE_UG.$(SOEXT)
@@ -333,6 +368,30 @@ ifneq (,$(findstring Posix_jc,$(PACE_COMPONENTS)))
   LIB   = libPACE_JC.a
   SHLIB = libPACE_JC.$(SOEXT)
 endif # Job Control
+
+ifneq (,$(findstring Posix_ugr,$(PACE_COMPONENTS)))
+  FILES = $(POSIX_UGR_FILES)
+  LIB   = libPACE_UGR.a
+  SHLIB = libPACE_UGR.$(SOEXT)
+endif # User Groups - Reentrant
+
+ifneq (,$(findstring Posix_fl,$(PACE_COMPONENTS)))
+  FILES = $(POSIX_FL_FILES)
+  LIB   = libPACE_FL.a
+  SHLIB = libPACE_FL.$(SOEXT)
+endif # File Locking
+
+ifneq (,$(findstring Posix_clr,$(PACE_COMPONENTS)))
+  FILES = $(POSIX_CLSR_FILES)
+  LIB   = libPACE_CLSR.a
+  SHLIB = libPACE_CLSR.$(SOEXT)
+endif # C Language Support - Reentrant
+
+ifneq (,$(findstring Posix_sr,$(PACE_COMPONENTS)))
+  FILES = $(POSIX_SDR_FILES)
+  LIB   = libPACE_SDR.a
+  SHLIB = libPACE_SDR.$(SOEXT)
+endif # System Database - Reentrant
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
