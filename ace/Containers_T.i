@@ -442,7 +442,8 @@ ACE_DLList<T>::get (T *&item, size_t index)
 {
   ACE_DLList_Node *node;
   int result = ACE_DLList_Base::get (node, index);
-  item = (T *) node->item_;
+  if (result != -1)
+    item = (T *) node->item_;
   return result;
 }
 

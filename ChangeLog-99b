@@ -1,3 +1,25 @@
+Sun Oct 17 11:00:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU (LD): Added
+	  a fix so that SunC++ 5.0 will work correctly when it's used in
+ 	  "compat" mode with SunC++ 4.2.  Thanks to Susan Liebeskind
+ 	  <susan.liebeskind@gtri.gatech.edu> for reporting this fix.
+
+	* ace/Malloc_T.cpp (remove): Need to call the destructor of
+	  ACE_Malloc_Stats explicitly in remove().  Thanks to Jean-Marc
+ 	  Strauss <jms97@club-internet.fr> for reporting this.
+
+	* ace/Containers_T.i (get): ACE_DLList::get() didn't check
+	  the return value from ACE_Double_Linked_List::get() so it was
+ 	  possible for the node variable to be NULL.  Now it checks for
+ 	  the error case explicitly.  Thanks to Boris Sukholitko
+ 	  <palisander@hotmail.com> for reporting this bug.
+
+	* ace/Containers_T.cpp (get): The ACE_Double_Linked_List::get()
+	  method should return -1 on error but it was returning 1.  Now,
+ 	  the implementation matches the documentation.  Thanks to Boris
+ 	  Sukholitko <palisander@hotmail.com> for reporting this bug.
+
 Sat Oct 16 17:10:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Makefile:
