@@ -4,6 +4,10 @@ Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  built, because it wasn't needed.  Thanks to Sandro Doro
 	  <alex@aureus.sublink.org> for this fix.
 
+	* ace/config-aix-4.[12].x.h,config-mvs.h: changed ACE_HAS_MULTICAST
+	  to ACE_HAS_IP_MULTICAST.  Thanks to Daniel Montalibet
+	  <daniel_montalibet@stortek.com> for reporting this.
+
 	* include/makeinclude/platform_sunos5_g++.GNU,
 	                      platform_sunos5_x86_g++.GNU,
 	                      platform_unixware_g++.GNU:
