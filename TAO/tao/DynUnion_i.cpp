@@ -9,7 +9,7 @@
 //    DynUnion_i.cpp
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ====================================================================
 
@@ -211,12 +211,12 @@ TAO_DynUnion_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynUnion_i::to_any (CORBA::Environment& TAO_IN_ENV)
+TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   // Both Dynanys must have been initialied.
   if (this->member_.in () == 0 || this->discriminator_.in () == 0)
     {
-      TAO_IN_ENV.exception (new CORBA_DynAny::Invalid);
+      ACE_TRY_ENV.exception (new CORBA_DynAny::Invalid);
       return 0;
     }
 
@@ -224,9 +224,9 @@ TAO_DynUnion_i::to_any (CORBA::Environment& TAO_IN_ENV)
 
   // Add the discriminator to the CDR stream.
 
-  CORBA_TypeCode_ptr disc_tc = this->discriminator_->type (TAO_IN_ENV);
+  CORBA_TypeCode_ptr disc_tc = this->discriminator_->type (ACE_TRY_ENV);
 
-  CORBA_Any_ptr disc_any = this->discriminator_->to_any (TAO_IN_ENV);
+  CORBA_Any_var disc_any = this->discriminator_->to_any (ACE_TRY_ENV);
 
   ACE_Message_Block* disc_mb = disc_any->_tao_get_cdr ();
 
@@ -234,15 +234,13 @@ TAO_DynUnion_i::to_any (CORBA::Environment& TAO_IN_ENV)
 
   out_cdr.append (disc_tc,
                   &disc_cdr,
-                  TAO_IN_ENV);
-
-  delete disc_any;
+                  ACE_TRY_ENV);
 
   // Add the member to the CDR stream.
 
-  CORBA_TypeCode_ptr member_tc = this->member_->type (TAO_IN_ENV);
+  CORBA_TypeCode_ptr member_tc = this->member_->type (ACE_TRY_ENV);
 
-  CORBA_Any_ptr member_any = this->member_->to_any (TAO_IN_ENV);
+  CORBA_Any_var member_any = this->member_->to_any (ACE_TRY_ENV);
 
   ACE_Message_Block* member_mb = member_any->_tao_get_cdr ();
 
@@ -250,19 +248,17 @@ TAO_DynUnion_i::to_any (CORBA::Environment& TAO_IN_ENV)
 
   out_cdr.append (member_tc,
                   &member_cdr,
-                  TAO_IN_ENV);
-
-  delete member_any;
+                  ACE_TRY_ENV);
 
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
   CORBA_Any* retval;
-  ACE_NEW_THROW_RETURN (retval,
-                        CORBA_Any (this->type (TAO_IN_ENV),
-                                   in_cdr.start ()),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                        0);
+  ACE_NEW_THROW_EX (retval,
+                    CORBA_Any (this->type (ACE_TRY_ENV),
+                               in_cdr.start ()),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
   return retval;
 }
 
@@ -1264,77 +1260,77 @@ TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any& inside_any,
 // Functor factory.
 DU_Extractor_base*
 TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
-                               CORBA::Environment& TAO_IN_ENV)
+                               CORBA::Environment& ACE_TRY_ENV)
 {
   DU_Extractor_base* retval;
 
   switch (kind)
     {
       case CORBA::tk_short:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::Short>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::Short>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_long:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::Long>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::Long>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_ushort:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::UShort>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::UShort>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_ulong:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::ULong>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::ULong>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_boolean:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::Boolean>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::Boolean>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_char:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::Char>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::Char>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
 
 // For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_longlong:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::LongLong>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::LongLong>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
+        ACE_CHECK_RETURN (0);
         return retval;
 #endif /* ACE_LACKS_LONGLONG_T */
 
       case CORBA::tk_ulonglong:
-        ACE_NEW_THROW_RETURN (retval,
-                              DU_Extractor<CORBA::ULongLong>,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          DU_Extractor<CORBA::ULongLong>,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_wchar:
-        ACE_NEW_THROW_RETURN (retval,
-                              WChar_extractor,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          WChar_extractor,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_enum:
-        ACE_NEW_THROW_RETURN (retval,
-                              Enum_extractor,
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
+        ACE_NEW_THROW_EX (retval,
+                          Enum_extractor,
+                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (0);
         return retval;
       default:
         return 0;

@@ -9,7 +9,7 @@
 //    DynAny_i.cpp
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // =================================================================
 
@@ -520,23 +520,20 @@ TAO_DynAny_i::get_wchar (CORBA::Environment &env)
 CORBA::Any_ptr
 TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
 {
-  // @@ Jeff: Why don't you use CORBA_Any_var which will clean up the
-  // memory for you automatically?
-  CORBA_Any_ptr val;
+  CORBA_Any_var val;
 
-  ACE_NEW_THROW_EX (val,
+  ACE_NEW_THROW_EX (val.out (),
                     CORBA_Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  if (!(this->value_ >>= *val))
+  if (!(this->value_ >>= *val.out ()))
     {
-      delete val;
       val = 0;
       ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 0);
     }
 
-  return val;
+  return val._retn ();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -629,74 +626,74 @@ TAO_DynAny_i::create_dyn_any (const CORBA_Any& any,
 
 CORBA_DynAny_ptr
 TAO_DynAny_i::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                    CORBA::Environment& TAO_IN_ENV)
+                                    CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynAny_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
-                        TAO_DynAny_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynAny::_nil ());
-  return dp->_this (TAO_IN_ENV);
+  ACE_NEW_THROW_EX (dp,
+                    TAO_DynAny_i (tc),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynStruct_ptr
 TAO_DynAny_i::create_dyn_struct (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& TAO_IN_ENV)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynStruct_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
-                        TAO_DynStruct_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynStruct::_nil ());
-  return dp->_this (TAO_IN_ENV);
+  ACE_NEW_THROW_EX (dp,
+                    TAO_DynStruct_i (tc),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynStruct::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynSequence_ptr
 TAO_DynAny_i::create_dyn_sequence (CORBA_TypeCode_ptr tc,
-                                   CORBA::Environment& TAO_IN_ENV)
+                                   CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynSequence_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
+  ACE_NEW_THROW_EX (dp,
                         TAO_DynSequence_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynSequence::_nil ());
-  return dp->_this (TAO_IN_ENV);
+                        CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynSequence::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynArray_ptr
 TAO_DynAny_i::create_dyn_array (CORBA_TypeCode_ptr tc,
-                                CORBA::Environment& TAO_IN_ENV)
+                                CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynArray_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
+  ACE_NEW_THROW_EX (dp,
                         TAO_DynArray_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynArray::_nil ());
-  return dp->_this (TAO_IN_ENV);
+                        CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynArray::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynUnion_ptr
 TAO_DynAny_i::create_dyn_union (CORBA_TypeCode_ptr tc,
-                                CORBA::Environment& TAO_IN_ENV)
+                                CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynUnion_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
+  ACE_NEW_THROW_EX (dp,
                         TAO_DynUnion_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynUnion::_nil ());
-  return dp->_this (TAO_IN_ENV);
+                        CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynUnion::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynEnum_ptr
 TAO_DynAny_i::create_dyn_enum (CORBA_TypeCode_ptr tc,
-                               CORBA::Environment& TAO_IN_ENV)
+                               CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_DynEnum_i* dp;
-  ACE_NEW_THROW_RETURN (dp,
+  ACE_NEW_THROW_EX (dp,
                         TAO_DynEnum_i (tc),
-                        CORBA::NO_MEMORY (),
-                        CORBA_DynEnum::_nil ());
-  return dp->_this (TAO_IN_ENV);
+                        CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA_DynEnum::_nil ());
+  return dp->_this (ACE_TRY_ENV);
 }
 
 CORBA_DynAny_ptr
