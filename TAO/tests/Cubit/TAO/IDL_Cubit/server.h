@@ -43,19 +43,17 @@ public:
   Cubit_Server (void);
   // Default constructor
 
-
   ~Cubit_Server (void);
   // Destructor
-  
 
   int init (int argc,
             char **argv,
 	    CORBA::Environment& env);
   // Initialize the Cubit_Server state - parsing arguments and ...
 
-
   int run (CORBA::Environment& env);
   // Run the orb 
+
 private:
   int parse_args (void);
   // Parses the commandline arguments.

@@ -52,14 +52,16 @@ Cubit_Server::parse_args (void)
 }
 
 int
-Cubit_Server::init (int argc,char **argv,CORBA::Environment& env)
+Cubit_Server::init (int argc,
+		    char** argv,
+		    CORBA::Environment& env)
 {
-  // Call the init of TAO_ORB_Manager to create a good POA
+  // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
-  TAO_ORB_Manager::init (argc,
-                         argv,
-                         "child_poa",
-                         env);
+  this->init_child_poa (argc,
+			argv,
+			"child_poa",
+			env);
 
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
@@ -68,9 +70,9 @@ Cubit_Server::init (int argc,char **argv,CORBA::Environment& env)
   this->parse_args ();
 
   CORBA::String_var str  =
-    this->activate ("factory",
-                    &this->factory_impl_,
-                    env);
+    this->activate_under_child_poa ("factory",
+				    &this->factory_impl_,
+				    env);
   ACE_DEBUG ((LM_DEBUG,
 	      "The IOR is: <%s>\n",
               str.in ()));
@@ -96,7 +98,7 @@ int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
 {
   this->my_name_server_.init (this->orb_, 
-                              this->my_poa_);
+                              this->child_poa_);
   factory = this->factory_impl_._this (env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
