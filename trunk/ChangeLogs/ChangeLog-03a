@@ -1,3 +1,11 @@
+Tue Feb 22 00:39:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.h: Changed method fetch_recv_buf as protected and
+	  added some missing comments.
+
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Connector.h: Added some missing comments.
+
 Mon Feb 21 20:40:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/MEM_*: Minor modifications to formatting here.
@@ -10,7 +18,7 @@ Mon Feb 21 20:40:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  operations rendered "no-op"s unless ACE_HAS_TIMED_MESSAGE_BLOCKS
  	  is enabled.  This is necessary to avoid an unnecessary 16 bytes
  	  per-Message_Block.  Thanks to Irfan for pointing this out.
-  
+
 Mon Feb 21 17:22:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_LACKS_SETREUID):
@@ -100,19 +108,19 @@ Mon Feb 21 16:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 	  alignment).  This is useful in the implementation of the CDR
 	  streams and Anys.
 
-Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com> 
-  
-        * ace/Makefile.bor: Added new files.  
-  
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * ace/Makefile.bor: Added new files.
+
 	* tests/*.cpp, tests/test_config.h: Removed macros that had been
-	  used by C++Builder 3.  
-  
+	  used by C++Builder 3.
+
         * include/makeinclude/compiler.bor: Added support for C++Builder 5
-	  VCL libs. 
-    
+	  VCL libs.
+
         * include/makeinclude/recurse.bor, lots of Makefile.bor files:
 	  Added support for makefile recursion.
-    
+
 Mon Feb 21 14:35:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/compiler.bor: Increased the limit of
