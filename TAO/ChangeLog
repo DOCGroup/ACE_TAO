@@ -1,3 +1,8 @@
+Tue Jul 15 15:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/ec.html:
+          Corrected link to bugzilla.
+
 Tue Jul 15 10:31:29 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tests/Bug_1551_Regression/*
@@ -20,17 +25,17 @@ Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
           do the following during close_connection
 
           - Iterate through the dispatcher table by taking the
-            elements and adding it to an unbounded array. 
+            elements and adding it to an unbounded array.
 
           - Unbind all the entries
-  
-          - Call close_connection on all of them. 
+
+          - Call close_connection on all of them.
 
           This prevents closed entries being left over in cache that
           which leads to crashes. Thanks to Balachandran Natarajan
           <bala@dre.vanderbilt.edu> for helping me out with
           this. Thanks to Carlos O'Ryan <coryan@atdesk.com> for
-          reporting the bug. 
+          reporting the bug.
 
 Mon Jul 14 18:41:29 2003  Pradeep Gore  <pradeep@oomworks.com>
 
