@@ -244,6 +244,12 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   return 0;
 }
 
+int
+CORBA_ORB::run (ACE_Time_Value &tv)
+{
+  return this->run (&tv);
+}
+
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
