@@ -129,6 +129,7 @@ call %run_cmd% %dopure% %platform% Message_Queue_Notifications_Test
 call %run_cmd% %dopure% %platform% Message_Queue_Test
 call %run_cmd% %dopure% %platform% MM_Shared_Memory_Test
 call %run_cmd% %dopure% %platform% MT_Reactor_Timer_Test
+call %run_cmd% %dopure% %platform% MT_Reactor_Upcall_Test
 call %run_cmd% %dopure% %platform% MT_SOCK_Test
 call %run_cmd% %dopure% %platform% Malloc_Test
 call %run_cmd% %dopure% %platform% Naming_Test

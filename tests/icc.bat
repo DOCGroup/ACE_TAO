@@ -28,6 +28,7 @@ vacbld -SEV=E High_Res_Timer_Test.icc
 vacbld -SEV=E IOStream_Test.icc
 vacbld -SEV=E MM_Shared_Memory_Test.icc
 vacbld -SEV=E MT_Reactor_Timer_Test.icc
+vacbld -SEV=E MT_Reactor_Upcall_Test.icc
 vacbld -SEV=E MT_SOCK_Test.icc
 vacbld -SEV=E Map_Manager_Test.icc
 vacbld -SEV=E Map_Test.icc

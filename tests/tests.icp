@@ -178,6 +178,10 @@ subproject MT_Reactor_Timer_Test icc "MT_Reactor_Timer_Test.icc", ics "MT_Reacto
 {
 }
 
+subproject MT_Reactor_Upcall_Test icc "MT_Reactor_Upcall_Test.icc", ics "MT_Reactor_Upcall_Test.ics"
+{
+}
+
 subproject MT_SOCK_Test icc "MT_SOCK_Test.icc", ics "MT_SOCK_Test.ics"
 {
 }
@@ -480,6 +484,7 @@ use Logging_Strategy_Test
 use MEM_Stream_Test
 use MM_Shared_Memory_Test
 use MT_Reactor_Timer_Test
+use MT_Reactor_Upcall_Test
 use MT_SOCK_Test
 use Malloc_Test
 use Map_Manager_Test

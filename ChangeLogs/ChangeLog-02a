@@ -1,3 +1,27 @@
+Mon Apr 22 12:33:30 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	
+	* tests/MT_Reactor_Upcall_Test: This is a test that shows how to
+	  handle upcalls from the TP_Reactor and the WFMO_Reactor when the
+	  event loop is being run by multiple threads.
+
+	  The following files were updated to include the new test:
+
+	  - tests/Makefile
+	  - tests/Makefile.am
+	  - tests/Makefile.bor
+	  - tests/Reactor_Dispatch_Order_Test.dsp
+	  - tests/Reactor_Dispatch_Order_Test.icc
+	  - tests/icc.bat
+	  - tests/run_test.lst
+	  - tests/run_tests.bat
+	  - tests/run_tests.psosim
+	  - tests/run_tests_remote.lst
+	  - tests/tests.dsw
+	  - tests/tests.icp
+	  - tests/MT_Reactor_Upcall_Test_WinCE.vcp
+	  - tests/tests_WinCE.vcw
+
 Mon Apr 22 15:27:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/021/page01.html

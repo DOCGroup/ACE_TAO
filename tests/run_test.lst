@@ -65,6 +65,7 @@ Message_Queue_Test: !chorus
 Message_Queue_Test_Ex: !chorus
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks
 MT_Reactor_Timer_Test: !VxWorks
+MT_Reactor_Upcall_Test: !VxWorks
 MT_SOCK_Test: !chorus
 Malloc_Test: !VxWorks
 Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks

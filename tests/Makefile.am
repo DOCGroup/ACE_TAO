@@ -82,6 +82,7 @@ check_PROGRAMS = \
   IOStream_Test \
   MM_Shared_Memory_Test \
   MT_Reactor_Timer_Test \
+  MT_Reactor_Upcall_Test \
   MT_SOCK_Test \
   Map_Manager_Test \
   Map_Test \
@@ -193,6 +194,8 @@ MM_Shared_Memory_Test_SOURCES = MM_Shared_Memory_Test.cpp
 
 MT_Reactor_Timer_Test_SOURCES = MT_Reactor_Timer_Test.cpp \
                                 MT_Reactor_Timer_Test.h
+
+MT_Reactor_Upcall_Test_SOURCES = MT_Reactor_Upcall_Test.cpp
 
 MT_SOCK_Test_SOURCES = MT_SOCK_Test.cpp
 
