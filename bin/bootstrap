@@ -97,6 +97,12 @@ done
 # This script must be run from the top-level ACE source directory
 if test -d m4; then
 
+  # Set the PATH containing the GNU tools
+  if (uname | grep SunOS > /dev/null 2>&1); then
+    PATH=/project/danzon/pkg/gnu/bin:$PATH
+    export PATH
+  fi
+
   # Generate an `aclocal.m4' file from all existing m4 macro files
   # including those in the `m4' directory.
   echo Running aclocal
