@@ -263,8 +263,7 @@ public:
   // Get the event handle.
 
 #if defined (ACE_HAS_AIO_CALLS)
-  int insert_to_aiocb_list (aiocb *aiocb_ptr,
-                            ACE_Asynch_Result *result);
+  int insert_to_aiocb_list (aiocb *aiocb_ptr);
   // @@ Alex, is it possible to "hide" this better, i.e., so it's not
   // in the public interface?  Perhaps we could use a "friend"
   // instead, or better yet, abstract away from this via some other
@@ -274,9 +273,6 @@ public:
   // Proactor.  Inserting this <aiocb_ptr> to the array so that
   // <aio_return> and <aio_error> can make use of that. Inserting
   // result so that we can call the application back through complete.
-  // @@ Can array be full? That means, the aio issue is successful,
-  // but there are already AIO_LIST_AIO_MAX of calls pending. I will
-  // have to go for something other than arrays then.
 #endif /* ACE_HAS_AIO_CALLS */
 
 protected:
@@ -335,11 +331,9 @@ protected:
   // is something else in LynxOS!!!
 #if defined (AIO_LISTIO_MAX)
   aiocb *aiocb_list_ [AIO_LISTIO_MAX];
-  ACE_Asynch_Result *result_list_ [AIO_LISTIO_MAX];
 #else /* AIO_LISTIO_MAX */
   // Minimum is 2.
   struct aiocb *aiocb_list_ [2];
-  ACE_Asynch_Result *result_list_ [2];
 #endif /* AIO_LIST_AIO_MAX */
 
   size_t aiocb_list_max_size_;
