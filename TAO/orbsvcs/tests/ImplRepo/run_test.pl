@@ -48,9 +48,9 @@ $airplane_client = $EXEPREFIX."airplane_client".$EXE_EXT." ";
 $nestea_server = $EXEPREFIX."nestea_server".$EXE_EXT." ";
 $nestea_client = $EXEPREFIX."nestea_client".$EXE_EXT." ";
 
-$airplane_path = $ENV{ACE_ROOT}.$DIR_SEPARATOR."TAO/orbsvcs".$DIR_SEPARATOR."tests".
+$airplane_path = $ENV{"ACE_ROOT"}.$DIR_SEPARATOR."TAO/orbsvcs".$DIR_SEPARATOR."tests".
                  $DIR_SEPARATOR."ImplRepo".$DIR_SEPARATOR."airplane_server";
-$working_directory = $ENV{ACE_ROOT}.$DIR_SEPARATOR."TAO/orbsvcs".$DIR_SEPARATOR.
+$working_directory = $ENV{"ACE_ROOT"}.$DIR_SEPARATOR."TAO/orbsvcs".$DIR_SEPARATOR.
                      "tests".$DIR_SEPARATOR."ImplRepo";
 
 # Make sure the files are gone, so we can wait on them.
