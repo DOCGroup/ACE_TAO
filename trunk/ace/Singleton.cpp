@@ -63,7 +63,7 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, ACE_Singleton<TYPE, LOCK>::singleton_lock_i (), 0);
+      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
       if (singleton == 0)
 	ACE_NEW_RETURN (singleton, TYPE, 0);
@@ -78,7 +78,7 @@ ACE_Singleton<TYPE, LOCK>::instance (TYPE *new_instance)
   ACE_TRACE ("ACE_Singleton::set_instance");
 
   TYPE *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
-  ACE_GUARD_RETURN (LOCK, ace_mon, ACE_Singleton<TYPE, LOCK>::singleton_lock_i (), 0);
+  ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
   TYPE *old_instance = singleton;
   singleton = new_instance;
@@ -96,20 +96,21 @@ template <class TYPE, class LOCK> LOCK
 ACE_Singleton<TYPE, LOCK>::ace_singleton_lock_;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> void
+#if 0
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> void
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::dump (void)
 {
   ACE_TRACE ("ACE_SingletonEx<TYPE, LOCK, MEMORY>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   ACE_DEBUG ((LM_DEBUG, "instance_ = %x", 
-	      ACE_Singleton<TYPE, LOCK>::instance_i ()));
-  ACE_Singleton<TYPE, LOCK>::singleton_lock_i ().dump ();
+	      ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i ()));
+  ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ().dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> TYPE *&
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *&
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i (void)
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -123,7 +124,7 @@ ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> LOCK &
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> LOCK &
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i (void)
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -137,17 +138,17 @@ ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> TYPE *
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance (void)
 {
   ACE_TRACE ("ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance");
 
-  TYPE *&singleton = ACE_SingletonEx<TYPE, LOCK>::instance_i ();
+  TYPE *&singleton = ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i ();
 
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, ACE_SingletonEx<TYPE, LOCK>::singleton_lock_i (), 0);
+      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ()), 0);
 
       if (singleton == 0)
 	ACE_NEW_RETURN (singleton, TYPE, 0);
@@ -156,17 +157,17 @@ ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance (void)
   if (MEMORY == ACE_SINGLETON_HEAP)
     return singleton;
   else
-    return ACE_TSS_GET (singleton, TYPE);
+    return singleton->ts_object ();
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> TYPE *
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_ = 0;
 
 // Lock the creation of the singleton.  
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY> LOCK
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> LOCK
 ACE_SingletonEx<TYPE, LOCK, MEMORY>::ace_singletonex_lock_;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
-
+#endif
 #endif /* ACE_SINGLETON_C */

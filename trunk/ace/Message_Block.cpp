@@ -118,10 +118,10 @@ ACE_Data_Block::size (size_t length)
 
   if (length < this->max_size_)
     this->cur_size_ = length;
-  else
+  else 
     {
+      // We need to resize!
       char *buf;
-      
       ACE_ALLOCATOR_RETURN (buf, 
 			    (char *) this->allocator_strategy_->malloc (length), 
 			    -1);

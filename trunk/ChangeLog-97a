@@ -1,5 +1,19 @@
 Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/ASX/Message_Queue/buffer_stream.cpp: Updated this
+ 	  example to illustrate (1) how filters work in an ACE_Stream and
+	  (2) to make sure that resizing buffers work.
+
+	* ace/UPIPE_Stream.h: Changed the signature of control()
+	  to take an int so that it will match the base class
+	  signature.
+
+	* ace/Singleton.h: The new ACE_SingletonEx isn't working yet.
+  	  I've #ifdef'd it out until it works.
+
+	* examples/Threads/tss2.cpp: Updated this test program to
+ 	  illustrate the use of the new ACE_SingletonEx class.
+
 	* ace/Singleton.h: Added a new instance() method to the ACE
  	  Singleton that can be used to set the Singleton.  This is useful
  	  for situations where the type being used as the Singleton

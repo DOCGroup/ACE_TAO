@@ -52,11 +52,12 @@ protected:
   static TYPE *&instance_i (void);
   // Get pointer to the Singleton instance
 
-  static LOCK &singleton_lock_ (void);
+  static LOCK &singleton_lock_i (void);
   // Get reference to Singleton lock;
 };
 
-template <class TYPE, class LOCK, ACE_Singleton_Strategy MEMORY>
+#if 0
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY>
 class ACE_SingletonEx
   // = TITLE
   //     A Singleton Adapter that can allocate memory either off the
@@ -88,9 +89,10 @@ protected:
   static TYPE *&instance_i (void);
   // Get pointer to the SingletonEx instance.
 
-  static LOCK &singleton_lock_ (void);
+  static LOCK &singleton_lock_i (void);
   // Get reference to SingletonEx lock;
 };
+#endif
 
 #if defined (__ACE_INLINE__)
 #include "ace/Singleton.i"

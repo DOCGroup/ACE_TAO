@@ -253,7 +253,9 @@ public:
   // Get the total amount of space in the message.
   int size (size_t length);
   // Set the total amount of space in the message, reallocating space
-  // if necessary.  Returns 0 if successful, else -1.
+  // if necessary.  However, the <rd_ptr_> and <wr_ptr_> remain at the
+  // original offsets into the buffer, even if it is reallocated.
+  // Returns 0 if successful, else -1.
 
   // = <ACE_Data_Block> methods.
   ACE_Data_Block *data_block (void) const;
