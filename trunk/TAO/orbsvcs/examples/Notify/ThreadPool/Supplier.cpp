@@ -168,7 +168,7 @@ TAO_Notify_Supplier::subscription_change (const CosNotification::EventTypeSeq & 
 
       ++this->consumer_count_;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P,%t) Received Type %d: (%s)\n", this->consumer_count_, added[0].type_name));
+      ACE_DEBUG ((LM_DEBUG, "(%P,%t) Received Type %d: (%s)\n", this->consumer_count_, added[0].type_name.in ()));
 
       if (this->consumer_count_ == this->expected_consumer_count_)
         this->consumers_connected_.signal ();

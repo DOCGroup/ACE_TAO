@@ -25,7 +25,7 @@ $naming_ior = PerlACE::LocalFile ("naming.ior");
 $supplier_ior = PerlACE::LocalFile ("supplier.ior");
 
 $supplier_conf = PerlACE::LocalFile ("client.conf");
-d
+
 $consumer_conf = PerlACE::LocalFile ("client.conf");
 
 $consumer2_conf = PerlACE::LocalFile ("client.conf");
