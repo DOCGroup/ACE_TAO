@@ -1,3 +1,7 @@
+Fri Jun 27 13:37:37 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Svc_Conf.y: Finished the sanity checks started below.
+
 Fri Jun 27 11:55:13 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: added a check for an empty queue in expire
