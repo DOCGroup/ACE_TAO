@@ -5,7 +5,7 @@
 #include "ace/Dynamic_Service.h"
 #include "Time_Date.h"
 
-int 
+int
 DLL_ORB::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -33,10 +33,10 @@ DLL_ORB::svc (void)
   return 0;
 }
 
-int 
+int
 DLL_ORB::init (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV 
+  ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n\tInitialize ORB\n\n"));
@@ -53,13 +53,13 @@ DLL_ORB::init (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("DLL_ORB::init");
-      return -1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "DLL_ORB::init");
     }
   ACE_ENDTRY;
+  return -1;
 }
 
-int 
+int
 DLL_ORB::fini (void)
 {
   return 0;
@@ -105,16 +105,16 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
   return 0;
 }
 
-int 
+int
 Time_Date_Servant::init (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV 
+  ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n\tTime_Date servant\n\n"));
 
       this->parse_args (argc, argv);
- 
+
       DLL_ORB *orb =
         ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_);
 
@@ -123,11 +123,11 @@ Time_Date_Servant::init (int argc, char *argv[])
                            "can't find %s in the Service Repository\n",
                            this->orb_),
                           -1);
- 
-      CORBA::String_var str = orb->orb_manager_.activate (&servant_, 
+
+      CORBA::String_var str = orb->orb_manager_.activate (&servant_,
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       if (this->ior_output_file_)
         {
           ACE_OS::fprintf (this->ior_output_file_,
@@ -147,7 +147,18 @@ Time_Date_Servant::init (int argc, char *argv[])
 }
 
 // The following Factory is used by the <ACE_Service_Config> and
-// dll_orb.conf file to dynamically initialize the state of the 
+// dll_orb.conf file to dynamically initialize the state of the
 // Time_Date service.
 ACE_SVC_FACTORY_DEFINE (DLL_ORB)
 ACE_SVC_FACTORY_DEFINE (Time_Date_Servant)
+
+
+# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Dynamic_Service<DLL_ORB>;
+
+# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<DLL_ORB>
+
+# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

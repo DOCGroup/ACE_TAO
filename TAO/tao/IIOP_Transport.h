@@ -26,7 +26,7 @@
 // Forward decls.
 class TAO_IIOP_Handler_Base;
 class TAO_IIOP_Client_Connection_Handler;
-class TAO_Server_Connection_Handler;
+class TAO_IIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
 
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
@@ -128,7 +128,7 @@ public:
                              TAO_ORB_Core *orb_core);
   // Constructor.  Note, TAO_IIOP_Handler_Base is the base class for
   // both TAO_IIOP_Client_Connection_Handler and
-  // TAO_Server_Connection_Handler.
+  // TAO_IIOP_Server_Connection_Handler.
 
   ~TAO_IIOP_Client_Transport (void);
   // destructor
@@ -188,18 +188,18 @@ class TAO_Export TAO_IIOP_Server_Transport : public TAO_IIOP_Transport
   //   here.
 public:
 
-  TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler,
+  TAO_IIOP_Server_Transport (TAO_IIOP_Server_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
   //  Default creator method.
 
   ~TAO_IIOP_Server_Transport (void);
   // Default destructor
 
-  TAO_Server_Connection_Handler *server_handler (void);
+  TAO_IIOP_Server_Connection_Handler *server_handler (void);
   //  Return a pointer to the underlying connection handler.
 
 private:
-  TAO_Server_Connection_Handler *server_handler_;
+  TAO_IIOP_Server_Connection_Handler *server_handler_;
   // Pointer to the corresponding connection handler.
 };
 

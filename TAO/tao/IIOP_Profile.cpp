@@ -2,13 +2,13 @@
 // $Id$
 
 #include "tao/IIOP_Profile.h"
+#include "tao/IIOP_Connect.h"
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
-#include "tao/Connect.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
