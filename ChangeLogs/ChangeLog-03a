@@ -1,3 +1,11 @@
+Tue Jul 24 10:04:52 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/INET_Addr.cpp:
+
+          Corrected a run-time error on Tru64 with gcc.  Any executable that
+          called ACE_INET_Addr::get_host_name() would core dump.  This was
+          caused by the call to ACE_OS::gethostbyaddr_r().
+
 Tue Jul 24 08:20:02 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_aix_ibm.GNU:
