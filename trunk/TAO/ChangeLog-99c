@@ -1,3 +1,40 @@
+Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/any.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_struct_seq.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Param_Test/fixed_array.cpp:
+        * TAO/tests/Param_Test/fixed_struct.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/big_union.cpp:
+        * TAO/tests/Param_Test/ub_string.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/short.cpp:
+        * TAO/tests/Param_Test/ulonglong.cpp:
+        * TAO/tests/Param_Test/typecode.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_long_seq.cpp:
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+        * TAO/tests/Param_Test/var_array.cpp:
+        * TAO/tests/Param_Test/recursive_struct.cpp:
+	* TAO/performance-tests/Pluggable/server.cpp:
+	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+	* tao/Any.cpp:
+
+	  Changed ACE_NOTREACHED (return foo); to
+	  ACE_NOTREACHED (return foo;)
+
 Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
