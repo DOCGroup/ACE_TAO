@@ -1,10 +1,11 @@
 //$Id$
+
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testS.h"
 #include "ace/Get_Opt.h"
 
-char* filename = "test.ior";
+const char* filename = "test.ior";
 
 class test_impl :public POA_test
 {
