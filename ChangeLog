@@ -1,3 +1,12 @@
+Wed Jan 28 08:54:29 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Changed the output name from Makefile to GNUmakefile in accordance
+          with [BUGID 1726].  GNU Make will look for GNUmakefile before it
+          looks for Makefile.
+
 Wed Jan 28 08:20:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

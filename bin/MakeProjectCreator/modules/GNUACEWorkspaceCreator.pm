@@ -1,7 +1,7 @@
 package GNUACEWorkspaceCreator;
 
 # ************************************************************
-# Description   : A GNU Workspace (Makefile) creator for ACE
+# Description   : A GNU Workspace (GNUmakefile) creator for ACE
 # Author        : Chad Elliott
 # Create Date   : 5/13/2002
 # ************************************************************
@@ -40,7 +40,7 @@ sub generate_implicit_project_dependencies {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '');
+  return $self->get_modified_workspace_name('GNUmakefile', '');
 }
 
 
@@ -58,7 +58,7 @@ sub pre_workspace {
   print $fh "#----------------------------------------------------------------------------$crlf" .
             "#       GNU ACE Workspace$crlf" .
             "#$crlf" .
-            "# \@file Makefile$crlf" .
+            "# \@file GNUmakefile$crlf" .
             "#$crlf" .
             "# \$Id\$$crlf" .
             "#$crlf" .
