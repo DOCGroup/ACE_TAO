@@ -1,3 +1,27 @@
+Tue Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/examples/BasicSP/BasicSP.mpc
+	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc
+	* DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc
+	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc
+	* DAnCE/examples/BasicSP/EC/EC.mpc
+
+          Changed the shared component library name from 
+          <what_ever_component>_DnC_<stub> to <What_ever_component>_<stub>,
+          since it doesn't make sense to let the modelers to put _DnC
+          trailing a component name.
+
+          The same change applied to _svnt and _exec libraries. 
+         
+	* DAnCE/examples/BasicSP/descriptors/basicNodeDaemon.pl
+
+          Fixed this script since Some earlier cosmetic change make 
+          this perl script broken.
+
+          Thanks Steven Baker <Steven_D_Baker@raytheon.com> and
+          Sam Abbe <sam_abbe@raytheon.com> to pointing errors to
+          run this example.
+
 Sat Jan 15 15:16:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/README.html
