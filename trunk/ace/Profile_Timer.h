@@ -20,6 +20,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
+#include "ace/High_Res_Timer.h"
 
 #if !(defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE))
 

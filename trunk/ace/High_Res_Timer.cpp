@@ -10,6 +10,8 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
+double ACE_High_Res_Timer::global_scale_factor_ = 0;
+
 void
 ACE_High_Res_Timer::dump (void) const
 {
