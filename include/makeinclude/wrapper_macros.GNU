@@ -44,6 +44,7 @@
 #  fl_reactor       Build the FlReactor.
 #  tk_reactor       Build the TkReactor.
 #  qt_reactor       Build the QtReactor.
+#  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #  split            Build the library by first splitting up the ACE source to several
@@ -371,6 +372,17 @@ ifneq ($(qt_reactor),)
   LDFLAGS += $(PLATFORM_QT_LDFLAGS)
 endif # qt_reactor
 
+ifeq ($(gtk_reactor),0)
+  override gtk_reactor =
+endif # gtk_reactor
+
+ifneq ($(gtk_reactor),)
+  override ace_with_gtk=1
+  CPPFLAGS += -DACE_HAS_GTK $(PLATFORM_GTK_CPPFLAGS)
+  LIBS += $(PLATFORM_GTK_LIBS)
+  LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
+endif # gtk_reactor
+
 ifeq ($(rapi),0)
      override rapi =
 endif #rapi
@@ -603,7 +615,7 @@ ifdef repo
   #### Remove -fno-implicit-templates from, and add -frepo to, CCFLAGS.
   CCFLAGS := $(strip $(subst -fno-implicit-templates,,$(CCFLAGS)))
   CCFLAGS += -frepo -DACE_HAS_GNU_REPO
-  ace_lib_prelink := 1
+#  ace_lib_prelink := 1
 endif # repo
 
 

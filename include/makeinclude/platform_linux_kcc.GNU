@@ -64,13 +64,6 @@ endif
 # binary generation.
 ifneq ($(static_libs),0)
   CCFLAGS   += --one_instantiation_per_object
-  LD        += -Bstatic
-  # If we must link with static libraries, libc must be linked in dynamically
-  # or else the executable will core dump.  This is only necessary because the
-  # -Bstatic causes the hidden libraries (KCC, gcc and c) to get statically
-  # linked.  You might get a big warning at link time.  It's nothing with
-  # which to be concerned.
-  LIBS      += -lc -Bstatic
 endif
 
 PIC     = -fPIC
