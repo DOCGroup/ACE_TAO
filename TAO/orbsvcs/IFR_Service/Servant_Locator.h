@@ -20,6 +20,7 @@
 #define IFR_SERVANT_LOCATOR_H
 
 #include "tao/PortableServer/PortableServerC.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +28,7 @@
 
 class TAO_Repository_i;
 
-class IFR_ServantLocator : public PortableServer::ServantLocator
+class TAO_IFR_Service_Export IFR_ServantLocator : public PortableServer::ServantLocator
 {
   // = TITLE
   //    IFR_ServantLocator

@@ -21,6 +21,7 @@
 #define TAO_CONTAINED_I_H
 
 #include "IRObject_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Contained_i : public virtual TAO_IRObject_i
+class TAO_IFR_Service_Export TAO_Contained_i : public virtual TAO_IRObject_i
 {
   // = TITLE
   //    TAO_Contained_i

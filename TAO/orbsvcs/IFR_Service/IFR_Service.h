@@ -18,6 +18,7 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +29,7 @@ class TAO_IOR_Multicast;
 class ACE_Configuration;
 class TAO_Repository_i;
 
-class IFR_Service
+class TAO_IFR_Service_Export IFR_Service
 {
   // = TITLE
   //    IFR_Service
@@ -48,7 +49,12 @@ public:
             char *argv[]
             ACE_ENV_ARG_DECL);
   // Initialize the IFR service.
-
+  
+  int init_with_orb (int argc,
+                     ACE_TCHAR *argv [],
+		     CORBA::ORB_ptr orb);
+  // Initialize the IFR service with the command line arguments and the ORB.
+  
   int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the IFR service.
 

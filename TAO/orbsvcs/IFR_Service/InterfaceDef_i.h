@@ -23,6 +23,7 @@
 #include "Container_i.h"
 #include "Contained_i.h"
 #include "IDLType_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,9 +36,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_InterfaceDef_i : public virtual TAO_Container_i,
-                           public virtual TAO_Contained_i,
-                           public virtual TAO_IDLType_i
+class TAO_IFR_Service_Export TAO_InterfaceDef_i : public virtual TAO_Container_i,
+                                                  public virtual TAO_Contained_i,
+                                                  public virtual TAO_IDLType_i
 {
   // = TITLE
   //    TAO_InterfaceDef_i

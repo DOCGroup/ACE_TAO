@@ -21,6 +21,7 @@
 #define IFR_SERVANT_FACTORY_H
 
 #include "tao/PortableServer/PortableServerC.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,7 @@ class TAO_Contained_i;
 class TAO_Container_i;
 class TAO_Repository_i;
 
-class IFR_Servant_Factory
+class TAO_IFR_Service_Export IFR_Servant_Factory
 {
   // = TITLE
   //    Servant_Factory

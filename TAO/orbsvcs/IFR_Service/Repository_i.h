@@ -21,6 +21,7 @@
 #define REPOSITORY_I_H
 
 #include "Container_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +40,7 @@
 
 class IFR_Servant_Factory;
 
-class TAO_Repository_i : public virtual TAO_Container_i
+class TAO_IFR_Service_Export TAO_Repository_i : public virtual TAO_Container_i
 {
   // = TITLE
   //    TAO_Repository_i
