@@ -47,54 +47,6 @@ TAO_AV_QoS::convert (AVStreams::streamQoS &/*network_qos*/)
   return -1;
 }
 
-#if !defined (TAO_ORBSVCS_HAS_Trader)
-// = Methods to deal with ACE_Hash_Map_Manager.
-
-TAO_String_Hash_Key::TAO_String_Hash_Key (void)
-{
-}
-
-TAO_String_Hash_Key::TAO_String_Hash_Key (char * name)
-  : CORBA_String_var (name)
-{
-}
-
-TAO_String_Hash_Key::TAO_String_Hash_Key (const char * name)
-  : CORBA_String_var (name)
-{
-}
-
-TAO_String_Hash_Key::TAO_String_Hash_Key (const CORBA::String_var &src)
-  : CORBA_String_var (src)
-{
-}
-
-int
-TAO_String_Hash_Key::operator == (const TAO_String_Hash_Key &hash_key) const
-{
-  return ACE_OS::strcmp (this->in (), hash_key.in ()) == 0;
-}
-
-int
-operator < (const TAO_String_Hash_Key &left,
-            const TAO_String_Hash_Key &right)
-{
-  return ACE_OS::strcmp (left.in (), right.in ()) < 0;
-}
-
-
-u_long
-TAO_String_Hash_Key::hash (void) const
-{
-  u_long ret = ACE::hash_pjw (this->in ());
-  return ret;
-}
-
-TAO_String_Hash_Key::~TAO_String_Hash_Key (void)
-{
-}
-
-#endif /* !TAO_ORBSVCS_HAS_Trader */
 
 // ----------------------------------------------------------------------
 // AV_Null_MediaCtrl
@@ -133,7 +85,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec,
             for (u_int i=0;i<flow_spec.length ();i++)
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
-                TAO_String_Hash_Key flow_name_key (flowname);
+                ACE_CString flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key,
                                                      flow_connection_entry) == 0)
@@ -183,7 +135,7 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec,
             for (u_int i = 0; i < flow_spec.length (); i++)
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
-                TAO_String_Hash_Key flow_name_key (flowname);
+                ACE_CString flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key,
                                                      flow_connection_entry) == 0)
@@ -233,7 +185,7 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
             for (u_int i=0;i<flow_spec.length ();i++)
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
-                TAO_String_Hash_Key flow_name_key (flowname);
+                ACE_CString flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
                   {
@@ -364,7 +316,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
                      AVStreams::noSuchFlow,
                      AVStreams::notSupported))
 {
-  TAO_String_Hash_Key flow_name_key (flow_name);
+  ACE_CString flow_name_key (flow_name);
   FlowConnection_Map::ENTRY *flow_connection_entry = 0;
   if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
     return AVStreams::FlowConnection::_duplicate (flow_connection_entry->int_id_);
@@ -397,7 +349,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   // add the flowname and the flowconnection to the hashtable.
   this->flows_.length (this->flow_count_ + 1);
   this->flows_ [this->flow_count_++] = CORBA::string_dup (flow_name);
-  TAO_String_Hash_Key flow_name_key (flow_name);
+  ACE_CString flow_name_key (flow_name);
   if (this->flow_connection_map_.bind (flow_name_key, flow_connection) != 0)
     ACE_THROW (AVStreams::noSuchFlow ());// is this right?
 }
@@ -1082,7 +1034,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             AVStreams::FlowEndPoint::_narrow (fep_obj.in (),
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          TAO_String_Hash_Key fep_key (flowname);
+          ACE_CString fep_key (flowname);
           result = a_fep_map->bind (fep_key, fep);
           if (result == -1)
             if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s", flowname));
@@ -1100,7 +1052,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             AVStreams::FlowEndPoint::_narrow (fep_obj.in (),
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          TAO_String_Hash_Key fep_key (flowname);
+          ACE_CString fep_key (flowname);
           result = b_fep_map->bind (fep_key, fep);
           if (result == -1)
             if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s", flowname));
@@ -1127,7 +1079,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                               TAO_Forward_FlowSpec_Entry,
                               0);
               entry->parse (flow_spec[i].in ());
-              TAO_String_Hash_Key fep_key (entry->flowname ());
+              ACE_CString fep_key (entry->flowname ());
               AVStreams::FlowEndPoint_ptr fep;
               result = a_fep_map->find (fep_key, fep);
               if (result == -1)
@@ -1656,7 +1608,7 @@ void
 TAO_Base_StreamEndPoint::set_flow_handler (const char *flowname,
                                            TAO_AV_Flow_Handler *handler)
 {
-  TAO_String_Hash_Key flow_name_key (flowname);
+  ACE_CString flow_name_key (flowname);
   if (this->flow_handler_map_.bind (flow_name_key, handler) != 0)
     ACE_ERROR ((LM_ERROR,
 		"Error in storing flow handler\n"));	     
@@ -2179,7 +2131,7 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
     {
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (the_flows [i].in ());
-      TAO_String_Hash_Key flow_name_key (entry.flowname ());
+      ACE_CString flow_name_key (entry.flowname ());
       Flow_Handler_Map_Entry *handler_entry;
       if (this->flow_handler_map_.find (flow_name_key,
 					handler_entry) == 0)
@@ -2276,7 +2228,7 @@ TAO_StreamEndPoint::get_fep (const char *flow_name,
                    AVStreams::notSupported,
                    AVStreams::noSuchFlow))
 {
-  TAO_String_Hash_Key fep_name_key (flow_name);
+  ACE_CString fep_name_key (flow_name);
   FlowEndPoint_Map::ENTRY *fep_entry = 0;
   if (this->fep_map_.find (fep_name_key, fep_entry) == 0)
     return fep_entry->int_id_;
@@ -2369,7 +2321,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
       ACE_TRY_CHECK;
       // Add it to the sequence of flowNames supported.
       // put the flowname and the flowendpoint in a hashtable.
-      TAO_String_Hash_Key fep_name_key (CORBA::string_dup (flow_name.in ()));
+      ACE_CString fep_name_key (CORBA::string_dup (flow_name.in ()));
       if (this->fep_map_.bind (fep_name_key, AVStreams::FlowEndPoint::_duplicate (fep.in ())) != 0)
         {
           ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
@@ -2405,7 +2357,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name,
 {
   ACE_TRY
     {
-      TAO_String_Hash_Key fep_name_key (flow_name);
+      ACE_CString fep_name_key (flow_name);
       AVStreams::FlowEndPoint_ptr fep_entry = 0;
       // Remove the fep from the hash table.
       if (this->fep_map_.unbind (fep_name_key, fep_entry)!= 0)
@@ -2564,7 +2516,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                           TAO_Forward_FlowSpec_Entry,
                           0);
           forward_entry->parse (flow_spec[i]);
-          TAO_String_Hash_Key mcast_key (forward_entry->flowname ());
+          ACE_CString mcast_key (forward_entry->flowname ());
           AVStreams::FlowEndPoint_ptr flow_endpoint = AVStreams::FlowEndPoint::_nil ();
           // @@Naga: There is a problem in the full profile case for multiconnect. Since
           // multiconnect on sep_a is called everytime a sink is added and if called for
@@ -2800,7 +2752,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
                           TAO_Forward_FlowSpec_Entry,
                           0);
           forward_entry->parse (flow_spec[i]);
-          TAO_String_Hash_Key mcast_key (forward_entry->flowname ());
+          ACE_CString mcast_key (forward_entry->flowname ());
           AVStreams::FlowEndPoint_var flow_endpoint;
           if (this->fep_map_.find (mcast_key, flow_endpoint.out ()) == 0)
             {
@@ -3289,7 +3241,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
             {
               TAO_Forward_FlowSpec_Entry forward_entry;
               forward_entry.parse (flow_spec[i]);
-              TAO_String_Hash_Key flow_key (forward_entry.flowname ());
+              ACE_CString flow_key (forward_entry.flowname ());
               AVStreams::FDev_ptr flow_dev;
               AVStreams::FlowConnection_var flowconnection = AVStreams::FlowConnection::_nil ();
               ACE_TRY_EX (flowconnection)
@@ -3574,7 +3526,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
 
   // Add it to the sequence of flowNames supported.
   // put the flowname and the fdev in a hashtable.
-  TAO_String_Hash_Key fdev_name_key (CORBA::string_dup (flow_name.in ()));
+  ACE_CString fdev_name_key (CORBA::string_dup (flow_name.in ()));
 
 
   if (this->fdev_map_.bind (fdev_name_key, AVStreams::FDev::_duplicate (fdev.in ())) != 0)
@@ -3614,7 +3566,7 @@ TAO_MMDevice::get_fdev (const char *flow_name,
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  TAO_String_Hash_Key fdev_name_key (flow_name);
+  ACE_CString fdev_name_key (flow_name);
   FDev_Map::ENTRY *fdev_entry = 0;
   if (this->fdev_map_.find (fdev_name_key, fdev_entry) == 0)
     return AVStreams::FDev::_duplicate (fdev_entry->int_id_);
@@ -3632,7 +3584,7 @@ TAO_MMDevice::remove_fdev (const char *flow_name,
 {
   ACE_TRY
     {
-      TAO_String_Hash_Key fdev_name_key (flow_name);
+      ACE_CString fdev_name_key (flow_name);
       AVStreams::FDev_ptr fdev_entry = AVStreams::FDev::_nil ();
       // Remove the fep from the hash table.
       if (this->fdev_map_.unbind (fdev_name_key, fdev_entry)!= 0)
@@ -5115,49 +5067,49 @@ TAO_Tokenizer::operator [] (size_t index) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash<TAO_String_Hash_Key>;
-template class ACE_Equal_To<TAO_String_Hash_Key>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Equal_To<ACE_CString>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FDev_ptr>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_AV_Flow_Handler *>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FDev_ptr>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowConnection_ptr>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowEndPoint_ptr>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_FlowSpec_Entry *>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_AV_Flow_Handler *>;
 
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_FlowSpec_Entry *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Flow_Handler *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Entry<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry>;
 template class ACE_Hash_Map_Manager<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>;
@@ -5168,58 +5120,58 @@ template class ACE_Hash_Map_Iterator_Base_Ex<MMDevice_Map_Hash_Key, TAO_StreamCt
 template class ACE_Hash_Map_Reverse_Iterator<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<MMDevice_Map_Hash_Key, TAO_StreamCtrl::MMDevice_Map_Entry, ACE_Hash<MMDevice_Map_Hash_Key>, ACE_Equal_To<MMDevice_Map_Hash_Key>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Acceptor*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString,TAO_AV_Acceptor*>;
+template class ACE_Hash_Map_Manager<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString,TAO_Forward_FlowSpec_Entry*>;
+template class ACE_Hash_Map_Manager<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString,TAO_Reverse_FlowSpec_Entry*>;
+template class ACE_Hash_Map_Manager<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*>;
+template class ACE_Hash_Map_Manager<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::QoS>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString,AVStreams::QoS>;
+template class ACE_Hash_Map_Manager<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-//template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
-//template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Manager<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 
 template class ACE_Equal_To<MMDevice_Map_Hash_Key>;
@@ -5254,48 +5206,46 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash<TAO_String_Hash_Key>
-#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FDev_ptr>
-#pragma instantaite ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FDev_ptr>
+#pragma instantaite ACE_Hash_Map_Entry<ACE_CString, TAO_FlowSpec_Entry *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_FlowSpec_Entry *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowConnection_ptr>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Flow_Handler*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_AV_Flow_Handler*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowEndPoint_ptr>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry>
 #pragma instantiate ACE_Hash_Map_Manager<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>
@@ -5306,59 +5256,59 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<MMDevice_Map_Hash_Key, TAO_StreamCtrl::MMDevice_Map_Entry, ACE_Hash<MMDevice_Map_Hash_Key>, ACE_Equal_To<MMDevice_Map_Hash_Key>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Acceptor*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Acceptor*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Acceptor*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_AV_Acceptor*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_AV_Acceptor*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Acceptor*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Forward_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_Forward_FlowSpec_Entry*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_Forward_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Forward_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_Reverse_FlowSpec_Entry*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::QoS>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::QoS>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::QoS, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_FlowSpec_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_FlowSpec_Entry *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Equal_To<MMDevice_Map_Hash_Key>
 #pragma instantiate ACE_Hash<MMDevice_Map_Hash_Key>
