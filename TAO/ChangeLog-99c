@@ -1,3 +1,9 @@
+1999-04-07  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
+	  (ServiceTypeRepository): Used Service_Type_Map_Iterator instead
+	  of Service_Type_Map::iterator.  Stupid g++ could not gork it.
+
 Tue Apr  6 19:52:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/PropertyTest.dsw:

@@ -1,5 +1,3 @@
-$Id$
-
 // ========================================================================
 //
 // $Id$
@@ -41,7 +39,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
   {
     ACE_WRITE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
-    for (Service_Type_Map::iterator service_map_iterator (this->type_map_);
+    for (Service_Type_Map_Iterator service_map_iterator (this->type_map_);
          ! service_map_iterator.done ();
          service_map_iterator++)
       {
@@ -207,7 +205,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes&
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber num =
     which_types.incarnation ();
 
-  for (Service_Type_Map::iterator itr (this->type_map_);
+  for (Service_Type_Map_Iterator itr (this->type_map_);
        ! itr.done ();
        itr++)
     {
@@ -579,7 +577,7 @@ update_type_map (const char* name,
   // update entries for all supertypes to include this type as a subtype.
   // we can use the super_types_map we have constructed.
 
-  for (Service_Type_Map::iterator super_map_iterator (super_map);
+  for (Service_Type_Map_Iterator super_map_iterator (super_map);
        ! super_map_iterator.done ();
        super_map_iterator++)
     {
