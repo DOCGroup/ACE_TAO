@@ -118,7 +118,8 @@ class _EXPCLASS CORBA_Object : public IUnknown
   virtual void register_op(const CORBA_String &opname, skeleton skel_ptr) 
   { optable_->register_op(opname, skel_ptr); }
     // Register a CORBA IDL operation name
-
+  // TAO extension that retrieves the name (key) assigned to the object.
+  virtual CORBA_String _get_name(CORBA_Environment &env);
 protected:
     TAO_Operation_Table         *optable_;
   void  set_parent(IUnknown *p);

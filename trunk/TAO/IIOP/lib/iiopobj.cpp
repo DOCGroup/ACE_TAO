@@ -195,3 +195,9 @@ IIOP_Object::QueryInterface (
     (void) AddRef ();
     return NOERROR;
 }
+
+//TAO extensions
+CORBA_String IIOP_Object::_get_name(CORBA_Environment &env)
+{
+  return (CORBA_String)this->profile.object_key.buffer;
+}

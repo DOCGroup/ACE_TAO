@@ -18,6 +18,7 @@
 #include <ace/Synch.h>
 #include <ace/Hash_Map_Manager.h>
 #include <ace/SString.h>
+#include <ace/Singleton.h>
 
 #include "orb.hh"
 
@@ -99,6 +100,39 @@ private:
   Entry       *tbl_;
 };
 
+
+class OpTable_Parameters
+{
+public:
+  enum DEMUX_STRATEGY
+  {
+    TAO_LINEAR,
+    TAO_DYNAMIC_HASH,
+    TAO_ACTIVE_DEMUX,
+    TAO_USER_DEFINED
+  };
+  void lookup_strategy(OpTable_Parameters::DEMUX_STRATEGY s);
+  OpTable_Parameters::DEMUX_STRATEGY lookup_strategy() const;
+  void concrete_strategy(TAO_Operation_Table *ot);
+  TAO_Operation_Table* concrete_strategy();
+
+  OpTable_Parameters();
+  ~OpTable_Parameters();
+private:
+  TAO_Operation_Table *strategy_;
+  OpTable_Parameters::DEMUX_STRATEGY type_;
+};
+
+typedef ACE_Singleton<OpTable_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
+
+class OpTable_Factory
+{
+public:
+  TAO_Operation_Table *opname_lookup_strategy();
+  OpTable_Factory();
+  ~OpTable_Factory();
+};
+
+typedef ACE_Singleton<OpTable_Factory, ACE_RW_Mutex> TAO_OP_TABLE_FACTORY;
+
 #endif
-
-

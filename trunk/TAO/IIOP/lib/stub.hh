@@ -205,6 +205,8 @@ class _EXPCLASS STUB_Object : public IUnknown
 				STUB_Object (char *p = 0)
 				    : type_id (p) { }
 
+    // TAO extension
+    virtual CORBA_String _get_name(CORBA_Environment &env) = 0;
   protected:
 				// XXX virtual inlines are evil
 				virtual ~STUB_Object ()
