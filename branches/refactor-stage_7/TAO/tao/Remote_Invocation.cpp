@@ -164,7 +164,7 @@ namespace TAO
         // Close the transport and all the associated stuff along with
         // it.
         this->resolver_.transport ()->close_connection ();
-
+        this->resolver_.stub ()->reset_profiles ();
         return TAO_INVOKE_RESTART;
       }
 

@@ -164,7 +164,6 @@ ORB_CORE_FILES = \
   Object_Proxy_Broker \
   Remote_Object_Proxy_Broker \
   Object_Proxy_Impl \
-  Remote_Object_Proxy_Impl \
   DomainC \
   TimeBaseC \
   Principal \
@@ -192,7 +191,6 @@ ORB_CORE_FILES = \
   ClientRequestInfo \
   ClientRequestInfo_i \
   RequestInfo_Util \
-  ClientInterceptorAdapter \
   ClientRequestInterceptor_Adapter \
   PI_ForwardC \
   PortableInterceptorC \

@@ -29,7 +29,6 @@ class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
 class TAO_Endpoint;
-class TAO_GIOP_Invocation;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_ORB_Core;
@@ -85,21 +84,6 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc
-                       ACE_ENV_ARG_DECL);
-
-  /**
-   * Call is very similar to the previous one but with a timeout.
-   */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout
-                       ACE_ENV_ARG_DECL);
-
-  /**
-   * Call is very similar to the previous one but with a timeout.
-   */
   virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface *desc,
                                   ACE_Time_Value *timeout
@@ -124,12 +108,6 @@ protected:
   /// Set and validate endpoint. We need to do this to initialize our
   /// remote *_Addr's which have not been done during IOR decode.
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
-
-  /// Do an actual connect using the underlying transport to make a
-  /// connection
-  virtual int make_connection (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc,
-                               ACE_Time_Value *timeout) = 0;
 
   virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
                                           TAO_Transport_Descriptor_Interface &desc,

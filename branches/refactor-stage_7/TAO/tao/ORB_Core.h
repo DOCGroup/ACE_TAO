@@ -273,11 +273,8 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static TAO::Collocation_Strategy collocation_strategy_new (CORBA::Object_ptr object
-                                                             ACE_ENV_ARG_DECL);
-
-  static int collocation_strategy (CORBA::Object_ptr object
-                                   ACE_ENV_ARG_DECL);
+  static TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+                                                         ACE_ENV_ARG_DECL);
   //@}
 
   /**

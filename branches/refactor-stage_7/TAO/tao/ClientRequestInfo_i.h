@@ -31,7 +31,6 @@
 #include "tao/Invocation_Utils.h"
 
 class TAO_Service_Context;
-class TAO_GIOP_Invocation;
 
 namespace TAO
 {
@@ -50,10 +49,6 @@ public:
 
   /// Constructor from concrete interface.
   TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation);
-
-  //// @@ NEED TO GO.... For backward compatibility
-  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *,
-                           CORBA::Object_ptr ) {};
 
   /// Constructor from abstract interface.
   TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,

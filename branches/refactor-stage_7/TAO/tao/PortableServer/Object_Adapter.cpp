@@ -3,11 +3,11 @@
 // -- PortableServer Include --
 #include "Object_Adapter.h"
 #include "POA.h"
-#include "Strategized_Object_Proxy_Broker.h"
 #include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
 #include "ServerInterceptorAdapter.h"
 #include "PortableServer_ORBInitializer.h"
+#include "Collocated_Object_Proxy_Broker.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -834,7 +834,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                       CORBA::Object::_nil ());
 
       // Here we set the strategized Proxy Broker.
-      x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+      x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
       // Success.
       return x;
@@ -876,7 +876,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
       obj->set_collocated_servant (sb);
 
       // Here we set the strategized Proxy Broker.
-      obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+      obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
      // Success.
      return 0;
