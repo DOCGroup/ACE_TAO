@@ -28,6 +28,11 @@
 #define ACE_HAS_SYSINFO
 #define ACE_HAS_UALARM
 
+// Platform has support for multi-byte character support compliant
+// with the XPG4 Worldwide Portability Interface wide-character
+// classification.
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
+
 // We need to setup a very high address or Naming_Test won't run.
 #define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024)) 
 
