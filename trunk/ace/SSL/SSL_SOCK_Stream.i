@@ -46,6 +46,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
     ACE_NOTSUP_RETURN (-1);
 
   int bytes_sent = 0;
+  int ssl_write = 0;
 
   // The SSL_write() call is wrapped in a do/while(SSL_pending())
   // loop to force a full SSL record (SSL is a record-oriented
@@ -55,6 +56,8 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   // before the current record is fully handled.
   do
     {
+      ssl_write = 0;
+
       bytes_sent = ::SSL_write (this->ssl_,
                                 ACE_static_cast (const char*, buf),
                                 n);
@@ -66,17 +69,15 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
+          ssl_write = 1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
-          // @@ This appears to be the right/expected thing to do.
-          //    However, it'd be nice if someone could verify this.
-          //
           // The peer has notified us that it is shutting down via
           // the SSL "close_notify" message so we need to
           // shutdown, too.
-
           (void) ::SSL_shutdown (this->ssl_);
+
           return bytes_sent;
 
         case SSL_ERROR_SYSCALL:
@@ -91,7 +92,18 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
           // store the last error in errno so explicitly do so.
           ACE_OS::set_errno_to_last_error ();
 
+          break;
+
         default:
+          // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
+          // from being associated with fatal SSL errors.
+          errno = 0;
+
+          break;
+        }
+
+      if (!ssl_write && bytes_sent <= 0)
+        {
           ACE_SSL_Context::report_error ();
 
           return -1;
@@ -145,6 +157,8 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   // handled.
   do
     {
+      ssl_read = 0;
+
       if (flags)
         {
           if (ACE_BIT_ENABLED (flags, MSG_PEEK))
@@ -191,9 +205,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           if (timeout != 0)
             ACE::restore_non_blocking_mode (handle, val);
 
-          // @@ This appears to be the right/expected thing to do.
-          //    However, it'd be nice if someone could verify this.
-          //
           // The peer has notified us that it is shutting down via
           // the SSL "close_notify" message so we need to
           // shutdown, too.
@@ -213,7 +224,18 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           // store the last error in errno so explicitly do so.
           ACE_OS::set_errno_to_last_error ();
 
+          break;
+
         default:
+          // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
+          // from being associated with a fatal SSL error.
+          errno = 0;
+
+          break;
+        }
+
+      if (!ssl_read && bytes_read <= 0)
+        {
           ACE_SSL_Context::report_error ();
 
           return -1;

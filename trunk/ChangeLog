@@ -1,3 +1,10 @@
+Sun Sep 30 17:25:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+
+	  Reset errno to prevent previous values (e.g. EWOULDBLOCK) from
+	  being associated with a fatal SSL error (e.g. an alert).
+
 Sun Sep 30 16:52:22 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_shutdown):
