@@ -216,6 +216,9 @@ fe/lex.yy.cpp:	fe/idl.ll
 
 .PHONY: lex.yy.cpp.target
 
+# For DOC group use
+YACC = /home/cs/faculty/schmidt/bin/SunOS5/yacc
+
 lex.yy.cpp.target:
 		$(LEX) -t fe/idl.ll | \
 		sed -e "s/yy/tao_yy/g" \
@@ -244,7 +247,8 @@ y.tab: fe/idl.yy
 		    -e "s%\(#pragma ident\)%// \1%" < y.tab.c > /tmp/$(USER).Y
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$(USER).YH
-		cp /tmp/$(USER).Y fe/y.tab.cpp
+		echo '// $$I''d$$' > fe/y.tab.cpp
+		cat /tmp/$(USER).Y >> fe/y.tab.cpp
 		echo '// $$I''d$$' > fe/y.tab.h
 		cat /tmp/$(USER).YH >> fe/y.tab.h
 		$(RM) -f /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
