@@ -96,8 +96,7 @@ int
 ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
 {
   // Get to the platform specific implementation.
-  ACE_POSIX_Proactor *posix_proactor = ACE_dynamic_cast (ACE_POSIX_Proactor *,
-                                                         proactor_impl);
+  ACE_POSIX_Proactor *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
 
   if (posix_proactor == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
@@ -1513,8 +1512,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      sockaddr * laddr = ACE_reinterpret_cast (sockaddr *,
-                                               local_sap.get_addr ());
+      sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       size_t size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
@@ -1543,8 +1541,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
   for (;;)
     {
       int rc = ACE_OS::connect (handle,
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
       if (rc < 0)  // failure
         {
@@ -2034,7 +2031,7 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       ACE_reinterpret_cast (void *, &this->header_act_),
+                       reinterpret_cast<void *> (&this->header_act_),
                        0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),

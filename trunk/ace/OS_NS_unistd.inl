@@ -520,7 +520,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #  elif defined (ACE_WIN32)
-  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+  return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
   char *result = 0;

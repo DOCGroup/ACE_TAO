@@ -33,7 +33,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
   int i;
 
   for (i = 0; i < n; ++i)
-    if (ACE_static_cast (int, iov[i].iov_len) < 0)
+    if (static_cast<int> (iov[i].iov_len) < 0)
       return -1;
     else
       length += iov[i].iov_len;
@@ -117,7 +117,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
           // This avoids a subtle problem where "holes" in the data
           // stream would occur if partial sends of a given buffer in
           // the iovec array occured.
-          if (ACE_static_cast (size_t, result) < iov[i].iov_len)
+          if (static_cast<size_t> (result) < iov[i].iov_len)
             break;
         }
     }

@@ -1,3 +1,66 @@
+Thu Jan 13 23:32:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Capabilities.cpp:
+	* ace/Configuration.cpp:
+	* ace/Connector.cpp:
+	* ace/Containers_T.cpp:
+	* ace/Dev_Poll_Reactor.cpp:
+	* ace/Dynamic_Service.cpp:
+	* ace/FILE.cpp:
+	* ace/LSOCK_Acceptor.cpp:
+	* ace/LSOCK_Stream.cpp:
+	* ace/Log_Msg.cpp:
+	* ace/Message_Queue.cpp:
+	* ace/Message_Queue_T.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/OS_NS_fcntl.cpp:
+	* ace/OS_NS_netdb.cpp:
+	* ace/OS_NS_stdio.cpp:
+	* ace/OS_NS_stropts.cpp:
+	* ace/OS_NS_sys_uio.cpp:
+	* ace/OS_NS_sys_utsname.cpp:
+	* ace/OS_NS_time.cpp:
+	* ace/OS_NS_unistd.inl:
+	* ace/OS_NS_wchar.cpp:
+	* ace/OS_Thread_Adapter.cpp:
+	* ace/Obstack_T.cpp:
+	* ace/POSIX_Asynch_IO.cpp:
+	* ace/POSIX_CB_Proactor.cpp:
+	* ace/POSIX_Proactor.cpp:
+	* ace/Parse_Node.cpp:
+	* ace/Remote_Name_Space.cpp:
+	* ace/SOCK_Acceptor.cpp:
+	* ace/SOCK_Connector.cpp:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_SEQPACK_Acceptor.cpp:
+	* ace/SOCK_SEQPACK_Association.cpp:
+	* ace/SOCK_SEQPACK_Connector.cpp:
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Service_Config.cpp:
+	* ace/Service_Repository.cpp:
+	* ace/Sock_Connect.cpp:
+	* ace/Stream_Modules.cpp:
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_y.cpp:
+	* ace/TLI.cpp:
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Connector.cpp:
+	* ace/TSS_T.cpp:
+	* ace/Timer_Heap_T.cpp:
+	* ace/Timer_Wheel_T.cpp:
+	* ace/Token_Collection.cpp:
+	* ace/UPIPE_Stream.cpp:
+	* ace/UUID.cpp:
+	* ace/Unbounded_Queue.cpp:
+	* ace/Unbounded_Set.cpp:
+	* ace/WFMO_Reactor.cpp:
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/WIN32_Proactor.cpp:
+
+	  Converted all ACE_*_cast macro calls to their standard C++
+	  counterparts.  The ACE_*_cast macros were deprecated in ACE
+	  5.4.2.
+
 Thu Jan 13 11:29:35 2005  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* ace/TMCast/Group.cpp:

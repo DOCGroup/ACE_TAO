@@ -60,7 +60,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->dp_reactor_ = ACE_dynamic_cast (ACE_Dev_Poll_Reactor *, r);
+      this->dp_reactor_ = dynamic_cast<ACE_Dev_Poll_Reactor *> (r);
 
       if (this->dp_reactor_ == 0)
         {

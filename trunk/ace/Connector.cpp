@@ -486,7 +486,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
   ACE_Event_Handler_var safe_handler (handler);
 
   NBCH *nbch =
-    ACE_dynamic_cast (NBCH *, handler);
+    dynamic_cast<NBCH *> (handler);
 
   if (nbch == 0)
     return -1;
@@ -667,7 +667,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       ACE_Event_Handler_var safe_handler (handler);
 
       NBCH *nbch =
-        ACE_dynamic_cast (NBCH *, handler);
+        dynamic_cast<NBCH *> (handler);
 
       ACE_ASSERT (nbch != 0);
 
