@@ -1,5 +1,6 @@
 //$Id$
 project : taolib, core, messaging, portableserver {
+  avoids += minimum_corba
   sharedname   = TAO_DynamicInterface
   dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
   include_dir  = tao/DynamicInterface

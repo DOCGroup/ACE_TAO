@@ -1,3 +1,16 @@
+Thu Dec 11 14:01:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	* examples/POA/DSI/POA_DSI.mpc:
+	* orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+	* tao/DynamicInterface/DynamicInterface.mpc:
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
+
+	  Added avoids += minimum_corba. 
+
 Thu Dec 11 19:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/RTScheduling/Makefile.bor:
