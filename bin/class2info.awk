@@ -2,7 +2,7 @@
 #
 # = DESCRIPTION
 #     Awk script for converting C++ class header file to classinfo file.
-#     Requires nawk or gawk.
+#     Requires gawk or gawk.
 #     comments like /*  ... */ with ... goes over multiple lines are not ok
 #		and will be not printed as comments!
 #     class xxx

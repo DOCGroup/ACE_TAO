@@ -1,3 +1,9 @@
+Fri Oct 10 14:49:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* bin/man2html: Added a new set rul -e 's/^$/<P>/g', which
+ 	  correctly preserves paragraph boundaries.  Regenerated all of
+ 	  the ACE html documentation so that it is much better formatted.
+
 Fri Oct 10 11:08:02 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/run_tests.sh: 

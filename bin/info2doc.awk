@@ -325,6 +325,7 @@ function csa_get_filedate_and_name()
 #
 function csa_get_()
 {
+  ;
 }
 
 #
