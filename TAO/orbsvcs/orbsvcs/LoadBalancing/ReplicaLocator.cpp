@@ -18,8 +18,8 @@ TAO_LB_ReplicaLocator::preinvoke (
       const PortableServer::ObjectId & /* oid */,
       PortableServer::POA_ptr /* adapter */,
       const char * /* operation */,
-      PortableServer::ServantLocator::Cookie & /* the_cookie */,
-      CORBA_Environment &ACE_TRY_ENV)
+      PortableServer::ServantLocator::Cookie & /* the_cookie */
+      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -43,8 +43,8 @@ TAO_LB_ReplicaLocator::postinvoke (
     PortableServer::POA_ptr /* adapter */,
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
-    PortableServer::Servant /* the_servant */,
-    CORBA_Environment & /* ACE_TRY_ENV */)
+    PortableServer::Servant /* the_servant */
+    TAO_ENV_ARG_DECL_NOT_USED)
 {
   // No-op
 }
