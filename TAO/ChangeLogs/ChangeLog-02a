@@ -1,3 +1,10 @@
+Mon Jan 21 10:30:38 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+
+          Added the ETCL directory to libpath.
+
 Mon Jan 21 08:02:28 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
