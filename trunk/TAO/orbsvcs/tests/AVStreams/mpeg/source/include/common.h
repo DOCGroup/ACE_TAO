@@ -353,6 +353,9 @@ typedef struct
 // to terminate the event loop
 #define CmdExit  34
 
+// cmd sent by Java GUI to Controller process
+#define CmdJINIT 35
+
 /* CTR-VS */
 
 /* CmdINITvideo: followd by parameters of a fixed structure of 3 integers
