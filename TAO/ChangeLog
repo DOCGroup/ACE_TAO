@@ -1,3 +1,10 @@
+Tue Jul 23 17:15:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/PortableServer/Collocated_Object.cpp
+	(_non_existent,_get_component): Removed redundant useages of
+	  ACE_TRY blocks.  They were causing some warnings from Tru64
+	  compiler.
+
 Tue Jul 23 16:20:39 2002  Steve Huston  <shuston@riverace.com>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (is_full_i):
@@ -38,7 +45,7 @@ Tue Jul 23 12:28:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Correct emulated exception macro usage error,
 	  i.e. "ACE_CHECK" instead of "ACE_TRY_CHECK".
-	
+
 	* orbsvcs/orbsvsc/LoadBalancing/LB_Random.h:
 
 	  Moved `CosLoadBalancingC.h' include ahead of
@@ -58,7 +65,7 @@ Tue Jul 23 12:28:08 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvsc/Makefile.CosLoadBalancing:
 
 	  Makefile for the new load balancer.
-	
+
 	* orbsvcs/orbsvsc/Makefile.CosNaming:
 	* orbsvcs/orbsvsc/Makefile.PortableGroup:
 
@@ -142,7 +149,7 @@ Mon Jul 22 17:26:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Stack_Recursion/Test.idl:
 	* tests/Stack_Recursion/client.cpp:
 	* tests/Stack_Recursion/run_test.pl: Made some cosmetic fixes to
-	  get the test to exhibit the crash properly. 
+	  get the test to exhibit the crash properly.
 
 Mon Jul 22 17:20:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -171,10 +178,10 @@ Mon Jul 22 17:20:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul 22 20:16:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/Makefile.PortableGroup: Add 
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Add
 	  PG_Default_Property_Validator.cpp to list of files being built.
 	* orbsvcs/tests/Miop/McastHello/Makefile: Add -lTAO_PortableGroup to
-	  link line.  Fix for TRU64 Unix build. 
+	  link line.  Fix for TRU64 Unix build.
 
 Mon Jul 22 14:22:49 2002  Ossama Othman  <ossama@uci.edu>
 
