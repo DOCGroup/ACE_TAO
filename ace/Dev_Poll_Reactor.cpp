@@ -43,6 +43,7 @@ ACE_RCSID (ace,
 #include "ace/Handle_Set.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Heap.h"
+#include "ace/ACE.h"
 
 
 ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)

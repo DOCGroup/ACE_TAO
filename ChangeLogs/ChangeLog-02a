@@ -1,3 +1,9 @@
+Thu May 02 13:34:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Include "ACE.h" to pull in methods in the ACE class/namespace.
+
 Thu May  2 13:28:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.h:
