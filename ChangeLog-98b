@@ -1,3 +1,16 @@
+Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Message_Block.{cpp,h,i}: Added worst case execution time and
+          deadline absolute time ACE_Time_Value members to ACE_Message_Block.
+          These default to ACE_Time_Value::zero in the constructors and
+          initialization methods.
+           
+        * ace/Message_Queue.{cpp,h,i}: Added ACE_Dynamic_Message_Queue,
+          ACE_Dynamic_Message_Strategy, ACE_Deadline_Message_Strategy,
+          ACE_Laxity_Message_Strategy, and ACE_Message_Queue_Factory
+          classes to facilitate adaptive use of statically or dynamically
+          prioritized message queues.
+
 Wed Jun 24 10:23:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: 1) inserted /pkg/gnu/bin at head of
