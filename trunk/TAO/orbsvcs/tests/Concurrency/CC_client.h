@@ -66,8 +66,8 @@ private:
   // Runs the basic tests (on a single lock set). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise
 
-  int run_extended_tests(char lock_set_name);
-  // Runs the basic tests (on more lock sets). Returns CC_SUCCESS
+  int run_extended_tests(char *params);
+  // Runs the extended tests (on more lock sets). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise
 
   FILE *cc_factory_ior_file_;
@@ -101,6 +101,13 @@ private:
 
   int run_basic_tests_;
   // flag to tell which test should be run
+
+  int run_extended_tests_;
+  // flag to tell which test should be run
+
+  char *extended_tests_params_;
+  // Parameters to the extended tests. The parameters are of the following
+  // format: <test>:<parm1>:<parm2>...
 
   void print_usage(void);
   // Prints out the options to the program

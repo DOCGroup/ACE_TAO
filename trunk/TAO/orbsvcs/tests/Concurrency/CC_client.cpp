@@ -11,6 +11,7 @@ CC_Client::CC_Client (void)
     f_handle_ (ACE_INVALID_HANDLE),
     use_naming_service_ (1),
     run_basic_tests_ (0),
+    run_extended_tests_ (0),
     naming_service_ (0)
 {
 }
@@ -58,7 +59,7 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dsf:k:xbh");
+  ACE_Get_Opt get_opts (argc_, argv_, "dsf:k:xbhe:");
   int c;
   int result;
 
@@ -66,7 +67,11 @@ CC_Client::parse_args (void)
     switch (c)
       {
       case 'b':  // debug flag
-        run_basic_tests_ = 1;
+        this->run_basic_tests_ = 1;
+        break;
+      case 'e':  // debug flag
+        run_extended_tests_ = 1;
+        this->extended_tests_params_ = ACE_OS::strdup(get_opts.optarg);
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
@@ -106,12 +111,18 @@ CC_Client::run (void)
 {
   int tests_run = 0;
   // Tells whether any tests have been run
-  int success = 0;
+  int success = CC_SUCCESS;
   // Did test succeed?
 
-  if(run_basic_tests_) 
+  if(this->run_basic_tests_ && success==CC_SUCCESS) 
     {
       success = run_basic_tests();
+      tests_run = 1;
+    }
+
+  if(this->run_extended_tests_ && success==CC_SUCCESS) 
+    {
+      success = run_extended_tests(this->extended_tests_params_);
       tests_run = 1;
     }
 
@@ -129,7 +140,7 @@ CC_Client::run (void)
       ACE_ERROR_RETURN((LM_ERROR, "No tests given\n"), -1);
     }
 
-  return 0;
+  return success;
 }
 
 
@@ -137,19 +148,67 @@ CC_Client::run (void)
 int
 CC_Client::run_basic_tests(void)
 {
+  int success = CC_FAIL;
+
   Test_Single_Lock_With_Mode t1(naming_service_,
                                 CosConcurrencyControl::read);
-
-  return t1.run();
+  Test_Single_Lock_With_Mode t2(naming_service_,
+                                CosConcurrencyControl::write);
+  Test_Single_Lock_With_Mode t3(naming_service_,
+                                CosConcurrencyControl::upgrade);
+  Test_Single_Lock_With_Mode t4(naming_service_,
+                                CosConcurrencyControl::intention_read);
+  Test_Single_Lock_With_Mode t5(naming_service_,
+                                CosConcurrencyControl::intention_write);
+  if( t1.run() == CC_SUCCESS &&
+      t2.run() == CC_SUCCESS &&
+      t3.run() == CC_SUCCESS &&
+      t4.run() == CC_SUCCESS &&
+      t5.run() == CC_SUCCESS )
+    return CC_SUCCESS;
+  else
+    return CC_FAIL;
 }
 
 int 
-CC_Client::run_extended_tests(char lock_set_name)
+CC_Client::run_extended_tests(char *params)
 {
-  Test_Against_Other_LockSet t1(naming_service_,
-                                "LockSet_1");
+  char *test;
+  int success = CC_FAIL;
 
-  return t1.run();
+  ACE_DEBUG((LM_DEBUG, "Params: %s\n", params));
+
+  char *cmd  = strtok(params, ";");
+  char *arg1 = strtok(NULL, ";");
+  char *arg2 = strtok(NULL, ";");
+
+  // A possible scenario using test 1,2, and 3
+  // Create and lock the lock set with the name 'Name'
+  // ./CC_client -e '1;Name'
+  // Try to lock the same lock set. The process will hang
+  // ./CC_client -e '2:Name'
+  // Unlocks the lock set. Now test 2 will continue.
+  // ./CC_client -e '3:Name'
+
+  if(strcmp(cmd, "1")==0)
+    {
+      Test_Setup_LockSet t1(naming_service_, arg1);
+      success = t1.run();
+    }
+
+  if(strcmp(cmd, "2")==0)
+    {
+      Test_Use_Already_Created_LockSet t2(naming_service_, arg1);
+      success = t2.run();
+    }
+
+  if(strcmp(cmd, "3")==0)
+    {
+      Test_Unlock_Already_Created_LockSet t3(naming_service_, arg1);
+      success = t3.run();
+    }
+
+  return success;
 }
 
 void

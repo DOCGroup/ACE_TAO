@@ -126,7 +126,7 @@ CC_naming_service::init_naming_service(void)
       
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve lock set factory in Naming service <%s>\n"),
+                           " could not resolve lock set factory in Naming service\n"),
                           -1);
     }
   TAO_CATCHANY
