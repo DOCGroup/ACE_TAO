@@ -222,6 +222,9 @@ DRV_pre_proc(char *myfile)
   long	readfromstdin = I_FALSE;
   char	catbuf[512];
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (readfromstdin);
+
   const char* tmpdir = getenv("TMP");
   if (tmpdir != 0)
     {
