@@ -132,8 +132,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -335,6 +333,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -360,6 +360,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -424,7 +425,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/Notify_Collection.h \
+ Notify/Notify_QoSAdmin_i.inl Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -437,8 +438,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -629,6 +628,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -691,6 +692,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -735,13 +737,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_Collection.h \
- Notify/Notify_Event.h Notify/Notify_Event.i \
- Notify/Notify_EventChannelFactory_i.h Notify/Notify_SupplierAdmin_i.h \
- Notify/Notify_FilterAdmin_i.h Notify/Notify_ConsumerAdmin_i.h \
- Notify/Notify_Listeners.h Notify/Notify_Event_Manager.h \
- Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
- Notify/Notify_Event_Map.i Notify/Notify_Event_Processor.h \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_Collection.h Notify/Notify_Event.h \
+ Notify/Notify_Event.i Notify/Notify_EventChannelFactory_i.h \
+ Notify/Notify_SupplierAdmin_i.h Notify/Notify_FilterAdmin_i.h \
+ Notify/Notify_ConsumerAdmin_i.h Notify/Notify_Listeners.h \
+ Notify/Notify_Event_Manager.h Notify/Notify_Event_Manager.i \
+ Notify/Notify_Event_Map.h Notify/Notify_Event_Map.i \
+ Notify/Notify_Event_Processor.h \
  $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -769,7 +772,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  Notify/Notify_Channel_Objects_Factory.h Notify/Notify_POA_Factory.h \
  Notify/Notify_Factory.h Notify/Notify_Event_Manager_Objects_Factory.h \
  Notify/Notify_Collection_Factory.h \
@@ -779,8 +783,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -971,6 +973,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -1005,6 +1009,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -1049,8 +1054,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_Event.h Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
+ Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1112,7 +1118,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxySupplier_T.cpp Notify/Notify_Factory.h \
  Notify/Notify_Channel_Objects_Factory.h \
@@ -1132,8 +1139,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1324,6 +1329,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -1349,6 +1356,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -1393,8 +1401,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_Event.h Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
+ Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1463,7 +1472,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxyConsumer_T.cpp Notify/Notify_Factory.h \
  Notify/Notify_Channel_Objects_Factory.h \
@@ -1480,8 +1490,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1681,6 +1689,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -1706,6 +1716,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -1740,10 +1751,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1810,7 +1821,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxySupplier_T.cpp Notify/Notify_ConsumerAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
@@ -1826,8 +1838,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2018,6 +2028,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -2043,6 +2055,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -2086,10 +2099,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2156,7 +2169,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxySupplier_T.cpp Notify/Notify_ConsumerAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
@@ -2172,8 +2186,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2373,6 +2385,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -2398,6 +2412,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -2432,10 +2447,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2502,13 +2517,74 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxySupplier_T.cpp Notify/Notify_ConsumerAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
  Notify/Notify_Event_Manager_Objects_Factory.h \
  Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
- Notify/Notify_Command.i
+ Notify/Notify_Command.i Notify/Notify_StructuredEvents.h \
+ Notify/Notify_Event.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
+ $(TAO_ROOT)/tao/PortableServer/poa_macros.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
+ $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
+ $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
+ $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
+ $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i
 
 .obj/Notify_ProxyPushConsumer_i.o .obj/Notify_ProxyPushConsumer_i.so .shobj/Notify_ProxyPushConsumer_i.o .shobj/Notify_ProxyPushConsumer_i.so: Notify/Notify_ProxyPushConsumer_i.cpp \
  Notify/Notify_ProxyPushConsumer_i.h \
@@ -2517,8 +2593,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2718,6 +2792,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -2743,6 +2819,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -2777,10 +2854,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2847,7 +2924,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxyConsumer_T.cpp Notify/Notify_SupplierAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
@@ -2863,8 +2941,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3055,6 +3131,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -3080,6 +3158,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -3123,10 +3202,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3193,7 +3272,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxyConsumer_T.cpp Notify/Notify_SupplierAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
@@ -3209,8 +3289,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3410,6 +3488,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -3435,6 +3515,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -3469,10 +3550,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h Notify/Notify_FilterAdmin_i.h \
- Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
- Notify/Notify_ID_Pool_T.cpp Notify/Notify_Event.h \
- Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/Notify_Event.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3539,21 +3620,21 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(TAO_ROOT)/tao/debug.h \
  Notify/Notify_ProxyConsumer_T.cpp Notify/Notify_SupplierAdmin_i.h \
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h \
  Notify/Notify_Event_Manager_Objects_Factory.h \
  Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
- Notify/Notify_Command.i
+ Notify/Notify_Command.i Notify/Notify_StructuredEvents.h \
+ Notify/Notify_Event.h
 
 .obj/Notify_FilterAdmin_i.o .obj/Notify_FilterAdmin_i.so .shobj/Notify_FilterAdmin_i.o .shobj/Notify_FilterAdmin_i.so: Notify/Notify_FilterAdmin_i.cpp \
  Notify/Notify_FilterAdmin_i.h \
  $(ACE_ROOT)/ace/pre.h \
  Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3755,6 +3836,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -3780,6 +3863,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -3850,8 +3934,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Constraint_Interpreter.h \
  ETCL/ETCL_Interpreter.h \
  ETCL/etcl_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4046,12 +4128,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotifyCommC.h \
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -4153,8 +4238,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4345,6 +4428,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -4368,6 +4453,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.i \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -4449,8 +4535,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4641,13 +4725,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/notify_export.h
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
+ Notify/Notify_Extensions.h
 
 .obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.so .shobj/Notify_Constraint_Interpreter.o .shobj/Notify_Constraint_Interpreter.so: \
  Notify/Notify_Constraint_Interpreter.cpp \
@@ -4655,8 +4742,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  ETCL/ETCL_Interpreter.h \
  ETCL/etcl_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4851,12 +4936,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotifyCommC.h \
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -4896,8 +4984,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5118,6 +5204,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -5151,8 +5239,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5343,6 +5429,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
@@ -5353,19 +5441,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
  Notify/Notify_Event.i \
  $(TAO_ROOT)/tao/debug.h
 
-.obj/Notify_Collection.o .obj/Notify_Collection.so .shobj/Notify_Collection.o .shobj/Notify_Collection.so: Notify/Notify_Collection.cpp \
- Notify/Notify_Collection.h \
+.obj/Notify_StructuredEvents.o .obj/Notify_StructuredEvents.so .shobj/Notify_StructuredEvents.o .shobj/Notify_StructuredEvents.so: Notify/Notify_StructuredEvents.cpp \
+ Notify/Notify_StructuredEvents.h \
  $(ACE_ROOT)/ace/pre.h \
- CosNotifyCommC.h \
+ Notify/Notify_Event.h \
+ CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5556,11 +5644,229 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ Notify/notify_export.h \
+ CosNotificationC.i \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ CosNotifyFilterC.h \
+ CosNotifyCommC.h \
+ CosEventCommC.h \
+ CosEvent/event_export.h \
+ CosEventCommC.i \
+ CosNotifyCommC.i \
+ CosNotifyFilterC.i \
+ Notify/Notify_Event.i \
+ Notify/notify_export.h Notify/Notify_QoSAdmin_i.h \
+ Notify/Notify_QoSAdmin_i.inl \
+ $(TAO_ROOT)/tao/debug.h
+
+.obj/Notify_Collection.o .obj/Notify_Collection.so .shobj/Notify_Collection.o .shobj/Notify_Collection.so: Notify/Notify_Collection.cpp \
+ Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosNotifyCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  ESF/ESF_Worker.h \
@@ -5578,8 +5884,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5770,6 +6074,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -5787,6 +6093,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -5836,8 +6143,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6028,6 +6333,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -6042,6 +6349,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Collection.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  Notify/Notify_Event.h \
@@ -6117,14 +6425,63 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i Notify/Notify_Factory.h \
- Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
- Notify/Notify_Command.i Notify/Notify_Event_Manager_Objects_Factory.h \
- Notify/Notify_Update_Dispatch_Command.h
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
+ Notify/Notify_Factory.h Notify/Notify_Worker_Task.h \
+ Notify/Notify_Command.h Notify/Notify_Command.i \
+ Notify/Notify_Event_Manager_Objects_Factory.h \
+ Notify/Notify_Update_Dispatch_Command.h Notify/Notify_QoSAdmin_i.h \
+ Notify/Notify_QoSAdmin_i.inl Notify/Notify_EventChannel_i.h \
+ CosNotifyChannelAdminS.h \
+ CosNotificationS.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosNotificationS_T.h \
+ CosNotificationS_T.i \
+ CosNotificationS_T.cpp \
+ CosNotificationS.i \
+ CosNotifyFilterS.h \
+ CosNotifyCommS.h \
+ CosEventCommS.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosNotifyCommS_T.h \
+ CosNotifyCommS_T.i \
+ CosNotifyCommS_T.cpp \
+ CosNotifyCommS.i \
+ CosNotifyFilterS_T.h \
+ CosNotifyFilterS_T.i \
+ CosNotifyFilterS_T.cpp \
+ CosNotifyFilterS.i \
+ CosEventChannelAdminS.h \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
+ CosEventChannelAdminS_T.h \
+ CosEventChannelAdminS_T.i \
+ CosEventChannelAdminS_T.cpp \
+ CosEventChannelAdminS.i \
+ CosNotifyChannelAdminC.h \
+ CosNotifyChannelAdminC.i \
+ CosNotifyChannelAdminS_T.h \
+ CosNotifyChannelAdminS_T.i \
+ CosNotifyChannelAdminS_T.cpp \
+ CosNotifyChannelAdminS.i \
+ Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
+ Notify/Notify_ID_Pool_T.cpp
 
 .obj/Notify_Event_Processor.o .obj/Notify_Event_Processor.so .shobj/Notify_Event_Processor.o .shobj/Notify_Event_Processor.so: Notify/Notify_Event_Processor.cpp \
  Notify/Notify_Event_Processor.h \
@@ -6132,8 +6489,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6361,6 +6716,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Worker_Task.h \
  Notify/Notify_Command.h Notify/Notify_Command.i Notify/Notify_Event.h \
@@ -6373,6 +6730,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -6415,11 +6773,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_AdminProperties.h \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_Worker_Task.o .obj/Notify_Worker_Task.so .shobj/Notify_Worker_Task.o .shobj/Notify_Worker_Task.so: Notify/Notify_Worker_Task.cpp \
  Notify/Notify_Worker_Task.h \
@@ -6429,8 +6788,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6652,6 +7009,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/Notify_Command.h Notify/notify_export.h \
  Notify/Notify_Command.i Notify/Notify_Event.h \
@@ -6664,10 +7023,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
- Notify/Notify_Event.i
+ Notify/Notify_Event.i Notify/Notify_AdminProperties.h \
+ Notify/Notify_Listeners.h Notify/Notify_Signal_Property_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
+ Notify/Notify_QoSAdmin_i.h Notify/Notify_QoSAdmin_i.inl
 
 .obj/Notify_Source_Filter_Eval_Command.o .obj/Notify_Source_Filter_Eval_Command.so .shobj/Notify_Source_Filter_Eval_Command.o .shobj/Notify_Source_Filter_Eval_Command.so: \
  Notify/Notify_Source_Filter_Eval_Command.cpp \
@@ -6677,8 +7043,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6867,6 +7231,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
  CosNotificationC.h \
@@ -6878,6 +7244,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -6932,8 +7299,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7124,6 +7489,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -7141,6 +7508,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -7212,11 +7580,11 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  Notify/Notify_Listener_Filter_Eval_Command.h
 
 .obj/Notify_Listener_Filter_Eval_Command.o .obj/Notify_Listener_Filter_Eval_Command.so .shobj/Notify_Listener_Filter_Eval_Command.o .shobj/Notify_Listener_Filter_Eval_Command.so: \
@@ -7224,8 +7592,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7416,6 +7782,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -7433,6 +7801,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -7487,8 +7856,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7677,6 +8044,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
  CosNotificationC.h \
@@ -7688,6 +8057,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -7742,8 +8112,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7932,6 +8300,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
  CosNotificationC.h \
@@ -7943,6 +8313,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -7956,8 +8327,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -8152,6 +8521,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Default_CO_Factory.h \
  Notify/Notify_Channel_Objects_Factory.h \
@@ -8186,6 +8557,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  ESF/ESF_Worker.h \
@@ -8212,8 +8584,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -8405,6 +8775,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -8459,6 +8831,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -8504,7 +8877,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
- Notify/Notify_Collection.h \
+ Notify/Notify_QoSAdmin_i.inl Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -8543,7 +8916,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h Notify/Notify_AdminProperties.i \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  Notify/Notify_FilterFactory_i.h Notify/Notify_ConsumerAdmin_i.h \
  Notify/Notify_FilterAdmin_i.h Notify/Notify_SupplierAdmin_i.h \
  Notify/Notify_StructuredProxyPushSupplier_i.h \
@@ -8568,8 +8942,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -8776,6 +9148,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -8788,8 +9162,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Default_Collection_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Notify/notify_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -8988,11 +9360,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  ESF/ESF_Worker.h \
@@ -9046,8 +9421,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -9254,6 +9627,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Config.i \
@@ -9280,6 +9655,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Listeners.h Notify/Notify_Collection.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  ESF/ESF_Worker.h \
@@ -9331,13 +9707,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
- Notify/Notify_AdminProperties.h \
+ Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i Notify/Notify_Worker_Task.h \
- Notify/Notify_Command.h Notify/Notify_Command.i \
- Notify/Notify_Factory.h Notify/Notify_MT_Worker_Task.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
+ Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
+ Notify/Notify_Command.i Notify/Notify_Factory.h \
+ Notify/Notify_MT_Worker_Task.h \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_AdminProperties.o .obj/Notify_AdminProperties.so .shobj/Notify_AdminProperties.o .shobj/Notify_AdminProperties.so: Notify/Notify_AdminProperties.cpp \
@@ -9345,8 +9722,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -9537,21 +9912,22 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h \
  CosNotificationC.i \
  Notify/Notify_Listeners.h Notify/notify_export.h \
+ Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i
 
 .obj/Notify_Buffering_Strategy.o .obj/Notify_Buffering_Strategy.so .shobj/Notify_Buffering_Strategy.o .shobj/Notify_Buffering_Strategy.so: Notify/Notify_Buffering_Strategy.cpp \
  Notify/Notify_Buffering_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -9742,16 +10118,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/Notify_AdminProperties.h \
  CosNotificationC.h \
  Notify/notify_export.h \
  CosNotificationC.i \
  Notify/Notify_Listeners.h Notify/notify_export.h \
+ Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -9767,6 +10146,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -9781,8 +10161,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -10005,6 +10383,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/Notify_Command.h Notify/notify_export.h \
  Notify/Notify_Command.i Notify/Notify_Event.h \
@@ -10017,15 +10397,18 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
  Notify/Notify_Event.i Notify/Notify_AdminProperties.h \
- Notify/Notify_Listeners.h \
+ Notify/Notify_Listeners.h Notify/Notify_Signal_Property_T.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- Notify/Notify_AdminProperties.i Notify/Notify_Buffering_Strategy.h \
+ Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i \
+ Notify/Notify_Buffering_Strategy.h Notify/Notify_QoSAdmin_i.h \
+ Notify/Notify_QoSAdmin_i.inl Notify/Notify_Extensions.h \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_Command.o .obj/Notify_Command.so .shobj/Notify_Command.o .shobj/Notify_Command.so: Notify/Notify_Command.cpp Notify/Notify_Command.h \
@@ -10033,8 +10416,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -10223,6 +10604,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
  CosNotificationC.h \
@@ -10234,17 +10617,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
+ CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
  Notify/Notify_Event.i
 
-.obj/CosNotificationS.o .obj/CosNotificationS.so .shobj/CosNotificationS.o .shobj/CosNotificationS.so: CosNotificationS.cpp CosNotificationS.h \
+.obj/Notify_Extensions.o .obj/Notify_Extensions.so .shobj/Notify_Extensions.o .shobj/Notify_Extensions.so: Notify/Notify_Extensions.cpp \
+ Notify/Notify_Extensions.h \
  $(ACE_ROOT)/ace/pre.h \
- CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -10435,6 +10817,207 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ Notify/notify_export.h
+
+.obj/CosNotificationS.o .obj/CosNotificationS.so .shobj/CosNotificationS.o .shobj/CosNotificationS.so: CosNotificationS.cpp CosNotificationS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosNotificationC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -10507,7 +11090,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -10593,8 +11176,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -10785,6 +11366,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -10803,13 +11386,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
  CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h \
- CosEventCommS.h CosEventCommC.h CosEventCommC.i CosEventCommS_T.h \
- CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
- CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
- CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
- CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
- CosEventChannelAdminS.h CosEventChannelAdminC.h \
+ CosEventCommS.h CosEventCommC.h CosEvent/event_export.h \
+ CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+ CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
+ CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
+ CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
+ CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
+ CosNotifyFilterS.i CosEventChannelAdminS.h CosEventChannelAdminC.h \
  CosEventChannelAdminC.i CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i CosEventChannelAdminS_T.cpp \
  CosEventChannelAdminS.i CosNotifyChannelAdminC.h \
@@ -10870,7 +11453,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -10955,8 +11538,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -11147,6 +11728,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -11164,9 +11747,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
- CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
- CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp \
- CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
+ CosNotificationS.i CosEventCommS.h CosEventCommC.h \
+ CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
+ CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+ CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
  CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
@@ -11222,7 +11806,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -11307,8 +11891,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotifyCommS.h CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -11499,6 +12081,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -11516,9 +12100,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
- CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
- CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp \
- CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
+ CosNotificationS.i CosEventCommS.h CosEventCommC.h \
+ CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
+ CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+ CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
  CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
  CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
  CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
@@ -11576,7 +12161,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -11660,8 +12245,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
  $(ACE_ROOT)/ace/pre.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -11852,8 +12435,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h CosEventCommC.i \
+ CosEvent/event_export.h CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -11924,7 +12509,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -12010,8 +12595,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -12202,8 +12785,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h CosEventCommC.i \
+ CosEvent/event_export.h CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -12276,7 +12861,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -12360,8 +12945,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotificationC.o .obj/CosNotificationC.so .shobj/CosNotificationC.o .shobj/CosNotificationC.so: CosNotificationC.cpp CosNotificationC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -12552,6 +13135,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12668,8 +13253,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -12860,11 +13443,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
- CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h CosEventCommC.i \
- CosNotifyCommC.i CosNotifyFilterC.i CosEventChannelAdminC.h \
- CosEventChannelAdminC.i CosNotifyChannelAdminC.i \
+ CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h \
+ CosEvent/event_export.h CosEventCommC.i CosNotifyCommC.i \
+ CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
+ CosNotifyChannelAdminC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -12978,8 +13564,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotifyCommC.o .obj/CosNotifyCommC.so .shobj/CosNotifyCommC.o .shobj/CosNotifyCommC.so: CosNotifyCommC.cpp CosNotifyCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -13170,9 +13754,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
- CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
+ CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
+ CosNotifyCommC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -13286,8 +13873,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.so .shobj/CosNotifyFilterC.o .shobj/CosNotifyFilterC.so: CosNotifyFilterC.cpp CosNotifyFilterC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -13478,10 +14063,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h CosNotifyCommC.h CosNotificationC.h \
- CosNotificationC.i CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
- CosNotifyFilterC.i \
+ CosNotificationC.i CosEventCommC.h CosEvent/event_export.h \
+ CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -13595,8 +14182,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -13787,8 +14372,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h CosEventCommC.i \
+ CosEvent/event_export.h CosEventCommC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -13903,8 +14490,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosEventChannelAdminC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -14095,8 +14680,10 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h CosEventCommC.h CosEventCommC.i \
+ CosEvent/event_export.h CosEventCommC.h CosEventCommC.i \
  CosEventChannelAdminC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
