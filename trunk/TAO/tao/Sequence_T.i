@@ -516,7 +516,7 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
       if (this->buffer_ == 0)
         {
           result = 
-	    TAO_Unbounded_Array_Sequence<T>::allocbuf (this->length_);
+	    TAO_Unbounded_Array_Sequence<T, T_Var>::allocbuf (this->length_);
           this->buffer_ = result;
         }
       else
@@ -638,7 +638,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (CORBA::Boolean orphan)
       if (this->buffer_ == 0)
         {
           result = 
-	    TAO_Bounded_Array_Sequence<T,MAX>::allocbuf (this->maximum_);
+	    TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (this->maximum_);
           this->buffer_ = result;
         }
       else
