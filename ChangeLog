@@ -1,3 +1,12 @@
+Sat Apr 15 18:17:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+	  Fixed the handle_output() function so that it does the "Right
+ 	  Thing"[TM] on Windows NT.  Win32 Winsock doesn't trigger
+ 	  multiple "You can write now" signals, so we have to assume that
+ 	  we can continue to write until we get another EWOULDBLOCK.
+	  Thanks to Nick Pratt
+
 Thu Apr 13 16:30:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.7.h: added #undef ACE_NEEDS_LWP_PRIO_SET.
