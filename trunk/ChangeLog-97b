@@ -42,10 +42,9 @@ Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Tue Nov 18 16:27:32 1997    <irfan@TWOSTEP>
 
-	* ace/Log_Msg.cpp (log): Changed the %T option of Log_Msg from
- 	  "hour:minute:second:microsecond" to "month/day/year
- 	  hour:minute:second:microsecond". Thanks to John Mulhern
- 	  <9107@MN3.LAWSON.lawson.com> for suggesting this.
+	* ace/Log_Msg.cpp (log): Added a %D option to Log_Msg for
+ 	  "month/day/year hour:minute:second:microsecond". Thanks to John
+ 	  Mulhern <9107@MN3.LAWSON.lawson.com> for suggesting this.
 
 	* ace/config-win32-common.h: If __ACE_INLINE__ is defined to be 0,
  	  we will undefine it.
