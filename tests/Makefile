@@ -196,12 +196,6 @@ realclean: clean
 	-$(RM) libDLL_Test.$(SOEXT) log/compilations.log*
 
 
-ifeq ($(static_libs_only),1)
-$(VBIN): $(VLIB)
-else
-$(VBIN): $(VSHLIB)
-endif
-
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
