@@ -152,7 +152,7 @@ TAO_Naming_Server::parse_args (int argc,
   // some compilers that complain about mismatching types
   // in the sscanf.
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-  ptr_arith_t address;
+  ptrdiff_t address;
 #else
   long int address;
 #endif /* ACE_SIZEOF_VOID_P */

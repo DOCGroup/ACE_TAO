@@ -1,14 +1,24 @@
+Tue May  6 12:56:27 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp: 
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+
+	  More ptr_arith_t -> ptrdiff_t changes.
+
 Tue May  6 10:42:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
 
-          Put back some project dependencies that inadvertently got lost as 
+          Put back some project dependencies that inadvertently got lost as
           the result of a conflict update.
 
 Tue May  6 08:54:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Default_ORTC.h: Removed an extra include of
-	  pre.h. 
+	  pre.h.
 
 Tue May 06 14:46:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
