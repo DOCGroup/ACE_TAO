@@ -29763,8 +29763,7 @@ realclean:
  RTCORBAS_T.cpp \
  RTCORBAS.i \
  LocalObject.h \
- LocalObject.i \
- RT_Mutex.i
+ LocalObject.i
 
 .obj/RT_Policy_i.o .obj/RT_Policy_i.so .shobj/RT_Policy_i.o .shobj/RT_Policy_i.so: RT_Policy_i.cpp \
  RT_Policy_i.h \
@@ -30173,8 +30172,7 @@ realclean:
  RT_ORB.i \
  RT_Policy_i.h \
  RT_Policy_i.i \
- RT_Mutex.h \
- RT_Mutex.i
+ RT_Mutex.h 
 
 .obj/RT_ORB_Loader.o .obj/RT_ORB_Loader.so .shobj/RT_ORB_Loader.o .shobj/RT_ORB_Loader.so: RT_ORB_Loader.cpp RT_ORB_Loader.h \
  $(ACE_ROOT)/ace/pre.h \

@@ -24,6 +24,7 @@
 
 #include "tao/RTCORBAS.h"
 #include "tao/LocalObject.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -32,18 +33,59 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+// Forward reference for TAO_Named_RT_Mutex_Manager
+class TAO_RT_Mutex;
+
+/**
+ * @class TAO_Named_RT_Mutex_Manager
+ *
+ * @brief Manages the names of RT Mutexes
+ *
+ */
+
+class TAO_Export TAO_Named_RT_Mutex_Manager
+{
+
+public:
+  /// Constructor.
+  TAO_Named_RT_Mutex_Manager (void);
+
+  /// Destructor.
+  ~TAO_Named_RT_Mutex_Manager (void);
+
+  /// Looks up a mutex based on its name
+  TAO_RT_Mutex *find_mutex (const char *name);
+
+  /// Registers a mutex based on its name
+  int register_mutex (const char *name,
+                      TAO_RT_Mutex *mutex);
+
+  /// Unregisters a mutex based on its name
+  void unregister_mutex (const char *name);
+
+
+protected:
+
+  /// Hash map for named RT Mutexes
+  ACE_Hash_Map_Manager_Ex<const char *, TAO_RT_Mutex *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX> mutex_map_;
+
+};
+
+
+/**
+ * @class TAO_RT_ORB
+ *
+ * @brief RTCORBA::RTORB implementation
+ *
+ * Creates and destroys RT CORBA objects, i.e., policies,
+ * threadpools, mutexes.
+ */
+
 class TAO_Export TAO_RT_ORB :
   public RTCORBA::RTORB,
   public CORBA::LocalObject
 
 {
-  // = TITLE
-  //   RTCORBA::RTORB implementation
-  //
-  // = DESCRIPTION
-  //   Creates and destroys RT CORBA objects, i.e., policies,
-  //   threadpools, mutexes.
-  //
 
 public:
   /// Constructor.
@@ -61,6 +103,21 @@ public:
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
+                                                 CORBA::Boolean_out created_flag,
+                                                 CORBA::Environment
+                                                 &ACE_TRY_ENV =
+                                                 TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+   virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
+                                                CORBA::Environment &ACE_TRY_ENV =
+                                                TAO_default_environment () )
+     ACE_THROW_SPEC ((
+                      CORBA::SystemException,
+                      RTCORBA::RTORB::MutexNotFound
+                      ));
 
   virtual RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,
@@ -128,7 +185,15 @@ public:
                                  CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+protected:
+
+  TAO_Named_RT_Mutex_Manager mutex_mgr_;
+
 };
+
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/RT_ORB.i"
