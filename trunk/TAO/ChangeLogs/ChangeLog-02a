@@ -1,16 +1,23 @@
+Fri Apr 13 16:09:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Thread_Pool.cpp:
+          Add enough template instantiations as to get gcc-2.95.2 happy
+          with inlining.  More templates will be required later, but this
+          will allow people to make progress.
+
 Fri Apr 13 12:33:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated the release notes. 
+        * docs/releasenotes/index.html: Updated the release notes.
 
 Fri Apr 13 11:14:46 2001  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp: 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: 	
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
 
-	  Added a timed orb->run () to prevent the sender from shutting
-	  down before the distributer connected to it. This should
-	  fix the breaking of the test on many platforms.
-	
+          Added a timed orb->run () to prevent the sender from shutting
+          down before the distributer connected to it. This should
+          fix the breaking of the test on many platforms.
+
 
 Fri Apr 13 10:50:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -25,61 +32,61 @@ Fri Apr 13 10:50:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Apr 13 10:49:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/IORManipulation/IORTest.cpp: Fixed a small problem that
-	  was showing up in the builds as test failures. The test used the
-	  name of a machine "acme.cs.wustl.edu" for creating IOR's. Looks
-	  like the machine has been removed from the network. The creation
-	  of IOR's failed and hence the test. 
+        * tests/IORManipulation/IORTest.cpp: Fixed a small problem that
+          was showing up in the builds as test failures. The test used the
+          name of a machine "acme.cs.wustl.edu" for creating IOR's. Looks
+          like the machine has been removed from the network. The creation
+          of IOR's failed and hence the test.
 
 Fri Apr 13 2:15:04 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp: 	
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
 
-	  Fixed compile errors on solaris.
+          Fixed compile errors on solaris.
 
 Thu Apr 12 23:46:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Thread_Pool: Added classes to handle the creation of thread
-	  pools in TAO:
-	  
-	  - TAO_Thread_Pool_Threads: Class representing a thread running
-	    in a thread lane.
+        * tao/Thread_Pool: Added classes to handle the creation of thread
+          pools in TAO:
 
-	  - TAO_Thread_Lane: Class representing the thread lane inside a
-	    thread pool.
+          - TAO_Thread_Pool_Threads: Class representing a thread running
+            in a thread lane.
 
-	  - TAO_Thread_Pool: Class representing the thread pool inside a
- 	    thread pool manager.
+          - TAO_Thread_Lane: Class representing the thread lane inside a
+            thread pool.
 
-	  - TAO_Thread_Pool_Manager: Class for managing thread pools.
+          - TAO_Thread_Pool: Class representing the thread pool inside a
+            thread pool manager.
 
-	* tests/RTCORBA/Thread_Pool: New test for creating and using
-	  thread-pools in a MT server.
+          - TAO_Thread_Pool_Manager: Class for managing thread pools.
 
-	* tao/RT_ORB.h: The RT_ORB now has a TAO_Thread_Pool_Manager class
-	  to create and manage thread pools.  All thread pool related
-	  methods are forwarded to TAO_Thread_Pool_Manager.
+        * tests/RTCORBA/Thread_Pool: New test for creating and using
+          thread-pools in a MT server.
 
-	* tao/ORB_Core: Because the RT_ORB now holds a pointer to its
-	  creating ORB, the RT members of ORB_Core had to be rearranged such
-	  that <rt_orb_> is before <orb_>.
+        * tao/RT_ORB.h: The RT_ORB now has a TAO_Thread_Pool_Manager class
+          to create and manage thread pools.  All thread pool related
+          methods are forwarded to TAO_Thread_Pool_Manager.
 
-	* tao/RT_ORB_Loader.cpp (create_object): RT_ORB constructor
-	  now requires that the orb reference be passed in.
+        * tao/ORB_Core: Because the RT_ORB now holds a pointer to its
+          creating ORB, the RT members of ORB_Core had to be rearranged such
+          that <rt_orb_> is before <orb_>.
 
-	* File updates for new thread pool code and test:
+        * tao/RT_ORB_Loader.cpp (create_object): RT_ORB constructor
+          now requires that the orb reference be passed in.
 
-	  - tao/Makefile
-	  - tao/Makefile.bor
-	  - tao/TAO.dsp
-	  - tao/TAO_Static.dsp
-	  - tests/RTCORBA/README
-	  - tests/RTCORBA/Makefile
-	  - tests/RTCORBA/Makefile.bor
-	  - tests/RTCORBA/RTCORBA_tests.dsw
-	  - $ACE_ROOT/bin/auto_run_tests.lst
-	
+        * File updates for new thread pool code and test:
+
+          - tao/Makefile
+          - tao/Makefile.bor
+          - tao/TAO.dsp
+          - tao/TAO_Static.dsp
+          - tests/RTCORBA/README
+          - tests/RTCORBA/Makefile
+          - tests/RTCORBA/Makefile.bor
+          - tests/RTCORBA/RTCORBA_tests.dsw
+          - $ACE_ROOT/bin/auto_run_tests.lst
+
 Thu Apr 12 20:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Blocking_Sync_None/Blocking_Sync_None.dsw:
