@@ -1,3 +1,8 @@
+Mon Apr 05 15:09:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: removed second #include of netdb.h.  Thanks to
+          John H Aughey <tmpsp499@cec.wustl.edu> for reporting this.
+
 Mon Apr 05 14:17:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Trace.cpp: removed unnecessary (and complicated)
