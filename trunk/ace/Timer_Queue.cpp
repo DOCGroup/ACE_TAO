@@ -38,7 +38,7 @@ ACE_Timer_Node_T<TYPE, FUNCTOR>::ACE_Timer_Node_T (const TYPE &type,
 						   const void *a, 
 						   const ACE_Time_Value &t, 
 						   const ACE_Time_Value &i, 
-						   NODE *n,
+						   ACE_Timer_Node_T<TYPE, FUNCTOR> *n,
 						   int timer_id)
   : type_ (type), 
     act_ (a), 
@@ -118,9 +118,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR>::dump (void) const
 template <class TYPE, class FUNCTOR> 
 ACE_Timer_Queue_T<TYPE, FUNCTOR>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor)
   : gettimeofday_ (ACE_OS::gettimeofday),
-    timer_skew_ (0, ACE_TIMER_SKEW),
     upcall_functor_ (upcall_functor == 0 ? *(new FUNCTOR) : *upcall_functor),
-    delete_upcall_functor_ (upcall_functor == 0)
+    delete_upcall_functor_ (upcall_functor == 0),
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
@@ -194,7 +194,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR>::upcall (TYPE &type,
 {
   // This calls the correct operator () on the functor (the one with
   // four args)
-  this->upcall_functor_ (*this, type, act, cur_time);
+  this->upcall_functor_.operator () (*this, type, act, cur_time);
 }
 
 

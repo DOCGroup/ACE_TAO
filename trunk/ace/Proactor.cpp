@@ -114,6 +114,8 @@ ACE_Proactor_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 						 const void *act,
 						 const ACE_Time_Value &time)
 {
+  ACE_UNUSED_ARG (timer_queue);
+
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
@@ -144,6 +146,9 @@ int
 ACE_Proactor_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 						 ACE_Handler *handler)
 {
+  ACE_UNUSED_ARG (timer_queue);
+  ACE_UNUSED_ARG (handler);
+
   // Do nothing
   return 0;
 }
@@ -488,5 +493,24 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 {
   this->handler_.handle_timeout (this->time_, this->act ());
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+
+template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
+template class ACE_Set_Node<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
+
+template class ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+
+template class ACE_Timer_Queue_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+template class ACE_Timer_Queue_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+
+template class ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+template class ACE_Timer_List_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+
+template class ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+template class ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_WIN32 */
