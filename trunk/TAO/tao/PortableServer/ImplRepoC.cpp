@@ -2434,7 +2434,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::EnvironmentVar
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::EnvironmentVariable *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(ImplementationRepository::EnvironmentVariable*&,_tao_elem);
+  return _tao_any >>= ACE_const_cast (const ImplementationRepository::EnvironmentVariable *&, _tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentVariable *&_tao_elem)
@@ -2642,7 +2642,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::StartupOptions
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::StartupOptions *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(ImplementationRepository::StartupOptions*&,_tao_elem);
+  return _tao_any >>= ACE_const_cast (const ImplementationRepository::StartupOptions *&, _tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::StartupOptions *&_tao_elem)
@@ -2723,7 +2723,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformation *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(ImplementationRepository::ServerInformation*&,_tao_elem);
+  return _tao_any >>= ACE_const_cast (const ImplementationRepository::ServerInformation *&, _tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::ServerInformation *&_tao_elem)
@@ -2809,8 +2809,8 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformationList *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(
-      const ImplementationRepository::ServerInformationList*&,
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::ServerInformationList *&,
       _tao_elem
     );
 }
@@ -2955,8 +2955,8 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(
-      const ImplementationRepository::Administration::AlreadyRegistered*&,
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::Administration::AlreadyRegistered *&,
       _tao_elem
     );
 }
@@ -3036,8 +3036,8 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::CannotActivate *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(
-      const ImplementationRepository::Administration::CannotActivate*&,
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::Administration::CannotActivate *&,
       _tao_elem
     );
 }
@@ -3117,8 +3117,8 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration::NotFound *&_tao_elem)
 {
-  return _tao_any >>= ACE_const_cast(
-      const ImplementationRepository::Administration::NotFound*&,
+  return _tao_any >>= ACE_const_cast (
+      const ImplementationRepository::Administration::NotFound *&,
       _tao_elem
     );
 }
