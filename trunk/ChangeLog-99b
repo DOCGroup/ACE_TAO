@@ -3,7 +3,7 @@ Thu Apr 15 14:04:36 1999  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/rules.lib.GNU: don't call $(RANLIB)
           if it is null.
 
-        * include/makeinclude/platform_vxworks_5.x.GNU: removed
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: removed
           RANLIB definition, so that it will be null.  This prevents
           calling "true" on NT hosts.
 
