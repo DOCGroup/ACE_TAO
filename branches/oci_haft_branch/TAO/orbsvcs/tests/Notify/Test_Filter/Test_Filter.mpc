@@ -1,0 +1,14 @@
+project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify, rtcorba, etcl, dynamicany, portableserver, iortable {
+				    
+  sharedname = TAO_RT_NotifyTests_Filter
+
+  dynamicflags    = TAO_RT_Test_Filter_BUILD_DLL
+
+  IDL_Files {  
+  }
+
+  Source_Files{
+    RT_Test_Filter.cpp
+    RT_Test_FilterFactory.cpp
+  }
+}

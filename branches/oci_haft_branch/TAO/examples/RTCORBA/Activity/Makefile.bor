@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor all
+
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor clean
+
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor realclean
+
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity_Lib.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Activity.bor install
+
+regenerate:
+	C:\Perl\bin\perl.exe \ACElatest\ACE_wrappers\bin\mwc.pl -type borland

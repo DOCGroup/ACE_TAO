@@ -1,0 +1,126 @@
+project(CosNotification) : orbsvcslib, core, etcl, dynamicany, event {
+  sharedname   = TAO_CosNotification
+  idlflags    += -Wb,export_macro=TAO_Notify_Export -Wb,export_include=Notify/notify_export.h
+  // Set both DLL flags because of the shared idl files
+  dynamicflags = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
+  tagchecks    = Notify
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    CosEventComm.idl
+    CosEventChannelAdmin.idl
+    CosNotification.idl
+    CosNotifyComm.idl
+    CosNotifyFilter.idl
+    CosNotifyChannelAdmin.idl
+    NotifyExt.idl
+    Event_Forwarder.idl
+  }
+
+  // The following could be simplified if RT stuff was
+  // put into another subdirectory.
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Notify {
+      CosEventCommC.cpp
+      CosEventCommS.cpp
+      CosEventChannelAdminC.cpp
+      CosEventChannelAdminS.cpp
+      CosNotificationC.cpp
+      CosNotificationS.cpp
+      CosNotifyCommC.cpp
+      CosNotifyCommS.cpp
+      CosNotifyFilterC.cpp
+      CosNotifyFilterS.cpp
+      CosNotifyChannelAdminC.cpp
+      CosNotifyChannelAdminS.cpp
+      NotifyExtC.cpp
+      NotifyExtS.cpp
+      Event_ForwarderC.cpp
+      Event_ForwarderS.cpp
+      Notify/Admin.cpp
+      Notify/AdminProperties.cpp
+      Notify/Buffering_Strategy.cpp
+      Notify/Builder.cpp
+      Notify/Consumer.cpp
+      Notify/ConsumerAdmin.cpp
+      Notify/Container_T.cpp
+      Notify/CosNotify_Initializer.cpp
+      Notify/CosNotify_Service.cpp
+      Notify/Default_Factory.cpp
+      Notify/ETCL_Filter.cpp
+      Notify/ETCL_FilterFactory.cpp
+      Notify/Event.cpp
+      Notify/EventChannel.cpp
+      Notify/EventChannelFactory.cpp
+      Notify/EventType.cpp
+      Notify/EventTypeSeq.cpp
+      Notify/Event_Manager.cpp
+      Notify/Event_Map_Entry_T.cpp
+      Notify/Event_Map_T.cpp
+      Notify/FilterAdmin.cpp
+      Notify/Find_Worker_T.cpp
+      Notify/ID_Factory.cpp
+      Notify/Method_Request.cpp
+      Notify/Method_Request_Dispatch.cpp
+      Notify/Method_Request_Dispatch_T.cpp
+      Notify/Method_Request_Event.cpp
+      Notify/Method_Request_Lookup.cpp
+      Notify/Method_Request_Lookup_T.cpp
+      Notify/Method_Request_Shutdown.cpp
+      Notify/Method_Request_Updates.cpp
+      Notify/Method_Request_Updates_T.cpp
+      Notify/Notify_Constraint_Interpreter.cpp
+      Notify/Notify_Constraint_Visitors.cpp
+      Notify/Notify_Default_Collection_Factory.cpp
+      Notify/Notify_Default_CO_Factory.cpp
+      Notify/Notify_Default_EMO_Factory.cpp
+      Notify/Notify_Default_POA_Factory.cpp
+      Notify/Notify_EventChannelFactory_i.cpp
+      Notify/Notify_Extensions.cpp
+      Notify/Object.cpp
+      Notify/Peer.cpp
+      Notify/POA_Helper.cpp
+      Notify/Properties.cpp
+      Notify/PropertySeq.cpp
+      Notify/Property_Boolean.cpp
+      Notify/Property_T.cpp
+      Notify/Proxy.cpp
+      Notify/ProxyConsumer.cpp
+      Notify/ProxyConsumer_T.cpp
+      Notify/ProxySupplier.cpp
+      Notify/ProxySupplier_T.cpp
+      Notify/Proxy_T.cpp
+      Notify/QoSProperties.cpp
+      Notify/Reactive_Task.cpp
+      Notify/Refcountable.cpp
+      Notify/Refcountable_Guard_T.cpp
+      Notify/Seq_Worker_T.cpp
+      Notify/Subscription_Change_Worker.cpp
+      Notify/Supplier.cpp
+      Notify/SupplierAdmin.cpp
+      Notify/ThreadPool_Task.cpp
+      Notify/Timer_Queue.cpp
+      Notify/Timer_Reactor.cpp
+      Notify/Worker_Task.cpp
+      Notify/Any/AnyEvent.cpp
+      Notify/Any/CosEC_ProxyPushConsumer.cpp
+      Notify/Any/CosEC_ProxyPushSupplier.cpp
+      Notify/Any/ProxyPushConsumer.cpp
+      Notify/Any/ProxyPushSupplier.cpp
+      Notify/Any/PushConsumer.cpp
+      Notify/Any/PushSupplier.cpp
+      Notify/Sequence/Batch_Buffering_Strategy.cpp
+      Notify/Sequence/SequenceProxyPushConsumer.cpp
+      Notify/Sequence/SequenceProxyPushSupplier.cpp
+      Notify/Sequence/SequencePushConsumer.cpp
+      Notify/Sequence/SequencePushSupplier.cpp
+      Notify/Structured/StructuredEvent.cpp
+      Notify/Structured/StructuredProxyPushConsumer.cpp
+      Notify/Structured/StructuredProxyPushSupplier.cpp
+      Notify/Structured/StructuredPushConsumer.cpp
+      Notify/Structured/StructuredPushSupplier.cpp
+    }
+  }
+}

@@ -1,0 +1,69 @@
+#
+# Makefile for building the TAO CosNaming library
+#
+
+NAME = TAO_CosNaming
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_Naming_Export \
+	-Wb,export_include=Naming/naming_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\CosNaming.idl
+
+OBJFILES = \
+	$(OBJDIR)\CosNamingC.obj \
+	$(OBJDIR)\CosNamingS.obj \
+	$(OBJDIR)\Entries.obj \
+	$(OBJDIR)\Hash_Naming_Context.obj \
+	$(OBJDIR)\Naming_Context_Interface.obj \
+	$(OBJDIR)\Naming_Loader.obj \
+	$(OBJDIR)\Naming_Utils.obj \
+	$(OBJDIR)\Persistent_Context_Index.obj \
+	$(OBJDIR)\Persistent_Entries.obj \
+	$(OBJDIR)\Persistent_Naming_Context.obj \
+        $(OBJDIR)\Transient_Naming_Context.obj \
+        $(OBJDIR)\Flat_File_Persistence.obj \
+        $(OBJDIR)\Naming_Service_Container.obj \
+        $(OBJDIR)\Storable.obj \
+        $(OBJDIR)\Storable_Naming_Context.obj \
+        $(OBJDIR)\Storable_Naming_Context_Activator.obj
+
+RESOURCE = $(OBJDIR)\CosNaming.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	-DTAO_NAMING_BUILD_DLL
+
+CPPDIR = .;Naming
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\Naming
+INCLUDES = Naming\*.h Naming\*_T.cpp
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_IORTABLE_LIB) \
+	$(TAO_SVC_UTILS_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\CosNamingC.cpp $(IDLDIR)\CosNamingS.cpp: $(IDLDIR)\CosNaming.idl
+	$(TAO_IDL) $**

@@ -1,0 +1,56 @@
+project(*C_inclient) : aceexe {
+  exename = C-inclient
+  Source_Files {
+    C-inclient.cpp
+  }
+}
+
+project(*C_inserver) : aceexe {
+  exename = C-inserver
+  Source_Files {
+    C-inserver.cpp
+  }
+}
+
+project(*CPP_inclient) : aceexe {
+  exename = CPP-inclient
+  Source_Files {
+    CPP-inclient.cpp
+  }
+}
+
+project(*CPP_inserver) : aceexe {
+  exename = CPP-inserver
+  Source_Files {
+    CPP-inserver.cpp
+  }
+}
+
+project(*CPP_memclient) : aceexe {
+  exename = CPP-memclient
+  Source_Files {
+    CPP-memclient.cpp
+  }
+}
+
+project(*CPP_memserver) : aceexe {
+  exename = CPP-memserver
+  Source_Files {
+    CPP-memserver.cpp
+  }
+}
+
+project(*FD_unclient) : aceexe {
+  exename = FD-unclient
+  Source_Files {
+    FD-unclient.cpp
+  }
+}
+
+project(*CPP_unserver) : aceexe {
+  exename = FD-unserver
+  Source_Files {
+    FD-unserver.cpp
+  }
+}
+

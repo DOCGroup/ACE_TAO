@@ -1,0 +1,55 @@
+# Makefile for building the test exe with Borland C++ Builder
+
+NAME = test
+
+OBJFILES = \
+	$(OBJDIR)\main.obj
+
+EXTERNAL_LIBS = \
+ \
+
+LFLAGS = \
+	-j..\..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\..\lib \
+	-L..\..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	activity$(LIB_DECORATOR).lib \
+	TAO_RTPortableServer$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO_CosNaming$(LIB_DECORATOR).lib \
+	TAO_Svc_Utils$(LIB_DECORATOR).lib \
+	TAO_IORTable$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO_IORInterceptor$(LIB_DECORATOR).lib \
+	TAO_Valuetype$(LIB_DECORATOR).lib \
+	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+	-I..\..\..\orbsvcs \
+	-I..\..\.. \
+	-I..\..\..\tao \
+	-I..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	JobS_T.h \
+	JobS_T.cpp \
+	JobS_T.i
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

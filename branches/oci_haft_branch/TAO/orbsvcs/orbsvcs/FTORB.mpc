@@ -1,0 +1,20 @@
+project(FTORB) : orbsvcslib, core, iormanip, portableserver {
+  sharedname   = TAO_FTORB
+  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  dynamicflags = TAO_FT_BUILD_DLL
+  tagchecks    = FTORB
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    FT_CORBA_ORB.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    FTORB {
+      FT_CORBA_ORBC.cpp
+      FT_CORBA_ORBS.cpp
+      FaultTolerance
+    }
+  }
+}

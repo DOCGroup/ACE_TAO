@@ -1,0 +1,4 @@
+project : acelib {
+  after += Kokyu
+  libs  += Kokyu
+}
