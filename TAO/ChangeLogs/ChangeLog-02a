@@ -1,3 +1,22 @@
+Tue Nov 21 13:30:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp:
+
+	  In the usage message, fixed
+
+	  ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
+	  ACE_TEXT (" CORBA::Environment arguments (enabled by default")
+	  ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+
+	  to read
+
+	  ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
+	  ACE_TEXT (" CORBA::Environment arguments (disabled by default")
+	  ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing 
+	  this out.
+
 Tue Nov 21 13:13:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Multiple/Multiple.dsw:
