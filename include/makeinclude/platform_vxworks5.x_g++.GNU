@@ -124,7 +124,6 @@ OCFLAGS         += -O
 PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv
-RANLIB          = @true
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
