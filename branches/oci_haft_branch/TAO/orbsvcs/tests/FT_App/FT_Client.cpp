@@ -468,8 +468,11 @@ int FTClientMain::pass (
               {
                 std::cout << "FT Client: ->shutdown();" << std::endl;
               }
-std::cout << "call shutdown" << std::endl;
               ft_server->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
+              // @@ Note: this is here because the corba event loop seems to go to sleep
+              // if there's nothing for it to do.
+              // not quite sure why, yet.  Dale
+              ft_server->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
             }
             ACE_CATCHANY
             {

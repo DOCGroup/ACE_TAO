@@ -179,7 +179,13 @@ int StubFaultNotifier::fini ()
       this_name.length (1);
       this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-      naming_context->rebind (this_name, _this()
+      // find my identity as a corba object
+      CORBA::Object_var this_obj =
+        this->poa_->id_to_reference (object_id_.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      naming_context->rebind (this_name, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -237,6 +243,12 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
+  // find my identity as a corba object
+  CORBA::Object_var this_obj =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
   //////////////////////////////////////////
   // resolve references to detector factory
   CORBA::String_var factory_ior;
@@ -282,7 +294,7 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
           TAO_PG::Properties_Encoder encoder;
 
           PortableGroup::Value value;
-          value <<= _this();
+          value <<= this_obj;
           encoder.add(::FT::FT_NOTIFIER, value);
 
           value <<= replica;
@@ -374,7 +386,7 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
       this_name.length (1);
       this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-      naming_context->rebind (this_name, _this()
+      naming_context->rebind (this_name, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

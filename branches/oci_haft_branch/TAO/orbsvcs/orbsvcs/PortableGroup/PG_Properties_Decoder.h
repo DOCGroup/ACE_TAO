@@ -54,12 +54,13 @@ namespace TAO_PG
   template <typename TYPE>
   int find (Properties_Decoder & decoder, const ACE_CString & key, TYPE & value)
   {
+    int result = 0;
     PortableGroup::Value * any;
-    decoder.find (key, any);
-    // if find fails, any will be empty and the attempt to extract
-    // the value will fail, so there's no need to check status
-    // on the find.
-    return ((*any) >>= value);
+    if ( decoder.find (key, any))
+    {
+      result = ((*any) >>= value);
+    }
+    return result;
   }
 
 #ifdef PG_PS_UNIT_TEST

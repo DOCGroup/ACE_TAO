@@ -102,7 +102,7 @@ private:
   // Data Members
 private:
   /**
-   * The orb 
+   * The orb
    */
   CORBA::ORB_var orb_;
 
@@ -114,7 +114,7 @@ private:
   /**
    * The CORBA object id assigned to this object.
    */
-  PortableServer::ObjectId_var objectId_;
+  PortableServer::ObjectId_var object_id_;
 
 
   /**
@@ -135,7 +135,7 @@ private:
   /**
    * consumer id assigned by the notifier
    */
-  ::FT::FaultNotifier::ConsumerId consumerId_;
+  ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
 

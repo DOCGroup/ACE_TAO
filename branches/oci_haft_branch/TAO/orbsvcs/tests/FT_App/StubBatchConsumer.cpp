@@ -33,7 +33,7 @@ int StubBatchConsumer::parse_args (int argc, char * argv[])
 
 PortableServer::ObjectId StubBatchConsumer::objectId()const
 {
-  return this->objectId_.in();
+  return this->object_id_.in();
 }
 
 
@@ -44,6 +44,9 @@ int StubBatchConsumer::init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & not
 {
   int result = 0;
   this->orb_ = orb;
+  this->notifier_ = notifier;
+  this->identity_ = "StubBatchConsumer";
+
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -56,9 +59,8 @@ int StubBatchConsumer::init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & not
                        ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                       -1);
 
-  // Get the POA object.
-  this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
+  // Get the POA .
+  this->poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
@@ -79,17 +81,20 @@ int StubBatchConsumer::init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & not
 
   // Register with the POA.
 
-  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  this->notifier_ = notifier;
+  // find my identity as an object
 
-  this->identity_ = "StubBatchConsumer";
+  CORBA::Object_var this_obj =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
-  this->consumerId_ = notifier->connect_sequence_fault_consumer(
-    _this(),
+  this->consumer_id_ = notifier->connect_sequence_fault_consumer(
+    CosNotifyComm::SequencePushConsumer::_narrow(this_obj),
     filter);
 
   return result;
@@ -108,7 +113,7 @@ const char * StubBatchConsumer::identity () const
  */
 void StubBatchConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->notifier_->disconnect_consumer(this->consumerId_ ACE_ENV_ARG_PARAMETER);
+  this->notifier_->disconnect_consumer(this->consumer_id_ ACE_ENV_ARG_PARAMETER);
 }
 
 
