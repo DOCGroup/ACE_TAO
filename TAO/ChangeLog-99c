@@ -1,4 +1,8 @@
-Thu Apr  8 22:21:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+Thu Apr  8 23:12:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Server): Added
+ 	  a default value of 0 to the persistence_location so that the
+ 	  code will build again...
 
 	* tao/ORB.cpp: Rewrote the multicast_query() method to test a
  	  theory about what might be causing the problem on NT.  Thanks to
