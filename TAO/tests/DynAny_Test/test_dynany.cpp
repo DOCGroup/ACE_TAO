@@ -70,7 +70,8 @@ Test_DynAny::run_test (void)
                             -1);
         }
 
-      CORBA::Any in1 (CORBA::_tc_double, 0);
+      CORBA::Any in1;
+      in1 <<= data.m_double2;
       DynamicAny::DynAny_var fa1 =
         dynany_factory->create_dyn_any (in1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -130,8 +131,8 @@ Test_DynAny::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      CORBA::Any in (CORBA::_tc_TypeCode, 
-                     0);
+      CORBA::Any in;
+      in <<= data.m_typecode2;
       DynamicAny::DynAny_var fa2 =
         dynany_factory->create_dyn_any (in
                                         ACE_ENV_ARG_PARAMETER);

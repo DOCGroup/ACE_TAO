@@ -38,7 +38,6 @@ public:
   char *                m_string2;
   CORBA::TypeCode_ptr   m_typecode1,  m_typecode2;
   CORBA::WChar          m_wchar1,     m_wchar2;
-  CORBA::Any            m_any1,       m_any2;
   CORBA::Object_var     m_objref1,    m_objref2;
 
 const char* labels[16];

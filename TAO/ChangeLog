@@ -1,3 +1,14 @@
+Fri Aug 15 14:23:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/DynAny_Test/data.cpp:
+        * tests/DynAny_Testdata.h:
+        * tests/DynAny_Testtest_dynany.cpp:
+
+	  Changes required by the removal of the deprecated Any constructor in
+	  the checkin of
+
+	  Thu Aug 14 15:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>.
+
 Fri Aug 15 16:41:37 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (start_server_i):
