@@ -112,6 +112,11 @@ TAO_PICurrent_Impl::TAO_PICurrent_Impl (void)
 
 TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 {
+  // Make sure the peer TAO_PICurrent_Impl object no longer considers
+  // this TAO_PICurrent_Impl its peer since this object will no longer
+  // exist once this destructor completes execution.
+  if (this->pi_peer_ != 0)
+    this->pi_peer_->pi_peer (0);
 }
 
 CORBA::Any *
