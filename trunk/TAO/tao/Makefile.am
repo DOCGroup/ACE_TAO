@@ -131,7 +131,16 @@ ORB_CORE_FILES = \
   StringSeqC.cpp \
   ORB_Core.cpp \
   ORB_Table.cpp \
+  LF_Event.cpp \
+  LF_Event_Binder.cpp \
+  LF_Event_Loop_Thread_Helper.cpp \
+  LF_Strategy.cpp \
+  LF_Strategy_Complete.cpp \
   Leader_Follower.cpp \
+  Leader_Follower_Flushing_Strategy.cpp \
+  LF_Follower.cpp \
+  LF_Follower_Auto_Ptr.cpp \
+  LF_Follower_Auto_Adder.cpp \
   Reactor_Registry.cpp \
   Single_Reactor.cpp \
   Reactor_Per_Priority.cpp \
@@ -295,7 +304,16 @@ HEADER_FILES = \
   InterceptorS.h \
   Invocation.h \
   Key_Adapters.h \
+  Follower.h \
+  Follower_Auto_Ptr.h \
+  LF_Follower_Auto_Adder.h \
   Leader_Follower.h \
+  Leader_Follower_Flushing_Strategy.h \
+  LF_Event.h \
+  LF_Event_Binder.h \
+  LF_Event_Loop_Thread_Helper.h \
+  LF_Strategy.h \
+  LF_Strategy_Complete.h \
   MProfile.h \
   Managed_Types.h \
   Marshal.h \
@@ -430,7 +448,16 @@ INLINE_FILES = \
   InterceptorC.i \
   Invocation.i \
   Key_Adapters.i \
+  Follower.inl \
+  Follower_Auto_Ptr.inl \
+  LF_Follower_Auto_Adder.inl \
   Leader_Follower.i \
+  Leader_Follower_Flushing_Strategy.inl \
+  LF_Event.inl \
+  LF_Event_Binder.inl \
+  LF_Event_Loop_Thread_Helper.inl \
+  LF_Strategy.inl \
+  LF_Strategy_Complete.inl \
   MProfile.i \
   Managed_Types.i \
   Marshal.i \

@@ -65,6 +65,8 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
 void
 TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
+  this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
+
   while (this->current_block_ != 0 && byte_count > 0)
     {
       size_t l = this->current_block_->length ();
@@ -84,6 +86,8 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
           this->current_block_ = this->current_block_->cont ();
         }
     }
+  if (this->current_block_ == 0)
+    this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 }
 
 void

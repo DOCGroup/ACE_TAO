@@ -23,10 +23,6 @@
 
 #include "ObjectIDList.h"
 
-#include "ace/Object_Manager.h"
-#include "ace/Env_Value_T.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
 #include "Services_Activate.h"
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
@@ -44,6 +40,14 @@
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#include "tao/LF_Event_Loop_Thread_Helper.h"
+
+#include "ace/Object_Manager.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -1783,25 +1787,6 @@ TAO_ORB_Core::poa_adapter (void)
   return this->poa_adapter_;
 }
 
-TAO_SYNCH_CONDITION *
-TAO_ORB_Core::leader_follower_condition_variable (void)
-{
-  // Always using TSS.
-
-  // Get tss key.
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-
-  if (tss->leader_follower_condition_variable_ == 0)
-    {
-      // Create a new one and return.
-      ACE_NEW_RETURN (tss->leader_follower_condition_variable_,
-                      TAO_SYNCH_CONDITION (this->leader_follower ().lock ()),
-                      0);
-    }
-
-  return tss->leader_follower_condition_variable_;
-}
-
 TAO_Stub *
 TAO_ORB_Core::create_stub(const char *repository_id,
                           const TAO_MProfile &profiles,
@@ -2100,10 +2085,11 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       TAO_LF_Strategy &lf_strategy =
         this->lf_strategy ();
-      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower, lf_strategy);
 
-      result = helper.set_event_loop_thread (tv);
-
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower,
+                                              lf_strategy,
+                                              tv);
+      int result = helper.event_loop_return ();
       if (result != 0)
         {
           if (errno == ETIME)
@@ -3107,7 +3093,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     transport_cache_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
-    leader_follower_condition_variable_ (0),
     reactor_registry_ (0),
     reactor_registry_cookie_ (0),
     ts_objects_ (),
@@ -3139,9 +3124,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
   // UNIMPLEMENTED delete this->transport_cache__;
   this->transport_cache_ = 0;
-
-  delete this->leader_follower_condition_variable_;
-  this->leader_follower_condition_variable_ = 0;
 
   if (this->reactor_registry_ != 0)
     this->reactor_registry_->destroy_tss_cookie (

@@ -47,7 +47,16 @@ PUB_HDRS = \
   Client_Strategy_Factory \
   ORB_Core \
   ORB_Table \
+  LF_Follower \
+  LF_Follower_Auto_Adder \
+  LF_Follower_Auto_Ptr \
+  LF_Event \
+  LF_Event_Binder \
+  LF_Event_Loop_Thread_Helper \
+  LF_Strategy \
+  LF_Strategy_Complete \
   Leader_Follower \
+  Leader_Follower_Flushing_Strategy \
   Reactor_Holder \
   Single_Reactor \
   Wait_Strategy \
@@ -185,7 +194,16 @@ ORB_CORE_FILES = \
   ORB_Core \
   Stub_Factory \
   ORB_Table \
+  LF_Follower \
+  LF_Follower_Auto_Ptr \
+  LF_Follower_Auto_Adder \
   Leader_Follower \
+  Leader_Follower_Flushing_Strategy \
+  LF_Event \
+  LF_Event_Binder \
+  LF_Event_Loop_Thread_Helper \
+  LF_Strategy \
+  LF_Strategy_Complete \
   Reactor_Registry \
   params \
   Resource_Factory \

@@ -24,7 +24,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
 
-#if defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
+#if TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY == 1
   this->transport_mux_strategy_ = TAO_MUXED_TMS;
 #else
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;

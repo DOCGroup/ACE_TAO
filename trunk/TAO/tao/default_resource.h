@@ -171,7 +171,7 @@ protected:
   /// If it has been disabled we should print warnings if options
   /// were processed before (or later).
   int factory_disabled_;
-  
+
 private:
   enum Lock_Type
   {
@@ -184,6 +184,7 @@ private:
 
   enum Flushing_Strategy_Type
   {
+    TAO_LEADER_FOLLOWER_FLUSHING,
     TAO_REACTIVE_FLUSHING,
     TAO_BLOCKING_FLUSHING
   };

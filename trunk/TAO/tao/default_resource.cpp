@@ -12,8 +12,12 @@
 
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
+#include "tao/Leader_Follower_Flushing_Strategy.h"
+
 #include "tao/Leader_Follower.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
+
+#include "tao/LF_Strategy_Complete.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -25,8 +29,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, default_resource, "$Id$")
-
-
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
@@ -42,7 +44,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     options_processed_ (0),
     factory_disabled_ (0),
     cached_connection_lock_type_ (TAO_THREAD_LOCK),
-    flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
+    flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
 {
 }
 
@@ -81,7 +83,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
     return 0;
   }
   this->options_processed_ = 1;
-  
+
   this->parser_names_count_ = 0;
 
   int curarg = 0;
@@ -335,6 +337,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
+                                    "leader_follower") == 0)
+              this->flushing_strategy_type_ = TAO_LEADER_FOLLOWER_FLUSHING;
+            else if (ACE_OS::strcasecmp (name,
                                     "reactive") == 0)
               this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
             else if (ACE_OS::strcasecmp (name,
@@ -839,7 +844,11 @@ TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
 {
   TAO_Flushing_Strategy *strategy = 0;
-  if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
+  if (this->flushing_strategy_type_ == TAO_LEADER_FOLLOWER_FLUSHING)
+    ACE_NEW_RETURN (strategy,
+                    TAO_Leader_Follower_Flushing_Strategy,
+                    0);
+  else if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
     ACE_NEW_RETURN (strategy,
                     TAO_Reactive_Flushing_Strategy,
                     0);
@@ -879,7 +888,7 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   TAO_LF_Strategy *strategy = 0;
 
   ACE_NEW_RETURN (strategy,
-                  TAO_Complete_LF_Strategy,
+                  TAO_LF_Strategy_Complete,
                   0);
 
   return strategy;

@@ -130,6 +130,10 @@ SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Strategy_Null.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LFU_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -243,6 +247,14 @@ SOURCE=.\DIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\DIOP_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Null.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Null.inl
 # End Source File
 # Begin Source File
 
