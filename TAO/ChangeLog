@@ -1,3 +1,9 @@
+Mon May 26 17:29:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/UIOP_Lite_Factory.h:
+          Fixed incorrect ACE_FACTORY_DECLARE usage. This fixed the internal
+          compiler error in the Cygwin build.
+
 Mon May 26 12:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
