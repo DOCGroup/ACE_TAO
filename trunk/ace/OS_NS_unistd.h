@@ -123,11 +123,7 @@ namespace ACE_OS {
 
   //@}
 
-#if !defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
-  extern ACE_Export
-#endif /* ACE_WIN32 */
   int fsync (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
