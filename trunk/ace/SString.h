@@ -80,6 +80,9 @@ public:
   // _Don't_ even think about casting the result to (char *) and modifying it,
   // if it has length 0!
 
+  const char *c_str (void) const;
+  // Same as STL String's c_str()
+
   void operator += (const ACE_CString &);
   // Concat operator (copies memory).
 
@@ -280,6 +283,9 @@ public:
 
   const ACE_USHORT16 *fast_rep (void) const;
   // Get at the underlying representation directly!
+
+  const ACE_USHORT16 *c_str (void) const;
+  // Same as STL String's c_str()
 
   int strstr (const ACE_WString &s) const;
   // Comparison operator that will match substrings.  Returns the

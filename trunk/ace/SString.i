@@ -32,6 +32,12 @@ ACE_CString::fast_rep (void) const
   return this->rep_;
 }
 
+ACE_INLINE const char *
+ACE_CString::c_str (void) const
+{
+  return this->rep_;
+}
+
 // Comparison operator.
 
 ACE_INLINE int 
@@ -128,6 +134,12 @@ ACE_WString::rep (void) const
 
 ACE_INLINE const ACE_USHORT16 *
 ACE_WString::fast_rep (void) const
+{
+  return this->rep_;
+}
+
+ACE_INLINE const ACE_USHORT16 *
+ACE_WString::c_str (void) const
 {
   return this->rep_;
 }
