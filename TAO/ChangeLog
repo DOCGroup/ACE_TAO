@@ -1,3 +1,9 @@
+Wed Nov  5 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_union.cpp: 
+
+	  Set the aggregate_seen_ bit inaddition to the union_seen_ bit. 
+
 Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.h:
