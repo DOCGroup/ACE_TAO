@@ -264,7 +264,7 @@ protected:
   // Process service configuration requests as indicated in the
   // <service_config_file>.  Returns -1 if errors occur, else 0.
 
-  static int process_directive (char directive[]);
+  static int process_directive (ASYS_TCHAR directive[]);
   // Process one service configuration <directive>, which is passed as
   // a string.  Returns -1 if errors occur, else 0.
 

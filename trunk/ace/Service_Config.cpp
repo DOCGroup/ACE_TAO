@@ -335,7 +335,7 @@ ACE_Service_Config::process_directives_i (void)
 }
 
 int
-ACE_Service_Config::process_directive (char directive[])
+ACE_Service_Config::process_directive (ASYS_TCHAR directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
   ACE_UNUSED_ARG (directive);
