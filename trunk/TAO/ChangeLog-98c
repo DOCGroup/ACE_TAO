@@ -1,3 +1,7 @@
+Fri Oct 17 17:42:27 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/roa.*: Gone.  Bye-bye.  Removed.
+
 Fri Oct 17 15:43:04 1997    <nw1@CHA-CHA>
 
 	* tao/connect.h: Added template instantiation supression directive
