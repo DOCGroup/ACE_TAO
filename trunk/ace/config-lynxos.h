@@ -166,6 +166,8 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
+#define ACE_LACKS_GETHOSTENT
+
 extern "C"
 {
   int getopt (int, char *const *, const char *);

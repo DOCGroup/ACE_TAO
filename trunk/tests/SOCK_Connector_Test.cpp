@@ -34,8 +34,8 @@ find_another_host (char other_host[])
 {
   ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST); // If all else fails
 
+#if !defined (ACE_LACKS_GETHOSTENT)
   // These gethost-type things don't work everywhere.
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD) && !defined (ACE_PSOS) && !defined (__Lynx__)
   struct hostent *h;
   struct utsname un;
 
@@ -67,7 +67,7 @@ find_another_host (char other_host[])
     }
 
   endhostent ();
-#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) !defined (ACE_NETBSD) */
+#endif /* ! ACE_LACKS_GETHOSTENT */
 }
 
 static int
