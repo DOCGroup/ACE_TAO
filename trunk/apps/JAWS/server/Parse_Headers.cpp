@@ -149,7 +149,15 @@ Headers_Map::Map_Item::operator const char * const & (void) const
 }
 
 Headers_Map::Map_Item &
-Headers_Map::Map_Item::operator= (const char * & value)
+Headers_Map::Map_Item::operator= (char * value)
+{
+  ACE_OS::free ((void *)this->value_);
+  this->value_ = ACE_OS::strdup (value);
+  return *this;
+}
+
+Headers_Map::Map_Item &
+Headers_Map::Map_Item::operator= (const char * value)
 {
   ACE_OS::free ((void *)this->value_);
   this->value_ = ACE_OS::strdup (value);
