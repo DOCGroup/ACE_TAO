@@ -5337,13 +5337,13 @@ ACE_OS::mktime (struct tm *t)
   ACE_TRACE ("ACE_OS::mktime");
 #   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   ACE_UNUSED_ARG (t);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_static_cast (time_t, -1));
 #   else
 #     if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
-  ACE_OS_GUARD_RETURN (-1)
+  ACE_OS_GUARD_RETURN (ACE_static_cast (time_t, -1))
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
-  ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
+  ACE_OSCALL_RETURN (::mktime (t), time_t, ACE_static_cast (time_t, -1));
 #   endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 }
 # endif /* !ACE_HAS_WINCE */
