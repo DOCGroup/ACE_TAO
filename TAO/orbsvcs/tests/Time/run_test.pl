@@ -24,15 +24,15 @@ $time_dir = "..$DIR_SEPARATOR..".$DIR_SEPARATOR."Time_Service".$DIR_SEPARATOR;
 
 sub time_service_test_using_naming_service
 {
-    $SV1 = Process::Create ($time_dir."server".$EXE_EXT,"");
+    $SV1 = Process::Create ($time_dir."Time_Service_Server".$EXE_EXT,"");
 
     sleep 5;
 
-    $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,"-t 2");
+    $SV2 = Process::Create ($time_dir."Time_Service_Clerk".$EXE_EXT,"-t 2");
 
     sleep 10;
 
-    $CL = system ($EXEPREFIX."client".$EXE_EXT, "");
+    $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT, "");
     
     if ($CL->TimedWait (60) == -1) {
       print STDERR "ERROR: client timedout\n";
@@ -48,7 +48,7 @@ sub time_service_test_using_naming_service
 
 sub time_service_test_using_files
 {
-    $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
+    $SV1 = Process::Create ($time_dir."Time_Service_Server".$EXE_EXT,
                             "-o $server_ior");
 
     if (ACE::waitforfile_timed ($server_ior, 5) == -1) {
@@ -60,7 +60,7 @@ sub time_service_test_using_files
       
       sleep 5;
       
-      $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
+      $SV2 = Process::Create ($time_dir."Time_Service_Clerk".$EXE_EXT,
                               "-f $server_ior -o clerk_ior -t 2");
       
       if (ACE::waitforfile_timed ($clerk_ior, 5) == -1) {
@@ -102,7 +102,7 @@ sub time_service_test_using_ir
     exit 1;
   } 
 
-  $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
+  $SV1 = Process::Create ($time_dir."Time_Service_Server".$EXE_EXT,
                          "-o $server_ior -i -r");
 
   if (ACE::waitforfile_timed ($server_ior, 5) == -1) {
@@ -114,7 +114,7 @@ sub time_service_test_using_ir
 
   sleep 10;
 
-  $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
+  $SV2 = Process::Create ($time_dir."Time_Service_Clerk".$EXE_EXT,
                           "-f $server_ior -o clerk_ior");
 
   sleep 10;
