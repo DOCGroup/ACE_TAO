@@ -1,3 +1,13 @@
+1998-12-14  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* docs/releasenotes/trader.html:
+	  Added instructions on using -TSdumpior to have the trader dump
+	  its ior to a file for use by  -ORBtradingserviceior and the
+	  TradingServiceIOR environment variable. Removed the bit about
+	  having the export_test use -ORBport 0 when run on the same
+	  machine as the trader it's testing, since this is now the
+	  default. Thanks to Carlos O'Ryan for pointing this out.      
+
 Mon Dec 14 12:21:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/MT_Cubit/{client,server}.dsp:
