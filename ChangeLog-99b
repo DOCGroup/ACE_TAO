@@ -1,3 +1,11 @@
+Thu Mar 18 11:53:48 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
+	  Changed the argument of the ntohl() call to be a temporary
+	  variable that had the same value as the original argument.
+	  This is need to get around what is apparently a bug in the
+	  egcs-2.91.63 compiler.
+
 Wed Mar 17 17:23:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* ace/OS.i (timezone): Added support for timezone () on CHORUS
