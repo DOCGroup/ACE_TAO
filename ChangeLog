@@ -1,3 +1,22 @@
+Fri Sep 13 08:37:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+
+	  Removed copy constructor.  The default compiler-generated copy
+	  constructor will do fine since ACE_Time_Value is a POD class.
+	  This may also avoid potential confusion due to a missing
+	  explicit assignment operator.  The compiler-generated assignment
+	  operator will suffice in this case, too.
+
+	From Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
+	* bin/.cvsignore:
+	* tests/.cvsignore:
+	* tests/log/.cvsignore:
+
+	  Files to silence annoying CVS messages regarding generated files
+	  it doesn't know about.
+	  
 Fri Sep 13 08:57:03 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
