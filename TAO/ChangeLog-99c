@@ -1,3 +1,10 @@
+Sun Feb 21 16:54:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/MProfile.i:
+	  Modifed TAO_MProfile::get_prev() and 
+	  TAO_MProfile::get_current_profile() to always return a value -
+	  warning turned up in VC 6.0.
+
 Sun Feb 21 16:38:15 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Took care of
