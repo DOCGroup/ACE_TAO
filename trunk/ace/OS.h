@@ -1957,6 +1957,7 @@ typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
 
 #elif defined (ACE_HAS_WTHREADS)
+
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
 typedef struct
 {
@@ -1967,7 +1968,13 @@ typedef struct
     CRITICAL_SECTION thr_mutex_;
   };
 } ACE_mutex_t;
+
+#if !defined (ACE_HAS_WINCE)
 typedef HANDLE ACE_sema_t;
+#else
+
+
+#endif /* ACE_HAS_WINCE */
 
 // These need to be different values, neither of which can be 0...
 #  define USYNC_THREAD 1
@@ -3648,10 +3655,10 @@ public:
   ACE_Cleanup_Info (void);
   // Default constructor.
 
-  int operator== (const struct ACE_Cleanup_Info &o) const;
+  int operator== (const ACE_Cleanup_Info &o) const;
   // Equality operator.
 
-  int operator!= (const struct ACE_Cleanup_Info &o) const;
+  int operator!= (const ACE_Cleanup_Info &o) const;
   // Inequality operator.
 
   void *object_;
