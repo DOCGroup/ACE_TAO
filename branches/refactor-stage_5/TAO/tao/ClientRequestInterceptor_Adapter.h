@@ -27,9 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 #include "Interceptor_List.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
 
 class TAO_ClientRequestInfo;
 class TAO_ClientRequestInfo_i;
