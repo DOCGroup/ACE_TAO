@@ -55,8 +55,19 @@ TAO_Service_Type_Repository::
 incarnation (CORBA::Environment& _env)
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
-  TAO_READ_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
-  return this->incarnation_;
+  if (this->lock_->acquire_read () == -1)
+    {
+      inc_num = this->incarnation_;
+      if (this->lock_->release () == -1)
+        ;
+    }
+  else
+    {
+      inc_num.high = 0;
+      inc_num.low = 0;
+    }
+
+  return inc_num;
 }
 
 
@@ -80,7 +91,9 @@ add_type (const char * name,
   Prop_Map prop_map;
   Service_Type_Map super_map;
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
-  
+
+  inc_num.low = 0;
+  inc_num.high = 0;
   TAO_WRITE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
 
   // make sure Type name is valid
@@ -375,9 +388,8 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
   CORBA::ULong num_props = 0,
     num_types = service_type_queue.size ();
 
-  for (TAO_String_Queue::ITERATOR iterator (service_type_queue);
-       ! iterator.done ();
-       iterator.advance ())
+  TAO_String_Queue::ITERATOR iterator (service_type_queue);
+  for (; ! iterator.done (); iterator.advance ())
     {
       char** next_type_name = 0;
       Service_Type_Map::ENTRY* type_entry = 0;
@@ -392,43 +404,35 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
     }
 
   num_props += type_struct.props.length ();
-  CosTradingRepos::ServiceTypeRepository::PropStruct* pstructs =
-    CosTradingRepos::ServiceTypeRepository::PropStructSeq::allocbuf (num_props);
+  props.length (num_props);
   super_types.length (num_types);
 
-  if (pstructs != 0)
+  // Copy in all properties.
+  int i = 0;
+  CORBA::ULong prop_index = 0,
+    type_index = 0;  
+  for (i = type_struct.props.length () - 1; i >= 0; i--)
+    props[prop_index++] = type_struct.props[i];
+  
+  for (iterator.first (); ! iterator.done (); iterator.advance ())
     {
-      // Copy in all properties.
-      int i = 0;
-      CORBA::ULong prop_index = 0,
-        type_index = 0;  
-      for (i = type_struct.props.length () - 1; i >= 0; i--)
-        pstructs[prop_index++] = type_struct.props[i];
+      char** next_type_name = 0;
+      Service_Type_Map::ENTRY* type_entry = 0;
       
-      for (TAO_String_Queue::ITERATOR iterator (service_type_queue);
-           ! iterator.done ();
-           iterator.advance ())
+      iterator.next (next_type_name);
+      TAO_String_Hash_Key hash_key (ACE_const_cast (const char*, *next_type_name));
+      this->type_map_.find (hash_key, type_entry);
+      
+      // Should never be zero.
+      if (type_entry != 0)
         {
-          char** next_type_name = 0;
-          Service_Type_Map::ENTRY* type_entry = 0;
-
-          iterator.next (next_type_name);
-          TAO_String_Hash_Key hash_key (ACE_const_cast (const char*, *next_type_name));
-          this->type_map_.find (hash_key, type_entry);
-
-          // Should never be zero.
-          if (type_entry != 0)
-            {
-              CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
+          CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
                 type_entry->int_id_->type_struct_;
-              for (i = tstruct.props.length () - 1; i >= 0; i--)
-                pstructs[prop_index++] = tstruct.props[i];
-            }
-          
-          super_types[type_index++] = *next_type_name;
+          for (i = tstruct.props.length () - 1; i >= 0; i--)
+            props[prop_index++] = tstruct.props[i];
         }
-
-      props.replace (num_props, num_props, pstructs, CORBA::B_TRUE);
+      
+      super_types[type_index++] = *next_type_name;
     }
 }
 

@@ -14,7 +14,8 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
 
-  for (Offer_Database::iterator type_iter (this->offer_db_);
+  ACE_DEBUG ((LM_DEBUG, "Offer Database Destruction.\n"));
+  for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
     {
@@ -46,7 +47,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 insert_offer (const char* type, CosTrading::Offer* offer)
 { 
   CosTrading::OfferId return_value = 0;
-  Offer_Database::ENTRY* database_entry = 0;
+  ACE_TYPENAME Offer_Database::ENTRY* database_entry = 0;
   TAO_String_Hash_Key service_type (type); 
 
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
@@ -60,13 +61,17 @@ insert_offer (const char* type, CosTrading::Offer* offer)
       ACE_NEW_RETURN (new_offer_map_entry->offer_map_, TAO_Offer_Map, 0);
       new_offer_map_entry->counter_ = 1;
 
-      this->db_lock_.release ();
-      {
-	// Add the new entry; upgrade lock.
-	ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
-	this->offer_db_.bind (service_type, new_offer_map_entry, database_entry);
-      }
-      this->db_lock_.acquire_read ();
+      if (this->db_lock_.release () == -1)
+        return 0;
+      else
+        {
+          // Add the new entry; upgrade lock.
+          ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
+          this->offer_db_.bind (service_type, new_offer_map_entry, database_entry);
+        }
+      
+      if (this->db_lock_.acquire_read () == -1)
+        return 0;
     }
 
   Offer_Map_Entry* offer_map_entry = database_entry->int_id_;
@@ -84,21 +89,51 @@ template <class LOCK_TYPE> int
 TAO_Offer_Database<LOCK_TYPE>::
 remove_offer (const char* type, CORBA::ULong id)
 {
-  if (this->db_lock_.acquire_read ())
-    return -1;
-
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, -1);
+  
   int return_value = -1;
-  Offer_Database::ENTRY* db_entry = 0;
+  ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
   TAO_String_Hash_Key service_type (type); 
   
   if (this->offer_db_.find (service_type, db_entry) == 0)
     {
       CosTrading::Offer* offer = 0;
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;
-      ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, -1);
-      return_value = offer_map_entry->offer_map_->unbind (id, offer);
 
+      if (offer_map_entry->lock_.acquire_write () == -1)
+        return -1;
+      
+      return_value = offer_map_entry->offer_map_->unbind (id, offer);
       delete offer;
+
+      // If the service type has no more offers, free the map, lest
+      // the memory forever persist.
+      if (offer_map_entry->offer_map_->current_size () == 0)
+        {
+          if (this->db_lock_.release () == -1)
+            return -1;
+          else
+            {
+              // Promote the database lock. Will be released by
+              // guard. 
+              if (this->db_lock_.acquire_write () == -1)
+                return -1;
+
+              // Unbind the service type from the database.
+              this->offer_db_.unbind (service_type);
+
+              // Now that the type has been removed, we can release
+              // its lock.
+              if (offer_map_entry->lock_.release () == -1)
+                return -1;
+
+              // Delete the database resources for this type.
+              delete offer_map_entry->offer_map_;
+              delete offer_map_entry;
+            }          
+        }
+      else if (offer_map_entry->lock_.release () == -1)
+        return -1;
     }
 
   return return_value;
@@ -170,7 +205,7 @@ lookup_offer (const char* type, CORBA::ULong id)
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
   CosTrading::Offer* return_value = 0;
-  Offer_Database::ENTRY* db_entry = 0;
+  ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
   TAO_String_Hash_Key service_type (type); 
   
   if (this->offer_db_.find (service_type, db_entry) == 0)
@@ -197,7 +232,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
   TAO_Offer_Id_Iterator* id_iterator = new TAO_Offer_Id_Iterator ();
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
   
-  for (Offer_Database::iterator type_iter (this->offer_db_);
+  for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
     {
@@ -278,7 +313,7 @@ TAO_Service_Offer_Iterator (const char* type,
   if (this->stm_.db_lock_.acquire_read () == -1)
     ;
 
-  TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
+  ACE_TYPENAME TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
   if (this->stm_.offer_db_.find (service_type, entry) == -1)
     return;
   else

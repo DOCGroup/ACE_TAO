@@ -549,10 +549,6 @@ public:
   // END SPEC
 
  protected:
-
-  typedef
-    TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::Offer_Database
-    Offer_Database;
   
   void validate_properties (const char* type,
 			    const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
