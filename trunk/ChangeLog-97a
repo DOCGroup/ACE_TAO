@@ -1,10 +1,9 @@
 Sun Mar 23 13:25:39 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
-	* ace/High_Res_Timer.h: Set the constructor <scale_factor> back to
-	  1 by default.  Changed the non Win32 global_scale_factor_ to
- 	  1000.  For <scale_factor> == 1, the constructor takes the
- 	  global_scale_factor_.  This will still allow construction with
- 	  no parameters on Solaris.
+	* ace/High_Res_Timer.h: Removed <scale_factor> from the
+	  constructor of High_Res_Timer.  All High_Res_Timers now use
+	  global_scale_factor_ directly.  Hopefully, this will not break
+	  any existing code!
 
 Sat Mar 22 12:06:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

@@ -11,14 +11,10 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
 // For Intel platforms, a scale factor is required for
-// ACE_OS::gethrtime.  Thus, initialize the global_scale_factor to
-// zero.  This will prevent use unless someone explicitly sets it.
-// All this is necessary since we use the RDTSC instruction in
-// ACE_OS::gethrtime where the value of each tick varies per processor
-// speed.  For instance, on a 200MHz Pentium use a scale factor of
-// 200.  That is, it takes 200 ticks to equal one microsecond.
+// ACE_OS::gethrtime.  We'll still set this to one to prevent division
+// by zero errors.
 #if defined (ACE_WIN32)
-u_long ACE_High_Res_Timer::global_scale_factor_ = 0;
+u_long ACE_High_Res_Timer::global_scale_factor_ = 1;
 #else
 // A scale_factor of 1000 converts nanosecond ticks to microseconds.
 // That is, on these platforms, 1 tick == 1 nanosecond.
@@ -48,24 +44,24 @@ ACE_High_Res_Timer::reset (void)
 void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 {
-  tv.sec ((long) ((this->end_ - this->start_) / scale_factor_) / 1000000);
-  tv.usec ((long) ((this->end_ - this->start_) / scale_factor_) % 1000000);
+  tv.sec ((long) ((this->end_ - this->start_) / global_scale_factor_) / 1000000);
+  tv.usec ((long) ((this->end_ - this->start_) / global_scale_factor_) % 1000000);
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
 void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
-  elapsed_time.tv_sec = (time_t) ((this->end_ - this->start_)  / scale_factor_) / 1000000;
-  elapsed_time.tv_nsec = (long) ((this->end_ - this->start_) / scale_factor_) % 1000000;
+  elapsed_time.tv_sec = (time_t) ((this->end_ - this->start_)  / global_scale_factor_) / 1000000;
+  elapsed_time.tv_nsec = (long) ((this->end_ - this->start_) / global_scale_factor_) % 1000000;
 }
 #endif /* ACE_HAS_POSIX_TIME */
 
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
 {
-  tv.sec ((long) (this->total_ / scale_factor_) / 1000000);
-  tv.usec ((long) (this->total_ / scale_factor_) % 1000000);
+  tv.sec ((long) (this->total_ / global_scale_factor_) / 1000000);
+  tv.usec ((long) (this->total_ / global_scale_factor_) % 1000000);
 }
 
 void
@@ -73,7 +69,7 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
   ACE_hrtime_t total;
-  total = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_ * 1000);
+  total = (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor_ * 1000);
   ACE_hrtime_t total_secs  = total / 1000000000;
   u_long extra_nsecs = (u_long) (total % 1000000000);
 
@@ -98,7 +94,7 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
   ACE_hrtime_t total_secs;
-  total_secs = (ACE_hrtime_t) (this->total_ / scale_factor_ / 1000000);
+  total_secs = (ACE_hrtime_t) (this->total_ / global_scale_factor_ / 1000000);
   u_long extra_nsecs = (u_long) (this->total_ % 1000000000);
 
   char buf[100];

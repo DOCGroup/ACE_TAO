@@ -10,17 +10,9 @@ ACE_High_Res_Timer::supported ()
 }
 
 ACE_INLINE
-ACE_High_Res_Timer::ACE_High_Res_Timer (u_long scale_factor)
-  : scale_factor_ (scale_factor)
+ACE_High_Res_Timer::ACE_High_Res_Timer (void)
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
-
-  // <scale_factor> takes precendence over the global_scale_factor_.
-  // If scale_factor_ is not set (== 1) and a global_scale_factor is
-  // set (!= 0), use the global_scale_factor_.
-  if (scale_factor_ == 1 && 
-      ACE_High_Res_Timer::global_scale_factor_ != 0)
-    scale_factor_ = ACE_High_Res_Timer::global_scale_factor_;
 
   this->reset ();
 }
@@ -56,7 +48,7 @@ ACE_High_Res_Timer::stop_incr (void)
 ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
-  usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_);
+  usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor_);
 }
 
 ACE_INLINE void
@@ -67,27 +59,25 @@ ACE_High_Res_Timer::global_scale_factor (u_long gsf)
 
 ACE_INLINE void
 ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
-				  ACE_hrtime_t hrt, 
-				  u_long scale_factor)
+				  ACE_hrtime_t hrt)
 {
-  tv.sec ((long) (hrt / scale_factor) / 1000000);
-  tv.usec ((long) (hrt / scale_factor) % 1000000);
+  tv.sec ((long) (hrt / global_scale_factor_) / 1000000);
+  tv.usec ((long) (hrt / global_scale_factor_) % 1000000);
 }
 
 ACE_INLINE ACE_Time_Value
 ACE_High_Res_Timer::gettimeofday (void)
 {
-  // If the global_scale_factor_ == 0, then a scale factor is needed
-  // by the platform gethrtime, but a scale factor has not been set.
-  // Hence, just return ACE_OS::gettimeofday.
-  if (ACE_High_Res_Timer::global_scale_factor_ == 0)
+#if defined (ACE_WIN32)
+  // If the global_scale_factor_ == 1 and we're on an Intel platform,
+  // then a scale factor is needed by the platform gethrtime.  Since
+  // one has not been set, just return ACE_OS::gettimeofday.
+  if (ACE_High_Res_Timer::global_scale_factor_ == 1)
     return ACE_OS::gettimeofday ();
-  else
-    {
-      ACE_Time_Value tv;
-      ACE_High_Res_Timer::hrtime_to_tv (tv,
-					ACE_OS::gethrtime (),
-					ACE_High_Res_Timer::global_scale_factor_);
-      return tv;
-    }
+#endif /* ACE_WIN32 */
+
+  ACE_Time_Value tv;
+  ACE_High_Res_Timer::hrtime_to_tv (tv,
+				    ACE_OS::gethrtime ());
+  return tv;
 }
