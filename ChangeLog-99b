@@ -1,3 +1,11 @@
+Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-qnx-neutrino.h,
+          include/makeinclude/platform_qnx_neutrino.GNU: added config
+          files for QNX Neutrino.  They support cross-compiling on a
+          QNX4 host for Neutrino target.  Builds are almost (but not
+          completely) clean.
+
 Mon Jun 14 14:33:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (handle_input): removed
