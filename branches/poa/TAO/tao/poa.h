@@ -20,6 +20,7 @@
 #define TAO_POA_H
 
 #include "tao/corba.h"
+#include "tao/objtable.h"
 
 class TAO_GIOP_RequestHeader;
 
@@ -46,7 +47,7 @@ public:
   //
   // @@ Hum, does this still make sense now that it's in POA?
 
-  typedef void (CORBA_POA::*dsi_handler) (CORBA::OctetSeq &obj_id,
+  typedef void (CORBA_POA::*dsi_handler) (PortableServer::ObjectId &id,
 					  CORBA::ServerRequest &request,
 					  void *context,
 					  CORBA::Environment &env);
@@ -130,20 +131,20 @@ public:
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
 
-  void dispatch (CORBA::OctetSeq &key, 
+  void dispatch (PortableServer::ObjectId &key, 
 		 CORBA::ServerRequest &req, 
 		 void *context, 
 		 CORBA::Environment &env);
   // Find the object for the request and pass it up the chain.  Errors
   // are returned in <env>.
 
-  virtual int bind (const CORBA::OctetSeq &key, 
+  virtual int bind (const PortableServer::ObjectId &key, 
 		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA::OctetSeq &key, 
+  virtual int find (const PortableServer::ObjectId &key, 
 		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
@@ -157,7 +158,7 @@ public:
   TAO_HRESULT QueryInterface (REFIID riid, void** ppv);
 
 private:
-  TAO_Object_Table *objtable_;
+  TAO_Object_Table objtable_;
   // Table of objects registered with this Object Adapter.
 
   CORBA::Boolean do_exit_;	
@@ -202,7 +203,7 @@ struct TAO_Dispatch_Context
   CORBA::POA::dsi_handler skeleton_;
   // Function pointer to skeleton glue function.
 
-  void (*check_forward_) (CORBA::OctetSeq& key,
+  void (*check_forward_) (PortableServer::ObjectId& key,
 			  CORBA::Object_ptr& fwd_ref,
 			  void* context,
 			  CORBA::Environment& env);

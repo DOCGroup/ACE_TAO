@@ -46,7 +46,7 @@ public:
   // = Server-side ORB Strategy Factory Methods.
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual TAO_Object_Table *create_object_table (void);
+  virtual TAO_Object_Table_Impl *create_object_table (void);
   // Factory method for object tables.
 
   // = Service Configurator hooks.

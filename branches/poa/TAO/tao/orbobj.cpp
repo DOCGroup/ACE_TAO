@@ -458,10 +458,13 @@ CORBA_ORB::key_to_object (const TAO::ObjectKey_ptr key,
   // useable internally, we need the same capabilities, and so right
   // around the time that this conversion could be done properly it
   // won't have to be done at all.
-  CORBA::OctetSeq *internal_key = (CORBA::OctetSeq *)key;
+  // @@ I (coryan@cs) modified the ORB core to use
+  // PortableServer::ObjectId instead of CORBA::OctetSeq as object
+  // identifiers, if this prove to be wrong I'll take it back.
+  // CORBA::OctetSeq *internal_key = (CORBA::OctetSeq *)key;
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         *internal_key));
+                                         *key));
   if (data != 0)
     env.clear ();
   else

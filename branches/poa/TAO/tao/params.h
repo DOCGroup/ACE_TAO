@@ -133,11 +133,11 @@ public:
   TAO_LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
-  TAO_LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table *&ot);
+  TAO_LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table_Impl *&ot);
   // Provide a way for user defined object key lookup strategies to be
   // plugged in.
 
-  TAO_LOCAL_INLINE TAO_Object_Table *userdef_lookup_strategy (void);
+  TAO_LOCAL_INLINE TAO_Object_Table_Impl *userdef_lookup_strategy (void);
   // return the lookup strategy
 
   TAO_LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
@@ -153,7 +153,7 @@ private:
   CORBA::ULong tablesize_;       
   // size of object lookup table
 
-  TAO_Object_Table *ot_;
+  TAO_Object_Table_Impl *ot_;
   // concrete lookup table instance
 };
 

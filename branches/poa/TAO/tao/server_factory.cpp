@@ -53,7 +53,7 @@ TAO_Server_Strategy_Factory::scheduling_strategy (void)
   return 0;
 }
 
-TAO_Object_Table *
+TAO_Object_Table_Impl *
 TAO_Server_Strategy_Factory::create_object_table (void)
 {
   return 0;
