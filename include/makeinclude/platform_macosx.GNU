@@ -1,4 +1,4 @@
-# platform_macosx.GNU,v 4.6 2001/08/14 18:57:28 bala Exp
+# $Id$
 # platform_macosx.GNU
 # support for Mac OS X 10.2
 
@@ -12,9 +12,9 @@ ifeq (,$(optimize))
   optimize = 0
 endif
 
-CC              = cc
-CXX             = c++
-CFLAGS          += -Wall -Wpointer-arith -pipe
+CC              = gcc
+CXX             = g++
+CFLAGS          += -Wall -Wpointer-arith -pipe -I/sw/include
 
 # Test for template instantiation.
 #
@@ -25,8 +25,16 @@ CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
-LDFLAGS		+= #-flat_namespace
+LDFLAGS		+= -L/sw/lib
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
+
+## dlcompat package (not part of base Darwin) is needed for dlopen().
+## Fink installer puts libraries in /sw/lib and headers in /sw/include
+## In order to install dlcompat do the following:
+##   - download fink from http://fink.sf.net
+##   - type:
+##        fink install dlcompat
+LIBS            += -ldl 
 OCFLAGS         += -O3
 RANLIB          = ranlib
 SOEXT		= dylib
