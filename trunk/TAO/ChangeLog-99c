@@ -1,3 +1,10 @@
+Fri Jul 23 02:13:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Generate a warning message if we see
+	  '-ORBCollocation YES'.  We still accept this option but it
+	  implies using global collocation table.  Thanks to Irfan for
+	  suggesting this.
+
 Fri Jul 23 02:02:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (_get_collocated_servant): The origianl
