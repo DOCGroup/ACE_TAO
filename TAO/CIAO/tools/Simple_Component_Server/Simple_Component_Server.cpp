@@ -180,7 +180,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Configuring HomeRegistrar.
-      obj = orb->resolve_initial_references ("NameService");
+      obj = orb->resolve_initial_references ("NameService"
+                                             ACE_ENV_ARG_PARAMETER);
       CosNaming::NamingContext_var ns = CosNaming::NamingContext::_narrow (obj);
       if (CORBA::is_nil (ns))
         return -1;

@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Client_init
+ * @file Client_init.h
  *
  * Initializing CIAO client side ORB, if they need to.
  *

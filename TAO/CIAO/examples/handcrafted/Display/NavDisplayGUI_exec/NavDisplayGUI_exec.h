@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file NavDisplay_exec.h
+ * @file NavDisplayGUI_exec.h
  *
  * Header file for the actual NavDisplay and NavDisplayHome component
  * implementations.

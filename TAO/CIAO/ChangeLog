@@ -1,3 +1,27 @@
+Tue Apr 22 23:07:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.cidl: Added this
+	  cidl example.
+
+	* ciao/Client_init.h:
+	* ciao/Cookies.h:
+	* ciao/Server_init.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplayE.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/Daemon.idl:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/XML_Utils.h: Fixed fuzz errors.
+
+	* examples/handcrafted/Display/RateGen/RateGen_comp.idl: Removed
+	  this unused file.
+
 Mon Apr 21 15:36:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* *: Merged with main trunk.

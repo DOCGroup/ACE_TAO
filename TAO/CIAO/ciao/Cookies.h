@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Coockies.h
+ * @file Cookies.h
  *
  * A CIAO implementation of Cookie valuetype.
  *
