@@ -41,10 +41,10 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
     return -1;
   }
 
-  Task_Entry *first_entry =
-          * ACE_static_cast (Task_Entry **, first);
-  Task_Entry *second_entry =
-          * ACE_static_cast (Task_Entry **, second);
+  const Task_Entry *first_entry =
+          * ACE_static_cast (const Task_Entry *const *, first);
+  const Task_Entry *second_entry =
+          * ACE_static_cast (const Task_Entry *const *, second);
 
   // sort blank entries to the end
   if (! first_entry)
