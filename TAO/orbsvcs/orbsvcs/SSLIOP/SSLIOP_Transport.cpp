@@ -366,7 +366,7 @@ TAO_SSLIOP_Transport::get_listen_point (
     }
 
   for (size_t index = 0;
-       index <= count;
+       index != count;
        index++)
     {
       if (local_addr.get_ip_address()
