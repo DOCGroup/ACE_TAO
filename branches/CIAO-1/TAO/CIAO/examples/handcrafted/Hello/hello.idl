@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ciao/CIAO_Component.pidl"
+
 // A plain vanilla component definition.
 
 interface Hello
@@ -10,6 +12,7 @@ interface Hello
 };
 
 #if 1
+
 component HelloWorld supports Hello
 {
   // The name of this greeting machine.
@@ -21,6 +24,7 @@ home HelloHome manages HelloWorld
 {
   factory init (in string name);
 };
+
 #else
 
 interface HelloWorld :
@@ -31,16 +35,16 @@ interface HelloWorld :
 };
 
 interface HelloHomeExplicit
-// : ::Components::CCMHome
+  : ::Components::CCMHome
 {
   HelloWorld init (in string name);
 };
 
 interface HelloHomeImplicit
-// : ::Components::KeylessCCMHome
+  : ::Components::KeylessCCMHome
 {
   HelloWorld create ()
-    //    raises (CreateFailure)
+    raises (::Components:CreateFailure)
     ;
 };
 
