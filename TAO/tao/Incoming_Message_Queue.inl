@@ -1,62 +1,9 @@
 // -*- C++ -*-
 //$Id$
-/************************************************************************/
-// Methods for TAO_Queued_Data
-/************************************************************************/
-/*static*/
-ACE_INLINE TAO_Queued_Data *
-TAO_Queued_Data::get_queued_data (void)
-{
-  // @@TODO: Use the global pool for allocationg...
-  TAO_Queued_Data *qd = 0;
-  ACE_NEW_RETURN (qd,
-                  TAO_Queued_Data,
-                  0);
-
-  return qd;
-}
-
-/*static*/
-ACE_INLINE void
-TAO_Queued_Data::release (TAO_Queued_Data *qd)
-{
-  ACE_Message_Block::release (qd->msg_block_);
-
-  // @@TODO: Use the global pool for releasing..
-  delete qd;
-}
-
-
-ACE_INLINE TAO_Queued_Data *
-TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
-{
-  // Check to see if the underlying block is on the stack. If not it
-  // is fine. If the datablock is on stack, try to make a copy of that
-  // befor doing a duplicate.
-  // @@ todo: Theoretically this should be within the Message Block,
-  // but we dont have much scope to do this in that mess. Probably in
-  // the next stage of MB rewrite we should be okay
-  ACE_Message_Block::Message_Flags fl =
-    sqd.msg_block_->self_flags ();
-
-  if (ACE_BIT_ENABLED (fl,
-                       ACE_Message_Block::DONT_DELETE))
-    (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
-
-
-  // @@TODO: Use the pool for allocation...
-  TAO_Queued_Data *qd = 0;
-  ACE_NEW_RETURN (qd,
-                  TAO_Queued_Data (sqd),
-                  0);
-
-  return qd;
-}
-
+// -*- C++ -*-
 /************************************************************************/
 // Methods for TAO_Incoming_Message_Queue
 /************************************************************************/
-
 ACE_INLINE CORBA::ULong
 TAO_Incoming_Message_Queue::queue_length (void)
 {
@@ -119,4 +66,34 @@ ACE_INLINE TAO_Queued_Data *
 TAO_Incoming_Message_Queue::get_node (void)
 {
   return TAO_Queued_Data::get_queued_data ();
+}
+
+/************************************************************************/
+// Methods  for TAO_Queued_Data
+/************************************************************************/
+
+/*static*/
+ACE_INLINE void
+TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
+{
+  size_t newsize =
+    ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+
+  ACE_Data_Block *db =
+    mb.data_block ()->clone_nocopy ();
+
+  if (db->size (newsize) == -1)
+    return;
+
+  ACE_Message_Block tmp (db);
+  ACE_CDR::mb_align (&tmp);
+
+  tmp.copy (mb.rd_ptr (), mb.length());
+  mb.data_block (tmp.data_block ()->duplicate ());
+
+  mb.rd_ptr (tmp.rd_ptr ());
+  mb.wr_ptr (tmp.wr_ptr ());
+
+  // Remove the DONT_DELETE flags from mb
+  mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 }

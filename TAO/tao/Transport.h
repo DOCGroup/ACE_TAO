@@ -135,8 +135,8 @@ protected:
  * - A per-message 'waiting object'
  * - A per-message timeout
  *
- * The Transport object provides a single method to send messages
- * (send_message ()).
+ * The Transport object provides a single method to send request
+ * messages (send_request_message ()).
  *
  * <H3>The incoming data path:</H3>
  *
@@ -170,7 +170,7 @@ protected:
  * to the higher layers of the ORB. The problems stem from the
  * following
  *  (a) Data is bigger than the buffer that we have on stack
- *  (b) Transports like TCP do not guarentee availability of the whole
+ *  (b) Transports like TCP do not guarantee availability of the whole
  *      chunk of data in one shot. Data could trickle in byte by byte.
  *  (c) Single read gives multiple messages
  *
@@ -199,9 +199,30 @@ protected:
  *       message from the queue and processes that. Once the queue
  *       is drained the last thread resumes the handle.
  *
+ * <H3> Sending Replies </H3>
+ *
+ * We could use the outgoing path of the ORB to send replies. This
+ * would allow us to reuse most of the code in the outgoing data
+ * path. We were doing this till TAO-1.2.3. We run in to
+ * problems. When wrinting the reply gets flow controlled, the ORB
+ * tries to flush the message by going into the reactor. This resulted
+ * in unnecessary nesting. The thread that gets into the Reactor could
+ * potentially handle other messages (incoming or outgoing) and the
+ * stack starts growing leading to crashes.
+ *
+ * <H4> Solution to the nesting problem </H4>
+ *
+ * If a thread sending replies gets flow controlled, the ORB would be
+ * healthier if it just copies the message and leaves it in the
+ * queue. It can go back to wait in the reactor by exiting the
+ * loop. The underlying assumption is that the thread trying to send a
+ * reply is doing so in the first place it was waiting in the reactor
+ to send
+ *
+ *
  * <B>See Also:</B>
  *
- * http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
+ * http://deuce.doc.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
 class TAO_Export TAO_Transport : private TAO_Synch_Refcountable
@@ -574,7 +595,6 @@ public:
    * must be 'formatted', i.e. the message_size field in the GIOP
    * header can finally be set to the proper value.
    *
-   * @todo Another generic method, move to TAO_Transport.
    */
   // @@ lockme
   virtual int send_message (TAO_OutputCDR &stream,
