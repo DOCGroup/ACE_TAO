@@ -318,28 +318,28 @@ LINK32=link.exe
 # PROP Intermediate_Dir "x86CE/Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
+EMPFILE=empfile.exe
+# ADD BASE EMPFILE -COPY
+# ADD EMPFILE -COPY
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /pdb:none /incremental:no
 # ADD LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none /incremental:no
-EMPFILE=empfile.exe
-# ADD BASE EMPFILE -COPY
-# ADD EMPFILE -COPY
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\ /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\ /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
 
@@ -355,28 +355,28 @@ EMPFILE=empfile.exe
 # PROP Intermediate_Dir "Sh3CE/Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=shcl.exe
-# ADD BASE CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
-# ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
+PFILE=pfile.exe
+# ADD BASE PFILE COPY
+# ADD PFILE COPY
 LINK32=link.exe
 # ADD BASE LINK32 advapi32.lib commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /pdb:".\ace.pdb" /debug /machine:SH3 /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
 # ADD LINK32 advapi32.lib commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /pdb:".\ace.pdb" /debug /machine:SH3 /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /fixed:no /pdb:none /nodefaultlib
-PFILE=pfile.exe
-# ADD BASE PFILE COPY
-# ADD PFILE COPY
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
+# ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
+CPP=shcl.exe
+# ADD BASE CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /I "..\\ /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /I "..\\ /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 
 !ENDIF 
 
@@ -420,7 +420,6 @@ DEP_CPP_ACE_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -486,6 +485,7 @@ DEP_CPP_ACE_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ACE_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -527,7 +527,6 @@ DEP_CPP_ACTIV=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -611,6 +610,7 @@ DEP_CPP_ACTIV=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ACTIV=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -652,7 +652,6 @@ DEP_CPP_ADDR_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -671,6 +670,7 @@ DEP_CPP_ADDR_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ADDR_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -713,7 +713,6 @@ DEP_CPP_ARGV_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -762,6 +761,7 @@ DEP_CPP_ARGV_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ARGV_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -803,7 +803,6 @@ DEP_CPP_ARRAY=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -822,6 +821,7 @@ DEP_CPP_ARRAY=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ARRAY=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -868,7 +868,6 @@ DEP_CPP_ASYNC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -921,6 +920,7 @@ DEP_CPP_ASYNC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ASYNC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -965,7 +965,6 @@ DEP_CPP_ASYNCH=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -1049,6 +1048,7 @@ DEP_CPP_ASYNCH=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ASYNCH=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1117,7 +1117,6 @@ DEP_CPP_CONNE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Connector.h"\
 	".\Connector.i"\
 	".\Containers.cpp"\
@@ -1221,6 +1220,7 @@ DEP_CPP_CONNE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_CONNE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1261,7 +1261,6 @@ DEP_CPP_CORBA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -1332,6 +1331,7 @@ DEP_CPP_CORBA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_CORBA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1371,7 +1371,6 @@ DEP_CPP_CORBA_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\CORBA_Ref.h"\
 	".\CORBA_Ref.i"\
 	".\Log_Msg.h"\
@@ -1392,6 +1391,7 @@ DEP_CPP_CORBA_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_CORBA_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1431,7 +1431,6 @@ DEP_CPP_DATE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Date_Time.h"\
 	".\Date_Time.i"\
 	".\Log_Msg.h"\
@@ -1452,6 +1451,7 @@ DEP_CPP_DATE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DATE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1493,7 +1493,6 @@ DEP_CPP_DEV_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\DEV.h"\
 	".\DEV.i"\
 	".\DEV_Addr.h"\
@@ -1518,6 +1517,7 @@ DEP_CPP_DEV_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DEV_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1559,7 +1559,6 @@ DEP_CPP_DEV_A=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\DEV_Addr.h"\
 	".\DEV_Addr.i"\
 	".\Log_Msg.h"\
@@ -1580,6 +1579,7 @@ DEP_CPP_DEV_A=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DEV_A=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1621,7 +1621,6 @@ DEP_CPP_DEV_CO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\DEV.h"\
 	".\DEV.i"\
 	".\DEV_Addr.h"\
@@ -1650,6 +1649,7 @@ DEP_CPP_DEV_CO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DEV_CO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1691,7 +1691,6 @@ DEP_CPP_DEV_I=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\DEV.h"\
 	".\DEV.i"\
 	".\DEV_Addr.h"\
@@ -1718,6 +1717,7 @@ DEP_CPP_DEV_I=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DEV_I=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1758,7 +1758,6 @@ DEP_CPP_DUMP_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Dump.h"\
 	".\Dump_T.cpp"\
 	".\Dump_T.h"\
@@ -1793,6 +1792,7 @@ DEP_CPP_DUMP_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DUMP_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1832,7 +1832,6 @@ DEP_CPP_DYNAM=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Dynamic.h"\
 	".\Dynamic.i"\
 	".\Log_Msg.h"\
@@ -1853,6 +1852,7 @@ DEP_CPP_DYNAM=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DYNAM=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -1893,7 +1893,6 @@ DEP_CPP_DYNAMI=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -1963,6 +1962,7 @@ DEP_CPP_DYNAMI=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_DYNAMI=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2003,7 +2003,6 @@ DEP_CPP_EVENT=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -2054,6 +2053,7 @@ DEP_CPP_EVENT=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_EVENT=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2093,7 +2093,6 @@ DEP_CPP_EVENT_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Event_Handler_T.h"\
@@ -2116,6 +2115,7 @@ DEP_CPP_EVENT_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_EVENT_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2155,7 +2155,6 @@ DEP_CPP_FIFO_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FIFO.h"\
 	".\FIFO.i"\
 	".\IPC_SAP.h"\
@@ -2178,6 +2177,7 @@ DEP_CPP_FIFO_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FIFO_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2217,7 +2217,6 @@ DEP_CPP_FIFO_R=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FIFO.h"\
 	".\FIFO.i"\
 	".\FIFO_Recv.h"\
@@ -2242,6 +2241,7 @@ DEP_CPP_FIFO_R=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FIFO_R=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2281,7 +2281,6 @@ DEP_CPP_FIFO_RE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FIFO.h"\
 	".\FIFO.i"\
 	".\FIFO_Recv.h"\
@@ -2308,6 +2307,7 @@ DEP_CPP_FIFO_RE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FIFO_RE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2347,7 +2347,6 @@ DEP_CPP_FIFO_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FIFO.h"\
 	".\FIFO.i"\
 	".\FIFO_Send.h"\
@@ -2372,6 +2371,7 @@ DEP_CPP_FIFO_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FIFO_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2411,7 +2411,6 @@ DEP_CPP_FIFO_SE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FIFO.h"\
 	".\FIFO.i"\
 	".\FIFO_Send.h"\
@@ -2438,6 +2437,7 @@ DEP_CPP_FIFO_SE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FIFO_SE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2479,7 +2479,6 @@ DEP_CPP_FILE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FILE.h"\
 	".\FILE.i"\
 	".\FILE_Addr.h"\
@@ -2504,6 +2503,7 @@ DEP_CPP_FILE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FILE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2545,7 +2545,6 @@ DEP_CPP_FILE_A=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FILE_Addr.h"\
 	".\FILE_Addr.i"\
 	".\Log_Msg.h"\
@@ -2566,6 +2565,7 @@ DEP_CPP_FILE_A=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FILE_A=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2607,7 +2607,6 @@ DEP_CPP_FILE_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FILE.h"\
 	".\FILE.i"\
 	".\FILE_Addr.h"\
@@ -2636,6 +2635,7 @@ DEP_CPP_FILE_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FILE_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2677,7 +2677,6 @@ DEP_CPP_FILE_I=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\FILE.h"\
 	".\FILE.i"\
 	".\FILE_Addr.h"\
@@ -2704,6 +2703,7 @@ DEP_CPP_FILE_I=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FILE_I=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2744,7 +2744,6 @@ DEP_CPP_FILEC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -2812,6 +2811,7 @@ DEP_CPP_FILEC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FILEC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2852,7 +2852,6 @@ DEP_CPP_FUTUR=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Future.h"\
@@ -2885,6 +2884,7 @@ DEP_CPP_FUTUR=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_FUTUR=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2924,7 +2924,6 @@ DEP_CPP_GET_O=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Get_Opt.h"\
 	".\Get_Opt.i"\
 	".\Log_Msg.h"\
@@ -2945,6 +2944,7 @@ DEP_CPP_GET_O=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_GET_O=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -2984,7 +2984,6 @@ DEP_CPP_HANDL=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\Log_Msg.h"\
@@ -3005,6 +3004,7 @@ DEP_CPP_HANDL=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_HANDL=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3044,7 +3044,6 @@ DEP_CPP_HIGH_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\High_Res_Timer.h"\
 	".\High_Res_Timer.i"\
 	".\Log_Msg.h"\
@@ -3065,6 +3064,7 @@ DEP_CPP_HIGH_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_HIGH_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3106,7 +3106,6 @@ DEP_CPP_INET_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\Log_Msg.h"\
@@ -3127,6 +3126,7 @@ DEP_CPP_INET_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_INET_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3194,7 +3194,6 @@ DEP_CPP_IO_SA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IO_SAP.h"\
 	".\IO_SAP.i"\
 	".\Log_Msg.h"\
@@ -3215,6 +3214,7 @@ DEP_CPP_IO_SA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_IO_SA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3256,7 +3256,6 @@ DEP_CPP_IOSTR=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\INET_Addr.h"\
@@ -3283,6 +3282,7 @@ DEP_CPP_IOSTR=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_IOSTR=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3322,7 +3322,6 @@ DEP_CPP_IPC_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -3343,6 +3342,7 @@ DEP_CPP_IPC_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_IPC_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3385,7 +3385,6 @@ DEP_CPP_LOCAL=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -3476,6 +3475,7 @@ DEP_CPP_LOCAL=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LOCAL=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3516,7 +3516,6 @@ DEP_CPP_LOCAL_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -3589,6 +3588,7 @@ DEP_CPP_LOCAL_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LOCAL_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3631,7 +3631,6 @@ DEP_CPP_LOG_M=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -3703,6 +3702,7 @@ DEP_CPP_LOG_M=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LOG_M=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3742,7 +3742,6 @@ DEP_CPP_LOG_R=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -3761,6 +3760,7 @@ DEP_CPP_LOG_R=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LOG_R=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3802,7 +3802,6 @@ DEP_CPP_LSOCK=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -3827,6 +3826,7 @@ DEP_CPP_LSOCK=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3868,7 +3868,6 @@ DEP_CPP_LSOCK_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -3908,6 +3907,7 @@ DEP_CPP_LSOCK_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -3949,7 +3949,6 @@ DEP_CPP_LSOCK_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -3980,6 +3979,7 @@ DEP_CPP_LSOCK_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4021,7 +4021,6 @@ DEP_CPP_LSOCK_CO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -4061,6 +4060,7 @@ DEP_CPP_LSOCK_CO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK_CO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4102,7 +4102,6 @@ DEP_CPP_LSOCK_D=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -4131,6 +4130,7 @@ DEP_CPP_LSOCK_D=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK_D=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4172,7 +4172,6 @@ DEP_CPP_LSOCK_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -4207,6 +4206,7 @@ DEP_CPP_LSOCK_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_LSOCK_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4247,7 +4247,6 @@ DEP_CPP_MALLO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -4296,6 +4295,7 @@ DEP_CPP_MALLO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_MALLO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4335,7 +4335,6 @@ DEP_CPP_MEM_M=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -4356,6 +4355,7 @@ DEP_CPP_MEM_M=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_MEM_M=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4396,7 +4396,6 @@ DEP_CPP_MEMOR=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -4445,6 +4444,7 @@ DEP_CPP_MEMOR=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_MEMOR=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4485,7 +4485,6 @@ DEP_CPP_MESSA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -4536,6 +4535,7 @@ DEP_CPP_MESSA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_MESSA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4575,7 +4575,6 @@ DEP_CPP_METHO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -4595,6 +4594,7 @@ DEP_CPP_METHO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_METHO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4635,7 +4635,6 @@ DEP_CPP_MULTI=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -4734,6 +4733,7 @@ DEP_CPP_MULTI=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_MULTI=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4776,7 +4776,6 @@ DEP_CPP_NAME_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -4857,6 +4856,7 @@ DEP_CPP_NAME_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_NAME_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4896,7 +4896,6 @@ DEP_CPP_NAME_R=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -4917,6 +4916,7 @@ DEP_CPP_NAME_R=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_NAME_R=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -4959,7 +4959,6 @@ DEP_CPP_NAME_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5041,6 +5040,7 @@ DEP_CPP_NAME_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_NAME_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5091,7 +5091,6 @@ DEP_CPP_NAMIN=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5188,6 +5187,7 @@ DEP_CPP_NAMIN=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_NAMIN=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5231,7 +5231,6 @@ DEP_CPP_OBJEC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5304,6 +5303,7 @@ DEP_CPP_OBJEC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_OBJEC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5343,7 +5343,6 @@ DEP_CPP_OBSTA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -5363,6 +5362,7 @@ DEP_CPP_OBSTA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_OBSTA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5408,7 +5408,6 @@ DEP_CPP_OS_CP=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5459,6 +5458,7 @@ DEP_CPP_OS_CP=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_OS_CP=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5487,7 +5487,6 @@ DEP_CPP_OS_CP=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5584,6 +5583,9 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_OS_CP=\
+	".\config.h"\
+	
 
 !ENDIF 
 
@@ -5611,7 +5613,6 @@ DEP_CPP_PARSE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5709,6 +5710,7 @@ DEP_CPP_PARSE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PARSE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5750,7 +5752,6 @@ DEP_CPP_PIPE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -5786,6 +5787,7 @@ DEP_CPP_PIPE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PIPE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5826,7 +5828,6 @@ DEP_CPP_PRIOR=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -5905,6 +5906,7 @@ DEP_CPP_PRIOR=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PRIOR=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -5947,7 +5949,6 @@ DEP_CPP_PROAC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6054,6 +6055,7 @@ DEP_CPP_PROAC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PROAC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6096,7 +6098,6 @@ DEP_CPP_PROCE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6147,6 +6148,7 @@ DEP_CPP_PROCE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PROCE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6187,7 +6189,6 @@ DEP_CPP_PROCES=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Log_Msg.h"\
@@ -6223,6 +6224,7 @@ DEP_CPP_PROCES=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PROCES=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6262,7 +6264,6 @@ DEP_CPP_PROFI=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\High_Res_Timer.h"\
 	".\High_Res_Timer.i"\
 	".\Log_Msg.h"\
@@ -6286,6 +6287,7 @@ DEP_CPP_PROFI=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_PROFI=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6326,7 +6328,6 @@ DEP_CPP_REACT=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6420,6 +6421,7 @@ DEP_CPP_REACT=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REACT=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6460,7 +6462,6 @@ DEP_CPP_READ_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6527,6 +6528,7 @@ DEP_CPP_READ_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_READ_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6574,7 +6576,6 @@ DEP_CPP_REGIS=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -6595,6 +6596,7 @@ DEP_CPP_REGIS=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REGIS=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6645,7 +6647,6 @@ DEP_CPP_REGIST=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6731,6 +6732,7 @@ DEP_CPP_REGIST=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REGIST=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6773,7 +6775,6 @@ DEP_CPP_REMOT=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6856,6 +6857,7 @@ DEP_CPP_REMOT=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REMOT=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -6898,7 +6900,6 @@ DEP_CPP_REMOTE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -6989,6 +6990,7 @@ DEP_CPP_REMOTE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REMOTE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7028,7 +7030,6 @@ DEP_CPP_SCHED=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -7049,6 +7050,7 @@ DEP_CPP_SCHED=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SCHED=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7091,7 +7093,6 @@ DEP_CPP_SELEC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -7186,6 +7187,7 @@ DEP_CPP_SELEC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SELEC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7232,7 +7234,6 @@ DEP_CPP_SERVI=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -7337,6 +7338,7 @@ DEP_CPP_SERVI=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVI=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7377,7 +7379,6 @@ DEP_CPP_SERVIC=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -7442,6 +7443,7 @@ DEP_CPP_SERVIC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVIC=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7484,7 +7486,6 @@ DEP_CPP_SERVICE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -7586,6 +7587,7 @@ DEP_CPP_SERVICE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVICE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7626,7 +7628,6 @@ DEP_CPP_SERVICE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Log_Msg.h"\
@@ -7664,6 +7665,7 @@ DEP_CPP_SERVICE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVICE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7704,7 +7706,6 @@ DEP_CPP_SERVICE_R=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Log_Msg.h"\
@@ -7744,6 +7745,7 @@ DEP_CPP_SERVICE_R=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVICE_R=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7784,7 +7786,6 @@ DEP_CPP_SERVICE_T=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -7882,8 +7883,37 @@ DEP_CPP_SERVICE_T=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SERVICE_T=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" ==\
+ "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Memory.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -7921,7 +7951,6 @@ DEP_CPP_SHARE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -7945,6 +7974,7 @@ DEP_CPP_SHARE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SHARE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -7984,7 +8014,6 @@ DEP_CPP_SHARED=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -8008,6 +8037,7 @@ DEP_CPP_SHARED=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SHARED=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8047,7 +8077,6 @@ DEP_CPP_SHARED_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -8068,6 +8097,7 @@ DEP_CPP_SHARED_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SHARED_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8108,7 +8138,6 @@ DEP_CPP_SIGNA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -8157,6 +8186,7 @@ DEP_CPP_SIGNA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SIGNA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8198,7 +8228,6 @@ DEP_CPP_SOCK_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -8221,6 +8250,7 @@ DEP_CPP_SOCK_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8263,7 +8293,6 @@ DEP_CPP_SOCK_A=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\INET_Addr.h"\
@@ -8308,6 +8337,7 @@ DEP_CPP_SOCK_A=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_A=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8349,7 +8379,6 @@ DEP_CPP_SOCK_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -8376,6 +8405,7 @@ DEP_CPP_SOCK_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8417,7 +8447,6 @@ DEP_CPP_SOCK_CO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\INET_Addr.h"\
@@ -8451,6 +8480,7 @@ DEP_CPP_SOCK_CO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_CO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8493,7 +8523,6 @@ DEP_CPP_SOCK_D=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Handle_Set.h"\
@@ -8533,6 +8562,7 @@ DEP_CPP_SOCK_D=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_D=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8574,7 +8604,6 @@ DEP_CPP_SOCK_DG=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -8603,6 +8632,7 @@ DEP_CPP_SOCK_DG=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_DG=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8644,7 +8674,6 @@ DEP_CPP_SOCK_DGR=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -8673,6 +8702,7 @@ DEP_CPP_SOCK_DGR=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_DGR=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8714,7 +8744,6 @@ DEP_CPP_SOCK_I=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -8739,6 +8768,7 @@ DEP_CPP_SOCK_I=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_I=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8780,7 +8810,6 @@ DEP_CPP_SOCK_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -8809,6 +8838,7 @@ DEP_CPP_SOCK_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SOCK_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8850,7 +8880,6 @@ DEP_CPP_SPIPE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -8875,6 +8904,7 @@ DEP_CPP_SPIPE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SPIPE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8916,7 +8946,6 @@ DEP_CPP_SPIPE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -8944,6 +8973,7 @@ DEP_CPP_SPIPE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SPIPE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -8985,7 +9015,6 @@ DEP_CPP_SPIPE_A=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9006,6 +9035,7 @@ DEP_CPP_SPIPE_A=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SPIPE_A=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9047,7 +9077,6 @@ DEP_CPP_SPIPE_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -9076,6 +9105,7 @@ DEP_CPP_SPIPE_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SPIPE_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9117,7 +9147,6 @@ DEP_CPP_SPIPE_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -9144,6 +9173,7 @@ DEP_CPP_SPIPE_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SPIPE_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9184,7 +9214,6 @@ DEP_CPP_SSTRI=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -9249,6 +9278,7 @@ DEP_CPP_SSTRI=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SSTRI=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9289,7 +9319,6 @@ DEP_CPP_STRAT=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -9372,6 +9401,7 @@ DEP_CPP_STRAT=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_STRAT=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9411,7 +9441,6 @@ DEP_CPP_SV_ME=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9432,6 +9461,7 @@ DEP_CPP_SV_ME=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SV_ME=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9471,7 +9501,6 @@ DEP_CPP_SV_MES=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9494,6 +9523,7 @@ DEP_CPP_SV_MES=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SV_MES=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9533,7 +9563,6 @@ DEP_CPP_SV_SE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9556,6 +9585,7 @@ DEP_CPP_SV_SE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SV_SE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9595,7 +9625,6 @@ DEP_CPP_SV_SEM=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9616,6 +9645,7 @@ DEP_CPP_SV_SEM=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SV_SEM=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9655,7 +9685,6 @@ DEP_CPP_SV_SH=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -9676,6 +9705,7 @@ DEP_CPP_SV_SH=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SV_SH=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9716,7 +9746,6 @@ DEP_CPP_SVC_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -9787,6 +9816,7 @@ DEP_CPP_SVC_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SVC_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9829,7 +9859,6 @@ DEP_CPP_SVC_CO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -9931,6 +9960,7 @@ DEP_CPP_SVC_CO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SVC_CO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -9971,7 +10001,6 @@ DEP_CPP_SVC_H=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10069,6 +10098,7 @@ DEP_CPP_SVC_H=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SVC_H=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10109,7 +10139,6 @@ DEP_CPP_SYNCH=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Log_Msg.h"\
@@ -10141,6 +10170,7 @@ DEP_CPP_SYNCH=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SYNCH=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10180,7 +10210,6 @@ DEP_CPP_SYNCH_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -10200,6 +10229,7 @@ DEP_CPP_SYNCH_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SYNCH_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10240,7 +10270,6 @@ DEP_CPP_SYSTE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10290,6 +10319,7 @@ DEP_CPP_SYSTE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_SYSTE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10330,7 +10360,6 @@ DEP_CPP_TASK_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10424,6 +10453,7 @@ DEP_CPP_TASK_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TASK_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10463,7 +10493,6 @@ DEP_CPP_THREA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -10484,6 +10513,7 @@ DEP_CPP_THREA=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_THREA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10524,7 +10554,6 @@ DEP_CPP_THREAD=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10577,6 +10606,7 @@ DEP_CPP_THREAD=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_THREAD=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10616,7 +10646,6 @@ DEP_CPP_TIME_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -10637,6 +10666,7 @@ DEP_CPP_TIME_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIME_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10677,7 +10707,6 @@ DEP_CPP_TIMER=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10738,6 +10767,7 @@ DEP_CPP_TIMER=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10778,7 +10808,6 @@ DEP_CPP_TIMER_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10833,6 +10862,7 @@ DEP_CPP_TIMER_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10873,7 +10903,6 @@ DEP_CPP_TIMER_L=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -10928,6 +10957,7 @@ DEP_CPP_TIMER_L=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER_L=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -10968,7 +10998,6 @@ DEP_CPP_TIMER_Q=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11021,6 +11050,7 @@ DEP_CPP_TIMER_Q=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER_Q=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11061,7 +11091,6 @@ DEP_CPP_TIMER_QU=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11157,6 +11186,7 @@ DEP_CPP_TIMER_QU=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER_QU=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11197,7 +11227,6 @@ DEP_CPP_TIMER_W=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11254,6 +11283,7 @@ DEP_CPP_TIMER_W=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TIMER_W=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11295,7 +11325,6 @@ DEP_CPP_TLI_C=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
 	".\Log_Msg.h"\
@@ -11318,6 +11347,7 @@ DEP_CPP_TLI_C=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TLI_C=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11359,7 +11389,6 @@ DEP_CPP_TLI_A=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -11389,6 +11418,7 @@ DEP_CPP_TLI_A=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TLI_A=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11430,7 +11460,6 @@ DEP_CPP_TLI_CO=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\INET_Addr.h"\
@@ -11461,6 +11490,7 @@ DEP_CPP_TLI_CO=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TLI_CO=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11502,7 +11532,6 @@ DEP_CPP_TLI_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
 	".\IPC_SAP.h"\
@@ -11529,6 +11558,7 @@ DEP_CPP_TLI_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TLI_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11569,7 +11599,6 @@ DEP_CPP_TOKEN=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Log_Msg.h"\
@@ -11603,6 +11632,7 @@ DEP_CPP_TOKEN=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TOKEN=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11643,7 +11673,6 @@ DEP_CPP_TOKEN_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11716,6 +11745,7 @@ DEP_CPP_TOKEN_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TOKEN_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11756,7 +11786,6 @@ DEP_CPP_TOKEN_I=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11829,6 +11858,7 @@ DEP_CPP_TOKEN_I=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TOKEN_I=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11869,7 +11899,6 @@ DEP_CPP_TOKEN_M=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -11942,6 +11971,7 @@ DEP_CPP_TOKEN_M=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TOKEN_M=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -11982,7 +12012,6 @@ DEP_CPP_TOKEN_R=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -12056,6 +12085,7 @@ DEP_CPP_TOKEN_R=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TOKEN_R=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12095,7 +12125,6 @@ DEP_CPP_TRACE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -12115,6 +12144,7 @@ DEP_CPP_TRACE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TRACE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12156,7 +12186,6 @@ DEP_CPP_TTY_I=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\DEV.h"\
 	".\DEV.i"\
 	".\DEV_Addr.h"\
@@ -12186,6 +12215,7 @@ DEP_CPP_TTY_I=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TTY_I=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12225,7 +12255,6 @@ DEP_CPP_TYPED=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -12246,6 +12275,7 @@ DEP_CPP_TYPED=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TYPED=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12285,7 +12315,6 @@ DEP_CPP_TYPED_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -12313,6 +12342,7 @@ DEP_CPP_TYPED_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_TYPED_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12354,7 +12384,6 @@ DEP_CPP_UNIX_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
@@ -12375,6 +12404,7 @@ DEP_CPP_UNIX_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_UNIX_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12417,7 +12447,6 @@ DEP_CPP_UPIPE=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -12529,6 +12558,7 @@ DEP_CPP_UPIPE=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_UPIPE=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12571,7 +12601,6 @@ DEP_CPP_UPIPE_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -12682,6 +12711,7 @@ DEP_CPP_UPIPE_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_UPIPE_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12724,7 +12754,6 @@ DEP_CPP_UPIPE_S=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -12831,6 +12860,7 @@ DEP_CPP_UPIPE_S=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_UPIPE_S=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12871,7 +12901,6 @@ DEP_CPP_WFMO_=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -12957,6 +12986,7 @@ DEP_CPP_WFMO_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_WFMO_=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -12999,7 +13029,6 @@ DEP_CPP_XTREA=\
 	".\Auto_Ptr.i"\
 	".\config-win32-common.h"\
 	".\config-win32.h"\
-	".\config.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
 	".\Containers.i"\
@@ -13092,6 +13121,7 @@ DEP_CPP_XTREA=\
 	".\XtReactor.h"\
 	
 NODEP_CPP_XTREA=\
+	".\config.h"\
 	".\stdcpp.h"\
 	
 
@@ -14346,1278 +14376,134 @@ SOURCE=.\Acceptor.cpp
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Containers.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Free_List.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Module.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Singleton.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream_Modules.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" ==\
- "ACE dynamic library - Win32 (WCE x86em) CE Emulator Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Documentation"
