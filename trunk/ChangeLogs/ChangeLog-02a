@@ -1,3 +1,14 @@
+Wed Dec 20 16:18:49 2000  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/simple_test_proactor.cpp: Removed unused
+          'initial_read_size' variable from file scope.
+
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp (setup_signal_handler):
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp (Receiver::open):
+          Fixed unused variable warnings for gcc.
+
 Tue Dec 19 15:08:40 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Logging_Strategy.cpp: If ACE_LACKS_IOSTREAM_TOTALLY we'll
