@@ -1,3 +1,20 @@
+Thu Oct 16 09:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Fixed another problem with * in the after keyword.  Multiple
+          listings with * would only pick up the first one.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If install is set to . for exe's then don't do anything.
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Added support for setting ar flags and setting cpp flags on the
+          make command line.
+
 Thu Oct 16 09:02:24 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyGenerator.pm:
