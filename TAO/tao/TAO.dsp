@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="TAO" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
@@ -20,12 +20,13 @@ CFG=TAO - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -104,14 +105,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /I " ..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /I " ..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
-# SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd ..\\ /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd ..\\ /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -136,14 +137,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-# SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD ..\\ /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD ..\\ /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -3228,6 +3229,126 @@ NODEP_CPP_DEFAUL=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynAny_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynAnyC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynAnyS.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynArray_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynEnum_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynSequence_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynStruct_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynUnion_i.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\encode.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -5267,6 +5388,21 @@ DEP_CPP_IIOP_OR=\
 NODEP_CPP_IIOP_OR=\
 	"..\..\ace\sys_conf.h"\
 	
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\InconsistentTypeCodeC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
 
@@ -12475,6 +12611,10 @@ SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CurrentC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\debug.h
 # End Source File
 # Begin Source File
@@ -12484,6 +12624,34 @@ SOURCE=.\default_client.h
 # Begin Source File
 
 SOURCE=.\default_server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynAny_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynAnyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynArray_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynEnum_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynSequence_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynStruct_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynUnion_i.h
 # End Source File
 # Begin Source File
 
@@ -12512,6 +12680,10 @@ SOURCE=.\IIOP_Object.h
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
@@ -12560,6 +12732,10 @@ SOURCE=.\params.h
 # Begin Source File
 
 SOURCE=.\poa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_CORBA.h
 # End Source File
 # Begin Source File
 
@@ -12667,6 +12843,10 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynAnyC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.i
 # End Source File
 # Begin Source File
@@ -12728,10 +12908,6 @@ SOURCE=.\poaS.i
 # Begin Source File
 
 SOURCE=.\PolicyC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PolicyS.i
 # End Source File
 # Begin Source File
 
