@@ -249,8 +249,9 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 }
 
 /*
- * Strip down a name to the last component, i.e. everything after the last
- * '/' character
+ * Strip down a name to the last component, i.e. everything after the
+ last
+ * '/' or '\' character
  */
 static char *
 DRV_stripped_name(char *fn)
@@ -259,10 +260,13 @@ DRV_stripped_name(char *fn)
     long        l;
 
     if (n == NULL)
-        return NULL;
+      return NULL;
     l = strlen(n);
-    for (n += l; l > 0 && *n != '/'; l--, n--);
-    if (*n == '/') n++;
+    int slash_found = 0;
+    for (n += l-1; n >= fn && !slash_found; n--)
+        slash_found = (*n == '/' || *n == '\\');
+    n += 1;
+    if (slash_found) n += 1;
     return n;
 }
 
