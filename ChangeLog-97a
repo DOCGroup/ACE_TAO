@@ -1,3 +1,9 @@
+Thu Apr  3 01:48:01 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Malloc.i (malloc): ACE_New_Allocator::malloc only calls new
+	  if nbytes is > 0.  Purify was complaining that 0 bytes were
+ 	  allocated but never deleted.  Go figure.
+
 Wed Apr 02 10:09:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-sunc++-4.1.h: added template specialization
