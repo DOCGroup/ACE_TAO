@@ -1,3 +1,31 @@
+Fri Jan 26 14:13:32 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+	* ace/OS.i (mutex_timedlock):
+
+	  Wrapped the pthread_mutex_timedlock() function.  It times out if
+	  a lock hasn't been acquired by the given absolute time.
+
+	* ace/Synch.h:
+	* ace/Synch.i (acquire):
+
+	  Added versions of this method that accept an ACE_Time_Value.
+	  They are used to prevent blocking definitely while waiting for a
+	  given mutex to become available.
+
+	* ace/config-linux.h (ACE_HAS_MUTEX_TIMEOUTS):
+
+	  glibc 2.2.x supports the pthread_mutex_timedlock() function.
+
+	* ace/config-linux-common.h:
+
+	  Undefine ACE_LACKS_{LLSEEK,LSEEK64}_PROTOTYPE prior to include
+	  the KCC configuration file.
+
+	* ace/README:
+
+	  Added ACE_HAS_MUTEX_TIMEOUTS to the list of ACE macros.
+
 Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (dump): Fixed some unintentional tabs.  Thanks

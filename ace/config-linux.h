@@ -4,8 +4,8 @@
 // The following configuration file is designed to work for Linux
 // platforms using GNU C++.
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_LINUX_H
+#define ACE_CONFIG_LINUX_H
 #include "ace/pre.h"
 
 #include "ace/config-linux-common.h"
@@ -37,20 +37,34 @@
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
+#if !(__GLIBC_PREREQ (2, 1))
    // Older versions of glibc lacked reentrant netdb functions
 #  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
    // glibc < 2.1 lacks pthread_attr_setstacksize()
 #  define ACE_LACKS_THREAD_STACK_SIZE
-#endif /*  (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1) */
+#endif /* (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1) */
 
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif
+
 #include /**/ <pthread.h>
-#endif /*ACE_MT_SAFE*/
+
+#if __GLIBC_PREREQ (2, 2)
+   // glibc 2.2.x or better has pthread_mutex_timedlock()
+#  define ACE_HAS_MUTEX_TIMEOUTS
+#  if !defined (_XOPEN_SOURCE) \
+   || (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) < 600)
+// pthread_mutex_timedlock() prototype is not visible if _XOPEN_SOURCE
+// is not >= 600 (i.e. for XPG6).
+extern int pthread_mutex_timedlock (pthread_mutex_t *mutex,
+                                    const struct timespec * abstime);
+#  endif  /* _XOPEN_SOURCE && _XOPEN_SOURCE < 600 */
+#endif  /* (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) */
+
+#endif  /* ACE_MT_SAFE */
 
 
 #include "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_LINUX_H */

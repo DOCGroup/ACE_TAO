@@ -119,6 +119,8 @@
 # define ACE_HAS_STRING_CLASS
 # undef ACE_HAS_LLSEEK
 # undef ACE_HAS_LSEEK64
+# undef ACE_LACKS_LLSEEK_PROTOTYPE
+# undef ACE_LACKS_LSEEK64_PROTOTYPE
 # include "ace/config-kcc-common.h"
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
@@ -191,6 +193,13 @@
   // like shared memory and message queues.
 # define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #endif
+
+// glibc supports the mkstemp() function.
+#define ACE_HAS_MKSTEMP
+
+// glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype
+// visible, so force ACE to declare one.  Yuk!
+#define ACE_LACKS_MKSTEMP_PROTOTYPE
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
