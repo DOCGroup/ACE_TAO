@@ -584,7 +584,7 @@ idl_store_pragma (char *buf)
     {
       idl_global->ident_string (buf + 8);
     }
-  else if (ACE_OS::strncmp (buf + 8, "id", 2) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "ID", 2) == 0)
     {
       char *tmp = buf + 11;
 
