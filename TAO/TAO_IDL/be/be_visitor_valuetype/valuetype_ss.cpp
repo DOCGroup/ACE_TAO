@@ -98,20 +98,34 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << be_idt_nl
       << ": TAO_Abstract_ServantBase (rhs)," << be_nl
-      << "  TAO_ServantBase (rhs)," << be_nl
-      << "  ValueBase (rhs)," << be_nl;
+      << "  TAO_ServantBase (rhs)," << be_nl;
 
   if (concrete->is_nested ())
     {
       AST_Decl *scope = ScopeAsDecl (concrete->defined_in ());
 
       *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-          << concrete->local_name () << ") (rhs)";
+          << concrete->local_name () << ") (rhs)," << be_nl;
     }
   else
     {
       be_interface *bd = be_interface::narrow_from_decl (concrete);
-      *os << bd->full_skel_name () << " (rhs)";
+      *os << bd->full_skel_name () << " (rhs)," << be_nl;
+    }
+
+  *os << "  ValueBase (rhs)," << be_nl;
+    
+  if (node->is_nested ())
+    {
+      AST_Decl *scope = ScopeAsDecl (node->defined_in ());
+
+      *os << "  ACE_NESTED_CLASS (" << scope->name () << ", "
+          << node->local_name () << ") ()";
+    }
+  else
+    {
+      be_interface *bd = be_interface::narrow_from_decl (node);
+      *os << bd->full_skel_name () << " ()";
     }
 
   *os << be_uidt_nl << "{}" << be_nl << be_nl;
