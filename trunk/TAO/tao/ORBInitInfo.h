@@ -266,7 +266,7 @@ private:
 /**
  * @class TAO_ORBInitInfo_var
  */
-class  TAO_ORBInitInfo_var : public TAO_Base_var
+class TAO_Export TAO_ORBInitInfo_var : public TAO_Base_var
 {
 public:
   TAO_ORBInitInfo_var (void); // default constructor
