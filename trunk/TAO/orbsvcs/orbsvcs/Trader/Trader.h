@@ -1,30 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader_Base.h
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-//  Contents:
-//
-//  TAO_Trader_Factory
-//  TAO_Trader_Base
-//  TAO_Support_Attributes_i
-//  TAO_Trading_Components_i
-//  TAO_Link_Attributes_i
-//  TAO_Import_Attributes_i
-//  TAO_Sequence_Extracter_Base
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Trader_Base.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
@@ -57,34 +44,39 @@ class TAO_Trader_Base;
   // TAO_Trader_Factory
   // *************************************************************
 
+/**
+ * @class TAO_Trader_Factory
+ *
+ * @brief Uses command line arguments to construct a trader instance with
+ * the correct interface support, locking, and policy settings.
+ */
 class TAO_Trading_Export TAO_Trader_Factory
-// = TITLE
-//   Uses command line arguments to construct a trader instance with
-//   the correct interface support, locking, and policy settings.
 {
 public:
 
   typedef TAO_Trader_Base TAO_TRADER;
 
+  /**
+   * Creates an instance of the trader according to parameters whose
+   * default values can be overrided with the following command line
+   * arguments:
+   *
+   * -TSthreadsafe, default is not thread-safe
+   * -TSconformance {query, simple, stand-alone, linked}, default is linked
+   * -TSsupports_dynamic_properties {true, false}, default is true
+   * -TSsupports_modifiable_propertise {true, false}, default is true
+   * -TSdef_search_card {integer}, default is 20
+   * -TSmax_search_card {integer}, default is 50
+   * -TSdef_match_card {integer}, default is 20
+   * -TSmax_match_card {integer}, default is 50
+   * -TSdef_return_card {integer}, default is 20
+   * -TSmax_return_card {integer}, default is 50
+   * -TSdef_hop_count {integer}, default is 5,
+   * -TSmax_hop_count {integer}, default is 10
+   * -TSdef_follow_policy {always,if_no_local,local_only}, default is if_no_local,
+   * -TSmax_follow_policy {always,if_no_local,local_only}, default is always
+   */
   static TAO_TRADER* create_trader (int& argc, ACE_TCHAR** argv);
-  // Creates an instance of the trader according to parameters whose
-  // default values can be overrided with the following command line
-  // arguments:
-  //
-  // -TSthreadsafe, default is not thread-safe
-  // -TSconformance {query, simple, stand-alone, linked}, default is linked
-  // -TSsupports_dynamic_properties {true, false}, default is true
-  // -TSsupports_modifiable_propertise {true, false}, default is true
-  // -TSdef_search_card {integer}, default is 20
-  // -TSmax_search_card {integer}, default is 50
-  // -TSdef_match_card {integer}, default is 20
-  // -TSmax_match_card {integer}, default is 50
-  // -TSdef_return_card {integer}, default is 20
-  // -TSmax_return_card {integer}, default is 50
-  // -TSdef_hop_count {integer}, default is 5,
-  // -TSmax_hop_count {integer}, default is 10
-  // -TSdef_follow_policy {always,if_no_local,local_only}, default is if_no_local,
-  // -TSmax_follow_policy {always,if_no_local,local_only}, default is always
 
 protected:
 
@@ -126,10 +118,13 @@ private:
   // Attribute Classes
   // *************************************************************
 
+/**
+ * @class TAO_Lockable
+ *
+ * Class used to remove the circular dependencies between the
+ * Attribute classes and the Trader class.
+ */
 class TAO_Lockable
-// = DESCRIPTION
-//   Class used to remove the circular dependencies between the
-//   Attribute classes and the Trader class.
 {
 public:
 
@@ -137,14 +132,16 @@ public:
 };
 
 
+/**
+ * @class TAO_Support_Attributes_i
+ *
+ * @brief This class stores, allows access to and modification of
+ * trader's support attributes.
+ *
+ * Contains a reference to the trader from which it is
+ * used so it can use trader's lock.
+ */
 class TAO_Trading_Export TAO_Support_Attributes_i
-  // = TITLE
-  //     This class stores, allows access to and modification of
-  //     trader's support attributes.
-  //
-  // = DESCRIPTION
-  //     Contains a reference to the trader from which it is
-  //     used so it can use trader's lock.
 {
 public:
   // = Initialization and termination methods.
@@ -168,33 +165,35 @@ public:
 
 private:
 
+  /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
-  // A reference to the trader (needed for obtaining the lock.)
 
+  /// Indicator of whether the trader supports property modification.
   CORBA::Boolean supports_modifiable_properties_;
-  // Indicator of whether the trader supports property modification.
 
+  /// Indicator of whether the trader supports dynamic properties.
   CORBA::Boolean supports_dynamic_properties_;
-  // Indicator of whether the trader supports dynamic properties.
 
+  /// Indicator of whether the trader supports proxy offers.
   CORBA::Boolean supports_proxy_offers_;
-  // Indicator of whether the trader supports proxy offers.
 
+  /// A reference to the TypeRepostitory used by the trader.
   CORBA::Object_var type_repos_;
-  // A reference to the TypeRepostitory used by the trader.
 
+  /// Already narrowed reference to the ServiceTypeRepository.
   CosTradingRepos::ServiceTypeRepository_var service_type_repos_;
-  // Already narrowed reference to the ServiceTypeRepository.
 };
 
+/**
+ * @class TAO_Link_Attributes_i
+ *
+ * @brief This class stores, allows access to and modification of
+ * trader's link attributes.
+ *
+ * Contains a reference to the trader from which it is
+ * used so it can use trader's lock.
+ */
 class TAO_Trading_Export TAO_Link_Attributes_i
-  // = TITLE
-  //     This class stores, allows access to and modification of
-  //     trader's link attributes.
-  //
-  // = DESCRIPTION
-  //     Contains a reference to the trader from which it is
-  //     used so it can use trader's lock.
 {
 public:
   // = Initialization and termination methods.
@@ -209,21 +208,23 @@ public:
 
 private:
 
+  /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
-  // A reference to the trader (needed for obtaining the lock.)
 
+  ///
   CosTrading::FollowOption max_link_follow_policy_;
-  //
 };
 
+/**
+ * @class TAO_Import_Attributes_i
+ *
+ * @brief This class stores, allows access to and modification of
+ * trader's import attributes.
+ *
+ * Contains a reference to the trader from which it is
+ * used so it can use trader's lock.
+ */
 class TAO_Trading_Export TAO_Import_Attributes_i
-  // = TITLE
-  //     This class stores, allows access to and modification of
-  //     trader's import attributes.
-  //
-  // = DESCRIPTION
-  //     Contains a reference to the trader from which it is
-  //     used so it can use trader's lock.
 {
 public:
   // = Initialization and termination methods.
@@ -271,56 +272,57 @@ private:
 
   TAO_Lockable &locker_;
 
+  /// Upper bound of offers to be searched if <search_card>
+  /// is not specified.
   CORBA::ULong def_search_card_;
-  // Upper bound of offers to be searched if <search_card>
-  // is not specified.
 
+  /// Maximum upper bound of offers to be searched.
   CORBA::ULong max_search_card_;
-  // Maximum upper bound of offers to be searched.
 
+  /// Upper bound of matched offers to be ordered if
+  /// <match_card> is not specified).
   CORBA::ULong def_match_card_;
-  // Upper bound of matched offers to be ordered if
-  // <match_card> is not specified).
 
+  /// Maximum upper bound of matched offers to be ordered.
   CORBA::ULong max_match_card_;
-  // Maximum upper bound of matched offers to be ordered.
 
+  /// Upper bound of ordered offers to be returned if
+  /// <returned_card> is not specified.
   CORBA::ULong def_return_card_;
-  // Upper bound of ordered offers to be returned if
-  // <returned_card> is not specified.
 
+  /// Maximum upper bound of ordered offers to be returned.
   CORBA::ULong max_return_card_;
-  // Maximum upper bound of ordered offers to be returned.
 
+  /// Upper bound of depth
   CORBA::ULong max_list_;
-  // Upper bound of depth
 
+  /// Upper bound of depth of links to be traversed if <hop_count> is
+  /// not specified.
   CORBA::ULong def_hop_count_;
-  // Upper bound of depth of links to be traversed if <hop_count> is
-  // not specified.
 
+  /// Maximum upper bound of depth of links to be traversed.
   CORBA::ULong max_hop_count_;
-  // Maximum upper bound of depth of links to be traversed.
 
+  /// Default link follow policy for a particular trader.
   CosTrading::FollowOption def_follow_policy_;
-  // Default link follow policy for a particular trader.
 
+  /// Limiting link follow policy for all links of the trader -
+  /// overrides both link and importer policies.
   CosTrading::FollowOption max_follow_policy_;
-  // Limiting link follow policy for all links of the trader -
-  // overrides both link and importer policies.
 };
 
+/**
+ * @class TAO_Trading_Components_i
+ *
+ * @brief Set/get methods for references to various
+ * interfaces of the trader.
+ *
+ * Note, this class is for use in local address space only and is NOT a
+ * direct implementation of IDL methods. (Implementation of
+ * IDL methods in CosTrading::Trader_Components would need
+ * add a _duplicate call for each get method).
+ */
 class TAO_Trading_Export TAO_Trading_Components_i
-  //
-  // = TITLE
-  //     Set/get methods for references to various
-  //     interfaces of the trader.
-  //
-  // = DESCRIPTION
-  //     Note, this class is for use in local address space only and is NOT a
-  //     direct implementation of IDL methods. (Implementation of
-  //     IDL methods in CosTrading::Trader_Components would need
-  //     add a _duplicate call for each get method).
 {
 public:
 
@@ -330,40 +332,40 @@ public:
 
   // = CosTrading::TraderComponents methods.
 
+  /// Returns an object reference to the Lookup interface of the trader.
+  /// Returns nil if the trader does not support Lookup interface.
   CosTrading::Lookup_ptr lookup_if (void) const;
-  // Returns an object reference to the Lookup interface of the trader.
-  // Returns nil if the trader does not support Lookup interface.
 
+  /// Set the reference to the Lookup interface.
   void lookup_if (CosTrading::Lookup_ptr);
-  // Set the reference to the Lookup interface.
 
+  /// Returns object reference for the Register interface of the trader.
+  /// Returns nil if the trader does not support Register interface.
   CosTrading::Register_ptr register_if (void) const;
-  // Returns object reference for the Register interface of the trader.
-  // Returns nil if the trader does not support Register interface.
 
+  /// Set the reference to the Register interface of the trader.
   void register_if (CosTrading::Register_ptr);
-  // Set the reference to the Register interface of the trader.
 
+  /// Returns object reference for the Link interface of the trader.
+  /// Returns nil if the trader does not support Link interface.
   CosTrading::Link_ptr link_if (void) const;
-  // Returns object reference for the Link interface of the trader.
-  // Returns nil if the trader does not support Link interface.
 
+  /// Set the reference to the Link interface of the trader.
   void link_if (CosTrading::Link_ptr);
-  // Set the reference to the Link interface of the trader.
 
+  /// Returns object reference to the Proxy interface of the trader.
+  /// Returns nil if the trader does not support Proxy interface.
   CosTrading::Proxy_ptr proxy_if (void) const;
-  // Returns object reference to the Proxy interface of the trader.
-  // Returns nil if the trader does not support Proxy interface.
 
+  /// Set the reference to the Proxy interface of the trader.
   void proxy_if (CosTrading::Proxy_ptr);
-  // Set the reference to the Proxy interface of the trader.
 
+  /// Returns object reference for the Admin interface of the trader.
+  /// Returns nil if the trader does not support Admin interface.
   CosTrading::Admin_ptr admin_if (void) const;
-  // Returns object reference for the Admin interface of the trader.
-  // Returns nil if the trader does not support Admin interface.
 
+  /// Set the reference to the Admin interface of the trader.
   void admin_if (CosTrading::Admin_ptr);
-  // Set the reference to the Admin interface of the trader.
 
 private:
 
@@ -380,20 +382,21 @@ private:
   // TAO_Trader_Base
   // *************************************************************
 
+/**
+ * @class TAO_Trader_Base
+ *
+ * @brief TAO_Trader inherits from this "helper" class.
+ * The sole purpose of this class is to factor some of TAO_Trader's
+ * data members out, so that they would not have to be templatized
+ * and be be aware of the type of lock they use.
+ *
+ * TAO_Trader is a template class.  And while we want
+ * <import_attributes_>, <trader_components_>, and
+ * <support_attributes> use a lock contained in TAO_Trader, we do not
+ * want all these classes to be templatized.  TAO_Trader_Base class solves
+ * this problem.
+ */
 class TAO_Trading_Export TAO_Trader_Base : public TAO_Lockable
-  //
-  // = TITLE
-  //     TAO_Trader inherits from this "helper" class.
-  //     The sole purpose of this class is to factor some of TAO_Trader's
-  //     data members out, so that they would not have to be templatized
-  //     and be be aware of the type of lock they use.
-  //
-  // = DESCRIPTION
-  //     TAO_Trader is a template class.  And while we want
-  //     <import_attributes_>, <trader_components_>, and
-  //     <support_attributes> use a lock contained in TAO_Trader, we do not
-  //     want all these classes to be templatized.  TAO_Trader_Base class solves
-  //     this problem.
 {
 public:
 
@@ -428,36 +431,38 @@ public:
 
   // = Accessor for trader's lock.
 
+  /**
+   * Determine whether the identifier is a valid one (i.e., if the
+   * first character is a letter, and the subsequent ones letter,
+   * numbers, or underscores.)
+   */
   static CORBA::Boolean is_valid_identifier_name (const char* ident);
-  // Determine whether the identifier is a valid one (i.e., if the
-  // first character is a letter, and the subsequent ones letter,
-  // numbers, or underscores.)
 
 protected:
   // = Objects determining current configuration of a trader.
 
+  /// Stores and allows lookup of trader's components.
   TAO_Trading_Components_i trading_components_;
-  // Stores and allows lookup of trader's components.
 
+  /// Stores and allows access/modification of trader's import attributes.
   TAO_Import_Attributes_i import_attributes_;
-  // Stores and allows access/modification of trader's import attributes.
 
+  /// Stores and allows access/modification of trader's support attributes.
   TAO_Support_Attributes_i support_attributes_;
-  // Stores and allows access/modification of trader's support attributes.
 
+  /// Stores and allows access/modification of trader's link attributes.
   TAO_Link_Attributes_i link_attributes_;
-  // Stores and allows access/modification of trader's link attributes.
 
  protected:
 
+  /// Implemented.
   TAO_Trader_Base (void);
-  // Implemented.
 
  private:
 
+  /// Unimplemented.
   TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base);
   TAO_Trader_Base& operator= (const TAO_Trader_Base&);
-  // Unimplemented.
 };
 
 
