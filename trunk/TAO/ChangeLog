@@ -1,3 +1,64 @@
+Wed Jan 19 08:24:36 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_Impl.inl:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Pluggable_Messaging.h:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+          Adding an alternate implementation of PMB and an implementation of
+          GIOP fragment handling that only consolidates fragments when the
+          last one is received.
+
+          Partial GIOP messages are accumulated in a message block within
+          the TAO_Transport until a sufficient amount of data is collected.
+          At that point, processing occurs as usual.
+
+        * tests/GIOP_Fragments/Java_Big_Reply/Client_Task.h:
+        * tests/GIOP_Fragments/Java_Big_Reply/Client_Task.cpp:
+        * tests/GIOP_Fragments/Java_Big_Reply/Java_Big_Reply.mpc:
+        * tests/GIOP_Fragments/Java_Big_Reply/Test.idl:
+        * tests/GIOP_Fragments/Java_Big_Reply/client.cpp:
+        * tests/GIOP_Fragments/Java_Big_Reply/run_test.pl:
+        * tests/GIOP_Fragments/Java_Big_Reply/server.java:
+        * tests/GIOP_Fragments/Java_Big_Request/Java_Big_Request.mpc:
+        * tests/GIOP_Fragments/Java_Big_Request/Payload_Receiver.h:
+        * tests/GIOP_Fragments/Java_Big_Request/Payload_Receiver.cpp:
+        * tests/GIOP_Fragments/Java_Big_Request/Test.idl:
+        * tests/GIOP_Fragments/Java_Big_Request/client.java:
+        * tests/GIOP_Fragments/Java_Big_Request/run_test.pl:
+        * tests/GIOP_Fragments/Java_Big_Request/server.cpp:
+
+          When the Java client/server is run using the JDK ORB, it will
+          fragment the GIOP messages to exercise the GIOP fragment handling
+          code in TAO.
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/PMB_With_Fragments.mpc:
+        * tests/GIOP_Fragments/PMB_With_Fragments/Payload_Receiver.h:
+        * tests/GIOP_Fragments/PMB_With_Fragments/Payload_Receiver.cpp:
+        * tests/GIOP_Fragments/PMB_With_Fragments/Test.idl:
+        * tests/GIOP_Fragments/PMB_With_Fragments/dribble.pl:
+        * tests/GIOP_Fragments/PMB_With_Fragments/giop1.2_fragments.dat:
+        * tests/GIOP_Fragments/PMB_With_Fragments/giop1.2_fragments.layout:
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
+        * tests/GIOP_Fragments/PMB_With_Fragments/server.cpp:
+
+          This test uses canned GIOP 1.2 fragment data and exercises the PMB
+          code as well as GIOP fragment handling code.
+
 Wed Jan 19 12:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Endpoint.cpp:
@@ -73,120 +134,120 @@ Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan 13 11:55:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
 
-	  Include "ace/OS_NS_unistd.h" to pull in ACE_OS::getpid()
-	  declaration.
+          Include "ace/OS_NS_unistd.h" to pull in ACE_OS::getpid()
+          declaration.
 
-	  Replaced ACE_static_cast macro usage with standard C++
-	  static_cast<>.
+          Replaced ACE_static_cast macro usage with standard C++
+          static_cast<>.
 
 Thu Jan 13 11:52:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.cpp (execute):
+        * orbsvcs/tests/Concurrency/CC_command.cpp (execute):
 
-	  Use "fgetc (stdin)" instead of "getchar ()".  ACE doesn't wrap
-	  the latter.  Fixes a build error.
+          Use "fgetc (stdin)" instead of "getchar ()".  ACE doesn't wrap
+          the latter.  Fixes a build error.
 
 Thu Jan 13 01:07:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/POA.h (objectkey_prefix):
-	* tao/PortableServer/POA.cpp (objectkey_prefix):
+        * tao/PortableServer/POA.h (objectkey_prefix):
+        * tao/PortableServer/POA.cpp (objectkey_prefix):
 
-	  Changed this static array is to be an array of constant
-	  CORBA::Octets of instead of an array of non-constant
-	  CORBA::Octets.  The former is what was intended.  Also provides
-	  compiler with additional optimization opportunities.
+          Changed this static array is to be an array of constant
+          CORBA::Octets of instead of an array of non-constant
+          CORBA::Octets.  The former is what was intended.  Also provides
+          compiler with additional optimization opportunities.
 
 Wed Jan 12 23:01:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
 
-	  Fixed spelling typo.
+          Fixed spelling typo.
 
-	* tests/Portable_Interceptors/PolicyFactory/server.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp:
 
-	  Cosmetic change.
+          Cosmetic change.
 
 Wed Jan 12 22:36:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ObjRefTemplate/ORT_Adapter_Impl.h (tao_ort_template_):
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.h (tao_ort_template_):
 
-	  Removed this attribute.  A local variable within the activate()
-	  method is all that is needed.
+          Removed this attribute.  A local variable within the activate()
+          method is all that is needed.
 
-	  (ORT_Adapter_Impl):
+          (ORT_Adapter_Impl):
 
-	  Removed default constructor declaration.  The compiler generated
-	  one will now suffice since all remaining class members define
-	  suitable default constructors.
+          Removed default constructor declaration.  The compiler generated
+          one will now suffice since all remaining class members define
+          suitable default constructors.
 
-	* tao/ObjRefTemplate/ORT_Adapter_Impl.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.cpp:
 
-	  Coding convention improvements.
+          Coding convention improvements.
 
-	  (ORT_Adapter_Impl):
+          (ORT_Adapter_Impl):
 
-	  Removed default constructor implementation.  See default
-	  constructor declaration removal description above.
+          Removed default constructor implementation.  See default
+          constructor declaration removal description above.
 
-	  (activate):
+          (activate):
 
-	  Fixed invalid widening assignment from
-	  PortableInterceptor::ObjectReferenceTemplate_var to
-	  PortableInterceptor::ObjectReferenceFactory_var.
+          Fixed invalid widening assignment from
+          PortableInterceptor::ObjectReferenceTemplate_var to
+          PortableInterceptor::ObjectReferenceFactory_var.
 
-	* tao/PortableServer/ORT_Adapter.h (release):
+        * tao/PortableServer/ORT_Adapter.h (release):
 
-	  Added this new pure virtual method.  It allows the POA to
-	  explicitly release an ObjectReferenceTemplate instance without
-	  pulling in valuetype related code.
+          Added this new pure virtual method.  It allows the POA to
+          explicitly release an ObjectReferenceTemplate instance without
+          pulling in valuetype related code.
 
-	* tao/PortableServer/POA.cpp (destroy_i):
+        * tao/PortableServer/POA.cpp (destroy_i):
 
-	  Fixed memory leak related to tricky ObjectReferenceTemplate
-	  memory management.
+          Fixed memory leak related to tricky ObjectReferenceTemplate
+          memory management.
 
-	* tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.h:
 
-	  Cosmetic improvement.
+          Cosmetic improvement.
 
-	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
-	* tao/RTCORBA/Priority_Mapping_Manager.h:
-	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/RTScheduler_Manager.h:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/RTScheduler_Manager.h:
 
-	  Changed all TAO-specific "_var" classes to inherit privately,
-	  rather than publicly, from TAO_Base_var.  Public inheritance in
-	  this case is not correct since (1) the TAO-specific "_var"
-	  classes are not meant to satisfy an "IS-A" relationship with
-	  TAO_Base_var, and (2) since it allows some invalid widening
-	  assignments to occur.
+          Changed all TAO-specific "_var" classes to inherit privately,
+          rather than publicly, from TAO_Base_var.  Public inheritance in
+          this case is not correct since (1) the TAO-specific "_var"
+          classes are not meant to satisfy an "IS-A" relationship with
+          TAO_Base_var, and (2) since it allows some invalid widening
+          assignments to occur.
 
-	* tao/Valuetype/Value_VarOut_T.h (TAO_Value_Var_T):
+        * tao/Valuetype/Value_VarOut_T.h (TAO_Value_Var_T):
 
-	  Inherit privately from TAO_Base_var and declare a private copy
-	  constructor and assignment operator that accept a reference to a
-	  constant TAO_Base_var.  Prevents invalid widening assignments.
+          Inherit privately from TAO_Base_var and declare a private copy
+          constructor and assignment operator that accept a reference to a
+          constant TAO_Base_var.  Prevents invalid widening assignments.
 
-	* tao/Valuetype/Value_VarOut_T.cpp (TAO_Value_Var_T):
+        * tao/Valuetype/Value_VarOut_T.cpp (TAO_Value_Var_T):
 
-	  Explicitly initialize TAO_Base_var base class in base member
-	  initializer list of copy constructor.
+          Explicitly initialize TAO_Base_var base class in base member
+          initializer list of copy constructor.
 
-	* orbsvcs/tests/Concurrency/CC_command.cpp (execute):
+        * orbsvcs/tests/Concurrency/CC_command.cpp (execute):
 
-	  Replaced use of insecure gets() function call with one to
-	  getchar().  The latter is all that is needed since only one
-	  character is needed from stdin.
+          Replaced use of insecure gets() function call with one to
+          getchar().  The latter is all that is needed since only one
+          character is needed from stdin.
 
 Wed Jan 12 19:53:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
 
-	  Changed to not crash if ior file can not be opened.
+          Changed to not crash if ior file can not be opened.
 
-	  Added '-p' command line option to write process id to file.
+          Added '-p' command line option to write process id to file.
 
 Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
 
@@ -197,10 +258,10 @@ Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
 
 Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.cpp:
 
-	  Fixed a debug output which was appearing without the debug level
-	  being set. Thanks to Lother Werzinger for reporting this.
+          Fixed a debug output which was appearing without the debug level
+          being set. Thanks to Lother Werzinger for reporting this.
 
 Tue Jan 11 20:44:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
 

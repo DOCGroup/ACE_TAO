@@ -847,6 +847,18 @@ private:
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
 
+  /// Process a non-version specific fragment by either consolidating
+  /// the fragments or enqueuing the queueable message
+  void process_fragment (TAO_Queued_Data* fragment_message,
+                         TAO_Queued_Data* queueable_message,
+                         CORBA::Octet major,
+                         CORBA::Octet minor,
+                         TAO_Resume_Handle &rh);
+
+  /// Allocate a partial message block and store it in our
+  /// partial_message_ data member.
+  void allocate_partial_message_block (void);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
@@ -973,6 +985,9 @@ private:
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
   CORBA::Boolean first_request_;
+
+  /// Holds the partial GIOP message (if there is one)
+  ACE_Message_Block* partial_message_;
 };
 
 /**

@@ -476,3 +476,9 @@ TAO_GIOP_Message_Generator_Parser_10::minor_version (void)
   // Any harm in hardcoding??
   return 0;
 }
+
+size_t
+TAO_GIOP_Message_Generator_Parser_10::fragment_header_length (void) const
+{
+  return 0;
+}

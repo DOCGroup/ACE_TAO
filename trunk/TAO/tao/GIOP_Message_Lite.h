@@ -90,6 +90,11 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr);
 
   /// Parse the incoming messages..
+  ///
+  /// \return -1 There was some error parsing the GIOP header
+  /// \return 0  The GIOP header was parsed correctly
+  /// \return 1  There was not enough data in the message block to
+  ///            parse the header
   virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
   /// Get the message type. The return value would be one of the
@@ -98,7 +103,7 @@ public:
   /// TAO_PLUGGABLE_MESSAGE_REPLY,
   /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (void);
+  TAO_Pluggable_Message_Type message_type (void) const;
 
 
   /// Calculate the amount of data that is missing in the <incoming>
@@ -118,10 +123,6 @@ public:
 
   /// Get the details of the message parsed through the <qd>.
   virtual void get_message_data (TAO_Queued_Data *qd);
-
-  /// @@Bala: Docu???
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd);
 
   /// Process the request message that we have received on the
   /// connection
@@ -203,6 +204,10 @@ private:
   /// Header length
   virtual size_t header_length (void) const;
 
+  /// Fragment header length
+  virtual size_t fragment_header_length (CORBA::Octet major,
+                                         CORBA::Octet minor) const;
+
   virtual TAO_OutputCDR &out_stream (void);
 
 private:
@@ -248,6 +253,9 @@ private:
   /// Parse the locate reply message from the server
   int parse_locate_reply (TAO_InputCDR &input,
                           TAO_Pluggable_Reply_Params &params);
+
+  /// Initialize the relevant portions of a TAO_Queued_Data
+  void init_queued_data (TAO_Queued_Data* qd) const;
 
 private:
 

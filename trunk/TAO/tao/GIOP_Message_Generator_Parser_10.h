@@ -86,6 +86,8 @@ public:
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
 
+  /// The header length of a fragment
+  virtual size_t fragment_header_length (void) const;
 };
 
 #include /**/ "ace/post.h"
