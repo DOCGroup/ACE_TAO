@@ -149,7 +149,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   *os << "CORBA::Boolean " << node->name()
       <<                   "::_tao_unmarshal (TAO_InputCDR &strm, "
-      <<                   node->name() <<" *&new_object)" << be_nl
+      <<                   node->local_name () <<" *&new_object)" << be_nl
       <<  "{" << be_idt_nl
       <<    "CORBA::Boolean retval = 1;" << be_nl
       <<    "CORBA::ValueBase *base;   // %! should be a _var"
@@ -158,7 +158,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       <<       be_nl
 
       <<    "if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base," << be_idt_nl
-      <<       "      " << node->name ()
+      <<       "      " << node->local_name ()
       << "::_tao_obv_static_repository_id ()) )" << be_nl
       <<       "{" << be_idt_nl
       <<          "return 0;" << be_uidt_nl
@@ -182,7 +182,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       <<    "// Now base must be null or point to the unmarshaled object."
       <<      be_nl
       <<    "// Align the pointer to the right subobject." << be_nl
-      <<    "new_object = " << node->name () << "::_downcast (base);" << be_nl
+      <<    "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
       <<    "// %! unmarshal_post" << be_nl
       <<    "return 1;" << be_uidt_nl
       <<  "}\n" << be_nl;
