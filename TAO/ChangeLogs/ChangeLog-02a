@@ -1,7 +1,11 @@
+Sun Sep  9 11:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile: Updated dependencies.
+
 Fri Sep  7 17:16:50 2001  Anand Krishnan  <anandk@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl:
-	      Actually committing the file.
+	  Actually committing the file.
 
 Fri Sep  7 12:56:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
