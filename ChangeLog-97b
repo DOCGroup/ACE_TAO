@@ -4,6 +4,8 @@ Thu Sep 18 16:30:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	  on Solaris because its hard to rig up the test properly on
 	  all platforms.  We still test it thoroughly on Solaris.
 	  ACE_U_LongLong isn't used on most platforms, including Win32.
+	  Thanks to Sandro Doro <doros@aureus.sublink.org> for reporting
+	  this.
 
 	* ace/Semaphore_Test: protected declarations of test_timeout_count
 	  and timeouts because they're not used on Solaris.
