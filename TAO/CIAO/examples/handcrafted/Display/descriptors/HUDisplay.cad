@@ -6,13 +6,13 @@
 <componentassembly id="Single-process HUDisplay assembly">
   <componentfiles>
     <componentfile id="com-RateGen">
-      <fileinarchive name="RateGen/RateGen.csd"/>
+      <fileinarchive name="RateGen.csd"/>
     </componentfile>
     <componentfile id="com-GPS">
-      <fileinarchive name="GPS/GPS.csd"/>
+      <fileinarchive name="GPS.csd"/>
     </componentfile>
     <componentfile id="com-NavDisplay">
-      <fileinarchive name="NavDisplay/NavDisplay.csd"/>
+      <fileinarchive name="NavDisplay.csd"/>
     </componentfile>
   </componentfiles>
 

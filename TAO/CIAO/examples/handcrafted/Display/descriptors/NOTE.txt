@@ -1,0 +1,27 @@
+Step1:
+======
+
+W:\ACE_wrappers\TAO\CIAO\tools\Daemon\CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
+
+
+CIAO-Daemon IOR: corbaloc:iiop:1.2@localhost:10000/\14\01\0f\00RST]L\8e>\ae\cb\0
+c\00\00\00\00\00\01\00\00\00\01\00\00\00
+CIAO_Daemon is running...
+CIAO::ServerActivator_Impl::create_component_server
+ComponentServer IOR: IOR:010000003600000049444c3a6f6d672e6f72672f436f6d706f6e656
+e74732f4465706c6f796d656e742f436f6d706f6e656e745365727665723a312e300000000100000
+00000000060000000010102cd050000004349414f00cdc2051b00000014010f00525354644c8e3ec
+b070100000000000100000001000000cd02000000000000000800000001cdcdcd004f41540100000
+01400000001cdcdcd01000100000000000901010000000000
+Running ComponentServer...
+
+
+Step2:
+======
+
+W:\ACE_wrappers\TAO\CIAO\tools\Assembly_Deployer\Assembly_Manager -o ior -c test.dat
+
+Step3:
+======
+
+W:\ACE_wrappers\TAO\CIAO\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a HUDisplay.cad

@@ -38,17 +38,22 @@ namespace CIAO
    */
   typedef struct _assembly_context
   {
-    ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            Components::CCMHome_var,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> installed_homes_;
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Components::CCMHome_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> HOME_MAP;
+    HOME_MAP installed_homes_;
 
-    ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            Components::CCMObject_var,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> instantiated_components_;
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Components::CCMObject_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> COMP_MAP;
+    COMP_MAP instantiated_components_;
+
+    typedef ACE_Unbounded_Queue<Components::Deployment::ComponentServer_var> SERVER_QUEUE;
+    SERVER_QUEUE component_servers_;
   } Assembly_Context;
 
   /**
@@ -63,6 +68,7 @@ namespace CIAO
     /// Constructor
     Assembly_Builder_Visitor (CORBA::ORB_ptr o,
                               Assembly_Context &context,
+                              CIAO::ID_IMPL_MAP &idmap,
                               Deployment_Configuration &config);
 
     /// Destructor
@@ -78,12 +84,32 @@ namespace CIAO
 
     virtual int visit_componentinstantiation (Assembly_Placement::componentinstantiation *ci);
 
+    Components::Deployment::Container_ptr
+    get_current_container (void);
+
   protected:
+    /// Current Component Server.
+    Components::Deployment::ComponentServer_var compserv_;
+
+    /// Current Container.  (This shouldn't be necessary because the
+    /// component server supposedly should be able to figure out if a
+    /// component home can be installed in the same container based on
+    /// its configvalue.  However, our component server don't do that
+    /// yet, so we just install all home in a process into one single
+    /// container.)
+    Components::Deployment::Container_var container_;
+
+    /// Current Component Home.
+    Components::CCMHome_var home_;
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
     /// Context to build on.
     Assembly_Context &context_;
+
+    /// Context to build on.
+    CIAO::ID_IMPL_MAP &impl_idref_map_;
 
     /// Deployment Configuration Info.
     Deployment_Configuration &deployment_config_;
