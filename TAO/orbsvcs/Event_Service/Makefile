@@ -33,7 +33,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
-LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
+LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_BiDirGIOP $(TAO_SRVR_LIBS)
 
 Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

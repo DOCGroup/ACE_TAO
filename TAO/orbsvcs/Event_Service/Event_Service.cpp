@@ -15,6 +15,8 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
+
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
@@ -32,7 +34,8 @@ Event_Service::Event_Service (void)
     sched_impl_ (0),
     ec_impl_ (0),
     scheduler_type_ (SCHED_NONE),
-    event_service_type_ (ES_NEW)
+    event_service_type_ (ES_NEW),
+    use_bidir_giop_ (0)
 {
 }
 
@@ -191,9 +194,11 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       RtecEventChannelAdmin::EventChannel_var ec;
 
-      // If the servant name is empty, activate the servant under the default
-      // POA, else create a new child POA with persistent policies
-      if (ACE_OS::strcmp(this->servant_name_.c_str(), "") == 0)
+      // If the servant name is empty and we don't use BiDIR GIOP, activate the
+      // servant under the default POA, else create a new child POA with persistent policies
+      // the needed policies
+      int persistent = ACE_OS::strcmp(this->servant_name_.c_str(), "");
+      if ((persistent == 0) && (this->use_bidir_giop_ == 0))
         {
           // Notice that we activate *this* object with the POA, but we
           // forward all the requests to the underlying EC
@@ -203,23 +208,40 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
       else
         {
-          // Create persistent POA
-          CORBA::PolicyList policies (2);
-          policies.length (2);
+          int index = 0;
 
-          policies[0] =
-            root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          // Create child POA
+          CORBA::PolicyList policies (3);
 
-          policies[1] =
-            root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (persistent == 1)
+            {
+              policies[index++] =
+                root_poa->create_id_assignment_policy (PortableServer::USER_ID
+                                                        ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
 
-          ACE_CString persistent_poa_name = "persistentPOA";
-          PortableServer::POA_var persistent_poa =
-            root_poa->create_POA (persistent_poa_name.c_str (),
+              policies[index++] =
+                root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                                   ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+
+          if (this->use_bidir_giop_ == 1)
+            {
+              CORBA::Any pol;
+              pol <<= BiDirPolicy::BOTH;
+              policies[index++] =
+                this->orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
+                                           pol
+                                            ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+
+          policies.length (index);
+
+          ACE_CString child_poa_name = "childPOA";
+          PortableServer::POA_var child_poa =
+            root_poa->create_POA (child_poa_name.c_str (),
                                   poa_manager.in (),
                                   policies
                                   ACE_ENV_ARG_PARAMETER);
@@ -234,22 +256,22 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
               ACE_TRY_CHECK;
             }
 
-          if (CORBA::is_nil (persistent_poa.in ()))
+          if (CORBA::is_nil (child_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to initialize the persistent POA.\n"),
+                               " (%P|%t) Unable to initialize the child POA.\n"),
                               1);
 
           PortableServer::ObjectId_var ec_object_id =
             PortableServer::string_to_ObjectId(servant_name_.c_str());
 
-          persistent_poa->activate_object_with_id(ec_object_id.in(),
-                                                  this
-                                                  ACE_ENV_ARG_PARAMETER);
+          child_poa->activate_object_with_id(ec_object_id.in(),
+                                             this
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Object_var ec_obj =
-            persistent_poa->id_to_reference(ec_object_id.in()
-                                            ACE_ENV_ARG_PARAMETER);
+            child_poa->id_to_reference(ec_object_id.in()
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ec =
@@ -331,7 +353,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:q:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:q:b"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -352,6 +374,10 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
         case 'q':
           this->servant_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          break;
+
+        case 'b':
+          this->use_bidir_giop_ = 1;
           break;
 
         case 's':
@@ -414,6 +440,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                       ACE_LIB_TEXT("-s <global|local|none> ")
                       ACE_LIB_TEXT("-t <new|old_reactive|old_mt> ")
                       ACE_LIB_TEXT("-q servant_name for persistent IOR ")
+                      ACE_LIB_TEXT("-b use bidir giop ")
                       ACE_LIB_TEXT("\n"),
                       argv[0]));
           return -1;
