@@ -18,12 +18,12 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
   char *char_argv[MAX_ARGS];
   for (i = 0; i < argc && i < MAX_ARGS; ++i)
     char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
-  ACE_NEW_RETURN (server_,
-                  Reactor_Logging_Server<ACCEPTOR>
-                    (i, char_argv, ACE_Reactor::instance ()), -1);
+  ACE_NEW_NORETURN (server_,
+                    Reactor_Logging_Server<ACCEPTOR>
+                      (i, char_argv, ACE_Reactor::instance ()));
   for (i = 0; i < argc && i < MAX_ARGS; ++i)
     ACE::strdelete (char_argv[i]);
-  return 0;
+  return server_ == 0 ? -1 : 0;
 }
 
 
