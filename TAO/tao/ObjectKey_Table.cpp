@@ -94,7 +94,7 @@ TAO::ObjectKey_Table::unbind (TAO::Refcounted_ObjectKey *&key_new)
 
   // If the refcount has dropped to 1, just go ahead and unbind it
   // from the table.
-  if (key_new->decr_refcount () == 1)
+  if (key_new && key_new->decr_refcount () == 1)
     return this->unbind_i (key_new);
 
   return 0;
@@ -133,17 +133,15 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                   TAO::Refcounted_ObjectKey (key),
                   -1);
 
+
+
   int retval =  this->table_.bind (key,
                                    key_new);
 
   if (retval != -1)
-    {
-      key_new->incr_refcount ();
-    }
+    key_new->incr_refcount ();
   else
-    {
-      key_new->decr_refcount ();
-    }
+    key_new->decr_refcount ();
 
   return retval;
 }
