@@ -26,15 +26,15 @@ template <class TYPE, class ACE_LOCK>
 class ACE_Singleton : public ACE_Cleanup
 {
   // = TITLE
-  //     A Singleton Adapter the uses the Adapter pattern to turn
-  //     ordinary classes into Singletons optimized with the
-  //     Double-Checked Locking optimization pattern.
+  //     A Singleton Adapter uses the Adapter pattern to turn ordinary
+  //     classes into Singletons optimized with the Double-Checked
+  //     Locking optimization pattern.
   //
   // = DESCRIPTION
   //     This implementation is a slight variation on the GoF
   //     Singleton pattern.  In particular, a single
-  //     <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here, not
-  //     a <TYPE> instance.  The reason for this is to allow
+  //     <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here,
+  //     not a <TYPE> instance.  The reason for this is to allow
   //     registration with the <ACE_Object_Manager>, so that the
   //     Singleton can be cleaned up when the process exits.  For this
   //     scheme to work, a (static) <cleanup> function must be
