@@ -1,3 +1,14 @@
+Tue Dec 10 19:30:56 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+	  Removed all memory management from the *_forany classes. A close reading
+	  of the spec, and discussion with Bala, made it clear that this
+	  class is meant to be nothing more than a helper for the overloaded Any
+	  and CDR stream operators, and should not make any memory management
+	  decisions of its own. Thanks to Petr Tuma <petr.tuma@mff.cuni.cz>
+	  for reporting the oversight.
+
 Tue Dec 10 18:17:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp (send_message): Formatted the debug
