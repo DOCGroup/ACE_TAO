@@ -575,11 +575,14 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
-  // Set the <active_object_map_entry>.
+    void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
+    // Set the <active_object_map_entry>.
 
-  TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
-  // Get the <active_object_map_entry>.
+    TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
+    // Get the <active_object_map_entry>.
+
+    void using_servant_locator (void);
+    // We are using the servant locator for this upcall.
 
   protected:
 
@@ -624,6 +627,9 @@ public:
     TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
     // Pointer to the entry in the TAO_Active_Object_Map corresponding
     // to the servant for this request.
+
+    int using_servant_locator_;
+    // Are we using the servant locator?
 
   private:
     Servant_Upcall (const Servant_Upcall &);

@@ -203,6 +203,12 @@ TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (void) const
   return this->active_object_map_entry_;
 }
 
+ACE_INLINE void
+TAO_Object_Adapter::Servant_Upcall::using_servant_locator (void)
+{
+  this->using_servant_locator_ = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 ACE_INLINE void
