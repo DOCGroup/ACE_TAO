@@ -765,10 +765,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
   ACE_TRACE ("ACE_Select_Reactor_T::handle_error");
   if (errno == EINTR)
     return this->restart_;
-#if defined (__MVS__) || defined (ACE_WIN32)
+#if defined (__MVS__) || defined (ACE_WIN32) || defined (VXWORKS)
   // On MVS Open Edition and Win32, there can be a number of failure
   // codes on a bad socket, so check_handles on anything other than
-  // EINTR.
+  // EINTR.  VxWorks doesn't even bother to always set errno on error
+  // in select (specifically, it doesn't return EBADF for bad FDs).
   else
     return this->check_handles ();
 #else
@@ -1306,10 +1307,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::check_handles");
 
-#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
   ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
-#endif /* ACE_WIN32 || MVS || ACE_PSOS */
+#endif /* ACE_WIN32 || MVS || ACE_PSOS || VXWORKS */
 
   ACE_Event_Handler *eh = 0;
   int result = 0;
@@ -1325,13 +1326,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       if (handle == ACE_INVALID_HANDLE)
         continue;
 
-#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,
       // even though the docs say to check a handle with either select or
       // fstat, the fstat method always says the handle is ok.
       // pSOS needs to do it this way because file handles and socket handles
-      // are maintained by separate pieces of the system.
+      // are maintained by separate pieces of the system.  VxWorks needs the select
+      // variant since fstat always returns an error on socket FDs.
       rd_mask.set_bit (handle);
 
       if (ACE_OS::select (int (handle) + 1,
