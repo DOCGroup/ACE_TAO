@@ -522,6 +522,19 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
+  if (ACE_Service_Config::svc_conf_file_queue_ == 0)
+    {
+      ACE_NEW (ACE_Service_Config::svc_conf_file_queue_,
+               ACE_SVC_QUEUE);
+
+      // Load the default "svc.conf" entry here.
+      if (ACE_Service_Config::svc_queue_->enqueue_tail
+          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%p\n"),
+                    "enqueue_tail"));
+    }
+
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
