@@ -918,10 +918,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Val
 
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
+  ACE_Select_Reactor_Handle_Set fd_set;
+  fd_set.rd_mask_ = this->wait_set_.rd_mask_;
+  fd_set.wr_mask_ = this->wait_set_.wr_mask_;
+  fd_set.ex_mask_ = this->wait_set_.ex_mask_;
+
   return ACE_OS::select (int (width),
-                         this->wait_set_.rd_mask_,
-                         this->wait_set_.wr_mask_,
-                         this->wait_set_.ex_mask_,
+                         fd_set.rd_mask_,
+                         fd_set.wr_mask_,
+                         fd_set.ex_mask_,
                          timeout);
 }
 
