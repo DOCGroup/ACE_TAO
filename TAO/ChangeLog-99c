@@ -1,3 +1,8 @@
+Fri Apr  9 17:14:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* rules.tao.GNU:
+	  Fixed typos in the alternative extensions for generated files.
+
 Fri Apr  9 16:23:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/README:
