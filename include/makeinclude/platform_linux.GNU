@@ -72,7 +72,10 @@ else
   CXX = g++
 endif
 
-CFLAGS  += -W -Wall -Wpointer-arith -pipe
+# fix this
+pipes ?= 1
+
+CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads

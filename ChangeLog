@@ -1,3 +1,48 @@
+Tue Mar  2 23:57:29 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+          Added a check for "ciao" that mimics the behavior of
+          already in place for tao.  This will enable us to know
+          if it's a ciao project so we can include a ciao specific
+          rules file.
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+          Output the name of the file that can't be opened
+          instead of just saying unable to read.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+          Don't always tack on a file extension.  This was
+          vexing when trying to pass a different template file.
+          This way, you can let your shell complete the file name
+          that you find without having to hit the delete key 5 times.
+
+          Allow calls to pass the absolute path--just easier for
+          scripts to handle.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed $(CCFLAGS) $(CPPFLAGS) from the link step.  Thanks
+          to Boris Kolpackov <boris@dre.vanderbilt.edu> for pointing
+          this out.
+
+        * include/makeinclude/rules.local.GNU:
+          Make sure assignments to CLEANUP_OBJS is always additive.
+
+        * include/makeinclude/platform_chorus.GNU:
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_psosim_g++.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+          Don't always include -pipe in CFLAGS, let users
+          control it with the pipes option.
+
 Tue Mar  2 18:46:11 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:

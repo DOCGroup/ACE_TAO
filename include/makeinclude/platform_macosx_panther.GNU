@@ -16,9 +16,11 @@ ifeq (,$(versioned_so))
 endif
 with_ld = macosx
 
+pipes ?= 1
+
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe  
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double  
 
 DCFLAGS         += -g
 DLD             = libtool

@@ -24,10 +24,11 @@ PSS_BSP_LIB     = $(PSS_BSP)/bsp.a
 
 debug = 1
 optimize = 1
+pipes ?=1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
+CFLAGS          += -W -Wall -Wpointer-arith #### -Winline
 
 
 # -w suppresses warnings
