@@ -2,7 +2,11 @@ Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: map ACE_dynamic_cast to static_cast with Sun C++,
           without RTTI, to avoid warning about using dynamic_cast
-          without RTTI.
+          without RTTI.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for reporting this.
+
+        * include/makeinclude/wrapper_macros.GNU,ACE-INSTALL.html:
+          added rtti make option.
 
 Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
