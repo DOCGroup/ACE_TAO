@@ -36,7 +36,7 @@ ACE_Process::wait (ACE_exitcode *status,
                    int wait_options)
 {
   return ACE_OS::wait (this->getpid (),
-                       status,
+                       ACE_static_cast (int*, status),
                        wait_options);
 }
 

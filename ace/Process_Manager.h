@@ -230,7 +230,7 @@ public:
   // ACE_INVALID_PID on error.
 
   int reap (pid_t pid = -1,
-            int *stat_loc = 0,
+            ACE_exitcode *stat_loc = 0,
             int options = WNOHANG);
   // Reap the result of a single process by calling <ACE_OS::waitpid>,
   // therefore, this method is not portable to Win32.  If the child is
