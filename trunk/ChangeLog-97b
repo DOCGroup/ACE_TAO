@@ -1,3 +1,11 @@
+Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Threads/tss1.cpp: replaced ACE_SYNCH_1 and _2 with
+          _DECL and _USE.
+
+        * ace/config-linux{,-common}.h: created config-linux-common.h
+          and moved alpha-specific defines to it.
+
 Fri Nov 07 10:05:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.40, released Fri Nov 07 10:05:12 1997.
@@ -41,7 +49,7 @@ Thu Nov  6 23:05:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
         * Changed the obtusely named ACE_SYNCH_1 and ACE_SYNCH_2 macros to
  	  ACE_SYNCH_DECL and ACE_SYNCH_USE, respectively.  Thanks to Mike
  	  Kamrad <J.M.KAMRAD.II@cdev.com> for suggesting this.
- 
+
 	* ace/Select_Reactor.cpp, ace/ACE.cpp: Broaded the comparison so
  	  that we only try to use {set|get}rlimit() if ACE_LACKS_RLIMIT is
  	  *false*.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
@@ -79,14 +87,14 @@ Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
  	  parameter const ACE_Addr &local_sap = ACE_Addr::sap_any will
  	  cause a copy of sap_any to be made and passed to the method,
  	  invalidating the memory address comparison.
- 	
+
 	  The following files were effected:
 
 	  Asynch_Acceptor.cpp
- 	  SOCK_Acceptor.cpp 
-	  SOCK_CODgram.cpp 
+ 	  SOCK_Acceptor.cpp
+	  SOCK_CODgram.cpp
 	  SOCK_Dgram.cpp
- 	  TLI_Acceptor.cpp 
+ 	  TLI_Acceptor.cpp
 	  TLI_Connector.cpp
 
 	* ace/Addr.cpp: Made sure that the type and size of
