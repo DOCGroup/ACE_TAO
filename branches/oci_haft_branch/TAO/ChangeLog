@@ -12,11 +12,12 @@ Tue Oct 21 09:49:51 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup.idl:
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-          Modify FactoryRegistry interface to register factories by role, not by type
-
+          Modify FactoryRegistry interface to register factories by
+          role, not by type
 
         * orbsvcs/tests/FT_App/FT_App.mpc:
-          remove unneeded dependancies for ft_client. {ft_client is !NOT! JUnit.}
+          remove unneeded dependancies for ft_client. {ft_client is
+          !NOT! JUnit.}
 
         * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
         * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
@@ -29,15 +30,34 @@ Tue Oct 21 09:49:51 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
         * orbsvcs/tests/FT_App/run_test_notifier.pl:
         * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
-          Support the "roles" concept.  i.e. distinguish between the interface implemented
-          by a replica (its type_id) and its capabilities and purpose (its role.)
+          Support the "roles" concept.  i.e. distinguish between the
+          interface implemented by a replica (its type_id) and its
+          capabilities and purpose (its role.)
 
         * orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
           add /**/ to pre.h and post.h includes
 
-
         These changes were made in the oci_haft branch.
 
+Fri Oct 17 11:26:25 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+          Improved the implementation of the shutdown() operation.
+          Instead of directly shutting down the ORB, it sets a quit
+          flag that is returned by idle() the next time it is called
+          from TAO::Utils::Server_Main<>::run().  That way, the
+          Replication Manager shuts down in a nice clean fashion.
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+          Added a simple client to control the Replication Manager.
+          Right now, all it can do is shut it down.
+
+        * orbsvcs/tests/FT_App/run_test_replication_mgr.pl:
+          Shut down the Replication Manager to cleanly end the test.
+
+        These changes were made in the oci_haft branch.
 
 Thu Oct 16 18:16:07 2003  Steve Totten  <totten_s@ociweb.com>
 
