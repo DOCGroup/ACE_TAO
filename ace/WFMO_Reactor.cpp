@@ -1059,7 +1059,6 @@ ACE_WFMO_Reactor::open (size_t size,
                         ACE_Reactor_Notify *notify)
 {
   ACE_UNUSED_ARG (unused);
-  ACE_UNUSED_ARG (sh);
 
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
