@@ -340,7 +340,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 #endif
 }
 
-# if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 #   include "ace/OS_NS_Thread.h"
 #   include "ace/Object_Manager_Base.h"
 int
