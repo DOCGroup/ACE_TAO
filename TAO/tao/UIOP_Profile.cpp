@@ -85,6 +85,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
     orb_core_ (orb_core)
 {
   parse_string (string, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
