@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef TAO_INTERCEPTORS_H
@@ -17,21 +19,16 @@
 #endif /* _MSC_VER */
 
 class Echo_Client_Request_Interceptor
-: public PortableInterceptor::ClientRequestInterceptor,
-  public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
+
   Echo_Client_Request_Interceptor (void);
   // ctor.
   virtual ~Echo_Client_Request_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -78,8 +75,8 @@ private:
 };
 
 class Echo_Server_Request_Interceptor
-: public PortableInterceptor::ServerRequestInterceptor,
-  public CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
@@ -87,12 +84,6 @@ public:
   // cotr.
   ~Echo_Server_Request_Interceptor ();
   // dotr.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -33,20 +33,6 @@ TAO_IOR_Manipulation_impl::~TAO_IOR_Manipulation_impl (void)
 {
 }
 
-void
-TAO_IOR_Manipulation_impl::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-TAO_IOR_Manipulation_impl::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors

@@ -21,8 +21,8 @@
 #endif /* _MSC_VER */
 
 class Client_Request_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
   /// Client-side interceptor.  Verifies presense of RTCORBA priority
   /// context in the reply messages.
@@ -32,12 +32,6 @@ public:
 
   virtual ~Client_Request_Interceptor ();
   // dtor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
