@@ -233,6 +233,7 @@ public abstract class Task implements Runnable, EventHandler
    * Insert message into the message queue.
    *@param mb Message Block to insert into the Message Queue
    *@param tv amount of time to wait for
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected int putq (MessageBlock mb, TimeValue tv) throws InterruptedException
     {
@@ -243,6 +244,7 @@ public abstract class Task implements Runnable, EventHandler
    * Extract the first message from the queue. Note that the call is blocking.
    *@return the first Message Block from the Message Queue.
    *@param tv amount of time to wait for
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected MessageBlock getq (TimeValue tv) throws InterruptedException
     {
@@ -253,6 +255,7 @@ public abstract class Task implements Runnable, EventHandler
    * Return a message back to the queue.
    *@param mb Message Block to return back to the Message Queue
    *@param tv amount of time to wait for
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected int ungetq (MessageBlock mb, TimeValue tv) throws InterruptedException
     {

@@ -58,7 +58,10 @@ import JACE.ServiceConfigurator.*;
  * <tt>AcceptorStrategy</tt> class.</blockquote>
  *
  *
- * @see java.lang.Class,ACE.Connection.SvcHandler,ACE.SOCK_SAP.SOCKAcceptor */
+ * @see java.lang.Class
+ * @see JACE.Connection.SvcHandler
+ * @see JACE.SOCK_SAP.SOCKAcceptor 
+ */
 public class Acceptor extends ServiceObject
 {
   /**
@@ -66,7 +69,7 @@ public class Acceptor extends ServiceObject
    * an instance is created via this method, <tt>setHandlerFactory</tt>
    * must be called prior to using <tt>accept</tt>.
    *
-   * @see ACE.Connection.Acceptor.setHandlerFactory
+   * @see JACE.Connection.Acceptor.setHandlerFactory
    */
   public Acceptor ()
   {
@@ -78,7 +81,7 @@ public class Acceptor extends ServiceObject
    * an instance of a SvcHandler when a connection is accepted
    * (typically obtained by calling <tt>Class.classForName</tt>).
    *
-   *@see java.lang.Class.classForName
+   *@see java.lang.Class.forName
    */
   public Acceptor (Class handlerFactory)
   {
@@ -90,9 +93,9 @@ public class Acceptor extends ServiceObject
    * no-arg constructor.
    *@param handlerFactory meta-class reference used to create
    * an instance of a SvcHandler when a connection is accepted
-   * (typically obtained by calling <tt>Class.classForName</tt>).
+   * (typically obtained by calling <tt>Class.forName</tt>).
    *
-   *@see java.lang.Class.classForName
+   *@see java.lang.Class.forName
    */
   public void setHandlerFactory (Class handlerFactory)
   {

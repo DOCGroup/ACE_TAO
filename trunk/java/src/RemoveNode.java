@@ -18,13 +18,11 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import JACE.OS.*;
-import java_cup.runtime.*;
 
 class RemoveNode extends ParseNode
 {
-  public RemoveNode (int act_num)
+  public RemoveNode ()
   {
-    super(act_num);
   }  
 
   public void apply () 

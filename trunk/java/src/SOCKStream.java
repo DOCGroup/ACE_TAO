@@ -194,6 +194,7 @@ public class SOCKStream
 
   /**
    * Cleanup when the SOCK Stream is garbage collected.
+   *@exception Throwable (Probably IOException from the socket level)
    */
   protected void finalize () throws Throwable
     {

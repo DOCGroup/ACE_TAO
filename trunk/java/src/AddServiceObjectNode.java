@@ -2,21 +2,17 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import JACE.OS.*;
-import java_cup.runtime.*;
 
 class AddServiceObjectNode extends ParseNode
 {
 
-  public AddServiceObjectNode (int act_num)
+  public AddServiceObjectNode ()
   {
-    super(act_num);
-
     this.locator_ = new String();
     this.params_ = new String();
   }
 
-  /* String with possible locator information -- used when trying to load
-     old C++ format files */
+  /* This should be the class name, fully qualified or in the class path */
   public String locator ()
   {
     return this.locator_;

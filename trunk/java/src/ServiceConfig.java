@@ -6,8 +6,8 @@
  * = FILENAME
  *    ServiceConfig.java
  *
- * Services can be suspended, resumed, removed, and reloaded.  Reloading requires that
- * the user calls a prepareForReload method after removing a service.  You can't access
+ * Services can be suspended, resumed, removed, and reloaded.  Reloading requires a
+ * call to prepareForReload method after removing a service (done in remove()).  You can't access
  * the ServiceObjects that are loaded directly -- anything loaded with a class loader
  * must be wrapped and have its methods called via reflection.  This is because a
  * loaded class doesn't exist in the same space as one loaded with the system loader.
@@ -35,9 +35,13 @@ import JACE.Misc.*;
 public class ServiceConfig
 {
   /** Begins the process of loading a service configurator file:
-   *  parses the command line and calls either loadOldConfigFile or
-   *  processDirectives depending on whether or not the user wants
-   *  to try to load a C++ svc.conf file.
+   *  parses the command line and calls processDirectives
+   *
+   *@exception FileNotFoundException Couldn't find service config file
+   *@exception IOException Problem reading or parsing
+   *@exception ClassNotFoundException Couldn't find a certain class
+   *@exception IllegalAccessException Inappropriate method call on a class
+   *@exception InstantiationException Couldn't create a certain class instance
    */
   public static int open (String [] args) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalAccessException, InstantiationException
    {
@@ -50,10 +54,7 @@ public class ServiceConfig
     if (ServiceConfig.loader_ == null)
       ServiceConfig.loader_ = new ServiceLoader();
 
-    if (ServiceConfig.oldConfigFormat_) 
-      return ServiceConfig.loadOldConfigFile();
-    else
-      return ServiceConfig.processDirectives ();
+    return ServiceConfig.processDirectives ();
     
   }
 
@@ -62,13 +63,12 @@ public class ServiceConfig
     * -b             Run as a daemon (not implemented yet)
     * -d             Debug mode
     * -n             No defaults
-    * -o             Attempt to load a C++ ACE service config file
     * -f <filename>  Load services in the given file [see below for info]
     *
     */
   protected static void parseArgs (String [] args)
   {
-    GetOpt getopt = new GetOpt (args, "bdnf:o:");
+    GetOpt getopt = new GetOpt (args, "bdnf:");
     for (int c; (c = getopt.next ()) != -1; )
       switch (c)
 	{
@@ -81,9 +81,6 @@ public class ServiceConfig
 	  break;
 	case 'n':
 	  ServiceConfig.noDefaults_ = true;
-	  break;
-	case 'o':
-	  ServiceConfig.oldConfigFormat_ = true;
 	  break;
 	case 'f':
 	  ServiceConfig.serviceConfigFile_ = getopt.optarg ();
@@ -111,11 +108,16 @@ public class ServiceConfig
   }
 
   /** Called by ParseNode subclass
-   * Asks the Service Repository to remove a serivce
+   * Asks the Service Repository to remove a service, also calls
+   * prepareForReload so the user doesn't have to.
    */
   public static int remove (String name)
   {
-    return svcRep_.remove(name);
+    int result = svcRep_.remove(name);
+
+    prepareForReload();
+
+    return result;
   }
 
   /** Should be called before the user wants to reload
@@ -136,9 +138,8 @@ public class ServiceConfig
   /**
    * Parse a service configurator file, creating classes as necessary
    *
-   * This is getting too complicated -- since CUP and JLex are available, it would be nice to
-   * develop a grammar for this.  Unfortunately, there may be file problems when trying to get
-   * CUP and JLex to produce more than one parser per program.
+   * This is getting complicated, but there were too many installation problems when using
+   * CUP and JLex to merit developing a grammar.
    *
    * Current formats:
    *
@@ -148,6 +149,11 @@ public class ServiceConfig
    *    suspend <Service Name>
    *    remove <Service Name>
    *
+   *@exception FileNotFoundException Couldn't find the file (default "svc.conf")
+   *@exception IOException Problem reading/parsing 
+   *@exception ClassNotFoundException Couldn't find a certain class
+   *@exception IllegalAccessException Inappropriate method call
+   *@exception InstantiationException Couldn't create a class instance
    */
   protected static int processDirectives () throws FileNotFoundException, IOException, ClassNotFoundException, IllegalAccessException, InstantiationException 
   {
@@ -207,16 +213,16 @@ public class ServiceConfig
 	      // This is a hack, but it should work until CUP is easier
 	      // to deal with when multiple parsers are needed
 	      if (commandName.equals("load"))
-		result = new AddServiceObjectNode(0);
+		result = new AddServiceObjectNode();
 	      else
 	      if (commandName.equals("remove"))
-		result = new RemoveNode(0);
+		result = new RemoveNode();
 	      else
 	      if (commandName.equals("suspend"))
-		result = new SuspendNode(0);
+		result = new SuspendNode();
 	      else
 	      if (commandName.equals("resume"))
-		result = new ResumeNode(0);
+		result = new ResumeNode();
 	      else
 		throw new IOException ("COMMAND NAME missing or invalid: " + commandName);
 
@@ -293,26 +299,6 @@ public class ServiceConfig
     return 0;
   }
 
-  /** Parses the svc.conf file, treating it as a C++ ACE svc.conf file.
-    * This will involve attempts to infer the class name from
-    * the service initializer path, and isn't very accurate.
-    */
-  public static int loadOldConfigFile ()
-  {
-    parser ps = new parser();
-
-    try {
-
-      ps.parse();
-
-    } catch (Exception e) {
-      ACE.ERROR("Error: " + e);
-      return -1;
-    }
-
-    return 0;
-  }
-
 
   /**
    * This is called when apply() is called on AddServiceObjectNodes.  Similar
@@ -324,47 +310,14 @@ public class ServiceConfig
   {
      Class c = null;
 
-    if (ServiceConfig.oldConfigFormat_) {
+     try {
 
-      // Generate a lot of possible file locations and names
-      ClassNameGenerator cng = new ClassNameGenerator(son.locator());
-      String attempt = null;
-      boolean ready = false;
- 
+       c = loader_.loadClass(son.locator(), true);
 
-      // Try to load the class based on the names we can infer from
-      // the C++ svc.conf line
-      while ((cng.hasMoreElements()) && (!ready)) {
-	try {
-	  
-	  attempt = (String)cng.nextElement();
-	  
-	  c = loader_.loadClass(attempt, true);
-
-	  ready = true;
-      
-	} catch (ClassNotFoundException e) { }
-      
-      }
-
-      // Couldn't find the class
-      if (!ready) {
-	ACE.ERROR("Can't find class with locator: " + son.locator());
-	return -1;
-      }
-
-    } else {
-
-      try {
-
-	c = loader_.loadClass(son.locator(), true);
-
-      } catch (ClassNotFoundException e) {
-	ACE.ERROR("Can't find class with locator: " + son.locator());
-	return 01;
-      }
-
-    }
+     } catch (ClassNotFoundException e) {
+       ACE.ERROR("Can't find class with locator: " + son.locator());
+       return -1;
+     }
 
     try {
 
@@ -396,7 +349,6 @@ public class ServiceConfig
   }
 
   // Set by command line options
-  private static boolean oldConfigFormat_ = false;
   private static boolean beADaemon_ = false;
   private static boolean debug_ = false;
   private static boolean noDefaults_ = false;

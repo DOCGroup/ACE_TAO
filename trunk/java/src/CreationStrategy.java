@@ -29,7 +29,10 @@ package JACE.Connection;
  *     linking the handler, etc.).
  *</blockquote>
  *
- *@see SvcHandler,StrategyAcceptor,AcceptStrategy,ActivateStrategy
+ *@see SvcHandler
+ *@see StrategyAcceptor
+ *@see AcceptStrategy
+ *@see ActivateStrategy
  */
 public class CreationStrategy
 {

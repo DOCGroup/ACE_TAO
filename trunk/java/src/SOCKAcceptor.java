@@ -101,6 +101,7 @@ public class SOCKAcceptor
   /**
    * Clean up when the garbage collector gets run (if at all). Note
    * that there is no guarantee that finalize () will get called.
+   *@exception Throwable (Probably IOException from the socket level)
    */
   protected void finalize () throws Throwable
     {

@@ -65,8 +65,8 @@ public class AcceptStrategy
    * should overwrite this method to provide a different accept
    * strategy.
    *@param sh Svc Handler in which to accept the connection
-   *@exception SocketException
-   *@exception IOException
+   *@exception SocketException Socket error
+   *@exception IOException Socket error
    *@return 0
    */
   public int acceptSvcHandler (SvcHandler sh) throws
