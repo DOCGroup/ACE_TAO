@@ -176,47 +176,47 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
   if (node->pt () == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  *os << "const " << this->type_name (node) << " &";
-	  break;
-	case AST_Argument::dir_INOUT:
-	  *os << this->type_name (node) << " &";
-	  break;
-	case AST_Argument::dir_OUT:
-	  *os << this->type_name (node, "_out");
-	  break;
-	} // end switch direction
+        {
+        case AST_Argument::dir_IN:
+          *os << "const " << this->type_name (node) << " &";
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node) << " &";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << this->type_name (node, "_out");
+          break;
+        } // end switch direction
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  *os << this->type_name (node, "_ptr");
-	  break;
-	case AST_Argument::dir_INOUT:
-	  *os << this->type_name (node, "_ptr") << " &";
-	  break;
-	case AST_Argument::dir_OUT:
-	  *os << this->type_name (node, "_out");
-	  break;
-	} // end switch direction
+        {
+        case AST_Argument::dir_IN:
+          *os << this->type_name (node, "_ptr");
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node, "_ptr") << " &";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << this->type_name (node, "_out");
+          break;
+        } // end switch direction
     } // end else if
   else // simple predefined types
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  *os << this->type_name (node);
-	  break;
-	case AST_Argument::dir_INOUT:
-	  *os << this->type_name (node) << " &";
-	  break;
-	case AST_Argument::dir_OUT:
-	  *os << this->type_name (node, "_out");
-	  break;
-	} // end switch direction
+        {
+        case AST_Argument::dir_IN:
+          *os << this->type_name (node);
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node) << " &";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << this->type_name (node, "_out");
+          break;
+        } // end switch direction
     } // end of else
 
   return 0;
@@ -312,3 +312,46 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
+
+
+#ifdef IDL_HAS_VALUETYPE
+
+int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+      *os << this->type_name (node) << " *";
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << " *&";
+      break;
+    case AST_Argument::dir_OUT:
+      *os << this->type_name (node, "_out");
+      break;
+    }
+  return 0;
+}
+
+int be_visitor_args_arglist::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+      *os << "const " << this->type_name (node) << " *";
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << " *&";
+      break;
+    case AST_Argument::dir_OUT:
+      *os << this->type_name (node, "_out");
+      break;
+    }
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */

@@ -87,6 +87,7 @@ public:
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
+    , PS_ValuetypeDeclSeen      // Seen complete valuetype declaration
     , PS_AttrDeclSeen           // Seen complete attribute declaration
     , PS_OpDeclSeen             // Seen complete operation declaration
     , PS_ModuleSeen             // Seen a MODULE keyword
@@ -102,6 +103,8 @@ public:
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
     , PS_InheritColonSeen       // Seen ':' in inheritance list
+    , PS_ValuetypeSeen          // Seen a VALUETYPE keyword
+    , PS_ValuetypeIDSeen        // Seen the valuetype ID
     , PS_SNListCommaSeen        // Seen ',' in list of scoped names
     , PS_ScopedNameSeen         // Seen a complete scoped name
     , PS_SN_IDSeen              // Seen an identifier as part of a scoped name
@@ -291,18 +294,18 @@ public:
 
   // The number of currently availabe include files.
   virtual size_t n_included_idl_files (void);
-  
+
   // Set the number of included_idl_files. Use this carefully. This
   // method is used when we validate all the #included idl files,
   // against the ones that we get after preprocessing.
   virtual void n_included_idl_files (size_t n);
 
   // Validate the included idl files, somefiles might have been
-  // ignored by the preprocessor. 
+  // ignored by the preprocessor.
   virtual void validate_included_idl_files (void);
-  
-  virtual ParseState		parse_state();		// What state we're in
-  virtual void			set_parse_state(ParseState s); // Set it
+
+  virtual ParseState            parse_state();          // What state we're in
+  virtual void                  set_parse_state(ParseState s); // Set it
 
   // Convert from a predefined type to an expression type
   virtual AST_Expression::ExprType
@@ -415,7 +418,7 @@ public:
 
   virtual void impl_class_suffix (const char* s);
   // Set the implementation class suffix.
-  
+
   virtual void implementation_skel_ending (const char* s);
   // Set the implementation_skel_ending.
 
@@ -488,16 +491,27 @@ public:
   // Get the path for the perfect hashing program (GPERF).
 
   virtual void any_support (idl_bool);
-  // enable suppressing any support
+  // enable suppressing any support    ?T.Kuepper: suppressed?
 
   virtual idl_bool any_support (void);
-  // check if Any support is suppressed
+  // check if Any support is suppressed  ? enabled ?
 
   virtual void tc_support (idl_bool);
   // enable suppressing TypeCode support
 
   virtual idl_bool tc_support (void);
   // check if TypeCode support is suppressed
+
+#ifdef IDL_HAS_VALUETYPE
+  virtual void obv_opt_accessor (idl_bool);
+  virtual idl_bool obv_opt_accessor (void);
+
+  virtual void obv_support (idl_bool);
+  // set enable/disable OBV (Valuetype) support
+#endif /* IDL_HAS_VALUETYPE */
+
+  virtual idl_bool obv_support (void);
+  // check if OBV (Valuetype) support is enabled
 
   virtual void compiled_marshaling (idl_bool);
   // enable compiled marshaling support
@@ -579,7 +593,7 @@ private:
                                                         // before?
 
   String                        *pd_idl_src_file;       // IDL source file.
-  
+
   size_t  changing_standard_include_files_;
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
@@ -605,7 +619,7 @@ private:
 
  // Implementation's skeleton file name ending. Default is "I.cpp".
   char* implementation_skel_ending_;
-  
+
   //Implementaion class prefix
   char* impl_class_prefix_;
 
@@ -637,16 +651,22 @@ private:
   // Directory where all the IDL-Compiler-Generated files are to be
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
-  
+
   char* temp_dir_;
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
-  
+
   idl_bool any_support_;
   // do we support Any operators?
 
   idl_bool tc_support_;
   // do we support typecodes?
+
+  idl_bool obv_support_;
+  // do we support OBV (Valuetype)?
+
+  idl_bool obv_opt_accessor_;
+  // do we optimize valuetype accessors?
 
   idl_bool compiled_marshaling_;
   // do we support compiled marshaling
@@ -668,15 +688,3 @@ private:
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH
-
-
-
-
-
-
-
-
-
-
-
-

@@ -126,6 +126,7 @@ public:
     TAO_FIELD_CS,
     TAO_FIELD_CDR_OP_CH,
     TAO_FIELD_CDR_OP_CS,
+    TAO_FIELD_OBV_CH,
 
     // emitting code for the interface
     TAO_INTERFACE_CH,
@@ -150,6 +151,34 @@ public:
     TAO_INTERFACE_FWD_CI,
     TAO_INTERFACE_FWD_CDR_OP_CI,
 
+    // emitting code for the valuetype
+    TAO_VALUETYPE_CH,
+    TAO_VALUETYPE_CI,
+    TAO_VALUETYPE_CS,
+    TAO_VALUETYPE_SH,
+    TAO_VALUETYPE_IH,
+    TAO_VALUETYPE_SI,
+    TAO_VALUETYPE_SS,
+    TAO_VALUETYPE_IS,
+    TAO_VALUETYPE_OBV_CH,               // OBV_ class
+    TAO_VALUETYPE_OBV_CI,
+    TAO_VALUETYPE_OBV_CS,
+    TAO_VALUETYPE_COLLOCATED_SH,
+    TAO_VALUETYPE_COLLOCATED_SS,
+    TAO_VALUETYPE_ANY_OP_CH,
+    TAO_VALUETYPE_ANY_OP_CS,
+    TAO_VALUETYPE_MARSHAL_CH,          // the actual generation of CDR in header
+    TAO_VALUETYPE_MARSHAL_CS,          // and the implementation, activated from:
+    TAO_VALUETYPE_CDR_OP_CH,
+    TAO_VALUETYPE_CDR_OP_CS,
+    //TAO_VALUETYPE_TIE_SH,
+    //TAO_VALUETYPE_TIE_SI,
+
+    // emitting code for the valuetype forward declaration
+    TAO_VALUETYPE_FWD_CH,
+    TAO_VALUETYPE_FWD_CI,
+    TAO_VALUETYPE_FWD_CDR_OP_CI,
+
     // emitting code for the module
     TAO_MODULE_CH,
     TAO_MODULE_CI,
@@ -163,6 +192,9 @@ public:
     TAO_MODULE_ANY_OP_CS,
     TAO_MODULE_CDR_OP_CH,
     TAO_MODULE_CDR_OP_CS,
+    TAO_MODULE_OBV_CH,                  // for OBV_ (cmp. POA_ namespace)
+    TAO_MODULE_OBV_CI,
+    TAO_MODULE_OBV_CS,
 
     // emitting code for an operation.
     TAO_OPERATION_CH,                       // in client header
@@ -216,6 +248,15 @@ public:
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
     TAO_OPERATION_TIE_SH,
     TAO_OPERATION_TIE_SI,
+
+    TAO_OBV_OPERATION_ARGLIST_CH,      // parameter list in obv op signature
+                                             // ... for client header
+    TAO_OBV_OPERATION_ARGLIST_OBV_CH,        // ... for OBV_ class
+    TAO_OBV_OPERATION_ARGLIST_SH,            // ... for server header
+    TAO_OBV_OPERATION_ARGLIST_IH,            // ... for implementation header
+    TAO_OBV_OPERATION_ARGLIST_IS,            // ... for implementation header
+    TAO_OBV_OPERATION_ARGLIST_COLLOCATED_SH,   // ... for collocated server
+    TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
     // emitting code for root
     TAO_ROOT_CH,

@@ -165,7 +165,7 @@ class CORBA_NVList_var;
 class CORBA_NVList_out;
 typedef class CORBA_NVList *CORBA_NVList_ptr;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* ! TAO_HAS_MINIMUM_CORBA */
 
 class CORBA_ORB;
 class CORBA_ORB_var;
@@ -206,6 +206,13 @@ typedef class CORBA_Principal *CORBA_Principal_ptr;
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
 typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
+
+#ifdef TAO_HAS_VALUETYPE
+class CORBA_ValueBase;
+class CORBA_ValueFactoryBase;
+typedef CORBA_ValueFactoryBase *CORBA_ValueFactory_ptr;
+class CORBA_DefaultValueRefCountBase;
+#endif /* TAO_HAS_VALUETYPE */
 
 class CORBA_String_var;
 class CORBA_String_out;
@@ -430,6 +437,18 @@ public:
   typedef CORBA_Current *Current_ptr;
   typedef CORBA_Current_var Current_var;
   typedef CORBA_Current_out Current_out;
+
+#ifdef TAO_HAS_VALUETYPE
+  typedef CORBA_ValueBase ValueBase;
+  typedef CORBA_ValueFactoryBase ValueFactoryBase;
+  typedef CORBA_ValueFactoryBase *ValueFactory;
+          // as CORBA 2.3a C++ map. 20.17.10 says
+  typedef CORBA_ValueFactoryBase *ValueFactory_ptr;
+          // own invention, more readable
+  typedef CORBA_DefaultValueRefCountBase  DefaultValueRefCountBase;
+  static void add_ref (ValueBase *);
+  static void remove_ref (ValueBase *);
+#endif /* TAO_HAS_VALUETYPE */
 
   // enum values defined in nvlist.hh, bitwise ORed.
   typedef u_int Flags;

@@ -69,6 +69,10 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
+#ifdef TAO_HAS_VALUETYPE
+class TAO_ValueFactory_Map;
+#endif /* TAO_HAS_VALUETYPE */
+
 
 // The new (POA) base class for servants.
 class TAO_ServantBase;
@@ -263,6 +267,20 @@ public:
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
+#ifdef TAO_HAS_VALUETYPE
+  // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
+  CORBA::ValueFactory_ptr register_value_factory (
+                            const char *repository_id,
+                            CORBA::ValueFactory_ptr factory,
+                            CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::default_environment () );
+  void unregister_value_factory (const char * repository_id,
+                                 CORBA_Environment &ACE_TRY_ENV =
+                                     CORBA::default_environment () );
+  CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
+           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
+#endif /* TAO_HAS_VALUETYPE */
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void create_list (CORBA::Long count,
@@ -426,8 +444,8 @@ public:
   // Resolve the POA.
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
-				const char *type_id,
-				CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                const char *type_id,
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
 
@@ -514,7 +532,7 @@ protected:
 private:
 
   CORBA_Object_ptr resolve_service (CORBA::String service_name,
-				    ACE_Time_Value *timeout,
+                                    ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
   // Resolve the service name.
 
@@ -523,9 +541,9 @@ private:
   // Resolve the trading object reference.
 
   int multicast_query (char *buf,
-		       const char *service_name,
-		       u_short port,
-		       ACE_Time_Value *timeout);
+                       const char *service_name,
+                       u_short port,
+                       ACE_Time_Value *timeout);
 
   // returns and IOR string, the client is responsible for freeing
   // memory!
@@ -605,6 +623,11 @@ private:
 
   TAO_ORB_Core* orb_core_;
   // The ORB_Core that created us....
+
+#ifdef TAO_HAS_VALUETYPE
+  TAO_ValueFactory_Map *valuetype_factory_map_;
+  // If non-0 then this is the Factory for OBV unmarshaling
+#endif /* TAO_HAS_VALUETYPE */
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.

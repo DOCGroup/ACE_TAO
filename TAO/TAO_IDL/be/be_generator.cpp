@@ -143,7 +143,40 @@ be_generator::create_interface(UTL_ScopedName *n,
 AST_InterfaceFwd *
 be_generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
 {
-  return (AST_InterfaceFwd *) new be_interface_fwd(n, p);
+  return (AST_InterfaceFwd *) new be_interface_fwd(this->create_interface (n, 0, -1, p),
+                                                                                  n, p);
+}
+
+/*
+ * Create a be_valuetype node
+ */
+AST_Interface *
+be_generator::create_valuetype(UTL_ScopedName *n,
+                               AST_Interface **ih,
+                               long nih,
+                               UTL_StrList *p)
+{
+#ifdef IDL_HAS_VALUETYPE
+  return (AST_Interface *) new be_valuetype(n, ih, nih, p);
+#else
+  ACE_ASSERT (0);
+  return 0;
+#endif /* IDL_HAS_VALUETYPE */
+}
+
+/*
+ * Create a be_valuetype_fwd node
+ */
+AST_InterfaceFwd *
+be_generator::create_valuetype_fwd(UTL_ScopedName *n, UTL_StrList *p)
+{
+#ifdef IDL_HAS_VALUETYPE
+  return (AST_InterfaceFwd *) new be_valuetype_fwd(this->create_valuetype (n, 0, -1, p),
+                                                                                  n, p);
+#else
+  ACE_ASSERT (0);
+  return 0;
+#endif /* IDL_HAS_VALUETYPE */
 }
 
 /*
@@ -189,9 +222,10 @@ be_generator::create_operation(AST_Type *rt,
  * Create a BE_Field node
  */
 AST_Field *
-be_generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
+                                                 AST_Field::Visibility vis)
 {
-  return (AST_Field *) new be_field(ft, n, p);
+  return (AST_Field *) new be_field(ft, n, p, vis);
 }
 
 /*

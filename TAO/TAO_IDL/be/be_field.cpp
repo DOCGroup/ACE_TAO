@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_field, "$Id$")
 
@@ -31,8 +31,9 @@ ACE_RCSID(be, be_field, "$Id$")
 be_field::be_field (void)
 {
 }
-be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
-  : AST_Field (ft, n, p),
+
+be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p, Visibility vis)
+  : AST_Field (ft, n, p, vis),
     AST_Decl (AST_Decl::NT_field, n, p)
 {
 }

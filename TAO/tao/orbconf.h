@@ -245,16 +245,16 @@
 // The IDL compiler can generate the classes corresponding to IDL
 // sequences in two ways:
 // + Use the TAO templates for sequences,
-//   i.e. TAO_{Unb,B}ounded_Sequence<> 
+//   i.e. TAO_{Unb,B}ounded_Sequence<>
 // + Explicitly generate code for the sequence.
 //
 // The first approach can (potentially) produce smaller code, because
-// the code for a sequence over a particular type (say sequence<long>) 
+// the code for a sequence over a particular type (say sequence<long>)
 // can be shared across multiple IDL files.
 // Unfortunately it is hard to manage the template instantiations on
 // platforms that do not automatically generate them, mainly because
 // it is hard to decide on which generated file are the templates
-// instantiated.  Thus the second approach is more convenient for most 
+// instantiated.  Thus the second approach is more convenient for most
 // applications.
 //
 // On platforms that support automatic template instantiation we use
@@ -283,6 +283,9 @@
 
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
+
+// OBV is in experimental stage
+#define TAO_HAS_VALUETYPE
 
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
