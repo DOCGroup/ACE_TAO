@@ -17,8 +17,8 @@ import ACE.Concurrency.*;
 class TestThread extends Thread
 {
   TestThread(String  name,
-		    boolean writer,
-		    RWMutex  lock)
+	     boolean writer,
+	     RWMutex  lock)
   {
     super (name);
     mWriter = writer;
@@ -35,8 +35,9 @@ class TestThread extends Thread
 	      {
 		mLock.acquireRead();
 		ACE.DEBUG (getName() + ": Acquired Read Lock");
-         
-		sleep ((int) (Math.random () * 1000));
+		
+		int sleepTime = i * 100;
+		sleep (sleepTime);
 
 		mLock.release ();
 		ACE.DEBUG (getName () + ": Released Read Lock");
@@ -46,7 +47,8 @@ class TestThread extends Thread
 		mLock.acquireWrite ();
 		ACE.DEBUG (getName () + ": Acquired Write Lock");
 					
-		sleep ((int) (Math.random ()* 1000));
+		int sleepTime = i * 100;
+		sleep (sleepTime);
 
 		mLock.release ();
 		ACE.DEBUG (getName () + ": Released Write Lock");
@@ -68,7 +70,7 @@ public class RWMutexTest
   public static void main(String [] args)
   {
     RWMutex lock = new RWMutex();
-
+    
     TestThread t1 = new TestThread ("1", false, lock);
     TestThread t2 = new TestThread ("2", false, lock);
     TestThread t3 = new TestThread ("3", false, lock);
