@@ -72,34 +72,22 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
   //
   size_t count = 0;
 
-  // proceed if the number of members in our scope is greater than 0
-  if (node->nmembers () > 0)
+  // initialize an iterator to iterate thru our scope
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
+      be_argument *bd =
+        be_argument::narrow_from_decl (si.item ());
 
-      // Continue until each element is visited
-      while (!si->is_done ())
-        {
-          be_argument *bd =
-            be_argument::narrow_from_decl (si->item ());
+      // We do not generate insertion operators for valuetypes
+      // yet.  Do not include them in the count.
+      be_valuetype *vt =
+        be_valuetype::narrow_from_decl (bd->field_type ());
 
-          // We do not generate insertion operators for valuetypes
-          // yet.  Do not include them in the count.
-          be_valuetype *vt =
-            be_valuetype::narrow_from_decl (bd->field_type ());
+      if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
+        count++;
 
-          if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
-            count++;
-
-          si->next ();
-        }
-
-      delete si;
     }
 
   return count;

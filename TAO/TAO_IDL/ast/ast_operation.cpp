@@ -157,7 +157,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
     {
       AST_Argument *arg =
         AST_Argument::narrow_from_decl (si.item ());
-      
+
       if ((arg->direction () & direction_mask) != 0)
         count++;
     }

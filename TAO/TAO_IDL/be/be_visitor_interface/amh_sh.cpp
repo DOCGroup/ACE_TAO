@@ -207,48 +207,37 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
   if (!node || !amh_node)
     return -1;
 
-  if (node->nmembers () > 0)
+  this->elem_number_ = 0;
+  // initialize an iterator to iterate thru our scope
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node, UTL_Scope::IK_decls),
-                      0);
-      this->elem_number_ = 0;
-
-      // continue until each element is visited
-      while (!si->is_done ())
+      AST_Decl *d = si.item ();
+      if (!d)
         {
-          AST_Decl *d = si->item ();
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
-                                 "bad node in this scope\n"),
-                                0);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
+                             "bad node in this scope\n"),
+                            0);
+        }
 
-            }
+      if (d->node_type () == AST_Decl::NT_attr)
+        {
+          be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
-          if (d->node_type () == AST_Decl::NT_attr)
+          if (!attribute)
+            return 0;
+        }
+      else
+        {
+          be_operation* operation = be_operation::narrow_from_decl (d);
+          if (operation)
             {
-              be_attribute *attribute = be_attribute::narrow_from_decl (d);
-
-              if (!attribute)
-                return 0;
+              this->add_amh_operation (operation, amh_node);
             }
-          else
-            {
-              be_operation* operation = be_operation::narrow_from_decl (d);
-              if (operation)
-                {
-                  this->add_amh_operation (operation, amh_node);
-                }
-            }
-          si->next ();
-        } // end of while loop
-      delete si;
-    } // end of if
+        }
+    }
   return 0;
 }
 

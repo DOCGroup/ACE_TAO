@@ -882,36 +882,29 @@ be_visitor_union_branch_cdr_op_ci::explicit_default (void)
       be_union_branch *ub =
         be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-      // instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si =
-        new UTL_ScopeActiveIterator (bu,
-                                     UTL_Scope::IK_decls);
-
       int i = 0; // counter
-      be_union_branch *bub = 0; // union branch node
-      AST_Decl *d = 0;  // temp node
 
-      while (!(si->is_done ()))
+      // instantiate a scope iterator.
+      for (UTL_ScopeActiveIterator si (bu, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          // get the next AST decl node
-          d = si->item ();
+          be_union_branch *bub = 0; // union branch node
+
+          AST_Decl *d = si.item ();
 
           if (!d->imported ())
             bub = be_union_branch::narrow_from_decl (d);
 
           if (bub == ub)
             {
-              delete si;
               return (i == def_index);
             }
           else
             {
               i++;
-              si->next ();
             }
         }
-
-      delete si;
     }
 
   return 0;

@@ -58,7 +58,7 @@ Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
     {
       // reset the compute queue since we must not affect computation of other
       // nodes
-      customer_->queue_reset (customer_->compute_queue_);  
+      customer_->queue_reset (customer_->compute_queue_);
     }
 }
 
@@ -73,7 +73,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context *ctx)
       computed_scope_encap_len_ (0),
       tc_offset_ (0),
       index_ (-1)
-    
+
 {
 }
 
@@ -147,87 +147,67 @@ be_visitor_typecode_defn::visit_members (AST_Structure *node)
   return 0;
 }
 
-int 
+int
 be_visitor_typecode_defn::visit_members (be_valuetype *node)
 {
-  // proceed if the number of members in our scope is greater than 0
-  if (node->nmembers () > 0)
-    {      
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
+  this->elem_number_ = 0;
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Decl *d = si.item ();
 
-      this->elem_number_ = 0;
-
-      // continue until each element is visited
-      for (;!si->is_done ();si->next())
+      if (!d)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "bad node in this scope\n"), -1);
+        }
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                  "bad node in this scope\n"), -1);
-            }
+      AST_Field *field = AST_Field::narrow_from_decl (d);
 
-          AST_Field *field = AST_Field::narrow_from_decl (d);
+      if (!field)
+        {
+          continue;
+        }
 
-          if (!field)
-            {
-              continue;     
-            }
+      be_decl *bd = be_decl::narrow_from_decl (d);
+      // set the scope node as "node" in which the code is being
+      // generated so that elements in the node's scope can use it
+      // for code generation
 
-          be_decl *bd = be_decl::narrow_from_decl (d);
-          // set the scope node as "node" in which the code is being
-          // generated so that elements in the node's scope can use it
-          // for code generation
+      this->ctx_->scope (node->decl ());
 
-          this->ctx_->scope (node->decl ());
+      // set the node to be visited
+      this->ctx_->node (bd);
+      this->elem_number_++;
 
-          // set the node to be visited
-          this->ctx_->node (bd);
-          this->elem_number_++;
+      // Do any pre processing using the next item info.
+      if (this->pre_process (bd) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "pre processing failed\n"
+                             ), -1);
+        }
 
-          // Do any pre processing using the next item info. 
-          if (this->pre_process (bd) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                  "pre processing failed\n"
-                  ), -1);
-            }
+      // Send the visitor.
+      if (bd == 0 || bd->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "codegen for scope failed\n"
+                             ), -1);
+        }
 
-          // Send the visitor.
-          if (bd == 0 || bd->accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                  "codegen for scope failed\n"
-                  ), -1);
-
-            }
-
-          // Do any post processing using this item info.
-          if (this->post_process (bd) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                  "post processing failed\n"
-                  ), -1);
-            }
-
-        } // end of for loop
-
-      delete si;
+      // Do any post processing using this item info.
+      if (this->post_process (bd) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "post processing failed\n"
+                             ), -1);
+        }
     }
 
   return 0;
@@ -822,7 +802,7 @@ be_visitor_typecode_defn::visit_union (be_union *node)
                     -1);
 }
 
-int 
+int
 be_visitor_typecode_defn::visit_valuetype (be_valuetype *node)
 {
   switch (this->ctx_->sub_state ())
@@ -1053,7 +1033,7 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
 
       {
         Scoped_Compute_Queue_Guard guard (this);
-        
+
         // emit the encapsulation length
         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
         if (node->accept (this) == -1)
@@ -1181,7 +1161,7 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
 
       {
         Scoped_Compute_Queue_Guard guard (this);
-        
+
       // emit the encapsulation length
         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
         if (node->accept (this) == -1)
@@ -1292,15 +1272,15 @@ be_visitor_typecode_defn::gen_encapsulation (be_field *node)
     {
       // generate visibility marker
 
-      // Even though visibility marker is UShort it seems that 
+      // Even though visibility marker is UShort it seems that
       // it would always be aligned on ULong boundary.
-      ACE_CDR::ULong visibility = 
+      ACE_CDR::ULong visibility =
         node->visibility() == AST_Field::vis_PRIVATE ? 0 : 1;
-      
+
       os->indent (); // start from current indentation level
-      *os << visibility << ", // data memeber visibility marker" 
+      *os << visibility << ", // data memeber visibility marker"
           << "\n\n";
-      
+
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
     }
 
@@ -1346,7 +1326,7 @@ be_visitor_typecode_defn::gen_typecode (be_interface *node)
 
       {
         Scoped_Compute_Queue_Guard guard (this);
-        
+
         // emit the encapsulation length
         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
         if (node->accept (this) == -1)
@@ -1497,8 +1477,8 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
                 {
                   // Insert node into tc_queue_ in case the node is involved in
                   // some form of recursion.
-                  if (this->queue_insert (this->tc_queue_, 
-                                          node, 
+                  if (this->queue_insert (this->tc_queue_,
+                                          node,
                                           this->tc_offset_) == 0)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1512,7 +1492,7 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
 
                   {
                     Scoped_Compute_Queue_Guard guard (this);
-                    
+
                     // emit the encapsulation length
                     this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
                     if (node->accept (this) == -1)
@@ -1589,7 +1569,7 @@ be_visitor_typecode_defn::gen_typecode (be_sequence *node)
 
   {
     Scoped_Compute_Queue_Guard guard (this);
-    
+
     // emit the encapsulation length
     this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
     if (node->accept (this) == -1)
@@ -1732,7 +1712,7 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
 
       {
         Scoped_Compute_Queue_Guard guard (this);
-        
+
         // emit the encapsulation length
         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
         if (node->accept (this) == -1)
@@ -2236,15 +2216,15 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
   return 0;
 }
 
-int 
+int
 be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
   os->indent (); // start from whatever indentation level we were at
-  
+
   // check if we are repeated
-  const be_visitor_typecode_defn::QNode *qnode = 
+  const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
   if (qnode)
     {
@@ -2253,8 +2233,8 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n", 
-                 (qnode->offset - this->tc_offset_), 
+      os->print ("0x%x, // negative offset (%ld)\n",
+                 (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
     }
@@ -2262,14 +2242,14 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->tc_queue_, 
-                              node, 
+      if (this->queue_insert (this->tc_queue_,
+                              node,
                               this->tc_offset_) == 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typecode_defn::"
                            "visit_type - "
-                           "queue insert failed\n"), 
+                           "queue insert failed\n"),
                           -1);
       }
 
@@ -2292,7 +2272,7 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
           }
       }
 
-      *os << this->computed_encap_len_ << ", // encapsulation length" 
+      *os << this->computed_encap_len_ << ", // encapsulation length"
           << be_idt << "\n";
       // size of the encap length
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -2309,10 +2289,10 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
         }
       *os << be_uidt << "\n";
     }
-  return 0;  
+  return 0;
 }
 
-int 
+int
 be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
@@ -2338,20 +2318,20 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
   os->indent ();
 
   // TAO doesn't support neither CUSTOM nor TRUNCATABLE
-  // valuetypes. So basically need to choose between 
+  // valuetypes. So basically need to choose between
   // VM_NONE = 0 and VM_ABSTRACT = 2
   ACE_CDR::ULong value_modifier = node->is_abstract_valuetype () ? 2 : 0;
-    
+
   *os << value_modifier << ", // value modifier" << "\n";
-  
+
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
   //STEP 4: generate TypeCode of concrete base
-  
+
   AST_Interface *inherited = 0;
   if (node->n_inherits () > 0 &&
       (   // Statefull base valuetype is always first
-          inherited = 
+          inherited =
           AST_Interface::narrow_from_decl(node->inherits ()[0])
       ) != 0 &&
       inherited->is_valuetype () &&
@@ -2369,18 +2349,18 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
                              ACE_TEXT ("failed to generate typecode\n")),
                             -1);
         }
-      // revert the state to what it was before 
+      // revert the state to what it was before
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
     }
   else
     {
       // emit tk_null
       os->indent ();
-      *os << "CORBA::tk_null, // no stateful base valuetype" 
+      *os << "CORBA::tk_null, // no stateful base valuetype"
           << "\n\n";
 
       // size of the enum
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);      
+      this->tc_offset_ += sizeof (ACE_CDR::ULong);
     }
 
   //STEP 5: generate the member count
@@ -2396,7 +2376,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN((
-          LM_ERROR, 
+          LM_ERROR,
           "be_valuetype: cannot generate typecode for members\n"), -1);
     }
 
@@ -2695,7 +2675,7 @@ be_visitor_typecode_defn::compute_encap_length (be_field *node)
     {
       // count visibility marker
 
-      // Even though visibility marker is UShort it seems that 
+      // Even though visibility marker is UShort it seems that
       // it would always be aligned on ULong boundary.
       this->computed_encap_len_ += 4;
     }
@@ -3220,7 +3200,7 @@ be_visitor_typecode_defn::compute_encap_length (be_union_branch *node)
   return this->computed_encap_len_;
 }
 
-ACE_CDR::Long 
+ACE_CDR::Long
 be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
 {
   // while computing the encapsulation length we must keep in mind the typecode
@@ -3236,37 +3216,37 @@ be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
     {
       this->computed_tc_size_ = 4 + 4;
     }
-  else 
+  else
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
                               this->tc_offset_) == 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typecode_defn::"
                            "compute_tc_size (valuetype) - "
-                           "queue insert failed\n"), 
+                           "queue insert failed\n"),
                           -1);
       }
 
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
       if (node->accept (this) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
                              ACE_TEXT ("::compute_tc_size (valuetype) - ")
                              ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
-      
+
       this->computed_tc_size_ = 4 + 4 + this->computed_encap_len_;
     }
   return this->computed_tc_size_;
 }
 
-ACE_CDR::Long 
+ACE_CDR::Long
 be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
 {
   // STEP 1:
@@ -3280,13 +3260,13 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
 
   // STEP 4:
   encap_len += 4; // to hold the ValueModifier
-  
+
 
   // STEP 5: get encapsulation length for concrete base valuetype
   AST_Interface *inherited = 0;
   if (node->n_inherits () > 0 &&
       (   // Statefull abse valuetype is always first
-          inherited = 
+          inherited =
           AST_Interface::narrow_from_decl(node->inherits ()[0])
       ) != 0 &&
       inherited->is_valuetype () &&
@@ -3294,7 +3274,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
      )
     {
       // Got non-abstract base valuetype.
-      
+
       this->computed_encap_len_ = 0;
 
       be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
@@ -3307,7 +3287,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
                              ACE_TEXT ("failed to compute len\n")),
                             -1);
         }
-      // revert the state to what it was before 
+      // revert the state to what it was before
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
       encap_len += this->computed_encap_len_;
@@ -3316,7 +3296,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
     {
       encap_len += 4; // to hold the CORBA::tk_null
     }
-  
+
   //STEP 6:
   encap_len += 4; // to hold the member count
 
@@ -3336,7 +3316,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
   if (node->accept (this) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
                          ACE_TEXT ("::compute_encap_len (valuetype) - ")
                          ACE_TEXT ("cannot compute scope tc size\n")),
