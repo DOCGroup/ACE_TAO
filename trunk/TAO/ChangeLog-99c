@@ -1,3 +1,25 @@
+Mon May 31 11:56:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+	  (main): Removed unused <env>.  Rearranged code.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp
+	  (~Cubit_Server): No need to deactivate the factory object
+	  because by the time we reach the destructor, the ORB has already
+	  been shut down.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+	  (init,shutdown_server): Changed to toggle collocation
+	  optimization directly from the ORB.  We cannot do this thru
+	  TAO_ORB_Core_instance anymore because it gives you back the
+	  "default" ORB which is not the one we want in collocation_test.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+	  Changed obsolete option -ORBreactorlock to -ORBreactortype.
+	  Changed to use reactive concurrency model.  Currently, ORB
+	  cannot shutdown the acceptor thread if we use
+	  thread-per-connection model.
+
 Mon May 31 11:22:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/time-date: Added a new example that illustrates
@@ -17,9 +39,9 @@ Mon May 31 11:22:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun May 30 21:23:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/sfp.idl : 
+	* orbsvcs/orbsvcs/sfp.idl :
 	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	
+
 	  Fixed the case-only difference in IDL by suffixing a _Msg to all
 	  enumerators as a temporary fix until the OMG AVStreams RTF fixes
 	  the SFP idl.
@@ -31,7 +53,7 @@ Sun May 30 16:23:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
           Updated Pluggable Protocol release notes and updated all
 	  references of the now deprecated "-ORBhost" and "-ORBport"
-	  options with "-ORBendpoint." 
+	  options with "-ORBendpoint."
 
 Sun May 30 13:51:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -68,7 +90,7 @@ Sat May 29 20:25:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  contains such errors - some enum values clash with struct
 	  names, and since enums don't generate their own scope...
 	  So what we did was to default the IDl compiler to produce
-	  a warning if this happens. This behavior can also be 
+	  a warning if this happens. This behavior can also be
 	  specified explicitly by the command line option -Cw. To
 	  be more strict and produce errors instead, use the command
 	  line option -Ce.
