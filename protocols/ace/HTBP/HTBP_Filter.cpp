@@ -3,8 +3,6 @@
 
 #include "ace/Log_Msg.h"
 
-#include <sstream>
-
 #include "HTBP_Session.h"
 #include "HTBP_Filter.h"
 
