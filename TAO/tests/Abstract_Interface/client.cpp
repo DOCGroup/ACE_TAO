@@ -3,8 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Abstract_Interface, 
-           client, 
+ACE_RCSID (Abstract_Interface,
+           client,
            "$Id$")
 
 const char *ior_input_file = "file://test.ior";
@@ -30,25 +30,25 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	      ior_input_file = get_opts.optarg;
-	      break;
+              ior_input_file = get_opts.optarg;
+              break;
       case 'd':
-	      debug = 1;
-	      break;
+              debug = 1;
+              break;
       case 's':
-	      which_test = TEST_STATE;
-	      break;
+              which_test = TEST_STATE;
+              break;
       case 'o':
-	      which_test = TEST_OPERATION;
-	      break;
+              which_test = TEST_OPERATION;
+              break;
       case 'e':
-	      which_test = TEST_EXCEPTION;
-	      break;
+              which_test = TEST_EXCEPTION;
+              break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			                     "-k <iorfile>",
+                                             "-k <iorfile>",
                            argv [0]),
                           -1);
       }
@@ -58,10 +58,10 @@ parse_args (int argc, char *argv[])
 }
 
 void
-dump_node (BaseNode_ptr bn, 
+dump_node (BaseNode_ptr bn,
            int indent)
 {
-  if (bn == 0) 
+  if (bn == 0)
     {
       return;
     }
@@ -88,9 +88,9 @@ dump_node (BaseNode_ptr bn,
         }
     }
 
-  dump_node (bn->left (), 
+  dump_node (bn->left (),
              indent + 1);
-  dump_node (bn->right (), 
+  dump_node (bn->right (),
              indent + 1);
 }
 
@@ -104,7 +104,7 @@ dump_tree (TreeController *tc)
                   tc));
     }
 
-  dump_node (tc->root (), 
+  dump_node (tc->root (),
              1);
 
   if (debug)
@@ -125,10 +125,10 @@ test_state (base_ptr abs)
 
 void
 test_operation (base_ptr abs
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   CORBA::String_var retval = abs->base_op ("base_op"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (debug)
@@ -141,11 +141,11 @@ test_operation (base_ptr abs
   CORBA::Object_var obj = abs->_to_object ();
 
   foo_var concrete = foo::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   retval = concrete->foo_op ("foo_op"
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (debug)
@@ -156,7 +156,7 @@ test_operation (base_ptr abs
     }
 
   retval = concrete->base_op ("base_op"
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (debug)
@@ -169,10 +169,10 @@ test_operation (base_ptr abs
 
 void
 test_exception (base_ptr abs
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   CORBA::String_var retval = abs->base_op ("bad_name"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (debug)
@@ -183,17 +183,17 @@ test_exception (base_ptr abs
     }
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   CORBA::String_var retval;
 
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            "" 
-                                            TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            ""
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -201,9 +201,9 @@ main (int argc, char *argv[])
           return 1;
         }
 
-      CORBA::Object_var obj = 
+      CORBA::Object_var obj =
         orb->string_to_object (ior_input_file
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -214,7 +214,7 @@ main (int argc, char *argv[])
         }
 
       passer_var objref = passer::_narrow (obj.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (objref.in ()))
@@ -265,7 +265,7 @@ main (int argc, char *argv[])
           sn_factory->_remove_ref (); // release ownership
 
           objref->pass_state (package.out ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (package.in ()))
@@ -281,7 +281,7 @@ main (int argc, char *argv[])
       if (which_test != TEST_STATE)
         {
           objref->pass_ops (package.out ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (package.in ()))
@@ -295,7 +295,7 @@ main (int argc, char *argv[])
       if (which_test == TEST_OPERATION || which_test == TEST_ALL)
         {
           test_operation (package.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -303,11 +303,11 @@ main (int argc, char *argv[])
         {
           which_test = TEST_EXCEPTION;
           test_exception (package.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (BadInput, ex)

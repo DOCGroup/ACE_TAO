@@ -1,3 +1,9 @@
+Tue Oct 15 17:03:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Abstract_Interface/server.cpp:
+	* tests/Abstract_Interface/client.cpp: TAO_ENV* macros were
+	  used. Changed those to use ACE_ENV* macros.
+
 Tue Oct 15 12:55:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP (CPPFLAGS, LDFLAGS, LIBS):
