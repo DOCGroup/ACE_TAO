@@ -16,14 +16,18 @@ Task_State::Task_State (int argc, char **argv)
     shutdown_ (0),
     oneway_ (0),
     use_name_service_ (1),
-    ior_file_ (0)
+    ior_file_ (0),
+    use_sysbench_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:");
+  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:y");
   int c;
   int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
+    case 'y':
+      use_sysbench_ = 1;
+      break;
     case 's':
       use_name_service_ = 0;
       break;
@@ -115,22 +119,12 @@ Task_State::Task_State (int argc, char **argv)
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
            double *[thread_count_]);
-  ACE_NEW (ave_latency_,
-           int [thread_count_]);
 }
 
 Client::Client (Task_State *ts)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())),
     ts_ (ts)
 {
-}
-
-void
-Client::put_ave_latency (int ave_latency, u_int thread_id)
-{
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
-
-  ts_->ave_latency_[thread_id] = ave_latency;
 }
 
 void
@@ -174,7 +168,7 @@ Client::get_low_priority_latency (void)
 int
 Client::get_latency (u_int thread_id)
 {
-  return ts_->ave_latency_[thread_id];
+  return ts_->latency_ [thread_id];
 }
 
 double
@@ -572,9 +566,13 @@ Client::run_tests (Cubit_ptr cb,
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
 
-      timer_.start ();
-      // ACE_OS::ACE_HRTIMER_START; not using sysBench when CHORUS
-      // defined.
+      // use sysBench when CHORUS defined and option specified on command line
+#if defined (CHORUS)      
+      if (ts_->use_sysbench_ == 1)
+	timer_.start (ACE_OS::ACE_HRTIMER_START); 
+      else 
+#endif /* CHORUS */
+	timer_.start ();
 
       if (ts_->oneway_ == 0)
         {
@@ -765,8 +763,15 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-      timer_.stop ();
-      // ACE_OS::ACE_HRTIMER_STOP; not using sysBench when CHORUS defined
+      // use sysBench when CHORUS defined and option specified on command line
+#if defined (CHORUS)      
+      if (ts_->use_sysbench_ == 1)
+	timer_.stop (ACE_OS::ACE_HRTIMER_STOP); 
+      else 
+#endif /* CHORUS */
+      // if CHORUS is not defined just use plain timer_.stop ().
+      timer_.stop (); 
+
       timer_.elapsed_time (delta_t);
 
       double real_time = 0.0;
@@ -794,12 +799,10 @@ Client::run_tests (Cubit_ptr cb,
       if (error_count == 0)
         {
 #if defined (ACE_LACKS_FLOATING_POINT)
-          double tmp = latency / ACE_ONE_SECOND_IN_USECS;
-          //      printf("latency=%u, tmp=%u, call_count=%u, \n", latency, tmp, call_count);
-          double calls_per_second = call_count / tmp;
+          double calls_per_second = (call_count * ACE_ONE_SECOND_IN_USECS) / latency;
 #endif /* ACE_LACKS_FLOATING_POINT */
 
-          latency /= call_count;
+          latency /= call_count; // calc average latency
 
           if (latency > 0)
             {
