@@ -1,16 +1,23 @@
+Mon Jun 29 14:43:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_array.cpp (gen_forany_defn): changed
+          declaration of friend CORBA::Any to friend class CORBA_Any,
+          to keep DEC cxx from complaining.  Also, commented out
+          the declaration, because it doesn't appear to be necessary.
+
 Mon Jun 29 11:05:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/encode.cpp: 
-	  Removed unused variable.
+        * tao/encode.cpp:
+          Removed unused variable.
 
 Mon Jun 29 11:00:26 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 
-	After the call to do_static_call, we were not checking if some
-	exception was raised. This was causing major problems if there was
-	any post do_static_call processing such as narrowing to be
-	done. Thanks to Seth Widoff for reporting the problem.
+        After the call to do_static_call, we were not checking if some
+        exception was raised. This was causing major problems if there was
+        any post do_static_call processing such as narrowing to be
+        done. Thanks to Seth Widoff for reporting the problem.
 
 Sun Jun 28 21:33:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
