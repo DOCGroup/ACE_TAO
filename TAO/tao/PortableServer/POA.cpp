@@ -417,17 +417,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   }
 
-  if (this->ort_adapter_ != 0)
-  {
-    TAO::ORT_Adapter_Factory *ort_factory =
-      this->ORT_adapter_factory ();
-
-    ort_factory->destroy (this->ort_adapter_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->ort_adapter_ = 0;
-  }
-
   CORBA::release (this);
 }
 
@@ -883,6 +872,19 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       if (ort_adapter != 0)
         ort_adapter->release (array_obj_ref_template[0]);
+
+      // ---------------------------------------------
+      if (this->ort_adapter_ != 0)
+        {
+          TAO::ORT_Adapter_Factory *ort_factory =
+            this->ORT_adapter_factory ();
+
+          ort_factory->destroy (this->ort_adapter_
+                                ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          this->ort_adapter_ = 0;
+        }
     }
   else
     {
@@ -4151,7 +4153,7 @@ TAO_POA::ORT_adapter_i (void)
           ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!ort_adapter_)
+      if (!this->ort_adapter_)
         return 0;
 
       // @todo We have to look at this, we activate it but hold the POA lock,
@@ -4260,7 +4262,9 @@ TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref
       PortableServer::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  TAO_POA_PortableGroup_Hooks * hooks =
+    this->orb_core_.portable_group_poa_hooks ();
+
   if (hooks == 0)
     {
       ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
