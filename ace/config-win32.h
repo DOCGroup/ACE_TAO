@@ -14,7 +14,8 @@
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
-//  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2.
+//  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2
+//  unless you uncomment ACE_HAS_WINSOCK2 definition in this file.
 #if !defined (ACE_HAS_WINNT4)
 	#define ACE_HAS_WINNT4	1	// assuming Win NT 4.0 or greater
 
@@ -69,11 +70,11 @@
 	#define ACE_HAS_SVC_DLL 1
 #endif
 
-// Define the following macro if you're compiling with WinSock 2.0.
+// Uncomment the following definition if you do *not* want to compile with WinSock 2.0.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: winsock2 must be installed.
 #if !defined (ACE_HAS_WINSOCK2)
-	#define ACE_HAS_WINSOCK2 0
+//	#define ACE_HAS_WINSOCK2 0
 #endif
 
 // Uncomment these if you want to integrate ACE and Orbix in Win32.
