@@ -1,12 +1,13 @@
 // $Id$
 
 #include "ace/FIFO_Recv_Msg.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_Msg_server, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-int 
+int
 main (int, char *[])
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
@@ -22,7 +23,7 @@ main (int, char *[])
       if (msg.len == 0)
 	break;
       else
-	ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s", 
+	ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s",
 		    msg.len, band, msg.len, msg.buf));
       flags = MSG_ANY;
       band = 0;

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Event_Handler_T.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_event_handler_t, "$Id$")
 

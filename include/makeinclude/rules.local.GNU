@@ -112,7 +112,7 @@ $(VDIR).creation_stamp:
 	@echo > $@
 else
 $(VDIR).creation_stamp:
-	@-mkdir $(VDIR)
+	@-test -d $(VDIR) || mkdir $(VDIR)
 	@touch $@
 endif
 
@@ -123,7 +123,7 @@ $(VSHDIR).creation_stamp:
 	@echo > $@
   else
 $(VSHDIR).creation_stamp:
-	@-mkdir $(VSHDIR)
+	@-test -d $(VSHDIR) || mkdir $(VSHDIR)
 	@touch $@
   endif
 endif
@@ -291,7 +291,13 @@ rcs_info.local:
 
 build.objdirs: $(OBJDIRS)
 
-$(OBJDIRS): $(VDIR).creation_stamp $(VSHDIR).creation_stamp
+ifeq ($(OS),"Windows_NT")
+$(OBJDIRS):
+	@if not exist $@ mkdir $@
+else
+$(OBJDIRS):
+	@-test -d $@ || mkdir $@
+endif
 
 #---------------------------------------------------------------------------
 #       Source file splitting

@@ -1,3 +1,22 @@
+Wed Nov  8 14:10:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/client.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * examples/Reactor/Misc/test_event_handler_t.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
+          We must explicitly #include "ace/Log_Msg.h", unfortunately the
+          errors were only detected on platforms that do not define
+          ACE_TEMPLATES_REQUIRE_SOURCE.
+
+        * include/makeinclude/rules.local.GNU:
+          More fine tuning, the Templates.DB directory must be created by
+          the Makefile because SunCC 4.2 generates a warning if it is not
+          present.
+
 Wed Nov  8 14:40:25 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-all.h

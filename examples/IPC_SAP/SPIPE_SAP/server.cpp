@@ -2,6 +2,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SPIPE_SAP, server, "$Id$")
 
@@ -21,7 +22,7 @@ main (int argc, char *argv[])
   struct pollfd poll_array[MAX_HANDLES];
   ACE_HANDLE handle;
 
-  for (handle = 0; handle < MAX_HANDLES; handle++) 
+  for (handle = 0; handle < MAX_HANDLES; handle++)
     {
       poll_array[handle].fd = -1;
       poll_array[handle].events = POLLIN;
@@ -75,29 +76,29 @@ main (int argc, char *argv[])
 	      }
 	    else
 	      ACE_DEBUG ((LM_DEBUG, "%*s\n", n, buf));
-	  } 
+	  }
 
       if (ACE_BIT_ENABLED (poll_array[0].revents, POLLIN))
 	{
 	  if (peer_acceptor.accept (new_stream) == -1)
 	    ACE_DEBUG ((LM_DEBUG, "%p\n", "accept failed"));
-  
+
 	  ACE_SPIPE_Addr client;
 	  ACE_HANDLE n_handle = new_stream.get_handle ();
 
 	  if (new_stream.get_remote_addr (client) == -1)
-	    ACE_DEBUG ((LM_DEBUG, "%p\n", 
+	    ACE_DEBUG ((LM_DEBUG, "%p\n",
 			"get_remote_addr failed"));
 
-	  ACE_DEBUG ((LM_DEBUG, 
-		      "n_handle = %d, uid = %d, gid = %d\n", 
-		      n_handle, 
-		      client.user_id (), 
+	  ACE_DEBUG ((LM_DEBUG,
+		      "n_handle = %d, uid = %d, gid = %d\n",
+		      n_handle,
+		      client.user_id (),
 		      client.group_id ()));
 
 	  int arg = RMSGN | RPROTDAT;
 
-	  if (ACE_OS::ioctl (n_handle, 
+	  if (ACE_OS::ioctl (n_handle,
 			     I_SRDOPT, (void *) arg) == -1)
 	    ACE_DEBUG ((LM_DEBUG, "%p\n", "ioctl failed"));
 
