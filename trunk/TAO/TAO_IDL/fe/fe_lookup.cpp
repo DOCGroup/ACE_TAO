@@ -2,11 +2,11 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"fe_private.h"
-/* starting time is 18:04:44 */
-/* C++ code produced by gperf version 2.6 (GNU C++ version) */
+/* starting time is 11:21:40 */
+/* C++ code produced by gperf version 2.7 (GNU C++ version) */
 /* Command-line: /home/gokhale/research/projects/ACE_wrappers/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup fe/keywords.dat  */
 unsigned int
-TAO_IDL_CPP_Keyword_Table::hash (const char *str, int len)
+TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
@@ -28,7 +28,7 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, int len)
 }
 
 const struct TAO_IDL_CPP_Keyword_Entry *
-TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
+TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 {
   enum
     {
@@ -41,7 +41,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
       DUPLICATES = 4
     };
 
-  static const struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
+  static const struct TAO_IDL_CPP_Keyword_Entry  wordlist[] =
     {
       {"",}, {"",}, {"",}, 
       {"int",  "_cxx_int"},
@@ -119,11 +119,11 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
       {"goto",  "_cxx_goto"},
     };
 
-  static const short lookup[] =
+  static const signed short lookup[] =
     {
-        -1,   -1,   -1,    3,   -1,   -1,   -1,   -1,    4,    5,    6,    7,    8,  128, 
-        12,   13,   14,   -9,   -3,   -1,   -1,   15,   16,   17,   -1,   -1,  135,   20, 
-        21,   22,   23,   24,   25,   -1,   26,   27,   28,  -18,   -2,   29,   30,   -1, 
+        -1,   -1,   -1,    3,   -1,   -1,   -9,   -3,    4,    5,    6,    7,    8, -131, 
+        12,   13,   14,   -1,   -1,   -1,   -1,   15,   16,   17,  -18,   -2, -126,   20, 
+        21,   22,   23,   24,   25,   -1,   26,   27,   28,   -1,   -1,   29,   30,   -1, 
         -1,   31,   32,   33,   34,   35,   36,   -1,   37,   -1,   38,   39,   -1,   40, 
         41,   42,   -1,   43,   44,   45,   46,   47,   -1,   48,   49,   -1,   50,   51, 
         -1,   52,   53,   -1,   54,   55,   56,   57,   58,   -1,   59,   60,   -1,   61, 
@@ -134,7 +134,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
@@ -151,9 +151,9 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
             return 0;
           else
             {
-              int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
-              const struct TAO_IDL_CPP_Keyword_Entry *base = &wordlist[-lookup[offset]];
-              const struct TAO_IDL_CPP_Keyword_Entry *ptr = base + -lookup[offset + 1];
+              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const struct TAO_IDL_CPP_Keyword_Entry  *base = &wordlist[-lookup[offset]];
+              const struct TAO_IDL_CPP_Keyword_Entry  *ptr = base + -lookup[offset + 1];
 
               while (--ptr >= base)
                 if (*str == *ptr->keyword_ && !strncmp (str + 1, ptr->keyword_ + 1, len - 1))
@@ -163,4 +163,4 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, int len)
     }
   return 0;
 }
-/* ending time is 18:04:44 */
+/* ending time is 11:21:40 */
