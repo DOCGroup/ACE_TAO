@@ -63,8 +63,7 @@ class ImplRepo_i : public POA_ImplementationRepository::Administration
   //    Implementation Repository
   //
   // = DESCRIPTION
-  //    This provides the interface to communicate directly with the
-  //    Implementation Repository.
+  //    This provides the interface to Administer the Implementation Repository.
 public:
   // = Constructor and destructor
   ImplRepo_i (void);
@@ -156,7 +155,13 @@ private:
   // The command line arguments.
 };
 
-class IR_Forwarder: public  PortableServer::DynamicImplementation
+class IR_Forwarder: public PortableServer::DynamicImplementation
+  // = TITLE
+  //    Implementation Repository Forwarder
+  //
+  // = DESCRIPTION
+  //    This class is provides a DSI implementation that is used to handle
+  //    arbitrary calls and forward them to the correct place.
 {
 public:
   IR_Forwarder (CORBA::ORB_ptr orb_ptr,
@@ -184,6 +189,34 @@ private:
 
   PortableServer::POA_var poa_var_;
   // POA reference.
+};
+
+class IR_Iterator : public POA_ImplementationRepository::ServerInformationIterator
+{
+public:
+  IR_Iterator (Server_Repository::HASH_IR_ITER *iterator,
+               PortableServer::POA_ptr poa);
+  // Constructor
+  // Ownership of iterator is transfered to this class (we'll delete it)
+
+  ~IR_Iterator ();
+  // Destructor
+
+  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
+                                 ImplementationRepository::ServerInformationList_out server_list,
+                                 CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Returns the next list of up to <how_many> servers.  If empty, will return
+  // false.
+
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Destroys the iterator.
+
+private:
+  Server_Repository::HASH_IR_ITER *iterator_;
+  // Our very own iterator for transversing the server repository.
+
+  PortableServer::POA_var poa_;
+  // Our lovely POA.
 };
 
 #endif /* IMPLREPO_I_H */

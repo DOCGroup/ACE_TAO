@@ -197,6 +197,28 @@ Server_Repository::remove (const ACE_TString POA_name)
 {
   return this->repository_.unbind (POA_name);
 }
+
+
+// Returns a new iterator that travels over the repository.
+
+HASH_IR_ITER *
+Server_Repository::new_iterator ()
+{
+  HASH_IR_ITER *hash_iter;
+  ACE_NEW_RETURN (hash_iter,
+                  Server_Repository::HASH_IR_ITER (this->repository_),
+                  0);
+  return hash_iter;
+}
+
+
+// Returns the number of entries in the repository.
+
+size_t 
+get_repository_size ()
+{
+  return this->repository_.current_size ();
+}
   
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
