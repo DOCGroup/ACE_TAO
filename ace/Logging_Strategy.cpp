@@ -305,35 +305,44 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                            ACE_Log_Msg::OSTREAM))
         {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-          // check if we already have an opened one.
-          FILE *output_file = 0;
-          if (this->log_msg_->msg_ostream () 
-              && ACE_OS::fclose (this->log_msg_->msg_ostream ()) == -1)
-                return -1; // failed to close the file
-
+          FILE *output_file = this->log_msg_->msg_ostream ();
           if (wipeout_logfile_)
+          {
+              // close and re-open a stream if such exits
+            if (output_file &&
+                ACE_OS::fclose (output_file) == -1)
+                return -1;
             output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
+          }
           else
-            output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("at"));
+          {
+            // open a stream only if such doesn't exists
+            if (output_file == 0)
+                output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("at"));
+          }
           if (output_file == 0)
             return -1;
 #else
-          ofstream *output_file = 0;
-          if (this->log_msg_->msg_ostream ())
-            delete this->log_msg_->msg_ostream (); // destructor will close it
-
+          ostream *output_file = this->log_msg_->msg_ostream ();
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
+          {
+              if (output_file)
+                  delete output_file;
             ACE_NEW_RETURN
               (output_file,
                ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_)),
                -1);
+          }
           else
-            ACE_NEW_RETURN
-              (output_file,
-               ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_),
-                         ios::app | ios::out),
+          {
+            if (output_file == 0)
+              ACE_NEW_RETURN
+                  (output_file,
+                   ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_),
+                   ios::app | ios::out),
                -1);
+          }
           if (output_file->rdstate () != ios::goodbit)
             {
               delete output_file;
@@ -376,7 +385,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                               0,
                               SEEK_CUR) > this->max_size_)
 #else
-  if ((size_t) this->log_msg_->msg_ostream () > this->max_size_)
+  if ((size_t) this->log_msg_->msg_ostream ()->tellp () > this->max_size_)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     {
       // Lock out any other logging.
