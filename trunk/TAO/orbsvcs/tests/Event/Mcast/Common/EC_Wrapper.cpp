@@ -72,7 +72,6 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   this->ec_impl_ = impl_release.release ();
   return 0;
@@ -85,7 +84,7 @@ EC_Wrapper::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ec_impl_)
     return this->ec_impl_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   else
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::ConsumerAdmin::_nil());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
@@ -95,7 +94,7 @@ EC_Wrapper::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ec_impl_)
     return this->ec_impl_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   else
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::SupplierAdmin::_nil());
 }
 
 void
@@ -146,7 +145,7 @@ EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer
   if (this->ec_impl_)
     return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
   else
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }
 
 void
