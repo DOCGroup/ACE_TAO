@@ -1,41 +1,47 @@
+Tue Jan 16 15:28:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+          The formal parameter names must match in the .h and .cpp file
+          to make Sun/CC 6.0 happy.
+
 Tue Jan 16 11:25:32 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Convert strerror() text string to a
-	  TCHAR so that this call will work correctly with Unicode.
-  	  Thanks to Matthias Wittig <m.wittig@com-on.de> for reporting
- 	  this.
+        * ace/Log_Msg.cpp (log): Convert strerror() text string to a
+          TCHAR so that this call will work correctly with Unicode.
+          Thanks to Matthias Wittig <m.wittig@com-on.de> for reporting
+          this.
 
 Tue Jan 16 09:58:20 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.inl:
 
-          Updated ACE_Ascii_To_Wide and ACE_Wide_To_Ascii to 
+          Updated ACE_Ascii_To_Wide and ACE_Wide_To_Ascii to
           preserve null pointers.
 
-          Thanks to Matthias Wittig <m.wittig@com-on.de> for 
+          Thanks to Matthias Wittig <m.wittig@com-on.de> for
           reporting this and suggesting a fix.
 
 Tue Jan 16 10:47:33 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* ace/config-win32-common.h:
-	* ace/config-win32-msvc.h:
-	  Moved #define ACE_HAS_LLSEEK from config-win32-common.h to 
-	  config-win32-msvc.h, since _lseeki64 isn't defined for 
-	  Borland.  Also implicitly removed ACE_HAS_LLSEEK for the
-	  VisualAge compiler - it might have worked (didn't know,
-	  couldn't test)
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc.h:
+          Moved #define ACE_HAS_LLSEEK from config-win32-common.h to
+          config-win32-msvc.h, since _lseeki64 isn't defined for
+          Borland.  Also implicitly removed ACE_HAS_LLSEEK for the
+          VisualAge compiler - it might have worked (didn't know,
+          couldn't test)
 
 Mon Jan 15 15:22:42 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Asynch_IO.h: Changed the ACE_Asynch_Read_Stream::read()
-	  method's "bytes_to_read" parameter to "num_bytes_to_read" to
- 	  workaround a weird problem with some compilers.  Thanks to Chris
- 	  Kohlhoff <chris@kohlhoff.com> for this fix.
+        * ace/Asynch_IO.h: Changed the ACE_Asynch_Read_Stream::read()
+          method's "bytes_to_read" parameter to "num_bytes_to_read" to
+          workaround a weird problem with some compilers.  Thanks to Chris
+          Kohlhoff <chris@kohlhoff.com> for this fix.
 
-	* examples/Service_Configurator/IPC-tests/README: Updated this
-	  file so that it's now up-to-date and also explains how to
- 	  reconfigure a server if SIGHUP isn't supported.  Thanks to Mike
- 	  Curtis <mccurry@my-deja.com> for reporting this.
+        * examples/Service_Configurator/IPC-tests/README: Updated this
+          file so that it's now up-to-date and also explains how to
+          reconfigure a server if SIGHUP isn't supported.  Thanks to Mike
+          Curtis <mccurry@my-deja.com> for reporting this.
 
 Mon Jan 15 12:13:48 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -48,13 +54,13 @@ Mon Jan 15 12:13:48 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Jan 15 12:29:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-macosx.h: Fixed typo so that ACE_HAS_CLOCK_GETTIME
-	  is spelled correctly.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for reporting this.
-	
-	* ace/Strategies_T.cpp (open): Replace the ACE_OS::strncpy() functions
-	  with ACE_OS::strcpy() functions.  Thanks to Ron Hashimshony
- 	  <Ron@bandwiz.com> for reporting this.
+        * ace/config-macosx.h: Fixed typo so that ACE_HAS_CLOCK_GETTIME
+          is spelled correctly.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for reporting this.
+
+        * ace/Strategies_T.cpp (open): Replace the ACE_OS::strncpy() functions
+          with ACE_OS::strcpy() functions.  Thanks to Ron Hashimshony
+          <Ron@bandwiz.com> for reporting this.
 
 Mon Jan 15 09:44:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
