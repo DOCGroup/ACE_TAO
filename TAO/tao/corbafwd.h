@@ -582,6 +582,11 @@ TAO_SYSTEM_EXCEPTION_LIST
     OUT_LIST_MEMORY = 0x10
   };
 
+  typedef char *ORBid;
+  typedef CORBA::String_var ORBid_var;
+  typedef CORBA::String_out ORBid_out;
+  static CORBA::TypeCode_ptr _tc_ORBid;
+
   typedef char *Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
