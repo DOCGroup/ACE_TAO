@@ -113,8 +113,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                 {
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) Unable to set eNULL ")
-                                ACE_TEXT ("SSL cipher in SSLIOP ")
+                                ACE_TEXT ("(%P|%t) Unable to set ")
+                                ACE_TEXT ("SSL certificate in SSLIOP ")
                                 ACE_TEXT ("factory.\n")));
 
                   return -1;
@@ -147,8 +147,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                 {
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) Unable to set eNULL ")
-                                ACE_TEXT ("SSL cipher in SSLIOP ")
+                                ACE_TEXT ("(%P|%t) Unable to set ")
+                                ACE_TEXT ("SSL private key in SSLIOP ")
                                 ACE_TEXT ("factory.\n")));
 
                   return -1;
