@@ -1,3 +1,9 @@
+Fri May 01 11:52:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (last_error): On Win32, this should also update errno
+ 	  after calling SetLastError ().  Thanks to Steve for pointing
+ 	  this out.
+
 Fri May 01 10:01:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.6.h: replaced config-sunos5.6-sunc++-4.x.h
