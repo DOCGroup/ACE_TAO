@@ -1,62 +1,67 @@
+Tue Jul 14 21:50:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/run_test.sh: use sh instead of ksh, $login
+          instead of mk1, and $ps_opts.
+
 Tue Jul 14 21:25:19 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Makefile:
-	* orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}: 
-	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
-	* orbsvcs/tests/Trading/Offer_Importer.h:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading/TT_Info.{h,cpp}:
-	* orbsvcs/tests/Trading/colocated_test.cpp:
-	* orbsvcs/tests/Trading/export_test.cpp:
- 	* orbsvcs/tests/Tradingimport_test.cpp: 
-	These tests now copmile with egcs. In addition, Added modify and
-	withdraw_using_constraint tests, and the "quiet" flag, which will
-	staunch the usual barrage of output by not printing the contents
-	of offers and service types.
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+        * orbsvcs/tests/Trading/Offer_Importer.h:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading/TT_Info.{h,cpp}:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Tradingimport_test.cpp:
+        These tests now copmile with egcs. In addition, Added modify and
+        withdraw_using_constraint tests, and the "quiet" flag, which will
+        staunch the usual barrage of output by not printing the contents
+        of offers and service types.
 
-	* orbsvcs/Trading_Service/Trading_Service.cpp: compiles with
-	egcs. 
+        * orbsvcs/Trading_Service/Trading_Service.cpp: compiles with
+        egcs.
 
-	* orbsvcs/orbsvcs/Trader/*.*: Compiles with egcs. Improved the
-	modify method. 
+        * orbsvcs/orbsvcs/Trader/*.*: Compiles with egcs. Improved the
+        modify method.
 
 Tue Jul 14 19:15:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/Fast_Reactor.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  The Event Channel modules are constructed using a Factory class,
-	  that will simplify configuration of the EC, like using RTU or
-	  FIFO dispatching, disabling correlation, or filtering, etc.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          The Event Channel modules are constructed using a Factory class,
+          that will simplify configuration of the EC, like using RTU or
+          FIFO dispatching, disabling correlation, or filtering, etc.
 
 Tue Jul 14 18:35:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp: 
-	  The generated replace() method released the buffer twice.
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+          The generated replace() method released the buffer twice.
 
 Tue Jul 14 15:56:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams:
-		Removed files Machine_Properties.{h,cpp} and
-		Property_Exporter.{h,cpp} as they are moved to
-		orbsvcs/tests/AVStreams/mpeg/source/server.
-		
-		Removed server.{h,cpp} and client.{h,cpp} as they are
-		outdated.
+        * orbsvcs/tests/AVStreams:
+                Removed files Machine_Properties.{h,cpp} and
+                Property_Exporter.{h,cpp} as they are moved to
+                orbsvcs/tests/AVStreams/mpeg/source/server.
 
-		Removed Makefile for the above files.
-	
+                Removed server.{h,cpp} and client.{h,cpp} as they are
+                outdated.
+
+                Removed Makefile for the above files.
+
 Tue Jul 14 15:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp: 
-	  Added support for arrays inside structures. Anonymous arrays do
-	  *not* work. Thanks to Eric Powers <powerg@deltanet.com> for this
-	  patch.
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Added support for arrays inside structures. Anonymous arrays do
+          *not* work. Thanks to Eric Powers <powerg@deltanet.com> for this
+          patch.
 
 Tue Jul 14 14:40:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
