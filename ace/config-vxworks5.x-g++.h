@@ -15,7 +15,7 @@
 // Even though the documentation suggests that g++/VxWorks 5.3.1
 // (Tornado 1.0.1) supports long long, Wind River tech support says
 // that it doesn't.  It causes undefined symbols for math functions.
-// #define ACE_HAS_LONGLONG_T
+#define ACE_LACKS_LONGLONG_T
 
 // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
 // of the Iostream_init class.  That causes all files that #include it
