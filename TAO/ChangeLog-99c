@@ -1,5 +1,8 @@
 Thu May 20 18:46:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	  updated dependencies.
+
 	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
 	  Removed this file. templates seem to be an overkill here.
 
