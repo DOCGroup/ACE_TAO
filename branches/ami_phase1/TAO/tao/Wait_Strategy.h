@@ -6,7 +6,7 @@
 //     TAO
 //
 // = FILENAME
-//     IIOP_Wait_Strategy.h
+//     Wait_Strategy.h
 //
 // = DESCRIPTION
 //     Classes to strategize waiting for reply.
@@ -19,10 +19,10 @@
 
 #include "tao/GIOP.h"
 
-class TAO_IIOP_Request_Multiplexing_Strategy;
+class TAO_Request_Mux_Strategy;
 class TAO_Transport;
 
-class TAO_Export TAO_IIOP_Wait_Strategy
+class TAO_Export TAO_Wait_Strategy
 {
   // = TITLE
   //
@@ -32,10 +32,10 @@ class TAO_Export TAO_IIOP_Wait_Strategy
   // 
   
 public:
-  TAO_IIOP_Wait_Strategy (TAO_Transport *transport);
+  TAO_Wait_Strategy (TAO_Transport *transport);
   // Constructor.
   
-  virtual ~TAO_IIOP_Wait_Strategy (void);
+  virtual ~TAO_Wait_Strategy (void);
   // Destructor.
   
   virtual int wait (void) = 0;
@@ -46,7 +46,7 @@ protected:
   // Transport object.
 };
 
-class TAO_Export TAO_Wait_On_Reactor : public TAO_IIOP_Wait_Strategy
+class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
   // = TITLE
   // 
@@ -67,7 +67,7 @@ public:
   // Do the event loop of the Reactor.
 };
 
-class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_IIOP_Wait_Strategy
+class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
   // = TITLE
   //
@@ -89,7 +89,7 @@ public:
   // Wait according to the L-F model.
 };
 
-class TAO_Export TAO_Wait_On_Read :  public TAO_IIOP_Wait_Strategy
+class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
   // = TITLE
   // 

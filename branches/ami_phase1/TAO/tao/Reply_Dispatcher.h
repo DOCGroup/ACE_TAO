@@ -6,7 +6,7 @@
 //     TAO
 //
 // = FILENAME
-//     IIOP_Reply_Dispatcher.h
+//     Reply_Dispatcher.h
 //
 // = DESCRIPTION
 //     Dispatch the reply appropriately. 
@@ -16,8 +16,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_IIOP_REPLY_DISPATCHER_H
-#define TAO_IIOP_REPLY_DISPATCHER_H
+#ifndef TAO_REPLY_DISPATCHER_H
+#define TAO_REPLY_DISPATCHER_H
 
 #include "tao/GIOP.h"
 
@@ -26,7 +26,7 @@
 class TAO_Stub;
 class TAO_InputCDR;
 
-class TAO_Export TAO_IIOP_Reply_Dispatcher
+class TAO_Export TAO_Reply_Dispatcher
 {
   // = TITLE
   //
@@ -34,10 +34,10 @@ class TAO_Export TAO_IIOP_Reply_Dispatcher
   //
   
 public:
-  TAO_IIOP_Reply_Dispatcher (void);
+  TAO_Reply_Dispatcher (void);
   // Constructor.
   
-  virtual ~TAO_IIOP_Reply_Dispatcher (void);
+  virtual ~TAO_Reply_Dispatcher (void);
   // Destructor.
   
   void request_id (CORBA::ULong request_id);
@@ -74,7 +74,7 @@ protected:
   // Replt status.
 };
 
-class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_IIOP_Reply_Dispatcher
+class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
   // 
@@ -94,4 +94,4 @@ public:
   // NO OP.
 };
 
-#endif /* TAO_IIOP_REPLY_DISPATCHER_H */
+#endif /* TAO_REPLY_DISPATCHER_H */

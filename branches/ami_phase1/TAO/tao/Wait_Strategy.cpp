@@ -1,20 +1,17 @@
 // $Id$
 
-#include "tao/IIOP_Wait_Strategy.h"
+#include "tao/Wait_Strategy.h"
 #include "tao/Pluggable.h"
 #include "tao/ORB_Core.h"
 
-// @@ This is not IIOP specific, ditto for IIOP_RMS and
-//    IIOP_Reply_Dispatcher
-
 // Constructor.
-TAO_IIOP_Wait_Strategy::TAO_IIOP_Wait_Strategy (TAO_Transport *transport)
+TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)
   : transport_ (transport)
 {
 }
 
 // Destructor.
-TAO_IIOP_Wait_Strategy::~TAO_IIOP_Wait_Strategy (void)
+TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 {
 }
 
@@ -22,7 +19,7 @@ TAO_IIOP_Wait_Strategy::~TAO_IIOP_Wait_Strategy (void)
 
 // Constructor.
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
-  : TAO_IIOP_Wait_Strategy (transport)
+  : TAO_Wait_Strategy (transport)
 {
 }
 
@@ -61,7 +58,7 @@ TAO_Wait_On_Reactor::wait (void)
 
 // Constructor.
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
-  : TAO_IIOP_Wait_Strategy (transport)
+  : TAO_Wait_Strategy (transport)
 {
 }
 
@@ -124,7 +121,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
 // Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
-  : TAO_IIOP_Wait_Strategy (transport)
+  : TAO_Wait_Strategy (transport)
 {
 }
 
