@@ -49,7 +49,8 @@ public:
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_criteria (const PortableGroup::Properties & criteria)
+  void validate_criteria (const PortableGroup::Properties & criteria
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidCriteria,
                      PortableGroup::CannotMeetCriteria));
