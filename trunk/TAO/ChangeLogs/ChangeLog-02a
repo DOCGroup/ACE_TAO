@@ -1,3 +1,10 @@
+Tue Mar 27 22:00:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/PortableServer/POA.i:
+          Fixed several Fuzz warning
+
 Tue Mar 27 21:57:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/time-date/Time_Date.cpp:
