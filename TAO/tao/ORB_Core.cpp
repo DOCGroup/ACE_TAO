@@ -205,6 +205,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Trading Service port used for Multicast
   u_short ts_port = 0;
 
+  // Implementation Repository Service IOR string.
+  ACE_CString ir_ior;
+
+  // Implementation Repository Service port #.
+  u_short ir_port = 0;
+
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
   //    since we may have protocols loaded which use shared memory of
@@ -414,6 +420,30 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ts_port = ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcasecmp (current_arg, 
+                                   "-ORBImplRepoIOR") == 0)
+        {
+          // Specify the IOR of the Implementation Repository
+
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              ir_ior = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcasecmp (current_arg, 
+                                   "-ORBImplRepoPort") == 0)
+        {
+          // Specify the multicast port number for the Implementation Repository.
+
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              ir_port = ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -872,6 +902,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->orb_params ()->name_service_port (ns_port);
   this->orb_params ()->trading_service_ior (ts_ior);
   this->orb_params ()->trading_service_port (ts_port);
+  this->orb_params ()->implrepo_service_ior (ir_ior);
+  this->orb_params ()->implrepo_service_port (ir_port);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
