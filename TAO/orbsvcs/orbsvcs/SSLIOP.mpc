@@ -1,4 +1,5 @@
 // -*- MPC -*-
+//
 // $Id$
 
 project(SSLIOP) : orbsvcslib, core, security, ssl {
@@ -17,7 +18,6 @@ project(SSLIOP) : orbsvcslib, core, security, ssl {
   Source_Files(ORBSVCS_COMPONENTS) {
     SSLIOP {
       SSLIOPC.cpp
-      SSLIOPS.cpp
       SSLIOP
     }
   }
