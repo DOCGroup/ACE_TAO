@@ -17,6 +17,9 @@
 #ifndef ACE_ARG_SHIFTER_H
 #define ACE_ARG_SHIFTER_H
 
+#include "ace/OS.h"
+
+
 class ACE_Export ACE_Arg_Shifter
 {
   // = TITLE
@@ -34,9 +37,9 @@ class ACE_Export ACE_Arg_Shifter
   //    the front of argv.
 public:
   // = Initialization and termination methods.
-  ACE_Arg_Shifter (int &argc,
-                   char **argv,
-                   char **temp = 0);
+  ACE_Arg_Shifter (int& argc,
+                   char** argv,
+                   char** temp = 0);
   // Initialize the <ACE_Arg_Shifter> to the vector over which to
   // iterate, also providing the temporary array if the client doesn't
   // want the arg_shifter to dynamically allocate its own. If internal
@@ -48,8 +51,43 @@ public:
   ~ACE_Arg_Shifter (void);
   // Destructor.
 
-  char *get_current (void) const;
+  char* get_current (void) const;
   // Get the current head of the vector.
+
+  char* is_or_contains_ignore_case(const char* flag);
+  // Check if the current argument matches <flag>
+  //
+  // An argument matches if:
+  // - it STARTS with <flag>
+  // - any character may appear after the flag including
+  // - digits, spaces, characters or nothing at all
+  // - match is case insensitive.
+  // - ie: "-Foobar" "-FOOBAR" "-fOobAr" "-foobarVALUE"
+  // - all match the <flag> "-FooBar"
+  //
+  // If there is NOT a match, nil is returned
+  //
+  // If there IS a match:
+  // An attempt is made to return the <flag>'s parameter (or 'value')
+  //
+  // Case A: value is separated from flag with a space:
+  // Arg_Shifter calls consume_arg() (<flag>) and advances to the next arg
+  // If the new current argument passes is_parameter_next()
+  // - we return the 'new' current argument, ('value')
+  // else, we return nil
+  //
+  // Case B: value is mangled together with flag: ie: "-fooBarVALUE"
+  // A char* is returned - pointing to VALUE
+  //
+  // This operation consumes the current argument if:
+  // - there is a match &&
+  // - and the value for the flag is separated from the flag with a space.
+  // This operation does not consume the current argument if:
+  // - there is a match but
+  // - there is no space separating the value from the flag "-FooBarVALUE"
+  //
+  // This method is safe to call without checking for a valid
+  // current argument
 
   int consume_arg (int number = 1);
   // Consume <number> argument(s) by sticking them/it on the end of
@@ -74,16 +112,16 @@ public:
   // Returns the number of irrelevant args seen.
 
 private:
-  int &argc_;
+  int& argc_;
   // The size of the argument vector.
 
   int total_size_;
   // The size of argv_.
 
-  char **temp_;
+  char** temp_;
   // The temporary array over which we traverse.
 
-  char **argv_;
+  char** argv_;
   // The array in which the arguments are reordered.
 
   int current_index_;
