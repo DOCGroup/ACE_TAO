@@ -587,6 +587,7 @@ typedef int key_t;
     #define ENOMEM       12       /* Not enough core                       */
 #   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
     #define EACCES       13       /* Permission denied                     */
+    #define EFAULT       14       /* Bad access                            */
 #   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
     #define EEXIST       17       /* File exists                           */
 #   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
@@ -696,10 +697,15 @@ typedef int key_t;
 
 // For general purpose portability
 
+#define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
+
 typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
 #   define ACE_SELF (0)
 typedef u_long ACE_pri_t;
+
+// pHILE+ calls the DIR struct XDIR instead
+typedef XDIR DIR;
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
