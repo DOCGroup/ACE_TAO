@@ -4,6 +4,7 @@
 #include "ace/Dynamic_Service.h"
 #include "tao/DLL_ORB.h"
 #include "tao/TAO_Singleton_Manager.h"
+#include "tao/debug.h"
 
 ACE_RCSID (tao, DLL_ORB, "$Id$")
 
@@ -63,8 +64,9 @@ TAO_DLL_ORB::init (int argc, ACE_TCHAR *argv[])
     }
   ACE_CATCHANY
     {
-//       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-//                            ACE_TEXT ("TAO_DLL_ORB::init"));
+      if (TAO_debug_level >= 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_DLL_ORB::init");
 
       return -1;
     }
@@ -92,8 +94,9 @@ TAO_DLL_ORB::fini (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("TAO_DLL_ORB::fini"));
+      if (TAO_debug_level >= 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_DLL_ORB::fini");
       return -1;
     }
   ACE_ENDTRY;
@@ -112,8 +115,9 @@ TAO_DLL_ORB::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("TAO_DLL_ORB::svc"));
+      if (TAO_debug_level >= 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_DLL_ORB::svc");
       return -1;
     }
   ACE_ENDTRY;
