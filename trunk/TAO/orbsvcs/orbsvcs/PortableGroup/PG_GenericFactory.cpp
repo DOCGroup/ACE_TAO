@@ -91,18 +91,6 @@ TAO_PG_GenericFactory::create_object (
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::ULong factory_infos_count =
-    (factory_infos == 0 ? 0 : factory_infos->length ());
-
-  // If the number of factories is less than the initial number of
-  // members, then the desired number of members cannot possibly be
-  // created.
-  if (factory_infos != 0
-      && factory_infos_count < ACE_static_cast (CORBA::ULong,
-                                                initial_number_members))
-    ACE_THROW_RETURN (PortableGroup::CannotMeetCriteria (),
-                      CORBA::Object::_nil ());
-
   CORBA::ULong fcid = 0;
 
   {
@@ -148,6 +136,9 @@ TAO_PG_GenericFactory::create_object (
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  CORBA::ULong factory_infos_count =
+    (factory_infos == 0 ? 0 : factory_infos->length ());
+
   if (factory_infos_count > 0
       && membership_style == PortableGroup::MEMB_INF_CTRL)
     {
@@ -155,12 +146,11 @@ TAO_PG_GenericFactory::create_object (
                                    object_group.in (),
                                    oid.in (),
                                    type_id,
-                                   *factory_infos
+                                   *factory_infos,
+                                   initial_number_members
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
-
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
   PortableGroup::GenericFactory::FactoryCreationId * tmp = 0;
@@ -303,12 +293,13 @@ TAO_PG_GenericFactory::populate_object_group (
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableServer::ObjectId & oid,
   const char * type_id,
-  const PortableGroup::FactoryInfos & factory_infos
+  const PortableGroup::FactoryInfos & factory_infos,
+  const PortableGroup::InitialNumberMembersValue initial_number_members
   ACE_ENV_ARG_DECL)
 {
   CORBA::ULong factory_infos_count = factory_infos.length ();
   TAO_PG_Factory_Set factory_set (factory_infos_count);
-  for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
+  for (CORBA::ULong j = 0; j < initial_number_members; ++j)
     {
       const PortableGroup::FactoryInfo &factory_info =
         factory_infos[j];
@@ -463,13 +454,20 @@ TAO_PG_GenericFactory::process_criteria (
   // Merge the given criteria with the type-specific criteria.
   TAO_PG::override_properties (criteria, props.inout ());
 
+  PortableGroup::Criteria unmet_criteria;
+  unmet_criteria.length (4);  // The four criteria understood by this
+                              // method.
+
+  // Unmet criteria count.
+  CORBA::ULong uc = 0;
+
   PortableGroup::Name name (1);
   name.length (1);
 
   PortableGroup::Value value;
 
+  // MembershipStyle
   name[0].id = CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
-
   if (TAO_PG::get_property_value (name, props.in (), value)
       && (!(value >>= membership_style)
           || (membership_style != PortableGroup::MEMB_APP_CTRL
@@ -480,6 +478,7 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
+  // Factories
   name[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
   if (TAO_PG::get_property_value (name, props.in (), value)
       && !(value >>= factory_infos))
@@ -489,6 +488,7 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
+  // InitialNumberMembers
   name[0].id =
     CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
   if (TAO_PG::get_property_value (name, props.in (), value)
@@ -499,6 +499,24 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
+  if (membership_style == PortableGroup::MEMB_INF_CTRL)
+    {
+      CORBA::ULong factory_infos_count =
+        (factory_infos == 0 ? 0 : factory_infos->length ());
+
+      // If the number of factories is less than the initial number of
+      // members or the desired number of initial members cannot
+      // possibly be created.
+
+      if (factory_infos_count < ACE_static_cast (CORBA::ULong,
+                                                 initial_number_members))
+        {
+          unmet_criteria[uc].nam = name;
+          unmet_criteria[uc++].val = value;
+        }
+    }
+
+  // MinimumNumberMembers
   name[0].id =
     CORBA::string_dup ("org.omg.PortableGroup.MinimumNumberMembers");
   if (TAO_PG::get_property_value (name, props.in (), value)
@@ -507,6 +525,31 @@ TAO_PG_GenericFactory::process_criteria (
       // This only occurs if extraction of the actual value from the
       // Any fails.
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
+    }
+
+  // If the minimum number of members is less than the initial number
+  // of members, the MinimumNumberMembers property is cannot be
+  // initially met.
+  //
+  // @note This code is not part of the above "MEMB_INF_CTRL" criteria
+  //       check since the "name" and "value" variables have been
+  //       changed.
+  if (membership_style == PortableGroup::MEMB_INF_CTRL
+      && minimum_number_members < initial_number_members)
+    {
+      unmet_criteria[uc].nam = name;
+      unmet_criteria[uc++].val = value;
+    }
+
+  if (uc > 0)
+    {
+      // Reduce the length of the unmet criteria sequence in an effort
+      // to optimize the copying that will occur when the below
+      // exception is thrown.  Reducing the length is fast since no
+      // deallocations should occur.
+      unmet_criteria.length (uc);
+
+      ACE_THROW (PortableGroup::CannotMeetCriteria (unmet_criteria));
     }
 }
 

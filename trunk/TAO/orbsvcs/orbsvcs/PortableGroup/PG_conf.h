@@ -52,7 +52,7 @@ const PortableGroup::InitialNumberMembersValue TAO_PG_INITIAL_NUMBER_MEMBERS =
 #ifndef TAO_PG_MINIMUM_NUMBER_MEMBERS
 /// The default minimum number of object group members.
 const PortableGroup::MinimumNumberMembersValue TAO_PG_MINIMUM_NUMBER_MEMBERS =
-  0;
+  TAO_PG_INITIAL_NUMBER_MEMBERS;
 #endif  /* TAO_PG_MINIMUM_NUMBER_MEMBERS */
 
 #include "ace/post.h"
