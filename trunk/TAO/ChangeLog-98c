@@ -1,3 +1,11 @@
+Wed Oct 29 11:01:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL compiler: be_type.cpp::nested_type_name: A quick commit
+	made that includes an improvement over the previous scheme of
+	generating ACE_NESTED_CLASS macros. We handle the problem of
+	generating fully scoped names for types that were defined in some
+	ancestor of the scope in which that type is being used.
+
 Wed Oct 29 06:17:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Must increase the loop
