@@ -1,3 +1,11 @@
+Wed Jan  9 11:38:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/SSL/Makefile (LDLIBS):
+
+	  Added missing SSL and crypto libraries.  Fixed link errors.
+	  Thanks to Marvin Wolfthal <maw@weichi.com> for reporting the
+	  error and suggesting a fix.
+
 Wed Jan  9 12:24:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (spawn): Don't attempt ACE_OS::setpgid if

@@ -12,7 +12,7 @@
 BIN =   Thread_Pool_Reactor_SSL_Test
 
 PSRC=$(addsuffix .cpp,$(BIN))
-LDLIBS = -lACE_SSL
+LDLIBS = -lACE_SSL -lssl -lcrypto
 CPPFLAGS += -I..
 
 #----------------------------------------------------------------------------
