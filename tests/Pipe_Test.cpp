@@ -20,6 +20,7 @@
 #include "ace/Pipe.h"
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Pipe_Test, "$Id$")
 
