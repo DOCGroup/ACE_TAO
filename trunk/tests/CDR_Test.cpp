@@ -23,6 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, CDR_Test, "$Id$")
 
