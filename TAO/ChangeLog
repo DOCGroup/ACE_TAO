@@ -1,3 +1,13 @@
+Thu Nov 25 09:15:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/Log/Event/Log_Event.mpc:
+	* orbsvcs/examples/Log/Notify/Log_Notify.mpc:
+	* orbsvcs/examples/Log/RTEvent/Log_RTEvent.mpc:
+
+	  Changed exename definitions from consumer and supplier to
+	  Event_Consumer, Event_Supplier, etc. to match description
+	  in the README files.
+
 Wed Nov 24 21:21:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/Log/README:
