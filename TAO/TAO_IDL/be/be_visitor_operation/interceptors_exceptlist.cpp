@@ -31,28 +31,28 @@ ACE_RCSID(be_visitor_operation, interceptors_exceptlist, "$Id$")
 // Operation visitor for exception list
 // ************************************************************
 
-be_visitor_operation_interceptors_exceptlist::be_visitor_operation_interceptors_exceptlist (be_visitor_context *ctx)
+be_visitor_operation_interceptors_exceptlist::
+be_visitor_operation_interceptors_exceptlist (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_interceptors_exceptlist::~be_visitor_operation_interceptors_exceptlist (void)
+be_visitor_operation_interceptors_exceptlist::
+~be_visitor_operation_interceptors_exceptlist (void)
 {
 }
 
 int
 be_visitor_operation_interceptors_exceptlist::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
-  //  be_type *bt;       // type node
-
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node for future use
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // Start with the current indentation level.
   os->indent ();
+  TAO_CodeGen::CG_STATE state = this->ctx_->state ();
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST)
+  if (state == TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST)
     {
       return this->gen_exceptlist (node);
     }
@@ -65,12 +65,12 @@ be_visitor_operation_interceptors_exceptlist::visit_operation (be_operation *nod
 }
 
 int
-be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node)
+be_visitor_operation_interceptors_exceptlist::gen_exceptlist (
+    be_operation *node
+  )
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node for future use
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // Generate the exception data array.
   *os << be_nl
@@ -78,13 +78,13 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
       << "_exceptiondata[] = " << be_nl;
   *os << "{" << be_idt_nl;
 
-  // Initialize an iterator to iterate thru the exception list.
-  UTL_ExceptlistActiveIterator ei (node->exceptions ());
-
   be_exception *excp = 0;
 
+  // Initialize an iterator to iterate thru the exception list.
   // Continue until each element is visited.
-  while (!ei.is_done ())
+  // Iterator must be advanced explicitly inside the loop.
+  for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+       !ei.is_done ();)
     {
       excp = be_exception::narrow_from_decl (ei.item ());
 
@@ -97,18 +97,15 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
               "be_exception::narrow_from_decl failed\n"),
             -1
           );
-
         }
 
       *os << excp->tc_name ();
-
       ei.next ();
 
       if (!ei.is_done ())
         {
           *os << "," << be_nl;
         }
-
     }
 
   *os << be_uidt_nl << "};" << be_nl;
@@ -121,7 +118,8 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
       << "{" << be_idt_nl
       << "CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
       << "_exceptiondata[i];" << be_nl
-      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
+      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode, "
+      << "CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
       << "(*exception_list)[i] = tcp_object;" << be_uidt_nl
       << "}\n" << be_uidt;
 

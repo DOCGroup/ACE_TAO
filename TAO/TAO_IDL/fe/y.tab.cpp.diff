@@ -1,11 +1,5 @@
 --- y.tab.cpp	Fri Jan 25 11:06:56 2002
 +++ y.tab.cpp.mod	Fri Jan 25 11:09:03 2002
-@@ -1,4 +1,4 @@
--// $Id$
-+// $Id$
- #ifndef lint
- char tao_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
-  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 @@ -960,7 +960,7 @@
  #ifdef TAO_YYMAXDEPTH
  #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH

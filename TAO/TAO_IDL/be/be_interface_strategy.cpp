@@ -89,16 +89,16 @@ be_interface_strategy::compute_coll_names (int type,
       delete [] this->local_coll_name_;
     }
 
-  static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
-                                            "_tao_direct_collocated_" };
+  static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
+                                           "_tao_direct_collocated_"};
   static const char *poa = "POA_";
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
   const char *collocated = collocated_names[type];
 
   int name_len = ACE_OS::strlen (collocated)
-    + ACE_OS::strlen (poa)
-    + 1;
+                 + ACE_OS::strlen (poa)
+                 + 1;
 
   if (prefix)
     {
@@ -110,18 +110,13 @@ be_interface_strategy::compute_coll_names (int type,
       name_len += ACE_OS::strlen (suffix);
     }
 
-  UTL_IdListActiveIterator *i = 0;
-  ACE_NEW (i,
-           UTL_IdListActiveIterator (node_->name ()));
-
-  while (!i->is_done ())
+  for (UTL_IdListActiveIterator i (this->node_->name ());
+       !i.is_done ();
+       i.next ())
     {
       // Reserve 2 characters for "::".
-      name_len += ACE_OS::strlen (i->item ()->get_string ()) + 2;
-      i->next ();
+      name_len += ACE_OS::strlen (i.item ()->get_string ()) + 2;
     }
-
-  delete i;
 
   ACE_NEW (this->full_coll_name_,
            char[name_len + 1]);
@@ -129,26 +124,25 @@ be_interface_strategy::compute_coll_names (int type,
   // Null terminate the string.
   this->full_coll_name_[0] = 0;
 
-  // Iterate again.
-  ACE_NEW (i,
-           UTL_IdListActiveIterator (node_->name ()));
-
   // Only the first component get the "POA_" preffix.
   int poa_added = 0;
 
-  while (!i->is_done ())
+  // Iterate again.
+  // Must advance the iterator explicitly inside the loop.
+  for (UTL_IdListActiveIterator j (this->node_->name ());
+       !j.is_done ();)
     {
-      const char *item = i->item ()->get_string ();
+      const char *item = j.item ()->get_string ();
 
       // Increase right away, so we can test for the final component
       // in the loop.
-      i->next ();
+      j.next ();
 
       // We add the POA_ preffix only if the first component is not
       // the global scope...
       if (ACE_OS::strcmp (item, "") != 0)
         {
-          if (!i->is_done ())
+          if (!j.is_done ())
             {
               // We only add the POA_ preffix if there are more than
               // two components in the name, in other words, if the
@@ -180,12 +174,11 @@ be_interface_strategy::compute_coll_names (int type,
         }
     }
 
-  delete i;
-
   // Compute the local name for the collocated class.
+  char *local_name = this->node_->AST_Interface::local_name ()->get_string ();
   int local_len = ACE_OS::strlen (collocated)
-    + ACE_OS::strlen (node_->AST_Interface::local_name ()->get_string ())
-    + 1;
+                  + ACE_OS::strlen (local_name)
+                  + 1;
   if (prefix)
     {
       local_len += ACE_OS::strlen (prefix);

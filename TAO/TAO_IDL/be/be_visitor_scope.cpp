@@ -49,6 +49,7 @@ be_visitor_scope::visit_scope (be_scope *node)
 {
   // Proceed if the number of members in our scope is greater than 0.
   this->elem_number_ = 0;
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -164,7 +165,9 @@ be_visitor_scope::next_elem (be_decl *elem,
         }
 
       if (bd != elem)
-        continue;
+        {
+          continue;
+        }
 
       // Find who is next to me.
       si.next ();

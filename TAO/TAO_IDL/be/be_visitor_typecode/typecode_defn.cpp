@@ -151,6 +151,7 @@ int
 be_visitor_typecode_defn::visit_members (be_valuetype *node)
 {
   this->elem_number_ = 0;
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -161,7 +162,8 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                             "bad node in this scope\n"), -1);
+                             "bad node in this scope\n"), 
+                            -1);
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
@@ -172,13 +174,13 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
         }
 
       be_decl *bd = be_decl::narrow_from_decl (d);
-      // set the scope node as "node" in which the code is being
+
+      // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation
-
       this->ctx_->scope (node->decl ());
 
-      // set the node to be visited
+      // Set the node to be visited.
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -186,16 +188,19 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
       if (this->pre_process (bd) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "(%N:%l) be_visitor_typecode_defn::"
+                             "visit_members - "
                              "pre processing failed\n"
-                             ), -1);
+                             ), 
+                            -1);
         }
 
       // Send the visitor.
       if (bd == 0 || bd->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "(%N:%l) be_visitor_typecode_defn::"
+                             "visit_members - "
                              "codegen for scope failed\n"
                              ), -1);
         }
@@ -204,7 +209,8 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
       if (this->post_process (bd) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode_defn::visit_members - "
+                             "(%N:%l) be_visitor_typecode_defn::"
+                             "visit_members - "
                              "post processing failed\n"
                              ), -1);
         }
@@ -214,53 +220,50 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
 }
 
 
-// the following needs to be done to deal with the most bizarre behavior of
-// MSVC++ compiler
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
 be_visitor_typecode_defn::gen_nested_namespace_begin (be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  UTL_IdListActiveIterator *i;
+  char *item_name = 0;
 
-  i = new UTL_IdListActiveIterator (node->name ());
-  while (!(i->is_done ()))
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
     {
-      if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+      item_name = i.item ()->get_string ();
+
+      if (ACE_OS::strcmp (item_name, "") != 0)
         {
-          // leave the outermost root scope
-          *os << "TAO_NAMESPACE_BEGIN (" << i->item ()->get_string ()
+          // Leave the outermost root scope.
+          *os << "TAO_NAMESPACE_BEGIN (" << item_name
               << ")" << be_nl;
         }
-      i->next ();
     }
-  delete i;
+
   return 0;
 }
 
-// the following needs to be done to deal with the most bizarre behavior of
-// MSVC++ compiler
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
 be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  UTL_IdListActiveIterator *i;
 
-  i = new UTL_IdListActiveIterator (node->name ());
-  while (!(i->is_done ()))
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
     {
-      if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
-          // leave the outermost root scope
+          // Leave the outermost root scope.
           *os << "TAO_NAMESPACE_END" << be_nl;
         }
-      i->next ();
     }
-  delete i;
+
   return 0;
 }
 
-// the visit methods will be called for the top-level node whose typecode is
-// being generated
+// The visit methods will be called for the top-level node whose typecode is
+// being generated.
 
 int
 be_visitor_typecode_defn::visit_type (be_type *node)
@@ -3635,7 +3638,7 @@ be_visitor_typecode_defn::
 queue_lookup (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
               be_type *node)
 {
-  for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *>
+  for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *> 
          iter (queue);
        !iter.done ();
        iter.advance ())
@@ -3647,7 +3650,7 @@ queue_lookup (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
       if (!ACE_OS::strcmp (item->node->full_name (),
                            node->full_name ()))
         {
-          // found
+          // Found.
           return item;
         }
     }

@@ -16,7 +16,9 @@
 
 #include "be_visitor_operation.h"
 
-be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (be_visitor_context *ctx)
+be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -30,13 +32,17 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 {
   // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   if (this->generate_shared_prologue (node, os, "") == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int argument_count =
     node->count_arguments_with_direction (AST_Argument::dir_IN
@@ -60,7 +66,9 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
           if (argument == 0
               || argument->direction () == AST_Argument::dir_OUT)
-            continue;
+            {
+              continue;
+            }
 
           if (vardecl_visitor.visit_argument (argument) == -1)
             {
@@ -71,7 +79,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                                 -1);
             }
         }
-
 
       *os << be_nl
           << "TAO_InputCDR &_tao_in ="
@@ -92,9 +99,12 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
         {
           be_argument *argument =
             be_argument::narrow_from_decl (sj.item ());
+
           if (argument == 0
               || argument->direction () == AST_Argument::dir_OUT)
-            continue;
+            {
+              continue;
+            }
 
           *os << "&& ";
 
@@ -106,6 +116,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                                  "codegen for demarshal failed\n"),
                                 -1);
             }
+
           *os << be_nl;
         }
 
@@ -120,11 +131,14 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                              "(%N:%l) gen_raise_exception failed\n"),
                             -1);
         }
+
       *os << be_uidt << "\n";
     }
 
   if (this->generate_shared_section (node, os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   {
     be_visitor_context ctx (*this->ctx_);
@@ -138,11 +152,15 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       {
         be_argument *argument =
           be_argument::narrow_from_decl (i.item ());
+
         if (argument == 0
             || argument->direction () == AST_Argument::dir_OUT)
-          continue;
+          {
+            continue;
+          }
 
         *os << ",";
+
         if (argument->accept (&visitor) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -151,13 +169,17 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                                "codegen for upcall args failed\n"),
                               -1);
           }
+
         *os << be_nl;
       }
+
     *os << "ACE_ENV_ARG_PARAMETER";
   }
 
   if (this->generate_shared_epilogue (os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 
@@ -170,33 +192,43 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   this->ctx_->node (node);
 
   if (this->generate_shared_prologue (node, os, "_get_") == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->generate_shared_section (node, os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   *os << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (node->readonly ())
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->generate_shared_prologue (node, os, "_set_") == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   be_argument the_argument (AST_Argument::dir_IN,
                             node->field_type (),
                             node->name ());
 
-  {
     be_visitor_context ctx (*this->ctx_);
     be_visitor_args_vardecl_ss visitor (&ctx);
 
     if (visitor.visit_argument (&the_argument) == -1)
-      return -1;
-  }
+      {
+        return -1;
+      }
 
   *os << be_nl
       << "TAO_InputCDR &_tao_in ="
@@ -211,7 +243,9 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     be_visitor_args_marshal_ss visitor (&ctx);
 
     if (visitor.visit_argument (&the_argument) == -1)
-      return -1;
+      {
+        return -1;
+      }
   }
 
   *os << be_uidt_nl << "))" << be_idt_nl;
@@ -225,16 +259,21 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                          "(%N:%l) gen_raise_exception failed\n"),
                         -1);
     }
+
   *os << be_uidt << "\n";
 
   if (this->generate_shared_section (node, os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   *os << ", " << node->local_name ()
       << be_nl << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -267,7 +306,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   intf->compute_full_name ("AMH_", "", buf);
   ACE_CString amh_skel_name ("POA_");
   amh_skel_name += buf;
-  delete[] buf;
+  delete [] buf;
+  buf = 0;
 
   os->indent ();
   *os << "void" << be_nl
@@ -306,12 +346,14 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   char *buf;
   intf->compute_full_name ("AMH_", "ResponseHandler", buf);
   ACE_CString response_handler_name (buf);
-  delete[] buf;
+  delete [] buf;
+  buf = 0;
 
   intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  delete[] buf;
+  delete [] buf;
+  buf = 0;
 
   *os << be_nl << response_handler_name.c_str ()
       << "_var _tao_rh =" << be_idt_nl

@@ -141,14 +141,10 @@ AST_Factory::compute_argument_attr (void)
   // If there are elements in this scope.
   if (this->nmembers () > 0)
     {
-      // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-
-      while (!si.is_done ())
+      for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
           // Get the next AST decl node.
-          d = si.item ();
+          d = i.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
@@ -163,8 +159,6 @@ AST_Factory::compute_argument_attr (void)
                   this->has_native_ = 1;
                 }
             }
-
-          si.next ();
         }
     }
 

@@ -1045,35 +1045,20 @@ AST_Interface::compare_names (AST_Interface *that,
   Identifier *that_id = 0;
   Identifier *other_id = 0;
 
-  UTL_IdListActiveIterator *that_iter = 0;
-  ACE_NEW_RETURN (that_iter,
-                  UTL_IdListActiveIterator (that_name),
-                  I_FALSE);
-
-  UTL_IdListActiveIterator *other_iter = 0;
-  ACE_NEW_RETURN (other_iter,
-                  UTL_IdListActiveIterator (other_name),
-                  I_FALSE);
-
-  for (int i = 0; i < that_length; i++)
+  for (UTL_IdListActiveIterator that_iter (that_name), other_iter (other_name);
+       !that_iter.is_done ();
+       that_iter.next (), other_iter.next ())
     {
-      that_id = that_iter->item ();
-      other_id = other_iter->item ();
+      that_id = that_iter.item ();
+      other_id = other_iter.item ();
 
       if (ACE_OS::strcmp (that_id->get_string (),
                           other_id->get_string ()))
         {
-          delete that_iter;
-          delete other_iter;
           return I_FALSE;
         }
-
-      that_iter->next ();
-      other_iter->next ();
     }
 
-  delete that_iter;
-  delete other_iter;
   return I_TRUE;
 }
 
@@ -1086,26 +1071,23 @@ AST_Interface::inherited_name_clash (void)
 
   // Compare our members with those of each parent.
 
-  UTL_ScopeActiveIterator *my_members = 0;
-  ACE_NEW (my_members,
-           UTL_ScopeActiveIterator (DeclAsScope (this),
-                                    UTL_Scope::IK_decls));
-
-  while (!my_members->is_done ())
+  for (UTL_ScopeActiveIterator my_members (DeclAsScope (this), IK_decls);
+       !my_members.is_done ();
+       my_members.next ())
     {
-      my_member = my_members->item ();
+      my_member = my_members.item ();
       Identifier *id = my_member->local_name ();
 
-      for (int i = 0; i < this->pd_n_inherits_flat; i ++)
+      for (int i = 0; i < this->pd_n_inherits_flat; ++i)
         {
-          UTL_ScopeActiveIterator *parent_members = 0;
-          ACE_NEW (parent_members,
-                   UTL_ScopeActiveIterator (DeclAsScope (pd_inherits_flat[i]),
-                                            UTL_Scope::IK_decls));
-
-          while (!parent_members->is_done ())
+          for (UTL_ScopeActiveIterator parent_members (
+                   DeclAsScope (this->pd_inherits_flat[i]), 
+                   UTL_Scope::IK_decls
+                 );
+               !parent_members.is_done ();
+               parent_members.next ())
             {
-              parent1_member = parent_members->item ();
+              parent1_member = parent_members.item ();
               AST_Decl::NodeType nt = parent1_member->node_type ();
 
               // All other member types but these may be redefined in
@@ -1139,31 +1121,23 @@ AST_Interface::inherited_name_clash (void)
                             );
                         }
                     }
-                }
-
-              parent_members->next ();
-            }
-
-          delete parent_members;
-        }
-
-      my_members->next ();
-    }
-
-  delete my_members;
+                } // end of IF (nt == AST_Decl::NT_op ....)
+            } // end of FOR (parent_members ...)
+        } // end of FOR (i ...)
+    } // end of FOR (my_members ...)
 
   // Now compare members of each parent with each other.
 
   for (int i = 0; i < this->pd_n_inherits_flat - 1; i++)
     {
-      UTL_ScopeActiveIterator *parent1_members = 0;
-      ACE_NEW (parent1_members,
-               UTL_ScopeActiveIterator (DeclAsScope (pd_inherits_flat[i]),
-                                        UTL_Scope::IK_decls));
-
-      while (!parent1_members->is_done ())
+      for (UTL_ScopeActiveIterator parent1_members (
+               DeclAsScope (this->pd_inherits_flat[i]),
+               UTL_Scope::IK_decls
+             );
+           !parent1_members.is_done ();
+           parent1_members.next ())
         {
-          parent1_member = parent1_members->item ();
+          parent1_member = parent1_members.item ();
           AST_Decl::NodeType nt1 = parent1_member->node_type ();
 
           // Only these member types may cause a clash with other
@@ -1174,16 +1148,14 @@ AST_Interface::inherited_name_clash (void)
 
               for (int j = i + 1; j < this->pd_n_inherits_flat; j++)
                 {
-                  UTL_ScopeActiveIterator *parent2_members = 0;
-                  ACE_NEW (parent2_members,
-                           UTL_ScopeActiveIterator (
-                               DeclAsScope (pd_inherits_flat[j]),
-                               UTL_Scope::IK_decls
-                             ));
-
-                  while (!parent2_members->is_done ())
+                  for (UTL_ScopeActiveIterator parent2_members (
+                           DeclAsScope (this->pd_inherits_flat[j]),
+                           UTL_Scope::IK_decls
+                         );
+                       !parent2_members.is_done ();
+                       parent2_members.next ())
                     {
-                      parent2_member = parent2_members->item ();
+                      parent2_member = parent2_members.item ();
                       AST_Decl::NodeType nt2 =
                         parent2_member->node_type ();
 
@@ -1223,20 +1195,12 @@ AST_Interface::inherited_name_clash (void)
                                     );
                                 }
                             }
-                        }
-
-                      parent2_members->next ();
-                    }
-
-                  delete parent2_members;
-                }
-            }
-
-          parent1_members->next ();
-        }
-
-      delete parent1_members;
-    }
+                        } // end of IF (nt2 == AST_Decl::NT_op ...)
+                    } // end of FOR (parent2_members ...)
+                } // end of FOR (j ...)
+            } // end of IF (nt1 == AST_Decl::NT_op ..)
+        } // end of FOR (parent1_members ...)
+    } // end of FOR (i ...)
 }
 
 void

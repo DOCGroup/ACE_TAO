@@ -19,11 +19,8 @@
 //
 // ============================================================================
 
-//#include      "idl.h"
-//#include      "idl_extern.h"
-//#include      "be.h"
-
 #include "be_visitor_valuetype.h"
+#include "be_visitor_field.h"
 
 ACE_RCSID(be_visitor_valuetype, valuetype, "$Id$")
 
@@ -36,22 +33,20 @@ be_visitor_valuetype::~be_visitor_valuetype (void)
 {
 }
 
-// this method must be overridden by the derived valuetype visitors
+// This method must be overridden by the derived valuetype visitors.
 int
 be_visitor_valuetype::visit_valuetype (be_valuetype *)
 {
-//!  ACE_ASSERT (0);
   return -1;
 }
 
-// visit the scope of the valuetype node
-// (in public/private field order)
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
   int n_processed = 0;
 
   this->elem_number_ = 0;
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -62,7 +57,8 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), -1);
+                             "bad node in this scope\n"), 
+                            -1);
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
@@ -89,12 +85,14 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
           
         }
     } // end of for loop
 
   this->elem_number_ = 0;
+
   for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
        !sj.is_done ();
        sj.next())
@@ -105,15 +103,17 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), -1);
+                             "bad node in this scope\n"), 
+                            -1);
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
 
-      if (!field ||
-          (field && field->visibility() != AST_Field::vis_PRIVATE))
+      if (!field 
+          || (field && field->visibility () != AST_Field::vis_PRIVATE))
         {
-          continue;      // only private fields in this run
+          // Only private fields.
+          continue;
         }
 
       ++ n_processed;
@@ -124,13 +124,13 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         }
 
       be_decl *bd = be_decl::narrow_from_decl (d);
-      // set the scope node as "node" in which the code is being
+      // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
-      // for code generation
+      // for code generation.
 
       this->ctx_->scope (node->decl ());
 
-      // set the node to be visited
+      // Set the node to be visited.
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -146,101 +146,136 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
   return 0;
 }
 
-// this two are called from visit_valuetype_scope()
+// These two are called from visit_valuetype_scope()
 void
 be_visitor_valuetype::begin_public ()
 {
-  // in derived visitors print "public:" in class definition
+  // In derived visitors print "public:" in class definition
 }
 
 void
 be_visitor_valuetype::begin_private ()
 {
-  // in derived visitors print "protected:" in class definition
+  // In derived visitors print "protected:" in class definition
 }
 
-// =all common visit methods for valuetype visitor
+// All common visit methods for valuetype visitor.
 
-// visit an attribute
 int
 be_visitor_valuetype::visit_attribute (be_attribute *node)
-// was be_visitor_attribute::visit_attribute (be_attribute *node)
 {
-  this->ctx_->node (node); // save the node
-  this->ctx_->attribute (node); // save this attribute node
+  this->ctx_->node (node);
+  this->ctx_->attribute (node);
 
-  be_operation *op;
+  be_operation *op = 0;
+  ACE_NEW_RETURN (op,
+                  be_operation (node->field_type (),
+                                AST_Operation::OP_noflags,
+                                node->name (),
+                                0,
+                                0),
+                  -1);
 
-  // first the "get" operation
-  op = new be_operation (node->field_type (),
-                         AST_Operation::OP_noflags,
-                         node->name (),
-                         0,
-                         0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
+
   if (!op || this->visit_operation (op) == -1)
     {
       delete op;
+      op = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
                          "codegen for get_attribute failed\n"),
                         -1);
     }
-  delete op;
-  if (node->readonly ())
-    return 0;  // nothing else to do
 
-  // the set method.
-  // the return type  is "void"
-  be_predefined_type *rt =
-    new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"),
-                                                0));
-  // argument type is the same as the attribute type
-  be_argument *arg = new be_argument (AST_Argument::dir_IN,
-                                      node->field_type (),
-                                      node->name ());
+  delete op;
+  op = 0;
+
+  if (node->readonly ())
+    {
+      // Nothing else to do.
+      return 0;
+    }
+
+  // The set method.
+  // The return type  is "void".
+
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("void"),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
+
+  be_predefined_type *rt = 0;
+  ACE_NEW_RETURN (rt,
+                  be_predefined_type (AST_PredefinedType::PT_void,
+                                      sn),
+                  -1);
+
+  // Argument type is the same as the attribute type.
+  be_argument *arg = 0;
+  ACE_NEW_RETURN (arg,
+                  be_argument (AST_Argument::dir_IN,
+                               node->field_type (),
+                               node->name ()),
+                  -1);
+
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
-  // create the operation
-  op = new be_operation (rt,
-                         AST_Operation::OP_noflags,
-                         node->name (),
-                         0,
-                         0);
+
+  // Create the operation.
+  ACE_NEW_RETURN (op,
+                  be_operation (rt,
+                                AST_Operation::OP_noflags,
+                                node->name (),
+                                0,
+                                0),
+                  -1);
+
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->add_argument_to_scope (arg);
 
  if (!op || this->visit_operation (op) == -1)
     {
       delete op;
+      op = 0;
       delete arg;
+      arg = 0;
       delete rt;
+      rt = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
                          "codegen for set_attribute failed\n"),
                         -1);
     }
+
   delete op;
+  op = 0;
   delete rt;
+  rt = 0;
   delete arg;
+  arg = 0;
   return 0;
 }
 
 
-// visit a constant
 int
 be_visitor_valuetype::visit_constant (be_constant *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -264,52 +299,51 @@ be_visitor_valuetype::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_VALUETYPE_IS:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
     case TAO_CodeGen::TAO_VALUETYPE_SS:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_constant - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_constant - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_constant - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
 
-//visit an enum
 int
 be_visitor_valuetype::visit_enum (be_enum *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
+  // Instantiate a visitor context with a copy of our context. This info
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -343,61 +377,59 @@ be_visitor_valuetype::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_VALUETYPE_IS:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
     case TAO_CodeGen::TAO_VALUETYPE_SS:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_enum - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_enum - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),  
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_enum - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),  
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
 
 
-// visit an operation
 int
 be_visitor_valuetype::visit_operation (be_operation *)
 {
-  // is overridden in derived visitors
+  // Is overridden in derived visitors.
   return 0;
 }
 
-// visit an exception (not used)
 int
 be_visitor_valuetype::visit_exception (be_exception *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-  // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -442,52 +474,51 @@ be_visitor_valuetype::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
     case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
     case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface::"
                            "visit_exception - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
                          "visit_exception - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),  
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
                          "visit_exception - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),  
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
 
-// visit a structure
 int
 be_visitor_valuetype::visit_structure (be_structure *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -523,52 +554,51 @@ be_visitor_valuetype::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_VALUETYPE_IS:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
     case TAO_CodeGen::TAO_VALUETYPE_SS:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_structure - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_structure - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),  
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_structure - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),  
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
 
-// visit a union
 int
 be_visitor_valuetype::visit_union (be_union *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -604,52 +634,51 @@ be_visitor_valuetype::visit_union (be_union *node)
     case TAO_CodeGen::TAO_VALUETYPE_IS:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
     case TAO_CodeGen::TAO_VALUETYPE_SS:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_union - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_union - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),  
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_union - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),  
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
 
-// visit a typedef
 int
 be_visitor_valuetype::visit_typedef (be_typedef *node)
 {
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
-  // this switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set
+  // This switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set.
 
   switch (this->ctx_->state ())
     {
@@ -685,36 +714,37 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_VALUETYPE_IS:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
     case TAO_CodeGen::TAO_VALUETYPE_SS:
-      return 0; // nothing to be done
+      return 0; // Nothing to be done.
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_typedef - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"), 
+                          -1);
       }
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_typedef - "
-                         "NUL visitor\n"
-                         ),  -1);
+                         "NULL visitor\n"),  
+                        -1);
     }
 
-  // let the node accept this visitor
   if (node->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_typedef - "
-                         "failed to accept visitor\n"
-                         ),  -1);
+                         "failed to accept visitor\n"),  
+                        -1);
     }
+
   delete visitor;
   return 0;
 }
@@ -722,12 +752,12 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
 int
 be_visitor_valuetype::visit_field (be_field *)
 {
-  // is overridden in derived visitors
+  // Is overridden in derived visitors.
   return 0;
 }
 
 
-// private data fields for scope
+// Private data fields for scope.
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
@@ -740,21 +770,24 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
        si.next())
     {
       AST_Decl *d = si.item ();
+
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), -1);
+                             "bad node in this scope\n"), 
+                            -1);
         }
       be_field *field = be_field::narrow_from_decl (d);
+
       if (!field)
         {
           continue;
         }
-      ++ n_processed;
-      // set the scope node as "node" in which the code is being
+      ++n_processed;
+      // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
-      // for code generation
+      // for code generation.
 
       this->ctx_->scope (node->decl ());
 
@@ -766,101 +799,85 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "codegen for scope failed\n"), -1);
-
+                             "codegen for scope failed\n"), 
+                            -1);
         }
     }
+
   return 0;
 }
 
-// private data for field
+// Private data for field.
 int
 be_visitor_valuetype::gen_field_pd (be_field *node)
-// derived from be_visitor_field_ch
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt; // field's type
-  be_valuetype *vt;  // field declared in this scope
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+  be_valuetype *vt;
 
   os = this->ctx_->stream ();
-  // first generate the type information
+  // First generate the type information.
   bt = be_type::narrow_from_decl (node->field_type ());
   vt = be_valuetype::narrow_from_scope (node->defined_in ());
+
   if (!bt || !vt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
                          "visit_field - "
-                         "Bad field type\n"
-                         ), -1);
+                         "Bad field type\n"), 
+                        -1);
     }
 
-  // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
-  ctx.node (node); // set the node to be the node being visited. The scope is
-                   // still the same
+  ctx.node (node);
 
   ctx.sub_state (TAO_CodeGen::TAO_USE_FULL_NAME);
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure::"
-                         "visit_field - "
-                         "NUL visitor\n"
-                         ),  -1);
-    }
+  be_visitor_field_ch visitor (&ctx);
 
-  // let the node accept this visitor
-  if (bt->accept (visitor) == -1)
+  if (visitor.visit_field (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
                          "visit_field - "
-                         "codegen for field type failed\n"
-                         ), -1);
+                         "codegen for field type failed\n"), 
+                        -1);
     }
-  delete visitor;
 
-  // now output the field name.
+  // Now output the field name.
   *os << " " << vt->field_pd_prefix ()
              << node->local_name ()
              << vt->field_pd_postfix() << ";" << be_nl;
   return 0;
-
 }
 
 
-// generate the _init definition
+// Generate the _init definition.
 int
 be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 {
   if (node->is_abstract_valuetype ())
-    return 0;   // no instance of it can created
+    {
+      return 0;
+    }
 
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
       << "_init : public CORBA_ValueFactoryBase" << be_nl;
 
-  // generate the body
-
+  // Generate the body.
   *os << "{" << be_nl
       << "public:" << be_idt_nl
       << "virtual ~" << node->local_name () << "_init ();" << be_nl;
 
-      /* %!     << "static " << node->local_name () << "* "
-              << "_downcast (CORBA::ValueFactoryBase* );" << be_nl */
-
   *os << "virtual const char* tao_repository_id (void);\n" << be_nl;
-  *os << "// create () goes here" << be_nl;  // %!
-
+  *os << "// create () goes here" << be_nl;
   *os << be_uidt_nl << "};" << be_nl;
 
   return 0;
@@ -870,23 +887,31 @@ int
 be_visitor_valuetype::gen_init_impl (be_valuetype *node)
 {
   if (node->is_abstract_valuetype ())
-    return 0;   // no instance of it can created
+    {
+      return 0;
+    }
 
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  os->indent (); // start with whatever indentation level we are at
+  TAO_OutStream *os = this->ctx_->stream ();
+  os->indent ();
 
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_init", node->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, 
+                   "%s_init", 
+                   node->full_name ());
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_init", node->local_name ());
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, 
+                   "%s_init", 
+                   node->local_name ());
 
-  // destructor
+  // Destructor.
   *os << fname << "::~" << lname << " (void)" << be_nl
       << "{" << be_nl << "}\n\n";
 
@@ -896,7 +921,6 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
       <<   "return " << node->local_name ()
       <<                "::_tao_obv_static_repository_id ();"
       << be_uidt_nl << "}\n\n";
-
 
   return 0;
 }
@@ -911,21 +935,21 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
       return factory_style;
     }
 
-  // Check whether we have at least one operation or not
+  // Check whether we have at least one operation or not.
   idl_bool have_operation = be_visitor_valuetype::have_operation(node);
 
 
   idl_bool have_factory = 0;
 
-  // Try only our own scope
+  // Try only our own scope.
   if (node->nmembers () > 0)
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator si (node,
-                                  UTL_Scope::IK_decls);
-
+      // Initialize an iterator to iterate thru our scope
       // Continue until each element is visited.
-      for (; !si.is_done (); si.next())
+      for (UTL_ScopeActiveIterator si (node,
+                                       UTL_Scope::IK_decls); 
+           !si.is_done (); 
+           si.next())
         {
           AST_Decl *d = si.item ();
 
@@ -969,7 +993,7 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
 idl_bool
 be_visitor_valuetype::have_operation(be_valuetype* node)
 {
-  // Check whatever scope we get for operations/attributes
+  // Check whatever scope we get for operations/attributes.
 
   if (node == 0)
     {
@@ -983,19 +1007,19 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
   // -derived (abstract VT | VT | abstract iface | iface)
   //
 
-  // First try our own scope
+  // First try our own scope.
   if (node->nmembers () > 0)
     {
       // Initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator si (node,
-                                  UTL_Scope::IK_decls);
-
       // Continue until each element is checked.
-      for (; !si.is_done (); si.next())
+      for (UTL_ScopeActiveIterator si (node,
+                                       UTL_Scope::IK_decls); 
+           !si.is_done (); 
+           si.next())
         {
           AST_Decl *d = si.item ();
 
-            if (!d)
+          if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_valuetype_init::"
@@ -1076,7 +1100,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
       return 0;
     }
 
-  // now go thru our base VTs and see if one has already
+  // Now go thru our base VTs and see if one has already.
 
   int i;  // loop index
 
@@ -1108,7 +1132,7 @@ idl_bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
-  // just try to find a VT with concrete factory in inheritance tree
+  // Just try to find a VT with concrete factory in inheritance tree.
   if(node == 0)
     {
       return 0;
@@ -1119,7 +1143,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
       return 1;
     }
 
-  // now go thru our base VTs
+  // Now go thru our base VTs.
 
   int i;  // loop index
 

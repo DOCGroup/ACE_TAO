@@ -125,11 +125,10 @@ AST_Structure::in_recursion (AST_Type *node)
   if (this->nmembers () > 0)
     {
       // Initialize an iterator to iterate over our scope.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-
       // Continue until each element is visited.
-      while (!si.is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls); 
+           !si.is_done (); 
+           si.next ())
         {
           AST_Field *field = AST_Field::narrow_from_decl (si.item ());
 
@@ -137,7 +136,6 @@ AST_Structure::in_recursion (AST_Type *node)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
-              si.next ();
               continue;
             }
 
@@ -156,8 +154,6 @@ AST_Structure::in_recursion (AST_Type *node)
             {
               return 1;
             }
-
-          si.next ();
         }
     }
 
@@ -207,24 +203,16 @@ AST_Structure::is_local (void)
           if (this->nmembers () > 0)
             {
               // Instantiate a scope iterator.
-              UTL_ScopeActiveIterator *si = 0;
-              ACE_NEW_RETURN (si,
-                              UTL_ScopeActiveIterator (this,
-                                                       UTL_Scope::IK_decls),
-                              0);
-
-              while (!si->is_done ())
+              for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+                   !si.is_done ();
+                   si.next ())
                 {
-                  if (si->item ()->is_local ())
+                  if (si.item ()->is_local ())
                     {
                       this->local_struct_ = I_TRUE;
                       break;
                     }
-
-                  si->next ();
                 }
-
-              delete si;
             }
         }
     }
@@ -479,19 +467,12 @@ AST_Structure::compute_member_count (void)
   if (this->nmembers () > 0)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          this->member_count_++;
-          si->next ();
+          ++this->member_count_;
         }
-
-      delete si;
     }
 
   return 0;
