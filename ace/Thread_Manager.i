@@ -93,7 +93,10 @@ ACE_At_Thread_Exit_Func::apply()
 ACE_INLINE
 ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
   : thr_id_ (ACE_OS::NULL_thread),
-    thr_handle_ (ACE_OS::NULL_hthread)
+    thr_handle_ (ACE_OS::NULL_hthread),
+    grp_id_ (0),
+    thr_state_ (ACE_THR_IDLE),
+    task_ (0)
 {
 }
 
@@ -115,19 +118,36 @@ ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) co
   return !(*this == rhs);
 }
 
+ACE_INLINE ACE_Task_Base *
+ACE_Thread_Descriptor_Base::task (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor_Base::task");
+  return this->task_;
+}
+
+// Group ID.
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Base::grp_id (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor_Base::grp_id");
+  return grp_id_;
+}
+
+// Current state of the thread.
+ACE_INLINE ACE_Thread_State
+ACE_Thread_Descriptor_Base::state (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor_Base::state");
+  return thr_state_;
+}
+
 // Unique thread id.
 ACE_INLINE ACE_thread_t
 ACE_Thread_Descriptor::self (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   return this->thr_id_;
-}
-
-ACE_INLINE ACE_Task_Base *
-ACE_Thread_Descriptor::task (void)
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::task");
-  return this->task_;
 }
 
 // Unique kernel-level thread handle.
@@ -137,23 +157,6 @@ ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   handle = this->thr_handle_;
-}
-
-// Group ID.
-
-ACE_INLINE int
-ACE_Thread_Descriptor::grp_id (void)
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::grp_id");
-  return grp_id_;
-}
-
-// Current state of the thread.
-ACE_INLINE ACE_Thread_State
-ACE_Thread_Descriptor::state (void)
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::state");
-  return thr_state_;
 }
 
 // Get the thread creation
@@ -186,7 +189,7 @@ ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::flag");
-  return this->next_;
+  return ACE_dynamic_cast (ACE_Thread_Descriptor *, this->next_);
 }
 
 // Set the exit status.
@@ -291,4 +294,13 @@ ACE_INLINE int
 ACE_Thread_Manager::wait_on_exit (void)
 {
   return this->automatic_wait_;
+}
+
+ACE_INLINE int
+ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
+{
+  ACE_Thread_Descriptor_Base *tdb;
+  ACE_NEW_RETURN (tdb, ACE_Thread_Descriptor_Base (*td), -1);
+  this->terminated_thr_list_.insert_tail (tdb);
+  return 0;
 }
