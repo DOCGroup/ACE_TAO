@@ -1,3 +1,8 @@
+Thu Jul 30 21:25:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Conf_y.cpp: This file didn't get patched with our
+	  routine patch.  Applied $ACE_ROOT/Svc_Conf_y.cpp.diff manually.
+
 Thu Jul 30 19:03:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Timer_Queue/Thread_Timer_Queue_Test.h: Changed the type
