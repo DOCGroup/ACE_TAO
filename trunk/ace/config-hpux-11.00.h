@@ -210,12 +210,6 @@
 // It can also be set so that the mapped region is shareable with 32-bit
 // programs.  To enable the 32/64 sharing, comment out the first definition
 // of ACE_DEFAULT_BASE_ADDR and uncomment the two lines after it.
-// Note - there's a compiler bug on aC++ A.03.04 in 64-bit mode which prevents
-// these from working as-is.  So, there's some hackery in Naming_Context.cpp
-// and Memory_Pool.cpp which works around it.  It requires the
-// ACE_DEFAULT_BASE_ADDRL definition below - make sure it has the same
-// value as what you use for ACE_DEFAULT_BASE_ADDR.  This is allegedly fixed
-// in A.03.10 on the June Applications CD.
 #if defined (__LP64__)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000001100000000)
 //#  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
