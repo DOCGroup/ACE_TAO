@@ -409,7 +409,7 @@ ACE_Filecache_Object::init (void)
 {
   this->filename_[0] = '\0';
   this->handle_ = ACE_INVALID_HANDLE;
-  this->error_ = SUCCESS;
+  this->error_ = ACE_SUCCESS;
   this->tempname_ = 0;
   this->size_ = 0;
 
@@ -550,7 +550,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
 
 ACE_Filecache_Object::~ACE_Filecache_Object (void)
 {
-  if (this->error_ == SUCCESS)
+  if (this->error_ == ACE_SUCCESS)
     {
       this->mmap_.unmap ();
       ACE_OS::close (this->handle_);
