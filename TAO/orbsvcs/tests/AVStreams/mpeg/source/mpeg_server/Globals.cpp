@@ -187,10 +187,10 @@ Video_Global::send_to_network (int timeToUse)
 
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
-  /*
-    fprintf (stderr, "VS to send pkt %d of size %d.\n",
-    ntohl (msghd->this->packetsn), ntohl (msghd->this->packetSize));
-    */
+  
+  fprintf (stderr, "VS to send pkt %d of size %d.\n",
+           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
+  
 
   {
     VideoMessage * msg = NULL;
@@ -256,6 +256,7 @@ Video_Global::send_to_network (int timeToUse)
 
         segsize = min (size, this->msgsize)+sizeof (*msg);
         if (this->conn_tag != 0) { /* this->packet stream */
+          cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
           while ((sentsize = write (this->videoSocket, (char *)msg, segsize)) == -1) {
             if (errno == EINTR)
               continue;
