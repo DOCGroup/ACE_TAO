@@ -27,10 +27,9 @@
 Client_i::Client_i ()
   : ior_ (0),
     shutdown_ (0),
-    server_ (),
-    use_naming_service_ (1),
     stock_name_ ("Unknown"),
-    threshold_value_ (0)
+    threshold_value_ (0),
+    server_ ()
 {
 }
 
@@ -73,8 +72,8 @@ Client_i::read_ior (char *filename)
 int
 Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dt:n:f:xk:xs");
-
+  // ACE_Get_Opt get_opts (argc_, argv_, "dt:n:f:xk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "d:f:xk:xs");
   int c;
   int result;
 
@@ -85,13 +84,14 @@ Client_i::parse_args (void)
 	TAO_debug_level++; //****
         break;
 
-      case 'n':  // consumer name provide on command line
+	/*  case 'n':  // consumer name provide on command line
         this->stock_name_ = get_opts.optarg;
         break;
 
       case 't':  // threshold provide on command line
         this->threshold_value_ = ACE_OS::atoi (get_opts.optarg);
         break;
+	*/
 
       case 'k':  // ior provide on command line
         this->ior_ = ACE_OS::strdup (get_opts.optarg);
@@ -264,11 +264,14 @@ Client_i::run (void)
   int unregistered = 0;
   char buf[BUFSIZ];
 
+  TAO_TRY
+    {
+      for (;;)
+	{
   // the string could read contains \n\0 hence using ACE_OS::read
   // which returns the no of bytes read and hence i can manipulate
   // and remove the devil from the picture i.e '\n' ! ;)
    int strlen = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
-
    if ( buf[strlen -1] == '\n' )
      buf[strlen -1] = '\0';
 
@@ -284,9 +287,6 @@ Client_i::run (void)
 
 	    ACE_DEBUG ((LM_DEBUG,"consumer_i_ created\n"));
 
-
-	    TAO_TRY
-	      {
 		// get the consumer stub (i.e consumer object) pointer.
 		this->consumer_var_ =
 		  this->consumer_i_->_this (TAO_TRY_ENV);
@@ -334,16 +334,6 @@ Client_i::run (void)
 		// Run the ORB.
 		this->orb_->run ();
 
-
-	      }
-	    TAO_CATCHANY
-	      {
-		TAO_TRY_ENV.print_exception ("Client_i::run ()");
-		return -1;
-	      }
-	    TAO_ENDTRY;
-
-
        }
 
       if ( ACE_OS::strcmp (buf, "unregister") == 0)
@@ -351,7 +341,7 @@ Client_i::run (void)
 	    if (registered == 1)
 	      {
 
-		this->server_->unregister_callback (this->consumer_var_);
+		this->server_->unregister_callback (this->consumer_var_.in ());
 		ACE_DEBUG ((LM_DEBUG,
 	        	    " Consumer Unregistered \n "));
 
@@ -371,12 +361,25 @@ Client_i::run (void)
       if (ACE_OS::strcmp (buf, "quit") == 0)
        {
 	 // get the consumer stub (i.e consumer object) pointer.
-	   this->consumer_var_ =
-	     this->consumer_i_->_this ();
-	    this->consumer_var_->shutdown ();
+	 // this->consumer_var_ =
+	 //   this->consumer_i_->_this ();
 
+
+	    this->consumer_i_->shutdown (TAO_TRY_ENV);
+             TAO_CHECK_ENV;
+
+            break;
         }
 
+     }
+
+   }
+   TAO_CATCHANY
+   {
+     TAO_TRY_ENV.print_exception ("Client_i::run ()");
+  	return -1;
+    }
+    TAO_ENDTRY;
 
       ACE_DEBUG ((LM_DEBUG,
 	    "\nreturned from run method\n"));
