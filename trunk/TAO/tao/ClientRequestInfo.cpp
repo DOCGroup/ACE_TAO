@@ -269,7 +269,7 @@ TAO_ClientRequestInfo::add_request_service_context (
   TAO_Service_Context &service_context_list =
     this->invocation_->request_service_context ();
 
-  if (service_context_list.set_context (service_context,replace) == 0)
+  if (service_context_list.set_context (service_context, replace) == 0)
     {
       ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
                                        CORBA::COMPLETED_NO));

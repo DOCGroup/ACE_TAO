@@ -8,8 +8,7 @@
  *
  *  Encapsulate the logic for remote Asynchronous Invocations.
  *
- *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -32,17 +31,17 @@
 #include "tao/MessagingC.h"
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
 
+/**
+ * @class TAO_GIOP_Asynch_Invocation
+ *
+ * @brief Base class for TAO_GIOP_Twoway_Asynch_Invocation and
+ *  TAO_GIOP_DII_Deferred_Invocation.
+ */
 class TAO_Export TAO_GIOP_Asynch_Invocation
   : public TAO_GIOP_Invocation
 {
-  // = TITLE
-  //    TAO_Asynch_Invocation.
-  //
-  // = DESCRIPTION
-  //    Base class for TAO_GIOP_Twoway_Asynch_Invocation and
-  //    TAO_GIOP_DII_Deferred_Invocation.
-  //
 public:
+
   /// Default constructor. This should never get called, it is here
   /// only to appease older versions of g++.
   TAO_GIOP_Asynch_Invocation (void);
@@ -67,6 +66,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+
   /// Must be overridden.
   virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
@@ -77,19 +77,20 @@ protected:
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
+/**
+ * @class TAO_GIOP_Twoway_Asynch_Invocation
+ *
+ * @brief Sends a two-way request does not expect the reply.  This
+ *        class connects (or lookups a connection from the cache) to
+ *        the remote server, builds the CDR stream for the Request,
+ *        send the CDR stream and returns.
+ */
 class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation
   : public TAO_GIOP_Asynch_Invocation
 {
-  // = TITLE
-  //    TAO_GIOP_Twoway_Asynch_Invocation.
-  //
-  // = DESCRIPTION
-  //    Sends a two-way request does not expect the reply.
-  //    This class connects (or lookups a connection from the cache) to
-  //    the remote server, builds the CDR stream for the Request, send
-  //    the CDR stream and returns.
-  //
+
 public:
+
   /// Constructor.
   TAO_GIOP_Twoway_Asynch_Invocation (
       TAO_Stub *stub,
@@ -102,6 +103,25 @@ public:
     );
 
 protected:
+
+  /// Generate a request ID for an asynchronous invocation
+  /**
+   * The request ID must be unique across all outstanding requests.
+   * To avoid synchronization overhead, the address of the
+   * TAO_Asynch_Reply_Dispatcher object is used as the request ID.
+   * This guarantees that the request ID is unique.
+   * @par
+   * For 64-bit platforms, only the lower 32 bits are used.  Hopefully
+   * that will be enough to ensure uniqueness.
+   * @par
+   * This is basically the same trick used in
+   * TAO_GIOP_Invocation::generate_request_id().  However, no right
+   * shifting of 64 bit addresses is performed since the
+   * TAO_Asynch_Reply_Dispatcher object is not large enough to allow
+   * that trick.
+   */
+  virtual CORBA::ULong generate_request_id (void) const;
+
   /// Implementation of the invoke() methods, handles the basic
   /// send/reply code and the system exceptions.
   virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)

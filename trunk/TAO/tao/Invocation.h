@@ -10,14 +10,12 @@
  *  twoways.
  *
  * THREADING NOTE: Threads should never manipulate another
- * thread's invocations.  In this implementation, all   data
- * structures   used to represent invocations (and parts of them)
- * are owned by the thread which created them.  Multiple threads
- * may make of course   concurrent invocations safely, since the
- * GIOP code is reentrant.
+ * thread's invocations.  In this implementation, all data structures
+ * used to represent invocations (and parts of them) are owned by the
+ * thread which created them.  Multiple threads may make of course
+ * concurrent invocations safely, since the GIOP code is reentrant.
  *
- *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================
@@ -122,8 +120,29 @@ public:
   /// after receiving a reply message.
   TAO_Service_Context& reply_service_context (void);
 
+  /// Generate a request ID
+  /**
+   * The request ID must be unique across all outstanding requests.
+   * To avoid synchronization overhead, the address of this Invocation
+   * object is used as the request ID.  This guarantees that the
+   * request ID is unique without being forced to acquire a lock.
+   * @par
+   * For 64-bit platforms, we right shift 8 bits and then use the
+   * lower 32 bits of that shifted value.  Rather than losing the
+   * upper 32 bits of significant digits by taking the lower 32 bits,
+   * we only lose the upper 24 by doing the shift.  Basically, the
+   * resulting request ID will comprised of bits 8 through 39.  This is
+   * made possible by the fact that this Invocation object is large
+   * enough to increase the likelihood that those bits (0 through 39)
+   * are unique.  In particular, this->buffer_ is 512 bytes
+   * (ACE_CDR::DEFAULT_BUFSIZE) long by default; implying that
+   * dropping the lower 8 bits of the this Invocation object's 64 bit
+   * address (i.e. 256 bytes) is not a problem.
+   */
+  virtual CORBA::ULong generate_request_id (void) const;
+
   /// Return the request id of this invocation.
-  CORBA::ULong request_id (void);
+  CORBA::ULong request_id (void) const;
 
   /// Return the name of the operation being invoked.
   const char *operation (void);

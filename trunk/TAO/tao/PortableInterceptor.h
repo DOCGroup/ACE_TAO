@@ -14,8 +14,6 @@
  *   These macros allows us to disable/enable support of interceptors
  *   easily.
  *
- *
- *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
@@ -53,6 +51,9 @@
 #include "PortableInterceptorC.h"
 #include "Interceptor_List.h"
 
+// Forward declarations
+class TAO_ClientRequestInfo;
+
 /**
  * @class TAO_ClientRequestInterceptor_Adapter
  *
@@ -85,22 +86,22 @@ public:
   //@{
   /// This method implements one of the "starting" client side
   /// interception points.
-  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
+  void send_request (TAO_ClientRequestInfo *ri,
                      CORBA::Environment &);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
+  void receive_reply (TAO_ClientRequestInfo *ri,
                       CORBA::Environment &);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
+  void receive_exception (TAO_ClientRequestInfo *ri,
                           CORBA::Environment &);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri,
+  void receive_other (TAO_ClientRequestInfo *ri,
                       CORBA::Environment &);
   //@}
 

@@ -22,7 +22,7 @@ TAO_ServerRequestInfo::TAO_ServerRequestInfo (
   : server_request_ (server_request),
     forward_reference_ (),
     //    poa_current_ (),
-    adapter_id_ (),
+    //    adapter_id_ (),
     caught_exception_ (0),
     reply_status_ (-1)
 {
@@ -32,7 +32,38 @@ CORBA::ULong
 TAO_ServerRequestInfo::request_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->server_request_.request_id ();
+  // The request ID returned by this method need not correspond to the
+  // GIOP request ID sent with the client request.  The request ID
+  // must be unique across all outstanding requests.  To avoid locking
+  // overhead, the address of the TAO_ServerRequest object is used as
+  // the request ID.  This guarantees that the request ID is unique.
+  //
+  // For 64-bit platforms, only the lower 32 bits are used.  Hopefully
+  // that will be enough to ensure uniqueness.
+
+  // This is basically the same trick used in
+  // TAO_GIOP_Invocation::generate_request_id().  However, no right
+  // shifting of 64 bit addresses is performed since the
+  // TAO_ServerRequest object is not large enough to allow that trick.
+
+  CORBA::ULong id = 0;
+
+  if (sizeof (this) == 4)       // 32 bit address
+    id =
+      ACE_reinterpret_cast (CORBA::ULong, &(this->server_request_));
+
+  else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
+    id =
+      ACE_reinterpret_cast (CORBA::ULong,
+                            &(this->server_request_)) & 0xFFFFFFFFu;
+
+  else
+    // @@ Rather than fallback on the GIOP request ID, we should use
+    //    an atomically incremented variable specific to the ORB, or
+    //    perhaps specific to the process.
+    id = this->server_request_.request_id ();  // Fallback
+
+  return id;
 }
 
 char *
@@ -384,7 +415,7 @@ TAO_ServerRequestInfo::add_reply_service_context (
   TAO_Service_Context &service_context_list =
     this->server_request_.reply_service_context ();
 
-  if (service_context_list.set_context (service_context,replace) == 0)
+  if (service_context_list.set_context (service_context, replace) == 0)
     {
       ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
                                        CORBA::COMPLETED_NO));
