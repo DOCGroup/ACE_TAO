@@ -147,21 +147,15 @@ main (int argc, char *argv[])
       for (int i = 0; i != nthreads; ++i)
         {
           client[i].set (server.in (), niterations);
-          cout << __LINE__ << " " << "i is " << i << endl;
           if (client[i].activate (THR_NEW_LWP | THR_JOINABLE) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot activate client threads\n"),
                               1);
         }
 
-      cout << __FILE__ << __LINE__ << endl;
       ACE_Thread_Manager::instance ()->wait ();
 
-      cout << __FILE__ << __LINE__ << endl;
-
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
-      cout << __FILE__ << __LINE__ << endl;
 
       ACE_Throughput_Stats throughput;
 
