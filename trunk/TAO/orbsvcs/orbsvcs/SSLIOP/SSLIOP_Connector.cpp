@@ -636,6 +636,20 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
             }
         }
     }
+  else
+    {
+      // Use the default, i.e. the one set in the SSL_CTX that was
+      // used when creating the SSL data structure.
+      TAO_SSLIOP_Credentials_ptr c = ssliop_credentials.out ();
+      ACE_NEW_THROW_EX (c,
+                        TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl)),
+                        CORBA::NO_MEMORY ());
+
+      // @@ What about the private key?  OpenSSL does have a
+      //    ::SSL_get_privatekey() function, but it returns an EVP
+      //    structure.  We should probably switch to using that
+      //    instead of RSA/DSA-specific data structures.
+    }
 
   return ssliop_credentials._retn ();
 }
