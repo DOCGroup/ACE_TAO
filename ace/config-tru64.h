@@ -11,7 +11,7 @@
 
 #if defined (DIGITAL_UNIX)
 # include "ace/config-osf1-4.0.h"
-# if DIGITAL_UNIX >= 0x40E
+# if DIGITAL_UNIX >= 0x40D
 #   define ACE_LACKS_SYSTIME_H
 # endif /* DIGITAL_UNIX >= 0x40E */
 # if DIGITAL_UNIX >= 0x500
