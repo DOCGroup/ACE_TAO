@@ -1111,6 +1111,17 @@ be_interface::gen_operation_table (const char *flat_name,
                          idl_global->temp_dir (),
                          flat_name);
 
+        // QNX can't handle individual file names (path components)
+        // longer than 48 characters.
+#if defined(__QNX__)
+        size_t temp_dir_len = ACE_OS::strlen (idl_global->temp_dir));
+
+        if (ACE_OS::strlen (temp_file) > temp_dir_len + 47)
+          {
+            temp_file[temp_dir_len + 47] = 0;
+          }
+#endif /* defined(__QNX__) */
+     
         // Save this file name with the codegen singleton.
         tao_cg->gperf_input_filename (temp_file);
 
