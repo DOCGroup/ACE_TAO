@@ -6877,23 +6877,6 @@ ACE_CE_Bridge::ACE_CE_Bridge (void)
 {
 }
 
-#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-ACE_CE_Bridge::ACE_CE_Bridge (CWnd *w, int n, int i)
-  : text_output_ (w->m_hWnd),
-    notification_ (n),
-    idc_ (i)
-{
-}
-
-void
-ACE_CE_Bridge::set_window (CWnd *w, int n, int i)
-{
-  this->text_output_ = w->m_hWnd;
-  this->notification_ = n;
-  this->idc_ = i;
-}
-#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
-
 ACE_CE_Bridge::ACE_CE_Bridge (HWND w, int n, int i)
   : text_output_ (w),
     notification_ (n),
