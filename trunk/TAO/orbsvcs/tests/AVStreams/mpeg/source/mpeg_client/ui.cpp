@@ -17,7 +17,8 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
  *         email: scen@cse.ogi.edu
  */
 
-#include "ace/OS.h"
+//#include "ace/OS.h"
+#include "ace/Log_Msg.h"
 /* include <stdio.h>
 include <errno.h>
 include <stdlib.h>
