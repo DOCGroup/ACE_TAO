@@ -371,8 +371,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (&msg_block,
-                          this->message_handler_.message_state ().byte_order);
+  int byte_order = this->message_handler_.message_state ().byte_order;
+  TAO_InputCDR input_cdr (&msg_block, byte_order);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
