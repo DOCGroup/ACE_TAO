@@ -30,7 +30,19 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Generate the TypeCode instantiation.
+  // generate typecode for the base type
+  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
+  if (!base || base->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) be_visitor_alias_typecode")
+                         ACE_TEXT ("::visit_typedef) - ")
+                         ACE_TEXT ("failed to generate base typecode\n")),
+                        -1);
+    }
+
+  // Generate the alias TypeCode instantiation.
   os
     << "static TAO::TypeCode::Alias<char const *," << be_nl
     << "                            TAO::Null_RefCount_Policy> const"
@@ -38,8 +50,37 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
-    << "&" << base->tc_name () << ");" << be_uidt_nl
-    << be_uidt_nl;
+    << "&";
+
+  if (base->is_nested ()
+      && base->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_module * const module =
+        be_module::narrow_from_scope (base->defined_in ());
+
+      ACE_ASSERT (module);
+
+      for (UTL_IdListActiveIterator i (module->name ());
+           !i.is_done ();
+           i.next ())
+        {
+          char * const module_name  = i.item ()->get_string ();
+
+          if (ACE_OS::strcmp (module_name, "") != 0)
+            {
+              os << "::";
+            }
+
+          os << module_name;
+        }
+
+      os << "::_tao_tc_" << base->flat_name ();
+    }
+  else
+    os << "&" << base->tc_name ();
+
+  os << ");" << be_uidt_nl
+     << be_uidt_nl;
 
   return this->gen_typecode_ptr (node);
 }

@@ -259,6 +259,8 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
         }
     }
 
+  *os << be_nl << be_nl;
+
   return 0;
 }
 
@@ -396,12 +398,13 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      be_module *module = be_module::narrow_from_scope (node->defined_in ());
+      be_module * const module =
+        be_module::narrow_from_scope (node->defined_in ());
 
       if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_type - "
+                             "be_visitor_typecode_defn::gen_typecode_ptr - "
                              "Error parsing nested name\n"),
                             -1);
         }
@@ -430,7 +433,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       os << node->tc_name ();
 
       os << " =" << be_idt_nl
-         << "&_tc_TAO_tc_";
+         << "&_tao_tc_";
 
       // Flat name generation.
       os <<  node->flat_name ();
@@ -686,6 +689,10 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  os << be_nl << be_nl
+     << "// WORK DAMN IT!" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the TypeCode instantiation.
