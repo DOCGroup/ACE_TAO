@@ -496,15 +496,6 @@ typedef void* ACE_THR_FUNC_RETURN;
 # endif /* VXWORKS */
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
 
-// Now some platforms have special requirements...
-# if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
-# else
-typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
-# endif /* VXWORKS */
-
 extern "C" {
 typedef void (*ACE_THR_C_DEST)(void *);
 }
@@ -520,6 +511,15 @@ typedef void (*ACE_THR_DEST)(void *);
 #   endif /* ghs */
 
 #   include /**/ <vxWorks.h>
+# endif /* VXWORKS */
+
+// Now some platforms have special requirements...
+# if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
+# else
+typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
 # endif /* VXWORKS */
 
 extern "C"
