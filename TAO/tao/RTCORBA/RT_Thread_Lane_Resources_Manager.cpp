@@ -81,6 +81,13 @@ TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
   this->tp_manager_->shutdown_reactor ();
 }
 
+void
+TAO_RT_Thread_Lane_Resources_Manager::cleanup_rw_transports (void)
+{
+  // Shutdown default reactors.
+  this->default_lane_resources_->cleanup_rw_transports ();
+}
+
 int
 TAO_RT_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
 {

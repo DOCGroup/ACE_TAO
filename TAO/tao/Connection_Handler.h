@@ -104,6 +104,9 @@ public:
   /// protocols.  Remote protocols must overwrite implementation.
   virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority);
 
+  /// Release the OS resources related to this handler.
+  virtual int release_os_resources (void);
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -139,9 +142,6 @@ protected:
   /// Implement close_connection() for Connection_Handlers that are
   /// also Event_Handlers.
   int close_connection_eh (ACE_Event_Handler * eh);
-
-  /// Release the OS resources related to this handler.
-  virtual int release_os_resources (void);
 
   /// Pre-invocation hook for I/O operations (handle_input() &
   /// handle_output())

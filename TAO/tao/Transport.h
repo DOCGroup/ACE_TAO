@@ -277,10 +277,10 @@ public:
   void bidirectional_flag (int flag);
 
   /// Set the Cache Map entry
-  void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+  void cache_map_entry (TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
 
   /// Get the Cache Map entry
-  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
 
   /// Set and Get the identifier for this transport instance.
   /**
@@ -316,7 +316,18 @@ public:
    * @param handlers The TAO_Connection_Handler_Set into which the
    *        transport should place its handler
    */
-  void provide_handler (TAO_Connection_Handler_Set &handlers);
+  void provide_handler (TAO::Connection_Handler_Set &handlers);
+
+
+  /// Add event handlers corresponding to transports that have RW wait
+  /// strategy to the handlers set.
+  /**
+   * Called by the cache when the ORB is shuting down.
+   *
+   * @param handlers The TAO_Connection_Handler_Set into which the
+   *        transport should place its handler
+   */
+  void provide_blockable_handler (TAO::Connection_Handler_Set &handlers);
 
   /// Register the handler with the reactor.
   /**
@@ -747,7 +758,7 @@ public:
 private:
 
   /// Helper method that returns the Transport Cache Manager.
-  TAO_Transport_Cache_Manager &transport_cache_manager (void);
+  TAO::Transport_Cache_Manager &transport_cache_manager (void);
 
   /// Send some of the data in the queue.
   /**
@@ -878,7 +889,7 @@ protected:
 
   /// Our entry in the cache. We dont own this. It is here for our
   /// convenience. We cannot just change things around.
-  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
 
   /// Strategy to decide whether multiple requests can be sent over the
   /// same connection or the connection is exclusive for a request.
