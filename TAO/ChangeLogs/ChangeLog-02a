@@ -1,3 +1,14 @@
+Mon Mar 12 12:55:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/client.conf:
+        * performance-tests/Latency/st_client.conf:
+          Reenable the RW waiting strategy for both tests.  This
+          application does not need nested upcalls.
+          This explains the mysterious 10% drop in performance shown on
+          the nightly builds, I guess I wasn't thinking when I commited
+          this files mixed on the middle of all the ORB::run() changes.
+          Frank Hunleth tracked this one down.
+
 Mon Mar 12 11:37:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/echo/Echo_i.cpp:
