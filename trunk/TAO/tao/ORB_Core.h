@@ -567,7 +567,7 @@ public:
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
+  CORBA::Policy *default_buffering_constraint (void) const;
 
   /// This strategy will buffer messages.
   //@{

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "testC.h"
 
 ACE_RCSID(Thread_Pools, client, "$Id$")
