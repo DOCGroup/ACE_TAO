@@ -377,7 +377,7 @@ be_exception::gen_client_stubs (void)
       *cs << "};" << nl;
 
       *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
-        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () <<
+        " (CORBA::tk_except, sizeof (_oc_" <<  this->flatname () <<
         "), (char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
