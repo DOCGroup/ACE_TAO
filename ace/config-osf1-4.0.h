@@ -151,7 +151,6 @@
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_UALARM
 #define ACE_HAS_UCONTEXT_T
-#define ACE_LACKS_CONDATTR_PSHARED
 // If ACE doesn't compile due to the lack of these methods, please
 // send email to schmidt@cs.wustl.edu reporting this. 
 // #define ACE_LACKS_CONDATTR_PSHARED
