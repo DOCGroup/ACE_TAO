@@ -1,5 +1,10 @@
 Mon Jan 25 17:24:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
+	  Removed superfluous component in include path, thanks to
+	  Eric B. Mitchell <emitchell@altaira.com> for reporting this
+	  one.
+
 	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
 	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
