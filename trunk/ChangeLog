@@ -1,3 +1,7 @@
+Thu Jun 20 16:02:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.5.h: Commented out the below addition for now.
+
 Thu Jun 20 15:49:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.5.h: For Forte 6, Update 2 and up, add
