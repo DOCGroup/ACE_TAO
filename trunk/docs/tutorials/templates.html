@@ -145,10 +145,10 @@ server.cpp:112: undefined reference to `ACE_Acceptor&lt;Client_Handler, ACE_SOCK
 </UL>
 <P>
 Figuring out the correct manual instantiations is usually an
-interative and tedious process.  On Linux, I generally use a version of gcc that 
+iterative and tedious process.  On Linux, I generally use a version of gcc that 
 will do automatic instantiaion.  "Normal" gcc with the Cygnus repo
-patches does that as does egcs.  Lately (9/98) I've been using egcs
-1.1b with pretty good results.  On our Digital Unix 4.0b system the
+patches does that as does egcs.  Lately (1/99) I've been using egcs
+1.1.1 with pretty good results.  On our Digital Unix 4.0b system the
 native compiler (CXX) has switches that will request it to also
 automatically instantiate templates as needed.
 <P>
@@ -170,11 +170,12 @@ generate output that you can then use to figure out the correct
 templates.  Gcc/egcs create .rpo files for each object.  These files
 contain mangled names that the compiler uses to figure out what to
 instantiate.  With c++filt and some patience, you can parse that stuff 
-to figure out what the compiler is instantiating for you.
+to figure out what the compiler is instantiating for you.  Note that
+c++filt expects you to have a GNU-flavored C++ compiler available.
 <P>
 My best advice is to get a compiler that will handle the
 instantiations for you.  When you have some free time on your hands,
-take a look at it's intermediate files (if any) and start working on
+take a look at its intermediate files (if any) and start working on
 manual instantiation.
 <P>
 For some more hints, take a look at <A HREF="../../ACE-INSTALL.html#g++">ACE-INSTALL</A>

@@ -18,7 +18,7 @@ A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
 <P>The purpose of this tutorial is to show you how to create a very simple
 server capable of handling multiple client connections. Unlike a &quot;traditional&quot;
 server application, this one handles all requests in one process. Issues
-of multi-processing and multi-threading will be handled in later tutorial.</P>
+of multi-processing and multi-threading will be handled in later tutorials.</P>
 
 <P>
 <HR WIDTH="100%"></P>
@@ -44,7 +44,7 @@ seem obvious now but as we progress through this tutorial it will become
 more clear.</P>
 
 <P>Finally, a simple <I>main()</I> function will provide our program loop.
-After any program initiallization, it will enter an infinite loop which
+After any program initialization, it will enter an infinite loop which
 waits for connection attempts to the Acceptor or data &quot;events&quot;
 on the EventHandler.</P>
 
@@ -92,11 +92,11 @@ only good when the requests can be handled almost instantaneously.</i>
 </P>
 
 <P>This is where the reactor's power and flexibility come into play. The
-developer can begin as a simple, single-threaded application that is later
+developer can create a simple, single-threaded application that is later
 modified to thread-per-client, process-per-client or thread-pool solution.
 <P>
-If all of this is gibberish & makes you think that ACE is way to hard to
-learn, don't worry.  We'll go into all the details & explain as we go.
+If all of this is gibberish and makes you think that ACE is way to hard to
+learn, don't worry.  We'll go into all the details and explain as we go.
 I only went into all of this so that it can kick around in the back of your
 mind until you need it later.
 <P>
