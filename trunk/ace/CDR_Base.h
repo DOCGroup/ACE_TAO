@@ -213,6 +213,7 @@ public:
           //@{
           int operator== (const LongLong &rhs) const;
           int operator!= (const LongLong &rhs) const;
+          LongLong &operator= (const LongLong &rhs);
           //@}
         };
 #   endif /* no native 64 bit integer type */
@@ -275,6 +276,7 @@ public:
          char ld[16];
          int operator== (const LongDouble &rhs) const;
          int operator!= (const LongDouble &rhs) const;
+         LongDouble &operator= (const LongDouble &rhs);
          // @@ also need other comparison operators.
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */

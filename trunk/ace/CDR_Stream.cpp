@@ -1323,8 +1323,8 @@ ACE_CDR::Boolean
 ACE_InputCDR::read_16 (ACE_CDR::LongDouble *x)
 {
   char *buf;
-  if (this->adjust (ACE_CDR::LONGLONG_SIZE,
-                    ACE_CDR::LONGLONG_ALIGN,
+  if (this->adjust (ACE_CDR::LONGDOUBLE_SIZE,
+                    ACE_CDR::LONGDOUBLE_ALIGN,
                     buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
