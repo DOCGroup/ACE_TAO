@@ -94,8 +94,8 @@ do {\
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
-		   ACE_LOG_DIRECTORY, \
-		   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
+		   ACE_LOG_DIRECTORY_A, \
+		   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
 		   ".log"); \
   ACE_DEBUG ((LM_DEBUG, "Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp); 
