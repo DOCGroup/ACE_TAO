@@ -242,9 +242,9 @@ TAO::TypeCode::Struct<StringType,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-      safe_fields.reset (fields);
+      safe_fields.reset (tc_fields);
 
-      static char const * const empty_name = "";
+      static char const empty_name[] = "";
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
@@ -252,14 +252,14 @@ TAO::TypeCode::Struct<StringType,
           // the compact TypeCode.
 
           tc_fields[i].name = empty_name;
-          tc_fields[i].type =
-            &(*(this->fields_[i].type)->get_compact_typecode (
-                  ACE_ENV_SINGLE_ARG_PARAMETER));
+          tc_fields[i].type = 0;  // FIX ME!
+//             &(*this->fields_[i].type)->get_compact_typecode (
+//                   ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
         }
     }
 
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 
