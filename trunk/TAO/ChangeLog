@@ -1,3 +1,34 @@
+Fri Jan  7 19:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/Timeout/Timeout.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/ORB_shutdown/Foo_Bar.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/Connection_Purging/Connection_Purging.mpc:
+        * tests/Connection_Failure/Connection_Failure.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+        * tests/Bug_1627_Regression/test.mpc:
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+          Changed above mpc files by using the correct base project, derive
+          the server from taoserver, the client from taoclient. Some clients
+          did link S.cpp files which where not needed. Seems more mpc files
+          could be cleaned and simplified.
+
 Fri Jan  7 18:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Client_Leaks/Client_Leaks.mpc:
