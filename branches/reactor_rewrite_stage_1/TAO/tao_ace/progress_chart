@@ -1,0 +1,20 @@
+Dispatching mechanism
+=====================
+.  Map of entries on how many threads have been dispatched
+.  dispatch
+.  removing 
+
+@todo
+. Add allocation hooks
+. Add comments to every method declared
+. check for ACE_RCSID
+. Change SOCK to IO
+. Add realtime selection strategy for select
+. Add alloc hooks
+. Add dump methods
+. Add signal guards
+
+Points to ponder over later
+--------------------------
+
+
