@@ -1,3 +1,8 @@
+Wed Oct 11 10:06:19 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Prevented building FT service in
+	  Minimum CORBA build.
+
 Tue Oct 10 22:14:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAOACE_Static.dsw: Added Event_Service_Static project.
