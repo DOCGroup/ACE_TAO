@@ -189,6 +189,20 @@ public:
   void clear (int release = 0);
 
   /**
+   * A more specialized version of clear(): "fast clear". fast_clear()
+   * resets the string to 0 length. If the string owns the buffer
+   * (@arg release_== 1):
+   *  - the string buffer is not freed
+   *  - the first character of the buffer is set to 0.
+   *
+   * If @arg release_ is 0 (this object does not own the buffer):
+   *  - the buffer pointer is reset to the NULL_String_ and does not
+   *    maintain a pointer to the caller-supplied buffer on return
+   *  - the maximum string length is reset to 0.
+   */
+  void fast_clear (void);
+
+  /**
    * Return a substring given an offset and length, if length == -1
    * use rest of str.  Return empty substring if offset or
    * offset/length are invalid.

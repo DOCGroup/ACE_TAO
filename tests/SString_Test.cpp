@@ -267,6 +267,9 @@ run_main (int, ACE_TCHAR *[])
     if(!(s11 > s12)){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if(s11 < s12){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
 
+    s11.fast_clear ();
+    if (s11.length () != 0)
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("fast_clear didn't yield 0 length\n")));
   }
 
   {
