@@ -45,7 +45,8 @@ public:
   ~TAO_TIO (void);
   // Destructor.
 
-  virtual TimeBase::IntervalT  time_interval (CORBA::Environment &env)
+  virtual TimeBase::IntervalT  time_interval (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This is the get method for the attribute time interval.
 
