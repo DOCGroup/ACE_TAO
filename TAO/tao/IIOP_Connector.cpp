@@ -252,3 +252,17 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 #endif /* 0 */
   return successes;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<ACE_INET_Addr>;
+template class ACE_Unbounded_Stack<ACE_INET_Addr>;
+template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
