@@ -24,7 +24,7 @@ Tue Mar 08 12:26:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
 
-	  Since MSVC++ 6 cannot typedefs that depend on template
+	  Since MSVC++ 6 cannot handle typedefs that depend on template
 	  parameters, explicitly specify the return argument type in a
 	  second template parameter for the get_*_arg<>() function
 	  templates.
