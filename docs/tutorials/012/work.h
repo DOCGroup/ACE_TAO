@@ -10,6 +10,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Log_Msg.h"
+
 /*
   We'll start by defining a basic unit of work that can be put into
   the message queue.  The threads in the pool will expect to find one
