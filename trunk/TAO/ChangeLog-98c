@@ -1,3 +1,40 @@
+Sun Aug  9 000:45:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/client.dsp:
+
+	  Added a missing header file to FileView and created separate
+	  client and server directories under Debug\ so separate .pdb
+	  files can be kept for client and server projects.
+
+	* Param_Test/ub_any_seq.{h,cpp}:
+
+	  DII test now works and is CORBA-compliant.
+
+	* Param_Test/any.cpp:
+	* Param_Test/bd_long_seq.cpp:
+	* Param_Test/bd_short_seq.cpp:
+	* Param_Test/bd_str_seq.cpp:
+	* Param_Test/bd_struct_seq.cpp:
+	* Param_Test/client.cpp:
+	* Param_Test/driver,{h,cpp}:
+	* Param_Test/fixed_array.cpp:
+	* Param_Test/fixed_struct.cpp:
+	* Param_Test/nested_struct.cpp:
+	* Param_Test/objref.cpp:
+	* Param_Test/short.{h,cpp}:
+	* Param_Test/typecode.cpp:
+	* Param_Test/ub_long_seq.cpp:
+	* Param_Test/ub_objref_seq.cpp:
+	* Param_Test/ub_short_seq.cpp:
+	* Param_Test/ub_str_seq.cpp:
+	* Param_Test/ub_string.cpp:
+	* Param_Test/ub_struct_seq.cpp:
+	* Param_Test/var_array.cpp:
+	* Param_Test/var_struct.cpp:
+
+	  Made cosmetic changes to the code.
+
+
 Sat Aug  8 22:47:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* Param_Test/fixed_array.{h,cpp}:
