@@ -78,7 +78,6 @@ PACE_FILES = \
   locale \
   math \
   mqueue \
-  netdb \
   pthread \
   pwd \
   sched \
@@ -88,19 +87,13 @@ PACE_FILES = \
   stdio \
   stdlib \
   string \
-  strings \
   time \
   unistd \
   utime \
   wait
-ARPA_FILES = \
-  arpa/inet
 CONFIG_FILES =
-NETINET_FILES = \
-  netinet/in
 SYS_FILES = \
   sys/mman \
-  sys/socket \
   sys/stat \
   sys/termios \
   sys/times \
@@ -267,9 +260,7 @@ ifndef PACE_COMPONENTS
   #### Please see docs/PACE-subsets.html for documentation. ??
   PACE_COMPONENTS = \
     Pace \
-    Arpa \
     Config \
-    Netinet \
     Sys
 endif # PACE_COMPONENTS
 
@@ -277,9 +268,7 @@ ifeq (FOR_ACE,$(PACE_COMPONENTS))
   #### These PACE components are necessary to support ACE.
   override PACE_COMPONENTS = \
     Pace \
-    Arpa \
     Config \
-    Netinet \
     Sys
 else  # ! FOR_ACE
   #### Is there anything in PACE that ACE doesn't need? Probably not
@@ -292,17 +281,9 @@ ifneq (,$(findstring Pace,$(PACE_COMPONENTS)))
   FILES += $(PACE_FILES)
 endif # Pace
 
-ifneq (,$(findstring Arpa,$(PACE_COMPONENTS)))
-  FILES += $(ARPA_FILES)
-endif # Arpa
-
 ifneq (,$(findstring Config,$(PACE_COMPONENTS)))
   FILES += $(CONFIG_FILES)
 endif # Config
-
-ifneq (,$(findstring Netinet,$(PACE_COMPONENTS)))
-  FILES += $(NETINET_FILES)
-endif # Netinet
 
 ifneq (,$(findstring Sys,$(PACE_COMPONENTS)))
   FILES += $(SYS_FILES)
