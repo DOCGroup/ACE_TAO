@@ -44,7 +44,7 @@ public:
 
   // = Accessors.
   /// Get priority.
-  u_long priority (void);
+  u_long priority (void) const;
 
   /// Set priority.
   void priority (u_long);

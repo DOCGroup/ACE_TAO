@@ -565,8 +565,7 @@ ACE_Sig_Handlers::dump (void) const
 }
 
 // This is the method that does all the dirty work...  The basic
-// structure of this method was devised by Detlef Becker
-// (beckerd@erlh.siemens.de).
+// structure of this method was devised by Detlef Becker.
 
 int
 ACE_Sig_Handlers::register_handler (int signum,
@@ -721,7 +720,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
           // Type-safe downcast would be nice here...
           ACE_Sig_Adapter *sh = (ACE_Sig_Adapter *) *eh;
 
-          // Remove the handler if (1) it's key matches the key we've
+          // Remove the handler if (1) its key matches the key we've
           // been told to remove or (2) if we've been told to remove
           // *all* handlers (i.e., <sigkey> == -1).
 
