@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Sched_Factory
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Sched_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_SCHED_FACTORY_H
 #define TAO_EC_SCHED_FACTORY_H
@@ -34,21 +24,20 @@
 
 #include "sched_event_export.h"
 
+/**
+ * @class TAO_EC_Sched_Factory
+ *
+ * @brief Extend the default factory to support scheduling
+ *
+ */
 class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Factory
 {
-  // = TITLE
-  //   Extend the default factory to support scheduling
-  //
-  // = DESCRIPTION
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor
   TAO_EC_Sched_Factory (void);
-  // Constructor
 
+  /// destructor...
   virtual ~TAO_EC_Sched_Factory (void);
-  // destructor...
 
   // = The Service_Object entry points
   virtual int init (int argc, char* argv[]);

@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Masked_Type_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Masked_Type_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_MASKED_TYPE_FILTER_H
 #define TAO_EC_MASKED_TYPE_FILTER_H
@@ -32,33 +22,29 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Masked_Type_Filter
+ *
+ * @brief A masked type filter.
+ *
+ * This filter only accepts events whose type and/or source have
+ * a given value when a bitmask is applied to them.
+ * In short the filter checks that:
+ * (event.header.type & type_mask) == type_value
+ * and that:
+ * (event.header.source & source_mask) == source_value
+ */
 class TAO_RTEvent_Export TAO_EC_Masked_Type_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   A masked type filter.
-  //
-  // = DESCRIPTION
-  //   This filter only accepts events whose type and/or source have
-  //   a given value when a bitmask is applied to them.
-  //   In short the filter checks that:
-  //
-  //   (event.header.type & type_mask) == type_value
-  //
-  //   and that:
-  //
-  //   (event.header.source & source_mask) == source_value
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor.
   TAO_EC_Masked_Type_Filter (CORBA::ULong source_mask,
                              CORBA::ULong type_mask,
                              CORBA::ULong source_value,
                              CORBA::ULong type_value);
-  // Constructor.
 
+  /// Destructor
   virtual ~TAO_EC_Masked_Type_Filter (void);
-  // Destructor
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -91,13 +77,13 @@ private:
                               (const TAO_EC_Masked_Type_Filter&))
 
 private:
+  /// The bitmasks
   CORBA::ULong source_mask_;
   CORBA::ULong type_mask_;
-  // The bitmasks
 
+  /// The values
   CORBA::ULong source_value_;
   CORBA::ULong type_value_;
-  // The values
 };
 
 #if defined (__ACE_INLINE__)

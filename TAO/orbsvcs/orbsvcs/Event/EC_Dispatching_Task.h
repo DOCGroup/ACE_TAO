@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Dispatching_Task
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Dispatching_Task.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_DISPATCHING_TASK_H
 #define TAO_EC_DISPATCHING_TASK_H
@@ -50,20 +40,21 @@ protected:
   virtual int is_full_i (void);
 };
 
+/**
+ * @class TAO_EC_Dispatching_Task
+ *
+ * @brief Implement the dispatching queues for FIFO and Priority
+ * dispatching.
+ *
+ */
 class TAO_RTEvent_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //   Implement the dispatching queues for FIFO and Priority
-  //   dispatching.
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor
   TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
-  // Constructor
 
+  /// Process the events in the queue.
   virtual int svc (void);
-  // Process the events in the queue.
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
@@ -71,14 +62,14 @@ public:
                      CORBA::Environment &env);
 
 private:
+  /// An per-task allocator
   ACE_Allocator *allocator_;
-  // An per-task allocator
 
+  /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
-  // Helper data structure to minimize memory allocations...
 
+  /// The queue
   TAO_EC_Queue the_queue_;
-  // The queue
 };
 
 // ****************************************************************
@@ -86,18 +77,18 @@ private:
 class TAO_RTEvent_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
+  /// Constructor, it will allocate its own data block
   TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
-  // Constructor, it will allocate its own data block
 
+  /// Constructor, it assumes ownership of the data block
   TAO_EC_Dispatch_Command (ACE_Data_Block*,
                            ACE_Allocator *mb_allocator = 0);
-  // Constructor, it assumes ownership of the data block
 
+  /// Destructor
   virtual ~TAO_EC_Dispatch_Command (void);
-  // Destructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&) = 0;
-  // Command callback
 };
 
 // ****************************************************************
@@ -105,11 +96,11 @@ public:
 class TAO_RTEvent_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
+  /// Constructor
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
-  // Constructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&);
-  // Command callback
 };
 
 // ****************************************************************
@@ -117,28 +108,28 @@ public:
 class TAO_RTEvent_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
+  /// Constructor
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                        RtecEventComm::PushConsumer_ptr consumer,
                        RtecEventComm::EventSet& event,
                        ACE_Data_Block* data_block,
                        ACE_Allocator *mb_allocator);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_EC_Push_Command (void);
-  // Destructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&);
-  // Command callback
 
 private:
+  /// The proxy
   TAO_EC_ProxyPushSupplier* proxy_;
-  // The proxy
 
+  /// The consumer connected to the proxy when the event was pushed.
   RtecEventComm::PushConsumer_var consumer_;
-  // The consumer connected to the proxy when the event was pushed.
 
+  /// The event
   RtecEventComm::EventSet event_;
-  // The event
 };
 
 #if defined (__ACE_INLINE__)

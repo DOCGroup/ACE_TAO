@@ -13,43 +13,47 @@
 
 ACE_RCSID(ESF, ESF_Proxy_Admin, "$Id$")
 
-template<class EC, class P,class I>
-TAO_ESF_Proxy_Admin<EC,P,I>::TAO_ESF_Proxy_Admin (EC *ec)
-  :  event_channel_ (ec)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec)
+  : event_channel_ (ec)
 {
   this->event_channel_->create_proxy_collection (this->collection_);
 }
 
-template<class EC, class P,class I>
-TAO_ESF_Proxy_Admin<EC,P,I>::~TAO_ESF_Proxy_Admin (void)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    ~TAO_ESF_Proxy_Admin (void)
 {
   this->event_channel_->destroy_proxy_collection (this->collection_);
 }
 
-template<class EC, class P,class I> I*
-TAO_ESF_Proxy_Admin<EC,P,I>::obtain (CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> INTERFACE*
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    obtain (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  P* proxy;
+  PROXY* proxy;
   this->event_channel_->create_proxy (proxy);
 
   PortableServer::ServantBase_var holder = proxy;
 
-  ACE_TYPENAME P::_var_type result =
+  ACE_TYPENAME PROXY::_var_type result =
     proxy->activate (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (I::_nil ());
+  ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   this->collection_->connected (proxy, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (I::_nil ());
+  ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   return result._retn ();
 }
 
-template<class EC, class P,class I> void
-TAO_ESF_Proxy_Admin<EC,P,I>::shutdown (CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  TAO_ESF_Shutdown_Proxy<P> worker;
+  TAO_ESF_Shutdown_Proxy<PROXY> worker;
 
   this->collection_->for_each (&worker, ACE_TRY_ENV);
   ACE_CHECK; // Cannot happen, just following the discipline.
@@ -57,24 +61,27 @@ TAO_ESF_Proxy_Admin<EC,P,I>::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->collection_->shutdown (ACE_TRY_ENV);
 }
 
-template<class EC, class P,class I> void
-TAO_ESF_Proxy_Admin<EC,P,I>::connected (P *,
-                                      CORBA::Environment &)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    connected (PROXY *,
+               CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
 }
 
-template<class EC, class P,class I> void
-TAO_ESF_Proxy_Admin<EC,P,I>::reconnected (P *proxy,
-                                        CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    reconnected (PROXY *proxy,
+                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   this->collection_->reconnected (proxy, ACE_TRY_ENV);
 }
 
-template<class EC, class P,class I> void
-TAO_ESF_Proxy_Admin<EC,P,I>::disconnected (P *proxy,
-                                         CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
+    disconnected (PROXY *proxy,
+                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   proxy->deactivate (ACE_TRY_ENV);

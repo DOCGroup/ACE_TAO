@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Copy_On_Read
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Copy_On_Read.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_COPY_ON_READ_H
 #define TAO_ESF_COPY_ON_READ_H
@@ -30,25 +22,24 @@ template<class Target> class TAO_ESF_Worker;
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Copy_On_Read
+ *
+ * @brief Implement the Copy_On_Read protocol
+ *
+ * 
+ * The class is parametric on the kind of collection and locking
+ * mechanism used.
+ */
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Copy_On_Read : public TAO_ESF_Proxy_Collection<PROXY>
 {
-  // = TITLE
-  //   TAO_ESF_Copy_On_Read
-  //
-  // = DESCRIPTION
-  //   Implement the Copy_On_Read protocol
-  //   The class is parametric on the kind of collection and locking
-  //   mechanism used.
-  //
-  // = TODO
-  //
 public:
+  /// Constructors
   TAO_ESF_Copy_On_Read (void);
   TAO_ESF_Copy_On_Read (const COLLECTION &collection);
-  // Constructors
 
-  // = The TAO_ESF_Proxy methods
+  // = The TAO_ESF_Proxy_Collection methods
   virtual void for_each (TAO_ESF_Worker<PROXY> *worker,
                          CORBA::Environment &ACE_TRY_ENV);
   virtual void connected (PROXY *proxy,

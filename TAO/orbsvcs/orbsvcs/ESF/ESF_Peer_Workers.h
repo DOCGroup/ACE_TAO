@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Peer_Connected
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Peer_Connected.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/ESF/index.html
+ */
 
 #ifndef TAO_ESF_PEER_WORKERS_H
 #define TAO_ESF_PEER_WORKERS_H
@@ -26,16 +18,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_ESF_Peer_Connected
+ *
+ * Helper class.
+ * Used to iterate over a Proxy_Collection and invoke:
+ * PROXY->connected (peer);
+ * peer->connected (proxy);
+ */
 template<class PROXY, class PEER>
 class TAO_ESF_Peer_Connected : public TAO_ESF_Worker<PROXY>
 {
-  // = DESCRIPTION
-  //   Helper class.
-  //   Used to iterate over a Proxy_Collection and invoke:
-  //
-  //   PROXY->connected (peer);
-  //   peer->connected (proxy);
-  //
 public:
   TAO_ESF_Peer_Connected (PEER *peer);
 
@@ -48,16 +41,17 @@ private:
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Peer_Reconnected
+ *
+ * Helper class.
+ * Used to iterate over a Proxy_Collection and invoke:
+ * PROXY->reconnected (peer);
+ * peer->reconnected (proxy);
+ */
 template<class PROXY, class PEER>
 class TAO_ESF_Peer_Reconnected : public TAO_ESF_Worker<PROXY>
 {
-  // = DESCRIPTION
-  //   Helper class.
-  //   Used to iterate over a Proxy_Collection and invoke:
-  //
-  //   PROXY->reconnected (peer);
-  //   peer->reconnected (proxy);
-  //
 public:
   TAO_ESF_Peer_Reconnected (PEER *peer);
 
@@ -70,16 +64,17 @@ private:
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Peer_Disconnected
+ *
+ * Helper class.
+ * Used to iterate over a Proxy_Collection and invoke:
+ * PROXY->disconnected (peer);
+ * peer->disconnected (proxy);
+ */
 template<class PROXY, class PEER>
 class TAO_ESF_Peer_Disconnected : public TAO_ESF_Worker<PROXY>
 {
-  // = DESCRIPTION
-  //   Helper class.
-  //   Used to iterate over a Proxy_Collection and invoke:
-  //
-  //   PROXY->disconnected (peer);
-  //   peer->disconnected (proxy);
-  //
 public:
   TAO_ESF_Peer_Disconnected (PEER *peer);
 

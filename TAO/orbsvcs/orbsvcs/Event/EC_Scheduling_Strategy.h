@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Scheduling_Strategy
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Scheduling_Strategy.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_SCHEDULING_STRATEGY_H
 #define TAO_EC_SCHEDULING_STRATEGY_H
@@ -37,38 +27,36 @@ class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_QOS_Info;
 
+/**
+ * @class TAO_EC_Scheduling_Strategy
+ *
+ * @brief Define the interface for the scheduling strategy
+ *
+ * The scheduling strategy controls the actions that the event
+ * channel must take to update the dependency information in the
+ * scheduler and to query the scheduler for the priority of each
+ * event pushed by a supplier.
+ * The base
+ */
 class TAO_RTEvent_Export TAO_EC_Scheduling_Strategy
 {
-  // = TITLE
-  //   Define the interface for the scheduling strategy
-  //
-  // = DESCRIPTION
-  //   The scheduling strategy controls the actions that the event
-  //   channel must take to update the dependency information in the
-  //   scheduler and to query the scheduler for the priority of each
-  //   event pushed by a supplier.
-  //
-  //   The base
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Destructor
   virtual ~TAO_EC_Scheduling_Strategy (void);
-  // Destructor
 
+  /// Add all the dependencies between <supplier> and <consumer>
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer,
       CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Add all the dependencies between <supplier> and <consumer>
 
+  /// Initializes <qos_info> based on the QoS information for
+  /// <consumer> and the event header.
   virtual void init_event_qos (
       const RtecEventComm::EventHeader& header,
       TAO_EC_ProxyPushConsumer *consumer,
       TAO_EC_QOS_Info& qos_info,
       CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Initializes <qos_info> based on the QoS information for
-  // <consumer> and the event header.
 
 };
 

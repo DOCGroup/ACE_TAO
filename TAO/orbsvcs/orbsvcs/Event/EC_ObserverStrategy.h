@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_ObserverStrategy
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_ObserverStrategy.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
 #define TAO_EC_OBSERVERSTRATEGY_H
@@ -42,26 +32,27 @@ class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 
+/**
+ * @class TAO_EC_ObserverStrategy
+ *
+ * @brief The strategy to handle observers for the Event Channel
+ * subscriptions and publication.
+ *
+ * The Event Channel supports Observers for the set of
+ * subscriptions and publications.
+ * This is used to implement federations of event channels,
+ * either through UDP (multicast and unicast) and/or regular CORBA
+ * calls.
+ * This behavior of the EC is strategized to avoid overhead when
+ * no gateways are needed.
+ */
 class TAO_RTEvent_Export TAO_EC_ObserverStrategy
 {
-  // = TITLE
-  //   The strategy to handle observers for the Event Channel
-  //   subscriptions and publication.
-  //
-  // = DESCRIPTION
-  //   The Event Channel supports Observers for the set of
-  //   subscriptions and publications.
-  //   This is used to implement federations of event channels,
-  //   either through UDP (multicast and unicast) and/or regular CORBA
-  //   calls.
-  //
-  //   This behavior of the EC is strategized to avoid overhead when
-  //   no gateways are needed.
-  //
 public:
+  /// Destructor
   virtual ~TAO_EC_ObserverStrategy (void);
-  // Destructor
 
+  /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
                        CORBA::Environment &env)
@@ -78,37 +69,37 @@ public:
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
      = 0;
-  // The basic methods to support the EC strategies.
 
+  /// Used by the EC to inform the ObserverStrategy that a Consumer has
+  /// connected or disconnected from it.
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&) = 0;
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
                              CORBA::Environment&) = 0;
-  // Used by the EC to inform the ObserverStrategy that a Consumer has
-  // connected or disconnected from it.
 
+  /// Used by the EC to inform the ObserverStrategy that a Consumer has
+  /// connected or disconnected from it.
   virtual void connected (TAO_EC_ProxyPushSupplier*,
                           CORBA::Environment&) = 0;
   virtual void disconnected (TAO_EC_ProxyPushSupplier*,
                              CORBA::Environment&) = 0;
-  // Used by the EC to inform the ObserverStrategy that a Consumer has
-  // connected or disconnected from it.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Null_ObserverStrategy
+ *
+ * @brief A null observer strategy.
+ *
+ * This class keeps no information and simply ignores the messages
+ * from the EC.
+ */
 class TAO_RTEvent_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
-  // = TITLE
-  //   A null observer strategy.
-  //
-  // = DESCRIPTION
-  //   This class keeps no information and simply ignores the messages
-  //   from the EC.
-  //
 public:
+  /// Constructor
   TAO_EC_Null_ObserverStrategy (void);
-  // Constructor
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -137,29 +128,30 @@ public:
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Basic_ObserverStrategy
+ *
+ * @brief A simple observer strategy.
+ *
+ * This class simply keeps the information about the current list
+ * of observers, whenever the list of consumers and/or suppliers
+ * changes in queries the EC, computes the global subscription
+ * and/or publication list and sends the update message to all the
+ * observers.
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of the <lock>, but not of the
+ * Event_Channel.
+ */
 class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
-  // = TITLE
-  //   A simple observer strategy.
-  //
-  // = DESCRIPTION
-  //   This class simply keeps the information about the current list
-  //   of observers, whenever the list of consumers and/or suppliers
-  //   changes in queries the EC, computes the global subscription
-  //   and/or publication list and sends the update message to all the
-  //   observers.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the <lock>, but not of the
-  //   Event_Channel.
-  //
 public:
+  /// Constructor
   TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel* ec,
                                  ACE_Lock* lock);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_EC_Basic_ObserverStrategy (void);
-  // Destructor
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -229,25 +221,25 @@ public:
   typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 
 protected:
+  /// Helper functions to compute the consumer and supplier QOS.
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos,
                  CORBA::Environment &env);
   void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos,
                  CORBA::Environment &env);
-  // Helper functions to compute the consumer and supplier QOS.
 
 protected:
+  /// The event channel.
   TAO_EC_Event_Channel* event_channel_;
-  // The event channel.
 
+  /// The lock
   ACE_Lock* lock_;
-  // The lock
 
+  /// The handles are generated in sequential order, but are opaque to
+  /// the client.
   RtecEventChannelAdmin::Observer_Handle handle_generator_;
-  // The handles are generated in sequential order, but are opaque to
-  // the client.
 
+  /// Keep the set of Observers
   Observer_Map observers_;
-  // Keep the set of Observers
 };
 
 // ****************************************************************
@@ -255,8 +247,8 @@ protected:
 class TAO_EC_Accumulate_Supplier_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
+  /// Constructor
   TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
-  // Constructor
 
   virtual void work (TAO_EC_ProxyPushSupplier *supplier,
                      CORBA::Environment &ACE_TRY_ENV);
@@ -270,8 +262,8 @@ private:
 class TAO_EC_Accumulate_Consumer_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
+  /// Constructor
   TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
-  // Constructor
 
   virtual void work (TAO_EC_ProxyPushConsumer *consumer,
                      CORBA::Environment &ACE_TRY_ENV);

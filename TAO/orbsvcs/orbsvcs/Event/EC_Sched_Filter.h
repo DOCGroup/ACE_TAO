@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Sched_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Sched_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_SCHED_FILTER_H
 #define TAO_EC_SCHED_FILTER_H
@@ -35,21 +25,27 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
+/**
+ * @class TAO_EC_Sched_Filter
+ *
+ * @brief Decorate a filter with scheduling information
+ *
+ * This filter decorates a regular filter with scheduling
+ * information. It creates a new RT_Info entry for the filter and
+ * it adds the dependencies between the filter and any childrens
+ * it may have.
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of the children.
+ */
 class TAO_RTSchedEvent_Export TAO_EC_Sched_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   Decorate a filter with scheduling information
-  //
-  // = DESCRIPTION
-  //   This filter decorates a regular filter with scheduling
-  //   information. It creates a new RT_Info entry for the filter and
-  //   it adds the dependencies between the filter and any childrens
-  //   it may have.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the children.
-  //
 public:
+  /**
+   * Constructor.
+   * It assumes ownership of the <body>, makes a copy of the other
+   * parameters
+   */
   TAO_EC_Sched_Filter (const char* name,
                        RtecScheduler::handle_t rt_info,
                        RtecScheduler::Scheduler_ptr scheduler,
@@ -57,12 +53,9 @@ public:
                        RtecScheduler::handle_t body_info,
                        RtecScheduler::handle_t parent_info,
                        RtecScheduler::Info_Type_t info_type);
-  // Constructor.
-  // It assumes ownership of the <body>, makes a copy of the other
-  // parameters
 
+  /// Destructor
   virtual ~TAO_EC_Sched_Filter (void);
-  // Destructor
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -96,37 +89,37 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Sched_Filter& operator=
                               (const TAO_EC_Sched_Filter&))
 
+  /// Initialize our RT_Info handle and dependencies
   void init_rt_info (CORBA::Environment& env);
-  // Initialize our RT_Info handle and dependencies
 
+  /// Compute a new qos_info to push up.
   void compute_qos_info (TAO_EC_QOS_Info& qos_info,
                          CORBA::Environment &ACE_TRY_ENV);
-  // Compute a new qos_info to push up.
 
 private:
+  /// The RT_Info handle for this object
   RtecScheduler::handle_t rt_info_;
-  // The RT_Info handle for this object
 
+  /// Has the Scheduler been updated?
   int rt_info_computed_;
-  // Has the Scheduler been updated?
 
+  /// Our operation name
   ACE_CString name_;
-  // Our operation name
 
+  /// The scheduler we are going to use
   RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler we are going to use
 
+  /// The implementation
   TAO_EC_Filter* body_;
-  // The implementation
 
+  /// The RT_Info handle for the body
   RtecScheduler::handle_t body_info_;
-  // The RT_Info handle for the body
 
+  /// The RT_Info handle for the parent
   RtecScheduler::handle_t parent_info_;
-  // The RT_Info handle for the parent
 
+  /// Required for the scheduling service
   RtecScheduler::Info_Type_t info_type_;
-  // Required for the scheduling service
 };
 
 #if defined (__ACE_INLINE__)

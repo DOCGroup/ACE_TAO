@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Proxy_Collection
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Proxy_Collection.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_IMMEDIATE_CHANGES_H
 #define TAO_ESF_IMMEDIATE_CHANGES_H
@@ -26,14 +18,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_ESF_Immediate_Changes
+ *
+ * @brief Implement the Immediate_Changes strategy
+ * 
+ */
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Immediate_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
-  // = TITLE
-  //   TAO_ESF_Immediate_Changes
-  //
-  // = DESCRIPTION
-  //   Implement the Immediate_
 public:
   TAO_ESF_Immediate_Changes (void);
   TAO_ESF_Immediate_Changes (const COLLECTION &collection);

@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Gateway_Sched
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// = DESCRIPTION
-//   Extend the EC_Gateway_IIOP class to support the scheduling service.
-//
-// ============================================================================
+/**
+ *  @file   EC_Gateway_Sched.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ *
+ *
+ */
 
 #ifndef TAO_EC_GATEWAY_SCHED_H
 #define TAO_EC_GATEWAY_SCHED_H
@@ -27,16 +24,24 @@
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Gateway_Sched
+ *
+ * @brief Extend the EC_Gateway_IIOP interface to support scheduling.
+ */
 class TAO_RTSchedEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
-//
-// = TITLE
-//   Extend the EC_Gateway_IIOP interface to support scheduling.
-//
 {
 public:
   TAO_EC_Gateway_Sched (void);
   ~TAO_EC_Gateway_Sched (void);
 
+  /**
+   * To do its job this class requires to know the local and remote
+   * ECs it will connect to; furthermore it also requires to build
+   * RT_Infos for the local and remote schedulers.
+   * @todo part of the RT_Info is hardcoded, we need to make it
+   * parametric.
+   */
   void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
              RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecScheduler::Scheduler_ptr rmt_sched,
@@ -44,11 +49,6 @@ public:
              const char* lcl_name,
              const char* rmt_name,
              CORBA::Environment &env = TAO_default_environment ());
-  // To do its job this class requires to know the local and remote
-  // ECs it will connect to; furthermore it also requires to build
-  // RT_Infos for the local and remote schedulers.
-  // @@ TODO part of the RT_Info is hardcoded, we need to make it
-  // parametric.
 };
 
 #include "ace/post.h"

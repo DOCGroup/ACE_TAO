@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Bitmask_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Bitmask_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_BITMASK_FILTER_H
 #define TAO_EC_BITMASK_FILTER_H
@@ -33,40 +23,43 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Bitmask_Filter
+ *
+ * @brief The bitmask filter.
+ *
+ * This filter quickly rejects events that do not match a given
+ * bitmask.
+ * If the event is not rejected based on the mask then the child
+ * is consulted to finally accept or reject the event.
+ * When composed with the Null_Filter it accepts any events that
+ * satisfy:
+ * (event.header.type & type_mask) != 0
+ * && (event.header.type & source_mask) != 0
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of the child.
+ */
 class TAO_RTEvent_Export TAO_EC_Bitmask_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   The bitmask filter.
-  //
-  // = DESCRIPTION
-  //   This filter quickly rejects events that do not match a given
-  //   bitmask.
-  //   If the event is not rejected based on the mask then the child
-  //   is consulted to finally accept or reject the event.
-  //   When composed with the Null_Filter it accepts any events that
-  //   satisfy:
-  //   (event.header.type & type_mask) != 0
-  //   && (event.header.type & source_mask) != 0
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the child.
-  //
 public:
+  /**
+   * Constructor.
+   * Events that do not satisfy:
+   *
+   * (e.header.source & source_mask) != 0 &&
+   * (e.header.type & type_mask) != 0
+   *
+   * are immediately rejected, other events are recursively tested
+   * using the child node.
+   * It assumes ownership of the child.
+   */
   TAO_EC_Bitmask_Filter (CORBA::ULong source_mask,
                          CORBA::ULong type_mask,
                          TAO_EC_Filter* child);
-  // Constructor.
-  // Events that do not satisfy:
-  //
-  // (e.header.source & source_mask) != 0 &&
-  // (e.header.type & type_mask) != 0
-  //
-  // are immediately rejected, other events are recursively tested
-  // using the child node.
-  // It assumes ownership of the child.
 
+  /// Destructor
   virtual ~TAO_EC_Bitmask_Filter (void);
-  // Destructor
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -99,12 +92,12 @@ private:
                               (const TAO_EC_Bitmask_Filter&))
 
 private:
+  /// The bitmasks
   CORBA::ULong source_mask_;
   CORBA::ULong type_mask_;
-  // The bitmasks
 
+  /// The children
   TAO_EC_Filter* child_;
-  // The children
 };
 
 #if defined (__ACE_INLINE__)

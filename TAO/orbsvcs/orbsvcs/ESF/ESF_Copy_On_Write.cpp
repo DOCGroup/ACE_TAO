@@ -79,8 +79,8 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     }
 }
 
-template<class PROXY, class C, class I, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
+template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     connected (PROXY *proxy,
                CORBA::Environment &ACE_TRY_ENV)
 {
@@ -94,8 +94,8 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
   ace_mon.copy->collection.connected (proxy, ACE_TRY_ENV);
 }
 
-template<class PROXY, class C, class I, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
+template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     reconnected (PROXY *proxy,
                  CORBA::Environment &ACE_TRY_ENV)
 {
@@ -109,8 +109,8 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
   ace_mon.copy->collection.reconnected (proxy, ACE_TRY_ENV);
 }
 
-template<class PROXY, class C, class I, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
+template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     disconnected (PROXY *proxy,
                   CORBA::Environment &ACE_TRY_ENV)
 {
@@ -123,8 +123,8 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
   ace_mon.copy->collection.disconnected (proxy, ACE_TRY_ENV);
 }
 
-template<class PROXY, class C, class I, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
+template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   // We need to perform a copy to follow the protocol.

@@ -1,3 +1,87 @@
+Mon Oct 30 18:51:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+          Sun/CC 5.1 Patch 109490-01 gives errors if the formal arguments
+          names in a template definition do not match the names in the
+          declaration.
+          Fixed the problems in the ESF directory per J. Russell
+          Noseworthy <rnosewor@objectsciences.com> report.
+          This is a partial fix for [BUGID:709]
+
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Defaults.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Busy_Lock.h:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_Sched.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+          Update all the header files to use Doxygen style documentation.
+          I used Darrell's doxygen-convert.pl script and a little
+          hand-crafting.
+
 Mon Oct 30 18:35:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/POA/Forwarding/Servant_Activator.cpp:
@@ -15,191 +99,191 @@ Mon Oct 30 18:35:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Oct 30 17:47:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Policy_Manager.h: 
-	* tao/Policy_Manager.cpp (TAO_Policy_Manager_Impl): 
-	  Changed the type of relative_roundtrip_timeout_ and sync_scope_ to 
-	  CORBA::Policy *. 
-	  Hence instead of calling TAO_RelativeTimeoutPolicy::clone or
-	  TAO_Sync_Scope_Policy::clone,	calling CORBA::Policy::copy.
-	  Made related changes.
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.cpp (TAO_Policy_Manager_Impl):
+          Changed the type of relative_roundtrip_timeout_ and sync_scope_ to
+          CORBA::Policy *.
+          Hence instead of calling TAO_RelativeTimeoutPolicy::clone or
+          TAO_Sync_Scope_Policy::clone, calling CORBA::Policy::copy.
+          Made related changes.
 
-	  Modify the return parameter for
-	  relative_roundtrip_timeout () and sync_scope () to
-	  CORBA::Policy_ptr in all the classes in the file.
-	  
-	* tao/ORB_Core.h  : 
-	* tao/ORB_Core.cpp: 
-	  Declare and define TAO_ORB_Core::call_timeout_hook, 
-	  TAO_ORB_Core::set_timeout_hook, 
-	  TAO_ORB_Core::call_sync_scope_hook,
-	  TAO_ORB_Core::set_sync_scope_hook which are used to call the
-	  hooks to set and get the values of timeout/scope and save the
-	  hook for the respective policies so that they can be used later
-	  in need.
-	  
-	  Also, get_sync_strategy is defined as a helper to get the
-	  TAO_Sync_Strategy related to the Sync_Scope passed to it.
-		
-	  The function TAO_ORB_Core::stubless_sync_scope helps get the
-	  scope when the stub is nil.
+          Modify the return parameter for
+          relative_roundtrip_timeout () and sync_scope () to
+          CORBA::Policy_ptr in all the classes in the file.
 
-	  Modify the return parameter for
-	  TAO_ORB_Core::relative_roundtrip_timeout (),
-	  TAO_ORB_Core::default_relative_roundtrip_timeout (),
-	  TAO_ORB_Core::stubless_relative_roundtrip_timeout (), 
-	  TAO_ORB_Core::default_sync_scope () and
-	  TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
-	  
-	  The same change recursively in all the classes which call these
-	  functions.
-	
-	* tao/Stub.h: 
-	* tao/Stub.cpp (sync_scope): 
-	  Modified TAO_Stub::sync_strategy () to call
-	  TAO_ORB_Core::call_sync_scope_hook to get the scope value. 
-	  This scope value is passed to TAO_ORB_Core::get_sync_strategy ()
-	  to get the TAO_Sync_Strategy.
+        * tao/ORB_Core.h  :
+        * tao/ORB_Core.cpp:
+          Declare and define TAO_ORB_Core::call_timeout_hook,
+          TAO_ORB_Core::set_timeout_hook,
+          TAO_ORB_Core::call_sync_scope_hook,
+          TAO_ORB_Core::set_sync_scope_hook which are used to call the
+          hooks to set and get the values of timeout/scope and save the
+          hook for the respective policies so that they can be used later
+          in need.
 
-	  Modify the return parameter for
-	  TAO_ORB_Core::relative_roundtrip_timeout (), 
-	  TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
+          Also, get_sync_strategy is defined as a helper to get the
+          TAO_Sync_Strategy related to the Sync_Scope passed to it.
 
-	  Modified TAO::Sync_scope to call
- 	  TAO_ORB_Core::stubless_sync_scope to avoid code repetition.
-	
-	* tao/Messaging_Policy_i.h (SyncScopePolicy,): 
-	* tao/Messaging_Policy_i.cpp: 
-	  Declare and define TAO_RelativeRoundtripTimeoutPolicy::hook
-	  and TAO_Sync_Scope_Policy::hook functions. The
-	  functions are called to set the hooks for the respective policies
-	  to indicate that the policies are set and also to know the Timeout
-	  and scope values in the respective cases.
-		
-	* tao/Messaging_PolicyFactory.cpp (create_policy): 
-	  Remove the if-defs for TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
-	  and TAO_HAS_SYNC_SCOPE_POLICY in the switch-case block.
+          The function TAO_ORB_Core::stubless_sync_scope helps get the
+          scope when the stub is nil.
 
-	* tao/Messaging_ORBInitializer.cpp: 
-	  Save the pointers to hooks for 
-	  TAO_RelativeRoundtripTimeout and TAO_Sync_Scope
-	  policies in the
-	  TAO_Messaging_ORBInitializer::pre_init by calling the
-	  TAO_ORB_Core::set_timeout_hook and
-	  TAO_ORB_Core::set_sync_scope_hook.
-	
-	* tao/UIOP_Connect.h: 
-	* tao/UIOP_Connect.cpp:
-	
-	* tao/SHMIOP_Connect.h:
-	* tao/SHMIOP_Connect.cpp (handle_timeout): 
-	
-	* tao/IIOP_Connect.h: 
-	* tao/IIOP_Connect.cpp (handle_timeout): 
-	  Set the timeout value by calling TAO_ORB_Core::call_timeout_hook
-	  instead of getting a TAO_RelativeRoundtripPolicy pointer and
-	  proceeding from there.
+          Modify the return parameter for
+          TAO_ORB_Core::relative_roundtrip_timeout (),
+          TAO_ORB_Core::default_relative_roundtrip_timeout (),
+          TAO_ORB_Core::stubless_relative_roundtrip_timeout (),
+          TAO_ORB_Core::default_sync_scope () and
+          TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
 
-	* tao/Invocation.h: 
-	* tao/Invocation.cpp: 
-	  Same as IIOP_Connect for TAO_RelativeRoundtripTimeoutPolicy. 
-	  Similar change with sync_scope. Instead of getting a
-	  TAO_Sync_Scope_Policy_ptr and gettting the sync_scope
-	  value, call the hook for the sync_scope which is
-	  TAO_ORB_Core::call_sync_scope_hook.
-	
-	* tao/ClientRequestInfo.h : 
-	* tao/ClientRequestInfo.cpp (sync_scope): 
-	  Modified the return value of sync_scope from
-	  Messaging::SyncScope to CORBA::Short.
+          The same change recursively in all the classes which call these
+          functions.
+
+        * tao/Stub.h:
+        * tao/Stub.cpp (sync_scope):
+          Modified TAO_Stub::sync_strategy () to call
+          TAO_ORB_Core::call_sync_scope_hook to get the scope value.
+          This scope value is passed to TAO_ORB_Core::get_sync_strategy ()
+          to get the TAO_Sync_Strategy.
+
+          Modify the return parameter for
+          TAO_ORB_Core::relative_roundtrip_timeout (),
+          TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
+
+          Modified TAO::Sync_scope to call
+          TAO_ORB_Core::stubless_sync_scope to avoid code repetition.
+
+        * tao/Messaging_Policy_i.h (SyncScopePolicy,):
+        * tao/Messaging_Policy_i.cpp:
+          Declare and define TAO_RelativeRoundtripTimeoutPolicy::hook
+          and TAO_Sync_Scope_Policy::hook functions. The
+          functions are called to set the hooks for the respective policies
+          to indicate that the policies are set and also to know the Timeout
+          and scope values in the respective cases.
+
+        * tao/Messaging_PolicyFactory.cpp (create_policy):
+          Remove the if-defs for TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+          and TAO_HAS_SYNC_SCOPE_POLICY in the switch-case block.
+
+        * tao/Messaging_ORBInitializer.cpp:
+          Save the pointers to hooks for
+          TAO_RelativeRoundtripTimeout and TAO_Sync_Scope
+          policies in the
+          TAO_Messaging_ORBInitializer::pre_init by calling the
+          TAO_ORB_Core::set_timeout_hook and
+          TAO_ORB_Core::set_sync_scope_hook.
+
+        * tao/UIOP_Connect.h:
+        * tao/UIOP_Connect.cpp:
+
+        * tao/SHMIOP_Connect.h:
+        * tao/SHMIOP_Connect.cpp (handle_timeout):
+
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connect.cpp (handle_timeout):
+          Set the timeout value by calling TAO_ORB_Core::call_timeout_hook
+          instead of getting a TAO_RelativeRoundtripPolicy pointer and
+          proceeding from there.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+          Same as IIOP_Connect for TAO_RelativeRoundtripTimeoutPolicy.
+          Similar change with sync_scope. Instead of getting a
+          TAO_Sync_Scope_Policy_ptr and gettting the sync_scope
+          value, call the hook for the sync_scope which is
+          TAO_ORB_Core::call_sync_scope_hook.
+
+        * tao/ClientRequestInfo.h :
+        * tao/ClientRequestInfo.cpp (sync_scope):
+          Modified the return value of sync_scope from
+          Messaging::SyncScope to CORBA::Short.
 
 Mon Oct 30 18:57:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/POA: Removed the Forwarding Servant.  The
-	  forwarding servant was ill-constructed: (a) it threw exceptions
-	  the incorrect way since the correct way is to call
-	  set_exception() on the ServerRequest and not to throw an
-	  exception; (b) the forward_object() method on the POA leads to
-	  deadlock if called from an upcall on the object being forwarded;
-	  (c) Servant Managers is the only correct way to forward requests
-	  - Default Servants is not the correct solution.
+        * tao/PortableServer/POA: Removed the Forwarding Servant.  The
+          forwarding servant was ill-constructed: (a) it threw exceptions
+          the incorrect way since the correct way is to call
+          set_exception() on the ServerRequest and not to throw an
+          exception; (b) the forward_object() method on the POA leads to
+          deadlock if called from an upcall on the object being forwarded;
+          (c) Servant Managers is the only correct way to forward requests
+          - Default Servants is not the correct solution.
 
-	* tao/PortableServer/Object_Adapter.cpp (dispatch,
-	  dispatch_servant, and prepare_for_upcall): Changed these methods
-	  such that the forwarding exception can only be raised by the
-	  servant managers.  Now the forward exception is caught in
-	  prepare_for_upcall() when we are looking for the servant and may
-	  potentially call the servant managers.  If this exception is
-	  raised by a regular servant or by a default servant, the
-	  exception is reported to the client as an unknown exception.
-	  Thanks to Ossama for reporting this problem.  This fix closes
-	  bug 690.
+        * tao/PortableServer/Object_Adapter.cpp (dispatch,
+          dispatch_servant, and prepare_for_upcall): Changed these methods
+          such that the forwarding exception can only be raised by the
+          servant managers.  Now the forward exception is caught in
+          prepare_for_upcall() when we are looking for the servant and may
+          potentially call the servant managers.  If this exception is
+          raised by a regular servant or by a default servant, the
+          exception is reported to the client as an unknown exception.
+          Thanks to Ossama for reporting this problem.  This fix closes
+          bug 690.
 
-	* Since the signature of
-	  TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall() got
-	  changed because of the above fix, it required a change to
-	  collocation code that performs through POA calls.  The following
-	  files were effected:
+        * Since the signature of
+          TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall() got
+          changed because of the above fix, it required a change to
+          collocation code that performs through POA calls.  The following
+          files were effected:
 
-	  - tao/PortableServer/Collocated_Object.cpp
-	  - tao/PortableServer/DomainS.cpp
-	  - tao/PortableServer/ImplRepoS.cpp
-	  - tao/PortableServer/MessagingS.cpp
-	  - tao/PortableServer/PolicyS.cpp
-	  - tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp
+          - tao/PortableServer/Collocated_Object.cpp
+          - tao/PortableServer/DomainS.cpp
+          - tao/PortableServer/ImplRepoS.cpp
+          - tao/PortableServer/MessagingS.cpp
+          - tao/PortableServer/PolicyS.cpp
+          - tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp
 
-	  and
+          and
 
-	  - TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp
-	  - TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp	  
+          - TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp
+          - TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
 
-	* tao/Adapter.h (TAO_Adapter): Added a new return value for failed
-	  dispatching of upcalls.
+        * tao/Adapter.h (TAO_Adapter): Added a new return value for failed
+          dispatching of upcalls.
 
 Mon Oct 30 18:38:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
 
-	  Plugged a memory leak by removing an extra string copy
-	  when adding the include path for orb.idl to the 
-	  command line arglist.
+          Plugged a memory leak by removing an extra string copy
+          when adding the include path for orb.idl to the
+          command line arglist.
 
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Found a missing 'delete' for an iterator that was
-	  created on the heap. Instead of adding the 'delete',
-	  just created the iterator on the stack.
+          Found a missing 'delete' for an iterator that was
+          created on the heap. Instead of adding the 'delete',
+          just created the iterator on the stack.
 
 Mon Oct 30 10:40:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/tutorials/Quoter/AMI/Makefile: 
-	  Updated the Makefile to link lTAO_PortableServer. Thanks to 
-	  Walt Corey <wcorey@ibm.net> for reporting the bug.
+        * docs/tutorials/Quoter/AMI/Makefile:
+          Updated the Makefile to link lTAO_PortableServer. Thanks to
+          Walt Corey <wcorey@ibm.net> for reporting the bug.
 
 Mon Oct 30 15:21:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
+        * tao/Typecode.cpp:
 
-	  Added a check for a null typecode pointer argument to a function
- 	  common to equal() and equivalent().  This change will cause all
- 	  Any extractions to fail if the application has not initialized
- 	  an ORB. Thanks to Albert Wijnja <albert.wijnja@meco.nl> for
- 	  reporting this bug.
+          Added a check for a null typecode pointer argument to a function
+          common to equal() and equivalent().  This change will cause all
+          Any extractions to fail if the application has not initialized
+          an ORB. Thanks to Albert Wijnja <albert.wijnja@meco.nl> for
+          reporting this bug.
 
 Mon Oct 30 15:00:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
 
-	  Modified redefinition of forward declared interface
-	  to handle the case where an interface is defined in
-	  a reopening of the module where it is forward declared,
-	  then referenced in a different module. Thanks to
-	  Vsevolod Novikov <novikov@df.nnov.rfnet.ru> for reporting
-	  this bug and sending in an example IDL file.
+          Modified redefinition of forward declared interface
+          to handle the case where an interface is defined in
+          a reopening of the module where it is forward declared,
+          then referenced in a different module. Thanks to
+          Vsevolod Novikov <novikov@df.nnov.rfnet.ru> for reporting
+          this bug and sending in an example IDL file.
 
-	* tests/IDL_Test/reopened_modules.idl:
+        * tests/IDL_Test/reopened_modules.idl:
 
-	  Added the above example to IDL_Test.
+          Added the above example to IDL_Test.
 
 Mon Oct 30 12:04:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -208,14 +292,14 @@ Mon Oct 30 12:04:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Oct 30 12:29:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 
-	  Made the signatures of wstring members and wstring
-	  parameters in constructor signature agree for the
-	  generated TAO_ServerRequest_Info subclasses. Thanks to
-	  Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
-	  this bug.
+          Made the signatures of wstring members and wstring
+          parameters in constructor signature agree for the
+          generated TAO_ServerRequest_Info subclasses. Thanks to
+          Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
+          this bug.
 
 Sat Oct 28 17:55:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
