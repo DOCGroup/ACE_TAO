@@ -375,6 +375,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Semaphore_Test"=..\Semaphore_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Service_Config_Test"=.\Service_Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
