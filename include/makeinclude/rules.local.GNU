@@ -132,9 +132,9 @@ endif
 #----------------------------------------------------------------------------
 
 clean.local:
-	-$(RM) -f *.o *~ *.bak *.rpo Makefile.old core
-	-$(RM) -rf $(OBJDIRS) $(TEMPINCDIR) 
-	-$(RM) -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+	-$(RM) -f *.o *~ *.bak *.rpo *.sym Makefile.old core
+	-$(RM) -rf $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
+                   gcctemp.c gcctemp so_locations
 
 realclean.local: clean.local
 	-$(RM) -f $(BIN:%=%) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize)
