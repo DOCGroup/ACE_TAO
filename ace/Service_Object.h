@@ -105,12 +105,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-   ACE_Service_Type (const ACE_Service_Type &);
-   ACE_Service_Type & operator= (const ACE_Service_Type & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
-
   const ASYS_TCHAR *name_;
   // Humanly readible name of svc.
 
@@ -158,12 +152,6 @@ public:
   // Smart pointer to access the underlying <ACE_Service_Object>.
 
 private:
-  // ACE_Service_Object_Ptr (const ACE_Service_Object_Ptr &);
-  ACE_Service_Object_Ptr & operator= (const ACE_Service_Object_Ptr & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
-
   ACE_Service_Object *service_object_;
   // Holds the service object until we're done.
 };

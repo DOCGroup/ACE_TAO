@@ -248,12 +248,6 @@ public:
   // Dump the state of an object.
 
 private:
-  ACE_TPQ_Iterator (const ACE_TPQ_Iterator &);
-  ACE_TPQ_Iterator & operator= (const ACE_TPQ_Iterator & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
-
   ACE_TPQ_Entry *current_;
 };
 
@@ -313,13 +307,6 @@ protected:
   // Tail.
   int size_;
   // Size.
-
-private:
-  ACE_Token_Proxy_Queue (const ACE_Token_Proxy_Queue &);
-  ACE_Token_Proxy_Queue & operator= (const ACE_Token_Proxy_Queue & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 // 5..
@@ -841,13 +828,6 @@ protected:
   virtual ACE_Tokens *create_token (const ASYS_TCHAR *name) = 0;
   // Make the correct type of ACE_Tokens.  This is called by the Token
   // Manager.
-
-private:
-  //ACE_Token_Proxy (const ACE_Token_Proxy &);
-  ACE_Token_Proxy & operator= (const ACE_Token_Proxy & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 // 8..
