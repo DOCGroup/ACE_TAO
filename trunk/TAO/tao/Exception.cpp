@@ -197,12 +197,6 @@ CORBA_UserException::operator= (const CORBA_UserException &src)
   return *this;
 }
 
-void
-CORBA_UserException::_raise (void)
-{
-  TAO_RAISE (*this);
-}
-
 int
 CORBA_UserException::_is_a (const char* interface_id) const
 {

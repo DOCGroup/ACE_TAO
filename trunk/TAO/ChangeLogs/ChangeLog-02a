@@ -1,3 +1,20 @@
+Thu Mar  2 09:09:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  The CORBA::UserException is abstract, the _raise() method cannot
+	  be defined for it.
+
+	* tao/POAC.i:
+	  The ForwardRequest exception is not present with minimum CORBA,
+	  yet i did not protect the CDR insertion and extraction operators
+	  for it with TAO_HAS_MINIMUM_CORBA == 0
+
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+	  For exceptions without any fields the operator>> declared on the
+	  header file and the one defined in the .i file were not
+	  matching.
+
 Wed Mar  1 21:36:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/POAC.h:
