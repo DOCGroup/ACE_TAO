@@ -16,31 +16,14 @@
 //
 // ===========================================================
 
-#include "client_i.h"
+#include "Client_i.h"
 
 int
 main (int argc, char *argv[])
 {
-  char *nick;
-
-  if (argc >= 2)
-    nick = argv[1];
-  else
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "\n usage: client <nickname>\n"),
-		      -1);
-
   TAO_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-		 "\n============= Simple Chat ===========\n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-		 "\n============= type 'quit' to exit  ===========\n"));
-
-      // @@ Please make the "chat.ior" an option or something you can
-      // override as a user.
-      Client_i client_i ("chat.ior", nick);
+      Client_i client_i;
 
       if (client_i.init (argc, argv) == -1
 	  || client_i.run () == -1)
