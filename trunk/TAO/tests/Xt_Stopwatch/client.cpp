@@ -131,7 +131,6 @@ Client::start_callback (Widget widget,
                         XtPointer client_data,
                         XtPointer )
 {
-  cout << "I am here "<<endl;
   Client *self = ACE_static_cast(Client*,client_data);
   self->start_hook ();
 }
@@ -141,7 +140,6 @@ Client::stop_callback (Widget widget,
                        XtPointer client_data,
                        XtPointer )
 {
-  cout << "I am here "<<endl;
   Client *self = ACE_static_cast(Client*,client_data);
   self->stop_hook ();
 }
@@ -149,13 +147,11 @@ Client::stop_callback (Widget widget,
 void
 Client::start_hook (void)
 {
-  cout << "I am here 1"<<endl;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->server_->start (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      cout <<"I am here 2"<<endl;
     }
   ACE_CATCHANY
     {

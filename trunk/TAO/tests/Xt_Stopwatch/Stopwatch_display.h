@@ -13,6 +13,7 @@
 // ============================================================================
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
+#include "tao/corba.h"
 #include <Xm/Xm.h>
 #include <Xm/Frame.h>
 #include <Xm/Label.h>
@@ -32,7 +33,11 @@ class Stopwatch_display
   virtual void manage();   
   // Manage the widget
 
+  void set_time (CORBA::Float value);
+  // Change the displayed time
+
   //virtual void unmanage();
+
   // Unmanage the widget
     
  private:

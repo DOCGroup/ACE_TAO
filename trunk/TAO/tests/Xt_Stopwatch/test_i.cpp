@@ -10,8 +10,9 @@
 
 ACE_RCSID(FL_Cube, test_i, "$Id$")
 
-Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb, Timer_imp *timer)
+  :  orb_ (CORBA::ORB::_duplicate (orb)),
+     timer_ (timer)
 {
 
 }
@@ -19,13 +20,13 @@ Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb)
 void
 Stopwatch_imp::start (CORBA::Environment&)
 {
-  cout <<"Start button pressed "<<endl;
+  this->timer_->start ();
 }
 
 void
 Stopwatch_imp::stop (CORBA::Environment&)
 {
-  cout << "Stop button pressed "<< endl;
+  this->timer_->stop ();
 }
 
 void
