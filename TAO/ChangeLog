@@ -1,3 +1,28 @@
+Tue Oct 28 21:53:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+	  Removed #include of Invocation.h. We need to remove this from
+	  the repo. We will do that once things stabilize a bit. 
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h: Removed the
+	  declaratrion of _tao_QueryInterface () since it is no longer
+	  required. 
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+
+	  Updated dependecies. 
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
+	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h: 
+
+	  Changed the #include of corba.h to ORB.h. This (corba.h)
+	  is another file that needs to be removed from the repo. 
+
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp: Fixed a
+	  unused variable warning.
+
 Tue Oct 28 21:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Dynamic_Adapter.cpp:

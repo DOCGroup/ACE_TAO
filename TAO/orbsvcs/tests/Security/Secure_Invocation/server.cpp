@@ -97,7 +97,10 @@ main (int argc, char *argv[])
                                  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+	// @@ A better thing would be to print out an error statement. 
         ACE_ASSERT (!equivalent);
+
+	ACE_UNUSED_ARG (equivalent);
       }
 
       CORBA::String_var ior =

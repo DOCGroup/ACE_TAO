@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
