@@ -1,3 +1,18 @@
+Tue Mar 17 01:01:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object.cpp (_non_existent): 
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+	  (gen_marshal_and_invoke): <_invoke_status> should be set before
+	  use (at least according to g++).
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Changed
+	  <this->attr_utc_time_.inacchi> to 0 since the conversion
+	  routines Vishal used are not supported on vxworks. Vishal should
+	  consult David in fixing this correctly.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Also
+	  changed <lowest_time> to 0.  Vishal should fix this also.
+
 Tue Mar 16 15:52:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/POAManager.i (lock): moved function definition before inline

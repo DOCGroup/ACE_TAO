@@ -89,7 +89,7 @@ _tao_start_again:
   ACE_ENDTRY;
   ACE_CHECK_RETURN (_tao_retval);
 
-  TAO_GIOP_ReplyStatusType _invoke_status;
+  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
   ACE_TRY_EX (_tao_INVOKE_FAILED)
     {
       _invoke_status =
@@ -216,7 +216,7 @@ _tao_start_again:
     ))
     ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
 
-  TAO_GIOP_ReplyStatusType _invoke_status;
+  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
   ACE_TRY_EX (_tao_INVOKE_FAILED)
     {
       _invoke_status =
@@ -328,7 +328,7 @@ _tao_start_again:
   ACE_ENDTRY;
   ACE_CHECK_RETURN (_tao_retval);
 
-  TAO_GIOP_ReplyStatusType _invoke_status;
+  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
   ACE_TRY_EX (_tao_INVOKE_FAILED)
     {
       _invoke_status =
