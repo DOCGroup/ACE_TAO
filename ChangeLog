@@ -1,3 +1,9 @@
+Sat Jul 10 09:37:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ACE-INSTALL.html:
+
+	  Added information for users who build from anon cvs repository.
+
 Fri Jul  9 23:45:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RB_Tree.h (ACE_RB_Tree_Base::allocator):

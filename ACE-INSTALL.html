@@ -53,6 +53,7 @@ report process</a>.<P>
   <LI><A HREF="#resource_requirements">System Resource Requirements</A>
   <LI><A HREF="#MPC">General MPC Information</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
+  <LI><A HREF="#power">Building from Anonymous CVS</A>
 </UL>
 
 
@@ -2917,7 +2918,43 @@ show_uninit        Lists all uninitialized in object files built for
 </PRE>
 <HR><P>
 
+<HR><P>
+<H3><A NAME="power">Building from anonymous CVS</A></H3>
+If users are building from our <a
+href="http://cvs.doc.wustl.edu/anoncvs.html"> anon cvs </a> the
+GNUmakefiles, and project files for building on various platforms will
+not be available. Users from anon cvs are expected to generate them
+using <a href="MPC/README">MPC </a> before building ACE, TAO or
+CIAO. We point out some suggestions below to get bootstrapped
+quickly. 
 
+<UL>
+  <LI> Please see <a href="#MPC"> instructions </a> above to  download
+  MPC from anon cvs repository <p>       
+  <LI>Please make sure that you have <a href="http://www.perl.org">
+  perl</a> installed, preferably perl 
+  5.8 or higher. Users on Win32 based platforms are recommended to use
+  <a href="http://www.activestate.com/Products/ActivePerl/"> Active
+  State Perl </a>. We use active state perl without problems. We have
+  ran into problems trying to use the cygwin version of perl on Win32
+  based platforms. 
+  <LI>If you just want to build ACE and associated tests, examples,
+  and associated utility libraries, we recommend that you do <p>
+  <CODE> $ACE_ROOT/bin/mwc.pl ACE.mwc </CODE> <p>
+  
+  to generate GNUmakefiles. Please use 
+
+  <CODE> $ACE_ROOT/bin/mwc.pl -type vc6 ACE.mwc </CODE> <p>
+
+  to generate VC6 project and workspace files. Please use <CODE>-type
+  vc71</CODE> to generate VC71 project and solution files. 
+
+  <LI>If you want to build TAO+CIAO and its associated libraries
+  please see <a href="TAO/TAO-INSTALL.html"> TAO-INSTALL <a> and <a
+  href="TAO/CIAO/CIAO-INSTALL.html"> CIAO-INSTALL </a> for details. 
+</UL>
+
+<HR><P>
 
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
 home page.
