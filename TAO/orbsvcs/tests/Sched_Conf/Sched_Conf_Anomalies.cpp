@@ -376,14 +376,14 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos_out, configs_out, anomalies_out, ACE_TRY_ENV);
+         infos_out, configs_out, anomalies_out, ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
+         infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif /* ! __SUNPRO_CC */
 
       ACE_TRY_CHECK;
