@@ -60,18 +60,16 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
   : TAO_Profile (pfile.tag ()),
-    host_ (),
+    host_ (pfile.host_),
     port_ (pfile.port_),
     version_ (pfile.version_),
     object_key_ (pfile.object_key_),
     object_addr_ (pfile.object_addr_),
-    hint_ (0),
+    hint_ (pfile.hint_),
     orb_core_ (pfile.orb_core_)
 {
-  if (pfile.host_ != 0)
-    this->host_ = pfile.host_;
-
-  hint_ = pfile.hint_;
+  // @@ Do we need this copy constructor?  Won't the default copy
+  // constructor work just as well?
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
@@ -260,10 +258,6 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);
-
-  ACE_DEBUG ((LM_DEBUG, "OSSAMA 0 ----> <%s>\n", this->host_.in ()));
-  ACE_DEBUG ((LM_DEBUG, "OSSAMA 1 ----> <%s>\n", start));
-  ACE_DEBUG ((LM_DEBUG, "OSSAMA 2 ----> <%d>\n", this->port_));
 
   // @@ This call to atoi appears to pass in a string that
   //    still has the object key appended to it.
