@@ -66,7 +66,7 @@ class TAO_ServerProtocolPolicy;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Thread_Policy :
+class TAO_PortableServer_Export TAO_Thread_Policy :
   public PortableServer::ThreadPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -91,7 +91,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-class TAO_Export TAO_Lifespan_Policy :
+class TAO_PortableServer_Export TAO_Lifespan_Policy :
   public PortableServer::LifespanPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -114,7 +114,7 @@ protected:
   PortableServer::LifespanPolicyValue value_;
 };
 
-class TAO_Export TAO_Id_Uniqueness_Policy :
+class TAO_PortableServer_Export TAO_Id_Uniqueness_Policy :
   public PortableServer::IdUniquenessPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -137,7 +137,7 @@ protected:
   PortableServer::IdUniquenessPolicyValue value_;
 };
 
-class TAO_Export TAO_Id_Assignment_Policy :
+class TAO_PortableServer_Export TAO_Id_Assignment_Policy :
   public PortableServer::IdAssignmentPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -162,7 +162,7 @@ protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Implicit_Activation_Policy :
+class TAO_PortableServer_Export TAO_Implicit_Activation_Policy :
   public PortableServer::ImplicitActivationPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -185,7 +185,7 @@ protected:
   PortableServer::ImplicitActivationPolicyValue value_;
 };
 
-class TAO_Export TAO_Servant_Retention_Policy :
+class TAO_PortableServer_Export TAO_Servant_Retention_Policy :
   public PortableServer::ServantRetentionPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -208,7 +208,7 @@ protected:
   PortableServer::ServantRetentionPolicyValue value_;
 };
 
-class TAO_Export TAO_Request_Processing_Policy :
+class TAO_PortableServer_Export TAO_Request_Processing_Policy :
   public PortableServer::RequestProcessingPolicy,
   public TAO_Local_RefCounted_Object
 {
@@ -233,7 +233,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-class TAO_Export TAO_POA_Policies
+class TAO_PortableServer_Export TAO_POA_Policies
 {
 public:
 
@@ -393,7 +393,7 @@ protected:
 // Forward Declaration
 class ServerObject_i;
 
-class TAO_Export TAO_POA :
+class TAO_PortableServer_Export TAO_POA :
   public PortableServer::POA,
   public TAO_Local_RefCounted_Object
 {
@@ -1047,7 +1047,7 @@ private:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Adapter_Activator : public PortableServer::AdapterActivator
+class TAO_PortableServer_Export TAO_Adapter_Activator : public PortableServer::AdapterActivator
 {
 public:
 

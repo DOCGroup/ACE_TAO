@@ -17,6 +17,7 @@
 #define TAO_COLLOCATED_OBJECT_H
 #include "ace/pre.h"
 
+#include "portableserver_export.h"
 #include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -25,7 +26,7 @@
 
 class TAO_ServantBase;
 
-class TAO_Export TAO_Collocated_Object : public virtual CORBA_Object
+class TAO_PortableServer_Export TAO_Collocated_Object : public virtual CORBA_Object
 {
 public:
   TAO_Collocated_Object (TAO_Stub *p = 0,

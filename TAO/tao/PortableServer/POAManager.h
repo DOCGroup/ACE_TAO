@@ -45,7 +45,7 @@ class TAO_Object_Adapter;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_POA_Manager :
+class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
   public TAO_Local_RefCounted_Object
 {

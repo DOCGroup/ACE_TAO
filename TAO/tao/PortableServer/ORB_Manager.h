@@ -26,7 +26,7 @@
 
 #include "tao/ORB.h"
 
-class TAO_Export TAO_ORB_Manager
+class TAO_PortableServer_Export TAO_ORB_Manager
 {
   // = TITLE
   //     Helper class for simple ORB/POA initialization and

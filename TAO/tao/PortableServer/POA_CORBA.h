@@ -55,7 +55,7 @@ class IR_InterfaceDef;
 class POA_CORBA_DomainManager;
 class POA_CORBA_ConstructionPolicy;
 
-class TAO_Export  POA_CORBA
+class TAO_PortableServer_Export  POA_CORBA
 {
 public:
 
@@ -63,7 +63,7 @@ public:
 
   class Policy;
   typedef Policy *Policy_ptr;
-  class TAO_Export Policy :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export Policy :  public virtual PortableServer::ServantBase
   {
   protected:
     Policy (void);
@@ -165,7 +165,7 @@ public:
   };
 
 
-  class TAO_Export _tao_thru_poa_collocated_CORBA_Policy   : public virtual ::CORBA_Policy
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_CORBA_Policy   : public virtual ::CORBA_Policy
   {
   public:
     _tao_thru_poa_collocated_CORBA_Policy (

@@ -733,7 +733,7 @@ TAO_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
                                  *orb_core);
 }
 
-ACE_FACTORY_DEFINE (TAO, TAO_Object_Adapter_Factory)
+ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
                        ACE_TEXT ("TAO_POA"),
                        ACE_SVC_OBJ_T,

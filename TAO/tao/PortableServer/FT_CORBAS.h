@@ -30,7 +30,7 @@
 #endif /* _MSC_VER */
 
 
-class TAO_Export FT_POA_RequestDurationPolicy : public virtual POA_CORBA::Policy
+class TAO_PortableServer_Export FT_POA_RequestDurationPolicy : public virtual POA_CORBA::Policy
 {
 protected:
   FT_POA_RequestDurationPolicy (void);
@@ -122,7 +122,7 @@ public:
 };
 
 
-class TAO_Export
+class TAO_PortableServer_Export
 FT_POA_tao_thru_poa_collocated_RequestDurationPolicy :
   public virtual FT::RequestDurationPolicy,
   public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
@@ -159,7 +159,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_Export FT_POA_RequestDurationPolicy_tie :
+class TAO_PortableServer_Export FT_POA_RequestDurationPolicy_tie :
   public FT_POA_RequestDurationPolicy
 {
 public:
@@ -238,7 +238,7 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-class TAO_Export FT_POA_HeartbeatPolicy : public virtual POA_CORBA::Policy
+class TAO_PortableServer_Export FT_POA_HeartbeatPolicy : public virtual POA_CORBA::Policy
 {
 protected:
   FT_POA_HeartbeatPolicy (void);
@@ -330,7 +330,7 @@ public:
 };
 
 
-class TAO_Export FT_POA_tao_thru_poa_collocated_HeartbeatPolicy:
+class TAO_PortableServer_Export FT_POA_tao_thru_poa_collocated_HeartbeatPolicy:
   public virtual FT::HeartbeatPolicy,
   public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
 {
@@ -364,7 +364,7 @@ public:
 // about it.
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_Export FT_POA_HeartbeatPolicy_tie : public FT_POA_HeartbeatPolicy
+class TAO_PortableServer_Export FT_POA_HeartbeatPolicy_tie : public FT_POA_HeartbeatPolicy
 {
 public:
   FT_POA_HeartbeatPolicy_tie (T &t);
@@ -441,7 +441,7 @@ private:
 #endif /* ACE_HAS_USING_KEYWORD */
 
 
-class TAO_Export FT_POA_HeartbeatEnabledPolicy : public virtual POA_CORBA::Policy
+class TAO_PortableServer_Export FT_POA_HeartbeatEnabledPolicy : public virtual POA_CORBA::Policy
 {
 protected:
   FT_POA_HeartbeatEnabledPolicy (void);
@@ -533,7 +533,7 @@ public:
 };
 
 
-class TAO_Export FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy
+class TAO_PortableServer_Export FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy
   : public virtual FT::HeartbeatEnabledPolicy,
     public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
 {
@@ -570,7 +570,7 @@ public:
 // about it.
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_Export FT_POA_HeartbeatEnabledPolicy_tie :
+class TAO_PortableServer_Export FT_POA_HeartbeatEnabledPolicy_tie :
   public FT_POA_HeartbeatEnabledPolicy
 {
 public:

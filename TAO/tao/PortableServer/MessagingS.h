@@ -40,7 +40,7 @@ TAO_NAMESPACE  POA_Messaging
 
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
-  class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export ReplyHandler :  public virtual PortableServer::ServantBase
   {
   protected:
     ReplyHandler (void);
@@ -97,7 +97,7 @@ TAO_NAMESPACE  POA_Messaging
 #if !defined (_MESSAGING_REPLYHANDLER___THRU_POA_COLLOCATED_SH_)
 #define _MESSAGING_REPLYHANDLER___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_ReplyHandler     : public virtual ::Messaging::ReplyHandler
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_ReplyHandler     : public virtual ::Messaging::ReplyHandler
   {
   public:
     _tao_thru_poa_collocated_ReplyHandler (
@@ -121,7 +121,7 @@ TAO_NAMESPACE  POA_Messaging
 #if !defined (_MESSAGING_REPLYHANDLER___DIRECT_COLLOCATED_SH_)
 #define _MESSAGING_REPLYHANDLER___DIRECT_COLLOCATED_SH_
 
-  class TAO_Export _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler, public virtual TAO_Collocated_Object
+  class TAO_PortableServer_Export _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler, public virtual TAO_Collocated_Object
   {
   public:
     _tao_direct_collocated_ReplyHandler (
@@ -151,7 +151,7 @@ TAO_NAMESPACE  POA_Messaging
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export ReplyHandler_tie : public ReplyHandler
+  class TAO_PortableServer_Export ReplyHandler_tie : public ReplyHandler
   {
   public:
     ReplyHandler_tie (T &t);

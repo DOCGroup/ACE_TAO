@@ -31,7 +31,7 @@
 #include "Servant_Base.h"
 #include "tao/ORB.h"
 
-class TAO_Forwarding_Servant : public TAO_DynamicImplementation
+class TAO_PortableServer_Export TAO_Forwarding_Servant : public TAO_DynamicImplementation
 {
 public:
 

@@ -32,7 +32,7 @@
 
   class POA_CORBA_DomainManager;
   typedef POA_CORBA_DomainManager *POA_CORBA_DomainManager_ptr;
-  class TAO_Export POA_CORBA_DomainManager :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export POA_CORBA_DomainManager :  public virtual PortableServer::ServantBase
   {
   protected:
     POA_CORBA_DomainManager (void);
@@ -149,7 +149,7 @@ CORBA::Policy_ptr  result_;
 #if !defined (_CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_
 
-class TAO_Export POA_CORBA__tao_thru_poa_collocated_DomainManager   : public virtual ::CORBA::DomainManager
+class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_DomainManager   : public virtual ::CORBA::DomainManager
 {
 public:
   POA_CORBA__tao_thru_poa_collocated_DomainManager (
@@ -182,7 +182,7 @@ public:
 #if !defined (_CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_
 
-class TAO_Export POA_CORBA__tao_direct_collocated_DomainManager   :  public virtual CORBA::DomainManager, public virtual TAO_Collocated_Object
+class TAO_PortableServer_Export POA_CORBA__tao_direct_collocated_DomainManager   :  public virtual CORBA::DomainManager, public virtual TAO_Collocated_Object
 {
 public:
   POA_CORBA__tao_direct_collocated_DomainManager (
@@ -221,7 +221,7 @@ private:
 #if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_Export POA_CORBA_DomainManager_tie : public POA_CORBA_DomainManager
+class TAO_PortableServer_Export POA_CORBA_DomainManager_tie : public POA_CORBA_DomainManager
 {
 public:
   POA_CORBA_DomainManager_tie (T &t);
@@ -275,7 +275,7 @@ private:
 
 class POA_CORBA_ConstructionPolicy;
 typedef POA_CORBA_ConstructionPolicy *POA_CORBA_ConstructionPolicy_ptr;
-class TAO_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA::Policy
+class TAO_PortableServer_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA::Policy
 {
 protected:
   POA_CORBA_ConstructionPolicy (void);
@@ -415,7 +415,7 @@ CORBA::Boolean & constr_policy_;
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___THRU_POA_COLLOCATED_SH_)
 #define _CORBA_CONSTRUCTIONPOLICY___THRU_POA_COLLOCATED_SH_
 
-class TAO_Export POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy   : public virtual ::CORBA::ConstructionPolicy,
+class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy   : public virtual ::CORBA::ConstructionPolicy,
     public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
 {
 public:
@@ -450,7 +450,7 @@ public:
 #if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_Export POA_CORBA_ConstructionPolicy_tie : public POA_CORBA_ConstructionPolicy
+class TAO_PortableServer_Export POA_CORBA_ConstructionPolicy_tie : public POA_CORBA_ConstructionPolicy
 {
 public:
   POA_CORBA_ConstructionPolicy_tie (T &t);

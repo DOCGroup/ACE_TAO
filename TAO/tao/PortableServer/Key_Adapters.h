@@ -48,7 +48,7 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_ObjectId_Hash
+class TAO_PortableServer_Export TAO_ObjectId_Hash
 {
   // = TITLE
   //     Hashing class for Object Ids.

@@ -26,7 +26,7 @@
 
 class TAO_Operation_Table;
 
-class TAO_Export TAO_ServantBase
+class TAO_PortableServer_Export TAO_ServantBase
 {
   // = TITLE
   //     Base class for skeletons and servants.
@@ -122,7 +122,7 @@ protected:
   // Reference count for lock.
 };
 
-class TAO_Export TAO_RefCountServantBase : public virtual TAO_ServantBase
+class TAO_PortableServer_Export TAO_RefCountServantBase : public virtual TAO_ServantBase
 {
   // = TITLE
   //     Reference counting mix-in class.
@@ -182,7 +182,7 @@ private:
   // Reference counter.
 };
 
-class TAO_Export TAO_ServantBase_var
+class TAO_PortableServer_Export TAO_ServantBase_var
 {
   // = TITLE
   //     Auto pointer for reference counting servants.
@@ -221,14 +221,14 @@ private:
   TAO_ServantBase *ptr_;
 };
 
-class TAO_Export TAO_Servant_Hash
+class TAO_PortableServer_Export TAO_Servant_Hash
 {
 public:
   u_long operator () (PortableServer::Servant servant) const;
   // Returns hash value.
 };
 
-class TAO_Export TAO_Local_ServantBase : public virtual TAO_ServantBase
+class TAO_PortableServer_Export TAO_Local_ServantBase : public virtual TAO_ServantBase
 {
   // = TITLE
   //     Base class for local servants.
@@ -254,7 +254,7 @@ protected:
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
+class TAO_PortableServer_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
 {
   // = TITLE
   //   Base class for DSI.

@@ -1,3 +1,43 @@
+Wed Aug 30 16:16:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO.dsw:
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	  Add new project files for the PortableServer library.
+	  Update the list of files in the TAO library
+
+	* tao/PortableServer/portableserver_export.h:
+	  Add file to define the export macros for the PortableServer
+	  library.
+
+	* tao/PortableServer/Active_Object_Map.h:
+	* tao/PortableServer/Collocated_Object.h:
+	* tao/PortableServer/DomainS.h:
+	* tao/PortableServer/FT_CORBAS.h:
+	* tao/PortableServer/Forwarding_Servant.h:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/Key_Adapters.h:
+	* tao/PortableServer/MessagingS.h:
+	* tao/PortableServer/ORB_Manager.h:
+	* tao/PortableServer/Object_Adapter.h:
+	* tao/PortableServer/Operation_Table.h:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POAManager.h:
+	* tao/PortableServer/POA_CORBA.h:
+	* tao/PortableServer/PortableServer.h:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/Object_Adapter.cpp:
+	  Add the infamous export macros.
+
+	* tao/PortableServer/DomainS.cpp:
+	  Fix use of ACE_NESTED_CLASS macro
+
 Wed Aug 30 13:56:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/DomainS_T.h:
