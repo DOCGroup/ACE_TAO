@@ -3418,16 +3418,23 @@ ACE_OS::connect (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
 }
 
+#if !defined (VXWORKS)
+ACE_INLINE struct hostent *
+ACE_OS::gethostbyname (const char *name)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyname");
+#if defined (ACE_HAS_NONCONST_GETBY)
+  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
+#else
+  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
+#endif /* ACE_HAS_NONCONST_GETBY */
+}
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
   // ACE_TRACE ("ACE_OS::gethostbyaddr");
-#if defined (VXWORKS)
-  ACE_UNUSED_ARG (addr);
-  ACE_UNUSED_ARG (length);
-  ACE_UNUSED_ARG (type);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_NONCONST_GETBY)
+#if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type),
                        struct hostent *, 0);
 #else
@@ -3435,6 +3442,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
                        struct hostent *, 0);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
+#endif /* ! VXWORKS */
 
 // It would be really cool to add another version of select that would
 // function like the one we're defending against below!
