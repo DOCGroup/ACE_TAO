@@ -239,7 +239,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // Generate the formal argument fields which are passed to the RequestInfo object
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS);
-  //  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
   visitor = tao_cg->make_visitor (&ctx);
 
   if ((!visitor) || (node->accept (visitor) == -1))
@@ -327,6 +326,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           << "ri.result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_SS);
+      // just so that primitive types are taken care of.
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT); 
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (bt->accept (visitor) == -1))
         {
