@@ -1,75 +1,80 @@
+Mon May 25 09:55:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Sequence.cpp (TAO_Unbounded_Sequence ctor): initialize base
+          class before data members.
+
 Sun May 24 22:04:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	  Fixed some mistakes in previous change.
+        * TAO_IDL/be/be_visitor_args.cpp:
+          Fixed some mistakes in previous change.
 
 Sat May 23 21:50:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	* tao/CDR.cpp: 
-	  The no copy marshalling of octet sequences can only be applied
-	  if the octet sequence owns its memory through a message block.
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+          The no copy marshalling of octet sequences can only be applied
+          if the octet sequence owns its memory through a message block.
 
-	* tao/Connect.cpp: 
-	  The input stream is allocated from the heap to permit the no
-	  copy optimizations to work.
+        * tao/Connect.cpp:
+          The input stream is allocated from the heap to permit the no
+          copy optimizations to work.
 
-	* tao/GIOP.cpp: 
-	  Fixed some unitialized memory read problems.
+        * tao/GIOP.cpp:
+          Fixed some unitialized memory read problems.
 
-	* tao/Request.cpp: 
-	  The result was not released.
+        * tao/Request.cpp:
+          The result was not released.
 
-	* tao/Sequence.h: 
-	* tao/Sequence.cpp: 
-	  Added constructor based on a Message_Block.
-	  Fixed memory deallocation in _allocate_buffer() for octet
-	  sequences.
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+          Added constructor based on a Message_Block.
+          Fixed memory deallocation in _allocate_buffer() for octet
+          sequences.
 
-	* tao/Typecode.cpp: 
-	  The buffer was not released every time.
+        * tao/Typecode.cpp:
+          The buffer was not released every time.
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	  The return value must be allocated by the upcall and is held in
-	  a _var variable to guarantee automatic release.
+        * TAO_IDL/be/be_visitor_args.cpp:
+          The return value must be allocated by the upcall and is held in
+          a _var variable to guarantee automatic release.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
-	  The result is released by the request, no need to release it in
-	  the invocation.
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp:
+          The result is released by the request, no need to release it in
+          the invocation.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	  Initialize the octet sequence using a Message Block to exploit
-	  the no copy marshalling.
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+          Initialize the octet sequence using a Message Block to exploit
+          the no copy marshalling.
 
-	* tao/Any.cpp: 
-	  The cdr buffer must be released always.
+        * tao/Any.cpp:
+          The cdr buffer must be released always.
 
 Fri May 22 16:39:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext): Use
-	  the lock returned by server_factory ()-> create_servant_lock ()
-	  instead of hacking its own.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext): Use
+          the lock returned by server_factory ()-> create_servant_lock ()
+          instead of hacking its own.
 
-	* tao/default_server.cpp (create_servant_lock): Changed to use
-	  ACE_Recursive_Thread_Mutex to avoid further trouble.
+        * tao/default_server.cpp (create_servant_lock): Changed to use
+          ACE_Recursive_Thread_Mutex to avoid further trouble.
 
 Fri May 22 12:29:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect.cpp (handle_message): Simplified code in this file.
+        * tao/Connect.cpp (handle_message): Simplified code in this file.
 
-	* tao/GIOP.cpp (writev_n): Changed TAO to use the new
- 	  ACE_IO_Vector class.
+        * tao/GIOP.cpp (writev_n): Changed TAO to use the new
+          ACE_IO_Vector class.
 
-	* poaC.* (PortableServer): Updated the old exceptions in the POA
- 	  generated code.
+        * poaC.* (PortableServer): Updated the old exceptions in the POA
+          generated code.
 
-	* tao/Server_Request.h (IIOP_ServerRequest): Merged the
- 	  ServerRequest and the GIOP_RequestHeader class into one
- 	  class. When these classes were separate, there were too many
- 	  questions about ownership of memory.  The separation also caused
- 	  extra memory allocations and tight coupling between the two
- 	  classes.
+        * tao/Server_Request.h (IIOP_ServerRequest): Merged the
+          ServerRequest and the GIOP_RequestHeader class into one
+          class. When these classes were separate, there were too many
+          questions about ownership of memory.  The separation also caused
+          extra memory allocations and tight coupling between the two
+          classes.
 
 Fri May 22 10:24:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
