@@ -253,10 +253,6 @@ private:
   // table slot.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Hash_Map_Manager.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Hash_Map_Manager.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
