@@ -6,6 +6,8 @@ Sun May 11 17:36:59 1997    <harrison@samba.cs.wustl.edu>
 
 Sun May 11 14:40:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/config-osf1-4.0.h: put back ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
+
 	* ace/ACE_Process.cpp (ACE_Process_Options ctor): reordered
 	  initializers to match declaration order.
 
