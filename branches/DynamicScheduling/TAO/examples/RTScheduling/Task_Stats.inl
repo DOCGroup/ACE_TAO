@@ -1,7 +1,7 @@
 //$Id$
 
 ACE_INLINE int
-Task_Stats::sample (ACE_UINT64 thr_run_time, int thr_count)
+Task_Stats::sample (ACE_UINT32 thr_run_time, int thr_count)
 {
   if (this->samples_count_ >= this->max_samples_)
   {
