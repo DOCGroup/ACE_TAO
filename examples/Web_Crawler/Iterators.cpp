@@ -27,7 +27,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 {
   size_t len = BUFSIZ;
   const char *buf;
-  ACE_CString buffer; 
+  ACE_CString buffer;
   int href_index = 0;
 
   for (buf = this->url_.stream ().recv (len);
@@ -46,7 +46,8 @@ HTML_Body_Iterator::next (ACE_CString &url)
       if ( href_index > 0)
         {
           // Get back to buffer start location.
-          this->url_.stream ().seek (-1 * len, SEEK_CUR);
+          this->url_.stream ().seek (-1 * ACE_static_cast (off_t, len),
+                                     SEEK_CUR);
 
           int start_index = buffer.find ('\"',
                                          href_index);
@@ -64,7 +65,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
           ssize_t url_len = end_index - (start_index + 1);
 
-          ACE_CString temp = buffer.substring (start_index + 1, 
+          ACE_CString temp = buffer.substring (start_index + 1,
                                                url_len);
           url.set (temp.c_str (), len, 1);
 
@@ -134,7 +135,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
               return 1;
             }
         }
-     
+
     }
   return 0;
 }

@@ -1,3 +1,11 @@
+Fri Apr 23 22:26:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Web_Crawler/Iterators.cpp (next):
+
+	  Explicitly cast offset value from size_t to off_t to address
+	  "change of sign in integer conversion" warning exhibited by
+	  MSVC++ 7.1.
+
 Fri Apr 23 22:13:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Token_Collection.h:
