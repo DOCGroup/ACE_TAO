@@ -1293,14 +1293,14 @@ Wed Aug  4 23:03:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (Credentials):
 
 	  Older versions of OpenSSL didn't define the OpenSSL macro.  Use
-	  CRYPTO_free in OPENSSL_free isn't defined.
+	  CRYPTO_free if OPENSSL_free isn't defined.
 
 Wed Aug  4 22:13:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp
 	  (register_acquirer_factory):
 
-	  Release the String_var containing acquisition method Id  once
+	  Release the String_var containing the acquisition method Id once
 	  the factory is successfully registered.  Memory management
 	  becomes the responsiblity of the CredentialsCurator.  Fixes a
 	  double deletion error.
