@@ -1,7 +1,8 @@
 // $Id$
 
 #include "ciao/Container_Base.h"
-#include "SString.h"
+#include "ace/SString.h"
+#include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
 char *ior_file_name_ = 0;
@@ -37,7 +38,24 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int breakdown (const char *source,
+int
+write_IOR(const char* ior)
+{
+  FILE* ior_output_file_ =
+    ACE_OS::fopen (ior_file_name_, "w");
+
+  if (ior_output_file_)
+    {
+      ACE_OS::fprintf (ior_output_file_,
+                       "%s",
+                       ior);
+      ACE_OS::fclose (ior_output_file_);
+    }
+
+  return 0;
+}
+
+int breakdown (char *source,
                int len,
                char *list[])
 {
@@ -55,14 +73,16 @@ int breakdown (const char *source,
 }
 
 void
-install_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+install_homes (CIAO::Session_Container &container,
+               CORBA::ORB_ptr orb
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  FILE* config_file_ =
+  FILE* config_file =
     ACE_OS::fopen (component_list_, "r");
 
-  if (config_file_)
+  if (config_file)
     {
-      ACE_Read_Buffer ior_buffer (config_file_);
+      ACE_Read_Buffer ior_buffer (config_file);
       char *data = 0;
       while ((data = ior_buffer.read ('\n')) != 0)
         {
@@ -109,24 +129,7 @@ install_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
         }
     }
-  ACE_OS::fclose (component_list_);
-}
-
-int
-write_IOR(const char* ior)
-{
-  FILE* ior_output_file_ =
-    ACE_OS::fopen (ior_file_name_, "w");
-
-  if (ior_output_file_)
-    {
-      ACE_OS::fprintf (ior_output_file_,
-                       "%s",
-                       ior);
-      ACE_OS::fclose (ior_output_file_);
-    }
-
-  return 0;
+  ACE_OS::fclose (config_file);
 }
 
 int
@@ -169,7 +172,7 @@ main (int argc, char *argv[])
 
       // install component
 
-      install_homes (container, ACE_ENV_ARG_PARAMETER);
+      install_homes (container, orb ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // End Deployment part
