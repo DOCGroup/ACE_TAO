@@ -231,12 +231,3 @@ Consumer_Input_Handler::~Consumer_Input_Handler (void)
   // No-op
 }
 
-int
-Consumer_Input_Handler::handle_close (ACE_HANDLE,
-									  ACE_Reactor_Mask close_mask)
-{
-	// the STDIN handler dies.
-	delete this;
-
-	return 0;
-}
