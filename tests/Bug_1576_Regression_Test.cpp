@@ -31,9 +31,10 @@ run_main (int, ACE_TCHAR *[])
 
   if(result == -1)
   {
+    // Use dll.error() is you want to get the error text, but we don't this in
+    // this test because else the error is shown on the scoreboard
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Load failed, as expected (%s)\n"),
-                dll.error ()));
+                ACE_TEXT ("Load failed, as expected\n")));
   }
   else
   {
@@ -48,9 +49,10 @@ run_main (int, ACE_TCHAR *[])
 
   if(symbol == 0)
   {
+    // Use dll.error() is you want to get the error text, but we don't this in
+    // this test because else the error is shown on the scoreboard
     ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("Symbol lookup failed, as expected (%s)\n"),
-               dll.error ()));
+               ACE_TEXT ("Symbol lookup failed, as expected\n")));
   }
   else
   {
