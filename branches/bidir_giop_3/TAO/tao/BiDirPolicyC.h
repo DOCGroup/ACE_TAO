@@ -23,13 +23,12 @@
 #define _TAO_IDL_BIDIRPOLICYC_H_
 
 #include "ace/pre.h"
-#include "tao/corba.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "tao/PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -69,7 +68,7 @@ TAO_NAMESPACE  BiDirPolicy
 
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -80,17 +79,17 @@ TAO_NAMESPACE  BiDirPolicy
   {
   public:
     BidirectionalPolicy_var (void); // default constructor
-    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {} 
+    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {}
     BidirectionalPolicy_var (const BidirectionalPolicy_var &); // copy constructor
     ~BidirectionalPolicy_var (void); // destructor
-    
+
     BidirectionalPolicy_var &operator= (BidirectionalPolicy_ptr);
     BidirectionalPolicy_var &operator= (const BidirectionalPolicy_var &);
     BidirectionalPolicy_ptr operator-> (void) const;
-    
+
     operator const BidirectionalPolicy_ptr &() const;
     operator BidirectionalPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     BidirectionalPolicy_ptr in (void) const;
     BidirectionalPolicy_ptr &inout (void);
     BidirectionalPolicy_ptr &out (void);
@@ -123,7 +122,7 @@ TAO_NAMESPACE  BiDirPolicy
     operator BidirectionalPolicy_ptr &();
     BidirectionalPolicy_ptr &ptr (void);
     BidirectionalPolicy_ptr operator-> (void);
-    
+
   private:
     BidirectionalPolicy_ptr &ptr_;
   };
@@ -147,12 +146,12 @@ class TAO_Export BidirectionalPolicy: public virtual CORBA::Policy
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
     static BidirectionalPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static BidirectionalPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static BidirectionalPolicy_ptr _nil (void)
@@ -161,7 +160,7 @@ class TAO_Export BidirectionalPolicy: public virtual CORBA::Policy
       }
 
     virtual BiDirPolicy::BidirectionalPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -169,12 +168,12 @@ class TAO_Export BidirectionalPolicy: public virtual CORBA::Policy
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     BidirectionalPolicy ();
-    
+
     virtual ~BidirectionalPolicy (void);
   private:
     BidirectionalPolicy (const BidirectionalPolicy &);

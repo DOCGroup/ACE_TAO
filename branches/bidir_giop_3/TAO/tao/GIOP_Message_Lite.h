@@ -181,7 +181,11 @@ private:
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
       TAO_OutputCDR & /*cdr*/,
-      TAO_Pluggable_Reply_Params & /*params*/) { return 0;};
+      TAO_Pluggable_Reply_Params & /*params*/);
+
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  virtual int is_ready_for_bidirectional (void);
 
 private:
 

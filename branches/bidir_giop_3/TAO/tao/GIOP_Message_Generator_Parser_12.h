@@ -88,6 +88,10 @@ public:
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
 
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  virtual int is_ready_for_bidirectional (void);
+
 private:
 
   /// Marshall the TargetSpecification

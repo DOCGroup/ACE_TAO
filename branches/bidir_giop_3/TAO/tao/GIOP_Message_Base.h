@@ -184,6 +184,10 @@ private:
       TAO_OutputCDR & /*cdr*/,
       TAO_Pluggable_Reply_Params & /*params*/);
 
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  virtual int is_ready_for_bidirectional (void);
+
 private:
 
   /// The message state. It represents the status of the messages that
