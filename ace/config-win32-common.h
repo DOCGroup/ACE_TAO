@@ -313,9 +313,11 @@ typedef unsigned __int64 ACE_UINT64;
 // must have _MT defined to include multithreading
 // features from win32 headers
 # if !defined(_MT) && !defined (ACE_HAS_WINCE)
-// *** DO NOT *** DO NOT *** defeat this error message
-// by defining _MT yourself.  RTFM and see who set _MT.
-#  error You must link ACE against multi-threaded libraries.
+// *** DO NOT *** defeat this error message by defining _MT yourself.  
+// On MSVC, this is changed by selecting the Multithreaded 
+// DLL or Debug Multithreaded DLL in the Project Settings
+// under C++ Code Generation.
+#  error You must link ACE against multi-threaded libraries (check your project settings)
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
