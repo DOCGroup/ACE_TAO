@@ -145,7 +145,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   if (bound)
     {
       ACE_OS::sprintf (boundbuf,
-                       "_%u",
+                       "_%ld",
                        bound);
     }
 
