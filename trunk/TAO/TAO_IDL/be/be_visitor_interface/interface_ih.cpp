@@ -77,7 +77,16 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       *os << node->full_skel_name ();
     }
 
-  *os << ", public virtual PortableServer::RefCountServantBase";
+  *os << ", public virtual ";
+  
+  if (node->is_local ())
+    {
+      *os << "TAO_Local_RefCounted_Object";
+    }
+  else
+    {
+      *os << "PortableServer::RefCountServantBase";
+    }
 
   *os << be_nl
       << "{" << be_nl
@@ -86,7 +95,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       <<  be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
 
-  if (be_global->gen_copy_ctor ())
+  if (be_global->gen_copy_ctor () && !node->is_local ())
     {
       *os << "//Copy Constructor"<<be_nl
           << be_global->impl_class_prefix () << namebuf
