@@ -1,3 +1,10 @@
+Fri Mar  4 10:32:17 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Naming_Context.cpp: Changed ACE_OS::strcat() to 
+	  ACE_OS::strcpy() to fix a bug.  Thanks to David Hauck
+ 	  <davidh@netacquire.com> for reporting this bug and providing a
+ 	  fix.
+
 Fri Mar  4 15:18:50 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* examples/RMCast/Send_Msg/Receiver.cpp:
