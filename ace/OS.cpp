@@ -1461,7 +1461,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
-    ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, (ACE_THR_C_FUNC)ace_thread_adapter), -1);
+    ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, (ACE_THR_C_FUNC) ace_thread_adapter), -1);
   else
     thread_args = thread_adapter;
 
