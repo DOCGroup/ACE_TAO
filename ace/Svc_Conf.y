@@ -315,7 +315,7 @@ pathname
 // messages.
 
 void
-yyerror (const char *s)
+yyerror (const ACE_TCHAR *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (s);

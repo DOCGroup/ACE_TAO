@@ -312,11 +312,11 @@ typedef unsigned __int64 ACE_UINT64;
 
 // must have _MT defined to include multithreading
 // features from win32 headers
-# if !defined(_MT)
+# if !defined(_MT) && !defined (ACE_HAS_WINCE)
 // *** DO NOT *** DO NOT *** defeat this error message
 // by defining _MT yourself.  RTFM and see who set _MT.
 #  error You must link ACE against multi-threaded libraries.
-# endif /* _MT */
+# endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 // We are using STL's min and max (in algobase.h).  Therefore the

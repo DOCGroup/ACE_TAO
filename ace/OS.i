@@ -539,20 +539,24 @@ ACE_OS::chdir (const ACE_TCHAR *path)
 #   if defined (VXWORKS)
   ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
 
-#elif defined (ACE_PSOS_LACKS_PHILE)
+#    elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 
-#elif defined (ACE_PSOS)
+#    elif defined (ACE_PSOS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), ace_result_),
                      int, -1);
 
-#elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#    elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
 
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
-
+  
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
@@ -1151,6 +1155,10 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
 #elif defined (__BORLANDC__) || (__IBMCPP__)
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (dir);
+  ACE_UNUSED_ARG (pfx);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #else /* VXWORKS */
@@ -1287,7 +1295,7 @@ ACE_OS::abort (void)
   ::abort ();
 #else
   // @@ CE doesn't support abort?
-  ::exit (1);
+  exit (1);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -2196,23 +2204,30 @@ ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::ace_isspace (const char s)
+ACE_OS::ace_isspace (const ACE_TCHAR s)
 {
-#if !defined (ACE_HAS_WINCE)
-  return isspace (s);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_USES_WCHAR)
+  return iswspace (s);
+#else 
+  return isspace (s);
 #endif /* ACE_HAS_WINCE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS::ace_isspace (wchar_t c)
+ACE_OS::ace_isprint (const ACE_TCHAR s)
 {
-  return iswspace (c);
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_USES_WCHAR)
+  return iswprint (s);
+#else 
+  return isprint (s);
+#endif /* ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
 ACE_OS::sysconf (int name)
@@ -3836,7 +3851,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // any security attribute whatsoever.  However, since this
   // semaphore implementation only works within a process, there
   // shouldn't any security issue at all.
-  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, arg) == 0
+  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, (ACE_mutexattr_t *)arg) == 0
       && ACE_OS::event_init (&s->count_nonzero_, 1,
                              count > 0, type, name, arg, sa) == 0
       && ACE_OS::thread_mutex_lock (&s->lock_) == 0)
@@ -9302,30 +9317,28 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_TRACE ("ACE_OS::dlsym");
 
   // Get the correct OS type.
-#   if defined (ACE_HAS_CHARPTR_DL)
-typedef char * ACE_DL_SYM_TYPE;
-#   else
-typedef const char * ACE_DL_SYM_TYPE;
-#   endif /* ACE_HAS_CHARPTR_DL */
-
-  ACE_DL_SYM_TYPE symbolname = ACE_const_cast (ACE_DL_SYM_TYPE, sname);
+#if defined (ACE_HAS_WINCE) 
+  const wchar_t *symbolname = sname;
+#elif defined (ACE_HAS_WIN32) && defined (ACE_USES_WCHAR)
+  char *symbolname = ACE_TEXT_ALWAYS_CHAR (sname);
+#elif defined (ACE_HAS_CHARPTR_DL)
+  char *symbolname = ACE_const_cast (char *, sname);
+#else
+  const char *symbolname = sname;
+#endif /* ACE_HAS_CHARPTR_DL */
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
   int l = ACE_OS::strlen (symbolname) + 2;
   char *asm_symbolname = 0;
-  ACE_NEW_RETURN (asm_symbolname,
-                  char[l],
-                  0);
-  ACE_OS::strcpy (asm_symbolname,
-                  "_") ;
-  ACE_OS::strcpy (asm_symbolname + 1,
-                  symbolname) ;
+  ACE_NEW_RETURN (asm_symbolname, char[l], 0);
+  ACE_OS::strcpy (asm_symbolname, "_") ;
+  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
   void *ace_result;
-  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0,
-              ace_result);
+  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0, ace_result);
   delete [] asm_symbolname;
   return ace_result;
 #   elif defined (_M_UNIX)
@@ -9333,14 +9346,11 @@ typedef const char * ACE_DL_SYM_TYPE;
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
+
 # elif defined (ACE_WIN32)
-#   if !defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname),
-                        void *, 0);
-#   else  /* ACE_HAS_WINCE */
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname),
-                        void *, 0);
-#   endif /* ACE_HAS_WINCE */
+
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+
 # elif defined (__hpux)
 
   void *value;
@@ -9350,9 +9360,11 @@ typedef const char * ACE_DL_SYM_TYPE;
   return status == 0 ? value : NULL;
 
 # else
+  
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (symbolname);
   ACE_NOTSUP_RETURN (0);
+
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
@@ -12019,94 +12031,6 @@ ACE_Thread_Adapter::entry_point (void)
   return this->entry_point_;
 }
 
-#if defined (ACE_HAS_WINCE)
-
-//          **** Warning ****
-// You should not use the following functions under CE at all.
-// These functions are used to make Svc_Conf_l.cpp compile
-// under WinCE.  Most of them doesn't do what they are expected
-// to do under regular environments.
-//          **** Warning ****
-
-ACE_INLINE size_t
-fwrite (void *buf, size_t sz, size_t count, FILE *fp)
-{
-  return ACE_OS::fwrite (buf, sz, count, fp);
-}
-
-ACE_INLINE size_t
-fread (void *buf, size_t sz, size_t count, FILE *fp)
-{
-  return ACE_OS::fread (buf, sz, count, fp);
-}
-
-ACE_INLINE int
-getc (FILE *fp)
-{
-  char retv;
-  if (ACE_OS::fread (&retv, 1, 1, fp) != 1)
-    return EOF;
-  else
-    return retv;
-}
-
-ACE_INLINE int
-ferror (FILE *fp)
-{
-  // @@ Hey! What should I implement here?
-  return 0;
-}
-
-//          **** Warning ****
-// You should not use these functions under CE at all.
-// These functions are used to make Svc_Conf_l.cpp compile
-// under WinCE.  Most of them doesn't do what they are expected
-// to do under regular environments.
-//          **** Warning ****
-
-ACE_INLINE int
-isatty (int h)
-{
-  return ACE_OS::isatty (h);
-}
-
-int ACE_HANDLE
-fileno (FILE *fp)
-{
-  return fp;
-}
-
-ACE_INLINE int
-fflush (FILE *fp)
-{
-  return ACE_OS::fflush (fp);
-}
-
-//          **** Warning ****
-// You should not use these functions under CE at all.
-// These functions are used to make Svc_Conf_l.cpp compile
-// under WinCE.  Most of them doesn't do what they are expected
-// to do under regular environments.
-//          **** Warning ****
-
-ACE_INLINE int
-printf (const char *format, ...)
-{
-  ACE_UNUSED_ARG (format);
-  return 0;
-}
-
-ACE_INLINE int
-putchar (int c)
-{
-  ACE_UNUSED_ARG (c);
-  return c;
-}
-
-//          **** End CE Warning ****
-
-#endif /* ACE_HAS_WINCE */
-
 #if defined (ACE_PSOS)
 ACE_INLINE int
 isatty (int h)
@@ -12413,7 +12337,7 @@ ACE_OS::setuid (uid_t uid)
 # elif defined (ACE_WIN32) || defined(CHORUS)
   ACE_UNUSED_ARG (uid);
   ACE_NOTSUP_RETURN (-1);
-#else
+# else
   ACE_OSCALL_RETURN (::setuid (uid), int,  -1);
 # endif /* VXWORKS */
 }
@@ -12427,7 +12351,7 @@ ACE_OS::getuid (void)
   return 0;
 # elif defined (ACE_WIN32) || defined(CHORUS)
   ACE_NOTSUP_RETURN (ACE_static_cast (uid_t, -1));
-#else
+# else
   ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
 # endif /* VXWORKS */
 }
@@ -12443,7 +12367,7 @@ ACE_OS::setgid (gid_t gid)
 # elif defined (ACE_WIN32) || defined(CHORUS)
   ACE_UNUSED_ARG (gid);
   ACE_NOTSUP_RETURN (-1);
-#else
+# else
   ACE_OSCALL_RETURN (::setgid (gid), int,  -1);
 # endif /* VXWORKS */
 }
@@ -12457,7 +12381,7 @@ ACE_OS::getgid (void)
   return 0;
 # elif defined (ACE_WIN32) || defined(CHORUS)
   ACE_NOTSUP_RETURN (ACE_static_cast (gid_t, -1));
-#else
+# else
   ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
 # endif /* VXWORKS */
 }
@@ -12470,6 +12394,7 @@ ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
   return old_hook;
 }
 
+#if defined (ACE_WIN32)
 ACE_INLINE int
 ACE_OS::isatty (int handle)
 {
@@ -12485,15 +12410,17 @@ ACE_OS::isatty (int handle)
 # endif /* defined (ACE_LACKS_ISATTY) */
 }
 
-#if defined (ACE_WIN32)
-# if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::isatty (ACE_HANDLE handle)
 {
+#if defined (ACE_LACKS_ISATTY)
+  ACE_UNUSED_ARG (handle);
+  return 0;
+#else
   int fd = ::_open_osfhandle ((long) handle, 0);
   return ::_isatty (fd);
+#endif /* ACE_LACKS_ISATTY */
 }
-# endif /* !ACE_HAS_WINCE */
 
 ACE_INLINE void
 ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)

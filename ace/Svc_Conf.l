@@ -81,8 +81,10 @@ inactive	      { return token (ACE_INACTIVE); }
 		      }
 {white_space}+	      ; /* EMPTY */
 {newline}	      { yylineno++; }
-{other}		      { ACE_ERROR ((LM_ERROR, ACE_TEXT ("unknown character = (%d"), *yytext));
-                        if (isprint (*yytext))
+{other}		      { ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("unknown character = (%d"), 
+                                          *yytext));
+                        if (ACE_OS::ace_isprint (*yytext))
                           ACE_ERROR ((LM_ERROR, ACE_TEXT ("|%c"), *yytext));
                         ACE_ERROR ((LM_ERROR, ACE_TEXT (")\n")));
                       }

@@ -17,7 +17,7 @@
 // Need to define LD search path explicitly on CE because
 // CE doesn't have environment variables and we can't get
 // the information using getenv.
-#define ACE_DEFAULT_LD_SEARCH_PATH ".\\;\\windows"
+#define ACE_DEFAULT_LD_SEARCH_PATH ACE_TEXT (".\\;\\windows")
 
 // CE is not NT.
 #if defined (ACE_HAS_WINNT4)
@@ -29,15 +29,16 @@
 #define ACE_LACKS_ACE_OTHER
 
 // You must use MFC with ACE on CE.
-#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-# undef ACE_HAS_MFC
-#endif /* ACE_HAS_MFC */
-#define ACE_HAS_MFC 1
+//#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+//# undef ACE_HAS_MFC
+//#endif /* ACE_HAS_MFC */
+//#define ACE_HAS_MFC 1
 
-// So is UNICODE.
-#if !defined (ACE_HAS_WCHAR)
-# error Only Unicode ACE is supported on Windows CE
-#endif /* ACE_HAS_WCHAR */
+#define ACE_HAS_WCHAR
+
+#if !defined (ACE_USES_WCHAR)
+#define ACE_USES_WCHAR
+#endif /* ACE_USES_WCHAR */
 
 #define ACE_USES_WINCE_SEMA_SIMULATION
 
@@ -50,12 +51,22 @@
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
+// FILE stuff isn't always defined in CE
+#ifndef _FILE_DEFINED
+typedef void FILE;
+#define _FILE_DEFINED
+#endif /* _FILE_DEFINED */
+
+// This was defined in previous versions of CE, but not 2.11
+#define EXCEPTION_ACCESS_VIOLATION STATUS_ACCESS_VIOLATION
+
 // We need to rename program entry name "main" with ace_ce_main here
 // so that we can call it from CE's bridge class.
 #define ACE_MAIN ace_ce_main
 #define ACE_MAIN_OBJECT_MANAGER
 
-// SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
+// SH3 cross-compiler can't handle inline functions correctly 
+// (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)
 #define ACE_LACKS_INLINE_FUNCTIONS
 #endif /* SH3 && _DEBUG */
@@ -150,10 +161,6 @@
 #  define BUFSIZ   1024
 #endif /* BUFSIZ */
 
-#if defined (UNDER_CE) && (UNDER_CE < 211)
-#define EOF  -1
-#endif /* UNDER_CE && UNDER_CE < 211 */
-
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 
@@ -174,16 +181,6 @@ typedef long off_t;
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
 #endif /* UNDER_CE && UNDER_CE > 201 */
 
-#if defined (UNDER_CE) && (UNDER_CE < 211)
-#define  FILE  void             // Try to map FILE* to HANDLE
-#define SEEK_SET FILE_BEGIN
-#define SEEK_CUR FILE_CURRENT
-#define SEEK_END FILE_END
-#define stderr 0
-#define stdin 0
-#define stdout 0
-#endif /* UNDER_CE && UNDER_CE < 211 */
-
 #if defined (UNDER_CE) && (UNDER_CE >= 211)
 #define ACE_HAS_WINCE_BROKEN_ERRNO
 #define _MAX_FNAME 255
@@ -194,11 +191,10 @@ typedef long off_t;
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_DEFAULT_LOG_STREAM 0
 
-// isprint macro is missing.
-inline int isprint (const char c)
-{
-  return (c < 0x20 || c > 0x7e ? 0 : 1);
-}
+// If you don't use MFC, this doesn't get defined
+#if !defined (ACE_HAS_MFC)
+inline void *operator new (unsigned int, void *p) { return p; }
+#endif /* ACE_HAS_MFC */
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WINCE_H */

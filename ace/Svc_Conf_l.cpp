@@ -912,7 +912,7 @@ case 24:
 ACE_YY_RULE_SETUP
 #line 84 "Svc_Conf.l"
 { ACE_ERROR ((LM_ERROR, ACE_TEXT ("unknown character = (%d"), *ace_yytext));
-                        if (isprint (*ace_yytext))
+                        if (ACE_OS::ace_isprint (*ace_yytext))
                           ACE_ERROR ((LM_ERROR, ACE_TEXT ("|%c"), *ace_yytext));
                         ACE_ERROR ((LM_ERROR, ACE_TEXT (")\n")));
                       }

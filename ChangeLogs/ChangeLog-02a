@@ -1,3 +1,131 @@
+Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        These changes bring the Windows CE port up to date.  It currently
+        supports Windows CE 2.11 on the H/PC Pro.  I am looking into the 2.11
+        P/PC port, but there are other problems with it still.  Hopefully
+        the WinCE 3.0 SDK will be more mature.
+
+        * ace/ace_dll_ce.dsp: (added)
+        * ace/ace_ce_dll.dsp: (removed)
+        * ace/ace_ce.dsw:
+          
+          Created a new dsp file from scratch from CE to see how the
+          toolkit sets up the projects.  Removed the old one.
+
+        * ace/ACE.cpp:
+          
+          format_hexdump (): Changed usage of isprint to ACE_OS::ace_isprint.
+
+          get_ip_interfaces (): Changed use of deprecated ACE_TEXT_STRING to 
+          ACE_TString.  Also added an ACE_TEXT_CHAR_TO_TCHAR to a use
+          of the ACE_INET_Addr constructor.
+
+        * ace/ARGV.cpp:
+
+          create_buf_from_queue (): We were not adjusting the size of a 
+          ACE_TCHAR buffer by sizeof ACE_TCHAR when we did a memcopy.
+          Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>
+          for reporting this.
+
+        * ace/Memory_Pool.cpp: 
+
+          seh_selector (): Changed use of LPEXCEPTION_POINTERS to 
+          EXCEPTION_POINTERS * since it seems like that definition is
+          missing in some WinCE configs.
+
+        * ace/ace_wchar.h:
+
+          Added deprecated definition of ACE_TEXT_STRING.
+
+          convert (): Changed the conversions from CharToOem to 
+          MultiByteToWideChar, since it is more widely supported in Win32.
+          Also removed the loading of user32.lib since it was only needed
+          for CharToOem.
+
+        * ace/config-win32-common.h:
+
+          Changed the _MT check so it doesn't do anything on CE.  Some 
+          CE targets do not have the Multithreaded DLL generation option.
+
+        * ace/config-WinCE.h:
+          
+          Changed ACE_DEFAULT_LD_SEARCH_PATH to use ACE_TEXT.
+
+          Added a define for ACE_HAS_WCHAR and a check to always define
+          ACE_USES_WCHAR.
+
+          Commented out the ACE_HAS_MFC check.
+
+          Defined FILE, since it seems to be missing from CE 2.11 H/PC Pro.
+
+          Added a definition for EXCEPTION_ACCESS_VIOLATION that was in
+          older SDK's.
+
+          Removed some UNDER_CE < 2.11 defines.  < 2.11 CE will not be
+          supported anymore.  
+
+          Removed definition of is_print, since it was moved into ACE_OS.
+
+          Added a definition for the operator placement new, which is 
+          missing when MFC isn't used.
+
+        * ace/OS.h:
+
+          Enabled is_atty for Windows CE.  Added ace_isprint and made
+          ace_isspace an ACE_TCHAR method.
+
+        * ace/OS.i:
+
+          chdir (): NOTSUP on CE 2.11
+
+          tempnam (): Also NOTSUP on CE 2.11
+
+          abort (): changed ::exit to exit to get it to compile.
+
+          ace_isspace (): Changed to use ACE_TCHAR, but also made it 
+          NOTSUP on CE 2.11.
+
+          ace_isprint (): Added, but NOTSUP on CE 2.11.
+
+          sema_init (): Needed to cast an void *arg to ACE_mutexattr_t.  
+
+          dlsym (): Changed the way ACE declares symbolname so it uses
+          the right one on Win32 (WinNT always uses char *, CE always uses
+          wchar_t *).  The function still takes in ACE_TCHAR * though.  
+          Thanks to "Jeff Greif" <jmg@trivida.com> for reporting this.
+
+          Removed a few global function definitions that were just for
+          CE (like fwrite, fread, getc, etc.).  These are either supported
+          in newer CE's or is disabled in the ACE_OS methods.  
+
+          is_atty (): Enabled on CE.
+
+        * ace/OS.cpp:
+
+          Enabled fopen on CE by using _wfopen (but not sure if this will
+          work correctly, since on other Win32 platforms we have a lot more
+          stuff.
+
+          Enabled several printf methods on CE.
+
+          open (): Removed the use of FILE_SHARE_DELETE on CE.
+
+        * ace/Service_Config.i:
+
+          initialize (): Added an ACE_TEXT_CHAR_TO_TCHAR and replaced
+          an ACE_WIDE_STRING with it also.
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+
+          ace_yyerror (): Takes an ACE_TCHAR * instead of char * now.
+
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf_l.cpp:
+
+          Changed to use ACE_OS::isatty () and ACE_OS::ace_isprint.
+
 Thu Apr 27 11:49:52 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i (memchr): Do not cast away constness when emulating

@@ -2817,7 +2817,7 @@ ACE::format_hexdump (const char *buffer,
                                ACE_TEXT (" "));
               obuf++;
             }
-          textver[j] = isprint (c) ? c : '.';
+          textver[j] = ACE_OS::ace_isprint (c) ? c : '.';
         }
 
       textver[j] = 0;
@@ -2845,7 +2845,7 @@ ACE::format_hexdump (const char *buffer,
                                ACE_TEXT (" "));
               obuf++;
             }
-          textver[i] = isprint (c) ? c : '.';
+          textver[i] = ACE_OS::ace_isprint (c) ? c : '.';
         }
 
       for (i = size % 16; i < 16; i++)
@@ -4212,8 +4212,8 @@ ACE::get_ip_interfaces (size_t &count,
   for (int i = 0; i < n_interfaces; i++)
     {
       // a. construct name to access IPAddress for this interface
-      ACE_TEXT_STRING ifdevkey (SVCS_KEY1);
-      ACE_TEXT_STRING the_dev = dev_names.next ();
+      ACE_TString ifdevkey (SVCS_KEY1);
+      ACE_TString the_dev = dev_names.next ();
 
       // chop off the "\Device" and keep last name.
       if (the_dev.length() < 8)
@@ -4240,8 +4240,7 @@ ACE::get_ip_interfaces (size_t &count,
 
           // c. store in hostinfo object array and up the counter
           addrs[count++] =
-            ACE_INET_Addr ((u_short) 0,
-                           ACE_TEXT_CHAR_TO_TCHAR (buffer));
+            ACE_INET_Addr ((u_short) 0, buffer);
         }
     }
   return 0;
