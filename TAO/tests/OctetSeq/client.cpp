@@ -133,7 +133,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           CORBA::ULong crc_local =
-            ACE::crc32 (reinterpret_cast<const char*> (elements[idx].get_buffer ()),
+            ACE::crc32 (elements[idx].get_buffer (),
                         elements[idx].length ());
 
           if (crc_local != crc_remote)
