@@ -74,6 +74,15 @@ TAO_DIOP_Protocol_Factory::make_connector (void)
 int
 TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
+  // This switch is actually meant to distinguish between pluggable
+  // protocols which are able to clean up their endpoints and such
+  // that aren't. E.g. UIOP will leave files, it therefore returns 1, 
+  // IIOP cleans up its endpoint resources, which therefore return 0.
+  //
+  // DIOP does clean up endpoint resources, but as DIOP is only
+  // suitable for special environments, e.g. it supports only one-ways,
+  // it returns 1 for an other reason than resource clean-up.
+ 
   return 1;
 }
 
