@@ -1,3 +1,10 @@
+Fri May  3 06:57:13 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Proactor_Test.cpp:
+
+          Add a conditional to avoid building this test if threads are not
+          enabled.
+
 Fri May  3 06:47:23 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Dev_Poll_Reactor_Test.cpp:
