@@ -1,3 +1,8 @@
+Wed Feb 16 11:04:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_Asynch_Stream.cpp: Corrections to use ACE_Handler::Proxy
+	  instead of naked ACE_Handler pointers/references.
+
 Wed Feb 16 10:19:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_IO.h: Remove the extraneous ACE_Handler:: qualification
