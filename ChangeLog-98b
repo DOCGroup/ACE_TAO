@@ -1,3 +1,12 @@
+Tue Dec 01 10:49:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * tests/Win32clerk.conf
+          tests/Win32server.conf
+          tests/Win32tokens.conf: removed explicit path for netsvcs dll, as 
+	  this dll is now being moved to ACE_wrappers/bin after it is built
+	  and the explicit path was causing dlopen to fail rather than 
+	  searching the path on NT, which caused Time_Service_Test to fail.
+
 Tue Dec 01 10:07:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.5 released.
