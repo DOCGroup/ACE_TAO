@@ -1,3 +1,12 @@
+Fri Aug  8 23:23:30 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Dispatcher_Task.{h,cpp,i}: 
+	  Renamed init() method so that it does not hide the base class
+	  init method. 
+	
+	* Kokyu/Default_Dispatcher_Impl.cpp:
+	  Commented out some debug statements.
+
 Sat Aug  9 01:03:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Based_Pointer_Repository.cpp:
