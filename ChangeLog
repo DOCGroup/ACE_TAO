@@ -12,7 +12,7 @@ Tue Jul 22 14:59:59 UTC 2003 Don Hinton  <dhinton@dresystems.com>
           Rolled back Wed Jun 18 17:28:25 2003  Balachandran Natarajan
           <bala@dre.vanderbilt.edu> and added _GNU_SOURCE instead.  If
           _GNU_SOURCE is defined, these defaults plus a few others
-          including _XOPEN_SOURCE, get set by default--and defaults and
+          including _XOPEN_SOURCE, get set by default--and defaults can
           and do change over time.  This should also cleanup warnings on
           Debian builds.
 
