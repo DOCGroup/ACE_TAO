@@ -1,3 +1,8 @@
+Sun Nov  9 13:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-win32-borland.h:
+	  Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+
 Sun Nov  9 13:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Makefile.bor:
