@@ -1,3 +1,7 @@
+Tue Mar 28 12:13:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Containers_T.h: Fixed the mismatching filename in preamble.
+
 Tue Mar 28 12:06:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Array.h: Simply include "ace/Containers_T.h" would work.
