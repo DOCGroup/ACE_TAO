@@ -1,3 +1,31 @@
+Mon Oct 07 15:18:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+	* examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+	* examples/TypeCode_Creation/TypeCode_Creation.dsp:
+	* orbsvcs/IFR_Service/TAO_IFR_BE_DLL.dsp:
+	* orbsvcs/IFR_Service/tao_ifr.dsp:
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
+	* orbsvcs/orbsvcs/ETCL/ETCL.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+	* tao/Domain/TAO_Domain.dsp:
+	* tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+	* tao/IFR_Client/TAO_IFR_Client.dsp:
+	* tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+	* tao/TypeCodeFactory/TypeCodeFactory.dsp:
+	* tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+	* tests/MT_Timeout/MT_Timeout_Server.dsp: Disabled the generation
+	  of precompiled headers.  They were taking up too much disk space
+	  on the nightly build machines.  Thanks to Ossama for noticing
+	  this.
+
 Mon Oct  7 10:14:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/examples/Log/Basic/Makefile:
