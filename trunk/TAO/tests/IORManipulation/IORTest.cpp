@@ -30,6 +30,7 @@
 
 ACE_RCSID(IORManipluation, IORTest, "$Id$")
 
+int
 main (int argc, char **argv)
 {
 
