@@ -1,3 +1,34 @@
+Mon Dec  7 19:10:24 EST 1998  James CE Johnson <jcej@lads.com>
+
+        * docs/tutorials/
+        * docs/tutorials/001/001.dsp
+        * docs/tutorials/002/002.dsp
+        * docs/tutorials/003/003.dsp
+        * docs/tutorials/004/004.dsp
+        * docs/tutorials/005/005.dsp
+        * docs/tutorials/006/006.dsp
+        * docs/tutorials/007/007.dsp
+        * docs/tutorials/008/008.dsp
+        * docs/tutorials/008/008-server/008-server.dsp
+        * docs/tutorials/008/008-direct/008-direct.dsp
+        * docs/tutorials/008/008-broadcast/008-broadcast.dsp
+        * docs/tutorials/009/009-directed/009-directed.dsp
+        * docs/tutorials/009/009-server/009-server.dsp
+        * docs/tutorials/009/009-broadcast/009-broadcast.dsp
+        * docs/tutorials/010/010.dsp
+        * docs/tutorials/011/011.dsp
+        * docs/tutorials/012/012.dsp
+        * docs/tutorials/013/013.dsp
+        * docs/tutorials/014/014.dsp
+        * docs/tutorials/018/018.dsp
+        * docs/tutorials/015/015-client/015-client.dsp
+        * docs/tutorials/015/015-server/015-server.dsp
+        * docs/tutorials/016/016.dsp
+        * docs/tutorials/017/017.dsp
+        * docs/tutorials/tutorials.dsw
+        Contributed by:
+          Stefan Ericsson <Stefan.Ericsson@osd.uab.ericsson.se>
+
 Mon Dec 07 14:11:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/README: added entries for ACE_LACKS_IOSTREAMS_TOTALLY
