@@ -343,7 +343,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(ACE_ROOT)/ace/Signal.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -1463,7 +1463,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(ACE_ROOT)/ace/Signal.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
