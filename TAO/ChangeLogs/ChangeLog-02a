@@ -1,3 +1,10 @@
+Wed Feb 21 20:32:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
+
+          Updated to use PerlACE::Run_Test.  Also fixed the timeout 
+          problem we've been seeing on Win2000_DLL_Debug nightly build.
+
 Wed Feb 21 20:17:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Multiple/Multiple_Impl.cpp:
