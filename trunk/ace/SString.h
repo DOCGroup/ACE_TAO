@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SString.h
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_SSTRING_H)
@@ -47,7 +47,7 @@ public:
   // Default constructor.
 
   ACE_CString (const char *s, ACE_Allocator *alloc = 0, int release = 1);
-  // Constructor that copies <s> into dynamically allocated memory. 
+  // Constructor that copies <s> into dynamically allocated memory.
 
   ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0, int release = 1);
   // Constructor that copies <len> chars of <s> into dynamically
@@ -61,7 +61,7 @@ public:
   // Probable loss of data. Please use with care.
 
   ACE_CString (char c, ACE_Allocator *alloc = 0);
-  // Constructor that copies <c> into dynamically allocated memory. 
+  // Constructor that copies <c> into dynamically allocated memory.
 
   ~ACE_CString (void);
   // Deletes the memory...
@@ -126,11 +126,11 @@ public:
   int find (char c, int pos = 0) const;
   // Find <c> starting at pos.  Returns the index of the first
   // location that matches, else npos.
-  
+
   int rfind (char c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
-  
+
   int operator== (const ACE_CString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -163,7 +163,7 @@ private:
   // Represents the "NULL" string to simplify the internal logic.
 };
 
-ACE_Export ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+ACE_Export ACE_INLINE ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
 #if !defined (ACE_HAS_WINCE)
 ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
 #endif /* ! ACE_HAS_WINCE */
@@ -179,7 +179,7 @@ class ACE_Export ACE_SString
   //   need to use this class since the ACE ACE_Map_Manager requires
   //   an object that supports the operator== and operator!=.
   //   This class uses an ACE_Allocator to allocate memory
-  //   The user can make this a persistant class by providing an 
+  //   The user can make this a persistant class by providing an
   //   ACE_Allocator with a persistable memory pool
 {
 public:
@@ -190,7 +190,7 @@ public:
   // Default constructor.
 
   ACE_SString (const char *s, ACE_Allocator *alloc = 0);
-  // Constructor that copies <s> into dynamically allocated memory. 
+  // Constructor that copies <s> into dynamically allocated memory.
 
   ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
   // Constructor that copies <len> chars of <s> into dynamically
@@ -200,7 +200,7 @@ public:
   // Copy constructor.
 
   ACE_SString (char c, ACE_Allocator *alloc = 0);
-  // Constructor that copies <c> into dynamically allocated memory. 
+  // Constructor that copies <c> into dynamically allocated memory.
 
   ~ACE_SString (void);
   // Default dtor.
@@ -258,11 +258,11 @@ public:
   int find (char c, int pos = 0) const;
   // Find <c> starting at pos.  Returns the index of the first
   // location that matches, else npos.
-  
+
   int rfind (char c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
-  
+
   int operator== (const ACE_SString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -296,7 +296,7 @@ ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
 class ACE_Export ACE_WString
   // = TITLE
   //   A persistent wide string class.
-  // 
+  //
   // = DESCRIPTION
   //   This is *not* a general-purpose string class.  It is only
   //   intended for use with applications that understand how it
@@ -313,17 +313,17 @@ public:
   ACE_WString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
-  ACE_WString (const char *s, 
-	       ACE_Allocator *alloc = 0);
+  ACE_WString (const char *s,
+               ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s, 
-	       ACE_Allocator *alloc = 0);
+  ACE_WString (const ACE_USHORT16 *s,
+               ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s, 
-	       size_t len, 
-	       ACE_Allocator *alloc = 0);
+  ACE_WString (const ACE_USHORT16 *s,
+               size_t len,
+               ACE_Allocator *alloc = 0);
   // Constructor that copies <len> ACE_USHORT16's of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
@@ -335,7 +335,7 @@ public:
   // Copy constructor.
 
   ACE_WString (ACE_USHORT16 c, ACE_Allocator *alloc = 0);
-  // Constructor that copies <c> into dynamically allocated memory. 
+  // Constructor that copies <c> into dynamically allocated memory.
 
   ~ACE_WString (void);
   // Deletes the memory...
@@ -401,11 +401,11 @@ public:
   int find (ACE_USHORT16 c, int pos = 0) const;
   // Find <c> starting at pos.  Returns the index of the first
   // location that matches, else npos.
-  
+
   int rfind (ACE_USHORT16 c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
-  
+
   int operator== (const ACE_WString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -423,10 +423,10 @@ public:
 
   static size_t strlen (const ACE_USHORT16 *);
   // Computes the length of a "0" terminated ACE_USHORT16 *.
-  
+
   static const ACE_USHORT16 *strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2);
   // Traditional style strstr
-  
+
   void resize (size_t len);
   // This method is designed for high-performance. Please use with
   // care ;-) If the current size of the string is less than <len>,
@@ -444,7 +444,7 @@ private:
   // Pointer to data.
 };
 
-ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 #if !defined (ACE_HAS_WINCE)
 ACE_Export ostream &operator<< (ostream &, const ACE_WString &);
 #endif /* ! ACE_HAS_WINCE */
@@ -481,7 +481,7 @@ public:
   LPTSTR next (void);
   // Returns the next token.
 
-  enum { 
+  enum {
     MAX_DELIMITERS=16,
     MAX_PRESERVES=16
   };
@@ -495,7 +495,7 @@ protected:
   // If <start> is a start preserve designator, returns 1 and sets
   // <stop> to the stop designator.  Returns 0 if <start> is not a
   // preserve designator.
- 
+
 private:
   LPTSTR buffer_;
   int index_;
@@ -522,7 +522,7 @@ private:
   };
 
   Preserve_Entry preserves_[MAX_PRESERVES];
-  // The application can specify MAX_PRESERVES preserve designators. 
+  // The application can specify MAX_PRESERVES preserve designators.
 
   int preserves_index_;
   // Pointer to the next free spot in preserves_.
