@@ -160,8 +160,7 @@ Thread_Pool::svc (void)
             }
           ACE_CATCHANY
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "Exception caught in Thread_Pool::svc ():");
+	      // Just forget the exception and continue	
             }
           ACE_ENDTRY;
         }
