@@ -70,6 +70,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_11.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_12.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_Impl.obj \
+	$(OBJDIR)\GIOP_Message_Handler.obj \
 	$(OBJDIR)\GIOP_Message_Headers.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
