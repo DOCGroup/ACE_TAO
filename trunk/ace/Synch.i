@@ -858,7 +858,7 @@ ACE_INLINE int ACE_Null_Condition::remove (void)
 }
 
 ACE_INLINE int
-ACE_Null_Condition::wait (ACE_Time_Value *)
+ACE_Null_Condition::wait (const ACE_Time_Value *)
 {
   errno = ETIME;
   return -1;

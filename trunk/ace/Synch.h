@@ -730,7 +730,7 @@ public:
   int remove (void);
 
   /// Returns -1 with <errno> == <ETIME>.
-  int wait (ACE_Time_Value * = 0);
+  int wait (const ACE_Time_Value * = 0);
 
   /// Returns 0.
   int signal (void);
