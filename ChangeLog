@@ -1,3 +1,10 @@
+Fri Jan  2 13:00:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/APG/Sockets/sockets.mpc:
+
+          Prefixed the project name with the '*' operator to avoid project
+          name conflicts.
+
 Fri Jan  2 08:56:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Config/config.mpc:
