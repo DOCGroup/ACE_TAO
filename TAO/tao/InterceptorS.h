@@ -10,8 +10,7 @@
 #ifndef _TAO_IDL_INTERCEPTORS_H_
 #define _TAO_IDL_INTERCEPTORS_H_
 
-#include "InterceptorC.h"
-
+#include "tao/InterceptorC.h"
 #include "tao/Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -53,11 +52,9 @@ TAO_NAMESPACE  POA_PortableInterceptor
     virtual const char* _interface_repository_id (void) const;
 
     virtual char * myname (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
 
   };
@@ -85,11 +82,9 @@ TAO_NAMESPACE  POA_PortableInterceptor
       );
 
         virtual char * myname (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
   private:
@@ -129,60 +124,46 @@ TAO_NAMESPACE  POA_PortableInterceptor
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::ULong get_request_id (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean response_expected (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual IOP::ServiceContextList * get_service_contexts (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        const IOP::ServiceContextList & sc,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Object_ptr get_object (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual char * get_operation (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::NVList_ptr get_arguments (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::NVList_ptr args,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
 
   };
@@ -210,60 +191,46 @@ TAO_NAMESPACE  POA_PortableInterceptor
       );
 
         virtual CORBA::ULong get_request_id (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual CORBA::Boolean response_expected (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual IOP::ServiceContextList * get_service_contexts (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        const IOP::ServiceContextList & sc,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual CORBA::Object_ptr get_object (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual char * get_operation (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual CORBA::NVList_ptr get_arguments (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::NVList_ptr args,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
   private:
@@ -303,11 +270,9 @@ TAO_NAMESPACE  POA_PortableInterceptor
     virtual const char* _interface_repository_id (void) const;
 
     virtual char * name (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
 
   };
@@ -335,11 +300,9 @@ TAO_NAMESPACE  POA_PortableInterceptor
       );
 
         virtual char * name (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
   private:
@@ -380,27 +343,24 @@ TAO_NAMESPACE  POA_PortableInterceptor
 
     virtual void preinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void postinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void exception_occurred (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
 
   };
@@ -430,27 +390,24 @@ TAO_NAMESPACE  POA_PortableInterceptor
 
         virtual void preinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual void postinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual void exception_occurred (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
   private:
@@ -491,27 +448,24 @@ TAO_NAMESPACE  POA_PortableInterceptor
 
     virtual void preinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void postinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void exception_occurred (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
 
   };
@@ -541,27 +495,24 @@ TAO_NAMESPACE  POA_PortableInterceptor
 
         virtual void preinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual void postinvoke (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
     virtual void exception_occurred (
         PortableInterceptor::RequestInfo_ptr & ri,
-        PortableInterceptor::Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+        PortableInterceptor::Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
   private:

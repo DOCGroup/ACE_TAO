@@ -7,7 +7,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "InterceptorS.h"
+#include "tao/InterceptorS.h"
 
 // skeleton constructor
 POA_PortableInterceptor::Cookie::Cookie (void)
@@ -92,14 +92,11 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_Cookie::_non_exis
 
 
 char * POA_PortableInterceptor::_tao_direct_collocated_Cookie::myname  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->myname (
-
+      ACE_TRY_ENV
     );
 
 }
@@ -189,105 +186,85 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::_non
 
 
 CORBA::ULong POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_request_id  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->get_request_id (
-
+      ACE_TRY_ENV
     );
 
 }
 
 CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::response_expected  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->response_expected (
-
+      ACE_TRY_ENV
     );
 
 }
 
 IOP::ServiceContextList * POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_service_contexts  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->get_service_contexts (
-
+      ACE_TRY_ENV
     );
 
 }
 
 CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::set_service_contexts  (
-    const IOP::ServiceContextList & sc
+    const IOP::ServiceContextList & sc,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->set_service_contexts (
-      sc
+      sc,
+      ACE_TRY_ENV
     );
 
 }
 
 CORBA::Object_ptr POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_object  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->get_object (
-
+      ACE_TRY_ENV
     );
 
 }
 
 char * POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_operation  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->get_operation (
-
+      ACE_TRY_ENV
     );
 
 }
 
 CORBA::NVList_ptr POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_arguments  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->get_arguments (
-
+      ACE_TRY_ENV
     );
 
 }
 
 CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::set_arguments  (
-    CORBA::NVList_ptr args
+    CORBA::NVList_ptr args,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->set_arguments (
-      args
+      args,
+      ACE_TRY_ENV
     );
 
 }
@@ -377,14 +354,11 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_Interceptor::_non
 
 
 char * POA_PortableInterceptor::_tao_direct_collocated_Interceptor::name  (
-
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->servant_->name (
-
+      ACE_TRY_ENV
     );
 
 }
@@ -479,45 +453,42 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInte
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::preinvoke  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->preinvoke (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::postinvoke  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->postinvoke (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::exception_occurred  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->exception_occurred (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }
@@ -612,45 +583,42 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInte
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::preinvoke  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->preinvoke (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::postinvoke  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->postinvoke (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::exception_occurred  (
     PortableInterceptor::RequestInfo_ptr & ri,
-    PortableInterceptor::Cookies & ck
+    PortableInterceptor::Cookies & ck,
+    CORBA::Environment &ACE_TRY_ENV
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->servant_->exception_occurred (
       ri,
-      ck
+      ck,
+      ACE_TRY_ENV
     );
 
 }

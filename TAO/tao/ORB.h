@@ -388,16 +388,22 @@ public:
   PortableInterceptor::ClientRequestInterceptor_ptr _register_client_interceptor
   (PortableInterceptor::ClientRequestInterceptor_ptr ci,
    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Registerring the client-side request interceptor.  Unregister it with
+  // a null interceptor.
 
   PortableInterceptor::ServerRequestInterceptor_ptr _register_server_interceptor
   (PortableInterceptor::ServerRequestInterceptor_ptr ci,
    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Registerring the server-side request interceptor.  Unregister it with
+  // a null interceptor.
 
   PortableInterceptor::ClientRequestInterceptor_ptr _get_client_interceptor
     (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // accessor to the client-side interceptor.  You get a duplicate.
 
   PortableInterceptor::ServerRequestInterceptor_ptr _get_server_interceptor
     (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // accessor to the server-side interceptor.  You get a duplicate.
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 

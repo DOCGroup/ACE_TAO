@@ -156,6 +156,8 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # ifdef TAO_HAS_VALUETYPE
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
+    client_interceptor_ (),
+    server_interceptor_ (),
     use_omg_ior_format_ (1)
 {
 }
