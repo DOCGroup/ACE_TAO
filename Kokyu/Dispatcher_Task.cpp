@@ -9,6 +9,12 @@
 #include "Dispatcher_Task.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
+#endif /* ACE_HAS_DSUI */
+
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
 namespace
@@ -114,6 +120,8 @@ Dispatcher_Task::svc (void)
                       "EC (%P|%t) getq error in Dispatching Queue\n"));
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, 0, NULL);
+
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : next command got from queue at %u\n",tv.msec()));
 
@@ -129,14 +137,20 @@ Dispatcher_Task::svc (void)
       Dispatch_Command* command = qitem->command ();
 
       ACE_ASSERT(command != 0);
+
       //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
       //time to actually dispatch event
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, 0, NULL);
+
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
 
       int result = command->execute ();
+
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
       //Measure time to actually dispatch event
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, 0, NULL);
+
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
 
@@ -191,8 +205,11 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
     {
       //defer until last release time + period
       this->deferrer_.dispatch(qitem);
+
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, 0, NULL);
+
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));
     }
