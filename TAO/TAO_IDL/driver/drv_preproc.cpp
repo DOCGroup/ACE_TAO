@@ -581,7 +581,7 @@ DRV_pre_proc (const char *myfile)
 {
   const char* tmpdir = idl_global->temp_dir ();
   static const char temp_file_extension[] = ".cpp";
-  
+
   // If ACE_LACKS_MKSTEMP is defined, we use ACE's uuid generator
   // to create a unique id to append to tao_idl*_template to get
   // unique temporary file names.
@@ -591,10 +591,10 @@ DRV_pre_proc (const char *myfile)
 
   static const char tao_idlf_template[] = "tao-idlf_";
   static const char tao_idli_template[] = "tao-idli_";
-  
+
   // The generated string format has 32 characters and 4 dashes.
   uuid_len = 36;
-  
+
 #else
 
   static const char tao_idlf_template[] = "tao-idlf_XXXXXX";
@@ -628,17 +628,19 @@ DRV_pre_proc (const char *myfile)
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  ftmpl.substr (0, 9).c_str ());
   ACE_OS::strcat (tmp_ifile, itmpl.substr (0, 9).c_str ());
-  
-  ACE_Utils::UUID* uuid = 
+
+  ACE_Utils::UUID* uuid =
     ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
-    
+
   const char *suffix = uuid->to_string ()->c_str ();
-    
+
   ACE_OS::strcat (tmp_file, suffix);
   ACE_OS::strcat (tmp_ifile, suffix);
-  
+  ACE_OS::strcat (tmp_file,  temp_file_extension);
+  ACE_OS::strcat (tmp_ifile, temp_file_extension);
+
   delete uuid;
-  
+
   char * t_file  = tmp_file;
   char * t_ifile = tmp_ifile;
 
@@ -647,7 +649,7 @@ DRV_pre_proc (const char *myfile)
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
-  
+
   int tf_fd = ACE_OS::mkstemp (tmp_file);
   int ti_fd = ACE_OS::mkstemp (tmp_ifile);
 
@@ -745,7 +747,7 @@ DRV_pre_proc (const char *myfile)
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
-                         
+
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
