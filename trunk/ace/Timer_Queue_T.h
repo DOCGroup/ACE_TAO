@@ -6,9 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmid <schmidt@cs.wustl.edu>
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu> and
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -335,7 +335,7 @@ public:
   /* virtual */ int expire (void);
 
   /**
-   * Returns the current time of day.  This allows different
+   * Returns the current time of day.  This method allows different
    * implementations of the timer queue to use special high resolution
    * timers.
    */
