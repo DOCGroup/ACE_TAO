@@ -153,7 +153,7 @@ synchronous_signal_handler (void *)
   return 0;
 }
 
-#if 1 // !defined (ACE_HAS_THREADS)
+#if 0 // !defined (ACE_HAS_THREADS)
 // This function arranges to handle signals asynchronously, i.e., if
 // the platform lacks threads.
 
@@ -230,23 +230,24 @@ worker_child (void *)
 static void
 run_test (ACE_THR_FUNC worker)
 {
-#if 0 // defined (ACE_HAS_THREADS)
-  // Block all signals.
-  ACE_Sig_Set sigset (1);
-  int result = ACE_OS::thr_sigsetmask (SIG_BLOCK,
-                                       sigset,
-                                       0);
-  ACE_ASSERT (result != -1);
-
-  result = ACE_Thread_Manager::instance ()->spawn 
-    (worker, 0, THR_DETACHED);
-  ACE_ASSERT (result != -1);
+#if 1 // defined (ACE_HAS_THREADS)
+  int result;
+  {
+    // Block all signals before spawning the threads.  Then, 
+    // unblock these signals as the scope is exited.
+    ACE_Sig_Guard guard;
+    
+    result = ACE_Thread_Manager::instance ()->spawn 
+      (worker, 0, THR_DETACHED);
+    ACE_ASSERT (result != -1);
   
 #if 0
-  result = ACE_Thread_Manager::instance ()->spawn 
-    (synchronous_signal_handler, 0, THR_DETACHED);
-  ACE_ASSERT (result != -1);
+    result = ACE_Thread_Manager::instance ()->spawn 
+      (synchronous_signal_handler, 0, THR_DETACHED);
+    ACE_ASSERT (result != -1);
+  }
 #else
+  }
   synchronous_signal_handler (0);
 #endif /* 0 */
 
@@ -280,6 +281,7 @@ worker_parent (void *)
 
   // Perform a <wait> until our child process has exited.
   
+#if 0
   while (shut_down == 0)
     {
       // Wait for a signal to arrive.
@@ -290,8 +292,9 @@ worker_parent (void *)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) got signal!\n")));
     }
-  // Note that <result> should == -1 because our signal handler should
-  // have "reaped" the SIGCHLD already.
+#else
+  pm.wait ();
+#endif
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) child done\n")));
