@@ -1,3 +1,17 @@
+Tue Jul 28 16:25:11 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+      * tao/Sequence_T.i : Reversed the order of 2 args in 
+        the base class call of one of the
+        constructors for TAO_Bounded_Sequence<T,MAX> and added a line to
+        this and to the default constructor for TAO_Bounded_Sequence<T,MAX>
+        to allocate the buffer to MAX size upon instantiation.
+
+      * tao_idl/be/be_visitor/gen_bounded_sequence_ch.cpp:
+      * tao_idl/be/be_visitor/gen_bounded_str_sequence_ch.cpp:
+      * tao_idl/be/be_visitor/gen_bounded_obj_sequence_ch.cpp:
+        Made the changes corresponding to the changes above in
+        Sequence_T.i.
+
 Tue Jul 28 16:22:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
