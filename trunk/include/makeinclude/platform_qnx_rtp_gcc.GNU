@@ -1,4 +1,5 @@
-# platform_qnx_rtp_gcc.GNU,v 1.11 2003/08/09 04:43:51 dhinton Exp
+# $Id$
+#
 # QNX/RTP hosted, using gcc-2.95.2
 
 nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
