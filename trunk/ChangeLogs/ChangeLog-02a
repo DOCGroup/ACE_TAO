@@ -1,3 +1,9 @@
+Thu Jun 15 15:18:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_g++.GNU: Add default setting for
+          exceptions (off by default); added proper handling for turning off
+          threads. Thanks to Soren Schmidt <ssc@dde..dk> for these.
+
 Thu Jun 15 12:49:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h:
