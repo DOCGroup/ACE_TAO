@@ -1,9 +1,14 @@
+Thu Dec 16 16:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Some minor documentation updates for VxWorks.
+
 Thu Dec 16 10:06:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
           Check for multiple places for the test executable.  Some Linux
-          installations don't have /bin/test, but do have /usr/bin/test. 
+          installations don't have /bin/test, but do have /usr/bin/test.
           This will allow more parallel building to occur.
 
 Thu Dec 16 16:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
