@@ -28,6 +28,8 @@ main (void)
 {
   ACE_START_TEST ("Atomic_Op_Test");
 
+#if defined (ACE_HAS_THREADS)
+
   ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5L);
   ACE_ASSERT (foo == 5L);
 
@@ -45,6 +47,10 @@ main (void)
 
   foo = 5L;
   ACE_ASSERT (foo == 5L);
+
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
   return 0;
