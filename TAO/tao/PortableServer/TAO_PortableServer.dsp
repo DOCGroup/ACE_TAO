@@ -256,6 +256,14 @@ SOURCE=.\PortableServer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableServer_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableServerC.cpp
 # End Source File
 # Begin Source File
@@ -397,6 +405,14 @@ SOURCE=.\PortableServer.h
 # Begin Source File
 
 SOURCE=.\portableserver_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_PolicyFactory.h
 # End Source File
 # Begin Source File
 
