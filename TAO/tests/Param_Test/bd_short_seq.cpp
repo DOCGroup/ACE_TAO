@@ -161,9 +161,8 @@ Test_Bounded_Short_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
+Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

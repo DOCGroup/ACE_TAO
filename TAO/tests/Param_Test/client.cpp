@@ -74,7 +74,6 @@ Param_Test_Client<T>::run_sii_test (void)
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      ACE_TRY_ENV.clear ();
       ACE_TRY
         {
           this->results_.call_count (this->results_.call_count () + 1);
