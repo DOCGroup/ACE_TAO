@@ -1,3 +1,9 @@
+Tue Oct 19 13:31:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Params.h, ATM_QoS.{h,i}:
+          Cleaned up comments, removed ACE_ATM_QoS::get_options_params
+          method (since it's not used), and made changes for UNIX build.
+
 Tue Oct 19 12:55:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Codeset_IBM1047.h:
