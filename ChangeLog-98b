@@ -1,4 +1,6 @@
-Tue Oct 27 02:04:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Oct 27 03:24:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/TP_Reactor.h: Added an description for TP_Reactor.
 
 	* ace/OS.i (cond_timedwait): When emulating cv, there're chances
 	  that the "wait for being signaled" function times out and return
