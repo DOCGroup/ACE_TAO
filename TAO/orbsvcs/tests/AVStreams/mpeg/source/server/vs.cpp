@@ -57,8 +57,14 @@ main (int argc, char **argv)
 
   if (video_child.init (argc,argv) == -1)
     return 1;
-  if (video_child.run () == -1)
-    return 2;
-  
+//   while (1)
+//     {
+      video_child.run ();
+//       if (errno == EINTR)
+//         continue;
+//       else
+//         break;
+//     }
+
   return 0;
 }

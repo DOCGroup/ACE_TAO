@@ -427,7 +427,14 @@ int
 AV_Server::run (CORBA::Environment& env){
   int result;
   // Run the ORB event loop
-  this->orb_manager_.run (env);
+//   while (1)
+//     {
+      this->orb_manager_.run (env);
+//       if (errno == EINTR)
+//         continue;
+//       else
+//         break;
+//     }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server::run () "
