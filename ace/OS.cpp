@@ -184,65 +184,23 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
 }
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
-ACE_U_LongLong
-ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
-{
-  ACE_U_LongLong ret (lo_, hi_ + ll.hi_);
-
-  const u_long old_lo = ret.lo_;
-  ret.lo_ += ll.lo_;
-  if (ret.lo_ < old_lo) ++ret.hi_; /* carry to ll.hi_ */
-
-  return ret;
-}
-
-ACE_U_LongLong
-ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
-{
-  ACE_U_LongLong ret (lo_, hi_ - ll.hi_);
-
-  if (lo_ < ll.lo_) --ret.hi_; /* borrow from ll.hi_ */
-  ret.lo_ -= ll.lo_;
-
-  return ret;
-}
-
-u_long
-ACE_U_LongLong::operator/ (const u_long ul) const
-{
-  return hi_ / ul * ULONG_MAX + lo_ / ul;
-}
-
-ACE_U_LongLong &
-ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
-{
-  hi_ += ll.hi_;
-  const u_long old_lo = lo_;
-  lo_ += ll.lo_;
-  if (lo_ < old_lo) ++hi_; /* carry to hi_ */
-
-  return *this;
-}
-
-ACE_U_LongLong &
-ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
-{
-  hi_ -= ll.hi_;
-  if (lo_ < ll.lo_) --hi_; /* borrow from hi_ */
-  lo_ -= ll.lo_;
-
-  return *this;
-}
 
 void
 ACE_U_LongLong::dump (FILE *file) const
 {
-#if ULONG_MAX == 4294967295UL
-  // 32-bit unsigned long, which has 10 decimal digits.
-  ::fprintf (file, "%lu%010lu", hi_, lo_);
-#else
-#  error Unsupported ULONG_MAX size
-#endif /* ULONG_MAX */
+  if (hi_ > 0)
+    {
+#     if ULONG_MAX == 4294967295UL
+        // 32-bit unsigned long, which has 10 decimal digits.
+        ::fprintf (file, "%lu%010lu", hi_, lo_);
+#     else
+#       error Unsupported ULONG_MAX size
+#     endif /* ULONG_MAX */
+    }
+  else
+    {
+      ::fprintf (file, "%lu", lo_);
+    }
 }
 
 #endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
