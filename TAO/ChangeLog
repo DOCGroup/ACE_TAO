@@ -1,3 +1,9 @@
+Thu Dec 11 07:49:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+
+	  Fixed a typo.
+
 Wed Dec 10 09:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:

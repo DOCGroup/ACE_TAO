@@ -1,5 +1,5 @@
 project(*Server): strategies, rt_server {
-  avoid += minimum_corba
+  avoids += minimum_corba
   Source_Files {
     test_i.cpp
     server.cpp
@@ -7,6 +7,7 @@ project(*Server): strategies, rt_server {
 }
 
 project(*Client): strategies, rt_client {
+  avoids += minimum_corba
   Source_Files {
     testC.cpp
     client.cpp
