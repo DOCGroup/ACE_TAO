@@ -1,3 +1,12 @@
+Tue Apr 22 07:30:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_TEMPNAM
+
+        * ace/OS.i (tempnam):
+          Removed VxWorks specific part but just expect that VxWorks
+          also sets ACE_LACKS_TEMPNAM just like all other OS's do.
+
 Tue Apr 22 06:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SStringfwd.h:
