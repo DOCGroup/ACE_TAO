@@ -1,3 +1,9 @@
+Sat Mar 10 09:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Reverted the changes Fri Mar  9 14:38:06 2001  Paul Calabrese
+	  <calabrese_p@ociweb.com>. This change was breaking all the tests
+	  for Sequnces in $TAO_ROOT/tests/Param_Test.
+
 Sat Mar 10 02:33:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Makefile:
