@@ -1,3 +1,33 @@
+Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
+	
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/any_op_cs.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_visitor_valuetype.h:
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype.cpp:
+	* tao/Typecode.h:		
+	* tao/Marshal.h:
+	* tao/Marshal.i:
+	* tao/Marshal.cpp:
+	* tao/Typecode.cpp:
+	* tao/ValueBase.cpp:
+	* tao/append.cpp:
+	* tao/skip.cpp:
+	  Added Any and TypeCode support for valuetypes.
+	
+	
 Fri Jan 18 11:50:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Regenerated dependencies.
