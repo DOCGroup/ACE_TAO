@@ -1,3 +1,10 @@
+Sun Aug  9 19:46:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/var_array.cpp:
+
+	  Changed this->out_.out () in add_args to
+	  this->out_.inout (), which works with dii requests.
+
 Sun Aug  9 19:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: 
