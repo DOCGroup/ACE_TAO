@@ -60,8 +60,8 @@ ifeq (1,$(stdcpplib))
 ifeq (1, $(threads))
   CCFLAGS += -D_RWSTD_MULTI_THREAD -D_REENTRANT
 endif
-# Compile errors using -AA and +noeh together - HP support call 3100620459
-# -- Steve Huston, April 10, 2001.
+# Compile errors using -AA and +noeh together - HP problem report
+# JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
   exceptions = 1
 endif
 
