@@ -114,6 +114,14 @@ public:
 
   //@}
 
+
+  /// Verify that the given properties are valid and/or supported by
+  /// the Load Balancer.
+  void validate_properties (const LoadBalancing::Properties &props,
+                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
+
   /**
    * @name TAO-specific Load Balancing PropertyManager Helper Methods
    *
@@ -129,12 +137,12 @@ public:
     CORBA::Object_ptr object_group) const;
 
   /// Return the load monitoring style for the given object group.
-  LoadBalancing::LoadMonitoringStyle load_monitoring_style (
+  LoadBalancing::MonitoringStyle load_monitoring_style (
     CORBA::Object_ptr object_group) const;
 
   /// Return the load monitoring granularity for the given object
   /// group.
-  LoadBalancing::LoadMonitoringGranularity
+  LoadBalancing::MonitoringGranularity
     load_monitoring_granularity (CORBA::Object_ptr object_group) const;
 
   /// Return the initial number of replicas for the given object
@@ -147,14 +155,19 @@ public:
   LoadBalancing::MinimumNumberReplicas
     minimum_number_replicas (CORBA::Object_ptr object_group) const;
 
+  /// Return the sequence FactoryInfos associated with the given
+  /// object group.
+  LoadBalancing::FactoryInfos *
+    factory_infos (CORBA::Object_ptr object_group) const;
+
   //@}
 
   /// Type-specific property hash map.
   typedef ACE_Hash_Map_Manager_Ex<
-    const ACE_TCHAR *,
+    const char *,
     LoadBalancing::Properties,
-    ACE_Hash<const ACE_TCHAR *>,
-    ACE_Equal_To<const ACE_TCHAR *>,
+    ACE_Hash<const char *>,
+    ACE_Equal_To<const char *>,
     TAO_SYNCH_MUTEX> Type_Prop_Table;
 
   /// Properties used when a given object group was created.
@@ -163,10 +176,7 @@ public:
     LoadBalancing::Properties,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
-    TAO_SYNCH_MUTEX> Creation_Prop_Table;
-
-  /// Properties set at run time
-  typedef Creation_Prop_Table Dynamic_Prop_Table;
+    TAO_SYNCH_MUTEX> Dynamic_Prop_Table;
 
 private:
 
@@ -175,10 +185,6 @@ private:
 
   /// Table of type-specific object group properties.
   Type_Prop_Table type_properties_;
-
-  /// Table of object group properties used when the object group was
-  /// created.
-  Creation_Prop_Table creation_properties_;
 
   /// Table of object group properties used at run-time.
   Dynamic_Prop_Table dynamic_properties_;

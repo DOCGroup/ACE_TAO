@@ -7,6 +7,16 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
+TAO_LB_ObjectGroup_Map_Entry::TAO_LB_ObjectGroup_Map_Entry (void)
+  : type_id (),
+    object_group (),
+    replica_infos (),
+    creation_properties (),
+    dynamic_properties (0),
+    lock ()
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<PortableServer::ObjectId, TAO_LB_ObjectGroup_Map_Entry *>;

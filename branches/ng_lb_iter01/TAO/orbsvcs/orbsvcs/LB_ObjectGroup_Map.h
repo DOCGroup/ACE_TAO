@@ -34,8 +34,15 @@
  *
  * @brief Value field of the ObjectGroup map.
  */
-struct TAO_LB_ObjectGroup_Map_Entry
+class TAO_LB_ObjectGroup_Map_Entry
 {
+public:
+
+  /// Constructor
+  TAO_LB_ObjectGroup_Map_Entry (void);
+
+public:
+
   /// The RepositoryId corresponding to all Replicas in the
   /// ObjectGroup.
   CORBA::String_var type_id;
@@ -46,6 +53,13 @@ struct TAO_LB_ObjectGroup_Map_Entry
   /// Unbounded set containing replica references and all related
   /// information for each replica.
   TAO_LB_ReplicaInfo_Set replica_infos;
+
+  /// Properties used when creating this object group.
+  LoadBalancing::Properties creation_properties;
+
+  /// Properties set for this object group after this object group was
+  /// created.
+  LoadBalancing::Properties *dynamic_properties;
 
   /// Lock used to synchronize access to the ReplicaInfo set.
   TAO_SYNCH_MUTEX lock;
