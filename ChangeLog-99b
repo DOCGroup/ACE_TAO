@@ -1,5 +1,12 @@
-Tue Oct 12 14:26:15 1999  David L. Levine  <levine@cs.wustl.edu>
+Tue Oct 12 14:49:00 1999  Ruibiao Qiu  <ruibiao@cs.wustl.edu>
 
+	* ace/ATM_Stream.h
+	* ace/ATM_Acceptor.h: Moved #pragma after ACE include 
+	  so that g++ would not give warning messages.  Thanks
+	  to Dr. David L. Levine <levine@cs.wustl.edu> for 
+	  pointing this out.
+
+Tue Oct 12 14:26:15 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-qnx-neutrino.h: added #define of
           ACE_THR_PRI_FIFO_DEF.  This allows us to easily set a
           thread priority (10) that's lower the the TCP service
