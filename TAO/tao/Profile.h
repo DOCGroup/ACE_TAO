@@ -155,6 +155,13 @@ protected:
   
   CORBA::PolicyList *policy_list_;
   // Client exposed policies of this profile.
+  
+  // NOTE: In this implementation it is assumed that the <policy_list> 
+  // is exactly the same for each profile.
+  // So to save memory, each TAO_Profile has a pointer to the same
+  // PolicyList object. The life cycle of this object is managed
+  // by the TAO_MProfile class. 
+
 
 private:
   CORBA::ULong tag_;

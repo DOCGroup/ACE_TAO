@@ -1,3 +1,20 @@
+Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/ORBCore.cpp:
+
+	  Fixed Memory leaks in <create_stub_object>.
+	
+	* tao/Profile.cpp:
+
+	  Fixed potential memory leak in <policies>.
+	
+	* tao/Profile.h:
+		  
+	  Added comment to point out the current assumption of
+	  having only one policy list shared by all profiles,
+	  and whose lifecycle is managed by the TAO_MProfile. 
+	
+
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* */Makefile:
@@ -91,6 +108,7 @@ Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/orbsvcs.dsw:
 
           Added some missing dependencies.
+
 
 Mon Jun 12 13:24:43 2000  Ossama Othman  <ossama@uci.edu>
 
