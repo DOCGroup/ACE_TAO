@@ -943,8 +943,8 @@ const_type
 	      }
 	    } else if (d->node_type () == AST_Decl::NT_string) {
                 $$ = AST_Expression::EV_string;
-            /* @ASG@ we will need a similar one for wstring after it
-                is implemented */
+            } else if (d->node_type () == AST_Decl::NT_wstring) {
+		$$ = AST_Expression::EV_wstring;
             } else            
 	      $$ = AST_Expression::EV_any;
 	  } else
