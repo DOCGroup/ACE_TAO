@@ -5,7 +5,11 @@
 
 ifndef ACE_DU_VERSION
   ACE_DU_VERSION := $(shell uname -r)
-endif # ACE_DU_VERSION
+endif # ! ACE_DU_VERSION
+
+ifndef ACE_DU_SUBVERSION
+  ACE_DU_SUBVERSION := $(shell /usr/sbin/sizer v-)
+endif # ! ACE_DU_SUBVERSION
 
 ifeq (3.,$(findstring 3.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_3.2.GNU
@@ -14,11 +18,19 @@ else # ! 3.x
 ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
 
-  ifeq (4.0F,$(findstring 4.0F,$(shell /usr/sbin/sizer -v)))
+  ifeq (4.0F,$(findstring 4.0F,$(ACE_DU_SUBVERSION)))
     CFLAGS += -DDIGITAL_UNIX=0x40F
-  else  # ! 4.0F
+  else
+  ifeq (4.0E,$(findstring 4.0E,$(ACE_DU_SUBVERSION)))
+    CFLAGS += -DDIGITAL_UNIX=0x40E
+  else
+  ifeq (4.0D,$(findstring 4.0D,$(ACE_DU_SUBVERSION)))
+    CFLAGS += -DDIGITAL_UNIX=0x40D
+  else
     CFLAGS += -DDIGITAL_UNIX=0x400
-  endif # ! 4.0F
+  endif
+  endif
+  endif
 
   ifneq ($(CXX_VER),CXX_5)
     # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
