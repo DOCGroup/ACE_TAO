@@ -533,6 +533,6 @@ update_type_map (const char* name,
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

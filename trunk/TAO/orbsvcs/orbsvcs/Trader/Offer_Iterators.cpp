@@ -378,7 +378,7 @@ template class ACE_Unbounded_Queue <CosTrading::Offer*>;
 template class ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
 template class ACE_Unbounded_Queue <CosTrading::OfferId>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::Offer*>;
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferId>;
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::Offer*>
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferIterator*>
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferId>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1123,15 +1123,15 @@ template class TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::StringSeq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
-#pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::LongSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ULongSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>;
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::StringSeq>;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::LongSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ULongSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
+#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
