@@ -85,9 +85,11 @@ TAO_IIOP_Transport::recv_i (char *buf,
                                                        len,
                                                        max_wait_time);
 
-  // Most of the errors handling is common for
-  // Now the message has been read
-  if (n == -1 && TAO_debug_level > 4)
+  // Do not print the error message if it is a timeout, which could
+  // occur in thread-per-connection.
+  if (n == -1 &&
+      TAO_debug_level > 4 &&
+      errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p \n"),
@@ -101,8 +103,13 @@ TAO_IIOP_Transport::recv_i (char *buf,
       if (errno == EWOULDBLOCK)
         return 0;
 
+
       return -1;
     }
+
+  // Most of the errors handling is common for
+  // Now the message has been read
+
   // @@ What are the other error handling here??
   else if (n == 0)
     {

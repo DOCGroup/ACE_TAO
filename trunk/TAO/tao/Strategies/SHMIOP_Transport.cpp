@@ -115,7 +115,7 @@ TAO_SHMIOP_Transport::recv_i (char *buf,
 
   if (n == 0 || n == -1)
     {
-      if (TAO_debug_level > 3)
+      if (TAO_debug_level > 3 && errno != ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - %p \n"),

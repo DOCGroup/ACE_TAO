@@ -86,6 +86,16 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (void) = 0;
+
+protected:
+
+  /// Lock for the address lookup.
+  /// @@todo: This lock should be strategised so that we dont lock in
+  /// single threaded configurations. I am not able to do this now as
+  /// most of the information is available in the ORB_Core which is
+  /// not available here...
+  TAO_SYNCH_MUTEX addr_lookup_lock_;
+
 private:
 
   // Endpoints should not be copied.
@@ -102,6 +112,8 @@ private:
    * currently used for RTCORBA only.
    */
   CORBA::Short priority_;
+
+
 };
 
 #if defined (__ACE_INLINE__)

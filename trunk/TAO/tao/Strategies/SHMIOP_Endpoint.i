@@ -16,7 +16,14 @@ TAO_SHMIOP_Endpoint::object_addr (void) const
     ACE_const_cast (TAO_SHMIOP_Endpoint *,
                     this);
 
-  if (this->object_addr_.get_type () != AF_INET
+  // Begin a dummy scope for the lock
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      endpoint->addr_lookup_lock_,
+                      this->object_addr_ );
+
+    if (this->object_addr_.get_type () != AF_INET
       && endpoint->object_addr_.set (this->port_,
                                     this->host_.in ()) == -1)
     {
@@ -29,6 +36,7 @@ TAO_SHMIOP_Endpoint::object_addr (void) const
       // denote that ACE_INET_Addr initialization failed.
       endpoint->object_addr_.set_type (-1);
     }
+  }
 
   return this->object_addr_;
 }
