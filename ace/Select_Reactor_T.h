@@ -514,7 +514,7 @@ public:
   /// Wake up all threads in waiting in the event loop
   virtual void wakeup_all_threads (void);
 
-  // = Only the owner thread that can perform a <handle_events>.
+  // = Only the owner thread can perform a <handle_events>.
 
   /// Set the new owner of the thread and return the old owner.
   virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
