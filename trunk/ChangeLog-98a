@@ -1,5 +1,8 @@
 Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
+        * examples/IPC_SAP/SOCK_SAP/C-in{client,server}.cpp: added
+          support to optionally set socket buffer sizes.
+
         * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
           removed unused constant SHMSZ.
 
