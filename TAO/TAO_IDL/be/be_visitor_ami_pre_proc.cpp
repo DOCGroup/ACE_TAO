@@ -285,18 +285,13 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-      // continue until each element is visited
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
-          if (!d)
+          AST_Decl *d = si.item ();
+          if (d == 0)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
@@ -330,9 +325,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                             excep_holder,
                                             NORMAL);
             }
-          si->next ();
         } // end of while loop
-      delete si;
     } // end of if
 
   return excep_holder;
@@ -397,20 +390,15 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
   if (node->nmembers () > 0)
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
       this->elem_number_ = 0;
-      // continue until each element is visited
-      while (!si->is_done ())
+      // initialize an iterator to iterate thru our scope
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
+          AST_Decl *d = si.item ();
           if (!d)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
@@ -425,7 +413,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
               if (!attribute)
                 return 0;
 
-              be_operation *get_operation = this->generate_get_operation (attribute);
+              be_operation *get_operation =
+                this->generate_get_operation (attribute);
               this->create_reply_handler_operation (get_operation,
                                                     reply_handler);
 
@@ -435,7 +424,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
               if (!attribute->readonly ())
                 {
-                  be_operation *set_operation = this->generate_set_operation (attribute);
+                  be_operation *set_operation =
+                    this->generate_set_operation (attribute);
                   this->create_reply_handler_operation (set_operation,
                                                         reply_handler);
 
@@ -459,9 +449,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                 excep_holder);
                 }
             }
-          si->next ();
         } // end of while loop
-      delete si;
     } // end of if
 
   return reply_handler;
@@ -622,19 +610,13 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-
-      // continue until each element is visited
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
+          AST_Decl *d = si.item ();
           if (!d)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_ami_pre_proc::create_sendc_method - "
                                  "bad node in this scope\n"),
@@ -654,9 +636,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
 
               op->add_argument_to_scope (arg);
             }
-          si->next ();
         } // end of while loop
-      delete si;
     } // end of if
 
   return op;
@@ -723,19 +703,13 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-
-      // continue until each element is visited
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
-          if (!d)
+          AST_Decl *d = si.item ();
+          if (d == 0)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_ami_pre_proc::create_reply_handler_operation - "
                                  "bad node in this scope\n"),
@@ -755,9 +729,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
 
               operation->add_argument_to_scope (arg);
             }
-          si->next ();
         } // end of while loop
-      delete si;
     } // end of if
 
   // Set the proper strategy
@@ -845,37 +817,26 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 
       {
         // initialize an iterator to iterate thru our scope
-        UTL_ScopeActiveIterator *si;
-        ACE_NEW_RETURN (si,
-                        UTL_ScopeActiveIterator (node,
-                                                 UTL_Scope::IK_decls),
-                        -1);
-
-        while (!si->is_done ())
+        for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+             !si.is_done ();
+             si.next ())
           {
             number_of_elements++;
-            si->next ();
           }
-        delete si;
       }
 
-      AST_Decl **elements = new AST_Decl *[number_of_elements];
+      AST_Decl **elements;
+      ACE_NEW_RETURN (elements, AST_Decl *[number_of_elements], -1);
 
       {
         int position = 0;
         // initialize an iterator to iterate thru our scope
-        UTL_ScopeActiveIterator *si;
-        ACE_NEW_RETURN (si,
-                        UTL_ScopeActiveIterator (node,
-                                                 UTL_Scope::IK_decls),
-                        -1);
-
-        while (!si->is_done ())
+        for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+             !si.is_done ();
+             si.next ())
           {
-            elements[position++] = si->item ();
-            si->next ();
+            elements[position++] = si.item ();
           }
-        delete si;
       }
 
 
