@@ -4005,7 +4005,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-#if defined (FreeBSD)
+#if defined (__FreeBSD__)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
   *sig = ::sigwait (set);
@@ -4034,7 +4034,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   // third arg is timeout:  0 means forever
   *sig = ::sigtimedwait (set, 0, 0);
   return *sig;
-#endif /* FreeBSD */
+#endif /* __FreeBSD__ */
 #else
   ACE_UNUSED_ARG (set);
   ACE_UNUSED_ARG (sig);
@@ -6812,6 +6812,8 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
 #else
+  if (signum < 1 || signum > NSIG)
+    return 1 ;			// Invalid signum, return error
   *s |= (1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6823,6 +6825,8 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
 #else
+  if (signum < 1 || signum > NSIG)
+    return 1 ;			// Invalid signum, return error
   *s &= ~(1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6856,6 +6860,8 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
 #else
+  if (signum < 1 || signum > NSIG)
+    return 1 ;			// Invalid signum, return error
   return ((*s & (1 << (signum - 1))) != 0) ;
 #endif /* !ACE_LACKS_SIGSET */
 }

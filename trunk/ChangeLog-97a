@@ -1,3 +1,15 @@
+Tue May 20 09:10:18 1997  Nanbor Wang  <nw1@number.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: 
+	* ace/config-freebsd.h: Removed "FreeBSD" directive because gcc on
+	  FreeBSD defines __FreeBSD__ automatically.
+
+	* ace/OS.i (sigaddset, sigdelset, sigismember): Added range
+	  checking to these functions in order to avoid disasters.  Sig
+	  number should be between 1 and NSIG.
+	  (sigwait): Changed ifdef (FreeBSD) to ifdef (__FreeBSD__) since
+	  compiler does it for us.	
+
 Tue May 20 09:19:49 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Released version 4.2.
