@@ -106,7 +106,7 @@ public:
 protected:
 
   /// Default constructor, only derived classes can be created.
-  TAO_ServantBase (TAO_Operation_Table const * optable = 0);
+  TAO_ServantBase (TAO_Operation_Table * optable = 0);
 
   /// Copy constructor, protected so no instances can be created.
   TAO_ServantBase (const TAO_ServantBase &);
@@ -136,7 +136,7 @@ protected:
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.
-  TAO_Operation_Table const * const optable_;
+  TAO_Operation_Table * optable_;
 
 };
 

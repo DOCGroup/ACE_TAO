@@ -45,7 +45,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table const * optable)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table * optable)
   : TAO_Abstract_ServantBase ()
   , optable_ (optable)
 {
