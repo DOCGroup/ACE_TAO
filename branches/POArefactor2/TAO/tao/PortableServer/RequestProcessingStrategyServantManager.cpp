@@ -13,16 +13,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ServantLocatorC.h"
-
 #include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/LifespanStrategy.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/POA.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Servant_Upcall.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,

@@ -11,8 +11,6 @@
 
 #include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
 #include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/ImplicitActivationStrategy.h"
-#include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -202,12 +200,13 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Non_Retain_Servant_Retention_Strategy::locate_servant (const char *operation,
-                      const PortableServer::ObjectId &system_id,
-                       TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                         int &wait_occurred_restart_call
-                         ACE_ENV_ARG_DECL)
+    Non_Retain_Servant_Retention_Strategy::locate_servant (
+      const char *operation,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
     {
       // We have the NON_RETAIN policy, user id is the system id.
 

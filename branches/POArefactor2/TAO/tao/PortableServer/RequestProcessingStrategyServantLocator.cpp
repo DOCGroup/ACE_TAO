@@ -18,7 +18,6 @@
 
 #include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"

@@ -16,7 +16,6 @@
 
 #include "portableserver_export.h"
 #include "Active_Object_Map.h"
-#include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "ServantRetentionStrategy.h"
 
@@ -45,7 +44,7 @@ namespace TAO
       virtual void strategy_init (TAO_POA *poa);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
-                                      int &wait_occurred_restart_call);
+                                     int &wait_occurred_restart_call);
 
       virtual TAO_Active_Object_Map* get_aom() const;
 
@@ -113,11 +112,11 @@ namespace TAO
       virtual
       PortableServer::Servant
       locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                         TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                           TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                           int &wait_occurred_restart_call
-                           ACE_ENV_ARG_DECL);
+                      const PortableServer::ObjectId &system_id,
+                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+                      int &wait_occurred_restart_call
+                      ACE_ENV_ARG_DECL);
 
       virtual
       void

@@ -16,7 +16,6 @@
 
 #include "portableserver_export.h"
 #include "Active_Object_Map.h"
-#include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "ServantRetentionStrategy.h"
 
