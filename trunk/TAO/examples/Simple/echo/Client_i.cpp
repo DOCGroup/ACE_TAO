@@ -113,19 +113,19 @@ Client_i::echo_list (const char *message)
   TAO_TRY
     {
       // Make the RMI.
-      Echo::List *l = this->server_->echo_list 
-        (message, 
+      Echo::List_var l = this->server_->echo_list
+        (message,
          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      for (u_int i = 0; i < l->length (); i++) 
+      for (u_int i = 0; i < l->length (); i++)
         {
-          CORBA::Object_ptr obj = (*l)[i];
+          CORBA::String_var ior = orb_->object_to_string (l[i]);
 
           ACE_DEBUG ((LM_DEBUG,
                       "list elem %d = %s\n",
                       i,
-                      orb_->object_to_string (obj)));
+                      ior));
         }
     }
   TAO_CATCHANY
@@ -142,7 +142,7 @@ Client_i::echo_string (const char *message)
   TAO_TRY
     {
       // Make the RMI.
-      CORBA::String_var s = this->server_->echo_string 
+      CORBA::String_var s = this->server_->echo_string
         (message,
          TAO_TRY_ENV);
       TAO_CHECK_ENV;
