@@ -112,10 +112,6 @@ public:
   // The tag, each concrete class will have a specific tag value.  for
   // example we are TAO_IOP_TAG_INTERNET_IOP.
 
-  TAO_Transport* transport (void);
-  // Return a pointer to the underlying transport object.  this will
-  // provide access to lower layer protocols and processing.
-
   int parse (TAO_InputCDR& cdr,
              CORBA::Boolean& continue_decoding,
              CORBA::Environment &env);
@@ -163,10 +159,7 @@ public:
   char *addr_to_string (void);
   // Return a string representation for the address.
 
-  ACE_Addr &object_addr (const ACE_Addr *addr);
-  // set the object_addr for the profile.
-
-  ACE_Addr &object_addr (void);
+  const ACE_INET_Addr &object_addr (void) const;
   //  return a reference to the object_addr.
 
   const char *host (void);
