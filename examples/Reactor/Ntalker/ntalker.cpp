@@ -34,14 +34,22 @@ public:
   ~Handler (void);
   // Destructor.
 
-  // Event demuxer.
+  // Event demuxer hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);
+  virtual ACE_HANDLE get_handle (void) const;
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
+  // Multicast wrapper.
 };
+
+ACE_HANDLE
+Handler::get_handle (void) const
+{
+  return this->mcast_.get_handle ();
+}
 
 int
 Handler::handle_input (ACE_HANDLE h)
@@ -67,7 +75,10 @@ Handler::handle_input (ACE_HANDLE h)
                                "can't read from STDIN"),
                               -1);
       else // result == 0
-        ACE_Reactor::end_event_loop ();
+        {
+          ACE_Reactor::end_event_loop ();
+          return -1;
+        }
     }
   else
     {
@@ -102,11 +113,19 @@ int
 Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
 {
   if (h == ACE_STDIN)
-    ACE_DEBUG ((LM_DEBUG,
-                "STDIN_Events handle removed from reactor."));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "STDIN_Events handle removed from reactor.\n"));
+      if (ACE_Reactor::instance ()->remove_handler 
+          (this, ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "remove_handler"),
+                           -1);
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "Mcast_Events handle removed from reactor."));
+                "Mcast_Events handle removed from reactor.\n"));
   return 0;
 }
 
@@ -139,12 +158,19 @@ Handler::Handler (u_short udp_port,
   //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
 
   // Register callbacks with the ACE_Reactor.
-  if (reactor.register_handler (this->mcast_.get_handle (),
-				this,
-				ACE_Event_Handler::READ_MASK) == -1)
+  else if (reactor.register_handler (this->mcast_.get_handle (),
+                                     this,
+                                     ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, 
                 "%p\n",
                 "can't register with Reactor\n"));
+  // Register the STDIN handler.
+  else if (ACE::register_stdin_handler (this,
+                                        ACE_Reactor::instance (),
+                                        ACE_Thread_Manager::instance ()) == -1)
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_stdin_handler"));
 }
 
 static void
@@ -180,28 +206,11 @@ main (int argc, char *argv[])
                    INTERFACE,
                    *ACE_Reactor::instance ());
 
-  // Register the STDIN handler.
-  if (ACE::register_stdin_handler (&handler,
-                                   ACE_Reactor::instance (),
-                                   ACE_Thread_Manager::instance ()) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "register_stdin_handler"),
-                        -1);
-
   // Run the event loop.
   ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "\ntalker Done.\n"));
-
-  // Cleanup the STDIN handler.
-  if (ACE::remove_stdin_handler (ACE_Reactor::instance (),
-                                 ACE_Thread_Manager::instance ()) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "remove_stdin_handler"),
-                        -1);
+              "talker Done.\n"));
   return 0;
 }
 #else
