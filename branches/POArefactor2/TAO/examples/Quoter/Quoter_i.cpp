@@ -15,13 +15,11 @@
 
 #include "Quoter_i.h"
 
-#include "tao/PortableServer/POA.h"
-
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Quoter, 
-           Quoter_i, 
+ACE_RCSID (Quoter,
+           Quoter_i,
            "$Id$")
 
 // Constructor.  Create all the quoter factories.

@@ -1,3 +1,31 @@
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/examples/ORT/Object_Factory_i.cpp:
+        * examples/POA/FindPOA/FindPOA.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.h:
+        * examples/Quoter/Quoter_i.cpp:
+        * tests/UNKNOWN_Exception/server.cpp:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
+          Fixed compile errors now TAO_POA is gone
+
+Mon Dec  6 16:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+        * tao/PortableServer/Regular_POA.{h,cpp,inl}:
+          Renamed TAO_POA to TAO_Regular_POA. This will cause now compile
+          errors but this way wrong cast are found by the compiler
+
+        * tao/PortableServer/*.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp
+          Updated for TAO_Regular_POA
+
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+          Add utils as base project because TAO_ORB_Manager is now there
+
 Mon Dec  6 14:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
