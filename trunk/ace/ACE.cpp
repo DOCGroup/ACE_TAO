@@ -48,10 +48,7 @@ ACE::read_adapter (void *args)
   ACE_Thread_Control tc (stdin_adapter_args->thr_mgr_); 
 
   ACE_Event_Handler *this_ptr = stdin_adapter_args->handler_;
-  ACE_HANDLE handle = this_ptr->get_handle ();
-
-  if (handle == ACE_INVALID_HANDLE)
-    handle = ACE_STDIN;
+  ACE_HANDLE handle = ACE_STDIN;
 
   while (this_ptr->handle_input (handle) != -1)
     continue;
