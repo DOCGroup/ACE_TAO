@@ -669,16 +669,25 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                            "<aio_error> has failed"),
                           -1);
 
-      // Is <aio_> operation still in progress?
+      // Continue the loop if <aio_> operation is still in progress. 
       if (error_status == EINPROGRESS)
         continue;
+
+      // Handle cancel'ed asynchronous operation. We dont have to call
+      // <aio_return> in this case, since return_status is going to be
+      // -1. We will pass 0 for the <bytes_transferred> in this case
+      if (error_status == ECANCELED)
+        {
+          return_status = 0;
+          break;
+        }
 
       // Error_status is not -1 and not EINPROGRESS. So, an <aio_>
       // operation has finished (successfully or unsuccessfully!!!)
       // Get the return_status of the <aio_> operation.
       return_status = aio_return (aiocb_list_[ai]);
+
       if (return_status == -1)
-        // <aio_return> itself has failed.
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%N:%l:(%P | %t)::%p\n",
                            "ACE_POSIX_AIOCB_Proactor::handle_events:"
@@ -688,7 +697,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
         // This AIO has finished.
         break;
     }
-
+  
   // Something should have completed.
   ACE_ASSERT (ai != this->aiocb_list_max_size_);
 
@@ -1120,11 +1129,15 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   if (sig_info.si_code == SI_ASYNCIO)
     {
       // Analyze error and return values.
-
+      
+      int error_status = 0;
+      int return_status = 0;
+      
       // Check the error status
-      int error_status = aio_error (asynch_result);
+      error_status = aio_error (asynch_result);
+
+      // <aio_error> itself has failed.
       if (error_status == -1)
-        // <aio_error> itself has failed.
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%N:%l:(%P | %t)::%p\n",
                            "ACE_POSIX_SIG_Proactor::handle_events:"
@@ -1133,36 +1146,50 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
 
       // Completion signal has been received, so it can't be in
       // progress.
-      ACE_ASSERT (error_status != EINPROGRESS);
-
-      // Error_status is not -1 and not EINPROGRESS. So, an <aio_>
-      // operation has finished (successfully or unsuccessfully!!!)
-      // Get the return_status of the <aio_> operation.
-      int return_status = aio_return (asynch_result);
-      if (return_status == -1)
-        // <aio_return> itself has failed.
+      if (error_status == EINPROGRESS)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%N:%l:(%P | %t)::%p\n",
                            "ACE_POSIX_SIG_Proactor::handle_events:"
-                           "<aio_return> failed"),
+                           "Internal error: AIO in progress. "
+                           "But completion signal was received"),
                           -1);
-      else
+
+      // Handle cancel'ed asynchronous operation. We dont have to call
+      // <aio_return> in this case, since return_status is going to be
+      // -1. We will pass 0 for the <bytes_transferred> in this case
+      if (error_status == ECANCELED)
         {
-          // AIO has finished
-          this->application_specific_code (asynch_result,
-                                           return_status,
-                                           1,             // Result : True.
-                                           0,             // No completion key.
-                                           error_status); // Error.
+          return_status = 0;
         }
+      else 
+        {
+          // Get the return_status of the <aio_> operation.
+          return_status = aio_return (asynch_result);
+
+          // Failure.
+          if (return_status == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%N:%l:(%P | %t)::%p\n",
+                               "ACE_POSIX_SIG_Proactor::handle_events:"
+                               "<aio_return> failed"),
+                              -1);
+        }
+
+      // error status and return status are obtained. Dispatch the
+      // completion . 
+      this->application_specific_code (asynch_result,
+                                       return_status,
+                                       1,             // Result : True.
+                                       0,             // No completion key.
+                                       error_status); // Error.
     }
   else if (sig_info.si_code == SI_QUEUE)
     {
       this->application_specific_code (asynch_result,
-                                       0, // No bytes transferred.
-                                       1, // Result : True.
-                                       0, // No completion key.
-                                       0);// No error.
+                                       0,  // No bytes transferred.
+                                       1,  // Result : True.
+                                       0,  // No completion key.
+                                       0); // No error.
     }
   else
     // Unknown signal code.
@@ -1192,16 +1219,11 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
 }
 
 void
-ACE_POSIX_Asynch_Timer::complete (u_long bytes_transferred,
-                                  int success,
-                                  const void *completion_key,
-                                  u_long error)
+ACE_POSIX_Asynch_Timer::complete (u_long       /* bytes_transferred */,
+                                  int          /* success */,
+                                  const void * /* completion_key */,
+                                  u_long       /* error */)
 {
-  ACE_UNUSED_ARG (error);
-  ACE_UNUSED_ARG (completion_key);
-  ACE_UNUSED_ARG (success);
-  ACE_UNUSED_ARG (bytes_transferred);
-
   this->handler_.handle_time_out (this->time_, this->act ());
 }
 
