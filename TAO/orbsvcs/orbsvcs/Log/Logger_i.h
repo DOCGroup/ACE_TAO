@@ -34,29 +34,34 @@ public:
   // destructor
 
   virtual void log (const Logger::Log_Record &log_rec,
-                    CORBA::Environment &_env);
+                    CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
 
   virtual void logv (const Logger::Log_Record &log_rec,
                      Logger::Verbosity_Level verbosity,
-                     CORBA::Environment &_env);
+                     CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
   virtual void log2 (const Logger::Log_Record &log_rec,
-                     CORBA::Environment &_env);
+                     CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
   
   virtual void logv2 (const Logger::Log_Record &log_rec,
                       Logger::Verbosity_Level verbosity,
-                      CORBA::Environment &_env);
+                      CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
   Logger::Verbosity_Level verbosity (void) const;
   // Gets the verbosity level
 
-  void verbosity (Logger::Verbosity_Level level, CORBA::Environment &env);
+  void verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
+    ACE_THROW_SPEC (());
   // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
   //  and SILENT}. Defaults to VERBOSE
 
@@ -91,7 +96,7 @@ public:
 
   virtual Logger_ptr make_logger (const char *name,
                                   CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This function returns a logger with name <name>. If <name> is
   // unique, a new logger is created; else, a previously created
   // logger of name <name> is returned

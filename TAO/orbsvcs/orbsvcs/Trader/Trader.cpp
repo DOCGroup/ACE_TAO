@@ -868,7 +868,7 @@ CORBA::TCKind
 TAO_Sequence_Extracter_Base::
 sequence_type (CORBA::TypeCode* type_code,
                CORBA::Environment& env)
-  TAO_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TCKind return_value = CORBA::tk_void,
     type_kind = type_code->kind (env);
