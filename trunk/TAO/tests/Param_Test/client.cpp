@@ -58,12 +58,12 @@ Param_Test_Client<T>::run_sii_test (void)
   this->results_.error_count (0);
   this->results_.iterations (opt->loop_count ());
 
+  // initialize parameters for the test
+  this->test_object_->init_parameters ();
+
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      // initialize parameters for the test
-      this->test_object_->init_parameters ();
-
       this->results_.call_count (this->results_.call_count () + 1);
       if (opt->debug ())
         {
@@ -103,6 +103,8 @@ Param_Test_Client<T>::run_sii_test (void)
                       i));
           continue;
         }
+      // reset parameters for the test
+      this->test_object_->reset_parameters ();
     }
 
   // print statistics
@@ -127,12 +129,12 @@ Param_Test_Client<T>::run_dii_test (void)
   this->results_.error_count (0);
   this->results_.iterations (opt->loop_count ());
 
+  // initialize parameters for the test
+  this->test_object_->init_parameters ();
+
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      // initialize parameters for the test
-      this->test_object_->init_parameters ();
-
       this->results_.call_count (this->results_.call_count () + 1);
 
       // start the timing. We measure the entire overhead of DII, including the
@@ -200,6 +202,9 @@ Param_Test_Client<T>::run_dii_test (void)
 
       // stop the this->results_.
       this->results_.stop_timer ();
+
+      // reset parameters for the test
+      this->test_object_->reset_parameters ();
 
     } // for loop
 

@@ -946,7 +946,17 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               if (type->node_type () == AST_Decl::NT_sequence)
                 {
-                  *os << "retval->init_mgr ();" << nl;
+                  be_sequence *seq = be_sequence::narrow_from_decl (type);
+                  // init_mgr method for managed types
+                  switch (seq->managed_type ())
+                    {
+                    case be_sequence::MNG_OBJREF:
+                    case be_sequence::MNG_STRING:
+                      *os << "retval->init_mgr ();" << nl;
+                      break;
+                    default:
+                      break;
+                    }
                 }
               *os << "return retval;" << nl;
             }

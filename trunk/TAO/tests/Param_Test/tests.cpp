@@ -50,6 +50,14 @@ Test_Short::init_parameters (void)
   this->inout_ =  0;
 }
 
+void
+Test_Short::reset_parameters (void)
+{
+  this->inout_ =  0;
+  this->out_ =  0;
+  this->ret_ =  0;
+}
+
 int
 Test_Short::run_sii_test (Param_Test_ptr objref,
                           CORBA::Environment &env)
@@ -168,6 +176,20 @@ Test_Unbounded_String::init_parameters (void)
   this->inout_ = CORBA::string_dup (this->in_);
 }
 
+void
+Test_Unbounded_String::reset_parameters (void)
+{
+  // release any previously occupied values
+  CORBA::string_free (this->inout_);
+  CORBA::string_free (this->out_);
+  CORBA::string_free (this->ret_);
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
+
+  this->inout_ = CORBA::string_dup (this->in_);
+}
+
 int
 Test_Unbounded_String::run_sii_test (Param_Test_ptr objref,
                           CORBA::Environment &env)
@@ -272,6 +294,14 @@ Test_Fixed_Struct::init_parameters (void)
 
   this->in_ = gen->gen_fixed_struct ();
   ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
+}
+
+void
+Test_Fixed_Struct::reset_parameters (void)
+{
+  ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
+  ACE_OS::memset (&this->out_, 0, sizeof (Param_Test::Fixed_Struct));
+  ACE_OS::memset (&this->ret_, 0, sizeof (Param_Test::Fixed_Struct));
 }
 
 int
@@ -464,6 +494,14 @@ Test_String_Sequence::init_parameters (void)
     }
 }
 
+void
+Test_String_Sequence::reset_parameters (void)
+{
+  this->inout_ = new Param_Test::StrSeq; // delete the previous one
+  this->out_ = 0;
+  this->ret_ = 0;
+}
+
 int
 Test_String_Sequence::run_sii_test (Param_Test_ptr objref,
                                     CORBA::Environment &env)
@@ -529,7 +567,7 @@ Test_String_Sequence::check_validity (CORBA::Request_ptr req)
   this->out_ = new Param_Test::StrSeq (*(Param_Test::StrSeq *) req->arguments
                                        ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::StrSeq (*(Param_Test::StrSeq *)req->result
-                                       ()->value ()->value ()); 
+                                       ()->value ()->value ());
   return this->check_validity ();
 }
 

@@ -1,3 +1,26 @@
+Tue Dec 30 10:06:45 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_state_argument, be_state_operation,
+	be_state_attribute}.cpp - Unnecessary call on "init_mgr" for
+	sequences that do not have any managed types was getting
+	generated. This is fixed. In addition, MSVC++ compiler was
+	producing an error saying "ambiguous assignment" when an "_out"
+	variable was assigned to a pointer type. Solaris platform (CC and
+	g++) did not give any such errors since they were (most probably)
+	using the operator *() on the _out class, but MSVC++ did not.
+
+	* TAO/tests/Cubit/IDL_Cubit/clnt.cpp: The same "ambiguous
+	assignment" error described above has been fixed here too.
+
+	* TAO/tests/Param_Test: Added a method called "reset_parameters"
+	so that we do not change the "in" parameter for every
+	iteration. Previuosly we were settingthe in parameter differently
+	for every new iteration. However, for performance comparison
+	purposes, this was not correct (e.g., in the case of string
+	sequences or unbounded strings where everytime we were sending a
+	different lenght string and hence the performance numbers were
+	different for each run and couldn't be compared.)
+
 Mon Dec 29 21:51:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_sequence.cpp: get_name was returning a local

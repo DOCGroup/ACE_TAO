@@ -48,6 +48,9 @@ public:
   void init_parameters (void);
   // set values for parameters
 
+  void reset_parameters (void);
+  // reset values for CORBA
+
   CORBA::Boolean check_validity (void);
   // check if results are valid
 
@@ -100,6 +103,9 @@ public:
 
   void init_parameters (void);
   // set values for parameters
+
+  void reset_parameters (void);
+  // reset values for CORBA
 
   CORBA::Boolean check_validity (void);
   // check if results are valid
@@ -155,6 +161,9 @@ public:
   void init_parameters (void);
   // set values for parameters
 
+  void reset_parameters (void);
+  // reset values for CORBA
+
   CORBA::Boolean check_validity (void);
   // check if results are valid
 
@@ -208,6 +217,9 @@ public:
 
   void init_parameters (void);
   // set values for parameters
+
+  void reset_parameters (void);
+  // reset values for CORBA
 
   CORBA::Boolean check_validity (void);
   // check if results are valid
