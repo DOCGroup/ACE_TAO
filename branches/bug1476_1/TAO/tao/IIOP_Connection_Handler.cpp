@@ -15,7 +15,6 @@
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/netinet/os_tcp.h"
 
 ACE_RCSID (tao,
            IIOP_Connection_Handler,

@@ -1,5 +1,13 @@
+Fri Aug  6 13:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Removed duplicate include
+
+        * ace/Thread_Per_Connection_Handler.cpp:
+          Corrected classname in debug statement
+
 Thu Aug  5 08:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
- 
+
         * tao/Invocation_Adapter.{h,cpp}:
           Renamed set_sync_policy to set_response_flags, we are setting
           the response flags using sync_policy for oneways. Also, when
@@ -25,7 +33,7 @@ Thu Aug  5 08:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
         * orbsvcs/orbsvcs/IIOP_SSL_Connector.cpp:
           When the connect() calls return -1, only when errno == EWOULDBLOCK
-          we wait for completion, for other errno's we have to set 
+          we wait for completion, for other errno's we have to set
           transport to zero, because the transport is not usable in that
           case and we just don't have a connection then.
 
