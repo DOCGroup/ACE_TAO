@@ -17,7 +17,7 @@
 #define PACE_CONFIG_COMPILER_H
 
 #if defined (__cplusplus)
-# define PACE_HAS_CPLUSPLUS
+# define PACE_HAS_CPLUSPLUS __cplusplus
 # if defined (PACE_HAS_INLINE)
 #   define PACE_INLINE inline
 # else
@@ -32,7 +32,7 @@
 # else
 #   define PACE_INLINE
 # endif /* ! PACE_HAS_INLINE */
-#endif /* ! __cplusplus */ 
+#endif /* ! __cplusplus */
 
 /* ============================================================================
  * Compiler Silencing macros
@@ -61,12 +61,3 @@
 #endif /* ! ghs || __GNUC__ || ..... */
 
 #endif /* PACE_CONFIG_COMPILER_H */
-
-
-
-
-
-
-
-
-

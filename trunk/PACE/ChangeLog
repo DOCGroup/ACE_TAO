@@ -1,3 +1,9 @@
+Fri Jul  7 15:24:57 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/compiler.h:
+
+	  # define PACE_HAS_CPLUSPLUS __cplusplus
+
 Fri Jul 07 14:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:
