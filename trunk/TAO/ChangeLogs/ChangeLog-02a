@@ -1,3 +1,9 @@
+Thu Aug 10 23:11:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/MT_Client/server.cpp:
+	* tests/MT_Client/client.cpp:
+	  Call ORB::destroy() before finishing the test.
+
 Thu Aug 10 23:03:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/server.cpp:
@@ -8,7 +14,7 @@ Thu Aug 10 23:03:17 2000  Carlos O'Ryan  <coryan@uci.edu>
           is disabled.
 
 Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-	
+
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
 	Added a new policy in the design which enables the user to either
@@ -17,7 +23,7 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	smart proxy factories.  Thus one can have a smart proxy factory
 	per interface (this is the one-shot policy) or have the smart
 	factory per object instance by disabling the one-shot policy at
-	creation time.  
+	creation time.
 
 	* tests/Smart_Proxies/Policy/Makefile:
 	* tests/Smart_Proxies/Policy/README:
@@ -36,13 +42,13 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/Smart_Proxies/Benchmark/Smart_Proxy_Impl.{h,cpp}:
 	* tests/Smart_Proxies/Benchmark/test.idl:
 	This is a test which performs benchmarking of the smart proxy
-	feature in TAO.  
+	feature in TAO.
 
 	* docs/Smart_Proxies.html: Describes these new options of the
 	smart proxy feature.
 	Thanks to Doug and Nanbor for motivating me to get these policies
 	in place. ;)
-	
+
 Thu Aug 10 18:39:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
