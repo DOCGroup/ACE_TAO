@@ -644,7 +644,7 @@ ACE_OS::gets (char *str, int n)
   int c;
   char *s = str;
 
-  if (n < 0) n = 0;
+  if (str == 0 || n < 0) n = 0;
   if (n == 0) str = 0;
   else n--;
 
@@ -662,7 +662,7 @@ ACE_OS::gets (char *str, int n)
       if (n > 0)
         n--, *s++ = c;
     }
-  *s = '\0';
+  if (s) *s = '\0';
 
   // ACE_OSCALL_RETURN (::gets (str), char *, 0);
   return (c == EOF) ? 0 : str;
