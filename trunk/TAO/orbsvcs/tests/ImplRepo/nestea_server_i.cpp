@@ -6,7 +6,11 @@
 
 ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
 
-const char *NESTEA_DATA_FILENAME = "nestea.dat";
+// The file to save the persistent state to.
+const char NESTEA_DATA_FILENAME[] = "nestea.dat";
+
+// The server name of the Nestea Server
+const char SERVER_NAME[] = "nestea_server";
 
 Nestea_Server_i::Nestea_Server_i (const char * /*filename*/)
   : server_impl_ (0),
@@ -62,66 +66,129 @@ Nestea_Server_i::parse_args (void)
   return 0;
 }
 
+
+// The init() method does quite a few things.
+//
+// - Initialize the ORB
+// - Create a persistent POA for the server
+// - Activate the POA Manager
+// - Activate the servant under the POA
+// - Uses the IR helper class to alter the object
+// - Creates an IOR from the servant and outputs it to a file
+
 int
 Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 {
-  char poa_name[] = "nestea_server";
+  // Since the Implementation Repository keys off of the POA name, we need
+  // to use the SERVER_NAME as the POA's name.
+  const char *poa_name = SERVER_NAME;
 
   ACE_TRY 
     {
-      // Call the init of <TAO_ORB_Manager> to initialize the ORB and
-      // create a child POA under the root POA.
-      if (this->orb_manager_.init_child_poa (argc, argv, poa_name, ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
-
-      ACE_TRY_CHECK;
-    
-      if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
-
+      // Initialize the ORB
+      this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Save pointers to the command line arguments
       this->argc_ = argc;
       this->argv_ = argv;
 
+      // Now check the arguments for our options
       int retval = this->parse_args ();
 
       if (retval != 0)
         return retval;
 
-      ACE_NEW_RETURN (this->server_impl_, Nestea_i (NESTEA_DATA_FILENAME, this->use_ir_), -1);
-
-      CORBA::String_var server_str  =
-        this->orb_manager_.activate_under_child_poa ("server",
-                                                     this->server_impl_,
-                                                     ACE_TRY_ENV);
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references ("RootPOA",
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->use_ir_ == 1)
-        ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                     this->orb_manager_.child_poa (),
-                                                     this->orb_manager_.orb (),
-                                                     TAO_debug_level),
-                        -1);
+      // Check the POA object.
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nestea_i::init(): Unable to initialize the POA.\n"),
+                          -1);
 
+      // Narrow the object to a POA.
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      PortableServer::ObjectId_var id =
+      // Get the POA_Manager.
+      this->poa_manager_ = root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      // We now need to create a POA with the persistent and user_id policies,
+      // since they are need for use with the Implementation Repository.
+      
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+    
+      policies[0] =
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK
+
+      policies[1] =
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->nestea_poa_ =
+        root_poa->create_POA (poa_name,
+                              this->poa_manager_.in (),
+                              policies,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Creation of the new POA is over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0; i < policies.length (); ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      // Make sure the POA manager is activated.
+      this->poa_manager_->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_NEW_RETURN (this->server_impl_, 
+                      Nestea_i (NESTEA_DATA_FILENAME, 
+                                this->use_ir_), 
+                      -1);
+
+      PortableServer::ObjectId_var server_id =
         PortableServer::string_to_ObjectId ("server");
 
-      CORBA::Object_var server_obj =
-        this->orb_manager_.child_poa ()->id_to_reference (id.in (),
-                                                          ACE_TRY_ENV);
+      this->nestea_poa_->activate_object_with_id (server_id.in (),
+                                                  this->server_impl_,
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
+      CORBA::Object_var server_obj =
+        this->nestea_poa_->id_to_reference (server_id.in (),
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
       if (this->use_ir_ == 1)
         {
+          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (SERVER_NAME,
+                                                       this->nestea_poa_,
+                                                       this->orb_,
+                                                       TAO_debug_level),
+                          -1);
           this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-       
-      server_str =
-        this->orb_manager_.orb ()->object_to_string (server_obj.in (),
-                                                     ACE_TRY_ENV);
+      
+      // Create an IOR from the server object.
+      CORBA::String_var server_str =
+        this->orb_->object_to_string (server_obj.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -148,6 +215,8 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 int
 Nestea_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  int status = 0;
+
   ACE_TRY
     {
       if (this->use_ir_ == 1)
@@ -156,7 +225,7 @@ Nestea_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
           ACE_TRY_CHECK;
         }
 
-      this->orb_manager_.run (ACE_TRY_ENV);
+      status = this->orb_->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
@@ -174,5 +243,5 @@ Nestea_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
   
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  return status;
 }

@@ -21,6 +21,7 @@
 #define IMPLREPO_I_H
 
 #include "orbsvcs/ImplRepoS.h"
+#include "orbsvcs/IOR_Multicast.h"
 #include "Repository.h"
 #include "tao/TAO.h"
 
@@ -173,6 +174,12 @@ private:
 
   char *server_input_file_;
   // Copy of the filename for the server output file.
+
+  TAO_IOR_Multicast *ior_multicast_;
+  // The ior_multicast event handler.
+
+  CORBA::String_var ir_var_;
+  // The IR's IOR
 
   int argc_;
   // Number of command line arguments.

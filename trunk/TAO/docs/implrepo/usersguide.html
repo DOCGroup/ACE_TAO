@@ -76,8 +76,8 @@ hiding much of the work of registration in methods. </p>
     ACE_DEBUG.<br>
     <br>
     The constructor creates a ServerObject and registers it with the Implementation
-    Repository. It receives a reference to the IR via the ORB, so the ORB must be passed
-    the information via the command line (since multicast is not fully operational yet)..
+    Repository. It receives a reference to the IR via the ORB, so the ORB can be passed
+    the information via the command line or it can find it via multicast.
      <code><br>
     </code></li>
   <li><code>void notify_startup ();<br>

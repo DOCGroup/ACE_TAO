@@ -6,6 +6,9 @@
 
 ACE_RCSID(ImplRepo, airplane_server_i, "$Id$")
 
+// The server name of the Aiprlane Server
+const char SERVER_NAME[] = "airplane_server";
+
 Airplane_Server_i::Airplane_Server_i (void)
   : server_impl_ (0),
     ior_output_file_ (0),
@@ -56,65 +59,115 @@ Airplane_Server_i::parse_args (void)
 int
 Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 {
-  char poa_name[] = "plane";
+  // Since the Implementation Repository keys off of the POA name, we need
+  // to use the SERVER_NAME as the POA's name.
+  const char *poa_name = SERVER_NAME;
 
   ACE_TRY
     {
-      // Call the init of <TAO_ORB_Manager> to initialize the ORB and
-      // create a child POA under the root POA.
-      if (this->orb_manager_.init_child_poa (argc, argv, poa_name, ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
-
+      // Initialize the ORB
+      this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
-
-      ACE_TRY_CHECK;
-
+      // Save pointers to the command line arguments
       this->argc_ = argc;
       this->argv_ = argv;
 
+      // Now check the arguments for our options
       int retval = this->parse_args ();
 
       if (retval != 0)
         return retval;
 
-      ACE_NEW_RETURN (this->server_impl_, Airplane_i (this->use_ir_), -1);
-
-      CORBA::String_var server_str  =
-        this->orb_manager_.activate_under_child_poa ("server",
-                                                     this->server_impl_,
-                                                     ACE_TRY_ENV);
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references ("RootPOA",
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
-      CORBA::ORB_var orb = this->orb_manager_.orb ();
+      // Check the POA object.
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Airplane_i::init(): Unable to initialize the POA.\n"),
+                          -1);
 
-      if (this->use_ir_ == 1)
-        ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                     child_poa.in (),
-                                                     orb.in (),
-                                                     TAO_debug_level),
-                        -1);
-
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("server");
-
-      CORBA::Object_var server_obj =
-        child_poa->id_to_reference (id.in (),
-                                    ACE_TRY_ENV);
+      // Narrow the object to a POA.
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->use_ir_ == 1)
+      // Get the POA_Manager.
+      this->poa_manager_ = root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      // We now need to create a POA with the persistent and user_id policies,
+      // since they are need for use with the Implementation Repository.
+      
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+    
+      policies[0] =
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK
+
+      policies[1] =
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->airplane_poa_ =
+        root_poa->create_POA (poa_name,
+                              this->poa_manager_.in (),
+                              policies,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Creation of the new POA is over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
-          this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      server_str =
-        orb->object_to_string (server_obj.in (),
-                               ACE_TRY_ENV);
+      // Make sure the POA manager is activated.
+      this->poa_manager_->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_NEW_RETURN (this->server_impl_, 
+                      Airplane_i (this->use_ir_), 
+                      -1);
+
+      PortableServer::ObjectId_var server_id =
+        PortableServer::string_to_ObjectId ("server");
+
+      this->airplane_poa_->activate_object_with_id (server_id.in (),
+                                                    this->server_impl_,
+                                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var server_obj =
+        this->airplane_poa_->id_to_reference (server_id.in (),
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
+      if (this->use_ir_ == 1)
+        {
+          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (SERVER_NAME,
+                                                       this->airplane_poa_,
+                                                       this->orb_,
+                                                       TAO_debug_level),
+                          -1);
+          this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      
+      // Create an IOR from the server object.
+      CORBA::String_var server_str =
+        this->orb_->object_to_string (server_obj.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -149,7 +202,7 @@ Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
           ACE_TRY_CHECK;
         }
 
-      this->orb_manager_.run (ACE_TRY_ENV);
+      this->orb_->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)

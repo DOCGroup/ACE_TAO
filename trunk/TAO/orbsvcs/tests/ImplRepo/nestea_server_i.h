@@ -21,7 +21,7 @@
 #if !defined (NESTEA_SERVER_I_H)
 #define NESTEA_SERVER_I_H
 
-#include "tao/TAO.h"
+#include "tao/corba.h"
 #include "nestea_i.h"
 #include "orbsvcs/IR_Helper.h"
 
@@ -58,9 +58,15 @@ private:
   char **argv_;
   // The command line arguments.
 
-  TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
+  CORBA::ORB_var orb_;
+  // The ORB.
 
+  PortableServer::POA_var nestea_poa_;
+  // The POA for the Nestea Server.
+
+  PortableServer::POAManager_var poa_manager_;
+  // The POA manager.
+  
   Nestea_i *server_impl_;
   // The Nestea Bookshelf Server Implementation.  
 

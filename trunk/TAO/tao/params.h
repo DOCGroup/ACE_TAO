@@ -175,6 +175,11 @@ public:
   // Disable the OMG standard profile components, useful for
   // homogenous environments.
 
+  int use_multicast (void) const;
+  void use_multicast (int um);
+  // Set/Get the flag for whether multicast should be used in 
+  // resolve_initial_references ().
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -248,6 +253,9 @@ private:
 
   int std_profile_components_;
   // If true then the standard OMG components are not generated.
+
+  int use_multicast_;
+  // 1 if we want to use multicast, 0 if we want to suppress it.
 };
 
 #if defined (__ACE_INLINE__)

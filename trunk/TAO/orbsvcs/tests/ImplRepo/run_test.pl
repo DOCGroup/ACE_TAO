@@ -49,7 +49,7 @@ sub airplane_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add airplane_server -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $SV = Process::Create ($airplane_server,
                          "-o $airplane_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
@@ -58,11 +58,11 @@ sub airplane_ir_test
 
   system($airplane_client." -k file://$airplane_ior");
 
-  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown plane");
+  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown airplane_server");
 
   system($airplane_client." -k file://$airplane_ior");
 
-  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown plane");
+  system($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown airplane_server");
 
   $IR->Kill (); $IR->Wait ();
 }
@@ -112,8 +112,8 @@ sub both_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea -c \"$nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add airplane_server -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea_server -c \"$nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $ASV = Process::Create ($nestea_server,
                          "-o $nestea_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
@@ -123,14 +123,15 @@ sub both_ir_test
   ACE::waitforfile ($nestea_ior);
 
   $NCL = Process::Create ($nestea_client, "-k file://$nestea_ior");
+  $ACL = Process::Create ($airplane_client, "-k file://$airplane_ior");
 
-  ACE::waitforfile ($airplane_ior);
-
-  system($airplane_client." -k file://$airplane_ior");
+  $ncl_status = $NCL->TimedWait (300);
+  $acl_status = $ACL->TimedWait (300);
 
   $ASV->Kill (); $ASV->Wait ();
   $NSV->Kill (); $NSV->Wait ();
   $NCL->Kill (); $NCL->Wait ();
+  $ACL->Kill (); $ACL->Wait ();
   $IR->Kill (); $IR->Wait ();
 }
 
