@@ -272,40 +272,8 @@ ACE_Filecache::update_i (const char *filename,
 {
   ACE_Filecache_Object *handle = 0;
 
-  // Just in case someone removed it
-  if (this->hash_.find (filename, handle) == -1)
-    {
-      ACE_NEW_RETURN (handle,
-                      ACE_Filecache_Object (filename, filelock, 0, mapit),
-                      0);
-
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: creating %s\n"), filename));
-
-      if (this->hash_.bind (filename, handle) == -1)
-        {
-          delete handle;
-          handle = 0;
-        }
-    }
-  else
-    {
-      if (handle->update ())
-        {
-          handle = this->remove_i (filename);
-
-          ACE_NEW_RETURN (handle,
-                          ACE_Filecache_Object (filename, filelock, 0, mapit),
-                          0);
-
-          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: updating %s\n"), filename));
-
-          if (this->hash_.bind (filename, handle) == -1)
-            {
-              delete handle;
-              handle = 0;
-            }
-        }
-    }
+  handle = this->remove_i (filename);
+  handle = this->insert_i (filename, filelock, mapit);
 
   return handle;
 }
@@ -342,17 +310,16 @@ ACE_Filecache::fetch (const char *filename, int mapit)
     {
       if (handle->update ())
         {
-          filelock.release ();
           {
             // Double check locking pattern
             ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
 
             // Second check in the method call
             handle = this->update_i (filename, filelock, mapit);
-          }
 
-          if (handle)
-            filelock.acquire_read ();
+            if (handle == 0)
+              filelock.release ();
+          }
         }
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: found %s\n"), filename));
     }
