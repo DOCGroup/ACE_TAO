@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -154,7 +154,7 @@ namespace TAO
                                      T_var,
                                      to_T,
                                      from_T,
-                                     BOUND>       in_sarg_val;
+                                     BOUND>       in_arg_val;
     typedef Inout_BD_String_SArgument_T<T,
                                         T_var,
                                         to_T,
@@ -180,7 +180,7 @@ namespace TAO
    */
 
   template<size_t BOUND>
-  class BD_StringS_Arg_Traits
+  class BD_String_SArg_Traits
     : public BD_String_SArg_Traits_T<CORBA::Char,
                                      CORBA::String_var,
                                      CORBA::String_out,

@@ -4,16 +4,10 @@
 
 template<typename S>
 ACE_INLINE
-TAO::In_Fixed_Size_SArgument_T<S>::In_Fixed_Size_SArgument_T (S const & a)
-  : arg_ (a)
-{}
-
-template<typename S>
-ACE_INLINE
 S const &
 TAO::In_Fixed_Size_SArgument_T<S>::arg (void) const
 {
-  return this->arg_;
+  return *this->x_;
 }
 
 // ==========================================================================

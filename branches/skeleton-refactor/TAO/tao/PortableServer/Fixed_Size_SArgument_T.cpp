@@ -78,7 +78,7 @@ template<typename S>
 void
 TAO::Out_Fixed_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
-  p.argument <<= *this->x_;
+  p.argument <<= this->x_;
   p.mode = CORBA::PARAM_OUT;
 }
 

@@ -40,9 +40,6 @@ namespace TAO
   {
   public:
 
-    /// Constructor.
-    In_Fixed_Size_SArgument_T (void);
-
     /**
      * @name @c TAO::Argument Method Overrides
      *
@@ -65,7 +62,7 @@ namespace TAO
   private:
 
     /// Reference to the "IN" argument.
-    S & arg_;
+    S * x_;
 
   };
 

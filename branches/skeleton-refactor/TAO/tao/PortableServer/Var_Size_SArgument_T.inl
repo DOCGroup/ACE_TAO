@@ -1,9 +1,5 @@
 // $Id$
 
-template<typename S>
-ACE_INLINE
-TAO::In_Var_Size_SArgument_T<S>::In_Var_Size_SArgument_T (void)
-{}
 
 template<typename S>
 const S &
