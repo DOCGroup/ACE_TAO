@@ -6068,7 +6068,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
   ACE_UNUSED_ARG (requested);
   ACE_UNUSED_ARG (remaining);
   ACE_NOTSUP_RETURN (-1);
-#endif (ACE_HAS_CLOCK_GETTIME)
+#endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
 ACE_INLINE int 
