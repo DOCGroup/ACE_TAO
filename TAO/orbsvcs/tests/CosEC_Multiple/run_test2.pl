@@ -17,7 +17,7 @@ $status = 0;
 sub cosec_multiple_test2
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT, "");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Server".$EXE_EXT, "");
 
     sleep 10;
 
