@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    Checks the functionality of the ACE CDR streams used for file
-//    I/O. 
+//    I/O.
 //
 // = AUTHORS
 //    Giga Giguashvili <gregoryg@ParadigmGeo.com> and
@@ -59,13 +59,13 @@ public:
 
 private:
   ACE_CDR::Char char_;
-  ACE_CDR::Long	word_;
+  ACE_CDR::Long word_;
   ACE_CDR::Float fpoint_;
   ACE_CDR::Double dprec_;
 };
 
 ostream &
-operator << (ostream &os, 
+operator << (ostream &os,
              const CDR_Test &t)
 {
   os << "Char:  " << t.char_ << endl
@@ -94,7 +94,7 @@ CDR_Test::CDR_Test (ACE_CDR::Char o,
 {
 }
 
-void 
+void
 operator << (ACE_OutputCDR &os, const CDR_Test &t)
 {
   os << t.char_;
@@ -103,7 +103,7 @@ operator << (ACE_OutputCDR &os, const CDR_Test &t)
   os << t.dprec_;
 }
 
-void 
+void
 operator >> (ACE_InputCDR &is, CDR_Test &t)
 {
   is >> t.char_;
@@ -139,16 +139,16 @@ run_test (int write_file,
 
       // Output the data to cout.
       *ace_file_stream::instance ()->output_file () << cdr_test;
-	
+
       // Save the data.
-      const ACE_Message_Block *output_mb = 
+      const ACE_Message_Block *output_mb =
         output_cdr.begin ();
-	
+
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("Writing file %s in %s endian format...\n"),
                   filename,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
-	
+
       ssize_t n = file.send (output_mb->rd_ptr (),
                              output_mb->length ());
       if (n != (ssize_t) output_mb->length())
@@ -186,19 +186,21 @@ run_test (int write_file,
                                 info.size_);
       if (size != info.size_)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
+                           ASYS_TEXT ("Read %d bytes, rather than expected ")
+                           ASYS_TEXT ("%d bytes\n"),
                            size,
                            info.size_),
                           -1);
 
-      // Create message block for the whole file 
-	
-      ACE_Message_Block mb (info.size_);
+      // Create message block for the whole file.  Ensure that it is
+      // aligned to properly handle the double.
+      ACE_Message_Block mb (ACE_CDR::MAX_ALIGNMENT + info.size_);
+      ACE_CDR::mb_align (&mb);
       mb.copy (buffer,
                info.size_);
-	
+
       // Create CDR input stream from the message block.
-	
+
       ACE_InputCDR input_cdr (&mb);
       input_cdr.reset_byte_order (ACE_CDR_BYTE_ORDER);
 
@@ -206,7 +208,7 @@ run_test (int write_file,
                   ASYS_TEXT ("Reading file %s in %s endian format...\n"),
                   filename,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
-	
+
       CDR_Test temp;
 
       // Demarshal the data from the input CDR stream into the
@@ -216,13 +218,13 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << temp;
       ACE_ASSERT (temp == cdr_test);
     }
-    
+
   return 0;
 }
 
 // Main function
 
-int 
+int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
@@ -241,30 +243,30 @@ main (int, ASYS_TCHAR *[])
                          0,
                          O_RDWR | O_CREAT,
                          ACE_DEFAULT_FILE_PERMS) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("connect failed for %p\n"),
                          filename.get_path_name ()),
                         1);
   // Unlink this file right away so that it is automatically removed
   // when the process exits.
   else if (file.unlink () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("unlink failed for %p\n"),
                        filename.get_path_name ()),
                       1);
-  CDR_Test cdr_test ('a', 
+  CDR_Test cdr_test ('a',
                      1000,
                      1.54321f,
                      1.12345);
 
   // First write the file.
-  run_test (1, 
+  run_test (1,
             file,
             filename.get_path_name (),
             cdr_test);
 
   // Then read the file.
-  run_test (0, 
+  run_test (0,
             file,
             filename.get_path_name (),
             cdr_test);
