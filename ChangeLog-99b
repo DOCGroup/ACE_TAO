@@ -1,5 +1,11 @@
 Wed Aug  4 09:28:35 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Malloc.h: Replaced the use of typedefs for macros
+	  to define ACE_MALLOC_HEADER_PTR ACE, ACE_NAME_NODE_PTR,
+ 	  ACE_CHAR_PTR to try to avoid "incomplete type" messages from
+ 	  certain versions of G++.  Macros are "later binding" than
+ 	  typedefs for this situation.
+
 	* ace/Asynch_Acceptor.cpp (handle_accept): Fixed an expression
 	  that had incorrect parentheses.  Thanks to David Digby
  	  <DWD15274@glaxowellcome.co.uk> for reporting this.
