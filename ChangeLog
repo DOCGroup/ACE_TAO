@@ -1,3 +1,14 @@
+Sat Feb 14 11:41:27 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_sys_stat.inl: Implement lstat() so that it'll
+	  use stat() on platforms that don't support lstat().
+
+	* build/tests/Dirent_Test.cpp: Updated this test so it will
+	  illustrate how to recurse through a hierarchical directory
+ 	  structure.  Thanks to Zvika Ashani <zvika@aspectusvi.com> for
+ 	  helping to motivate this example and for providing the initial
+ 	  implementation.
+
 Sat Feb 14 09:22:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TMCast/Makefile:	
