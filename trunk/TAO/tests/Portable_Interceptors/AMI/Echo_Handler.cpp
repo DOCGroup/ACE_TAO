@@ -14,6 +14,7 @@ ACE_RCSID (AMI,
 
 
 Echo_Handler::Echo_Handler(void)
+  : replies_ (0)
 {
 }
 
@@ -22,6 +23,7 @@ Echo_Handler::echo_operation (char const *
                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
+  ++this->replies_;
 }
 
 void
@@ -42,4 +44,10 @@ Echo_Handler::shutdown_excep (Test::AMI_EchoExceptionHolder *
                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
+}
+
+CORBA::ULong
+Echo_Handler::replies (void) const
+{
+  return this->replies_;
 }

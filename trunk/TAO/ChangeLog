@@ -1,3 +1,15 @@
+Tue Mar 23 22:48:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/AMI/Echo_Handler.cpp:
+	* tests/Portable_Interceptors/AMI/Echo_Handler.h:
+	* tests/Portable_Interceptors/AMI/client.cpp:
+
+	  Huang-Ming reported that interceptors are not invoked during
+	  reply collection process in AMI. To verify the bug report I just
+	  went ahead and improved the above test to check for the missing
+	  test case. Looks like the bug report is false, but the
+	  improvement is good enough to be run in the daily builds.
+
 Tue Mar 23 13:53:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
