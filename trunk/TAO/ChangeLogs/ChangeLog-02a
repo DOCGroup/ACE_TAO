@@ -1,3 +1,9 @@
+Sun Jul 22 16:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/Client_Task.cpp:
+	* tests/Big_Reply/Client_Task.h: Fixed a compile error in no
+	  exception builds.  
+
 Sun Jul 22 13:36:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/RTP.cpp:
