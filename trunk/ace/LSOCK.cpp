@@ -30,7 +30,7 @@ int
 ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
-  unsigned char a[2];
+  u_char a[2];
   iovec iov;
   msghdr send_msg;
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
@@ -71,7 +71,7 @@ int
 ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
 {
   ACE_TRACE ("ACE_LSOCK::recv_handle");
-  unsigned char a[2];
+  u_char a[2];
   iovec iov;
   msghdr recv_msg;
 
@@ -103,9 +103,6 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 #if defined (ACE_HAS_STREAMS)
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-  ACE_UNUSED_ARG (handle);
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, 0);
 
@@ -115,9 +112,15 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
         *len = nbytes;
 
       if (nbytes == sizeof a
-          && ((unsigned char *) iov.iov_base)[0] == 0xab
-          && ((unsigned char *) iov.iov_base)[1] == 0xcd)
-        return 1;
+          && ((u_char *) iov.iov_base)[0] == 0xab
+          && ((u_char *) iov.iov_base)[1] == 0xcd)
+        {
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+          cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+          handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr);
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+          return 1;
+        }
       else
         return 0;
     }
@@ -129,8 +132,8 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
   if (nbytes != ACE_INVALID_HANDLE)
     {
       if (nbytes == sizeof a
-          && ((unsigned char *) iov.iov_base)[0] == 0xab
-          && ((unsigned char *) iov.iov_base)[1] == 0xcd)
+          && ((u_char *) iov.iov_base)[0] == 0xab
+          && ((u_char *) iov.iov_base)[1] == 0xcd)
         {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
           // Close down the socket that was returned by the MSG_PEEK.
@@ -149,7 +152,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
             {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
               cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
-              handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr) ;
+              handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr);
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
               return 1;
             }

@@ -1,3 +1,20 @@
+Sun Oct 21 12:50:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/LSOCK.cpp: The ACE_LSOCK::recv_handle() was returning success
+	  without setting the I/O handle.  Thanks to Rick Ohnemus
+ 	  <rick.ohnemus@systemware.com> for reporting this.
+
+	* ace/config-freebsd-pthread.h: Changed
+          #if (__FreeBSD_version > 430000) to
+	  #if (__FreeBSD_version > 440000) to get ACE to work with FreeBSD 4.4.
+	  Thanks to Gu Song <gusong_m@yahoo.com> for reporting this.
+
+Fri Oct 19 06:44:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
+	  Don't use a global Event_Handler object since this violates the
+ 	  design rules for the ACE_Reactor.	
+  
 Sun Oct 21 13:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the Quoter example in
@@ -50,6 +67,12 @@ Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
           target, core executables are built correctly if they don't
           already exist.
 
+Wed Oct 17 09:15:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-linux-common.h: Clarified that this file should 
+	  not be included directly!  Thanks to Suresh N
+ 	  <suresh.n@vergiltech.com> for reporting this.
+
 Wed Oct 17 16:00:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Graeme Clark to the Hall of Fame.
@@ -81,10 +104,10 @@ Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
 	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
 	  If errno is set to EWOULDBLOCK for the SSL_ERROR_SYSCALL case,
-	  then continue the connection establishment loop.  Do not return
-	  right away.  Fixes non-blocking connection establishment on AIX.
-	  Thanks to Vladimir Chovanec  <Vladimir.CHOVANEC@asset.sk> for
-	  providing this fix.
+ 	  then continue the connection establishment loop.  Do not return
+ 	  right away.  Fixes non-blocking connection establishment on AIX.
+  	  Thanks to Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk> for
+ 	  providing this fix.
 
 	* ace/SSL/SSL_SOCK_Stream.h (notify):
 

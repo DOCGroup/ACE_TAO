@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -44,7 +44,7 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-Event_Handler event_handler;
+static Event_Handler *global_event_handler;
 
 void WINAPI
 timer_callback (HWND hwnd,
@@ -54,7 +54,7 @@ timer_callback (HWND hwnd,
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) timeout occured @ %d\n", dwTime));
 
-  event_handler.handle_.signal ();
+  global_event_handler->handle_.signal ();
 }
 
 int
@@ -66,6 +66,9 @@ main (int argc, char** argv)
   auto_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl));
   ACE_Reactor::instance (reactor.get ());
   auto_ptr<ACE_Reactor_Impl> delete_impl (impl);
+
+  Event_Handler event_handler;
+  global_event_handler = &event_handler;
 
   event_handler.iterations_ = 5;
   int result = ACE_Reactor::instance ()->register_handler (&event_handler,

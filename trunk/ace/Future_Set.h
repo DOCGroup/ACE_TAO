@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
 #include "ace/pre.h"

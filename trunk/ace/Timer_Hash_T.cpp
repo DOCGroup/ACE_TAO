@@ -232,7 +232,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (size_t tabl
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *upcall_functor,
-                                                                 ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
+                                                                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> (upcall_functor, freelist),
     size_ (0),
     table_ (new BUCKET *[ACE_DEFAULT_TIMER_HASH_TABLE_SIZE]),
