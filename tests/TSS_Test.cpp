@@ -87,25 +87,25 @@ worker (void *c)
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
 
-  if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
+  if (ACE_Thread::keycreate (&key, cleanup) == -1)
     {
       ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no keys available)\n"),
-                  ASYS_TEXT ("ACE_OS::thr_keycreate")));
+                  ASYS_TEXT ("ACE_Thread::keycreate")));
       return (void *) -1;
     }
 
   ACE_NEW_RETURN (ip, int, 0);
 
-  if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
+  if (ACE_Thread::setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                ASYS_TEXT ("ACE_Thread::setspecific")));
 
   for (int i = 0; i < count; i++)
     {
-      if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
+      if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
           ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no more keys)\n"),
-                      ASYS_TEXT ("ACE_OS::thr_keycreate")));
+                      ASYS_TEXT ("ACE_Thread::keycreate")));
           break;
         }
 
@@ -115,23 +115,23 @@ worker (void *c)
                             ASYS_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
 
-      if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
+      if (ACE_Thread::setspecific (key, (void *) ip) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::setspecific")));
 
-      if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
+      if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::getspecific")));
 
-      if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
+      if (ACE_Thread::setspecific (key, (void *) 0) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::setspecific")));
 
       delete ip;
 
-      if (ACE_OS::thr_keyfree (key) == -1)
+      if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_keyfree")));
+                    ASYS_TEXT ("ACE_Thread::keyfree")));
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -169,10 +169,10 @@ worker (void *c)
 #if !defined (__Lynx__) && !defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
-      if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
+      if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
           ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no more keys)\n"),
-                      ASYS_TEXT ("ACE_OS::thr_keycreate")));
+                      ASYS_TEXT ("ACE_Thread::keycreate")));
           break;
         }
 
@@ -182,23 +182,23 @@ worker (void *c)
                             ASYS_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
 
-      if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
+      if (ACE_Thread::setspecific (key, (void *) ip) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::setspecific")));
 
-      if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
+      if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::getspecific")));
 
-      if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
+      if (ACE_Thread::setspecific (key, (void *) 0) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_setspecific")));
+                    ASYS_TEXT ("ACE_Thread::setspecific")));
 
       delete ip;
 
-      if (ACE_OS::thr_keyfree (key) == -1)
+      if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_OS::thr_keyfree")));
+                    ASYS_TEXT ("ACE_Thread::keyfree")));
 #endif /* ! __Lynx__) && ! ACE_HAS_TSS_EMULATION */
     }
 
