@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

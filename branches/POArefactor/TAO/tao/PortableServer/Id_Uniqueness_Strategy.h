@@ -10,14 +10,13 @@
  */
 //=============================================================================
 
-#ifndef TAO_ID_ASSIGNMENT_STRATEGY_H
-#define TAO_ID_ASSIGNMENT_STRATEGY_H
+#ifndef TAO_ID_UNIQUENESS_STRATEGY_H
+#define TAO_ID_UNIQUENESS_STRATEGY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PolicyFactory.h"
 #include "PortableServerC.h"
-#include "PolicyStrategy.h"
+#include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -40,12 +39,9 @@ namespace TAO
        public virtual Policy_Strategy
     {
     public:
-      virtual ~Thread_Strategy (void);
+      virtual ~Id_Uniqueness_Strategy (void);
 
-      void init(CORBA::PolicyList *policy_list)
-      {
-        // dependent on type create the correct strategy.
-      }
+      void strategy_init(CORBA::PolicyList *policy_list);
     };
 
     class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy :
@@ -69,4 +65,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_ID_ASSIGNMENT_STRATEGY_H */
+#endif /* TAO_ID_UNIQUENESS_STRATEGY_H */
