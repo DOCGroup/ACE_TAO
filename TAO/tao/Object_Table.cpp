@@ -38,7 +38,7 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
     {
       const TAO_Object_Table_Entry &item = i->item ();
 
-      if (!item.is_free_)
+      if (!this->is_free (item))
         {
           if (item.servant_ == servant)
             {
