@@ -219,8 +219,10 @@ class ACE_DNode
 
 public:
 
+# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_DNode (void);
-  // This isn't necessary, but it keeps the compiler happy.
+  // This isn't necessary, but it keeps some compilers happy.
+# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 private:
 

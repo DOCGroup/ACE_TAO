@@ -75,7 +75,7 @@ Tue Apr 27 16:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  factory to simply inform Object Adapter if POA locking should be
 	  enabled.  The Object Adapter will create the proper lock.
 
-Tue Apr 27 19:11:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
+Tue Apr 27 16:40:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: added some additional
           structure member initializations to remove uninitialized memory
