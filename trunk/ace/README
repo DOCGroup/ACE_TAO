@@ -607,7 +607,7 @@ ACE_LACKS_ACE_IOSTREAM                  Platform can not build
                                         does not necessarily mean that
                                         the platform does not support
                                         iostreams.
-ACE_LACKS_AUTO_MMAP_REPLACEMENT         No system support for replacing any 
+ACE_LACKS_AUTO_MMAP_REPLACEMENT         No system support for replacing any
                                         previous mappings.
 ACE_LACKS_BSEARCH                       Compiler/platform lacks the
                                         standard C library bsearch()
@@ -1347,7 +1347,6 @@ ACE_HAS_THREADS:
 ----------------
 
   Used in:
-     libsrc/Service_Configurator/Service_Record.i
      libsrc/Service_Configurator/Svc_Conf.y.C
      libsrc/Service_Configurator/Thread_Spawn.i
      libsrc/Threads/Synch.C

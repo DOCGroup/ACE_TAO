@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Service_Record.i
-
 ACE_INLINE void *
 ACE_Service_Type_Impl::object (void) const
 {
@@ -37,7 +35,7 @@ ACE_INLINE int
 ACE_Service_Object_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::suspend");
-  return ((ACE_Service_Object *) this->object ())->suspend ();  
+  return ((ACE_Service_Object *) this->object ())->suspend ();
 }
 
 ACE_INLINE int
@@ -51,7 +49,7 @@ ACE_INLINE int
 ACE_Service_Object_Type::info (ASYS_TCHAR **str, size_t len) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::info");
-  return ((ACE_Service_Object *) this->object ())->info (str, len);  
+  return ((ACE_Service_Object *) this->object ())->info (str, len);
 }
 
 ACE_INLINE
@@ -65,5 +63,3 @@ ACE_Stream_Type::~ACE_Stream_Type (void)
 {
   ACE_TRACE ("ACE_Stream_Type::~ACE_Stream_Type");
 }
-
-
