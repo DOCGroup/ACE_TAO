@@ -1,3 +1,8 @@
+Thu Sep  2 22:14:59 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* example/simple/chat/Broadcaster.idl:
+	  modified parameter names to avoid idl compiler errors.
+
 Thu Sep 02 20:23:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/source.cpp:
