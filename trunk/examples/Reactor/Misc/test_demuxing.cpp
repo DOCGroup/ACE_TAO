@@ -165,8 +165,10 @@ STDIN_Handler::STDIN_Handler (void)
                 "%p\n",
                 "register_stdin_handler"));
 
-  // Register the STDIN_Handler to be dispatched once every <timeout>
-  // seconds.
+  // Register the <STDIN_Handler> to be dispatched once every
+  // <timeout> seconds starting in <timeout> seconds.  This example
+  // uses the "interval timer" feature of the <ACE_Reactor>'s timer
+  // queue.
   else if (ACE_Reactor::instance ()->schedule_timer
 	   (this,
             0,
