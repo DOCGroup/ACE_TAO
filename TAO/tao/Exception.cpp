@@ -107,7 +107,7 @@ CORBA_Exception::_decr_refcnt (void)
 
     // release the lock before destroying the object.
   }
-  
+
   delete this;
   return 0;
 }
@@ -300,8 +300,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
   // this.
   static const char *minor = "minor";
-  // @@ NW should this be "completed" or "completion"?
-  static const char *completion = "completion";
+  static const char *completed = "completed";
 
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
@@ -340,11 +339,11 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                        &CORBA::_tc_ulong, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
-                       &completion, 0,
+                       &completed, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
                        &TC_completion_status, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     TAO_THROW_ENV (CORBA_INITIALIZE (CORBA::COMPLETED_NO), env);
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
@@ -357,7 +356,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                              stream.buffer (),
                              1,
                              sizeof (CORBA_SystemException));
-  
+
   TAO_Exceptions::system_exceptions->add (tcp);
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
   return;
