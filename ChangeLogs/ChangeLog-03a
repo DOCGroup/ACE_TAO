@@ -1,3 +1,10 @@
+Fri Jul 14 12:00:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h (ACE_Log_Msg): Replaced class comments with some new
+          text submitted by Jerry D. DeMaster <jdemaster@ritesolutions.com>
+          that explain the per-thread and per-process logging enablement
+          clearly.
+
 Fri Jul 14 00:28:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS.i
