@@ -152,6 +152,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
 	    {
 	      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
 	      temp_ptr = temp_ptr->next_;
+	      // Explicitly call the destructor.
+	      hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
 	      this->allocator_->free (hold_ptr);
 	    }
 	}   
