@@ -216,6 +216,29 @@ namespace TAO
                        PortableGroup::MemberNotFound));
 
 
+    void create_member (
+        const PortableGroup::Location & the_location,
+        const char * type_id,
+        const PortableGroup::Criteria & the_criteria
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ( (CORBA::SystemException,
+        PortableGroup::MemberAlreadyPresent,
+        PortableGroup::NoFactory,
+        PortableGroup::ObjectNotCreated,
+        PortableGroup::InvalidCriteria,
+        PortableGroup::CannotMeetCriteria));
+
+    PortableGroup::Locations * locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CORBA::Object_ptr get_member_reference (
+        const PortableGroup::Location & the_location
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        PortableGroup::ObjectGroupNotFound,
+        PortableGroup::MemberNotFound));
+
     /////////////////////////
     // Implementation methods
   private:

@@ -22,7 +22,7 @@
 
 
 ACE_RCSID (PortableGroup,
-           PG_Group_Factory::,
+           PG_Group_Factory,
            "$Id$")
 
 
@@ -89,7 +89,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   PortableGroup::TagGroupTaggedComponent tagged_component;
   if (! TAO::PG_Utils::get_tagged_component (empty_group, tagged_component))
   {
-    delete empty_group;
     ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
   }
 
@@ -111,7 +110,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
 
   if (this->group_map_.bind (group_id, objectGroup) != 0)
   {
-    delete empty_group;
     delete objectGroup;
     ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
   }
