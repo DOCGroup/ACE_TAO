@@ -67,9 +67,9 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
 
       if (offset < 0)
 	{
-	  unsigned int difference = ACE_OS::strlen(this->temp_[current_index_]);
+	  int difference = ACE_OS::strlen(this->temp_[current_index_]) + offset;
                                                    
-          if ((difference + offset) <= 0)
+          if (difference < 0)
             {
 	      return 0;
 	    }
@@ -80,9 +80,9 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
 	}
       else if (offset > 0)
 	{
-	  unsigned int difference = ACE_OS::strlen(this->temp_[current_index_]);
+	  int difference = ACE_OS::strlen(this->temp_[current_index_]) - offset;
           
-	  if ((difference - offset) <= 0)
+	  if (difference < 0)
 	    {
 	      return 0;
 	    }
