@@ -74,32 +74,54 @@ TAO_default_environment ()
 
 // ****************************************************************
 
-TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
-TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::connection_timeout_hook_ = 0;
-TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
+// Initialize instance_ to 0, since this is what we test for in the call
+// to instance ().  Note that this does not require a constructor call, so
+// it is always initialized by the time that instance () can be called.
+TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::instance_ = 0;
 
-ACE_CString TAO_ORB_Core::endpoint_selector_factory_name_ =
-  "Default_Endpoint_Selector_Factory";
-ACE_CString TAO_ORB_Core::thread_lane_resources_manager_factory_name_ =
-  "Default_Thread_Lane_Resources_Manager_Factory";
-ACE_CString TAO_ORB_Core::collocation_resolver_name_ =
-  "Default_Collocation_Resolver";
-ACE_CString TAO_ORB_Core::stub_factory_name_ =
-  "Default_Stub_Factory";
-ACE_CString TAO_ORB_Core::resource_factory_name_ =
-  "Resource_Factory";
-ACE_CString TAO_ORB_Core::protocols_hooks_name_ =
-  "Protocols_Hooks";
-ACE_CString TAO_ORB_Core::dynamic_adapter_name_ =
-  "Dynamic_Adapter";
-ACE_CString TAO_ORB_Core::ifr_client_adapter_name_ =
-  "IFR_Client_Adapter";
-ACE_CString TAO_ORB_Core::typecodefactory_adapter_name_ =
-  "TypeCodeFactory_Adapter";
-ACE_CString TAO_ORB_Core::poa_factory_name_ =
-  "TAO_POA";
-ACE_CString TAO_ORB_Core::poa_factory_directive_ =
-  "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()";
+// Force an instance to be created at module initialization time,
+// since we do not want to worry about double checked locking and
+// the race condition to initialize the lock.
+TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::initialization_reference_ =
+  TAO_ORB_Core_Static_Resources::instance ();
+
+TAO_ORB_Core_Static_Resources*
+TAO_ORB_Core_Static_Resources::instance (void)
+{
+  if (TAO_ORB_Core_Static_Resources::instance_ == 0)
+    {
+      // This new is never freed on purpose.  The data specified by
+      // it needs to be around for the last shared library that references
+      // this class.  This could occur in a destructor in a shared library
+      // that is unloaded after this one.  One solution to avoid this
+      // harmless memory leak would be to use reference counting.
+      ACE_NEW_RETURN (TAO_ORB_Core_Static_Resources::instance_,
+                      TAO_ORB_Core_Static_Resources (),
+                      0);
+    }
+
+  return TAO_ORB_Core_Static_Resources::instance_;
+}
+
+TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
+  : sync_scope_hook_ (0),
+    protocols_hooks_name_ ("Protocols_Hooks"),
+    timeout_hook_ (0),
+    connection_timeout_hook_ (0),
+    endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory"),
+    thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory"),
+    collocation_resolver_name_ ("Default_Collocation_Resolver"),
+    stub_factory_name_ ("Default_Stub_Factory"),
+    resource_factory_name_ ("Resource_Factory"),
+    dynamic_adapter_name_ ("Dynamic_Adapter"),
+    ifr_client_adapter_name_ ("IFR_Client_Adapter"),
+    typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
+    poa_factory_name_ ("TAO_POA"),
+    poa_factory_directive_ ("dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
+{
+}
+
+// ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
@@ -1122,63 +1144,65 @@ TAO_ORB_Core::fini (void)
 void
 TAO_ORB_Core::set_thread_lane_resources_manager_factory (const char *thread_lane_resources_manager_factory_name)
 {
-  TAO_ORB_Core::thread_lane_resources_manager_factory_name_ =
+  TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_ =
     thread_lane_resources_manager_factory_name;
 }
 
 void
 TAO_ORB_Core::set_collocation_resolver (const char *collocation_resolver_name)
 {
-  TAO_ORB_Core::collocation_resolver_name_ =
+  TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_ =
     collocation_resolver_name;
 }
 
 void
 TAO_ORB_Core::set_stub_factory (const char *stub_factory_name)
 {
-  TAO_ORB_Core::stub_factory_name_ = stub_factory_name;
+  TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_ =
+    stub_factory_name;
 }
 
 void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 {
-  TAO_ORB_Core::resource_factory_name_ = resource_factory_name;
+  TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_ =
+    resource_factory_name;
 }
 
 void
 TAO_ORB_Core::dynamic_adapter_name (const char *name)
 {
-  TAO_ORB_Core::dynamic_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_ = name;
 }
 
 const char *
 TAO_ORB_Core::dynamic_adapter_name (void)
 {
-  return TAO_ORB_Core::dynamic_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_.c_str();
 }
 
 void
 TAO_ORB_Core::ifr_client_adapter_name (const char *name)
 {
-  TAO_ORB_Core::ifr_client_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->ifr_client_adapter_name_ = name;
 }
 
 const char *
 TAO_ORB_Core::ifr_client_adapter_name (void)
 {
-  return TAO_ORB_Core::ifr_client_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->ifr_client_adapter_name_.c_str();
 }
 
 void
 TAO_ORB_Core::typecodefactory_adapter_name (const char *name)
 {
-  TAO_ORB_Core::typecodefactory_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->typecodefactory_adapter_name_ = name;
 }
 
 const char *
 TAO_ORB_Core::typecodefactory_adapter_name (void)
 {
-  return TAO_ORB_Core::typecodefactory_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->typecodefactory_adapter_name_.c_str();
 }
 
 TAO_Resource_Factory *
@@ -1191,7 +1215,7 @@ TAO_ORB_Core::resource_factory (void)
   // Look in the service repository for an instance.
   this->resource_factory_ =
     ACE_Dynamic_Service<TAO_Resource_Factory>::instance
-    (TAO_ORB_Core::resource_factory_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_.c_str());
 
   return this->resource_factory_;
 }
@@ -1206,7 +1230,7 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
   // If not, lookup the corresponding factory and ask it to make one.
   TAO_Thread_Lane_Resources_Manager_Factory *factory =
     ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager_Factory>::instance
-    (TAO_ORB_Core::thread_lane_resources_manager_factory_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_.c_str());
 
   this->thread_lane_resources_manager_ =
     factory->create_thread_lane_resources_manager (*this);
@@ -1224,7 +1248,7 @@ TAO_ORB_Core::collocation_resolver (void)
   // If not, lookup it up.
   this->collocation_resolver_ =
     ACE_Dynamic_Service<TAO_Collocation_Resolver>::instance
-    (TAO_ORB_Core::collocation_resolver_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_.c_str());
 
   return *this->collocation_resolver_;
 }
@@ -1239,7 +1263,7 @@ TAO_ORB_Core::stub_factory (void)
   // If not, look in the service repository for an instance.
   this->stub_factory_ =
     ACE_Dynamic_Service<TAO_Stub_Factory>::instance
-    (TAO_ORB_Core::stub_factory_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_.c_str());
 
   return this->stub_factory_;
 }
@@ -1248,20 +1272,22 @@ void
 TAO_ORB_Core::set_poa_factory (const char *poa_factory_name,
                                const char *poa_factory_directive)
 {
-  TAO_ORB_Core::poa_factory_name_ = poa_factory_name;
-  TAO_ORB_Core::poa_factory_directive_ = poa_factory_directive;
+  TAO_ORB_Core_Static_Resources::instance ()->poa_factory_name_ =
+    poa_factory_name;
+  TAO_ORB_Core_Static_Resources::instance ()->poa_factory_directive_ =
+    poa_factory_directive;
 }
 
 const ACE_CString &
 TAO_ORB_Core::poa_factory_name (void)
 {
-  return TAO_ORB_Core::poa_factory_name_;
+  return TAO_ORB_Core_Static_Resources::instance ()->poa_factory_name_;
 }
 
 void
 TAO_ORB_Core::set_endpoint_selector_factory (const char *endpoint_selector_factory_name)
 {
-  TAO_ORB_Core::endpoint_selector_factory_name_ =
+  TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_ =
     endpoint_selector_factory_name;
 }
 
@@ -1275,15 +1301,16 @@ TAO_ORB_Core::endpoint_selector_factory (void)
   // If not, look in the service repository for an instance.
   this->endpoint_selector_factory_ =
     ACE_Dynamic_Service<TAO_Endpoint_Selector_Factory>::instance
-    (TAO_ORB_Core::endpoint_selector_factory_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_.c_str());
 
   return this->endpoint_selector_factory_;
 }
 
 void
-TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
+TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
 {
-  TAO_ORB_Core::protocols_hooks_name_ = protocols_hooks;
+  TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_ =
+    protocols_hooks_name;
 }
 
 TAO_Protocols_Hooks *
@@ -1296,7 +1323,7 @@ TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
   // If not, look in the service repository for an instance.
   this->protocols_hooks_ =
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
-    (TAO_ORB_Core::protocols_hooks_name_.c_str());
+    (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
 
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this
@@ -1458,13 +1485,15 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
   if (!CORBA::is_nil (this->root_poa_.in ()))
     return CORBA::Object::_duplicate (this->root_poa_.in ());
 
+  TAO_ORB_Core_Static_Resources* static_resources =
+    TAO_ORB_Core_Static_Resources::instance ();
   TAO_Adapter_Factory *factory =
-    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_.c_str());
+    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (static_resources->poa_factory_name_.c_str());
   if (factory == 0)
     {
-      ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_ORB_Core::poa_factory_directive_.c_str()));
+      ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(static_resources->poa_factory_directive_.c_str()));
       factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_.c_str());
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (static_resources->poa_factory_name_.c_str());
     }
 
   if (factory == 0)
@@ -2446,13 +2475,16 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
                                     int &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
-  if (TAO_ORB_Core::sync_scope_hook_ == 0)
+  Sync_Scope_Hook sync_scope_hook =
+    TAO_ORB_Core_Static_Resources::instance ()->sync_scope_hook_;
+
+  if (sync_scope_hook == 0)
     {
       has_synchronization = 0;
       return;
     }
 
-  (*TAO_ORB_Core::sync_scope_hook_) (this, stub, has_synchronization, scope);
+  (*sync_scope_hook) (this, stub, has_synchronization, scope);
 }
 
 TAO_Sync_Strategy &
@@ -2482,8 +2514,7 @@ TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
 void
 TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
 {
-  TAO_ORB_Core::sync_scope_hook_ = hook;
-  return;
+  TAO_ORB_Core_Static_Resources::instance ()-> sync_scope_hook_ = hook;
 }
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
@@ -2524,18 +2555,21 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  int &has_timeout,
                                  ACE_Time_Value &time_value)
 {
-  if (TAO_ORB_Core::timeout_hook_ == 0)
+  Timeout_Hook timeout_hook =
+    TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_;
+
+  if (timeout_hook == 0)
     {
       has_timeout = 0;
       return;
     }
-  (*TAO_ORB_Core::timeout_hook_) (this, stub, has_timeout, time_value);
+  (*timeout_hook) (this, stub, has_timeout, time_value);
 }
 
 void
 TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
-  TAO_ORB_Core::timeout_hook_ = hook;
+  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
   // Saving the hook pointer so that we can use it later when needed.
 
   return;
@@ -2583,21 +2617,22 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
                                   int &has_timeout,
                                   ACE_Time_Value &time_value)
 {
-  if (TAO_ORB_Core::connection_timeout_hook_ == 0)
+  Timeout_Hook connection_timeout_hook =
+    TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_;
+
+  if (connection_timeout_hook == 0)
     {
       has_timeout = 0;
       return;
     }
-  (*TAO_ORB_Core::connection_timeout_hook_) (this, stub, has_timeout, time_value);
+  (*connection_timeout_hook) (this, stub, has_timeout, time_value);
 }
 
 void
 TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 {
   // Saving the hook pointer so that we can use it later when needed.
-  TAO_ORB_Core::connection_timeout_hook_ = hook;
-
-  return;
+  TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_ = hook;
 }
 
 CORBA::Policy_ptr
