@@ -1,3 +1,10 @@
+Wed Mar 15 20:47:12 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/ACE.h: moved #include of OS.h inside the #ifndef ACE_ACE_H
+          protection.  OS.h no longer depends on ACE.h, so there's no
+          circular include problem.  Thanks to Espen Harlinn
+          <espen.harlinn@seamos.no> for reporting this.
+
 Wed Mar 15 20:43:14 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_keycreate): rearranged ::pthread_keycreate ()
