@@ -1,6 +1,6 @@
 Mon Jan 12 01:20:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
 
 	  Fixed a simple problem with the way we used extraction operators
 	  that caused link errors on VC71.
