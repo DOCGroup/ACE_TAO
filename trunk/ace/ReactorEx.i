@@ -515,7 +515,7 @@ ACE_ReactorEx::suspend_all (void)
   
   int changes_required = 0;
   int total_handles = this->handler_rep_.max_handlep1_ - 1;
-  for (size_t i = 0; i < total_handles && error == 0; i++)
+  for (int i = 0; i < total_handles && error == 0; i++)
     {      
       result = this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i], changes_required);
       if (result == -1)
