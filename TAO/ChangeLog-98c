@@ -48,6 +48,10 @@ Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ace/config.h is #included first.  The allows config.h to
           #defined _REENTRANT before stdio.h is #included, for example.
 
+        * tao/Makefile: marked Object_KeyC.* and POA[SC].* files as
+          .PRECIOUS so that gmake avoids deleting them.  Thanks to
+          Chris Cleeland for this suggestion.
+
 Mon Mar 23 03:20:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.10, released Mon Mar 23 03:20:47 1998.
