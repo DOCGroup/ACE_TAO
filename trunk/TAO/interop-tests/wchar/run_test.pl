@@ -13,7 +13,7 @@ unlink $iorfile;
 $status = 0;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
 $SV->Spawn ();
 
