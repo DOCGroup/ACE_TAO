@@ -146,6 +146,7 @@
 #define ACE_HAS_STREAMS
 
 // Platform has 64bit longs and 32bit ints...
+// NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
 #define ACE_HAS_64BIT_LONGS
 
 // Platform supports STREAM pipes.
