@@ -1,4 +1,22 @@
-Wed May 31 08:59:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+Thu May 31 15:25:19 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Refcounted_Auto_Ptr.i (ACE_Refcounted_Auto_Ptr_Rep::detach):
+          If the object needs to be deleted, release the guard first to
+          avoid later unlocking a lock residing in memory that had been
+          freed and potentially reallocated. Thanks to Steve Witten
+          <steve_witten@hp.com> for noticing this bug, and Purify for making
+          it relatively easy to track down.
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp: Rearranged to verify things
+          which should happen, and improve the logging and thread rundown
+          sequence.
+
+        * THANKS: Added Steve Witten to the Hall of Fame.
+
+        * ACE-INSTALL.html: Fixed the section about how to build on AIX
+          to account for the new ace.icc file, and Visual Age C++ 5.
+
+Thu May 31 08:59:00 2001  Craig Rodrigues <crodrigu@bbn.com>
  
         * ace/config-g++-common.h:
  
@@ -8,7 +26,8 @@ Wed May 30 23:54:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp: 
 
-	  Fixed the subscribe method so things worked even when no qos was specified.
+	  Fixed the subscribe method so things worked even when no qos
+          was specified.
 
 Wed May 30 11:13:16 2001  Ossama Othman  <ossama@uci.edu>
 
