@@ -983,7 +983,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   // Create the CORBA level proxy
   CORBA_Object *new_obj =
     this->orb_core_->optimize_collocation_objects () ?
-    new_obj = new CORBA_Object (data, servant, collocated) :
+    new CORBA_Object (data, servant, collocated) :
     new CORBA_Object (data, 0, 0);
 
   // Clean up in case of errors.
@@ -1658,20 +1658,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
   //    when we use collocation!
   const TAO_MProfile &mprofile = sobj->get_base_profiles ();
 
-  // We always look for collocation in ourselves first if we support
-  // collocation optimization since single ORB is the most common use
-  // case.
-  if (this->_optimize_collocation_objects ())
-    {
-      TAO_SERVANT_LOCATION servant_location =
-        this->_find_collocated_servant (sobj,
-                                        this->orb_core_,
-                                        servant,
-                                        mprofile);
-      if (servant_location != TAO_SERVANT_NOT_FOUND)
-        return servant_location;
-    }
-
   {
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
@@ -1685,11 +1671,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
          i != end;
          ++i)
       {
-        // Skip ourselve.  This should never happen if this ORB doesn't use
-        // collocation optimization.
-        if ((*i).int_id_ == this->orb_core_)
-          continue;
-
         TAO_SERVANT_LOCATION servant_location =
           this->_find_collocated_servant (sobj,
                                           (*i).int_id_,
@@ -1709,6 +1690,12 @@ CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
                                      TAO_ServantBase *&servant,
                                      const TAO_MProfile &mprofile)
 {
+  if (!orb_core->optimize_collocation_objects ())
+    return TAO_SERVANT_NOT_FOUND;
+
+  if (!orb_core->use_global_collocation () && orb_core != this->orb_core_)
+    return TAO_SERVANT_NOT_FOUND;
+
   if (!orb_core->is_collocated (mprofile))
     return TAO_SERVANT_NOT_FOUND;
 
