@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_FILE_LOCK_H
 #define ACE_FILE_LOCK_H
@@ -35,19 +34,27 @@ public:
   /**
    * Set the <handle_> of the File_Lock to <handle>.  Note that this
    * constructor assumes ownership of the <handle> and will close it
-   * down in <remove>.  If you want the <handle> stays open when
-   * <remove> is called make sure to call <dup> on the <handle> before
-   * closing it.
+   * down in <remove>.  If you want the <handle> to stay open when
+   * <remove> is called make sure to call <dup> on the <handle>.
+   * If you don't want the file unlinked in the destructor pass a
+   * zero value for <unlink_in_destructor>.
    */
-  ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE);
+  ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE,
+                 int unlink_in_destructor = 1);
+
+  /// Open the <filename> with <flags> and <mode> and set the result
+  /// to <handle_>.  If you don't want the file unlinked in the
+  /// destructor pass a zero value for <unlink_in_destructor>.
+  ACE_File_Lock (const ACE_TCHAR *filename,
+                 int flags,
+                 mode_t mode = 0,
+                 int unlink_in_destructor = 1);
 
   /// Open the <filename> with <flags> and <mode> and set the result to
-  /// <handle_>.
-  ACE_File_Lock (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
-
-  /// Open the <filename> with <flags> and <mode> and set the result to
-  /// <handle_>.
-  int open (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
+  /// <handle_>.  
+  int open (const ACE_TCHAR *filename,
+            int flags,
+            mode_t mode = 0);
 
   /// Remove a File lock by releasing it and closing down the <handle_>.
   ~ACE_File_Lock (void);
@@ -134,10 +141,14 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// destructor.  This flag isn't protected by a lock, so make sure
+  /// that you don't have multiple threads simultaneously calling
+  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
-  // destructor.  This flag isn't protected by a lock, so make sure
-  // that you don't have multiple threads simultaneously calling
-  // <remove> on the same object, which is a bad idea anyway...
+
+  /// Keeps track of whether to unlink the underlying file in the
+  /// destructor.
+  int unlink_in_destructor_;
 
 private:
   // = Prevent assignment and initialization.
