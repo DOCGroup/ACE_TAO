@@ -60,7 +60,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
         {
@@ -68,22 +68,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "reactive") == 0)
-                {
-                  this->dispatching_ = 0;
-                }
+                this->dispatching_ = 0;
               else if (ACE_OS::strcasecmp (opt, "mt") == 0)
-                {
-                  this->dispatching_ = 1;
-                }
+                this->dispatching_ = 1;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported dispatching <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported dispatching <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -94,7 +88,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -106,26 +100,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->filtering_ = 0;
-                }
+                this->filtering_ = 0;
               else if (ACE_OS::strcasecmp (opt, "basic") == 0)
-                {
-                  this->filtering_ = 1;
-                }
+                this->filtering_ = 1;
               else if (ACE_OS::strcasecmp (opt, "prefix") == 0)
-                {
-                  this->filtering_ = 2;
-                }
+                this->filtering_ = 2;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported filtering <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported filtering <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -138,22 +124,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->supplier_filtering_ = 0;
-                }
+                this->supplier_filtering_ = 0;
               else if (ACE_OS::strcasecmp (opt, "per-supplier") == 0)
-                {
-                  this->supplier_filtering_ = 1;
-                }
+                this->supplier_filtering_ = 1;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported supplier filtering <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported supplier filtering <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -164,18 +144,14 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "reactive") == 0)
-                {
-                  this->timeout_ = 0;
-                }
+                this->timeout_ = 0;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported timeout <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported timeout <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -186,22 +162,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->observer_ = 0;
-                }
+                this->observer_ = 0;
               else if (ACE_OS::strcasecmp (opt, "basic") == 0)
-                {
-                  this->observer_ = 1;
-                }
+                this->observer_ = 1;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported observer <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported observer <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -212,18 +182,14 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->scheduling_ = 0;
-                }
+                this->scheduling_ = 0;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported scheduling <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported scheduling <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -234,7 +200,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
@@ -278,7 +244,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
@@ -322,26 +288,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->consumer_lock_ = 0;
-                }
+                this->consumer_lock_ = 0;
               else if (ACE_OS::strcasecmp (opt, "thread") == 0)
-                {
-                  this->consumer_lock_ = 1;
-                }
+                this->consumer_lock_ = 1;
               else if (ACE_OS::strcasecmp (opt, "recursive") == 0)
-                {
-                  this->consumer_lock_ = 2;
-                }
+                this->consumer_lock_ = 2;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported consumer lock <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported consumer lock <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -352,26 +310,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->supplier_lock_ = 0;
-                }
+                this->supplier_lock_ = 0;
               else if (ACE_OS::strcasecmp (opt, "thread") == 0)
-                {
-                  this->supplier_lock_ = 1;
-                }
+                this->supplier_lock_ = 1;
               else if (ACE_OS::strcasecmp (opt, "recursive") == 0)
-                {
-                  this->supplier_lock_ = 2;
-                }
+                this->supplier_lock_ = 2;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported supplier lock <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported supplier lock <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -394,22 +344,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->consumer_control_ = 0;
-                }
+                this->consumer_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
-                {
-                  this->consumer_control_ = 1;
-                }
+                this->consumer_control_ = 1;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported consumer control <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported consumer control <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -420,22 +364,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
-                {
-                  this->supplier_control_ = 0;
-                }
+                this->supplier_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
-                {
-                  this->supplier_control_ = 1;
-                }
+                this->supplier_control_ = 1;
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "EC_Default_Factory - "
-                              "unsupported supplier control <%s>\n",
-                              opt));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "EC_Default_Factory - "
+                            "unsupported supplier control <%s>\n",
+                            opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -446,7 +384,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -458,7 +396,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }

@@ -856,9 +856,9 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_OSCALL_RETURN (::pace_pipe (fds), int, -1);
 # elif !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__)
   ACE_OS_TRACE ("ACE_OS::pipe");
-  ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0),
-                     int,
-                     -1);   // Use default mode
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL 
+                        (::CreatePipe (&fds[0], &fds[1], 0, 0),
+                         ace_result_), int, -1);
 # else
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_PACE */
