@@ -1436,7 +1436,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
       result = user;
     }
 
-  delete char_user;
+  delete [] char_user;
 
   return result;
 # endif /* ACE_WIN32 */
@@ -5551,7 +5551,7 @@ ACE_OS::connect (ACE_HANDLE handle,
 
 #if !defined (VXWORKS)
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname (const ACE_TCHAR *name)
+ACE_OS::gethostbyname (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname");
 # if defined (ACE_PSOS)
@@ -5562,14 +5562,14 @@ ACE_OS::gethostbyname (const ACE_TCHAR *name)
                        struct hostent *,
                        0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)),
+  ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
                        0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname2 (const ACE_TCHAR *name, int family)
+ACE_OS::gethostbyname2 (const char *name, int family)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname2");
 # if defined (ACE_PSOS)
@@ -5583,7 +5583,7 @@ ACE_OS::gethostbyname2 (const ACE_TCHAR *name, int family)
                        struct hostent *,
                        0);
 #   else
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_TEXT_ALWAYS_CHAR (name), family),
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (name, family),
                        struct hostent *,
                        0);
 #   endif /* ACE_HAS_NONCONST_GETBY */
@@ -5597,7 +5597,7 @@ ACE_OS::gethostbyname2 (const ACE_TCHAR *name, int family)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr (const ACE_TCHAR *addr, int length, int type)
+ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
 # if defined (ACE_PSOS)
@@ -5612,7 +5612,7 @@ ACE_OS::gethostbyaddr (const ACE_TCHAR *addr, int length, int type)
                        struct hostent *,
                        0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr),
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
@@ -5898,7 +5898,7 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname (const ACE_TCHAR *name)
+ACE_OS::getprotobyname (const char *name)
 {
 #if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
@@ -5908,14 +5908,14 @@ ACE_OS::getprotobyname (const ACE_TCHAR *name)
                        struct protoent *,
                        0);
 #else
-  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
+  ACE_SOCKCALL_RETURN (::getprotobyname (name),
                        struct protoent *,
                        0);
 #endif /* VXWORKS */
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname_r (const ACE_TCHAR *name,
+ACE_OS::getprotobyname_r (const char *name,
                           struct protoent *result,
                           ACE_PROTOENT_DATA buffer)
 {
@@ -5953,7 +5953,7 @@ ACE_OS::getprotobyname_r (const ACE_TCHAR *name,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
+  ACE_SOCKCALL_RETURN (::getprotobyname (name),
                        struct protoent *,
                        0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
@@ -6008,7 +6008,7 @@ ACE_OS::getprotobynumber_r (int proto,
 }
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname (const ACE_TCHAR *svc, const ACE_TCHAR *proto)
+ACE_OS::getservbyname (const char *svc, const char *proto)
 {
   ACE_OS_TRACE ("ACE_OS::getservbyname");
 #if defined (ACE_LACKS_GETSERVBYNAME)
@@ -6021,8 +6021,8 @@ ACE_OS::getservbyname (const ACE_TCHAR *svc, const ACE_TCHAR *proto)
                        struct servent *,
                        0);
 #else
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc),
-                                        ACE_TEXT_ALWAYS_CHAR (proto)),
+  ACE_SOCKCALL_RETURN (::getservbyname (svc,
+                                        proto),
                        struct servent *,
                        0);
 #endif /* ACE_HAS_NONCONST_GETBY */
@@ -6551,7 +6551,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 
 #if !defined (VXWORKS)
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr,
+ACE_OS::gethostbyaddr_r (const char *addr,
                          int length,
                          int type,
                          hostent *result,
@@ -6607,7 +6607,7 @@ ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr),
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
@@ -6616,7 +6616,7 @@ ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr,
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname_r (const ACE_TCHAR *name,
+ACE_OS::gethostbyname_r (const char *name,
                          hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
@@ -6675,7 +6675,7 @@ ACE_OS::gethostbyname_r (const ACE_TCHAR *name,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)),
+  ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
                        0);
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
@@ -6696,8 +6696,8 @@ ACE_OS::gets (char *str)
 #endif /* 0 */
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname_r (const ACE_TCHAR *svc,
-                         const ACE_TCHAR *proto,
+ACE_OS::getservbyname_r (const char *svc,
+                         const char *proto,
                          struct servent *result,
                          ACE_SERVENT_DATA buf)
 {
@@ -6739,15 +6739,15 @@ ACE_OS::getservbyname_r (const ACE_TCHAR *svc,
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc),
-                                        ACE_TEXT_ALWAYS_CHAR (proto)),
+  ACE_SOCKCALL_RETURN (::getservbyname (svc,
+                                        proto),
                        struct servent *,
                        0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE long
-ACE_OS::inet_addr (const ACE_TCHAR *name)
+ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
 #if defined (VXWORKS) || defined (ACE_PSOS)
@@ -6786,24 +6786,24 @@ ACE_OS::inet_addr (const ACE_TCHAR *name)
 #elif defined (ACE_HAS_NONCONST_GETBY)
   return ::inet_addr ((char *) name);
 #else
-  return ::inet_addr (ACE_TEXT_ALWAYS_CHAR (name));
+  return ::inet_addr (name);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
 // For pSOS, this function is in OS.cpp
 #if !defined (ACE_PSOS)
-ACE_INLINE ACE_TCHAR *
+ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
-  ACE_OSCALL_RETURN (ACE_TEXT_CHAR_TO_TCHAR (::inet_ntoa (addr)),
-                                             ACE_TCHAR *,
+  ACE_OSCALL_RETURN (::inet_ntoa (addr),
+                     char *,
                      0);
 }
 #endif /* defined (ACE_PSOS) */
 
 ACE_INLINE int
-ACE_OS::inet_pton (int family, const ACE_TCHAR *strptr, void *addrptr)
+ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_pton");
 
@@ -6827,8 +6827,8 @@ ACE_OS::inet_pton (int family, const ACE_TCHAR *strptr, void *addrptr)
 #endif  /* ACE_HAS_IP6 */
 }
 
-ACE_INLINE const ACE_TCHAR *
-ACE_OS::inet_ntop (int family, const void *addrptr, ACE_TCHAR *strptr, size_t len)
+ACE_INLINE const char *
+ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntop");
 
@@ -6840,13 +6840,13 @@ ACE_OS::inet_ntop (int family, const void *addrptr, ACE_TCHAR *strptr, size_t le
 
   if (family == AF_INET)
     {
-      ACE_TCHAR temp[INET_ADDRSTRLEN];
+      char temp[INET_ADDRSTRLEN];
 
       // Stevens uses snprintf() in his implementation but snprintf()
       // doesn't appear to be very portable.  For now, hope that using
       // sprintf() will not cause any string/memory overrun problems.
       ACE_OS::sprintf (temp,
-                       ACE_LIB_TEXT ("%d.%d.%d.%d"),
+                       "%d.%d.%d.%d",
                        p[0], p[1], p[2], p[3]);
 
       if (ACE_OS::strlen (temp) >= len)

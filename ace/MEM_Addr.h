@@ -96,12 +96,12 @@ public:
                      size_t hostnamelen) const;
   // Return the character representation of the hostname.
 
-  const ACE_TCHAR *get_host_name (void) const;
+  const char *get_host_name (void) const;
   // Return the character representation of the hostname (this version
   // is non-reentrant since it returns a pointer to a static data
   // area).
 
-  const ACE_TCHAR *get_host_addr (void) const;
+  const char *get_host_addr (void) const;
   // Return the "dotted decimal" external address.
 
   ACE_UINT32 get_ip_address (void) const;

@@ -35,9 +35,9 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     {
       ACE_OS::sprintf (s,
                        ACE_LIB_TEXT ("%s:%d"),
-                       (ipaddr_format == 0
-                        ? this->get_host_name ()
-                        : this->get_host_addr ()),
+                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                                               ? this->get_host_name ()
+                                               : this->get_host_addr ()),
                        this->get_port_number ());
       return 0;
     }
@@ -113,21 +113,21 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 // Transform the string into the current addressing format.
 
 int
-ACE_INET_Addr::string_to_addr (const ACE_TCHAR s[])
+ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
-  ACE_TCHAR *t;
+  char *t;
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (t,
                         ACE_OS::strdup (s),
                         -1);
-  ACE_TCHAR *ip_addr = ACE_OS::strchr (t, ':');
+  char *ip_addr = ACE_OS::strchr (t, ':');
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (t, ACE_LIB_TEXT ("1234567890"))
+      if (ACE_OS::strspn (t, "1234567890")
           == ACE_OS::strlen (t))
         { // port number
           u_short port = (u_short) ACE_OS::atoi (t);
@@ -142,8 +142,7 @@ ACE_INET_Addr::string_to_addr (const ACE_TCHAR s[])
     {
       *ip_addr = '\0'; ++ip_addr; // skip over ':'
 
-      if (ACE_OS::strspn (ip_addr,
-                          ACE_LIB_TEXT ("1234567890")) ==
+      if (ACE_OS::strspn (ip_addr, "1234567890") ==
           ACE_OS::strlen (ip_addr))
         {
           u_short port =
@@ -159,18 +158,28 @@ ACE_INET_Addr::string_to_addr (const ACE_TCHAR s[])
 }
 
 int
-ACE_INET_Addr::set (const ACE_TCHAR address[])
+ACE_INET_Addr::set (const char address[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   return this->string_to_addr (address);
 }
 
-ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR address[])
+ACE_INET_Addr::ACE_INET_Addr (const char address[])
   : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
+  : ACE_Addr (AF_INET, sizeof this->inet_addr_)
+{
+  ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  this->set (address);
+}
+
+#endif /* ACE_HAS_WCHAR */
 
 // Copy constructor.
 
@@ -217,7 +226,7 @@ ACE_INET_Addr::set (u_short port_number,
 
 int
 ACE_INET_Addr::set (u_short port_number,
-                    const ACE_TCHAR host_name[],
+                    const char host_name[],
                     int encode)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
@@ -272,9 +281,9 @@ ACE_INET_Addr::set (u_short port_number,
 // <host_name>.
 
 int
-ACE_INET_Addr::set (const ACE_TCHAR port_name[],
-                    const ACE_TCHAR host_name[],
-                    const ACE_TCHAR protocol[])
+ACE_INET_Addr::set (const char port_name[],
+                    const char host_name[],
+                    const char protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
@@ -302,9 +311,9 @@ ACE_INET_Addr::set (const ACE_TCHAR port_name[],
 // address.
 
 int
-ACE_INET_Addr::set (const ACE_TCHAR port_name[],
+ACE_INET_Addr::set (const char port_name[],
                     ACE_UINT32 inet_address,
-                    const ACE_TCHAR protocol[])
+                    const char protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
@@ -333,7 +342,7 @@ ACE_INET_Addr::set (const ACE_TCHAR port_name[],
 
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
-                              const ACE_TCHAR host_name[])
+                              const char host_name[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
@@ -347,11 +356,33 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
-                ((host_name == 0) ?
-                 (ACE_LIB_TEXT ("<unknown>")) :
-                 host_name)));
+                ACE_TEXT_CHAR_TO_TCHAR ((host_name == 0) ?
+                                        "<unknown>" : host_name)));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
+                              const wchar_t host_name[])
+{
+  ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  if (this->set (port_number,
+                 host_name) == -1)
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+    ACE_ERROR ((LM_ERROR,
+                (char *)"ACE_INET_Addr::ACE_INET_Addr: %p\n",
+                (((char *) host_name == 0) ?
+                 ((char *) "<unknown>") :
+                 ((char *) (host_name)))));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
+                ACE_TEXT_WCHAR_TO_TCHAR ((host_name == 0) ?
+                                         ACE_TEXT_WIDE ("<unknown>") :
+                                         host_name)));
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
+}
+#endif /* ACE_HAS_WCHAR */
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 
@@ -401,9 +432,9 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
 // HOST_NAME.
 
-ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
-                              const ACE_TCHAR host_name[],
-                              const ACE_TCHAR protocol[])
+ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
+                              const char host_name[],
+                              const char protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -413,12 +444,26 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
+                              const wchar_t host_name[],
+                              const wchar_t protocol[])
+{
+  ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  if (this->set (port_name,
+                 host_name,
+                 protocol) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+}
+#endif /* ACE_HAS_WCHAR */
+
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
 
 
-ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
+ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
-                              const ACE_TCHAR protocol[])
+                              const char protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -428,8 +473,22 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
+                              ACE_UINT32 inet_address,
+                              const wchar_t protocol[])
+{
+  ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  if (this->set (port_name,
+                 inet_address,
+                 protocol) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+}
+#endif /* ACE_HAS_WCHAR */
+
 int
-ACE_INET_Addr::get_host_name (ACE_TCHAR hostname[],
+ACE_INET_Addr::get_host_name (char hostname[],
                               size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
@@ -474,7 +533,7 @@ ACE_INET_Addr::get_host_name (ACE_TCHAR hostname[],
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp = 
-        ACE_OS::gethostbyaddr_r (ACE_TEXT_CHAR_TO_TCHAR ((char *)&this->inet_addr_.sin_addr),
+        ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
                                  a_len,
                                  this->addr_type_,
                                  &hentry,
@@ -497,22 +556,47 @@ ACE_INET_Addr::get_host_name (ACE_TCHAR hostname[],
           return -1;
         }
 
-      ACE_OS::strcpy (hostname, ACE_TEXT_CHAR_TO_TCHAR (hp->h_name));
+      ACE_OS::strcpy (hostname, hp->h_name);
       return 0;
 #endif /* VXWORKS */
     }
 }
 
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_INET_Addr::get_host_name (wchar_t hostname[],
+                              size_t len) const
+{
+  ACE_TRACE ("ACE_INET_Addr::get_host_name");
+
+  char char_hostname [MAXHOSTNAMELEN + 1];
+
+  // We have a build in limitation of MAXHOSTNAMELEN
+  if (len > MAXHOSTNAMELEN + 1)
+    len = MAXHOSTNAMELEN + 1;
+
+  // Call the char version
+  int result = this->get_host_name (char_hostname, len);
+
+  // And copy it over, if successful
+  if (result == 0)
+    ACE_OS_String::strcpy (hostname, 
+                           ACE_Ascii_To_Wide (char_hostname).wchar_rep ());
+
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
+
 // Return the character representation of the hostname.
 
-const ACE_TCHAR *
+const char *
 ACE_INET_Addr::get_host_name (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
-  static ACE_TCHAR name[MAXHOSTNAMELEN + 1];
+  static char name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, ACE_LIB_TEXT ("<unknown>"));
+    ACE_OS::strcpy (name, "<unknown>");
   return name;
 }
 

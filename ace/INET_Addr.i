@@ -29,7 +29,7 @@ ACE_INET_Addr::get_addr (void) const
 
 // Return the dotted Internet address.
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE const char *
 ACE_INET_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_addr");
@@ -58,3 +58,42 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs)
     || (this->get_ip_address () == rhs.get_ip_address ()
         && this->get_port_number () < rhs.get_port_number ());
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int 
+ACE_INET_Addr::set (u_short port_number, 
+                    const wchar_t host_name[], 
+                    int encode)
+{
+  return this->set (port_number, 
+                    ACE_Wide_To_Ascii (host_name).char_rep (),
+                    encode);
+}
+
+ACE_INLINE int 
+ACE_INET_Addr::set (const wchar_t port_name[],
+                    const wchar_t host_name[], 
+                    const wchar_t protocol[])
+{
+  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (), 
+                    ACE_Wide_To_Ascii (host_name).char_rep (),
+                    ACE_Wide_To_Ascii (protocol).char_rep ());
+}
+
+ACE_INLINE int 
+ACE_INET_Addr::set (const wchar_t port_name[],
+                    ACE_UINT32 ip_addr,
+                    const wchar_t protocol[])
+{
+  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
+                    ip_addr,
+                    ACE_Wide_To_Ascii (protocol).char_rep ());
+}
+
+ACE_INLINE int 
+ACE_INET_Addr::set (const wchar_t addr[])
+{
+  return this->set (ACE_Wide_To_Ascii (addr).char_rep ());
+}
+
+#endif /* ACE_HAS_WCHAR */
