@@ -254,7 +254,7 @@ ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
 // messages.
 
 void
-ace_yyerror (char *s)
+ace_yyerror (const char *s)
 {
   ACE_ERROR ((LM_ERROR, ASYS_TEXT ("[error %d] on line %d: %s\n"),
               ++ace_yyerrno, ace_yylineno, ASYS_WIDE_STRING (s)));
@@ -410,7 +410,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_INDENT */
 #ifndef ACE_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
+void ACE_YYDEBUG_REDUCE(int ace_yynew_state, int ace_yyrule_num, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
 #else
 ACE_YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
 int ace_yynew_state;
@@ -440,7 +440,7 @@ int ace_yyrhs_count;
 #endif /* ACE_YYDEBUG_REDUCE */
 #ifndef ACE_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state*/, char *ace_yytoken_string, int ace_yynew_indent)
+void ACE_YYDEBUG_SHIFT_LEXEME(int ace_yyold_state, int ace_yynew_state, char *ace_yytoken_string, int ace_yynew_indent)
 #else
 ACE_YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
 int ace_yyold_state;
@@ -455,7 +455,7 @@ int ace_yynew_indent;
 #endif /*  ACE_YYDEBUG_SHIFT_LEXEME */
 #ifndef ACE_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_LOOK_AHEAD(int ace_yynew_state, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -472,7 +472,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_LOOK_AHEAD */
 #ifndef ACE_YYDEBUG_DISCARD_STATE
 #ifdef __cplusplus
-void ACE_YYDEBUG_DISCARD_STATE(int /* ace_yynew_state */, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_STATE(int ace_yynew_state, int ace_yyindent)
 #else
 ACE_YYDEBUG_DISCARD_STATE(ace_yynew_state, ace_yyindent)
 int ace_yynew_state;
@@ -500,7 +500,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_DISCARD_STATE */
 #ifndef ACE_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_TOKEN(int ace_yynew_state, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -515,7 +515,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_DISCARD_TOKEN */
 #ifndef ACE_YYDEBUG_SHIFT_ERROR_LEXEME
 #ifdef __cplusplus
-void ACE_YYDEBUG_SHIFT_ERROR_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, int ace_yyindent)
+void ACE_YYDEBUG_SHIFT_ERROR_LEXEME(int ace_yyold_state, int ace_yynew_state, int ace_yyindent)
 #else
 ACE_YYDEBUG_SHIFT_ERROR_LEXEME(ace_yyold_state, ace_yynew_state, ace_yyindent)
 int ace_yyold_state;
@@ -541,7 +541,7 @@ ace_yyparse()
     extern char *ace_foo();
 #endif
 
-    if ((ace_yys = ACE_OS::getenv("ACE_YYDEBUG")))
+    if (ace_yys = ACE_OS::getenv("ACE_YYDEBUG"))
     {
         ace_yyn = *ace_yys;
         if (ace_yyn >= '0' && ace_yyn <= '9')
@@ -558,7 +558,7 @@ ace_yyparse()
     *ace_yyssp = ace_yystate = 0;
 
 ace_yyloop:
-    if ((ace_yyn = ace_yydefred[ace_yystate])) goto ace_yyreduce;
+    if (ace_yyn = ace_yydefred[ace_yystate]) goto ace_yyreduce;
     if (ace_yychar < 0)
     {
         if ((ace_yychar = ace_yylex()) < 0) ace_yychar = 0;
@@ -668,7 +668,7 @@ ace_yyinrecovery:
             if (5 < ace_yydebug)
                 printf("ace_yydebug: state %d, error recovery discards token %d (%s)\n",
                     ace_yystate, ace_yychar, ace_yys);
-            else
+            else 
                 ACE_YYDEBUG_DISCARD_TOKEN(ace_yystate, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
         }
 #endif
