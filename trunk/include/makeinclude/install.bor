@@ -16,9 +16,9 @@ install:
 !endif
 	@echo Do Nothing 1> NUL
 
-exe_install: $(TARGET)
+exe_install: $(TARGET) $(CORE_TARGET)
 	@$(MAKE_INSTALL_EXEDIR)
-	-&copy "$**" $(INSTALL_EXEDIR) 1> NUL
+	-copy "$(TARGET)" $(INSTALL_EXEDIR) 1> NUL
 
 !ifdef DEBUG
 dll_install: $(TARGET) $(TARGET:.dll=.tds)

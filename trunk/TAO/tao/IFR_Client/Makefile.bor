@@ -22,7 +22,7 @@ CPPDIR = .
 
 INCDIR_NAME = tao\IFR_Client
 INCLUDES = \
-	*.h *.i
+	*.h *.i *.pidl
 
 LIBFILES = \
 	$(TAO_LIB) \

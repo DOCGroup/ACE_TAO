@@ -220,10 +220,9 @@ CPPDIR = .
 
 INCDIR_NAME = tao
 INCLUDES = \
-	*.h *.i *.inl *_T.cpp \
+	*.h *.i *.inl *_T.cpp *.pidl \
 	TAO_Singleton.cpp \
-	orb.idl \
-	Policy.pidl
+	orb.idl
 
 LIBFILES = $(ACE_LIB)
 
