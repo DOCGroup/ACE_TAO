@@ -2591,7 +2591,7 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) lproto), 
+  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
 		       struct servent *, 0);
 #else
   ACE_SOCKCALL_RETURN (::getservbyname (svc, proto), 
