@@ -172,7 +172,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
 
-      MT_Task task (first_poa,
+      MT_Task task (first_poa.in (),
                     one_impl,
                     two_impl,
                     three_impl);
