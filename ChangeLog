@@ -1,3 +1,17 @@
+Fri Dec 28 19:56:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/Server_Concurrency/Latency_Stats.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+          Made these files compiling when ACE_USES_WCHAR is set
+
+        * Makefile.bor:
+          Added the performance-tests directory to this BCB makefile. All files
+          in this directory now compile when ACE_USES_WCHAR is set
+
 Fri Dec 28 10:45:33 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp: Make the string
