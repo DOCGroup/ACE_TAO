@@ -25,6 +25,10 @@ Sat May 09 12:01:37 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/Makefile: suppress -g when building POA.o with ghs for
           VxWorks/i86.
 
+        * tests/Cubit/COOL/{IDL,MT}_Cubit/Makefile: added $(ACELIB) $(LIBS)
+          to VLDLIBS.  Thanks to Steve Kay <slk1@icore.ih.lucent.com> for
+          reporting that link lines were missing -lACE on Chorus.
+
 Fri May  8 16:32:55 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_exception.cpp: In the typecode generation, we were
