@@ -28,8 +28,17 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  DOMDocument* doc = CIAO::Config_Handler::Utils::create_document (location);
-  CIAO::Config_Handler::PC_Handler pc_handler (doc,
+  /*
+  DOMDocument* top_pc_doc = 
+     CIAO::Config_Handler::Utils::create_document (location);
+  CIAO::Config_Handler::Top_PC_Handler top_pc_handler (top_pc_doc,
+                                               DOMNodeFilter::SHOW_ELEMENT |
+                                               DOMNodeFilter::SHOW_TEXT);
+  char * package_location = top_pc_handler,process_top_level ();
+  */
+  DOMDocument* top_pc_doc = 
+     CIAO::Config_Handler::Utils::create_document (location);
+  CIAO::Config_Handler::PC_Handler pc_handler (top_pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);
