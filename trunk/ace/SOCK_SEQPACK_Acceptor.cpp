@@ -401,11 +401,12 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               }
 #else
               // Call bind
+              size_t name_len = (sizeof local_inet_addr) * num_addresses;
               if (ACE_OS::bind (this->get_handle (),
                                 ACE_reinterpret_cast (sockaddr *,
                                                       local_inet_addrs),
-                                (sizeof local_inet_addr)*num_addresses) == -1)
-                  error = 1;
+                                ACE_static_cast (int, name_len)) == -1)
+                error = 1;
 #endif /* ACE_HAS_LKSCTP */
             }
 

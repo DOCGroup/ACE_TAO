@@ -1,4 +1,4 @@
-// SOCK_SEQPACK_Association.cpp
+// $Id$
 
 #include "ace/SOCK_SEQPACK_Association.h"
 
@@ -138,33 +138,39 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  int physical_size = size * sizeof(sockaddr_in);
+  size_t physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
                  0,
                  physical_size);
 
-  /* Populate the array with real values from the getsockname system
-     call.  The variables addr_structs and phycisal_size are
-     modified. */
+  /*
+  ** Populate the array with real values from the getsockname system
+  ** call.  addr_structs is modified, and name_size is modified to contain
+  ** the number of bytes written to addr_structs.
+  ** Use name_size to get the data types right across the call.
+  */
+  int name_size = ACE_static_cast (int, physical_size);
   if (ACE_OS::getsockname (this->get_handle (),
                            ACE_reinterpret_cast (sockaddr *,
                                                  addr_structs.get()),
-                           &physical_size) == -1)
+                           &name_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
-  size = physical_size / sizeof (sockaddr_in);
+  name_size /= sizeof (sockaddr_in);
+  size = ACE_static_cast (size_t, name_size);
 
   /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
-  for (size_t i = 0; i < size; ++i) {
-
-    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr_in));
-    addrs[i].set_type(addr_structs[i].sin_family);
-    addrs[i].set_size(sizeof(sockaddr_in));
-  }
+  const int addrlen (ACE_static_cast (int, sizeof (sockaddr_in)));
+  for (int i = 0; i < name_size; ++i)
+    {
+      addrs[i].set_addr (&(addr_structs[i]), addrlen);
+      addrs[i].set_type (addr_structs[i].sin_family);
+      addrs[i].set_size (addrlen);
+    }
 #endif /* ACE_HAS_LKSCTP */
   return 0;
 }
@@ -269,33 +275,39 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  int physical_size = size * sizeof(sockaddr_in);
+  size_t physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
                  0,
                  physical_size);
 
-  /* Populate the array with real values from the getpeername system
-     call.  The variables addr_structs and phycisal_size are
-     modified. */
+  /*
+  ** Populate the array with real values from the getpeername system
+  ** call.  addr_structs is modified, and name_size is modified to contain
+  ** the number of bytes written to addr_structs.
+  ** Use name_size to get the data types right across the call.
+  */
+  int name_size = ACE_static_cast (int, physical_size);
   if (ACE_OS::getpeername (this->get_handle (),
                            ACE_reinterpret_cast (sockaddr *,
                                                  addr_structs.get()),
-                           &physical_size) == -1)
+                           &name_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
-  size = physical_size / sizeof (sockaddr_in);
+  name_size /= sizeof (sockaddr_in);
+  size = ACE_static_cast (size_t, name_size);
 
   /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
-  for (size_t i = 0; i < size; ++i) {
-
-    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr_in));
-    addrs[i].set_type(addr_structs[i].sin_family);
-    addrs[i].set_size(sizeof(sockaddr_in));
-  }
+  const int addrlen (ACE_static_cast (int, sizeof (sockaddr_in)));
+  for (int i = 0; i < name_size; ++i)
+    {
+      addrs[i].set_addr (&(addr_structs[i]), addrlen);
+      addrs[i].set_type (addr_structs[i].sin_family);
+      addrs[i].set_size (addrlen);
+    }
 #endif /* ACE_HAS_LKSCTP */
   return 0;
 }

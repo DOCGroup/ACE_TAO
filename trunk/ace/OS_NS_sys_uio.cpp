@@ -80,7 +80,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
 // "Fake" writev for operating systems without it.  Note that this is
 // thread-safe.
 
-int
+ssize_t
 ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("ACE_OS::writev_emulation");
