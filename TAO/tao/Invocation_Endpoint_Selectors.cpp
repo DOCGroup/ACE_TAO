@@ -14,6 +14,7 @@
 
 ACE_RCSID(tao, Invocation_Endpoint_Selectors, "$Id$")
 
+
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {
 }

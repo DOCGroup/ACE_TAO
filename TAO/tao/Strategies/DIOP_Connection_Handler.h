@@ -117,6 +117,9 @@ public:
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
+  /// Event handler overload..
+  virtual int resume_handler (void);
+
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 

@@ -92,12 +92,16 @@ protected:
  * This represents a set of data that would be received by the
  * connector from the acceptor.
  */
-class TAO_Export TAO_Pluggable_Reply_Params 
+class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base
 {
 public:
   /// Constructor.
   TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
+
+  /* @todo: There is a way out clear this off from stack. Need to look
+     into that after 1.2
+  */
 
   /// The stream with the non-demarshaled reply. This stream will be
   /// passed up to the stubs to demarshal the parameter values.

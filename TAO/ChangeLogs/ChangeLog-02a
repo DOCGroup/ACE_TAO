@@ -1,3 +1,661 @@
+Thu Jul  5 23:30:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	  The long awaited fix for bug 575 is finally in!! This has been
+	  merged  from bug_575_stage_2. The ChangeLog entries start here,
+
+Thu Jul  5 23:00:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Fixed some more
+	  compilation errors in g++.  
+
+Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: Fixed compile
+	  errors in g++. The new IIOP_SSL_Transport classes now does the
+	  functionality of the IIOP_SSL_Connection_Handler classes. The
+	  connection handler classes exist now only to create the
+	  transport. 
+
+Thu Jul  5 21:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: New files for the
+	  SSLIOP.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Moved
+	  the handle_input () from the connection handler to transport.
+
+	* tao/Strategies/DIOP_*:  Fixed it for the new setup. We now make
+	  a buffer of dgram size and use that to read messages.
+
+Thu Jul  5 14:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	Merged with the main trunk and moved it to a new branch by name
+	bug_575_stage_2.
+
+Wed Jul  4 18:53:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i): Added the
+	  error checking.
+
+	* tao/Pluggable_Messaging.h: Made reset () as a pure virtual
+	  function.
+
+	* tao/Strategies/UIOP_Transport.cpp: Removed the close_connection
+	  () call on TMS.
+
+	* tao/LIST_OF_TODO: Updated..
+
+Wed Jul  4 18:45:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.inl (reset):
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.inl:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging.cpp: Added documentation.
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Fixed a minor bug. In consolidate_message ()
+	  we were not checking the queue before processing the message on
+	  hand. Now we check the queue and process the head of the queue
+	  if it is not empty. In the process we add the message on hand in
+	  the queue.
+
+Wed Jul  4 16:21:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp: Removed the connection_closed () from
+	  the recv_i () call.
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Added a number of comments and cleaned up the
+	  code for readability.
+
+	* tao/LIST_OF_TODO: Updated the list.
+
+Wed Jul  4 09:20:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h (TAO_Transport): Added some documentation for
+	  the incoming_data_path.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:  Fixed the
+	  SSLIOP for the changes. Havent compiled this yet.
+
+Tue Jul  3 17:09:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.cpp: Fixed a bug in
+	  consolidate_message (). The IDL_Cubit tests work fine with the
+	  SHMIOP & UIOP transports.
+
+Tue Jul  3 16:29:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Transport.cpp: Fixed warnings and errors
+	  in g++.
+
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnungs and
+	  errors in g++.
+
+	* tao/IIOP_Connection_Handler.cpp: Used fetch_handle () to get the
+	  handle instead of the handle passed as an argument of the
+	  handle_input () call.
+
+	* tao/Connection_Handler.h: Added a new #define and changed
+	  TAO_CONNECTION_HANDLER_BUF_SIZE as
+	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE.
+
+
+Tue Jul 03 15:45:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Fixed the protocol
+	  to work  with the latest changes.
+
+	* tao/Strategies/TAO_Strategies.dsp: Removed the
+	  GIOP_NonReactive_* files.
+
+	* tao/Resume_Handle.cpp: Fixed a bug in resume_handle (). If we
+	  have a null ORB_Core we just dont resume the handle.
+
+Mon Jul 02 23:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h: Removed some functions which would no
+	  longer be used.
+
+	* tao/Transport.h: Added some documentation for the incoming data
+	  path.
+
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Brought them up in
+	  sync with IIOP.
+
+Mon Jul 02 20:28:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin fixes many problems with multiple calls being read in
+	a single read.
+
+	* tao/GIOP_Message_Base.cpp: Changed the way we calculate the
+	  remaining length that needs to be copied if the last read had
+	  left with a very small piece of message ie. less than 12 bytes
+	  in the queue.
+
+	* tao/GIOP_Message_State.cpp: Fixed a check condition before we go
+	  ahead to parse the header.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Added a method set_flags
+	  (). Further the condition for resuming the handler has been
+	  relaxed. Clients of this class can decide not to resume handlers
+	  at all. This comes in handy at times. Also added a operator=
+	  method.
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: One of the bigger problems have been
+	  solved. The way we now multiple oneways is like this
+
+	  - The leader thread uses the transport and reads more messages
+	  - It splits up the messages in to pieces and queues them up.
+	  - It just takes one message and processes (the head of the
+	    queue). The changes above makes sure that only one of the
+	    message is processed.
+	  - Before processing if it finds one more message it sends a
+	    notify () to the reactor. An important point is that it does
+	    this without resuming the handler.
+	  - The notify call processes one more message. Before processing
+	    if it finds one more complete message it just sends another
+	    notify to the reactor.
+	  - The thread that reads the last complete message from the queue
+	    resumes the handler before processing the message.
+
+	  By the above process we dont starve any thread and at the
+	  same time ensures concurrency within the ORB.
+
+	* tao/LIST_OF_TODO: Updated..
+
+Sun Jul 01 18:35:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.h:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:  Applied the same
+	  optimization that was done in the last checkin. The last checkin
+	  works fine. It is no more a suspect.
+
+Sun Jul 01 18:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: Fixed small problems in getting
+	  message types.
+
+	* tao/Synch_Reply_Dispatcher.h:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.cpp: Suspect optimisations added
+	  to create datablocks on stack.
+
+	* tao/LIST_OF_TODO: Updated list..
+
+Sun Jul 01 09:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Muxed_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Exclusive_TMS.cpp:
+	* tao/Exclusive_TMS.h: Removed commented out code. They have been
+	  commented out for sometime that we dont need them anymore.
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Incoming_Message_Queue.h: Added lots of comments. Changed
+	  the name of the method copy_message () to copy_tail () and
+	  missing_data () to missing_data_tail (). Added a new static
+	  method TAO_Queued_Data::release () that releases a node.
+
+	* tao/Transport.cpp: Accomodated the changes to the
+	  Incoming_Message_Queue to the Transport class.
+
+	* tao/LIST_OF_TODO: Updated ..
+
+Sat Jun 30 13:00:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Fixed a subtle bug while allocating
+	  memory for the datablock in the queue. Memory was allocated only
+	  for the exact number of bytes without thinking about the
+	  alignment. Increased the number of bytes allocated.
+
+	  Created the outgoing CDR streams on the stack with memory drawn
+	  from the TSS. We cannot share the buffers like the way it has
+	  been done so far.
+
+	* tao/IIOP_Transport.cpp: Increased the debug_level for a debug
+	  statement.
+
+	* This checkin fixes the AMI problems that have been seen so far.
+
+	* tao/LIST_OF_TODO: Updated the list.
+
+Fri Jun 29 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/GIOP_Message_Base.cpp: Fixed a bug in calculating the number
+	  of bytes that  needs to be copied into queue.
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h: Changed the signature of copy
+          (). It returns the number of bytes copied instead of a void.
+
+	* tao/Transport.cpp (parse_consolidate_messages):
+	* tao/Transport.h: Added a new method parse_consolidate_messages
+	  () to the class. It does some common functaionalities like
+	  parsing the messages & consolidating the messages.
+
+Thu Jun 28 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Resume_Handle.cpp: Added a check for resumable_handlers
+	  before actually resuming the handle.
+
+Thu Jun 28 18:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp (process_queue_head):
+	* tao/Transport.h: Added a new method that would take the message
+	  from the head of the incoming queue and send it for processing.
+
+	* tao/GIOP_Message_Base.cpp: Minor formatting.
+
+Thu Jun 28 17:16:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/Pluggable_Messaging.h: Removed all the arguments that had an
+	  TAO_ORB_Core as one of the arguments. GIOP classes hold a copy
+	  of the pointer to the ORB_Core and so it is no
+	  necessary. Removed the following methods
+
+	  - is_message_complete ()
+	  - message_type ()
+
+	  The message_type () method is now local to the GIOP classes and
+	  it returns the Pluggable Message type from the
+	  GIOP_Message_State. This method is now used to fill the node
+	  with the right information type about the message.
+
+	* tao/Transport.cpp: Used the information from the node of the
+	  queue to determine the type of message before processing it.
+
+Thu Jun 28 15:12:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.i: Moved the get_queued_data () from the
+	  .i  file to the .cpp file.
+
+	* tao/Incoming_Message_Queue.h: #include'd a file.
+	* tao/Makefile: Added new files.
+	* tao/Resume_Handle.inl: Added the ACE_INLINE macros to the
+	  methods defined in this file.
+
+Thu Jun 28 09:30:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Base.cpp: Made lots of changes to deal with the
+	  following
+
+	  - to parse & queue up messages if we have read multiple messages.
+	  - to consolidate messages if we had read half of a message
+	  - to process a consolidated message.
+
+	 We now use the node of the Incoming Message Queue to share data
+	 between the Transport layer and the GIOP layer.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Made the TAO_Queued_Data as a
+	  seperate class. This helped using the node of the queue to be
+	  shared between the GIOP layer. Removed many of the useless
+	  methods like wr_ptr (), is_message_complete (), add_message ()
+	  etc. We have the following methods that are more meaningful
+
+	  - is_tail_complete ()
+	  - is_message_complete ()
+	  - dequeue_head ()
+	  - dequeue_tail ()
+	  - enqueue_tail ()
+
+	 Added a static method get_queued_data () to create a node in the
+	 Message Queue.
+
+	 Added the protocol version information to the Queued Data.  We
+	 also need the message type and that has also been added.
+
+	* tao/Resume_Handle.h:
+	* tao/Resume_Handle.cpp:
+	* tao/Resume_Handle.inl: This is a utility class that is used to
+	  resume handlers. This works more or less similar to our
+	  ACE_GUARD macros, but uses a flag to keep track whether the
+	  handle has been resumed.
+
+	* tao/IIOP_Connection_Handler.cpp: Installed the Resume_Handle in
+	  handle_input () methods.
+
+	* tao/Pluggable_Messaging.h: Removed the method  byte_order () and
+	  added the methods consolidate_node (), get_message_data () and
+	  extract_next_message ().
+
+	* tao/Wait_On_Read.cpp:
+	* tao/Connection_Handler.cpp: Changes to keep in sync with the
+	  changes to the signature of handle_input_i () in Transport
+	  class.
+
+	* tao/LIST_OF_TODO: Updated the list of TODO's.
+
+Mon Jun 25 19:21:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_State.inl:
+	* tao/IIOP_Transport.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Pluggable_Messaging.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:  An inconsistent checkin only to transfer the
+	  files to the box at home.
+
+Mon Jun 25 12:10:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.{h,cpp,inl}:
+	* tao/LIST_OF_TODO:
+	* tao/GIOP_Message_State.inl: Added these to my branch.
+
+Mon Jun 25 07:54:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/* : Merged the files from the main branch.
+
+Mon Jun 25 07:45:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Created this file.
+
+Fri Jun 22 17:00:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/LIST_OF_TODO: Updated the list of TODO's.
+
+Mon Jun 18 13:31:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp (dispatch_reply):
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/Transport.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Fixed warnings in
+	  g++ builds.
+
+Sat Jun 17 17:46:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This set of changes comes with complete revamping of the previous
+	design. The flaws with the previous design were as follows
+	(1) We were unnecessarily penalising large data blocks. We were
+	    trying to read a particular size of data till the data was
+	    completely removed from the socket. This was totally
+	    ridiculous because we were doing more reads than required.
+
+	(2) The message block that was constructed on the stack with a
+	    buffer from stack never did what we wanted. It was allocating
+	    a data block on the heap and was thus spoiling whatever
+	    optimization that we had tried putting in.
+
+	(3) The incoming message Queue is now managed by the TAO_Transport
+	    object instead of the GIOP classes.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Removed the references to the incoming
+	  message queue. Implemention for two methods missing_data () and
+	  byte_order (). Added an extra argument to the methods
+	  process_request_message () and process_reply_message (). Used
+	  the incoming message block to create a input CDR with the
+	  DONT_DELETE flag so that the data block is not deleted after
+	  request processing.
+
+	* tao/GIOP_Message_State.cpp: Removed the inclusion of
+	  Transport.h.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Added an argument to the
+	  add_message (). Further the implementation of add_message () has
+	  changed a bit. It now adds only a new message to the queue. It
+	  doesn't modify a half filled queue. The TAO_Transport object
+	  does that job. So declared the TAO_Transport as the friend class
+	  of the Incoming_Message_Queue.
+
+	  Changed the name of the methods complete_message () as
+	  is_complete_message (). Removed the methods current_message ()&
+	  current_byte_order ().
+
+	  Added a new method copy_message () which copies messages into
+	  the half empty nodes.
+
+	  Added a method wr_ptr () to access the write pointer of the tail
+	  node that has halfempty message.
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: The Incoming Message Queue is now managed by
+	  this class. Added the following methods
+	  - missing_data ()
+	  - parse_incoming_messages ()
+	  - check_message_integrity ()
+	  - consolidate_message ()
+	  - conslodate_message_queue ()
+
+	* tao/Pluggable_Messaging.h: Added two new virtual functions
+	  missing_data () and byte_order ().
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i: Added an accessor for the locking_strategy used
+	  for the CDR blocks.
+
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Changed the
+	  exchange_data_block () to clone_from () which is a new method in
+	  ACE_InputCDR.
+
+	* tao/LIST_OF_TODO: Updated the list
+
+Sat Jun 16 15:49:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/CDR.cpp:
+	* tao/CDR.h:
+	* tao/CDR.i:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/Invocation.cpp:
+	* tao/ORB.cpp:
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/TAO_Server_Request.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Integrated some
+	  of the changes from the main trunk in this branch.
+
+Wed Jun 13 17:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Fixed a bad way to use the tail
+	  of the circular linked list. This is now replaced by the size of
+	  the linked list. This fixes quite a few errors.
+
+	* tao/Transport.cpp: On read () if we get errno === EWOULDBLOCK we
+	  were closing the connection prematurely. This is not right. We
+	  should only return a 0 to the reactor, so that it can call us
+	  back when there is data in the socket.
+
+Wed Jun 13 10:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp (process_reply_message): Fixed the
+	  reply parsing and generation of the CDR stream that is passed on
+	  to the higher layers of the ORB.
+
+Wed Jun 13 07:25:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile: Added new files.
+	* tao/Exclusive_TMS.cpp: Removed some commented code.
+
+Tue Jun  12 18:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.inl: The message_size () now returns the
+	  payload size + the GIOP header length. Added a new method
+	  payload_size () that returns the payload size alone.
+
+	* tao/GIOP_Message_Base.cpp: Fixed a warning with g++ builds.
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp: The svc_i () method now calls
+	  handle_input_i () on the transport instead of the method in the
+	  same class. The handle_input_i () in the TAO_Connection_Handler
+	  class has been removed as it is no longer used.
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp: Removed the implementation of
+	  handle_input_i ().
+
+	* tao/Incoming_Message_Queue.cpp: When trying to make a new data
+	  block we dont add the size of GIOP header. The message_size ()
+	  now returns with that value.
+
+	* tao/Incoming_Message_Queue.inl: Fixed a link error in g++
+	  builds.
+
+Tue Jun  12 17:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	First set of checkins for big two ways.
+
+	* tao/Connection_Handler.h: Added #define for the default
+	  buffer size . Not sure yet whether this is the right place for
+	  it.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Queue up the incoming
+	  messages. We form a circular linked list of messages that are
+	  bigger than a particular buffer size. During processing we take
+	  messages of the queue to pass it onto the higher layers of the
+	  ORB.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Added support for big two way
+	  requests. If the message has only been partially read we add the
+	  message in the queue and then go for the next read. During
+	  processing we check if the queue has messages before processing
+	  the message on hand.
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.inl: Added accessor methods.
+
+	* tao/Transport.cpp: Added support for bigger two ways. If we
+	  receive a two way bigger than a particular size we read and
+	  queue the message and do a further read to retrieve the rest of
+	  the message.
+
+	* tao/TAO.dsp: Added new files.
+	* tao/default_resource.cpp: For single threaded configuration we
+	  have been creating a locked data block and that seems to defy
+	  logic. We now should create a lock free datablock for single
+	  threaded configurations.
+
+Sat Jun  2 12:02:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/* : Merged with the main trunk.
+
+Fri Jun  1 17:22:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.cpp (parse_message_header_i):
+	* tao/Connection_Handler.cpp:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/Makefile:
+	* tao/Transport.cpp: Fixed warnings and errors in Linux g++.
+
+Thu Jun 01 13:39:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* tao/Transport.h:  Added the following methods -- handle_input_i
+	  (), process_parsed_message (). The handle_input_i () creates a
+	  buffer on the stack. It uses the buffer to read the
+	  messages. Any errors in read () or dealt here directly. The read
+	  message is then parsed and processed by the GIOP classes. Moved
+	  most of the code for processing here as they seem to be common
+	  between different transport protocols. Once we have received a
+	  full message, we just resume the handler and go ahead with
+	  processing the message.
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input ()): Calls
+	  handle_input_i () on the transport.
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp:  The svc_i () calls the
+	  handle_input_i () on the transport instead of the same call on
+	  the connection handler. This way we should be able to share the
+	  same code among different protocol objects.
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp: Much of the message parsing and
+	  state information is stored here.
+
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/Pluggable_Messaging.h: made some changes to suit the
+	  above. But more changes could come in, to suit different
+	  protocols. We may want to change the interfaces in
+	  Pluggable_Messaging to give a much cleaner interface to the
+	  world.
+
+	* tao/Wait_On_Read.cpp: Used the handle_input_i () on the
+	  transport for processing the incoming data.
+
+	* tao/TAO.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp: Added new files and
+	  removed files from GIOP_Lite in the first round.
+
+	* tao/GIOP_Message_Reactive_Handler.cpp:
+	* tao/GIOP_Message_Reactive_Handler.h: Looks like these files
+	  would be removed during the final merge.
+
+	The above checkins works for simple two way calls. The
+	BiDirectional_NestedUpcall test works with the TP_Reactor. This
+	works on Win32.
+
+
+Thu May 24 12:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h: Added some design forces for the input data
+	  path.
+
+	End of ChangeLog entries from branch bug_575_stage_2.
+
 Thu Jul  5 22:04:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/LongUpcalls/run_ami_test.pl: Adding a new perl script to

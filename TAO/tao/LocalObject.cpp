@@ -2,6 +2,7 @@
 //
 // $Id$
 
+
 #include "LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
@@ -13,6 +14,7 @@
 ACE_RCSID (tao,
            LocalObject,
            "$Id$")
+
 
 CORBA_LocalObject::~CORBA_LocalObject (void)
 {

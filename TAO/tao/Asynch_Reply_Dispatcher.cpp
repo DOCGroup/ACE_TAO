@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Asynch_Reply_Dispatcher.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
@@ -19,8 +18,16 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
-  : reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-                0,
+  : buf_ (),
+    db_ (sizeof buf_,
+         ACE_Message_Block::MB_DATA,
+         this->buf_,
+         orb_core->message_block_buffer_allocator (),
+         orb_core->locking_strategy (),
+         ACE_Message_Block::DONT_DELETE,
+         orb_core->message_block_dblock_allocator ()),
+    reply_cdr_ (&db_,
+                ACE_Message_Block::MB_DATA,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
@@ -48,11 +55,6 @@ TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
   return 0;
 }
 
-/*TAO_GIOP_Message_State *
-TAO_Asynch_Reply_Dispatcher_Base::message_state (void)
-{
-  return this->message_state_;
-} */
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::dispatcher_bound (TAO_Transport *)
@@ -113,11 +115,11 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 
   this->reply_status_ = params.reply_status_;
 
-  // this->message_state_ = message_state;
+  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
+  ACE_Data_Block *db =
+    this->reply_cdr_.clone_from (params.input_cdr_);
 
-  // Steal the buffer so that no copying is done.
-  this->reply_cdr_.exchange_data_blocks (params.input_cdr_);
-
+  ACE_UNUSED_ARG (db);
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
   CORBA::ULong max = params.svc_ctx_.maximum ();

@@ -31,6 +31,7 @@ class TAO_Transport;
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
+class TAO_Queued_Data;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -108,27 +109,43 @@ public:
   /// general.
   virtual int format_message (TAO_OutputCDR &cdr) = 0;
 
-  /// Get the message type that was received.
-  virtual TAO_Pluggable_Message_Type message_type (void) = 0;
-
-
   /// Do any initialisations that may be needed.
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor) = 0;
 
-  /// Reset teh messaging object
-  virtual void reset (int reset_flag = 1) = 0;
-  // Reset the messaging object
+  /// Parse the incoming messages..
+  virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
+
+  /// Calculate the amount of data that is missing in the <incoming>
+  /// message block.
+  virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
+
+  /// Get the details of the message parsed through the <qd>.
+  virtual void get_message_data (TAO_Queued_Data *qd) = 0;
+
+  /* Extract the details of the next message from the <incoming>
+   * through <qd>. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in <incoming>.
+  */
+  virtual int extract_next_message (ACE_Message_Block &incoming,
+                                    TAO_Queued_Data *&qd) = 0;
+
+  /// Check whether the node <qd> needs consolidation from <incoming>
+  virtual int consolidate_node (TAO_Queued_Data *qd,
+                                ACE_Message_Block &incoming) = 0;
 
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core) = 0;
+                                       TAO_Queued_Data *qd) = 0;
+
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
-      TAO_Pluggable_Reply_Params &reply_info) = 0;
+      TAO_Pluggable_Reply_Params &reply_info,
+      TAO_Queued_Data *qd) = 0;
+
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
@@ -140,8 +157,8 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (void) = 0;
 
-  /// Are there any more messages that needs processing?
-  virtual int more_messages (void);
+  /// Reset the messaging the object
+  virtual void reset (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
@@ -68,6 +69,7 @@ using std::set_unexpected;
 
 
 ACE_RCSID(tao, ORB, "$Id$")
+
 
 
 static const char ior_prefix [] = "IOR:";
@@ -1755,6 +1757,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                                       CORBA::COMPLETED_NO),
                       0);
 
+
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1981,8 +1984,11 @@ CORBA_ORB::ior_string_to_object (const char *str,
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb, byte_order, TAO_DEF_GIOP_MAJOR,
-                       TAO_DEF_GIOP_MINOR, this->orb_core_);
+  TAO_InputCDR stream (&mb,
+                       byte_order,
+                       TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR,
+                       this->orb_core_);
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;

@@ -13,29 +13,19 @@
 #ifndef TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H
 #define TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H
 #include "ace/pre.h"
-#include "ace/Message_Block.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP_Message_State.h"
 
-class TAO_Transport;
+
 class TAO_ORB_Core;
 class TAO_GIOP_Message_Base;
+class TAO_GIOP_Message_State;
+class ACE_Message_Block;
 
-enum TAO_GIOP_Message_Status
-{
-  /// The buffer is waiting for the header of the message yet
-  TAO_GIOP_WAITING_FOR_HEADER = 0,
-
-  /// The buffer is waiting for the payload to appear on the socket
-  TAO_GIOP_WAITING_FOR_PAYLOAD,
-
-  /// The buffer has got multiple messages
-  TAO_GIOP_MULTIPLE_MESSAGES
-};
 
 /**
  * @class TAO_GIOP_Message_Reactive_Handler
@@ -54,6 +44,9 @@ enum TAO_GIOP_Message_Status
  * reading the header and the payload seperately.
  */
 
+
+
+#if 0
 class TAO_Export TAO_GIOP_Message_Reactive_Handler
 {
 public:
@@ -79,7 +72,7 @@ public:
   ///  - We have sufficient info for processing the header and we
   ///    processed it succesfully. (return 1);
   ///  - Any errors in processing will return a -1.
-  int parse_message_header (void);
+  int parse_message_header (ACE_Message_Block &message_block);
 
   /// Check whether we have atleast one complete message ready for
   /// processing.
@@ -173,7 +166,11 @@ private:
   /// is then sent to the higher layers of the ORB.
   ACE_Message_Block supp_buffer_;
 };
+#if defined (__ACE_INLINE__)
+# include "tao/GIOP_Message_Reactive_Handler.inl"
+#endif /* __ACE_INLINE__ */
 
+#endif
 
 const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
 const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
@@ -183,9 +180,7 @@ const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
 const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Reactive_Handler.inl"
-#endif /* __ACE_INLINE__ */
+
 
 #include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H*/
