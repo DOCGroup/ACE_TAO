@@ -46,9 +46,13 @@ TAO_Admin<TRADER>::TAO_Admin (TRADER &trader)
     total_length = name_length + id_length + sizeof (CORBA::ULong);
   
   this->stem_id_.length (total_length);
-  for (int i = total_length - 1, j = name_length - 1; j >= 0; i--, j--)
-    this->stem_id_[i] = (CORBA::Octet) poa_name[j];
+  // @@ Commented it out until a fix is found
   
+  for (int i = total_length - 1, j = name_length - 1; j >= 0; i--, j--) 
+    //this->stem_id_[i] = (CORBA::Octet) poa_name[j];
+    ;
+
+
   for (j = id_length - 1; j >= 0; j--, i--)
     this->stem_id_[i] = id[j];
 }

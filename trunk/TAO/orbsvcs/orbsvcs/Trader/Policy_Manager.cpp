@@ -111,7 +111,7 @@ TAO_Policy_Manager::policy_seq (void) const
 }
 
 CosTrading::Policy&
-TAO_Policy_Manager::fetch_next_policy (POLICY_TYPE pol_type)
+TAO_Policy_Manager::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
 {
   CORBA::ULong index = 0;
 

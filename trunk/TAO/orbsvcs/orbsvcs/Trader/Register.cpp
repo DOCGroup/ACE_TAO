@@ -294,7 +294,7 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
   TAO_ENDTRY;
   
   // Ensure that the register pointer isn't nil.
-  if (link_info->target_reg == CosTrading::Register::_nil ())
+  if (link_info->target_reg.in() == CosTrading::Register::_nil ())
     TAO_THROW_RETURN (CosTrading::Register::RegisterNotSupported (name),
 		      CosTrading::Register::_nil ());
 
