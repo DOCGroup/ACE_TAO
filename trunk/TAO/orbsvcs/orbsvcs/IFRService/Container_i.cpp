@@ -404,8 +404,19 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA_ContainedSeq *contents = 0;
+  ACE_NEW_THROW_EX (contents,
+                    CORBA_ContainedSeq,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA_ContainedSeq_var retval = contents;
+  retval->length (0);
+
   if (limit_type == CORBA::dk_none)
-    return 0;
+    {
+      return retval._retn ();
+    }
 
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -413,54 +424,60 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
   // Definitions
 
   ACE_Configuration_Section_Key defns_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "defns",
-                                        0,
-                                        defns_key);
+  int status =
+    this->repo_->config ()->open_section (this->section_key_,
+                                          "defns",
+                                          0,
+                                          defns_key);
 
-  u_int count = 0;
-  this->repo_->config ()->get_integer_value (defns_key,
-                                             "count",
-                                             count);
-
-  for (u_int i = 0; i < count; ++i)
+  // If there are no contents (other than possible attributes or
+  // operations), skip this part.
+  if (status == 0)
     {
-      CORBA::String_var section_name = this->int_to_string (i);
-      ACE_Configuration_Section_Key defn_key;
-      int status =
-        this->repo_->config ()->open_section (defns_key,
-                                              section_name.in (),
-                                              0,
-                                              defn_key);
+      u_int count = 0;
+      this->repo_->config ()->get_integer_value (defns_key,
+                                                 "count",
+                                                 count);
 
-      if (status == 0)
+      for (u_int i = 0; i < count; ++i)
         {
-          u_int kind = 0;
-          this->repo_->config ()->get_integer_value (defn_key,
-                                                     "def_kind",
-                                                     kind);
+          CORBA::String_var section_name = this->int_to_string (i);
+          ACE_Configuration_Section_Key defn_key;
+          status =
+            this->repo_->config ()->open_section (defns_key,
+                                                  section_name.in (),
+                                                  0,
+                                                  defn_key);
 
-          CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
-
-          if (limit_type == CORBA::dk_all
-              || limit_type == def_kind)
+          if (status == 0)
             {
-              kind_queue.enqueue_tail (def_kind);
+              u_int kind = 0;
+              this->repo_->config ()->get_integer_value (defn_key,
+                                                         "def_kind",
+                                                         kind);
 
-              ACE_TString id;
-              this->repo_->config ()->get_string_value (defn_key,
-                                                        "id",
-                                                        id);
+              CORBA::DefinitionKind def_kind =
+                ACE_static_cast (CORBA::DefinitionKind, kind);
 
-              ACE_TString path;
-              this->repo_->config ()->get_string_value (
-                                          this->repo_->repo_ids_key (),
-                                          id.c_str (),
-                                          path
-                                        );
+              if (limit_type == CORBA::dk_all
+                  || limit_type == def_kind)
+                {
+                  kind_queue.enqueue_tail (def_kind);
 
-              path_queue.enqueue_tail (path);
+                  ACE_TString id;
+                  this->repo_->config ()->get_string_value (defn_key,
+                                                            "id",
+                                                            id);
+
+                  ACE_TString path;
+                  this->repo_->config ()->get_string_value (
+                                              this->repo_->repo_ids_key (),
+                                              id.c_str (),
+                                              path
+                                            );
+
+                  path_queue.enqueue_tail (path);
+                }
             }
         }
     }
@@ -489,18 +506,9 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
     }
 
   size_t size = kind_queue.size ();
-
-  CORBA_ContainedSeq *contents = 0;
-  ACE_NEW_THROW_EX (contents,
-                    CORBA_ContainedSeq (size),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  CORBA_ContainedSeq_var retval = contents;
-
   retval->length (size);
 
-  for (size_t j = 0; j < size; j++)
+  for (size_t j = 0; j < size; ++j)
     {
       CORBA::DefinitionKind next_kind;
       kind_queue.dequeue_head (next_kind);

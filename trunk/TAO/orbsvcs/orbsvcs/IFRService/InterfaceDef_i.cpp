@@ -998,27 +998,33 @@ TAO_InterfaceDef_i::interface_contents (
 
   ACE_TString section_name;
   int index = 0;
+  int status = 0;
 
   // Attributes
   if (limit_type == CORBA::dk_Attribute
       || limit_type == CORBA::dk_all)
     {
       ACE_Configuration_Section_Key attrs_key;
-      this->repo_->config ()->open_section (this->section_key_,
-                                            "attrs",
-                                            0,
-                                            attrs_key);
+      status =
+        this->repo_->config ()->open_section (this->section_key_,
+                                              "attrs",
+                                              0,
+                                              attrs_key);
 
-      while (this->repo_->config ()->enumerate_sections (attrs_key,
-                                                         index++,
-                                                         section_name)
-              == 0)
+      // Only if we have any.
+      if (status == 0)
         {
-          kind_queue.enqueue_tail (CORBA::dk_Attribute);
+          while (this->repo_->config ()->enumerate_sections (attrs_key,
+                                                             index++,
+                                                             section_name)
+                  == 0)
+            {
+              kind_queue.enqueue_tail (CORBA::dk_Attribute);
 
-          path_queue.enqueue_tail (
-              path + "\\attrs\\" + section_name.c_str ()
-            );
+              path_queue.enqueue_tail (
+                  path + "\\attrs\\" + section_name.c_str ()
+                );
+            }
         }
     }
 
@@ -1029,21 +1035,26 @@ TAO_InterfaceDef_i::interface_contents (
       index = 0;
 
       ACE_Configuration_Section_Key ops_key;
-      this->repo_->config ()->open_section (this->section_key_,
-                                            "ops",
-                                            0,
-                                            ops_key);
+      status =
+        this->repo_->config ()->open_section (this->section_key_,
+                                              "ops",
+                                              0,
+                                              ops_key);
 
-      while (this->repo_->config ()->enumerate_sections (ops_key,
-                                                         index++,
-                                                         section_name)
-              == 0)
+      // Only if we have any.
+      if (status == 0)
         {
-          kind_queue.enqueue_tail (CORBA::dk_Operation);
+          while (this->repo_->config ()->enumerate_sections (ops_key,
+                                                             index++,
+                                                             section_name)
+                  == 0)
+            {
+              kind_queue.enqueue_tail (CORBA::dk_Operation);
 
-          path_queue.enqueue_tail (
-              path + "\\ops\\" + section_name.c_str ()
-            );
+              path_queue.enqueue_tail (
+                  path + "\\ops\\" + section_name.c_str ()
+                );
+            }
         }
     }
 
@@ -1051,40 +1062,44 @@ TAO_InterfaceDef_i::interface_contents (
     {
       // Must recurse through the base interfaces.
       ACE_Configuration_Section_Key inherited_key;
-      this->repo_->config ()->open_section (this->section_key_,
-                                            "inherited",
-                                            0,
-                                            inherited_key);
+      status =
+        this->repo_->config ()->open_section (this->section_key_,
+                                              "inherited",
+                                              0,
+                                              inherited_key);
 
-      ACE_TString base_path;
-      ACE_Configuration_Section_Key base_key;
-      ACE_Configuration::VALUETYPE type;
-      index = 0;
-
-      while (this->repo_->config ()->enumerate_values (inherited_key,
-                                                       index++,
-                                                       section_name,
-                                                       type)
-              == 0)
+      if (status == 0)
         {
-          this->repo_->config ()->get_string_value (inherited_key,
-                                                    section_name.c_str (),
-                                                    base_path);
+          ACE_TString base_path;
+          ACE_Configuration_Section_Key base_key;
+          ACE_Configuration::VALUETYPE type;
+          index = 0;
 
-          this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                               base_path,
-                                               base_key,
-                                               0);
+          while (this->repo_->config ()->enumerate_values (inherited_key,
+                                                           index++,
+                                                           section_name,
+                                                           type)
+                  == 0)
+            {
+              this->repo_->config ()->get_string_value (inherited_key,
+                                                        section_name.c_str (),
+                                                        base_path);
 
-          TAO_InterfaceDef_i base_iface (this->repo_,
-                                         base_key);
+              this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                                   base_path,
+                                                   base_key,
+                                                   0);
 
-          base_iface.interface_contents (kind_queue,
-                                         path_queue,
-                                         limit_type,
-                                         exclude_inherited
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+              TAO_InterfaceDef_i base_iface (this->repo_,
+                                             base_key);
+
+              base_iface.interface_contents (kind_queue,
+                                             path_queue,
+                                             limit_type,
+                                             exclude_inherited
+                                             ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
         }
     }
 }
@@ -1211,13 +1226,19 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
   )
 {
   ACE_Configuration_Section_Key inherited_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "inherited",
-                                        0,
-                                        inherited_key);
+  int status =
+    this->repo_->config ()->open_section (this->section_key_,
+                                          "inherited",
+                                          0,
+                                          inherited_key);
+
+  // No base interfaces.
+  if (status != 0)
+    {
+      return;
+    }
 
   int index = 0;
-  int status = 0;
   u_int kind = 0;
   ACE_Configuration::VALUETYPE type;
   ACE_TString section_name, inherited_path;
