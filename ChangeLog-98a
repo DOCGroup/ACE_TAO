@@ -14,6 +14,9 @@ Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
           removed special-case support for ACE_HAS_SIGNFO_T, because ace/OS.h
           declares a siginfo_t without it.
 
+        * tests/run_tests.vxworks: enabled Priority_Reactor_Test and
+          Message_Queue_Test, because they appear to run successfully now.
+
 Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{i,cpp}:
