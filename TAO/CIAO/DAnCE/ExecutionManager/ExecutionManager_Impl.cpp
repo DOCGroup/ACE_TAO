@@ -146,9 +146,6 @@ void
 CIAO::ExecutionManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) You're using the wrong emulated exception macro below.
-  //         Please use ACE_ENV_ARG_PARAMETER instead.
-
   // Shutdown the ORB on which it is runing
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
