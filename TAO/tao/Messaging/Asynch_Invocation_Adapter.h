@@ -20,12 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Messaging/Messaging.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "tao/Invocation_Adapter.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
-#include "tao/Messaging/Messaging.h"
-#include "tao/Auto_Functor.h"
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "ace/Auto_Functor.h"
 
 class TAO_Operation_Details;
 class TAO_Stub;
@@ -89,8 +89,8 @@ namespace TAO
 
   private:
     /// Autofunctor to manage the reply dispatcher
-    Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
-                        ARDB_Refcount_Functor> safe_rd_;
+    ACE_Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
+                            ARDB_Refcount_Functor> safe_rd_;
 
   private:
     /// Dont allow default initializations

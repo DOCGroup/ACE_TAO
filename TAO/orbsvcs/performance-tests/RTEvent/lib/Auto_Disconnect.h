@@ -8,8 +8,8 @@
 #ifndef TAO_PERF_RTEC_AUTO_DISCONNECT_H
 #define TAO_PERF_RTEC_AUTO_DISCONNECT_H
 
-#include "Auto_Functor.h"
 #include "tao/corba.h"
+#include "ace/Auto_Functor.h"
 
 /**
  * @class Disconnect
@@ -30,7 +30,7 @@ public:
  *        RTEC client.
  */
 template<class Client>
-class Auto_Disconnect : public Auto_Functor<Client,Disconnect<Client> >
+class Auto_Disconnect : public ACE_Utils::Auto_Functor<Client,Disconnect<Client> >
 {
 public:
   /// Constructor

@@ -15,6 +15,6 @@ Disconnect<Client>::operator () (Client *client
 
 template<class Client> ACE_INLINE
 Auto_Disconnect<Client>::Auto_Disconnect (Client *client)
-  :  Auto_Functor<Client,Disconnect<Client> > (client)
+  :  ACE_Utils::Auto_Functor<Client,Disconnect<Client> > (client)
 {
 }
