@@ -1,3 +1,10 @@
+Thu Sep 18 08:54:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp: Added new line after
+	  adding the endif block. Revretde changes form this checkin "Thu
+	  Sep 18 07:39:51 2003  Balachandran Natarajan
+	  <bala@dre.vanderbilt.edu> 
+
 Thu Sep 18 08:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
