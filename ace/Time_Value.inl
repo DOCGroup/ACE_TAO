@@ -43,7 +43,7 @@ ACE_Time_Value::set (double d)
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   long l = (long) d;
   this->tv_.tv_sec = l;
-  this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS);
+  this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
   this->normalize ();
 }
 
