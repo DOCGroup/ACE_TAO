@@ -1,8 +1,8 @@
 Mon Mar  1 14:43:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/compiler.html: 
-	  Fixed minor error in the IDL compiler documentation, thanks to
-	  Frederic Maria  <fmaria@lucent.com> for pointing this out.
+        * docs/compiler.html:
+          Fixed minor error in the IDL compiler documentation, thanks to
+          Frederic Maria  <fmaria@lucent.com> for pointing this out.
 
 Mon Mar 01 14:20:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
