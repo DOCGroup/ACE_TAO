@@ -1,3 +1,9 @@
+Thu Oct  7 01:23:01 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* examples/Quoter/Makefile:
+	  Updated dependencies.  This file was missed during:
+	  Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
+	
 Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingC.h,
