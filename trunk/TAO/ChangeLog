@@ -1,3 +1,7 @@
+Mon Mar 31 06:43:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/default_resource.h: Fixed a warning in our daily builds. 
+
 Sun Mar 30 21:44:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* performance-tests/Memory/IOR_Size/server.conf: Added the lazy
