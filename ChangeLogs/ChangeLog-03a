@@ -1,3 +1,8 @@
+Sun Jan 20 10:40:28 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Vector_Test.dsp:
+	* tests/tests.dsw: Added a new project for Vector_Test.
+
 Sun Jan 20 16:25:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
