@@ -1,10 +1,19 @@
+Sun Oct 12 17:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Removed mentioning of tests/run_tests.bat, it has been removed
+          some time ago and the perl script run_tests.pl is the only one
+          to use. Updated documentation for Borland support. CBuilderX is
+          now supported, but not the new preview compiler that is shipped
+          with CBuilderX.
+
 Sun Oct 12 08:42:32 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/Makefile: 
+	* Kokyu/tests/DSRT_MIF/Makefile:
 	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/FIFO/README:	
-	* Kokyu/tests/EDF/README:	
+	* Kokyu/tests/FIFO/README:
+	* Kokyu/tests/EDF/README:
 	* Kokyu/tests/EDF/test.cpp: Added more output info
 	  statements. Added README for the examples.
 
