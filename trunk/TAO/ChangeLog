@@ -1,3 +1,17 @@
+Thu Dec 11 17:04:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+
+	  Used the $TAO_ROOT/tao/Utils Servant_Var instead of the one in
+	  the local directory.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+
+	  Updated dependencies.
+
 Thu Dec 11 15:38:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbscvcs/CosLoadBalancing.dsp:

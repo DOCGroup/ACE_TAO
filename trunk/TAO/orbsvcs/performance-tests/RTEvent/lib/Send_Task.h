@@ -9,7 +9,7 @@
 #ifndef TAO_PERF_RTEC_SEND_TASK_H
 #define TAO_PERF_RTEC_SEND_TASK_H
 
-#include "Servant_var.h"
+#include "tao/Utils/Servant_Var.h"
 #include "Supplier.h"
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
@@ -57,7 +57,7 @@ private:
 
   int event_source_;
 
-  Servant_var<Supplier> supplier_;
+  TAO::Utils::Servant_Var<Supplier> supplier_;
 
   ACE_Barrier *barrier_;
 

@@ -13,8 +13,8 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Send_Task, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Send_Task,
            "$Id$")
 
 Send_Task::Send_Task (void)
@@ -42,7 +42,8 @@ Send_Task::init (int iterations,
   this->startup_sleep_ = startup_sleep;
   this->event_type_ = event_type;
   this->event_source_ = event_source;
-  this->supplier_ = Servant_var<Supplier>::duplicate (supplier);
+  this->supplier_ =
+    TAO::Utils::Servant_Var<Supplier>::_duplicate (supplier);
   this->barrier_ = barrier;
 }
 
