@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_select.h"
+
 template <class STREAM> ssize_t
 ACE_Streambuf_T<STREAM>::send (char *buf, ssize_t len)
 {
