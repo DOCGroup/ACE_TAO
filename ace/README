@@ -155,6 +155,7 @@ ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UTSNAME_T			Platform lacks struct utsname (e.g., Win32 and VxWorks)
 ACE_MT_SAFE				Compile using multi-thread libraries
 ACE_NDEBUG				Turns off debugging features
+ACE_NEEDS_HUGE_THREAD_STACKSIZE		Required by platforms with small default stacks.
 ACE_NEEDS_READV				Platform doesn't define readv, so use our own
 ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own

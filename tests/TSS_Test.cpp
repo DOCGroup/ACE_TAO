@@ -75,12 +75,12 @@ static ACE_TSS<Errno> TSS_Error;
 
 #if defined (ACE_HAS_THREADS)
 // Serializes output via cout.
-static ACE_Thread_Mutex lock;
+static ACE_Thread_Mutex cout_lock;
 
 typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 #else
 // Serializes output via cout.
-static ACE_Null_Mutex lock;
+static ACE_Null_Mutex cout_lock;
 
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
@@ -153,7 +153,7 @@ worker (void *c)
 
       {
 	// Use the guard to serialize access
-	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0));
+	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
 	ACE_ASSERT (TSS_Error->flags () == ITERATIONS);
       }
       key = 0;

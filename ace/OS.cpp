@@ -270,6 +270,15 @@ public:
   // Mark a key as being used by this thread.
 
 protected:
+  int mark_cleanup_i (void);
+  // Mark a thread for actually performing cleanup.
+
+  int check_cleanup_i (void);
+  // Check if given thread is performing cleanup.
+
+  int exit_cleanup_i (void);
+  // Indicate that a thread has finished cleanup.
+
   void dump (void);
 
   ACE_TSS_Cleanup (void);
@@ -278,6 +287,9 @@ protected:
 private:
   ACE_TSS_TABLE table_;
   // Table of <ACE_TSS_Info>'s.
+
+  ACE_TSS_REF_TABLE ref_table_;
+  // Table of thread IDs that are performing cleanup activities.
 
   // = Static data.
   static ACE_TSS_Cleanup *instance_;
@@ -296,50 +308,102 @@ ACE_TSS_Cleanup *ACE_TSS_Cleanup::instance_ = 0;
 // Serialize initialization of <key_>.
 ACE_Recursive_Thread_Mutex ACE_TSS_Cleanup::lock_;
 
+int 
+ACE_TSS_Cleanup::mark_cleanup_i (void)
+{
+  return this->ref_table_.insert (ACE_TSS_Ref (ACE_OS::thr_self ()));
+}
+  
+int 
+ACE_TSS_Cleanup::check_cleanup_i (void)
+{
+  return this->ref_table_.find (ACE_TSS_Ref (ACE_OS::thr_self ()));
+}
+
+int 
+ACE_TSS_Cleanup::exit_cleanup_i (void)
+{
+  return this->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+}
+
 void 
 ACE_TSS_Cleanup::exit (void *status)
 {
-  // ACE_TRACE ("ACE_TSS_Cleanup::exit");
-
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
-
-  // Prevent recursive deletions (note that when a recursive mutex
-  // is first acquired it has a nesting level of 1...).
-  if (ACE_TSS_Cleanup::lock_.get_nesting_level () > 1)
-    return;
+// ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
   ACE_thread_key_t key_arr[TLS_MINIMUM_AVAILABLE];
   int index = 0;
 
   ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info info_arr[TLS_MINIMUM_AVAILABLE];
+  int info_ix = 0;
 
-  // Iterate through all the thread-specific items and free them all
-  // up.
+  // While holding the lock, we only collect the ACE_TSS_Info objects
+  // in an array without invoking the according destructors.
 
-  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-       iter.next (key_info) != 0;
-       iter.advance ())
-    {
-      void *tss_info = 0;
+  {
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
 
-      int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+    // Prevent recursive deletions
 
-      if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
-	  && (key_info->destructor_) 
-	  && tss_info)
-	// Probably need to have an exception handler here...
-	(*key_info->destructor_) (tss_info);   
+    if (this->check_cleanup_i ()) // Are we already performing cleanup?
+      return;
 
-      if (key_info->ref_table_.size () == 0 
-	  && key_info->tss_obj_ == 0)
-	key_arr[index++] = key_info->key_;
-    }
+    // If we can't insert our thread_id into the list, we will not be
+    // able to detect recursive invocations for this thread. Therefore
+    // we better risk memory and key leakages, resulting also in
+    // missing close() calls as to be invoked recursively.
 
-  for (int i = 0; i < index; i++)
-    {
-      ::TlsFree (key_arr[i]);
-      this->table_.remove (ACE_TSS_Info (key_arr[i]));
-    }
+    if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
+      return;
+
+    // Iterate through all the thread-specific items and free them all
+    // up.
+
+    for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
+	 iter.next (key_info) != 0;
+	 iter.advance ())
+      {
+	void *tss_info = 0;
+
+	int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+
+	if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
+	    && (key_info->destructor_) 
+	    && tss_info)
+          info_arr[info_ix++] = *key_info; // copy this information into array
+
+ 	if (key_info->ref_table_.size () == 0 
+	    && key_info->tss_obj_ == 0)
+	  key_arr[index++] = key_info->key_;
+      }
+   }
+
+   // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
+   // invoking destructors.
+
+   for (int i = 0; i < info_ix; i++)
+     {
+       void *tss_info = 0;
+
+       ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
+
+       (*info_arr[i].destructor_)(tss_info);
+     }
+
+   // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
+   // entries from ACE_TSS_Info table.
+   {
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+
+    for (int i = 0; i < index; i++)
+      {
+	::TlsFree (key_arr[i]);
+	this->table_.remove (ACE_TSS_Info (key_arr[i]));
+      }
+
+    this->exit_cleanup_i (); // remove thread id from reference list.
+   }
 
 #if 0 
   ::ExitThread ((DWORD) status);
@@ -586,13 +650,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif	//  ACE_HAS_FSU_PTHREADS
     }
 
+#if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+    if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+      stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+#endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
     if (stacksize != 0)
       {
 	size_t size = stacksize;
 
 #if defined (PTHREAD_STACK_MIN)
 	if (size < PTHREAD_STACK_MIN)
-	  stacksize = PTHREAD_STACK_MIN;
+	  size = PTHREAD_STACK_MIN;
 #endif /* PTHREAD_STACK_MIN */
 
 	if (::pthread_attr_setstacksize (&attr, size) != 0)
@@ -961,26 +1030,6 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
-}
-
-int
-ACE_OS::thr_win32_tls_table_lock (void)
-{
-#if defined (ACE_WIN32)
-  return ACE_TSS_Cleanup::lock_.acquire ();
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-int
-ACE_OS::thr_win32_tls_table_release (void)
-{
-#if defined (ACE_WIN32)
-  return ACE_TSS_Cleanup::lock_.release ();
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
 }
 
 int 

@@ -989,7 +989,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_DIRECTORY_SEPARATOR_CHAR '\\'
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
-
+#define ACE_LOGGER_KEY "\\temp\\server_daemon"
 // This will help until we figure out everything:
 #define NFDBITS 32 // only used in unused functions...
 // These two may be used for internal flags soon:
@@ -1289,6 +1289,7 @@ typedef char TCHAR;
 #define ACE_DIRECTORY_SEPARATOR_CHAR '/'
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+#define ACE_LOGGER_KEY "/tmp/server_daemon"
 
 // Wrapper for NT events on UNIX.
 struct ACE_event_t
@@ -1798,7 +1799,7 @@ typedef int ucontext_t;
 #endif /* ACE_HAS_TIMOD_H */
 
 #if defined (ACE_HAS_BROKEN_T_ERRNO)
-undef t_errno
+#undef t_errno
 #endif /* ACE_HAS_BROKEN_T_ERRNO */
 
 // Type of the extended signal handler.
@@ -1931,7 +1932,7 @@ public:
   static pid_t fork_exec (char *argv[]);
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.
-  static uid_t getgid (void);
+  static gid_t getgid (void);
   static pid_t getpid (void);
   static uid_t getuid (void);
   static pid_t setsid (void);
@@ -1948,6 +1949,12 @@ public:
   static int setrlimit (int resource, ACE_SETRLIMIT_TYPE *rl);
   static int sleep (u_int seconds);
   static int sleep (const ACE_Time_Value &tv);
+
+#if defined (ACE_HAS_BROKEN_R_ROUTINES)
+#undef ctime_r
+#undef asctime_r
+#undef rand_r   
+#endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
   // = A set of wrappers for operations on time.
   static time_t time (time_t *tloc);
@@ -2264,8 +2271,6 @@ public:
   static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
-  static int thr_win32_tls_table_lock(void);
-  static int thr_win32_tls_table_release(void);
   static int thr_keycreate (ACE_thread_key_t *key, void (*dest)(void *), void *inst = 0);
   static int thr_key_used (ACE_thread_key_t key);
   static int thr_kill (ACE_thread_t thr_id, int signum);

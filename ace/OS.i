@@ -210,7 +210,7 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
   ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 }
 
-ACE_INLINE uid_t 
+ACE_INLINE gid_t
 ACE_OS::getgid (void)
 {
 // ACE_TRACE ("ACE_OS::getgid");
@@ -218,7 +218,7 @@ ACE_OS::getgid (void)
   // getgid() is not supported:  just one group anyways
   return 0;
 #else
-  ACE_OSCALL_RETURN (::getgid (), uid_t, -1);
+  ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
 #endif /* VXWORKS */
 }
 
@@ -243,7 +243,7 @@ ACE_OS::getuid (void)
   // getuid() is not supported:  just one user anyways
   return 0;
 #else
-  ACE_OSCALL_RETURN (::getuid (), uid_t, -1);
+  ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
 #endif /* VXWORKS */
 }
 
@@ -4589,6 +4589,14 @@ ACE_OS::ctime (const time_t *t)
 #endif    // ACE_HAS_BROKEN_CTIME)
 }
 
+#if defined (DIGITAL_UNIX)
+extern "C" {
+  extern char *_Pctime_r (const time_t *, char *);
+  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
+  extern char *_Pasctime_r (const struct tm *, char *);
+}
+#endif /* DIGITAL_UNIX */
+
 ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
@@ -4596,7 +4604,11 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
   char *result;
+#if defined (DIGITAL_UNIX)
+   ACE_OSCALL (::_Pctime_r (t, buf), char *, 0, result);
+#else
   ACE_OSCALL (::ctime_r (t, buf), char *, 0, result);
+#endif /* DIGITAL_UNIX */
   ::strncpy (buf, result, buflen);
   return buf;
 #else
@@ -4622,7 +4634,11 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 {
 // ACE_TRACE ("ACE_OS::localtime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (DIGITAL_UNIX)
+   ACE_OSCALL_RETURN (::_Plocaltime_r(t, res), struct tm *, 0);
+#else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
+#endif /* DIGITAL_UNIX */
 #else
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
 #endif
@@ -4642,7 +4658,11 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
   char *result;
+#if defined (DIGITAL_UNIX)
+  ACE_OSCALL (::_Pasctime_r(t, buf), char *, 0, result);
+#else
   ACE_OSCALL (::asctime_r (t, buf), char *, 0, result);
+#endif /* DIGITAL_UNIX */
   ::strncpy (buf, result, buflen);
   return buf;
 #else
