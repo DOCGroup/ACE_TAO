@@ -1,3 +1,8 @@
+Sat Dec 21 12:38:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (snprintf): Win32 doesn't 0-terminate the string if
+          the maxlen is exceed, so terminate the string in that case.
+
 Sat Dec 21 14:36:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cygwin32.GNU:
