@@ -1,0 +1,17 @@
+project: messaging, corba_messaging {
+  Source_Files {
+    Oneway_Receiver.cpp
+    Shutdown_Helper.cpp
+    server.cpp
+  }
+}
+
+project(client): messaging, corba_messaging {
+  exename = client
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

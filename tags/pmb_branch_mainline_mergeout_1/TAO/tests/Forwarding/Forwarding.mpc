@@ -1,0 +1,17 @@
+project: server {
+  depends += IORTable
+  libs    += TAO_IORTable
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

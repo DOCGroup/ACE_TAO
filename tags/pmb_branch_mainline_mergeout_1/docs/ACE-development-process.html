@@ -1,0 +1,167 @@
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>ACE+TAO Development and Release Process</title>
+    <link rev=made href="mailto:levine@cs.wustl.edu">
+  </head>
+
+<body text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<hr>
+<h3>The ACE+TAO Development and Release Process</h3>
+
+To improve the quality of our software and minimize development
+effort, we try to follow the structured development and release
+process described below.<p>
+
+An important concept to keep in mind is <em>risk</em>.  Before you
+commit <em>any</em> change to ACE+TAO, please consider the effects
+that it will have.  Could it possibly cause a build failure, on any
+platform?  Could it possibly cause different run-time behavior?  And
+so on.  If so, it is your responsibility to adequately build and test
+with the change, in order to verify that it has no unintended
+effects.<p>
+
+Please keep in mind the cost of committing a mistake.  It may take you
+only a few seconds to fix, but its cost to the group may be much
+larger.  With our large group, workspace updates and builds are likely
+to happen at any time.  If one break, it can take hours to rebuild it.
+And each developer that was waiting for a successful build would be
+blocked for the duration of the broken build, the fix, and the
+rebuild.<p>
+
+<hr>
+<h3>The ACE+TAO Development Process</h3>
+
+The ACE+TAO development process looks like:<p>
+<ol>
+  <li>Every change to ACE+TAO must have a bug report.  <em>Change</em>
+    includes fixes, enhancements, updates, and so on.
+  <li><a href="http://ace.cs.wustl.edu/bugs/index.cgi">Create a bug report</a>.
+  <li>Accept the bug report if you are going to implement the change.
+  <li>Implement the change in your workspace(s).
+  <li>Test the change sufficiently to demonstrate that it both does
+    what is intended, and doesn't break anything.  The test may be
+    as simple as building and running the ACE+TAO tests on one platform.
+    Or as complicated as rebuilding and test all of ACE+TAO on
+    all platforms that we have.
+  <li>Create an appropriate ChangeLog entry.
+  <li>Commit the change using a ChangeLogTag commit message.
+  <li>Respond to the requester of the change, if any.  Please do this
+    <em>after</em> committing your change.
+  <li>Make sure that the requester is listed in the THANKS file.
+  <li>Update the bug report to indicate resolution.
+  <li>Monitor the next round of build/tests for problems with your change.
+  <li>Respond immediately to reports of problems with your changes.
+</ol>
+
+<p><hr>
+<H3>Bug Lifecycles</H3>
+<P>
+
+A bug should typically follow this life cycle:<p>
+<center><table cellpadding=5 border=0>
+<tr>
+  <td>Submitter:</td>
+  <td>Enters problem</td>
+<tr>
+  <td>Bugmaster:</td>
+  <td>Assigns</td>
+<tr>
+  <td>Owner:</td>
+  <td>Accepts</td>
+<tr>
+  <td>Owner:</td>
+  <td>Reproduces problem - if it needs a new test, write it and
+      put it in the regression tests.
+      If it can't be reproduced, set to Resolved/CANT_FIND.<br>
+      If it's a duplicate, set it to Resolved/DUPLICATE.
+      Fix code, commit changes, set to Resolved.</td>
+<tr>
+  <td>Submitter:</td>
+  <td>Tests it again; set to Verified (pass) or Reopened (fail)</td>
+<tr>
+  <td>Owner:</td>
+  <td>After next release is done, re-test; sets to Closed or Reopened.</td>
+</table></center>
+
+<p><hr>
+<H3>The Role of the Build Czar</H3>
+<P>
+
+At all times, we'll have a build czar.  The role may be shared by
+multiple people.  The build czar is responsible for ensuring that the
+next kits are clean, <em>i.e.</em>, it builds and runs cleanly on all
+platforms.  The status of all ACE+TAO builds is tracked automatically
+<A HREF="http://tao.doc.wustl.edu/scoreboard/"</A>online</A>.<p>
+
+A comprehensive summary of the build czar's role is available <A HREF="http://www.cs.wustl.edu/~bugzilla/">online</A>.
+This role is briefly summarized below:<p>
+<ul>
+  <li>Remind people to check build logs.  Developers are still
+    responsible for verifying that their changes are clean.
+  <li>Fix minor problems caused by compilation errors.  More complex
+      problems should be fixed by the developers who caused them.  The
+      build czar should help track down the guilty parties.
+  <li>Freeze the CVS repository when it's decided to no more
+    non-critical changes will be accepted for the next kits.
+    The build czar has the final say over when the freeze is
+    implemented.  The tendency to implement a freeze sooner than
+    later is intentional, desirable, beneficial, and the "Right Thing"[TM]
+    to do.
+  <li>Verifies that the final round of builds/tests are clean.
+  <li>Creates the kits.
+  <li>Unfreezes the CVS repository.
+  <li>Sends email to appropriate news groups announcing the new kits.
+  <li>Passes the mantle on to the next build czar.<p>
+</ul>
+
+If another developer interferes with the build czar's duties, the
+build czar has the unilateral authority to pass the mantle to the
+violator.  This is also intentional, desirable, beneficial, and the
+Right Thing[TM] to do.<p>
+
+<p><hr>
+<H3>The ACE+TAO Release Process</H3>
+<P>
+
+Minor releases of ACE+TAO occur periodically, typically twice a year.
+Minor releases have two-digit numbers, <EM>e.g.</EM>, 5.1.  Major
+releases are released infrequently, typically once a year.  Major
+releases are 1-digit numbers, <EM>e.g.</EM>5, that include
+substantially new functionality.  Both major and minor releases are
+carefully tested on all platforms the ACE+TAO run on.  In particular,
+we do not put out major or minor releases of ACE+TAO until all the
+compilations and regression tests work successful on all the platform
+we support. <P>
+
+Between major/minor releases, we release betas periodically,
+<EM>e.g.</EM>, once a month, so that ACE+TAO users can download and
+test our latest work in progress.  ACE+TAO beta kits have three-digit
+numbers, <EM>e.g.,</EM>5.1.1.  Betas are often not as stable as the
+major or minor releases, but they often contain important fixes that
+aren't in the official releases.  Although we try to ensure the
+quality of betas, they may not compile cleanly on all platforms, nor
+will they necessarily pass all of the tests on all platforms.  They
+will, however, compile cleanly and pass most tests on most platforms.
+As usual, we endeavor to fix any problems that arise as quickly as
+possible.  Naturally, if you require 100% predictable stability and
+support, please contact <A HREF="http://www.theaceorb.com/">OCI</A>
+for TAO commercial support or <A
+HREF="http://www.riverace.com/">Riverace</A> for ACE commercial
+support. <P>
+
+<hr><p>
+  <font size=-1>
+    Last modified 
+<!--#echo var="LAST_MODIFIED" -->.<p>
+  </font><hr>
+
+Back to <A HREF="index.html">ACE Documentation Home</A>.
+
+</body>
+</html>

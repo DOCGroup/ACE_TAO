@@ -1,0 +1,95 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+Like the client, we want to keep the main() part of our server code as
+      simple as possible.  This is done by putting most of the work
+      into the Handler object that will deal with client connections.
+From the looks of the code below, I think we've been successful in our
+simplification.
+<HR>
+
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>Server_i.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Select_Reactor.h">ace/Select_Reactor.h</A>"
+
+<font color=red>// A signal handler that will close the server object</font>
+extern "<font color=green>C</font>" void handler (int)
+{
+    <font color=#008888>Server::close</font>();
+}
+
+int main (int, char **)
+{
+        <font color=red>/* On Win32, the WFMO reactor is used by default.
+           Unfortunately, that causes the sockets to be put into
+           non-blocking mode which will break <font color=#008888>Recv::recv</font>().  To
+           prevent that issue, I explicitly use the Select Reactor
+           instead.  I'll talk more about the "<font color=green>problem</font>" in the Recv
+           comments.
+         */</font>
+
+        <font color=red>// First, we create a Select_Reactor that will do the work.</font>
+        <font color=red>// To keep things simple, I'll create it on the stack.</font>
+    ACE_Select_Reactor mySelectReactor;
+
+        <font color=red>// Next, we need an ACE_Reactor that is the bridge between the</font>
+        <font color=red>// code and the real reactor.  It is given a pointer to the</font>
+        <font color=red>// real reactor.</font>
+    ACE_Reactor myReactor (&mySelectReactor);
+
+        <font color=red>// Finally, we set the singleton instance to use the reactor</font>
+        <font color=red>// we've created.</font>
+    <font color=#008888>ACE_Reactor::instance</font> (&myReactor);
+
+        <font color=red>// The server object that abstracts away all of the difficult parts.</font>
+    Server server;
+
+        <font color=red>// Attempt to open the server.  Like all good ACE-based</font>
+        <font color=red>// objects, we'll get -1 on failure.</font>
+    if( server.open() == -1 )
+    {
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>server.open()</font>"), -1);
+    }
+
+        <font color=red>// Install a signal handler for ^C so that we can exit gracefully</font>
+    ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
+        <font color=red>// Run the server's main loop until we're interrupted</font>
+    if( server.run() == -1 )
+    {
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>server.run()</font>"), -1);
+    }
+
+    return 0;
+}
+
+<font color=red>/* These explicit instantiations were taken from an earlier tutorial.
+   Your compiler may require others as well.
+*/</font>
+<font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
+template class ACE_Acceptor &lt;Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+<font color=blue>#elif defined</font> (<font color=purple>ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA</font>)
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Acceptor &lt;Handler, ACE_SOCK_ACCEPTOR>
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+<font color=blue>#endif</font> <font color=red>/* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */</font>
+
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>
+

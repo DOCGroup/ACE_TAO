@@ -1,0 +1,3 @@
+project {
+  requires += corba_messaging
+}

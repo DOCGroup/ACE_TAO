@@ -1,0 +1,2 @@
+type_is_binary  = 1
+common_defines  = WIN32

@@ -1,0 +1,3 @@
+project(Interoperable Naming): namingexe {
+  exename = client
+}
