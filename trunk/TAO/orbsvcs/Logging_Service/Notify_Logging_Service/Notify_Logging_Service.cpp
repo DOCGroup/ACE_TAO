@@ -190,3 +190,13 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 
 /*****************************************************************/
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Dynamic_Service<TAO_NS_Service>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<TAO_NS_Service>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

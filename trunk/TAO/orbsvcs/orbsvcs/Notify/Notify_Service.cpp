@@ -128,7 +128,7 @@ TAO_NS_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_Notify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_NS_Notify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_Sched_Params::Policy sched_policy;
   long thr_sched_policy = orb->orb_core ()->orb_params ()->sched_policy ();
