@@ -1,6 +1,14 @@
+Fri Feb  6 14:53:27 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/global.features:
+
+	  Added a new feature cidl into the global features.
+	  This feature is turned off by default, so no makefiles
+	  or project files will be gnerated for CCF and CIDLC.
+
 Fri Feb  6 14:13:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Time_Value.inl (msec): Changed the return type of 
+	* ace/Time_Value.inl (msec): Changed the return type of
           ACE_Time_Value::msec() from long to unsigned long to prevent
  	  problems with wrap-arounds that yield negative numbers.  Thanks
  	  to Matthew Gillen <gillen@ohio.edu> for this fix.
@@ -8,7 +16,7 @@ Fri Feb  6 14:13:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Fri Feb  6 11:50:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp:
-	  
+
 	  Fixes a problem that this change "Thu Jan 15 08:02:23 2004
 	  Douglas C. Schmidt  <schmidt@cse.wustl.edu>" opened up and which
 	  Craig Rodrigues reported. This problem has been lying around for
@@ -24,15 +32,15 @@ Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
 	  Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
-	  problems. 
+	  problems.
 
 	* ace/config-sunos5.5.h:
 
 	  Added ACE_LACKS_SWAB. This is a lie. There are signatures
 	  mismatch and adding compile time options that get the right
 	  signatures messes things up a lot. Someone needs to take a look
-	  at it fix the compile time options properly. 
-	
+	  at it fix the compile time options properly.
+
 Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
