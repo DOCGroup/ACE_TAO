@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 IDL_FILES = Time
 IDL_SRC = TimeC.cpp TimeS.cpp

@@ -28,7 +28,7 @@ ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
 endif # NativeCosEvent
 
 PSRC=$(addsuffix .cpp,$(BIN))
-LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 

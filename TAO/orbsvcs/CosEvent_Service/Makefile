@@ -10,7 +10,7 @@ LSRC = CosEvent_Service.cpp \
 
 ES_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 BIN2 = CosEvent_Service
 

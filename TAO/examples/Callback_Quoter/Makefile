@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 IDL_FILES = Notifier Consumer
 IDL_SRC = NotifierC.cpp NotifierS.cpp ConsumerC.cpp ConsumerS.cpp
