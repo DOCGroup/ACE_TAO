@@ -403,10 +403,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
       }
     this->transport ()->purge_entry ();
 
-    // The Reactor must not be null, otherwise something else is
-    // horribly broken.
+
     ACE_Reactor * eh_reactor = eh->reactor ();
-    ACE_ASSERT(eh_reactor != 0);
 
     // These checks are valid as long as the ORB_Core is not
     // shutdown. It is good to have these checks and they are valid
@@ -421,16 +419,23 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
         // thread. For the main thread that takes the responsibility
         // of finalizing () the lanes and the pools, the calls and
         // comparison make no sense.
-        ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
-        ACE_ASSERT (eh_reactor == orb_core_reactor);
-
         ACE_Reactor * reactor =
           this->transport()->orb_core()->reactor ();
-        ACE_ASSERT (reactor == 0 || eh_reactor == reactor);
+        ACE_ASSERT (eh_reactor == 0 || eh_reactor == reactor);
+
+        ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
+        ACE_ASSERT (reactor == orb_core_reactor);
+
+        if (eh_reactor == 0)
+          eh_reactor = reactor;
 
         ACE_UNUSED_ARG (orb_core_reactor);
         ACE_UNUSED_ARG (reactor);
       }
+
+    // The Reactor must not be null, otherwise something else is
+    // horribly broken.
+    ACE_ASSERT(eh_reactor != 0);
 
     if (TAO_debug_level)
       {
