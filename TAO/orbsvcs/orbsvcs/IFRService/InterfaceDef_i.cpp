@@ -457,7 +457,9 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
                                                   op_key);
 
           if (status == 0)
-            key_queue.enqueue_tail (op_key);
+            {
+              key_queue.enqueue_tail (op_key);
+            }
         }
     }
 
@@ -652,6 +654,11 @@ TAO_InterfaceDef_i::create_attribute_i (
                                              mode);
 
   // Create the set and/or get operations for this attribute.
+  // This may not be necessary, and it seems that it may be
+  // better if the FullInterfaceDescription returned from
+  // describe_interface does not contain these operations -
+  // other IFRs from other vendors don't behave that way.
+/*
   this->create_attr_ops (id,
                          name,
                          version,
@@ -659,7 +666,7 @@ TAO_InterfaceDef_i::create_attribute_i (
                          mode
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
-
+*/
 #if 0 // CCM specific.
 
   CORBA::ULong i = 0;
