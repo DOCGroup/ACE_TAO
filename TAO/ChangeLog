@@ -1,3 +1,9 @@
+Wed Feb 11 11:28:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/chat/chat.mpc:
+          Added idl files explictly so that the order in which the idl files
+          are compiled is fixed and correct.
+
 Wed Feb 11 10:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ec_typed_events.mpb:
