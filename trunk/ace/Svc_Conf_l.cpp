@@ -1465,7 +1465,7 @@ char msg[];
 #endif
 	{
 	(void) fprintf( stderr, "%s\n", msg );
-	exit( 1 );
+	ACE_OS::exit( 1 );
 	}
 
 
