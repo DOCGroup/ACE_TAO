@@ -110,9 +110,10 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   ACE_TRACE ("ACE_SOCK_Connector::complete");
 #if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
   // Win32 has a timing problem - if you check to see if the
-  // connection has completed too fast, it will fail - so wait a bit
-  // to let it catch up.
-  ACE_OS::sleep (0);
+  // connection has completed too fast, it will fail - so wait 1
+  // millisecond to let it catch up.
+  ACE_Time_Value tv (0, 1000);
+  ACE_OS::sleep (tv);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
   ACE_HANDLE h = ACE::handle_timed_complete (this->get_handle (), tv);
 
