@@ -47,7 +47,7 @@ Handle_Timeout::init (int argc, char *argv[])
 	 break;
        }
   
-  if (ACE_Service_Config::reactor ()->schedule_timer (this, 
+  if (ACE_Reactor::instance()->schedule_timer (this, 
 						      (void *) arg, 
 						      delta, 
 						      interval) == -1)

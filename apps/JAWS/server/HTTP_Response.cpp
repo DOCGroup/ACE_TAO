@@ -125,7 +125,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
       length =
         ACE_OS::sprintf (buf1, error_header,
                          this->request_.version(), status_code,
-                         HTTP_Status_Code::instance()[status_code],
+                         HTTP_Status_Code::instance ()[status_code],
                          length,
                          buf2);
       buf = buf1;

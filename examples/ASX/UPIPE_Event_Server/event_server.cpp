@@ -10,10 +10,6 @@
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include /**/ <iostream.h>
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
@@ -29,15 +25,15 @@ public:
 };
 
 Quit_Handler::Quit_Handler (void)
-  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Service_Config::end_reactor_event_loop))
+  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {  
   // Register to trap input from the user.
   if (ACE::register_stdin_handler (this,
-				   ACE_Service_Config::reactor (),
-				   ACE_Service_Config::thr_mgr ()) == -1)
+				   ACE_Reactor::instance (),
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
@@ -49,7 +45,7 @@ Quit_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_INFO, " (%t) closing down the test\n"));
   options.print_results ();
 
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 
@@ -196,13 +192,13 @@ main (int argc, char *argv[])
   // Create the modules..
 
   MT_Module *sr = new MT_Module ("Supplier_Router", 
-				 new Supplier_Router (ACE_Service_Config::thr_mgr ()));
+	  new Supplier_Router (ACE_Thread_Manager::instance ()));
   MT_Module *ea = new MT_Module ("Event_Analyzer", 
 				 new Event_Analyzer, 
 				 new Event_Analyzer);
   MT_Module *cr = new MT_Module ("Consumer_Router", 
 				 0, // 0 triggers the creation of a ACE_Thru_Task...
-				 new Consumer_Router (ACE_Service_Config::thr_mgr ()));
+				 new Consumer_Router (ACE_Thread_Manager::instance ()));
 
   // Push the modules onto the event_server stream.
 
@@ -228,18 +224,18 @@ main (int argc, char *argv[])
 
   // spawn the two threads.
 
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (consumer), (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) 0,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
-  else if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (supplier), (void *) "hello",
+  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), (void *) "hello",
 						  THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
  
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
 
-  daemon.run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, "main exiting\n"));
 

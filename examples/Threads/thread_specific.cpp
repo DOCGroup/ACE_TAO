@@ -79,7 +79,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   int count = int (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
@@ -170,7 +170,7 @@ extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
-  ACE_Service_Config::thr_mgr ()->exit (0);
+  ACE_Thread_Manager::instance ()->exit (0);
 }
 
 int 
@@ -178,7 +178,7 @@ main (int argc, char *argv[])
 {
   // The Service_Config must be the first object defined in main...
   ACE_Service_Config daemon (argv[0]);
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   int threads = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
   int count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
 
@@ -187,13 +187,13 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (sa);
 
 #if defined (ACE_HAS_THREADS)
-  if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
+  if (ACE_Thread_Manager::instance ()->spawn_n (threads, 
 					       ACE_THR_FUNC (&worker), 
 					       (void *) count,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   worker ((void *) count);
 #endif /* ACE_HAS_THREADS */

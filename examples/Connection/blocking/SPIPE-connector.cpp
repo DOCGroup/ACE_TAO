@@ -28,8 +28,8 @@ Peer_Handler::open (void *)
     {
       this->display_menu ();
       if (ACE::register_stdin_handler (this,
-				      ACE_Service_Config::reactor (),
-				      ACE_Service_Config::thr_mgr ()) == -1)
+				      ACE_Reactor::instance(),
+					  ACE_Thread_Manager::instance ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
       else 
 	return 0;
@@ -50,7 +50,7 @@ Peer_Handler::open (void *)
 	continue;
       
       this->peer ().close ();
-      ACE_Service_Config::end_reactor_event_loop ();
+      ACE_Reactor::end_event_loop();
       return 0;
     }
 }
@@ -98,7 +98,7 @@ Peer_Handler::display_menu (void)
 
 IPC_Client::IPC_Client (void)
   : iterations_ (0),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_proactor_event_loop))
+    done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
   ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
 }
@@ -115,7 +115,7 @@ IPC_Client::init (int argc, char *argv[])
   if (this->parse_args (argc, argv) == -1)
     return -1;
   // Handle signals through the ACE_Reactor.
-  else if (ACE_Service_Config::reactor ()->register_handler
+  else if (ACE_Reactor::instance()->register_handler
 	   (SIGINT, &this->done_handler_) == -1)
     return -1;
 
@@ -147,7 +147,7 @@ IPC_Client::fini (void)
 int 
 IPC_Client::svc (void)
 {
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop();
   return 0;
 }
 

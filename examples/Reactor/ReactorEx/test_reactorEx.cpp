@@ -132,7 +132,7 @@ private:
 Peer_Handler::Peer_Handler (int argc, char *argv[])
   : host_ (0),
     port_ (ACE_DEFAULT_SERVER_PORT),
-    strategy_ (ACE_Service_Config::reactorEx (), 
+    strategy_ (ACE_ReactorEx::instance(), 
 	       this, 
 	       ACE_Event_Handler::WRITE_MASK)
 {
@@ -192,7 +192,7 @@ Peer_Handler::open (void *)
       ACE_DEBUG ((LM_DEBUG, "accepted.\n"));
     }
 
-  return ACE_Service_Config::proactor ()->initiate 
+  return ACE_Proactor::instance()->initiate 
     (this, ACE_Event_Handler::READ_MASK);
 }
 
@@ -234,7 +234,7 @@ Peer_Handler::handle_input_complete (ACE_Message_Block *msg,
       // If a read failed, we will assume it's because the remote peer
       // went away.  We will end the event loop.  Since we're in the
       // main thread, we don't need to do a notify.
-      ACE_Service_Config::end_reactorEx_event_loop ();
+      ACE_ReactorEx::end_event_loop();
       result = -1;
     }
 
@@ -281,7 +281,7 @@ Peer_Handler::handle_output (ACE_HANDLE fd)
   // Forward the message to the remote peer receiver.
   if (this->getq (mb, &tv) != -1)
     {
-      if (ACE_Service_Config::proactor ()->
+      if (ACE_Proactor::instance()->
 	  initiate (this, ACE_Event_Handler::WRITE_MASK, mb) == -1)
 	ACE_ERROR ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"));
     }
@@ -369,17 +369,17 @@ void
 STDIN_Handler::register_thread_exit_hook (void)
 {
   // Get a real handle to our thread.
-  ACE_Service_Config::thr_mgr ()->thr_self (this->thr_handle_);
+	ACE_Thread_Manager::instance ()->thr_self (this->thr_handle_);
 
   // Register ourselves to get called back when our thread exits.
 
-  if (ACE_Service_Config::reactorEx ()->
+  if (ACE_ReactorEx::instance()->
       register_handler (this, this->thr_handle_) == -1)
     ACE_ERROR ((LM_ERROR, "Exit_Hook Register failed.\n"));
 
   // We're in another thread, so we need to notify the ReactorEx so
   // that it wakes up and waits on the new set of handles.
-  ACE_Service_Config::reactorEx ()->notify ();
+  ACE_ReactorEx::instance()->notify ();
 }
 
 // The STDIN thread has exited.  This means the user hit ^C.  We can
@@ -390,7 +390,7 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "STDIN thread has exited.\n"));
   ACE_ASSERT (this->thr_handle_ == si->si_handle_);
-  ACE_Service_Config::end_reactorEx_event_loop ();
+  ACE_ReactorEx::end_event_loop();
   return 0;
 }
 
@@ -417,13 +417,13 @@ main (int argc, char *argv[])
 
   // Register proactor with ReactorEx so that we can demultiplex
   // "waitable" events and I/O operations from a single thread.
-  if (ACE_Service_Config::reactorEx ()->register_handler 
-      (ACE_Service_Config::proactor ()) != 0)
+  if (ACE_ReactorEx::instance()->register_handler 
+      (ACE_Proactor::instance()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
 		       argv[0]), -1);
 
   // Run main event demultiplexor.
-  ACE_Service_Config::run_reactorEx_event_loop ();
+  ACE_ReactorEx::run_event_loop();
 
   return 0;
 }

@@ -90,16 +90,16 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
   // Call down to the ACCEPTOR's open() method to do the initialization.
   if (this->inherited::open (this->server_addr_, 
-			     use_reactor ? ACE_Service_Config::reactor () : 0) == -1)
+			     use_reactor ? ACE_Reactor::instance() : 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   // Handle the SIGINT signal through the ACE_Reactor.
-  else if (ACE_Service_Config::reactor ()->register_handler
+  else if (ACE_Reactor::instance()->register_handler
 	   (SIGINT, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #if !defined (ACE_WIN32)
   // Handle the SIGPIPE signal through the ACE_Reactor.
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance()->register_handler 
 	   (SIGPIPE, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #endif /* ACE_WIN32 */
@@ -109,7 +109,7 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
 
 template <class SH, PR_AC_1>
 IPC_Server<SH, PR_AC_2>::IPC_Server (void)
-  : done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_reactor_event_loop))
+  : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
@@ -139,7 +139,7 @@ IPC_Server<SH, PR_AC_2>::svc (void)
 
   // Performs the iterative server activities.
 
-  while (ACE_Service_Config::reactor_event_loop_done () == 0)
+  while (ACE_Reactor::event_loop_done() == 0)
     {
       SH sh (this->reactor ());
                                                                      

@@ -14,7 +14,7 @@ static ACE_Process_Manager proc_mgr;
 void *
 sig_handler (void *)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   ACE_Sig_Set sigset;
 
@@ -137,7 +137,7 @@ main (int argc, char *argv[])
 
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, sigset, 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "thr_sigsetmask"), 1);
-  else if (ACE_Service_Config::thr_mgr ()->spawn (sig_handler, 0, THR_DETACHED) == -1)
+  else if (ACE_Thread_Manager::instance ()->spawn (sig_handler, 0, THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   if (child)
@@ -165,7 +165,7 @@ main (int argc, char *argv[])
       // Perform a barrier wait until all the processes and threads
       // have shut down.
       proc_mgr.wait ();
-      ACE_Service_Config::thr_mgr ()->wait ();
+	  ACE_Thread_Manager::instance ()->wait ();
     }
 
   return 0;

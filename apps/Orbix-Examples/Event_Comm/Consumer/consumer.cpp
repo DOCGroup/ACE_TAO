@@ -59,7 +59,7 @@ Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
 void
 Consumer::run (void)
 {
-  if (ACE_Reactor::run_event_loop() == -1)
+  if (ACE_Reactor::run_event_loop () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "run_reactor_event_loop"));
 }
 
@@ -83,7 +83,7 @@ Consumer::Consumer (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
     }
 
-  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 

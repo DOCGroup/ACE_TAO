@@ -38,7 +38,7 @@ Acceptor_Factory<PH, PK>::init (int argc, char *argv[])
 	 break;
        }
   
-  if (this->open (addr, ACE_Service_Config::reactor ()) == -1)
+  if (this->open (addr, ACE_Reactor::instance()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   return 0;
 }
@@ -93,7 +93,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
 	  hb->wr_ptr (sizeof (long));
 	  if (this->router_task_->reply (hb) == -1)
 	    {
-              ACE_DEBUG ((LM_DEBUG, "Peer_Handler.svc : router_task->reply failed\n"));
+	      cout << "Peer_Handler.svc : router_task->reply failed" << endl ;
 	      return -1;
 	    }
        
@@ -139,7 +139,7 @@ Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
 {
 
   ACE_DEBUG ((LM_DEBUG, "(%t) input arrived on sd %d\n", h));
-//  ACE_Service_Config::reactor ()->remove_handler(h,
+//  ACE_Reactor::instance()->remove_handler(h,
 //                                          ACE_Event_Handler::ALL_EVENTS_MASK
 //                                          |ACE_Event_Handler::DONT_CALL);
 // this method should be called only if the peer shuts down
