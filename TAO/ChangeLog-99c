@@ -1,63 +1,68 @@
+Mon Mar 29 21:27:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO-INSTALL.html: removed 2>&1 from cross-compilation instructions.
+          Thanks to Jeff for reporting that t/csh doesn't like it.
+
 Mon Mar 29 20:12:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* TAO/examples/Simple/time:
-	  Updated the following projects to contain Simple_util.*
-	  Removed the obsolete files. Thanks to Barry Hoggard 
-	  <hoggard@cfx.com> for pointing this out.
+        * TAO/examples/Simple/time:
+          Updated the following projects to contain Simple_util.*
+          Removed the obsolete files. Thanks to Barry Hoggard
+          <hoggard@cfx.com> for pointing this out.
 
-	  * TAO/examples/Simple/timeserver.dsp
-	  * TAO/examples/Simple/timeclient.dsp
-	  * TAO/examples/Simple/timeserver_static.dsp
-	  * TAO/examples/Simple/timeclient_static.dsp
+          * TAO/examples/Simple/timeserver.dsp
+          * TAO/examples/Simple/timeclient.dsp
+          * TAO/examples/Simple/timeserver_static.dsp
+          * TAO/examples/Simple/timeclient_static.dsp
 
 Mon Mar 29 19:10:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Stub.h:
-	* tao/Stub.i:
-	* tao/Stub.cpp:
-	  The Stub carries the ORB_Core around, this reduces the number of 
-	  calls to TAO_ORB_Core_instance(), at least on the client-side.
-	  It is also the first step to be able to get to the policy list
-	  effective for an object, because we needed some way to map from
-	  the CORBA::Object to the ORB that it belongs to.
+        * tao/Stub.h:
+        * tao/Stub.i:
+        * tao/Stub.cpp:
+          The Stub carries the ORB_Core around, this reduces the number of
+          calls to TAO_ORB_Core_instance(), at least on the client-side.
+          It is also the first step to be able to get to the policy list
+          effective for an object, because we needed some way to map from
+          the CORBA::Object to the ORB that it belongs to.
 
-	* tao/CDR.h:
-	* tao/CDR.i:
-	* tao/CDR.cpp:
-	  The InputCDR class can carry the ORB_Core around to initialize
-	  the TAO_Stub's appropiately. Unfortunately we cannot use this
-	  feature everywhere.
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+          The InputCDR class can carry the ORB_Core around to initialize
+          the TAO_Stub's appropiately. Unfortunately we cannot use this
+          feature everywhere.
 
-	* tao/Invocation.i:
-	  Initialize the InputCDR with the right ORB_Core.
+        * tao/Invocation.i:
+          Initialize the InputCDR with the right ORB_Core.
 
-	* tao/ORB.cpp:
-	  Changed the code to create TAO_Stub's to use the new
-	  constructor and pass it the ORB_Core.
-	  Use the right ORB_Core when extracting an object reference from
-	  a string.
+        * tao/ORB.cpp:
+          Changed the code to create TAO_Stub's to use the new
+          constructor and pass it the ORB_Core.
+          Use the right ORB_Core when extracting an object reference from
+          a string.
 
-	* tao/Object.cpp:
-	  When extracting an Object from a CDR stream we use the right
-	  ORB_Core.
+        * tao/Object.cpp:
+          When extracting an Object from a CDR stream we use the right
+          ORB_Core.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
-	  Use the ORB_Core in the stub instead TAO_ORB_Core_instance() to
-	  make a request.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Use the ORB_Core in the stub instead TAO_ORB_Core_instance() to
+          make a request.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: 
-	  Migrated to the new TAO_Stub constructors.
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Migrated to the new TAO_Stub constructors.
 
 Mon Mar 29 15:55:23 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Request.h (CORBA_Request): Put a default argument for calls
- 	  send_oneway () and invoke () as
- 	  CORBA::Environment::default_environment(). This is for users who
- 	  are using the native exception. But users using the non-native
- 	  exceptions should pass in their environment to get the exception
- 	  back. This change is attributed to Barry Hoggard
- 	  <hoggardb@cfx.xom>
-	
+        * tao/Request.h (CORBA_Request): Put a default argument for calls
+          send_oneway () and invoke () as
+          CORBA::Environment::default_environment(). This is for users who
+          are using the native exception. But users using the non-native
+          exceptions should pass in their environment to get the exception
+          back. This change is attributed to Barry Hoggard
+          <hoggardb@cfx.xom>
+
 Sun Mar 28 21:37:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/grid/Grid_Client_i.cpp (run): fixed
