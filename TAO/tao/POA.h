@@ -36,7 +36,7 @@
 #include "ace/SString.h"
 
 // Map
-#include "ace/Map_Manager.h"
+#include "ace/Hash_Map_Manager.h"
 
 // Vector
 #include "ace/Containers.h"
@@ -727,7 +727,7 @@ protected:
 
   PortableServer::Servant default_servant_;
 
-  typedef ACE_Map_Manager<String, TAO_POA *, ACE_Null_Mutex> CHILDREN;
+  typedef ACE_Hash_Map_Manager<String, TAO_POA *, ACE_Null_Mutex> CHILDREN;
 
   CHILDREN children_;
 
