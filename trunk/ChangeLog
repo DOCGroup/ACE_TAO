@@ -1,3 +1,10 @@
+Tue Aug 10 06:52:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Removed AC_LANG_PUSH([C])/.../AC_LANG_POP([C]) which forced the
+	  use of C for selected AC_CHECK_FUNC calls.  The current version
+	  of autoconf always uses C.
+
 Tue Aug 10 14:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         I shouldn't have been rushed into these guarded #includes. The following
