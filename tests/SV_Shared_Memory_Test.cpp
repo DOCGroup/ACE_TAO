@@ -48,31 +48,21 @@ static const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 static const int SHMSZ = 27;
 static const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
+static ACE_SV_Semaphore_Complex *parent_mutex = 0;
+static ACE_SV_Semaphore_Complex *parent_synch = 0;
+
 static int
 parent (char *shm)
 {
-  ACE_SV_Semaphore_Complex mutex;
-
-  // This semaphore is initially created with a count of 0, i.e., it
-  // is "locked."
-  ACE_ASSERT (mutex.open (SEM_KEY_1,
-                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
-
-  ACE_SV_Semaphore_Complex synch;
-  // This semaphore is initially created with a count of 0, i.e., it
-  // is "locked."
-  ACE_ASSERT (synch.open (SEM_KEY_2,
-                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
-
-  // This for loop executes in a critical section proteced by <mutex>.
+  // This for loop executes in a critical section proteced by <parent_mutex>.
   for (int i = 0; i < SHMSZ; i++)
     shm[i] = SHMDATA[i];
 
-  if (mutex.release () == -1)
+  if (parent_mutex->release () == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P) %p"),
                 ASYS_TEXT ("parent mutex.release")));
-  else if (synch.acquire () == -1)
+  else if (parent_synch->acquire () == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P) %p"),
                 ASYS_TEXT ("parent synch.acquire")));
@@ -81,11 +71,11 @@ parent (char *shm)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent allocator.remove")));
-  if (mutex.remove () == -1)
+  if (parent_mutex->remove () == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent mutex.remove")));
-  if (synch.remove () == -1)
+  if (parent_synch->remove () == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent synch.remove")));
@@ -95,9 +85,6 @@ parent (char *shm)
 static int
 child (char *shm)
 {
-  // Give the parent a chance to create the semaphore.
-  ACE_OS::sleep (1);
-
   ACE_SV_Semaphore_Complex mutex;
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
@@ -152,7 +139,24 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
     !defined(ACE_LACKS_SYSV_SHMEM)
-  char *shm = (char *) myallocator ().malloc (SHMSZ);
+  char *shm = ACE_reinterpret_cast (char *, myallocator ().malloc (SHMSZ));
+
+  // Create the mutex and synch before spawning the child process, to
+  // avoid race condition between their creation in the parent and use
+  // in the child.
+  ACE_NEW_RETURN (parent_mutex, ACE_SV_Semaphore_Complex, -1);
+  ACE_NEW_RETURN (parent_synch, ACE_SV_Semaphore_Complex, -1);
+
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
+  ACE_ASSERT (parent_mutex->open (SEM_KEY_1,
+                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
+  ACE_ASSERT (parent_synch->open (SEM_KEY_2,
+                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
     {
@@ -168,6 +172,9 @@ main (int, ASYS_TCHAR *[])
       parent (shm);
       break;
     }
+
+  delete parent_mutex;
+  delete parent_synch;
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("SYSV IPC, SYSV SHMEM, or fork ")
