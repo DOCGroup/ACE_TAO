@@ -1,3 +1,9 @@
+Tue Jul  9 11:10:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * apps/Gateway/Peer/Peer.{h cpp}: Renamed the Peer_Acceptor::open()
+          method to Peer_Acceptor::start() to avoid conflicts with the
+          virtual ACE_Acceptor::open() method.
+
 Tue Jul  9 09:01:14 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taolib_with_idl.mpb:

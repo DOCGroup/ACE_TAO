@@ -165,7 +165,7 @@ public:
   Peer_Acceptor (void);
   // Default initialization.
 
-  int open (u_short);
+  int start (u_short);
   //  the <Peer_Acceptor>.
 
   int close (void);
