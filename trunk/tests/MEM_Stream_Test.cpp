@@ -520,7 +520,7 @@ template class ACE_Thread_Strategy<Echo_Handler>;
 #  if defined (ACE_HAS_THREADS)
 #pragma instantiate ACE_Thread_Strategy<Echo_Handler>
 #  endif /* ACE_HAS_THREADS */
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
                        ACE_SYNCH_RECURSIVE_MUTEX> *

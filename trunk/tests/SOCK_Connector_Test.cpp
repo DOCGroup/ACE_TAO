@@ -21,6 +21,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Time_Value.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_netdb.h"

@@ -31,6 +31,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
 

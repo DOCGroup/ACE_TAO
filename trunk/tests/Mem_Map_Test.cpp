@@ -23,6 +23,9 @@
 #include "ace/Mem_Map.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(tests, Mem_Map_Test, "Mem_Map_Test.cpp,v 4.36 2003/11/01 11:15:25 dhinton Exp")
 
@@ -68,7 +71,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
   const char *c = ACE_ALPHABET;
   const char *d = c;
-#if defined (__QNXNTO__) 
+#if defined (__QNXNTO__)
   // For NTO has to applied to open the file, as Mem_Map can map only shared memory
   ACE_Mem_Map mmap_4_open;
   mmap_4_open.open (filename, O_RDWR | O_CREAT | O_TRUNC, ACE_DEFAULT_FILE_PERMS);
@@ -116,7 +119,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
                             -1);
         }
     }
-#if defined (__QNXNTO__) 
+#if defined (__QNXNTO__)
   mmap_4_open.close();
 #else
   ACE_OS::close (file_handle);
@@ -180,7 +183,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   // Now create a temporary file for intermediate processing
-#if defined (__QNXNTO__) 
+#if defined (__QNXNTO__)
   ACE_Mem_Map mmap_4_open;
   mmap_4_open.open(temp_file1,
                    O_RDWR | O_TRUNC | O_CREAT,
