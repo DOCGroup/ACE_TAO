@@ -84,7 +84,7 @@ ifeq ($(static_libs),1)
   endif
 endif
 
-#CPPFLAGS += -DKOKYU_DSRT_LOGGING
+CPPFLAGS += -DKOKYU_DSRT_LOGGING
 
 LDFLAGS      += -L../../../../lib -L$(DATASTREAM_ROOT)/lib
 
