@@ -8,12 +8,6 @@ TAO_GIOP_LocateRequestHeader::TAO_GIOP_LocateRequestHeader (void)
   : request_id (0)
 {}
 
-ACE_INLINE
-TAO_GIOP_RequestHeader::TAO_GIOP_RequestHeader (void)
-  : request_id (0),
-    response_expected (CORBA::B_FALSE)
-{}
-
 ACE_INLINE void
 TAO_GIOP_Invocation::get_value (CORBA::TypeCode_ptr tc,
                                 void *value,

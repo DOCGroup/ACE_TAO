@@ -86,7 +86,7 @@ TAO_GIOP::dump_msg (const char *label,
 // all the code to write a Message_Block chain could be encapsulated
 // in ACE.
 static ssize_t
-writev_n (ACE_HANDLE h, iovec* iov, int iovcnt)
+writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
 {
   ssize_t writelen = 0;
   int s = 0;
@@ -101,17 +101,17 @@ writev_n (ACE_HANDLE h, iovec* iov, int iovcnt)
       else
         {
           writelen += n;
-          while (n >= ACE_static_cast (ssize_t, iov[s].iov_len) && s < iovcnt)
+          while (n >= iov[s].length () && s < iovcnt)
             {
-              n -= iov[s].iov_len;
+              n -= iov[s].length ();
               s++;
             }
           if (n != 0)
             {
-              char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
-
-              iov[s].iov_base = base + n;
-              iov[s].iov_len -= n;
+              char* base = ACE_reinterpret_cast (char*, iov[s].buffer ());
+              
+              iov[s].buffer (base + n);
+              iov[s].length (iov[s].length () - n);
             }
         }
     }
@@ -166,14 +166,14 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   TAO_SOCK_Stream &peer = handler->peer ();
 
   const int TAO_WRITEV_MAX = 16;
-  iovec iov[TAO_WRITEV_MAX];
+  ACE_IO_Vector iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
   for (ACE_Message_Block* i = stream.begin ();
        i != stream.end ();
        i = i->cont ())
     {
-      iov[iovcnt].iov_base = i->rd_ptr ();
-      iov[iovcnt].iov_len = i->length ();
+      iov[iovcnt].buffer (i->rd_ptr ());
+      iov[iovcnt].length (i->length ());
       iovcnt++;
 
       // The buffer is full make a OS call.
@@ -1516,47 +1516,6 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
                          &this->object_key,
                          0,
                          env));
-}
-
-// Initialize the request header from <msg>, setting <env> for errors.
-
-CORBA::Boolean
-TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
-                              CORBA::Environment &env)
-{
-  CORBA::Boolean hdr_status;
-
-  // Tear out the service context ... we currently ignore it, but it
-  // should probably be passed to each ORB service as appropriate
-  // (e.g. transactions, security).
-  //
-  // NOTE: As security support kicks in, this is a good place to
-  // verify a digital signature, if that is required in this security
-  // environment.  It may be required even when using IPSEC security
-  // infrastructure.
-
-  hdr_status = msg.decode (TC_ServiceContextList,
-                           &this->service_info,
-                           0,
-                           env);
-
-  // Get the rest of the request header ...
-
-  hdr_status = hdr_status && msg.read_ulong (this->request_id);
-  hdr_status = hdr_status && msg.read_boolean (this->response_expected);
-  hdr_status = hdr_status && msg.decode (TC_opaque,
-                                         &this->object_key,
-                                         0,
-                                         env);
-  hdr_status = hdr_status && msg.decode (CORBA::_tc_string,
-                                         &this->operation,
-                                         0,
-                                         env);
-  hdr_status = hdr_status && msg.decode (CORBA::_tc_Principal,
-                                         &this->requesting_principal,
-                                         0,
-                                         env);
-  return hdr_status;
 }
 
 CORBA::Boolean

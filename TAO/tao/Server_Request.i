@@ -23,7 +23,7 @@ IIOP_ServerRequest::outgoing (void)
 ACE_INLINE const char *
 IIOP_ServerRequest::operation (void) const
 {
-  return this->opname_;
+  return this->operation_;
 }
 
 #if 0
@@ -51,4 +51,22 @@ ACE_INLINE CORBA::Boolean
 IIOP_ServerRequest::response_expected (void) const
 {
   return this->response_expected_;
+}
+
+ACE_INLINE CORBA::Principal_ptr 
+IIOP_ServerRequest::principal (void) const
+{
+  return this->requesting_principal_;
+}
+
+ACE_INLINE const TAO_opaque &
+IIOP_ServerRequest::object_key (void) const
+{
+  return this->object_key_;
+}
+
+ACE_INLINE const TAO_GIOP_ServiceContextList &
+IIOP_ServerRequest::service_info (void) const
+{
+  return this->service_info_;
 }
