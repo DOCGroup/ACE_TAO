@@ -177,10 +177,10 @@ TimeoutConsumer::push (const RtecEventComm::EventSet& events
     {
       if (ACE_ES_EVENT_INTERVAL_TIMEOUT == events[i].header.type)
         {
-  	//  ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) received timeout event\n",this->entry_pt.str().c_str()));
+          //ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) received timeout event\n",this->entry_pt.str().c_str()));
           if (this->_observer != 0)
             {
-        //      ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) updating observer\n",this->entry_pt.str().c_str()));
+              ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) updating observer\n",this->entry_pt.str().c_str()));
               this->_observer->update();
             }
         }
@@ -190,9 +190,9 @@ TimeoutConsumer::push (const RtecEventComm::EventSet& events
           ACE_hthread_t handle;
           ACE_Thread::self(handle);
           ACE_Thread::getprio(handle,prio);
-          //ACE_thread_t tid = ACE_Thread::self();
-//          ACE_DEBUG ((LM_DEBUG, "TimeoutConsumer %s @%d (%P|%t) we received event type %d\n",
-//                      this->entry_pt.str().c_str(),prio,events[0].header.type));
+          ACE_thread_t tid = ACE_Thread::self();
+          ACE_DEBUG ((LM_DEBUG, "TimeoutConsumer %s @%d (%P|%t) we received event type %d\n",
+                      this->entry_pt.str().c_str(),prio,events[0].header.type));
         }
     }
 }
