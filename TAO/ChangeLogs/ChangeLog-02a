@@ -1,3 +1,19 @@
+Tue Nov 14 09:30:36 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Server_Protocol/svc.conf :
+	  Added a deafault svc.conf for the client to use to 
+	  load the protocols.	
+
+	* tests/RTCORBA/Server_Declared/server.conf :
+	  Corrected the conf file to remove the repetitive
+	  inclusion of the -ORBReactorType option.
+	
+	* tests/RTCORBA/Client_Propagated/server.cpp :
+	* tests/RTCORBA/Client_Propagated/client.cpp :
+	  Removed unncessary inclusion of header files.	
+
+	  Thanks to Marina for pointing out.
+	
 Tue Nov 14 10:48:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp: 

@@ -3,8 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-#include "ace/Service_Config.h"
-#include "tao/Strategies/TAO_Strategies_Internal.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 
