@@ -9,4 +9,4 @@
 VBIN    = $(BIN:%=%$(VAR))
 
 $(BIN): %: $(VDIR)%.o $(VSHOBJS)
-	$(LINK.cc) -o $@ $< $(LDFLAGS) $(VLDLIBS)
+	$(LINK.cc) -o $@ $< $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
