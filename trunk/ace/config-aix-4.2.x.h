@@ -116,6 +116,8 @@
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SIZET_SOCKET_LEN
 
+// Platform has XPG4 wide character type and functions
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // Keep an eye on this as the compiler and standards converge...
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
