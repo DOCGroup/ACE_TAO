@@ -56,7 +56,7 @@ ACE_INET_Addr::get_port_number (void) const
 #endif
     return ntohs (this->inet_addr6_.sin6_port);
 #else
-  return ntohs (this->inet_addr6_.sin_port);
+  return ntohs (this->inet_addr4_.sin_port);
 #endif
 }
 
