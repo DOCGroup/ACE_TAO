@@ -13,6 +13,7 @@ Thu Apr  4 12:49:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/MT_BiDir/server.cpp:
 	* tests/MT_BiDir/Server_Task.cpp:
 	* tests/MT_BiDir/Server_Task.h:
+	* tests/MT_BiDir/run_test.pl:
 	* tests/MT_BiDir/Makefile:
 	* tests/MT_BiDir/Makefile.bor:
 	* tests/MT_BiDir/server.bor:
