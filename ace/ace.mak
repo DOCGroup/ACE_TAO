@@ -50,7 +50,7 @@ MTL=mktyplib.exe
 OUTDIR=.
 INTDIR=.\Release
 
-ALL : "$(OUTDIR)\acer.dll"
+ALL : "$(OUTDIR)\ace-r.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\ACE.obj"
@@ -177,9 +177,9 @@ CLEAN :
 	-@erase "$(INTDIR)\UPIPE_Acceptor.obj"
 	-@erase "$(INTDIR)\UPIPE_Connector.obj"
 	-@erase "$(INTDIR)\UPIPE_Stream.obj"
-	-@erase "$(OUTDIR)\acer.dll"
-	-@erase "$(OUTDIR)\acer.exp"
-	-@erase "$(OUTDIR)\acer.lib"
+	-@erase "$(OUTDIR)\ace-r.dll"
+	-@erase "$(OUTDIR)\ace-r.exp"
+	-@erase "$(OUTDIR)\ace-r.lib"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -204,10 +204,10 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"acer.dll"
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
 LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:no\
- /pdb:"$(OUTDIR)/acer.pdb" /machine:I386 /out:"$(OUTDIR)/acer.dll"\
- /implib:"$(OUTDIR)/acer.lib" 
+ /pdb:"$(OUTDIR)/ace-r.pdb" /machine:I386 /out:"$(OUTDIR)/ace-r.dll"\
+ /implib:"$(OUTDIR)/ace-r.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\ACE.obj" \
 	"$(INTDIR)\Activation_Queue.obj" \
@@ -334,7 +334,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\UPIPE_Connector.obj" \
 	"$(INTDIR)\UPIPE_Stream.obj"
 
-"$(OUTDIR)\acer.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\ace-r.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
