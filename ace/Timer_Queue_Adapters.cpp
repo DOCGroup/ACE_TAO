@@ -184,7 +184,12 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  while (this->active_)
+   // Thread cancellation point, if ACE supports it.
+#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+  ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ());
+#endif /* ACE_LACKS_PTHREAD_CANCEL */
+
+ while (this->active_)
     {
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_.is_empty ())
@@ -203,6 +208,11 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
       // Expire timers anyway, at worst this is a no-op.
       this->timer_queue_.expire ();
     }
+
+   // Thread cancellation point, if ACE supports it.
+#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+  ACE_PTHREAD_CLEANUP_POP (1);
+#endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   ACE_DEBUG ((LM_DEBUG, "terminating dispatching thread\n"));
   return 0;
