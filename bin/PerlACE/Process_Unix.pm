@@ -45,6 +45,7 @@ sub new
     my $self = {};
     
     $self->{RUNNING} = 0;
+    $self->{IGNOREEXESUBDIR} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
@@ -66,6 +67,10 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
+    
+    if ($self->{IGNOREEXESUBDIR}) {
+        return $executable;
+    }
 
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
@@ -108,6 +113,17 @@ sub CommandLine ()
     return $commandline;
 }
 
+sub IgnoreExeSubDir
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREEXESUBDIR} = shift;
+    }
+
+    return $self->{IGNOREEXESUBDIR};
+}
+
 ###############################################################################
 
 # Spawn the process and continue;
@@ -125,6 +141,16 @@ sub Spawn ()
     if (!defined $self->{EXECUTABLE}) {
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
             return -1;
+    }
+
+    if (!-f $self->{EXECUTABLE}) {
+        print STDERR "ERROR: Cannot Spawn: $self->{EXECUTABLE} not found\n";
+	    return -1;
+    }
+
+    if (!-x $self->{EXECUTABLE}) {
+        print STDERR "ERROR: Cannot Spawn: $self->{EXECUTABLE} not executable\n";
+	    return -1;
     }
 
     FORK:
@@ -154,9 +180,9 @@ sub Spawn ()
 sub WaitKill ($)
 {
     my $self = shift;
-    my $maxtime = shift;
+    my $timeout = shift;
 
-    my $status = $self->TimedWait ($maxtime);
+    my $status = $self->TimedWait ($timeout);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -174,22 +200,25 @@ sub WaitKill ($)
 sub SpawnWaitKill ($)
 {
     my $self = shift;
-    my $maxtime = shift;
+    my $timeout = shift;
 
     if ($self->Spawn () == -1) {
         return -1;
     }
 
-    return $self->WaitKill ($maxtime);
+    return $self->WaitKill ($timeout);
 }
 
-sub Terminate ()
+sub TerminateWaitKill ($)
 {
     my $self = shift;
+    my $timeout = shift;
   
     if ($self->{RUNNING}) {
         kill ('TERM', $self->{PROCESS});
     }
+    
+    return $self->WaitKill ($timeout);
 }
 
 sub Kill ()
@@ -211,12 +240,12 @@ sub Wait ()
     waitpid ($self->{PROCESS}, 0);
 }
 
-sub TimedWait
+sub TimedWait ($)
 {
     my $self = shift;
-    my $maxtime = shift;
+    my $timeout = shift;
     
-    while ($maxtime-- != 0) {
+    while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
             return $?;

@@ -439,31 +439,176 @@ sub check_for_mismatched_filename ()
     }
 }
 
-# check for 
-sub check_for_old_run_test ()
+# check for bad run_test
+sub check_for_bad_run_test ()
 {
-    print "Running old run_test.pl test\n";
+    print "Running run_test.pl test\n";
     foreach $file (@files_pl) {
         if (open (FILE, $file)) {
+            my $is_run_test = 0;
+            my $line = 0;
+            my $sub = 0;
+
+            print "Looking at file $file\n" if $opt_d;
+            
+            while (<FILE>) {
+                ++$line;
+
+                if (m/PerlACE/ || m/ACEutils/) {
+                    $is_run_test = 1;
+                }
+                
+                if ($is_run_test == 1) {
+                    if (m/ACEutils/) {
+                        print_error ("ACEutils.pm still being used in $file ($line)");
+                    }
+                    
+                    if (m/unshift \@INC/) {
+                        print_error ("Still unshifting \@INC, should \"use lib\""
+                                     ." instead in $file ($line)");
+                    }
+                    
+                    if (m/\$EXEPREFIX/) {
+                        print_error ("Still using \$EXEPREFIX in $file ($line)");
+                    }
+
+                    if (m/\$EXE_EXT/) {
+                        print_error ("Still using \$EXE_EXT in $file ($line)");
+                    }
+
+                    if (m/\$DIR_SEPARATOR/) {
+                        print_error ("Still using \$DIR_SEPARATOR in $file ($line)");
+                    }
+                    if (m/ACE\:\:/ && !m/PerlACE\:\:/) {
+                        print_error ("Still using ACE::* in $file ($line)");
+                    }
+
+                    if (m/Process\:\:/ && !m/PerlACE\:\:Process\:\:/) {
+                        print_error ("Still using Process::* in $file ($line)");
+                    }
+
+                    if (m/Process\:\:Create/) {
+                        print_error ("Still using Process::Create in $file ($line)");
+                    }
+                    
+                    if ((m/\.ior/ || m/\.conf/) && !m/LocalFile/) {
+                        print_error ("Not using PerlACE::LocalFile at $file ($line)");
+                    }
+
+                    if (m/^  [^ ]/) {
+                        print_warning ("Still using two-space indentation in $file ($line)");
+                    }
+
+                    if (m/^\s*\t/) {
+                        print_error ("Indenting using tabs in $file ($line)");
+                    }
+
+                    if (m/^\s*\{/ && $sub != 1) {
+                        print_warning ("Using Curly Brace alone on $file ($line)");
+                    }
+
+                    if (m/timedout/i && !m/\#/) {
+                        print_error ("timedout message found on $file ($line)");
+                    }
+
+                    if (m/^\s*sub/) {
+                        $sub = 1;
+                    }
+                    else {
+                        $sub = 0;
+                    }
+                }
+            }
+
+            close (FILE);
+
+            if ($is_run_test) {
+                my @output = `perl -wc $file 2>&1`;    
+
+                foreach $output (@output) {
+                    chomp $output;
+                    if ($output =~ m/error/i) {
+                        print_error ($output);
+                    }
+                    elsif ($output !~ m/syntax OK/) {
+                        print_warning ($output);
+                    }
+                }
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+
+# Check for links to ~schmidt/ACE_wrappers/, which should not be in the
+# documentation
+sub check_for_absolute_ace_wrappers()
+{
+    print "Running absolute ACE_wrappers test\n";
+    foreach $file (@files_html) {
+        if (open (FILE, $file)) {
+            my $line = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (m/ACEutils/) {
-                    print_error ("ACEutils.pm still being used in $file");
+                ++$line;
+                if (m/\~schmidt\/ACE_wrappers\//) {
+                    chomp;
+                    print_error ("~schmidt/ACE_wrappers found in $file on "
+                                 . "line $line");
+                    print_error ($_) if (defined $opt_v);
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+# Make sure ACE_[OS_]TRACE matches the function/method
+sub check_for_bad_ace_trace()
+{
+    print "Running TRACE test\n";
+    foreach $file (@files_inl, @files_cpp) {
+        if (open (FILE, $file)) {
+            my $line = 0;
+            my $class;
+            my $function;
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                
+                # look for methods or functions
+                if (m/(^[^\s][^\(]*)\:\:([^\:^\(]*[^\s^\(])\s*/) {
+                    $class = $1;
+                    $function = $2;
+                }
+                elsif (m/^(ACE_[^\s]*) \(/i) {
+                    $class = "";
+                    $function = $1;
                 }
                 
-                if (m/unshift \@INC/) {
-                    print_error ("Still unshifting \@INC, should \"use lib\""
-                                 ." instead in $file");
+                # Look for TRACE statements
+                if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
+                    || m/ACE_TRACE\s*\(\s*\"(.*)\"/) {
+                    my $trace = $1;
+                    
+                    if ($class =~ m/(^[^\s][^\<^\s]*)\s*\</) {
+                        $class = $1;
+                    }
+                    
+                    if ($trace !~ m/\Q$function\E/
+                        || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
+                        print_error ("Mismatched TRACE in $file on line $line");
+                        print_error ("   I see \"$trace\" but I think I'm in \"" 
+                                     . $class . "::" . $function . "\"") if (defined $opt_v);
+                    }
                 }
-                
-                if (m/ACE\:\:/ && !m/PerlACE\:\:/) {
-                    print_error ("Still using ACE::* in $file");
-                }
-
-                if (m/Process\:\:/ && !m/PerlACE\:\:Process\:\:/) {
-                    print_error ("Still using Process::* in $file");
-                }
-
             }
             close (FILE);
         }
@@ -475,9 +620,9 @@ sub check_for_old_run_test ()
 
 ##############################################################################
 
-#our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
+#our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m, $opt_v);
 
-if (!getopts ('cdhl:m') || $opt_h) {
+if (!getopts ('cdhl:mv') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [file1, file2, ...]\n";
     print "\n";
     print "    -c         only look at the files passed in\n";
@@ -485,6 +630,7 @@ if (!getopts ('cdhl:m') || $opt_h) {
     print "    -h         display this help\n";
     print "    -l level   set detection level (default = 5)\n";
     print "    -m         only check locally modified files (uses cvs)\n";
+    print "    -v         verbose mode\n";
     exit (1);
 }
 
@@ -517,7 +663,9 @@ check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
-check_for_old_run_test () if ($opt_l >= 6);
+check_for_bad_run_test () if ($opt_l >= 6);
+check_for_absolute_ace_wrappers () if ($opt_l >= 3);
+check_for_bad_ace_trace () if ($opt_l >= 4);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
