@@ -1,3 +1,28 @@
+Mon Dec 20 22:15:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile:
+
+	  Added ACE-configuration.txt, ltcf-c.sh, ltcf-cxx.sh and
+	  Makefile.in to the list of CONTROLLED_FILES.
+
+	  Added ACE+autoconf bootstrapping commands the release and
+	  releaseall targets.  This allows a bootstrapped ACE+autoconf
+	  setup to be shipped with ACE, thus allowing the configure script
+	  to work "out of the box."
+
+	* bin/bootstrap:
+
+	  Added bootstrapping options that enable or disable certain types
+	  of workspaces.  By default, automatic dependency tracking is
+	  disabled by default.
+
+	* bin/make_release:
+
+	  If path to additional GNU tools is broken, default to existing
+	  PATH and hope for the best.
+
+	  Fixed MD5 checksum generation.
+
 Mon Dec 20 21:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
