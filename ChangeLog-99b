@@ -8,6 +8,11 @@ Tue Jul 27 10:25:41 1999  Steve Huston  <shuston@riverace.com>
           ability for users of pre-5.0 to still pass char **. Thanks to
           Bill Tovrea <gwtovrea@west.raytheon.com> for reporting this.
 
+        * examples/Connection/non_blocking/Makefile: Re-added LIBS += $(ACELIB)
+          (see ChangeLog, 23-Jul-1999) but did it in the section for AIX
+          C Set++ and IBM C/C++ only (ifdef TEMPINCDIR). This is needed to
+          generate the shared library (libConn) using those compilers.
+
 Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Future.h: Moved the static methods until the bottom
