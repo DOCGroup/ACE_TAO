@@ -40,21 +40,32 @@ Dispatcher_Task::initialize ()
           ACE_Message_Queue<ACE_SYNCH> (ACE_Message_Queue_Base::DEFAULT_HWM,
                                         ACE_Message_Queue_Base::DEFAULT_LWM,
                                         0,
-                                        1),
+                                        enable_dsui_,
+                                        queue_id_),
           -1);
       break;
 
     case DEADLINE_DISPATCHING:
       ACE_NEW_RETURN (
           this->the_queue_,
-          ACE_Dynamic_Message_Queue<ACE_SYNCH> (deadline_msg_strategy_),
+          ACE_Dynamic_Message_Queue<ACE_SYNCH> (deadline_msg_strategy_,
+                                                ACE_Message_Queue_Base::DEFAULT_HWM,
+                                                ACE_Message_Queue_Base::DEFAULT_LWM,
+                                                0,
+                                                enable_dsui_,
+                                                queue_id_),
           -1);
       break;
 
     case LAXITY_DISPATCHING:
       ACE_NEW_RETURN (
            this->the_queue_,
-           ACE_Dynamic_Message_Queue<ACE_SYNCH> (laxity_msg_strategy_),
+           ACE_Dynamic_Message_Queue<ACE_SYNCH> (laxity_msg_strategy_,
+                                                 ACE_Message_Queue_Base::DEFAULT_HWM,
+                                                 ACE_Message_Queue_Base::DEFAULT_LWM,
+                                                 0,
+                                                 enable_dsui_,
+                                                 queue_id_),
            -1);
       break;
 
@@ -123,7 +134,7 @@ Dispatcher_Task::svc (void)
       int result = this->getq (mb);
 
 #if defined (ACE_HAS_DSUI)
-      DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_GETQ_CALL, 0, 0, NULL);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_GETQ_CALL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&mb->get_ID());
 #endif // ACE_HAS_DSUI
 
       if (result == -1)
@@ -156,7 +167,7 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
-      ACE_Object_Counter::object_id oid = command->getID();
+      ACE_Object_Counter::object_id oid = mb->get_ID();
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
       ACE_ASSERT(command != 0);
 

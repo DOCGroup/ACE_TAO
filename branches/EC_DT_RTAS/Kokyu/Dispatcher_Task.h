@@ -80,6 +80,7 @@ public:
   /// Constructor
   Dispatcher_Task (const ConfigInfo& config_info,
                    ACE_Thread_Manager* thr_manager = 0,
+                   uint32_t enable_dsui = 0,
                    uint32_t queue_id = 0);
 
 
@@ -107,6 +108,9 @@ private:
 private:
   // Unique ID for queue
   uint32_t queue_id_;
+
+  // DSUI enabled (1 = true, 0 = false)
+  uint32_t enable_dsui_;
 
   ConfigInfo curr_config_info_;
 

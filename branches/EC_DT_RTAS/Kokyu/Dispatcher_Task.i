@@ -5,9 +5,11 @@ namespace Kokyu
 ACE_INLINE
 Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
                                   ACE_Thread_Manager* thr_manager,
+                                  uint32_t enable_dsui,
                                   uint32_t queue_id)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
      queue_id_ (queue_id),
+     enable_dsui_ (enable_dsui),
      curr_config_info_ (config_info),
      allocator_ (config_info.allocator_),
      own_allocator_ (0),

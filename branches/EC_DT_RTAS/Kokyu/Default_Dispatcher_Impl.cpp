@@ -52,6 +52,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
       ACE_NEW_RETURN (task,
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance(),
+                                       1,
                                        queue_ctr.increment()),
                       -1);
       auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
