@@ -43,7 +43,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), FALSE);
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
   }
 
   Components::Transaction::UserTransaction_ptr
