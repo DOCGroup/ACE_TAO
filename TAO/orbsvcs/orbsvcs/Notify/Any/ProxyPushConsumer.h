@@ -76,6 +76,8 @@ protected:
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
+
+  void push (TAO_NS_Event_var &);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
