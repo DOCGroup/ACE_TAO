@@ -1,3 +1,11 @@
+Fri Nov 12 08:40:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        
+          Added missing ACE_CHECK in generated code for operations
+          of the AMH response handler. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the oversight.
+
 Thu Nov 11 22:31:12 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
