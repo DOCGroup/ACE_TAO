@@ -2,13 +2,18 @@ Tue Oct 13 08:48:36 EDT 1998   James CE Johnson  <jcej@lads.com>
 
         * docs/ACE-tutorials.html
         * docs/ACE-FMM.html
-	  Added Bob McWhirter's <bob@netwrench.com> "Frequently Made
-	  Mistakes" list.
+          Added Bob McWhirter's <bob@netwrench.com> "Frequently Made
+          Mistakes" list.
 
 Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp (dump): replaced ACE_static_casts with
           ACE_CU64_TO_CU32, because the method is const.  Thanks to Doug
+          for reporting this.
+
+        * ace/Thread_Manager.cpp (join): replaced __xlC__ test with
+          _AIX.  That way, g++ and xlC will both use the three-arg
+          join call on AIX.  Thanks to Ian Wright <I.Wright@elsevier.co.uk>
           for reporting this.
 
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
