@@ -56,7 +56,7 @@ public:
   /// Obtain the parent of this filter.
   TAO_EC_Filter* parent (void) const;
 
-  /// Become the parent of <child>
+  /// Become the parent of @a child.
   void adopt_child (TAO_EC_Filter* child);
 
   /// Matches two event headers.

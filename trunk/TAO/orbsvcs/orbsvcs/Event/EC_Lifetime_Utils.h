@@ -119,7 +119,7 @@ class TAO_RTEvent_Export TAO_EC_Deactivated_Object
 {
 public:
 
-  /// Set deactivation state to that specified by the <deactivator>
+  /// Set deactivation state to that specified by the @a deactivator
   /// argument.
   void set_deactivator (TAO_EC_Object_Deactivator & deactivator);
 

@@ -140,7 +140,7 @@ public:
  * observers.
  *
  * <H2>Memory Management</H2>
- * It assumes ownership of the <lock>, but not of the
+ * It assumes ownership of the @a lock, but not of the
  * Event_Channel.
  */
 class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy :
@@ -235,7 +235,7 @@ protected:
                  ACE_ENV_ARG_DECL);
 
   /// Copies all current observers into an array and passes it
-  /// back to the caller through <lst>.  Returns the size of the array.
+  /// back to the caller through @a lst.  Returns the size of the array.
   int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst
                             ACE_ENV_ARG_DECL);
   //@}
