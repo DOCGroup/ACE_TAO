@@ -117,8 +117,10 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       // read to set the time zone. We convert the timezone value from seconds
       // to minutes.
 
-      ACE_OS::tzset();
-      clerk_->time_displacement_factor (ACE_OS::timezone () / 60);
+      ACE_OS::tzset ();
+      long arg = ACE_OS::timezone () / 60;
+      CORBA::Short goodarg = ACE_static_cast (CORBA::Short, arg);
+      clerk_->time_displacement_factor (goodarg);
 
       // Set the inaccuracy.
       if (highest_time > lowest_time)
