@@ -192,7 +192,7 @@ be_visitor_structure_any_op_cs::visit_union (be_union *node)
 int
 be_visitor_structure_any_op_cs::visit_enum (be_enum *node)
 {
-  if (node->cli_hdr_any_op_gen ()
+  if (node->cli_stub_any_op_gen ()
       || node->imported ())
     {
       return 0;
