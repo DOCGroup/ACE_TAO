@@ -1,3 +1,9 @@
+Mon Dec  7 15:28:16 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/utils.cpp (psecs): fixed another
+	warning that David was getting about an implicit cast from double
+	to int.
+
 Mon Dec  7 12:48:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Removed TAO_CHECK_CONDITION_ENV_RETURN[_VOID].

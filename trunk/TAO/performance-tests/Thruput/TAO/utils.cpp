@@ -551,7 +551,7 @@ psecs (CORBA::Double d, register CORBA::Char *cp)
 {
   register int i;
 
-  i = d / 3600;
+  i = (int) d / 3600;
   if (i)
     {
       ACE_OS::sprintf (cp, "%d:", i);
