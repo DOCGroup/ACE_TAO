@@ -33,6 +33,7 @@ Legend:
 [1111x ] 	POA/FindPOA runs
 [1111x ] POA/NewPOA compiles
 [1111x ] 	POA/NewPOA runs
+<<<<<<< release.chk
 [1101  ] POA/Generic_Servant compiles
 [1101  ] 	POA/Generic_Servant runs
 [1101  ] POA/On_Demand_Activation compiles
@@ -62,7 +63,7 @@ Legend:
 [x0xxx ] 	DII objref
       
 [0x0x0 ] Thruput/TAO compiles
-      
+
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
 [1x11x ] Simple_Naming compiles
@@ -70,17 +71,20 @@ Legend:
 [1xx1x ] Logger compiles
 [xxx0x ] 	Logger runs
 [11x11 ] Scheduling_Service compiles
+[xxxxx ]        Scheduling_Service runs
 [11x10 ] Event_Service compiles
+[xxxxx ]        Event_Service runs
 [11x10 ] Dump_Schedule compiles
+[xxxxx ]        Dump_Schedule runs
 [11x11 ] Event_Latency compiles
-[x x0x ] Event_Latency runs
-       
-[01010 ] MT_Cubit compiles
-[00000 ] 	runs for Octet
-[00000 ] 	runs for Short
-[00000 ] 	runs for Long
-[00000 ] 	runs for Struct
-      
+[x x0x ]        Event_Latency runs
+
+[010100] MT_Cubit compiles
+[xxx0xx] 	runs for Octet
+[xxx0xx] 	runs for Short
+[xxx0xx] 	runs for Long
+[xxx0xx] 	runs for Struct
+
 NOTES
 * Solaris/CC
 **orbsvcs/tests/Logger does not compile
