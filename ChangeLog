@@ -1,3 +1,8 @@
+Sat Jan  1 13:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-guidelines.html:
+          Updated that ACE_OS is a namespace, not a class
+
 Sat Jan  1 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

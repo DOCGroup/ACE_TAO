@@ -26,9 +26,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -206,10 +204,8 @@ public:
    * TAO_ORBInitInfo-specific methods and types.
    */
   //@{
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_ORBInitInfo_ptr _ptr_type;
   typedef TAO_ORBInitInfo_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
 
@@ -295,7 +291,7 @@ namespace TAO
 #include "ORBInitInfo.inl"
 #endif  /* __ACE_INLINE__ */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
