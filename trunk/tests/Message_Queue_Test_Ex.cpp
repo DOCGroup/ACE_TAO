@@ -41,7 +41,7 @@ static int max_messages = MAX_MESSAGES;
 static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_SYNCH> SYNCH_QUEUE;
+typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH> SYNCH_QUEUE;
 
 struct Queue_Wrapper
 {
@@ -382,6 +382,12 @@ main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>;
+#if defined (ACE_HAS_THREADS)
+template class ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH>;
+#endif /* ACE_HAS_THREADS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>
+#if defined (ACE_HAS_THREADS)
+#pragma instantiate ACE_Message_Queue_Ex<ACE_Message_Block, ACE_MT_SYNCH>
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
