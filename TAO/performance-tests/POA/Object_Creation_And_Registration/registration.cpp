@@ -22,12 +22,12 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
-#define USING_PURIFY
+//#define USING_PURIFY
 //#define USING_PURIFY_FOR_SERVANT_LOOKUP
-#define USING_PURIFY_FOR_UNDERBAR_THIS
+//#define USING_PURIFY_FOR_UNDERBAR_THIS
 
 #if defined (USING_PURIFY)
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
 #include "pure.h"
 
 #else
