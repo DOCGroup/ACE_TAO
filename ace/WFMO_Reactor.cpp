@@ -431,14 +431,13 @@ int
 ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
                                                         int &changes_required)
 {
-  // Remember this value; only if it changes do we need to wakeup
-  // the other threads
-  size_t original_handle_count = this->handles_to_be_suspended_;
   size_t i = 0;
 
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
+
+  // Check the current entries first.
   for (i = 0; i < this->max_handlep1_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
@@ -451,9 +450,28 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
         this->current_info_[i].suspend_entry_ = 1;
         // Increment the handle count
         this->handles_to_be_suspended_++;
+        // Changes will be required
+        changes_required = 1;
       }
 
-  // Then check the to_be_added entries
+  // Then check the suspended entries.
+  for (i = 0; i < this->suspended_handles_; i++)
+    // Since the handle can either be the event or the I/O handle,
+    // we have to check both
+    if ((this->current_suspended_info_[i].event_handle_ == handle ||
+         this->current_suspended_info_[i].io_handle_ == handle) &&
+        // Make sure that the resumption is not already undone
+        this->current_suspended_info_[i].resume_entry_)
+      {
+        // Undo resumption
+        this->current_suspended_info_[i].resume_entry_ = 0;
+        // Decrement the handle count
+        this->handles_to_be_resumed_--;
+        // Changes will be required
+        changes_required = 1;
+      }
+
+  // Then check the to_be_added entries.
   for (i = 0; i < this->handles_to_be_added_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
@@ -466,12 +484,9 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
         this->to_be_added_info_[i].suspend_entry_ = 1;
         // Increment the handle count
         this->handles_to_be_suspended_++;
+        // Changes will be required
+        changes_required = 1;
       }
-
-  // Only if the number of handlers to be deleted changes do we need
-  // to wakeup the other threads
-  if (original_handle_count < this->handles_to_be_suspended_)
-    changes_required = 1;
 
   return 0;
 }
@@ -480,15 +495,30 @@ int
 ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
                                                        int &changes_required)
 {
-  // Remember this value; only if it changes do we need to wakeup
-  // the other threads
-  size_t original_handle_count = this->handles_to_be_resumed_;
+  size_t i = 0;
 
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
-  size_t i = 0;
 
+  // Check the current entries first.
+  for (i = 0; i < this->max_handlep1_; i++)
+    // Since the handle can either be the event or the I/O handle,
+    // we have to check both
+    if ((this->current_handles_[i] == handle ||
+         this->current_info_[i].io_handle_ == handle) &&
+        // Make sure that the suspension is not already undone
+        this->current_info_[i].suspend_entry_)
+      {
+        // Undo suspension
+        this->current_info_[i].suspend_entry_ = 0;
+        // Decrement the handle count
+        this->handles_to_be_suspended_--;
+        // Changes will be required
+        changes_required = 1;
+      }
+
+  // Then check the suspended entries.
   for (i = 0; i < this->suspended_handles_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
@@ -501,27 +531,26 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
         this->current_suspended_info_[i].resume_entry_ = 1;
         // Increment the handle count
         this->handles_to_be_resumed_++;
+        // Changes will be required
+        changes_required = 1;
       }
 
-  // Then check the to_be_added entries
+  // Then check the to_be_added entries.
   for (i = 0; i < this->handles_to_be_added_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
     if ((this->to_be_added_info_[i].io_handle_ == handle ||
          this->to_be_added_info_[i].event_handle_ == handle) &&
-        // Make sure that it is not already marked for resumption
+        // Make sure that the suspension is not already undone
         this->to_be_added_info_[i].suspend_entry_)
       {
-        // Mark to be resumed
+        // Undo suspension
         this->to_be_added_info_[i].suspend_entry_ = 0;
         // Decrement the handle count
         this->handles_to_be_suspended_--;
+        // Changes will be required
+        changes_required = 1;
       }
-
-  // Only if the number of handlers to be deleted changes do we need
-  // to wakeup the other threads
-  if (original_handle_count < this->handles_to_be_resumed_)
-    changes_required = 1;
 
   return 0;
 }
