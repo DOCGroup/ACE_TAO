@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// FUZZ: disable check_for_tchar
 
 //=============================================================================
 /**
@@ -19,12 +18,12 @@
 ace_main_i (int, ACE_TCHAR**); \
 extern BOOL InitInstance (HINSTANCE, int); \
 extern void InitSetup(); \
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, ACE_TCHAR* lpCmdLine, int nCmdShow) \
 { \
     MSG msg; \
     HACCEL hAccelTable; \
     if (!InitInstance (hInstance, nCmdShow)) return FALSE; \
-    hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_FACE); \
+    hAccelTable = LoadAccelerators(hInstance, (const ACE_TCHAR*)IDC_FACE); \
     InitSetup(); \
     while (GetMessage(&msg, NULL, 0, 0)) { \
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) { \

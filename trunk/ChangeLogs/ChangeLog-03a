@@ -1,3 +1,11 @@
+Sun Mar 31 22:44:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * apps/FaCE/FaCE_OS.h:
+        * apps/FaCE/FaCE.cpp:
+        * apps/FaCE/Main.cpp:
+          Changed 'LPWSTR' to 'ACE_TCHAR*' and 'LPCTSTR' to 'const ACE_TCHAR*'.
+          Also removed fuzz no-checking header to enable fuzz again.
+
 Sun Mar 31 22:08:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ChangeLog:
