@@ -1,3 +1,20 @@
+Wed Jun 04 21:24:35 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-sunos5.5-g++.h: fixed typo: #define instead of
+	  #defined ACE_HAS_CLOCK_GETTIME.
+
+	* ace/config-sunos5.5-sunc++*.h: Combined
+	  config-sunos5.5-sunc++-4.x.h and config-sunos5.5-sunc++-4.1.h,
+	  and removed the latter.  The Orbix config file now #includes
+	  config-sunos5.5-sunc++-4.x.h and adds its differences.
+
+	* include/makeinclude/platform_sunos5_sunc++*.GNU: Combined
+	  platform_sunos5_sunc++.GNU and platform_sunos5_sunc++-4.1.GNU,
+	  and removed the latter.  platform_sunos5_sunc++_orbix.GNU now
+	  includes the non-orbix file and adds its differences.  Also,
+	  added optional CC -fast support.  To enable, just add "fast=1"
+	  to your "make" invocation.
+
 Wed Jun 04 12:21:41 1997    <irfan@TWOSTEP>
 
 	* tests: Made the following config files consistent:
