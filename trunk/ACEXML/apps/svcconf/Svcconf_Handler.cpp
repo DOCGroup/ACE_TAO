@@ -70,7 +70,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           msg += ACE_CString (ACE_TEXT ("' for entity '"));
           msg += ACE_CString (ACE_TEXT (active_info->name ()));
           msg += ACE_CString (ACE_TEXT ("'\n"));
-          
+
           ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
         }
 
@@ -90,7 +90,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           msg += ACE_CString (ACE_TEXT ("' for entity '"));
           msg += ACE_CString (ACE_TEXT (active_info->name ()));
           msg += ACE_CString (ACE_TEXT ("'\n"));
-          
+
           ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
         }
       symbol = (*func)(&gobbler); // target object created in the loaded DLL.
@@ -118,7 +118,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               msg += ACE_CString (ACE_TEXT (" for entity '"));
               msg += ACE_CString (ACE_TEXT (active_info->name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
 
@@ -156,7 +156,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_CString (ACE_TEXT (" for entity '"));
                   msg += ACE_CString (ACE_TEXT (active_info->name ()));
                   msg += ACE_CString (ACE_TEXT ("'\n"));
-                  
+
                   ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
                 }
 
@@ -184,7 +184,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_CString (ACE_TEXT (" for entity '"));
                   msg += ACE_CString (ACE_TEXT (active_info->name ()));
                   msg += ACE_CString (ACE_TEXT ("'\n"));
-                  
+
                   ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
                 }
             }
@@ -220,7 +220,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_CString (ACE_TEXT (" for entity '"));
                   msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
                   msg += ACE_CString (ACE_TEXT ("'\n"));
-                  
+
                   ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
                 }
             }
@@ -331,7 +331,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           ACE_CString msg (ACE_TEXT ("Cannot find stream '"));
           msg += ACE_CString (ACE_TEXT (this->stream_info_.name ()));
           msg += ACE_CString (ACE_TEXT ("'\n"));
-          
+
           ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
         }
       this->stream_ =   this->stream_svc_type_ == 0
@@ -369,7 +369,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               ACE_CString msg (ACE_TEXT ("Can't locate module '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
 
@@ -386,7 +386,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_CString (ACE_TEXT (" for entity '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
         }
@@ -410,7 +410,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               ACE_CString msg (ACE_TEXT ("Can't locate module '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
 
@@ -427,7 +427,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_CString (ACE_TEXT (" for entity '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
         }
@@ -451,7 +451,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               ACE_CString msg (ACE_TEXT ("Can't locate module '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
 
@@ -468,7 +468,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_CString (ACE_TEXT (" for entity '"));
               msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
             }
         }
@@ -580,9 +580,9 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
             msg += ACE_CString (ACE_TEXT ("' for entity '"));
             msg += ACE_CString (ACE_TEXT (this->stream_info_.name ()));
             msg += ACE_CString (ACE_TEXT ("'\n"));
-            
+
             ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-													  -1);
+                                                                                                          -1);
           }
       }
   return 0;
@@ -607,7 +607,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
             msg += ACE_CString (ACE_TEXT (" for entity '"));
             msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
             msg += ACE_CString (ACE_TEXT ("'\n"));
-            
+
             ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
                             -1);
           }
@@ -648,7 +648,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                   msg += ACE_CString (ACE_TEXT (" for entity '"));
                   msg += ACE_CString (ACE_TEXT (info->name ()));
                   msg += ACE_CString (ACE_TEXT ("'\n"));
-                  
+
                   ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
                                   -1);
                 }
@@ -675,7 +675,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                   msg += ACE_CString (ACE_TEXT ("' for entity '"));
                   msg += ACE_CString (ACE_TEXT (info->name ()));
                   msg += ACE_CString (ACE_TEXT ("'\n"));
-                  
+
                   ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
                                   -1);
                 }
@@ -688,7 +688,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
               msg += ACE_CString (ACE_TEXT ("' for entity '"));
               msg += ACE_CString (ACE_TEXT (info->name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
             }
         }
@@ -726,7 +726,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
               msg += ACE_CString (ACE_TEXT ("' for entity '"));
               msg += ACE_CString (ACE_TEXT (info->name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
             }
         }
@@ -760,7 +760,7 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_AR
               msg += ACE_CString (ACE_TEXT ("' for entity '"));
               msg += ACE_CString (ACE_TEXT (info->name ()));
               msg += ACE_CString (ACE_TEXT ("'\n"));
-              
+
               ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
             }
         }
