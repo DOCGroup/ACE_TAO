@@ -403,7 +403,7 @@ ACE_Thr_Server_Logging_Handler::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manag
 // Override definition in the ACE_Svc_Handler class (spawn a new
 // thread if we're configured with ACE_HAS_THREADS!).
 
-ACE_INLINE int
+int
 ACE_Thr_Server_Logging_Handler::open (void *)
 {
   // Shut off non-blocking IO since now we can block in our own
@@ -432,7 +432,7 @@ ACE_Thr_Server_Logging_Handler::open (void *)
 
 // Process remote logging records. 
 
-ACE_INLINE int
+int
 ACE_Thr_Server_Logging_Handler::svc (void)
 {
   int result = 0;
