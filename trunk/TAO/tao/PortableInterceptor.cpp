@@ -1,6 +1,5 @@
 // $Id$:
 
-#include "tao/corbafwd.h"
 #include "tao/PortableInterceptor.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
