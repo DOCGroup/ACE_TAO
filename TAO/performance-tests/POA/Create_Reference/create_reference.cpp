@@ -180,12 +180,12 @@ main (int argc, char *argv[])
 
       gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-      object_creation_test (root_poa,
+      object_creation_test (root_poa.in (),
                             0, // POA::create_reference
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      object_creation_test (child_poa,
+      object_creation_test (child_poa.in (),
                             1, // POA::create_reference_with_id
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
