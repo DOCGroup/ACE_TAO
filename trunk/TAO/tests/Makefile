@@ -28,6 +28,7 @@ DIRS  = CDR \
         Connection_Purging \
         ORB_init \
         ORB_destroy \
+	Objref_Sequence_Test \
         File_IO \
         Nested_Event_Loop \
         Leader_Followers \

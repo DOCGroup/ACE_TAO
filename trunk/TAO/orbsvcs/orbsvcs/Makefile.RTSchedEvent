@@ -81,8 +81,7 @@ realclean: clean
 
 
 .obj/EC_Sched_Filter.o .obj/EC_Sched_Filter.so .shobj/EC_Sched_Filter.o .shobj/EC_Sched_Filter.so: Event/EC_Sched_Filter.cpp Event/EC_Sched_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -292,8 +291,7 @@ realclean: clean
 
 .obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.so .shobj/EC_Sched_Filter_Builder.o .shobj/EC_Sched_Filter_Builder.so: Event/EC_Sched_Filter_Builder.cpp \
  Event/EC_Sched_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1419,8 +1417,7 @@ realclean: clean
 
 .obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.so .shobj/EC_Gateway_Sched.o .shobj/EC_Gateway_Sched.so: Event/EC_Gateway_Sched.cpp \
  Event/EC_Gateway_Sched.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Gateway.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Gateway.h \
  Event/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
