@@ -13,8 +13,8 @@
 //      <ACE_Reactors> and <ACE_Tasks> in the same process.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>, 
-//    Detlef Becker <Detlef.Becker@med.siemens.de>, and 
+//    Prashant Jain <pjain@cs.wustl.edu>,
+//    Detlef Becker <Detlef.Becker@med.siemens.de>, and
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
@@ -22,6 +22,7 @@
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(tests, Reactors_Test, "$Id$")
 
