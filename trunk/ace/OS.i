@@ -7683,7 +7683,7 @@ ACE_OS::sleep (u_int seconds)
 #elif defined (ACE_PSOS)
   timeval wait;
   wait.tv_sec = seconds;
-  wait.tv_sec = 0;
+  wait.tv_usec = 0;
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &wait), int, -1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
