@@ -68,7 +68,7 @@ TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &ACE
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->supplier_->disconnect_push_supplier (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Deactivate the supplier proxy
   PortableServer::POA_var poa =
