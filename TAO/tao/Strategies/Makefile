@@ -419,7 +419,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Connector_Impl.cpp
 
 .obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.so .shobj/UIOP_Lite_Factory.o .shobj/UIOP_Lite_Factory.so: UIOP_Lite_Factory.cpp UIOP_Lite_Factory.h \
- $(ACE_ROOT)/ace/pre.h strategies_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ strategies_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1022,7 +1023,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Connection_Handler.inl \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  UIOP_Connection_Handler.inl UIOP_Endpoint.h UIOP_Endpoint.i \
- UIOP_Profile.i $(TAO_ROOT)/tao/ORB.h \
+ UIOP_Profile.i \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
@@ -5364,7 +5366,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  uiop_endpoints.i
 
 .obj/advanced_resource.o .obj/advanced_resource.so .shobj/advanced_resource.o .shobj/advanced_resource.so: advanced_resource.cpp advanced_resource.h \
- $(ACE_ROOT)/ace/pre.h strategies_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ strategies_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
