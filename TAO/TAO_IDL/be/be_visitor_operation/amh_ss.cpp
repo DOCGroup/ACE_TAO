@@ -357,31 +357,40 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
 
   // Create the response handler
   char *buf;
-  intf->compute_full_name ("AMH_", "ResponseHandler", buf);
-  ACE_CString response_handler_name (buf);
-  delete [] buf;
-  buf = 0;
-
   intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
   delete [] buf;
   buf = 0;
 
-  *os << be_nl << response_handler_name.c_str ()
-      << "_ptr _tao_rh_ptr;" << be_nl
-      << "ACE_NEW (" << be_idt << be_idt_nl
-      << "_tao_rh_ptr," << be_nl
+  *os << be_nl
+      << "TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =" << be_idt_nl
+      << "_tao_server_request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();" << be_uidt_nl << be_nl
+      << "TAO::TAO_Buffer_Allocator<"
       << response_handler_implementation_name.c_str ()
-      << " (_tao_server_request)" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << response_handler_name.c_str () << "_var _tao_rh = _tao_rh_ptr;"
+      << ", TAO_AMH_BUFFER_ALLOCATOR> buffer_allocator (amh_allocator);"
+      << be_nl << be_nl
+      << response_handler_implementation_name.c_str ()
+      << "_ptr _tao_rh_ptr = "
+      << be_idt_nl
+      << "buffer_allocator.allocate();"
+      << be_uidt_nl << be_nl
+      << "if (!_tao_rh_ptr) " << be_idt_nl << "ACE_THROW (CORBA::NO_MEMORY ());"
+      << be_uidt_nl;
+
+  // Initialize amh rh
+  *os << be_nl << "_tao_rh_ptr->init (_tao_server_request, amh_allocator);" << be_nl
+      << be_nl;
+
+  *os <<  "ACE_Utils::Auto_Functor <"
+      << response_handler_implementation_name.c_str ()
+      << ", TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);"
       << be_nl;
 
   // Make the upcall.
   *os << be_nl << "_tao_impl->"
       << node->local_name () << " (" << be_idt << be_idt_nl
-      << "_tao_rh.in ()";
+      << "safe_rd_.get ()";
 
   return 0;
 }

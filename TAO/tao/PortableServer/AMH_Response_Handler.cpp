@@ -10,20 +10,19 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
+#include "tao/Buffer_Allocator_T.h"
 #include "ace/Copy_Disabled.h"
 
-TAO_AMH_Response_Handler::
-TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
-  : mesg_base_ (server_request.mesg_base_)
-  , request_id_ (server_request.request_id_)
-  , response_expected_ (server_request.response_expected_)
-  , transport_ (server_request.transport ())
-  , orb_core_ (server_request.orb_core ())
+TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
+  : mesg_base_ (0)
+  , request_id_ (0)
+  , transport_ (0)
+  , orb_core_ (0)
   , argument_flag_ (1)
   , exception_type_ (TAO_GIOP_NO_EXCEPTION)
   , reply_status_ (TAO_RS_UNINITIALIZED)
+  , allocator_ (0)
 {
-  this->transport_->add_reference ();
 }
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
@@ -66,6 +65,20 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
     ACE_ENDTRY;
     ACE_CHECK;
   }
+}
+
+void
+TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
+                               TAO_AMH_BUFFER_ALLOCATOR* allocator)
+{
+  mesg_base_ = server_request.mesg_base_;
+  request_id_ = server_request.request_id_;
+  response_expected_  = server_request.response_expected_;
+  transport_ = server_request.transport ();
+  orb_core_ = server_request.orb_core ();
+  allocator_ = allocator;
+
+  this->transport_->add_reference ();
 }
 
 void
@@ -211,6 +224,45 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->reply_status_ = TAO_RS_SENT;
+  }
+}
+
+long
+TAO_AMH_Response_Handler::decr_refcount (void)
+{
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      mon,
+                      this->refcount_lock_,
+                      -1);
+    --this->refcount_;
+
+    if (this->refcount_ > 0)
+      return this->refcount_;
+  }
+
+  if (this->allocator_)
+    {
+      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (allocator_);
+
+      allocator.release(this);
+    }
+  else
+    {
+      delete this;
+    }
+
+  return 0;
+}
+
+namespace TAO
+{
+  ACE_INLINE void
+  ARH_Refcount_Functor::operator () (
+      TAO_AMH_Response_Handler *arh)
+    ACE_THROW_SPEC (())
+  {
+    (void) arh->decr_refcount ();
   }
 }
 

@@ -24,7 +24,7 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
-#include "ace/os_include/os_ctype.h"
+ #include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
            be_codegen,
@@ -318,7 +318,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "\n#include \""
                        << be_global->be_get_client_inline_fname (1)
                        << "\"";
-  *this->client_stubs_ << "\n#endif /* !defined __ACE_INLINE__ */";
+  *this->client_stubs_ << "\n#endif /* !defined INLINE */";
 
   return 0;
 }
@@ -646,7 +646,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   *this->server_skeletons_ << "#include \""
                            << be_global->be_get_server_inline_fname (1)
                            << "\"\n";
-  *this->server_skeletons_ << "#endif /* !defined __ACE_INLINE__ */";
+  *this->server_skeletons_ << "#endif /* !defined INLINE */";
 
   return 0;
 }
@@ -707,7 +707,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       << "\n#include \""
       << be_global->be_get_server_template_inline_fname (1)
       << "\"";
-  *this->server_template_skeletons_ << "\n#endif /* !defined __ACE_INLINE__ */\n\n";
+  *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
 
   return 0;
 }
@@ -962,7 +962,7 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << "#include \""
                         << be_global->be_get_client_inline_fname (1)
                         << "\"\n";
-  *this->client_header_ << "#endif /* defined __ACE_INLINE__ */";
+  *this->client_header_ << "#endif /* defined INLINE */";
 
   *this->client_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
@@ -1007,7 +1007,7 @@ TAO_CodeGen::end_server_header (void)
   *this->server_header_ << "#include \""
                         << be_global->be_get_server_inline_fname (1)
                         << "\"\n";
-  *this->server_header_ << "#endif /* defined __ACE_INLINE__ */";
+  *this->server_header_ << "#endif /* defined INLINE */";
 
   *this->server_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
@@ -1096,7 +1096,7 @@ TAO_CodeGen::end_server_template_header (void)
       << "\n#include \""
       << be_global->be_get_server_template_inline_fname (1)
       << "\"";
-  *this->server_template_header_ << "\n#endif /* defined __ACE_INLINE__ */";
+  *this->server_template_header_ << "\n#endif /* defined INLINE */";
 
   // Insert the code to include the template source file.
   *this->server_template_header_
@@ -1617,9 +1617,21 @@ TAO_CodeGen::gen_skel_src_includes (void)
       this->gen_arg_file_includes (this->server_skeletons_);
     }
 
+
+
   // The following header must always be included.
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableInterceptor.h");
+
+  if (be_global->gen_amh_classes ())
+    {
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Thread_Lane_Resources.h");
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Buffer_Allocator_T.h");
+      this->gen_standard_include (this->server_skeletons_,
+                                  "ace/Auto_Functor.h");
+    }
 
   // Include Portable Interceptor related headers.
   *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
