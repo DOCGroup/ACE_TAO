@@ -9,8 +9,11 @@
 //    Cached_Conn_Test.cpp
 //
 // = DESCRIPTION
-//     The test illustrates how the <ACE_Strategy_Connector> works by showing how you can
-//     cache connections on the client.
+//     The test illustrates how the <ACE_Strategy_Connector> works by
+//   showing how you can cache connections on the client using
+//   different caching strategies. Also how connections can be purged
+//   explicitly if needed from the connection cache maintained by the
+//   connector.
 //
 // = AUTHOR
 //    Kirthika Parameswaran <kirthika@cs.wustl.edu>
