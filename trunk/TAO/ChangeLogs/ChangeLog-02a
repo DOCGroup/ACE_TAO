@@ -1,3 +1,16 @@
+Thu Mar 21 12:20:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Invocation.cpp:
+
+          When a CORBA system or user exception is raised, the invocation
+          creates it on the heap. On platforms with native exceptions, it
+          is then thrown, causing a memory leak, so in these cases the
+          newly created exception is put into an ACE auto_ptr before
+          raising. On platforms without native exceptions, the Environment
+          class manages the memory. Thanks to Bruce McIntosh
+          <Bruce.McIntosh@Australia.Boeing.com> for pointing out the
+          leak, and to Nanbor for his help with the fix.
+
 Wed Mar 21 08:11:15 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
