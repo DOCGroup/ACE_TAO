@@ -589,8 +589,7 @@ Handler_Factory::handle_events (void)
         }
     }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
