@@ -97,7 +97,7 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 
   *buf = '\0';  // Initialize the string
 
-  stream >> c;
+  stream.get(c);
 
   if (!stream) // eat space up to the first char
     return stream;
@@ -127,10 +127,12 @@ operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
 {
   stream.put ('"');
   while (*buf)
-    if (*buf == '"')
-      stream.put ('\\');
+    {
+      if (*buf == '"')
+        stream.put ('\\');
 
-  stream.put ((char) *buf++);
+      stream.put ((char) *buf++);
+    }
   stream.put ('"');
 
   return stream;
@@ -281,6 +283,23 @@ server (void *arg = 0)
   // Compared to the method above, this is quite messy.  Notice also
   // that whitespace is lost.
 
+#if defined(ACE_HAS_STRING_CLASS) && defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+  ACE_IOStream_String buf;
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
+
+  while (client_handler &&
+         (buf.length() == 0 || buf[buf.length() - 1] != '\n'))
+    {
+      client_handler >> buf;
+	  if (buf.length() > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "%s ", buf.c_str()));
+        }
+    }
+
+  ACE_DEBUG ((LM_DEBUG, ")\n"));
+
+#else
   char buf[BUFSIZ];
   ACE_OS::memset (buf, 0, sizeof buf);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
@@ -293,6 +312,7 @@ server (void *arg = 0)
     }
 
   ACE_DEBUG ((LM_DEBUG, ")\n"));
+#endif
 
   // Send some non-textual data to the client.  We use a single
   // character to separate the fields but we could have used any valid
