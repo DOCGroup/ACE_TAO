@@ -12,8 +12,8 @@
 //
 // =========================================================================
 
-#ifndef ACE_ACE_HANDLE_OPS_H
-#define ACE_ACE_HANDLE_OPS_H
+#ifndef ACE_HANDLE_OPS_H
+#define ACE_HANDLE_OPS_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"
@@ -33,8 +33,8 @@ class ACE_Export ACE_Handle_Ops
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Handle_Ops.i"
+#include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
-#endif /* ACE_ACE_HANDLE_OPS_H */
+#endif /* ACE_HANDLE_OPS_H */

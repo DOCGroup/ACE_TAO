@@ -1,19 +1,20 @@
 // $Id$
 
+// ========================================================================
+
 // FILENAME
 //   ACE_Flag_Manip.h
 //
 // DESCRIPTION
-//   IPC_SAP uses only two functions in ACE and hence is linking the
-//   entire ACE. Splitting the functions that are used in IPC_SAP to a */
-//   different class and linking to that class instead of the whole
-//   thing would result in reduced dependency on ACE and ultimately
-//   reduced FP.
+//   This class includes the functions used for the Flag Manipulation.
 //
+// AUTHOR
+//   Priyanka Gontla <pgontla@ece.uci.edu>
+
 // =======================================================================
 
-#ifndef ACE_ACE_FLAG_MANIP_H
-#define ACE_ACE_FLAG_MANIP_H
+#ifndef ACE_FLAG_MANIP_H
+#define ACE_FLAG_MANIP_H
 #include "ace/pre.h"
 
 #include "OS.h"
@@ -42,8 +43,8 @@ class ACE_Export ACE_Flag_Manip
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Flag_Manip.i"
+#include "ace/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
-#endif  /* ACE_ACE_FLAG_MANIP_H */
+#endif  /* ACE_FLAG_MANIP_H */
