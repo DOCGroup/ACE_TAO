@@ -13,7 +13,8 @@
 //    Handle input from the keyboard.
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wistl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
+//    Pradeep Gore (pradeep@cs.wustl.edu)
 //
 // ============================================================================
 

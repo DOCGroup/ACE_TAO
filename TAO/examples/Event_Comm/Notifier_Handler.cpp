@@ -72,22 +72,19 @@ Notifier_Handler::init (int argc, char *argv[])
       notifier_ref_name[0].id =
       CORBA::string_dup (NOTIFIER_BIND_NAME);
 
-
       CORBA::Object_var notifier_obj =
        this->naming_client_->resolve (notifier_ref_name,
 				      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
 
-      // The CORBA::Object_var object is downcast to Notifier_var using
-      // the <_narrow> method.
+      // The CORBA::Object_var object is downcast to Notifier_var
+      // using the <_narrow> method.
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
 					TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "Notifier initialized.. \n"));
       return 0;
 
   }
@@ -97,5 +94,6 @@ Notifier_Handler::init (int argc, char *argv[])
      return -1;
    }
  TAO_ENDTRY;
+
  return 0;
 }
