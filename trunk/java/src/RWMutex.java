@@ -6,10 +6,13 @@
  * = FILENAME
  *    RWMutex.java
  *
- *@author Ross Dargahi (rossd@krinfo.com) and Prashant Jain
+ *@author Irfan Pyarali
  *
  *************************************************/
+
 package ACE.Concurrency;
+
+import ACE.OS.*;
 
 /*******************************************************************************
 * <HR>
@@ -17,6 +20,7 @@ package ACE.Concurrency;
 * <BR>
 * This class increments a read/write lock. A read/write lock allows multiple
 * readers or a single writer to access the guarded element.
+* This implementation is based on the C++ version of ACE.
 * </PRE><P><HR>
 * <B> Notes </B>
 * <UL>
@@ -30,7 +34,7 @@ public class RWMutex
    * @exception InterruptedException Lock acquisition interrupted
    **/
   public void acquire()
-       throws InterruptedException
+    throws InterruptedException
   {
     acquireWrite();
   }
@@ -39,66 +43,132 @@ public class RWMutex
    * Acquires the read lock
    * @exception InterruptedException Lock acquisition interrupted
    **/
-  public synchronized void acquireRead()
-       throws InterruptedException
+  public void acquireRead()
+    throws InterruptedException
   {
-    // Wait till there is an active writer, wait.
-    while (this.mWriterActive_)
-      wait();
+    // make sure we start with no exception
+    InterruptedException exception_ = null;
+    
+    // grab lock
+    lock_.acquire ();
+    
+    // Give preference to writers who are waiting.
+    while (referenceCount_ < 0 || numberOfWaitingWriters_ > 0)
+      {
+	numberOfWaitingReaders_++;
+	try 
+	  {
+	    waitingReaders_.Wait ();
+	  }
+	catch (InterruptedException exception)
+	  {
+	    // cache exception
+	    exception_ = exception;
+	  }
+	numberOfWaitingReaders_--;
+      }
+    
+    if (exception_ == null)
+      // No errors
+      referenceCount_++;
 
-    this.mNumReaders_++;
+    // make sure this is released in all cases
+    lock_.release ();
+
+    if (exception_ != null)
+      // error: propogate
+      throw exception_;
   }
-
+  
   /**
    * Acquires the write lock
    * @exception InterruptedException Lock acquisition interrupted
    **/
-  public synchronized void acquireWrite()
-       throws InterruptedException
+  public void acquireWrite()
+    throws InterruptedException
   {
-    // If there is an active writer before us, then wait for it to finish
-    // before proceeding
-    while (this.mWriterActive_)
-      wait();
+    // make sure we start with no exception
+    InterruptedException exception_ = null;
     
-    // Set the writer active flag to true, then wait for all readers to finish
-    // with the lock. Note that no new readers will be able to grab the lock
-    // since they will be blocking on the writer active flag in acquireRead()
-    this.mWriterActive_ = true;
+    // grab lock
+    lock_.acquire ();
     
-    while (this.mNumReaders_ > 0)
-      wait();
-   
-    this.mWriterHoldsLock_ = true;
+    // Give preference to writers who are waiting.
+    while (referenceCount_ != 0)
+      {
+	numberOfWaitingWriters_++;
+	try 
+	  {
+	    waitingWriters_.Wait ();
+	  }
+	catch (InterruptedException exception)
+	  {
+	    // cache exception
+	    exception_ = exception;
+	  }
+	numberOfWaitingWriters_--;
+      }
+    
+    if (exception_ == null)
+      // No errors
+      referenceCount_ = -1;
+
+    // make sure this is released in all cases
+    lock_.release ();
+
+    if (exception_ != null)
+      // error: propogate
+      throw exception_;
   }
 
   /**
    * Release held lock
    * @exception InterruptedException Lock acquisition interrupted
    **/
-  public synchronized void release()
+  public void release()
+    throws InterruptedException
   {
-    if (this.mWriterHoldsLock_)
+    lock_.acquire ();
+    
+    // Releasing a reader.
+    if (referenceCount_ > 0) 
+      referenceCount_--;
+    else 
+      // Releasing a writer.
+      if (referenceCount_ == -1) 
+	referenceCount_ = 0;
+    
+    // Give preference to writers over readers...
+    if (numberOfWaitingWriters_ > 0)
       {
-	this.mWriterActive_ = false;
-	this.mWriterHoldsLock_ = false;
+	waitingWriters_.signal ();
       }
-    else
+    else if (numberOfWaitingReaders_ > 0)
       {
-	this.mNumReaders_--;
+	waitingReaders_.broadcast ();
       }
-
-    notifyAll();
-
+	
+    
+    lock_.release ();
   }
 
-  private int mNumReaders_;
-  // Current number of readers
-    
-  private boolean mWriterActive_;
-  // If true, a writer is active
-
-  private boolean mWriterHoldsLock_;
-  // If true, a writer holds the lock
+  private Mutex lock_ = new Mutex (); 
+  // Serialize access to internal state.
+ 
+  private Condition waitingReaders_ = new Condition (lock_);
+  // Reader threads waiting to acquire the lock.
+ 
+  private int numberOfWaitingReaders_;
+  // Number of waiting readers.
+ 
+  private Condition waitingWriters_ = new Condition (lock_);
+  // Writer threads waiting to acquire the lock.
+ 
+  private int numberOfWaitingWriters_ = 0;
+  // Number of waiting writers.
+ 
+  private int referenceCount_ = 0;
+  // Value is -1 if writer has the lock, else this keeps track of the
+  // number of readers holding the lock.
 }
 
