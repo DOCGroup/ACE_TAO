@@ -1,3 +1,15 @@
+Thu Jan 22 17:14:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        
+          Changed the mutator of the member that stores the version
+          to update the repository id along with a legal set of
+          the version. Since the repository id is now computed
+          eagerly, it must be updated if a #pragma version directive
+          is encountered in the IDL file. Thanks to Nils Sandoy 
+          <nils.sandoy@fast.no> for sending in the example IDL file
+          that uncovered the problem.
+
 Thu Jan 22 16:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
