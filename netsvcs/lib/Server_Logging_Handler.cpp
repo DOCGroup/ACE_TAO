@@ -163,7 +163,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::ACE_Server_
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1> int
 ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logging_record (void)
 {
-  size_t len;
+  ssize_t len;
   // Lock used to serialize access to std output 
   // (this should be in the class, but the SunC++ compiler is broken...)
   static ACE_SYNCH_MUTEX lock;
