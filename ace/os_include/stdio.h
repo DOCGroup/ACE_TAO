@@ -71,5 +71,15 @@
 #  define ACE_STDERR 2
 #endif /* ACE_WIN32 */
 
+#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+   // Header information snarfed from compiler provided header files
+   // that are not included because there is already an identically
+   // named file provided with pSOS, which does not have this info
+   // from compiler supplied stdio.h
+   extern FILE *fdopen(int, const char *);
+   extern char *tempnam(const char *, const char *);
+   extern "C" int fileno(FILE *);
+# endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDIO_H */

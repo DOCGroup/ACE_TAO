@@ -45,5 +45,13 @@ typedef u_int ACE_RANDR_TYPE;
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_BROKEN_RANDR */
 
+#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+   // Header information snarfed from compiler provided header files
+   // that are not included because there is already an identically
+   // named file provided with pSOS, which does not have this info
+   // from compiler supplied header
+   extern int putenv (char *); // stdlib.h
+#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDLIB_H */

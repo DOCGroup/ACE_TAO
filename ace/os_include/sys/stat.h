@@ -103,5 +103,15 @@ struct stat
 #  define _fstat fstat
 #endif /* __BORLANDC__ */
 
+#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+   // Header information snarfed from compiler provided header files
+   // that are not included because there is already an identically
+   // named file provided with pSOS, which does not have this info
+   // from compiler supplied header
+   extern mode_t umask (mode_t);  //sys/stat.h
+   extern int mkfifo (const char *, mode_t);  //sys/stat.h
+   extern int mkdir (const char *, mode_t);  //sys/stat.h
+#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_STAT_H */

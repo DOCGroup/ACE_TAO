@@ -1,3 +1,44 @@
+Sat May 10 21:39:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Removed commented and moved more code, as listed below.
+
+        * ace/Handle_Set.h:
+          Moved ACE_FD_SETSIZE and ACE_DEFAULT_SELECT_REACTOR_SIZE
+          defines here.
+
+        * ace/Malloc.h:
+          Moved ACE_DEFAULT_BASE_ADDR define here.  Fixed #ifdef
+          indentation.
+
+        * ace/Timer_Queue_T.cpp:
+          Moved ACE_TIMER_SKEW define here.
+
+        * ace/os_include/pthread.h:
+          Moved a large section of pthread defines and typedefs here.
+
+        * ace/os_include/stdio.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for fdopen(), tempnam(),
+          and fileno() here.
+
+        * ace/os_include/stdlib.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl for putenv() here.
+
+        * ace/os_include/string.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl for strdup() here.
+
+        * ace/os_include/unistd.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for getopt() and
+          isatty() here.
+
+        * ace/os_include/sys/stat.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for umask(), mkfifo(),
+          and mkdir() here.
+
+        * apps/gperf/src/Vectors.h:
+          Moved ACE_ASCII_SIZE, ACE_EBCDIC_SIZE, and
+          ACE_STANDARD_CHARACTER_SET_SIZE defines here.
+
 Sat May 10 18:59;32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-cygwin32.h:
@@ -26,12 +67,12 @@ Sat May 10 16:18:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           defines here.
 
         * ace/os_include/string.h:
-          Moved str[n]imp for __BORLANDC__ and ACE_SPRINTF_ADAPTER 
+          Moved str[n]imp() for __BORLANDC__ and ACE_SPRINTF_ADAPTER 
           defines here.
 
         * ace/os_include/unistd.h:
-          Moved _SC_AIO_MAX, chdir, access, getcwd, and isatty defines
-          for __BORLANDC__ here.
+          Moved _SC_AIO_MAX, chdir(), access(), getcwd(), and isatty() 
+          defines for __BORLANDC__ here.
 
         * ace/os_include/sys/mman.h:
           Moved PROT_RDWR define here.
@@ -40,10 +81,10 @@ Sat May 10 16:18:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Moved CMSG_DATA define here.
 
         * ace/os_include/sys/stat.h:
-          Moved stat, umask, and fstat defines for __BORLANDC__ here.
+          Moved stat(), umask(), and fstat() defines for __BORLANDC__ here.
 
         * ace/os_include/sys/timeb.h:
-          Moved ftime and timeb defines for __BORLANDC__ here.
+          Moved ftime() and timeb defines for __BORLANDC__ here.
 
         * ace/os_include/sys/types.h:
           Moved longlong_t, key_t, and pid_t here.
@@ -71,16 +112,16 @@ Fri May  9 22:45:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           sys/regset.h here.
 
         * ace/os_include/stdlib.h:
-          Move rand_r declaration here.
+          Move rand_r() declaration here.
 
         * ace/os_include/string.h:
-          Moved strtok_r declaration here.
+          Moved strtok_r() declaration here.
 
         * ace/os_include/time.h:
-          Moved strptime declaration here.
+          Moved strptime() declaration here.
 
         * ace/os_include/unistd.h:
-          Moved ualarm, pread/pwrite, getpgid, and lseek64/llseek 
+          Moved ualarm(), pread/pwrite(), getpgid(), and lseek64/llseek() 
           declarations here.
 
         * ace/os_include/sys/mman.h:

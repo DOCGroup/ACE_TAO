@@ -24,15 +24,21 @@
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
+// Default address for shared memory mapped files and SYSV shared memory
+// (defaults to 64 M).
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
+# endif /* ACE_DEFAULT_BASE_ADDR */
+
 #if defined (ACE_HAS_MALLOC_STATS)
-#include "ace/Atomic_Op.h"
-#if defined (ACE_HAS_THREADS)
-#include "ace/Process_Mutex.h"
-#define ACE_PROCESS_MUTEX ACE_Process_Mutex
-#else
-#include "ace/SV_Semaphore_Simple.h"
-#define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
-#endif /* ACE_HAS_THREADS */
+#  include "ace/Atomic_Op.h"
+#  if defined (ACE_HAS_THREADS)
+#    include "ace/Process_Mutex.h"
+#    define ACE_PROCESS_MUTEX ACE_Process_Mutex
+#  else /* ACE_HAS_THREADS */
+#    include "ace/SV_Semaphore_Simple.h"
+#    define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
+#  endif /* ACE_HAS_THREADS */
 
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
@@ -199,9 +205,9 @@ struct ACE_Export ACE_Malloc_Stats
   /// Number of blocks in use
   ACE_INT ninuse_;
 };
-#define ACE_MALLOC_STATS(X) X
+#  define ACE_MALLOC_STATS(X) X
 #else
-#define ACE_MALLOC_STATS(X)
+#  define ACE_MALLOC_STATS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
 #if !defined (ACE_MALLOC_PADDING)
@@ -210,7 +216,7 @@ struct ACE_Export ACE_Malloc_Stats
 // when you want areas to be at least a page long, or 32K long, or
 // something like that.
 
-#define ACE_MALLOC_PADDING 1
+#  define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
 union ACE_max_align_info
@@ -223,11 +229,11 @@ union ACE_max_align_info
 
 #if !defined (ACE_MALLOC_ALIGN)
 // Align the malloc header size to a multiple of a double.
-#define ACE_MALLOC_ALIGN (sizeof (ACE_max_align_info))
+#  define ACE_MALLOC_ALIGN (sizeof (ACE_max_align_info))
 #endif /* ACE_MALLOC_ALIGN */
 
 #if !defined ACE_MALLOC_ROUNDUP
-#define ACE_MALLOC_ROUNDUP(X, Y) ((X) + ((Y) - 1) & ~((Y) - 1))
+#  define ACE_MALLOC_ROUNDUP(X, Y) ((X) + ((Y) - 1) & ~((Y) - 1))
 #endif
 
 // ACE_MALLOC_HEADER_SIZE is the normalized malloc header size.
