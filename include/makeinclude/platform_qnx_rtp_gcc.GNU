@@ -16,7 +16,7 @@ endif # ! optimize
 CC      = gcc
 CXX     = g++
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
-CCFLAGS += $(CFLAGS) -fno-implicit-templates
+CCFLAGS += $(CFLAGS) -fno-implicit-templates -fexceptions
 
 #
 # Under the current version of QNX RTP ACE crashes
@@ -36,3 +36,5 @@ ARFLAGS = ruv
 SOFLAGS = -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
+
+exceptions=1
