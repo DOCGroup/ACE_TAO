@@ -38,12 +38,11 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::open");
 
-  // Make a copy of address to use in the <send> methods.
-  // Note: Sun C++ 4.2 needs the useless const_cast.
+  // Make a copy of address to use in the <send> methods.  Note: Sun
+  // C++ 4.2 needs the useless const_cast.
   this->mcast_addr_.set (ACE_reinterpret_cast (const ACE_INET_Addr &,
                                                ACE_const_cast (ACE_Addr &,
                                                                mcast_addr)));
-
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
   if (this->get_handle () == ACE_INVALID_HANDLE)
