@@ -5,11 +5,16 @@ Thu May 01 00:05:59 1997    <irfan@TWOSTEP>
  	  sure because this test kills the Time Clerk and on some
  	  platforms the Clerk is not allowed to do a graceful shutdown. By
  	  cleaning the backing store here, we are sure that we get a fresh
- 	  start and no garbage data from a possible aborted run. The old
- 	  code of waiting for the Clerk to go away and deleting the
- 	  backing store is still there but does not work as unlink fails
- 	  with ERROR_ACCESS_DENIED. I am not sure why this is happening!
- 	  For now the unlink at the start of the program will do.
+ 	  start and no garbage data from a possible aborted run. 
+
+	  The old code deleting the backing store at the end of the test
+ 	  is still there but does not work on Win32 as unlink fails with
+ 	  ERROR_ACCESS_DENIED. I am not sure why this is happening!  For
+ 	  now the unlink at the start of the program will do.
+
+	  Also added a wait for the clerk before deleting the backing
+ 	  store. This way we are sure that we do not delete the backing
+ 	  store before the clerk is done with it.
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp: Fixed an obscure bug with
  	  ACE_TS_Clerk_Processor. ACE_TS_Clerk_Processor (which is an
