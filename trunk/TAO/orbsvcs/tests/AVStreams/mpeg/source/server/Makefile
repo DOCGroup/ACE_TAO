@@ -20,7 +20,7 @@ DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
 
-LIBS 	+= -lTAO -lACE -lorbsvcs -lmpeg_server -lmpeg_shared -lmpeg_mib
+LIBS 	+= -lTAO -lACE -lorbsvcs -lmpeg_server -lmpeg_shared
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
