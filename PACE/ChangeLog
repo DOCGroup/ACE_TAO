@@ -1,3 +1,34 @@
+Sat Jun 17 16:46:39 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/aio.h:
+	* pace/assert.h:
+	* pace/defines.h:
+	* pace/dirent.h:
+	* pace/fnctl.h:
+	* pace/grp.h:
+	* pace/limits.h:
+	* pace/locale.h:
+	* pace/mqueue.h:
+	* pace/netdb.h:
+	* pace/pthread.h:
+	* pace/pwd.h:
+	* pace/sched.h:
+	* pace/semaphore.h:
+	* pace/setjmp.h:
+	* pace/signal.h:
+	* pace/stdio.h:
+	* pace/stdlib.h:
+	* pace/string.h:
+	* pace/strings.h:
+	* pace/thread.h:
+	* pace/time.h:
+	* pace/unistd.h:
+	* pace/utime.h:
+	* pace/wait.h:	
+
+	  Altered these "root" files to include the correct
+	  subdirectory/file.
+
 Fri Jun 16 17:47:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/pace/config/features.h	

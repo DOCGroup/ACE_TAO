@@ -6,36 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    locale.h
+ *    pace/locale.h
  *
  * = AUTHOR
  *    Joe Hoffert
  *
- * ===========================================================================
- */
-
+ * =========================================================================== */
 
 #ifndef PACE_LOCALE_H
 #define PACE_LOCALE_H
 
-
-#include "pace/defines.h"
-#include <locale.h>
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
-
-  PACE_INLINE char * pace_setlocale (int category, const char * locale);
-
-# if defined (PACE_HAS_CPLUSPLUS)
-}
-# endif /* PACE_HAS_CPLUSPLUS */
-
-# if defined (PACE_HAS_INLINE)
-# include "locale.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_POSIX)
+# include "posix/locale.h"
+#elif defined (PACE_VXWORKS)
+# include "vxworks/locale.h"
+#elif defined (PACE_WIN32)
+# include "win32/locale.h"
+#endif
 
 #endif /* PACE_LOCALE_H */
