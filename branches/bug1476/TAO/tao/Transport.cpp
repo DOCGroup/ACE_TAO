@@ -2117,25 +2117,36 @@ TAO_Transport::out_stream (void)
 }
 
 int
-TAO_Transport::set_connected (size_t id)
+TAO_Transport::post_open (size_t id)
 {
   this->id_ = id;
   this->is_connected_ = true;
 
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so. If registeration is required and it succeeds,
+  // #REFCOUNT# becomes two.
+  int result =
+    this->wait_strategy ()->register_handler ();
 
-    if (!this->queue_is_empty_i ())
-      {
-// do something here, we now get into problems because the schedule_output_i has a nill reactor
-//
-        //TAO_Flushing_Strategy *flushing_strategy =
-//          this->orb_core ()->flushing_strategy ();
-  //      (void) flushing_strategy->schedule_output (this);
-      }
-  }
+  // Registration failures.
+  if (result != 0)
+    {
+// @bala, this line looks tricky, we expect that the caller put this transport
+// in the cache, what about this?
+      // Purge from the connection cache.
+      this->purge_entry ();
 
-  return 0;
+      // Close the handler.
+      this->connection_handler()->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - TAO_Transport::set_connected, "
+                    "could not register the transport "
+                    "in the reactor.\n"));
+    }
+
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

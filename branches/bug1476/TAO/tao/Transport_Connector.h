@@ -128,9 +128,6 @@ protected:
   virtual int check_connection_closure (TAO_Connection_Handler *svc_handler,
                                         int result);
 
-  /// Register a transport with the reactor
-  int register_transport (TAO_Transport *transport);
-
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
 

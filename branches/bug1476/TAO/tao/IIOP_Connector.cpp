@@ -198,6 +198,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // another thread pick up the completion and potentially deletes the
   // handler before we get a chance to increment the reference count.
 
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
   if (result == -1 && errno == EWOULDBLOCK)
     {
       if (TAO_debug_level > 2)
@@ -240,9 +242,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                         result);
     }
 
-  // Irrespective of success or failure, remove the extra #REFCOUNT#.
-  svc_handler->remove_reference ();
-
   // In case of errors.
   if (result == -1)
     {
@@ -262,7 +261,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_Transport *transport =
     svc_handler->transport ();
 
-  // At this point, the connection has be successfully connected.
+  // At this point, the connection has be successfully created connected or not.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
     {
@@ -294,34 +293,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
         }
 
       return 0;
-    }
-
-  if (transport->is_connected())
-    {
-      // If the wait strategy wants us to be registered with the reactor
-      // then we do so. If registeration is required and it succeeds,
-      // #REFCOUNT# becomes two.
-      retval = transport->wait_strategy ()->register_handler ();
-
-      // Registration failures.
-      if (retval != 0)
-        {
-          // Purge from the connection cache.
-          transport->purge_entry ();
-
-          // Close the handler.
-          svc_handler->close ();
-
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "could not register the new connection "
-                          "in the reactor\n"));
-            }
-
-          return 0;
-        }
     }
 
   return transport;

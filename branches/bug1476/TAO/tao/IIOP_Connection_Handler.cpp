@@ -147,7 +147,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   // Set that the transport now is connected
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->set_connected ((size_t) this->get_handle ());
+  this->transport ()->post_open ((size_t) this->get_handle ());
 
   return 0;
 }

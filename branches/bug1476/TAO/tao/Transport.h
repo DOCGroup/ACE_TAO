@@ -447,8 +447,8 @@ public:
   /// Is this transport really connected
   bool is_connected (void) const;
 
-  /// Set this transport as connected
-  int set_connected (size_t id);
+  /// Perform all the actions when this transport get opened
+  int post_open (size_t id);
 
   /// Get the connection handler for this transport
   TAO_Connection_Handler * connection_handler (void);

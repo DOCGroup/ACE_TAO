@@ -250,20 +250,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // return that, in case it is not connected we have to do several extra
   // things
   if (base_transport->is_connected())
-    {
-      if (base_transport->wait_strategy ()->is_registered() == 0)
-        {
-          // We have a transport that is not registered yet, so register it
-          // now
-          int retval = this->register_transport (base_transport);
-
-          if (retval != 0)
-            {
-              return 0;
-            }
-        }
       return base_transport;
-    }
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
@@ -322,49 +309,12 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     this->active_connect_strategy_->wait (base_transport,
                                           &zero);
 
-  if (base_transport->is_connected ())
-    {
-      // We now have a connection, register it
-      result = this->register_transport (base_transport);
-
-      if (result != 0)
-        {
-          return 0;
-        }
-    }
+// @@bala, check error?
 
   // Connection not ready yet, just use this base_transport, if
   // we need a connected one we will block later to make sure
   // it is connected
   return base_transport;
-}
-
-int
-TAO_Connector::register_transport(TAO_Transport *transport)
-{
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so. If registeration is required and it succeeds,
-  // #REFCOUNT# becomes two.
-  int result =
-    transport->wait_strategy ()->register_handler ();
-
-  // Registration failures.
-  if (result != 0)
-    {
-      // Purge from the connection cache.
-      transport->purge_entry ();
-
-      // Close the handler.
-      transport->connection_handler()->close_connection ();
-
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - TAO_Connector::register_transport, "
-                    "could not register the transport "
-                    "in the reactor.\n"));
-    }
-
-  return result;
 }
 
 int

@@ -1,3 +1,26 @@
+Thu Jul 29 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp}:
+          Renamed set_connected to post_open, we do much more then just
+          setting a property. When the transport is connected we register
+          ourselves with the reactor. In case of failure we close the
+          connection. The thing to check is whether it is safe to assume that
+          we are also in the transport cache
+
+        * tao/Transport_Connector.{h,cpp}:
+          Removed register_transport() because the transport register itselves
+          now. Also removed the calls to register_transport, we don't have to
+          register the transport as connector anymore, the transport does
+          that.
+
+        * tao/IIOP_Connector.cpp (make_connection):
+          Removed the registration of the transport with the reactor, see
+          above. Use a ACE_Event_Handler_var to make sure that we always do
+          a remove reference on the connection handler.
+
+        * tao/IIOP_Connection_Handler.cpp (open):
+          Call transport::post_open instead of set_connected
+
 Thu Jul 29 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (set_connected):
