@@ -717,7 +717,9 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER)
       || ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
     {
-      if (logger_key == 0)
+      // The SYSLOG backends (both NT and UNIX) can get along fine
+      // without the logger_key.
+      if (logger_key == 0 && ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
         status = -1;
       else
         {
