@@ -1,3 +1,13 @@
+Mon Feb 18 13:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/config-all.h:
+          Added ACE_NEW_NORETURN macro. This macro is the same as ACE_NEW
+          but doesn't do a return when an out of memory error occured so that
+          the caller can do extra handling.
+
+        * tests/New_fail_test.cpp:
+          Extended this test to test the new ACE_NEW_NORETURN macro.
+
 Mon Feb 18 01:45:07 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/compiler.bor:
