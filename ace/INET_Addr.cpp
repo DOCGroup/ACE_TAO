@@ -59,8 +59,8 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 
   return this->inet_addr_.sin_port == sap.inet_addr_.sin_port
       && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr,
-                       (void *) &sap.inet_addr_.sin_addr,
-                       sizeof (this->inet_addr_.sin_addr)) == 0;
+                         (void *) &sap.inet_addr_.sin_addr,
+                         sizeof (this->inet_addr_.sin_addr)) == 0;
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
