@@ -20,9 +20,9 @@
 #include "Event_Channel.i"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/Timeprobe.h"
-
 ACE_RCSID(Event, Event_Channel, "$Id$")
+
+#include "tao/Timeprobe.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -45,8 +45,6 @@ static const char *TAO_Event_Channel_Timeprobe_Description[] =
   "end push_source_type",
   "deliver to Supplier Module (thru Supplier Proxy)",
   "connected - priority requested",
-  "ES_Priority_Queue - start execute",
-  "ES_Priority_Queue - end execute",
   "Consumer_Name - priority requested",
   "Consumer_Name - priority obtained",
   "deliver event to consumer proxy",
@@ -74,8 +72,6 @@ enum
   TAO_EVENT_CHANNEL_END_PUSH_SOURCE_TYPE,
   TAO_EVENT_CHANNEL_DELIVER_TO_SUPPLIER_MODULE_THRU_SUPPLIER_PROXY,
   TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_REQUESTED,
-  TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE,
-  TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_END_EXECUTE,
   TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_REQUESTED,
   TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_OBTAINED,
   TAO_EVENT_CHANNEL_DELIVER_EVENT_TO_CONSUMER_PROXY,
@@ -229,7 +225,7 @@ public:
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export Flush_Queue_ACT : public ACE_ES_Timer_ACT
+class TAO_ORBSVCS_Export Flush_Queue_ACT : public ACE_Command_Base
 // = TITLE
 //    Flush Queue Asynchronous Completion Token
 //
@@ -243,7 +239,7 @@ public:
     request_ (request),
     dispatching_module_ (dispatching_module) { }
 
-  virtual void execute (void)
+  virtual int execute (void* arg = 0)
     {
       TAO_TRY
         {
@@ -258,6 +254,7 @@ public:
                       "Unknown exception..\n"));
         }
       TAO_ENDTRY;
+      return 0;
     }
 
   ACE_ES_Dispatch_Request *request_;
@@ -1511,7 +1508,7 @@ int
 ACE_ES_Correlation_Module::cancel_timeout (ACE_ES_Consumer_Rep_Timeout *consumer)
 {
   // Cancel the timer from the Priority Timer.
-  ACE_ES_Timer_ACT *act;
+  ACE_Command_Base *act;
   this->channel_->cancel_timer (consumer->preemption_priority (),
 				consumer->timer_id (),
 				act);
@@ -2112,16 +2109,17 @@ ACE_ES_Consumer_Rep::~ACE_ES_Consumer_Rep (void)
 {
 }
 
-void
-ACE_ES_Consumer_Rep::execute (void)
+int
+ACE_ES_Consumer_Rep::execute (void* arg)
 {
   ACE_ERROR ((LM_ERROR, "Warning!  ACE_ES_Consumer_Rep::execute called.\n"));
+  return -1;
 }
 
 // ************************************************************
 
-void
-ACE_ES_Consumer_Rep_Timeout::execute (void)
+int
+ACE_ES_Consumer_Rep_Timeout::execute (void* arg)
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_REP_TIMEOUT_EXECUTE);
   if (this->receiving_events ())
@@ -2133,8 +2131,11 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
                                                this->timeout_event_,
                                                __env);
       if (__env.exception () != 0)
-        ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ACE_ES_Consumer_Rep_Timeout::execute: "
+                           "unexpected exception.\n"), -1);
     }
+  return 0;
 }
 
 // ************************************************************
@@ -3233,31 +3234,6 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
         }
     }
   pub.length (sc);
-}
-
-// ************************************************************
-
-TAO_EC_Timeout_Handler::TAO_EC_Timeout_Handler (void)
-{
-}
-
-int
-TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
-					const void *vp)
-{
-  ACE_ES_Timer_ACT *act = (ACE_ES_Timer_ACT *) vp;
-
-  if (act == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "
-                       "received act == 0!!!.\n"), 0);
-
-  {
-    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
-
-    act->execute ();
-  }
-
-  return 0;
 }
 
 // ************************************************************

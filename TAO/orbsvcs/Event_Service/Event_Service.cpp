@@ -8,6 +8,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/Event_Channel.h"
 
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
@@ -21,10 +22,13 @@ int global_scheduler = 0;
 // Otherwise we just resolve the Scheduling Service using the Naming
 // Service (i.e. we assume there is a global scheduling service running.
 
+int reactive = 0;
+// If 1 we use the reactive EC.
+
 int
 parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:s:");
+  ACE_Get_Opt get_opt (argc, argv, "n:s:r");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -58,12 +62,17 @@ parse_args (int argc, char *argv [])
             }
           break;
 
+        case 'r':
+          reactive = 1;
+          break;
 	  
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-n service_name "
+                      "-s <global|local> "
+                      "-r "
                       "\n",
                       argv[0]));
           return -1;
@@ -143,8 +152,19 @@ int main (int argc, char *argv[])
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 
+      // We pick the right module factory according to the command
+      // line options
+      TAO_Default_Module_Factory default_module_factory;
+      TAO_Reactive_Module_Factory reactive_module_factory;
+
+      TAO_Module_Factory* module_factory = &default_module_factory;
+      if (reactive)
+        module_factory = &reactive_module_factory;
+
       // Register Event_Service with Naming Service.
-      ACE_EventChannel ec_impl;
+      ACE_EventChannel ec_impl (1,
+                                ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                module_factory);
 
       RtecEventChannelAdmin::EventChannel_var ec =
         ec_impl._this (TAO_TRY_ENV);

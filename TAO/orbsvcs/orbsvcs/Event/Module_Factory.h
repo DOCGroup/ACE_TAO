@@ -35,7 +35,7 @@ class ACE_ES_Dispatching_Base;
 class ACE_ES_Consumer_Module;
 class ACE_ES_Correlation_Module;
 class ACE_ES_Subscription_Module;
-class ACE_ES_Supplier_Modulel;
+class ACE_ES_Supplier_Module;
 class ACE_ES_Priority_Timer;
 class TAO_EC_Timer_Module;
 
