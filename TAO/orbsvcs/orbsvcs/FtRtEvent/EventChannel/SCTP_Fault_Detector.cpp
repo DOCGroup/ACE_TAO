@@ -69,14 +69,14 @@ inline void SCTP_Connector::set_heart_beat(int hb)
 }
 
 
-STCP_Fault_Detector::~STCP_Fault_Detector()
+SCTP_Fault_Detector::~SCTP_Fault_Detector()
 {
 }
 
 
-int STCP_Fault_Detector::parse_conf(int argc, char** argv)
+int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
 {
-  ACE_TRACE ("STCP_Fault_Detector::parse_conf");
+  ACE_TRACE ("SCTP_Fault_Detector::parse_conf");
 
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],

@@ -47,7 +47,6 @@ namespace FTRTEC {
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
-      ACE_NEW_RETURN(detector, STCP_Fault_Detector, -1);
       ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector)
 #else
       ACE_DEBUG ((LM_DEBUG,
