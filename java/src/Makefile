@@ -84,7 +84,11 @@ pkg_connection = \
 	AcceptStrategy \
 	ActivateStrategy \
 	CreationStrategy \
-	StrategyAcceptor
+	StrategyAcceptor \
+	Blob \
+	BlobHandler \
+	BlobReader \
+	BlobWriter
 
 connection:	os socksap svcconfig $(addsuffix .java,$(pkg_connection))
 	$(COMPILE.java)
