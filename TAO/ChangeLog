@@ -1,11 +1,30 @@
+Wed May  7 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+          Fixed incorrect $Id
+
+          Following changes are from Mark Drijver <mdrijver@remedy.nl>
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * docs/ec_options.html:
+          Added Rtec option ECConsumerValidateConnection. With this option
+          set the connection from Rtec to consumer is created on connect and
+          not on the first event push. See ec_options.html for the usage
+          and detailed reason of this option.
+
 Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Faults/middle.cpp:
 	* tests/Faults/ping.cpp:
-	* tests/Faults/ping_i.h: 
+	* tests/Faults/ping_i.h:
 	* tests/Faults/test_i.h: Fixed servant memory management
-	  problems. 
-
+	  problems.
 
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
