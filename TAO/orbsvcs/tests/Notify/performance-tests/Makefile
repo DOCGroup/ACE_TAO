@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	RedGreen \
-	Throughput
+	Throughput \
+        Filter
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

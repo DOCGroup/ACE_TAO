@@ -90,7 +90,7 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
   // Unregister from publication updates.
 
   // = Accessors
-  CosNotification::EventTypeSeq* obtain_offered_types(void);
+  CosNotification::EventTypeSeq* obtain_offered_types (void);
   // Obtain the publication list.
 
   CosNotification::EventTypeSeq* obtain_subscription_types (void);
@@ -114,6 +114,8 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
                       TAO_ENV_ARG_DECL);
   // Delivers the event to listeners subscribed for <event>
   // <event_source> is the <event> source to the Event Manager.
+
+  void update_task_admins (void);
 
 protected:
   // = Event dispatching methods.

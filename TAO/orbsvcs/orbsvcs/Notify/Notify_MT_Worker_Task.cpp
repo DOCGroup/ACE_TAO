@@ -4,6 +4,8 @@
 #include "Notify_Command.h"
 #include "Notify_AdminProperties.h"
 #include "Notify_Buffering_Strategy.h"
+#include "Notify_QoSAdmin_i.h"
+#include "Notify_Extensions.h"
 
 #include "tao/debug.h"
 
@@ -25,26 +27,31 @@ TAO_Notify_MT_Worker_Task::~TAO_Notify_MT_Worker_Task ()
 }
 
 int
-TAO_Notify_MT_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_properties)
+TAO_Notify_MT_Worker_Task::init_task (
+                   TAO_Notify_AdminProperties* const admin_properties,
+                   TAO_Notify_QoSAdmin_i* const qos_properties)
 {
   // Store the admin properties...
-
   this->queue_length_ = admin_properties->queue_length ();
 
   // Make us an Active Object.
-  if (this->activate (flags_, n_threads_, force_active_, priority_) == -1)
+  if (this->activate (this->flags_, this->n_threads_, this->force_active_, this->priority_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("activate failed")), -1);
 
   // Create the dispatching strategy.
-  this->buffering_strategy_ =
-    new TAO_Notify_Buffering_Strategy (admin_properties->queue_length ());
+  ACE_NEW_RETURN (this->buffering_strategy_,
+                  TAO_Notify_Buffering_Strategy (
+                            admin_properties->queue_length ()),
+                  -1);
 
-  this->buffering_strategy_->max_queue_length (admin_properties->max_queue_length ());
+  // Set the admin properties
+  this->update_admin (*admin_properties);
 
-  // temporary
-  this->buffering_strategy_->order_policy (CosNotification::PriorityOrder);
+  // Set the qos policies
+  this->update_qos (*qos_properties);
+
   return 0;
 }
 
@@ -71,7 +78,7 @@ TAO_Notify_MT_Worker_Task::close (u_long)
   // We can not wait for ourselves to quit
   if (this->thr_mgr ())
     {
-      // call this->thr_mgr()->task() in the main thread will assert()
+      // call this->thr_mgr ()->task () in the main thread will assert ()
       // fail in ACE_Thread_Manager::thread_desc_self (void) so I get
       // task this way.
       ACE_Thread_Descriptor *mydesc = this->thr_mgr ()->thread_descriptor (ACE_OS::thr_self ());
@@ -92,6 +99,64 @@ TAO_Notify_MT_Worker_Task::process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DEC
   return 0;
 }
 
+void
+TAO_Notify_MT_Worker_Task::update_admin (TAO_Notify_AdminProperties& admin)
+{
+  this->buffering_strategy_->max_queue_length (admin.max_queue_length ());
+}
+
+void
+TAO_Notify_MT_Worker_Task::update_qos (TAO_Notify_QoSAdmin_i& qos_admin)
+{
+  // Only set values on the buffering_strategy_ that have actually been
+  // set on the qos_admin that is passed in.  This way, values on the
+  // buffering_strategy_ are preserved when the qos parameters are not
+  // set on say the event channel or the supplier proxy.
+  ACE_TRY_NEW_ENV
+    {
+      CosNotification::QoSProperties_var qos = qos_admin.get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      for (CORBA::ULong index = 0; index < qos->length (); ++index)
+        {
+          if (ACE_OS::strcmp (qos[index].name,
+                              CosNotification::OrderPolicy) == 0)
+            {
+              CORBA::Short value;
+              qos[index].value >>= value;
+              this->buffering_strategy_->order_policy (value);
+            }
+          else if (ACE_OS::strcmp (qos[index].name,
+                                   CosNotification::DiscardPolicy) == 0)
+            {
+              CORBA::Short value;
+              qos[index].value >>= value;
+              this->buffering_strategy_->discard_policy (value);
+            }
+          else if (ACE_OS::strcmp (qos[index].name,
+                                   CosNotification::MaxEventsPerConsumer) == 0)
+            {
+              CORBA::Long value;
+              qos[index].value >>= value;
+              this->buffering_strategy_->max_events_per_consumer (value);
+            }
+          else if (ACE_OS::strcmp (qos[index].name,
+                                   TAO_Notify_Extensions::BlockingPolicy) == 0)
+            {
+              TimeBase::TimeT value;
+              qos[index].value >>= value;
+              this->buffering_strategy_->blocking_timeout (value);
+            }
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "EC (%P|%t) exception in update_qos");
+    }
+  ACE_ENDTRY;
+}
+
 int
 TAO_Notify_MT_Worker_Task::svc (void)
 {
@@ -104,9 +169,9 @@ TAO_Notify_MT_Worker_Task::svc (void)
           if (this->getq (mb) == -1)
             if (ACE_OS::last_error () == ESHUTDOWN)
               return 0;
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) getq error in Dispatching Queue\n"));
+            else
+              ACE_ERROR ((LM_ERROR,
+                          "EC (%P|%t) getq error in Dispatching Queue\n"));
 
           // Decrement the global event count.
           (*this->queue_length_)--;
@@ -114,16 +179,15 @@ TAO_Notify_MT_Worker_Task::svc (void)
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "removing from queue\n"));
           TAO_Notify_Command *command =
-            ACE_dynamic_cast(TAO_Notify_Command*, mb);
+            ACE_dynamic_cast (TAO_Notify_Command*, mb);
 
-          if (command == 0)
+          int result = 0;
+
+          if (command != 0)
             {
-              ACE_Message_Block::release (mb);
-              continue;
+              result = command->execute (TAO_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
-
-          int result = command->execute (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_Message_Block::release (mb);
 

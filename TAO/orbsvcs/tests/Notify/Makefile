@@ -10,7 +10,15 @@
 
 DIRS  =	lib \
 	Basic \
-	performance-tests
+	performance-tests \
+        Blocking \
+        Discarding \
+        MT_Dispatching \
+        Ordering \
+        Structured_Filter \
+        Structured_Multi_Filter \
+        Sequence_Multi_Filter \
+        Sequence_Multi_ETCL_Filter
 
 
 ifndef TAO_ROOT

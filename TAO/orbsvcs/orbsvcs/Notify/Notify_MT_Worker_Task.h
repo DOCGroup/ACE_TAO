@@ -32,6 +32,7 @@
 
 class TAO_Notify_Event_Processor;
 class TAO_Notify_Buffering_Strategy;
+class TAO_Notify_QoSAdmin_i;
 
 class TAO_Notify_Export TAO_Notify_MT_Worker_Task : public TAO_Notify_Worker_Task, public ACE_Task<ACE_SYNCH>
 {
@@ -53,7 +54,8 @@ public:
   ~TAO_Notify_MT_Worker_Task ();
   // Destructor.
 
-  virtual int init_task (TAO_Notify_AdminProperties* const admin_properties);
+  virtual int init_task (TAO_Notify_AdminProperties* const admin_properties,
+                         TAO_Notify_QoSAdmin_i* const qos_properties);
   // Init the task
 
   virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
@@ -61,6 +63,9 @@ public:
 
   virtual int process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
   // Process the command.
+
+  virtual void update_admin (TAO_Notify_AdminProperties& admin);
+  virtual void update_qos (TAO_Notify_QoSAdmin_i& qos_admin);
 
  protected:
   virtual int svc (void);
@@ -72,7 +77,7 @@ public:
   TAO_Notify_Buffering_Strategy* buffering_strategy_;
   // The buffering strategy to use.
 
-  TAO_Notify_Property_Long* queue_length_;
+  TAO_Notify_Signal_Property_Long* queue_length_;
   // We need to decrement the event_count_ everytime we dequeue a command
   // object.
 

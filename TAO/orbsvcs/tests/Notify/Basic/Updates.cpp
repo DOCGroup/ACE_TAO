@@ -86,44 +86,46 @@ Updates::~Updates ()
 {
 }
 
-void
+int
 Updates::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
   Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Create all participents ...
   this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   consumer_ = new Update_StructuredPushConsumer (this);
   consumer_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   consumer_->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   supplier_ = new Update_StructuredPushSupplier (this);
   supplier_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   supplier_->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int

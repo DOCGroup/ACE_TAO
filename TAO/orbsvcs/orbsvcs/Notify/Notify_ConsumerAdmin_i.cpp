@@ -59,7 +59,7 @@ TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
    delete this->event_listener_list_;
 
    this->event_channel_->consumer_admin_destroyed (this->my_id_);
-   event_channel_->_remove_ref ();
+   this->event_channel_->_remove_ref ();
 
    delete this->dispatching_task_;
    delete this->filter_eval_task_;
@@ -197,9 +197,12 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
   TAO_Notify_AdminProperties* const admin_properties =
     this->event_manager_->admin_properties ();
 
-  // Init the tasks
-  this->dispatching_task_->init_task (admin_properties);
-  this->filter_eval_task_->init_task (admin_properties);
+  // Init the tasks, allowing them to update values based on
+  // the admin and qos properties.
+  this->dispatching_task_->init_task (admin_properties,
+                                      &(this->qos_admin_));
+  this->filter_eval_task_->init_task (admin_properties,
+                                      &(this->qos_admin_));
 
   // Initially we set up things so that all listeners are subscribed for
   // all the events so that things "work" even if we don't twiddle with
@@ -535,6 +538,17 @@ TAO_Notify_ConsumerAdmin_i::set_qos (const CosNotification::QoSProperties & qos 
                    ))
 {
   this->qos_admin_.set_qos (qos TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Then update our task's qos
+  if (this->dispatching_task_ != 0)
+    {
+      this->dispatching_task_->update_qos (this->qos_admin_);
+    }
+  if (this->filter_eval_task_ != 0)
+    {
+      this->filter_eval_task_->update_qos (this->qos_admin_);
+    }
 }
 
 void

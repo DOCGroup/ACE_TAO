@@ -28,6 +28,7 @@
 #include "Notify_AdminProperties.h"
 
 #include "ace/Message_Queue.h"
+#include "ace/Synch.h"
 
 class TAO_Notify_Command;
 
@@ -41,7 +42,7 @@ class TAO_Notify_Export TAO_Notify_Buffering_Strategy
   //   policies specified in the CosNotification.idl
   //
 public:
-  TAO_Notify_Buffering_Strategy (TAO_Notify_Property_Long* const queue_length);
+  TAO_Notify_Buffering_Strategy (TAO_Notify_Signal_Property_Long* const queue_length);
 
   virtual ~TAO_Notify_Buffering_Strategy ();
 
@@ -51,24 +52,41 @@ public:
   void max_queue_length (CORBA::Long max_queue_length);
   // Set the max. queue length.
 
+  void max_events_per_consumer (CORBA::Long max_events_per_consumer);
+  // Set the max. events per consumer.
+
   void order_policy (CORBA::Short order_policy);
   // Set the order policy.
 
   void discard_policy (CORBA::Short discard_policy);
   // Set the discard policy.
 
+  void blocking_timeout (TimeBase::TimeT timeout);
+  // Set the blocking timeout.
+
 protected:
-  TAO_Notify_Property_Long* const queue_length_;
+  TAO_Notify_Signal_Property_Long* const queue_length_;
   // The overall queue length.
 
   CORBA::Long max_queue_length_;
   // Discarding policies kicks in when the <queue_length_> exceeds <max_queue_length_>
+
+  CORBA::Long max_events_per_consumer_;
+  // Discarding policies kicks in when the <queue_length_> exceeds <max_events_per_consumer_>
 
   CORBA::Short order_policy_;
   // Order of events in internal buffers.
 
   CORBA::Short discard_policy_;
   // Policy to discard when buffers are full.
+
+  CORBA::Boolean use_max_queue_;
+  // Should we use the max queue or max events.
+
+  TimeBase::TimeT blocking_timeout_;
+  CORBA::Boolean use_blocking_timeout_;
+  // The blocking timeout will be used in place of discarding
+  // if use_blocking_timeout_ is set.  This is a TAO specific extension.
 };
 
 #include "ace/post.h"

@@ -27,9 +27,11 @@
 
 #include "Notify_Listeners.h"
 #include "notify_export.h"
-#include "ace/Atomic_Op.h"
+#include "Notify_Signal_Property_T.h"
+
 
 typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX,CORBA::Long> TAO_Notify_Property_Long;
+typedef TAO_Notify_Signal_Property <TAO_SYNCH_MUTEX,CORBA::Long> TAO_Notify_Signal_Property_Long;
 
 class TAO_Notify_Export TAO_Notify_AdminProperties
 {
@@ -60,12 +62,13 @@ public:
   ));
 
   // = Accessors
-  CORBA::Long max_queue_length (void);
-  CORBA::Long max_consumers (void);
-  CORBA::Long max_suppliers (void);
-  CORBA::Boolean reject_new_events (void);
+  // There was no reason for these not to be const
+  CORBA::Long max_queue_length (void) const;
+  CORBA::Long max_consumers (void) const;
+  CORBA::Long max_suppliers (void) const;
+  CORBA::Boolean reject_new_events (void) const;
 
-  TAO_Notify_Property_Long* queue_length (void);
+  TAO_Notify_Signal_Property_Long* queue_length (void);
   TAO_Notify_Property_Long* consumers (void);
   TAO_Notify_Property_Long* suppliers (void);
 
@@ -97,7 +100,7 @@ protected:
   // Reject any new event.
 
   //= Variables
-  TAO_Notify_Property_Long queue_length_;
+  TAO_Notify_Signal_Property_Long queue_length_;
   // This is used to count the queue length across all buffers in the Notify Service
   // to enforce the "MaxQueueLength" property.
 

@@ -29,7 +29,7 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
    default_id_ (0),
    event_listener_list_ (0)
 {
-  channel_factory_->_add_ref ();
+  this->channel_factory_->_add_ref ();
 }
 
 // Implementation skeleton destructor
@@ -44,7 +44,7 @@ TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
   delete this->event_listener_list_;
 
   this->channel_factory_->event_channel_destroyed (this->channel_id_);
-  channel_factory_->_remove_ref ();
+  this->channel_factory_->_remove_ref ();
 
   delete event_manager_objects_factory_;
 }
@@ -65,14 +65,16 @@ TAO_Notify_EventChannel_i::init (CosNotifyChannelAdmin::ChannelID channel_id, co
     this->event_manager_objects_factory_->create_event_manager (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_manager_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // try to set initial qos params
+  // Set these before initializing the event manger.
   this->set_qos (initial_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  this->event_manager_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // try to set initial admin params
+  // This must be set after initializing the event manager
+  // since it is the one that owns the admin properties.
   this->set_admin (initial_admin TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -182,6 +184,12 @@ TAO_Notify_EventChannel_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
 
   this->poa_factory_->destroy_POA (this->SA_POA_.in ()
                                    TAO_ENV_ARG_PARAMETER);
+}
+
+const TAO_Notify_QoSAdmin_i&
+TAO_Notify_EventChannel_i::qos_admin (void) const
+{
+  return this->qos_admin_;
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
@@ -388,6 +396,9 @@ TAO_Notify_EventChannel_i::set_admin (const CosNotification::AdminProperties & a
                    ))
 {
   this->event_manager_->admin_properties ()->set_admin (admin TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->event_manager_->update_task_admins ();
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr

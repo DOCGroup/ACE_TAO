@@ -75,6 +75,7 @@ Throughput_StructuredPushConsumer::push_structured_event (const CosNotification:
   if (this->push_count_%1000 == 0)
     ACE_DEBUG ((LM_DEBUG,"(%P)(%t) event count = %d\n", this->push_count_));
 
+
   if (push_count_ == test_client_->perconsumer_count_)
   {
     ACE_DEBUG ((LM_DEBUG, "(%t)expected count reached\n"));
@@ -200,24 +201,23 @@ Notify_Throughput::~Notify_Throughput ()
   delete payload_;
 }
 
-void
-Notify_Throughput::init (int argc, char* argv []
-                         TAO_ENV_ARG_DECL)
+int
+Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
   Notify_Test_Client::init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =
         orb_->resolve_initial_references ("ORBPolicyManager"
                                          TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (manager_object.in ()
                                        TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
 
       CORBA::Any sync_scope;
       sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -228,11 +228,11 @@ Notify_Throughput::init (int argc, char* argv []
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             sync_scope
                             TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
       policy_manager->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
                                             TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "CORBA Messaging disabled in this configuration,"
@@ -247,19 +247,19 @@ Notify_Throughput::init (int argc, char* argv []
                 "Cannot activate client threads\n"));
   // Create all participents ...
   this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -274,10 +274,11 @@ Notify_Throughput::init (int argc, char* argv []
     {
       consumers_[i] = new Throughput_StructuredPushConsumer (this);
       consumers_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
+
       consumers_[i]->connect (this->consumer_admin_.in ()
                               TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
     }
 
   for (i = 0; i < this->supplier_count_; ++i)
@@ -286,10 +287,10 @@ Notify_Throughput::init (int argc, char* argv []
       suppliers_[i]->
         TAO_Notify_StructuredPushSupplier::init (root_poa_.in ()
                                                  TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
       suppliers_[i]->connect (this->supplier_admin_.in ()
                               TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
     }
 
   // ----
@@ -305,7 +306,9 @@ Notify_Throughput::init (int argc, char* argv []
 
   this->consumer_admin_->subscription_change (added, removed
                                               TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int

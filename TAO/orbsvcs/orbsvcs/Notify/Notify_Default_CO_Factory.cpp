@@ -63,6 +63,24 @@ TAO_Notify_Default_CO_Factory::create_consumer_admin (TAO_Notify_EventChannel_i*
   ACE_NEW_THROW_EX (consumer_admin_i,
                     TAO_Notify_ConsumerAdmin_i (event_channel),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the event channels qos to the consumer
+      CosNotification::QoSProperties_var qos =
+                           event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      consumer_admin_i->set_qos ((CosNotification::QoSProperties &)qos
+                                 TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate event channel qos\n");
+    }
+  ACE_ENDTRY;
+
   return consumer_admin_i;
 }
 
@@ -75,6 +93,24 @@ TAO_Notify_Default_CO_Factory::create_supplier_admin (TAO_Notify_EventChannel_i*
   ACE_NEW_THROW_EX (supplier_admin_i,
                     TAO_Notify_SupplierAdmin_i (event_channel),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the event channels qos to the supplier
+      CosNotification::QoSProperties_var qos =
+                           event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      supplier_admin_i->set_qos ((CosNotification::QoSProperties &)qos
+                                 TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate event channel qos\n");
+    }
+  ACE_ENDTRY;
+
   return supplier_admin_i;
 }
 
@@ -97,6 +133,23 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushsupplier (TAO_Notify_Cons
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_StructuredProxyPushSupplier_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the supplier
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 
@@ -107,6 +160,23 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushsupplier (TAO_Notify_Consume
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_SequenceProxyPushSupplier_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the supplier
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 
@@ -117,6 +187,23 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushsupplier (TAO_Notify_ConsumerAdm
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_ProxyPushSupplier_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the supplier
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 
@@ -128,6 +215,23 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushconsumer (TAO_Notify_Supp
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_StructuredProxyPushConsumer_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the consumer
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 
@@ -138,6 +242,23 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushconsumer (TAO_Notify_SupplierAdm
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_ProxyPushConsumer_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the consumer
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 
@@ -148,6 +269,23 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushconsumer (TAO_Notify_Supplie
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_SequenceProxyPushConsumer_i (parent),
                     CORBA::NO_MEMORY ());
+  ACE_TRY
+    {
+      // Propagate the parent qos to the consumer
+      CosNotification::QoSProperties_var qos =
+                           parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      proxy->set_qos ((CosNotification::QoSProperties &)qos TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to propagate parent qos\n");
+    }
+  ACE_ENDTRY;
+
   return proxy;
 }
 

@@ -47,7 +47,7 @@ class TAO_Notify_Export TAO_Notify_Filter_i : public POA_CosNotifyFilter::Filter
 
 public:
   //Constructor
-  TAO_Notify_Filter_i (void);
+  TAO_Notify_Filter_i (const char* constraint_grammar);
 
   //Destructor
   virtual ~TAO_Notify_Filter_i (void);
@@ -166,9 +166,9 @@ virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (
 
 private:
   void add_constraints_i (
-    const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
-    TAO_ENV_ARG_DECL
-  )
+      const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
+      TAO_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosNotifyFilter::InvalidConstraint
@@ -201,9 +201,10 @@ private:
   CONSTRAINT_EXPR_LIST_ITER;
 
   typedef ACE_Hash_Map_Entry <CosNotifyFilter::ConstraintID,
-                              ACE_NESTED_CLASS (TAO_Notify_Filter_i, 
+                              ACE_NESTED_CLASS (TAO_Notify_Filter_i,
                                                 Notify_Constraint_Expr*)>
   CONSTRAINT_EXPR_ENTRY;
+  CORBA::String_var constraint_grammar_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

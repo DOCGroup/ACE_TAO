@@ -42,7 +42,7 @@ public:
   // Destructor
 
   // = match operation on all the filters
-  CORBA::Boolean match (const TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+  CORBA::Boolean match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData

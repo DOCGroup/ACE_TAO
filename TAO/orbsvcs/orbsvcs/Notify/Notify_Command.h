@@ -30,6 +30,10 @@
 #include "tao/corba.h"
 #include "notify_export.h"
 
+#if !defined (TAO_NOTIFY_COMMAND_PRIORITY_BASE)
+#define TAO_NOTIFY_COMMAND_PRIORITY_BASE 32768
+#endif /* TAO_NOTIFY_COMMAND_PRIORITY_BASE */
+
 class TAO_Notify_Event_Processor;
 class TAO_Notify_Event;
 
@@ -48,6 +52,8 @@ class TAO_Notify_Export TAO_Notify_Command : public ACE_Message_Block
 
   virtual int execute (TAO_ENV_SINGLE_ARG_DECL) = 0;
   // Command callback
+
+  virtual CORBA::Short priority (void) const;
 
 protected:
   // = Data Members

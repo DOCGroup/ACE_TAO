@@ -10,6 +10,7 @@
 #include "Notify_Factory.h"
 #include "Notify_Listeners.h"
 #include "Notify_Event_Manager.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Notify, Notify_Event_Processor, "$Id$")
 
@@ -18,7 +19,7 @@ TAO_Notify_Event_Processor::TAO_Notify_Event_Processor (TAO_Notify_Event_Manager
    lookup_task_ (0),
    emo_factory_ (0)
 {
-  this->emo_factory_ = event_manager_->resource_factory ();
+  this->emo_factory_ = this->event_manager_->resource_factory ();
 }
 
 TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
@@ -27,7 +28,8 @@ TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
 }
 
 void
-TAO_Notify_Event_Processor::init (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Processor::init (TAO_Notify_QoSAdmin_i* qos_properties
+                                  TAO_ENV_ARG_DECL)
 {
   this->lookup_task_ = this->emo_factory_->create_lookup_task (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -36,7 +38,8 @@ TAO_Notify_Event_Processor::init (TAO_ENV_SINGLE_ARG_DECL)
   TAO_Notify_AdminProperties* const admin_properties =
     this->event_manager_->admin_properties ();
 
-  this->lookup_task_->init_task (admin_properties);
+  this->lookup_task_->init_task (admin_properties,
+                                 qos_properties);
 }
 
 void
@@ -56,6 +59,10 @@ TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event,
   // allocation, that way the single threaded case works just fine.
   TAO_Notify_Source_Filter_Eval_Command* mb =
     new TAO_Notify_Source_Filter_Eval_Command (this, event, event_source);
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "Evaluating listener filter\n"));
 
   event_source->filter_eval_task ()->process_event (mb TAO_ENV_ARG_PARAMETER);
 }

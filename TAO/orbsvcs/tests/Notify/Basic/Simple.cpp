@@ -49,50 +49,50 @@ Simple_Test::~Simple_Test ()
 {
 }
 
-void
+int
 Simple_Test::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
   Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Create all participents ...
   this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   consumer_ = new Event_AnyPushConsumer (this);
   consumer_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
   consumer_->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   Event_AnyPushConsumer* consumer2;
   consumer2 = new Event_AnyPushConsumer (this);
   consumer2->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
   consumer2->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   supplier_ = new Event_AnyPushSupplier (this);
   supplier_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   supplier_->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Setup the CA to receive all type of events
   CosNotification::EventTypeSeq added(1);
@@ -104,7 +104,9 @@ Simple_Test::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
   added[0].type_name = CORBA::string_dup ("*");
 
   this->consumer_admin_->subscription_change (added, removed TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int

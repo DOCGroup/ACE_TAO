@@ -1463,11 +1463,11 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated:Wed Feb 14 15:14:15 CST 2001 </h4>
+<h4> Last updated:Mon Dec 20 06:38:42 CDT 2001 </h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>
 Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
-The implementation released in TAO 1.1.12 consists of the following
+The implementation released in TAO 1.2.2 consists of the following
 (see the associated README's for more information):
 <ul>
         <li>
@@ -1502,7 +1502,8 @@ The implementation released in TAO 1.1.12 consists of the following
 <ul>
   <li>
       The following QoS properties are supported - per-message event
-      priority,order policy and discard policy.
+      priority,order policy, discard policy, maximum batch size,
+      pacing interval, and max events per consumer.
   </li>
 
   <li>
@@ -1521,10 +1522,8 @@ The implementation released in TAO 1.1.12 consists of the following
   </li>
 
   <li>
-      For now, the SequenceProxyPushSupplier does not <tt>push</tt> to
-      consumers.
-      This will be done once we support the <tt>Maximum Batch Size</tt> QoS
-      property.
+      The SequenceProxyPushSupplier now pushes sequences of structured
+      events to SequenceProxyPushConsumers.
   </li>
 
   <li>
@@ -1602,19 +1601,12 @@ The TODO list runs like this:
 
   <li>
       Implement the QoS properties - Expiry times, Earliest
-      delivery times, maximun events per consumer, deadline based ordering,
-      maximum batch size, pacing interval.
+      delivery times.
   </li>
 
   <li>
       Filters:
       <ul>
-        <li>
-            Intergrate the parser engine for the <tt>Extended TCL</tt>
-            grammer in <tt> orbsvcs/orbsvcs/ETCL </tt> with Notify and
-            remove dependency on the <tt>Trader </tt>.
-        </li>
-
         <li>
             Implement CosNotifyFilter::MappingFilter.
         </li>
@@ -1656,11 +1648,11 @@ For up-to-date information, see the project web site
 Implemented Features:
 <UL>
   <LI>
-	<P>
+        <P>
     IIOP over SSL integration via TAO's
     <A HREF="http://doc.ece.uci.edu/TAO/Security/SSLIOP.html">SSLIOP pluggable protocol</A>.
     <UL>
-	  <P>
+          <P>
       <LI>
         Added an <CODE>SSLIOP::Current</CODE> implementation that can
         be used to obtain the SSL session state for the current
@@ -1678,23 +1670,23 @@ Implemented Features:
         Implemented <CODE>SecurityLevel1</CODE> for the SSLIOP
         security mechanism.
       </LI>
-	  <LI>
-	    The <CODE>Security::QOPPolicy</CODE> policy has been
-	    implemented.  This policy is used to set the desired
-	    invocation Quality-of-Protection (QoP).  It can be created
-	    using <CODE>ORB::create_policy()</CODE>, and used in
-	    conjunction with the standard policy manipulation CORBA
-	    features (e.g. <CODE>PolicyManager</CODE>,
-	    <CODE>PolicyCurrent</CODE>), meaning that this policy can
-	    be set on a per-ORB, per-thread or per-object basis.
-	    <P>
-	      This policy makes it possible to, for example, make both secure
-	      and insecure invocations within the same client process.
-	  </LI>
-	  <LI>
-	    TAO's SSLIOP pluggable protocol implementation is now
-	    thread-safe.
-	  </LI>
+          <LI>
+            The <CODE>Security::QOPPolicy</CODE> policy has been
+            implemented.  This policy is used to set the desired
+            invocation Quality-of-Protection (QoP).  It can be created
+            using <CODE>ORB::create_policy()</CODE>, and used in
+            conjunction with the standard policy manipulation CORBA
+            features (e.g. <CODE>PolicyManager</CODE>,
+            <CODE>PolicyCurrent</CODE>), meaning that this policy can
+            be set on a per-ORB, per-thread or per-object basis.
+            <P>
+              This policy makes it possible to, for example, make both secure
+              and insecure invocations within the same client process.
+          </LI>
+          <LI>
+            TAO's SSLIOP pluggable protocol implementation is now
+            thread-safe.
+          </LI>
     </UL>
   </LI>
 </UL>
@@ -1721,14 +1713,14 @@ Schedule:
 <UL>
 
       <LI>
-	<FONT COLOR=BLUE>April 2002</FONT><BR>
-	<UL>
-	  <LI>
-	    Begin implementation of the Common Secure Interoperability
-	    version 2 (CSIv2) protocol/specification.  Needed for more
-	    advanced features, such as delegation.
-	  </LI>
-	</UL>
+        <FONT COLOR=BLUE>April 2002</FONT><BR>
+        <UL>
+          <LI>
+            Begin implementation of the Common Secure Interoperability
+            version 2 (CSIv2) protocol/specification.  Needed for more
+            advanced features, such as delegation.
+          </LI>
+        </UL>
       </LI>
 
   <LI>
@@ -1774,7 +1766,7 @@ Schedule:
     <UL>
       <LI>
         Begin implementation of a <CODE>DomainManager</CODE> and/or
-	<I>Domain Membership</I> specification for TAO.
+        <I>Domain Membership</I> specification for TAO.
         This is needed to support security domains.
       </LI>
     </UL>
