@@ -2261,8 +2261,6 @@ ACE_POSIX_SIG_Asynch_Accept::~ACE_POSIX_SIG_Asynch_Accept (void)
 void*
 ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::thread_function called\n"));
-
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor* reactor = (ACE_Reactor *) arg_reactor;
   if (reactor == 0)
@@ -2271,18 +2269,11 @@ ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
   // For this reactor, this thread is the owner.
   reactor->owner (ACE_OS::thr_self ());
 
-  // Handle events.
+  // Handle events. Wait for any connection events. 
   int result = 0;
   while (result != -1)
-    {
-      result = reactor->handle_events ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "ACE_Asynch_Accept::Thread_Function : handle_events : result = [%d]\n",
-                  result));
-    }
-
-  ACE_DEBUG ((LM_DEBUG, "Exiting ACE_Asynch_Accept::thread_function \n"));
-
+    result = reactor->handle_events ();
+  
   return 0;
 }
 
