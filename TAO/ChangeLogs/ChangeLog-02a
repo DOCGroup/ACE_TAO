@@ -1,3 +1,8 @@
+Fri Jan 28 12:51:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Leader_Followers: Minor changes to make it work with
+	  different compilers.
+
 Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Leader_Follower:
