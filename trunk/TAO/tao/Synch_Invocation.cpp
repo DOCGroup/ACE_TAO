@@ -529,6 +529,31 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
+    {
+      // Start the special case for FTCORBA.
+      /**
+       * There has been a unanimous view that this is not the right way
+       * to do things. But a need to be compliant is forcing us into
+       * this.
+       */
+      if ((ACE_OS_String::strcmp (type_id.in (),
+                                  "TRANSIENT") == 0) &&
+          (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
+        {
+         Invocation_Status s =
+           this->orb_core ()->service_raise_transient_failure (
+             this->details_.request_service_context ().service_info (),
+             this->resolver_.profile ()
+             ACE_ENV_ARG_PARAMETER);
+
+         ACE_CHECK;
+
+         if (s == TAO_INVOKE_RESTART)
+           return s;
+         // else fall through and raise an exception.
+        }
+    }
+
     CORBA::SystemException *ex =
       TAO_Exceptions::create_system_exception (type_id.in ()
                                                ACE_ENV_ARG_PARAMETER);
