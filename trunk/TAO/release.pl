@@ -60,6 +60,7 @@ close (CHANGELOG);
 close (CHANGELOGOUT);
 
 # Morph the version number
+chop $version_number;
 ($version_tag = $MODNAME."-".$version_number) =~ s/\./_/g;
 
 $CVSCOM = 'cvs';
