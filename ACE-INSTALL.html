@@ -844,8 +844,12 @@ the STL fixes.
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
-      By default ACE always uses DLL version of run-time libraries
-      regardless you are building  DLL or static version of ACE.  If
+      By default, all ACE examples use DLL version of run-time libraries
+      regardless you are building  DLL or static version of ACE.  You
+      can still choose to link ACE statically or dynamically
+      regardless of run-time libraries.  The reason of choosing to
+      link run-time library dynamically is almost every NT box has
+      these library installed and to save disk space. If
       you prefer to link MFC as a static library into ACE, you can do
       this by defining <code>ACE_USES_STATIC_MFC</code> in your
       <code>config.h</code> file.  If you insist on linking everything
