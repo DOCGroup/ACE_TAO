@@ -1,3 +1,57 @@
+Sat Mar 20 02:03:53 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acinclude.m4:
+	
+          Split acinclude.m4 into several M4 macro files and moved those
+	  files into the new `m4' subdirectory, includind acinclude.m4.
+	
+	* m4/acinclude.m4:
+	* m4/compiler.m4:
+	* m4/subsets.m4:
+	* m4/threads.m4:
+	
+	  Added these M4 files.
+
+	* bin/autogen:
+	
+	  Script to regenerate auto{conf,make} and libtool related files.
+	  Additional functionality may be added to this script in the
+	  future.
+
+	* Makefile.am:
+	* ace/Makefile.am:
+	* apps/gperf/src/Makefile.am:
+	* apps/gperf/tests/Makefile.am:
+	* apps/gperf/Makefile.am:
+	* apps/Makefile.am:
+	* netsvcs/clients/Logger/Makefile.am:
+	* netsvcs/clients/Naming/Client/Makefile.am:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+	* netsvcs/clients/Naming/Makefile.am:
+	* netsvcs/clients/Tokens/collection/Makefile.am:
+	* netsvcs/clients/Tokens/deadlock/Makefile.am:
+	* netsvcs/clients/Tokens/invariant/Makefile.am:
+	* netsvcs/clients/Tokens/manual/Makefile.am:
+	* netsvcs/clients/Tokens/mutex/Makefile.am:
+	* netsvcs/clients/Tokens/rw_lock/Makefile.am:
+	* netsvcs/clients/Tokens/Makefile.am:
+	* netsvcs/clients/Makefile.am:
+	* netsvcs/lib/Makefile.am:
+	* netsvcs/servers/Makefile.am:
+	* netsvcs/Makefile.am:
+	* man/man3/Makefile.am:   ( NOT ADDED YET )
+	* man/Makefile.am:        ( NOT ADDED YET )
+	* tests/log/Makefile.am:
+	* tests/Makefile.am:
+
+	Added Automake makefile templates for ACE.
+
+	* configure.in:
+	* m4/subsets.m4:
+	* ace/Makefile.am:
+	
+	Added support for David's ACE subsetting work.
+
 Fri Mar 19 23:36:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Changed
