@@ -344,8 +344,8 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 }
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads,
-			    Timer_Queue *tq,
-			    int used_with_reactor_event_loop,
+                            Timer_Queue *tq,
+                            int used_with_reactor_event_loop,
                             POSIX_COMPLETION_STRATEGY completion_strategy)
   :
 #if defined (ACE_HAS_AIO_CALLS)
