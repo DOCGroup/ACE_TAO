@@ -45,11 +45,16 @@ Workspace Declarations
 workspace(workspace_name) {
   file.mpc
   directory
+  relative/path/to/another/mwc_file
 }
 
-Workspaces can contain individual mpc files or directories.  In the case of
-a directory, the workspace creator will traverse it and use any mpc files
-that are found.  The workspace files should have an 'mwc' extension.
+Workspaces can contain individual mpc files, directories or other mwc files.
+In the case of a directory, the workspace creator will traverse it and use
+any mpc files that are found.  If another workspace file is listed in the
+workspace files, it will be aggregated into the workspace with paths relative
+to the directory in which the main workspace is found.  These "aggregated"
+workspaces should not inherit from any other base workspace.  The workspace
+files should have an 'mwc' extension.
 
 
 Project Declarations
