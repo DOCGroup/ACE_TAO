@@ -1,3 +1,7 @@
+Wed Jun 24 19:52:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/IPC_SAP.cpp (enable,disable): Fixed #define nesting.
+
 Wed Jun 24 15:36:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
