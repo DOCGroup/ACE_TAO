@@ -40,10 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -191,6 +191,10 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
@@ -235,6 +239,10 @@ SOURCE=.\default_client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
@@ -256,10 +264,6 @@ SOURCE=.\Default_Stub_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Default_Thread_Lane_Resources_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Default_Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
 
@@ -767,10 +771,6 @@ SOURCE=.\Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocation_Resolver.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -947,6 +947,10 @@ SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
@@ -995,6 +999,10 @@ SOURCE=.\default_client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
@@ -1016,10 +1024,6 @@ SOURCE=.\Default_Stub_Factory.h
 # Begin Source File
 
 SOURCE=.\Default_Thread_Lane_Resources_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Default_Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -1599,10 +1603,6 @@ SOURCE=.\Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocation_Resolver.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -1739,6 +1739,10 @@ SOURCE=.\ClientInterceptorAdapter.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
@@ -1775,6 +1779,10 @@ SOURCE=.\default_client.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Collocation_Resolver.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Protocols_Hooks.i
 # End Source File
 # Begin Source File
@@ -1788,10 +1796,6 @@ SOURCE=.\default_server.i
 # Begin Source File
 
 SOURCE=.\Default_Thread_Lane_Resources_Manager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Default_Collocation_Resolver.i
 # End Source File
 # Begin Source File
 
@@ -2128,10 +2132,6 @@ SOURCE=.\Thread_Lane_Resources.i
 # Begin Source File
 
 SOURCE=.\Thread_Lane_Resources_Manager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Collocation_Resolver.i
 # End Source File
 # Begin Source File
 
