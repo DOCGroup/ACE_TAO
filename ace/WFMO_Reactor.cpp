@@ -1392,6 +1392,114 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
   return found;
 }
 
+int
+ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
+                                              ACE_Reactor_Mask user_masks,
+                                              ACE_Event_Handler **user_event_handler)
+{
+  int found = 0;
+  size_t i = 0;
+  ACE_Event_Handler *event_handler = 0;
+  long existing_masks;
+
+  //
+  // Look for the handle first
+  //
+
+  // First go through the current entries
+  //
+  // Look for all entries in the current handles for matching handle
+  // (except those that have been scheduled for deletion)
+  for (i = 0; i < this->max_handlep1_ && !found; i++)
+    if ((handle == this->current_info_[i].io_handle_ ||
+         handle == this->current_handles_[i]) &&
+        !this->current_info_[i].delete_entry_)
+      {
+        found = 1;
+        event_handler = this->current_info_[i].event_handler_;
+        existing_masks = this->current_info_[i].network_events_;
+      }
+
+  // Then pass through the suspended handles
+  //
+  // Look for all entries in the suspended handles for matching handle
+  // (except those that have been scheduled for deletion)
+  for (i = 0; i < this->suspended_handles_ && !found; i++)
+    if ((handle == this->current_suspended_info_[i].io_handle_ ||
+         handle == this->current_suspended_info_[i].event_handle_) &&
+        !this->current_suspended_info_[i].delete_entry_)
+      {
+        found = 1;
+        event_handler = this->current_suspended_info_[i].event_handler_;
+        existing_masks = this->current_suspended_info_[i].network_events_;
+      }
+
+  // Then check the to_be_added handles
+  //
+  // Look for all entries in the to_be_added handles for matching
+  // handle (except those that have been scheduled for deletion)
+  for (i = 0; i < this->handles_to_be_added_ && !found; i++)
+    if ((handle == this->to_be_added_info_[i].io_handle_ ||
+         handle == this->to_be_added_info_[i].event_handle_) &&
+        !this->to_be_added_info_[i].delete_entry_)
+      {
+        found = 1;
+        event_handler = this->to_be_added_info_[i].event_handler_;
+        existing_masks = this->to_be_added_info_[i].network_events_;
+      }
+
+  // If the handle is not found, return failure.
+  if (!found)
+    return -1;
+
+  // Otherwise, make sure that the masks that the user is looking for
+  // are on.
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_READ)
+        && !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::WRITE_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_WRITE))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::EXCEPT_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_OOB))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::ACCEPT_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::CONNECT_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::QOS_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
+      found = 0;
+
+  if (found &&
+      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::GROUP_QOS_MASK))
+    if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
+      found = 0;
+
+  if (found &&
+      user_event_handler)
+    *user_event_handler = event_handler;
+
+  if (found)
+    return 0;
+  else
+    return -1;
+}
+
 // Waits for and dispatches all events.  Returns -1 on error, 0 if
 // max_wait_time expired, or the number of events that were dispatched.
 int

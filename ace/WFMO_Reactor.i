@@ -433,7 +433,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
 ACE_INLINE int
 ACE_WFMO_Reactor::reset_timer_interval
-  (long timer_id, 
+  (long timer_id,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
@@ -457,7 +457,7 @@ ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_WFMO_Reactor::schedule_timer");
 
   long result = this->timer_queue_->schedule
-    (handler, 
+    (handler,
      arg,
      timer_queue_->gettimeofday () + delta_time,
      interval);
@@ -1082,8 +1082,9 @@ ACE_WFMO_Reactor::handler (ACE_HANDLE handle,
                            ACE_Reactor_Mask mask,
                            ACE_Event_Handler **event_handler)
 {
-  // Don't have an implementation for this yet...
-  ACE_NOTSUP_RETURN (-1);
+  return this->handler_rep_.handler (handle,
+                                     mask,
+                                     event_handler);
 }
 
 ACE_INLINE int
