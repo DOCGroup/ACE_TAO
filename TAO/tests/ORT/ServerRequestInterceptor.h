@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Server_Request_Interceptor.h
+ * @file ServerRequestInterceptor.h
  *
  * $Id$
  *
