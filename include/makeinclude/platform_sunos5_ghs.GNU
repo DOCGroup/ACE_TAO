@@ -18,7 +18,7 @@ DCFLAGS  += -g
 DLD      = $(CXX)
 LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
-LIBS     += -lsocket -ldl -lgen -lnsl -lposix4 -lthread -lw -lcx
+LIBS     += -lsocket -ldl -lgen -lnsl -lposix4 -lthread -lw
 OCFLAGS  += -OL -OM
 PIC      = -PIC
 RANLIB   = @true
@@ -29,8 +29,6 @@ SOFLAGS  = -shared
 
 ifdef exceptions
   CCFLAGS += --exceptions
-  LIBS += -ledge
 else  # ! exceptions
   CCFLAGS += --no_exceptions
-  LIBS += -ledgnoe
 endif # ! exceptions
