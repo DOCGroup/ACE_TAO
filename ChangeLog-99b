@@ -1,3 +1,8 @@
+Thu Aug 05 15:30:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/streams.h: with ACE_LACKS_IOSTREAMS_TOTALLY, always
+          #define ostream FILE *. [Bug 208]
+
 Thu Aug 05 15:13:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added note on why we don't #define
