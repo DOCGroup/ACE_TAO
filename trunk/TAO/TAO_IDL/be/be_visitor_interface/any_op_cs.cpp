@@ -100,14 +100,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "_tao_any._tao_get_cdr ()," << be_nl
           << "_tao_any._tao_byte_order ()" << be_uidt_nl
           << ");" << be_uidt_nl
-//          << "CORBA::Object_var _tao_obj_var;" << be_nl
-//          << "if (stream >> _tao_obj_var.out ())" << be_nl
           << "if (stream >> _tao_elem)" << be_nl
           << "{" << be_idt_nl
-//          << "_tao_elem = " << node->full_name ()
-//          << "::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);" << be_nl
-//          << "ACE_TRY_CHECK;" << be_nl
-//          << be_nl
           << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
           << node->tc_name () << "," << be_nl
           << "1," << be_nl
