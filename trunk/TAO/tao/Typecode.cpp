@@ -967,11 +967,11 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
     }
 
   // check if the discriminant type is same
-  CORBA::TypeCode_var my_discrim = 
+  CORBA::TypeCode_var my_discrim =
     this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_var tc_discrim = 
+  CORBA::TypeCode_var tc_discrim =
     tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -1396,7 +1396,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
                                                         // flag and padding
                                                  + 4);  // skip (strlen + 1)
         return this->private_state_->tc_id_; // this is OK because
-                                             // strings in the CDR stream 
+                                             // strings in the CDR stream
                                              // are NULL terminated
       }
     // No other typecodes ever have type IDs
@@ -1596,7 +1596,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
         if (slot < mcount)
           return this->private_state_->tc_member_type_list_[slot];
         else
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                             (CORBA::TypeCode_ptr)0);
       }
       ACE_NOTREACHED (break;)
@@ -1613,7 +1613,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           if (slot < mcount)
             return  this->private_state_->tc_member_type_list_[slot];
           else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                               CORBA::TypeCode::_nil ());
 
         // the first time in. Precompute and store types of all members
@@ -1632,7 +1632,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 
         // get the typecode for the discriminator
-        CORBA::TypeCode_ptr disc_tc = 
+        CORBA::TypeCode_ptr disc_tc =
           this->private_discriminator_type_i (ACE_TRY_ENV);
         // compute the typecodes for all the members and return the
         // required one
@@ -1671,7 +1671,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
 
     default:
       // bad kind
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         (CORBA::TypeCode_ptr)0);
     }
 }
@@ -1692,136 +1692,92 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
                        this->byte_order_);
   CORBA::TypeCode_var tc = 0;
 
+  mcount = this->member_count (ACE_TRY_ENV);
+  // out of bounds
+  ACE_CHECK_RETURN ((char *)0);
+
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+
+  if (this->private_state_->tc_member_name_list_known_)
+    if (slot < mcount)
+      return this->private_state_->tc_member_name_list_[slot];
+    else
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+
+  // the first time in. Precompute and store names of all members
+  // Allocate a list to hold the member names
+  ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
+                    char* [mcount],
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+  // this->private_state_->tc_member_name_list_ = new char* [mcount];
+
+  if (this->private_state_->tc_member_name_list_ == 0)
+      // no memory for the member_list
+      ACE_THROW_RETURN (CORBA::NO_MEMORY (), (char *)0);
+
   switch (kind_)
     {
     case CORBA::tk_enum:
-      mcount = this->member_count (ACE_TRY_ENV);
-      // out of bounds
-      ACE_CHECK_RETURN ((char *)0);
-
       {
-        // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                          this->private_state_->mutex_, 0);
-        if (this->private_state_->tc_member_name_list_known_)
-          if (slot < mcount)
-            return this->private_state_->tc_member_name_list_[slot];
-          else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
-
-        // the first time in. Precompute and store names of all members
-        // Allocate a list to hold the member names
-        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
-                          char* [mcount],
-                          CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (0);
-        // this->private_state_->tc_member_name_list_ = new char* [mcount];
-
-        if (this->private_state_->tc_member_name_list_ == 0)
-          // no memory for the member_list
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (), (char *)0);
-
         // skip the id, name, and member_count part
         if (!stream.skip_string ()     // type ID, hidden
             || !stream.skip_string ()     // enum name
             || !stream.read_ulong (temp)) // member count
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), (char *)0);
 
-      // compute the typecodes for all the members and
-      // return the required one.
+        // compute the typecodes for all the members and
+        // return the required one.
         for (CORBA::ULong i = 0; i < mcount; i++)
-          // now skip this name
+          // now read this name
           if (!stream.read_string (
-                   this->private_state_->tc_member_name_list_ [i]
-                 ))
+                      this->private_state_->tc_member_name_list_ [i]
+                      ))
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), (char *)0);
-
+        
         this->private_state_->tc_member_name_list_known_ = 1;
-
-        if (slot < mcount)
-          return this->private_state_->tc_member_name_list_[slot];
-        else
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
-      }
-      ACE_NOTREACHED (break);
-
-    case CORBA::tk_except:
-    case CORBA::tk_struct:              // index from 0
-      mcount = this->member_count (ACE_TRY_ENV);
-      // out of bounds
-      ACE_CHECK_RETURN ((char *)0);
-
-      {
-        // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                          this->private_state_->mutex_, 0);
-        if (this->private_state_->tc_member_name_list_known_)
-          if (slot < mcount)
-            return this->private_state_->tc_member_name_list_[slot];
-          else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
-
-        // the first time in. Precompute and store names of all members
-        // Allocate a list to hold the member names
-        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
-                          char* [mcount],
-                          CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (0);
-
-        if (this->private_state_->tc_member_name_list_ == 0)
-          // no memory for the member_list
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (), (char *)0);
-
-        // skip the id, name, and member_count part
-        if (!stream.skip_string ()        // type ID, hidden
-            || !stream.skip_string ()     // struct/except name
-            || !stream.read_ulong (temp)) // member count
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), (char *)0);
-
-          // compute the typecodes for all the members and
-          // return the required one.
-        for (CORBA::ULong i = 0; i < mcount; i++)
-          if (!stream.read_string (
-                   this->private_state_->tc_member_name_list_ [i]
-                 )
-              || !this->skip_typecode (stream))
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
-
-        this->private_state_->tc_member_name_list_known_ = 1;
-
+        
         if (slot < mcount)
           return this->private_state_->tc_member_name_list_[slot];
         else
           ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
       }
       ACE_NOTREACHED (break;)
+        
+    case CORBA::tk_except:
+    case CORBA::tk_struct:              // index from 0
+      {
+        // skip the id, name, and member_count part
+        if (!stream.skip_string ()        // type ID, hidden
+            || !stream.skip_string ()     // struct/except name
+            || !stream.read_ulong (temp)) // member count
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), (char *)0);
+
+        // compute the typecodes for all the members and
+          // return the required one.
+        for (CORBA::ULong i = 0; i < mcount; i++)
+          {
+            if (!stream.read_string (
+                   this->private_state_->tc_member_name_list_ [i]
+                   )
+              || !this->skip_typecode (stream))
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
+          }
+
+        this->private_state_->tc_member_name_list_known_ = 1;
+        
+        if (slot < mcount)
+          return this->private_state_->tc_member_name_list_[slot];
+        else
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
+        
+      }
+      ACE_NOTREACHED (break;)
 
     case CORBA::tk_union:            // index from 0
-      mcount = this->member_count (ACE_TRY_ENV);
-      // out of bounds
-      ACE_CHECK_RETURN ((char *)0);
-
       {
-        // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                          this->private_state_->mutex_, 0);
-        if (this->private_state_->tc_member_name_list_known_)
-          if (slot < mcount)
-            return this->private_state_->tc_member_name_list_[slot];
-          else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
-
-        // the first time in. Precompute and store names of all members
-        // Allocate a list to hold the member names
-        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
-                          char* [mcount],
-                          CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (0);
-
-        if (this->private_state_->tc_member_name_list_ == 0)
-          // no memory for the member_list
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
-
         // skip the id, name, and discrimant type part
         if (!stream.skip_string ()             // type ID, hidden
             || !stream.skip_string ()          // typedef name
@@ -1833,7 +1789,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
         else
           {
             // get the typecode for the discriminator
-            CORBA::TypeCode_ptr disc_tc = 
+            CORBA::TypeCode_ptr disc_tc =
               this->private_discriminator_type_i (ACE_TRY_ENV);
             // compute the name for all the members and return the
             // required one
@@ -1860,11 +1816,12 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               }
 
             this->private_state_->tc_member_name_list_known_ = 1;
-
+            
             if (slot < mcount)
               return this->private_state_->tc_member_name_list_[slot];
             else
               ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
+
           }
       }
       ACE_NOTREACHED (break;)
@@ -1929,7 +1886,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   ACE_CHECK_RETURN (0);
 
   // get the discriminant TC
-  CORBA::TypeCode_ptr disc_tc = 
+  CORBA::TypeCode_ptr disc_tc =
     this->private_discriminator_type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
