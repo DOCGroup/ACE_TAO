@@ -243,6 +243,10 @@ SOURCE=.\Exclusive_TMS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fault_Tolerance_Service.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
@@ -867,6 +871,10 @@ SOURCE=.\Exception.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fault_Tolerance_Service.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
@@ -1356,6 +1364,10 @@ SOURCE=.\Exception.cpp
 # Begin Source File
 
 SOURCE=.\Exclusive_TMS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fault_Tolerance_Service.cpp
 # End Source File
 # Begin Source File
 
