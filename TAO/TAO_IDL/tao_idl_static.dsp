@@ -13,18 +13,16 @@ CFG=TAO_IDL Compiler Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tao_idl_static.mak"\
- CFG="TAO_IDL Compiler Static - Win32 Debug"
+!MESSAGE NMAKE /f "tao_idl_static.mak" CFG="TAO_IDL Compiler Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_IDL Compiler Static - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "TAO_IDL Compiler Static - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -89,7 +87,7 @@ LINK32=link.exe
 # Name "TAO_IDL Compiler Static - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ".cpp"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
@@ -256,10 +254,6 @@ SOURCE=.\be\be_expression.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\be\be_factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\be\be_field.cpp
 # End Source File
 # Begin Source File
@@ -281,10 +275,6 @@ SOURCE=.\be\be_interface.cpp
 # Begin Source File
 
 SOURCE=.\be\be_interface_fwd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_interpretive.cpp
 # End Source File
 # Begin Source File
 
@@ -317,6 +307,10 @@ SOURCE=.\be\be_scope.cpp
 # Begin Source File
 
 SOURCE=.\be\be_sequence.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_stream_factory.cpp
 # End Source File
 # Begin Source File
 
@@ -385,6 +379,10 @@ SOURCE=.\be\be_visitor_enum.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_exception.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_factory.cpp
 # End Source File
 # Begin Source File
 
@@ -480,6 +478,10 @@ SOURCE=.\fe\fe_interface_header.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\fe\fe_lookup.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\fe\fe_private.cpp
 # End Source File
 # Begin Source File
@@ -561,7 +563,7 @@ SOURCE=.\fe\y.tab.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ".h"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\include\ast.h
@@ -728,10 +730,6 @@ SOURCE=.\include\be_extern.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\be_include\be_field.h
 # End Source File
 # Begin Source File
@@ -749,10 +747,6 @@ SOURCE=.\be_include\be_interface.h
 # Begin Source File
 
 SOURCE=.\be_include\be_interface_fwd.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\be_include\be_interpretive.h
 # End Source File
 # Begin Source File
 
@@ -785,6 +779,10 @@ SOURCE=.\be_include\be_sequence.h
 # Begin Source File
 
 SOURCE=.\be_include\be_state.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_stream_factory.h
 # End Source File
 # Begin Source File
 
@@ -853,6 +851,10 @@ SOURCE=.\be_include\be_visitor_enum.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_factory.h
 # End Source File
 # Begin Source File
 
