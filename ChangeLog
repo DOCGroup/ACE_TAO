@@ -1,15 +1,24 @@
+Wed Mar 24 07:25:19 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where settings were not being properly reset when
+          processing a 'specific' section for one project and then
+          processing other projects.
+
 Tue Mar 23 22:13:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added new PortableInterceptors ORB::shutdown() regression test
-	  to the nightly build test runs.
+          Added new PortableInterceptors ORB::shutdown() regression test
+          to the nightly build test runs.
 
 Tue Mar 23 20:18:20 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* apps/gperf/README: Fixed the README file so it points to
-	  the right version of the GPERF paper.  Thanks to Eric Whorter
- 	  <emcwhorter@rightnow.com> for reporting this.
+        * apps/gperf/README: Fixed the README file so it points to
+          the right version of the GPERF paper.  Thanks to Eric Whorter
+          <emcwhorter@rightnow.com> for reporting this.
 
 Tue Mar 23 20:12:51 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -22,11 +31,11 @@ Tue Mar 23 20:12:51 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
 Tue Mar 23 18:31:40 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/SSL/Makefile:
-	* tests/SSL/aix_hack_for_main.cpp: Added aix_hack_for_main.cpp to get
-	  something without templates to build first. This all helps Visual
-	  Age C++ on AIX deal with reality. Also see:
-	  Sat Dec  6 19:27:26 2003  Steve Huston  <shuston@riverace.com>
+        * tests/SSL/Makefile:
+        * tests/SSL/aix_hack_for_main.cpp: Added aix_hack_for_main.cpp to get
+          something without templates to build first. This all helps Visual
+          Age C++ on AIX deal with reality. Also see:
+          Sat Dec  6 19:27:26 2003  Steve Huston  <shuston@riverace.com>
 
 Tue Mar 23 07:22:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
