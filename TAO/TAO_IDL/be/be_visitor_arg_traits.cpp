@@ -330,8 +330,14 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       return 0;
     }
     
-  TAO_OutStream *os = this->ctx_->stream ();
   unsigned long bound = st->max_size ()->ev ()->u.ulval;
+  
+  if (bound == 0)
+    {
+      return 0;
+    }
+    
+  TAO_OutStream *os = this->ctx_->stream ();
   idl_bool wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
@@ -353,7 +359,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
-      
+  
   this->generated (node, I_TRUE);
   return 0;
 }
