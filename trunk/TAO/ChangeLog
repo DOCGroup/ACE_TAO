@@ -1,3 +1,11 @@
+Thu Aug  1 12:22:17 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  Removed LB_ClientRequestInterceptor from the C++ source list,
+	  and regenerated the dependencies.  That file hasn't been
+	  committed yet.
+
 Thu Aug  1 13:54:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing: Updated dependencies.  
