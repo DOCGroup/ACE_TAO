@@ -33,11 +33,24 @@
 # undef _POSIX_PTHREAD_SEMANTICS
 #endif
 
-/* Some platforms require _GNU_SOURCE to be defined to make some function
-   prototypes "visible." */
+/* Some platforms require "feature test" macros to be defined to make
+   some function prototypes "visible." */
 #ifndef _GNU_SOURCE
-# undef _GNU_SOURCE
-#endif
+#  undef _GNU_SOURCE
+#else
+#  ifndef _XOPEN_SOURCE
+#    undef _XOPEN_SOURCE
+#  endif  /*_XOPEN_SOURCE  */
+#  ifndef _XOPEN_EXTENDED_SOURCE
+#    undef _XOPEN_EXTENDED_SOURCE
+#  endif  /* _XOPEN_EXTENDED_SOURCE */
+#  ifndef _LARGEFILE64_SOURCE
+#    undef _LARGEFILE64_SOURCE
+#  endif  /* _LARGEFILE64_SOURCE */
+#  ifndef _FILE_OFFSET_BITS
+#    undef _FILE_OFFSET_BITS
+#  endif  /* _FILE_OFFSET_BITS */
+#endif /* _GNU_SOURCE */
 
 /* ACE currently doesn't use these; however the configure script does */
 #undef ACE_LACKS_SYSTIMES_H
