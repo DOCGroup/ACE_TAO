@@ -10,8 +10,6 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Block)
 
-typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> > ACE_NEW_MALLOC;
-
 void
 ACE_Message_Block::data_block (ACE_Data_Block *db)
 {
@@ -179,12 +177,6 @@ ACE_Data_Block::~ACE_Data_Block (void)
       this->allocator_strategy_->free ((void *) this->base_);
       this->base_ = 0;
     }
-
-  if (this->delete_allocator_strategy_)
-    {
-      delete this->allocator_strategy_;
-      this->allocator_strategy_ = 0;
-    }
 }
 
 ACE_Message_Block::~ACE_Message_Block (void)
@@ -212,7 +204,6 @@ ACE_Data_Block::ACE_Data_Block (void)
     flags_ (ACE_Message_Block::DONT_DELETE),
     base_ (0),
     allocator_strategy_ (0),
-    delete_allocator_strategy_ (0),
     locking_strategy_ (0),
     reference_count_ (1)
 {
@@ -231,17 +222,15 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
     flags_ (flags),
     base_ ((char *) msg_data),
     allocator_strategy_ (allocator_strategy),
-    delete_allocator_strategy_ (0),
     locking_strategy_ (locking_strategy),
     reference_count_ (1)
 {
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
 
+  // If the user didn't pass one in, let's use the
+  // <ACE_Service_Config::alloc>.
   if (this->allocator_strategy_ == 0)
-    {
-      ACE_NEW (this->allocator_strategy_, ACE_NEW_MALLOC);
-      this->delete_allocator_strategy_ = 1;
-    }
+    ACE_ALLOCATOR (this->allocator_strategy_, ACE_Service_Config::alloc ());
 
   if (msg_data == 0)
     ACE_ALLOCATOR (this->base_, 
@@ -590,12 +579,7 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
 		  ACE_Data_Block (this->max_size_, // size
 				  this->type_,     // type
 				  0,               // data
-				  // Make sure not to copy the
-				  // allocator_strategy_ pointer if
-				  // we're planning to delete it!
-				  this->delete_allocator_strategy_ 
-				  ? 0 
-				  : this->allocator_strategy_, // allocator
+				  this->allocator_strategy_, // allocator
 				  this->locking_strategy_, // locking strategy
 				  this->flags_), // flags
 		  0);
