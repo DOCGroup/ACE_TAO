@@ -25,6 +25,9 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "server - Win32 Release"
 
 OUTDIR=.
@@ -54,44 +57,11 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D\
  "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\server.pch" /YX\
  /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 CPP_OBJS=.\Release/
 CPP_SBRS=.
-
-.c{$(CPP_OBJS)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(CPP_OBJS)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(CPP_OBJS)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(CPP_SBRS)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(CPP_SBRS)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(CPP_SBRS)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\server.bsc" 
 BSC32_SBRS= \
@@ -121,11 +91,13 @@ OutDir=.
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "$(OUTDIR)\server.exe"
+ALL : "param_testS.i" "param_testS.h" "param_testS.cpp" "param_testC.i"\
+ "param_testC.h" "param_testC.cpp" "$(OUTDIR)\server.exe"
 
 !ELSE 
 
-ALL : "$(OUTDIR)\server.exe"
+ALL : "param_testS.i" "param_testS.h" "param_testS.cpp" "param_testC.i"\
+ "param_testC.h" "param_testC.cpp" "$(OUTDIR)\server.exe"
 
 !ENDIF 
 
@@ -139,16 +111,41 @@ CLEAN :
 	-@erase "$(OUTDIR)\server.exe"
 	-@erase "$(OUTDIR)\server.ilk"
 	-@erase "$(OUTDIR)\server.pdb"
+	-@erase "param_testC.cpp"
+	-@erase "param_testC.h"
+	-@erase "param_testC.i"
+	-@erase "param_testS.cpp"
+	-@erase "param_testS.h"
+	-@erase "param_testS.i"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D\
  "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\server.pch" /YX\
  /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\server.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+LINK32_FLAGS=TAO.lib aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)\server.pdb" /debug /machine:I386 /out:"$(OUTDIR)\server.exe"\
+ /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" 
+LINK32_OBJS= \
+	"$(INTDIR)\param_test_i.obj" \
+	"$(INTDIR)\param_testC.obj" \
+	"$(INTDIR)\param_testS.obj" \
+	"$(INTDIR)\server.obj"
+
+"$(OUTDIR)\server.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(CPP_OBJS)}.obj::
    $(CPP) @<<
@@ -180,28 +177,6 @@ CPP_SBRS=.
    $(CPP_PROJ) $< 
 <<
 
-RSC=rc.exe
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\server.bsc" 
-BSC32_SBRS= \
-	
-LINK32=link.exe
-LINK32_FLAGS=TAO.lib aced.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)\server.pdb" /debug /machine:I386 /out:"$(OUTDIR)\server.exe"\
- /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" 
-LINK32_OBJS= \
-	"$(INTDIR)\param_test_i.obj" \
-	"$(INTDIR)\param_testC.obj" \
-	"$(INTDIR)\param_testS.obj" \
-	"$(INTDIR)\server.obj"
-
-"$(OUTDIR)\server.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
-
 
 !IF "$(CFG)" == "server - Win32 Release" || "$(CFG)" == "server - Win32 Debug"
 SOURCE=.\param_test.idl
@@ -209,24 +184,25 @@ SOURCE=.\param_test.idl
 !IF  "$(CFG)" == "server - Win32 Release"
 
 InputPath=.\param_test.idl
-InputName=param_test
 
-"$(InputName)S.h"	"$(InputName)S.i"	"$(InputName)S.cpp"	"$(InputName)C.h"\
-	"$(InputName)C.i"	"$(InputName)C.cpp"	 : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\tao_idl\tao_idl $(InputName).idl
+"param_testS.h"	"param_testS.i"	"param_testS.cpp"	"param_testC.h"\
+	"param_testC.i"	"param_testC.cpp"	 : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\tao_idl\tao_idl param_test.idl
 
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
 InputPath=.\param_test.idl
-InputName=param_test
 
-"$(InputName)S.h"	"$(InputName)S.i"	"$(InputName)S.cpp"	"$(InputName)C.h"\
-	"$(InputName)C.i"	"$(InputName)C.cpp"	 : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\tao_idl\tao_idl $(InputName).idl
+"param_testS.h"	"param_testS.i"	"param_testS.cpp"	"param_testC.h"\
+	"param_testC.i"	"param_testC.cpp"	 : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\tao_idl\tao_idl param_test.idl
 
 !ENDIF 
 
 SOURCE=.\param_test_i.cpp
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
 DEP_CPP_PARAM=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
@@ -445,7 +421,18 @@ DEP_CPP_PARAM=\
  ".\param_testS.h" ".\param_testC.h" ".\param_testS.i" ".\param_testC.i"
 
 
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+
+"$(INTDIR)\param_test_i.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
 SOURCE=.\param_testC.cpp
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
 DEP_CPP_PARAM_=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
@@ -661,7 +648,18 @@ DEP_CPP_PARAM_=\
  ".\param_testC.h" ".\param_testC.i"
 
 
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+
+"$(INTDIR)\param_testC.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
 SOURCE=.\param_testS.cpp
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
 DEP_CPP_PARAM_T=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
@@ -879,7 +877,18 @@ DEP_CPP_PARAM_T=\
  ".\param_testS.h" ".\param_testS.i" ".\param_testC.h" ".\param_testC.i"
 
 
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+
+"$(INTDIR)\param_testS.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
 SOURCE=.\server.cpp
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
 DEP_CPP_SERVE=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
@@ -1097,6 +1106,14 @@ DEP_CPP_SERVE=\
 "$(INTDIR)\server.obj" : $(SOURCE) $(DEP_CPP_SERVE) "$(INTDIR)"\
  ".\param_testS.h" ".\param_testC.h" ".\param_testS.i" ".\param_testC.i"
 
+
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+
+"$(INTDIR)\server.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
 
 
 !ENDIF 
