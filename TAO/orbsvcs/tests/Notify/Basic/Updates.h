@@ -128,8 +128,8 @@ protected:
   // Supplier
 
 private:
-  friend Update_StructuredPushSupplier;
-  friend Update_StructuredPushConsumer;
+  friend class Update_StructuredPushSupplier;
+  friend class Update_StructuredPushConsumer;
 };
 
 /***************************************************************************/

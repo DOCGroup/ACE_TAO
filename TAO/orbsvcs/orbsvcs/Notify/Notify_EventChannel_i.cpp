@@ -377,6 +377,8 @@ TAO_Notify_EventChannel_i::get_admin (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   admin->length (property_count);
 
+#if 0 // temporarily commenting out till i find out whats causing VxWorks to break.
+
   (*admin)[0].name =
   CORBA::string_dup (CosNotification::MaxQueueLength);
   (*admin)[0].value <<= (CORBA::Long)max_queue_length_;
@@ -389,6 +391,7 @@ TAO_Notify_EventChannel_i::get_admin (CORBA::Environment &ACE_TRY_ENV)
   CORBA::string_dup (CosNotification::MaxSuppliers);
   (*admin)[2].value <<= (CORBA::Long)max_suppliers_;
 
+#endif
   return admin._retn ();
 }
 
