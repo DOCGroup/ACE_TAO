@@ -32,9 +32,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
 #include "tao/TAO.h"
-#include "orbsvcs/CosNamingC.h"
 
-#include "mpeg_shared/Video_ControlC.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -52,10 +50,7 @@ public:
   // Construct this handler with a control (UNIX) handle
 
   int init (void);
-  // initialize the ORB.
-
-  int resolve_server_reference (void);
-  // Resolve the AV server reference.
+  // initialize the ORB
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when input events occur (e.g., connection or data).
@@ -79,8 +74,8 @@ private:
   
   CORBA::Boolean step (void);
   
-  CORBA::Boolean play (int flag,
-                       CORBA::Environment& env);
+  CORBA::Boolean play (int flag);
+                      
   
   CORBA::Boolean position (void);
   
@@ -98,10 +93,7 @@ private:
   // The fd for the UNIX command socket
 
   TAO_ORB_Manager *orb_manager_;
-  // orb manager
-
-  Video_Control_var video_control_;
-  // Video control object 
+  // the ORB manager
 };
 
 
