@@ -1,3 +1,100 @@
+Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/Context.inl:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.inl:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+	* tao/DynamicInterface/Dynamic_Implementation.cpp:
+	* tao/DynamicInterface/Dynamic_Implementation.h:
+	* tao/DynamicInterface/ExceptionList.cpp:
+	* tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/ExceptionList.inl:
+        * tao/DynamicInterface/Makefile:
+        * tao/DynamicInterface/Makefile.bor:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.inl:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Server_Request.inl:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/DynamicInterface/dynamicinterface_export.h:
+
+	  Files either moved whole from TAO/tao, created from parts of 
+	  files in TAO/tao, or created from scratch for the new 
+	  DynamicInterface library. This new library contains all the code
+	  related to DII and DSI. 
+
+	* tao/Dynamic_Adapter.cpp:
+	* tao/Dynamic_Adapter.h:
+
+	  New files containing base class for hook methods that replace 
+	  all or part of existing TAO methods that use DII or DSI.
+
+        * TAOACE.dsw:
+        * tao/DomainC.cpp:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/Exception.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/LocalObject.cpp:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/PolicyC.cpp:
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/Stub.i:
+        * tao/TAO.dsp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/corba.h:
+        * tao/corbafwd.cpp:
+        * tao/operation_details.h:
+        * tao/target_specification.h:
+
+	  TAO/tao files modified to be consistent with the 
+	  DynamicInterface library.
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.i:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+	  TAO/tao/PortableServer files modified to be consistent
+	  with the DynamicInterface library.
+
+        * tests/DSI_Gateway/test_dsi.cpp:
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/helper.h:
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/Database_i.h:
+        * examples/POA/DSI/server.dsp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+        * performance-tests/Latency/deferred_synch_client.dsp:
+        * performance-tests/Latency/dii_client.cpp:
+
+	  Tests and examples modified to be consistent with the
+	  DynamicInterface library.
+
 Tue Oct 31 11:06:52 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/InterfaceS.cpp:
