@@ -46,7 +46,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -59,7 +59,6 @@ namespace TAO
 
 // Traits specializations for ImplementationRepository::ServerObject.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerObject_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerObject>::duplicate (
     ImplementationRepository::ServerObject_ptr p
@@ -68,7 +67,6 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::duplicate (
   return ImplementationRepository::ServerObject::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::ServerObject>::release (
     ImplementationRepository::ServerObject_ptr p
@@ -77,14 +75,12 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerObject_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerObject>::nil (void)
 {
   return ImplementationRepository::ServerObject::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::ServerObject>::marshal (
     ImplementationRepository::ServerObject_ptr p,
@@ -248,6 +244,12 @@ ImplementationRepository::ServerObject::_duplicate (ServerObject_ptr obj)
   return obj;
 }
 
+void
+ImplementationRepository::ServerObject::_tao_release (ServerObject_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 ImplementationRepository::ServerObject::_is_a (
     const char *value
@@ -324,7 +326,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
