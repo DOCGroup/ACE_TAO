@@ -1,3 +1,11 @@
+Mon Sep  1 08:44:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added the '/**/' prefix to the generation of ace/pre.h 
+          and ace/post.h includes. This has come into recent use
+          because it helps doxygen.
+
 Sun Aug 31 19:50:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
