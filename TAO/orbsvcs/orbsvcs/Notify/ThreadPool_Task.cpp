@@ -23,6 +23,18 @@ TAO_NS_ThreadPool_Task::~TAO_NS_ThreadPool_Task ()
   delete this->buffering_strategy_;
 }
 
+int
+TAO_NS_ThreadPool_Task::init (int argc, char **argv)
+{
+  return this->ACE_Task<ACE_SYNCH>::init (argc, argv);
+}
+
+void 
+TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties& admin_properties)
+{
+  TAO_NS_Worker_Task::init (admin_properties);
+}
+
 void
 TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties  ACE_ENV_ARG_DECL)
 {

@@ -268,7 +268,7 @@ template class TAO_ESF_Proxy_Collection<TAO_NS_Supplier>;
 template class TAO_ESF_Proxy_Collection<TAO_NS_Peer>;
 
 template class ACE_Unbounded_Set<int>;
-template class ACE_Unbounded_Set<TAO_NS_EventType>;
+//template class ACE_Unbounded_Set<TAO_NS_EventType>;
 template class ACE_Unbounded_Set<TAO_NS_ProxySupplier *>;
 
 template class ACE_Unbounded_Set_Const_Iterator<int>;

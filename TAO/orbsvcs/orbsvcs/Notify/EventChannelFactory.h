@@ -39,12 +39,16 @@ class TAO_NS_EventChannel;
  * @brief Implementation of CosNotifyChannelAdmin::EventChannelFactory
  *
  */
+
+
 class TAO_Notify_Export TAO_NS_EventChannelFactory : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public TAO_NS_Container_T <TAO_NS_EventChannel, TAO_NS_EventChannelFactory, TAO_NS_Notify_Service>, public TAO_NS_Destroy_Callback
 {
   friend class TAO_NS_Builder;
+
+public:
   typedef TAO_NS_Container_T <TAO_NS_EventChannel, TAO_NS_EventChannelFactory, TAO_NS_Notify_Service> inherited;
   typedef ACE_Unbounded_Set <TAO_NS_Object_Id> TAO_NS_Object_Id_Seq;
-public:
+
   /// Constuctor
   TAO_NS_EventChannelFactory (void);
 

@@ -43,6 +43,11 @@ public:
   /// Destructor
   ~TAO_NS_ThreadPool_Task ();
 
+  /// Call the base class init
+  virtual int init (int argc, char **argv);
+
+  virtual void init(TAO_NS_AdminProperties&);
+
   /// Activate the threadpool
   void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties ACE_ENV_ARG_DECL);
 
