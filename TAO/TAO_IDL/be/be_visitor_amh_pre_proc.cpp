@@ -191,7 +191,7 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
   if (old_strategy)
     delete old_strategy;
 
-/*  be_operation *sendc_marshaling =
+  be_operation *sendc_marshaling =
     this->create_sendc_operation (node,
                                   0); // for arguments = FALSE
 
