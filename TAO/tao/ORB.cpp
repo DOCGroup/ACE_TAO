@@ -1095,8 +1095,8 @@ CORBA_ORB::create_enum_tc (const char *id,
       string2long (members[index].in (), larr, arrlen);
       
       // And finally the enums themselves
-      for (ACE_CDR::ULong len = 0; len < arrlen; len++)
-        cdr << larr [index];
+      for (ACE_CDR::ULong len1 = 0; len1 < arrlen; len1++)
+        cdr << larr [len1];
     } 
 
   CORBA_TypeCode_ptr interface_typecode = 0;
