@@ -8,16 +8,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require ACEutils;
 require Process;
+use Cwd;
 
-$NS_ior = "NameService.ior";
+$port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }                     
+}
+
+$NS_ior = "$cwd$DIR_SEPARATOR" . "NameService.ior";
 $sleeptime = 5;
 $status = 0;
 
-$NS = Process::Create ("..".$DIR_SEPARATOR.
+$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
                        "Naming_Service".$EXE_EXT,
-                       " -o $NS_ior ");
+                       "-ORBNameServicePort $port -o $NS_ior ");
 
 if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
   print STDERR "ERROR: waiting for naming service IOR file\n";
@@ -25,7 +41,7 @@ if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
   exit 1;
 }
 
-$ES = Process::Create ("..".$DIR_SEPARATOR.
+$ES = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$EXE_EXT,

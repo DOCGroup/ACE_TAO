@@ -1,3 +1,50 @@
+Fri Apr  7 11:12:07 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/AMI/run_test.pl, tests/CDR/run_test.pl,
+          tests/Connection_Purging/run_test.pl,
+          tests/DSI_Gateway/run_test.pl, tests/DynAny_Test/run_test.pl,
+          tests/Endpoint_Per_Priority/run_test.pl,
+          tests/Explicit_Event_Loop/run_test.pl,
+          tests/Faults/run_test.pl,
+          tests/IORManipulation/run_test.pl, tests/InterOp-Naming/run_test.pl,
+          tests/Interceptors/client.cpp
+          tests/Interceptors/run_test.pl, tests/Leader_Followers/run_test.pl,
+          tests/MT_Client/run_test.pl, tests/POA/Deactivation/run_test.pl,
+          tests/POA/Destruction/run_test.pl, tests/POA/Identity/run_test.pl,
+          tests/MT_Server/run_test.pl, tests/Multiple_Inheritance/run_test.pl,
+          tests/Native_Exceptions/run_test.pl,
+          tests/NestedUpcall/MT_Client_Test/run_test.pl,
+          tests/NestedUpcall/Simple/run_test.pl,
+          tests/NestedUpcall/Triangle_Test/run_test.pl,
+          tests/Nested_Event_Loop/run_test.pl,
+          tests/ORB_init/run_test.pl, tests/OctetSeq/run_test.pl,
+          tests/Param_Test/run_test.pl, tests/Smart_Proxies/run_test.pl,
+          tests/Smart_Proxies/On_Demand/run_test.pl,
+          tests/Timed_Buffered_Oneways/run_test.pl, tests/Timeout/run_test.pl,
+          orbsvcs/tests/AVStreams/benchmark/run_test.pl,
+          orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp,
+          orbsvcs/tests/CosEC_Multiple/run_test.pl,
+          orbsvcs/tests/CosEC_Multiple/run_test2.pl,
+          orbsvcs/tests/CosEvent/Basic/run_test.pl,
+          orbsvcs/tests/EC_Basic/run_test.pl,
+          orbsvcs/tests/EC_Custom_Marshal/run_test.pl,
+          orbsvcs/tests/EC_Mcast/run_test.pl,
+          orbsvcs/tests/EC_Multiple/run_test.pl,
+          orbsvcs/tests/EC_Throughput/run_test.pl,
+          orbsvcs/tests/Event/Basic/run_test.pl,
+          orbsvcs/tests/Event/Performance/run_test.pl,
+          orbsvcs/tests/Event_Latency/run_test.pl,
+          orbsvcs/tests/ImplRepo/run_test.pl,
+          orbsvcs/tests/Property/run_test.pl,
+          orbsvcs/tests/Simple_Naming/run_test.pl,
+          orbsvcs/tests/Time/run_test.pl,
+          orbsvcs/tests/Trading/export_test.cpp,
+          orbsvcs/tests/Trading/run_test.pl
+
+          Added a -chorus option to allow running the tests on a chorus
+          target.  Modified some test c++ code to give options to set input
+          files.
+
 Tue Apr  4 10:45:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Makefile: added Sched directory

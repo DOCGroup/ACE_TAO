@@ -11,13 +11,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../../bin';
 require Process;
 require Uniqueid;
+use Cwd;
 
-$prefix = "." . $DIR_SEPARATOR;
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }                     
+}
+
+$prefix = $EXEPREFIX . "." . $DIR_SEPARATOR;
 $status = 0;
 
 print STDERR "\n\nThroughput/Latency single threaded configuration\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
-		      " -ORBsvcconf ec.st.conf "
+		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.st.conf "
 		      . "-burstsize 2000 -burstcount 1");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
