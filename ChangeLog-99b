@@ -1,4 +1,4 @@
-Fri Apr 16 21:57:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Apr 16 22:14:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Auto_Ptr: Made several changes to bring the implementation
 	  up to the specification:
@@ -10,6 +10,9 @@ Fri Apr 16 21:57:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Thanks to Simeon Simeonov <simeons@allaire.com>, Rainer Blome
 	  <blome@de.ibm.com>, Jody Hagins <jody@atdesk.com>, and John
 	  Mulhern <John.Mulhern@lawson.com> for helping.
+
+	* tests/Reactor_Performance_Test.cpp: Updated to work with new
+	  auto pointer implementation.
 
 Fri Apr 16 19:36:35 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
