@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
   int close_down = argc > 1 ? 1 : 0;
 
   for (size_t i = 1; i <= ACE_Reactor::instance ()->size (); i++)
-    new Event_Handler (ACE_static_cast (int, i), close_down);
+    new Event_Handler (static_cast<int> (i), close_down);
 
   int result = 0;
   ACE_Time_Value time (1);

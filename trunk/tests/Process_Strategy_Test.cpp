@@ -511,8 +511,7 @@ static void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr =
-    ACE_reinterpret_cast (ACE_INET_Addr *,
-                          arg);
+    reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Stream stream;

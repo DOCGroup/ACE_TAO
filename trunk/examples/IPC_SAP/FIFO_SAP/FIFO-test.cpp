@@ -31,7 +31,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
     return -1;
 
   char *argv[2];
-  argv[0] = ACE_const_cast (char *, EXEC_COMMAND_ARG);
+  argv[0] = const_cast<char *> (EXEC_COMMAND_ARG);
   argv[1] = 0;
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)

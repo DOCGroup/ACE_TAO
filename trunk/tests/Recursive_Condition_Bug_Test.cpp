@@ -59,13 +59,12 @@ public:
                              ACE_TEXT ("getq failed")),
                             -1);
 
-        Test_Handler *handler = ACE_reinterpret_cast (Test_Handler *, mb->base ());
+        Test_Handler *handler = reinterpret_cast<Test_Handler *> (mb->base ());
         mb->release ();
 
         ACE_Time_Value timeout = ACE_OS::gettimeofday () + ACE_Time_Value (1, 0);
 
-        if (timer_queue_.schedule (ACE_reinterpret_cast (ACE_Event_Handler *,
-                                                         handler),
+        if (timer_queue_.schedule (reinterpret_cast<ACE_Event_Handler *> (handler),
                                    this,
                                    timeout) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -112,13 +111,12 @@ public:
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
 
-    void *nc_arg = ACE_const_cast (void *, arg);
+    void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
-      ACE_reinterpret_cast (Test_Task *, nc_arg);
+      reinterpret_cast<Test_Task *> (nc_arg);
     ACE_Message_Block *mb;
     ACE_NEW_MALLOC_RETURN (mb,
-                           ACE_static_cast (ACE_Message_Block *,
-                                            ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
+                           static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
                                               ACE_Message_Block::MB_DATA, // type
                                               0,       // cont
@@ -152,8 +150,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Message_Block *mb;
   ACE_NEW_MALLOC_RETURN (mb,
-                         ACE_static_cast(ACE_Message_Block *,
-                                         ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
+                         static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (handler),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             0,       // cont

@@ -69,8 +69,7 @@ ACE_RMCast_Partial_Message::fragment_received (ACE_UINT32 message_size,
   //   iteration if the
 
   ACE_UINT32 start = offset;
-  ACE_UINT32 end   = ACE_static_cast (ACE_UINT32,
-                                      offset + total_length);
+  ACE_UINT32 end   = static_cast<ACE_UINT32> (offset + total_length);
 
   while (start != end && this->hole_count_ != 0)
     {

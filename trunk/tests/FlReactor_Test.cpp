@@ -138,10 +138,10 @@ Test_Window::draw (void)
 void sides_cb (Fl_Widget *o, void *p)
 {
   Test_Window *tw =
-    ACE_reinterpret_cast (Test_Window *,p);
+    reinterpret_cast<Test_Window *> (p);
   Fl_Slider *slider =
-    ACE_dynamic_cast (Fl_Slider*,o);
-  tw->sides (ACE_static_cast (int, slider->value ()));
+    dynamic_cast<Fl_Slider*> (o);
+  tw->sides (static_cast<int> (slider->value ()));
 }
 
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>

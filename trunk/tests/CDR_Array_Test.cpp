@@ -266,7 +266,7 @@ CDR_Test<T, H>::checkval (int i)
   else
     {
       T v;
-      unsigned char* s = ACE_reinterpret_cast(unsigned char*, (&v));
+      unsigned char* s = reinterpret_cast<unsigned char*> ((&v));
       unsigned int j;
       for (j = 0; j < H::size (); j++)
         {
@@ -290,7 +290,7 @@ template<class T, class H> void
 CDR_Test<T, H>::ttoh (const T& t, char* s)
 {
   const unsigned char *const p =
-    ACE_reinterpret_cast(const unsigned char*, &t);
+    reinterpret_cast<const unsigned char*> (&t);
 
   static char digits[16] = {
     '0', '1', '2', '3',
@@ -313,7 +313,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
 void
 do_seal (char* pos)
 {
-  char* ps = ACE_reinterpret_cast(char*, &seal);
+  char* ps = reinterpret_cast<char*> (&seal);
   pos[0] = ps[0];
   pos[1] = ps[1];
   pos[2] = ps[2];
@@ -323,7 +323,7 @@ do_seal (char* pos)
 int
 check_seal (char* pos)
 {
-  char* ps = ACE_reinterpret_cast(char*, &seal);
+  char* ps = reinterpret_cast<char*> (&seal);
   return (pos[0] == ps[0]
           && pos[1] == ps[1]
           && pos[2] == ps[2]
@@ -374,9 +374,9 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     }
 
   char* src = ACE_ptr_align_binary(srcbuf, H::size ());
-  T* idata = ACE_reinterpret_cast(T*, src);
+  T* idata = reinterpret_cast<T*> (src);
   idata += src_offset;
-  src = ACE_reinterpret_cast(char*, idata);
+  src = reinterpret_cast<char*> (idata);
 
   {
     int i;
@@ -605,8 +605,8 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
       {
         T rv;
 
-        const char* src = ACE_reinterpret_cast(const char*, (idata + i));
-        char* dst = ACE_reinterpret_cast(char*, (&rv));
+        const char* src = reinterpret_cast<const char*> ((idata + i));
+        char* dst = reinterpret_cast<char*> ((&rv));
 
         H::swap(src, dst);
 

@@ -35,9 +35,7 @@
 ACE_RCSID(WFMO_Reactor, Multithreading, "$Id$")
 
 static int concurrent_threads = 1;
-static int number_of_handles = ACE_static_cast (
-                                   int,
-                                   ACE_Reactor::instance ()->size ());
+static int number_of_handles = static_cast<int> (ACE_Reactor::instance ()->size ());
 static int number_of_handles_to_signal = 1;
 static int interval = 2;
 static int iterations = 10;
@@ -143,7 +141,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
 
   // Make us an active object.
   if (this->activate (THR_NEW_LWP,
-                      ACE_static_cast (int, concurrent_threads)) == -1)
+                      static_cast<int> (concurrent_threads)) == -1)
     ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n",
                 "activate"));
 }

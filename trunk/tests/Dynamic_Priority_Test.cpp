@@ -140,11 +140,11 @@ order_consumer (void *args)
   ACE_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
-    ACE_static_cast (ArgStruct *, args)->queue_;
+    static_cast<ArgStruct *> (args)->queue_;
   const char *receipt_order =
-    ACE_static_cast (ArgStruct *, args)->order_string_;
+    static_cast<ArgStruct *> (args)->order_string_;
   u_int expected_count =
-    ACE_static_cast (ArgStruct *, args)->expected_count_;
+    static_cast<ArgStruct *> (args)->expected_count_;
 
   ACE_ASSERT (receipt_order != 0);
   ACE_ASSERT (msg_queue != 0);
@@ -186,13 +186,13 @@ order_producer (void *args)
   ACE_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
-    ACE_static_cast (ArgStruct *, args)->queue_;
+    static_cast<ArgStruct *> (args)->queue_;
   const char *send_order =
-    ACE_static_cast (ArgStruct *, args)->order_string_;
+    static_cast<ArgStruct *> (args)->order_string_;
   ACE_Message_Block **block_array =
-    ACE_static_cast (ArgStruct *, args)->array_;
+    static_cast<ArgStruct *> (args)->array_;
   int expected_count =
-    ACE_static_cast (ArgStruct *, args)->expected_count_;
+    static_cast<ArgStruct *> (args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);
@@ -343,9 +343,9 @@ performance_consumer (void * args)
   ACE_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
-    ACE_static_cast (ArgStruct *, args)->queue_;
+    static_cast<ArgStruct *> (args)->queue_;
   u_int expected_count =
-    ACE_static_cast (ArgStruct *, args)->expected_count_;
+    static_cast<ArgStruct *> (args)->expected_count_;
 
   ACE_ASSERT (msg_queue != 0);
 
@@ -389,11 +389,11 @@ performance_producer (void *args)
   ACE_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
-    ACE_static_cast (ArgStruct *, args)->queue_;
+    static_cast<ArgStruct *> (args)->queue_;
   ACE_Message_Block **block_array =
-    ACE_static_cast (ArgStruct *, args)->array_;
+    static_cast<ArgStruct *> (args)->array_;
   int expected_count =
-    ACE_static_cast (ArgStruct *, args)->expected_count_;
+    static_cast<ArgStruct *> (args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);

@@ -97,8 +97,8 @@ int basic_test (ACE_DLL &dll)
   foo = dll.symbol (ACE_TEXT ("get_hello"));
 
   // Cast the void* to long first.
-  ptrdiff_t tmp = ACE_reinterpret_cast (ptrdiff_t, foo);
-  Hello_Factory factory = ACE_reinterpret_cast (Hello_Factory, tmp);
+  ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
+  Hello_Factory factory = reinterpret_cast<Hello_Factory> (tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -138,8 +138,8 @@ int dynamic_cast_test (ACE_DLL &dll)
   foo = dll.symbol (ACE_TEXT ("dynamic_cast_test"));
 
   // Cast the void* to long first.
-  ptrdiff_t tmp = ACE_reinterpret_cast (ptrdiff_t, foo);
-  PFN pfnAcquire = ACE_reinterpret_cast (PFN, tmp);
+  ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
+  PFN pfnAcquire = reinterpret_cast<PFN> (tmp);
   if (pfnAcquire == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

@@ -31,7 +31,7 @@ public:
   u_long operator () (size_t t) const
     {
       // Simply returns t
-      return ACE_static_cast (u_long, t);
+      return static_cast<u_long> (t);
     }
 };
 

@@ -101,8 +101,7 @@ long max_connected_port = 0;
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
-                                                     arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
 
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST,

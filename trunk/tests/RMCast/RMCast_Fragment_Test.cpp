@@ -158,7 +158,7 @@ ACE_RMCast_Fragment_Tester::svc (void)
     ACE_UINT32 total = 0;
 
     ACE_RANDR_TYPE seed =
-      ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0));
+      static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
 
     int size = 64 + ACE_OS::rand_r(seed) % 128;
     ACE_Message_Block smallb[n];
@@ -279,7 +279,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
       ACE_OS::memcpy (this->received_.rd_ptr () + offset,
                       mb->rd_ptr (),
                       payload_size);
-      this->received_bytes_ += ACE_static_cast (ACE_UINT32, payload_size);
+      this->received_bytes_ += static_cast<ACE_UINT32> (payload_size);
       offset += payload_size;
     }
 
@@ -291,7 +291,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
       fragment_size += payload_size;
       ACE_OS::memcpy (this->received_.rd_ptr () + offset,
                       i->rd_ptr (), payload_size);
-      this->received_bytes_ += ACE_static_cast (ACE_UINT32, payload_size);
+      this->received_bytes_ += static_cast<ACE_UINT32> (payload_size);
       offset += payload_size;
     }
 

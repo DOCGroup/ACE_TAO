@@ -3335,7 +3335,7 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
                                                                instruction
                                                                ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK_RETURN (-1);
-                this->obstack_.unwind (ACE_const_cast (ACEXML_Char*, pitarget));
+                this->obstack_.unwind (const_cast<ACEXML_Char*> (pitarget));
                 return 0;
               }
             break;

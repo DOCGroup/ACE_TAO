@@ -174,7 +174,7 @@ issue_aio_calls (void)
   aiocb3.aio_sigevent.sigev_signo = SIGRTMIN;
   aiocb3.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb3;
   sigval value;
-  value.sival_ptr = ACE_reinterpret_cast (void *, &aiocb3);
+  value.sival_ptr = reinterpret_cast<void *> (&aiocb3);
   // Queue this one for completion right now.
   if (sigqueue (ACE_OS::getpid (), SIGRTMIN, value) == -1)
     // Queueing failed.

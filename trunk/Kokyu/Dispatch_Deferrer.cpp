@@ -75,7 +75,7 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
   while (begin <= end)
     {
       Dispatch_Queue_Item *qitem =
-        ACE_dynamic_cast(Dispatch_Queue_Item*, begin);
+        dynamic_cast<Dispatch_Queue_Item*> (begin);
 
       if (qitem == 0)
         {

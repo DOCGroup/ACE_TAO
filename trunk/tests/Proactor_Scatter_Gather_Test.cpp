@@ -91,7 +91,7 @@ static int allocate_chunks_chain (ACE_Message_Block *&head_mb,
 #endif /* ACE_WIN32 */
       if (addr)
         {
-          ACE_Message_Block *mb = new ACE_Message_Block (ACE_static_cast (char *, addr),
+          ACE_Message_Block *mb = new ACE_Message_Block (static_cast<char *> (addr),
                                                          chunk_size);
           if (!head_mb)
             head_mb = mb;
@@ -830,7 +830,7 @@ Writer::initiate_write_file (void)
   // pipelined writing (that is, mulitple calls to write before the callbacks
   // to handle_x)
   this->writing_file_offset_ +=
-    ACE_static_cast (u_long, increment_writing_file_offset);
+    static_cast<u_long> (increment_writing_file_offset);
   ++this->io_count_;
   return 0;
 }
@@ -846,7 +846,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
               result.bytes_transferred ()));
 
   this->reported_file_offset_ +=
-    ACE_static_cast (u_long, result.bytes_transferred ());
+    static_cast<u_long> (result.bytes_transferred ());
 
   // Always truncate as required,
   // because partial will always be the last write to a file
@@ -856,7 +856,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   if (last_mb->space ())
     ACE_OS::truncate (output_file,
                       this->reported_file_offset_ -
-                        ACE_static_cast (u_long, last_mb->space ()));
+                        static_cast<u_long> (last_mb->space ()));
 
   free_chunks_chain (mb);
 
@@ -1133,7 +1133,7 @@ Sender::initiate_read_file (void)
   static const size_t file_size = ACE_OS::filesize (input_file);
 
   static const size_t number_of_chunks_needed_for_file =
-    ACE_static_cast (size_t, ACE_OS::ceil ((double) file_size / chunk_size));
+    static_cast<size_t> (ACE_OS::ceil ((double) file_size / chunk_size));
 
   size_t relevant_number_of_chunks =
     ACE_MIN ((size_t)ACE_IOV_MAX,
@@ -1238,7 +1238,7 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
                   bytes_transferred,
                   chunks_chain_size));
 
-      this->file_offset_ += ACE_static_cast (u_long, bytes_transferred);
+      this->file_offset_ += static_cast<u_long> (bytes_transferred);
 
       this->initiate_write_stream (*mb);
 

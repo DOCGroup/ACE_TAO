@@ -151,7 +151,7 @@ ACE::HTBP::Channel *
 ACE::HTBP::Session::outbound (void) const
 {
   if (!this->closed_ && this->proxy_addr_)
-    ACE_const_cast(ACE::HTBP::Session *,this)->reconnect();
+    const_cast<ACE::HTBP::Session *> (this)->reconnect();
   if ( this->outbound_ == 0)
     return 0;
   ACE::HTBP::Channel::State s =this->outbound_->state();

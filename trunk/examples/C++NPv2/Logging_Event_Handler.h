@@ -47,7 +47,7 @@ public:
     // Need a non-const reference to call peer(), but that's
     // safe since we call a const method using it.
     Logging_Handler& h =
-      ACE_const_cast (Logging_Handler&, logging_handler_);
+      const_cast<Logging_Handler&> (logging_handler_);
     return h.peer ().get_handle ();
   };
 

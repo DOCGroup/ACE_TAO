@@ -267,7 +267,7 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
   for (const ACE_Message_Block *i = mb; i != 0; i = i->cont ())
     {
       iov[iovcnt].iov_base = i->rd_ptr ();
-      iov[iovcnt].iov_len = ACE_static_cast (u_long, i->length ());
+      iov[iovcnt].iov_len = static_cast<u_long> (i->length ());
       iovcnt++;
       if (iovcnt >= IOV_MAX)
         return -1;

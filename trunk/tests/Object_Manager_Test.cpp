@@ -36,7 +36,7 @@ extern "C"
 void
 hook2 (void * /* object */, void *param)
 {
-  u_int *paramp = ACE_reinterpret_cast (u_int *, param);
+  u_int *paramp = reinterpret_cast<u_int *> (param);
 
   // We can use ACE_Log_Msg in an ACE_Object_Manager cleanup hook.
   // But NOT in an ACE_OS::atexit () hook!  However, the ACE_END_TEST

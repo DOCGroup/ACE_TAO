@@ -36,7 +36,7 @@ cleanup (void *ptr)
               "(%t) in cleanup, ptr = %x\n",
               ptr));
 
-  delete ACE_reinterpret_cast (char *, ptr);
+  delete reinterpret_cast<char *> (ptr);
 }
 
 // This worker function is the entry point for each thread.
@@ -203,8 +203,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (threads,
                                                ACE_THR_FUNC (&worker),
-                                               ACE_reinterpret_cast(void *,
-                                                                    count),
+                                               reinterpret_cast<void *> (count),
                                                THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

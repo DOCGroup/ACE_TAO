@@ -36,8 +36,7 @@ public:
   Employee (const char *name, u_long id) : id_ (id)
   {
     size_t len = ACE_OS::strlen (name) + 1;
-    this->name_ = ACE_reinterpret_cast (char *,
-                                        shmem_allocator->malloc (len));
+    this->name_ = reinterpret_cast<char *> (shmem_allocator->malloc (len));
     ACE_OS::strcpy (this->name_, name);
   }
 
@@ -51,8 +50,7 @@ public:
       shmem_allocator->free (this->name_);
 
     size_t len = ACE_OS::strlen (name) + 1;
-    this->name_ = ACE_reinterpret_cast (char *,
-                                        shmem_allocator->malloc (len));
+    this->name_ = reinterpret_cast<char *> (shmem_allocator->malloc (len));
     ACE_OS::strcpy (this->name_, name);
   }
 
@@ -205,8 +203,7 @@ GUI_Handler::find_employee (const char *name)
   if (shmem_allocator->find (name,
                              temp) == 0)
     {
-      Employee *employee = ACE_reinterpret_cast (Employee *,
-                                                 temp);
+      Employee *employee = reinterpret_cast<Employee *> (temp);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The following employee was found.......\n\n"));
@@ -235,8 +232,7 @@ GUI_Handler::list_employees (void)
          iterator.next (temp) != 0;
          iterator.advance ())
       {
-        Employee *employee = ACE_reinterpret_cast (Employee *,
-                                                   temp);
+        Employee *employee = reinterpret_cast<Employee *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     "Employee name: %s\nEmployee id:   %d\n",
                     employee->name (),
@@ -253,8 +249,7 @@ GUI_Handler::list_employees (void)
          iterator.next (temp) != 0;
          iterator.advance ())
       {
-        Employee *employee = ACE_reinterpret_cast (Employee *,
-                                                   temp);
+        Employee *employee = reinterpret_cast<Employee *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     "Employee name: %s\nEmployee id:   %d\n",
                     employee->name (),
@@ -272,8 +267,7 @@ GUI_Handler::delete_employee (const char *name)
   if (shmem_allocator->unbind (name,
                                temp) == 0)
     {
-      Employee *employee = ACE_reinterpret_cast (Employee *,
-                                                 temp);
+      Employee *employee = reinterpret_cast<Employee *> (temp);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The following employee was found and deleted.......\n\n"));

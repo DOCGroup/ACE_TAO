@@ -66,7 +66,7 @@ public:
                                           mblk.space ());
       if (bytes_read <= 0)
         break;
-      mblk.wr_ptr (ACE_static_cast (size_t, bytes_read));
+      mblk.wr_ptr (static_cast<size_t> (bytes_read));
 
       // We have a bunch of data from the log file. The data is
       // arranged like so:
@@ -144,22 +144,19 @@ public:
 
         // Extract the type
         ACE_CDR::Long *lp;
-        lp = ACE_reinterpret_cast
-          (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = reinterpret_cast<ACE_CDR::Long*> (temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
         // Extract the pid
-        lp = ACE_reinterpret_cast
-          (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = reinterpret_cast<ACE_CDR::Long*> (temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
         // Extract the timestamp (2 Longs)
-        lp = ACE_reinterpret_cast
-          (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = reinterpret_cast<ACE_CDR::Long*> (temp->wr_ptr ());
         cdr >> *lp; ++lp; cdr >> *lp;
         temp->wr_ptr (2 * sizeof (ACE_CDR::Long));
         temp = temp->cont ();

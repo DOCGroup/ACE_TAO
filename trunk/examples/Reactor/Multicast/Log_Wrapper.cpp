@@ -68,7 +68,7 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   this->log_msg_.sequence_number = htonl(sequence_number_);
 
   iovec iovp[2];
-  iovp[0].iov_base = ACE_reinterpret_cast (char*, &log_msg_);
+  iovp[0].iov_base = reinterpret_cast<char*> (&log_msg_);
   iovp[0].iov_len  = sizeof (log_msg_);
   iovp[1].iov_base = message;
   iovp[1].iov_len  = log_msg_.msg_length;
