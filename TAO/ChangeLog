@@ -1,3 +1,15 @@
+2003-11-27    <bala@AMROD>
+
+	* M orbsvcs/tests/Concurrency/CC_client.dsp
+M orbsvcs/tests/EC_Mcast/EC_Mcast.dsp
+M orbsvcs/tests/EC_Multiple/EC_Multiple.dsp
+M orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp
+M orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp
+M orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp
+M orbsvcs/tests/Event/Performance/Connect.dsp
+M orbsvcs/tests/Event/Performance/Latency.dsp
+M orbsvcs/tests/Event/Performance/Latency_Server.dsp
+
 Thu Nov 27 17:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
