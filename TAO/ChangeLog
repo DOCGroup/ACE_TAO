@@ -1,3 +1,17 @@
+Tue Sep 17 09:09:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation/Collocation_Test_Stubs.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.bor:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Consumer.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Supplier.bor:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.bor:
+          Fixed for static build
+
 Mon Sep 16 18:23:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/Test_Client_Module.bor:
