@@ -109,7 +109,7 @@ Echo_Handler::handle_input (ACE_HANDLE)
 
   len = this->peer ().recv (buf, MAXPATHLEN * sizeof (ACE_TCHAR));
 
-  if (len == -1)
+  if (len == -1 && errno != EIO)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error receiving from MEM_Stream\n")),
                       -1);
