@@ -52,6 +52,14 @@ TAO_Cache_IntId::recycle_state (void)
   return this->recycle_state_;
 }
 
+ACE_INLINE TAO_Transport *
+TAO_Cache_IntId::relinquish_transport (void)
+{
+  // Yield ownership of the TAO_Transport object.
+  TAO_Transport *val = this->transport_;
+  this->transport_ = 0;
+  return val;
+}
 
 /*******************************************************/
 ACE_INLINE

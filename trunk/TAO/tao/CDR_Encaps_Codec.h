@@ -67,8 +67,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     IOP::Codec::InvalidTypeForEncoding));
 
-  // Extract the TypeCode and the value from the octet sequence and
-  // place them into an Any.
+  /// Extract the TypeCode and the value from the octet sequence and
+  /// place them into an Any.
   virtual CORBA::Any * decode (const CORBA::OctetSeq & data,
 			       CORBA::Environment &ACE_TRY_ENV =
 			         TAO_default_environment ())
@@ -83,8 +83,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     IOP::Codec::InvalidTypeForEncoding));
 
-  // Extract the value from the octet sequence, based on the given
-  // TypeCode,  and place it into an Any.
+  /// Extract the value from the octet sequence, based on the given
+  /// TypeCode,  and place it into an Any.
   virtual CORBA::Any * decode_value (const CORBA::OctetSeq & data,
 				     CORBA::TypeCode_ptr tc,
 				     CORBA::Environment &ACE_TRY_ENV =
