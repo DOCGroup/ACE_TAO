@@ -3,7 +3,7 @@
 
 project(*Receiver): taoserver {
 
-  requires += under_construction_not_build_nightly_yet
+  requires += dummy_label
 
   exename = receiver
 
@@ -14,7 +14,7 @@ project(*Receiver): taoserver {
 
 project(*Distributor): rt_server {
 
-  requires += under_construction_not_build_nightly_yet
+  requires += dummy_label
 
   exename = distributor
 
@@ -25,7 +25,7 @@ project(*Distributor): rt_server {
 
 project(*Sender): rt_client {
 
-  requires += under_construction_not_build_nightly_yet
+  requires += dummy_label
 
   Source_Files {
     sender.cpp
