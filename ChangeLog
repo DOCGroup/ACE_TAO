@@ -1,3 +1,11 @@
+Mon Mar 10 18:10:31 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/ARGV.h: Clarified the behavior of ACE_ARGV's behavior with
+	  respect to environment variable substitution; it only substitutes
+	  when the token is itself an environment variable reference and not
+	  if there's an environment variable reference contained within the
+	  token. e.g. $HOME will subtitute, $HOME/file will not.
+
 Mon Mar 10 14:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
