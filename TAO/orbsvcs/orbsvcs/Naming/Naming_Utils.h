@@ -113,7 +113,8 @@ public:
   TAO_Naming_Client (void);
   // Default constructor.
 
-  int init (CORBA::ORB_ptr orb);
+  int init (CORBA::ORB_ptr orb,
+            ACE_Time_Value *timeout = 0);
   // Initialize the name server.
 
   ~TAO_Naming_Client (void);
