@@ -1,3 +1,11 @@
+Thu May 10 08:06:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor
+        * tests/Queued_Message_Test/*.bor
+        * tests/Big_Request_Muxing/*.bor
+
+          Added BCB makefiles for mentioned tests
+
 Wed May 09 19:37:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
