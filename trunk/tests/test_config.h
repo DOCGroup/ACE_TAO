@@ -193,6 +193,8 @@ ACE_Test_Output::set_output (const char *filename, int append)
   int flags = ios::out;
   if (append)
     flags |= ios::app;
+  else
+    flags |= ios::trunc;
 
   this->output_file_.open (temp, flags);
   if (this->output_file_.bad ())
