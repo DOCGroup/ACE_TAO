@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/OS_NS_macros.h"
-
+#include "ace/OS_NS_errno.h"
 
 ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
@@ -66,7 +66,7 @@ ACE_OS::dlerror (void)
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 #endif /* _M_UNIX */
 # elif defined (__hpux) || defined (VXWORKS)
-  ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
+  ACE_OSCALL_RETURN (ACE_OS::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
 #   if defined (ACE_HAS_PHARLAP)
