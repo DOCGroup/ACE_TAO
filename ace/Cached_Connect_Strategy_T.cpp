@@ -17,10 +17,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pair_T.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Cached_Connect_Strategy_T.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
 
 #define ACE_T1 class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX

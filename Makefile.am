@@ -75,25 +75,6 @@ release:
 confexecdir=$(libdir)
 confexec_DATA = aceConf.sh
 
-## We create aceConf.sh here and not from configure because we want
-## to get the paths expanded correctly.  Macros like srcdir are given
-## the value NONE in configure if the user doesn't specify them (this
-## is an autoconf feature, not a bug).
-aceConf.sh: aceConf.sh.in Makefile
-## Use sed and then mv to avoid problems if the user interrupts.
-	sed -e 's,\@ACE_LIBDIR\@,$(ACE_LIBDIR),g' \
-            -e 's,\@ACE_INCLUDEDIR\@,$(ACE_INCLUDEDIR),g' \
-            -e 's,\@ACE_LIBS\@,$(ACE_LIBS),g' \
-            -e 's,\@CXXFLAGS\@,$(CXXFLAGS),g' \
-              < $(srcdir)/aceConf.sh.in > aceConf.tmp \
-          && mv aceConf.tmp aceConf.sh
-
-ace-config.1: ace-config.1.in Makefile
-## Use sed and then mv to avoid problems if the user interrupts.
-	sed -e 's,\@libdir\@,$(libdir),g' \
-              < $(srcdir)/ace-config.1.in > ace-config.1.tmp \
-          && mv ace-config.1.tmp ace-config.1
-
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
 ## needed anyway.
