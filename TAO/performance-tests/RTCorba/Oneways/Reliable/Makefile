@@ -17,7 +17,7 @@ LDLIBS = -lTAO
 IDLFILES = testC testS
 BIN = server client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
+SRC = $(addsuffix .cpp, $(IDLFILES) test_i $(BIN))
 
 CLIENT_OBJS = client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
