@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DynCommon.h"
+#include "tao/LocalObject.h"
 #include "ace/Containers.h"
 
 #if defined (_MSC_VER)

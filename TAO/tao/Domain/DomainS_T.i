@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+// be/be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -116,7 +122,7 @@ POA_CORBA::DomainManager_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::DomainManager_tie<T>::get_domain_policy  (
@@ -136,7 +142,7 @@ template <class T> ACE_INLINE
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+// be/be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -231,27 +237,7 @@ POA_CORBA::ConstructionPolicy_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
-    CORBA::InterfaceDef_ptr object_type,
-    CORBA::Boolean constr_policy
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->make_domain_manager (
-    object_type,
-    constr_policy
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA::ConstructionPolicy_tie<T>::policy_type  (
@@ -267,7 +253,7 @@ CORBA::PolicyType POA_CORBA::ConstructionPolicy_tie<T>::policy_type  (
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::ConstructionPolicy_tie<T>::copy  (
@@ -283,7 +269,7 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_CORBA::ConstructionPolicy_tie<T>::destroy  (
@@ -295,6 +281,26 @@ void POA_CORBA::ConstructionPolicy_tie<T>::destroy  (
 {
   this->ptr_->destroy (
     ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// be/be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
+    CORBA::InterfaceDef_ptr object_type,
+    CORBA::Boolean constr_policy
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->make_domain_manager (
+    object_type,
+    constr_policy
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
