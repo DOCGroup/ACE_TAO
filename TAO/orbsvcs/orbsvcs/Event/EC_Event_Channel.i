@@ -1,19 +1,5 @@
 // $Id$
 
-ACE_INLINE
-TAO_EC_Event_Channel_Attributes::
-TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
-                                 PortableServer::POA_ptr c_poa)
-  :  consumer_reconnect (0),
-     supplier_reconnect (0),
-     busy_hwm (1),
-     max_write_delay (1),
-     scheduler (RtecScheduler::Scheduler::_nil ()),
-     supplier_poa (s_poa),
-     consumer_poa (c_poa)
-{
-}
-
 ACE_INLINE TAO_EC_Dispatching*
 TAO_EC_Event_Channel::dispatching (void) const
 {
@@ -48,12 +34,6 @@ ACE_INLINE TAO_EC_Timeout_Generator*
 TAO_EC_Event_Channel::timeout_generator (void) const
 {
   return this->timeout_generator_;
-}
-
-ACE_INLINE TAO_EC_Scheduling_Strategy*
-TAO_EC_Event_Channel::scheduling_strategy (void) const
-{
-  return this->scheduling_strategy_;
 }
 
 ACE_INLINE TAO_EC_ProxyPushSupplier*
@@ -150,34 +130,4 @@ ACE_INLINE void
 TAO_EC_Event_Channel::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   this->factory_->destroy_supplier_admin_lock (x);
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::consumer_reconnect (void) const
-{
-  return this->consumer_reconnect_;
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::supplier_reconnect (void) const
-{
-  return this->supplier_reconnect_;
-}
-
-ACE_INLINE RtecScheduler::Scheduler_ptr
-TAO_EC_Event_Channel::scheduler (void)
-{
-  return RtecScheduler::Scheduler::_duplicate (this->scheduler_.in ());
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::busy_hwm (void) const
-{
-  return this->busy_hwm_;
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::max_write_delay (void) const
-{
-  return this->max_write_delay_;
 }

@@ -137,15 +137,12 @@ ECT_Throughput::run (int argc, char* argv[])
             }
         }
 
-      int priority =
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  priority,
+                                                  min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
@@ -160,7 +157,7 @@ ECT_Throughput::run (int argc, char* argv[])
                         "%s: ACE_OS::sched_params failed\n", argv[0]));
         }
 
-      if (ACE_OS::thr_setprio (priority) == -1)
+      if (ACE_OS::thr_setprio (min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
                       "no real-time features\n"));
@@ -240,13 +237,10 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
-          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                root_poa.in ());
-          attr.busy_hwm = this->ec_concurrency_hwm_;
-          attr.max_write_delay = this->ec_concurrency_hwm_;
-
           TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (attr);
+            new TAO_EC_Event_Channel (root_poa.in (),
+                                      root_poa.in ());
+          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -428,14 +422,13 @@ ECT_Throughput::connect_suppliers
 void
 ECT_Throughput::activate_suppliers (CORBA::Environment &)
 {
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       if (this->suppliers_[i]->activate (this->thr_create_flags_,
-                                         1, 0, priority) == -1)
+                                         1, 0, min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Cannot activate thread for supplier %d\n",
@@ -651,7 +644,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
     {
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of consumers or "
                          "suppliers out of range, "
                          "reset to default (%d)\n",
@@ -662,7 +655,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
@@ -672,7 +665,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
     {
       this->n_suppliers_ = 1;
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
@@ -681,7 +674,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
   if (this->ec_concurrency_hwm_ <= 0)
     {
       this->ec_concurrency_hwm_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);

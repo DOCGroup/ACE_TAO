@@ -31,7 +31,6 @@
 #include "tao/Environment.h"
 #include "tao/Context.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 class TAO_Export CORBA_Request
 {
@@ -58,15 +57,9 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
-  CORBA::Context_ptr ctx (void) const;
-  // Accessor for the Context member.
-
-  void ctx (CORBA::Context_ptr);
-  // Mutator for the Context member.
-
   CORBA::ContextList_ptr contexts (void);
-  // Return a list of the request's result's contexts. Since
-  // TAO does not implement Contexts, this will always be 0.
+  // Return a list of the request's contexts. Since TAO does
+  // not implement Contexts, this will always be 0.
 
   CORBA::Environment_ptr env (void);
   // Return the <Environment> for this request.
@@ -167,11 +160,8 @@ private:
   CORBA::ExceptionList exceptions_;
   // list of exceptions raised by the operation
 
-  CORBA::ContextList_ptr contexts_;
-  // List of the request's result's contexts.
-
-  CORBA::Context_ptr ctx_;
-  // Context associated with this request.
+  CORBA::ContextList contexts_;
+  // List of the request's contexts
 
   CORBA::ULong refcount_;
   // reference counting
@@ -248,47 +238,16 @@ private:
   CORBA_Request_ptr &ptr_;
 };
 
-// Make sure you instantiate this in Request.cpp
-class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request>
+class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
 {
 public:
-// Helpful with template programming.
+
+  // Helpful with template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_RequestSeq_ptr _ptr_type;
   typedef CORBA_ORB_RequestSeq_var _var_type;
 #endif /* __GNUC__ */
 
-  // Implement the same constructors provided by the template here,
-  // check Sequence_T.h for ideas.
-  // Simply delegate on the template for the implementation...
-  
-  CORBA_ORB_RequestSeq (void);
-  // default ctor
-
-  CORBA_ORB_RequestSeq (CORBA::ULong max);
-  // Constructor with a "hint" for the maximum capacity.
-
-  CORBA_ORB_RequestSeq (CORBA::ULong maximum,
-                        CORBA::ULong length,
-                        CORBA_Request* * data,
-                        CORBA::Boolean release=0);
-  // Constructor with a given buffer.
-
-  CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &);
-  // Copy ctor, deep copies.
-
-  //~CORBA_ORB_RequestSeq (void);
-  // dtor releases all the contained elements.
-};
-
-// This class definition should be removed.. But need to 
-// check with all the compiler guys before we have this removed
-
-/*class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
-{
-public:
-
-  
   // Default constructor.
   CORBA_ORB_RequestSeq (void);
 
@@ -338,7 +297,7 @@ public:
                 CORBA::Request_ptr *data,
                 CORBA::Boolean release);
 };
-*/
+
 class CORBA_ORB_RequestSeq_var
 {
 public:

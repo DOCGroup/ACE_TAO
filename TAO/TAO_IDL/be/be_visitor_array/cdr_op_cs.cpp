@@ -293,13 +293,6 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           *os << " ((const char *)_tao_array.in (), ";
           break;
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_cs::"
-                             "visit_predefined_type - "
-                             "bad substate in context\n"),
-                            -1);
         }
       break;
     default:
@@ -311,13 +304,6 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           *os << " (_tao_array.in (), ";
           break;
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_cs::"
-                             "visit_predefined_type - "
-                             "bad substate in context\n"),
-                            -1);
         }
       break;
     }
@@ -502,13 +488,6 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                 *os << ".out ()";
               }
           }
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_cs::"
-                             "visit_predefined_type - "
-                             "bad node type\n"),
-                            -1);
         }
       if (bt->node_type () == AST_Decl::NT_array)
         {
@@ -555,13 +534,6 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                 *os << ".in ()";
               }
           }
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_cs::"
-                             "visit_predefined_type - "
-                             "bad node type\n"),
-                            -1);
         }
       if (bt->node_type () == AST_Decl::NT_array)
         {

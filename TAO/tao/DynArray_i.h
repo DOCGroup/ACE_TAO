@@ -49,9 +49,9 @@ public:
 
   // Assign/dump elements using IDL defined type AnySeq
 
-  CORBA_AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV);
+  AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV);
 
-  void set_elements (const CORBA_AnySeq& value,
+  void set_elements (const AnySeq& value,
                      CORBA::Environment &ACE_TRY_ENV);
 
   // Functions common to all Dynamic Any types

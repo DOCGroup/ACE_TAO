@@ -36,7 +36,6 @@ class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;
 class TAO_IIOP_Server_Transport;
 class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -283,10 +282,7 @@ protected:
   // Perform appropriate closing.
 
   TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
+  // Cache the ORB Core to minimize
 };
 
 #if defined (__ACE_INLINE__)

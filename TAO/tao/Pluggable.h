@@ -21,6 +21,7 @@
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
+#include "tao/Typecode.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -181,9 +182,6 @@ class TAO_Export TAO_Profile
   //   @@ Fred, please fill in here.
   //
 public:
-  TAO_Profile (void);
-  // Constructor
-
   virtual CORBA::ULong tag (void) const = 0;
   // The tag, each concrete class will have a specific tag value.
   // @@ Fred, any reason this cannot be implemented in the base class?
@@ -242,11 +240,24 @@ public:
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by this object (not given to the caller).
 
-  void forward_to (TAO_MProfile *mprofiles);
-  // Keep a pointer to the forwarded profile
+  virtual void forward_to (TAO_MProfile *mprofiles) = 0;
+  // object will assume ownership for this object!!
+  // @@ Fred: this is a bit counterintuitive, the usual rules CORBA
+  //    are:
+  //    1) Memory passed to an operations is owned by the caller.
+  //    2) Memory returned from a call is owned by the caller.
+  //
+  //    C++ is more flexible about this but the common rule is:
+  //    1) Pointers returned are owned by the callee.
+  //    2) Pointers passed are owned by the caller.
+  //
+  //    One good thing about references it that it leaves no ambiguity
+  //    about this.
+  //    The principle of least surprize will recommend that you use
+  //    any of the approaches above, but not the protocol that you propose.
 
-  TAO_MProfile* forward_to (void);
-  // MProfile accessor
+  virtual TAO_MProfile *forward_to (void) = 0;
+  // copy of MProfile, user must delete.
 
   virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
                                         CORBA::Environment &env) = 0;
@@ -280,14 +291,11 @@ public:
   // @@ Fred: reference counting can be implemented in the base class!
 
 protected:
-  TAO_MProfile *forward_to_i (void);
+  virtual TAO_MProfile *forward_to_i (void) = 0;
   // this object keeps ownership of this object
 
   virtual ~TAO_Profile (void);
   // If you have a virtual method you need a virtual dtor.
-
-private:
-  TAO_MProfile* forward_to_;
 };
 
 class TAO_Export TAO_Acceptor
@@ -316,9 +324,6 @@ public:
 
   virtual CORBA::ULong tag (void) = 0;
   // The tag, each concrete class will have a specific tag value.
-
-  virtual int close (void) = 0;
-  // Closes the acceptor
 
   virtual ~TAO_Acceptor (void);
   // Destructor
@@ -440,9 +445,5 @@ private:
   // bit more generic.  Something like a key, value pair with key
   // equil to the IOP_TYPE and value a pointer to the Connector.
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/Pluggable.i"
-#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_PLUGGABLE_H */

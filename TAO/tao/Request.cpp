@@ -13,13 +13,6 @@
 
 ACE_RCSID(tao, Request, "$Id$")
 
-void
-CORBA::release (CORBA::Request_ptr req)
-{
-  if (req)
-    req->_decr_refcnt ();
-}
-
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
@@ -41,12 +34,6 @@ CORBA_Request::_decr_refcnt (void)
   return 0;
 }
 
-CORBA_Request*
-CORBA_Request::_nil (void)
-{
-  return 0;
-}
-
 // Reference counting for DII Request object
 
 // DII Request class implementation
@@ -61,12 +48,10 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     result_ (result),
     flags_ (flags),
     env_ (TAO_IN_ENV),
-    contexts_ (0),
-    ctx_ (0),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  opname_ = CORBA::string_copy (op);
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
@@ -74,12 +59,10 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::Environment &TAO_IN_ENV)
   : flags_ (0),
     env_ (TAO_IN_ENV),
-    contexts_ (0),
-    ctx_ (0),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  opname_ = CORBA::string_copy (op);
 
   ACE_NEW (args_, CORBA::NVList);
   ACE_NEW (result_, CORBA::NamedValue);
@@ -154,38 +137,11 @@ CORBA_Request::poll_response (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-//  constructor.
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max)
-{
-  // no-op
-}
-
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (rhs)
-{
-  // no-op
-}
-
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
-                                            CORBA::ULong length,
-                                            CORBA_Request **data,
-                                            CORBA::Boolean release)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max,
-                                                   length,
-                                                   data,
-                                                   release)
-{
-  // no-op
-}
-
-
+// Default constructor.
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
 {
-  // no-op
 }
 
-/*
 // Constructor using a maximum length value.
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
@@ -397,12 +353,5 @@ CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
   this->buffer_ = data;
   this->release_ = release;
 }
-*/
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Pseudo_Sequence<CORBA_Request>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_Request>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
