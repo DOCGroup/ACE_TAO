@@ -246,6 +246,7 @@ INCLUDES = \
 	Acceptor.cpp \
 	Asynch_Acceptor.cpp \
 	Array_Base.cpp \
+        Atomic_Op.cpp \
 	Node.cpp \
 	Unbounded_Set.cpp \
 	Unbounded_Queue.cpp \

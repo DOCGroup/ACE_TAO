@@ -1,8 +1,9 @@
 Fri Feb 22 08:07:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
-        * ace/Makefile.bor: Added String_Base.cpp to the list of files that
-          must be installed when doing a make install. Thanks to Cyrille
-          Chépélov <cyrille@softek.fr> for reporting that this file missed.
+        * ace/Makefile.bor: Added String_Base.cpp and Atomic_op.cpp to the
+          list of files that must be installed when doing a make install.
+          Thanks to Cyrille Chépélov <cyrille@softek.fr> for reporting that
+          these files missed.
 
 Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
