@@ -164,14 +164,13 @@ succeed_nonblocking (void)
 
       if (status == -1)
         {
-          // In cast the errno gets overwritten by the printout.  It
-          // does on LynxOS 2.5.0.
-          const int saved_errno = errno;
+          // Reset the status _before_ doing the printout, in case the
+          // printout overwrites errno.
+          if (errno == ECONNREFUSED || errno == ENOTCONN)
+            status = 0;
 
           ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
                       ASYS_TEXT("connect:complete")));
-          if (saved_errno == ECONNREFUSED || errno == ENOTCONN)
-            status = 0;
         }
       else
         ACE_DEBUG((LM_DEBUG,
