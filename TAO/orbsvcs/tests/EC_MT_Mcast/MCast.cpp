@@ -56,7 +56,7 @@ run_orb_within_thread (void *)
           return 0;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
     }
 
   return 0;
