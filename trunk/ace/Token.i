@@ -4,6 +4,18 @@
 // Token.i
 
 ACE_INLINE int
+ACE_Token::queueing_strategy (void)
+{
+  return this->queueing_strategy_;
+}
+
+ACE_INLINE void
+ACE_Token::queueing_strategy (int queueing_strategy)
+{
+  this->queueing_strategy_ = queueing_strategy == -1 ? -1 : 0;
+}
+
+ACE_INLINE int
 ACE_Token::remove (void)
 {
   ACE_TRACE ("ACE_Token::remove");
