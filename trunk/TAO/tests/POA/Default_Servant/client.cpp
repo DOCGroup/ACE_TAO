@@ -2,7 +2,7 @@
 //
 //===================================================================
 //  = LIBRARY
-//      client
+//      TAO/tests/POA/Default_Servant/client
 //
 //  = FILENAME
 //     client.cpp
