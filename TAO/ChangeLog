@@ -1,3 +1,9 @@
+Mon Aug 25 08:05:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Schedule.h: 
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors caused
+	  by changes to compute_scheduling and dump_schedule methods.
+	  
 Mon Aug 25 08:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynAny_Test/analyzer.{h,cpp}:

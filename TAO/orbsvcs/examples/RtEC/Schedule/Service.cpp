@@ -311,6 +311,7 @@ main (int argc, char* argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
           RtecScheduler::RT_Info_Set_var infos;
+          RtecScheduler::Dependency_Set_var deps;
           RtecScheduler::Config_Info_Set_var configs;
           RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
@@ -328,6 +329,7 @@ main (int argc, char* argv[])
           scheduler->compute_scheduling (min_os_priority,
                                          max_os_priority,
                                          infos.out (),
+                                         deps.out (),
                                          configs.out (),
                                          anomalies.out ()
                                          ACE_ENV_ARG_PARAMETER);
@@ -335,6 +337,7 @@ main (int argc, char* argv[])
 
           // Dump the schedule to a file..
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                                deps.in (),
                                                 configs.in (),
                                                 anomalies.in (),
                                                 "schedule.out");
