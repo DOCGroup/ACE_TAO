@@ -111,24 +111,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_IDLType_ptr element_type_def (
+  virtual CORBA::IDLType_ptr element_type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr element_type_def_i (
+  CORBA::IDLType_ptr element_type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void element_type_def (
-      CORBA_IDLType_ptr element_type_def
+      CORBA::IDLType_ptr element_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void element_type_def_i (
-      CORBA_IDLType_ptr element_type_def
+      CORBA::IDLType_ptr element_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -146,5 +146,3 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* TAO_SEQUENCEDEF_I_H */
-
-

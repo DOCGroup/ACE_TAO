@@ -69,24 +69,24 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA_IDLType_ptr original_type_def (
+  virtual CORBA::IDLType_ptr original_type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr original_type_def_i (
+  CORBA::IDLType_ptr original_type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void original_type_def (
-      CORBA_IDLType_ptr original_type_def
+      CORBA::IDLType_ptr original_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void original_type_def_i (
-      CORBA_IDLType_ptr original_type_def
+      CORBA::IDLType_ptr original_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -97,4 +97,3 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_VALUEBOXDEF_I_H */
-

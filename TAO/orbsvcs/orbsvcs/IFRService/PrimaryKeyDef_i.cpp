@@ -42,7 +42,7 @@ TAO_PrimaryKeyDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SING
   // TODO
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_PrimaryKeyDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -51,7 +51,7 @@ TAO_PrimaryKeyDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_PrimaryKeyDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -79,20 +79,19 @@ TAO_PrimaryKeyDef_i::is_a_i (const char * /* primary_key_id */
   return 0;
 }
 
-CORBA_ValueDef_ptr
+CORBA::ValueDef_ptr
 TAO_PrimaryKeyDef_i::primary_key (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_ValueDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
   return this->primary_key_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_ValueDef_ptr
+CORBA::ValueDef_ptr
 TAO_PrimaryKeyDef_i::primary_key_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return 0;
 }
-

@@ -158,16 +158,16 @@ TAO_SequenceDef_i::element_type_i (ACE_ENV_SINGLE_ARG_DECL)
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_SequenceDef_i::element_type_def (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
   return this->element_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_SequenceDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -194,14 +194,14 @@ TAO_SequenceDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     element_path.c_str ()
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
-  return CORBA_IDLType::_narrow (obj.in ()
+  return CORBA::IDLType::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_SequenceDef_i::element_type_def (CORBA_IDLType_ptr element_type_def
+TAO_SequenceDef_i::element_type_def (CORBA::IDLType_ptr element_type_def
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -212,7 +212,7 @@ TAO_SequenceDef_i::element_type_def (CORBA_IDLType_ptr element_type_def
 }
 
 void
-TAO_SequenceDef_i::element_type_def_i (CORBA_IDLType_ptr element_type_def
+TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -283,4 +283,3 @@ TAO_SequenceDef_i::destroy_element_type (
       break;
   }
 }
-

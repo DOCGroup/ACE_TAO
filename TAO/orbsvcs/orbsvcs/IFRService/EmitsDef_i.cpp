@@ -41,7 +41,7 @@ TAO_EmitsDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_AR
   // TODO
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_EmitsDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -50,11 +50,10 @@ TAO_EmitsDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_EmitsDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return 0;
 }
-

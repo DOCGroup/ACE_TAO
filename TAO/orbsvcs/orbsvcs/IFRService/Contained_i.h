@@ -128,12 +128,12 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Container_ptr defined_in (
+  virtual CORBA::Container_ptr defined_in (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_Container_ptr defined_in_i (
+  CORBA::Container_ptr defined_in_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -148,30 +148,30 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Repository_ptr containing_repository (
+  virtual CORBA::Repository_ptr containing_repository (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_Repository_ptr containing_repository_i (
+  CORBA::Repository_ptr containing_repository_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual.
 
   virtual void move (
-      CORBA_Container_ptr new_container,
+      CORBA::Container_ptr new_container,
       const char *new_name,
       const char *new_version
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -180,7 +180,7 @@ public:
 
 protected:
   void move_i (
-      CORBA_Container_ptr new_container,
+      CORBA::Container_ptr new_container,
       const char *new_name,
       const char *new_version,
       CORBA::Boolean cleanup
@@ -207,7 +207,7 @@ private:
   // Recursively update the scoped name of our contents.
 
   void move_pre_process (
-      CORBA_Container_ptr container,
+      CORBA::Container_ptr container,
       const char *contained_path,
       const char *name
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -219,7 +219,7 @@ private:
   // unmangles the names.
 
   void move_contents (
-      CORBA_Container_ptr new_container
+      CORBA::Container_ptr new_container
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -45,7 +45,7 @@ TAO_ComponentDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGL
   // TODO
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_ComponentDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -54,7 +54,7 @@ TAO_ComponentDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -79,7 +79,7 @@ TAO_ComponentDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_A
   return 0;
 }
 
-CORBA_InterfaceDefSeq *
+CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -88,7 +88,7 @@ TAO_ComponentDef_i::supported_interfaces (ACE_ENV_SINGLE_ARG_DECL)
   return this->supported_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_InterfaceDefSeq *
+CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -98,7 +98,7 @@ TAO_ComponentDef_i::supported_interfaces_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* 
 
 void
 TAO_ComponentDef_i::supported_interfaces (
-    const CORBA_InterfaceDefSeq &supported_interfaces
+    const CORBA::InterfaceDefSeq &supported_interfaces
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -111,7 +111,7 @@ TAO_ComponentDef_i::supported_interfaces (
 
 void
 TAO_ComponentDef_i::supported_interfaces_i (
-    const CORBA_InterfaceDefSeq & /* supported_interfaces */
+    const CORBA::InterfaceDefSeq & /* supported_interfaces */
     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -234,7 +234,7 @@ TAO_ComponentDef_i::create_provides (
     const char *id,
     const char *name,
     const char *version,
-    CORBA_InterfaceDef_ptr interface_type
+    CORBA::InterfaceDef_ptr interface_type
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -253,7 +253,7 @@ TAO_ComponentDef_i::create_provides_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
-    CORBA_InterfaceDef_ptr  /* interface_type */
+    CORBA::InterfaceDef_ptr  /* interface_type */
     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -266,7 +266,7 @@ IR::UsesDef_ptr
 TAO_ComponentDef_i::create_uses (const char *id,
                                  const char *name,
                                  const char *version,
-                                 CORBA_InterfaceDef_ptr interface_type,
+                                 CORBA::InterfaceDef_ptr interface_type,
                                  CORBA::Boolean is_multiple
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -285,7 +285,7 @@ IR::UsesDef_ptr
 TAO_ComponentDef_i::create_uses_i (const char * /* id */,
                                    const char * /* name */,
                                    const char * /* version */,
-                                   CORBA_InterfaceDef_ptr  /* interface_type */,
+                                   CORBA::InterfaceDef_ptr  /* interface_type */,
                                    CORBA::Boolean /* is_multiple */
                                    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -298,7 +298,7 @@ IR::EmitsDef_ptr
 TAO_ComponentDef_i::create_emits (const char *id,
                                   const char *name,
                                   const char *version,
-                                  CORBA_ValueDef_ptr value
+                                  CORBA::ValueDef_ptr value
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -315,7 +315,7 @@ IR::EmitsDef_ptr
 TAO_ComponentDef_i::create_emits_i (const char * /* id */,
                                     const char * /* name */,
                                     const char * /* version */,
-                                    CORBA_ValueDef_ptr  /* value */
+                                    CORBA::ValueDef_ptr  /* value */
                                     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -327,7 +327,7 @@ IR::PublishesDef_ptr
 TAO_ComponentDef_i::create_publishes (const char *id,
                                       const char *name,
                                       const char *version,
-                                      CORBA_ValueDef_ptr value
+                                      CORBA::ValueDef_ptr value
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -344,7 +344,7 @@ IR::PublishesDef_ptr
 TAO_ComponentDef_i::create_publishes_i (const char * /* id */,
                                         const char * /* name */,
                                         const char * /* version */,
-                                        CORBA_ValueDef_ptr  /* value */
+                                        CORBA::ValueDef_ptr  /* value */
                                         ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -356,7 +356,7 @@ IR::ConsumesDef_ptr
 TAO_ComponentDef_i::create_consumes (const char *id,
                                      const char *name,
                                      const char *version,
-                                     CORBA_ValueDef_ptr value
+                                     CORBA::ValueDef_ptr value
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -373,11 +373,10 @@ IR::ConsumesDef_ptr
 TAO_ComponentDef_i::create_consumes_i (const char * /* id */,
                                        const char * /* name */,
                                        const char * /* version */,
-                                       CORBA_ValueDef_ptr  /* value */
+                                       CORBA::ValueDef_ptr  /* value */
                                        ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return 0;
 }
-

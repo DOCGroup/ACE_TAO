@@ -71,13 +71,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // May not be called on a repository - raises BAD_INV_ORDER.
 
-  virtual CORBA_Contained_ptr lookup_id (
+  virtual CORBA::Contained_ptr lookup_id (
       const char *search_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_Contained_ptr lookup_id_i (
+  CORBA::Contained_ptr lookup_id_i (
       const char *search_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
@@ -103,66 +103,66 @@ public:
   // No locking necessary because the database is not
   // accessed.
 
-  virtual CORBA_StringDef_ptr create_string (
+  virtual CORBA::StringDef_ptr create_string (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_StringDef_ptr create_string_i (
+  CORBA::StringDef_ptr create_string_i (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_WstringDef_ptr create_wstring (
+  virtual CORBA::WstringDef_ptr create_wstring (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_WstringDef_ptr create_wstring_i (
+  CORBA::WstringDef_ptr create_wstring_i (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_SequenceDef_ptr create_sequence (
+  virtual CORBA::SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
-      CORBA_IDLType_ptr element_type
+      CORBA::IDLType_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC (( CORBA::SystemException));
 
-  CORBA_SequenceDef_ptr create_sequence_i (
+  CORBA::SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
-      CORBA_IDLType_ptr element_type
+      CORBA::IDLType_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC (( CORBA::SystemException));
 
-  virtual CORBA_ArrayDef_ptr create_array (
+  virtual CORBA::ArrayDef_ptr create_array (
       CORBA::ULong length,
-      CORBA_IDLType_ptr element_type
+      CORBA::IDLType_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ArrayDef_ptr create_array_i (
+  CORBA::ArrayDef_ptr create_array_i (
       CORBA::ULong length,
-      CORBA_IDLType_ptr element_type
+      CORBA::IDLType_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_FixedDef_ptr create_fixed (
+  virtual CORBA::FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_FixedDef_ptr create_fixed_i (
+  CORBA::FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
       CORBA::Short scale
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -181,8 +181,8 @@ public:
   CORBA::TypeCodeFactory_ptr tc_factory (void) const;
   // Accessor for the Typecode factory.
 
-  CORBA_Repository_ptr repo_objref (void) const;
-  void repo_objref (CORBA_Repository_ptr objref);
+  CORBA::Repository_ptr repo_objref (void) const;
+  void repo_objref (CORBA::Repository_ptr objref);
   // Accessor/mutator for our object reference.
 
   ACE_Configuration_Section_Key root_key (void) const;
@@ -237,7 +237,7 @@ protected:
   CORBA::TypeCodeFactory_var tc_factory_;
   // Our Typecode factory.
 
-  CORBA_Repository_ptr repo_objref_;
+  CORBA::Repository_ptr repo_objref_;
   // The object reference of this servant.
 
   ACE_Configuration_Section_Key root_key_;
@@ -272,14 +272,14 @@ protected:
 
 private:
   static const char *TAO_IFR_primitive_kinds[];
-  // Set of strings corresponding to the CORBA_PrimitiveKind
+  // Set of strings corresponding to the CORBA::PrimitiveKind
   // enum values.
 
   const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
   // Convert the enum value to the equivalent string.
 
   u_int num_pkinds (void) const;
-  // Return the number of entries in the CORBA_PrimitiveKind enum.
+  // Return the number of entries in the CORBA::PrimitiveKind enum.
 
 };
 
