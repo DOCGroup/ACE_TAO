@@ -279,7 +279,7 @@ Client::run (void)
                                         &addr);
       flow_spec [0] = entry.entry_to_string ();
       flow_spec.length (1);
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", entry.entry_to_string());
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", entry.entry_to_string() ));
 
       AVStreams::MMDevice_var client_mmdevice
         = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
