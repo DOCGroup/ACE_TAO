@@ -1,5 +1,5 @@
---- orig/IOPC.cpp	Wed Apr 18 02:12:29 2001
-+++ IOPC.cpp	Wed Apr 18 01:33:39 2001
+--- orig/IOPC.cpp	Tue Apr 24 23:48:58 2001
++++ IOPC.cpp	Tue Apr 24 13:44:40 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -22,12 +22,208 @@
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus
  #endif /* __BORLANDC__ */
-@@ -35,6 +28,8 @@
- #if !defined (__ACE_INLINE__)
+@@ -36,6 +29,8 @@
  #include "IOPC.i"
  #endif /* !defined INLINE */
-+
-+#include "Typecode.h"
  
++#include "Typecode.h"
++
  static const CORBA::Long _oc_IOP_ProfileId[] =
  {
+   TAO_ENCAP_BYTE_ORDER, // byte order
+@@ -1571,49 +1566,6 @@
+ TAO_NAMESPACE_BEGIN (IOP)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, FT_REQUEST, 13U)
+ TAO_NAMESPACE_END
+-IOP::Codec_ptr
+-tao_IOP_Codec_duplicate (
+-    IOP::Codec_ptr p
+-  )
+-{
+-  return IOP::Codec::_duplicate (p);
+-}
+-
+-void
+-tao_IOP_Codec_release (
+-    IOP::Codec_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-IOP::Codec_ptr
+-tao_IOP_Codec_nil (
+-    void
+-  )
+-{
+-  return IOP::Codec::_nil ();
+-}
+-
+-IOP::Codec_ptr
+-tao_IOP_Codec_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return IOP::Codec::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_IOP_Codec_upcast (
+-    void *src
+-  )
+-{
+-  IOP::Codec **tmp =
+-    ACE_static_cast (IOP::Codec **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class IOP::Codec_var
+ // *************************************************************
+@@ -2184,49 +2136,6 @@
+   delete tmp;
+ }
+ 
+-IOP::CodecFactory_ptr
+-tao_IOP_CodecFactory_duplicate (
+-    IOP::CodecFactory_ptr p
+-  )
+-{
+-  return IOP::CodecFactory::_duplicate (p);
+-}
+-
+-void
+-tao_IOP_CodecFactory_release (
+-    IOP::CodecFactory_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-IOP::CodecFactory_ptr
+-tao_IOP_CodecFactory_nil (
+-    void
+-  )
+-{
+-  return IOP::CodecFactory::_nil ();
+-}
+-
+-IOP::CodecFactory_ptr
+-tao_IOP_CodecFactory_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return IOP::CodecFactory::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_IOP_CodecFactory_upcast (
+-    void *src
+-  )
+-{
+-  IOP::CodecFactory **tmp =
+-    ACE_static_cast (IOP::CodecFactory **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class IOP::CodecFactory_var
+ // *************************************************************
+@@ -3383,11 +3292,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     
+ #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+@@ -3448,11 +3352,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -3510,11 +3409,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     
+ #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+@@ -3571,11 +3465,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -3618,11 +3507,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -3665,11 +3549,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -3725,11 +3604,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     
+ #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+@@ -3786,11 +3660,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)

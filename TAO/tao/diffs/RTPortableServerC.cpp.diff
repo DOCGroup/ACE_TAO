@@ -1,5 +1,5 @@
---- orig/RTPortableServerC.cpp	Wed Apr 18 01:09:15 2001
-+++ RTPortableServerC.cpp	Wed Apr 18 00:37:31 2001
+--- PortableServer/orig/RTPortableServerC.cpp	Wed Apr 25 00:19:23 2001
++++ PortableServer/RTPortableServerC.cpp	Tue Apr 24 13:44:54 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -22,7 +22,57 @@
  
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus
-@@ -306,3 +301,4 @@
+@@ -36,49 +31,6 @@
+ #include "RTPortableServerC.i"
+ #endif /* !defined INLINE */
+ 
+-RTPortableServer::POA_ptr
+-tao_RTPortableServer_POA_duplicate (
+-    RTPortableServer::POA_ptr p
+-  )
+-{
+-  return RTPortableServer::POA::_duplicate (p);
+-}
+-
+-void
+-tao_RTPortableServer_POA_release (
+-    RTPortableServer::POA_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-RTPortableServer::POA_ptr
+-tao_RTPortableServer_POA_nil (
+-    void
+-  )
+-{
+-  return RTPortableServer::POA::_nil ();
+-}
+-
+-RTPortableServer::POA_ptr
+-tao_RTPortableServer_POA_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_RTPortableServer_POA_upcast (
+-    void *src
+-  )
+-{
+-  RTPortableServer::POA **tmp =
+-    ACE_static_cast (RTPortableServer::POA **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class RTPortableServer::POA_var
+ // *************************************************************
+@@ -349,3 +301,4 @@
    #  pragma instantiate TAO_Object_Manager<RTPortableServer::POA,RTPortableServer::POA_var>
  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
  

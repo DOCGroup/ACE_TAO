@@ -1,5 +1,5 @@
---- orig/TypeCodeFactoryC.cpp	Mon Apr 23 23:49:14 2001
-+++ TypeCodeFactoryC.cpp	Mon Apr 23 23:52:13 2001
+--- orig/TypeCodeFactoryC.cpp	Wed Apr 25 00:27:51 2001
++++ TypeCodeFactoryC.cpp	Tue Apr 24 13:44:54 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -25,7 +25,57 @@
  
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus
-@@ -284,7 +278,7 @@
+@@ -36,49 +30,6 @@
+ #include "TypeCodeFactoryC.inl"
+ #endif /* !defined INLINE */
+ 
+-CORBA_TypeCodeFactory_ptr
+-tao_CORBA_TypeCodeFactory_duplicate (
+-    CORBA_TypeCodeFactory_ptr p
+-  )
+-{
+-  return CORBA_TypeCodeFactory::_duplicate (p);
+-}
+-
+-void
+-tao_CORBA_TypeCodeFactory_release (
+-    CORBA_TypeCodeFactory_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-CORBA_TypeCodeFactory_ptr
+-tao_CORBA_TypeCodeFactory_nil (
+-    void
+-  )
+-{
+-  return CORBA_TypeCodeFactory::_nil ();
+-}
+-
+-CORBA_TypeCodeFactory_ptr
+-tao_CORBA_TypeCodeFactory_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return CORBA_TypeCodeFactory::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_CORBA_TypeCodeFactory_upcast (
+-    void *src
+-  )
+-{
+-  CORBA_TypeCodeFactory **tmp =
+-    ACE_static_cast (CORBA_TypeCodeFactory **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class CORBA_TypeCodeFactory_var
+ // *************************************************************
+@@ -327,7 +278,7 @@
  
  const char* CORBA_TypeCodeFactory::_interface_repository_id (void) const
  {
