@@ -23,7 +23,7 @@
 
 // #include "tao/corba.h"
 #include "CC_Lock.h"
-#include "orbsvcs/CosConcurrencyControlS.h" // @@OR CosC...C.h???
+#include "orbsvcs/CosConcurrencyControlS.h"
 
 class TAO_ORBSVCS_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
   // = TITLE
@@ -33,6 +33,7 @@ class TAO_ORBSVCS_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
   //     This class implements the LockSet interface that is part
   //     of the CosConcurrency service. Please consult the idl file for
   //     detailed descriptions apart from the comments in this file
+  //     At present the lock set is not really a set, but only one lock.
 {
 public:
   CC_LockSet(void);
@@ -62,7 +63,10 @@ private:
 
   CosConcurrencyControl::LockSet_ptr related_lockset_;
   // If this lock set is related to another lock set, this is the pointer
-  // to the related lock set
+  // to the related lock set. This is a really simple solution, but since
+  // transactions are not supported in the first version there should be
+  // no reason to drop lock sets together. The LockSetCoordinator is not
+  // implemented (it has the responsibilities of dropping the locks).
 }; // CC_LockSet
 
 //#if defined (__ACE_INLINE__)
