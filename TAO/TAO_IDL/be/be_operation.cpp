@@ -65,8 +65,7 @@ be_operation::compute_argument_attr (void)
           // get the next AST decl node
 	  AST_Decl *d = si->item ();
 
-          if (!d->imported ()
-	      && d->node_type () == AST_Decl::NT_argument)
+          if (d->node_type () == AST_Decl::NT_argument)
 	    {
 	      this->argument_count_++;
 	      be_argument *arg = be_argument::narrow_from_decl (d);

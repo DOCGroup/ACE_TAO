@@ -1,3 +1,13 @@
+Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
+	* TAO_IDL/be/be_operation.cpp: 
+	  The _tie classes generated improper code when one of the base
+	  classes was imported from another file and the number of
+	  arguments was non-zero.  Thanks to Christa Schwanninger
+	  <christa.schwanninger@mchp.siemens.de>, for patiently convincing
+	  me that this was a problem.
+
 Wed Aug 19 21:03:38 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : 
