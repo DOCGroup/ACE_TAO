@@ -32,7 +32,10 @@ ACE_RCSID(IORManipluation, IORTest, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  int Status = 0;
+  // The variable is declared volatile because, some compilers
+  // optimizes this the wrong way. A case is point is the CC compiler
+  // on IRIX. 
+  volatile int Status = 0;
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IORManipulation Tests.\n"));
