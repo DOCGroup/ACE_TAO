@@ -1,3 +1,26 @@
+Mon Oct 12 18:55:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/Event/EC_Gateway.cpp
+          orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+          orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, i}: Added a new kind RT_Info
+	  type for EC_Gateway RT_Infos that depend on remote invocations.  This
+	  change facilitates building a distributed schedule without requiring
+	  the use of a single global scheduling service.  Thanks to Tom 
+	  Venturella <thomas.e.venturella@boeing.com> for this idea.
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp
+	  orbsvcs/orbsvcs/Scheduler_Factory.cpp
+	  orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
+	  orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
+	  orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsp}
+	  orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, dsp, h}  (NEW):
+          Fixed a number of problems with correctness and usability of the 
+	  config and runtime schedulers, and the scheduler factory.  Thanks
+	  to Amir Bahmanyari <abahmany@teknowledge.com> for providing detailed
+ 	  debugging reports. 
+	
 Mon Oct 12 18:32:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/try_macros.h: 
