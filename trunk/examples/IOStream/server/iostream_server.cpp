@@ -86,7 +86,7 @@ typedef ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR> IOStream_Acceptor;
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
   ACE_Service_Config daemon;

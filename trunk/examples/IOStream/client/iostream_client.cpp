@@ -15,7 +15,7 @@ ACE_RCSID (client,
 // classes, which mimic a C++ iostream.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
   const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
