@@ -363,7 +363,7 @@ client (void *arg)
        ACE_THR_FUNC (client_connections),
        (void *) &info,
        THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "client thread spawn failed"));
 
   // Wait for the threads to exit.
   client_manager.wait ();
@@ -383,7 +383,6 @@ server (void *arg)
   ACE_INET_Addr cli_addr;
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
-  ACE_UNUSED_ARG (options);
 
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
@@ -400,8 +399,11 @@ server (void *arg)
 // don't have signals
 #if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
                                      , options
-#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
                                      );
+#else
+                                     );
+  ACE_UNUSED_ARG (options);
+#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
 
       if (result == -1)
         {
@@ -496,21 +498,53 @@ static void
 spawn_threads (ACCEPTOR *acceptor,
                ACE_INET_Addr *server_addr)
 {
+#if defined (VXWORKS)
+  // Assign thread (VxWorks task) names to test that feature.
+  ACE_thread_t *server_name;
+  ACE_NEW (server_name, ACE_thread_t[n_servers]);
+
+  int i;
+
+  for (i = 0; i < n_servers; ++i)
+    {
+      ACE_NEW (server_name[i], char [32]);
+      ACE_OS::sprintf (server_name[i], "server%u", i);
+    }
+
+  char *client_name = "Conn client";
+#endif /* VXWORKS */
+
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (n_servers,
+      (
+#if defined (VXWORKS)
+       server_name,
+#endif /* VXWORKS */
+       n_servers,
        ACE_THR_FUNC (server),
        (void *) acceptor,
        THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "server thread create failed"));
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
        (void *) server_addr,
-       THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+       THR_NEW_LWP
+#if defined (VXWORKS)
+       , &client_name
+#endif /* VXWORKS */
+       ) == -1)
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "client thread create failed"));
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
+
+#if defined (VXWORKS)
+  for (i = 0; i < n_servers; ++i)
+    {
+      delete [] server_name [i];
+    }
+  delete [] server_name;
+#endif /* VXWORKS */
 }
 #endif /* (ACE_WIN32 || VXWORKS || ACE_PSOS) && ACE_HAS_THREADS */
 
