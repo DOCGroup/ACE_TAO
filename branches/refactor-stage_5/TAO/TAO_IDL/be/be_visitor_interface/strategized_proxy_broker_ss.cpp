@@ -92,7 +92,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl

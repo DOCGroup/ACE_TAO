@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           base_proxy_broker_sh, 
+ACE_RCSID (be_visitor_interface,
+           base_proxy_broker_sh,
            "$Id$")
 
 be_visitor_interface_strategized_proxy_broker_sh::
@@ -28,7 +28,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//               Strategized Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
@@ -39,7 +39,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
   *os << "class " << be_global->skel_export_macro () << " "
       << node->strategized_proxy_broker_name () << be_idt_nl
       << ": public virtual "
-      << "TAO::Collocation_Proxy_Broker" << be_uidt_nl <<  "{" 
+      << "TAO::Collocation_Proxy_Broker" << be_uidt_nl <<  "{"
       << be_nl
       << "public: " << be_idt;
 
@@ -71,11 +71,11 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));" << be_uidt;
+      << "ACE_THROW_SPEC ((CORBA::Exception));" << be_uidt;
 
   *os << be_uidt_nl << be_nl
       << "static" << be_nl
-      << node->strategized_proxy_broker_name () << " *" << be_nl 
+      << node->strategized_proxy_broker_name () << " *" << be_nl
       << "the" << node->strategized_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 
@@ -96,4 +96,3 @@ int be_visitor_interface_strategized_proxy_broker_sh::visit_component (
 {
   return this->visit_interface (node);
 }
-
