@@ -76,7 +76,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   
   int missed_deadlines = 0;
   // sleep_time is in microseconds, and requests_sec is per second, hence the pow(10,6)
-  float sleep_time = (1/requests_sec) * (1000 * 1000); // pow(10,6); 
+  float sleep_time = (1/requests_sec) * (1000.0 * 1000.0); // pow(10,6); 
   float delta = 0;
   srand(time(NULL));
   for(int i = 0; i < total_num; i++) { // i is used as a id for threads
@@ -161,6 +161,7 @@ main(int argc, char **argv)
   
   while(!feof(fp)) {
 	fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
+        if (id[0] == '#') continue;
 	fprintf(stderr,"----\n");
 	fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
     driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
