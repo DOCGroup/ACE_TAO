@@ -63,29 +63,32 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
           // Or, the ACE_Object_Manager instance has been destroyed,
-          // so the preallocated lock is not available.
+          // so the preallocated lock is not available.  Either way,
+          // don't register for destruction with the
+          // ACE_Object_Manager:  we'll have to leak this instance.
 #endif /* ACE_MT_SAFE */
+
           ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
-          // Register for destruction with ACE_Object_Manager.
-          // ACE_Object_Manager::at_exit (singleton);
+ACE_Object_Manager::at_exit (singleton);
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
           // Obtain a lock from the ACE_Object_Manager.  The pointer
-          // is static, so we only obtain one per ACE_Singleton instantiation.
+          // is static, so we only obtain one per ACE_Singleton
+          // instantiation.
           static ACE_LOCK *lock = 0;
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to allocate the lock!
+            // Failed to acquire the lock!
             return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton,
-                              (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
@@ -154,12 +157,13 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
           // Or, the ACE_Object_Manager instance has been destroyed,
-          // so the preallocated lock is not available.
+          // so the preallocated lock is not available.  Either way,
+          // don't register for destruction with the
+          // ACE_Object_Manager:  we'll have to leak this instance.
 #endif /* ACE_MT_SAFE */
+
           ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
 
-          // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
@@ -168,15 +172,15 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // is static, so we only obtain one per ACE_Singleton instantiation.
           static ACE_LOCK *lock = 0;
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to allocate the lock!
+            // Failed to acquire the lock!
             return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton,
-                              (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+              ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
+                              0);
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
