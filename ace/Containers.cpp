@@ -1993,7 +1993,6 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 
       default:
         return -1;
-                break;
     }
   }
   else
