@@ -80,7 +80,7 @@ main (int argc, char *argv[])
         }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
   ACE_CATCHANY
     {

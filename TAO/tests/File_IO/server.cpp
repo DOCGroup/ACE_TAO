@@ -194,6 +194,14 @@ main (int argc, char *argv[])
 
       worker.thr_mgr ()->wait ();
 
+      first_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,19 @@
+Thu Mar 14 14:13:02 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/File_IO/server.cpp:
+
+          Destroy the POA and ORB at the end of the test.  This avoids a
+          core dump on HP-UX 10.20.
+
+        * tests/Server_Leaks/run_test.pl:
+
+          Increase the wait time for server startup.  Slower machines were
+          failing due to this.
+
+        * tests/Server_Leaks/client.cpp:
+
+          Switched an ACE_CHECK within a try block to an ACE_TRY_CHECK.
+
 Thu Mar 14 12:03:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.cpp (~TAO_ClientRequestInfo_i):
