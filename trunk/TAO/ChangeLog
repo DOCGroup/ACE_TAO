@@ -1,3 +1,8 @@
+Thu Feb 13 17:41:37 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf: Added the
+	  scheduling policy to the configuration file.
+
 Thu Feb 13 16:35:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Exposed_Policies/svc.conf: Configuration file for
