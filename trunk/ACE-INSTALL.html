@@ -185,19 +185,26 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
       ACE has been ported to <A
       HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
       and Alpha platforms.  If you use a RedHat 5.x distribution, it's best
-      to use RedHat 5.1.  With RedHat 5.0, you'll need some <A
-      HREF="os-patches/linux-patches.html">updates and possibly som
-      patches</A> to get ACE working with LinuxThreads.  Some of the patches
+      to use RedHat 5.1.  ACE will work without any modifications on
+      RedHat 5.1; use the
+      <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
+      and <code>ace/config_linux_lxpthreads.h</code> platform/config
+      files.<p>
+
+      With RedHat 5.0, you'll need some
+      <a href="os-patches/linux-patches.html">updates and possibly some
+      patches</a> to get ACE working with LinuxThreads.  Some of the patches
       are necessary with Alpha CPUs and with some older kernels.  egcs 1.0.1
       can also be used, but it may need patches, described in the patches
-      file, as well.<P>
+      file, as well.<p>
 
       <strong>NOTE:</strong> Be careful when installing egcs.  If
       you don't remove your old gcc and libg++ RPMs, it's best to
       install egcs in a different directory than /usr, such as /usr/local,
       and set your PATH and LD_LIBRARY_PATH accordingly.<p>
 
-      Some of the ACE tests fail on older, pre-glibc-2 Linux platforms.<p>
+      Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
+      such as RedHat 4.2.<p>
 
   <LI><B>SCO UNIX</B><P>
 
