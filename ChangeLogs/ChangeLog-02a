@@ -1,3 +1,13 @@
+Wed Jul 25 23:49:43 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_tru64_g++.GNU:
+
+          Fixed some missing defines in the Makefile for DEC Unix versions
+          4.0D, 4.0E. We don't support or suggest this combination. Hence
+          the oversight in missing the needed defines.
+
+          Thanks to Martin Krumpolec <krumpo@pobox.sk> for reporting this.
+
 Wed Jul 25 23:49:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * include/makeinclude/wrapper_macros.GNU:
