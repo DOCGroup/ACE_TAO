@@ -116,7 +116,14 @@ $(OUTPUT_DIRECTORY):
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
-LIBCHECK = $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+LIBCHECK ?=
+# turn off libcheck if doing a dry run
+ifeq ($(findstring n, $(MAKEFLAGS)),n)
+  LIBCHECK = 1
+endif
+ifneq ($(LIBCHECK),1)
+ LIBCHECK = $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+endif
 ifeq ($(LIBCHECK),)
   LIBCHECK = 1
 endif

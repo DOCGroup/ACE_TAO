@@ -1,3 +1,11 @@
+Tue May 25 21:32:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Turn off LIBCHECK when doing dry-runs.
+
+        * include/makeinclude/rules.local.GNU:
+          Print out MAKEFLAGS during builds.
+
 Mon May 24 12:16:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Corrected comments in the pthread_rwlock-related
