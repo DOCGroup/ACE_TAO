@@ -199,10 +199,6 @@ ACE_Client_Logging_Handler::close (u_long)
   if (this->logging_output_ != ACE_STDOUT)
     ACE_OS::closesocket (this->logging_output_);
 
-  // Try to unlink the logger key so weird things don't happen if
-  // we're using STREAM pipes.
-  ACE_OS::unlink (this->logger_key_);
-
   this->destroy ();
   return 0;
 }
@@ -310,6 +306,10 @@ ACE_Client_Logging_Acceptor::fini (void)
 
   if (this->handler_ != 0)
     this->handler_->close (0);
+
+  // Try to unlink the logger key so weird things don't happen if
+  // we're using STREAM pipes.
+  ACE_OS::unlink (this->logger_key_);
 
   return 0;
 }
