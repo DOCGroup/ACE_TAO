@@ -25,7 +25,7 @@ ACE_Lock *Adaptive_Lock_Test::lock_ = 0;
 int
 Adaptive_Lock_Test::init (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "mr");
+  ACE_Get_Opt getopt (argc, argv, "mr", 0);
   int opt;
 
   while ((opt = getopt ()) != -1)
@@ -33,29 +33,29 @@ Adaptive_Lock_Test::init (int argc, char *argv[])
       switch (opt)
         {
         case 'm':
-          delete lock_;
-          ACE_NEW_RETURN (lock_,
+          delete Adaptive_Lock_Test::lock_;
+          ACE_NEW_RETURN (Adaptive_Lock_Test::lock_,
                           ACE_Lock_Adapter<ACE_Thread_Mutex> (),
-                          0);
+                          -1);
           break;
         case 'r':
-          delete lock_;
-          ACE_NEW_RETURN (lock_,
+          delete Adaptive_Lock_Test::lock_;
+          ACE_NEW_RETURN (Adaptive_Lock_Test::lock_,
                           ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
-                          0);
+                          -1);
           break;
         default:
           break;
         }
     }
-  return (lock_ != 0 ? 0 : -1);
+  return (Adaptive_Lock_Test::lock_ != 0 ? 0 : -1);
 }
 
 int
 Adaptive_Lock_Test::fini (void)
 {
-  delete lock_;
-  lock_ = 0;
+  delete Adaptive_Lock_Test::lock_;
+  Adaptive_Lock_Test::lock_ = 0;
   return 0;
 }
 
@@ -69,10 +69,10 @@ Adaptive_Lock_Test::svc (void)
 
   while (!this->done ())
     {
-      lock_->acquire ();
+      Adaptive_Lock_Test::lock_->acquire ();
       options.thr_work_count[ni]++;
       buffer++;
-      lock_->release ();
+      Adaptive_Lock_Test::lock_->release ();
     }
   /* NOTREACHED */
   return 0;
