@@ -64,7 +64,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request;
+  char *request = 0;
 
   // Read data from client (terminate on error).
 
@@ -135,6 +135,7 @@ twoway_server (void *arg)
       message_count++;
 
       delete [] request;
+      request = 0;
     }
 
   // Close new endpoint (listening endpoint stays open).
@@ -179,7 +180,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request;
+  char *request = 0;
 
   // Read data from client (terminate on error).
 
@@ -244,6 +245,7 @@ oneway_server (void *arg)
       message_count++;
 
       delete [] request;
+      request = 0;
     }
 
   timer.stop ();
