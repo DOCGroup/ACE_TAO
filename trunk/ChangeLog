@@ -1,3 +1,8 @@
+Mon Aug  9 09:25:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+        * tests/Dynamic_Priority_Test.cpp:
+          Fixed buffer overrun problem when ACE_HAS_TIMED_MESSAGE_BLOCKS
+          macro is defined.
+
 Mon Aug  9 09:56:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * examples/APG/Processes/Spawn.cpp:
