@@ -1,5 +1,9 @@
 Thu Oct 01 14:22:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
- 
+
+	* tao/CDR.i (operator<<): Changed to use TAO_CHECK_ENV for Any,
+	  Object and TypeCode operations and added trailing return
+	  statement to avoid warnings from MSVC.
+
 	* TAO/TAO_IDL/tao_idl.dsp:
 	* TAO/TAO_IDL/tao_idl_static.dsp: Updated project based on Andy's
 	  changes.  (by Darrell.)
