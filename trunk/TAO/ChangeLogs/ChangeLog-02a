@@ -1,3 +1,9 @@
+2001-04-02  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
+	  
+          Fixed Fuzz errors.
+
 Mon Apr  2 13:48:52 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/InterOp-Naming/Server_i.cpp : 
