@@ -1,5 +1,0 @@
-// $Id$
-
- This helper library is used to measure the time to create a component
-server, container, home, component, and build a connection. It is used
-by Assembly_Manager, and Static_Configurator.

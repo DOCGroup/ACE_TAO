@@ -1,1 +1,0 @@
-del /q /s *.plg *.pdb *.ilk *.lib *.dsw *.dsp *.ncb *.exp *.opt
