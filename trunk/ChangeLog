@@ -1,3 +1,15 @@
+Thu Sep 16 09:22:08 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+          In ACE_TSS_Cleanup::exit, defer deleting TSS objects
+          until it is no longer necessary to access the ACE_TSS_Cleanup
+          itself.  One of the objects to be deleted is a Thread_Exit
+          which may eventually cause (or at least allow) the deletion
+          of the ACE_TSS_Cleanup.
+          The original code worked like this but I changed it when
+          I added additional cleanup operations to the exit method.
+
+
 Thu Sep 16 08:14:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Memory_Pool.cpp:
@@ -91,8 +103,9 @@ Wed Sep 15 11:41:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Wed Sep 15 10:46:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Log_Msg.cpp:
-          Uninitialized static int was assumed to be zero.  It usually
-          was.
+          
+          Explicitly initialize a static int to zero to make it clear that
+          the initial value is important.
 
 Wed Sep 15 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
