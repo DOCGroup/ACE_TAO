@@ -1,3 +1,8 @@
+Fri Oct 23 17:54:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * Tao/tests/DynAny_Test/test_dynsequence.cpp:
+          Fixed a typo that was giving a false error.
+
 Fri Oct 23 16:31:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/DynAny_Test/da_tests.idl:
