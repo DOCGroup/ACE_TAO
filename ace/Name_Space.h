@@ -21,7 +21,7 @@
 
 #include "ace/ACE.h"
 #include "ace/SString.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
 
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;

@@ -21,7 +21,7 @@
 
 #include "ace/ACE.h"
 #include "ace/SString.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 #include "ace/Service_Object.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"

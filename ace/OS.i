@@ -952,24 +952,24 @@ ACE_OS::_exit (int status)
 }
 
 ACE_INLINE int
-ACE_OS::memcmp (const void *s, const void *t, size_t len)
+ACE_OS::memcmp (const void *t, const void *s, size_t len)
 {
   // ACE_TRACE ("ACE_OS::memcmp");
-  return ::memcmp (s, t, len);
+  return ::memcmp (t, s, len);
 }
 
 ACE_INLINE void *
-ACE_OS::memcpy (void *s, const void *t, size_t len)
+ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
   // ACE_TRACE ("ACE_OS::memcpy");
-  return ::memcpy (s, t, len);
+  return ::memcpy (t, s, len);
 }
 
 ACE_INLINE void *
-ACE_OS::memmove (void *s, const void *t, size_t len)
+ACE_OS::memmove (void *t, const void *s, size_t len)
 {
   // ACE_TRACE ("ACE_OS::memcpy");
-  return ::memmove (s, t, len);
+  return ::memmove (t, s, len);
 }
 
 ACE_INLINE void *
