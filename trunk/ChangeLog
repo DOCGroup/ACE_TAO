@@ -1,3 +1,10 @@
+Tue Jul 30 07:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Enabled warnings and undocument warnings to get these warnings
+          into the doxygen scoreboard. When this works I will enable the
+          warnings in all other .doxygen files later.
+
 Mon Jul 29 14:47:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.cpp (process_directives_i):
