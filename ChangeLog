@@ -1,3 +1,12 @@
+Tue Jul 27 06:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Reverted my change of yesterday, the Cygwin people made an error and
+          have corrected it already, the workaround is not needed for Cygwin
+          anymore. According to the Cygwin mailing list we could also have
+          fixed this by adding -Wl,--enable-runtime-pseudo-reloc as linker
+          options, maybe this works also for MinGW, we should test this
+
 Mon Jul 26 12:09:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Proactor.cpp: Add #include "ace/Auto_Ptr.h" to find auto_ptr<>
