@@ -822,7 +822,8 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
   
   long new_network_events = 0;
   int delete_event = 0;
-  auto_ptr <ACE_Auto_Event> event (0);
+
+  auto_ptr <ACE_Auto_Event> event ((ACE_Auto_Event *) 0);
 
   // Look up the repository to see if the <Event_Handler> is already
   // there.
@@ -878,11 +879,12 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 							int &delete_event)
 {
   int found = 0;
-  
+  size_t i;
+
   // First go through the current entries
   size_t total_entries = this->max_handlep1_;
 
-  for (size_t i = 0; i < total_entries && !found; i++)
+  for (i = 0; i < total_entries && !found; i++)
     if (io_handle == this->current_info_[i].io_handle_)
       {
 	found = 1;
@@ -903,29 +905,29 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 	event_handle = this->current_suspended_info_[i].event_handle_;
       }
 
-  if ((mask & ACE_Event_Handler::READ_MASK) == ACE_Event_Handler::READ_MASK)
-    new_mask |= FD_READ;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::READ_MASK, ACE_Event_Handler::READ_MASK))
+    ACE_SET_BITS (new_mask, FD_READ);
 
-  if ((mask & ACE_Event_Handler::WRITE_MASK) == ACE_Event_Handler::WRITE_MASK)
-    new_mask |= FD_WRITE;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::WRITE_MASK, ACE_Event_Handler::WRITE_MASK))
+    ACE_SET_BITS (new_mask, FD_WRITE);
   
-  if ((mask & ACE_Event_Handler::EXCEPT_MASK) == ACE_Event_Handler::EXCEPT_MASK)
-    new_mask |= FD_OOB;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::EXCEPT_MASK, ACE_Event_Handler::EXCEPT_MASK))
+    ACE_SET_BITS (new_mask, FD_OOB);
 
-  if ((mask & ACE_Event_Handler::ACCEPT_MASK) == ACE_Event_Handler::ACCEPT_MASK)
-    new_mask |= FD_ACCEPT;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::ACCEPT_MASK, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_SET_BITS (new_mask, FD_ACCEPT);
 
-  if ((mask & ACE_Event_Handler::CONNECT_MASK) == ACE_Event_Handler::CONNECT_MASK)
-    new_mask |= FD_CONNECT;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::CONNECT_MASK, ACE_Event_Handler::CONNECT_MASK))
+    ACE_SET_BITS (new_mask, FD_CONNECT);
 
-  if ((mask & ACE_Event_Handler::QOS_MASK) == ACE_Event_Handler::QOS_MASK)
-    new_mask |= FD_QOS;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::QOS_MASK, ACE_Event_Handler::QOS_MASK))
+    ACE_SET_BITS (new_mask, FD_QOS);
 
-  if ((mask & ACE_Event_Handler::GROUP_QOS_MASK) == ACE_Event_Handler::GROUP_QOS_MASK)
-    new_mask |= FD_GROUP_QOS;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::GROUP_QOS_MASK, ACE_Event_Handler::GROUP_QOS_MASK))
+    ACE_SET_BITS (new_mask, FD_GROUP_QOS);
 
-  if ((mask & ACE_Event_Handler::CLOSE_MASK) == ACE_Event_Handler::CLOSE_MASK)
-    new_mask |= FD_CLOSE;
+  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::CLOSE_MASK, ACE_Event_Handler::CLOSE_MASK))
+    ACE_SET_BITS (new_mask, FD_CLOSE);
 
   return found;
 }
@@ -1265,14 +1267,11 @@ ACE_ReactorEx::update_state (void)
 	  // Reset this flag
 	  this->change_state_thread_ = 0;
 	}
-      else
-	{
-	  if (this->active_threads_ == 0)
-	    // This thread did not get a chance to become the change
-	    // thread. If it is the last one out, it will wakeup the
-	    // change thread
-	    this->waiting_to_change_state_.signal ();
-	}
+      else if (this->active_threads_ == 0)
+	// This thread did not get a chance to become the change
+	// thread. If it is the last one out, it will wakeup the
+	// change thread
+	this->waiting_to_change_state_.signal ();
     }
 
   return 0;
