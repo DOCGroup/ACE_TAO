@@ -111,11 +111,11 @@ Distributer::sender_protocol_object (void)
 }
 
 Distributer::Distributer (void)
-  : distributer_sender_mmdevice_ (0),
-    distributer_receiver_mmdevice_ (0),
+  : distributer_receiver_mmdevice_ (0),
+    distributer_sender_mmdevice_ (0),
     sender_protocol_object_ (0),
-    protocol_ ("UDP"),
     receiver_streamctrl_ (0),
+    protocol_ ("UDP"),
     done_ (0)
 {
 }

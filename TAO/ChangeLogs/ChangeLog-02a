@@ -1,3 +1,10 @@
+Thu Mar 29 06:27:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	  Fixed warnings in g++.
+
 Thu Mar 29 06:15:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Simple/Persistent/server.cpp:
