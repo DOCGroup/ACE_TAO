@@ -47,17 +47,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
 CONTROLLED_FILES = CIAO
 
-RELEASE_FILES = $(CONTROLLED_FILES) \
-                TAO/CIAO/INSTALL
+RELEASE_FILES = $(CONTROLLED_FILES)
 
-.PHONY: INSTALL
-#INSTALL: TAO-INSTALL.html
-#	@lynx -dump $^ > $@; chmod a+r $@
-
-#orbsvcs/README: docs/orbsvcs.html
-#	@lynx -dump $^ > $@; chmod a+r $@
-
-#.PHONY: release tag
+.PHONY: release tag
 
 REL = beta
 CHECK =
