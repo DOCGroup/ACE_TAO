@@ -7,6 +7,9 @@
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+  : pipe_handle_ (ACE_INVALID_HANDLE)
+#endif /* ACE_WIN32 */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 }
@@ -90,7 +93,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   int status;
 
   // Create a new instance of the named pipe
-  ACE_HANDLE handle = 
+  this->pipe_handle_ =
 #if defined (ACE_USES_WCHAR)
     ::CreateNamedPipeW (
 #else /* ACE_USES_WCHAR */
@@ -108,7 +111,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
         NULL);
 
 
-  if (handle == ACE_INVALID_HANDLE)
+  if (this->pipe_handle_ == ACE_INVALID_HANDLE)
     return -1;
   else
     {
@@ -120,11 +123,12 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
       // Else the error status should be ERROR_IO_PENDING and the OS will
       // signal the event when it's done.
       this->already_connected_ = 0;
-      this->set_handle (handle);
+      this->set_handle (this->event_.handle ());
       this->overlapped_.hEvent = this->event_.handle ();
       this->event_.reset ();
 
-      BOOL result = ::ConnectNamedPipe (handle, &this->overlapped_);
+      BOOL result = ::ConnectNamedPipe (this->pipe_handle_,
+                                        &this->overlapped_);
       ACE_ASSERT (result == FALSE);
       ACE_UNUSED_ARG (result);
 
@@ -145,6 +149,12 @@ int
 ACE_SPIPE_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::close");
+
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+  // Substitute the pipe handle back in so it's closed properly.
+  this->set_handle (this->pipe_handle_);
+  this->pipe_handle_ = ACE_INVALID_HANDLE;
+#endif /* ACE_WIN32 */
 
   // This behavior is shared by UNIX and Win32...
   int result = this->ACE_SPIPE::close ();
@@ -214,7 +224,7 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   ACE_UNUSED_ARG (remote_addr);
 
   // Check to see if we have a valid pipe
-  if (this->get_handle () == ACE_INVALID_HANDLE)
+  if (this->pipe_handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   // open () started the Connect in asynchronous mode.  Wait for the event
@@ -234,16 +244,16 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
       // Should be here with the ConnectNamedPipe operation complete.
       // Steal the already_connected_ flag to record the results.
       DWORD unused;
-      this->already_connected_ = ::GetOverlappedResult (this->get_handle (),
-						       &this->overlapped_,
-						       &unused,
-						       FALSE);
+      this->already_connected_ = ::GetOverlappedResult (this->pipe_handle_,
+                                                        &this->overlapped_,
+                                                        &unused,
+                                                        FALSE);
     }
 
   if (this->already_connected_)
     {
-      new_io.set_handle (this->get_handle ());
-      this->set_handle (ACE_INVALID_HANDLE);
+      new_io.set_handle (this->pipe_handle_);
+      this->pipe_handle_ = ACE_INVALID_HANDLE;
       new_io.local_addr_ = this->local_addr_;
 
       // Create a new instance of the pipe for the next connection.
