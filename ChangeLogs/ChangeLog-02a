@@ -1,5 +1,8 @@
 Thu Jan 18 12:49:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Makefile.bor (TESTS): Added Config_Test so that this test
+	  runs on Borland.
+
 	* tests: Moved the config_test stuff (which tests ACE_Configuration* 
 	  classes) from the examples/Configuration/ directory to the
  	  tests/ directory and made it a one-button test.
