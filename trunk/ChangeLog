@@ -1,3 +1,21 @@
+Sat Oct 23 11:27:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/WIN32_Asynch_IO.cpp (shared_write): Changed the return values
+	  for ACE_Asynch_Write_Stream::write() and
+ 	  ACE_Asynch_Read_Stream::read() so that they return 0 rather than
+ 	  1.  This makes the code more portable between Windows and POSIX.
+  	  Thanks to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>
+ 	  for reporting this.
+
+	* ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager): 
+	  Added a call to
+	  
+	  ACE_Flag_Manip::set_flags (this->pipe_.read_handle (), ACE_NONBLOCK);
+	  
+	  so that the ACE_POSIX_AIOCB_Proactor doesn't hang on SuSe Linux
+ 	  9.1.  Thanks to Vukajlo <vukajlo@finsoft.co.yu> for reporting
+ 	  this fix.
+
 Fri Oct 22 17:55:32 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Added check for ACE_LACKS_WCTYPE_H.
