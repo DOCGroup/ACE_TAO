@@ -26,7 +26,7 @@ Tue Nov 30 11:42:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           line. After processing each file, all nodes in the AST
           are destroyed except for the predefined types, and now,
           at least for the arg traits, all predefined types are
-          handled the same.
+          handled the same. This fix closes [BUGID:1978].
 
 Tue Nov 30 11:15:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
