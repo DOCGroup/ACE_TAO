@@ -1,3 +1,9 @@
+Tue Mar  2 18:36:08 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/TMCast/TMCast.mpc:
+
+          Fixed the requires by removing the comma.
+
 Tue Mar  2 23:57:29 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
@@ -45,13 +51,13 @@ Tue Mar  2 23:57:29 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Tue Mar  2 18:46:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
-	* tests/RMCast/RMCast_Fragment_Test.cpp:
-	* tests/RMCast/RMCast_Reassembly_Test.cpp: Added #include
-	  "ace/OS_NS_string.h" to get missing ACE_OS methods on AIX.
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp: Added #include
+          "ace/OS_NS_string.h" to get missing ACE_OS methods on AIX.
 
-	* tests/RMCast/RMCast_Retransmission_Test.cpp: Added #include
-	  "ace/ACE.h" to get missing methods on AIX.
+        * tests/RMCast/RMCast_Retransmission_Test.cpp: Added #include
+          "ace/ACE.h" to get missing methods on AIX.
 
 Tue Mar  2 23:40:42 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -90,7 +96,7 @@ Tue Mar  2 22:58:40 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
           a bug in the dependencies (that was also present prior
           to this change) since it's now easier to grok the
           generated makefile.  I'll fix it once I've checked in
-          all the other MPC changes in my queue. 
+          all the other MPC changes in my queue.
 
 Tue Mar  2 12:28:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
