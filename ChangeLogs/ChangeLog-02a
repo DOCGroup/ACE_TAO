@@ -1,3 +1,11 @@
+Thu Oct 12 15:40:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.cpp (ACE_OS_GUARD):
+	  Use explicit names for the OS guards, otherwise the SGI compiler
+	  (7.30 + several patches) crashes.  Thanks to Philip Miller
+	  <pwmiller@sarnoff.com> for reporting the problem and providing
+	  the patch.
+
 Thu Oct 12 12:15:23 2000  Angelo  <corsaro@cs.wustl.edu>
 
         * ACE version 5.1.10 released.

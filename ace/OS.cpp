@@ -176,17 +176,17 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
 }
 
 #define ACE_OS_GUARD \
-  ACE_OS_Thread_Mutex_Guard (*(ACE_thread_mutex_t *) \
+  ACE_OS_Thread_Mutex_Guard ace_os_guard__ (*(ACE_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
       ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
 
 #define ACE_TSS_CLEANUP_GUARD \
-  ACE_OS_Recursive_Thread_Mutex_Guard (*(ACE_recursive_thread_mutex_t *) \
+  ACE_OS_Recursive_Thread_Mutex_Guard ace_tss_cleanup_guard__ (*(ACE_recursive_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
       ACE_OS_Object_Manager::ACE_TSS_CLEANUP_LOCK]);
 
 #define ACE_TSS_BASE_GUARD \
-  ACE_OS_Recursive_Thread_Mutex_Guard (*(ACE_recursive_thread_mutex_t *) \
+  ACE_OS_Recursive_Thread_Mutex_Guard ace_tss_base_guard__ (*(ACE_recursive_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
       ACE_OS_Object_Manager::ACE_TSS_BASE_LOCK]);
 
@@ -5362,7 +5362,7 @@ ACE_OS::open (const wchar_t *filename,
     shared_mode |= FILE_SHARE_DELETE;
 #endif /* ACE_HAS_WINCE */
 
-  ACE_HANDLE h = ::CreateFileW (filename, 
+  ACE_HANDLE h = ::CreateFileW (filename,
                                 access,
                                 shared_mode,
                                 ACE_OS::default_win32_security_attributes (sa),
