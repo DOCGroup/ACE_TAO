@@ -1,11 +1,10 @@
 Fri Jun 25 14:28:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): 
-
-	  Moved base_set() call in constructor to member initializer list.
-	  This is cleaner coding style.  The original code, before a bug
-	  fix was made, was like that.  I just forgot to put it back in
-	  the member initializer list after the fix.
+	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): Moved base_set() call in
+	  constructor to member initializer list.  This is cleaner coding
+ 	  style.  The original code, before a bug fix was made, was like
+ 	  that.  I just forgot to put it back in the member initializer
+ 	  list after the fix.
 
 Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
@@ -16,33 +15,34 @@ Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
-          Split the Options class to a new file, CPP-inclient.h,
-          to make IBM C++ (xlC) like it.
+          Split the Options class to a new file, CPP-inclient.h, to make
+ 	  IBM C++ (xlC) like it.
 
         * examples/IOStream/server/iostream_server.cpp: Split the Handler
           class off to new iostream_server.h file, to make IBM C++ (xlC)
-          like it.
+ 	  like it.
 
-        * examples/Logger/Acceptor-server/server_loggerd.cpp: Moved the Options
-          and handler classes' definitions to new server_loggerd.h file to
-          build with AIX IBM C++.
+        * examples/Logger/Acceptor-server/server_loggerd.cpp: Moved the 
+	  Options and handler classes' definitions to new server_loggerd.h
+ 	  file to build with AIX IBM C++.
 
         * examples/Misc/testr_dump.cpp: Moved the program's classes'
-          definitions to new server_loggerd.h file to build with AIX IBM C++.
+          definitions to new server_loggerd.h file to build with AIX IBM
+ 	  C++.
 
         * examples/IPC_SAP/SOCK_SAP/Makefile:
         * examples/Connection/non_blocking/Makefile:
-        * examples/Misc/Makefile:
-          On AIX w/ IBM C++, delete the tempinc directory before compiling
-          each new program. Keeps the template instantiations from one
-          program from conflicting with the others.
+        * examples/Misc/Makefile: On AIX w/ IBM C++, delete the tempinc
+	  directory before compiling each new program. Keeps the template
+ 	  instantiations from one program from conflicting with the
+ 	  others.
 
 Fri Jun 25 12:40:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added/expanded/moved discussions of
-          enabling/increasing virtual memory on Linux and LynxOS.
-          Thanks to Fabrice Podlyski <podlyski@clrhp04.in2p3.fr>
-          for providing detailed information for LynxOS.
+          enabling/increasing virtual memory on Linux and LynxOS.  Thanks
+ 	  to Fabrice Podlyski <podlyski@clrhp04.in2p3.fr> for providing
+ 	  detailed information for LynxOS.
 
 Fri Jun 25 11:16:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
@@ -52,14 +52,13 @@ Fri Jun 25 11:16:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 Fri Jun 25 07:41:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guideline to include
-          directories containing files with template definitions
-          in a -I.
+          directories containing files with template definitions in a -I.
 
 Thu Jun 24 22:42:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe): fixed UNICOS
-          preprocessor usage so that it's not in the middle
-          of the ACE_reintepret_cast.
+          preprocessor usage so that it's not in the middle of the
+ 	  ACE_reintepret_cast.
 
 Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>
 
@@ -72,12 +71,12 @@ Thu Jun 24 21:33:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * ace/Caching_Strategies_T.{h, cpp} (class ACE_LRU_Caching_Strategy):
         * ace/Caching_Strategies_T.{h, cpp} (class ACE_LFU_Caching_Strategy):
           Removed the overloaded clear_cache () method with entries as an
-          formal argument.
+ 	  formal argument.
 
         * ace/Caching_Strategy_Utility_T.{h,i,cpp}: Renamed as
           Caching_Utiltity.{h, i, cpp}. Also, removed <entries> formal
-          argument from the clear_cache() method, and made purge_percent
-          of type double instead of unsigned int.
+ 	  argument from the clear_cache() method, and made purge_percent
+ 	  of type double instead of unsigned int.
 
         * tests/Cache_Map_Manager_Test.cpp: Changed the purge_test and
           added a test for the Cache_Map_Manager using the Map_Manager.
@@ -94,13 +93,13 @@ Thu Jun 24 20:43:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/WFMO_Reactor/test_multithreading.cpp
           (Task_Handler): Change loop to go from 1 to number_of_handles
-          instead of 0 to number_of_handles - 1.
+ 	  instead of 0 to number_of_handles - 1.
 
 Thu Jun 24 18:36:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.h: Removed the still-born
           ACE_Sig_Action (struct sigaction *) method.  Thanks to Umar
-          Syyid for reporting this.
+ 	  Syyid for reporting this.
 
 Thu Jun 24 15:47:32 1999  Steve Huston  <shuston@riverace.com>
 
