@@ -52,7 +52,7 @@ public:
   {
     int baudrate;
     int parityenb;
-    char *paritymode;
+    const char *paritymode;
     int databits;
     int stopbits;
     int readtimeoutmsec;
@@ -60,7 +60,8 @@ public:
     int rcvenb;
   };
 
-  int control (Control_Mode cmd, Serial_Params * arg) const;
+  int control (Control_Mode cmd,
+               Serial_Params *arg) const;
   // Interface for reading/writing serial device parameters.
 
 #if defined (ACE_NEEDS_DEV_IO_CONVERSION)
