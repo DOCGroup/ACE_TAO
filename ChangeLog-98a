@@ -1,22 +1,27 @@
+Sun Feb 22 21:26:19 1998  James CE Johnson <jcej@chiroptera.tragus.org>
+
+        * tests/IOStream_Test.cpp (server): break out of while loop if
+          read from client_handler fails.
+
 Sun Feb 22 13:06:20 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.h (class ACE_Asynch_Acceptor): Made the
-	  accept method virtual so that users can override it and do
-	  things like enforce limits on the maximum number of simultaneous
-	  connections.  Thanks to Jason Katz <Jason@email.rts-inc.com> for
-	  suggesting this.
+        * ace/Asynch_Acceptor.h (class ACE_Asynch_Acceptor): Made the
+          accept method virtual so that users can override it and do
+          things like enforce limits on the maximum number of simultaneous
+          connections.  Thanks to Jason Katz <Jason@email.rts-inc.com> for
+          suggesting this.
 
 Sun Feb 22 13:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Moved definition of ACE_MAP_{PRIVATE,SHARED,FIXED}
- 	  down to where every platform can see.
+        * ace/OS.h: Moved definition of ACE_MAP_{PRIVATE,SHARED,FIXED}
+          down to where every platform can see.
 
 Sun Feb 22 13:06:20 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Svc_Conf.y: Fixed a couple of places where we were
- 	  potentially dereferencing NULL pointers when services failed to
- 	  load.  Thanks to Eric C. Newton <ecn@smart.net> for reporting
- 	  this.
+        * ace/Svc_Conf.y: Fixed a couple of places where we were
+          potentially dereferencing NULL pointers when services failed to
+          load.  Thanks to Eric C. Newton <ecn@smart.net> for reporting
+          this.
 
 Sat Feb 21 12:44:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -24,9 +29,9 @@ Sat Feb 21 12:44:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Feb 21 11:53:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (close_i): Remember to reset the
-	  current size to 0 after deallocating all entries in the map.
-	  Thanks to Alex for noticing this.
+        * ace/Hash_Map_Manager.cpp (close_i): Remember to reset the
+          current size to 0 after deallocating all entries in the map.
+          Thanks to Alex for noticing this.
 
 Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -49,9 +54,9 @@ Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Feb 19 17:59:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
-	  bit.  Added a test_URL.cpp file.  Notice that these file will
-	  finally be moved to other directory.
+        * apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
+          bit.  Added a test_URL.cpp file.  Notice that these file will
+          finally be moved to other directory.
 
 Thu Feb 19 15:52:50 1998  Stanley D Leeson <STANLEY.D.LEESON@cdev.com>
 
@@ -60,9 +65,9 @@ Thu Feb 19 15:52:50 1998  Stanley D Leeson <STANLEY.D.LEESON@cdev.com>
 
 Thu Feb 19 12:55:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added /**/ between #include and '<', Thanks to
-	  gonzo@ing.puc.cl (Gonzalo A. Diethelm) for providing the
-	  patches.
+        * ace/OS.h: Added /**/ between #include and '<', Thanks to
+          gonzo@ing.puc.cl (Gonzalo A. Diethelm) for providing the
+          patches.
 
 Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -106,43 +111,43 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/SOCK.cpp (open): It appears that we don't need to do
- 	  SO_REUSEADDR if protocol_family != PF_UNIX.  Thanks to Chuck
- 	  Gehr <gehr@sweng.stortek.com> for reporting this.
+        * ace/SOCK.cpp (open): It appears that we don't need to do
+          SO_REUSEADDR if protocol_family != PF_UNIX.  Thanks to Chuck
+          Gehr <gehr@sweng.stortek.com> for reporting this.
 
 Wed Feb 18 22:34:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Reactor/Dgram/Dgram.dsw:
-	* examples/Reactor/Dgram/Dgram.dsp:
-	* examples/Reactor/Dgram/CODgram.dsp: Newly added files for NT.
+        * examples/Reactor/Dgram/Dgram.dsw:
+        * examples/Reactor/Dgram/Dgram.dsp:
+        * examples/Reactor/Dgram/CODgram.dsp: Newly added files for NT.
 
-	* examples/Reactor/Dgram/Dgram.cpp:
-	* examples/Reactor/Dgram/CODgram.cpp: Made them runnable on NT.
+        * examples/Reactor/Dgram/Dgram.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp: Made them runnable on NT.
 
-	* ace/Process.h (ACE_Process_Options): Changed the definition of
-	  ACE_Process_Options::NO_EXEC to 0 for Win32 because it doesn't
-	  mean anything on NT (you must exec a new program on NT, no fork
-	  syntax available.)  With this, we can simulate the fork effect
-	  more or less (still not portable thou.  See
-	  examples/Reactor/Dgram/ for some examples.)
+        * ace/Process.h (ACE_Process_Options): Changed the definition of
+          ACE_Process_Options::NO_EXEC to 0 for Win32 because it doesn't
+          mean anything on NT (you must exec a new program on NT, no fork
+          syntax available.)  With this, we can simulate the fork effect
+          more or less (still not portable thou.  See
+          examples/Reactor/Dgram/ for some examples.)
 
 Wed Feb 18 16:07:14 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* netsvcs/lib/Log_Message_Receiver.cpp (log_output): There was a
- 	  problem where "outputfile" can be NULL, which causes problems
- 	  when it is dereferenced.  Thanks to Stephen Coy
- 	  <stevec@magna.com.au> for reporting this.
+        * netsvcs/lib/Log_Message_Receiver.cpp (log_output): There was a
+          problem where "outputfile" can be NULL, which causes problems
+          when it is dereferenced.  Thanks to Stephen Coy
+          <stevec@magna.com.au> for reporting this.
 
-	* ace/ACE.cpp (ldfind): modified the code to allow it to
- 	  consistently return a status indicating whether or not a
- 	  potential shared library file was found.  Thanks to Patrick
- 	  J. McNerthney <pat@thememedia.com> for reporting this.
+        * ace/ACE.cpp (ldfind): modified the code to allow it to
+          consistently return a status indicating whether or not a
+          potential shared library file was found.  Thanks to Patrick
+          J. McNerthney <pat@thememedia.com> for reporting this.
 
 Wed Feb 18 15:30:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/rules.lib.GNU:
-	  Now we can create libraries with some files in
-	  subdirectories. Though the Makefile still needs to set VPATH.
+        * include/makeinclude/rules.lib.GNU:
+          Now we can create libraries with some files in
+          subdirectories. Though the Makefile still needs to set VPATH.
 
 Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -152,8 +157,8 @@ Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Feb 18 11:53:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  Added netsvcs to auto_compile list.
+        * bin/auto_compile:
+          Added netsvcs to auto_compile list.
 
 Tue Feb 17 18:27:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -161,31 +166,31 @@ Tue Feb 17 18:27:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Feb 17 17:59:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Reactor/Multicast/Multicast.dsw:
-	* examples/Reactor/Multicast/client.dsp:
-	* examples/reactor/multicast/server.dsp: New project files.
+        * examples/Reactor/Multicast/Multicast.dsw:
+        * examples/Reactor/Multicast/client.dsp:
+        * examples/reactor/multicast/server.dsp: New project files.
 
 Tue Feb 17 15:53:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/ACE.cpp (recv_n): Added a check to drop out if the MSG_PEEK
- 	  flag is set!  Thanks to Keith Brown <kalbrown@ix.netcom.com> for
-	  reporting this.
+        * ace/ACE.cpp (recv_n): Added a check to drop out if the MSG_PEEK
+          flag is set!  Thanks to Keith Brown <kalbrown@ix.netcom.com> for
+          reporting this.
 
 Tue Feb 17 12:56:24 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Broke the "purify"
- 	command out of PRELINK into its own variable: PURELINK.  This was
- 	done to quiet purify when building shared libraries.  It wasn't
- 	possible simply to remove the PRELINK reference from SOLINK.cc
- 	because PRELINK is also used for specifying quantify.
+        * include/makeinclude/wrapper_macros.GNU: Broke the "purify"
+        command out of PRELINK into its own variable: PURELINK.  This was
+        done to quiet purify when building shared libraries.  It wasn't
+        possible simply to remove the PRELINK reference from SOLINK.cc
+        because PRELINK is also used for specifying quantify.
 
-	Also added two new variables: PURE_CACHE_DIR and
- 	PURE_CACHE_BASE_DIR.  PURE_CACHE_DIR is the value of the
- 	purify/quantify '-cache-dir=' option, and PURE_CACHE_BASE_DIR is
- 	used as the base directory to build a user/compiler-specific cache
- 	directory.  In general, you probably want to use them like this:
- 	"make PURE_CACHE_BASE_DIR=~/mypurecache", which will end up
- 	creating the directory ~/mypurecache-<username>-<compiler>.
+        Also added two new variables: PURE_CACHE_DIR and
+        PURE_CACHE_BASE_DIR.  PURE_CACHE_DIR is the value of the
+        purify/quantify '-cache-dir=' option, and PURE_CACHE_BASE_DIR is
+        used as the base directory to build a user/compiler-specific cache
+        directory.  In general, you probably want to use them like this:
+        "make PURE_CACHE_BASE_DIR=~/mypurecache", which will end up
+        creating the directory ~/mypurecache-<username>-<compiler>.
 
 Tue Feb 17 09:23:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
