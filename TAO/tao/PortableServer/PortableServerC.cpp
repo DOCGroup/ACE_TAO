@@ -6246,19 +6246,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableServer::POAList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableServer::POAList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
