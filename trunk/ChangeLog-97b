@@ -1,3 +1,13 @@
+Wed Oct  8 12:09:46 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/OS.i (strcasecmp): Oops, we forgot to compare the strlen
+	  first.  Thanks to Murphy Ivan <Ivan.Murphy@med.siemens.de> for
+	  fixing the bug.
+
+	* ace/OS.h: Added THR_DAEMON macro definition for Win32 (et. al.?)
+	  to avoid compilation error.
+	  Removed ACE_HAS_BROKEN_TEMPLATE_DESTRUCTOR and related macros.
+
 Wed Oct  8 09:52:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: 
