@@ -1,77 +1,86 @@
+Thu Jan 28 11:32:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_ORB.cpp (string_to_object): Checked if the <str> passed
+	  in is null.  If yes, simply return a null object.
+
+	* TAO-INSTALL.html (href): Fixed directory name leads to
+	  IDL_Cubit.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
+	  reporting these.
+
 Thu Jan 28 11:41:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  Disabled the support for the new EC implementation, it is not
 	  compiled by default in orbsvcs, hence it cannot be used by
 	  default either.
 
 Wed Jan 27 22:09:14 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
 	Enaaabled the exporting of properties by  mutiple augmented servers
-	
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
 	Need to initialize the handle everytime in rstat
-	
-	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java: 
+
+	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
 	Modified the algorithm to get the performance graph working
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java: 
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
 	Modified  the Jtree to to display multiple movie  info
 	Enabled the display of the performance graph
-	
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java: 
+
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
 	Added the thread to get the dynamic properties and display as a
 	graph
 
-	
+
 
 Wed Jan 27 21:59:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
 	  Added a new entry to the TAO_ORBSVCS macro, Event2, right now it
 	  is disabled by default.
 	  The makefile add a -DTAO_ORBSVCS_HAS_* for each entry in the
 	  TAO_ORBSVCS list.
 
-	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: 
+	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp:
 	  Use the TAO_ORBSVCS_HAS_* macros to instantiate only the needed
 	  templates.
 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
 	  A variable was not properly initialized.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
 	  Added missing template instantiations
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  It can create an instance of the new EC for testing purposes.
 
 Wed Jan 27 19:59:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h: 
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.cpp:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
 	  Completed the first prototype, this version does not support
 	  filtering or real-time features, but it is useful to get
 	  baseline numbers.
