@@ -44,7 +44,7 @@ namespace CIAO
    * @brief Servant implementation for Components::Deployment::Container
    *
    * This class implements the Components::Deployment::Container
-   * interface as defined by the CCM spcification.  As the interface
+   * interface as defined by the CCM specification.  As the interface
    * implies, this is actually part of the deployment interface and is
    * used to manage the lifecycle of the installed components and
    * homes.
