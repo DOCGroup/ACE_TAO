@@ -37,6 +37,7 @@
 #include "be_visitor_argument/paramlist.cpp"
 #include "be_visitor_argument/request_info_sh.cpp"
 #include "be_visitor_argument/request_info_ss.cpp"
+#include "be_visitor_argument/request_info_result.cpp"
 
 
 ACE_RCSID(be, be_visitor_argument, "$Id$")
