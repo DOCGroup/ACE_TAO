@@ -28,5 +28,5 @@ To update Svc_Conf_l.cpp.diff:
 6) % cd ../etc
    % cvs commit -ko -m'updated diff file' Svc_Conf_l.cpp.diff
 
-To update Svc_Conf_l.cpp.diff, follow the same procedure, above, as
+To update Svc_Conf_y.cpp.diff, follow the same procedure, above, as
 for updating Svc_Conf_l.cpp.diff, but replace "_l" with "_y".
