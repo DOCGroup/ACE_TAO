@@ -192,7 +192,7 @@ private:
                      int protocol_family,
                      int protocol,
                      int reuse_addr,
-					 ACE_Protocol_Info *protocolinfo);
+                     ACE_Protocol_Info *protocolinfo);
   // Subscribe to the multicast interface using QoS-enabled semantics.
 
   int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
