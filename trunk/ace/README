@@ -170,7 +170,6 @@ ACE_LACKS_EXEC				Platform lacks the exec() family of system calls (e.g., Win32,
 ACE_LACKS_FILELOCKS			Platform lacks file locking mechanism
 ACE_LACKS_GETPGID			Platform lacks getpgid() call (e.g., Win32, Chorus, and FreeBSD).
 ACE_LACKS_GETSERVBYNAME			Platforms lacks getservbyname() (e.g., VxWorks and Chorus).
-ACE_LACKS_IOSTREAM_SETGET		Platforms lacks IOStream get/set operators (e.g., SGI IRIX 6.2).
 ACE_LACKS_IOSTREAM_FX			iostream header does not declare ipfx (), opfx (), etc.
 ACE_LACKS_LINEBUFFERED_STREAMBUF	Platform lacks streambuf "linebuffered ()".
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
