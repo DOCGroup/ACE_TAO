@@ -11361,9 +11361,12 @@ ACE_OS::access (const wchar_t *path, int amode)
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #   else
   // @@ There should be a Win32 API that can do this.
-  ACE_UNUSED_ARG (path);
+  // Hard coded read access here.
+  FILE* handle = ACE_OS::fopen (path, ASYS_TEXT ("r"));
   ACE_UNUSED_ARG (amode);
-  ACE_NOTSUP_RETURN (-1);
+
+  ACE_OS::fclose (handle);
+  return (handle == ACE_INVALID_HANDLE ? -1 : 0);
 #   endif /* ACE_HAS_WINCE */
 }
 
