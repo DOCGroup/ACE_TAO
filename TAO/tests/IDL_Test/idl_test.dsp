@@ -893,6 +893,7 @@ SOURCE=.\full.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__FULL_="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\full.idl
@@ -905,6 +906,7 @@ InputName=full
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__FULL_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\full.idl
@@ -924,6 +926,7 @@ SOURCE=.\fwd.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__FWD_I="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\fwd.idl
@@ -936,6 +939,7 @@ InputName=fwd
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__FWD_I="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\fwd.idl
@@ -1040,6 +1044,7 @@ SOURCE=.\gperf.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\gperf.idl
 InputName=gperf
@@ -1062,6 +1067,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__GPERF="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\gperf.idl
@@ -1486,6 +1492,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__NESTE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\nested_scope.idl
@@ -1570,6 +1577,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\params.idl
@@ -1654,6 +1662,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PRAGM="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\pragma.idl
@@ -1699,6 +1708,7 @@ SOURCE=.\reopen_include1.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__REOPE="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include1.idl
@@ -1711,6 +1721,7 @@ InputName=reopen_include1
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__REOPE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include1.idl
@@ -1730,6 +1741,7 @@ SOURCE=.\reopen_include2.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__REOPEN="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include2.idl
@@ -1742,6 +1754,7 @@ InputName=reopen_include2
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__REOPEN="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include2.idl
@@ -1846,8 +1859,19 @@ SOURCE=.\repo_id_mod.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\repo_id_mod.idl
+InputName=repo_id_mod
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__REPO_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\repo_id_mod.idl
