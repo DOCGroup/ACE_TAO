@@ -1,3 +1,51 @@
+Fri May 30 14:16:33 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * examples/svcconf/.depend.Makefile.Svcconf:
+        * examples/svcconf/Makefile:
+        * examples/svcconf/Makefile.Svcconf:
+        * examples/svcconf/Makefile.Svcconf.bor:
+        * examples/svcconf/Makefile.bor:
+        * examples/svcconf/README:
+        * examples/svcconf/Svcconf.dsp:
+        * examples/svcconf/Svcconf.dsw:
+        * examples/svcconf/Svcconf.mpc:
+        * examples/svcconf/Svcconf_Handler.cpp:
+        * examples/svcconf/Svcconf_Handler.h:
+        * examples/svcconf/Svcconf_Handler.i:
+        * examples/svcconf/main.cpp:
+
+          Removed directories causing problems with Win XP release.
+
+        * ACEXML.dsw:
+        * Makefile:
+        * Makefile.bor:
+        * apps/svcconf/Makefile:
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser.bor:
+        * apps/svcconf/Makefile.bor:
+        * common/Makefile:
+        * common/Makefile.ACEXML.bor:
+        * common/Makefile.bor:
+        * examples/SAXPrint/Makefile:
+        * examples/SAXPrint/Makefile.SAXPrint.bor:
+        * examples/SAXPrint/Makefile.bor:
+        * parser/parser/Makefile:
+        * parser/parser/Makefile.ACEXML_Parser.bor:
+        * parser/parser/Makefile.bor:
+        * tests/.depend.Makefile.ContentHandler_Test:
+        * tests/.depend.Makefile.HttpCharStream_Test:
+        * tests/.depend.Makefile.NamespaceSupport_Test:
+        * tests/.depend.Makefile.Transcoder_Test::
+        * tests/Makefile:
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile.ContentHandler_Test.bor:
+        * tests/Makefile.HttpCharStream_Test.bor:
+        * tests/Makefile.NamespaceSupport_Test.bor:
+        * tests/Makefile.Transcoder_Test.bor:
+        * tests/Makefile.bor:
+
+          More build related delicacies needed updating because of the
+          previous change.
+
 Fri May 30 13:56:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * common/XML_Common.dsp: Removed old dsp left over from previous

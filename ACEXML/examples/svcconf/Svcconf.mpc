@@ -1,5 +1,0 @@
-project (Svcconf) : aceexe, acexml {
-   depends += ACEXML_XML_Svc_Conf_Parser
-   libs += ACEXML_XML_Svc_Conf_Parser
-   libpaths += $(ACE_ROOT)/ACEXML/apps/svcconf
-}
