@@ -3,6 +3,7 @@
 //
 
 #include "Client_Task.h"
+#include "tao/Messaging.h"
 
 ACE_RCSID(Big_Request_Muxing, Client_Task, "$Id$")
 
