@@ -11,6 +11,15 @@ Tue Mar 23 20:18:20 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  the right version of the GPERF paper.  Thanks to Eric Whorter
  	  <emcwhorter@rightnow.com> for reporting this.
 
+Tue Mar 23 20:12:51 2004  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * performance-tests/SCTP/Options_Manager.cpp (Options_Manager):
+          Fixed two instances of array[strlen] = '\0'; to
+          Fixed two instances of array[strlen - 1] = '\0';
+          Thanks to andreas.koehler@sysde.eads.net for reporting this
+          error.
+
+
 Tue Mar 23 18:31:40 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/SSL/Makefile:
