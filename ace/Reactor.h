@@ -440,8 +440,8 @@ protected:
   static sig_atomic_t end_event_loop_;
   // Terminate the event loop.
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor (const ACE_Reactor &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor &operator = (const ACE_Reactor &))
+  ACE_Reactor (const ACE_Reactor &);
+  ACE_Reactor &operator = (const ACE_Reactor &);
   // Deny access since member-wise won't work...
 };
 

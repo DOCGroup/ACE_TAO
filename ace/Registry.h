@@ -402,10 +402,10 @@ public:
     // (String version)
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Naming_Context (const Naming_Context &rhs))
+    Naming_Context (const Naming_Context &rhs);
     // Disallow copy constructors
 
-    ACE_UNIMPLEMENTED_FUNC (const Naming_Context &operator= (const Naming_Context &rhs))
+    const Naming_Context &operator= (const Naming_Context &rhs);
     // Disallow assignment
 
     HKEY key_;
