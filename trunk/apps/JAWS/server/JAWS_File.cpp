@@ -22,14 +22,18 @@ static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
 static const int READ_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
                                FILE_FLAG_OVERLAPPED |
                                O_RDONLY);
+static const int RCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
+                                O_RDONLY);
 static const int WRITE_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
                                 FILE_FLAG_OVERLAPPED |
-                                O_RDWR |
-                                O_CREAT |
-                                O_TRUNC);
+                                O_RDWR | O_CREAT | O_TRUNC);
+static const int WCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
+                                O_RDWR | O_CREAT | O_TRUNC);
 #else
 static const int READ_FLAGS = O_RDONLY;
+static const int RCOPY_FLAGS = O_RDONLY;
 static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
+static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
 // static data members
@@ -67,10 +71,14 @@ JAWS_File_Handle::JAWS_File_Handle (void)
 
 JAWS_File_Handle::JAWS_File_Handle (const char * filename)
 {
+  // there is a problem in this code:
   this->init ();
+
   // fetch the file from the Virtual_Filesystem
-  // let it do the work of cache coherency
+  // let the Virtual_Filesystem do the work of cache coherency
+
   this->file_ = JAWS_Virtual_Filesystem::instance ()->fetch (filename);
+
   this->file_->acquire ();
 }
 
@@ -228,6 +236,7 @@ JAWS_Virtual_Filesystem::remove_i (int index)
     {
       jf = this->table_[index];
       this->table_[index] = 0;
+      jf->release ();
       if (jf->action () == JAWS_File::IDLE)
         {
           delete jf;
@@ -251,13 +260,27 @@ JAWS_Virtual_Filesystem::insert (JAWS_File * new_file)
 JAWS_File *
 JAWS_Virtual_Filesystem::insert_i (JAWS_File * new_file)
 {
-  int i;
+  int i, max;
+  size_t maxsize = 0;
   for (i = 0; i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; i++)
     {
-      if (this->table_[i] != 0) continue;
+      if (this->table_[i] != 0)
+        {
+          if (this->table_[i]->size () > maxsize)
+            maxsize = this->table_[max = i]->size ();
+          continue;
+        }
       this->table_[i] = new_file;
       break;
     }
+  if (i == DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
+    {
+      // Forced to exercise a replacement policy here.
+      // Let's play nice, and remove the largest object from the cache.
+      this->remove_i (max);
+      this->table_[max] = new_file;
+    }
+  new_file->acquire ();
   return new_file;
 }
 
@@ -318,13 +341,13 @@ JAWS_File::JAWS_File (const char * filename)
 
   this->tempname_ = ACE_OS::tempnam (".", "zJAWS");
 
-  ACE_HANDLE original = ACE_OS::open (this->filename_, READ_FLAGS, R_MASK);
+  ACE_HANDLE original = ACE_OS::open (this->filename_, RCOPY_FLAGS, R_MASK);
   if (original == ACE_INVALID_HANDLE)
     {
       this->error (JAWS_File::OPEN_FAILED);
       return;
     }
-  ACE_HANDLE copy = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK);
+  ACE_HANDLE copy = ACE_OS::open (this->tempname_, WCOPY_FLAGS, W_MASK);
   if (copy == ACE_INVALID_HANDLE)
     {
       this->error (JAWS_File::COPY_FAILED);
