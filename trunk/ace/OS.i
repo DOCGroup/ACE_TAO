@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
-
 // $Id$
-
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 #undef ACE_INLINE
@@ -775,7 +773,7 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
 #if defined (ACE_HAS_CLOCK_GETTIME)
   ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
 #elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (clockid);	 
+  ACE_UNUSED_ARG (clockid);
   ACE_PSOS_Time_t pt;
   int result = ACE_PSOS_Time_t::get_system_time(pt);
   *ts = ACE_static_cast (struct timespec, pt);
@@ -1967,12 +1965,12 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   s->sema_ = 0;
   return result;
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS) 
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
   ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_delete (s->sema_), result), int, -1, result);
   s->sema_ = 0;
-  return result;  
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2060,7 +2058,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 
   return s->sema_ ? 0 : -1;
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS)  
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
   ACE_OS::memcpy (s->name_, name, sizeof (s->name_));
@@ -2114,7 +2112,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS)  
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
   ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_v (s->sema_), result), int, -1, result);
@@ -2200,10 +2198,10 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     // got the semaphore
     return 0;
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS)  
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_NOWAIT, 0), result), 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_NOWAIT, 0), result),
                                 int, -1, result);
   return result;
 #else
@@ -2268,10 +2266,10 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, WAIT_FOREVER), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS)  
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, 0), result), 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, 0), result),
                                 int, -1, result);
   return result;
 #else
@@ -2349,12 +2347,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
               tv.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
-#elif defined (ACE_PSOS)  
+#elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
   int result;
   u_long ticks = tv.sec() * KC_TICKS2SEC +
                  tv.usec () * KC_TICKS2SEC / ACE_ONE_SECOND_IN_USECS;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, ticks), result), 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, ticks), result),
                                 int, -1, result);
   return result;
 #else
@@ -2525,7 +2523,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   if (result == -1)
     // Bad things happened, so let's just return below.
-    /* NOOP */; 
+    /* NOOP */;
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   else if (external_mutex->type_ == USYNC_PROCESS)
     {
@@ -4724,24 +4722,18 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   *sig = ::sigwait (set);
   return *sig;
 #else /* ACE_HAS_ONEARG_SETWAIT */
-# if defined (DIGITAL_UNIX)
-#  if __DECCXX_VER < 60090006
-      errno = ::__sigwaitd10 (set, sig);
-#   else
-      errno = sigwait (set, sig);
-#   endif /* __DECCXX_VER < 60090006 */
-#  elif defined (__Lynx__)
+#  if defined (__Lynx__)
     // Second arg is a void **, which we don't need (the selected
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#  else
+#  else /* ! __Lynx __ */
     errno = ::sigwait (set, sig);
-#  endif /* DIGITAL_UNIX */
-  if (errno == -1)
-    return -1;
-  else
-    return *sig;
+    if (errno == 0)
+      return *sig;
+    else
+      return -1;
+#  endif /* ! __Lynx__ */
 #endif /* ACE_HAS_ONEARG_SIGWAIT */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (set);
@@ -7349,16 +7341,16 @@ ACE_OS::nanosleep (const struct timespec *requested,
   if (ticks > ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks))
   {
     ticks -= ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks);
-    remaining->tv_sec = ACE_static_cast (time_t, 
-                                         (ticks / 
-                                          ACE_static_cast (double, 
+    remaining->tv_sec = ACE_static_cast (time_t,
+                                         (ticks /
+                                          ACE_static_cast (double,
                                                            KC_TICKS2SEC)));
-    ticks -= ACE_static_cast (double, remaining->tv_sec) * 
+    ticks -= ACE_static_cast (double, remaining->tv_sec) *
              ACE_static_cast (double, KC_TICKS2SEC);
 
-    remaining->tv_nsec = 
-      ACE_static_cast (long, 
-                       (ticks * ACE_static_cast (double, 
+    remaining->tv_nsec =
+      ACE_static_cast (long,
+                       (ticks * ACE_static_cast (double,
                                                  ACE_ONE_SECOND_IN_NSECS)) /
                        ACE_static_cast (double, KC_TICKS2SEC));
 
