@@ -54,7 +54,7 @@
 #include "tao/CurrentC.h"
 
 // TAO specific files, avoid them as much as possible.
-#include "tao/PortableInterceptor.h"
+
 #if (TAO_HAS_SMART_PROXIES == 1)
 #include "tao/Smart_Proxies.h"
 #endif /*TAO_HAS_SMART_PROXIES == 1*/
@@ -86,6 +86,12 @@
 #include "tao/BoundsC.h"
 #include "tao/TAOC.h"
 #include "tao/MessagingC.h"
+#include "tao/StringSeq.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/PortableInterceptor.h"
+#endif  /* TAO_HAS_INTERCEPTORS */
+
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

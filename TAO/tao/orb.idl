@@ -55,6 +55,12 @@ module CORBA
     sequence <ServiceOption> service_options;
     sequence <ServiceDetail> service_details;
   };
+
+  // Portable Interceptor specification adds these types.
+  typedef sequence<string> StringSeq;
+  typedef sequence<wstring> WStringSeq;
+  typedef sequence<octet> OctetSeq;
+
 };
 
 #pragma prefix ""

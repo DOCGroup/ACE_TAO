@@ -42,6 +42,15 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
   return CORBA::string_dup (this->myname_);
 }
 
+void 
+Echo_Client_Request_Interceptor::send_poll (
+            PortableInterceptor::ClientRequestInfo_ptr,
+            CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Do Nothing
+}
+
 void
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                CORBA::Environment &)
@@ -94,6 +103,16 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
+}
+
+void 
+Echo_Client_Request_Interceptor::receive_other (
+            PortableInterceptor::ClientRequestInfo_ptr,
+            CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest))
+{
+  // Do Nothing
 }
 
 void
@@ -183,6 +202,16 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
 
 }
 
+void 
+Echo_Server_Request_Interceptor::receive_request_service_contexts (
+             PortableInterceptor::ServerRequestInfo_ptr,
+             CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest))
+{
+  // Do nothing
+}
+
 void
 Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                                              CORBA::Environment &ACE_TRY_ENV)
@@ -214,5 +243,15 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception from \"%s\"",
               ri->operation ()));
+}
+
+void 
+Echo_Server_Request_Interceptor::send_other (
+             PortableInterceptor::ServerRequestInfo_ptr,
+             CORBA::Environment & )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest))
+{
+  // Do Nothing
 }
 #endif /* (TAO_HAS_INTERCEPTORS == 1) */

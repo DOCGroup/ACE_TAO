@@ -17,7 +17,6 @@
 #include "IORManip_Loader.h"
 #include "IORManipulation.h"
 
-
 ACE_RCSID(IORManip, IORManip, "$Id$")
 
 TAO_IORManip_Loader::TAO_IORManip_Loader (void)

@@ -1,0 +1,12 @@
+// $Id$
+
+#ifndef TAO_OCTET_SEQ_IDL
+#define TAO_OCTET_SEQ_IDL
+
+#pragma prefix "omg.org"
+
+typedef sequence<octet> OctetSeq;
+
+#pragma prefix ""
+
+#endif /* TAO_OCTET_SEQ_IDL */

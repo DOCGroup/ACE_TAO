@@ -1,4 +1,25 @@
-// -*- IDL -*- $Id$:
+// -*- IDL -*-
+//
+// $Id$
+
+// ================================================================
+//
+//   This file was used to generate the code in PortableInterceptorC.*
+//   The command used to generate code is:
+//
+//     tao_idl
+//          -Ge 1 \
+//          -DCORBA3 \
+//          -Wb,export_macro=TAO_Export \
+//          -Wb,export_include="tao/corbafwd.h" \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          PortableInterceptor.pidl
+//
+//   Patches for changes to the generated code are available in the
+//   `diffs' directory.
+// ================================================================
+
 
 // This file contains the interface definitions for "Portable"
 // Interceptor support.
@@ -15,7 +36,6 @@
 
 #include "orb.idl"
 
-//#include <CORBA.pidl> // added
 #include <Dynamic.pidl> // changed to pidl from idl
 
 //#include <IOP_N.idl>
@@ -24,19 +44,6 @@
 #include "Messaging.pidl" // this is .idl in the spec
 
 module PortableInterceptor {
-
-  typedef string RepositoryId;
-  // Did this since couldnt find CORBA::RepositoryId;
-  // Have replaced CORBA::RepositoryId with RepositoryId;
-  // @@ Kirthika, can you please document here why you need to
-  //    replace types in CORBA module with local definitions?
-
-  typedef sequence<octet> OctetSeq;
-  // The spec has it as CORBA::OctetSeq, have replaced this by simply
-  // OctectSeq
-
-  typedef sequence<string> StringSeq;
-  // The spec has this as CORBA::StringSeq.
 
   local interface Interceptor {
     readonly attribute string name;
@@ -88,7 +95,7 @@ module PortableInterceptor {
     readonly attribute Object effective_target;
     readonly attribute IOP::TaggedProfile effective_profile;
     readonly attribute any received_exception;
-    readonly attribute RepositoryId received_exception_id;
+    readonly attribute CORBA::RepositoryId received_exception_id;
    IOP::TaggedComponent get_effective_component (in IOP::ComponentId id);
 
     // Removed it for starters
@@ -102,12 +109,12 @@ module PortableInterceptor {
 
   local interface ServerRequestInfo : RequestInfo {
     readonly attribute any sending_exception;
-    readonly attribute OctetSeq object_id;
-    readonly attribute OctetSeq adapter_id;
-    readonly attribute RepositoryId target_most_derived_interface;
+    readonly attribute CORBA::OctetSeq object_id;
+    readonly attribute CORBA::OctetSeq adapter_id;
+    readonly attribute CORBA::RepositoryId target_most_derived_interface;
     CORBA::Policy get_server_policy (in CORBA::PolicyType type);
     void set_slot (in SlotId id, in any data) raises (InvalidSlot);
-    boolean target_is_a (in RepositoryId id);
+    boolean target_is_a (in CORBA::RepositoryId id);
     void add_reply_service_context (
       in IOP::ServiceContext service_context,
       in boolean replace);
@@ -154,7 +161,7 @@ module PortableInterceptor {
     };
     exception InvalidName {};
 
-    readonly attribute StringSeq arguments;
+    readonly attribute CORBA::StringSeq arguments;
     readonly attribute string orb_id;
 
     // Shall not need this for starters
@@ -162,8 +169,9 @@ module PortableInterceptor {
 
     void register_initial_reference (in ObjectId id, in Object obj)
       raises (InvalidName);
-    void resolve_initial_references (in ObjectId id) raises (InvalidName);
-    void add_client_request_interceptor (in ClientRequestInterceptor interceptor)
+    CORBA::Object resolve_initial_references (in ObjectId id) raises (InvalidName);
+    void add_client_request_interceptor (
+      in ClientRequestInterceptor interceptor)
       raises (DuplicateName);
     void add_server_request_interceptor (
       in ServerRequestInterceptor interceptor)
@@ -180,7 +188,7 @@ module PortableInterceptor {
     void pre_init (in ORBInitInfo info);
     void post_init (in ORBInitInfo info);
   };
+
 };
-// @@ Kirthika, pleasse use traditional C style comments in
-// the following #endif.
-#endif  // _PORTABLE_INTERCEPTOR_IDL_
+
+#endif  /* _PORTABLE_INTERCEPTOR_IDL_ */
