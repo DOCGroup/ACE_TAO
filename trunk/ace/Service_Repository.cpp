@@ -40,7 +40,7 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::get_lock (), 0));
+				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Service_Repository::svc_rep_ == 0)
 	{
@@ -56,7 +56,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::get_lock (), 0));
+			    *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Service_Repository *t = ACE_Service_Repository::svc_rep_;
   // We can't safely delete it since we don't know who created it!
@@ -72,7 +72,7 @@ ACE_Service_Repository::close_singleton (void)
   ACE_TRACE ("ACE_Service_Repository::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::get_lock ()));
+		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Service_Repository::delete_svc_rep_)
     {

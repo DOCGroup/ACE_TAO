@@ -170,7 +170,7 @@ ACE_Thread_Manager::instance (void)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::get_lock (), 0));
+				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Thread_Manager::thr_mgr_ == 0)
 	{
@@ -188,7 +188,7 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::get_lock (), 0));
+			    *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Thread_Manager *t = ACE_Thread_Manager::thr_mgr_;
   // We can't safely delete it since we don't know who created it!
@@ -204,7 +204,7 @@ ACE_Thread_Manager::close_singleton (void)
   ACE_TRACE ("ACE_Thread_Manager::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::get_lock ()));
+		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
