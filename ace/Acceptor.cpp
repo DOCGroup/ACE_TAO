@@ -251,9 +251,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&
 
   // Set the reactor of the newly created <SVC_HANDLER> to the same
   // reactor that this <ACE_Acceptor> is using.
-  if (this->reactor ())
-    sh->reactor (this->reactor ());
-
+  sh->reactor (this->reactor ());
   return 0;
 }
 
