@@ -549,6 +549,7 @@ template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
 template class Param_Test_Client<Test_Big_Union>;
+template class Param_Test_Client<Test_Complex_Any>;
 #if 0
 template class Param_Test_Client<Test_Multdim_Array>;
 #endif
@@ -581,6 +582,7 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Var_Array>
 #pragma instantiate Param_Test_Client<Test_Exception>
 #pragma instantiate Param_Test_Client<Test_Big_Union>
+#pragma instantiate Param_Test_Client<Test_Complex_Any>
 #if 0
 #pragma instantiate Param_Test_Client<Test_Multdim_Array>
 #endif
