@@ -53,7 +53,7 @@ be_array::be_array (UTL_ScopedName *n,
 be_array::~be_array (void)
 {
   if (this->tao_name_ == 0)
-    delete[] tao_name_;
+    delete [] tao_name_;
 }
 
 // create a name for ourselves

@@ -575,19 +575,19 @@ AST_Decl::destroy (void)
 
   if (this->full_name_ != 0)
     {
-      delete this->full_name_;
+      delete [] this->full_name_;
       this->full_name_ = 0;
     }
 
   if (this->repoID_ != 0)
     {
-      delete this->repoID_;
+      delete [] this->repoID_;
       this->repoID_ = 0;
     }
 
   if (this->prefix_ != 0)
     {
-      delete this->prefix_;
+      delete [] this->prefix_;
       this->prefix_ = 0;
     }
 

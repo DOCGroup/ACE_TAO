@@ -511,7 +511,7 @@ be_decl::compute_repoID (const char *prefix,
   repoID += version_str;
 
   // Delete result.
-  delete result;
+  delete [] result;
   result = 0;
 
   name = repoID.rep ();
@@ -522,7 +522,7 @@ be_decl::destroy (void)
 {
   if (this->flat_name_ != 0)
     {
-      delete this->flat_name_;
+      delete [] this->flat_name_;
       this->flat_name_ = 0;
     }
 }
