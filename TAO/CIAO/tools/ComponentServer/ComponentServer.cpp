@@ -132,7 +132,7 @@ main (int argc, char *argv[])
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = poa->id_to_reference (cs_oid
+      obj = poa->id_to_reference (cs_oid.in ()
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

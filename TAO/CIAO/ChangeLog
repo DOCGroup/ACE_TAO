@@ -1,3 +1,9 @@
+Mon Apr 28 16:49:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/ComponentServer/ComponentServer.cpp (main): Fixed a gcc
+	  compilation error.  Thanks to Tao Lu <tao.lu@dre.vanderbilt.edu>
+	  for reporting this.
+
 Fri Apr 25 10:39:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.xpm:
