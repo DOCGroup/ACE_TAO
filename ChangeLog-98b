@@ -4,6 +4,12 @@ Mon Aug 17 10:06:01 1998  David L. Levine  <levine@cs.wustl.edu>
           #include <string.h> with #include "ace/OS.h", so that
           _REENTRANT gets defined with g++.
 
+        * apps/Gateway/Peer/Peer.{h,cpp} (Peer_Connector::open): added
+          (unused) arguments to this function.  They are only provided to
+          avoid a compiler warning about hiding the virtual function
+          ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>::open (ACE_Reactor *,
+          int).
+
 Mon Aug 17 00:05:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/ReactorEx/test_removals.cpp (main): Fixed
