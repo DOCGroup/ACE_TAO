@@ -10,14 +10,9 @@ ACE_RCSID(IFR_Service, tmplinst, "$Id$")
 template class ACE_Node<CORBA::DefinitionKind>;
 template class ACE_Unbounded_Queue<CORBA::DefinitionKind>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::DefinitionKind>;
-template class ACE_Node<ACE_TString>;
-template class ACE_Unbounded_Queue<ACE_TString>;
-template class ACE_Unbounded_Queue_Iterator<ACE_TString>;
 template class ACE_Node<ACE_Configuration_Section_Key>;
 template class ACE_Unbounded_Queue<ACE_Configuration_Section_Key>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>;
-template class ACE_Write_Guard<ACE_Lock>;
-template class ACE_Read_Guard<ACE_Lock>;
 
 template class POA_CORBA_Repository_tie<TAO_Repository_i>;
 template class POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>;
@@ -136,14 +131,9 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate ACE_Node<CORBA::DefinitionKind>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::DefinitionKind>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::DefinitionKind>
-#pragma instantiate ACE_Node<ACE_TString>
-#pragma instantiate ACE_Unbounded_Queue<ACE_TString>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TString>
 #pragma instantiate ACE_Node<ACE_Configuration_Section_Key>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Configuration_Section_Key>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>
-#pragma instantiate ACE_Write_Guard<ACE_Lock>
-#pragma instantiate ACE_Read_Guard<ACE_Lock>
 
 #pragma instantiate POA_CORBA_Repository_tie<TAO_Repository_i>
 #pragma instantiate POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>
