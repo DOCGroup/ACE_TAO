@@ -504,23 +504,26 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
                            ACE_LIB_TEXT ("dequeue_head")),
                           -1);
 
-      // check
-      if (eh && (eh != temp->eh_))
+      // If this is not a Reactor notify (it is for a particular handler),
+      // and it matches the specified handler (or purging all), then
+      // release it and count the number purged.
+      if (0 != temp->eh_ && (0 == eh || eh == temp->eh_))
         {
-          if (-1 == local_queue.enqueue_head (temp))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("enqueue_head")),
-                              -1);
-        }
-      else
-        {  // deallocate the space...
           if (-1 == this->free_queue_.enqueue_head (temp))
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_LIB_TEXT ("%p\n"),
                                ACE_LIB_TEXT ("enqueue_head")),
                               -1);
           ++number_purged;
+        }
+      else
+        {
+          // To preserve it, move it to the local_queue.
+          if (-1 == local_queue.enqueue_head (temp))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enqueue_head")),
+                              -1);
         }
     }
 
