@@ -298,17 +298,18 @@ ACE_Runtime_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*configs */
+                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   RtecScheduler::NOT_SCHEDULED))
 {
-  ACE_UNUSED_ARG ((configs));
-
   // throw an exception if a valid schedule has not been loaded
-  if (config_count_ <= 0)
+  if (this->config_count_ <= 0)
     ACE_THROW (RtecScheduler::NOT_SCHEDULED());
   //TODO: fill the Config_Info_Set with the runtime Config_Infos
   //for now, this function is unimplemented
+  // 
+  // @@ If unimplemented we either return a CORBA::NO_IMPL exception 
+  // or a proprietary ACE_NOTSUP; -- Bala
   return;
 }
