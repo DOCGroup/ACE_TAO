@@ -1463,9 +1463,8 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
   ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/Default_ORTC.i \
+  ObjRefTemplate/Default_ORTC.inl \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
-  ObjRefTemplate/ObjectReferenceTemplate_i.inl \
   ObjRefTemplate/Default_ORT.pidl \
   ObjRefTemplate/ObjectReferenceTemplate.pidl
 
