@@ -1,3 +1,13 @@
+Mon Jun 28 12:54:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	  Changed one line of method idl_parse_line_and_file() to call 
+	  idl_atoui() instead of idl_atoi(). This fixes a line number 
+	  off-by-one error in error outputs. Thanks to 
+	  Hata Yoshiaki <hatay@alpha.co.jp> for reporting the error
+	  and supplying a fix.
+
 Mon Jun 28 12:46:57 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
