@@ -29,6 +29,10 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/ACE_export.h"
 
+#if defined (CYGWIN32)
+#  include "ace/os_include/os_unistd.h"
+#endif /* CYGWIN32 */
+
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
@@ -125,7 +129,7 @@ namespace ACE_OS {
 # if defined (ACE_USES_WCHAR)
   // If fp points to the Unicode format file, the file pointer will be moved right next
   // to the Unicode header (2 types).  Otherwise, file pointer will be at the beginning.
-  extern ACE_Export 
+  extern ACE_Export
   void checkUnicodeFormat (FILE* fp);
 # endif  // ACE_USES_WCHAR
 
@@ -228,7 +232,7 @@ namespace ACE_OS {
   //@}
 
 #if defined (ACE_WIN32)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
@@ -259,7 +263,7 @@ namespace ACE_OS {
 
   /// Translate fopen's mode char to open's mode.  This helper function
   /// is here to avoid maintaining several pieces of identical code.
-  extern ACE_Export 
+  extern ACE_Export
   void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
   extern ACE_Export OSVERSIONINFO win32_versioninfo_;
@@ -269,15 +273,15 @@ namespace ACE_OS {
 # endif /* ACE_WIN32 */
 #endif
 
-  extern ACE_Export 
+  extern ACE_Export
   int fprintf (FILE *fp, const char *format, ...);
 
 # if defined (ACE_HAS_WCHAR)
-  extern ACE_Export 
+  extern ACE_Export
   int fprintf (FILE *fp, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
-  extern ACE_Export 
+  extern ACE_Export
   int fputs (const ACE_TCHAR *s,
              FILE *stream);
 
@@ -318,13 +322,13 @@ namespace ACE_OS {
   //   Otherwise, reads up to n-1 bytes (not including the newline),
   //              then swallows rest up to newline
   //              then swallows newline
-  extern ACE_Export 
+  extern ACE_Export
   char *gets (char *str, int n = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void perror (const ACE_TCHAR *s);
 
-  extern ACE_Export 
+  extern ACE_Export
   int printf (const char *format, ...);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -338,19 +342,19 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewind (FILE *fp);
 
-  extern ACE_Export 
+  extern ACE_Export
   int snprintf (char *buf, size_t maxlen, const char *format, ...);
 
 # if defined (ACE_HAS_WCHAR)
-  extern ACE_Export 
+  extern ACE_Export
   int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
 # endif /* ACE_HAS_WCHAR */
 
-  extern ACE_Export 
+  extern ACE_Export
   int sprintf (char *buf, const char *format, ...);
 
 # if defined (ACE_HAS_WCHAR)
-  extern ACE_Export 
+  extern ACE_Export
   int sprintf (wchar_t *buf, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
