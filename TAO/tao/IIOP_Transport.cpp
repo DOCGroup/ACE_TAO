@@ -75,6 +75,16 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                                                              max_wait_time);
   if (retval > 0)
     bytes_transferred = retval;
+  else
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
+                      ACE_TEXT ("send failure - %m (%d)\n"),
+                      this->id (), errno));
+        }
+    }
 
   return retval;
 }
