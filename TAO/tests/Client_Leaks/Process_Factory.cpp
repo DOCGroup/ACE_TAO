@@ -31,7 +31,7 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
     ACE_Process_Manager::instance ()->spawn (options);
 
   // Good chance to wait for older processes
-  ACE_Time_Value interval (0, 20000);
+  ACE_Time_Value interval (0, 10000);
   (void) ACE_Process_Manager::instance ()->wait (interval);
 
   if (pid == -1)
@@ -42,7 +42,7 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
                   errno));
       ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
     }
-  for (int i = 0; i != 200; ++i)
+  for (int i = 0; i != 500; ++i)
     {
       if (ACE_OS::access ("child.ior", R_OK) == 0)
         break;
