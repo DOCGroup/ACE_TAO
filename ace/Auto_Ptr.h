@@ -97,7 +97,7 @@ public:
  * @brief Implements the draft C++ standard auto_ptr abstraction.
  * This version can be used instead of auto_ptr<T>, and obviates
  * the need for the ACE_AUTO_PTR_RESET macro on platforms like
- * VC6 where the auto_ptr<T> is broken. 
+ * VC6 where the auto_ptr<T> is broken.
  */
 template <class X>
 class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
@@ -199,4 +199,5 @@ public:
 #  pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include /**/ "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */
