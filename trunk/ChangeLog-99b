@@ -1,3 +1,10 @@
+Wed Sep  1 21:37:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Moved the new ACE_OS::filesize() method down in
+	  this file until *after* the ACE_OS::close() method to prevent a
+ 	  "used before being inlined" error on DU.  Thanks to David for
+ 	  reporting this.
+
 Wed Sep  1 20:41:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.lst:
