@@ -278,7 +278,7 @@ public:
     // The handler for the client's connection.
 #if 0
     autorelease <client_endpoint> endpoint;
-#endif
+#endif /* 0 */
   };
 
   // = Close a connection, first sending GIOP::CloseConnection

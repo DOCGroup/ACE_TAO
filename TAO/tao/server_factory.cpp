@@ -13,9 +13,45 @@
 //     $Id$
 // ============================================================================
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "server_factory.i"
-#endif
+#endif /* __ACE_INLINE__ */
+
+TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
+{}
+
+TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
+{}
+
+CREATION_STRATEGY *
+TAO_Server_Strategy_Factory::creation_strategy (void)
+{
+  return 0;
+}
+
+ACCEPT_STRATEGY *
+TAO_Server_Strategy_Factory::accept_strategy (void)
+{
+  return 0;
+}
+
+CONCURRENCY_STRATEGY *
+TAO_Server_Strategy_Factory::concurrency_strategy (void)
+{
+  return 0;
+}
+
+SCHEDULING_STRATEGY *
+TAO_Server_Strategy_Factory::scheduling_strategy (void)
+{
+  return 0;
+}
+
+TAO_Object_Table *
+TAO_Server_Strategy_Factory::object_lookup_strategy (void)
+{
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_OA_Connection_Handler>;

@@ -1,3 +1,18 @@
+Sat Aug  9 14:05:08 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
+
+	* tao: Continued to clean up all the code so that it is more
+ 	  consistent with ACE programming style.
+
+	* tao/orbconf.h: Cleaned up a lot of the unnecessary #defines.
+
+	* tao/default_server.h: Make sure we inherit from
+ 	  TAO_Server_Strategy_Factory, not TAO_Server_Factory.
+
+	* tao/server_factory.cpp: Moved all the inline methods to be
+ 	  non-inline since this code will always be dynamically bound.
+
+	* tao/client_factory.cpp: Cleaned things up a bit.
+
 Sat Aug  9 12:37:05 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/corba.h:  Deleted include for xdr.h from corba.h.  xdr.h

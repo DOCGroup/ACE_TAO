@@ -24,7 +24,7 @@ DEFINE_GUID (IID_CORBA_ServerRequest,
 
 #if !defined (__ACE_INLINE__)
 #  include "svrrqst.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {

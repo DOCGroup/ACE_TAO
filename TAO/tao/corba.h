@@ -25,8 +25,8 @@
 // 
 // ============================================================================
 
-#if !defined(TAO_CORBA_H)
-#  define TAO_CORBA_H
+#if !defined (TAO_CORBA_H)
+#define TAO_CORBA_H
 
 #include "tao/orbconf.h"
 
@@ -58,4 +58,4 @@
 #include "tao/svrrqst.h"
 #include "tao/typecode.h"
 
-#endif
+#endif /* TAO_CORBA_H */

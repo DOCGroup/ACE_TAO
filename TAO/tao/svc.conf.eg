@@ -1,4 +1,6 @@
+# This file illustrates various ways to configure a TAO server dynamically.
+
 # Reactive, dynamic object table with 64 slots
-dynamic Server_Strategy_Factory TAO_Default_Server_Strategy_Factory "-R -L dynamic -o 64"
+# dynamic Server_Strategy_Factory TAO_Default_Server_Strategy_Factory "-R -L dynamic -o 64"
 # Thread-per-Connection, hash object table with 128 slots
 dynamic Server_Strategy_Factory TAO_Default_Server_Strategy_Factory "-T -L hash -o 128"

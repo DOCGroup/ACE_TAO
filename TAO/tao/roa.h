@@ -136,7 +136,7 @@ private:
 #if defined (ROA_NEEDS_REQ_KEY)
   ACE_thread_key_t req_key_;	
   // Key into TSS for a thread's request header
-#endif
+#endif /* ROA_NEEDS_REQ_KEY */
 
   // = Copy and assignment:  just say no
   ROA (const ROA &src);

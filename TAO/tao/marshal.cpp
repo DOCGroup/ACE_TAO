@@ -31,7 +31,7 @@ extern "C"
   u_int wslen (const CORBA_WChar *);
   CORBA_WChar *wscpy (CORBA_WChar *, const CORBA_WChar *);
 }
-#endif
+#endif /* HAVE_WIDEC_H */
 
 TAO_Marshal_Factory* TAO_Marshal::DEFAULT_MARSHAL_FACTORY = 0;
 
@@ -57,7 +57,7 @@ TAO_Marshal_Factory::TAO_Marshal_Factory (void)
     m_alias_ (TAO_MARSHAL_ALIAS::instance ()),
     m_except_ (TAO_MARSHAL_EXCEPT::instance ()),
     m_wstring_ (TAO_MARSHAL_WSTRING::instance ())
-#endif
+#endif /* 0 */
 {
   // initialize the mobj table
   mobj_table_[tk_null].obj_ = TAO_MARSHAL_PRIMITIVE::instance ();
@@ -159,8 +159,7 @@ TAO_Marshal_Object* TAO_Marshal_Factory::make_marshal_object (CORBA_TypeCode_ptr
       return (TAO_Marshal_Object *)0;
     }
 }
-#endif
-
+#endif /* 0 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX>;

@@ -21,9 +21,9 @@ static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
 static const char xchars [] = "0123456789abcdef";
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "iioporb.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 //
 // hex conversion utilities

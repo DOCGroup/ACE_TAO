@@ -13,9 +13,9 @@
 //     $Id$
 // ============================================================================
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "client_factory.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 // Template specializations which allow the cached connection manager
 // to work better.
@@ -34,23 +34,29 @@ ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::compare_i (const AC
 }
 
 int
-TAO_Client_Connection_Handler::open(void *)
+TAO_Client_Connection_Handler::open (void *)
 {
   // Here is where we could enable all sorts of things such as
   // nonblock I/O, sock buf sizes, TCP no-delay, etc.
   
+  // @@ Chris, this should be changed to a macro that we put in the
+  // ACE OS.h file.
   const int MAX_SOCK_BUF_SIZE = 65536;
-  if (this->peer ().set_option(SOL_SOCKET, SO_SNDBUF, (void
-						       *)&MAX_SOCK_BUF_SIZE,
-			       sizeof(MAX_SOCK_BUF_SIZE)) == -1) 
-    return -1;
-  if (this->peer ().set_option(SOL_SOCKET, SO_RCVBUF, (void
-						       *)&MAX_SOCK_BUF_SIZE,
-			       sizeof (MAX_SOCK_BUF_SIZE)) == -1)
+
+  if (this->peer ().set_option (SOL_SOCKET,
+				SO_SNDBUF, 
+				(void *)&MAX_SOCK_BUF_SIZE,
+				sizeof (MAX_SOCK_BUF_SIZE)) == -1) 
     return -1;
 
-  // For now, we just return success
-  return 0;
+  else if (this->peer ().set_option (SOL_SOCKET,
+				     SO_RCVBUF,
+				     (void *) &MAX_SOCK_BUF_SIZE,
+				     sizeof (MAX_SOCK_BUF_SIZE)) == -1)
+    return -1;
+  else
+    // For now, we just return success
+    return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
