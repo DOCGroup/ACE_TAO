@@ -1,3 +1,9 @@
+Sun Jul  4 22:27:42 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+
+	  Added a UIOP IDL_Cubit run.
+
 Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO-INSTALL.html: added link to ACE-INSTALL#VxWorks/NT.
