@@ -21,6 +21,9 @@ else
   tmp=
 fi
 
+if [ ! "$PWD" ]; then
+  PWD=`pwd`
+fi
 
 ########
 ######## Interpret command arguments.
@@ -29,7 +32,8 @@ while getopts ?ln:r:t arg; do
   case $arg in
       l   ) iiop_lite= ;;
       n   ) iterations=$OPTARG ;;
-      r   ) remote_host="rsh $OPTARG" ;;
+      r   ) remote_host=$OPTARG
+            ior_file=MT_Cubit-ior ;;
       t   ) tmp='/tmp/' ;;
       '?' ) echo $usage; echo $usage2; exit 0 ;;
   esac
@@ -64,5 +68,13 @@ done
 ########
 ######## Start client.
 ########
-$client_exec_prefix ./client -s -f $ior_file -t $threads -n $iterations \
-  $iiop_lite  > ${tmp}client-${threads}.log 2>&1
+if [ "$remote_host" ]; then
+  rsh $remote_host \
+    "cd $PWD; LD_LIBRARY_PATH=$LD_LIBRARY_PATH $client_exec_prefix \
+    ./client -s -f $ior_file -t $threads -n $iterations $iiop_lite" > \
+    ${tmp}client-${threads}.log 2>&1
+else
+  $client_exec_prefix \
+    ./client -s -f $ior_file -t $threads -n $iterations $iiop_lite  > \
+    ${tmp}client-${threads}.log 2>&1
+fi
