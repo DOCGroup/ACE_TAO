@@ -61,7 +61,7 @@ public:
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;
 
-  // Does <mprofile> belong to us?
+  /// Does @a mprofile belong to us?
   virtual int is_collocated (const TAO_MProfile& mprofile) = 0;
 
   /// @name Accessors
