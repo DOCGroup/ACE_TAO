@@ -137,7 +137,7 @@ Quoter_Server::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, "Quote_Server::init - %s", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quote_Server::init - %s\n", exception_message));
       ACE_TRY_ENV.print_exception ("SYS_EX");
       ACE_RETHROW;
     }
@@ -229,11 +229,13 @@ Quoter_Server::~Quoter_Server (void)
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
-      this->namingContext_var_->unbind (factory_name, ACE_TRY_ENV);
+      if (this->namingContext_var_.ptr () != 0)
+        this->namingContext_var_->unbind (factory_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       factory_name.length (1);
-      this->namingContext_var_->unbind (factory_name, ACE_TRY_ENV);
+      if (this->namingContext_var_.ptr () != 0)
+        this->namingContext_var_->unbind (factory_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -242,6 +244,9 @@ Quoter_Server::~Quoter_Server (void)
       ACE_TRY_ENV.print_exception ("~Quoter_Server");
     }
   ACE_ENDTRY;
+
+  delete [] this->argv_;
+  delete this->quoter_Factory_i_ptr_;
 }
 
 int
