@@ -43,7 +43,7 @@ struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
   unsigned short d_reclen;
-  const ACE_TCHAR d_name[1];
+  ACE_TCHAR d_name[1];
 };
 
 struct ACE_DIR {
@@ -64,7 +64,7 @@ struct ACE_DIR {
 };
 #elif defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
 // pHILE+ calls the DIR struct XDIR instead
-# 
+#
 typedef XDIR ACE_DIR;
 #else
 typedef DIR ACE_DIR;
@@ -94,18 +94,18 @@ public:
                        long loc);
   static void rewinddir (ACE_DIR *);
 
-  static int scandir (const ACE_TCHAR *dirname, 
-                      dirent **namelist[], 
+  static int scandir (const ACE_TCHAR *dirname,
+                      dirent **namelist[],
                       int (*selector) (const dirent *filename),
-                      int (*comparator) (const dirent **f1, 
+                      int (*comparator) (const dirent **f1,
                                          const dirent **f2));
 private:
   // Win32 emulation functions
   static ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
-  static int scandir_emulation (const ACE_TCHAR *dirname, 
-                                dirent **namelist[], 
-                                int (*selector)(const dirent *entry), 
-                                int (*comparator)(const dirent **f1, 
+  static int scandir_emulation (const ACE_TCHAR *dirname,
+                                dirent **namelist[],
+                                int (*selector)(const dirent *entry),
+                                int (*comparator)(const dirent **f1,
                                                   const dirent**f2));
   static void closedir_emulation (ACE_DIR *);
   static dirent *readdir_emulation (ACE_DIR *);
