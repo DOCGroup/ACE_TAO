@@ -55,7 +55,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
   ACE_DEBUG ((LM_DEBUG,
 	      "Segment Names:\n"));
   
-  for (int i = 0; i < segment_name_list->length (); i ++)
+  for (unsigned int i = 0; i < segment_name_list->length (); i ++)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "%s\n",
