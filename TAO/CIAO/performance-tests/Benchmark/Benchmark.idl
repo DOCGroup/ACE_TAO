@@ -1,0 +1,38 @@
+// $Id$
+//=============================================================================
+/**
+ * @file Benchmark.idl
+ *
+ * Definition of test interfaces used in the Benchmark module.
+ *
+ * @author Diego, Arvind <arvindk@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_BENCHMARK_IDL
+#define CIAO_BENCHMARK_IDL
+
+#include <Components.idl>
+
+module Benchmark
+{
+
+  /**
+   * @interface RoundTrip
+   *
+   * This Latency test provides operations to measure the round-trip
+   * latency of the ORB. The interface is  same as that of 
+   * $TAO_ROOT/performance-tests/Latency/Single_Threaded
+   */
+
+  /// Measure roundtrip delay
+  interface LatencyTest
+  {
+    /// A simple method to measure roundtrip delays
+    long makeCall (in long send_time);
+
+  };
+
+};
+
+#endif /*CIAO_BENCHMARK_IDL*/
