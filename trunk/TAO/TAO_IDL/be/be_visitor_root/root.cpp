@@ -106,7 +106,7 @@ int be_visitor_root::visit_root (be_root *node)
           *os << "// External declarations for undefined interface" << be_nl
               << "// " << ifwd->full_name () << be_nl;
 
-          *os << "extern " << be_global->stub_export_macro () << be_nl
+          *os << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
               << "tao_" << ifwd->flat_name () << "_duplicate (" 
               << be_idt << be_idt_nl

@@ -3601,49 +3601,6 @@ IR::FinderDefSeq_out::operator[] (CORBA::ULong index)
 #if !defined (_IR_COMPONENTREPOSITORY___CI_)
 #define _IR_COMPONENTREPOSITORY___CI_
 
-ACE_INLINE IR::ComponentRepository_ptr
-tao_IR_ComponentRepository_duplicate (
-    IR::ComponentRepository_ptr p
-  )
-{
-  return IR::ComponentRepository::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_ComponentRepository_release (
-    IR::ComponentRepository_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::ComponentRepository_ptr
-tao_IR_ComponentRepository_nil (
-    void
-  )
-{
-  return IR::ComponentRepository::_nil ();
-}
-
-ACE_INLINE IR::ComponentRepository_ptr
-tao_IR_ComponentRepository_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::ComponentRepository::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_ComponentRepository_upcast (
-    void *src
-  )
-{
-  IR::ComponentRepository **tmp =
-    ACE_static_cast (IR::ComponentRepository **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::ComponentRepository::ComponentRepository (
     TAO_Stub *objref,
@@ -3661,49 +3618,6 @@ IR::ComponentRepository::ComponentRepository (
 
 #if !defined (_IR_PROVIDESDEF___CI_)
 #define _IR_PROVIDESDEF___CI_
-
-ACE_INLINE IR::ProvidesDef_ptr
-tao_IR_ProvidesDef_duplicate (
-    IR::ProvidesDef_ptr p
-  )
-{
-  return IR::ProvidesDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_ProvidesDef_release (
-    IR::ProvidesDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::ProvidesDef_ptr
-tao_IR_ProvidesDef_nil (
-    void
-  )
-{
-  return IR::ProvidesDef::_nil ();
-}
-
-ACE_INLINE IR::ProvidesDef_ptr
-tao_IR_ProvidesDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::ProvidesDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_ProvidesDef_upcast (
-    void *src
-  )
-{
-  IR::ProvidesDef **tmp =
-    ACE_static_cast (IR::ProvidesDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 IR::ProvidesDef::ProvidesDef (
@@ -3915,49 +3829,6 @@ IR::ProvidesDescription_out::operator-> (void)
 
 #if !defined (_IR_USESDEF___CI_)
 #define _IR_USESDEF___CI_
-
-ACE_INLINE IR::UsesDef_ptr
-tao_IR_UsesDef_duplicate (
-    IR::UsesDef_ptr p
-  )
-{
-  return IR::UsesDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_UsesDef_release (
-    IR::UsesDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::UsesDef_ptr
-tao_IR_UsesDef_nil (
-    void
-  )
-{
-  return IR::UsesDef::_nil ();
-}
-
-ACE_INLINE IR::UsesDef_ptr
-tao_IR_UsesDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::UsesDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_UsesDef_upcast (
-    void *src
-  )
-{
-  IR::UsesDef **tmp =
-    ACE_static_cast (IR::UsesDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 IR::UsesDef::UsesDef (
@@ -4958,49 +4829,6 @@ IR::UsesDescSeq_out::operator[] (CORBA::ULong index)
 #if !defined (_IR_EVENTDEF___CI_)
 #define _IR_EVENTDEF___CI_
 
-ACE_INLINE IR::EventDef_ptr
-tao_IR_EventDef_duplicate (
-    IR::EventDef_ptr p
-  )
-{
-  return IR::EventDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_EventDef_release (
-    IR::EventDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::EventDef_ptr
-tao_IR_EventDef_nil (
-    void
-  )
-{
-  return IR::EventDef::_nil ();
-}
-
-ACE_INLINE IR::EventDef_ptr
-tao_IR_EventDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::EventDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_EventDef_upcast (
-    void *src
-  )
-{
-  IR::EventDef **tmp =
-    ACE_static_cast (IR::EventDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::EventDef::EventDef (
     TAO_Stub *objref,
@@ -5212,49 +5040,6 @@ IR::EventDescription_out::operator-> (void)
 #if !defined (_IR_EMITSDEF___CI_)
 #define _IR_EMITSDEF___CI_
 
-ACE_INLINE IR::EmitsDef_ptr
-tao_IR_EmitsDef_duplicate (
-    IR::EmitsDef_ptr p
-  )
-{
-  return IR::EmitsDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_EmitsDef_release (
-    IR::EmitsDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::EmitsDef_ptr
-tao_IR_EmitsDef_nil (
-    void
-  )
-{
-  return IR::EmitsDef::_nil ();
-}
-
-ACE_INLINE IR::EmitsDef_ptr
-tao_IR_EmitsDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::EmitsDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_EmitsDef_upcast (
-    void *src
-  )
-{
-  IR::EmitsDef **tmp =
-    ACE_static_cast (IR::EmitsDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::EmitsDef::EmitsDef (
     TAO_Stub *objref,
@@ -5272,49 +5057,6 @@ IR::EmitsDef::EmitsDef (
 
 #if !defined (_IR_PUBLISHESDEF___CI_)
 #define _IR_PUBLISHESDEF___CI_
-
-ACE_INLINE IR::PublishesDef_ptr
-tao_IR_PublishesDef_duplicate (
-    IR::PublishesDef_ptr p
-  )
-{
-  return IR::PublishesDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_PublishesDef_release (
-    IR::PublishesDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::PublishesDef_ptr
-tao_IR_PublishesDef_nil (
-    void
-  )
-{
-  return IR::PublishesDef::_nil ();
-}
-
-ACE_INLINE IR::PublishesDef_ptr
-tao_IR_PublishesDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::PublishesDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_PublishesDef_upcast (
-    void *src
-  )
-{
-  IR::PublishesDef **tmp =
-    ACE_static_cast (IR::PublishesDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 IR::PublishesDef::PublishesDef (
@@ -5334,49 +5076,6 @@ IR::PublishesDef::PublishesDef (
 #if !defined (_IR_CONSUMESDEF___CI_)
 #define _IR_CONSUMESDEF___CI_
 
-ACE_INLINE IR::ConsumesDef_ptr
-tao_IR_ConsumesDef_duplicate (
-    IR::ConsumesDef_ptr p
-  )
-{
-  return IR::ConsumesDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_ConsumesDef_release (
-    IR::ConsumesDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::ConsumesDef_ptr
-tao_IR_ConsumesDef_nil (
-    void
-  )
-{
-  return IR::ConsumesDef::_nil ();
-}
-
-ACE_INLINE IR::ConsumesDef_ptr
-tao_IR_ConsumesDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::ConsumesDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_ConsumesDef_upcast (
-    void *src
-  )
-{
-  IR::ConsumesDef **tmp =
-    ACE_static_cast (IR::ConsumesDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::ConsumesDef::ConsumesDef (
     TAO_Stub *objref,
@@ -5394,49 +5093,6 @@ IR::ConsumesDef::ConsumesDef (
 
 #if !defined (_IR_COMPONENTDEF___CI_)
 #define _IR_COMPONENTDEF___CI_
-
-ACE_INLINE IR::ComponentDef_ptr
-tao_IR_ComponentDef_duplicate (
-    IR::ComponentDef_ptr p
-  )
-{
-  return IR::ComponentDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_ComponentDef_release (
-    IR::ComponentDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::ComponentDef_ptr
-tao_IR_ComponentDef_nil (
-    void
-  )
-{
-  return IR::ComponentDef::_nil ();
-}
-
-ACE_INLINE IR::ComponentDef_ptr
-tao_IR_ComponentDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::ComponentDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_ComponentDef_upcast (
-    void *src
-  )
-{
-  IR::ComponentDef **tmp =
-    ACE_static_cast (IR::ComponentDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 IR::ComponentDef::ComponentDef (
@@ -5649,49 +5305,6 @@ IR::ComponentDescription_out::operator-> (void)
 #if !defined (_IR_PRIMARYKEYDEF___CI_)
 #define _IR_PRIMARYKEYDEF___CI_
 
-ACE_INLINE IR::PrimaryKeyDef_ptr
-tao_IR_PrimaryKeyDef_duplicate (
-    IR::PrimaryKeyDef_ptr p
-  )
-{
-  return IR::PrimaryKeyDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_PrimaryKeyDef_release (
-    IR::PrimaryKeyDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::PrimaryKeyDef_ptr
-tao_IR_PrimaryKeyDef_nil (
-    void
-  )
-{
-  return IR::PrimaryKeyDef::_nil ();
-}
-
-ACE_INLINE IR::PrimaryKeyDef_ptr
-tao_IR_PrimaryKeyDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::PrimaryKeyDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_PrimaryKeyDef_upcast (
-    void *src
-  )
-{
-  IR::PrimaryKeyDef **tmp =
-    ACE_static_cast (IR::PrimaryKeyDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::PrimaryKeyDef::PrimaryKeyDef (
     TAO_Stub *objref,
@@ -5903,49 +5516,6 @@ IR::PrimaryKeyDescription_out::operator-> (void)
 #if !defined (_IR_FACTORYDEF___CI_)
 #define _IR_FACTORYDEF___CI_
 
-ACE_INLINE IR::FactoryDef_ptr
-tao_IR_FactoryDef_duplicate (
-    IR::FactoryDef_ptr p
-  )
-{
-  return IR::FactoryDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_FactoryDef_release (
-    IR::FactoryDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::FactoryDef_ptr
-tao_IR_FactoryDef_nil (
-    void
-  )
-{
-  return IR::FactoryDef::_nil ();
-}
-
-ACE_INLINE IR::FactoryDef_ptr
-tao_IR_FactoryDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::FactoryDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_FactoryDef_upcast (
-    void *src
-  )
-{
-  IR::FactoryDef **tmp =
-    ACE_static_cast (IR::FactoryDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::FactoryDef::FactoryDef (
     TAO_Stub *objref,
@@ -5964,49 +5534,6 @@ IR::FactoryDef::FactoryDef (
 #if !defined (_IR_FINDERDEF___CI_)
 #define _IR_FINDERDEF___CI_
 
-ACE_INLINE IR::FinderDef_ptr
-tao_IR_FinderDef_duplicate (
-    IR::FinderDef_ptr p
-  )
-{
-  return IR::FinderDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_FinderDef_release (
-    IR::FinderDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::FinderDef_ptr
-tao_IR_FinderDef_nil (
-    void
-  )
-{
-  return IR::FinderDef::_nil ();
-}
-
-ACE_INLINE IR::FinderDef_ptr
-tao_IR_FinderDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::FinderDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_FinderDef_upcast (
-    void *src
-  )
-{
-  IR::FinderDef **tmp =
-    ACE_static_cast (IR::FinderDef **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 IR::FinderDef::FinderDef (
     TAO_Stub *objref,
@@ -6024,49 +5551,6 @@ IR::FinderDef::FinderDef (
 
 #if !defined (_IR_HOMEDEF___CI_)
 #define _IR_HOMEDEF___CI_
-
-ACE_INLINE IR::HomeDef_ptr
-tao_IR_HomeDef_duplicate (
-    IR::HomeDef_ptr p
-  )
-{
-  return IR::HomeDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IR_HomeDef_release (
-    IR::HomeDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IR::HomeDef_ptr
-tao_IR_HomeDef_nil (
-    void
-  )
-{
-  return IR::HomeDef::_nil ();
-}
-
-ACE_INLINE IR::HomeDef_ptr
-tao_IR_HomeDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IR::HomeDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IR_HomeDef_upcast (
-    void *src
-  )
-{
-  IR::HomeDef **tmp =
-    ACE_static_cast (IR::HomeDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 IR::HomeDef::HomeDef (

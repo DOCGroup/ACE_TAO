@@ -1,5 +1,5 @@
---- orig/IFR_ComponentsC.cpp	Mon Apr 23 20:20:22 2001
-+++ IFR_ComponentsC.cpp	Fri Apr 20 03:52:30 2001
+--- orig/IFR_ComponentsC.cpp	Tue Apr 24 23:26:05 2001
++++ IFR_ComponentsC.cpp	Tue Apr 24 23:15:18 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -17,7 +17,7 @@
  #include "tao/ClientRequestInfo.h"
  #if TAO_HAS_INTERCEPTORS == 1
  #include "tao/RequestInfo_Util.h"
-@@ -13177,7 +13175,7 @@
+@@ -13521,7 +13519,7 @@
    ACE_NTOHL (0x69627574), 
    ACE_NTOHL (0x65730000),  // name = attributes
    CORBA::tk_alias, // typecode kind for typedefs
@@ -26,7 +26,7 @@
      TAO_ENCAP_BYTE_ORDER, // byte order
      41,
      ACE_NTOHL (0x49444c3a), 
-@@ -13200,10 +13198,10 @@
+@@ -13544,10 +13542,10 @@
      ACE_NTOHL (0x6e536571), 
      ACE_NTOHL (0x0),  // name = CORBA_AttrDescriptionSeq
      CORBA::tk_sequence, // typecode kind
@@ -39,7 +39,7 @@
          TAO_ENCAP_BYTE_ORDER, // byte order
          43,
          ACE_NTOHL (0x49444c3a), 
-@@ -13255,23 +13253,24 @@
+@@ -13599,23 +13597,24 @@
          ACE_NTOHL (0x6d6f6465), 
          ACE_NTOHL (0x0),  // name = mode
          CORBA::tk_enum, // typecode kind
@@ -72,7 +72,7 @@
            2, // member count
            12,
            ACE_NTOHL (0x41545452), 
-@@ -18943,7 +18942,7 @@
+@@ -19459,7 +19458,7 @@
    ACE_NTOHL (0x6174696f), 
    ACE_NTOHL (0x6e730000),  // name = operations
    CORBA::tk_alias, // typecode kind for typedefs
@@ -81,7 +81,7 @@
      TAO_ENCAP_BYTE_ORDER, // byte order
      39,
      ACE_NTOHL (0x49444c3a), 
-@@ -18964,10 +18963,10 @@
+@@ -19480,10 +19479,10 @@
      ACE_NTOHL (0x696f6e53), 
      ACE_NTOHL (0x65710000),  // name = CORBA_OpDescriptionSeq
      CORBA::tk_sequence, // typecode kind
@@ -94,7 +94,7 @@
          TAO_ENCAP_BYTE_ORDER, // byte order
          43,
          ACE_NTOHL (0x49444c3a), 
-@@ -19019,23 +19018,24 @@
+@@ -19535,23 +19534,24 @@
          ACE_NTOHL (0x6d6f6465), 
          ACE_NTOHL (0x0),  // name = mode
          CORBA::tk_enum, // typecode kind
@@ -127,7 +127,7 @@
            2, // member count
            10,
            ACE_NTOHL (0x4f505f4e), 
-@@ -19082,7 +19082,7 @@
+@@ -19598,7 +19598,7 @@
          ACE_NTOHL (0x6d657465), 
          ACE_NTOHL (0x72730000),  // name = parameters
          CORBA::tk_alias, // typecode kind for typedefs
@@ -136,7 +136,7 @@
            TAO_ENCAP_BYTE_ORDER, // byte order
            40,
            ACE_NTOHL (0x49444c3a), 
-@@ -19103,10 +19103,10 @@
+@@ -19619,10 +19619,10 @@
            ACE_NTOHL (0x74696f6e), 
            ACE_NTOHL (0x53657100),  // name = CORBA_ParDescriptionSeq
            CORBA::tk_sequence, // typecode kind
@@ -149,7 +149,7 @@
                TAO_ENCAP_BYTE_ORDER, // byte order
                43,
                ACE_NTOHL (0x49444c3a), 
-@@ -19165,23 +19165,24 @@
+@@ -19681,23 +19681,24 @@
                ACE_NTOHL (0x6d6f6465), 
                ACE_NTOHL (0x0),  // name = mode
                CORBA::tk_enum, // typecode kind
@@ -182,7 +182,7 @@
                  3, // member count
                  9,
                  ACE_NTOHL (0x50415241), 
-@@ -19290,7 +19291,7 @@
+@@ -19806,7 +19807,7 @@
    ACE_NTOHL (0x69627574), 
    ACE_NTOHL (0x65730000),  // name = attributes
    CORBA::tk_alias, // typecode kind for typedefs
@@ -191,7 +191,7 @@
      TAO_ENCAP_BYTE_ORDER, // byte order
      41,
      ACE_NTOHL (0x49444c3a), 
-@@ -19313,10 +19314,10 @@
+@@ -19829,10 +19830,10 @@
      ACE_NTOHL (0x6e536571), 
      ACE_NTOHL (0x0),  // name = CORBA_AttrDescriptionSeq
      CORBA::tk_sequence, // typecode kind
@@ -204,7 +204,7 @@
          TAO_ENCAP_BYTE_ORDER, // byte order
          43,
          ACE_NTOHL (0x49444c3a), 
-@@ -19368,23 +19369,24 @@
+@@ -19884,23 +19885,24 @@
          ACE_NTOHL (0x6d6f6465), 
          ACE_NTOHL (0x0),  // name = mode
          CORBA::tk_enum, // typecode kind
@@ -237,3 +237,147 @@
            2, // member count
            12,
            ACE_NTOHL (0x41545452), 
+@@ -22296,11 +22298,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22343,11 +22340,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22390,11 +22382,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22437,11 +22424,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22484,11 +22466,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22531,11 +22508,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22578,11 +22550,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22625,11 +22592,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22672,11 +22634,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22719,11 +22676,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22874,11 +22826,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -22921,11 +22868,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)

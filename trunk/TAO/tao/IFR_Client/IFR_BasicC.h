@@ -8370,30 +8370,30 @@ _TAO_CORBA_LocalInterfaceDef_Proxy_Broker *
     CORBA::Object_ptr obj
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_FixedDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_FixedDef_ptr
 tao_CORBA_FixedDef_duplicate (
     CORBA_FixedDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_FixedDef_release (
     CORBA_FixedDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_FixedDef_ptr
 tao_CORBA_FixedDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_FixedDef_ptr
 tao_CORBA_FixedDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_FixedDef_upcast (
     void *

@@ -1,5 +1,5 @@
---- orig/IFR_BasicC.h	Mon Apr 23 20:55:30 2001
-+++ IFR_BasicC.h	Mon Apr 23 20:54:05 2001
+--- orig/IFR_BasicC.h	Tue Apr 24 23:25:50 2001
++++ IFR_BasicC.h	Tue Apr 24 22:38:54 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -550,7 +550,41 @@
  // Proxy Broker Factory function pointer declarations.
  
  extern TAO_IFR_Client_Export
-@@ -8531,17 +8399,11 @@
+@@ -8502,46 +8370,40 @@
+     CORBA::Object_ptr obj
+   );
+ 
+-// External declarations for undefined interface
++// Declarations for undefined interface
+ // CORBA_FixedDef
+ TAO_IFR_Client_Export
+ CORBA_FixedDef_ptr
+ tao_CORBA_FixedDef_duplicate (
+     CORBA_FixedDef_ptr
+   );
+-extern TAO_IFR_Client_Export
++TAO_IFR_Client_Export
+ void
+ tao_CORBA_FixedDef_release (
+     CORBA_FixedDef_ptr
+   );
+-extern TAO_IFR_Client_Export
++TAO_IFR_Client_Export
+ CORBA_FixedDef_ptr
+ tao_CORBA_FixedDef_nil (
+     void
+   );
+-extern TAO_IFR_Client_Export
++TAO_IFR_Client_Export
+ CORBA_FixedDef_ptr
+ tao_CORBA_FixedDef_narrow (
+     CORBA::Object *,
+     CORBA::Environment &
+   );
+-extern TAO_IFR_Client_Export
++TAO_IFR_Client_Export
+ CORBA::Object *
+ tao_CORBA_FixedDef_upcast (
      void *
    );
  

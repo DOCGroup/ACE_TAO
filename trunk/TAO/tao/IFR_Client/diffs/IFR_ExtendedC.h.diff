@@ -1,5 +1,5 @@
---- orig/IFR_ExtendedC.h	Mon Apr 23 20:20:13 2001
-+++ IFR_ExtendedC.h	Mon Apr 23 20:07:13 2001
+--- orig/IFR_ExtendedC.h	Tue Apr 24 23:25:56 2001
++++ IFR_ExtendedC.h	Tue Apr 24 13:44:48 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
