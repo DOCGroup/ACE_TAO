@@ -29,7 +29,8 @@
 
 #include "tao/Object_KeyC.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "ace/Synch.h"
+//#include "ace/Synch.h"
+class ACE_Lock;
 #include "tao/IOP_IORC.h"
 
 

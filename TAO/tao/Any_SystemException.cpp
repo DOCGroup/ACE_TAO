@@ -8,6 +8,7 @@
 #include "Marshal.h"
 #include "debug.h"
 #include "CORBA_String.h"
+#include "ace/Auto_Ptr.h"
 
 #include "ace/CORBA_macros.h"
 

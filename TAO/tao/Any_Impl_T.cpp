@@ -7,6 +7,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Impl_T.inl"

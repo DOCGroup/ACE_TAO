@@ -19,7 +19,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
