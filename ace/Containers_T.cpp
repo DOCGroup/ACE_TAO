@@ -50,24 +50,24 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T> ACE_Bounded_Stack<T> &
+template<class T> void
 ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::operator=");
+
   if (&s != this)
     {
       if (this->size_ < s.size_)
         {
           delete [] this->stack_;
-          ACE_NEW (this->stack_, T[s.size_]);
+          ACE_NEW (this->stack_,
+                   T[s.size_]);
         }
       this->top_ = s.top_;
 
       for (size_t i = 0; i < this->top_; i++)
         this->stack_[i] = s.stack_[i];
     }
-
-  return *this;
 }
 
 template<class T>
@@ -105,10 +105,11 @@ ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T, size_t ACE_SIZE> ACE_Fixed_Stack<T, ACE_SIZE> &
+template<class T, size_t ACE_SIZE> void
 ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::operator=");
+
   if (&s != this)
     {
       this->top_ = s.top_;
@@ -116,8 +117,6 @@ ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
       for (size_t i = 0; i < this->top_; i++)
         this->stack_[i] = s.stack_[i];
     }
-
-  return *this;
 }
 
 template<class T, size_t ACE_SIZE>
@@ -211,17 +210,16 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
   this->copy_all_nodes (s);
 }
 
-template<class T> ACE_Unbounded_Stack<T> &
+template<class T> void
 ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
+
   if (this != &s)
     {
       this->delete_all_nodes ();
       this->copy_all_nodes (s);
     }
-
-  return *this;
 }
 
 template<class T>
@@ -363,7 +361,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> ACE_Unbounded_Queue<T> &
+template <class T> void
 ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
 {
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
@@ -373,8 +371,6 @@ ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
-
-  return *this;
 }
 
 template <class T> ACE_Unbounded_Queue_Iterator<T>
@@ -760,7 +756,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx
   this->copy_nodes (cx);
 }
 
-template <class T> ACE_Double_Linked_List<T> &
+template <class T> void
 ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
 {
   if (this != &cx)
@@ -768,8 +764,6 @@ ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
       this->delete_nodes ();
       this->copy_nodes (cx);
     }
-
-  return *this;
 }
 
 template <class T>
@@ -1005,7 +999,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
     this->search_structure_[i] = fs.search_structure_[i];
 }
 
-template <class T, size_t ACE_SIZE> ACE_Fixed_Set<T, ACE_SIZE> &
+template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::operator=");
@@ -1017,8 +1011,6 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
       for (size_t i = 0; i < this->cur_size_; i++)
         this->search_structure_[i] = fs.search_structure_[i];
     }
-
-  return *this;
 }
 
 template <class T, size_t ACE_SIZE>
@@ -1217,7 +1209,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
     this->search_structure_[i] = bs.search_structure_[i];
 }
 
-template <class T> ACE_Bounded_Set<T> &
+template <class T> void
 ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::operator=");
@@ -1237,8 +1229,6 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
       for (size_t i = 0; i < this->cur_size_; i++)
         this->search_structure_[i] = bs.search_structure_[i];
     }
-
-  return *this;
 }
 
 template <class T>
@@ -1605,7 +1595,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> ACE_Unbounded_Set<T> &
+template <class T> void
 ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::operator=");
@@ -1615,8 +1605,6 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
-
-  return *this;
 }
 
 template <class T> int
@@ -1884,7 +1872,7 @@ ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet (void)
 }
 
 
-template <class T> ACE_Ordered_MultiSet<T> &
+template <class T> void
 ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::operator=");
@@ -1894,8 +1882,6 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
-
-  return *this;
 }
 
 
@@ -2292,28 +2278,26 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
 
 // Assignment operator (performs assignment).
 
-template <class T> ACE_Array_Base<T>&
+template <class T> 
 ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
 {
   // Check for "self-assignment".
 
-  if (this == &s)
-    return *this;
-  else if (this->max_size_ < s.size ())
+  if (this != &s)
     {
-      delete [] this->array_;
+      if (this->max_size_ < s.size ())
+        {
+          delete [] this->array_;
+          ACE_NEW_RETURN (this->array_,
+                          T[s.size ()]);
+          this->max_size_ = s.size ();
+        }
 
-      ACE_NEW_RETURN (this->array_, T[s.size ()], *this);
+      this->cur_size_ = s.size ();
 
-      this->max_size_ = s.size ();
+      for (size_t i = 0; i < this->size (); i++)
+        this->array_[i] = s.array_[i];
     }
-
-  this->cur_size_ = s.size ();
-
-  for (size_t i = 0; i < this->size (); i++)
-    this->array_[i] = s.array_[i];
-
-  return *this;
 }
 
 // Set an item in the array at location index.
@@ -2337,10 +2321,9 @@ ACE_Array_Base<T>::get (T &item, size_t index) const
 {
    if (this->in_range (index))
      {
-       item = this->array_[index];  // Copies the item.  If you don't
-                                    // want to copy, use operator [] instead
-                                    // (but then you'll be responsible for
-                                    // range checking).
+       // Copies the item.  If you don't want to copy, use operator []
+       // instead (but then you'll be responsible for range checking).
+       item = this->array_[index];  
        return 0;
      }
    else
@@ -2354,10 +2337,13 @@ ACE_Array_Base<T>::max_size (size_t new_size)
     {
       // @@ We should use auto_ptr<>!
       T* tmp;
-      ACE_NEW_RETURN (tmp, T[new_size], -1);
+      ACE_NEW_RETURN (tmp,
+                      T[new_size],
+                      -1);
 
       for (size_t i = 0; i < this->cur_size_; ++i)
         tmp[i] = this->array_[i];
+
       delete[] this->array_;
       this->array_ = tmp;
       this->max_size_ = new_size;
