@@ -30,7 +30,7 @@ public:
 private:
 
   /// Simple pings to prune up the connections
-  void validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+  void validate_connections (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Reference to the test interface

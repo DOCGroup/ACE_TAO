@@ -55,7 +55,7 @@ Client_Task::svc (void)
 
 
 void
-Client_Task::validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER)
+Client_Task::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0 ; i != 100; i++)
     {
