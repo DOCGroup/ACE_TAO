@@ -1,3 +1,9 @@
+Sat Apr 14 09:17:32 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/QOS/Change_Sender_TSpec/sender.dsp: Added extra level of
+          directory for include and lib - missed this one in yesterday's
+          set of changes.
+
 Sat Apr 14 09:08:33 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Array_Base.h: Added forward declaration for ACE_Allocator.
