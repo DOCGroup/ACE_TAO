@@ -1,3 +1,9 @@
+Tue Jan 15 15:46:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+
+	  Corrected typo.  "Replaceable" not "Replacable."
+
 Tue Jan 15 15:01:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/ServerRequestInfo.cpp : 

@@ -12,7 +12,7 @@
 
 module SecurityReplaceable {
 
-#   pragma version SecurityReplacable 1.8
+#   pragma version SecurityReplaceable 1.8
 
   local interface SecurityContext;
   local interface ClientSecurityContext;
