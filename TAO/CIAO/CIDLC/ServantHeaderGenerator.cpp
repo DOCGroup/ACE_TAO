@@ -651,7 +651,14 @@ namespace
       // like the original hand-crafted examples, for easier checking.
       // This can be moved later to ServantEmitter::pre() or out on its own.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
 
         Traversal::Provider provider;
         defines.node_traverser (provider);
@@ -662,7 +669,7 @@ namespace
         FacetEmitter facet_emitter (ctx);
         belongs.node_traverser (facet_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << STRS[GLUE_NS]
@@ -748,11 +755,19 @@ namespace
           << endl << endl;
 
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+        
         PortsEmitterPublic ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
       
       os << "// CIAO-specific." << endl << endl
@@ -769,21 +784,37 @@ namespace
          << " and consumers." << endl << endl;
 
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+
         PortsEmitterProtected ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "protected:" << endl;
 
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+
         PortsEmitterMembers ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
     }
 
@@ -1095,15 +1126,22 @@ namespace
       os << "// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
-      {
+      { 
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;                
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Supports supports_;
+        component_emitter.edge_traverser (component_inherits);
+        component_emitter.edge_traverser (supports_);
         InterfaceEmitter interface_emitter (ctx);
         supports_.node_traverser (interface_emitter);
 
         Traversal::Defines defines;
-        Traversal::Inherits inherits;
+        Traversal::Inherits interface_inherits;
         interface_emitter.edge_traverser (defines);
-        interface_emitter.edge_traverser (inherits);
+        interface_emitter.edge_traverser (interface_inherits);
 
         AttributeEmitter attribute_emitter (ctx);
         ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
@@ -1112,7 +1150,7 @@ namespace
 
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
-        inherits.node_traverser (interface_emitter);
+        interface_inherits.node_traverser (interface_emitter);
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
@@ -1145,7 +1183,7 @@ namespace
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
 
-        supports (t, supports_);
+        component_emitter.traverse (t);
       }
 
       os << "// Public port operations." << endl << endl;
@@ -1153,24 +1191,40 @@ namespace
       // Generate public operations for ports, and nested classes for
       // event consumers.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;                
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (component_inherits);
+        component_emitter.edge_traverser (defines);
+        
         PortsEmitterPublic ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       // Generate operations for component attributes.
       os << "// Component attribute operations." << endl << endl;
 
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;                
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+
         AttributeEmitter attribute_emitter (ctx);
         ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
         defines.node_traverser (read_only_attribute_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "// Operations for Navigation interface." << endl << endl;
@@ -1408,11 +1462,19 @@ namespace
 
       // Generate protected operations for facets and event sinks.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;                
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+
         PortsEmitterProtected ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
     }
 
@@ -1473,13 +1535,39 @@ namespace
         os << c.scoped_name ().scope_name ();
       }
     };
-
-    struct HomeOperationEmitter : Traversal::HomeFactory,
-                                  Traversal::Home,
-                                  OperationEmitter
+    
+    // HomeFactory and HomeFinder are tied to Operation in
+    // the front end. Since we want to treat them differently
+    // than regular operations in a home (we don't want to
+    // generate anything for base class factory operations,
+    // example), we use this class for regular home operations
+    // that overrides HomeFactory and HomeFinder traversals
+    // to do nothing.
+    struct HomeOperationEmitter : OperationEmitter,
+                                  Traversal::HomeFactory,
+                                  Traversal::HomeFinder
     {
-      HomeOperationEmitter (Context& c, SemanticGraph::Home& home)
-        : OperationEmitter (c),
+      HomeOperationEmitter (Context& c)
+        : OperationEmitter (c)
+      {}
+
+      virtual void
+      traverse (SemanticGraph::HomeFactory&)
+      {
+      }
+
+      virtual void
+      traverse (SemanticGraph::HomeFinder&)
+      {
+      }
+    };
+
+    struct FactoryOperationEmitter : Traversal::HomeFactory,
+                                     Traversal::Home,
+                                     EmitterBase
+    {
+      FactoryOperationEmitter (Context& c, SemanticGraph::Home& home)
+        : EmitterBase (c),
           home_ (home)
       {}
 
@@ -1492,11 +1580,11 @@ namespace
       virtual void
       returns (SemanticGraph::HomeFactory& hf)
       {
-        ReturnTypeNameEmitter manages_emitter (os);
-        Traversal::Manages manages_;
-        manages_.node_traverser (manages_emitter);
+        ReturnTypeNameEmitter returns_emitter (os);
+        Traversal::Returns returns_;
+        returns_.node_traverser (returns_emitter);
 
-        manages (home_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << endl;
       }
@@ -1586,12 +1674,20 @@ namespace
       os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
 
-      // Generate home factory and other operations.
-      os << "// Home factory and other operations." << endl << endl;
+      // Generate home operations.
+      os << "// Home operations." << endl << endl;
 
       {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits home_inherits;
+        home_inherits.node_traverser (home_emitter);
+        
         Traversal::Defines defines;
-        HomeOperationEmitter home_operation_emitter (ctx, t);
+        home_emitter.edge_traverser (defines);
+        home_emitter.edge_traverser (home_inherits);
+        
+        HomeOperationEmitter home_operation_emitter (ctx);
         defines.node_traverser (home_operation_emitter);
 
         Traversal::Receives receives;
@@ -1625,20 +1721,80 @@ namespace
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
 
-        names (t, defines);
+        home_emitter.traverse (t);
       }
 
-      // Generate operations for component attributes.
+      // Generate home factory operations. This is a separate traversal
+      // stack because we don't want to generate the factory operations
+      // of ancestors.
+      os << "// Home factory operations." << endl << endl;
+
+      {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits inherits;
+        home_emitter.edge_traverser (inherits);
+        inherits.node_traverser (home_emitter);
+        
+        Traversal::Defines defines;
+        home_emitter.edge_traverser (defines);
+        
+        FactoryOperationEmitter factory_operation_emitter (ctx, t);
+        defines.node_traverser (factory_operation_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        factory_operation_emitter.edge_traverser (receives);
+        factory_operation_emitter.edge_traverser (returns);
+        factory_operation_emitter.edge_traverser (raises);
+
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+
+        INArgTypeNameEmitter in_arg_emitter (os);
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        home_emitter.traverse (t);
+      }
+      
+     // Generate operations for home attributes.
       os << "// Attribute operations." << endl << endl;
 
       {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits home_inherits;
+        home_inherits.node_traverser (home_emitter);
+        
         Traversal::Defines defines;
+        home_emitter.edge_traverser (defines);
+        home_emitter.edge_traverser (home_inherits);
+        
         AttributeEmitter attribute_emitter (ctx);
         ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
         defines.node_traverser (read_only_attribute_emitter);
 
-        names (t, defines);
+        home_emitter.traverse (t);
       }
 
       // @@@ (JP) Need primary key support.
@@ -1694,7 +1850,15 @@ namespace
 
       // Generate operations for all supported interfaces.
       {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits home_inherits;
+        home_inherits.node_traverser (home_emitter);
+        
         Traversal::Supports supports_;
+        home_emitter.edge_traverser (supports_);
+        home_emitter.edge_traverser (home_inherits);
+        
         InterfaceEmitter interface_emitter (ctx);
         supports_.node_traverser (interface_emitter);
 
@@ -1743,7 +1907,7 @@ namespace
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
 
-        supports (t, supports_);
+        home_emitter.traverse (t);
       }
 
       os << "protected:" << endl
