@@ -231,6 +231,10 @@ ifeq ($(MAKEFILE),)
   MAKEFILE = Makefile
 endif # ! MAKEFILE
 
+ifeq ($(DEPENDENCY_FILE),)
+  DEPENDENCY_FILE = $(MAKEFILE)
+endif
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
@@ -262,22 +266,29 @@ ORIGdepend.local: $(MAKEFILE)
 	fi ;\
 	$(RM) $(MAKEFILE).old ;
 
+ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
+$(DEPENDENCY_FILE):
+	touch $(DEPENDENCY_FILE)
+depend.local: $(DEPENDENCY_FILE)
+include $(DEPENDENCY_FILE)
+endif
+
 depend.local: $(MAKEFILE)
-	@$(RM) $(MAKEFILE).old
-	@cp $(MAKEFILE) $(MAKEFILE).old
-	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
-	@if cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
+	@$(RM) $(DEPENDENCY_FILE).old
+	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
+	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
+	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
 	else \
 		echo "Makefile dependencies updated." ;\
 	fi ;\
-	$(RM) $(MAKEFILE).old ;
+	$(RM) $(DEPENDENCY_FILE).old ;
 
 #----------------------------------------------------------------------------
 #       RCS info target
 #----------------------------------------------------------------------------
 
-idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)C.h)
+idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
 #----------------------------------------------------------------------------
 #       RCS info target
