@@ -1,6 +1,7 @@
 #include "SCIOP_Factory.h"
 #include "SCIOP_Acceptor.h"
 #include "SCIOP_Connector.h"
+#include "ace/OS_NS_strings.h"
 
 #if TAO_HAS_SCIOP == 1
 
