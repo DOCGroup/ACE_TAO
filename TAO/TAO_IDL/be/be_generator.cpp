@@ -105,8 +105,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (be, 
-           be_generator, 
+ACE_RCSID (be,
+           be_generator,
            "$Id$")
 
 AST_Root *
@@ -164,7 +164,7 @@ be_generator::create_module (UTL_Scope *s,
               // Get m's previous_ member, plus all it's decls,
               // into the new modules's previous_ member.
               retval->add_to_previous (m);
-              retval->prefix (ACE_const_cast (char *, m->prefix ()));
+              retval->prefix (const_cast<char *> (m->prefix ()));
             }
         }
     }
@@ -227,9 +227,9 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     idl_bool local,
                                     idl_bool abstract)
 {
-  AST_Decl *d = 
+  AST_Decl *d =
     idl_global->scopes ().top_non_null ()->lookup_by_name (n, I_TRUE);
-    
+
   AST_Interface *dummy = this->create_interface (n,
                                                  0,
                                                  -1,
@@ -243,10 +243,10 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                   be_interface_fwd (dummy,
                                     n),
                   0);
-                  
+
   if (d != 0)
     {
-      retval->prefix (ACE_const_cast (char *, ScopeAsDecl (d->defined_in ())->prefix ()));
+      retval->prefix (const_cast<char *> (ScopeAsDecl (d->defined_in ())->prefix ()));
     }
 
   return retval;
@@ -422,7 +422,7 @@ be_generator::create_home (UTL_ScopedName *n,
 {
   be_home *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_home (n,                           
+                  be_home (n,
                            base_home,
                            managed_component,
                            primary_key,
@@ -468,7 +468,7 @@ be_generator::create_structure (UTL_ScopedName *n,
 AST_StructureFwd *
 be_generator::create_structure_fwd (UTL_ScopedName *n)
 {
-  
+
   AST_Structure *dummy = this->create_structure (n,
                                                  0,
                                                  0);

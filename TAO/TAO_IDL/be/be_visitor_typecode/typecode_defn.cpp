@@ -1694,7 +1694,7 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
   // check if we are repeated
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
-    
+
   ACE_Unbounded_Queue<AST_Type *> list;
 
   if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
@@ -2482,8 +2482,8 @@ be_visitor_typecode_defn::compute_tc_size (be_enum *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if (be_global->opt_tc () 
-      && (this->queue_lookup (this->tc_queue_, node) 
+  if (be_global->opt_tc ()
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
@@ -2492,9 +2492,9 @@ be_visitor_typecode_defn::compute_tc_size (be_enum *node)
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
-                              this->tc_offset_) 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
+                              this->tc_offset_)
             == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -2597,8 +2597,8 @@ be_visitor_typecode_defn::compute_tc_size (be_exception *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if (be_global->opt_tc () 
-      && (this->queue_lookup (this->tc_queue_, node) 
+  if (be_global->opt_tc ()
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
@@ -2607,8 +2607,8 @@ be_visitor_typecode_defn::compute_tc_size (be_exception *node)
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
                               this->tc_offset_)
              == 0)
         {
@@ -2741,8 +2741,8 @@ be_visitor_typecode_defn::compute_tc_size (be_interface *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if (be_global->opt_tc () 
-      && (this->queue_lookup (this->tc_queue_, node) 
+  if (be_global->opt_tc ()
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
@@ -2751,8 +2751,8 @@ be_visitor_typecode_defn::compute_tc_size (be_interface *node)
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
                               this->tc_offset_)
             == 0)
         {
@@ -2823,8 +2823,8 @@ be_visitor_typecode_defn::compute_tc_size (be_predefined_type *node)
       // have already been counted in the current computation or not by checking
       // for our presence in the compute queue. In both cases, we only include the
       // 8 bytes in the computation
-      if (be_global->opt_tc () 
-          && (this->queue_lookup (this->tc_queue_, node) 
+      if (be_global->opt_tc ()
+          && (this->queue_lookup (this->tc_queue_, node)
               || this->queue_lookup (this->compute_queue_, node)))
         {
           this->computed_tc_size_ = 4 + 4;
@@ -2833,8 +2833,8 @@ be_visitor_typecode_defn::compute_tc_size (be_predefined_type *node)
         {
           // Insert node into tc_queue_ in case the node is involved in
           // some form of recursion.
-          if (this->queue_insert (this->compute_queue_, 
-                                  node, 
+          if (this->queue_insert (this->compute_queue_,
+                                  node,
                                   this->tc_offset_)
                 == 0)
             {
@@ -2967,15 +2967,15 @@ be_visitor_typecode_defn::compute_tc_size (be_structure *node)
   ACE_Unbounded_Queue<AST_Type *> list;
 
   if ((be_global->opt_tc () || node->in_recursion (list))
-      && (this->queue_lookup (this->tc_queue_, node) 
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
     }
   else
     {
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
                               this->tc_offset_)
              == 0)
         {
@@ -3068,16 +3068,16 @@ be_visitor_typecode_defn::compute_tc_size (be_typedef *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if (be_global->opt_tc () 
-      && (this->queue_lookup (this->tc_queue_, node) 
+  if (be_global->opt_tc ()
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
     }
   else
     {
-      if (this->queue_insert (this->compute_queue_, 
-                              node, 
+      if (this->queue_insert (this->compute_queue_,
+                              node,
                               this->tc_offset_)
              == 0)
         {
@@ -3151,7 +3151,7 @@ be_visitor_typecode_defn::compute_tc_size (be_union *node)
   ACE_Unbounded_Queue<AST_Type *> list;
 
   if ((be_global->opt_tc () || node->in_recursion (list))
-      && (this->queue_lookup (this->tc_queue_, node) 
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
@@ -3160,9 +3160,9 @@ be_visitor_typecode_defn::compute_tc_size (be_union *node)
     {
       // Insert node into tc_queue_ in case the node is involved in
       // some form of recursion.
-      if (this->queue_insert (this->compute_queue_, 
+      if (this->queue_insert (this->compute_queue_,
                               node,
-                              this->tc_offset_) 
+                              this->tc_offset_)
             == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -3304,7 +3304,7 @@ be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
   ACE_Unbounded_Queue<AST_Type *> list;
 
   if ((be_global->opt_tc () || node->in_recursion (list))
-      && (this->queue_lookup (this->tc_queue_, node) 
+      && (this->queue_lookup (this->tc_queue_, node)
           || this->queue_lookup (this->compute_queue_, node)))
     {
       this->computed_tc_size_ = 4 + 4;
@@ -3315,7 +3315,7 @@ be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
       // some form of recursion.
       if (this->queue_insert (this->compute_queue_,
                               node,
-                              this->tc_offset_) 
+                              this->tc_offset_)
             == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -3614,13 +3614,13 @@ be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
     }
   else
     {
-      size_t slen = ACE_OS::strlen (node->repoID ()) + 1;
+      const size_t slen = ACE_OS::strlen (node->repoID ()) + 1;
       // + 1 for NULL terminating char
 
-      // the number of bytes to hold the string must be a multiple of 4 since this
-      // will be represented as an array of longs
-      return ACE_static_cast (ACE_CDR::ULong,
-                              4 + 4 * (slen/4 + (slen%4 ? 1:0)));
+      // The number of bytes to hold the string must be a multiple of
+      // 4 since this will be represented as an array of longs.
+      return
+        static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
     }
 }
 
@@ -3636,13 +3636,13 @@ be_visitor_typecode_defn::name_encap_len (be_decl *node)
     }
   else
     {
-      size_t slen =
+      const size_t slen =
         ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1;
 
-      // the number of bytes to hold the string must be a multiple of 4 since this
-      // will be represented as an array of longs
-      return ACE_static_cast (ACE_CDR::ULong,
-                              4 + 4 * (slen/4 + (slen%4 ? 1:0)));
+      // The number of bytes to hold the string must be a multiple of
+      // 4 since this will be represented as an array of longs.
+      return
+        static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
     }
 }
 
@@ -3658,9 +3658,9 @@ be_visitor_typecode_defn::tc_name2long (const char *name,
 
   // compute the number of bytes necessary to hold the name rounded to
   // the next multiple of 4 (i.e., size of long)
-  arrlen = ACE_static_cast (
-              ACE_CDR::ULong,
-              slen / bytes_per_word + (slen % bytes_per_word ? 1 : 0));
+  arrlen =
+    static_cast<ACE_CDR::ULong> (slen / bytes_per_word
+                                 + (slen % bytes_per_word ? 1 : 0));
 
   ACE_OS::memset (buf, 0, sizeof (buf));
   larr = buf;

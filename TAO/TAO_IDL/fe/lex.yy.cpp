@@ -1003,7 +1003,7 @@ TAO_YY_MALLOC_DECL
                         TAO_YY_FATAL_ERROR( "input in flex scanner failed" ); \
                 result = n; \
                 } \
-        else if ( ((result = ACE_static_cast (int, \
+        else if ( ((result = static_cast<int> ( \
                                   fread( buf, 1, max_size, tao_yyin ))) == 0) \
                   && ferror( tao_yyin ) ) \
                 TAO_YY_FATAL_ERROR( "input in flex scanner failed" );
@@ -1430,13 +1430,12 @@ TAO_YY_RULE_SETUP
       // This check will ensure that escaped C++ keywords will be
       // caught and prepended with '_cxx' as non-escaped keywords
       // are now prepended with '_cxx_'.
-      const char *tmp = 
+      const char *tmp =
         ace_tao_yytext[0] == '_' ? ace_tao_yytext + 1 : ace_tao_yytext;
 
-      entry = 
+      entry =
         cpp_key_tbl.lookup (tmp,
-                            ACE_static_cast (unsigned int,
-                                             ACE_OS::strlen (tmp)));
+                            static_cast<unsigned int> (ACE_OS::strlen (tmp)));
     }
 
   if (entry)
@@ -2788,7 +2787,7 @@ idl_store_pragma (char *buf)
           ext_id.set (idl_global->filename ()->get_string (),
                       0);
           char *int_id = ACE::strnew (new_prefix);
-          (void) idl_global->file_prefixes ().rebind (ext_id, 
+          (void) idl_global->file_prefixes ().rebind (ext_id,
                                                       int_id);
         }
     }
@@ -2823,7 +2822,7 @@ idl_store_pragma (char *buf)
           len = ACE_OS::strlen (number);
         }
 
-      // This call adds a proper null terminator to tmp, so no need to 
+      // This call adds a proper null terminator to tmp, so no need to
       // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
@@ -2870,7 +2869,7 @@ idl_store_pragma (char *buf)
                                                   new_id);
               return;
             }
-            
+
           d->repoID (new_id);
           d->typeid_set (I_TRUE);
         }
@@ -2968,24 +2967,24 @@ idl_atof (char *s)
   double e, k;
   long neg = 0, negexp = 0;
 
-  if (*s == '-') 
+  if (*s == '-')
     {
       neg = 1;
       s++;
     }
 
-  while (*s >= '0' && *s <= '9') 
+  while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
       s++;
     }
 
-  if (*s == '.') 
+  if (*s == '.')
     {
       s++;
       e = 10;
 
-      while (*s >= '0' && *s <= '9') 
+      while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
@@ -2993,15 +2992,15 @@ idl_atof (char *s)
         }
     }
 
-  if (*s == 'e' || *s == 'E') 
+  if (*s == 'e' || *s == 'E')
     {
       s++;
 
-      if (*s == '-') 
+      if (*s == '-')
         {
             negexp = 1;
             s++;
-        } 
+        }
       else if (*s == '+')
         {
           s++;
@@ -3009,13 +3008,13 @@ idl_atof (char *s)
 
       e = 0;
 
-      while (*s >= '0' && *s <= '9') 
+      while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
           s++;
         }
 
-      if (e > 0) 
+      if (e > 0)
         {
           for (k = 1; e > 0; k *= 10, e--);
 
@@ -3030,7 +3029,7 @@ idl_atof (char *s)
         }
     }
 
-  if (neg) 
+  if (neg)
     {
       d *= -1.0;
     }
@@ -3046,12 +3045,12 @@ idl_escape_reader(
     char *str
   )
 {
-  if (str[0] != '\\') 
+  if (str[0] != '\\')
     {
 	    return str[0];
     }
 
-  switch (str[1]) 
+  switch (str[1])
   {
     case 'n':
 	    return '\n';
@@ -3080,7 +3079,7 @@ idl_escape_reader(
 	      int i;
 
 	      // hex value
-	      for (i = 2; str[i] != '\0' && isxdigit(str[i]); ++i) 
+	      for (i = 2; str[i] != '\0' && isxdigit(str[i]); ++i)
           {
 		        continue;
 	        }
@@ -3094,11 +3093,11 @@ idl_escape_reader(
 	    ACE_NOTREACHED (break;)
     default:
 	    // check for octal value
-	    if (str[1] >= '0' && str[1] <= '7') 
+	    if (str[1] >= '0' && str[1] <= '7')
         {
  	        int i;
 
-	        for (i = 1; str[i] >= '0' && str[i] <= '7'; ++i) 
+	        for (i = 1; str[i] >= '0' && str[i] <= '7'; ++i)
             {
 		          continue;
 	          }
@@ -3108,8 +3107,8 @@ idl_escape_reader(
 	        char out = (char)idl_atoui(&str[1], 8);
 	        str[i] = save;
 	        return out;
-	      } 
-      else 
+	      }
+      else
         {
 	        return str[1] - 'a';
 	      }

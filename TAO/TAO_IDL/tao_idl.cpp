@@ -123,7 +123,7 @@ BE_init (void)
   Identifier id ("void");
   UTL_ScopedName n (&id,
                     0);
-  AST_Decl *d = 
+  AST_Decl *d =
     idl_global->scopes ().bottom ()->lookup_primitive_type (
                                           AST_Expression::EV_void
                                         );
@@ -301,7 +301,7 @@ DRV_drive (const char *s)
       // Call BE_abort to allow a BE to clean up after itself.
       BE_abort ();
 
-      ACE_OS::exit (ACE_static_cast (int, idl_global->err_count ()));
+      ACE_OS::exit (static_cast<int> (idl_global->err_count ()));
     }
 
   // Dump the code.
@@ -344,8 +344,7 @@ DRV_drive (const char *s)
     }
   else
     {
-      ACE_OS::exit (ACE_static_cast (int,
-                                     error_count));
+      ACE_OS::exit (static_cast<int> (error_count));
     }
 
   // Exit cleanly.

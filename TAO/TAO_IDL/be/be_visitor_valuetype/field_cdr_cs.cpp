@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           field_cdr_op_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           field_cdr_op_cs,
            "$Id$")
 
 // **********************************************
@@ -31,7 +31,7 @@ be_visitor_valuetype_field_cdr_cs::be_visitor_valuetype_field_cdr_cs (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    pre_ (""), 
+    pre_ (""),
     post_ ("")
 {
 }
@@ -50,7 +50,7 @@ be_visitor_valuetype_field_cdr_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -61,7 +61,7 @@ be_visitor_valuetype_field_cdr_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -81,15 +81,15 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_array - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
@@ -104,23 +104,23 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        node->full_name ());
     }
 
@@ -144,7 +144,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -162,7 +162,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -183,7 +183,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_array - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -205,7 +205,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_enum - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -221,7 +221,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -242,7 +242,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_interface - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -265,7 +265,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_interface - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -285,7 +285,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_interface_fwd - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -308,7 +308,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_interface_fwd - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -328,7 +328,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_valuetype - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -351,7 +351,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_valuetype - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -371,7 +371,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_valuetype_fwd - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -394,7 +394,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_valuetype_fwd - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -438,7 +438,7 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_predefined_type - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -484,7 +484,7 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
       if (pt == AST_PredefinedType::PT_pseudo
           || pt == AST_PredefinedType::PT_object)
         {
-          *os << "(strm << " << pre_ << f->local_name () 
+          *os << "(strm << " << pre_ << f->local_name ()
               << post_ << ".in ())";
         }
       else if (pt == AST_PredefinedType::PT_char)
@@ -520,7 +520,7 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -540,7 +540,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_sequence - "
-                         "cannot retrieve field node\n" ), 
+                         "cannot retrieve field node\n" ),
                         -1);
     }
 
@@ -562,7 +562,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_sequence - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -581,7 +581,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -602,7 +602,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_string - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -624,7 +624,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -644,7 +644,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_structure - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -666,7 +666,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_structure - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -682,7 +682,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                              "visit_struct - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -703,7 +703,7 @@ be_visitor_valuetype_field_cdr_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -724,7 +724,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_union - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -746,7 +746,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                          "visit_union - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -762,7 +762,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -798,7 +798,7 @@ be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -810,7 +810,7 @@ be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -830,7 +830,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
                          "visit_array - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -843,15 +843,15 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
                          "visit_array - "
-                         "cannot retrieve valuetype node\n"), 
+                         "cannot retrieve valuetype node\n"),
                         -1);
     }
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
@@ -864,25 +864,25 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
 
       if (node->is_nested ())
         {
-          be_decl *parent = 
+          be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        node->full_name ());
     }
 
@@ -895,8 +895,8 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       *os << fname << "_forany "
           << "_tao_" << vt->field_pd_prefix () << f->local_name ()
           << vt->field_pd_postfix () << be_idt << be_idt_nl
-          << "(ACE_const_cast (" << be_idt << be_idt_nl
-          << fname << "_slice*," << be_nl
+          << "(const_cast<" << be_idt << be_idt_nl
+          << fname << "_slice*> (" << be_nl
           << vt->field_pd_prefix () << f->local_name ()
           << vt->field_pd_postfix () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
@@ -907,7 +907,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       // Error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
-                         "visit_array - "), 
+                         "visit_array - "),
                         -1);
     }
 
@@ -925,7 +925,7 @@ be_visitor_valuetype_field_cdr_decl::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_cdr_op_field_decl::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 

@@ -141,8 +141,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_uidt_nl
+          << "static_cast<"
+          << node->local_name () << "*> (_tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -153,8 +153,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
       << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_dynamic_cast (" << node->local_name ()
-      << " *, _tao_excp);" << be_uidt_nl;
+  *os << "return dynamic_cast<" << node->local_name ()
+      << " *> (_tao_excp);" << be_uidt_nl;
   *os << "}" << be_uidt_nl;
   *os << "else" << be_idt_nl;
   *os << "{" << be_idt_nl;

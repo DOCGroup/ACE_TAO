@@ -11,8 +11,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_sh, 
+ACE_RCSID (be_visitor_interface,
+           amh_sh,
            "$Id$")
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
@@ -114,7 +114,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name.c_str () << " (const " << class_name.c_str () 
+  *os << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
@@ -194,7 +194,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "};";
 
   return 0;
@@ -224,7 +224,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
     }
 
   this->elem_number_ = 0;
-  
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -305,8 +305,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                 );
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *,
-                     amh_node->name ()->copy ());
+    static_cast<UTL_ScopedName *> (amh_node->name ()->copy ());
 
   ACE_NEW_RETURN (id,
                   Identifier (original_op_name.rep ()),

@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_enum, 
-           cdr_op_cs, 
+ACE_RCSID (be_visitor_enum,
+           cdr_op_cs,
            "$Id$")
 
 
@@ -64,8 +64,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "CORBA::Boolean _tao_result = strm >> _tao_temp;" << be_nl << be_nl
       << "if (_tao_result == 1)" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_enumval = ACE_static_cast (" << node->name ()
-      << ", _tao_temp);" << be_uidt_nl
+      << "_tao_enumval = static_cast<" << node->name ()
+      << "> (_tao_temp);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return _tao_result;" << be_uidt_nl
       << "}";

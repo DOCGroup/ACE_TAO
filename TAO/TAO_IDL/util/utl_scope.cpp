@@ -105,8 +105,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util, 
-           utl_scope, 
+ACE_RCSID (util,
+           utl_scope,
            "$Id$")
 
 #undef  INCREMENT
@@ -187,7 +187,7 @@ iter_lookup_by_name_local (AST_Decl *d,
       return 0;
     }
 
-  if (index < ACE_static_cast (long, sc->nmembers ()))
+  if (index < static_cast<long> (sc->nmembers ()))
     {
       // Look up the first component of the scoped name.
       result = sc->lookup_by_name_local (e->head (),
@@ -1827,7 +1827,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     {
       return;
     }
-    
+
   AST_Decl::NodeType nt = e->node_type ();
 
   // Special case for forward declared interfaces in the

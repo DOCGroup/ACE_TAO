@@ -272,7 +272,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     }
 
   *os << ",";
-  
+
   {
     be_visitor_args_upcall_ss visitor (this->ctx_);
 
@@ -281,7 +281,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
         return -1;
       }
   }
-  
+
   *os << be_nl << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
@@ -340,8 +340,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
   // Get the right object implementation.
   *os << amh_skel_name.c_str () << " *_tao_impl =" << be_idt_nl
-      << "ACE_static_cast (" << be_idt << be_idt_nl
-      << amh_skel_name.c_str () << " *," << be_nl
+      << "static_cast<" << be_idt << be_idt_nl
+      << amh_skel_name.c_str () << " *> (" << be_nl
       << "_tao_object_reference" << be_uidt_nl
       << ");" << be_uidt << be_uidt;
 

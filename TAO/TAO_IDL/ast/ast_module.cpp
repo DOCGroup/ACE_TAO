@@ -94,8 +94,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast, 
-           ast_module, 
+ACE_RCSID (ast,
+           ast_module,
            "$Id$")
 
 AST_Module::AST_Module (void)
@@ -187,7 +187,7 @@ AST_Module::fe_add_module (AST_Module *t)
           break;
         }
 
-      t->prefix (ACE_const_cast (char *, prefix_holder));
+      t->prefix (const_cast<char *> (prefix_holder));
       scope = parent->defined_in ();
     }
 
@@ -221,13 +221,13 @@ AST_Module::fe_add_module (AST_Module *t)
 
       if (ACE_OS::strcmp (this_prefix, "") == 0)
         {
-          t->prefix (ACE_const_cast (char *, prev_prefix));
+          t->prefix (const_cast<char *> (prev_prefix));
         }
       else
         {
           if (ACE_OS::strcmp (prev_prefix, "") == 0)
             {
-              d->prefix (ACE_const_cast (char *, this_prefix));
+              d->prefix (const_cast<char *> (this_prefix));
             }
           else
             {
@@ -703,7 +703,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
                                       d);
           return 0;
         }
-        
+
       // No need to call referenced() for forward declared interafces,
       // they can be redeclared after referencing.
 
@@ -1187,7 +1187,7 @@ AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
         }
       else
         {
-          if (!can_be_redefined (d)) 
+          if (!can_be_redefined (d))
             {
               idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                           t,
@@ -1347,7 +1347,7 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
         }
       else
         {
-          if (!can_be_redefined (d)) 
+          if (!can_be_redefined (d))
             {
               idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                           t,

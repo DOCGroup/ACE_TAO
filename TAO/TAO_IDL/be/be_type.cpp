@@ -331,7 +331,7 @@ be_type::seen_in_operation (idl_bool val)
 AST_Decl::NodeType
 be_type::base_node_type (void) const
 {
-  return ACE_const_cast (be_type*, this)->node_type ();
+  return const_cast<be_type*> (this)->node_type ();
 }
 
 // Cleanup method

@@ -1147,7 +1147,7 @@ IDL_GlobalData::update_prefix (char *filename)
     {
       prefix = ACE::strnew ("");
       (void) this->file_prefixes_.bind (ext_id, prefix);
-      char *tmp = ACE_const_cast (char *, "");
+      char *tmp = const_cast<char *> ("");
       this->pd_root->prefix (tmp);
     }
 
@@ -1329,14 +1329,14 @@ IDL_GlobalData::create_uses_multiple_stuff (
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
-  AST_Structure *connection = 
+  AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, 0, 0);
   struct_id.destroy ();
-  
+
   Identifier object_id ("objref");
   UTL_ScopedName object_name (&object_id,
                               0);
-  AST_Field *object_field = 
+  AST_Field *object_field =
     idl_global->gen ()->create_field (pd.impl,
                                       &object_name,
                                       AST_Field::vis_NA);
@@ -1362,7 +1362,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
     }
 
   AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
-  
+
   Identifier cookie_id ("ck");
   UTL_ScopedName cookie_name (&cookie_id,
                               0);
@@ -1372,9 +1372,9 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (cookie_field);
   cookie_id.destroy ();
-  
+
   (void) c->fe_add_structure (connection);
-  
+
   ACE_UINT64 bound = 0;
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
@@ -1385,7 +1385,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                          0,
                                          0,
                                          0);
-                                         
+
   ACE_CString seq_string (pd.id->get_string ());
   seq_string += "Connections";
   Identifier seq_id (seq_string.c_str ());
@@ -1397,6 +1397,6 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                         0,
                                         0);
   seq_id.destroy ();
-  
+
   (void) c->fe_add_typedef (connections);
 }

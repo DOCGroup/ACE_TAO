@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (ast, 
-           ast_type, 
+ACE_RCSID (ast,
+           ast_type,
            "$Id$")
 
 AST_Type::AST_Type (void)
@@ -241,14 +241,14 @@ AST_Type::unaliased_type (void)
   AST_Type *t = this;
   AST_Typedef *td = 0;
   AST_Decl::NodeType nt = this->node_type ();
-  
+
   while (nt == AST_Decl::NT_typedef)
     {
       td = AST_Typedef::narrow_from_decl (t);
       t = td->base_type ();
       nt = t->node_type ();
     }
-    
+
   return t;
 }
 
@@ -361,19 +361,19 @@ AST_Type::nested_name (const char* local_name,
       if (def_next != 0)
         {
           len_to_match =
-            ACE_static_cast (int, ACE_OS::strlen (def_curr)) -
-            ACE_static_cast (int, ACE_OS::strlen (def_next));
+            static_cast<int> (ACE_OS::strlen (def_curr)) -
+            static_cast<int> (ACE_OS::strlen (def_next));
         }
       else
         {
-          len_to_match = ACE_static_cast (int, ACE_OS::strlen (def_curr));
+          len_to_match = static_cast<int> (ACE_OS::strlen (def_curr));
         }
 
       if (use_next != 0)
         {
-          int len =
-            ACE_static_cast (int, ACE_OS::strlen (use_curr)) -
-            ACE_static_cast (int, ACE_OS::strlen (use_next));
+          const int len =
+            static_cast<int> (ACE_OS::strlen (use_curr)) -
+            static_cast<int> (ACE_OS::strlen (use_next));
 
           if (len > len_to_match)
             {
@@ -382,7 +382,7 @@ AST_Type::nested_name (const char* local_name,
         }
       else
         {
-          int len = ACE_static_cast (int, ACE_OS::strlen (use_curr));
+          const int len = static_cast<int> (ACE_OS::strlen (use_curr));
 
           if (len > len_to_match)
             {
@@ -419,20 +419,19 @@ AST_Type::nested_name (const char* local_name,
               if (def_next != 0)
                 {
                   len_to_match =
-                    ACE_static_cast (int, ACE_OS::strlen (def_curr)) -
-                    ACE_static_cast (int, ACE_OS::strlen (def_next));
+                    static_cast<int> (ACE_OS::strlen (def_curr)) -
+                    static_cast<int> (ACE_OS::strlen (def_next));
                 }
               else
                 {
-                  len_to_match = ACE_static_cast (int,
-                                                  ACE_OS::strlen (def_curr));
+                  len_to_match = static_cast<int> (ACE_OS::strlen (def_curr));
                 }
 
               if (use_next != 0)
                 {
                   int len  =
-                    ACE_static_cast (int, ACE_OS::strlen (use_curr)) -
-                    ACE_static_cast (int, ACE_OS::strlen (use_next));
+                    static_cast<int> (ACE_OS::strlen (use_curr)) -
+                    static_cast<int> (ACE_OS::strlen (use_next));
 
                   if (len > len_to_match)
                     {
@@ -441,7 +440,7 @@ AST_Type::nested_name (const char* local_name,
                 }
               else
                 {
-                  int len = ACE_static_cast (int, ACE_OS::strlen (use_curr));
+                  const int len = static_cast<int> (ACE_OS::strlen (use_curr));
 
                   if (len > len_to_match)
                     {
@@ -544,7 +543,7 @@ AST_Type::match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list)
           return I_TRUE;
         }
     }
-    
+
   return I_FALSE;
 }
 

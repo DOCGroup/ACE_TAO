@@ -715,9 +715,9 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
     {
       return 0;
     }
-   
+
   // A parent that's local will already have its operations declared
-  // as pure virtual. 
+  // as pure virtual.
   if (base_interface->is_local ())
     {
       return 0;
@@ -736,7 +736,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
           // Hack to force the generation of the pure virtual ' = 0'
           // at the end of the operation declaration.
           d->set_local (I_TRUE);
-        
+
           if (d->accept (this->visitor_) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -744,11 +744,11 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
                                 "visit base interface operation failed\n"),
                                 -1);
             }
-            
+
           d->set_local (I_FALSE);
         }
     }
-    
+
   return 0;
 }
 
@@ -862,15 +862,17 @@ be_interface::gen_operation_table (const char *flat_name,
                               + 1],
                         -1);
 
-        // This degree of randomness is necessary because there was an obscure
-        // chance of even this arriving at colliding filenames on multiprocessor
-        // machines when the IDL compiler was run at exactly the same time.
-        ACE_RANDR_TYPE seed = (ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::time())
-                               + ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::getpid ()));
+        // This degree of randomness is necessary because there was an
+        // obscure chance of even this arriving at colliding filenames
+        // on multiprocessor machines when the IDL compiler was run at
+        // exactly the same time.
+        ACE_RANDR_TYPE seed =
+          (static_cast<ACE_RANDR_TYPE> (ACE_OS::time())
+           + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
                          "%s%d.%s.gperf",
                          idl_global->temp_dir (),
-                         ACE_OS::rand_r(seed),
+                         ACE_OS::rand_r (seed),
                          flat_name);
 
         // QNX can't handle individual file names (path components)
@@ -1017,7 +1019,7 @@ be_interface::convert_parent_ops (be_visitor *visitor)
                           "codegen for base class operations failed\n"),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -1900,9 +1902,9 @@ be_interface::queryinterface_helper (be_interface *derived,
                                      TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "(type == ACE_reinterpret_cast ("
+  *os << "(type == reinterpret_cast<"
       << be_idt << be_idt <<be_idt << be_idt << be_idt << be_idt_nl
-      << "ptrdiff_t," << be_nl;
+      << "ptrdiff_t> (" << be_nl;
 
   be_decl *scope =
     be_scope::narrow_from_scope (ancestor->defined_in ())->decl ();
@@ -1936,15 +1938,15 @@ be_interface::queryinterface_helper (be_interface *derived,
 
   if (derived == ancestor)
     {
-      *os << "retv = ACE_reinterpret_cast (void*, this);" << be_uidt_nl;
+      *os << "retv = reinterpret_cast<void*> (this);" << be_uidt_nl;
     }
   else
     {
       *os << "retv =" << be_idt_nl
-          << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-          << "void *," << be_nl
-          << "ACE_static_cast (" << be_idt << be_idt_nl
-          << ancestor->full_name () << "_ptr," << be_nl
+          << "reinterpret_cast<" << be_idt << be_idt_nl
+          << "void *> (" << be_nl
+          << "static_cast<" << be_idt << be_idt_nl
+          << ancestor->full_name () << "_ptr> (" << be_nl
           << "this" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt << be_uidt_nl;
@@ -1973,8 +1975,8 @@ be_interface::downcast_helper (be_interface * /* derived */,
       << "                    \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return ACE_static_cast ("
-      << base->full_skel_name () << "_ptr, this);" << be_uidt_nl
+      << "return static_cast<"
+      << base->full_skel_name () << "_ptr> (this);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   return 0;
