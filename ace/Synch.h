@@ -29,7 +29,7 @@
 class ACE_Time_Value;
 // template <class ACE_COND_MUTEX> class ACE_Condition;
 
-class ACE_Lock
+class ACE_Export ACE_Lock
 {
   // = TITLE
   //     This is the abstract base class that contains the uniform
@@ -46,6 +46,10 @@ class ACE_Lock
   //     calls and (2) objects with virtual functions can't be placed
   //     into shared memory.
 public:
+
+  virtual ~ACE_Lock (void);
+  // Noop virtual destructor
+
   virtual int remove (void) = 0;
   // Explicitly destroy the lock.
 
