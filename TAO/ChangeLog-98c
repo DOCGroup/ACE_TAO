@@ -1,3 +1,8 @@
+Thu Dec  3 07:09:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/README.tests: Added
+ 	instructions for utilization test.
+
 Thu Dec 03 01:24:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/try_macros.h: Added TAO_TRY_VAR and TAO_TRY_VAR_EX.  These
