@@ -1,12 +1,14 @@
-//$Id$
-
 #include "Private_Transport_Descriptor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Private_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Private_Transport_Descriptor, "$Id$")
+#include "tao/Endpoint.h"
+
+ACE_RCSID (tao,
+           Private_Transport_Descriptor,
+           "$Id$")
 
 
 TAO_Private_Transport_Descriptor::~TAO_Private_Transport_Descriptor (void)
