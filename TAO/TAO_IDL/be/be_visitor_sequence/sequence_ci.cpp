@@ -282,18 +282,33 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (const ::" << fname 
-      << " &p) // deep copy" << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "if (this != &p)" << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "delete this->ptr_;" << be_nl;
-  *os << "ACE_NEW_RETURN (this->ptr_, ::" 
-      << node->name () << " (*p.ptr_), *this);" << be_uidt_nl;
-  *os << "}" << be_nl;
-  *os << "return *this;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "ACE_INLINE ::" << fname << " &" << be_nl
+      << fname << "::operator= (const ::" << fname
+      << " &p)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this != &p)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (p.ptr_ == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "delete this->ptr_;" << be_nl
+      << "this->ptr_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << node->name () << " *deep_copy =" << be_idt_nl
+      << "new " << node->name () << " (*p.ptr_);" 
+      << be_uidt_nl << be_nl
+      << "if (deep_copy != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << node->name () << " *tmp = deep_copy;" << be_nl
+      << "deep_copy = this->ptr_;" << be_nl
+      << "this->ptr_ = tmp;" << be_nl
+      << "delete deep_copy;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return *this;" << be_uidt_nl
+      << "}\n\n";
 
   // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)

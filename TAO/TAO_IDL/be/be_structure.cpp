@@ -266,22 +266,33 @@ be_structure::gen_var_impl (char *,
 
   // Assignment operator from _var.
   ci->indent ();
-  *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (const ::" << fname
-      << " &p)" << nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "if (this != &p)" << nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, " << "::" << this->name ()
-      << " (*p.ptr_), *this);\n";
-  ci->decr_indent ();
-  *ci << "}" << nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "ACE_INLINE ::" << fname << " &" << be_nl
+      << fname << "::operator= (const ::" << fname
+      << " &p)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this != &p)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (p.ptr_ == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "delete this->ptr_;" << be_nl
+      << "this->ptr_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << this->name () << " *deep_copy =" << be_idt_nl
+      << "new " << this->name () << " (*p.ptr_);" 
+      << be_uidt_nl << be_nl
+      << "if (deep_copy != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << this->name () << " *tmp = deep_copy;" << be_nl
+      << "deep_copy = this->ptr_;" << be_nl
+      << "this->ptr_ = tmp;" << be_nl
+      << "delete deep_copy;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return *this;" << be_uidt_nl
+      << "}\n\n";
 
   // Fixed-size types only.
   if (this->size_type () == be_decl::FIXED)
