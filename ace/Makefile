@@ -62,6 +62,7 @@ DEMUX_FILES = \
   Reactor \
   Select_Reactor \
   Select_Reactor_Base \
+  TP_Reactor \
   WFMO_Reactor
 CONNECTION_FILES = \
   Asynch_IO \
@@ -169,7 +170,6 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
-  TP_Reactor \
   XtReactor \
   FlReactor \
   TkReactor
