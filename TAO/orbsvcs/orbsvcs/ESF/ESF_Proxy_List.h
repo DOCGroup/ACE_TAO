@@ -21,7 +21,7 @@
 
 /// A concrete proxy collection.
 /**
- * Based on the ACE_Unbounded_Set_Ex<> collection, used a double
+ * Based on the ACE_Unbounded_Set<> collection, used a double
  * linked list internally.
  */
 template<class PROXY>
