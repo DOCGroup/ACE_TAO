@@ -269,38 +269,38 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 		      &TAO_POA::objectkey_prefix[0],
 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
-      CORBA::String_var object_id;
-
-      object_id = CORBA::string_dup ((char *) request.object_key ().get_buffer ());
-      object_id [request.object_key ().length ()] = '\0';
-
+      ACE_CString object_id ((const char *) request.object_key ().get_buffer (),
+			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
+			     0,
+			     0);
+      
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
 		    "Simple Object key %s. Doing the Table Lookup ...\n",
-		    object_id.in ()));
+		    object_id.c_str ()));
       
       CORBA::Object_ptr object_reference;
       
       // Do the Table Lookup.
       int status =
-	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id.in (),
+	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
 							 object_reference);
-
+      
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
 	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), -1);
-
+      
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
 
       CORBA::Object_ptr dup = CORBA::Object::_duplicate (object_reference);
-
+      
       ACE_THROW_RETURN (PortableServer::ForwardRequest (dup), -1);
     }
 
 #endif
-
+  
   // So, we read a request, now handle it using something more
   // primitive than a CORBA2 ServerRequest pseudo-object.
 
