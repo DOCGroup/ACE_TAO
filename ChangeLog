@@ -1,3 +1,11 @@
+Thu Apr 27 14:17:52 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i: 
+        
+          isatty (): Messed up on my CE change, so the version that
+          takes an int was hidden by a ACE_WIN32 block.  This has been
+          moved outside again.
+
 Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl: 
