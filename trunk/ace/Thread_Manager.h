@@ -270,21 +270,22 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+protected:
+  virtual int spawn_i (ACE_THR_FUNC func, 
+		       void *args, 
+		       long flags, 
+		       ACE_thread_t * = 0, 
+		       ACE_hthread_t *t_handle = 0,
+		       u_int priority = 0,
+		       int grp_id = -1,
+		       void *stack = 0, 
+		       size_t stack_size = 0,
+		       ACE_Task_Base *task = 0);
+  // Create a new thread (must be called with locks held).
+
 private:
   int resize (size_t);
   // Resize the pool of Thread_Descriptors.
-
-  int spawn_i (ACE_THR_FUNC func, 
-	       void *args, 
-	       long flags, 
-	       ACE_thread_t * = 0, 
-	       ACE_hthread_t *t_handle = 0,
-	       u_int priority = 0,
-	       int grp_id = -1,
-	       void *stack = 0, 
-	       size_t stack_size = 0,
-	       ACE_Task_Base *task = 0);
-  // Create a new thread (must be called with locks held).
 
   int find_thread (ACE_thread_t t_id);
   // Locate the index of the table slot occupied by <t_id>.  Returns
