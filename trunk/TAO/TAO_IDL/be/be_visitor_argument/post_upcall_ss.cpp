@@ -180,7 +180,7 @@ int be_visitor_args_post_upcall_ss::visit_predefined_type (be_predefined_type *n
   return 0;
 }
 
-int be_visitor_args_post_upcall_ss::visit_sequence (be_sequence *node)
+int be_visitor_args_post_upcall_ss::visit_sequence (be_sequence *)
 {
   switch (this->direction ())
     {
