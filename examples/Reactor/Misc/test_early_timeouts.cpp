@@ -59,6 +59,7 @@ main (int, char *[])
   ACE_Pipe dummy_pipe;
   int result = dummy_pipe.open ();
   ACE_ASSERT (result == 0);
+  ACE_UNUSED_ARG (result); // To avoid compile warning with ACE_NDEBUG.
 
   for (int i = 1; i <= iterations; i++)
     {
