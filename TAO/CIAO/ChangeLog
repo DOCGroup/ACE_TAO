@@ -1,3 +1,14 @@
+Mon Jun 28 11:33:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/Deployment.mwc:
+
+	  DnC tests projects reincluded to the compilation.
+
+	* DnC/tests/Config_Handlers/handler_test.mpb: 
+
+	  Added after statement to ensure Config_Handlers is compiled before
+	  compiling handler_tests.
+
 Mon Jun 28 11:18:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
   
 	* DnC/Config_Handlers/DnC_Dump.cpp:
