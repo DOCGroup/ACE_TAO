@@ -12,8 +12,10 @@ ACE_Service_Config::open (int argc,
                           LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::open");
-  ACE_Service_Config::parse_args (argc, argv);
-  return ACE_Service_Config::open (argv[0], logger_key);
+  if (ACE_Service_Config::parse_args (argc, argv) == -1)
+    return -1;
+  else
+    return ACE_Service_Config::open (argv[0], logger_key);
 }
 
 // Compare two service descriptors for equality.
