@@ -4,6 +4,10 @@ Wed Sep 25 12:40:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  Removed unused local variables.
 
+	* TAO_IDL/fe/fe_interface_header.cpp:
+
+	  Commented out an unused parameter.
+
 Wed Sep 25 12:24:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/Makefile.BE:

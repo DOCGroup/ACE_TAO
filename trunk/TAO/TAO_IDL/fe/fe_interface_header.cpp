@@ -789,7 +789,7 @@ FE_EventHeader::~FE_EventHeader (void)
 FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n, 
                                         UTL_ScopedName *base_component, 
                                         UTL_NameList *supports,
-                                        idl_bool compile_now)
+                                        idl_bool /* compile_now */)
   : FE_InterfaceHeader (n,
                         supports,
                         I_FALSE,
