@@ -6,8 +6,6 @@
 #include "tao/NVList.h"
 
 #include "tao/Exception.h"
-#include "tao/Environment.h"
-
 #include "tao/BoundsC.h"
 #include "tao/debug.h"
 #include "tao/Typecode.h"
