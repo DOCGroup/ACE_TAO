@@ -1,3 +1,12 @@
+Wed Jul 11 16:03:49 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp:
+
+	  Implementation of the SecurityLevel2::EstablishTrustPolicy.  It
+	  makes it possible to control whether or not client/target
+	  authentication is performed.
+
 Wed Jul 11 16:03:58 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * tao/Object_Loader.h:
