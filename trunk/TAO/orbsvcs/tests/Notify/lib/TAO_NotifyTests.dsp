@@ -141,14 +141,6 @@ SOURCE=.\Name.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Notify_PushConsumer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Notify_PushSupplier.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Notify_Test_Client.cpp
 # End Source File
 # Begin Source File
