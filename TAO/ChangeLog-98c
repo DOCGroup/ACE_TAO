@@ -1,5 +1,6 @@
-Fri Dec 11 12:18:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Fri Dec 11 12:39:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* TAO_IDL/tao_idl.1: 
 	* docs/compiler.html: Updated documentation for lookup
 	strategies. 
 
