@@ -1,3 +1,11 @@
+Sun Jan  4 11:59:46 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  There is no need to pass the libpaths with the -j commandline option
+	  to the linker, the -L flags is only needed. The -j flag specifies
+	  where the object files are located, the -L flag the location of the
+	  lib files.
+
 Sun Jan  4 10:30:06 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/APG/Makefile:
