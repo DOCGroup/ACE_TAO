@@ -45,19 +45,19 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
 #define _CORBA_POLICYLIST__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_RTScheduler_Export Arg_Traits<CORBA::PolicyList>
     : public
         Var_Size_Arg_Traits_T<
@@ -77,7 +77,6 @@ namespace TAO
 
 // Traits specializations for RTScheduling::ThreadAction.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
 TAO::Objref_Traits<RTScheduling::ThreadAction>::duplicate (
     RTScheduling::ThreadAction_ptr p
@@ -86,7 +85,6 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::duplicate (
   return RTScheduling::ThreadAction::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::ThreadAction>::release (
     RTScheduling::ThreadAction_ptr p
@@ -95,14 +93,12 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
 TAO::Objref_Traits<RTScheduling::ThreadAction>::nil (void)
 {
   return RTScheduling::ThreadAction::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::ThreadAction>::marshal (
     RTScheduling::ThreadAction_ptr p,
@@ -163,6 +159,12 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
   return obj;
 }
 
+void
+RTScheduling::ThreadAction::_tao_release (ThreadAction_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTScheduling::ThreadAction::_is_a (
     const char *value
@@ -208,7 +210,6 @@ RTScheduling::ThreadAction::marshal (TAO_OutputCDR &)
 
 // Traits specializations for RTScheduling::DistributableThread.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
 TAO::Objref_Traits<RTScheduling::DistributableThread>::duplicate (
     RTScheduling::DistributableThread_ptr p
@@ -217,7 +218,6 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::duplicate (
   return RTScheduling::DistributableThread::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::DistributableThread>::release (
     RTScheduling::DistributableThread_ptr p
@@ -226,14 +226,12 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
 TAO::Objref_Traits<RTScheduling::DistributableThread>::nil (void)
 {
   return RTScheduling::DistributableThread::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::DistributableThread>::marshal (
     RTScheduling::DistributableThread_ptr p,
@@ -294,6 +292,12 @@ RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
   return obj;
 }
 
+void
+RTScheduling::DistributableThread::_tao_release (DistributableThread_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTScheduling::DistributableThread::_is_a (
     const char *value
@@ -339,7 +343,6 @@ RTScheduling::DistributableThread::marshal (TAO_OutputCDR &)
 
 // Traits specializations for RTScheduling::Current.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
 TAO::Objref_Traits<RTScheduling::Current>::duplicate (
     RTScheduling::Current_ptr p
@@ -348,7 +351,6 @@ TAO::Objref_Traits<RTScheduling::Current>::duplicate (
   return RTScheduling::Current::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::Current>::release (
     RTScheduling::Current_ptr p
@@ -357,14 +359,12 @@ TAO::Objref_Traits<RTScheduling::Current>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
 TAO::Objref_Traits<RTScheduling::Current>::nil (void)
 {
   return RTScheduling::Current::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::Current>::marshal (
     RTScheduling::Current_ptr p,
@@ -506,7 +506,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DI
     0
   );
 
-::CORBA::TypeCode_ptr RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE =
+::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE =
   &_tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
 // TAO_IDL - Generated from 
@@ -642,6 +642,12 @@ RTScheduling::Current::_duplicate (Current_ptr obj)
   return obj;
 }
 
+void
+RTScheduling::Current::_tao_release (Current_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTScheduling::Current::_is_a (
     const char *value
@@ -695,7 +701,6 @@ RTScheduling::Current::marshal (TAO_OutputCDR &)
 
 // Traits specializations for RTScheduling::ResourceManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
 TAO::Objref_Traits<RTScheduling::ResourceManager>::duplicate (
     RTScheduling::ResourceManager_ptr p
@@ -704,7 +709,6 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::duplicate (
   return RTScheduling::ResourceManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::ResourceManager>::release (
     RTScheduling::ResourceManager_ptr p
@@ -713,14 +717,12 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
 TAO::Objref_Traits<RTScheduling::ResourceManager>::nil (void)
 {
   return RTScheduling::ResourceManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::ResourceManager>::marshal (
     RTScheduling::ResourceManager_ptr p,
@@ -781,6 +783,12 @@ RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
   return obj;
 }
 
+void
+RTScheduling::ResourceManager::_tao_release (ResourceManager_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTScheduling::ResourceManager::_is_a (
     const char *value
@@ -830,7 +838,6 @@ RTScheduling::ResourceManager::marshal (TAO_OutputCDR &)
 
 // Traits specializations for RTScheduling::Scheduler.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
 TAO::Objref_Traits<RTScheduling::Scheduler>::duplicate (
     RTScheduling::Scheduler_ptr p
@@ -839,7 +846,6 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::duplicate (
   return RTScheduling::Scheduler::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::Scheduler>::release (
     RTScheduling::Scheduler_ptr p
@@ -848,14 +854,12 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
 TAO::Objref_Traits<RTScheduling::Scheduler>::nil (void)
 {
   return RTScheduling::Scheduler::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::Scheduler>::marshal (
     RTScheduling::Scheduler_ptr p,
@@ -998,7 +1002,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING
     0
   );
 
-::CORBA::TypeCode_ptr RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES =
+::CORBA::TypeCode_ptr const RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES =
   &_tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 
 RTScheduling::Scheduler::Scheduler (void)
@@ -1052,6 +1056,12 @@ RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
   return obj;
 }
 
+void
+RTScheduling::Scheduler::_tao_release (Scheduler_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTScheduling::Scheduler::_is_a (
     const char *value
@@ -1093,7 +1103,7 @@ RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

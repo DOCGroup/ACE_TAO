@@ -65,7 +65,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_TypeCodeFactory (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_TypeCodeFactory =
+  ::CORBA::TypeCode_ptr const _tc_TypeCodeFactory =
     &_tc_TAO_tc_CORBA_TypeCodeFactory;
 }
 

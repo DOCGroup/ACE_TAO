@@ -61,7 +61,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_ThreadAction (
 
 namespace RTScheduling
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadAction =
+  ::CORBA::TypeCode_ptr const _tc_ThreadAction =
     &_tc_TAO_tc_RTScheduling_ThreadAction;
 }
 
@@ -107,7 +107,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_DistributableThread_DT_State (
     0
   );
 
-::CORBA::TypeCode_ptr RTScheduling::DistributableThread::_tc_DT_State =
+::CORBA::TypeCode_ptr const RTScheduling::DistributableThread::_tc_DT_State =
   &_tc_TAO_tc_RTScheduling_DistributableThread_DT_State;
 
 // TAO_IDL - Generated from
@@ -146,7 +146,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_DistributableThread (
 
 namespace RTScheduling
 {
-  ::CORBA::TypeCode_ptr _tc_DistributableThread =
+  ::CORBA::TypeCode_ptr const _tc_DistributableThread =
     &_tc_TAO_tc_RTScheduling_DistributableThread;
 }
 
@@ -186,7 +186,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_IdType (
     0
   );
 
-::CORBA::TypeCode_ptr RTScheduling::Current::_tc_IdType =
+::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_IdType =
   &_tc_TAO_tc_RTScheduling_Current_IdType;
 
 // TAO_IDL - Generated from
@@ -227,7 +227,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_NameList (
     0
   );
 
-::CORBA::TypeCode_ptr RTScheduling::Current::_tc_NameList =
+::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_NameList =
   &_tc_TAO_tc_RTScheduling_Current_NameList;
 
 // TAO_IDL - Generated from
@@ -260,7 +260,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current (
 
 namespace RTScheduling
 {
-  ::CORBA::TypeCode_ptr _tc_Current =
+  ::CORBA::TypeCode_ptr const _tc_Current =
     &_tc_TAO_tc_RTScheduling_Current;
 }
 
@@ -298,7 +298,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_ResourceManager (
 
 namespace RTScheduling
 {
-  ::CORBA::TypeCode_ptr _tc_ResourceManager =
+  ::CORBA::TypeCode_ptr const _tc_ResourceManager =
     &_tc_TAO_tc_RTScheduling_ResourceManager;
 }
 
@@ -333,7 +333,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Scheduler (
 
 namespace RTScheduling
 {
-  ::CORBA::TypeCode_ptr _tc_Scheduler =
+  ::CORBA::TypeCode_ptr const _tc_Scheduler =
     &_tc_TAO_tc_RTScheduling_Scheduler;
 }
 
