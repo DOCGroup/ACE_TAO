@@ -1,3 +1,8 @@
+Thu Nov 25 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RTCORBA.pidl:
+          Added include of Policy.pidl
+
 Thu Nov 25 15:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
