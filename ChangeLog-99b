@@ -1,3 +1,10 @@
+Tue Sep 14 11:02:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Hash_Map_With_Allocator_T.h:
+	* ace/Hash_Map_With_Allocator_T.cpp:Added a find () method that
+	  would lookup at the underlying Hash_Map_Manager_Ex to do the
+	  find. 
+
 Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Pipe.cpp: Make sure to use SOCK_STREAM rather than SOCK_DGRAM
