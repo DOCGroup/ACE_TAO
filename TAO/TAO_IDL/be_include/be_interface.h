@@ -262,7 +262,7 @@ public:
   const char *local_coll_name (int) const;
   // retrieve the fully qualified collocated class name.
 
-  const char *be_interface::relative_skel_name (const char *skel_name);
+  const char *relative_skel_name (const char *skel_name);
   // relative skeleton name
 
   void compute_full_skel_name (const char *prefix,char *&skel_name);
