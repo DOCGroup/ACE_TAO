@@ -1781,7 +1781,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #endif /* ACE_HAS_POSIX_SEM */
 }
 
-ACE_INLINE sem_t *
+ACE_INLINE ACE_sema_t *
 ACE_OS::sema_open (const char *name, int oflag, 
 		   u_long mode, u_int value)
 {
@@ -1792,7 +1792,7 @@ ACE_OS::sema_open (const char *name, int oflag,
   ACE_UNUSED_ARG(oflag);
   ACE_UNUSED_ARG(mode);
   ACE_UNUSED_ARG(value);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN ((ACE_sema_t *) -1);
 #endif /* defined (ACE_HAS_POSIX_SEM) && !defined (CHORUS) */
 }
 
@@ -6439,22 +6439,10 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
-ACE_INLINE void
-ACE_U_LongLong::normalize ()
-{
-  while (lo_ > 999999999)
-    {
-      lo_ -= 1000000000;
-      ++hi_;
-    }
-}
-
-
 ACE_INLINE
 ACE_U_LongLong::ACE_U_LongLong (u_long lo, u_long hi)
   : hi_ (hi), lo_ (lo)
 {
-  normalize ();
 }
 
 ACE_INLINE int
@@ -6506,23 +6494,15 @@ ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
 {
   ACE_U_LongLong ret (lo_ + ll.lo_, hi_ + ll.hi_);
-  ret.normalize ();
-
+  if (ret.lo_ < ll.lo_) /* carry */ ++ret.hi_;
   return ret;
 }
 
 ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 {
-  ACE_U_LongLong ret (lo_, hi_ - ll.hi_);
-
-  if (lo_ < ll.lo_)
-    {
-      --ret.hi_; /* borrow from hi_ */
-      ret.lo_ += 1000000000;
-    }
-  ret.lo_ -= ll.lo_;
-
+  ACE_U_LongLong ret (lo_ - ll.lo_, hi_ - ll.hi_);
+  if (lo_ < ll.lo_) /* borrow */ --ret.hi_;
   return ret;
 }
 
@@ -6537,8 +6517,7 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
 {
   hi_ += ll.hi_;
   lo_ += ll.lo_;
-  normalize ();
-
+  if (lo_ < ll.lo_) /* carry */ ++hi_;
   return *this;
 }
 
@@ -6546,16 +6525,10 @@ ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
 {
   hi_ -= ll.hi_;
-  if (lo_ < ll.lo_)
-    {
-      --hi_; /* borrow from hi_ */
-      lo_ += 1000000000;
-    }
+  if (lo_ < ll.lo_) /* borrow */ --hi_;
   lo_ -= ll.lo_;
-
   return *this;
 }
-
 #endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
 
 #if !defined (ACE_HAS_PENTIUM) || !defined (__GNUC__)
