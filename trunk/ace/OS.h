@@ -4132,10 +4132,6 @@ typedef int ucontext_t;
 #   include /**/ <tli/timod.h>
 # endif /* ACE_HAS_TIMOD_H */
 
-# if defined (ACE_HAS_BROKEN_T_ERRNO)
-#   undef t_errno
-# endif /* ACE_HAS_BROKEN_T_ERRNO */
-
 # if defined rewinddir
 #   undef rewinddir
 # endif /* rewinddir */
