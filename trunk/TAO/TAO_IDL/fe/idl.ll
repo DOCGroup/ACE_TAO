@@ -233,7 +233,7 @@ oneway		return IDL_ONEWAY;
 		  return IDL_UINTEGER_LITERAL;
 	      	}
 
-\"([^\\\"]*|\\[ntvbrfa\\\?\'\"])*\"	{
+\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
