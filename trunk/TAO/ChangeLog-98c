@@ -1,3 +1,10 @@
+Tue Sep  2 07:31:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.cpp (ORB_init): VxWorks doesn't use
+ 	ACE_Service_Config for now; the default factories are used.  The
+ 	Service Repository is still used, but the appropriate values are
+ 	"stuffed" in manually.
+
 Sat Aug 30 17:07:18 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tests/Thruput: First attempt at ACEifying it and removing the
