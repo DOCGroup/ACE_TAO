@@ -1,3 +1,7 @@
+Mon Jul 22 09:19:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Aded Kew Whitney and Colin Weaver to the hall of fame. 
+
 Sat Jul 20 08:53:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SOCK_Dgram.cpp (set_nic): Moved the #endif for
@@ -217,6 +221,7 @@ Sat Jul 13 17:29:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* bin/fuzz.pl: Removed the word "warning" from a print statement,
 	  since our scoreboard scripts seems to catch that as a warning.
 
+>>>>>>> 4.3893
 Sat Jul 13 13:31:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the Stack_Recursion test to the
