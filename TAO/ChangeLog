@@ -1,3 +1,11 @@
+Sat Oct  2 16:28:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Protocols/receiver.cpp:
+	* performance-tests/Protocols/sender.cpp:
+
+	  Fixed completely busted usage environment macros. The builds
+	  should start getting cleared soon.
+
 Sat Oct  2 13:09:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/PSDL.mpc:
