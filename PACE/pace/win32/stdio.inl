@@ -115,9 +115,7 @@ pace_fgets (char * s,
             int n,
             FILE * stream)
 {
-  return fgets (s,
-                n,
-                stream);
+  return fgets (s, n, stream);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -200,7 +198,7 @@ pace_fseek (FILE * stream,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos)
+pace_fsetpos(PACE_FILE * stream, const pace_fpos_t * pos)
 {
   return fsetpos (stream, pos);
 }

@@ -54,6 +54,10 @@ extern "C" {
   typedef struct _stat pace_stat_s;
 #endif /* PACE_STAT */
 
+#if (PACE_HAS_POSIX_FS_UOF)
+  int win32_mkdir (const char * path, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_FS_UOF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */

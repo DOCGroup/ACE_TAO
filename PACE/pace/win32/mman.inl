@@ -13,9 +13,7 @@
  *
  * ============================================================================= */
 
-#include <windows.h>
 #include <io.h>
-#include <stdio.h>
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
@@ -48,71 +46,7 @@ pace_mmap (void * addr,
            PACE_HANDLE fildes,
            pace_off_t off)
 {
-  void * addr_mapping = (void*)0;
-  int nt_flags = 0;
-  PACE_HANDLE local_handle = PACE_INVALID_HANDLE;
-  PACE_HANDLE * file_mapping = CreateFileMapping (fildes,
-                                                  0,
-                                                  prot,
-                                                  0,
-                                                  0,
-                                                  0);
-  if (*file_mapping == 0)
-    {
-      PACE_FAIL_RETURN (MAP_FAILED);
-    }
-
-  if (PACE_BIT_ENABLED (flags, MAP_PRIVATE))
-    {
-      prot = PAGE_WRITECOPY;
-      nt_flags = FILE_MAP_COPY;
-    }
-  else if (PACE_BIT_ENABLED (flags, MAP_SHARED))
-    {
-      if (PACE_BIT_ENABLED (prot, PAGE_READONLY))
-        nt_flags = FILE_MAP_READ;
-      if (PACE_BIT_ENABLED (prot, PAGE_READWRITE))
-        nt_flags = FILE_MAP_WRITE;
-    }
-
-# if !defined (PACE_HAS_WINCE)
-  addr_mapping = MapViewOfFileEx (*file_mapping,
-                                  nt_flags,
-                                  0,
-                                  off,
-                                  len,
-                                  addr);
-# else
-  /* WinCE doesn't allow specifying <addr>. */
-  PACE_UNUSED_ARG (addr);        
-  addr_mapping = MapViewOfFile (*file_mapping,
-                                nt_flags,
-                                0,
-                                off,
-                                len);
-# endif /* ! ACE_HAS_WINCE */
-
-  /* Only close this down if we used the temporary. */
-  if (file_mapping == &local_handle)
-    {
-      CloseHandle (*file_mapping);
-    }
-
-  if (addr_mapping == 0)
-    {
-      PACE_FAIL_RETURN (MAP_FAILED);
-    }
-
-  else if (PACE_BIT_ENABLED (flags, MAP_FIXED)
-           && addr_mapping != addr)
-    {
-      errno = EINVAL;
-      return MAP_FAILED;
-    }
-  else
-    {
-      return addr_mapping;
-    }
+  return mmap (addr, len, prot, flags, fildes, off);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -130,12 +64,9 @@ pace_munlock (const void * addr, size_t len)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_mprotect (void * addr,
-               size_t len,
-               int prot)
+pace_mprotect (void * addr, size_t len, int prot)
 {
-  DWORD dummy; /* Sigh! */
-  return VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;
+  return mprotect (addr, len, prot);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -146,10 +77,7 @@ pace_msync (void * addr,
             size_t len,
             int flags)
 {
-  PACE_UNUSED_ARG (flags);
-  PACE_WIN32CALL_RETURN
-    (PACE_ADAPT_RETVAL
-     (FlushViewOfFile (addr, len), pace_result_), int, -1);
+  return msync (addr, len, flags);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -167,19 +95,14 @@ PACE_INLINE
 int
 pace_munmap (void * addr, size_t len)
 {
-  PACE_UNUSED_ARG (len);
-  PACE_WIN32CALL_RETURN
-    (PACE_ADAPT_RETVAL
-     (UnmapViewOfFile (addr), pace_result_), int, -1);
+  return munmap (addr, len);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 PACE_HANDLE
-pace_shm_open (const char * name,
-               int oflag,
-               pace_mode_t mode)
+pace_shm_open (const char * name, int oflag, pace_mode_t mode)
 {
   /* Would be similar to ACE_OS::open
      which (currently uses threads and Object Manager).
