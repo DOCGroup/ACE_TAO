@@ -1,3 +1,30 @@
+Mon May 19 17:16:34 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* IIOP/lib/roa.cpp: Explicit cast rids us of a warning.
+
+	* IIOP/lib/params.h: Fixed CTOR name.  Once again I'm surprised
+ 	G++ didn't catch this.
+
+	* IIOP/lib/optable.h: Corrected erroneous method signature on
+ 	bind().
+
+	* IIOP/lib/objtable.cpp: Corrected erroneous method signature on
+ 	TAO_Linear_ObjTable::bind().
+
+	* IIOP/lib/{object,orbobj}.h: Forward declaration of
+ 	CORBA_release(CORBA_Object_ptr) and CORBA_is_nil(CORBA_Object_ptr)
+ 	were commented out.  I think this will cause a problem when we
+ 	DON'T inline, but I'll cross that bridge later.
+
+	* IIOP/lib/{orb,factories}.h: Made inclusion of some headers
+ 	conditional on the compilation phase (building the library or an
+ 	application).
+
+	* IIOP/lib/cdr.i: Removed incorrect default arguments (g++ didn't
+ 	catch them).
+
+	* IIOP/lib/Makefile: Removed thread from the header list.
+
 Mon May 19 10:07:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/optable.cpp: Changed implementation of the operation

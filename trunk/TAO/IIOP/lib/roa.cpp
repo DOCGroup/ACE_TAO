@@ -119,7 +119,8 @@ ROA::create (CORBA_OctetSeq &key,
     id = 0;
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
-  CORBA_String h = addr_.get_host_name ();
+  // Cast below de-warns on Sun's C++
+  CORBA_String h = (char*)addr_.get_host_name ();
 
   data = new IIOP_Object (id, IIOP::ProfileBody (ver,
                                                 h,

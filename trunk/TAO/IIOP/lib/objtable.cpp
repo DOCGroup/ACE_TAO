@@ -46,7 +46,7 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 
 int
 TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
-			   const CORBA_Object_ptr obj)
+			   CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
 

@@ -64,7 +64,7 @@ public:
 			      CORBA_Object_ptr &, void *, 
 			      CORBA_Environment &);
 
-  ROA_Parameters (void);
+  TAO_OA_Parameters (void);
 
   // = THREAD-RELATED THINGS
   // 
