@@ -36,9 +36,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_WIN32)
-  struct shmaddr {};
-#endif /* ACE_WIN32 */
+#if defined (ACE_LACKS_SHMID_DS_T)
+  struct shmid_ds {};
+#endif /* ACE_LACKS_SHMID_T */
 
 #ifdef __cplusplus
 }
