@@ -695,17 +695,17 @@ break;
 case 15:
 #line 94 "Svc_Conf.y"
 {
-      ace_yyval.parse_node_ = new ACE_Stream_Node (ace_yyvsp[-1].ACE_Static_Node_, ace_yyvsp[0].parse_node_);
+      ace_yyval.parse_node_ = new ACE_Stream_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 16:
 #line 97 "Svc_Conf.y"
-{ ace_yyval.ACE_Static_Node_ = new ACE_Static_Node (ace_yyvsp[0].ident_); }
+{ ace_yyval.static_node_ = new ACE_Static_Node (ace_yyvsp[0].ident_); }
 break;
 case 17:
 #line 98 "Svc_Conf.y"
 {
-      ace_yyval.parse_node_ = new ACE_Dummy_Node (ace_yyvsp[-1].ACE_Static_Node_, ace_yyvsp[0].parse_node_);
+      ace_yyval.parse_node_ = new ACE_Dummy_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 18:
@@ -722,7 +722,7 @@ case 20:
 #line 114 "Svc_Conf.y"
 { 
       /* Initialize left context...*/
-      ace_yyval.ACE_Static_Node_ = ace_yyvsp[-1].ACE_Static_Node_; 
+      ace_yyval.static_node_ = ace_yyvsp[-1].static_node_; 
     }
 break;
 case 21:
@@ -746,19 +746,19 @@ break;
 case 25:
 #line 132 "Svc_Conf.y"
 {
-      ACE_ARGV args (ace_yyvsp[0].ACE_Static_Node_->parameters ());
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].ACE_Static_Node_, ace_yyvsp[0].ACE_Static_Node_);
+      ACE_ARGV args (ace_yyvsp[0].static_node_->parameters ());
+      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_);
 
-      if (::strcmp (ace_yyvsp[0].ACE_Static_Node_->name (), 
+      if (::strcmp (ace_yyvsp[0].static_node_->name (), 
 		    ((MT_Module *) mt->object ())->name ()) != 0)
 	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   ace_yyvsp[0].ACE_Static_Node_->name (), ((MT_Module *) mt->object ())->name ()));
+		   ace_yyvsp[0].static_node_->name (), ((MT_Module *) mt->object ())->name ()));
 
       if (mt->init (args.argc (), args.argv ()) == -1
-	  || ((ACE_Stream_Type *) (ace_yyvsp[-2].ACE_Static_Node_)->record ()->type ())->push (mt) == -1)
+	  || ((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->push (mt) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "dynamic initialization failed for Module %s\n",
-		     ace_yyvsp[0].ACE_Static_Node_->name ()));
+		     ace_yyvsp[0].static_node_->name ()));
 	  ace_yyerrno++;
 	}
     }
@@ -766,19 +766,19 @@ break;
 case 26:
 #line 150 "Svc_Conf.y"
 { 
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].ACE_Static_Node_, ace_yyvsp[0].ACE_Static_Node_->name ());
-      if (::strcmp (ace_yyvsp[0].ACE_Static_Node_->name (), 
+      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
+      if (::strcmp (ace_yyvsp[0].static_node_->name (), 
 		    ((MT_Module *) mt->object ())->name ()) != 0)
 	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   ace_yyvsp[0].ACE_Static_Node_->name (), ((MT_Module *) mt->object ())->name ()));
-      if (((ACE_Stream_Type *) (ace_yyvsp[-2].ACE_Static_Node_)->record ()->type ())->push (mt) == -1)
+		   ace_yyvsp[0].static_node_->name (), ((MT_Module *) mt->object ())->name ()));
+      if (((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->push (mt) == -1)
 	ace_yyerrno++;
     }
 break;
 case 27:
 #line 160 "Svc_Conf.y"
 { 
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].ACE_Static_Node_, ace_yyvsp[0].ACE_Static_Node_->name ());
+      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
 	mt->suspend ();
     }
@@ -786,7 +786,7 @@ break;
 case 28:
 #line 166 "Svc_Conf.y"
 {
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].ACE_Static_Node_, ace_yyvsp[0].ACE_Static_Node_->name ());
+      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
 	mt->resume ();
     }
@@ -794,12 +794,12 @@ break;
 case 29:
 #line 172 "Svc_Conf.y"
 { 
-      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].ACE_Static_Node_, ace_yyvsp[0].ACE_Static_Node_->name ());
+      ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0 
-	  && ((ACE_Stream_Type *) (ace_yyvsp[-2].ACE_Static_Node_)->record ()->type ())->remove (mt) == -1)
+	  && ((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->remove (mt) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "cannot remove Module_Type %s from STREAM_Type %s\n",
-		     ace_yyvsp[0].ACE_Static_Node_->name (), (ace_yyvsp[-2].ACE_Static_Node_)->name ()));
+		     ace_yyvsp[0].static_node_->name (), (ace_yyvsp[-2].static_node_)->name ()));
 	  ace_yyerrno++;
 	}
     }
