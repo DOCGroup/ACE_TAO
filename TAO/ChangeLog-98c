@@ -1,3 +1,10 @@
+Tue Jun 30 13:23:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	  Workaround Sun/CC problem when compiling with -O (but not
+	  -fast). Apparently it does not like to use static (file) scope
+	  symbols in the definition of a template.
+
 Tue Jun 30 10:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* docs/configurations.html: Added documentation about the 
