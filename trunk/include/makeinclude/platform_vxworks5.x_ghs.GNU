@@ -86,3 +86,7 @@ LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
 OCFLAGS  += -OL -OM
 PIC      =
+
+ifeq (1, $(exceptions))
+   CCFLAGS += --stdle --exceptions
+endif # exceptions

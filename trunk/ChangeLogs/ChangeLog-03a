@@ -1,3 +1,8 @@
+Wed Mar 15 15:17:19 2000  Charles Scott <Charles.P.Scott@jpl.nasa.gov>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: added
+          --stdle --exceptions to CCFLAGS if exceptions are enabled.
+
 Tue Mar 14 15:01:46 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/Malloc_Test.cpp: Disable mapping the file into different
