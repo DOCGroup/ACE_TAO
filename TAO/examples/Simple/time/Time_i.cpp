@@ -11,7 +11,8 @@ Time_i::Time_i (void)
 }
 
 // Copy  Constructor
-Time_i::Time_i (Time_i & /* tim */)
+Time_i::Time_i (Time_i &  tim)
+  :POA_Time (tim)
 {
   // no-op
 }
