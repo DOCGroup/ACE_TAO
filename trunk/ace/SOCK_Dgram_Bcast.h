@@ -19,7 +19,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
 
-class ACE_Bcast_Node 
+class ACE_Export ACE_Bcast_Node 
 {
 public:
   ACE_Bcast_Node (ACE_INET_Addr &, ACE_Bcast_Node *);

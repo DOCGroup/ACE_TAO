@@ -230,7 +230,7 @@ private:
   ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 };
 
-class ACE_Filecache_Object
+class ACE_Export ACE_Filecache_Object
 {
   // = TITLE
   //     Abstraction over a real file.  This is what the Virtual

@@ -601,7 +601,7 @@ private:
   // We need this to get the readers/writer semantics...
 };
 
-class ACE_Null_Barrier
+class ACE_Export ACE_Null_Barrier
 {
   // = TITLE
   //     Implements "NULL barrier synchronization".
@@ -709,7 +709,7 @@ private:
   ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &);
 };
 
-class ACE_TSS_Adapter
+class ACE_Export ACE_TSS_Adapter
 {
   // = TITLE
   //     This class encapsulates a TSS object and its associated
@@ -1315,7 +1315,7 @@ private:
 // appear to be a portable and robust means of implementing this
 // functionality across platforms. 
 
-class ACE_Process_Condition
+class ACE_Export ACE_Process_Condition
 {
   // = TITLE
   //     ACE_Condition variable wrapper that works across processes.

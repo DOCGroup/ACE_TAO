@@ -743,7 +743,7 @@ public:
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
-class ACE_NULL_SYNCH
+class ACE_Export ACE_NULL_SYNCH
 {
   // = TITLE
   //     Implement a do nothing Synchronization wrapper that
@@ -761,7 +761,7 @@ public:
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_MT_SYNCH
+class ACE_Export ACE_MT_SYNCH
 {
   // = TITLE
   //     Implement a default thread safe synchronization wrapper that
