@@ -6674,7 +6674,8 @@ exit (int status)
 
 # endif /* ACE_HAS_WINCE */
 
-#if defined (ACE_LACKS_STRPTIME)
+#if defined (ACE_HAS_STRPTIME)
+# if defined (ACE_LACKS_NATIVE_STRPTIME)
 int
 ACE_OS::strptime_getnum (char *buf,
                          int *num,
@@ -6705,18 +6706,14 @@ ACE_OS::strptime_getnum (char *buf,
   else
     return 0;
 }
-#endif /* ACE_LACKS_STRPTIME */
+# endif /* ACE_LACKS_NATIVE_STRPTIME */
 
 char *
 ACE_OS::strptime (char *buf,
                   const char *format,
                   struct tm *tm)
 {
-#if !defined (ACE_LACKS_STRPTIME)
-  return ::strptime (buf,
-                     format,
-                     tm);
-#else
+#if defined (ACE_LACKS_NATIVE_STRPTIME)
   int bi = 0, fi = 0, percent = 0;
   int wday = 0, yday = 0;
   struct tm tmp;
@@ -6954,5 +6951,10 @@ ACE_OS::strptime (char *buf,
     }
 
   return buf + bi;
-#endif /* !defined (ACE_LACKS_STRPTIME) */
+#else  /* ! ACE_LACKS_NATIVE_STRPTIME */
+  return ::strptime (buf,
+                     format,
+                     tm);
+#endif /* ! ACE_LACKS_NATIVE_STRPTIME */
 }
+#endif /* ACE_HAS_STRPTIME */

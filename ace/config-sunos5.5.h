@@ -27,7 +27,7 @@
        to work around problems with automatic template instantiation. */
 #   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #   define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-// Note that SunC++ 5.0 doesn't yet appear to support 
+// Note that SunC++ 5.0 doesn't yet appear to support
 // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
 #   define ACE_TEMPLATES_REQUIRE_SOURCE
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
@@ -295,6 +295,8 @@
 
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
+
+#define ACE_HAS_STRPTIME
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
