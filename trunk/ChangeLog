@@ -3,10 +3,13 @@ Thu Sep 07 18:10:00 2000  Darrell Brunsch  <brunsch@uci.edu>
         * ace/config-win32-common.h:
 
           ACE_HAS_WINSOCK2 is turned on by default for all of Win32.  
-		  Windows 98 and Windows ME should have Winsock2, and NT/2000
-		  also does.  For Windows 95, this requires that Winsock 
-		  library be added or ACE_HAS_WINSOCK2 defined to 0 in 
-		  config.h before including config-win32.h (overriding it).
+	  Windows 98 and Windows ME should have Winsock2, and NT/2000
+	  also does.  For Windows 95, this requires that Winsock 
+	  library be added or ACE_HAS_WINSOCK2 defined to 0 in 
+	  config.h before including config-win32.h (overriding it).
+
+	  Thanks to Giovanni Zito <gzito@mbox.thunder.it> for inquiring
+	  about this.
 
 Thu Sep 07 17:21:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
