@@ -382,12 +382,10 @@ protected:
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler
 {
   // = TITLE
-  //
   //     Unblock the <ACE_WFMO_Reactor> from its event loop, passing
   //     it an optional <ACE_Event_Handler> to dispatch.
   //
   // = DESCRIPTION
-  //
   //     This implementation is necessary for cases where the
   //     <ACE_WFMO_Reactor> is run in a multi-threaded program.  In
   //     this case, we need to be able to unblock
@@ -396,25 +394,32 @@ class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler
   //     auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
   //     an <ACE_Event_Handler> and <ACE_Reactor_Mask> is passed to
   //     <notify>, the appropriate <handle_*> method is dispatched.
-  //
 public:
   ACE_WFMO_Reactor_Notify (void);
   // Constructor
 
-  int open (ACE_WFMO_Reactor &wfmo_reactor,
-	    ACE_Timer_Queue *timer_queue);
-  // Initialization.  <timer_queue> is stored to call gettimeofday.
+  virtual int open (ACE_Reactor_Impl *wfmo_reactor,
+                    ACE_Timer_Queue *timer_queue,
+                    int disable_notify = 0);
+  // Initialization.  <timer_queue> is stored to call <gettimeofday>.
 
-  int notify (ACE_Event_Handler *event_handler = 0,
-	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-	      ACE_Time_Value *timeout = 0);
-  // Special trick to unblock WaitForMultipleObjects() when updates
+  virtual int close (void);
+  // No-op.
+
+  ssize_t notify (ACE_Event_Handler *event_handler = 0,
+                  ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
+                  ACE_Time_Value *timeout = 0);
+  // Special trick to unblock <WaitForMultipleObjects> when updates
   // occur.  All we do is enqueue <event_handler> and <mask> onto the
-  // <ACE_Message_Queue> and wakeup the WFMO_Reactor by signaling its
-  // <ACE_Event> handle.  The <ACE_Time_Value> indicates how long to
-  // blocking trying to notify the <WFMO_Reactor>.  If <timeout> == 0,
-  // the caller will block until action is possible, else will wait
+  // <ACE_Message_Queue> and wakeup the <WFMO_Reactor> by signaling
+  // its <ACE_Event> handle.  The <ACE_Time_Value> indicates how long
+  // to blocking trying to notify the <WFMO_Reactor>.  If <timeout> ==
+  // 0, the caller will block until action is possible, else will wait
   // until the relative time specified in <timeout> elapses).
+
+  virtual int dispatch_notifications (int &number_of_active_handles,
+                                      const ACE_Handle_Set &rd_mask);
+  // No-op.
 
   virtual ACE_HANDLE get_handle (void) const;
   // Returns a handle to the <ACE_Auto_Event>.
@@ -471,12 +476,10 @@ private:
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
   // = TITLE
-  //
   //     An object oriented event demultiplexor and event handler
   //     WFMO_Reactor for Win32 WaitForMultipleObjects
   //
   // = DESCRIPTION
-  //
   //     The ACE_WFMO_Reactor is an object-oriented event
   //     demultiplexor and event handler Reactor.  The sources of
   //     events that the ACE_WFMO_Reactor waits for and dispatches
@@ -496,7 +499,6 @@ class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
   //     handler->handle_close(), use the DONT_CALL flag with
   //     remove_handler().  Or else, dynamically allocate the handler,
   //     and then call "delete this" inside handler->handle_close().
-  //
 public:
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
@@ -528,10 +530,14 @@ public:
 		    int restart = 0,
 		    ACE_Sig_Handler * = 0,
 		    ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = 0);
+                    int disable_notify_pipe = 0,
+                    ACE_Reactor_Notify * = 0);
   // Initialize <ACE_WFMO_Reactor> with size <size>.  Two slots will
   // be added to the <size> parameter which will store handles used
   // for internal management purposes.
+
+  virtual int current_info (ACE_HANDLE, size_t & /* size */);
+  // Returns -1 (not used in this implementation);
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
   // Use a user specified signal handler instead.
@@ -975,6 +981,12 @@ protected:
   int delete_handler_rep_;
   // Keeps track of whether we should delete the handler repository
 
+  ACE_WFMO_Reactor_Notify *notify_handler_;
+  // Used when <notify> is called.
+
+  int delete_notify_handler_;
+  // Keeps track of whether we should delete the notify handler.
+
   ACE_Process_Mutex lock_;
   // Synchronization for the ACE_WFMO_Reactor.
   //
@@ -989,9 +1001,6 @@ protected:
 
   ACE_WFMO_Reactor_Handler_Repository handler_rep_;
   // Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
-
-  ACE_WFMO_Reactor_Notify notify_handler_;
-  // Used when <notify> is called.
 
   ACE_Manual_Event ok_to_wait_;
   // A manual event used to block threads from proceeding into
@@ -1040,7 +1049,7 @@ private:
   // Deny access since member-wise won't work...
 };
 
-// if we don't have WinSOCK2, we need these defined
+// If we don't have WinSOCK2, we need these defined
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 /*
  * WinSock 2 extension -- bit values and indices for FD_XXX network events

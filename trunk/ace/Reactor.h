@@ -61,9 +61,11 @@ public:
   static ACE_Reactor *instance (void);
   // Get pointer to a process-wide <ACE_Reactor>.
 
-  static ACE_Reactor *instance (ACE_Reactor *);
+  static ACE_Reactor *instance (ACE_Reactor *,
+                                int delete_reactor = 0);
   // Set pointer to a process-wide <ACE_Reactor> and return existing
-  // pointer.
+  // pointer.  If <delete_reactor> != 0 then we'll delete the Reactor
+  // at destruction time.
 
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
@@ -94,8 +96,11 @@ public:
   // Resets the <ACE_Reactor::end_event_loop_> static so that the
   // <run_event_loop> method can be restarted.
 
-  ACE_Reactor (ACE_Reactor_Impl *implementation = 0);
-  // Create the Reactor using <implementation>
+  ACE_Reactor (ACE_Reactor_Impl *implementation = 0,
+               int delete_implementation = 0);
+  // Create the Reactor using <implementation>.  The flag
+  // <delete_implementation> tells the Reactor whether or not to
+  // delete the <implementation> on destruction.
 
   virtual ~ACE_Reactor (void);
   // Close down and release all resources.
@@ -419,6 +424,13 @@ public:
 
   virtual ACE_Reactor_Impl *implementation (void);
   // Get the implementation class
+
+  virtual int current_info (ACE_HANDLE handle,
+                            size_t &msg_size);
+  // Returns 0, if the size of the current message has been put in
+  // <size> Returns -1, if not.  ACE_HANDLE allows the reactor to
+  // check if the caller is valid.  Used for CLASSIX Reactor
+  // implementation.
 
   virtual int uses_event_associations (void);
   // Return 1 if we any event associations were made by the reactor

@@ -157,10 +157,7 @@ public:
   ACE_Event_Handler* event_handler_;
 };
 
-// The following two classes have to be moved out here to keep the SGI
-// C++ compiler happy (it doesn't like nested classes).
-
-class ACE_Export ACE_Select_Reactor_Notify : public ACE_Event_Handler
+class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
   // = TITLE
   //     Unblock the <ACE_Select_Reactor> from its event loop.
@@ -181,29 +178,35 @@ public:
   // Default dtor.
 
   // = Initialization and termination methods.
-  int open (ACE_Select_Reactor *, int disable_notify_pipe);
-  int close (void);
+  virtual int open (ACE_Reactor_Impl *,
+                    ACE_Timer_Queue * = 0,
+                    int disable_notify_pipe = 0);
+  // Initialize.
 
-  int dispatch_notifications (int &number_of_active_handles,
-                              const ACE_Handle_Set &rd_mask);
+  virtual int close (void);
+  // Destroy.
+
+  virtual ssize_t notify (ACE_Event_Handler * = 0,
+                          ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+                          ACE_Time_Value * = 0);
+  // Called by a thread when it wants to unblock the
+  // <ACE_Select_Reactor>.  This wakeups the <ACE_Select_Reactor> if
+  // currently blocked in select()/poll().  Pass over both the
+  // <Event_Handler> *and* the <mask> to allow the caller to dictate
+  // which <Event_Handler> method the <ACE_Select_Reactor> will
+  // invoke.  The <ACE_Time_Value> indicates how long to blocking
+  // trying to notify the <ACE_Select_Reactor>.  If <timeout> == 0,
+  // the caller will block until action is possible, else will wait
+  // until the relative time specified in *<timeout> elapses).
+
+  virtual int dispatch_notifications (int &number_of_active_handles,
+                                      const ACE_Handle_Set &rd_mask);
   // Handles pending threads (if any) that are waiting to unblock the
-  // Select_Reactor.
-
-  ssize_t notify (ACE_Event_Handler * = 0,
-                  ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                  ACE_Time_Value * = 0);
-  // Called by a thread when it wants to unblock the Select_Reactor.
-  // This wakeups the <ACE_Select_Reactor> if currently blocked in
-  // select()/poll().  Pass over both the <Event_Handler> *and* the
-  // <mask> to allow the caller to dictate which <Event_Handler>
-  // method the <Select_Reactor> will invoke.  The <ACE_Time_Value>
-  // indicates how long to blocking trying to notify the
-  // <Select_Reactor>.  If <timeout> == 0, the caller will block until
-  // action is possible, else will wait until the relative time
-  // specified in *<timeout> elapses).
+  // <ACE_Select_Reactor>.
 
   virtual int handle_input (ACE_HANDLE handle);
-  // Called back by the Select_Reactor when a thread wants to unblock us.
+  // Called back by the <ACE_Select_Reactor> when a thread wants to
+  // unblock us.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -386,14 +389,16 @@ public:
 
   ACE_Select_Reactor (ACE_Sig_Handler * = 0,
                       ACE_Timer_Queue * = 0,
-                      int disable_notify_pipe = 0);
+                      int disable_notify_pipe = 0,
+                      ACE_Select_Reactor *notify = 0);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor (size_t size,
                       int restart = 0,
                       ACE_Sig_Handler * = 0,
                       ACE_Timer_Queue * = 0,
-                      int disable_notify_pipe = 0);
+                      int disable_notify_pipe = 0,
+                      ACE_Select_Reactor *notify = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t size = DEFAULT_SIZE,
@@ -402,6 +407,9 @@ public:
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
+
+  virtual int current_info (ACE_HANDLE, size_t & /* size */);
+  // Returns -1 (not used in this implementation);
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
   // Use a user specified signal handler instead.
@@ -856,6 +864,14 @@ protected:
   // Keeps track of whether we should delete the signal handler (if we
   // didn't create it, then we don't delete it).
 
+  ACE_Select_Reactor_Notify *notify_handler_;
+  // Callback object that unblocks the ACE_Select_Reactor if it's
+  // sleeping.
+
+  int delete_notify_handler_;
+  // Keeps track of whether we need to delete the notify handler (if
+  // we didn't create it, then we don't delete it).
+
   ACE_Select_Reactor_Handle_Set wait_set_;
   // Tracks handles that are waited for by select().
 
@@ -900,10 +916,6 @@ protected:
 
   ACE_Lock_Adapter<ACE_Select_Reactor_Token> lock_adapter_;
   // Adapter used to return internal lock to outside world.
-
-  ACE_Select_Reactor_Notify notify_handler_;
-  // Callback object that unblocks the ACE_Select_Reactor if it's
-  // sleeping.
 
   void renew (void);
   // Enqueue ourselves into the list of waiting threads at the

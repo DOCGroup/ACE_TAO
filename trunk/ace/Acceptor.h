@@ -48,12 +48,14 @@ class ACE_Acceptor : public ACE_Service_Object
   //     a group.
 public:
   // = Initialization and termination methods.
-  ACE_Acceptor (ACE_Reactor * = 0);
+  ACE_Acceptor (ACE_Reactor * = 0, 
+                int use_select = 1);
   // "Do-nothing" constructor.
 
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
 		ACE_Reactor * = ACE_Reactor::instance (),
-		int flags = 0);
+		int flags = 0,
+                int use_select = 1);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
   // indicates how <SVC_HANDLER>'s should be initialized prior to
@@ -157,6 +159,10 @@ private:
   // prior to being activated.  Right now, the only flag that is
   // processed is <ACE_NONBLOCK>, which enabled non-blocking I/O on
   // the <SVC_HANDLER> when it is opened.
+
+  int use_select_;
+  // Flag that indicates whether it shall use <select> in the
+  // <accept>-loop.
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

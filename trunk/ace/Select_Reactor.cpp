@@ -357,9 +357,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 }
 
 ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repository_Iterator
-(const ACE_Select_Reactor_Handler_Repository *s)
-  : rep_ (s),
-    current_ (-1)
+  (const ACE_Select_Reactor_Handler_Repository *s)
+    : rep_ (s),
+      current_ (-1)
 {
   this->advance ();
 }
@@ -639,14 +639,21 @@ ACE_Select_Reactor_Notify::dump (void) const
 }
 
 int
-ACE_Select_Reactor_Notify::open (ACE_Select_Reactor *r,
+ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
+                                 ACE_Timer_Queue *,
                                  int disable_notify_pipe)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::open");
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = r;
+      this->select_reactor_ = ACE_dynamic_cast (ACE_Select_Reactor, r);
+
+      if (select_reactor_ == 0)
+        {
+          errno = EINVAL;
+          return -1;
+        }
 
       if (this->notification_pipe_.open () == -1)
         return -1;
@@ -822,7 +829,7 @@ ACE_Select_Reactor::notify (ACE_Event_Handler *eh,
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
 
-  n = this->notify_handler_.notify (eh, mask, timeout);
+  n = this->notify_handler_->notify (eh, mask, timeout);
   return n == -1 ? -1 : 0;
 }
 
@@ -960,7 +967,8 @@ ACE_Select_Reactor::open (size_t size,
                           int restart,
                           ACE_Sig_Handler *sh,
                           ACE_Timer_Queue *tq,
-                          int disable_notify_pipe)
+                          int disable_notify_pipe,
+                          ACE_Select_Reactor_Notify *notify)
 {
   ACE_TRACE ("ACE_Select_Reactor::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
@@ -973,13 +981,16 @@ ACE_Select_Reactor::open (size_t size,
   this->restart_ = restart;
   this->signal_handler_ = sh;
   this->timer_queue_ = tq;
+  this->notify_handler_ = notify;
 
   int result = 0;
 
   // Allows the signal handler to be overridden.
   if (this->signal_handler_ == 0)
     {
-      this->signal_handler_ = new ACE_Sig_Handler;
+      ACE_NEW_RETURN (this->signal_handler_,
+                      ACE_Sig_Handler,
+                      -1);
 
       if (this->signal_handler_ == 0)
         result = -1;
@@ -987,9 +998,12 @@ ACE_Select_Reactor::open (size_t size,
         this->delete_signal_handler_ = 1;
     }
 
+  // Allows the timer queue to be overridden.
   if (result != -1 && this->timer_queue_ == 0)
     {
-      this->timer_queue_ = new ACE_Timer_Heap;
+      ACE_NEW_RETURN (this->timer_queue_,
+                      ACE_Timer_Heap,
+                      -1);
 
       if (this->timer_queue_ == 0)
         result = -1;
@@ -997,9 +1011,24 @@ ACE_Select_Reactor::open (size_t size,
         this->delete_timer_queue_ = 1;
     }
 
+  // Allows the Notify_Handler to be overridden.
+  if (result != -1 && this->notify_handler_ == 0)
+    {
+      ACE_NEW_RETURN (this->notify_handler_,
+                      ACE_Select_Reactor_Notify,
+                      -1);
+
+      if (this->notify_handler_ == 0)
+        result = -1;
+      else
+        this->delete_notify_handler_ = 1;
+    }
+
   if (result != -1 && this->handler_rep_.open (size) == -1)
     result = -1;
-  else if (this->notify_handler_.open (this, disable_notify_pipe) == -1)
+  else if (this->notify_handler_->open (this, 
+                                        0,
+                                        disable_notify_pipe) == -1)
     result = -1;
 
   if (result != -1)
@@ -1034,11 +1063,13 @@ ACE_Select_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
 
 ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
                                         ACE_Timer_Queue *tq,
-                                        int disable_notify_pipe)
+                                        int disable_notify_pipe,
+                                        ACE_Select_Reactor_Notify *notify)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
+    delete_notify_handler_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
     max_notify_iterations_ (-1),
     initialized_ (0),
@@ -1054,10 +1085,12 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
                   0,
                   sh,
                   tq,
-                  disable_notify_pipe) == -1)
+                  disable_notify_pipe,
+                  notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
+                ASYS_TEXT ("ACE_Select_Reactor::open")
+                ASYS_TEXT ("failed inside ACE_Select_Reactor::CTOR")));
 }
 
 // Initialize ACE_Select_Reactor.
@@ -1066,11 +1099,13 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
                                         int rs,
                                         ACE_Sig_Handler *sh,
                                         ACE_Timer_Queue *tq,
-                                        int disable_notify_pipe)
+                                        int disable_notify_pipe,
+                                        ACE_Select_Reactor_Notify *notify)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
+    delete_notify_handler_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
     max_notify_iterations_ (-1),
     initialized_ (0),
@@ -1078,7 +1113,7 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     token_ (*this),
 #endif /* ACE_MT_SAFE */
-    lock_adapter_ (token_)
+    lock_adapter_ (token_),
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
@@ -1086,10 +1121,12 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
                   rs,
                   sh,
                   tq,
-                  disable_notify_pipe) == -1)
+                  disable_notify_pipe,
+                  notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
+                ASYS_TEXT ("ACE_Select_Reactor::open")
+                ASYS_TEXT ("failed inside ACE_Select_Reactor::CTOR")));
 }
 
 // Close down the ACE_Select_Reactor instance, detaching any remaining
@@ -1103,19 +1140,39 @@ ACE_Select_Reactor::close (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
   if (this->delete_signal_handler_)
-    delete this->signal_handler_;
-  this->signal_handler_ = 0;
+    {
+      delete this->signal_handler_;
+      this->signal_handler_ = 0;
+      this->delete_signal_handler_ = 0;
+    }
 
   this->handler_rep_.close ();
 
   if (this->delete_timer_queue_)
-    delete this->timer_queue_;
-  this->timer_queue_ = 0;
+    {
+      delete this->timer_queue_;
+      this->timer_queue_ = 0;
+      this->delete_timer_queue_ = 0;
+    }
 
-  this->notify_handler_.close ();
+  this->notify_handler_->close ();
+
+  if (this->delete_notify_handler_)
+    {
+      delete this->notify_handler_;
+      this->notify_handler_ = 0;
+      this->delete_notify_handler_ = 0;
+    }
+
   this->initialized_ = 0;
 
   return 0;
+}
+
+int
+ACE_Select_Reactor::current_info (ACE_HANDLE, size_t &)
+{
+  return -1;
 }
 
 ACE_Select_Reactor::~ACE_Select_Reactor (void)
@@ -1557,8 +1614,8 @@ ACE_Select_Reactor::dispatch_notification_handlers (int &number_of_active_handle
   // threads and then break out to continue the event loop.
 
   int number_dispatched =
-    this->notify_handler_.dispatch_notifications (number_of_active_handles,
-                                                  dispatch_set.rd_mask_);
+    this->notify_handler_->dispatch_notifications (number_of_active_handles,
+                                                   dispatch_set.rd_mask_);
   return this->state_changed_ ? -1 : number_dispatched;
 #else
   ACE_UNUSED_ARG (number_of_active_handles);
@@ -1883,7 +1940,7 @@ ACE_Select_Reactor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nowner_ = %d\n"), this->owner_));
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  this->notify_handler_.dump ();
+  this->notify_handler_->dump ();
   this->token_.dump ();
 #endif /* ACE_MT_SAFE */
 

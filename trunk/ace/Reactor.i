@@ -16,6 +16,13 @@ ACE_Reactor::implementation (ACE_Reactor_Impl *impl)
   this->implementation_ = impl;
 }
 
+ACE_INLINE int
+ACE_Reactor::current_info (ACE_HANDLE handle,
+                           size_t &size)
+{
+  return this->implementation ()->current_info (handle, size);
+}
+
 ACE_INLINE int 
 ACE_Reactor::open (size_t size,
 		   int restart,
