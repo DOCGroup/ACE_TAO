@@ -213,14 +213,14 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialize the ORB.
       this->orb_var_ = CORBA::ORB_init (this->argc_,
                                         this->argv_,
                                         "internet",
-                                        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -232,13 +232,13 @@ DII_Cubit_Client::init (int argc, char **argv)
       // Get a factory object reference from the factory IOR.
       this->factory_var_ = 
         this->orb_var_->string_to_object (this->factory_IOR_, 
-                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", TAO_TRY_ENV));
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", ACE_TRY_ENV));
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 	
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
@@ -252,25 +252,25 @@ DII_Cubit_Client::init (int argc, char **argv)
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
                                             &this->obj_var_,
                                             0, 
-                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Invoke the <make_cubit> operation to ask the Cubit factory
       // for a Cubit object.
-      mc_req->invoke (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      mc_req->invoke (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->obj_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not obtain Cubit object from Cubit factory <%s>\n"),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -512,7 +512,7 @@ DII_Cubit_Client::cube_octet_dii (void)
 
 void
 DII_Cubit_Client::cube_union_dii (void)
-{ /*
+{ 
   // Create the request ...
   CORBA::Request_var req (this->obj_var_->_request ("cube_union",
                                                     this->env_));
@@ -555,7 +555,7 @@ DII_Cubit_Client::cube_union_dii (void)
                   "cube_union_dii -- bad results\n"));
 
       this->error_count_++;
-    } */
+    } 
 }
 
 void
@@ -768,30 +768,30 @@ DII_Cubit_Client::run (void)
       this->print_stats (this->stats_messages_[j], dii_elapsed_time);
     }
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Shut down server via a DII request.
       if (this->shutdown_)
         {
           CORBA::Request_var req (this->obj_var_->_request ("shutdown",
-                                                            TAO_TRY_ENV));
+                                                            ACE_TRY_ENV));
 
-          TAO_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           // Cubit::shutdown () is a oneway operation.
-          req->send_oneway (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          req->send_oneway (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "\n\t Shutting down IDL_Cubit server \n\n"));
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("DII_Cubit_Client: server shutdown");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return this->error_count_ == 0 ? 0 : 1;
 }

@@ -50,7 +50,7 @@ Test_DynStruct::run_test (void)
   ts.es.f = data.m_float2;
   ts.es.s = data.m_short2;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get/next/seek/rewind/current_component\n"));
@@ -59,40 +59,40 @@ Test_DynStruct::run_test (void)
       in_any1 <<= ts;
       CORBA_DynAny_ptr dp1 = 
         this->orb_->create_dyn_any (in_any1,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       CORBA_DynStruct_ptr fa1 = CORBA_DynStruct::_narrow (dp1,
-                                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       fa1->insert_char (data.m_char1,
-                        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       fa1->insert_longlong (data.m_longlong1,
-        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      fa1->current_component (TAO_TRY_ENV)->insert_float (data.m_float1,
-                                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      fa1->current_component (TAO_TRY_ENV)->insert_short (data.m_short1,
-                                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      fa1->current_component (TAO_TRY_ENV)->rewind (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      fa1->rewind (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      CORBA::Char c = fa1->get_char (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      fa1->current_component (ACE_TRY_ENV)->insert_float (data.m_float1,
+                                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      fa1->current_component (ACE_TRY_ENV)->insert_short (data.m_short1,
+                                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      fa1->current_component (ACE_TRY_ENV)->rewind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      fa1->rewind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::Char c = fa1->get_char (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (c != data.m_char1)
         ++this->error_count_;
-      CORBA::LongLong ll = fa1->get_longlong (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::LongLong ll = fa1->get_longlong (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (ll != data.m_longlong1)
         ++this->error_count_;
-      fa1->current_component(TAO_TRY_ENV)->seek (1,
-                                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      CORBA::Short s = fa1->current_component (TAO_TRY_ENV)->get_short (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      fa1->current_component(ACE_TRY_ENV)->seek (1,
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::Short s = fa1->current_component (ACE_TRY_ENV)->get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (s != data.m_short1)
         ++this->error_count_;
       if (this->error_count_ == 0)
@@ -104,8 +104,8 @@ Test_DynStruct::run_test (void)
 
       CORBA_DynStruct_ptr ftc1 = 
         this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
-                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ts.c = data.m_char1;
       ts.ll = data.m_longlong1;
       ts.es.f = data.m_float1;
@@ -113,10 +113,10 @@ Test_DynStruct::run_test (void)
       CORBA_Any in_any2;
       in_any2 <<= ts;
       ftc1->from_any (in_any2,
-                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      CORBA_Any* out_any1 = ftc1->to_any (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA_Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       DynAnyTests::test_struct* ts_out;
       *out_any1 >>= ts_out;
       if (ts_out->es.s == data.m_short1)
@@ -132,14 +132,14 @@ Test_DynStruct::run_test (void)
                  "testing: current_member_name/current_member_kind\n"));
 
       ftc1->seek (2,
-                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      FieldName fn = ftc1->current_member_name (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      FieldName fn = ftc1->current_member_name (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (ACE_OS::strcmp (fn, "es"))
         ++this->error_count_;
-      CORBA::TCKind tk = ftc1->current_member_kind (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::TCKind tk = ftc1->current_member_kind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (tk != CORBA::tk_struct)
         ++this->error_count_;
       if (this->error_count_ == 0)
@@ -149,16 +149,16 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: get_members/set_members\n"));
 
-      NameValuePairSeq* nvps = fa1->get_members (TAO_TRY_ENV);
+      NameValuePairSeq* nvps = fa1->get_members (ACE_TRY_ENV);
       CORBA_DynStruct_ptr sm =
         this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
-                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       sm->set_members (*nvps,
-                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      NameValuePairSeq* gm = sm->get_members (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      NameValuePairSeq* gm = sm->get_members (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (ACE_OS::strcmp ((*gm)[2].id, "es"))
         ++this->error_count_;
 
@@ -166,23 +166,23 @@ Test_DynStruct::run_test (void)
       delete nvps;
       delete gm;
 
-      fa1->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      fa1->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       CORBA::release (fa1);
       CORBA::release (dp1);
-      ftc1->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      ftc1->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       CORBA::release (ftc1);
-      sm->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      sm->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       CORBA::release (sm);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("test_dynstruct::run_test");
+      ACE_TRY_ENV.print_exception ("test_dynstruct::run_test");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",
