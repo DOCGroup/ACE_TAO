@@ -1,3 +1,16 @@
+Mon Aug 11 12:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+
+          Overhauled generation of direct collocation operations to
+          match the changes for thruPOA collocation.
+
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Cosmetic changes to generated code.
+
 Mon Aug 11 12:02:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.cpp: Initialized boolean value. 

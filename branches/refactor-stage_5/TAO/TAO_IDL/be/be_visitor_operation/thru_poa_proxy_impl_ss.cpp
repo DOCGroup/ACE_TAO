@@ -85,14 +85,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
   if (this->gen_throw_spec (node) != 0)
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-          "visit_operation - "
-          "throw spec generation failed\n"
-        ),
-        -1
-      );
+      return -1;
     }
 
   *os << be_uidt_nl
