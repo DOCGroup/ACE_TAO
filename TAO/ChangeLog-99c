@@ -1,3 +1,10 @@
+Mon Sep  6 20:59:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/Options.html: Updated the documentation to point out that
+	  the various -ORB*ServiceIOR options are deprecated and should be
+ 	  replaced by -ORBInitRef.  Thanks to Marina and Ossama for
+ 	  pointing this out.
+
 Mon Sep  6 16:41:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp: Also
