@@ -111,7 +111,6 @@ public class LogRecord
     // Order here must match layout order in the C++ class.
     // This, of course, is VERY fragile, and ought not be used as
     // a model for anything except how NOT to do anything.
-
     length(dis.readInt());
     type(dis.readInt());
     this.timeStamp((long)dis.readInt() * 1000);
@@ -134,7 +133,6 @@ public class LogRecord
   {
     dos.writeInt(length());
     dos.writeInt(type());
-    dos.writeInt(length());
     dos.writeInt((int)(this.msec_ / 1000));
     dos.writeInt(0);  
     dos.writeInt(pid());

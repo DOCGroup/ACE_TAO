@@ -11,6 +11,7 @@ doc:
 
 files = LogMessageReceiver.java \
 	DefaultLMR.java \
+	LogClient.java \
 	LogRecord.java \
 	ServerLoggingAcceptor.java \
 	ServerLoggingHandler.java
