@@ -1,3 +1,13 @@
+Fri Aug 30 14:36:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Corrected call to send_exception() interception point in the
+	  ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS case.  It was
+	  receive_exception(), which was a cut and paste error from the
+	  client side case.  Thanks to Jeff for pointing out the problem.
+
 Fri Aug 30 13:36:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
