@@ -2829,6 +2829,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
   return 0;
 }
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
 {
   TAO_OutputCDR stream;
@@ -3003,3 +3005,5 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

@@ -1,5 +1,5 @@
 --- orig/MessagingC.h	Tue Apr  3 22:01:25 2001
-+++ patched/MessagingC.h	Tue Apr  3 22:05:23 2001
++++ patched/MessagingC.h	Thu Apr  5 09:07:23 2001
 @@ -23,13 +23,25 @@
  #define _TAO_IDL_ORIG_MESSAGINGC_H_
  
@@ -187,16 +187,7 @@
  // valuetype class
    class ExceptionHolder;
    typedef ExceptionHolder *ExceptionHolder_ptr;
-@@ -2409,6 +2476,8 @@
-     void operator= (const ReplyHandler &);
-   };
- 
-+#endif /* TAO_HAS_SMART_PROXIES */
-+
-   
- // The Proxy Implementations are used by each interface to
- // perform a call. Each different implementation encapsulate
-@@ -2519,6 +2588,7 @@
+@@ -2519,16 +2586,23 @@
  
  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyHandler;
  
@@ -204,16 +195,23 @@
  
  }
  TAO_NAMESPACE_CLOSE // module Messaging
-@@ -2529,6 +2599,8 @@
+ 
+ // Proxy Broker Factory function pointer declarations.
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ extern TAO_Export Messaging::_TAO_ReplyHandler_Proxy_Broker * (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
      CORBA::Object_ptr obj
    );
  
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
 +#if (TAO_HAS_AMI_CALLBACK == 1)
 +
  TAO_NAMESPACE  OBV_Messaging
  {
  
-@@ -2536,7 +2608,7 @@
+@@ -2536,7 +2610,7 @@
  #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
  
    // OBV_ class
@@ -222,7 +220,7 @@
    {
    public:
      virtual void is_system_exception (CORBA::Boolean);    // set
-@@ -2572,14 +2644,26 @@
+@@ -2572,14 +2646,26 @@
  }
  TAO_NAMESPACE_CLOSE
  
@@ -249,7 +247,7 @@
  TAO_Export void operator<<= (CORBA::Any &, const Messaging::PolicyValue &); // copying version
  TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValue*); // noncopying version
  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValue *&); // deprecated
-@@ -2588,19 +2672,33 @@
+@@ -2588,19 +2674,33 @@
  TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // noncopying version
  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&); // deprecated
  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValueSeq *&);
@@ -283,7 +281,7 @@
  #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_H_
  #define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_H_
  
-@@ -2630,26 +2728,15 @@
+@@ -2630,26 +2730,15 @@
  
  #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
  
@@ -314,12 +312,10 @@
  #endif /* __ACE_INLINE__ */
  
  
-@@ -2660,6 +2747,8 @@
- #if defined(_MSC_VER) && (_MSC_VER >= 1200)
- #pragma warning(pop)
- #endif /* _MSC_VER */
-+
-+#endif /* TAO_HAS_CORBA_MESSAGING */
+@@ -2666,4 +2755,6 @@
+ #endif /* __BORLANDC__ */
  
- #if defined (__BORLANDC__)
- #pragma option pop
+ #include "ace/post.h"
++
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+ #endif /* ifndef */
