@@ -1,3 +1,11 @@
+Wed Sep  1 06:48:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc:
+
+          With the current version of MPC, we must specify the exename for
+          this project.  MPC no longer automatically determines that
+          ACE_TMAIN is the entry point.
+
 Wed Sep  1 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
@@ -18,17 +26,17 @@ Wed Sep  1 07:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 31 12:18:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Moved ACE_HAS_PENTIUM into "defined(__i386__)" conditional.
+          Moved ACE_HAS_PENTIUM into "defined(__i386__)" conditional.
 
 Tue Aug 31 14:38:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_errno.h:
-	* ace/os_include/os_errno.h: Include config-lite.h instead of
-	  config-all.h to minimize re-includes.
+        * ace/OS_NS_errno.h:
+        * ace/os_include/os_errno.h: Include config-lite.h instead of
+          config-all.h to minimize re-includes.
 
-	* ace/OS_NS_errno.inl: Include config-all.h to pick up ACE_TRACE.
+        * ace/OS_NS_errno.inl: Include config-all.h to pick up ACE_TRACE.
 
 Tue Aug 31 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -44,209 +52,209 @@ Tue Aug 31 08:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 31 00:21:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
 
-	  Removed vestigial ACE_HAS_LAZY_V definition.
+          Removed vestigial ACE_HAS_LAZY_V definition.
 
 Tue Aug 31 00:17:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
 
-	  Removed vestigial ACE_HAS_IOMANIP_NO_H definition.
+          Removed vestigial ACE_HAS_IOMANIP_NO_H definition.
 
 Mon Aug 30 23:57:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
+        * ace/config-netbsd.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
 
-	  Removed vestigial ACE_HAS_SYS_IOCTL_H definition.  ACE now uses
-	  ACE_LACKS_SYS_IOCTL_H.
+          Removed vestigial ACE_HAS_SYS_IOCTL_H definition.  ACE now uses
+          ACE_LACKS_SYS_IOCTL_H.
 
-	* ace/config-integritySCA.h:
+        * ace/config-integritySCA.h:
 
-	  Removed vestigial ACE_LACKS_SYS_FILE_H definition.
+          Removed vestigial ACE_LACKS_SYS_FILE_H definition.
 
-	* ace/config-integritySCA.h:
-	* ace/config-psos-diab-mips.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-rtp-62x.h:
-	* ace/config-rtp-pre62x.h:
+        * ace/config-integritySCA.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-rtp-62x.h:
+        * ace/config-rtp-pre62x.h:
 
-	  Removed vestigial ACE_LACKS_RPC_H definition.
+          Removed vestigial ACE_LACKS_RPC_H definition.
 
 Mon Aug 30 23:47:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added check for ACE_LACKS_TOWLOWER and ACE_LACKS_TOWUPPER.
+          Added check for ACE_LACKS_TOWLOWER and ACE_LACKS_TOWUPPER.
 
 Mon Aug 30 23:39:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed check for libc.h and osfcn.h to not export a feature
-	  test macro definition, as the results are only needed within
-	  the configure script itself.
+          Changed check for libc.h and osfcn.h to not export a feature
+          test macro definition, as the results are only needed within
+          the configure script itself.
 
 Mon Aug 30 23:28:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-macos.h:
-	* ace/config-macos-panther.h:
+        * ace/config-macos.h:
+        * ace/config-macos-panther.h:
 
-	  Removed vestigial ACE_HAS_PTHREAD_CANCEL and ACE_HAS_PTHREAD_KILL
-	  definitions.
+          Removed vestigial ACE_HAS_PTHREAD_CANCEL and ACE_HAS_PTHREAD_KILL
+          definitions.
 
 Mon Aug 30 23:18:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-linux-common.h:
-	* ace/config-openbsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-openbsd.h:
 
-	  Removed vestigial ACE_HAS_MKSTEMP definition.  ACE now uses
-	  ACE_LACKS_MKSTEMP.
+          Removed vestigial ACE_HAS_MKSTEMP definition.  ACE now uses
+          ACE_LACKS_MKSTEMP.
 
 Mon Aug 30 22:39:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/TSS_Test.cpp:
+        * tests/TSS_Test.cpp:
 
-	  Changed the number of iterations from 100 to 25 so the test will
-	  run on systems with pthreads with the minimum required number of
-	  thread keys (128).  This should still be sufficient to check the
-	  TSS wrappers without exceeding the minimum requirements.
+          Changed the number of iterations from 100 to 25 so the test will
+          run on systems with pthreads with the minimum required number of
+          thread keys (128).  This should still be sufficient to check the
+          TSS wrappers without exceeding the minimum requirements.
 
 Mon Aug 30 18:31:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Add ACE_SSIZE_T_FORMAT_SPECIFIER and ACE_SIZE_T_FORMAT_SPECIFIER
-	  definitions for NetBSD/amd64.
+          Add ACE_SSIZE_T_FORMAT_SPECIFIER and ACE_SIZE_T_FORMAT_SPECIFIER
+          definitions for NetBSD/amd64.
 
-	* netsvcs/clients/Logger/Makefile.am:
-	* netsvcs/clients/Naming/Client/Makefile.am:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
-	* netsvcs/servers/Makefile.am:
+        * netsvcs/clients/Logger/Makefile.am:
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+        * netsvcs/servers/Makefile.am:
 
-	  Fix the _LDADD definitions that MPC doesn't get right yet.
+          Fix the _LDADD definitions that MPC doesn't get right yet.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added checks for: ACE_LACKS_STRCHR, ACE_LACKS_STRCSPN,
-	  ACE_LACKS_STRERROR, ACE_LACKS_STRPBRK, ACE_LACKS_STRSPN,
-	  ACE_LACKS_STRTOD, ACE_LACKS_STRTOL, ACE_LACKS_STRTOUL,
-	  and ACE_LACKS_SWAB.
+          Added checks for: ACE_LACKS_STRCHR, ACE_LACKS_STRCSPN,
+          ACE_LACKS_STRERROR, ACE_LACKS_STRPBRK, ACE_LACKS_STRSPN,
+          ACE_LACKS_STRTOD, ACE_LACKS_STRTOL, ACE_LACKS_STRTOUL,
+          and ACE_LACKS_SWAB.
 
-	  Added check for ACE_HAS_STRNLEN.
+          Added check for ACE_HAS_STRNLEN.
 
-	  Added checks for: ACE_LACKS_ARPA_INET_H, ACE_LACKS_DIRENT_H,
-	  ACE_LACKS_DLFCN_H, ACE_LACKS_ERRNO_H ACE_LACKS_FCNTL_H,
-	  ACE_LACKS_NET_IF_H, ACE_LACKS_NETDB_H, ACE_LACKS_NETINET_IN_H,
-	  ACE_LACKS_SEARCH_H, ACE_LACKS_SEMAPHORE_H, ACE_LACKS_SIGNAL_H,
-	  ACE_LACKS_STDLIB_H, ACE_LACKS_STRING_H, ACE_LACKS_STRINGS_H,
-	  ACE_LACKS_SYS_IOCTL_H, ACE_LACKS_SYS_IPC_H, ACE_LACKS_SYS_MMAN_H,
-	  ACE_LACKS_SYS_RESOURCE_H, ACE_LACKS_SYS_SEM_H, ACE_LACKS_SYS_SHM_H,
-	  ACE_LACKS_SYS_SOCKET_H, ACE_LACKS_SYS_STAT_H, ACE_LACKS_SYS_TIME_H,
-	  ACE_LACKS_SYS_UN_H, ACE_LACKS_SYS_WAIT_H, ACE_LACKS_TERMIOS_H, and
-	  ACE_LACKS_TIME_H.
+          Added checks for: ACE_LACKS_ARPA_INET_H, ACE_LACKS_DIRENT_H,
+          ACE_LACKS_DLFCN_H, ACE_LACKS_ERRNO_H ACE_LACKS_FCNTL_H,
+          ACE_LACKS_NET_IF_H, ACE_LACKS_NETDB_H, ACE_LACKS_NETINET_IN_H,
+          ACE_LACKS_SEARCH_H, ACE_LACKS_SEMAPHORE_H, ACE_LACKS_SIGNAL_H,
+          ACE_LACKS_STDLIB_H, ACE_LACKS_STRING_H, ACE_LACKS_STRINGS_H,
+          ACE_LACKS_SYS_IOCTL_H, ACE_LACKS_SYS_IPC_H, ACE_LACKS_SYS_MMAN_H,
+          ACE_LACKS_SYS_RESOURCE_H, ACE_LACKS_SYS_SEM_H, ACE_LACKS_SYS_SHM_H,
+          ACE_LACKS_SYS_SOCKET_H, ACE_LACKS_SYS_STAT_H, ACE_LACKS_SYS_TIME_H,
+          ACE_LACKS_SYS_UN_H, ACE_LACKS_SYS_WAIT_H, ACE_LACKS_TERMIOS_H, and
+          ACE_LACKS_TIME_H.
 
-	  Removed checks for ACE_HAS_SYS_IOCTL_H.
+          Removed checks for ACE_HAS_SYS_IOCTL_H.
 
 Mon Aug 30 15:55:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Message_Queue_T.inl (is_full_i): Reverted the change
+        * ace/Message_Queue_T.inl (is_full_i): Reverted the change
 
           Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	  since it seemed to break some regression tests.  If Rick
- 	  Robinson can figure out how to fix things so the tests don't
- 	  break we'll try again later.  Thanks to Chris Cleeland for
-	  reporting this.
+          since it seemed to break some regression tests.  If Rick
+          Robinson can figure out how to fix things so the tests don't
+          break we'll try again later.  Thanks to Chris Cleeland for
+          reporting this.
 
 Mon Aug 30 17:38:22 2004  Steve Huston  <shuston@riverace.com>
 
-	Changes that get PocketPC/WinCE back into a state where they build.
+        Changes that get PocketPC/WinCE back into a state where they build.
 
-	* ace/config-WinCE.h: Add ACE_LACKS_ASSERT_H, ACE_LACKS_SEARCH_H,
-	  and ACE_LACKS_WCHAR_H for WinCE 3.
-	  Add ACE_LACKS_SWAB for all versions.
+        * ace/config-WinCE.h: Add ACE_LACKS_ASSERT_H, ACE_LACKS_SEARCH_H,
+          and ACE_LACKS_WCHAR_H for WinCE 3.
+          Add ACE_LACKS_SWAB for all versions.
 
-	* ace/config-win32-msvc.h: Set (or clear) ACE_LACKS_RTTI based on
-	  whether or not the compiler switch to enable rtti is used.
+        * ace/config-win32-msvc.h: Set (or clear) ACE_LACKS_RTTI based on
+          whether or not the compiler switch to enable rtti is used.
 
-	* ace/OS_Errno.{h inl}:
-	* ace/OS_NS_errno.{h inl}: Moved ACE_CE_Errno from OS_Errno to
-	  OS_NS_errno. This seems like a more sensible place for an errno
-	  replacement, and avoids having to add includes for OS_Errno.h to
-	  a bunch of other files.
+        * ace/OS_Errno.{h inl}:
+        * ace/OS_NS_errno.{h inl}: Moved ACE_CE_Errno from OS_Errno to
+          OS_NS_errno. This seems like a more sensible place for an errno
+          replacement, and avoids having to add includes for OS_Errno.h to
+          a bunch of other files.
 
-	* ace/OS_NS_stdio.inl (rename): In the char* variant, always convert
-	  the names to wide-char for WinCE.
+        * ace/OS_NS_stdio.inl (rename): In the char* variant, always convert
+          the names to wide-char for WinCE.
 
-	* ace/OS_NS_stdlib.{h cpp inl}: Don't attempt ACE_OS::realpath() for
-	  ACE_HAS_WINCE. It has no native support and there's no
-	  ACE_OS::getcwd() to fake it with.
+        * ace/OS_NS_stdlib.{h cpp inl}: Don't attempt ACE_OS::realpath() for
+          ACE_HAS_WINCE. It has no native support and there's no
+          ACE_OS::getcwd() to fake it with.
 
-	* ace/OS_NS_stropts.{h cpp}: The 9-arg version of ACE_OS::ioctl is
-	  ok for WinCE, but the ACE_QoS one is disabled. Changed both files
-	  to implement this. They were mismatched for CE.
+        * ace/OS_NS_stropts.{h cpp}: The 9-arg version of ACE_OS::ioctl is
+          ok for WinCE, but the ACE_QoS one is disabled. Changed both files
+          to implement this. They were mismatched for CE.
 
-	* ace/OS_NS_sys_select.inl: Replace #include ace/os_include/os_errno.h
-	  with ace/OS_NS_errno.h to pick up errno correctly across all
-	  platforms.
+        * ace/OS_NS_sys_select.inl: Replace #include ace/os_include/os_errno.h
+          with ace/OS_NS_errno.h to pick up errno correctly across all
+          platforms.
 
-	* ace/OS_NS_sys_socket.cpp: Moved #endif closing #ifndef ACE_HAS_WINCE
-	  to encompass join_leaf() to match what's done in the class decl.
+        * ace/OS_NS_sys_socket.cpp: Moved #endif closing #ifndef ACE_HAS_WINCE
+          to encompass join_leaf() to match what's done in the class decl.
 
-	* ace/OS_NS_sys_stat.inl (mkdir, stat): Added #include
-	  "ace/OS_NS_macros.h" to get ACE_ADAPT_RETVAL.
-	  For the char* mkdir() and stat(), CE needs to convert
-	  the strings to wide-char.
+        * ace/OS_NS_sys_stat.inl (mkdir, stat): Added #include
+          "ace/OS_NS_macros.h" to get ACE_ADAPT_RETVAL.
+          For the char* mkdir() and stat(), CE needs to convert
+          the strings to wide-char.
 
-	* ace/OS_NS_time.h: Moved the day_of_week and month_name const
-	  strings into the ACE_OS namespace, as OS_NS_time.cpp desires.
+        * ace/OS_NS_time.h: Moved the day_of_week and month_name const
+          strings into the ACE_OS namespace, as OS_NS_time.cpp desires.
 
-	* ace/OS_NS_time.cpp: Removed the MT-only compile block around the
-	  day_of_week and month_name arrays. As suspected by Don Hinton,
-	  this is an incorrect condition.
-	  Also added #include "ace/OS_NS_stdio.h" for ACE_HAS_WINCE, as the
-	  ctime_r emulation needs it.
+        * ace/OS_NS_time.cpp: Removed the MT-only compile block around the
+          day_of_week and month_name arrays. As suspected by Don Hinton,
+          this is an incorrect condition.
+          Also added #include "ace/OS_NS_stdio.h" for ACE_HAS_WINCE, as the
+          ctime_r emulation needs it.
 
-	* ace/OS_NS_unistd.inl (unlink): Convert path to wide-char for WinCE.
-	  (rmdir): RemoveDirectory() takes only 1 arg.
-	  wide-char getcwd() is a NOTSUP for WinCE, as is the char* version.
+        * ace/OS_NS_unistd.inl (unlink): Convert path to wide-char for WinCE.
+          (rmdir): RemoveDirectory() takes only 1 arg.
+          wide-char getcwd() is a NOTSUP for WinCE, as is the char* version.
 
-	* ace/Proactor.cpp: Add #include "ace/config-lite.h" since the
-	  user config is needed to decide whether to compile this file.
-	  Also remove 'tv' param name from the stubbed-out version of
-	  run_event_loop(ACE_Time_Value&).
+        * ace/Proactor.cpp: Add #include "ace/config-lite.h" since the
+          user config is needed to decide whether to compile this file.
+          Also remove 'tv' param name from the stubbed-out version of
+          run_event_loop(ACE_Time_Value&).
 
 Mon Aug 30 16:24:51 2004  Steve Huston  <shuston@riverace.com>
 
-	* NEWS: Noted that the wide-char stuff is done and autoconf is in
-	  progress.
+        * NEWS: Noted that the wide-char stuff is done and autoconf is in
+          progress.
 
 Mon Aug 30 11:54:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/security.mpb:
+        * bin/MakeProjectCreator/config/security.mpb:
 
-	  Added missing "interceptors" and "corba_messaging" base
-	  projects.
+          Added missing "interceptors" and "corba_messaging" base
+          projects.
 
-	* bin/MakeProjectCreator/config/ssliop.mpb:
+        * bin/MakeProjectCreator/config/ssliop.mpb:
 
-	  Added missing "interceptors" base project.
+          Added missing "interceptors" base project.
 
 Mon Aug 30 13:02:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Don't use sizeof() when defining ACE_SIZEOF_WCHAR.
-	  Other code (e.g. ACEXML) in ACE uses ACE_SIZEOF_WCHAR in
-	  preprocessor tests, so it needs to be a preprocessor constant.
-	  If the config file doesn't set it, and on an XPG4 system, set
-	  the size to 4. If it's wrong, Basic_Types_Test will catch it.
+        * ace/Basic_Types.h: Don't use sizeof() when defining ACE_SIZEOF_WCHAR.
+          Other code (e.g. ACEXML) in ACE uses ACE_SIZEOF_WCHAR in
+          preprocessor tests, so it needs to be a preprocessor constant.
+          If the config file doesn't set it, and on an XPG4 system, set
+          the size to 4. If it's wrong, Basic_Types_Test will catch it.
 
-	* tests/Basic_Types_Test.cpp: Remove the comment that says the check
-	  for ACE_SIZEOF_WCHAR is pointless. It's now important.
+        * tests/Basic_Types_Test.cpp: Remove the comment that says the check
+          for ACE_SIZEOF_WCHAR is pointless. It's now important.
 
 Mon Aug 30 10:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -268,57 +276,57 @@ Sun Aug 29 16:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
 Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Message_Queue_T.inl: Changed the implementation of
-	  is_full_i() so the comparision operator is >= rather than >,
- 	  which makes it possible to use a 0 high water mark to disable
- 	  the enqueue side of the queue.  Thanks to Rick Robinson
- 	  <rick@oyarsa.com> for reporting this.
+        * ace/Message_Queue_T.inl: Changed the implementation of
+          is_full_i() so the comparision operator is >= rather than >,
+          which makes it possible to use a 0 high water mark to disable
+          the enqueue side of the queue.  Thanks to Rick Robinson
+          <rick@oyarsa.com> for reporting this.
 
 Fri Aug 27 11:40:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/ftrtevent.mpb:
-	* bin/MakeProjectCreator/portablegroup.mpb:
+        * bin/MakeProjectCreator/ftrtevent.mpb:
+        * bin/MakeProjectCreator/portablegroup.mpb:
 
-	  Changed to inherit from messaging.mpb.
+          Changed to inherit from messaging.mpb.
 
-	* bin/MakeProjectCreator/rtsched.mpb:
+        * bin/MakeProjectCreator/rtsched.mpb:
 
-	  Changed to inherit from svc_utils.mpb.
+          Changed to inherit from svc_utils.mpb.
 
 Fri Aug 27 13:38:25 2004  Steve Huston  <shuston@riverace.com>
 
-	* netsvcs/clients/Naming/Client/Client_Test.cpp:
-	* netsvcs/clients/Naming/Client/main.cpp:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.{h cpp}:
-	* netsvcs/clients/Naming/Dump_Restore/main.cpp:
-	* netsvcs/servers/main.cpp:
-	* websvcs/lib/URL_Addr.cpp: Fix wide-char errors.
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.{h cpp}:
+        * netsvcs/clients/Naming/Dump_Restore/main.cpp:
+        * netsvcs/servers/main.cpp:
+        * websvcs/lib/URL_Addr.cpp: Fix wide-char errors.
 
 Fri Aug 27 12:01:37 2004  Steve Huston  <shuston@riverace.com>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp:
-	* netsvcs/lib/Log_Message_Receiver.{h cpp}:
-	* netsvcs/lib/Name_Handler.{h cpp}:
-	* netsvcs/lib/Server_Logging_Handler_T.{h cpp}:
-	* netsvcs/lib/TS_Server_Handler.{h cpp}:
-	* netsvcs/lib/TS_Clerk_Handler.{h cpp}: Correct Service Configurator
-	  framework entrypoints (init(), etc.) to match ACE_TCHAR* instead of
-	  char*. Also corrected char-width problems and naked text literals.
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Log_Message_Receiver.{h cpp}:
+        * netsvcs/lib/Name_Handler.{h cpp}:
+        * netsvcs/lib/Server_Logging_Handler_T.{h cpp}:
+        * netsvcs/lib/TS_Server_Handler.{h cpp}:
+        * netsvcs/lib/TS_Clerk_Handler.{h cpp}: Correct Service Configurator
+          framework entrypoints (init(), etc.) to match ACE_TCHAR* instead of
+          char*. Also corrected char-width problems and naked text literals.
 
-	* ACEXML/parser/parser/Parser.cpp: Fixed uninitialized variable.
+        * ACEXML/parser/parser/Parser.cpp: Fixed uninitialized variable.
 
 Fri Aug 27 08:18:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/footprint_stats.sh:
+        * bin/footprint_stats.sh:
 
-	  Fixed the path to the libraries. Thanks to Johnny for spotting
-	  the error in the scoreboard.
+          Fixed the path to the libraries. Thanks to Johnny for spotting
+          the error in the scoreboard.
 
 Fri Aug 27 10:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/security.mpb:
           Security library uses valuetype, so added valuetype as base
-	  project.
+          project.
 
 Fri Aug 27 09:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -378,40 +386,40 @@ Fri Aug 27 07:40:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
 Thu Aug 26 19:55:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Fixed thinko in last change.  CVS and .svn directories *and*
-	  their contents must be pruned in install-local-data target.
+          Fixed thinko in last change.  CVS and .svn directories *and*
+          their contents must be pruned in install-local-data target.
 
 Thu Aug 26 19:37:10 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Changed dist-hook and install-local-data targets to skip .svn as
-	  well as CVS directories to support subversion.
+          Changed dist-hook and install-local-data targets to skip .svn as
+          well as CVS directories to support subversion.
 
 Thu Aug 26 19:22:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Added If_Then_Else.h to HEADER_FILES.
+          Added If_Then_Else.h to HEADER_FILES.
 
 Thu Aug 26 11:53:26 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Time_Value.h: Added extern "C++" around the ACE_Time_Value class
-	  declaration for WinCE. This is a total hack that I hate, but I have
-	  not been able to find any other way around it. The same code
-	  worked before the great ACE_OS reorg, but I don't know what tickled
-	  it to start misbehaving. Without the hack, eVC complains that
-	  the operators are C functions and so can't return a class.
+        * ace/Time_Value.h: Added extern "C++" around the ACE_Time_Value class
+          declaration for WinCE. This is a total hack that I hate, but I have
+          not been able to find any other way around it. The same code
+          worked before the great ACE_OS reorg, but I don't know what tickled
+          it to start misbehaving. Without the hack, eVC complains that
+          the operators are C functions and so can't return a class.
 
-	* ace/Dev_Poll_Reactor.{cpp h}: Inserted /**/ in #include directives
-	  to silence MSVC warnings that the files are missing dependencies.
+        * ace/Dev_Poll_Reactor.{cpp h}: Inserted /**/ in #include directives
+          to silence MSVC warnings that the files are missing dependencies.
 
 Thu Aug 26 11:39:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACEXML/common/XML_Types.h: Add #include "ace/Basic_Types.h" to
-	  pick up ACE_SIZEOF_WCHAR.
+        * ACEXML/common/XML_Types.h: Add #include "ace/Basic_Types.h" to
+          pick up ACE_SIZEOF_WCHAR.
 
 Thu Aug 26 12:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -466,14 +474,14 @@ Thu Aug 26 06:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Aug 25 23:31:02 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux.GNU:
 
-	  Fixed an error caused by a misplaced newline in Rich's previous
-	  commit.
+          Fixed an error caused by a misplaced newline in Rich's previous
+          commit.
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
 
-	  Brought over the following changes from OCITAO 1.3a.
+          Brought over the following changes from OCITAO 1.3a.
           Added -ladm to LIBS.  This is needed for SunOS 5.6 for
           resolving symbols for regular expression processing (e.g.,
           compile, step), and does not appear to cause a problem on
@@ -484,27 +492,27 @@ Wed Aug 25 23:31:02 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 Wed Aug 25 21:10:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Fixed tipo introduced by:
-	  Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+          Fixed tipo introduced by:
+          Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Aug 25 17:33:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Removed ACE_NTRACE definition.  It slipped in again.
+          Removed ACE_NTRACE definition.  It slipped in again.
 
 Wed Aug 25 16:00:11 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/Auto_Ptr.h:
-	* ace/Auto_Ptr.inl:
+        * ace/Auto_Ptr.h:
+        * ace/Auto_Ptr.inl:
 
-	  Added new ACE_Auto_Ptr which can be used more portably than
-	  auto_ptr even with the ACE auto_ptr workarounds. Specifically,
-	  this obviates the need for the ACE_AUTO_PTR_RESET macro, and
-	  will have better performance than the pre-standard auto_ptr that
-	  comes with VC6.
+          Added new ACE_Auto_Ptr which can be used more portably than
+          auto_ptr even with the ACE auto_ptr workarounds. Specifically,
+          this obviates the need for the ACE_AUTO_PTR_RESET macro, and
+          will have better performance than the pre-standard auto_ptr that
+          comes with VC6.
 
 Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
 
@@ -519,22 +527,22 @@ Wed Aug 25 14:49:11 2004  Rich Seibel <seibel_r@ociweb.com>
 
 Wed Aug 25 11:15:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Updated ACE_SSL library build notes to refer to MPC, i.e. the
-	  proper way to add ACE_SSL support to GNUmakefiles and MSVC++
-	  workspace/project files.  Thanks to Johnny for pointing out that
-	  the documentation was out of date.
+          Updated ACE_SSL library build notes to refer to MPC, i.e. the
+          proper way to add ACE_SSL support to GNUmakefiles and MSVC++
+          workspace/project files.  Thanks to Johnny for pointing out that
+          the documentation was out of date.
 
-	  Wrap the "Last modified" line within an Emacs "hhtms" block to
-	  allow Emacs to automatically update the date and time this file
-	  was last modified.
+          Wrap the "Last modified" line within an Emacs "hhtms" block to
+          allow Emacs to automatically update the date and time this file
+          was last modified.
 
 Wed Aug 25 11:46:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/sys/os_pstat.h: If ACE_HAS_SYS_PSTAT_H, include
-	  <sys/param.h> and <sys/pstat.h> (not <time.h>) as directed by
-	  HP-UX man page. HP-UX 11 is the only config that sets this.
+        * ace/os_include/sys/os_pstat.h: If ACE_HAS_SYS_PSTAT_H, include
+          <sys/param.h> and <sys/pstat.h> (not <time.h>) as directed by
+          HP-UX man page. HP-UX 11 is the only config that sets this.
 
 Wed Aug 25 08:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -629,10 +637,10 @@ Tue Aug 24 19:32:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Aug 24 15:03:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.inl (thread_mutex_init): Fixed wchar_t version to
-	  pass a 0 sa value. Corrects the passing of the lock_type value
-	  through to ACE_OS::mutex_init(), restoring behavior of recursive
-	  mutexes.
+        * ace/OS_NS_Thread.inl (thread_mutex_init): Fixed wchar_t version to
+          pass a 0 sa value. Corrects the passing of the lock_type value
+          through to ACE_OS::mutex_init(), restoring behavior of recursive
+          mutexes.
 
 Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
 
