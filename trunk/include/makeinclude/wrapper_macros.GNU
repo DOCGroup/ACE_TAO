@@ -383,6 +383,10 @@ ifdef quantify
              -max_threads=100
   CCFLAGS += -DACE_HAS_QUANTIFY
   CPPFLAGS += -I$(ACE_QUANTIFY_DIR)
+
+  ifeq ($(shell uname -p),sparc)
+    PRELINK += -record-register-window-traps
+  endif # sparc
 endif # quantify
 
 ifeq ($(repo),0)
