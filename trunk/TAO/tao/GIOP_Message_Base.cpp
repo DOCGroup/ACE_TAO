@@ -1137,9 +1137,10 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
         {
           status_info.status = TAO_GIOP_OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                      ACE_TEXT ("called: forwarding\n")));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
+                        ACE_TEXT ("called: forwarding\n")));
         }
       else if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
         {
