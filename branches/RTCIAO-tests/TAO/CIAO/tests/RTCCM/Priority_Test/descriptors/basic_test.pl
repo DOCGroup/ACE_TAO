@@ -24,6 +24,7 @@ if ($CIAO_ROOT eq "") {
 $status = 0;
 $assembly = PerlACE::LocalFile ("demo-50.cad");
 $deploy_config = PerlACE::LocalFile ("test.dat");
+#$deploy_config = PerlACE::LocalFile ("remote.dat");
 $daemon_ior = PerlACE::LocalFile ("daemon.ior");
 $am_ior = PerlACE::LocalFile ("am.ior");
 $controller_ior = PerlACE::LocalFile ("controller.ior");
@@ -33,6 +34,7 @@ $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 $start_work = 10;
 $end_work = 300;
 $work_step = 300;
+$run_time = 30;                 # run for $run_time sec.
 
 unlink $daemon_ior;
 unlink $am_ior;
@@ -100,7 +102,7 @@ for ($work = $start_work; $work < $end_work; $work += $work_step)
 
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
-    sleep (30);
+    sleep ($run_time);
 
 #Start the client to send the trigger message
     $CL = new PerlACE::Process ("../Controllers/client",
