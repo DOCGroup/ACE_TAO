@@ -17,8 +17,9 @@
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
+#include "ace/Acceptor.h"
 
-#include "tao/Transport_Acceptor.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,11 +27,11 @@
 
 #if TAO_HAS_SCIOP == 1
 
+#include "ace/SOCK_SEQPACK_Acceptor.h"
+
+#include "tao/Transport_Acceptor.h"
 #include "SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
-
-#include "ace/Acceptor.h"
-#include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 
 // TAO SCIOP_Acceptor concrete call defination
