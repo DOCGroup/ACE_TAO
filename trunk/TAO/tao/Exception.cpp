@@ -139,16 +139,16 @@ CORBA::Exception::_tao_any_destructor (void *x)
 
 namespace CORBA
 {
-  ostream& operator<< (ostream &os,
-                       const CORBA::Exception &e)
+  ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
+                                const CORBA::Exception &e)
   {
     os << e._name () << " (" << e._rep_id () << ')';
 
     return os;
   }
 
-  ostream& operator<< (ostream &os,
-                       const CORBA::Exception *e)
+  ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
+                                const CORBA::Exception *e)
   {
     os << e->_name () << " (" << e->_rep_id () << ')';
 
