@@ -124,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          ACE_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
                         1);
-    char buf[ACE_Log_Record::MAXLOGMSGLEN + 1];
+    char buf[ACE_MAXLOGMSGLEN + 1];
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
     ACE_FILE_Info info;
