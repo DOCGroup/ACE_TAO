@@ -1,3 +1,11 @@
+Wed Jul  3 11:23:10 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.h:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	  Fixed generation of AMH ExceptionHolders after Jeff's large
+	  commit. Somehow, something got missed :-)
+
 Wed Jul  3 14:04:57 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
