@@ -1,3 +1,8 @@
+Tue Jun 10 13:23:57 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/performance-tests/scripts/*.conf:
+	  Changed to use the continuous priority model.
+
 Sun Jun  8 19:53:04 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
