@@ -29,6 +29,7 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
   <LI><A HREF="#platforms">Supported Platforms and C++ Compilers</A>
   <LI><A HREF="#installnotes">Installation Notes for Supported Platforms</A>
   <LI><A HREF="#g++">Compiling ACE with GNU g++</A>
+  <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
   <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
@@ -417,19 +418,6 @@ try to help you fix the problems.
 If you use the GNU GCC g++ compiler please note the following:
 
 <UL>
-  <LI>ACE transparently supports egcs.  Please use the appropriate
-      g++ config and platform files for the OS on which you will use egcs.
-
-      <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-      The default behavior of the ACE Makefiles is to add
-      <code>-fno-exceptions</code> to egcs (and g++ starting with version
-      2.8.0) invocations.  This disables exception handling support.  On
-      Solaris/sparc and Linux/alpha, it results in a 25 percent reduction
-      in the size of libACE.so.  To enable exception handling, add
-      <code>exceptions=1</code> to your <code>make</code> command line
-      invocation, or to your
-      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<P>
-
   <LI>With g++ 2.8.0, an internal compiler error is raised when
       trying to compile ACE_Map_Manager instantiations.  One workaround
       is to disable optimization.  The easiest way to do that is:
@@ -525,8 +513,42 @@ If you use the GNU GCC g++ compiler please note the following:
 
 </UL>
 
-<P><HR><P>
 
+<P><HR>
+<H4><A NAME="egcs">Compiling ACE with egcs</A></H4>
+<ul>
+  <li>ACE transparently supports egcs, for the most part.  Please see
+      <a href="#g++">Compiling ACE with g++</a> in this document.  And,
+      please use the appropriate g++ config and platform files for the OS on
+      which you will use egcs.<p>
+
+  <li><strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+      The default behavior of the ACE Makefiles is to add
+      <code>-fno-exceptions</code> to egcs (and g++ starting with version
+      2.8.0) invocations.  This disables exception handling support.  On
+      Solaris/sparc and Linux/alpha, it results in a 25 percent reduction
+      in the size of libACE.so.  To enable exception handling, add
+      <code>exceptions=1</code> to your <code>make</code> command line
+      invocation, or to your
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<p>
+
+  <li>egcs may have trouble linking the ACE IOStream_Test if
+      its static libraries are used.  It's best to build
+      egcs with the <code>--enabled-shared</code> config option,
+      so that it provides shared libraries.  Be sure to set your
+      <code>LD_LIBRARY_PATH</code> environment variable, if necessary,
+      to pick up those shared libraries.<p>
+
+  <li>On DEC Alpha, egcs through version 1.03a, at least, may fail
+      to build ACE if debugging (-g) is enabled.  The fix is to
+      edit the egcs gcc/mips-file.c file, at line 976, and change
+      <code>PAGE_SIZE</code> to 8192.  Then rebuild ACE.  Thanks to
+      <a href="mailto:gpai@voicetek.com">Ganesh Pai</a> for this
+      information.<p>
+</ul>
+
+
+<P><HR>
 <H3><A NAME="aceinstall">Building and Installing ACE</A></H3>
 
 The following explains how to build the ACE on <A
