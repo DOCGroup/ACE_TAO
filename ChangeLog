@@ -1,8 +1,40 @@
+Fri Oct 15 10:09:34 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * tests/TSS_Test.cpp:
+        * tests/TSS_Test_Errno.h:
+
+          Olli's report that TSS_Test was failing when TSS_Emulation prompted me
+          to take a closer look at TSS_Test.  I found a number of problems, none
+          of which was related to the TSS Emulation issue.  That will be addressed
+          separately.
+
+          The most serious problem was attempting to log a message from within
+          a TSS cleanup function.  Since the log message buffer is itself a TSS
+          object this only works of the TSS objects happen to be deleted in the
+          "right" order.  There was even a comment that said:
+            // Anyways, for whatever reason, the ACE_DEBUG causes a
+            // core dump on LynxOS 2.5.0.
+
+          I was amused by: void *ptr; operator delete (ptr);.  It works, but it's a bad
+          example to set for people who might read this code as an example of how to
+          clean up "real" TSS objects.  Sometimes calling the destructor is important.
+
+          If the comments can be trusted, the code was deleting TSS objects twice when
+          ACE_HAS_PTHREADS_DRAFT4 was defined.
+
+          Finally I added a test of TSS object lifetime management.  Previously
+          it did a lot of calls without really checking to see if they worked.
+          It now counts the number of TSS objects created and the number deleted to
+          insure that every object created is actually deleted.  For now a failure
+          of this check generates a warning rather than an error because I want
+          to see how this turns out on various platforms without adding a new
+          test failure right before upcoming beta release.
+
 Fri Oct 15 01:28:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* netsvcs/lib/Makefile.am:
+        * netsvcs/lib/Makefile.am:
 
-	  Changed to install netsvcs library.
+          Changed to install netsvcs library.
 
 Fri Oct 15 06:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -12,11 +44,11 @@ Fri Oct 15 06:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 14 21:03:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/CDR_Base.cpp:
-	* ace/CDR_Base.inl:
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.inl:
 
-	  Added AMD64 optimized versions of ACE_CDR::swap_{2, 4, 8}, and
-	  ACE_CDR::swap_{2, 4}_array.
+          Added AMD64 optimized versions of ACE_CDR::swap_{2, 4, 8}, and
+          ACE_CDR::swap_{2, 4}_array.
 
 Thu Oct 14 08:07:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
