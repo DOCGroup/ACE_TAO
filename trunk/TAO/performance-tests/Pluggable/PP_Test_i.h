@@ -34,13 +34,16 @@ public:
   ~PP_Test_i (void);
   // Destructor
 
-  virtual void send_oneway (CORBA::Environment &env);
+  virtual void send_oneway (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a oneway call.
 
-  virtual void send_void (CORBA::Environment &env);
+  virtual void send_void (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a twoway call.
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown routine.
 
 protected:
@@ -62,7 +65,8 @@ public:
   ~Pluggable_Test_Factory_i (void);
   // Destructor.
 
-  virtual Pluggable_Test_ptr make_pluggable_test (CORBA::Environment &env);
+  virtual Pluggable_Test_ptr make_pluggable_test (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Make a Pluggable Test object.
 
 private:
