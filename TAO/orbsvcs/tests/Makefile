@@ -32,10 +32,6 @@ DIRS  = Simple_Naming \
 	ior_corbaname \
 	tests_svc_loader
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  DIRS += InterfaceRepo
-endif # ACE_HAS_GNUG_PRE_2_8
-
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
@@ -47,6 +43,13 @@ endif
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+ifeq ($(minimum_corba),0)
+  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    DIRS += InterfaceRepo
+  endif # ACE_HAS_GNUG_PRE_2_8
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
