@@ -90,6 +90,16 @@
         string for you.
 
 
+[HPC issues]
+    The only testbed we have locally is an HP 360LX.  Some tests that
+    use sockets must have the ethernet card installed in order to run
+    successfully.  If you don't, the test will either hang or worse,
+    render the serial connection unusable.
+
+    Sometimes, some programs will screw up the whole system
+    completely.  Reset button is you best friend when this happens.
+
+
 [CE Toolkit issues]
 
   [CE Toolkit]
