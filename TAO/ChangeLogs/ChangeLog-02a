@@ -1,3 +1,11 @@
+Wed Aug 22 10:35:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAOACE_Static.dsw:
+
+          Added dependencies to projects so the entire workspace
+          can be batch built. Thanks to Frank Wolf <fwolf@gum.de> 
+          for pointing out some of these.
+
 Wed Aug 22 08:16:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
