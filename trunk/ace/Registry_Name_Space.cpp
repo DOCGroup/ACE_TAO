@@ -61,6 +61,8 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
                                const ACE_NS_WString &value,
                                const char *type)
 {
+  ACE_UNUSED_ARG(type);
+
   // Pointer to data
   const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
@@ -87,6 +89,8 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
                                  const ACE_NS_WString &value,
                                  const char *type)
 {
+  ACE_UNUSED_ARG(type);
+
   // Pointer to data
   const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
@@ -124,6 +128,8 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
                                   ACE_NS_WString &value,
                                   char *&type)
 {
+  ACE_UNUSED_ARG(type);
+
   // This object will be used to query the size of the data.
   // Note: The query_object.data will be null for this invocation.
   ACE_Registry::Object query_object;
@@ -207,6 +213,9 @@ int
 ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
                                      const ACE_NS_WString &pattern)
 {
+  ACE_UNUSED_ARG(set);
+  ACE_UNUSED_ARG(pattern);
+
   return 0;
 }
 
@@ -215,6 +224,8 @@ int
 ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                             const ACE_NS_WString &pattern)
 {
+  ACE_UNUSED_ARG(pattern);
+
   ACE_Registry::Binding_List list;
   int result = this->context_.list (list);
   if (result != 0)
