@@ -29,10 +29,8 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "Object_Adapter.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/Service_Context.h"
 #include "tao/TAO_Server_Request.h"

@@ -817,7 +817,7 @@ namespace TAO
       // @todo Johnny, this must be changed, we only want to call something to request_processing_strategy
 
       // We must have default servant, if not, wrong policy
-      if (this->poa_->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
+      if (this->poa_->cached_policies().request_processing () != PortableServer::USE_DEFAULT_SERVANT)
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                             0);
