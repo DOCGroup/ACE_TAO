@@ -64,7 +64,7 @@ $s_conf = "server.conf";
 
 sub read_nsior
 {
-  open (FH, "<".$nsiorfile);
+  open (FH, "<$nsiorfile");
 
   read (FH, $ior, 255);
 
@@ -202,10 +202,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
 }
 
 name_server ();
-
-read_nsior ();
-
 sleep $sleeptime;
+read_nsior ();
 
 server ();
 sleep $sleeptime;
