@@ -90,6 +90,7 @@ main (int argc, char *argv[])
 {
   ds_control ds_cntrl ("DT_FT_Middle", "ft_enable.dsui");
 
+  ACE_LOG_MSG->priority_mask (LM_ERROR | LM_CRITICAL | LM_ALERT | LM_EMERGENCY, ACE_Log_Msg::PROCESS);
   EDF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;
   long flags;
@@ -225,13 +226,13 @@ main (int argc, char *argv[])
 
   CPULoad::calibrate(5);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
 //print out the start time of the program.
   ACE_Time_Value start_time=ACE_OS::gettimeofday();
   ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       Worker worker (orb.in ());
       if (worker.activate (flags,

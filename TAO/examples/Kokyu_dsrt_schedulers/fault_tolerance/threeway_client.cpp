@@ -202,6 +202,7 @@ main (int argc, char *argv[])
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();
 
+  ACE_LOG_MSG->priority_mask (LM_ERROR | LM_CRITICAL | LM_ALERT | LM_EMERGENCY, ACE_Log_Msg::PROCESS);
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
   int prio;
