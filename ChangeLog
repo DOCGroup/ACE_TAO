@@ -1,3 +1,16 @@
+Mon Nov  3 19:38:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/config-all.h:
+
+	  Added a new #define, ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+	  which defines template <>  for definitions of member functions
+	  of a class that is specialized. 
+	
+	* ace/config-g++-common.h:
+
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
+	  g++ is doing the right thing for class member specializations. 
+
 Mon Nov  3 17:02:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-openbsd.h:
