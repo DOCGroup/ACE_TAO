@@ -1,3 +1,12 @@
+Thu Jul 15 23:16:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.mt_server.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.st_client.conf:
+	  Alternative configurations that do not exploit any specific
+	  knowledge about the application, only that if the client or
+	  server are single threaded.
+
 Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * TAO/tao/IIOP_Connector.cpp
