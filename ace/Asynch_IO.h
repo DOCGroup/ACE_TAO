@@ -617,8 +617,9 @@ public:
 
   /**
    * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be write and stored in the <message_block>.  The write will
-   * start at <offset> from the beginning of the file. Priority of the
+   * will be written from the <message_block>, starting at the
+   * block's <rd_ptr>.  The write will go to the file, starting
+   * <offset> bytes from the beginning of the file. Priority of the
    * operation is specified by <priority>. On POSIX4-Unix, this is
    * supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
