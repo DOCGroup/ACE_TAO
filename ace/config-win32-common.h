@@ -100,6 +100,7 @@
 #define ACE_WIN32
 #if defined (__BORLANDC__)
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#define ACE_HAS_BROKEN_SAP_ANY
 #endif /* __BORLANDC__ */
 
 //#define ACE_HAS_ALLOC_HOOKS

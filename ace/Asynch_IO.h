@@ -85,10 +85,10 @@ public:
 		     ACE_HANDLE event,
 		     u_long offset = 0,
 		     u_long offset_high = 0);
-  // Constructor 
+  // Constructor. 
 
   virtual ~ACE_Asynch_Result (void);
-  // Destructor 
+  // Destructor.
 
 protected:
   virtual void complete (u_long bytes_transferred,
@@ -895,7 +895,7 @@ public:
   // Virtual destruction.
 
   virtual void open (ACE_HANDLE new_handle,
-		     ACE_Message_Block &message_block) = 0;
+		     ACE_Message_Block &message_block);
   // <open> is called by ACE_Asynch_Acceptor to initialize a new
   // instance of ACE_Service_Handler that has been created after the a
   // new connection is accepted. The handle for the new connection is

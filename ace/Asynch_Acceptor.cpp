@@ -66,30 +66,35 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::setsockopt"), -1);
     }
 
-  // If port is not specified, bind to any port
-  static ACE_INET_Addr sap_any ((const ACE_INET_Addr &) ACE_Addr::sap_any);
-  if (address == sap_any &&
-      ACE::bind_port (this->listen_handle_) == -1)
+  // If port is not specified, bind to any port.
+  static ACE_INET_Addr sa ((const ACE_INET_Addr &) ACE_Addr::sap_any);
+
+  if (address == sa && ACE::bind_port (this->listen_handle_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::bind_port"), -1);
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_, 
 		    (sockaddr *) address.get_addr (), 
 		    address.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::bind"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "ACE_OS::bind"),
+                      -1);
   
   // Start listening
   if (ACE_OS::listen (this->listen_handle_, backlog) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::listen"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "ACE_OS::listen"), -1);
 
-  // For the number of <backlog>
+  // For the number of <backlog>.
+
   for (int i = 0; i < backlog; i++)
-    {
-      // Initiate accepts
-      if (this->accept (bytes_to_read) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Acceptor::accept"), -1);	
-    }
-  
+    // Initiate accepts.
+    if (this->accept (bytes_to_read) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Acceptor::accept"), -1);	
   return 0;
 }
  
