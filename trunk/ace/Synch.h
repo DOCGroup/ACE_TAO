@@ -476,7 +476,8 @@ public:
   /// Initialize the mutex.
   ACE_Mutex (int type = USYNC_THREAD,
              const ACE_TCHAR *name = 0,
-             ACE_mutexattr_t *arg = 0);
+             ACE_mutexattr_t *arg = 0,
+             mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
   /// Implicitly destroy the mutex.
   ~ACE_Mutex (void);

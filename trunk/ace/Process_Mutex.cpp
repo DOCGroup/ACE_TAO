@@ -32,11 +32,20 @@ ACE_Process_Mutex::unique_name (void)
   return this->name_;
 }
 
-ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
+ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg, mode_t mode)
 #if defined (_ACE_USE_SV_SEM)
-  : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) :this->unique_name ())
+  : lock_ (name ?
+             ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (),
+           ACE_SV_Semaphore_Complex::ACE_CREATE,
+           1,
+           1,
+           mode)
 #else
-  : lock_ (USYNC_PROCESS, name ? ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (), (ACE_mutexattr_t *) arg)
+  : lock_ (USYNC_PROCESS,
+           name ?
+             ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (),
+           (ACE_mutexattr_t *) arg,
+           mode)
 #endif /* _ACE_USE_SV_SEM */
 {
 #if defined (_ACE_USE_SV_SEM)
@@ -45,11 +54,22 @@ ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name, void *arg)
+ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
+                                      void *arg,
+                                      mode_t mode)
 #if defined (_ACE_USE_SV_SEM)
-  : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): this->unique_name ())
+  : lock_ (name ?
+             ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (),
+           ACE_SV_Semaphore_Complex::ACE_CREATE,
+           1,
+           1,
+           mode)
 #else
-  : lock_ (USYNC_PROCESS, name ? ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (), (ACE_mutexattr_t *) arg)
+  : lock_ (USYNC_PROCESS,
+           name ?
+             ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (),
+           (ACE_mutexattr_t *) arg,
+           mode)
 #endif /* _ACE_USE_SV_SEM */
 {
 #if defined (_ACE_USE_SV_SEM)

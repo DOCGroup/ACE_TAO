@@ -171,7 +171,8 @@ ACE_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
+ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
+                      ACE_mutexattr_t *arg, mode_t mode)
   :
 #if defined (CHORUS) || defined(ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
     process_lock_ (0),
@@ -186,15 +187,11 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
   if (type == USYNC_PROCESS)
     {
       // Let's see if the shared memory entity already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (name,
-                                        O_RDWR | O_CREAT | O_EXCL,
-                                        ACE_DEFAULT_FILE_PERMS);
+      ACE_HANDLE fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT | O_EXCL, mode);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (name,
-                                   O_RDWR | O_CREAT,
-                                   ACE_DEFAULT_FILE_PERMS);
+            fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
           else
             return;
         }

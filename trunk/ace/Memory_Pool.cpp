@@ -157,7 +157,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
     flags_ (MAP_SHARED),
     write_each_page_ (0),
     minimum_bytes_ (0),
-    sa_ (0)
+    sa_ (0),
+    file_mode_ (ACE_DEFAULT_FILE_PERMS)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -190,6 +191,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       this->minimum_bytes_ = options->minimum_bytes_;
       if (options->sa_ != 0)
         this->sa_ = options->sa_;
+      this->file_mode_ = options->file_mode_;
     }
 
   if (backing_store_name == 0)
@@ -373,7 +375,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 
   if (this->mmap_.open (this->backing_store_name_,
                         O_RDWR | O_CREAT | O_TRUNC | O_EXCL,
-                        ACE_DEFAULT_FILE_PERMS, this->sa_) != -1)
+                        this->file_mode_, this->sa_) != -1)
     {
       // First time in, so need to acquire memory.
       first_time = 1;
@@ -390,7 +392,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            -1,
 #endif /* CHORUS */
                            O_RDWR,
-                           ACE_DEFAULT_FILE_PERMS,
+                           this->file_mode_,
                            PROT_RDWR,
                            this->flags_,
                            this->base_addr_,
@@ -451,14 +453,16 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
                                                             off_t minimum_bytes,
                                                             u_int flags,
                                                             int guess_on_fault,
-                                                            LPSECURITY_ATTRIBUTES sa)
+                                                            LPSECURITY_ATTRIBUTES sa,
+                                                            mode_t file_mode)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
     minimum_bytes_ (minimum_bytes),
     flags_ (flags),
     guess_on_fault_ (guess_on_fault),
-    sa_ (sa)
+    sa_ (sa),
+    file_mode_ (file_mode)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatability
