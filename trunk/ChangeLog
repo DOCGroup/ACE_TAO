@@ -1,3 +1,8 @@
+Tue Jan 20 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added support for the Cygwin 1.5.6-1 version
+
 Mon Jan 19 13:31:46 2004  Steve Huston  <shuston@riverace.com>
 
 	* Makefile: In AUTOCONF_RELEASE_FILES, changed aux to aux_config to
