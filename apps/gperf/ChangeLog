@@ -1,3 +1,8 @@
+Mon Jul 20 15:35:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	
+	* Wrapped all the files with "#if defined (ACE_HAS_GPERF) so that
+	it compiles on appropriate platforms.
+
 Sun Jul 19 13:11:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/new.cpp: Added support for the _RWSTD_THROW_SPEC macro for
