@@ -4,6 +4,7 @@
 #define CIAO_SWAPPING_SERVANT_IMPL_T_C
 
 #include "Swapping_Servant_Home_Impl_T.h"
+#include "Dynamic_Component_Servant_T.h"
 
 namespace CIAO
 {
@@ -214,10 +215,10 @@ namespace CIAO
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
-       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>
-          (this->executor_, home.in (), this->container_);
+       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
+          (this->executor_.in (), home, this->container_);
 
-    this->container_.update_map (oid.in (), svt);
+    this->container_->update_servant_map (oid, svt);
 
     return ho._retn ();
   }

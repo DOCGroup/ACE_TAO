@@ -29,14 +29,15 @@
 
 namespace CIAO
 {
-  template <typename COMP_SERVANT, typename COMP_EXEC, 
-            typename COMP_EXEC_VAR, typename EXEC, typename COMP>
+  template <typename COMP_SVNT, typename COMP_EXEC, 
+            typename COMP_EXEC_VAR, typename EXEC, typename EXEC_VAR,
+            typename COMP>
   class Dynamic_Component_Servant
     : public virtual Dynamic_Component_Servant_Base
   {
   public:
     Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home,
-                               Session_Container *c);
+                               Swapping_Container *c);
 
     virtual ~Dynamic_Component_Servant (void);
 
