@@ -70,7 +70,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TypeCodeFactoryC.o .obj/TypeCodeFactoryC.SO .shobj/TypeCodeFactoryC.o .shobj/TypeCodeFactoryC.SO: TypeCodeFactoryC.cpp TypeCodeFactoryC.h \
+.obj/TypeCodeFactoryC.o .obj/TypeCodeFactoryC.so .shobj/TypeCodeFactoryC.o .shobj/TypeCodeFactoryC.so: TypeCodeFactoryC.cpp TypeCodeFactoryC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -96,7 +96,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -107,7 +108,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -297,9 +299,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -439,8 +438,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.SO .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.SO: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
-  $(ACE_ROOT)/ace/pre.h TypeCodeFactory_Loader.h \
+.obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
+  $(ACE_ROOT)/ace/pre.h \
+  TypeCodeFactory_Loader.h typecodefactory_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -480,7 +480,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -567,7 +568,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h TypeCodeFactoryC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  TypeCodeFactoryC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -674,9 +676,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -700,7 +699,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
-  TypeCodeFactoryC.inl $(ACE_ROOT)/ace/Containers_T.h \
+  TypeCodeFactoryC.inl \
+  $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Array_Base.h \
@@ -709,8 +709,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp
 
-.obj/TypeCodeFactory_Adapter_Impl.o .obj/TypeCodeFactory_Adapter_Impl.SO .shobj/TypeCodeFactory_Adapter_Impl.o .shobj/TypeCodeFactory_Adapter_Impl.SO: TypeCodeFactory_Adapter_Impl.cpp \
-  TypeCodeFactory_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+.obj/TypeCodeFactory_Adapter_Impl.o .obj/TypeCodeFactory_Adapter_Impl.so .shobj/TypeCodeFactory_Adapter_Impl.o .shobj/TypeCodeFactory_Adapter_Impl.so: TypeCodeFactory_Adapter_Impl.cpp \
+  TypeCodeFactory_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/TypeCodeFactory_Adapter.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -750,13 +751,15 @@ realclean: clean
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i typecodefactory_export.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  typecodefactory_export.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
@@ -836,10 +839,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h TypeCodeFactory_i.h \
-  TypeCodeFactory_Loader.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  TypeCodeFactory_i.h TypeCodeFactory_Loader.h \
   $(TAO_ROOT)/tao/Object_Loader.h \
-  $(TAO_ROOT)/tao/Object_Loader.i TypeCodeFactoryC.h \
+  $(TAO_ROOT)/tao/Object_Loader.i \
+  TypeCodeFactoryC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -946,9 +950,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -972,7 +973,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
-  TypeCodeFactoryC.inl $(TAO_ROOT)/tao/ORB_Core.h \
+  TypeCodeFactoryC.inl \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
   $(TAO_ROOT)/tao/Policy_Set.i \
@@ -1034,8 +1036,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/TypeCodeFactory_Loader.o .obj/TypeCodeFactory_Loader.SO .shobj/TypeCodeFactory_Loader.o .shobj/TypeCodeFactory_Loader.SO: TypeCodeFactory_Loader.cpp \
-  TypeCodeFactory_Loader.h $(ACE_ROOT)/ace/pre.h \
+.obj/TypeCodeFactory_Loader.o .obj/TypeCodeFactory_Loader.so .shobj/TypeCodeFactory_Loader.o .shobj/TypeCodeFactory_Loader.so: TypeCodeFactory_Loader.cpp \
+  TypeCodeFactory_Loader.h \
+  $(ACE_ROOT)/ace/pre.h \
+  typecodefactory_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1075,7 +1079,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1162,7 +1167,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h TypeCodeFactoryC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  TypeCodeFactoryC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -1269,9 +1275,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \

@@ -63,7 +63,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORInterceptorC.o .obj/IORInterceptorC.SO .shobj/IORInterceptorC.o .shobj/IORInterceptorC.SO: IORInterceptorC.cpp IORInterceptorC.h \
+.obj/IORInterceptorC.o .obj/IORInterceptorC.so .shobj/IORInterceptorC.o .shobj/IORInterceptorC.so: IORInterceptorC.cpp IORInterceptorC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
@@ -105,7 +105,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -272,19 +273,23 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjRefTemplate/ort_export.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.h \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.cpp \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.i \
   iorinterceptor_export.h IORInterceptorC.i
 
-.obj/IORInterceptor_Adapter_Impl.o .obj/IORInterceptor_Adapter_Impl.SO .shobj/IORInterceptor_Adapter_Impl.o .shobj/IORInterceptor_Adapter_Impl.SO: IORInterceptor_Adapter_Impl.cpp \
-  IORInterceptor_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+.obj/IORInterceptor_Adapter_Impl.o .obj/IORInterceptor_Adapter_Impl.so .shobj/IORInterceptor_Adapter_Impl.o .shobj/IORInterceptor_Adapter_Impl.so: IORInterceptor_Adapter_Impl.cpp \
+  IORInterceptor_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/pre.h \
   IORInterceptorC.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
@@ -326,7 +331,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -493,14 +499,17 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjRefTemplate/ort_export.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.h \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.cpp \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.i \
   iorinterceptor_export.h IORInterceptorC.i \
   $(TAO_ROOT)/tao/IORInterceptor_Adapter.h \

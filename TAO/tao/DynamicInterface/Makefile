@@ -71,7 +71,9 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Context.o .obj/Context.SO .shobj/Context.o .shobj/Context.SO: Context.cpp Context.h $(ACE_ROOT)/ace/pre.h \
+.obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp Context.h \
+  $(ACE_ROOT)/ace/pre.h \
+  dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -111,7 +113,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -133,7 +136,8 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h Context.inl \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  Context.inl \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -256,7 +260,7 @@ endif
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i
 
-.obj/DII_Invocation.o .obj/DII_Invocation.SO .shobj/DII_Invocation.o .shobj/DII_Invocation.SO: DII_Invocation.cpp DII_Invocation.h \
+.obj/DII_Invocation.o .obj/DII_Invocation.so .shobj/DII_Invocation.o .shobj/DII_Invocation.so: DII_Invocation.cpp DII_Invocation.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/CDR.h \
@@ -300,7 +304,8 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
@@ -497,13 +502,15 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i Context.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  Context.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i Context.inl ExceptionList.h \
-  ExceptionList.inl $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  Context.inl ExceptionList.h ExceptionList.inl \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
@@ -519,8 +526,9 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i Request.inl \
-  DII_Invocation.inl $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/NVList.i \
+  Request.inl DII_Invocation.inl \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -601,7 +609,7 @@ endif
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h
 
-.obj/DII_Reply_Dispatcher.o .obj/DII_Reply_Dispatcher.SO .shobj/DII_Reply_Dispatcher.o .shobj/DII_Reply_Dispatcher.SO: DII_Reply_Dispatcher.cpp DII_Reply_Dispatcher.h \
+.obj/DII_Reply_Dispatcher.o .obj/DII_Reply_Dispatcher.so .shobj/DII_Reply_Dispatcher.o .shobj/DII_Reply_Dispatcher.so: DII_Reply_Dispatcher.cpp DII_Reply_Dispatcher.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -611,7 +619,8 @@ endif
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  dynamicinterface_export.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Transport.h \
@@ -639,7 +648,8 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -650,7 +660,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -795,13 +806,15 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i Context.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  Context.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i Context.inl ExceptionList.h \
-  ExceptionList.inl $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  Context.inl ExceptionList.h ExceptionList.inl \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
@@ -835,7 +848,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i Request.inl \
+  $(TAO_ROOT)/tao/NVList.i \
+  Request.inl \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -917,8 +931,9 @@ endif
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/DII_ClientRequestInfo.o .obj/DII_ClientRequestInfo.SO .shobj/DII_ClientRequestInfo.o .shobj/DII_ClientRequestInfo.SO: DII_ClientRequestInfo.cpp \
-  DII_ClientRequestInfo.h $(ACE_ROOT)/ace/pre.h \
+.obj/DII_ClientRequestInfo.o .obj/DII_ClientRequestInfo.so .shobj/DII_ClientRequestInfo.o .shobj/DII_ClientRequestInfo.so: DII_ClientRequestInfo.cpp \
+  DII_ClientRequestInfo.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -960,7 +975,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1165,7 +1181,7 @@ endif
   Request.inl \
   $(TAO_ROOT)/tao/RequestInfo_Util.h
 
-.obj/Dynamic_Adapter_Impl.o .obj/Dynamic_Adapter_Impl.SO .shobj/Dynamic_Adapter_Impl.o .shobj/Dynamic_Adapter_Impl.SO: Dynamic_Adapter_Impl.cpp Dynamic_Adapter_Impl.h \
+.obj/Dynamic_Adapter_Impl.o .obj/Dynamic_Adapter_Impl.so .shobj/Dynamic_Adapter_Impl.o .shobj/Dynamic_Adapter_Impl.so: Dynamic_Adapter_Impl.cpp Dynamic_Adapter_Impl.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Dynamic_Adapter.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -1200,7 +1216,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1209,7 +1226,8 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  dynamicinterface_export.h $(ACE_ROOT)/ace/Service_Config.h \
+  dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1289,7 +1307,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h Request.h Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  Request.h Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
@@ -1297,8 +1316,9 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i Context.inl ExceptionList.h \
-  ExceptionList.inl $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  Context.inl ExceptionList.h ExceptionList.inl \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
@@ -1376,7 +1396,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i Request.inl Server_Request.h \
+  $(TAO_ROOT)/tao/NVList.i \
+  Request.inl Server_Request.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -1409,7 +1430,8 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl $(TAO_ROOT)/tao/Invocation.h \
+  Server_Request.inl \
+  $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1500,8 +1522,9 @@ endif
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/Dynamic_Implementation.o .obj/Dynamic_Implementation.SO .shobj/Dynamic_Implementation.o .shobj/Dynamic_Implementation.SO: Dynamic_Implementation.cpp \
-  Dynamic_Implementation.h $(ACE_ROOT)/ace/pre.h \
+.obj/Dynamic_Implementation.o .obj/Dynamic_Implementation.so .shobj/Dynamic_Implementation.o .shobj/Dynamic_Implementation.so: Dynamic_Implementation.cpp \
+  Dynamic_Implementation.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1544,7 +1567,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1713,7 +1737,8 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i Context.h Context.inl \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  Context.h Context.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -1743,7 +1768,8 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl $(TAO_ROOT)/tao/ORB_Core.h \
+  Server_Request.inl \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
@@ -1838,14 +1864,17 @@ endif
   $(TAO_ROOT)/tao/PortableServer/POAManager.h \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjRefTemplate/ort_export.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.h \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.cpp \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableServer/POAManager.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.h \
@@ -1858,8 +1887,9 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/ExceptionList.o .obj/ExceptionList.SO .shobj/ExceptionList.o .shobj/ExceptionList.SO: ExceptionList.cpp ExceptionList.h \
-  $(ACE_ROOT)/ace/pre.h dynamicinterface_export.h \
+.obj/ExceptionList.o .obj/ExceptionList.so .shobj/ExceptionList.o .shobj/ExceptionList.so: ExceptionList.cpp ExceptionList.h \
+  $(ACE_ROOT)/ace/pre.h \
+  dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1899,7 +1929,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1921,7 +1952,8 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h ExceptionList.inl \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  ExceptionList.inl \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -2001,7 +2033,8 @@ endif
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i
 
-.obj/Request.o .obj/Request.SO .shobj/Request.o .shobj/Request.SO: Request.cpp Request.h $(ACE_ROOT)/ace/pre.h \
+.obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp Request.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/post.h \
@@ -2010,7 +2043,8 @@ endif
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h Dynamic_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  Dynamic_Adapter_Impl.h \
   $(TAO_ROOT)/tao/Dynamic_Adapter.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2035,7 +2069,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2044,7 +2079,8 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  dynamicinterface_export.h $(ACE_ROOT)/ace/Service_Config.h \
+  dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2124,7 +2160,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
@@ -2132,8 +2169,9 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i Context.inl ExceptionList.h \
-  ExceptionList.inl $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  Context.inl ExceptionList.h ExceptionList.inl \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
@@ -2211,7 +2249,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i Request.inl DII_Invocation.h \
+  $(TAO_ROOT)/tao/NVList.i \
+  Request.inl DII_Invocation.h \
   $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -2346,7 +2385,7 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/Server_Request.o .obj/Server_Request.SO .shobj/Server_Request.o .shobj/Server_Request.SO: Server_Request.cpp Server_Request.h \
+.obj/Server_Request.o .obj/Server_Request.so .shobj/Server_Request.o .shobj/Server_Request.so: Server_Request.cpp Server_Request.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2366,7 +2405,8 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/corbafwd.i Dynamic_Adapter_Impl.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
+  Dynamic_Adapter_Impl.h \
   $(TAO_ROOT)/tao/Dynamic_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2381,7 +2421,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2390,7 +2431,8 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  dynamicinterface_export.h $(ACE_ROOT)/ace/Service_Config.h \
+  dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2470,7 +2512,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
@@ -2478,7 +2521,8 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i Context.inl \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  Context.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -2579,13 +2623,16 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl $(TAO_ROOT)/tao/NVList.h \
+  Server_Request.inl \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/GIOP_Utils.h \
   $(TAO_ROOT)/tao/GIOP_Utils.i
 
-.obj/Unknown_User_Exception.o .obj/Unknown_User_Exception.SO .shobj/Unknown_User_Exception.o .shobj/Unknown_User_Exception.SO: Unknown_User_Exception.cpp \
-  Unknown_User_Exception.h $(ACE_ROOT)/ace/pre.h \
+.obj/Unknown_User_Exception.o .obj/Unknown_User_Exception.so .shobj/Unknown_User_Exception.o .shobj/Unknown_User_Exception.so: Unknown_User_Exception.cpp \
+  Unknown_User_Exception.h \
+  $(ACE_ROOT)/ace/pre.h \
+  dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2630,7 +2677,8 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
