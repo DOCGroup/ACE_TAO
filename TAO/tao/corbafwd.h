@@ -909,14 +909,12 @@ TAO_NAMESPACE CORBA
 #define TAO_DEFAULT_MINOR_CODE 0x54410000
 #define TAO_MAX_MINOR_CODE 0x54410FFF
 
-// Minor code encoding.  Skip 4 bits, currently unused.  Then, encode
-// the location in 4 bits, and the errno in 4 bits:
+// Minor code encoding.  Encode the location in 8 bits, and the errno
+// in 4 bits:
 // 0x   0101 0100   0100 0001   0000   ____  ____     ____
 //          T           A        0      location      errno
 
-// Location encoding:  next-to-last 8 bits.
-
-// For TRANSIENT...
+// Location encoding:  8 bits, after the errno encoding.
 #define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 4)
 #define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 4)
 #define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 4)
