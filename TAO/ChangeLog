@@ -1,3 +1,27 @@
+Fri Nov 28 09:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.bor:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.bor:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.bor:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.bor:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.bor:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.bor:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.bor:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.bor:
+        * orbsvcs/tests/AVStreams/Multicast/server.bor:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.bor:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.bor:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.bor:
+        * orbsvcs/tests/AVStreams/Pluggable/server.bor:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.bor:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.bor:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.bor:
+          Added Messaging library
+
 Thu Nov 27 20:51:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp:
@@ -15,108 +39,108 @@ Thu Nov 27 18:33:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Nov 27 18:07:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (root_poa): 
+	* tao/ORB_Core.cpp (root_poa):
 
 	  Added a double-checked-locking in the implementation of
 	  root_poa. Thanks to Sebastien Lalonde for pointing this
 	  out. Looks like the intial authors thought that users wouldn't
-	  call resolve_initial_references () from multiple threads. 
+	  call resolve_initial_references () from multiple threads.
 
 Thu Nov 27 17:41:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp: 
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp: 
-	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp: 
-	* orbsvcs/tests/Notify/Basic/Filter.dsp: 
-	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp: 
-	* orbsvcs/tests/Notify/Basic/Updates.dsp: 
-	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Driver/Driver.dsp: 
-	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp: 
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp: 
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp: 
-	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp: 
-	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp: 
-	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp: 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.dsp: 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp: 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp: 
-	* orbsvcs/tests/Security/Big_Request/client.cpp 
-	* orbsvcs/tests/Security/Big_Request/server.cpp 
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp: 
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp: 
-	* orbsvcs/tests/Security/Crash_Test/client.cpp 
-	* orbsvcs/tests/Security/Crash_Test/server.cpp 
-	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp: 
-	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp: 
+	* orbsvcs/ImplRepo_Service/implrepo.dsp:
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
+	* orbsvcs/tests/Notify/Basic/Filter.dsp:
+	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
+	* orbsvcs/tests/Notify/Basic/Updates.dsp:
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Driver/Driver.dsp:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+	* orbsvcs/tests/Security/Big_Request/client.cpp
+	* orbsvcs/tests/Security/Big_Request/server.cpp
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+	* orbsvcs/tests/Security/Crash_Test/client.cpp
+	* orbsvcs/tests/Security/Crash_Test/server.cpp
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
 
-	  Another set of fixes for the dsp files. 
+	  Another set of fixes for the dsp files.
 
 	* orbsvcs/tests/Security/MT_SSLIOP/test_i.cpp:
 	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
 	* orbsvcs/tests/Security/SecurityLevel1/server.cpp:
-	 
-	  Additional includes needed to get it compiling on Win32. 
+
+	  Additional includes needed to get it compiling on Win32.
 
 Thu Nov 27 16:12:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp: 
-	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp: 
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp: 
-	* orbsvcs/tests/Notify/Basic/Events.dsp: 
-	* orbsvcs/tests/Notify/Basic/Filter.dsp: 
-	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp: 
-	* orbsvcs/tests/Notify/Basic/LifeCycle.dsp: 
-	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp: 
-	* orbsvcs/tests/Notify/Basic/Sequence.dsp: 
-	* orbsvcs/tests/Notify/Basic/Simple.dsp: 
-	* orbsvcs/tests/Notify/Basic/Updates.dsp: 
-	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp: 
-	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp: 
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp: 
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+	* orbsvcs/tests/Notify/Basic/Events.dsp:
+	* orbsvcs/tests/Notify/Basic/Filter.dsp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+	* orbsvcs/tests/Notify/Basic/LifeCycle.dsp:
+	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
+	* orbsvcs/tests/Notify/Basic/Sequence.dsp:
+	* orbsvcs/tests/Notify/Basic/Simple.dsp:
+	* orbsvcs/tests/Notify/Basic/Updates.dsp:
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
 
 	  Some more fixes.
 
 Thu Nov 27 13:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp: 
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp: 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp: 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp: 
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp: 
-	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp: 
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp: 
-	* orbsvcs/tests/ImplRepo/airplane_client.dsp: 
-	* orbsvcs/tests/ImplRepo/airplane_server.dsp: 
-	* orbsvcs/tests/ImplRepo/nestea_client.dsp: 
-	* orbsvcs/tests/ImplRepo/nestea_server.dsp: 
+	* orbsvcs/ImplRepo_Service/implrepo.dsp:
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+	* orbsvcs/tests/ImplRepo/airplane_client.dsp:
+	* orbsvcs/tests/ImplRepo/airplane_server.dsp:
+	* orbsvcs/tests/ImplRepo/nestea_client.dsp:
+	* orbsvcs/tests/ImplRepo/nestea_server.dsp:
 
 	  Another set of dsp fixes. If these get reset again by someone,
 	  I may have to use the lead pipe that I have stacked in the
-	  corner of my room and pay a visit to those friends :-)! 
+	  corner of my room and pay a visit to those friends :-)!
 
 	  BTW, there are a lot more remaining.
 
@@ -133,7 +157,7 @@ Thu Nov 27 12:35:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/Event/Performance/Latency_Server.dsp:
 
 	  Not sure how the list of libraries and paths got whacked
-	  out. Reset all of them. Let us see how the builds go. 
+	  out. Reset all of them. Let us see how the builds go.
 
 Thu Nov 27 17:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
