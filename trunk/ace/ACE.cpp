@@ -30,6 +30,29 @@ size_t ACE::pagesize_ = 0;
 // Size of allocation granularity.
 size_t ACE::allocation_granularity_ = 0;
 
+int
+ACE::out_of_file_descriptors (int error)
+{
+  // EMFILE is common to all platforms.
+  if (error == EMFILE ||
+#if defined (ACE_WIN32)
+      // On Win32, we need to check for ENOBUFS also.
+      error == ENOBUFS ||
+#elif defined (HPUX)
+      // On HPUX, we need to check for EADDRNOTAVAIL also.
+      error == EADDRNOTAVAIL ||
+#elif defined (linux)
+      // On linux, we need to check for ENOENT also.
+      error == ENOENT ||
+#elif defined (sun)
+      // On sun, we need to check for ENOSR also.
+      error == ENOSR ||
+#endif /* ACE_WIN32 */
+      error == ENFILE)
+    return 1;
+  else
+    return 0;
+}
 
 int
 ACE::init (void)
@@ -3198,7 +3221,7 @@ ACE::get_ip_interfaces (size_t &count,
       // Ethernet.
       ACE_OS::sprintf (dev_name,
                        "ether%d",
-                       i);    
+                       i);
       ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
       if (ip_dev[count] == 0)
         break;
@@ -3208,7 +3231,7 @@ ACE::get_ip_interfaces (size_t &count,
       // SLIP.
       ACE_OS::sprintf (dev_name,
                        "sl%d",
-                       i); 
+                       i);
       ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
       if (ip_dev[count] == 0)
         break;
