@@ -10,6 +10,14 @@ Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/CORBA_Handler.cpp,Dump.cpp,OS.cpp: use ACE_MT with
 	  preallocated locks.
 
+	* include/makeinclude/platform_*.GNU,wrapper_macros.GNU:
+	  moved -O out of wrapper_macros.GNU and into each platform
+	  file's OC[C]FLAGS to support "optimize" make flag.
+
+	* include/makeinclude/wrapper_macros.GNU: Removed "debug"
+	  disable with "optimize", because some platforms allow both
+	  "debug" and "optimize".
+
 Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: 
