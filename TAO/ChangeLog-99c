@@ -1,49 +1,59 @@
+Fri Nov 19 22:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/DOVEBrowser/Makefile: a few fixes
+          to correspond to the current file complement.  It builds
+          on Linux now!
+
+        * examples/Simulator/DOVEBrowser/PushConsumer.java (open_consumer):
+          removed the first (float) argument from the RtecEventData
+          construction, because it no longer compiles with it.
+
 Fri Nov 19 18:41:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (log):
-	  Fixed some problems for VxWorks regarding use
-	  of ULongLong.
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp (log):
+          Fixed some problems for VxWorks regarding use
+          of ULongLong.
 
 Fri Nov 19 18:26:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.h:
-	* tao/Invocation.i:
-	* tao/Invocation.cpp:
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/Stub.cpp:
-	* tao/Server_Request.h:
-	* tao/Object_Adapter.h:
-	* tao/Object_Adapter.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.cpp:
-	   Changes to implement reliable oneway requests. The
-	   (GIOP 1.1) boolean 'response_expected' field of the
-	   request header has been replaced by the (GIOP 1.2)
-	   octet 'response_flags'. The TAO_GIOP_Oneway_Request
-	   now has new members holding the SyncScope value and a
-	   reply dispatcher. It will set the 'response_flags' field
-	   according to this SyncScope value.
-	   Likewise, the server request will read the
-	   header field and store the SyncScope value.
-	   TAO_Object_Adapter has a new method which returns
-	   a reply after the servant has been located, but before it
-	   is dispatched (for SyncScope value SYNC_WITH_SERVER).
-	   Finally, since SyncScope values must be
-	   used (if only to set defaults) whether messaging is
-	   enabled or not, a TAO:: duplicate set has been put
-	   into TAOC.*.
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Stub.cpp:
+        * tao/Server_Request.h:
+        * tao/Object_Adapter.h:
+        * tao/Object_Adapter.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+           Changes to implement reliable oneway requests. The
+           (GIOP 1.1) boolean 'response_expected' field of the
+           request header has been replaced by the (GIOP 1.2)
+           octet 'response_flags'. The TAO_GIOP_Oneway_Request
+           now has new members holding the SyncScope value and a
+           reply dispatcher. It will set the 'response_flags' field
+           according to this SyncScope value.
+           Likewise, the server request will read the
+           header field and store the SyncScope value.
+           TAO_Object_Adapter has a new method which returns
+           a reply after the servant has been located, but before it
+           is dispatched (for SyncScope value SYNC_WITH_SERVER).
+           Finally, since SyncScope values must be
+           used (if only to set defaults) whether messaging is
+           enabled or not, a TAO:: duplicate set has been put
+           into TAOC.*.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	   The client stub now must query the request for
-	   the SyncScope value before calling prepare_header().
-	   Also, the skeleton must call init_reply() for a oneway
-	   request, if the SyncScope value requires a reply.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+           The client stub now must query the request for
+           the SyncScope value before calling prepare_header().
+           Also, the skeleton must call init_reply() for a oneway
+           request, if the SyncScope value requires a reply.
 
 Fri Nov 19 18:09:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
