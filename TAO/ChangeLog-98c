@@ -12,7 +12,8 @@ Thu Dec 03 01:24:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  If the _non_existent() remote call succeeds, it return 0; if
  	  CORBA::OBJECT_NOT_EXIST is thrown, it returns 1; and any other
  	  (system) exception raised in making the remote call is passed
- 	  through to the user.
+ 	  through to the user.  Thanks to Sunil Kumar <skumar@sutmyn.com>
+	  for reporting this.
 
 Thu Dec 03 01:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
