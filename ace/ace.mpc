@@ -191,6 +191,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Addr.cpp
       INET_Addr.cpp
       IPC_SAP.cpp
+      ICMP_Socket.cpp
       LSOCK.cpp
       LSOCK_Acceptor.cpp
       LSOCK_CODgram.cpp
@@ -198,6 +199,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       LSOCK_Dgram.cpp
       LSOCK_Stream.cpp
       Multihomed_INET_Addr.cpp
+      Ping_Socket.cpp
       SOCK.cpp
       SOCK_Acceptor.cpp
       SOCK_CODgram.cpp
