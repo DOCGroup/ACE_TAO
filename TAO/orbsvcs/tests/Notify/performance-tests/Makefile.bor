@@ -1,0 +1,9 @@
+#
+# Makefile for building the TAO Notify performance-tests
+# $Id$
+#
+
+DIRS = \
+        RedGreen
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
