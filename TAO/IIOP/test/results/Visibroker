@@ -1,3 +1,32 @@
+
+Cubit results over Ethernet with 20,000 calls
+---------------------------------------------
+
+                               Clients  Latency (ms)          Calls/Sec
+
+Visibroker thr-per-connection  1        1.077                 928
+                               2        1.228                 814
+                               3        1.789                 558
+        
+
+Visibroker reactive            1        1.167                 856
+                               2        1.39                  718
+                               3        1.664                 600
+
+
+Cubit results over ATM with 20,000 calls
+----------------------------------------
+
+                               Clients  Latency (ms)          Calls/Sec
+
+Visibroker thr-per-connection  1        1.060                 943
+                               2        1.327                 753
+                               3        2.108                 474
+
+Visibroker reactive            1        1.195                 836
+                               2        1.241                 805
+                               3        1.56                  641
+
                         TNF client-side profile for Visibroker for 20000 calls
 
 Function name         %      self+desc.          mean     max      min     std.
@@ -18,27 +47,3 @@ mutex_lock           0.18      165.141  60432    0.003    0.501    0.002   0.000
 mutex_unlock         0.16      153.891  60432    0.003    0.373    0.002   0.000
 
 
-
-Cubit results over Ethernet with 20,000 calls
----------------------------------------------
-
-                                Latency (ms)            Calls/Sec
-
-Visibroker without filters        1.077                 928
-Visibroker Thread-Per-Request     
-Visibroker Thread-Pool (25)       
-Visibroker Thread-Per-Session     
-        
-
-Cubit results over ATM with 20,000 calls
-----------------------------------------
-
-                                Latency (ms)            Calls/Sec
-
-Visibroker without filters        1.060                 943
-Visibroker Thread-Per-Request     
-Visibroker Thread-Pool (25)       
-Visibroker Thread-Per-Session     
-
-
-        
