@@ -74,7 +74,7 @@ PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
   // @@ If we keep a list remember to remove this object from the
   // list.
   delete this;
-};
+}
 
 ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
                                           RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
