@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_operation.h"
+#include "be_operation_strategy.h"
+#include "be_predefined_type.h"
+#include "be_argument.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_operation, "$Id$")
+ACE_RCSID (be, 
+           be_operation, 
+           "$Id$")
 
 be_operation::be_operation (void)
 {

@@ -19,11 +19,17 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_union_branch.h"
+#include "be_union.h"
+#include "be_type.h"
+#include "be_enum.h"
+#include "be_visitor.h"
+#include "be_helper.h"
+#include "ast_union_label.h"
 
-ACE_RCSID(be, be_union_branch, "$Id$")
+ACE_RCSID (be, 
+           be_union_branch, 
+           "$Id$")
 
 be_union_branch::be_union_branch (void)
 {

@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
-           operation_smart_proxy_ch, 
+           smart_proxy_ch, 
            "$Id$")
-
 
 // ******************************************************
 // Primary visitor for "operation" in client header.

@@ -64,18 +64,36 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl.h"
+#include "idl_defines.h"
+#include "be_codegen.h"
+#include "be_generator.h"
+#include "be_extern.h"
 #include "global_extern.h"
 #include "fe_extern.h"
-#include "drv_private.h"
+#include "ast_root.h"
+#include "utl_string.h"
 #include "drv_extern.h"
-#include "be.h"
 #include "ace/Process.h"
 #include "../tao/Version.h"
 
-ACE_RCSID(TAO_IDL, tao_idl, "$Id$")
+ACE_RCSID (TAO_IDL, 
+           tao_idl, 
+           "$Id$")
 
-#define         IDL_CFE_VERSION        "1.3.0"
+#define IDL_CFE_VERSION "1.3.0"
+
+#if !defined (NFILES)
+# define NFILES 1024
+#endif /* ! NFILES */
+
+const char *DRV_files[NFILES];
+long DRV_nfiles = 0;
+long DRV_file_index = -1;
+
+const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+
+extern TAO_IDL_BE_Export void BE_produce (void);
+extern TAO_IDL_BE_Export void BE_abort (void);
 
 // Initialize the BE. The protocol requires only that this routine
 // return an instance of AST_Generator (or a subclass thereof).
@@ -115,51 +133,60 @@ DRV_version (void)
   BE_version ();
 }
 
-// Fork off a process, wait for it to die.
 void
-DRV_fork (void)
+DRV_init (void)
 {
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      ACE_Process_Options options (1,
-                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
-      options.creation_flags (ACE_Process_Options::NO_EXEC);
-      options.command_line ("%s %s %s",
-                            idl_global->prog_name (),
-                            idl_global->idl_flags (),
-                            DRV_files[DRV_file_index]);
-      ACE_Process manager;
-      pid_t child_pid = manager.spawn (options);
+  // Initialize FE global data object.
+  ACE_NEW (idl_global,
+           IDL_GlobalData);
 
-      if (child_pid == 0)
-        {
-          // OK, do it to this file (in the child).
-          DRV_drive (DRV_files[DRV_file_index]);
-          ACE_OS::exit (0);
-        }
+  // Initialize some of its data.
+  idl_global->set_root (0);
+  idl_global->set_gen (0);
+  idl_global->set_err (FE_new_UTL_Error ());
+  idl_global->set_err_count (0);
+  idl_global->set_indent (FE_new_UTL_Indenter ());
+  idl_global->set_filename (0);
+  idl_global->set_main_filename (0);
+  idl_global->set_real_filename (0);
+  idl_global->set_stripped_filename (0);
+  idl_global->set_import (I_TRUE);
+  idl_global->set_in_main_file (I_FALSE);
+  idl_global->set_lineno (-1);
+  idl_global->set_prog_name (0);
 
-      if (child_pid == ACE_INVALID_PID)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: spawn failed\n")));
+#if defined (TAO_IDL_PREPROCESSOR)
+  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
+#elif defined (ACE_CC_PREPROCESSOR)
+  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
+#else
+  // Just default to cc
+  idl_global->set_cpp_location ("cc");
+#endif /* TAO_IDL_PREPROCESSOR */
 
-          ACE_OS::exit (99);
-        }
+  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
+  ACE_OS::memset (&local_escapes,
+                  0,
+                  LOCAL_ESCAPES_BUFFER_SIZE);
 
-      // child_pid is the process id of something at this point.
-      if (manager.wait () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: wait failed\n")));
+  idl_global->set_local_escapes (local_escapes);
+  idl_global->set_be ("");
+  idl_global->set_compile_flags (0);
+  idl_global->set_read_from_stdin (I_FALSE);
+  idl_global->set_include_file_names (0);
+  idl_global->set_n_include_file_names (0);
+  idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
 
-          ACE_OS::exit (99);
-        }
-    }
+  // Put an empty prefix on the stack for the global scope.
+  idl_global->pragma_prefixes ().push (ACE::strnew (""));
 
-  // Now the parent process can exit.
-  ACE_OS::exit (0);
+  // Initialize BE global data object.
+  ACE_NEW (be_global,
+           BE_GlobalData);
+
+  // Initialize driver private data
+  DRV_nfiles = 0;
+  DRV_file_index = 0;
 }
 
 /*
@@ -286,6 +313,53 @@ DRV_drive (const char *s)
   BE_produce ();
 
   // Exit cleanly.
+  ACE_OS::exit (0);
+}
+
+// Fork off a process, wait for it to die.
+void
+DRV_fork (void)
+{
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
+      ACE_Process_Options options (1,
+                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
+      options.creation_flags (ACE_Process_Options::NO_EXEC);
+      options.command_line ("%s %s %s",
+                            idl_global->prog_name (),
+                            idl_global->idl_flags (),
+                            DRV_files[DRV_file_index]);
+      ACE_Process manager;
+      pid_t child_pid = manager.spawn (options);
+
+      if (child_pid == 0)
+        {
+          // OK, do it to this file (in the child).
+          DRV_drive (DRV_files[DRV_file_index]);
+          ACE_OS::exit (0);
+        }
+
+      if (child_pid == ACE_INVALID_PID)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: spawn failed\n")));
+
+          ACE_OS::exit (99);
+        }
+
+      // child_pid is the process id of something at this point.
+      if (manager.wait () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: wait failed\n")));
+
+          ACE_OS::exit (99);
+        }
+    }
+
+  // Now the parent process can exit.
   ACE_OS::exit (0);
 }
 

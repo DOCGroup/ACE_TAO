@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_constant.h"
-
-ACE_RCSID(be_visitor_constant, constant_ch, "$Id$")
+ACE_RCSID (be_visitor_constant, 
+           constant_ch, 
+           "$Id$")
 
 
 // ********************************************************************

@@ -73,12 +73,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Expression::ExprType and serves as a cache). This field is used
 // to compute coercions for labels based on the expected discriminator type.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union.h"
+#include "ast_union_branch.h"
+#include "ast_union_label.h"
+#include "ast_field.h"
+#include "ast_predefined_type.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "global_extern.h"
 
-ACE_RCSID(ast, ast_union, "$Id$")
+ACE_RCSID (ast, 
+           ast_union, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Union::AST_Union (void)
 {
 }

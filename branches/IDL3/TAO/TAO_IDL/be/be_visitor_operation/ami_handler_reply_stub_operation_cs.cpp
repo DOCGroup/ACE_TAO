@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            ami_handler_reply_stub_operation_cs, 
            "$Id$")
-
 
 // ************************************************************
 // Operation visitor for client stubs.
 // ************************************************************
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
-be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx)
+be_visitor_operation_ami_handler_reply_stub_operation_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -45,7 +41,9 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::
 
 // Processing to be done after every element in the scope is processed
 int
-be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (be_decl *bd)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (
+    be_decl *bd
+  )
 {
   // All we do here is to insert a comma and a newline.
   TAO_OutStream *os = this->ctx_->stream ();

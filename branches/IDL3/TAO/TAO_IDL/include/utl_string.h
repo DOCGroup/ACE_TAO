@@ -62,18 +62,14 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
-// utl_string.hh - contains a quick and dirty TEMPORARY string implementation
-
-/*
-** DEPENDENCIES: NONE
-**
-** USE: Included from util.hh
-*/
+#include "TAO_IDL_FE_Export.h"
+#include "idl_bool.h"
+#include "ace/OS.h"
 
 class TAO_IDL_FE_Export UTL_String
 {
@@ -82,26 +78,16 @@ class TAO_IDL_FE_Export UTL_String
   // =DESCRIPTION
   //  string class to store identifiers
 public:
-  // =Operations
-
   UTL_String (void);
-  // Default constructor.
 
   UTL_String (const char *str);
-  // Construct from a const char *.
 
   UTL_String (UTL_String *s);
-  // Copy constructor.
 
-  virtual ~UTL_String (void);
-  // Destructor.
-
-  // =AST Dumping.
+  ~UTL_String (void);
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
-
-  // =Other Operations
 
   char *get_string (void);
   // Get contents of utl_string.
@@ -110,10 +96,10 @@ public:
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 
-  virtual long compare (UTL_String *s);
+  idl_bool compare (UTL_String *s);
   // Compare two UTL_String *
 
-  virtual long compare_quiet (UTL_String *s);
+  long compare_quiet (UTL_String *s);
   // Like the above but without error or warning message output.
 
   virtual void destroy (void);
@@ -129,8 +115,6 @@ private:
 
   unsigned long len;
   // How long is string.
-
-  // =Private helper operations.
 
   void canonicalize (void);
   // Compute canonical representation.

@@ -67,23 +67,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // utl_err.cc - Implementation of error reporting object for IDL
 //              compiler program
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_string.h"
+#include "global_extern.h"
+#include "nr_extern.h"
+#include "ast_interface.h"
+#include "ast_enum.h"
+#include "ast_union.h"
+#include "ast_union_label.h"
 
-ACE_RCSID(util, utl_err, "$Id$")
+ACE_RCSID (util, 
+           utl_err, 
+           "$Id$")
 
-#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
+#if defined (ACE_GCC_HONORS_STD_NAMESPACE) \
+             && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
 using std::cerr;
 #endif
-
-
-/*
- * Helper functions to do:
- *
- * - Convert an error code to an error string
- * - Print out an error message header
- * - Convert an ExprType to a string
- */
 
 // Convert an error code into a const char *
 static const char *
@@ -241,7 +242,7 @@ exprtype_to_string (AST_Expression::ExprType t)
 
 // Convert a parse state into a possible error message
 static const char *
-parse_state_to_error_message(IDL_GlobalData::ParseState ps)
+parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
   switch (ps) {
   case IDL_GlobalData::PS_NoState:

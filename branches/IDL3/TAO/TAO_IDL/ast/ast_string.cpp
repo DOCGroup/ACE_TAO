@@ -69,14 +69,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_String nodes have a maximum size (an AST_Expression which must
 // evaluate to a positive integer).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_string.h"
+#include "ast_expression.h"
+#include "ast_visitor.h"
 
 ACE_RCSID (ast, 
            ast_string, 
            "$Id$")
 
-// Constructor(s) and destructor.
 AST_String::AST_String (void)
  : pd_max_size (0),
    pd_width (sizeof (char))

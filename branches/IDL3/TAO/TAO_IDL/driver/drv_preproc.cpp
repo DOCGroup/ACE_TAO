@@ -66,17 +66,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "drv_private.h"
+#include "idl_bool.h"
+#include "idl_defines.h"
+#include "global_extern.h"
+#include "fe_extern.h"
 #include "drv_extern.h"
+#include "utl_string.h"
 #include "ace/Version.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
 
-ACE_RCSID(driver, drv_preproc, "$Id$")
+ACE_RCSID (driver, 
+           drv_preproc, 
+           "$Id$")
 
 static long argcount = 0;
 static long max_argcount = 128;
@@ -84,14 +88,14 @@ static const char *arglist[128];
 static const char *output_arg_format = 0;
 static long output_arg_index = 0;
 
-// Push the new CPP location if we got a -Yp argument
+// Push the new CPP location if we got a -Yp argument.
 void
 DRV_cpp_new_location (const char *new_loc)
 {
   arglist[0] = new_loc;
 }
 
-// Push an argument into the arglist
+// Push an argument into the arglist.
 void
 DRV_cpp_putarg (const char *str)
 {
@@ -133,21 +137,56 @@ DRV_cpp_expand_output_arg (const char *filename)
     }
 }
 
-// Initialize the cpp argument list
+// Lines can be 1024 chars long.
+#define LINEBUF_SIZE 1024
+static char drv_line[LINEBUF_SIZE + 1];
+
+// Get a line from stdin.
+static long
+DRV_get_line (FILE *f)
+{
+    char *l = fgets (drv_line,
+                     LINEBUF_SIZE,
+                     f);
+    long i = 0;
+
+    if (l == 0)
+      {
+        return I_FALSE;
+      }
+
+    if (*l == '\0' && feof (f))
+      {
+        return I_FALSE;
+      }
+
+    if (*l == '\0')
+      {
+        return I_TRUE;
+      }
+
+    i = strlen(l) - 1;
+
+    if (l[i] == '\n')
+      {
+        l[i] = '\0';
+      }
+
+    return I_TRUE;
+}
+
+// Initialize the cpp argument list.
 void
 DRV_cpp_init (void)
 {
-  // @@ There are two "one time" memory leaks in this function.
-  //    They will not blow off the program but should be fixed at some point.
   const char *cpp_loc, *cpp_args;
 
   // See if TAO_IDL_PREPROCESSOR is defined.
-
-  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR", (char *) 0);
+  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR", 
+                                     (char *) 0);
 
   // Set cpp_loc to the built in location, unless it has been overriden by
   // environment variables.
-
   if (preprocessor != 0)
     {
       cpp_loc = preprocessor;
@@ -179,7 +218,7 @@ DRV_cpp_init (void)
 
   // Add an option to the IDL compiler to make the TAO version
   // available to the user. A XX.YY.ZZ release gets version 0xXXYYZZ,
-  // for example, 5.1.14 gets 0x050114
+  // for example, 5.1.14 gets 0x050114.
   char version_option[128];
   ACE_OS::sprintf (version_option,
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
@@ -191,7 +230,6 @@ DRV_cpp_init (void)
   DRV_cpp_putarg ("-I.");
 
   // Added some customizable preprocessor options
-
   ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS",
                               (char *) 0);
 
@@ -201,7 +239,8 @@ DRV_cpp_init (void)
     }
   else
     {
-      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment variable
+      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment 
+      // variable.
       ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
                                   (char *) 0);
 
@@ -238,7 +277,8 @@ DRV_cpp_init (void)
           // TAO_IDL_INCLUDE_DIR should be in quotes,
           // e.g. "/usr/local/include/tao"
 
-          ACE_OS::strcat (option, TAO_IDL_INCLUDE_DIR);
+          ACE_OS::strcat (option, 
+                          TAO_IDL_INCLUDE_DIR);
 #else
           const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
@@ -282,7 +322,8 @@ DRV_cpp_init (void)
   for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
     {
       // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 && output_arg_format == 0)
+      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 
+          && output_arg_format == 0)
         {
           output_arg_format = ACE::strnew (arglist[arg_cnt]);
           output_arg_index = argcount;
@@ -295,42 +336,126 @@ DRV_cpp_init (void)
     }
 }
 
-// Lines can be 1024 chars long.
-#define LINEBUF_SIZE    1024
-static  char    drv_line[LINEBUF_SIZE + 1];
-
-// Get a line from stdin
-static long
-DRV_get_line (FILE *f)
+// We really need to know whether this line is a "#include ...". If
+// so, we would like to separate the "file name" and keep that in the
+// idl_global. We need them to produce "#include's in the stubs and
+// skeletons.
+void
+DRV_check_for_include (const char* buf)
 {
-    char *l = fgets (drv_line,
-                     LINEBUF_SIZE,
-                     f);
-    long i = 0;
+  const char* r = buf;
+  const char* h;
 
-    if (l == NULL)
-      {
-        return I_FALSE;
-      }
+  // Skip initial '#'.
+  if (*r != '#')
+    {
+      return;
+    }
+  else
+    {
+      r++;
+    }
 
-    if (*l == '\0' && feof (f))
-      {
-        return I_FALSE;
-      }
+  // Skip the tabs and spaces.
+  while (*r == ' ' || *r == '\t')
+    {
+      ++r;
+    }
 
-    if (*l == '\0')
-      {
-        return I_TRUE;
-      }
+  // Probably we are at the word `include`. If not return.
+  if (*r != 'i')
+    {
+      return;
+    }
 
-    i = strlen(l) - 1;
+  // Check whether this word is `include` or no.
+  const char* include_str = "include";
 
-    if (l[i] == '\n')
-      {
-        l[i] = '\0';
-      }
+  for (size_t ii = 0;
+       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ++r, ++ii)
+    {
+      // Return if it doesn't match.
+      if (include_str [ii] != *r)
+        {
+          return;
+        }
+    }
 
-    return I_TRUE;
+  // Next thing is finding the file that has been `#include'd. Skip
+  // all the blanks and tabs and reach the startng " or < character.
+  for (; (*r != '"') && (*r != '<'); ++r)
+    {
+      if (*r == '\n' || *r == '\0')
+        {
+          return;
+        }
+    }
+
+  // Decide on the end char.
+  char end_char = '"';
+
+  if (*r == '<')
+    {
+      end_char = '>';
+    }
+
+  // Skip this " or <.
+  ++r;
+
+  // Store this position.
+  h = r;
+
+  // Found this in idl.ll. Decides the file to be standard input.
+  if (*h == '\0')
+    {
+      return;
+    }
+
+  // Find the closing " or < character.
+  for (; *r != end_char; ++r)
+    {
+      continue;
+    }
+
+  // Make a new string for this file name.
+  char* file_name = 0;
+  ACE_NEW (file_name,
+           char [r - h + 1]);
+
+  // Copy the char's.
+  size_t fi = 0;
+
+  for (; h != r; ++fi, ++h)
+    {
+      file_name [fi] = *h;
+    }
+
+  // Terminate the string.
+  file_name [fi] = '\0';
+
+  // Put Microsoft-style pathnames into a canonical form.
+  size_t i = 0;
+
+  for (size_t j = 0; file_name [j] != '\0'; ++i, ++j)
+    {
+      if (file_name [j] == '\\' && file_name [j + 1] == '\\')
+        {
+          j++;
+        }
+
+      file_name [i] = file_name [j];
+    }
+
+  // Terminate this string.
+  file_name [i] = '\0';
+
+  // Store in the idl_global, unless it's "orb.idl" -
+  // we don't want to generate header includes for that.
+  if (ACE_OS::strcmp (file_name, "orb.idl"))
+    {
+      idl_global->add_to_included_idl_files (file_name);
+    }
 }
 
 // Copy from stdin to a file
@@ -341,7 +466,7 @@ DRV_copy_input (FILE *fin,
 {
   FILE  *f = ACE_OS::fopen (fn, "w");
 
-  if (f == NULL)
+  if (f == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
@@ -353,7 +478,7 @@ DRV_copy_input (FILE *fin,
       ACE_OS::exit (99);
     }
 
-  if (fin == NULL)
+  if (fin == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s",
@@ -410,16 +535,16 @@ DRV_copy_input (FILE *fin,
 }
 
 // Strip down a name to the last component,
-// i.e. everything after the last '/' or '\' character
+// i.e. everything after the last '/' or '\' character.
 static char *
 DRV_stripped_name (char *fn)
 {
-    char        *n = fn;
-    long        l;
+    char *n = fn;
+    long l;
 
-    if (n == NULL)
+    if (n == 0)
       {
-        return NULL;
+        return 0;
       }
 
     l = strlen (n);
@@ -440,11 +565,11 @@ DRV_stripped_name (char *fn)
     return n;
 }
 
-// File names
+// File names.
 static char     tmp_file[128];
 static char     tmp_ifile[128];
 
-// Pass input through preprocessor
+// Pass input through preprocessor.
 void
 DRV_pre_proc (const char *myfile)
 {
@@ -455,14 +580,22 @@ DRV_pre_proc (const char *myfile)
 
   const char* tmpdir = idl_global->temp_dir ();
 
-  ACE_OS::strcpy (tmp_file, tmpdir);
-  ACE_OS::strcpy (tmp_ifile, tmpdir);
+  ACE_OS::strcpy (tmp_file, 
+                  tmpdir);
+  ACE_OS::strcpy (tmp_ifile, 
+                  tmpdir);
 
-  ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
-  ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
+  ACE_OS::strcat (tmp_file, 
+                  "idlf_XXXXXX");
+  ACE_OS::strcat (tmp_ifile, 
+                  "idli_XXXXXX");
 
-  (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
-  (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
+  (void) ACE_OS::mktemp (tmp_file); 
+  ACE_OS::strcat (tmp_file, 
+                  ".cc");
+  (void) ACE_OS::mktemp (tmp_ifile); 
+  ACE_OS::strcat (tmp_ifile, 
+                  ".cc");
 
   UTL_String *tmp = 0;
 
@@ -587,6 +720,7 @@ DRV_pre_proc (const char *myfile)
   argcount -= 2;
 
   ACE_exitcode status = 0;
+
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
@@ -715,128 +849,6 @@ DRV_pre_proc (const char *myfile)
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     {
       ACE_OS::exit (0);
-    }
-}
-
-// We really need to know whether this line is a "#include ...". If
-// so, we would like to separate the "file name" and keep that in the
-// idl_global. We need them to produce "#include's in the stubs and
-// skeletons.
-void
-DRV_check_for_include (const char* buf)
-{
-  const char* r = buf;
-  const char* h;
-
-  // Skip initial '#'.
-  if (*r != '#')
-    {
-      return;
-    }
-  else
-    {
-      r++;
-    }
-
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
-    {
-      r++;
-    }
-
-  // Probably we are at the word `include`. If not return.
-  if (*r != 'i')
-    {
-      return;
-    }
-
-  // Check whether this word is `include` or no.
-  const char* include_str = "include";
-
-  for (size_t ii = 0;
-       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
-       r++, ii++)
-    {
-      // Return if it doesn't match.
-      if (include_str [ii] != *r)
-        {
-          return;
-        }
-    }
-
-  // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " or < character.
-  for (; (*r != '"') && (*r != '<'); r++)
-    {
-      if (*r == '\n' || *r == '\0')
-        {
-          return;
-        }
-    }
-
-  // Decide on the end char.
-  char end_char = '"';
-
-  if (*r == '<')
-    {
-      end_char = '>';
-    }
-
-  // Skip this " or <.
-  r++;
-
-  // Store this position.
-  h = r;
-
-  // Found this in idl.ll. Decides the file to be standard input.
-  if (*h == '\0')
-    {
-      return;
-    }
-
-  // Find the closing " or < character.
-  for (; *r != end_char; r++)
-    {
-      continue;
-    }
-
-  // Make a new string for this file name.
-  char* file_name = 0;
-  ACE_NEW (file_name,
-           char [r - h + 1]);
-
-  // Copy the char's.
-  size_t fi = 0;
-
-  for (; h != r; fi++, h++)
-    {
-      file_name [fi] = *h;
-    }
-
-  // Terminate the string.
-  file_name [fi] = '\0';
-
-  // Put Microsoft-style pathnames into a canonical form.
-  size_t i = 0;
-
-  for (size_t j = 0; file_name [j] != '\0'; i++, j++)
-    {
-      if (file_name [j] == '\\' && file_name [j + 1] == '\\')
-        {
-          j++;
-        }
-
-      file_name [i] = file_name [j];
-    }
-
-  // Terminate this string.
-  file_name [i] = '\0';
-
-  // Store in the idl_global, unless it's "orb.idl" -
-  // we don't want to generate header includes for that.
-  if (ACE_OS::strcmp (file_name, "orb.idl"))
-    {
-      idl_global->add_to_included_idl_files (file_name);
     }
 }
 

@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_typedef.h"
-
-ACE_RCSID(be_visitor_typedef, typedef_ci, "$Id$")
-
+ACE_RCSID (be_visitor_typedef, 
+           typedef_ci, 
+           "$Id$")
 
 // ******************************************************
 // Typedef visitor for client inline

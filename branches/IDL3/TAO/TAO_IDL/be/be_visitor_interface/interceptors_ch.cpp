@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, interceptors_ch, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           interceptors_ch, 
+           "$Id$")
 
 
 // ************************************************************
@@ -32,13 +28,16 @@ ACE_RCSID(be_visitor_interface, interceptors_ch, "$Id$")
 // ************************************************************
 
 
-be_visitor_interface_interceptors_ch::be_visitor_interface_interceptors_ch
-(be_visitor_context *ctx)
+be_visitor_interface_interceptors_ch::be_visitor_interface_interceptors_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_interceptors_ch::~be_visitor_interface_interceptors_ch (void)
+be_visitor_interface_interceptors_ch::~be_visitor_interface_interceptors_ch (
+    void
+  )
 {
 }
 

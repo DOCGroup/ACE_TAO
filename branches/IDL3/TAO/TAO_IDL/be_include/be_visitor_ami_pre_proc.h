@@ -25,15 +25,10 @@
 #ifndef TAO_BE_VISITOR_AMI_PRE_PROC_H
 #define TAO_BE_VISITOR_AMI_PRE_PROC_H
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_root.h"
-#include "be_module.h"
-#include "be_interface.h"
 #include "be_visitor_scope.h"
+#include "ace/SString.h"
 
+class AST_Interface;
 
 class be_visitor_ami_pre_proc : public be_visitor_scope
 {
@@ -47,7 +42,8 @@ class be_visitor_ami_pre_proc : public be_visitor_scope
 private:
  typedef AST_Interface *AST_Interface_ptr;
 
- typedef enum {
+ typedef enum 
+ {
    NORMAL,
    GET_OPERATION,
    SET_OPERATION

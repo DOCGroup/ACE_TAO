@@ -67,10 +67,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // The check ensures that for every forward declared interface we also
 // saw a full definition of that interface.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_extern.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "ace/config-all.h"
 
-ACE_RCSID(ast, ast_check, "$Id$")
+ACE_RCSID (ast, 
+           ast_check, 
+           "$Id$")
 
 // Static storage for remembering nodes.
 static AST_InterfaceFwd	**ast_fwds = 0;

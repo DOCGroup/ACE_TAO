@@ -11,15 +11,14 @@
 */
 //=============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include  "be.h"
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_rh_ss, 
+           "$Id$")
 
-#include "be_visitor_operation/amh_rh_sh.h"
-
-be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh
-(be_visitor_context *ctx): be_visitor_interface_sh (ctx)
+be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (
+    be_visitor_context *ctx
+  )
+  : be_visitor_interface_sh (ctx)
 {
 }
 
@@ -46,12 +45,14 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   ACE_CString rh_base_class_name = node->local_name ();
   // ...and prepend either the "TAO_" prefix...
   ACE_CString rh_skel_class_name =  "TAO_";
+
   if (!node->is_nested ())
     {
       // ...or the "POA_TAO_" prefix if we are in the global
       // namespace....
       rh_skel_class_name = "POA_TAO_";
     }
+
   rh_skel_class_name += rh_base_class_name.c_str ();
 
   *os << "class " << rh_skel_class_name.c_str () << ";" << be_nl;

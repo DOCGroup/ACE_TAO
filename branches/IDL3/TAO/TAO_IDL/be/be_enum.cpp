@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_enum.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_enum, "$Id$")
+ACE_RCSID (be, 
+           be_enum, 
+           "$Id$")
 
 be_enum::be_enum (void)
 {

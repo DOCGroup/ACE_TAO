@@ -67,8 +67,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 1.1
  */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "utl_strlist.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+#include "utl_string.h"
+#include "utl_err.h"
+#include "ast_union_label.h"
+#include "ast_field.h"
+#include "ast_expression.h"
+#include "ast_argument.h"
+#include "ast_operation.h"
+#include "fe_interface_header.h"
+#include "global_extern.h"
 #include "fe_private.h"
 #include "y.tab.h"
 

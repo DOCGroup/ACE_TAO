@@ -22,7 +22,7 @@
 #ifndef TAO_BE_VISITOR_ENUM_H
 #define TAO_BE_VISITOR_ENUM_H
 
-#include "be_visitor.h"
+#include "be_visitor_decl.h"
 #include "be_visitor_scope.h"
 #include "be_visitor_enum/enum_ch.h"
 #include "be_visitor_enum/enum_cs.h"

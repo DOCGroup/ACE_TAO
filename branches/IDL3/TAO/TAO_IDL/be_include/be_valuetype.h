@@ -19,6 +19,7 @@
 #define TAO_BE_VALUETYPE_H
 
 #include "be_interface.h"
+#include "ast_field.h"
 
 class TAO_OutStream;
 

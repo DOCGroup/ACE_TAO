@@ -67,8 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_AST_UNION_HH
 #define _AST_UNION_AST_UNION_HH
 
-// Representation of union declaration:
-//
+#include "ast_structure.h"
+
 // NOTE: add (AST_ConcreteType *) is defined here because a union
 // can contain locally defined types in addition to fields.
 //

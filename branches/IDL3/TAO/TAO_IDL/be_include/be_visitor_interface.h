@@ -21,8 +21,10 @@
 #ifndef TAO_BE_VISITOR_INTERFACE_H
 #define TAO_BE_VISITOR_INTERFACE_H
 
-#include "be_visitor_scope.h"
+#include "ace/SString.h"
 
+#include "be_visitor_decl.h"
+#include "be_visitor_scope.h"
 #include "be_visitor_interface/interface.h"
 #include "be_visitor_interface/interface_ch.h"
 #include "be_visitor_interface/interface_ci.h"

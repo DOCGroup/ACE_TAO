@@ -67,9 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH
 #define _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH
 
-// utl_exceptlist.hh
-//
-// List of AST_Exception nodes
+#include "utl_list.h"
+
+class AST_Exception;
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -77,40 +77,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, ast_exception.hh
-**
-** USE: Included from util.hh
-*/
-
 class TAO_IDL_FE_Export UTL_ExceptList : public UTL_List
 {
 public:
-  // Operations
+  UTL_ExceptList (AST_Exception *s, 
+                  UTL_ExceptList *cdr);
 
-  // Constructor(s)
-  UTL_ExceptList (AST_Exception *s, UTL_ExceptList *cdr);
-
-  // Get list item
-  AST_Exception         *head();
+  // Get list item.
+  AST_Exception *head (void);
 
 private:
-  // Data
-  AST_Exception         *pd_car_data;   // Item of this list
+  // Data.
+  AST_Exception *pd_car_data;
 };
 
-// Active iterator for UTL_ExceptList
+// Active iterator for UTL_ExceptList.
 class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  // Operations
-
-  // Constructor(s)
-  UTL_ExceptlistActiveIterator(UTL_ExceptList *s);
+  UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
-  AST_Exception         *item();
+  AST_Exception *item (void);
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

@@ -62,20 +62,13 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * fe_private.cc - Declare global data which are private to the FE
- *		   part
- */
+#include "fe_private.h"
+#include "utl_strlist.h"
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"fe_private.h"
+ACE_RCSID (fe, 
+           fe_private, 
+           "$Id$")
 
-ACE_RCSID(fe, fe_private, "$Id$")
-
-/*
- * List of pragmas
- */
-UTL_StrList	*DRV_global_pragmas = NULL;
+UTL_StrList	*DRV_global_pragmas = 0;

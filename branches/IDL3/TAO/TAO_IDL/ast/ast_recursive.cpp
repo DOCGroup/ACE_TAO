@@ -79,10 +79,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //   since it was not bracketed by a sequence). If we don't find the base
 //   type nor a sequence, return FALSE (legal use, since we're not nested).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union.h"
+#include "utl_stack.h"
+#include "global_extern.h"
 
-ACE_RCSID(ast, ast_recursive, "$Id$")
+ACE_RCSID (ast, 
+           ast_recursive, 
+           "$Id$")
 
 idl_bool
 AST_illegal_recursive_type (AST_Decl *t)

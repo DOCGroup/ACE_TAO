@@ -67,6 +67,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_GENERATOR_AST_GENERATOR_HH
 #define _AST_GENERATOR_AST_GENERATOR_HH
 
+#include "ast_operation.h"
+#include "ast_argument.h"
+#include "ast_predefined_type.h"
+#include "ast_union_label.h"
+
+class AST_Root;
+class UTL_LabelList;
+class UTL_ExprList;
+
 // Defines base class for node generators.
 
 class TAO_IDL_FE_Export AST_Generator
@@ -233,6 +242,7 @@ public:
   // Create a node representing a sequence type.
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
+                                         UTL_ScopedName *n,
                                          idl_bool local,
                                          idl_bool abstract);
 

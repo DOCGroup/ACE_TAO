@@ -67,17 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXTERN_AST_EXTERN_HH
 #define _AST_EXTERN_AST_EXTERN_HH
 
-// ast_extern.hh
-//
+#include "idl_bool.h"
+
+class AST_InterfaceFwd;
+class AST_Decl;
+
 // Declares all global functions for the AST
-
-/*
-** DEPENDENCIES: none
-**
-** USE: Included from idl_extern.hh
-*/
-
-// Functions:
 
 // Two functions are provided for storing AST nodes representing fwd
 // declared interfaces, and for checking the stored nodes after parsing
@@ -86,7 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 extern void AST_record_fwd_interface (AST_InterfaceFwd *i);
 extern void AST_check_fwd_interface (void);
-
 extern idl_bool AST_illegal_recursive_type (AST_Decl *t);
 
 #endif           // _AST_EXTERN_AST_EXTERN_HH

@@ -1,27 +1,29 @@
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
+//
+// $Id$
+//
 
 ACE_RCSID (be_visitor_interface,
            be_visitor_interface_remote_proxy_broker_ch,
            "$Id$")
 
-be_visitor_interface_remote_proxy_broker_ch::be_visitor_interface_remote_proxy_broker_ch (be_visitor_context *ctx)
+be_visitor_interface_remote_proxy_broker_ch::
+be_visitor_interface_remote_proxy_broker_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_remote_proxy_broker_ch::~be_visitor_interface_remote_proxy_broker_ch (void)
+be_visitor_interface_remote_proxy_broker_ch::
+~be_visitor_interface_remote_proxy_broker_ch (void)
 {
   // No-Op.
 }
 
 int
-be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node)
+be_visitor_interface_remote_proxy_broker_ch::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -29,7 +31,8 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
   os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" << be_nl
+      << "///////////////////////////////////////////////////////////////////////" 
+      << be_nl
       << "//                 Remote Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
 
@@ -48,7 +51,8 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
       << be_nl << be_nl;
 
   // Accessor Method
-  *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy ("
+  *os << "virtual " << node->base_proxy_impl_name () << " &" 
+      << "select_proxy ("
       << be_idt << be_idt_nl;
 
   *os << node->local_name () << " *object" << be_nl
@@ -62,8 +66,10 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
   *os << "public:" << be_idt_nl;
 
   // Factory Member Function declaration.
-  *os << "// This member function is used to get an handle to the unique instance" << be_nl
-      << "// of the Remote Proxy Broker that is available for a given" << be_nl
+  *os << "// This member function is used to get an handle to the "
+      << "unique instance" << be_nl
+      << "// of the Remote Proxy Broker that is available for a given" 
+      << be_nl
       << "// interface." << be_nl
       << "static " << node->remote_proxy_broker_name ()
       << " *the" << node->remote_proxy_broker_name ()

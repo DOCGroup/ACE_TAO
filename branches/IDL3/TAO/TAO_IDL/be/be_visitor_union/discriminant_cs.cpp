@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_union.h"
-#include "be_visitor_enum/enum_cs.h"
-
 ACE_RCSID (be_visitor_union, 
            discriminant_cs, 
            "$Id$")
-
 
 // *************************************************************************
 // Visitor for discriminant in client stubs.
@@ -49,11 +44,14 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
     this->ctx_->be_node_as_union ();  // get the enclosing union backend
   be_type *bt;
 
-  // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))

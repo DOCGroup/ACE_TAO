@@ -37,10 +37,10 @@ public:
   be_union (void);
   // Default constructor.
 
-  be_union(AST_ConcreteType *dt,
-           UTL_ScopedName *n,
-           idl_bool local,
-           idl_bool abstract);
+  be_union (AST_ConcreteType *dt,
+            UTL_ScopedName *n,
+            idl_bool local,
+            idl_bool abstract);
   // Constructor.
 
   virtual int gen_var_defn (char *local_name = 0);

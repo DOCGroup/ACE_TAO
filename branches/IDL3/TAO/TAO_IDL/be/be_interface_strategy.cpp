@@ -17,11 +17,14 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_interface_strategy.h"
+#include "be_interface.h"
+#include "be_extern.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(be, be_interface_strategy, "$Id$")
+ACE_RCSID (be, 
+           be_interface_strategy, 
+           "$Id$")
 
 
 be_interface_strategy::be_interface_strategy (be_interface *node,
@@ -123,6 +126,7 @@ be_interface_strategy::compute_coll_names (int type,
   static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
                                            "_tao_direct_collocated_"};
   static const char *poa = "POA_";
+
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
   const char *collocated = collocated_names[type];

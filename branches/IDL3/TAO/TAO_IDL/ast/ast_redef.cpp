@@ -64,10 +64,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_decl.h"
 
-ACE_RCSID(ast, ast_redef, "$Id$")
+ACE_RCSID (ast, 
+           ast_redef, 
+           "$Id$")
 
 // Return TRUE if the node d represents an IDL construct whose name
 // can be redefined.

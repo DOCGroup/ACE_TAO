@@ -19,12 +19,17 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_sequence.h"
+#include "be_sequence.h"
+#include "be_typedef.h"
+#include "be_interface.h"
+#include "be_interface_fwd.h"
+#include "be_predefined_type.h"
+#include "be_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(be, be_sequence, "$Id$")
+ACE_RCSID (be, 
+           be_sequence, 
+           "$Id$")
 
 
 be_sequence::be_sequence (void)
@@ -37,24 +42,26 @@ be_sequence::be_sequence (void)
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
+                          UTL_ScopedName *n,
                           idl_bool local,
                           idl_bool abstract)
   : be_scope (AST_Decl::NT_sequence),
     be_type (AST_Decl::NT_sequence,
-             0),
+             n),
     be_decl (AST_Decl::NT_sequence,
-             0),
+             n),
     UTL_Scope (AST_Decl::NT_sequence),
     AST_Sequence (v,
                   t,
+                  n,
                   t->is_local () || local,
                   abstract),
     AST_ConcreteType (AST_Decl::NT_sequence,
-                      0),
+                      n),
     AST_Type (AST_Decl::NT_sequence,
-              0),
+              n),
     AST_Decl (AST_Decl::NT_sequence,
-              0,
+              n,
               I_TRUE),
     COMMON_Base (t->is_local () || local,
                  abstract),

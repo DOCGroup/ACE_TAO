@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_root.h"
+#include "be_visitor.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_array.h"
 
-ACE_RCSID(be, be_root, "$Id$")
+ACE_RCSID (be, 
+           be_root, 
+           "$Id$")
 
 // Default Constructor.
 be_root::be_root (void)

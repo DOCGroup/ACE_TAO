@@ -69,12 +69,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_UnionBranch is a subclass of AST_Field, adding a label (which
 // is a subclass of AST_UnionLabel).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union_branch.h"
+#include "ast_union_label.h"
+#include "ast_visitor.h"
+#include "utl_labellist.h"
 
 ACE_RCSID(ast, ast_union_branch, "$Id$")
 
-// Constructor(s) and destructor.
 AST_UnionBranch::AST_UnionBranch (void)
  : pd_ll (0)
 {
@@ -105,8 +106,10 @@ AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
   for (unsigned long i = 0; i < this->label_list_length (); ++i)
     {
       o << "case ";
+
       AST_UnionLabel *ul = this->label (i);
       ul->dump (o);
+
       o << ": \n";
     }
 

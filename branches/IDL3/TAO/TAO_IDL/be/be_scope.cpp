@@ -1,12 +1,21 @@
 //
 // $Id$
 //
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_scope.h"
+#include "be_interface.h"
+#include "be_module.h"
+#include "be_exception.h"
+#include "be_union.h"
+#include "be_structure.h"
+#include "be_enum.h"
+#include "be_operation.h"
+#include "be_factory.h"
+#include "be_root.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_scope, "$Id$")
-
+ACE_RCSID (be, 
+           be_scope, 
+           "$Id$")
 
 // Default Constructor.
 be_scope::be_scope (void)

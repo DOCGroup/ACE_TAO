@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           rettype_vardecl_ss, 
+           "$Id$")
 
 // ************************************************************************
 //    be_visitor_operation_rettype_vardecl_ss
@@ -34,8 +29,8 @@ ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
 //    of the return type.
 // ************************************************************************
 
-be_visitor_operation_rettype_vardecl_ss::be_visitor_operation_rettype_vardecl_ss
-(be_visitor_context *ctx)
+be_visitor_operation_rettype_vardecl_ss::
+be_visitor_operation_rettype_vardecl_ss (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

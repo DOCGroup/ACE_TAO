@@ -18,18 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_field.h"
-#include "be_visitor_array.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_sequence.h"
-#include "be_visitor_union.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            field_cdr_op_ch, 
            "$Id$")
-
 
 // **********************************************
 //  Visitor for field in the client header file.

@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, array_cs, "$Id$")
+ACE_RCSID (be_visitor_array, 
+           array_cs, 
+           "$Id$")
 
 
 // ************************************************************************
@@ -43,7 +39,6 @@ be_visitor_array_cs::~be_visitor_array_cs (void)
 int be_visitor_array_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
   unsigned long i;
 
   // Nothing to do if we are imported or code is already generated.
@@ -55,7 +50,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {
@@ -293,11 +288,13 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
       *os << ";";
     }
+
   for (i = 0; i < node->n_dims (); i++)
     {
       // Decrement indentation as many times as the number of dimensions.
       *os << be_uidt;
     }
+
   *os << be_uidt_nl << "}\n\n";
 
   // If we contain an anonymous sequence,
@@ -317,6 +314,5 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
 
   node->cli_stub_gen (1);
-
   return 0;
 }

@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // is implemented to create nodes of AST classes subclassed in this BE
 
 #include "TAO_IDL_BE_Export.h"
+#include "ast_generator.h"
 
 class TAO_IDL_BE_Export be_generator : public AST_Generator
 {
@@ -192,6 +193,7 @@ public:
 
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
+                                         UTL_ScopedName *n,
                                          idl_bool local,
                                          idl_bool abstract);
 

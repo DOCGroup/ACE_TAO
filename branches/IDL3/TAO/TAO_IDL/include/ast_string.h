@@ -67,6 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRING_AST_STRING_HH
 #define _AST_STRING_AST_STRING_HH
 
+#include "ast_concrete_type.h"
+#include "utl_scoped_name.h"
+
+class AST_Expression;
+
 // Representation of string declaration.
 // A string type is represented by a maximum size.
 

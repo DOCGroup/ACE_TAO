@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_interface_fwd.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_interface_fwd, "$Id$")
+ACE_RCSID (be, 
+           be_interface_fwd, 
+           "$Id$")
 
 be_interface_fwd::be_interface_fwd (void)
 {

@@ -68,12 +68,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Exceptions are a subclass of AST_Decl (they are not types!)
 // and of UTL_Scope.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_exception.h"
+#include "ast_field.h"
+#include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_exception, "$Id$")
+ACE_RCSID (ast, 
+           ast_exception, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Exception::AST_Exception (void)
 {
 }

@@ -64,17 +64,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "ast_module.h"
+#include "ast_root.h"
+#include "ast_interface.h"
+#include "ast_operation.h"
+#include "ast_factory.h"
+#include "ast_exception.h"
+#include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_interface_fwd.h"
+#include "utl_scope.h"
 
-ACE_RCSID(narrow, narrow, "$Id$")
+ACE_RCSID (narrow, 
+           narrow, 
+           "$Id$")
 
 // Narrowing functions for AST
 
-/*
- * Convert a UTL_Scope node into an AST_Decl node if possible
- */
-AST_Decl *
+TAO_IDL_FE_Export AST_Decl *
 ScopeAsDecl (UTL_Scope *s)
 {
   if (s == 0) return 0;
@@ -107,7 +114,7 @@ ScopeAsDecl (UTL_Scope *s)
 /*
  * Convert an AST_Decl to a UTL_Scope if possible
  */
-UTL_Scope *
+TAO_IDL_FE_Export UTL_Scope *
 DeclAsScope (AST_Decl *d)
 {
    if (d == 0) return 0;

@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_module.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_module, "$Id$")
+ACE_RCSID (be, 
+           be_module, 
+           "$Id$")
 
 be_module::be_module (void)
 {

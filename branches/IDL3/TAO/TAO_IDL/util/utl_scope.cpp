@@ -64,10 +64,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "utl_scope.h"
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
+#include "utl_string.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "ast_typedef.h"
+#include "ast_type.h"
+#include "ast_root.h"
+#include "ast_array.h"
+#include "ast_enum.h"
+#include "ast_concrete_type.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_structure.h"
+#include "ast_exception.h"
+#include "ast_constant.h"
+#include "ast_attribute.h"
+#include "ast_operation.h"
+#include "ast_argument.h"
+#include "ast_union.h"
+#include "ast_union_branch.h"
+#include "ast_field.h"
+#include "ast_enum_val.h"
+#include "ast_native.h"
+#include "ast_factory.h"
+#include "ast_visitor.h"
+#include "nr_extern.h"
+#include "global_extern.h"
 
-ACE_RCSID(util, utl_scope, "$Id$")
+ACE_RCSID (util, 
+           utl_scope, 
+           "$Id$")
 
 #undef  INCREMENT
 #define INCREMENT 64

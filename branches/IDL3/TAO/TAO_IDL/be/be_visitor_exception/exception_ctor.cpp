@@ -18,21 +18,16 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_exception.h"
-
-ACE_RCSID(be_visitor_exception, exception_ctor, "$Id$")
+ACE_RCSID (be_visitor_exception, 
+           exception_ctor, 
+           "$Id$")
 
 
 // ************************************************************************
 //  code to generate the special ctor
 // ************************************************************************
 
-be_visitor_exception_ctor::be_visitor_exception_ctor
-(be_visitor_context *ctx)
+be_visitor_exception_ctor::be_visitor_exception_ctor (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }

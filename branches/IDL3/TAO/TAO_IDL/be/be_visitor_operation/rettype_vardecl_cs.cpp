@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype_vardecl_cs, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           rettype_vardecl_cs, 
+           "$Id$")
 
 // ************************************************************
 //    be_visitor_operation_rettype_vardecl_cs
@@ -47,18 +42,21 @@ be_visitor_operation_rettype_vardecl_cs::
 int
 be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
   *os << bt->name () << "_var _tao_retval;";
-
   *os << be_nl;
 
   return 0;
@@ -67,13 +65,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
@@ -87,13 +89,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_enum (be_enum *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
@@ -118,13 +124,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
     be_interface_fwd *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
@@ -147,13 +157,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
 int
 be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
@@ -166,13 +180,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
   *os << "::" << bt->name () << "_var _tao_retval;\n\n"
@@ -203,22 +221,27 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
     case AST_PredefinedType::PT_pseudo:
       *os << bt->name () << "_var _tao_retval ("
           << bt->name () << "::_nil ());";
+
       break;
     case AST_PredefinedType::PT_any:
       *os << bt->name () << "_var _tao_retval;";
+
       break;
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_longdouble:
       *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;";
+
       break;
     case AST_PredefinedType::PT_longlong:
       *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;";
+
       break;
     default:
       *os << bt->name () << " _tao_retval = 0;";
+
       break;
     }
 
@@ -230,17 +253,22 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
 int
 be_visitor_operation_rettype_vardecl_cs::visit_sequence (be_sequence *node)
 {
-  // we should never directly be here because anonymous sequence return types
-  // are not allowed
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  // We should never directly be here because anonymous sequence return types
+  // are not allowed.
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
+
   *os << bt->name () << "_var _tao_retval;\n" << be_nl;
 
   return 0;
@@ -253,8 +281,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 
   os->indent ();
 
-  // @@ Jeff, this sort of code looks weird to me, on *all* platforms
-  // sizeof(char) is 1, by definition...
   if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::String_var _tao_retval;";
@@ -271,18 +297,22 @@ be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
-  // based on whether we are variable or not, we return a pointer or the
-  // aggregate type
+  // Based on whether we are variable or not, we return a pointer or the
+  // aggregate type.
   if (node->size_type () == be_decl::VARIABLE)
     {
       *os << bt->name () << "_var _tao_retval;" << be_nl;
@@ -301,7 +331,8 @@ be_visitor_operation_rettype_vardecl_cs::visit_structure (be_structure *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node); // set the alias node
+  this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -310,6 +341,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }
@@ -317,18 +349,22 @@ be_visitor_operation_rettype_vardecl_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   os->indent ();
 
-  // based on whether we are variable or not, we return a pointer or the
-  // aggregate type
+  // Based on whether we are variable or not, we return a pointer or the
+  // aggregate type.
   if (node->size_type () == be_decl::VARIABLE)
     {
       *os << bt->name () << "_var _tao_retval;";

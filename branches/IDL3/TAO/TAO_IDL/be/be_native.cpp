@@ -16,11 +16,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_native.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_native, "$Id$")
+ACE_RCSID (be, 
+           be_native, 
+           "$Id$")
 
 
 be_native::be_native (void)

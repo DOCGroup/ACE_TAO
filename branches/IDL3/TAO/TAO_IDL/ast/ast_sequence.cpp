@@ -70,12 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // must evaluate to a positive integer) and a base type (a subclass
 // of AST_Type).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_sequence.h"
+#include "ast_expression.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_sequence, "$Id$")
+ACE_RCSID (ast, 
+           ast_sequence, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Sequence::AST_Sequence (void)
  : pd_max_size (0),
    pd_base_type (0)
@@ -84,12 +87,12 @@ AST_Sequence::AST_Sequence (void)
 
 AST_Sequence::AST_Sequence (AST_Expression *ms,
                             AST_Type *bt,
+                            UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
- : AST_Decl(AST_Decl::NT_sequence,
-            new UTL_ScopedName (new Identifier ("sequence"),
-                                0),
-            I_TRUE),
+ : AST_Decl (AST_Decl::NT_sequence,
+             n,
+             I_TRUE),
    COMMON_Base (bt->is_local () || local,
                 abstract),
    pd_max_size (ms),

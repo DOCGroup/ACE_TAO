@@ -19,14 +19,19 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_array.h"
+#include "be_codegen.h"
+#include "be_scope.h"
+#include "be_helper.h"
+#include "be_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(be, be_array, "$Id$")
+ACE_RCSID (be, 
+           be_array, 
+           "$Id$")
 
 be_array::be_array (void)
-  :  tao_name_ (0)
+  : tao_name_ (0)
 {
 }
 
@@ -128,7 +133,9 @@ be_array::create_name (void)
   UTL_ScopedName *n = 0;
   be_decl *scope;
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
   // Retrieve the base type.
   // The name always starts this way.
   be_type *bt = be_type::narrow_from_decl (this->base_type ());

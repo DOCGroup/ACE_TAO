@@ -64,12 +64,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_generator.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_enum, "$Id$")
-
-// Constructor(s) and destructor,
+ACE_RCSID (ast, 
+           ast_enum, 
+           "$Id$")
 
 AST_Enum::AST_Enum (void)
         : pd_enum_counter (0),
@@ -94,8 +99,6 @@ AST_Enum::~AST_Enum (void)
 {
 }
 
-// Public operations.
-
 // Return the member count.
 int
 AST_Enum::member_count (void)
@@ -112,7 +115,7 @@ AST_Enum::member_count (void)
 UTL_ScopedName *
 AST_Enum::value_to_name (const unsigned long v)
 {
- AST_EnumVal *item = 0;
+  AST_EnumVal *item = 0;
   AST_Decl *d = 0;
 
   for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
@@ -196,8 +199,6 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
   return hold;
 }
-
-// Private operations.
 
 // Compute total number of members.
 int
@@ -308,7 +309,9 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
     }
 
   o << "enum ";
+
   this->local_name ()->dump (o);
+
   o << " {\n";
 
   // Must increment the iterator explicitly inside the loop.
@@ -325,6 +328,7 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
     }
 
   idl_global->indent ()->skip_to (o);
+
   o << "}";
 }
 

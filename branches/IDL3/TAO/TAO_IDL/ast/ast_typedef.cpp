@@ -70,12 +70,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Typedef nodes have a base type (a subclass of AST_Type)
 // and a name (an UTL_ScopedName).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_typedef.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_typedef, "$Id$")
+ACE_RCSID (ast, 
+           ast_typedef, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Typedef::AST_Typedef (void)
  : pd_base_type (0)
 {

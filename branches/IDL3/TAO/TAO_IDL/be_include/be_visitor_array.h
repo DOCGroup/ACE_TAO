@@ -22,9 +22,7 @@
 #define TAO_BE_VISITOR_ARRAY_H
 
 #include "be_visitor_decl.h"
-// generic visitor
 #include "be_visitor_array/array.h"
-// concrete visitors
 #include "be_visitor_array/array_ch.h"
 #include "be_visitor_array/array_ci.h"
 #include "be_visitor_array/array_cs.h"

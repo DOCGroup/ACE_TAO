@@ -67,6 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _NR_EXTERN_NR_EXTERN_HH
 #define _NR_EXTERN_NR_EXTERN_HH
 
+class UTL_Scope;
+class AST_Decl;
+
 // nr_extern.hh - Defines entry points provided by narrowing
 
 // Convert between an UTL_Scope and an AST_Decl.

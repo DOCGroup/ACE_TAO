@@ -25,6 +25,7 @@
 // ************************************************************
 // class be_visitor_args_vardecl_ss
 // ************************************************************
+
 class be_visitor_args_vardecl_ss : public be_visitor_args
 {
   //

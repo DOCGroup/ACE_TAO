@@ -18,15 +18,8 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_field.h"
-#include "be_visitor_array.h"
 #include "be_visitor_enum/enum_ch.h"
 #include "be_visitor_sequence/sequence_ch.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_union.h"
 
 ACE_RCSID (be_visitor_field, 
            field_ch, 

@@ -16,11 +16,17 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_codegen.h"
+#include "be_helper.h"
+#include "be_visitor_factory.h"
+#include "be_stream_factory.h"
+#include "be_extern.h"
+#include "global_extern.h"
+#include "utl_string.h"
 
-ACE_RCSID(be, be_codegen, "$Id$")
+ACE_RCSID (be, 
+           be_codegen, 
+           "$Id$")
 
 TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
 
@@ -1208,9 +1214,7 @@ TAO_CodeGen::node (void)
 void
 TAO_CodeGen::config_visitor_factory (void)
 {
-  // We have removed interpreted marshaling from TAO, so
-  // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
-  this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
+  this->visitor_factory_ = TAO_VISITOR_FACTORY::instance ();
 }
 
 void

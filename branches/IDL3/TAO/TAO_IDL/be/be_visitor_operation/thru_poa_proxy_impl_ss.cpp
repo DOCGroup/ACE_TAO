@@ -1,14 +1,8 @@
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            be_visitor_operation_thru_poa_proxy_impl_ss, 
            "$Id$")
-
 
 // ************************************************************
 // Operation visitor for client stubs

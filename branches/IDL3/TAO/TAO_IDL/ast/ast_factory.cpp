@@ -68,12 +68,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Factory is a subclass of AST_Decl (it is not a type!)
 // and of UTL_Scope (the arguments are managed in a scope).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_factory.h"
+#include "ast_argument.h"
+#include "ast_visitor.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_factory, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_factory, 
+           "$Id$")
 
 AST_Factory::AST_Factory (void)
   : argument_count_ (-1),

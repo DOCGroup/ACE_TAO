@@ -64,13 +64,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"fe_private.h"
+#include "fe_declarator.h"
+#include "ast_array.h"
+#include "ast_type.h"
+#include "utl_err.h"
+#include "global_extern.h"
+#include "ace/config-all.h"
 
-ACE_RCSID(fe, fe_declarator, "$Id$")
-
-// Constructor(s) and destructor
+ACE_RCSID (fe, 
+           fe_declarator, 
+           "$Id$")
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
@@ -80,8 +83,6 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 {
   this->pd_name = n;
 }
-
-// Public operations.
 
 // Compose the type of the complex declarator (if any) with the base
 // type supplied in ct.

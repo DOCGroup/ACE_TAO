@@ -74,14 +74,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Field nodes, the other to be used in constructing AST_Argument
 // nodes and AST_UnionBranch nodes.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_field.h"
+#include "ast_type.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_field, "$Id$")
+ACE_RCSID (ast, ast_field, "$Id$")
 
-// Constructor(s) and destructor.
-
-// Default constructor.
 AST_Field::AST_Field (void)
          : pd_field_type (0),
            pd_visibility (vis_NA)
@@ -115,8 +114,6 @@ AST_Field::~AST_Field (void)
 {
 }
 
-// Redefinition of inherited virtual operations.
-
 // Dump this AST_Field node to the ostream o.
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
@@ -125,16 +122,20 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
     {
     case vis_PRIVATE:
       o << "private ";
+
       break;
     case vis_PUBLIC:
       o << "public ";
+
       break;
     case vis_NA:
       break;
     }
 
   this->pd_field_type->local_name ()->dump (o);
+
   o << " ";
+
   this->local_name ()->dump (o);
 }
 
@@ -143,8 +144,6 @@ AST_Field::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_field (this);
 }
-
-// Data accessors.
 
 AST_Type *
 AST_Field::field_type (void)

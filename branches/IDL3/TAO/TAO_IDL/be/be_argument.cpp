@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_argument.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_argument, "$Id$")
+ACE_RCSID (be, 
+           be_argument, 
+           "$Id$")
 
 be_argument::be_argument (void)
 {

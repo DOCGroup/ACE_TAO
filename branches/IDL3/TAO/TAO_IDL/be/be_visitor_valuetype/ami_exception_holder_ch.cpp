@@ -18,9 +18,6 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_valuetype.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            ami_exception_holder_ch, 
            "$Id$")

@@ -69,12 +69,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // This implements the same protocol as AST_Generator but creates instances
 // of the BE-subclassed classes instead of of AST classes.
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_generator.h"
+#include "be_root.h"
+#include "be_predefined_type.h"
+#include "be_module.h"
+#include "be_interface.h"
+#include "be_interface_fwd.h"
+#include "be_valuetype.h"
+#include "be_valuetype_fwd.h"
+#include "be_union.h"
+#include "be_structure.h"
+#include "be_exception.h"
+#include "be_operation.h"
+#include "be_enum.h"
+#include "be_field.h"
+#include "be_argument.h"
+#include "be_attribute.h"
+#include "be_union_branch.h"
+#include "be_union_label.h"
+#include "be_constant.h"
+#include "be_expression.h"
+#include "be_enum_val.h"
+#include "be_array.h"
+#include "be_sequence.h"
+#include "be_string.h"
+#include "be_typedef.h"
+#include "be_native.h"
+#include "be_factory.h"
+#include "utl_identifier.h"
+#include "nr_extern.h"
 #include "ace/config-all.h"
 
-ACE_RCSID(be, be_generator, "$Id$")
+ACE_RCSID (be, 
+           be_generator, 
+           "$Id$")
 
 AST_Root *
 be_generator::create_root (UTL_ScopedName *n)
@@ -581,6 +609,7 @@ be_generator::create_array (UTL_ScopedName *n,
 AST_Sequence *
 be_generator::create_sequence (AST_Expression *v,
                                AST_Type *bt,
+                               UTL_ScopedName *n,
                                idl_bool local,
                                idl_bool abstract)
 {
@@ -588,6 +617,7 @@ be_generator::create_sequence (AST_Expression *v,
   ACE_NEW_RETURN (retval,
                   be_sequence (v,
                                bt,
+                               n,
                                local,
                                abstract),
                   0);

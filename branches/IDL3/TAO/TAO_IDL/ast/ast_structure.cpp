@@ -68,12 +68,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Structure is a subclass of AST_ConcreteType and of UTL_Scope (the
 // structure's fields are managed in a scope).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union.h"
+#include "ast_field.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_structure, "$Id$")
+ACE_RCSID (ast, 
+           ast_structure, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Structure::AST_Structure (void)
   : member_count_ (-1),
     local_struct_ (-1)

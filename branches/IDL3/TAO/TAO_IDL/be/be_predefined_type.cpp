@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_predefined_type.h"
+#include "be_visitor.h"
+#include "utl_identifier.h"
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(be, be_predefined_type, "$Id$")
+ACE_RCSID (be, 
+           be_predefined_type, 
+           "$Id$")
 
 be_predefined_type::be_predefined_type (void)
 {

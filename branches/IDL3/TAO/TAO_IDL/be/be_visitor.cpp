@@ -21,11 +21,12 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
 #include "be_visitor.h"
+#include "ace/config-all.h"
 
-ACE_RCSID(be, be_visitor, "$Id$")
+ACE_RCSID (be, 
+           be_visitor, 
+           "$Id$")
 
 be_visitor::be_visitor (void)
 {

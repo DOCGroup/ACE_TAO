@@ -19,13 +19,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_field.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            field_cdr_op_ci, 
            "$Id$")
-
 
 // **********************************************
 //  Visitor for field in the client inline file.

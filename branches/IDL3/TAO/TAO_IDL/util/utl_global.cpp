@@ -62,20 +62,25 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_global.cc - Implementation of class IDL_GlobalData
-//
+#include "idl_global.h"
+#include "global_extern.h"
+#include "ast_root.h"
+#include "ast_generator.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "utl_err.h"
+#include "utl_string.h"
 
-#include        "idl.h"
-#include        "idl_extern.h"
-
-ACE_RCSID(util, utl_global, "$Id$")
+ACE_RCSID (util, 
+           utl_global, 
+           "$Id$")
 
 // Define an increment for the size of the array used to store names of
-// included files
-#undef          INCREMENT
-#define         INCREMENT       64
+// included files.
+#undef INCREMENT
+#define INCREMENT 64
 
 IDL_GlobalData::IDL_GlobalData (void)
   : pd_root (0),

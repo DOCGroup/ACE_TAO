@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            direct_collocated_sh, 
            "$Id$")
-
 
 // *************************************************************************
 //  This visitor generates code for the direct_collocated operation signature in a

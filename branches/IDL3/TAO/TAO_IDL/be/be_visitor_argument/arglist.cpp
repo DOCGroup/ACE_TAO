@@ -18,11 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, arglist, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           arglist, 
+           "$Id$")
 
 
 // ************************************************************
@@ -41,10 +39,10 @@ be_visitor_args_arglist::~be_visitor_args_arglist (void)
 
 int be_visitor_args_arglist::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  this->ctx_->node (node); // save the argument node
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
-  // retrieve the type
+  // Retrieve the type.
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
 
   if (!bt)

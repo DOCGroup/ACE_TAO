@@ -67,7 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_DECLARATOR_FE_DECLARATOR_HH
 #define _FE_DECLARATOR_FE_DECLARATOR_HH
 
-class   FE_Declarator
+#include "utl_scoped_name.h"
+
+class AST_Decl;
+class AST_Type;
+
+class FE_Declarator
 {
 public:
   // Enum to denote types of declarators.

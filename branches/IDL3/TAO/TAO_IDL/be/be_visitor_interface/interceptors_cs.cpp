@@ -18,34 +18,33 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, interceptors_cs, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           interceptors_cs, 
+           "$Id$")
 
 // ************************************************************
 //  interceptor class in header
 // ************************************************************
 
-
-be_visitor_interface_interceptors_cs::be_visitor_interface_interceptors_cs
-(be_visitor_context *ctx)
+be_visitor_interface_interceptors_cs::be_visitor_interface_interceptors_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_interceptors_cs::~be_visitor_interface_interceptors_cs (void)
+be_visitor_interface_interceptors_cs::~be_visitor_interface_interceptors_cs (
+    void
+  )
 {
 }
 
 int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
 {
   if (node->is_local ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -54,6 +53,7 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
   // that only legal syntactic elements appear in our scope.
 
   os->indent ();
+
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Generate code for the interface definition by traversing thru the
@@ -67,7 +67,8 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
        ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_visitor_interface_ch::"
                           "visit_interface - "
-                          "codegen for scope failed\n"), -1);
+                          "codegen for scope failed\n"), 
+                         -1);
      }
 
   *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";

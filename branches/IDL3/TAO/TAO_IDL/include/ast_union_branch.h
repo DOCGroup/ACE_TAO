@@ -67,6 +67,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 #define _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 
+#include "ast_field.h"
+#include "utl_scoped_name.h"
+
+class UTL_LabelList;
+class AST_Type;
+class AST_UnionLabel;
+
 // Representation of union branch declaration.
 // A branch of a union is a field with a label.
 

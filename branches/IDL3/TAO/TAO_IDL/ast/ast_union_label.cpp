@@ -69,12 +69,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // enum AST_UnionLabel::LabelKind) and a label value (which is a
 // subclass of AST_Expression).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union_label.h"
+#include "ast_expression.h"
+#include "ast_visitor.h"
 
-ACE_RCSID(ast, ast_union_label, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_union_label, 
+           "$Id$")
 
 AST_UnionLabel::AST_UnionLabel (void)
   : pd_label_kind (UL_default),

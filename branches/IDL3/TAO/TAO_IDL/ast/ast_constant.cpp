@@ -71,10 +71,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // and the other for use in creating enumerators (see the class
 // AST_EnumVal).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_constant.h"
+#include "utl_identifier.h"
+#include "ast_visitor.h"
+#include "ast_generator.h"
 
-ACE_RCSID(ast, ast_constant, "$Id$")
+ACE_RCSID (ast, 
+           ast_constant, 
+           "$Id$")
 
 // Static functions.
 
@@ -171,8 +175,11 @@ void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "const " << exprtype_to_string (pd_et) << " ";
+
   this->local_name ()->dump (o);
+
   o << " = ";
+
   this->pd_constant_value->dump (o);
 }
 

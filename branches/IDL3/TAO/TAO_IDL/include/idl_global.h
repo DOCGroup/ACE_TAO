@@ -70,6 +70,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
+#include "idl_bool.h"
+#include "ast_expression.h"
+#include "ast_predefined_type.h"
+#include "utl_stack.h"
+
+class AST_Root;
+class AST_Generator;
+class UTL_Error;
+class UTL_String;
+class UTL_Indenter;
 
 // idl_global.hh
 //
@@ -213,8 +223,6 @@ public:
 
   // Operations
   virtual UTL_ScopeStack   &scopes (void);              // Scopes stack
-//  virtual void             set_scopes (UTL_ScopeStack *);
-                                                        // Set it
 
   virtual AST_Root         *root (void);                // Root of AST
   virtual void             set_root (AST_Root *);       // Set it

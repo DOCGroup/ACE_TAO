@@ -67,69 +67,62 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // utl_indenter.cc - Implementation of indenter for dumping IDL AST
 //
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(util, utl_indenter, "$Id$")
+ACE_RCSID (util, 
+           utl_indenter, 
+           "$Id$")
 
 /*
  * Constructors
  */
-UTL_Indenter::UTL_Indenter ()
+UTL_Indenter::UTL_Indenter (void)
   : pd_indent_level (0)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Reset indentation level
+// Reset indentation level.
 void
-UTL_Indenter::reset ()
+UTL_Indenter::reset (void)
 {
-  pd_indent_level = 0;
+  this->pd_indent_level = 0;
 }
 
-// Increase indentation level
+// Increase indentation level.
 void
-UTL_Indenter::increase ()
+UTL_Indenter::increase (void)
 {
-  pd_indent_level++;
+  ++this->pd_indent_level;
 }
 
-// Decrease indentation level
+// Decrease indentation level.
 void
 UTL_Indenter::decrease ()
 {
-  if (pd_indent_level > 0)
-    pd_indent_level--;
+  if (this->pd_indent_level > 0)
+    {
+      --this->pd_indent_level;
+    }
 }
 
-// Produce white space to indent to current indentation level on ostream o
+// Produce white space to indent to current indentation level on ostream o.
 void
 UTL_Indenter::skip_to (ACE_OSTREAM_TYPE &o)
 {
-  long i;
-
-  for (i = 0; i < pd_indent_level; i++)
-    o << "  ";
+  for (long i = 0; i < this->pd_indent_level; ++i)
+    {
+      o << "  ";
+    }
 }
 
-// Produce white space to indent to current indentation level on ostream o
+// Produce white space to indent to current indentation level on ostream o.
 void
 UTL_Indenter::skip_to (FILE *fp)
 {
-  long i;
-
-  for (i = 0; i < pd_indent_level; i++)
-    ACE_OS::fprintf (fp, "  ");
+  for (long i = 0; i < this->pd_indent_level; ++i)
+    {
+      ACE_OS::fprintf (fp, 
+                       "  ");
+    }
 }
 
-/*
- * Redefined virtual operations
- */

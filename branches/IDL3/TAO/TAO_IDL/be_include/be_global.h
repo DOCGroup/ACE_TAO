@@ -20,8 +20,13 @@
 #ifndef _BE_GLOBAL_H
 #define _BE_GLOBAL_H
 
+#include "TAO_IDL_BE_Export.h"
+#include "idl_bool.h"
+#include "ace/Unbounded_Queue.h"
+
 class be_interface;
 class be_interface_fwd;
+class UTL_String;
 
 // Defines a class containing all back end global data.
 

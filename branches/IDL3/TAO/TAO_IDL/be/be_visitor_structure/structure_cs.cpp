@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_typecode/typecode_defn.h"
-
 ACE_RCSID (be_visitor_structure, 
            structure_cs, 
            "$Id$")
-
 
 // ***************************************************************************
 // For client stubs.

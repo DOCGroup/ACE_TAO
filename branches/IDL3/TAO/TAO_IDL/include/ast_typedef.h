@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPEDEF_AST_TYPEDEF_HH
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
+#include "ast_type.h"
+
 // Representation of typedef declaration.
 // A typedef declaration is a renaming of a base type.
 

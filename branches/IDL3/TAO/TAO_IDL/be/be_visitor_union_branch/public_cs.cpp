@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_union_branch.h"
-
 ACE_RCSID (be_visitor_union_branch, 
            public_cs, 
            "$Id$")
-
 
 // **********************************************
 //  Visitor for union_branch in the client stubs file.

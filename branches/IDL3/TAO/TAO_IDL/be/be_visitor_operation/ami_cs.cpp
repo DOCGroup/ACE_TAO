@@ -20,15 +20,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            operation_ami_cs, 
            "$Id$")
-
 
 // ************************************************************
 // Operation visitor for client stubs

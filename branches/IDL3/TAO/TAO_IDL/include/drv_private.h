@@ -86,7 +86,7 @@ extern long DRV_file_index;
 
 // Functions
 
-extern void DRV_drive (const char *);
+//extern void DRV_drive (const char *);
 // Compiler driver for single file
 
 #endif  // _DRV_PRIVATE_DRV_PRIVATE_HH

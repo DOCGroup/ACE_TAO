@@ -20,13 +20,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, valuetype_init, "$Id$")
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_init, 
+           "$Id$")
 
 be_visitor_valuetype_init::be_visitor_valuetype_init (
     be_visitor_context *ctx

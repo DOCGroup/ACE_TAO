@@ -20,13 +20,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_valuetype.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            field_ci, 
            "$Id$")
-
 
 be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx

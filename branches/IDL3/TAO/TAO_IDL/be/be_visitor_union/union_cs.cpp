@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_union.h"
-#include "be_visitor_typecode/typecode_defn.h"
-
-ACE_RCSID(be_visitor_union, union_cs, "$Id$")
+ACE_RCSID (be_visitor_union, 
+           union_cs, 
+           "$Id$")
 
 
 // ******************************************************

@@ -18,18 +18,15 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, interface_ci, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           interface_ci, 
+           "$Id$")
 
 
 // **************************************************
 // Interface visitor for client inline
 // **************************************************
+
 be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {

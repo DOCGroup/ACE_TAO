@@ -67,6 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_LABEL_AST_UNION_LABEL_HH
 #define _AST_UNION_LABEL_AST_UNION_LABEL_HH
 
+#include "TAO_IDL_FE_Export.h"
+#include "ace/OS.h"
+
+class AST_Expression;
+class ast_visitor;
+
 // Defines labels for unions.
 
 class TAO_IDL_FE_Export AST_UnionLabel
@@ -75,13 +81,10 @@ public:
   // Define kind of label.
   enum UnionLabel
     {
-        UL_default              // Label is "default".
-      , UL_label                // Regular label.
+        UL_default
+      , UL_label 
     };
 
-  // Operations.
-
-  // Constructor(s) and destructor.
   AST_UnionLabel (void);
 
   AST_UnionLabel (UnionLabel lk,
@@ -89,7 +92,6 @@ public:
 
   virtual ~AST_UnionLabel (void);
 
-  // Data Accessors.
   UnionLabel label_kind (void);
 
   AST_Expression *label_val (void);

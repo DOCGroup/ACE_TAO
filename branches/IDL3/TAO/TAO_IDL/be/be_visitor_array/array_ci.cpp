@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, array_ci, "$Id$")
+ACE_RCSID (be_visitor_array, 
+           array_ci, 
+           "$Id$")
 
 
 // ************************************************************************
@@ -42,15 +38,17 @@ be_visitor_array_ci::~be_visitor_array_ci (void)
 
 int be_visitor_array_ci::visit_array (be_array *node)
 {
-  // nothing to do if we are imported or code is already generated
+  // Nothing to do if we are imported or code is already generated.
   if (node->imported () || (node->cli_inline_gen ()))
-    return 0;
+    {
+      return 0;
+    }
 
   this->ctx_->node (node); // save the array node
 
   // If we contain an anonymous sequence, generate code for it here.
-
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -118,16 +116,22 @@ int be_visitor_array_ci::visit_array (be_array *node)
 int
 be_visitor_array_ci::gen_var_impl (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  char nodename [NAMEBUFSIZE]; // node name
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local names of the var
-  // save the node's local name and full name in a buffer for quick use later
-  // on
-  ACE_OS::memset (nodename, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  char nodename [NAMEBUFSIZE];
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
+
+  ACE_OS::memset (nodename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   if (this->ctx_->tdef ())
     {
       // typedefed node
@@ -143,7 +147,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
       // our local name. This needs to be inserted after the parents's name
       if (node->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          be_decl *parent = 
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
           ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (fname, "%s::_%s_var", parent->full_name (),
@@ -370,7 +375,8 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
       // our local name. This needs to be inserted after the parents's name
       if (node->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          be_decl *parent = 
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
           ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (fname, "%s::_%s_out", parent->full_name (),
@@ -507,7 +513,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       // our local name. This needs to be inserted after the parents's name
       if (node->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          be_decl *parent = 
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
           ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (fname, "%s::_%s_forany", parent->full_name (),

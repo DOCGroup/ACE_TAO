@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_type.h"
+#include "be_scope.h"
+#include "be_visitor.h"
+#include "be_codegen.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(be, be_type, "$Id$")
+ACE_RCSID (be, 
+           be_type, 
+           "$Id$")
 
 be_type::be_type (void)
   : tc_name_ (0),
@@ -525,9 +529,6 @@ be_type::destroy (void)
       delete [] this->nested_type_name_;
       this->nested_type_name_ = 0;
     }
-
-  this->AST_Type::destroy ();
-  this->be_decl::destroy ();
 }
 
 int

@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_exception.h"
 #include "be_visitor_typecode/typecode_decl.h"
 
 ACE_RCSID (be_visitor_exception, 

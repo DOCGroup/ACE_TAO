@@ -18,19 +18,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_typecode, 
+           typecode_defn, 
+           "$Id$")
 
-#include "be_visitor_typecode.h"
-
-ACE_RCSID(be_visitor_typecode, typecode_defn, "$Id$")
-
-
-//
 // This is an implementation of C++ "scoped lock" idiom in order to
 // avoid repetitive code.
-//
 class Scoped_Compute_Queue_Guard
 {
 public:
@@ -47,17 +40,18 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
 {
   if (customer_ != 0)
     {
-      // reset the compute queue to set the stage for computing our
-      // encapsulation length
+      // Reset the compute queue to set the stage for computing our
+      // encapsulation length.
       customer_->queue_reset (customer_->compute_queue_);
     }
 }
+
 Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
 {
   if (customer_ != 0)
     {
-      // reset the compute queue since we must not affect computation of other
-      // nodes
+      // Reset the compute queue since we must not affect computation of other
+      // nodes.
       customer_->queue_reset (customer_->compute_queue_);
     }
 }

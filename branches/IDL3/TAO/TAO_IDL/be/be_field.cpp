@@ -19,11 +19,14 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_field.h"
+#include "be_visitor.h"
+#include "be_type.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(be, be_field, "$Id$")
+ACE_RCSID (be, 
+           be_field, 
+           "$Id$")
 
 be_field::be_field (void)
 {

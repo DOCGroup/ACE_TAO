@@ -1,25 +1,29 @@
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+//
+// $Id$
+//
 
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           strategized_proxy_broker_ss, 
+           "$Id$")
 
-ACE_RCSID (be_visitor_interface, base_proxy_broker_ss, "$Id$")
-
-be_visitor_interface_strategized_proxy_broker_ss::be_visitor_interface_strategized_proxy_broker_ss (be_visitor_context *ctx)
+be_visitor_interface_strategized_proxy_broker_ss::
+be_visitor_interface_strategized_proxy_broker_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_strategized_proxy_broker_ss::~be_visitor_interface_strategized_proxy_broker_ss (void)
+be_visitor_interface_strategized_proxy_broker_ss::
+~be_visitor_interface_strategized_proxy_broker_ss (void)
 {
   // No-Op.
 }
 
 int
-be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface *node)
+be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -27,7 +31,8 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
   os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" << be_nl
+      << "///////////////////////////////////////////////////////////////////////" 
+      << be_nl
       << "//            Strategized Proxy Broker Implementation" << be_nl
       << "//" << be_nl << be_nl;
 

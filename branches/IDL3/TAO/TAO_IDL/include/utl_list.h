@@ -67,15 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_LIST_UTL_LIST_HH
 #define _UTL_LIST_UTL_LIST_HH
 
-// utl_list.hh
-//
-// General single-linked lists
-
-/*
-** DEPENDENCIES: NONE
-**
-** USE: Included from util.hh
-*/
+// General single-linked list.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -83,28 +75,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-// Forward declare active iterator for UTL_List
-class   UTL_ListActiveIterator;
+#include "TAO_IDL_FE_Export.h"
+#include "idl_bool.h"
+
+// Forward declare active iterator for UTL_List.
+class  UTL_ListActiveIterator;
 
 class TAO_IDL_FE_Export UTL_List
 {
 public:
-  // Operations
-
-  // Constructor
   UTL_List (UTL_List *c);
 
-  // Destructor
   virtual ~UTL_List (void);
 
-  // Smash last cdr pointer in "this" with l
+  // Smash last cdr pointer in "this" with l.
   void nconc (UTL_List *l);
 
-  // Copy the list starting at "this"
+  // Copy the list starting at "this".
   virtual UTL_List *copy (void);
 
-  // Get next list
-  UTL_List *tail ();
+  // Get next list.
+  UTL_List *tail (void);
 
   // Set next list
   void set_tail (UTL_List *l);
@@ -116,34 +107,31 @@ public:
   virtual void destroy (void);
 
 private:
-  // Data
-  UTL_List *pd_cdr_data;   // The next list
+  // The next list.
+  UTL_List *pd_cdr_data;
 
   // Operations
-  long list_length (long n); // How long is it?
+  long list_length (long n);
 
-  // Friend class
-  friend class UTL_ListActiveIterator; // Friend class
+  // Friend class.
+  friend class UTL_ListActiveIterator;
 };
 
-// Active iterator for lists
+// Active iterator for lists.
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
-  // Operations
-
-  // Constructor(s)
   UTL_ListActiveIterator (UTL_List *s);
 
-  // Get next list
-  virtual void next ();
+  // Get next list.
+  virtual void next (void);
 
   // Are we at the end of this list?
   virtual idl_bool is_done (void);
 
 protected:
-  // Data
-  UTL_List *source;                // On what to iterate?
+  // On what to iterate?
+  UTL_List *source;
 };
 
 #endif           // _UTL_LIST_UTL_LIST_HH

@@ -1,21 +1,21 @@
-//$Id$
+//
+// $Id$
+//
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_interface, 
+           base_proxy_impl_ch, 
+           "$Id$")
 
-#include "be_visitor_interface.h"
-
-ACE_RCSID (be_visitor_interface, base_proxy_impl_ch, "$Id$")
-
-be_visitor_interface_base_proxy_impl_ch::be_visitor_interface_base_proxy_impl_ch (be_visitor_context *ctx)
+be_visitor_interface_base_proxy_impl_ch::
+be_visitor_interface_base_proxy_impl_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_base_proxy_impl_ch::~be_visitor_interface_base_proxy_impl_ch (void)
+be_visitor_interface_base_proxy_impl_ch::
+~be_visitor_interface_base_proxy_impl_ch (void)
 {
   // No-Op.
 }
@@ -28,7 +28,8 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
   //  os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" << be_nl
+      << "///////////////////////////////////////////////////////////////////////" 
+      << be_nl
       << "//                    Base Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
@@ -76,7 +77,8 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_base_proxy_impl_ch::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   *os << be_uidt_nl;
@@ -91,5 +93,6 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
       << "//               End Base Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
+
   return 0;
 }

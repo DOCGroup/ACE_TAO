@@ -74,12 +74,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // (implemented as a list of Strings, a UTL_StrList), and a raises
 // clause (implemented as an array of AST_Exceptions).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_operation.h"
+#include "ast_predefined_type.h"
+#include "ast_argument.h"
+#include "ast_exception.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_namelist.h"
+#include "utl_exceptlist.h"
+#include "utl_identifier.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
+#include "global_extern.h"
 
-ACE_RCSID(ast, ast_operation, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_operation, 
+           "$Id$")
 
 AST_Operation::AST_Operation (void)
   : pd_return_type (0),

@@ -71,12 +71,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // represents the total number of unique (recursively) inherited
 // interfaces.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "ast_constant.h"
+#include "ast_exception.h"
+#include "ast_attribute.h"
+#include "ast_operation.h"
+#include "ast_field.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_union.h"
+#include "ast_native.h"
+#include "ast_factory.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "global_extern.h"
+#include "nr_extern.h"
 
-ACE_RCSID(ast, ast_interface, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_interface, 
+           "$Id$")
 
 AST_Interface::AST_Interface (void)
   : is_valuetype_ (0),

@@ -4,6 +4,8 @@
 #ifndef _AST_INTERFACE_AST_COMPONENT_HH
 #define _AST_INTERFACE_AST_COMPONENT_HH
 
+#include "ast_interface.h"
+
 class TAO_IDL_FE_Export AST_Component : public virtual AST_Interface
 {
 public:

@@ -71,17 +71,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
 #include "ast_type.h"
 #include "utl_scope.h"
-#include "ast_decl.h"
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
-  // Constructor(s).
   AST_Interface (void);
 
   AST_Interface (UTL_ScopedName *n,
@@ -94,7 +90,6 @@ public:
 
   virtual ~AST_Interface (void);
 
-  // Data Accessors.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 

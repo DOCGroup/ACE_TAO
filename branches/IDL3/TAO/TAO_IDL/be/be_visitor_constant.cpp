@@ -18,15 +18,18 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_constant.h"
+#include "be_module.h"
+#include "be_helper.h"
+#include "utl_identifier.h"
 
 #include "be_visitor_constant.h"
+#include "be_visitor_context.h"
 
-// include all the individual files
 #include "be_visitor_constant/constant_ch.cpp"
 #include "be_visitor_constant/constant_cs.cpp"
 
-ACE_RCSID(be, be_visitor_constant, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_constant, 
+           "$Id$")
 

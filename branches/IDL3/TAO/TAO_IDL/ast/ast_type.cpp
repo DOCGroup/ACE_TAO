@@ -67,12 +67,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Type is the base class for all AST classes which represent
 // IDL type constructs.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_type.h"
+#include "ast_visitor.h"
 
-ACE_RCSID(ast, ast_type, "$Id$")
+ACE_RCSID (ast, 
+           ast_type, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Type::AST_Type (void)
   : ifr_added_ (0),
     ifr_fwd_added_ (0)

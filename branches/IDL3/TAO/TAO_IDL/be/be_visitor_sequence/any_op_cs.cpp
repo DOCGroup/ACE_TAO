@@ -18,22 +18,19 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
 
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_sequence_any_op_cs::be_visitor_sequence_any_op_cs
-(be_visitor_context *ctx)
+be_visitor_sequence_any_op_cs::be_visitor_sequence_any_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -52,7 +49,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Any <<= and >>= operators
+  // Any <<= and >>= operators.
   os->indent ();
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl

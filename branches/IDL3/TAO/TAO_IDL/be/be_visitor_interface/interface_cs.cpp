@@ -18,16 +18,11 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
 #include "be_visitor_typecode/typecode_defn.h"
 
 ACE_RCSID (be_visitor_interface, 
            interface_cs, 
            "$Id$")
-
 
 // ************************************************************
 // Interface visitor for client stubs

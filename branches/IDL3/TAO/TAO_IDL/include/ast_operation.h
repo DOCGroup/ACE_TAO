@@ -67,14 +67,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_OPERATION_AST_OPERATION_HH
 #define _AST_OPERATION_AST_OPERATION_HH
 
-// Representation of operation declaration.
-
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "utl_list.h"
 #include "ast_decl.h"
 #include "utl_scope.h"
-#include "utl_scoped_name.h"
+
+class UTL_ExceptList;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope

@@ -22,11 +22,23 @@
 //
 // ============================================================================
 
-
 #include "be_visitor_ami_pre_proc.h"
+#include "be_visitor_context.h"
+#include "be_root.h"
+#include "be_module.h"
+#include "be_interface.h"
+#include "be_interface_strategy.h"
+#include "be_valuetype.h"
+#include "be_operation.h"
+#include "be_operation_strategy.h"
+#include "be_attribute.h"
+#include "be_predefined_type.h"
+#include "be_argument.h"
+#include "utl_identifier.h"
 
-
-ACE_RCSID(be, be_visitor_ami_pre_proc, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_ami_pre_proc, 
+           "$Id$")
 
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
@@ -35,12 +47,10 @@ be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
 
 }
 
-  // constructor is protected
 be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
 {
 
 }
-
 
 int
 be_visitor_ami_pre_proc::visit_root (be_root *node)
@@ -229,7 +239,6 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
   return 0;
 }
 
-
 int
 be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 {
@@ -280,11 +289,6 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 
   return 0;
 }
-
-
-
-
-
 
 be_valuetype *
 be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
@@ -427,7 +431,6 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 
   return excep_holder;
 }
-
 
 be_interface *
 be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
@@ -598,7 +601,6 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
   return reply_handler;
 }
-
 
 int
 be_visitor_ami_pre_proc::create_raise_operation (
@@ -1120,7 +1122,6 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   return 0;
 }
 
-
 // Visit the scope and its elements.
 int
 be_visitor_ami_pre_proc::visit_scope (be_scope *node)
@@ -1220,8 +1221,6 @@ be_visitor_ami_pre_proc::generate_name (ACE_CString &destination,
   destination += suffix;
   return 0;
 }
-
-
 
 be_operation *
 be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)

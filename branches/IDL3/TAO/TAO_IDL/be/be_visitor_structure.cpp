@@ -18,13 +18,16 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_field.h"
+#include "be_structure.h"
+#include "be_helper.h"
+#include "be_extern.h"
 
 #include "be_visitor_structure.h"
+#include "be_visitor_field.h"
+#include "be_visitor_typecode.h"
+#include "be_visitor_context.h"
 
-// include all the individual files
 #include "be_visitor_structure/structure.cpp"
 #include "be_visitor_structure/structure_ch.cpp"
 #include "be_visitor_structure/structure_ci.cpp"
@@ -35,4 +38,6 @@
 #include "be_visitor_structure/cdr_op_ci.cpp"
 #include "be_visitor_structure/cdr_op_cs.cpp"
 
-ACE_RCSID(be, be_visitor_structure, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_structure, 
+           "$Id$")

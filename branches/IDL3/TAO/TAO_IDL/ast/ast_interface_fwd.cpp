@@ -69,12 +69,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the interface, which is initialized when that declaration is
 // encountered.
 
-#include "idl.h"
-#include  "idl_extern.h"
+#include "ast_interface_fwd.h"
+#include "ast_interface.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_interface_fwd, "$Id$")
+ACE_RCSID( ast, 
+           ast_interface_fwd, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_InterfaceFwd::AST_InterfaceFwd (void)
   : pd_full_definition (0)
 {

@@ -20,12 +20,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-
 ACE_RCSID (be_visitor_obv_module, 
            obv_module, 
            "$Id$")
-
 
 // ************************************************************
 // OBV module visitor for server header.
@@ -93,6 +90,7 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
+  int status = 1;
 
   switch (this->ctx_->state ())
     {
@@ -100,8 +98,13 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
       break;
     case TAO_CodeGen::TAO_MODULE_OBV_CI:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
-      break;
+      {
+        // This context state is not involved in any strategies.
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
+        be_visitor_valuetype_obv_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_MODULE_OBV_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
       break;
@@ -114,6 +117,19 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
                            ), 
                           -1);
       }
+    }
+
+  if (status == 0)
+    {
+      return 0;
+    }
+  else if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_obv_module::"
+                         "visit_valuetype - "
+                         "failed to accept visitor\n"),  
+                        -1);
     }
 
   // Change the state depending on the kind of node strategy.

@@ -19,40 +19,42 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, thru_poa_collocated_sh, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           thru_poa_collocated_sh, 
+           "$Id$")
 
 // ************************************************************
 //  thru_poa_collocated class in header
 // ************************************************************
 
-be_visitor_interface_thru_poa_collocated_sh::be_visitor_interface_thru_poa_collocated_sh
-(be_visitor_context *ctx)
+be_visitor_interface_thru_poa_collocated_sh::
+be_visitor_interface_thru_poa_collocated_sh (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_thru_poa_collocated_sh::~be_visitor_interface_thru_poa_collocated_sh (void)
+be_visitor_interface_thru_poa_collocated_sh::
+~be_visitor_interface_thru_poa_collocated_sh (void)
 {
 }
 
-int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *node)
+int be_visitor_interface_thru_poa_collocated_sh::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flat_name (), "_thru_poa_collocated");
+  os->gen_ifdef_macro (node->flat_name (), 
+                       "_thru_poa_collocated");
 
   // output the class defn
   os->indent ();
+
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->local_coll_name (be_interface::THRU_POA);
+
   os->incr_indent ();
+
   *os << " : public virtual ::" << node->full_name ();
 
   // generate base classes if any
@@ -64,14 +66,20 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
           be_interface* parent =
             be_interface::narrow_from_decl (node->inherits()[i]);
           *os << "  public virtual "
-              << be_interface::relative_name (parent->full_coll_name (be_interface::THRU_POA),
-                                              node->full_coll_name (be_interface::THRU_POA));
+              << be_interface::relative_name (
+                     parent->full_coll_name (be_interface::THRU_POA),
+                     node->full_coll_name (be_interface::THRU_POA)
+                   );
         }
     }
+
   *os << "\n";
+
   os->decr_indent ();
+
   *os << "{" << be_nl;
   *os << "public:\n";
+
   os->incr_indent ();
 
   *os << node->local_coll_name (be_interface::THRU_POA) << " (\n";
@@ -80,8 +88,11 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
   os->incr_indent ();
 
   *os << "TAO_Stub *stub\n";
+
   os->decr_indent ();
+
   *os << ");\n";
+
   os->decr_indent (0);
 
   os->indent ();
@@ -111,6 +122,5 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
   *os << "};\n\n";
 
   os->gen_endif ();
-
   return 0;
 }

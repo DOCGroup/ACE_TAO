@@ -23,12 +23,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype_marshal_ss, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           rettype_marshal_ss, 
+           "$Id$")
 
 // ****************************************************************************
 // visitor for arguments passing to the CDR operators.
@@ -45,13 +42,14 @@ be_visitor_operation_rettype_marshal_ss::
 {
 }
 
-int be_visitor_operation_rettype_marshal_ss::
-visit_operation (be_operation *node)
+int be_visitor_operation_rettype_marshal_ss::visit_operation (
+    be_operation *node
+  )
 {
-  this->ctx_->node (node); // save the argument node
+  this->ctx_->node (node);
 
-  // retrieve the type of the argument
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

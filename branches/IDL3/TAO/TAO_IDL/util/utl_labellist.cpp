@@ -64,70 +64,41 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-// utl_labellist.cc
-//
-// Implementation of a list of scoped names
+// Implementation of a list of union labels.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
+//	     will cease to operate correctly if you use either multiple or
+//	     public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "utl_labellist.h"
 
-ACE_RCSID(util, utl_labellist, "$Id$")
+ACE_RCSID (util, 
+           utl_labellist, 
+           "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_LabelList::UTL_LabelList(AST_UnionLabel *s, UTL_LabelList *cdr)
-	     : UTL_List(cdr),
-	       pd_car_data(s)
+UTL_LabelList::UTL_LabelList (AST_UnionLabel *s, 
+                              UTL_LabelList *cdr)
+  : UTL_List(cdr),
+	  pd_car_data(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get list item
+// Get list item.
 AST_UnionLabel *
-UTL_LabelList::head()
+UTL_LabelList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-// UTL_LabelList active iterator
-
-/*
- * Constructor
- */
 
 UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
-			   : UTL_ListActiveIterator (s)
+  : UTL_ListActiveIterator (s)
 {
 }
 
-/*
- * Private operations
- */
 
-/*
- * Public operations
- */
-
-// Get current item
+// Get current item.
 AST_UnionLabel *
 UTL_LabellistActiveIterator::item (void)
 {
@@ -139,6 +110,3 @@ UTL_LabellistActiveIterator::item (void)
   return ((UTL_LabelList *) source)->head ();
 }
 
-/*
- * Redefinition of inherited virtual operations
- */

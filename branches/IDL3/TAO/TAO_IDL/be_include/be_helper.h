@@ -23,6 +23,12 @@
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
+#include "ace/CDR_Base.h"
+
+class Identifier;
+class UTL_IdList;
+class AST_Expression;
+
 // a dummy structure to inform TAO_OutStream's << operator to  put a newline
 // and use the current indentation for the succeeding line
 struct TAO_NL

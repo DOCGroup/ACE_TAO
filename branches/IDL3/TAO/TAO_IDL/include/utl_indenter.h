@@ -62,22 +62,16 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_INDENTER_UTL_INDENTER_HH
 #define _UTL_INDENTER_UTL_INDENTER_HH
 
-// UTL indenter:
-//
+#include "ace/OS.h"
+
 // Utility class for control of indentation level during dumping
 // May also be useful for BEs that want to produce nicely formatted
-// output
-
-/*
-** DEPENDENCIES: NONE
-**
-** USE: in CFE in dumping the AST
-*/
+// output.
 
 class UTL_Indenter
 {
@@ -86,32 +80,28 @@ class UTL_Indenter
   // =DESCRIPTION
   //  useful in generating indented output
 public:
-  // Operations
+  UTL_Indenter (void);
 
-  UTL_Indenter();               // constructor
-  // Constructor(s)
+  ~UTL_Indenter (void) {}
 
-  virtual ~UTL_Indenter() {}
-  // destructor
+  void reset (void);
+  // Reset indentation level to 0.
 
-  void reset();
-  // Reset indentation level to 0
+  void increase (void);
+  // Increase indentation level.
 
-  void increase();
-  // Increase indentation level
-
-  void decrease();
-  // Decrease indentation level
+  void decrease (void);
+  // Decrease indentation level.
 
   void skip_to (ACE_OSTREAM_TYPE &o);
-  // Skip to indentation level stop
+  // Skip to indentation level stop.
 
   void skip_to (FILE *fp);
-  // skip to indentation level stop
+  // skip to indentation level stop.
 
 private:
-  // Data
-  long                          pd_indent_level;        // How far to indent
+  // How far to indent.
+  long pd_indent_level;
 };
 
 #endif           // _UTL_INDENTER_UTL_INDENTER_HH

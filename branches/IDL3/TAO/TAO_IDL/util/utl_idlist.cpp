@@ -64,20 +64,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-// utl_idlist.cc
-//
-// Implementation of a list of utl_string nodes
+// Implementation of a list of utl_string nodes.
 
 // NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
+//   inheritance, as opposed to multiple inheritance or public virtual.
 //	 It relies on a type-unsafe cast from UTL_List to subclasses, which
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "utl_idlist.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(util, utl_idlist, "$Id$")
+ACE_RCSID (util, 
+           utl_idlist, 
+           "$Id$")
 
 // Constructor
 UTL_IdList::UTL_IdList (Identifier *s,

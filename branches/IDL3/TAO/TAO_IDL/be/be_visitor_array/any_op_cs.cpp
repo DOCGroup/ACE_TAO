@@ -19,13 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, any_op_cs, "$Id$")
+ACE_RCSID (be_visitor_array, 
+           any_op_cs, 
+           "$Id$")
 
 
 // ***************************************************************************
@@ -33,8 +29,9 @@ ACE_RCSID(be_visitor_array, any_op_cs, "$Id$")
 // stubs file
 // ***************************************************************************
 
-be_visitor_array_any_op_cs::be_visitor_array_any_op_cs
-(be_visitor_context *ctx)
+be_visitor_array_any_op_cs::be_visitor_array_any_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }

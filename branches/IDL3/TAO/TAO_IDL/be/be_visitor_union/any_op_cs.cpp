@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_union, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_union_any_op_cs::be_visitor_union_any_op_cs
-(be_visitor_context *ctx)
+be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_union (ctx)
 {
 }
@@ -45,15 +41,18 @@ be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs (void)
 int
 be_visitor_union_any_op_cs::visit_union (be_union *node)
 {
-  if (node->cli_stub_any_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_stub_any_op_gen ()
+      || node->imported ()
+      || node->is_local ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the Any <<= and >>= operator declarations
+  // Generate the Any <<= and >>= operator declarations.
   os->indent ();
+
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
@@ -159,7 +158,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union::visit_union - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   node->cli_stub_any_op_gen (1);
@@ -169,17 +169,15 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt; // field's type
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
 
-  // first generate the type information
-  bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_cs::"
                          "visit_union_branch - "
-                         "Bad field type\n"
-                         ), -1);
+                         "Bad field type\n"), 
+                        -1);
     }
 
   if (bt->accept (this) == -1)
@@ -187,8 +185,9 @@ be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_cs::"
                          "visit_union_branch - "
-                         "codegen for field type failed\n"
-                         ), -1);
+                         "codegen for field type failed\n"), 
+                        -1);
     }
+
   return 0;
 }

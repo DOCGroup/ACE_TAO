@@ -20,42 +20,37 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, ami_handler_reply_stub_operation_ch, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           ami_handler_reply_stub_operation_ch, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server header
 // ************************************************************
 
-be_visitor_operation_ami_handler_reply_stub_operation_ch::be_visitor_operation_ami_handler_reply_stub_operation_ch (be_visitor_context *ctx)
+be_visitor_operation_ami_handler_reply_stub_operation_ch::
+be_visitor_operation_ami_handler_reply_stub_operation_ch (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ami_handler_reply_stub_operation_ch::~be_visitor_operation_ami_handler_reply_stub_operation_ch (void)
+be_visitor_operation_ami_handler_reply_stub_operation_ch::
+~be_visitor_operation_ami_handler_reply_stub_operation_ch (void)
 {
 }
 
 int
-be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_operation *node)
+be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
+    be_operation *node
+  )
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node
-
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // Generate the corresponding static skeleton method for this
   // operation only if there was no "native" type.
   if (!node->has_native ())
     {
-
       // Next line.
       *os << "static void ";
 
@@ -72,6 +67,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
               *os << "_get_";
             }
         }
+
       *os << node->local_name ()
           << "_reply_stub (" << be_idt << be_idt_nl;
 
@@ -83,5 +79,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
     }
+
   return 0;
 }

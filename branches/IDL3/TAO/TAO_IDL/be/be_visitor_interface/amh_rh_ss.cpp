@@ -11,14 +11,13 @@
 */
 //=============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_rh_ss, 
+           "$Id$")
 
-#include "be_visitor_interface.h"
-#include "be_visitor_operation/amh_rh_ss.h"
-
-be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (be_visitor_context *ctx)
+be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface_ss (ctx)
 {
 }
@@ -38,7 +37,9 @@ int
 be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
 {
   if (node->srv_skel_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -52,7 +53,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   node->compute_full_name (rh_skel_prefix.c_str(), "", buf);
   ACE_CString rh_skel_full_scope_name ("POA_");
   rh_skel_full_scope_name += buf;
-  delete[] buf;
+  delete [] buf;
 
   ACE_CString rh_skel_class_name_prefix (rh_skel_prefix.c_str ());
   if (!node->is_nested ())

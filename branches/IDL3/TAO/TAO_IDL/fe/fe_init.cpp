@@ -62,28 +62,20 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * fe_init.cc - Initialize the FE
- *
- * The FE initialization is carried out in two stages, with the BE
- * initialization protocol sandwiched between the two stages.
- *
- * The first stage is responsible for creating the scopes stack.
- * The second stage is run after the BE initialization has created
- * and returned an instance of AST_Generator (or a subclass). This
- * instance is used to create the root node for the AST, and to
- * populate it with AST_PredefinedType nodes which represent the
- * predefined IDL types. This AST root is then pushed on the scopes
- * stack as the outermost scope.
- */
+#include "ast_module.h"
+#include "ast_predefined_type.h"
+#include "ast_generator.h"
+#include "ast_root.h"
+#include "utl_scoped_name.h"
+#include "utl_identifier.h"
+#include "global_extern.h"
+#include "fe_extern.h"
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "fe_private.h"
-
-ACE_RCSID(fe, fe_init, "$Id$")
+ACE_RCSID (fe, 
+           fe_init, 
+           "$Id$")
 
 // Create a scoped name
 static UTL_ScopedName *

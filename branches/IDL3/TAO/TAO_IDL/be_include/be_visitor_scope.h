@@ -21,8 +21,8 @@
 #ifndef TAO_BE_VISITOR_SCOPE_H
 #define TAO_BE_VISITOR_SCOPE_H
 
-#include "idl_bool.h"
 #include "be_visitor_decl.h"
+#include "idl_bool.h"
 
 class be_visitor_scope : public be_visitor_decl
 {

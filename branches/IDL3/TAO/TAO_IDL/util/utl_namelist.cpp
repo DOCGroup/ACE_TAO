@@ -62,80 +62,50 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_namelist.cc
-//
-// Implementation of a list of scoped names
+// Implementation of a list of scoped names.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
+//	     will cease to operate correctly if you use either multiple or
+//	     public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "utl_namelist.h"
 
-ACE_RCSID(util, utl_namelist, "$Id$")
+ACE_RCSID (util, 
+           utl_namelist, 
+           "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_NameList::UTL_NameList(UTL_ScopedName *s, UTL_NameList *cdr)
-	    : UTL_List(cdr),
-	      pd_car_data(s)
+UTL_NameList::UTL_NameList (UTL_ScopedName *s, 
+                            UTL_NameList *cdr)
+	: UTL_List(cdr),
+	  pd_car_data(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get list item
+// Get list item.
 UTL_ScopedName *
-UTL_NameList::head()
+UTL_NameList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
-
-// UTL_NameList active iterator
-
-/*
- * Constructor
- */
-
-UTL_NamelistActiveIterator::UTL_NamelistActiveIterator(UTL_NameList *s)
-			    : UTL_ListActiveIterator(s)
+UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
+	: UTL_ListActiveIterator(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get current item
+// Get current item.
 UTL_ScopedName *
-UTL_NamelistActiveIterator::item()
+UTL_NamelistActiveIterator::item (void)
 {
-  if (source == NULL)
-    return NULL;
-  return ((UTL_NameList *) source)->head();
+  if (source == 0)
+    {
+      return 0;
+    }
+
+  return ((UTL_NameList *) source)->head ();
 }
 
-/*
- * Redefinition of inherited virtual operations
- */

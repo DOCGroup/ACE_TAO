@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            thru_poa_collocated_ss, 
            "$Id$")
-
 
 // *************************************************************************
 //  This visitor generates code for the thru_poa_collocated operation signature in a

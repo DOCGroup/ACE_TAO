@@ -1,11 +1,14 @@
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
 #include "be_sunsoft.h"
+#include "ast_expression.h"
+#include "utl_identifier.h"
+#include "utl_idlist.h"
+#include "utl_string.h"
 
-ACE_RCSID(be, be_sunsoft, "$Id$")
+ACE_RCSID (be, 
+           be_sunsoft, 
+           "$Id$")
 
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
   : TAO_OutStream ()

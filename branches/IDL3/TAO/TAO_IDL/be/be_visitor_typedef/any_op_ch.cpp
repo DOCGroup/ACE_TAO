@@ -18,21 +18,17 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_typedef.h"
-
-ACE_RCSID(be_visitor_typedef, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_typedef, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_typedef_any_op_ch::be_visitor_typedef_any_op_ch
-(be_visitor_context *ctx)
+be_visitor_typedef_any_op_ch::be_visitor_typedef_any_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_typedef (ctx)
 {
 }
