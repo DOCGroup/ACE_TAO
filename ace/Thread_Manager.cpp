@@ -960,10 +960,10 @@ ACE_Thread_Manager::apply_grp (int grp_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->grp_id_ == grp_id
         && (this->*func) (iter.next (), arg) == -1)
       result = -1;
@@ -1016,10 +1016,10 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if ((this->*func)(iter.next (), arg) == -1)
       result = -1;
 
@@ -1074,15 +1074,15 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 
     copy_table = new ACE_Thread_Descriptor [this->thr_list_.size ()];
 
-    ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-      iter (this->thr_list_);
-
-    for (; ! iter.done (); iter.advance ())
-      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much.
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+	 !iter.done ();
+	 iter.advance ())
+      // If threads are created as THR_DETACHED or THR_DAEMON, we
+      // can't help much.
       if (iter.next ()->task_ == this->task () &&
-          (((iter.next ()->flags_ & (THR_DETACHED | THR_DAEMON)) == 0)
-           || ((iter.next ()->flags_ & THR_JOINABLE) != 0)))
-          copy_table[copy_count++] = *iter.next ();
+	  (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
+	   || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
+	copy_table[copy_count++] = *iter.next ();
   }
 
   // Now to do the actual work

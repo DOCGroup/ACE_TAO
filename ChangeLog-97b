@@ -1,12 +1,3 @@
-Thu Oct 23 23:19:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
-
-	* ace/Filecache.cpp: Removed template method specialization of
-	  shared_find.  No longer needed since Hash_Map_Manager has been
-	  changed to no longer rely on sentinel_.
-
-	* ace/Thread_Manager.cpp (various):
-	  Hacked 'til it compiled.  (Chased down syntax errors.)
-
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
@@ -61,6 +52,15 @@ Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/Singleton.cpp (dump): There was a typo in the dump() method
  	  for ACE_TSS_Singleton, it should be
  	  ACE_TSS_Singleton::instance_i().  I've fixed this.
+
+Thu Oct 23 23:19:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Filecache.cpp: Removed template method specialization of
+	  shared_find.  No longer needed since Hash_Map_Manager has been
+	  changed to no longer rely on sentinel_.
+
+	* ace/Thread_Manager.cpp (various):
+	  Hacked 'til it compiled.  (Chased down syntax errors.)
 
 Thu Oct 23 22:52:17 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
