@@ -92,7 +92,7 @@ HTTP_Handler::receive_file_complete (void)
   char buffer[BUFSIZ];
   int buflen =
     ACE_OS::sprintf (buffer, 
-                     "%s %d %s",
+                     "%s %d %s\r\n",
                      this->request_.version (),
                      HTTP_Status_Code::STATUS_OK,
                      "Successful");  

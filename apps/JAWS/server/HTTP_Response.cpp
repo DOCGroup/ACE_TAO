@@ -307,22 +307,26 @@ HTTP_Response::cgi_response (void)
                            this->io_.handle (),
                            this->io_.handle ());
 
+  this->build_headers ();
+  this->io_.send_confirmation_message (this->HTTP_HEADER,
+                                       this->HTTP_HEADER_LENGTH);
+  //  ACE::send (this->io_.handle (),
+  //  this->HTTP_HEADER, this->HTTP_HEADER_LENGTH);
+
   // Exec the cgi program
   ACE_Process cgi_process;
   cgi_process.spawn (cgi_options);
-  cgi_process.wait ();
-  io_.send_confirmation_message ("", 0);
+  //  cgi_process.wait ();
 }
 
 void
 HTTP_Response::build_headers (void)
 {
   // At this point, we should really determine the type of request
-  // this is, and build the appropriate header.  For instance, this
-  // is unnecessary for CGI files since the header and contents are
-  // created and sent by the CGI program.
+  // this is, and build the appropriate header.
 
   // Let's assume this is HTML for now.
+  // Unless the request is CGI, then do not include content-* headers.
 
   if (this->request_.version () == 0
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
@@ -353,10 +357,11 @@ HTTP_Response::build_headers (void)
                             "Date: %s\r\n", date_ptr);
         }
 
-      HTTP_HEADER_LENGTH +=
-        ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
-                        "Content-type: %s\r\n\r\n",
-                        "text/html");
+      if (! this->request_.cgi ())
+        HTTP_HEADER_LENGTH +=
+          ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
+                          "Content-type: %s\r\n\r\n",
+                          "text/html");
     }
 
   HTTP_TRAILER = "";
