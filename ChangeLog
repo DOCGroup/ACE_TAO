@@ -1,3 +1,11 @@
+Mon Sep 20 18:07:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/run_test.pl:
+
+	  Reverted the change "Sun Sep 19 20:36:43 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since it was giving
+	  troubles on every platform.
+
 Mon Sep 20 06:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
