@@ -36,18 +36,18 @@ CORBA_Current_ptr CORBA_Current::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Current::_nil ();
-  if (!obj->_is_a ("IDL:CORBA/Current:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Current:1.0", ACE_TRY_ENV))
     return CORBA_Current::_nil ();
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()
-         || obj->_servant()->_downcast ("IDL:CORBA/Current:1.0") == 0
+         || obj->_servant()->_downcast ("IDL:omg.org/CORBA/Current:1.0") == 0
       )
   {
     return new CORBA_Current(stub);
   }
-  void* servant = obj->_servant ()->_downcast ("IDL:CORBA/Current:1.0");
+  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/CORBA/Current:1.0");
   return new POA_CORBA::_tao_collocated_Current(
       ACE_reinterpret_cast(POA_CORBA::Current_ptr, servant),
       stub
@@ -62,7 +62,7 @@ CORBA_Current_ptr CORBA_Current::_nil (void)
 CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Current:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -71,7 +71,7 @@ CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environmen
 
 const char* CORBA_Current::_interface_repository_id (void) const
 {
-  return "IDL:CORBA/Current:1.0";
+  return "IDL:omg.org/CORBA/Current:1.0";
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr _tao_elem)
