@@ -22,6 +22,11 @@
 #define FALSE 0
 
 #define MY_DEFPORT 5001
+#define QOS_NOT_SPECIFIED 0
+
+#define SERVICETYPE_NOTRAFFIC        0x00000000  // No data in this direction.
+#define SERVICETYPE_CONTROLLEDLOAD   0x00000002  // Controlled Load.
+#define SERVICETYPE_GUARANTEED       0x00000003  // Guaranteed.
 
 // Application-specific define - there is NO specific invalid send
 // priority.  This value is simply used to indicate whether or not to
