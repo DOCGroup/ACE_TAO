@@ -86,7 +86,7 @@ template <class T> ACE_INLINE const T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  T * const tmp = ACE_reinterpret_cast (T* const, this->buffer_);
+  T * const tmp = ACE_reinterpret_cast (T* ACE_CAST_CONST, this->buffer_);
   return tmp[i];
 }
 
@@ -254,7 +254,7 @@ template <class T> ACE_INLINE TAO_Object_Manager<T>
 TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T ** const tmp = ACE_reinterpret_cast (T ** const, this->buffer_);
+  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
   return TAO_Object_Manager<T> (tmp + index, this->release_);
 }
 
@@ -281,7 +281,7 @@ template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
 TAO_Bounded_Object_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T **const tmp = ACE_reinterpret_cast (T **const, this->buffer_);
+  T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
   return TAO_Object_Manager<T> (tmp + index, this->release_);
 }
 
@@ -308,6 +308,7 @@ template<CORBA::ULong MAX> ACE_INLINE TAO_String_Manager
 TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  char **const tmp = ACE_reinterpret_cast (char **const, this->buffer_);
+  char **const tmp = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
+                                           this->buffer_);
   return TAO_String_Manager (tmp + index, this->release_);
 }
