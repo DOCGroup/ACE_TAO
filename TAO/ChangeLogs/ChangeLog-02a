@@ -1,3 +1,14 @@
+Thu May 23 12:51:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed a bug in the IDL compiler's handling of
+          #pragma prefix when there is a chain of included IDL files
+          and repeated includes in the chain. Thanks to Bill Tonseth 
+          <wtonseth@yahoo.com> for reporting the bug.
+
 Thu May 23 13:34:35 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Nested_Upcall_Crash/Makefile:
