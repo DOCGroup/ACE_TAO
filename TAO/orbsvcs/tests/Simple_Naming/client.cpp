@@ -346,8 +346,7 @@ MT_Test::svc (void)
 int
 MT_Test::execute (TAO_Naming_Client &root_context)
 {
-  // if we weren't given the orb pointer - cannot proceed.
-  if (orb_.ptr () == 0)
+  if (CORBA::is_nil (this->orb_.in ()))
     return -1;
 
   // Create data which will be used by all threads.

@@ -348,4 +348,16 @@
 #define TAO_MESSAGING_MAX_HOPS_POLICY_TYPE 34
 #define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
 
+// Control the default version of GIOP used by TAO.
+// The ORB is always able to communicate with 1.0 and 1.1 servers, and
+// it creates 1.1 endpoints (and profiles).  If you need to talk to
+// old clients that only understand 1.0 (and do not attempt to use 1.0
+// with 1.1 servers), then change the values below.
+#if !defined(TAO_DEF_GIOP_MAJOR)
+#define TAO_DEF_GIOP_MAJOR 1
+#endif /* TAO_DEF_GIOP_MAJOR */
+#if !defined(TAO_DEF_GIOP_MINOR)
+#define TAO_DEF_GIOP_MINOR 1
+#endif /* TAO_DEF_GIOP_MINOR */
+
 #endif  /* TAO_ORB_CONFIG_H */

@@ -136,12 +136,12 @@ class TAO_Export CORBA_Environment_var
   //   Provide for automatic storage deallocation on going out of
   //   scope.
 public:
-  CORBA_Environment_var (void); 
+  CORBA_Environment_var (void);
   // default constructor
   CORBA_Environment_var (CORBA_Environment_ptr);
-  CORBA_Environment_var (const CORBA_Environment_var &); 
+  CORBA_Environment_var (const CORBA_Environment_var &);
   // copy constructor
-  ~CORBA_Environment_var (void); 
+  ~CORBA_Environment_var (void);
   // destructor
 
   CORBA_Environment_var &operator= (CORBA_Environment_ptr);

@@ -17,7 +17,7 @@
 
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
-  TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
+TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
     : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
 {
 }
@@ -29,13 +29,10 @@ TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (ACE_Thread_Manager *t)
 
 // ****************************************************************
 
-// @@ For pluggable protocols, added a reference to
-//    the corresponding transport obj.
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Handler_Base (t),
     orb_core_ (0),
-    tss_resources_ (0),
-    input_ (ACE_CDR::DEFAULT_BUFSIZE)
+    tss_resources_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -50,10 +47,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIOP_Handler_Base (orb_core),
     orb_core_ (orb_core),
-    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ()),
-    input_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-            TAO_ENCAP_BYTE_ORDER,
-            orb_core)
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
   transport_ = new TAO_UIOP_Server_Transport (this,
                                               this->orb_core_);
@@ -192,22 +186,12 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
   return result;
 }
 
-void
-TAO_UIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
-{
-  TAO_GIOP::send_message (this->transport_,
-                          output,
-                          this->orb_core_);
-}
-
 int
 TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int result = TAO_GIOP::handle_input (this->transport (),
                                        this->orb_core_,
-                                       this->message_header_,
-                                       this->current_offset_,
-                                       this->input_);
+                                       this->transport_->message_state_);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -215,17 +199,17 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "TAO (%P|%t) - %p\n",
                   "UIOP_Server_CH::handle_input, handle_input"));
     }
-  if (result == 1)
-    {
-      TAO_GIOP_MessageHeader header_copy = this->message_header_;
-      this->message_header_.message_size = 0;
-      TAO_GIOP::process_server_message (this->transport (),
-                                        this->orb_core_,
-                                        this->input_,
-                                        header_copy);
-      result = 0;
-    }
-  return result;
+  if (result == 0)
+    return 0;
+
+  // ACE_ASSERT (result == 1);
+
+  TAO_GIOP::process_server_message (this->transport (),
+                                    this->orb_core_,
+                                    this->transport_->message_state_.cdr,
+                                    this->transport_->message_state_);
+  this->transport_->message_state_.reset ();
+  return 0;
 }
 
 // ****************************************************************

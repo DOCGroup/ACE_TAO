@@ -592,9 +592,9 @@ cat_iiop_profile (TAO_InputCDR& stream)
   // encapsulation...
   CORBA::Octet iiop_version_major, iiop_version_minor;
   if (! (str.read_octet (iiop_version_major)
-         && iiop_version_major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
+         && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
+         && iiop_version_minor <= 0))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "detected new v%d.%d IIOP profile",
@@ -657,9 +657,9 @@ cat_uiop_profile (TAO_InputCDR& stream)
   // encapsulation...
   CORBA::Octet iiop_version_major, iiop_version_minor;
   if (! (str.read_octet (iiop_version_major)
-         && iiop_version_major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
+         && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
+         && iiop_version_minor <= 0))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "detected new v%d.%d UIOP profile",

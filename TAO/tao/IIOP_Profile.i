@@ -44,17 +44,10 @@ TAO_IIOP_Profile::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE const TAO_IOP_Version *
-TAO_IIOP_Profile::version (void)
+ACE_INLINE const TAO_GIOP_Version &
+TAO_IIOP_Profile::version (void) const
 {
-  return &this->version_;
-}
-
-ACE_INLINE const TAO_IOP_Version *
-TAO_IIOP_Profile::version (TAO_IOP_Version *v)
-{
-  this->version_ = *v;
-  return &this->version_;
+  return this->version_;
 }
 
 ACE_INLINE TAO_IIOP_Client_Connection_Handler *&

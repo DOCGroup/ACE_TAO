@@ -138,7 +138,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 
       if (addrs [addrs.length () - 1] == '/')
         // Get rid of trailing '/'.
-        addrs [addrs.length () - 1] = '\0'; 
+        addrs [addrs.length () - 1] = '\0';
 
       char *last_addr=0;
       addr_str.reset (addrs.rep ());
@@ -168,22 +168,29 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     (*factory)->factory ()->make_acceptor ();
                   if (acceptor != 0)
                     {
+                      // add acceptor to list.
+                      this->acceptors_.insert (acceptor);
+
                       // Check if an "N.n@" version prefix was
                       // specified.
                       // @@ For now, we just drop the version prefix.
                       // At some point in the future it may become
                       // useful.
+                      int major = -1;
+                      int minor = -1;
                       const char *temp_iop = address.c_str ();
-                      if (isdigit (temp_iop[0]) 
-                          && temp_iop[1] == '.' 
-                          && isdigit (temp_iop[2]) 
+                      if (isdigit (temp_iop[0])
+                          && temp_iop[1] == '.'
+                          && isdigit (temp_iop[2])
                           && temp_iop[3] == '@')
-                        address = address.substring (4);
-
-                      // add acceptor to list.
-                      this->acceptors_.insert (acceptor);
+                        {
+                          major = temp_iop[0] - '0';
+                          minor = temp_iop[2] - '0';
+                          address = address.substring (4);
+                        }
 
                       if (acceptor->open (orb_core,
+                                          major, minor,
                                           address) == -1)
                         return -1;
                       break;

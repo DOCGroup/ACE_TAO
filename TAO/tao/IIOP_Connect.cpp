@@ -19,9 +19,6 @@ ACE_RCSID(tao, Connect, "$Id$")
 
   static const char *TAO_Connect_Timeprobe_Description[] =
 {
-  "Server_Connection_Handler::send_response - start",
-  "Server_Connection_Handler::send_response - end",
-
   "Server_Connection_Handler::handle_input - start",
   "Server_Connection_Handler::handle_input - end",
 
@@ -39,10 +36,7 @@ ACE_RCSID(tao, Connect, "$Id$")
 enum
 {
   // Timeprobe description table start key
-  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
-  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
-
-  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
   TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
   TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
@@ -72,11 +66,12 @@ TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
 {
 }
 
+// ****************************************************************
+
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t),
     orb_core_ (0),
-    tss_resources_ (0),
-    input_ (ACE_CDR::DEFAULT_BUFSIZE)
+    tss_resources_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -89,10 +84,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
     orb_core_ (orb_core),
-    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ()),
-    input_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-            TAO_ENCAP_BYTE_ORDER,
-            orb_core)
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
   transport_ = new TAO_IIOP_Server_Transport (this,
                                               this->orb_core_);
@@ -238,24 +230,12 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
   return result;
 }
 
-void
-TAO_IIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
-
-  TAO_GIOP::send_message (this->transport_,
-                          output,
-                          this->orb_core_);
-}
-
 int
 TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int result = TAO_GIOP::handle_input (this->transport (),
                                        this->orb_core_,
-                                       this->message_header_,
-                                       this->current_offset_,
-                                       this->input_);
+                                       this->transport_->message_state_);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -263,17 +243,18 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "TAO (%P|%t) - %p\n",
                   "IIOP_Server_CH::handle_input, handle_input"));
     }
-  if (result == 1)
-    {
-      TAO_GIOP_MessageHeader header_copy = this->message_header_;
-      this->message_header_.message_size = 0;
-      TAO_GIOP::process_server_message (this->transport (),
-                                        this->orb_core_,
-                                        this->input_,
-                                        header_copy);
-      result = 0;
-    }
-  return result;
+
+  if (result == 0)
+    return 0;
+
+  // ACE_ASSERT (result == 1);
+
+  TAO_GIOP::process_server_message (this->transport (),
+                                    this->orb_core_,
+                                    this->transport_->message_state_.cdr,
+                                    this->transport_->message_state_);
+  this->transport_->message_state_.reset ();
+  return 0;
 }
 
 // ****************************************************************

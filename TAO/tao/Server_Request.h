@@ -154,7 +154,8 @@ public:
   virtual unsigned int operation_length (void) const = 0;
   // get the length of the operation name
 
-  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()) = 0;
+  virtual void init_reply (CORBA_Environment &TAO_IN_ENV =
+                               TAO_default_environment ()) = 0;
   // Start a Reply message.
 
   //  CORBA::Context_ptr ctx (void) = 0;
