@@ -1,3 +1,32 @@
+Sun Dec 14 09:56:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Generator_Parser_Impl.inl:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.inl:
+	* tao/IIOP_Transport.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Pluggable_Messaging.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+
+	  Reverting the change "Wed Dec 10 13:58:41 2003  Chris Cleeland
+	  <cleeland_c@ociweb.com>" for PMB fixes. The fixes were right,
+	  but it slowed down the ORB considerably due to the two
+	  allocations along the critical path. We will try to get these
+	  fixes in later once we have a way to get around the
+	  allocations. 
+
 Sun Dec 14 08:47:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1639_Regression/test.mpc:
