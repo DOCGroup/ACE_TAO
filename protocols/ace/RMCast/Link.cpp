@@ -115,7 +115,7 @@ namespace ACE_RMCast
         {
           send_ (m);
           send_ (hold_);
-          hold_ = 0;
+          hold_ = Message_ptr (0);
         }
         else
         {

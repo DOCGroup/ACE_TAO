@@ -48,7 +48,7 @@ namespace ACE_RMCast
 
       Lock l (mutex_);
 
-      queue_.bind (sn, Descr (new Data (*data)));
+      queue_.bind (sn, Descr (Data_ptr (new Data (*data))));
     }
 
     out_->send (m);

@@ -335,7 +335,7 @@ namespace ACE_RMCast
       }
     }
 
-    if (nrtm->empty ()) return 0;
+    if (nrtm->empty ()) return Profile_ptr (0);
     else return Profile_ptr (nrtm.release ());
   }
 
