@@ -1,3 +1,9 @@
+Wed Dec 06 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Auto_Ptr.i:
+
+          Added a couple of ACE_INLINEs and an include of Synch_T.h.
+
 Wed Dec 06 20:12:35 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Containers_T.cpp (operator=): In case the existing array is
