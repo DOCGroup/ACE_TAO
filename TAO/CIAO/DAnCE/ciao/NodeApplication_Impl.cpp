@@ -211,7 +211,8 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG, "Shutting down this NodeApplication!\n"));
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  //TODO: Find it out
+  //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 
