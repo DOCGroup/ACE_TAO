@@ -1,293 +1,301 @@
+Thu Aug 27 09:55:31 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: changed argc_ from
+          int to u_int so to avoid g++ compiler warning.
+
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: added
+          ACE_Singleton<Globals,ACE_Null_Mutex> instantiation.
+
 Thu Aug 27 07:59:18 1998  Aniruddha Gokhale  <gokhale@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
+        * TAO_IDL/Makefile:
 
-	  Added dependencies and targets to build the C++ keywords lookup
-	  table using GPERF generated perfect hash functions.
+          Added dependencies and targets to build the C++ keywords lookup
+          table using GPERF generated perfect hash functions.
 
-	  Also, redid "make depend".
+          Also, redid "make depend".
 
-	* TAO_IDL/be/be_array.cpp:
-	  TAO_IDL/be/be_interface.cpp:
-	  TAO_IDL/be/be_interface_fwd.cpp:
-	  TAO_IDL/be/be_structure.cpp:
-	  TAO_IDL/be/be_union.cpp:
-	  TAO_IDL/be_visitor_sequence/sequence_ch.cpp:
-	  TAO_IDL/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_array.cpp:
+          TAO_IDL/be/be_interface.cpp:
+          TAO_IDL/be/be_interface_fwd.cpp:
+          TAO_IDL/be/be_structure.cpp:
+          TAO_IDL/be/be_union.cpp:
+          TAO_IDL/be_visitor_sequence/sequence_ch.cpp:
+          TAO_IDL/be_visitor_sequence/sequence_ci.cpp:
 
-	  The _out class' copy constructor and assignment operator (from a
-	  _out) now use the "const" parameter. The CORBA v2.2 spec has a
-	  flaw in which it does not specify the "const"ness. Without the
-	  "const" keyword, however, we were getting warnings/errors from
-	  the C++  compilers because they were trying to create
-	  temporaries. To circumvent these warnings/errors, we were until
-	  now instantiating variables of the _out class. According to the
-	  spec, however, the _out types are to be used only in the
-	  signatures. The above fix will make everything CORBA
-	  compliant. The spec will also be fixed regarding the
-	  "const" keyword.
+          The _out class' copy constructor and assignment operator (from a
+          _out) now use the "const" parameter. The CORBA v2.2 spec has a
+          flaw in which it does not specify the "const"ness. Without the
+          "const" keyword, however, we were getting warnings/errors from
+          the C++  compilers because they were trying to create
+          temporaries. To circumvent these warnings/errors, we were until
+          now instantiating variables of the _out class. According to the
+          spec, however, the _out types are to be used only in the
+          signatures. The above fix will make everything CORBA
+          compliant. The spec will also be fixed regarding the
+          "const" keyword.
 
-	  In addition, as per Carlos's instructions, since the private
-	  data member (ptr_) is not a const, we have to use the
-	  "ACE_const_cast" macro to cast away the "const"ness.
+          In addition, as per Carlos's instructions, since the private
+          data member (ptr_) is not a const, we have to use the
+          "ACE_const_cast" macro to cast away the "const"ness.
 
-	* The first step towards supporting compiled marshaling stubs and
-	  skeletons. At this time, we generate the CDR << and >> operators
-	  for different IDL data types. Unions still need to be
-	  handled. They do not do anything at time. 
+        * The first step towards supporting compiled marshaling stubs and
+          skeletons. At this time, we generate the CDR << and >> operators
+          for different IDL data types. Unions still need to be
+          handled. They do not do anything at time.
 
-	  *NOTE* CDR operators are defined in the global scope just as the
-	  Any <<=, >>= operators are. At this time, both the Any operators
-	  as well as the CDR operators are defined. As a policy decision,
-	  this is going to be the default case. Users who choose to use the
-	  compiled marshaling approach and do not want the excess code for
-	  the Any operators and the TypeCodes will be required to use a
-	  "disable" flag. This is still TO-DO. 
+          *NOTE* CDR operators are defined in the global scope just as the
+          Any <<=, >>= operators are. At this time, both the Any operators
+          as well as the CDR operators are defined. As a policy decision,
+          this is going to be the default case. Users who choose to use the
+          compiled marshaling approach and do not want the excess code for
+          the Any operators and the TypeCodes will be required to use a
+          "disable" flag. This is still TO-DO.
 
-	  Affected files and new entries are shown below: 
+          Affected files and new entries are shown below:
 
-	  TAO_IDL/be_include/be_decl.h 
-	  TAO_IDL/be/be_decl.cpp:
-	    
-	    Accesors and mutators that check if the CDR <<, >> operators
-	    for a given IDL type have been generated or not. Once
-	    generated, the mutator sets a boolean value to TRUE and the
-	    accessor prevents multiple declaration/definition.
+          TAO_IDL/be_include/be_decl.h
+          TAO_IDL/be/be_decl.cpp:
 
-	  TAO_IDL/be_include/be_codegen.h
-	  TAO_IDL/be/be_codegen.cpp:
+            Accesors and mutators that check if the CDR <<, >> operators
+            for a given IDL type have been generated or not. Once
+            generated, the mutator sets a boolean value to TRUE and the
+            accessor prevents multiple declaration/definition.
 
-	    Added a number of code generation states for the generation of
-	    CDR operators for various types.
+          TAO_IDL/be_include/be_codegen.h
+          TAO_IDL/be/be_codegen.cpp:
 
-	    In addition, we define a new enumeration indicating the sub
-	    state during the CDR operator code generation. These sub
-	    states are necessary to prevent explosion of visitors. For
-	    example, consider generation of the CDR operators for
-	    interfaces or structures. The three possible substates are (1)
-	    generating the << (output) operator, (2) generating the >>
-	    (input) operators, and (3) generating code for the elements
-	    defined in that scope.
+            Added a number of code generation states for the generation of
+            CDR operators for various types.
 
-	  TAO_IDL/be_include/be_visitor_context.h:
-	  TAO_IDL/be/be_visitor_context.cpp:
+            In addition, we define a new enumeration indicating the sub
+            state during the CDR operator code generation. These sub
+            states are necessary to prevent explosion of visitors. For
+            example, consider generation of the CDR operators for
+            interfaces or structures. The three possible substates are (1)
+            generating the << (output) operator, (2) generating the >>
+            (input) operators, and (3) generating code for the elements
+            defined in that scope.
 
-	    Maintain the code generation substate required for the CDR
-	    operators and provide accesor/mutator for it.
+          TAO_IDL/be_include/be_visitor_context.h:
+          TAO_IDL/be/be_visitor_context.cpp:
 
-	  TAO_IDL/be_include/be_visitor_array/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_array.h:
-	  TAO_IDL/be/be_visitor_array.cpp:
+            Maintain the code generation substate required for the CDR
+            operators and provide accesor/mutator for it.
 
-	    New visitors for generation of CDR operators for
-	    arrays. Included the newly added files to the top level
-	    be_visitor_array.{h,cpp} files.
-	
-	  TAO_IDL/be_include/be_visitor_enum/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_enum/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_enum.h:
-	  TAO_IDL/be/be_visitor_enum.cpp:
+          TAO_IDL/be_include/be_visitor_array/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_array.h:
+          TAO_IDL/be/be_visitor_array.cpp:
 
-	    New visitors for generation of CDR operators for
-	    enums. Included the newly added files to the top level
-	    be_visitor_enum.{h,cpp} files.
-	
-	  TAO_IDL/be_include/be_visitor_exception/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_exception/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_exception.h:
-	  TAO_IDL/be/be_visitor_exception.cpp:
+            New visitors for generation of CDR operators for
+            arrays. Included the newly added files to the top level
+            be_visitor_array.{h,cpp} files.
 
-	    New visitors for generation of CDR operators for
-	    exceptions. Included the newly added files to the top level
-	    be_visitor_exception.{h,cpp} files.
-	  
-	  TAO_IDL/be_visitor_exception/exception.cpp:
-	
+          TAO_IDL/be_include/be_visitor_enum/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_enum/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_enum.h:
+          TAO_IDL/be/be_visitor_enum.cpp:
+
+            New visitors for generation of CDR operators for
+            enums. Included the newly added files to the top level
+            be_visitor_enum.{h,cpp} files.
+
+          TAO_IDL/be_include/be_visitor_exception/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_exception/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_exception.h:
+          TAO_IDL/be/be_visitor_exception.cpp:
+
+            New visitors for generation of CDR operators for
+            exceptions. Included the newly added files to the top level
+            be_visitor_exception.{h,cpp} files.
+
+          TAO_IDL/be_visitor_exception/exception.cpp:
+
             In the event that we are generating code for the CDR operators
-	    the types defined in our scope, the appropriate visitors for
-	    the "field" node are grabbed here.
-	
-	  TAO_IDL/be_include/be_visitor_field/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_field/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_field.h:
-	  TAO_IDL/be/be_visitor_field.cpp:
+            the types defined in our scope, the appropriate visitors for
+            the "field" node are grabbed here.
 
-	    New visitors for generation of CDR operators for
-	    fields. Included the newly added files to the top level
-	    be_visitor_field.{h,cpp} files.
-	
-	  TAO_IDL/be_include/be_visitor_interface/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_interface/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_interface.h:
-	  TAO_IDL/be/be_visitor_interface.cpp:
+          TAO_IDL/be_include/be_visitor_field/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_field/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_field.h:
+          TAO_IDL/be/be_visitor_field.cpp:
 
-	    New visitors for generation of CDR operators for
-	    Interfaces. Included the newly added files to the top level
-	    be_visitor_interface.{h,cpp} files.
-	
-	  TAO_IDL/be_visitor_interface/interface.cpp:
-	
+            New visitors for generation of CDR operators for
+            fields. Included the newly added files to the top level
+            be_visitor_field.{h,cpp} files.
+
+          TAO_IDL/be_include/be_visitor_interface/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_interface/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_interface.h:
+          TAO_IDL/be/be_visitor_interface.cpp:
+
+            New visitors for generation of CDR operators for
+            Interfaces. Included the newly added files to the top level
+            be_visitor_interface.{h,cpp} files.
+
+          TAO_IDL/be_visitor_interface/interface.cpp:
+
             In the event that we are generating code for the CDR operators
-	    for the types defined in our scope, the appropriate visitors
-	    for the nodes in our scope are grabbed here.
-	
-	  TAO_IDL/be_include/be_visitor_module/cdr_op.h:
-	  TAO_IDL/be/be_visitor_module/cdr_op.cpp:
-	  TAO_IDL/be_include/be_visitor_module.h:
-	  TAO_IDL/be/be_visitor_module.cpp:
+            for the types defined in our scope, the appropriate visitors
+            for the nodes in our scope are grabbed here.
 
-	    New visitors for generation of CDR operators for
-	    elements of the Module scope. Included the newly added files
-	    to the top level be_visitor_module.{h,cpp} files.
-	
-	  TAO_IDL/be_visitor_module/module.cpp:
-	
+          TAO_IDL/be_include/be_visitor_module/cdr_op.h:
+          TAO_IDL/be/be_visitor_module/cdr_op.cpp:
+          TAO_IDL/be_include/be_visitor_module.h:
+          TAO_IDL/be/be_visitor_module.cpp:
+
+            New visitors for generation of CDR operators for
+            elements of the Module scope. Included the newly added files
+            to the top level be_visitor_module.{h,cpp} files.
+
+          TAO_IDL/be_visitor_module/module.cpp:
+
             In the event that we are generating code for the CDR operators
-	    for the types defined in our scope, the appropriate visitors
-	    for the nodes in our scope are grabbed here.
-	
-	  TAO_IDL/be_include/be_visitor_root/cdr_op.h:
-	  TAO_IDL/be/be_visitor_root/cdr_op.cpp:
-	  TAO_IDL/be_include/be_visitor_root.h:
-	  TAO_IDL/be/be_visitor_root.cpp:
+            for the types defined in our scope, the appropriate visitors
+            for the nodes in our scope are grabbed here.
 
-	    New visitors for generation of CDR operators for
-	    elements of the Module scope. Included the newly added files
-	    to the top level be_visitor_module.{h,cpp} files.
-	
-	  TAO_IDL/be_visitor_operation/arglist.cpp:
+          TAO_IDL/be_include/be_visitor_root/cdr_op.h:
+          TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+          TAO_IDL/be_include/be_visitor_root.h:
+          TAO_IDL/be/be_visitor_root.cpp:
 
-	    Cosmetic changes to get the indentation right.
-	
-	  TAO_IDL/be_visitor_root/root.cpp:
-	
+            New visitors for generation of CDR operators for
+            elements of the Module scope. Included the newly added files
+            to the top level be_visitor_module.{h,cpp} files.
+
+          TAO_IDL/be_visitor_operation/arglist.cpp:
+
+            Cosmetic changes to get the indentation right.
+
+          TAO_IDL/be_visitor_root/root.cpp:
+
             In the event that we are generating code for the CDR operators
-	    for the types defined in our scope, the appropriate visitors
-	    for the nodes in our scope are grabbed here.
+            for the types defined in our scope, the appropriate visitors
+            for the nodes in our scope are grabbed here.
 
-	    In addition, we invoke generation of the CDR operators at the
-	    very end i.e., in the global scope, just after all the Any
-	    operators are generated.
-	
-	  TAO_IDL/be_include/be_visitor_sequence/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_sequence/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_sequence.h:
-	  TAO_IDL/be/be_visitor_sequence.cpp:
+            In addition, we invoke generation of the CDR operators at the
+            very end i.e., in the global scope, just after all the Any
+            operators are generated.
 
-	    New visitors for generation of CDR operators for
-	    sequences. Included the newly added files to the top level
-	    be_visitor_sequences.{h,cpp} files. Code generated for the
-	    sequences of primitive types uses TAO's internal, optimized
-	    CDR functions.
-	
-	  TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
-	 
-	    Generate the in (), inout (), out (), and _retn () methods for
-	    the object manager class. These are required in the CDR
-	    operators for sequences of object references.
-	
-	  TAO_IDL/be_include/be_visitor_structure/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_structure/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_structure.h:
-	  TAO_IDL/be/be_visitor_structure.cpp:
+          TAO_IDL/be_include/be_visitor_sequence/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_sequence/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_sequence.h:
+          TAO_IDL/be/be_visitor_sequence.cpp:
 
-	    New visitors for generation of CDR operators for
-	    structures. Included the newly added files to the top level
-	    be_visitor_structure.{h,cpp} files.
-	
-	  TAO_IDL/be_visitor_structure/structure.cpp:
-	
+            New visitors for generation of CDR operators for
+            sequences. Included the newly added files to the top level
+            be_visitor_sequences.{h,cpp} files. Code generated for the
+            sequences of primitive types uses TAO's internal, optimized
+            CDR functions.
+
+          TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+
+            Generate the in (), inout (), out (), and _retn () methods for
+            the object manager class. These are required in the CDR
+            operators for sequences of object references.
+
+          TAO_IDL/be_include/be_visitor_structure/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_structure/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_structure.h:
+          TAO_IDL/be/be_visitor_structure.cpp:
+
+            New visitors for generation of CDR operators for
+            structures. Included the newly added files to the top level
+            be_visitor_structure.{h,cpp} files.
+
+          TAO_IDL/be_visitor_structure/structure.cpp:
+
             In the event that we are generating code for the CDR operators
-	    for the types defined in our scope, the appropriate visitors
-	    for the field nodes in our scope are grabbed here.
-	
-	  TAO_IDL/be_include/be_visitor_typedef/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_typedef/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_typedef.h:
-	  TAO_IDL/be/be_visitor_typedef.cpp:
+            for the types defined in our scope, the appropriate visitors
+            for the field nodes in our scope are grabbed here.
 
-	    New visitors for generation of CDR operators for
-	    typedefs. Included the newly added files to the top level
-	    be_visitor_typedef.{h,cpp} files.
-	
-	  TAO_IDL/be_include/be_visitor_union/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_union/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_union.h:
-	  TAO_IDL/be/be_visitor_union.cpp:
+          TAO_IDL/be_include/be_visitor_typedef/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_typedef/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_typedef.h:
+          TAO_IDL/be/be_visitor_typedef.cpp:
 
-	    New visitors for generation of CDR operators for
-	    unions. Included the newly added files to the top level
-	    be_visitor_union.{h,cpp} files.
-	
-	  TAO_IDL/be_include/be_visitor_union_branch/{cdr_op_ch, cdr_op_cs}.h:
-	  TAO_IDL/be/be_visitor_union_branch/{cdr_op_ch, cdr_op_cs}.cpp:
-	  TAO_IDL/be_include/be_visitor_union_branch.h:
-	  TAO_IDL/be/be_visitor_union_branch.cpp:
+            New visitors for generation of CDR operators for
+            typedefs. Included the newly added files to the top level
+            be_visitor_typedef.{h,cpp} files.
 
-	    New visitors for generation of CDR operators for
-	    union_branchs. Included the newly added files to the top level
-	    be_visitor_union_branch.{h,cpp} files.
-	
-	  TAO_IDL/be/be_interpretive.cpp:
+          TAO_IDL/be_include/be_visitor_union/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_union/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_union.h:
+          TAO_IDL/be/be_visitor_union.cpp:
 
-	    Return the appropriate visitors for the newly defined CDR
-	    states. *NOTE* these should really go into a "be_compiled.cpp"
-	    file. However, all the elegant patterns will be added in the
-	    next attempt.
-	
-	* TAO_IDL/fe/idl.ll:
-	  TAO_IDL/fe/lex.yy.cpp:
-	  TAO_IDL/fe/fe_lookup.cpp:
-	  TAO_IDL/fe/keywords.dat:
-	  TAO_IDL/be_include/fe_private.h:
+            New visitors for generation of CDR operators for
+            unions. Included the newly added files to the top level
+            be_visitor_union.{h,cpp} files.
 
-	    Added code to handle C++ keywords. We now use ACE's GPERF
-	    generated perfect hash functions for keyword lookup. The
-	    fe_private.h file defines an entry for the lookup table used
-	    by the lexical analyzer (scanner). When the scanner comes
-	    across an identifier, it first checks if this identifier is a
-	    C++ keyword or not. If it is, then according to the C++
-	    mapping, a new identifier with a _cxx_ prepended to the C++
-	    keyword is generated. The keywords.dat file maintains the
-	    GPERF input file of C++ keywords. The fe_lookup.cpp is the
-	    file generated by GPERF with some additional ACE-specific
-	    include files. This file is not to be regenerated everytime.
-	
-	* tao/CDR.{h, i}:
+          TAO_IDL/be_include/be_visitor_union_branch/{cdr_op_ch, cdr_op_cs}.h:
+          TAO_IDL/be/be_visitor_union_branch/{cdr_op_ch, cdr_op_cs}.cpp:
+          TAO_IDL/be_include/be_visitor_union_branch.h:
+          TAO_IDL/be/be_visitor_union_branch.cpp:
 
-	  Added << and >> operators for CORBA::Object, CORBA::TypeCode,
-	  and CORBA::Any.
+            New visitors for generation of CDR operators for
+            union_branchs. Included the newly added files to the top level
+            be_visitor_union_branch.{h,cpp} files.
 
-	* tao/Environment.h: 
+          TAO_IDL/be/be_interpretive.cpp:
 
-	  Cosmetic changes to adhere to the ACE programming style.
+            Return the appropriate visitors for the newly defined CDR
+            states. *NOTE* these should really go into a "be_compiled.cpp"
+            file. However, all the elegant patterns will be added in the
+            next attempt.
 
-	* tao/Sequence.h:
-	  tao/Sequence.i:
-	  tao/Sequence_T.h:
-	  tao/Sequence_T.cpp:
+        * TAO_IDL/fe/idl.ll:
+          TAO_IDL/fe/lex.yy.cpp:
+          TAO_IDL/fe/fe_lookup.cpp:
+          TAO_IDL/fe/keywords.dat:
+          TAO_IDL/be_include/fe_private.h:
 
-	  Added the in (), inout (), out (), and _retn () methods for the
-	  String and Object manager classes. These are necessary for the
-	  CDR operators for sequences of strings and object references.
+            Added code to handle C++ keywords. We now use ACE's GPERF
+            generated perfect hash functions for keyword lookup. The
+            fe_private.h file defines an entry for the lookup table used
+            by the lexical analyzer (scanner). When the scanner comes
+            across an identifier, it first checks if this identifier is a
+            C++ keyword or not. If it is, then according to the C++
+            mapping, a new identifier with a _cxx_ prepended to the C++
+            keyword is generated. The keywords.dat file maintains the
+            GPERF input file of C++ keywords. The fe_lookup.cpp is the
+            file generated by GPERF with some additional ACE-specific
+            include files. This file is not to be regenerated everytime.
 
-	* tao/corba.h:
+        * tao/CDR.{h, i}:
 
-	  Added new macros called TAO_THROW_ENV and TAO_THROW_ENV_RETURN
-	  that allow us to specify our own environment variable rather
-	  than getting tied to the _env variable.
+          Added << and >> operators for CORBA::Object, CORBA::TypeCode,
+          and CORBA::Any.
 
-	  Moved the #include "singletons.h" earlier.
-	
+        * tao/Environment.h:
+
+          Cosmetic changes to adhere to the ACE programming style.
+
+        * tao/Sequence.h:
+          tao/Sequence.i:
+          tao/Sequence_T.h:
+          tao/Sequence_T.cpp:
+
+          Added the in (), inout (), out (), and _retn () methods for the
+          String and Object manager classes. These are necessary for the
+          CDR operators for sequences of strings and object references.
+
+        * tao/corba.h:
+
+          Added new macros called TAO_THROW_ENV and TAO_THROW_ENV_RETURN
+          that allow us to specify our own environment variable rather
+          than getting tied to the _env variable.
+
+          Moved the #include "singletons.h" earlier.
+
 Thu Aug 27 01:22:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Explicit_Activation/alternate.conf: 
-	* tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.cpp:
-	  tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.h:
-	  tests/POA/Explicit_Activation/Alternate_Resource_Factory/Alt_Resource_Factory.h:
- 	  
-	  Fixed Nanbor's changes.
+        * tests/POA/Explicit_Activation/alternate.conf:
+        * tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.cpp:
+          tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.h:
+          tests/POA/Explicit_Activation/Alternate_Resource_Factory/Alt_Resource_Factory.h:
+
+          Fixed Nanbor's changes.
 
 Wed Aug 26 23:57:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -295,24 +303,24 @@ Wed Aug 26 23:57:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Aug 26 22:29:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/POA/Explicit_Activation/Alternate_Resource_Factory/*:
-	  Renamed Alternate_Resource_Factory.* to Alt_Resource_Factory.*.
-	
-	* tao/ORB_Core.h (TAO_ORB_Core): Don't need to specify default
-	  parameters when declaring friend relationship.
+        * tests/POA/Explicit_Activation/Alternate_Resource_Factory/*:
+          Renamed Alternate_Resource_Factory.* to Alt_Resource_Factory.*.
+
+        * tao/ORB_Core.h (TAO_ORB_Core): Don't need to specify default
+          parameters when declaring friend relationship.
 
 Wed Aug 26 22:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  The ACE_Select_Reactor_Token_T<ACE_Noop_Token> class and the
-	  Select_Reactor_T over this class are used even when threads are
-	  enabled.
+        * tao/ORB_Core.cpp:
+          The ACE_Select_Reactor_Token_T<ACE_Noop_Token> class and the
+          Select_Reactor_T over this class are used even when threads are
+          enabled.
 
 Wed Aug 26 22:29:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/tao.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Changed the destination directories
-	for release libraries to the default directories.
+        * tao/tao.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Changed the destination directories
+        for release libraries to the default directories.
 
 Wed Aug 26 22:04:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
