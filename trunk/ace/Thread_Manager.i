@@ -10,6 +10,13 @@ ACE_Thread_Descriptor::self (void)
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   return this->thr_id_;
 }
+
+ACE_INLINE ACE_Task_Base *
+ACE_Thread_Descriptor::task (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::task");
+  return this->task_;
+}
   
 // Unique kernel-level thread handle.
 
@@ -83,4 +90,16 @@ ACE_Thread_Manager::thr_self (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::thr_self");
   return ACE_Thread::self ();
+}
+
+ACE_INLINE ACE_Task_Base *
+ACE_Thread_Manager::task (void)
+{
+  ACE_TRACE ("ACE_Thread_Manager::task");
+  ACE_Thread_Descriptor td;
+
+  if (this->thread_descriptor (ACE_Thread::self (), td) == -1)
+    return 0;
+  else
+    return td.task ();
 }
