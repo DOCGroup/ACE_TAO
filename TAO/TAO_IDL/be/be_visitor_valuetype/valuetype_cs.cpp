@@ -47,10 +47,10 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      be_visitor_typecode_defn tc_visitor (&ctx);
+      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+      be_visitor_valuetype_typecode tc_visitor (&ctx);
 
-      if (node->accept (&tc_visitor) == -1)
+      if (tc_visitor.visit_valuetype (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_cs::"
