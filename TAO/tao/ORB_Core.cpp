@@ -1706,6 +1706,7 @@ TAO_TSS_Resources::~TAO_TSS_Resources (void)
 // ****************************************************************
 
 TAO_ORB_Table::TAO_ORB_Table (void)
+  : first_orb_ (0)
 {
 }
 
