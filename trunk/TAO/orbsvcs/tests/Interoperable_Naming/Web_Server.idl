@@ -17,8 +17,6 @@
 //
 // ============================================================================
 
-IDL schema definition for Web server interface.
-
 module Web_Server
 {
   interface Iterator_Factory
