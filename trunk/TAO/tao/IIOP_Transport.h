@@ -62,6 +62,7 @@ public:
   virtual ACE_HANDLE handle (void);
   virtual ACE_Event_Handler *event_handler (void);
   virtual ssize_t send (TAO_Stub *stub,
+                        int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
