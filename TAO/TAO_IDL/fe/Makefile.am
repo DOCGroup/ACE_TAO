@@ -15,9 +15,9 @@ AUTOMAKE_OPTIONS = 1.4
 INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
            -I$(top_srcdir)/TAO_IDL/include
 
-noinst_LIBRARIES = libfe.a
+noinst_LTLIBRARIES = libfe.la
 
-libfe_a_SOURCES = \
+libfe_la_SOURCES = \
   fe_declarator.cpp \
   fe_extern.cpp \
   fe_init.cpp \

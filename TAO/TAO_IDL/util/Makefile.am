@@ -17,11 +17,11 @@ AUTOMAKE_OPTIONS = 1.4
 INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
            -I$(top_srcdir)/TAO_IDL/include
 
-noinst_LIBRARIES = libutil.a
+noinst_LTLIBRARIES = libutil.la
 
-libutil_a_SOURCES = \
+libutil_la_SOURCES = \
   utl_decllist.cpp \
-  utl_error.cpp \
+  utl_err.cpp \
   utl_exceptlist.cpp \
   utl_exprlist.cpp \
   utl_global.cpp \
