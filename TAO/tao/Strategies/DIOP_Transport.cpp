@@ -38,20 +38,10 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 {
   // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
   //             we read the whole UDP packet on a single read.
-  /*  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
-                                      }
-                                      else*/
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
-    }
+
+  ACE_NEW (this->messaging_object_,
+           TAO_GIOP_Message_Base (orb_core,
+                                  ACE_MAX_DGRAM_SIZE));
 }
 
 TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
@@ -233,22 +223,6 @@ TAO_DIOP_Transport::register_handler_i (void)
   // disturbs the general DIOP assumptions of not being
   // interested in any network failures, we ignore ICMP messages.
   return 0;
-  /*
-  // @@ It seems like this method should go away, the right reactor is
-  //    picked at object creation time.
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  if (r == this->connection_handler_->reactor ())
-    return 0;
-
-  // Set the flag in the Connection Handler
-  this->connection_handler_->is_registered (1);
-
-
-  // Register the handler with the reactor
-  return  r->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-  */
 }
 
 

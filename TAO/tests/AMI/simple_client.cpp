@@ -209,6 +209,16 @@ main (int argc, char *argv[])
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Try out sending asynchronous messages without a reply handler
+      // registered. Things fail if we get an exception.
+
+      ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (),
+                               0,
+                               "",
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
       ACE_DEBUG ((LM_DEBUG,

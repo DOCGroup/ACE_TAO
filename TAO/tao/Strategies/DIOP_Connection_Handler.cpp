@@ -386,8 +386,7 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE)
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
     }
   // @@ Michael:
-  // We always return 0, as we do not have any
-  // send errors.
+  // We always return 0, as we do not have any send errors.
   return 0;
 }
 

@@ -1,3 +1,28 @@
+Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/ORB_Core.cpp: 
+	* tao/Leader_Follower.i:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+
+	  Removed old, meanwhile unrelevant comments from me.
+
+Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	  
+	  Added a check for a nil reply handler. In the case of a nil reply
+	  handler no response is dispatched. Thanks to Andreas Geisler
+	  <Andreas.Geisler@erl9.siemens.de> for pointing this out.
+
+	* tests/AMI/simple_client.cpp:
+
+	  Added a test case for the above change.
+
+	* tests/AMI/client.cpp:
+
+	  Did a cosmetic change.
+
 Thu Jul 19 18:48:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.h (run/work_pending/perform_work): Updated documentation
@@ -6,7 +31,7 @@ Thu Jul 19 18:48:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu Jul 19 10:37:55 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
-	* docs/Options.html:
+  * docs/Options.html:
 
           Document the differences between the default and
 	  advanced resource factories.
