@@ -12,6 +12,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
