@@ -87,6 +87,9 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
   // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext * sc = ri->get_reply_service_context (id);
+
+  if (sc == 0)
+    ACE_THROW (CORBA::NO_MEMORY ());
   
   const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +139,7 @@ Echo_Server_Request_Interceptor::name (CORBA::Environment &)
   
 void 
 Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &)
+                                                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -149,6 +152,9 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext *sc = ri->get_request_service_context (id);
+
+  if (sc == 0)
+    ACE_THROW (CORBA::NO_MEMORY ());
  
   const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
@@ -177,7 +183,7 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
 
 void 
 Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &)
+                                             CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -189,6 +195,9 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
  // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext *sc = ri->get_reply_service_context (id); 
+ 
+  if (sc == 0)
+    ACE_THROW (CORBA::NO_MEMORY ());
 
   const char *buf = ACE_reinterpret_cast (const char *,
                                           sc->context_data.get_buffer ());
