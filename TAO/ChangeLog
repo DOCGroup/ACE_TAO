@@ -1,9 +1,22 @@
+Thu Aug 14 11:53:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+          Added commandline option -b to specify that BiDIR GIOP must be
+          used. BiDIR GIOP is disabled by default.
+
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/Event_Service/Event_Service_static.dsp:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/Event_Service/Makefile.bor:
+          Added BiDIR GIOP because of additon above.
+
 Wed Aug 13 22:16:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.cpp: The static type_code_array [] will now hold
 	  pointers to the typecode pointers. This way the initialization
 	  of the typecode pointers in make_standard_typecode () are not
-	  lost. 
+	  lost.
 
 	  This should fix the tests/Portable_Interceptor/Dynamic test
 	  failure in our daily builds.
@@ -17,38 +30,38 @@ Thu Aug 14 01:46:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Aug 13 19:56:39 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
 
 	  Modifications to reflect changes in Kokyu classes. Added a
 	  Dispatcher_Attributes class to pass dispatcher setup
 	  information.
-	
+
 Wed Aug 13 16:50:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/RTScheduler_Manager.h: 
-	* tao/RTScheduling/RTScheduler_Manager.cpp: 	
-	* tao/RTScheduling/Current.h: 	
-	* tao/RTScheduling/Current.cpp: 		
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/RTScheduling/RTScheduler_Manager.cpp:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp:
 
 	  Replaced ptr_arith_t with ptrdiff_t.
 
-	* tao/RTScheduling/RTScheduler_Manager.h: 
+	* tao/RTScheduling/RTScheduler_Manager.h:
 
 	  Added missing #pragma (pop).
 
-	* tests/RTScheduling/Scheduler.cpp: 
-	* tests/RTScheduling/Current/Thread_Task.cpp: 
-	* tests/RTScheduling/DT_Spawn/test.cpp: 
-	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp: 
-	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
-	* tests/RTScheduling/Thread_Cancel/test.cpp: 
+	* tests/RTScheduling/Scheduler.cpp:
+	* tests/RTScheduling/Current/Thread_Task.cpp:
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+	* tests/RTScheduling/Thread_Cancel/test.cpp:
 
 	Added missing environment variable in resolve_initial_reference() calls.
 
 	The above fixes should take care of errors on Fuzz build.
-	
+
 Wed Aug 13 17:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
