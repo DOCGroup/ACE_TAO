@@ -1,3 +1,10 @@
+Sat Jul 31 17:01:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/generate_rel_manpages:
+
+	  This is now executed at tao.dre for generating doxygen
+	  documentation. The files are then scp'ed to the main website. 
+
 Sat Jul 31 11:13:20 2004  Ossama  <ossama@dre.vanderbilt.edu>
 
         * ACE version 5.4.2 released.
