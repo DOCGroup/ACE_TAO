@@ -314,7 +314,6 @@ Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
           The changes were tested using PA-RISC, Alphas, Sparcs and
           finally Pentiums in various forms and using several compilers.
 
->>>>>>> 4.507
 Mon May 15 14:01:23 2000  Ossama Othman  <ossama@uci.edu>
 
         * ace/OS.h:
