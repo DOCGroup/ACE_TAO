@@ -42,7 +42,7 @@ client (void *)
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
 
-  ACE_OS::sleep (3);
+  ACE_OS::sleep (10);
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", rendezvous));
