@@ -1,3 +1,11 @@
+Wed Jul 12 15:27:27 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/types.h (PACE_TCHAR):
+	* pace/win32/types.h (PACE_TCHAR):	
+
+	  Added typedef char PACE_TCHAR;
+	  Protected some of the typedefs.
+
 Wed Jul 12 14:26:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/aio.inl:

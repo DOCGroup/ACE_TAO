@@ -13,20 +13,28 @@
  *
  * ============================================================================ */
 
-#include <sys/types.h>
-
 #ifndef PACE_SYS_TYPES_H_WIN32
 #define PACE_SYS_TYPES_H_WIN32
 
+#include <sys/types.h>
 #include <wtypes.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  /* Wrap a handle. */
-# define PACE_HANDLE int
-# define PACE_INVALID_HANDLE -1
+#ifndef PACE_TCHAR
+#define PACE_TCHAR
+  typedef char PACE_TCHAR;
+#endif /* PACE_TCHAR */
+
+#ifndef PACE_HANDLE
+  typedef int PACE_HANDLE;
+#endif /* PACE_HANDLE */
+
+#ifndef PACE_INVALID_HANDLE
+#define PACE_INVALID_HANDLE -1
+#endif /* PACE_INVALID_HANDLE */
 
 #ifndef PACE_DEV_T
 #define PACE_DEV_T
@@ -48,18 +56,18 @@ extern "C" {
 #define PACE_MODE_T
   typedef int mode_t;
   typedef mode_t pace_mode_t;
-#endif
+#endif /* PACE_MODE_T */
 
 #ifndef PACE_NLINK_T
 #define PACE_NLINK_T
   typedef DWORD nlink_t;
   typedef nlink_t pace_nlink_t;
-#endif
+#endif /* PACE_NLINK_T */
 
 #ifndef PACE_OFF_T
 #define PACE_OFF_T
   typedef off_t pace_off_t;
-#endif
+#endif /* PACE_OFF_T */
 
 #ifndef PACE_PID_T
 #define PACE_PID_T
@@ -137,3 +145,5 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SYS_TYPES_H_WIN32 */
+
+
