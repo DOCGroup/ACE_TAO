@@ -5,6 +5,7 @@
 
 #include "SSL_SOCK_Acceptor.h"
 
+#include "ace/Handle_Set.h"
 #include "ace/OS_Errno.h"
 #include "ace/Log_Msg.h"
 
