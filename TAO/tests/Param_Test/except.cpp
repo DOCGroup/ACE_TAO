@@ -144,6 +144,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
+      return -1;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
@@ -154,10 +155,12 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
+      return -1;
     }
   ACE_CATCH (Param_Test::BadBoy, ex)
     {
       ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - unexpected system exception\n");
+      return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

@@ -430,9 +430,8 @@ Test_Any::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Any::check_validity (CORBA::Request_ptr req)
+Test_Any::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

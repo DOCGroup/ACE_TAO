@@ -54,12 +54,9 @@ Test_Bounded_String_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr objref,
-                                               CORBA::Environment &env)
+Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr ,
+                                               CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
-
   const char *choiceList[] =
   {
     "one",
@@ -137,9 +134,9 @@ Test_Bounded_String_Sequence::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Bounded_StrSeq,
-                                            &this->ret_.inout (), // see above
-                                            0, // does not own
-                                            ACE_TRY_ENV);
+                                                    &this->ret_.inout (), // see above
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
