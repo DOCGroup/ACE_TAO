@@ -166,7 +166,7 @@ TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
 
 CORBA::Object_ptr
 TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
-                                             ACE_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var _tao_retval (CORBA::Object::_nil ());
 
@@ -182,7 +182,7 @@ TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
                               TAO_DEFAULT_MINOR_CODE,
                               EINVAL),
                             CORBA::COMPLETED_NO),
-                          _tao_retval);
+                          _tao_retval._retn());
 
       TAO_GIOP_Twoway_Invocation _tao_call (istub,
                                             "_component",
@@ -213,7 +213,7 @@ TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
             {
               ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                                 CORBA::COMPLETED_YES),
-                                _tao_retval);
+                                _tao_retval._retn ());
             }
           break;
         }
@@ -221,7 +221,7 @@ TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
       if (!(
             (_tao_in >> _tao_retval.inout ())
             ))
-        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval._retn ());
     }
   ACE_CATCHANY
     {
