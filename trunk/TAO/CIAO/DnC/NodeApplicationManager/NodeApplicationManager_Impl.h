@@ -39,7 +39,8 @@ namespace CIAO
   public:
     // Constructor
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-				 PortableServer::POA_ptr p);
+				 PortableServer::POA_ptr p,
+				 const Deployment::DeploymentPlan & plan);
 
     // Destructor
     virtual ~NodeApplicationManager_Impl (void);
@@ -88,15 +89,13 @@ namespace CIAO
      **/
     virtual CIAO::NodeApplicationManager_Impl *
     init (const char *nodeapp_location,
-	  CORBA::ULong delay,
-	  const Deployment::DeploymentPlan & plan
+	  CORBA::ULong delay
 	  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));
 
     //@@ Note: This mthod doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nadeapp_manager (void);
-
 
   protected:
     // Internal help function to create new NodeApplicationProcess
@@ -109,7 +108,7 @@ namespace CIAO
 
     // Helper function to get the connection.
     virtual Deployment::Connections *
-    create_connections (void)
+    create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::ResourceNotAvailable,
 		       Deployment::StartError,
@@ -119,7 +118,7 @@ namespace CIAO
      * Find the configurations in the plan and prepare them to pass to the
      * NodeApplication, from command line probably.
      */
-    void parse_config_value (ACE_CString & string
+    void parse_config_value (ACE_CString & str
 			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));
@@ -140,24 +139,24 @@ namespace CIAO
     // Child poa that uses active object map.
     PortableServer::POA_var callback_poa_;
 
-    // Specify the time in second NodeApplicationManager will wait for a
-    // child NodeApplication to callback.  Default is 5 second.
-    CORBA::ULong spawn_delay_;
-
     // Cache a object reference of the underlying NodeApplication
     // Since I have decided to have only 1 NA in NAM so no map is needed.
     Deployment::NodeApplication_var nodeapp_;
 
     // Cached plan (This should be the part of the whole plan local to this node)
     // The plan will be initialized when init is called.
-    Deployment::DeploymentPlan_var plan_;
+    const Deployment::DeploymentPlan & plan_;
+
+    // Specify the time in second NodeApplicationManager will wait for a
+    // child NodeApplication to callback.  Default is 5 second.
+    CORBA::ULong spawn_delay_;
 
     // Extracted commandline options to pass to the NodeApplication.
     CORBA::String_var nodeapp_command_op_;
 
     // A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMObject_ptr,
+                                    Components::CCMObject_var,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CCMComponent_Map;
