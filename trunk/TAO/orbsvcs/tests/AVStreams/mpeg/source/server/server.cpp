@@ -205,8 +205,6 @@ Mpeg_Svc_Handler::handle_timeout (const ACE_Time_Value &,
 
 // Default Constructor
 Mpeg_Server::Mpeg_Server ()
-  :fdTable_ (0),
-   size_ (0)
 {
 
 }
@@ -236,7 +234,7 @@ Mpeg_Server::on_exit_routine(void)
   */
   if (Mpeg_Global::live_audio > 1) ExitLiveAudio();
   if (Mpeg_Global::live_video > 1) ExitLiveVideo();
-  ComCloseServer();
+  //  ComCloseServer();
 }
 
  void
