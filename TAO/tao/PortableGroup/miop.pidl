@@ -46,6 +46,7 @@
 #define MIOP_IDL
 
 #include <IOP.pidl>
+#include <GIOP.pidl>
 
 #pragma prefix "omg.org"
 
@@ -55,50 +56,24 @@ module MIOP
 
   struct PacketHeader_1_0
   {
-    char magic[4];
-    octet hdr_version;
-    octet flags;
-    unsigned short packet_length;
-    unsigned long packet_number;
-    unsigned long number_of_packets;
-    UniqueId Id;
+    char              magic[4];
+    octet             hdr_version;
+    octet             flags;
+    unsigned short    packet_length;
+    unsigned long     packet_number;
+    unsigned long     number_of_packets;
+    UniqueId          Id;
   };
 
-  struct Version
-  {
-    octet major;
-    octet minor;
-  };
+  typedef GIOP::Version Version;
 
-  typedef short IPVersion;
-
-  const IPVersion IPv4 = 0;
-  const IPVersion IPv6 = 1;
-
-  struct UsingIpv4
-  {
-    unsigned short port;
-    octet class_d_address[4];  // @@ Frank: changed to octet to avoid lots of casting
-  };
-
-  struct UsingIpv6
-  {
-    unsigned long port;
-    string address;
-  };
-
-  union IPEndpoints switch (IPVersion)
-  {
-    case IPv4:
-      UsingIpv4 ipv4_endpoints;
-    case IPv6:
-      UsingIpv6 ipv6_endpoints;
-  };
+  typedef string Address;
 
   struct UIPMC_ProfileBody
   {
-    Version miop_version;
-    IPEndpoints endpoints;
+    Version           miop_version;
+    Address           the_address;
+    short             the_port;
     sequence<IOP::TaggedComponent> components;
   };
 

@@ -3089,11 +3089,11 @@ TAO_POA::create_id_for_reference (CORBA::Object_ptr the_ref,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ))
 {
   TAO_POA_PortableGroup_Hooks *hooks =
-    orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+    this->orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::ObjectId::_nil ());
 
   PortableServer::ObjectId *obj_id =
@@ -3108,11 +3108,11 @@ TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref,
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ))
 {
   TAO_POA_PortableGroup_Hooks *hooks =
-    orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+    this->orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
 
   PortableServer::IDs *id_list =
@@ -3120,6 +3120,40 @@ TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref,
   ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
 
   return id_list;
+}
+
+void 
+TAO_POA::associate_reference_with_id (CORBA::Object_ptr ref,
+                                      const PortableServer::ObjectId & oid,
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks =
+    this->orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  hooks->associate_reference_with_id (*this, ref, oid, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void 
+TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
+                                         const PortableServer::ObjectId & oid,
+                                         CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks =
+    this->orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  hooks->disassociate_reference_with_id (*this, ref, oid, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 #endif /* TAO_HAS_MIOP == 1 */

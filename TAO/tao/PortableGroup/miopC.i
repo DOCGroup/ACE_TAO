@@ -21,7 +21,7 @@
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_BOUNDED_SEQUENCE_MIOP_UNIQUEID_252_CI_)
 #define __TAO_BOUNDED_SEQUENCE_MIOP_UNIQUEID_252_CI_
 
@@ -33,20 +33,20 @@
     ACE_NEW_RETURN (retval, CORBA::Octet[252U], 0);
     return retval;
   }
-
-  ACE_INLINE void
+  
+  ACE_INLINE void 
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::freebuf (CORBA::Octet *buffer) // Free the sequence.
   {
     delete [] buffer;
   }
-
+  
   ACE_INLINE
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::_TAO_Bounded_Sequence_MIOP_UniqueId_252 (void)
   // Default constructor.
     : TAO_Bounded_Base_Sequence (252U, 0)
   {
   }
-
+  
   ACE_INLINE
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::_TAO_Bounded_Sequence_MIOP_UniqueId_252 (CORBA::ULong length,
     CORBA::Octet *data,
@@ -55,7 +55,7 @@
     : TAO_Bounded_Base_Sequence (252U, length, data, release)
   {
   }
-
+  
   ACE_INLINE
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::_TAO_Bounded_Sequence_MIOP_UniqueId_252 (const _TAO_Bounded_Sequence_MIOP_UniqueId_252 &rhs)
   // Copy constructor.
@@ -64,12 +64,12 @@
     if (rhs.buffer_ != 0)
     {
       CORBA::Octet *tmp1 = _TAO_Bounded_Sequence_MIOP_UniqueId_252::allocbuf (252U);
-
+      
       CORBA::Octet * const tmp2 = ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, rhs.buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-
+      
       this->buffer_ = tmp1;
     }
     else
@@ -77,31 +77,31 @@
       this->buffer_ = 0;
     }
   }
-
+  
   ACE_INLINE MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252 &
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::operator= (const _TAO_Bounded_Sequence_MIOP_UniqueId_252 &rhs)
-  // Assignment operator.
+  // Assignment operator.  
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_ && this->buffer_ != 0)
     {
     }
     else
       this->buffer_ = _TAO_Bounded_Sequence_MIOP_UniqueId_252::allocbuf (rhs.maximum_);
-
+    
     TAO_Bounded_Base_Sequence::operator= (rhs);
-
+    
     CORBA::Octet* tmp1 = ACE_reinterpret_cast (CORBA::Octet *, this->buffer_);
     CORBA::Octet* const tmp2 = ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-
+    
     return *this;
   }
-
+  
   // = Accessors.
   ACE_INLINE CORBA::Octet &
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::operator[] (CORBA::ULong i)// operator []
@@ -117,7 +117,7 @@
     const CORBA::Octet* tmp = ACE_reinterpret_cast (const CORBA::Octet* ACE_CAST_CONST,this->buffer_);
     return tmp[i];
   }
-
+  
   ACE_INLINE CORBA::Octet *
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::get_buffer (CORBA::Boolean orphan)
   {
@@ -151,14 +151,14 @@
     }
     return result;
   }
-
+  
   ACE_INLINE const CORBA::Octet *
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::Octet * ACE_CAST_CONST, this->buffer_);
   }
-
-  ACE_INLINE void
+  
+  ACE_INLINE void 
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::replace (CORBA::ULong max,
     CORBA::ULong length,
     CORBA::Octet *data,
@@ -174,11 +174,11 @@
     this->buffer_ = data;
     this->release_ = release;
   }
-
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_MIOP_UNIQUEID_CI_)
 #define _MIOP_UNIQUEID_CI_
@@ -241,7 +241,7 @@ MIOP::UniqueId_var::operator= (const ::MIOP::UniqueId_var &p)
         {
           UniqueId *deep_copy =
             new UniqueId (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               UniqueId *tmp = deep_copy;
@@ -251,7 +251,7 @@ MIOP::UniqueId_var::operator= (const ::MIOP::UniqueId_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -279,20 +279,20 @@ MIOP::UniqueId_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::UniqueId_var::operator const ::MIOP::UniqueId &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-MIOP::UniqueId_var::operator ::MIOP::UniqueId &() // cast
+ACE_INLINE 
+MIOP::UniqueId_var::operator ::MIOP::UniqueId &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-MIOP::UniqueId_var::operator ::MIOP::UniqueId &() const // cast
+ACE_INLINE 
+MIOP::UniqueId_var::operator ::MIOP::UniqueId &() const // cast 
 {
   return *this->ptr_;
 }
@@ -321,7 +321,7 @@ MIOP::UniqueId_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::MIOP::UniqueId *&
 MIOP::UniqueId_var::out (void)
 {
@@ -382,7 +382,7 @@ MIOP::UniqueId_out::operator= (UniqueId *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::UniqueId_out::operator ::MIOP::UniqueId *&() // cast
 {
   return this->ptr_;
@@ -460,7 +460,7 @@ MIOP::PacketHeader_1_0_var::operator= (const ::MIOP::PacketHeader_1_0_var &p)
         {
           PacketHeader_1_0 *deep_copy =
             new PacketHeader_1_0 (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               PacketHeader_1_0 *tmp = deep_copy;
@@ -470,7 +470,7 @@ MIOP::PacketHeader_1_0_var::operator= (const ::MIOP::PacketHeader_1_0_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -493,20 +493,20 @@ MIOP::PacketHeader_1_0_var::operator const ::MIOP::PacketHeader_1_0 &() const //
 }
 
 ACE_INLINE
-MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 &() // cast
+MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 &() const // cast
+MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 *&() // cast
+MIOP::PacketHeader_1_0_var::operator ::MIOP::PacketHeader_1_0 *&() // cast 
 {
   return this->ptr_;
 }
@@ -523,7 +523,7 @@ MIOP::PacketHeader_1_0_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::MIOP::PacketHeader_1_0 *&
 MIOP::PacketHeader_1_0_var::out (void)
 {
@@ -584,7 +584,7 @@ MIOP::PacketHeader_1_0_out::operator= (PacketHeader_1_0 *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::PacketHeader_1_0_out::operator ::MIOP::PacketHeader_1_0 *&() // cast
 {
   return this->ptr_;
@@ -658,26 +658,26 @@ MIOP::PacketHeader_1_0::_magic_forany::operator= (const MIOP::PacketHeader_1_0::
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::PacketHeader_1_0::_magic_forany::operator MIOP::PacketHeader_1_0::_magic_slice * const &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-MIOP::PacketHeader_1_0::_magic_forany::operator MIOP::PacketHeader_1_0::_magic_slice *&() // cast
+ACE_INLINE 
+MIOP::PacketHeader_1_0::_magic_forany::operator MIOP::PacketHeader_1_0::_magic_slice *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 const MIOP::PacketHeader_1_0::_magic_slice &
 MIOP::PacketHeader_1_0::_magic_forany::operator[] (CORBA::ULong index) const
 {
   return ACE_const_cast (const MIOP::PacketHeader_1_0::_magic_slice &, this->ptr_[index]);
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::PacketHeader_1_0::_magic_slice &
 MIOP::PacketHeader_1_0::_magic_forany::operator[] (CORBA::ULong index)
 {
@@ -719,897 +719,6 @@ MIOP::PacketHeader_1_0::_magic_forany::nocopy (void) const
 {
   return this->nocopy_;
 }
-
-// *************************************************************
-// Inline operations for class MIOP::Version_var
-// *************************************************************
-
-ACE_INLINE
-MIOP::Version_var::Version_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-MIOP::Version_var::Version_var (Version *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-MIOP::Version_var::Version_var (const ::MIOP::Version_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::MIOP::Version (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-// fixed-size types only
-ACE_INLINE
-MIOP::Version_var::Version_var (const ::MIOP::Version &p)
-{
-  ACE_NEW (this->ptr_, ::MIOP::Version (p));
-}
-
-ACE_INLINE
-MIOP::Version_var::~Version_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE MIOP::Version_var &
-MIOP::Version_var::operator= (Version *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::MIOP::Version_var &
-MIOP::Version_var::operator= (const ::MIOP::Version_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          Version *deep_copy =
-            new Version (*p.ptr_);
-
-          if (deep_copy != 0)
-            {
-              Version *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-
-  return *this;
-}
-
-// fixed-size types only
-ACE_INLINE MIOP::Version_var &
-MIOP::Version_var::operator= (const ::MIOP::Version &p)
-{
-  if (this->ptr_ != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::MIOP::Version (p), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const ::MIOP::Version *
-MIOP::Version_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::Version *
-MIOP::Version_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-MIOP::Version_var::operator const ::MIOP::Version &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::Version_var::operator ::MIOP::Version &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::Version_var::operator ::MIOP::Version &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const ::MIOP::Version &
-MIOP::Version_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::Version &
-MIOP::Version_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for fixed size
-ACE_INLINE ::MIOP::Version &
-MIOP::Version_var::out (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::Version
-MIOP::Version_var::_retn (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::Version *
-MIOP::Version_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class MIOP::UsingIpv4_var
-// *************************************************************
-
-ACE_INLINE
-MIOP::UsingIpv4_var::UsingIpv4_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::UsingIpv4_var (UsingIpv4 *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::UsingIpv4_var (const ::MIOP::UsingIpv4_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::MIOP::UsingIpv4 (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-// fixed-size types only
-ACE_INLINE
-MIOP::UsingIpv4_var::UsingIpv4_var (const ::MIOP::UsingIpv4 &p)
-{
-  ACE_NEW (this->ptr_, ::MIOP::UsingIpv4 (p));
-}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::~UsingIpv4_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE MIOP::UsingIpv4_var &
-MIOP::UsingIpv4_var::operator= (UsingIpv4 *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::MIOP::UsingIpv4_var &
-MIOP::UsingIpv4_var::operator= (const ::MIOP::UsingIpv4_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          UsingIpv4 *deep_copy =
-            new UsingIpv4 (*p.ptr_);
-
-          if (deep_copy != 0)
-            {
-              UsingIpv4 *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-
-  return *this;
-}
-
-// fixed-size types only
-ACE_INLINE MIOP::UsingIpv4_var &
-MIOP::UsingIpv4_var::operator= (const ::MIOP::UsingIpv4 &p)
-{
-  if (this->ptr_ != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::MIOP::UsingIpv4 (p), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const ::MIOP::UsingIpv4 *
-MIOP::UsingIpv4_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv4 *
-MIOP::UsingIpv4_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::operator const ::MIOP::UsingIpv4 &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::operator ::MIOP::UsingIpv4 &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4_var::operator ::MIOP::UsingIpv4 &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const ::MIOP::UsingIpv4 &
-MIOP::UsingIpv4_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv4 &
-MIOP::UsingIpv4_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for fixed size
-ACE_INLINE ::MIOP::UsingIpv4 &
-MIOP::UsingIpv4_var::out (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv4
-MIOP::UsingIpv4_var::_retn (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv4 *
-MIOP::UsingIpv4_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class MIOP::UsingIpv4::_class_d_address_forany
-// *************************************************************
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::_class_d_address_forany (void) // default constructor
-  : ptr_ (0),
-    nocopy_ (0)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::_class_d_address_forany (MIOP::UsingIpv4::_class_d_address_slice *p, CORBA::Boolean nocopy)
-  : ptr_ (p),
-    nocopy_ (nocopy)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::_class_d_address_forany (const MIOP::UsingIpv4::_class_d_address_forany &p) // copy constructor
-{
-  this->ptr_ = MIOP::UsingIpv4::_class_d_address_dup (ACE_const_cast (const MIOP::UsingIpv4::_class_d_address_slice *, p.ptr_));
-  this->nocopy_ = p.nocopy_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::~_class_d_address_forany (void) // destructor
-{
-   // don't do anything
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_forany &
-MIOP::UsingIpv4::_class_d_address_forany::operator= (MIOP::UsingIpv4::_class_d_address_slice *p)
-{
-  // is what we own the same that is being assigned to us?
-  if (this->ptr_ != p)
-  {
-    // delete our stuff and assume ownership of p
-    MIOP::UsingIpv4::_class_d_address_free (this->ptr_);
-    this->ptr_ = p;
-  }
-  return *this;
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_forany &
-MIOP::UsingIpv4::_class_d_address_forany::operator= (const MIOP::UsingIpv4::_class_d_address_forany &p)
-{
-  if (this != &p)
-  {
-    // not assigning to ourselves
-    MIOP::UsingIpv4::_class_d_address_free (this->ptr_); // free old stuff
-    // deep copy
-    this->ptr_ = MIOP::UsingIpv4::_class_d_address_dup (ACE_const_cast (const MIOP::UsingIpv4::_class_d_address_slice *, p.ptr_));
-    this->nocopy_ = p.nocopy_;
-  }
-  return *this;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::operator MIOP::UsingIpv4::_class_d_address_slice * const &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_forany::operator MIOP::UsingIpv4::_class_d_address_slice *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-const MIOP::UsingIpv4::_class_d_address_slice &
-MIOP::UsingIpv4::_class_d_address_forany::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const MIOP::UsingIpv4::_class_d_address_slice &, this->ptr_[index]);
-}
-
-ACE_INLINE
-MIOP::UsingIpv4::_class_d_address_slice &
-MIOP::UsingIpv4::_class_d_address_forany::operator[] (CORBA::ULong index)
-{
-  return this->ptr_[index];
-}
-
-ACE_INLINE const MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_forany::in (void) const
-{
-  return ACE_const_cast (const MIOP::UsingIpv4::_class_d_address_slice *, this->ptr_);
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_forany::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_slice * &
-MIOP::UsingIpv4::_class_d_address_forany::out (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_forany::_retn (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_forany::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::Boolean
-MIOP::UsingIpv4::_class_d_address_forany::nocopy (void) const
-{
-  return this->nocopy_;
-}
-
-// *************************************************************
-// Inline operations for class MIOP::UsingIpv6_var
-// *************************************************************
-
-ACE_INLINE
-MIOP::UsingIpv6_var::UsingIpv6_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::UsingIpv6_var (UsingIpv6 *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::UsingIpv6_var (const ::MIOP::UsingIpv6_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::MIOP::UsingIpv6 (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::~UsingIpv6_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE MIOP::UsingIpv6_var &
-MIOP::UsingIpv6_var::operator= (UsingIpv6 *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6_var &
-MIOP::UsingIpv6_var::operator= (const ::MIOP::UsingIpv6_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          UsingIpv6 *deep_copy =
-            new UsingIpv6 (*p.ptr_);
-
-          if (deep_copy != 0)
-            {
-              UsingIpv6 *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-
-  return *this;
-}
-
-ACE_INLINE const ::MIOP::UsingIpv6 *
-MIOP::UsingIpv6_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 *
-MIOP::UsingIpv6_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::operator const ::MIOP::UsingIpv6 &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::operator ::MIOP::UsingIpv6 &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_var::operator ::MIOP::UsingIpv6 &() const // cast
-{
-  return *this->ptr_;
-}
-
-// variable-size types only
-ACE_INLINE
-MIOP::UsingIpv6_var::operator ::MIOP::UsingIpv6 *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE const ::MIOP::UsingIpv6 &
-MIOP::UsingIpv6_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 &
-MIOP::UsingIpv6_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size
-ACE_INLINE ::MIOP::UsingIpv6 *&
-MIOP::UsingIpv6_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 *
-MIOP::UsingIpv6_var::_retn (void)
-{
-  ::MIOP::UsingIpv6 *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 *
-MIOP::UsingIpv6_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class MIOP::UsingIpv6_out
-// *************************************************************
-
-ACE_INLINE
-MIOP::UsingIpv6_out::UsingIpv6_out (::MIOP::UsingIpv6 *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_out::UsingIpv6_out (UsingIpv6_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_out::UsingIpv6_out (const ::MIOP::UsingIpv6_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (UsingIpv6_out&, p).ptr_)
-{}
-
-ACE_INLINE MIOP::UsingIpv6_out &
-MIOP::UsingIpv6_out::operator= (const ::MIOP::UsingIpv6_out &p)
-{
-  this->ptr_ = ACE_const_cast (UsingIpv6_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE MIOP::UsingIpv6_out &
-MIOP::UsingIpv6_out::operator= (UsingIpv6 *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-MIOP::UsingIpv6_out::operator ::MIOP::UsingIpv6 *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 *&
-MIOP::UsingIpv6_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::UsingIpv6 *
-MIOP::UsingIpv6_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for union MIOP::IPEndpoints
-// *************************************************************
-
-// this reset method is used by the decoding engine
-ACE_INLINE void
-MIOP::IPEndpoints::_reset (void)
-{
-  this->_reset (this->disc_, 1);
-  ACE_OS::memcpy (&this->u_, 0, sizeof (this->u_));
-}
-
-// the implicit _default () method
-ACE_INLINE void
-MIOP::IPEndpoints::_default ()
-{
-  this->disc_ = -32768;
-}
-
-// accessor to set the discriminant
-ACE_INLINE void
-MIOP::IPEndpoints::_d (CORBA::Short discval)
-{
-  this->disc_ = discval;
-}
-// accessor to get the discriminant
-ACE_INLINE CORBA::Short
-MIOP::IPEndpoints::_d (void) const
-{
-  return this->disc_;
-}
-
-// accessor to set the member
-ACE_INLINE void
-MIOP::IPEndpoints::ipv4_endpoints (const MIOP::UsingIpv4 &val)
-{
-  // set the discriminant val
-  this->_reset (0, 0);
-  this->disc_ = 0;
-  this->u_.ipv4_endpoints_ = val;
-}
-
-// readonly get method
-ACE_INLINE const MIOP::UsingIpv4 &
-MIOP::IPEndpoints::ipv4_endpoints (void) const
-{
-  return this->u_.ipv4_endpoints_;
-}
-
-// read/write get method
-ACE_INLINE MIOP::UsingIpv4 &
-MIOP::IPEndpoints::ipv4_endpoints (void)
-{
-  return this->u_.ipv4_endpoints_;
-}
-
-// accessor to set the member
-ACE_INLINE void
-MIOP::IPEndpoints::ipv6_endpoints (const MIOP::UsingIpv6 &val)
-{
-  // set the discriminant val
-  this->_reset (1, 0);
-  this->disc_ = 1;
-  ACE_NEW (
-      this->u_.ipv6_endpoints_,
-      MIOP::UsingIpv6 (val)
-    );
-}
-
-// readonly get method
-ACE_INLINE const MIOP::UsingIpv6 &
-MIOP::IPEndpoints::ipv6_endpoints (void) const
-{
-  return *this->u_.ipv6_endpoints_;
-}
-
-// read/write get method
-ACE_INLINE MIOP::UsingIpv6 &
-MIOP::IPEndpoints::ipv6_endpoints (void)
-{
-  return *this->u_.ipv6_endpoints_;
-}
-
-
-#if !defined (_MIOP_IPENDPOINTS___VAR_CI_)
-#define _MIOP_IPENDPOINTS___VAR_CI_
-
-// *************************************************************
-// Inline operations for class MIOP::IPEndpoints_var
-// *************************************************************
-
-ACE_INLINE
-MIOP::IPEndpoints_var::IPEndpoints_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::IPEndpoints_var (IPEndpoints *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::IPEndpoints_var (const ::MIOP::IPEndpoints_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::MIOP::IPEndpoints (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::~IPEndpoints_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints_var &
-MIOP::IPEndpoints_var::operator= (IPEndpoints *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints_var &
-MIOP::IPEndpoints_var::operator= (const ::MIOP::IPEndpoints_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          IPEndpoints *deep_copy =
-            new IPEndpoints (*p.ptr_);
-
-          if (deep_copy != 0)
-            {
-              IPEndpoints *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-
-  return *this;
-}
-
-ACE_INLINE const ::MIOP::IPEndpoints *
-MIOP::IPEndpoints_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints *
-MIOP::IPEndpoints_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::operator const ::MIOP::IPEndpoints &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::operator ::MIOP::IPEndpoints &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_var::operator ::MIOP::IPEndpoints &() const// cast
-{
-  return *this->ptr_;
-}
-
-// variable-size types only
-ACE_INLINE
-MIOP::IPEndpoints_var::operator ::MIOP::IPEndpoints *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE const ::MIOP::IPEndpoints &
-MIOP::IPEndpoints_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints &
-MIOP::IPEndpoints_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size
-ACE_INLINE ::MIOP::IPEndpoints *&
-MIOP::IPEndpoints_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints *
-MIOP::IPEndpoints_var::_retn (void)
-{
-  ::MIOP::IPEndpoints *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints *
-MIOP::IPEndpoints_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MIOP_IPENDPOINTS___OUT_CI_)
-#define _MIOP_IPENDPOINTS___OUT_CI_
-
-// *************************************************************
-// Inline operations for class MIOP::IPEndpoints_out
-// *************************************************************
-
-ACE_INLINE
-MIOP::IPEndpoints_out::IPEndpoints_out (IPEndpoints *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_out::IPEndpoints_out (IPEndpoints_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_out::IPEndpoints_out (const ::MIOP::IPEndpoints_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IPEndpoints_out&, p).ptr_)
-{}
-
-ACE_INLINE ::MIOP::IPEndpoints_out &
-MIOP::IPEndpoints_out::operator= (const ::MIOP::IPEndpoints_out &p)
-{
-  this->ptr_ = ACE_const_cast (IPEndpoints_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints_out &
-MIOP::IPEndpoints_out::operator= (IPEndpoints *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-MIOP::IPEndpoints_out::operator ::MIOP::IPEndpoints *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints *&
-MIOP::IPEndpoints_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::MIOP::IPEndpoints *
-MIOP::IPEndpoints_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
 
 // *************************************************************
 // Inline operations for class MIOP::UIPMC_ProfileBody_var
@@ -1662,7 +771,7 @@ MIOP::UIPMC_ProfileBody_var::operator= (const ::MIOP::UIPMC_ProfileBody_var &p)
         {
           UIPMC_ProfileBody *deep_copy =
             new UIPMC_ProfileBody (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               UIPMC_ProfileBody *tmp = deep_copy;
@@ -1672,7 +781,7 @@ MIOP::UIPMC_ProfileBody_var::operator= (const ::MIOP::UIPMC_ProfileBody_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1695,20 +804,20 @@ MIOP::UIPMC_ProfileBody_var::operator const ::MIOP::UIPMC_ProfileBody &() const 
 }
 
 ACE_INLINE
-MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody &() // cast
+MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody &() const // cast
+MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody *&() // cast
+MIOP::UIPMC_ProfileBody_var::operator ::MIOP::UIPMC_ProfileBody *&() // cast 
 {
   return this->ptr_;
 }
@@ -1725,7 +834,7 @@ MIOP::UIPMC_ProfileBody_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::MIOP::UIPMC_ProfileBody *&
 MIOP::UIPMC_ProfileBody_var::out (void)
 {
@@ -1786,7 +895,7 @@ MIOP::UIPMC_ProfileBody_out::operator= (UIPMC_ProfileBody *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::UIPMC_ProfileBody_out::operator ::MIOP::UIPMC_ProfileBody *&() // cast
 {
   return this->ptr_;
@@ -1806,7 +915,7 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CI_
 
@@ -1819,24 +928,24 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
     return retval;
   }
-
+  
   ACE_INLINE void MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::freebuf (IOP::TaggedComponent *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-
+  
   ACE_INLINE
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent (void) // Default constructor.
   {
   }
-
+  
   ACE_INLINE
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::allocbuf (maximum))
   {
   }
-
+  
   ACE_INLINE
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -1845,7 +954,7 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-
+  
   ACE_INLINE
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent (const _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent &rhs)
   // Copy constructor.
@@ -1855,10 +964,10 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     {
       IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::allocbuf (this->maximum_);
       IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-
+      
       this->buffer_ = tmp1;
     }
     else
@@ -1866,14 +975,14 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-
+  
   ACE_INLINE MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent &
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::operator= (const _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1886,18 +995,18 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::allocbuf (rhs.maximum_);
-
+    
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-
+    
     IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-
+    
     return *this;
   }
-
+  
   // = Accessors.
   ACE_INLINE IOP::TaggedComponent &
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::operator[] (CORBA::ULong i)
@@ -1907,7 +1016,7 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
     return tmp[i];
   }
-
+  
   ACE_INLINE const IOP::TaggedComponent &
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::operator[] (CORBA::ULong i) const
   // operator []
@@ -1916,9 +1025,9 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-
+  
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+  
   ACE_INLINE IOP::TaggedComponent *
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::get_buffer (CORBA::Boolean orphan)
   {
@@ -1952,13 +1061,13 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     }
     return result;
   }
-
+  
   ACE_INLINE const IOP::TaggedComponent *
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
   }
-
+  
   ACE_INLINE void
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -1975,11 +1084,11 @@ MIOP::UIPMC_ProfileBody_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 // *************************************************************
 // Inline operations for class MIOP::MulticastObjectGroupFactory::ipaddr_var
 // *************************************************************
@@ -2032,13 +1141,13 @@ MIOP::MulticastObjectGroupFactory::ipaddr_var::operator= (const MIOP::MulticastO
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::MulticastObjectGroupFactory::ipaddr_var::operator MIOP::MulticastObjectGroupFactory::ipaddr_slice * const &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 const MIOP::MulticastObjectGroupFactory::ipaddr_slice &
 MIOP::MulticastObjectGroupFactory::ipaddr_var::operator[] (CORBA::ULong index) const
 {
@@ -2050,7 +1159,7 @@ MIOP::MulticastObjectGroupFactory::ipaddr_var::operator[] (CORBA::ULong index) c
 #endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::MulticastObjectGroupFactory::ipaddr_slice &
 MIOP::MulticastObjectGroupFactory::ipaddr_var::operator[] (CORBA::ULong index)
 {
@@ -2153,26 +1262,26 @@ MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator= (const MIOP::Multica
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator MIOP::MulticastObjectGroupFactory::ipaddr_slice * const &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator MIOP::MulticastObjectGroupFactory::ipaddr_slice *&() // cast
+ACE_INLINE 
+MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator MIOP::MulticastObjectGroupFactory::ipaddr_slice *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 const MIOP::MulticastObjectGroupFactory::ipaddr_slice &
 MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator[] (CORBA::ULong index) const
 {
   return ACE_const_cast (const MIOP::MulticastObjectGroupFactory::ipaddr_slice &, this->ptr_[index]);
 }
 
-ACE_INLINE
+ACE_INLINE 
 MIOP::MulticastObjectGroupFactory::ipaddr_slice &
 MIOP::MulticastObjectGroupFactory::ipaddr_forany::operator[] (CORBA::ULong index)
 {
@@ -2267,7 +1376,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::PacketHea
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::PacketHeader_1_0 &_tao_aggregate)
@@ -2290,171 +1399,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::PacketHeader_1_0
     return 1;
   else
     return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::Version &_tao_aggregate)
-{
-  if (
-    (strm << CORBA::Any::from_octet (_tao_aggregate.major)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor))
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::Version &_tao_aggregate)
-{
-  if (
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.major)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor))
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::UsingIpv4::_class_d_address_forany &_tao_array)
-{
-   return strm.write_octet_array ((const ACE_CDR::Octet *)_tao_array.in (), 4);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::UsingIpv4::_class_d_address_forany &_tao_array)
-{
-   return strm.read_octet_array ((ACE_CDR::Octet *) _tao_array.out (), 4);
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::UsingIpv4 &_tao_aggregate)
-{
-  MIOP::UsingIpv4::_class_d_address_forany _tao_aggregate_class_d_address
-      (ACE_const_cast (
-          MIOP::UsingIpv4::_class_d_address_slice*,
-          _tao_aggregate.class_d_address
-        )
-    );
-  if (
-    (strm << _tao_aggregate.port) &&
-    (strm << _tao_aggregate_class_d_address)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::UsingIpv4 &_tao_aggregate)
-{
-  MIOP::UsingIpv4::_class_d_address_forany _tao_aggregate_class_d_address
-      (ACE_const_cast (
-          MIOP::UsingIpv4::_class_d_address_slice*,
-          _tao_aggregate.class_d_address
-        )
-    );
-  if (
-    (strm >> _tao_aggregate.port) &&
-    (strm >> _tao_aggregate_class_d_address)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::UsingIpv6 &_tao_aggregate)
-{
-  if (
-    (strm << _tao_aggregate.port) &&
-    (strm << _tao_aggregate.address.in ())
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::UsingIpv6 &_tao_aggregate)
-{
-  if (
-    (strm >> _tao_aggregate.port) &&
-    (strm >> _tao_aggregate.address.out ())
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const MIOP::IPEndpoints &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return 0;
-    }
-  CORBA::Boolean result = 1;
-  switch (_tao_union._d ())
-  {
-    case 0:
-      {
-        result = strm << _tao_union.ipv4_endpoints ();
-      }
-      break;
-    case 1:
-      {
-        result = strm << _tao_union.ipv6_endpoints ();
-      }
-      break;
-    default:
-      break;
-  }
-  return result;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    MIOP::IPEndpoints &_tao_union
-  )
-{
-  CORBA::Short _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return 0;
-    }
-  CORBA::Boolean result = 1;
-  switch (_tao_discriminant)
-  {
-    case 0:
-      {
-        MIOP::UsingIpv4 _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        if (result)
-          {
-            _tao_union.ipv4_endpoints (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 1:
-      {
-        MIOP::UsingIpv6 _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        if (result)
-          {
-            _tao_union.ipv6_endpoints (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    default:
-      _tao_union._d (_tao_discriminant);
-      break;
-  }
-  return result;
+  
 }
 
 
@@ -2476,25 +1421,27 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const MIOP::UIPMC_Pro
 {
   if (
     (strm << _tao_aggregate.miop_version) &&
-    (strm << _tao_aggregate.endpoints) &&
+    (strm << _tao_aggregate.the_address.in ()) &&
+    (strm << _tao_aggregate.the_port) &&
     (strm << _tao_aggregate.components)
   )
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, MIOP::UIPMC_ProfileBody &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.miop_version) &&
-    (strm >> _tao_aggregate.endpoints) &&
+    (strm >> _tao_aggregate.the_address.out ()) &&
+    (strm >> _tao_aggregate.the_port) &&
     (strm >> _tao_aggregate.components)
   )
     return 1;
   else
     return 0;
-
+  
 }
 

@@ -71,8 +71,9 @@ module PortableServer {
         Object forward_reference;
     };
 
-    // @@ Frank - MIOP specific calls
+    // @@ Frank - MIOP specific types
 
+    exception NotAGroupObject {};
     typedef sequence <ObjectId> IDs;
 
     // @@ Frank - End MIOP
@@ -287,13 +288,21 @@ module PortableServer {
         Object id_to_reference(     in ObjectId             oid)
                                         raises (ObjectNotActive, WrongPolicy);
 
-        // @@ Frank - MIOP specific calls
+        // @@ Frank - MIOP specific methods
 
         ObjectId create_id_for_reference(in CORBA::Object the_ref)
-                              raises (WrongAdapter);
+                              raises (NotAGroupObject);
 
         IDs reference_to_ids(in CORBA::Object the_ref)
-                              raises (WrongAdapter);
+                              raises (NotAGroupObject);
+
+        void associate_reference_with_id (in CORBA::Object ref, 
+                                          in ObjectId oid)
+                              raises (NotAGroupObject);
+          
+        void disassociate_reference_with_id (in CORBA::Object ref, 
+                                             in ObjectId oid)
+                              raises (NotAGroupObject);
 
         // @@ Frank - End MIOP
     };
