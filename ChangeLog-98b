@@ -61,6 +61,9 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
           g++ 2.9.  Thanks to Andrew G. Harvey <agh@cisco.com> for a problem
           with compiling ace/Filecache.cpp with g++ 2.9 on SunOS 5.5.1.
 
+        * tests/Upgradeable_RW_Test.h: replaced ACE_Thread_Mutex with
+          ACE_SYNCH_MUTEX.  Thanks to Ossama for reporting this.
+
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
