@@ -41,7 +41,7 @@ Wed Oct 22 16:43:25 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 	* tests/Reactor_Performance_Test.cpp (client): Corrected some code
  	  that wasn't logical (but compiled!) in the connect_n() test.
 
-Fri Oct 22 13:27:47 1997  Douglas C. Schmidt  <schmidt@watusi.cs.wustl.edu>
+Wed Oct 22 13:27:47 1997  Douglas C. Schmidt  <schmidt@watusi.cs.wustl.edu>
 
 	* tests/Reactor_Performance_Test.cpp (client): Revised the
  	  connection portion of this test to use the newly revised
