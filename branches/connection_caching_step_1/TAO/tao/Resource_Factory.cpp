@@ -11,7 +11,7 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 // ****************************************************************
 
-TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
+  TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core * /*orb_core*/)
 {
   //this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
 }
