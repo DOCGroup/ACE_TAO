@@ -1,3 +1,10 @@
+Wed May 31 12:29:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/JAWS2/JAWS/jaws.dsp:
+
+          Added a couple of files that were in the Makefile but not
+          in this file.
+
 Wed May 31 14:49:36 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (log): Revert change from Thu May 25 17:39:22 2000.
