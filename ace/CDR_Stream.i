@@ -560,6 +560,12 @@ ACE_InputCDR::read_longdouble (ACE_CDR::LongDouble &x)
   return this->read_16 (ACE_reinterpret_cast (ACE_CDR::LongDouble*,&x));
 }
 
+ACE_INLINE size_t
+ACE_InputCDR::length (void) const
+{
+  return this->start_.length ();
+}
+
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
                                ACE_CDR::ULong length)
@@ -877,12 +883,6 @@ ACE_InputCDR::adjust (size_t size,
                       char*& buf)
 {
   return this->adjust (size, size, buf);
-}
-
-ACE_INLINE size_t
-ACE_InputCDR::length (void) const
-{
-  return this->start_.length ();
 }
 
 ACE_INLINE const ACE_Message_Block*
