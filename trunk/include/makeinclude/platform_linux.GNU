@@ -34,4 +34,4 @@ PRELIB  = @true
 #### rebuilt gas, you might need to uncomment the following.
 #### ifeq ($(debug),1)
 ####   SUPPRESS_DASH_G = 1
-#### fi # $debug
+#### endif # debug

@@ -33,7 +33,7 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
 ifndef PRELIB
   PRELIB = @true
-endif
+endif # ! PRELIB
 
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
@@ -46,4 +46,4 @@ endif
 #### rebuilt gas, you might need to uncomment the following.
 #### ifeq ($(debug),1)
 ####   SUPPRESS_DASH_G = 1
-#### fi # $debug
+#### endif # debug
