@@ -1,3 +1,12 @@
+Wed Jul 10 10:19:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/server.cpp (test_method):
+
+	  Allocate the exception on the heap.  The ExceptionHolder now
+	  requires that all exceptions it is constructed with, be allocated
+	  on the heap since the ExceptionHolder takes over ownership of
+	  the exception and deletes it later.
+
 Wed Jul 10 12:19:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/utl_identifier.h:
