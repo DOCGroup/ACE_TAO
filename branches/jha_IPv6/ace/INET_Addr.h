@@ -58,6 +58,11 @@ public:
   /// Creates an <ACE_INET_Addr> from a ace_sockaddr_in structure.
   ACE_INET_Addr (const sockaddr_in *, int len);
 
+  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+  int set (const sockaddr_in *,
+	   int len);
+
+
   /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
   /// <host_name>.
   ACE_INET_Addr (u_short port_number,

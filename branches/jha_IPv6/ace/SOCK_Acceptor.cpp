@@ -209,6 +209,48 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_open");
   int error = 0;
 
+#if defined (ACE_HAS_IPV6)
+  // For AF_INET6 addresses, we need PF_INET6 sockets in order to
+  // properly bind to IPv6 addresses
+  if(local_sap.get_type() == AF_INET6)
+    protocol_family = PF_INET6;
+
+  if (protocol_family == PF_INET6)
+    {
+      printf("Doing PF_INET6 open\n");
+      sockaddr_in6 local_inet6_addr;
+      ACE_OS::memset (ACE_reinterpret_cast (void *,
+                                            &local_inet6_addr),
+                      0,
+                      sizeof local_inet6_addr);
+
+      if (local_sap == ACE_Addr::sap_any)
+        {
+          local_inet6_addr.sin6_family = AF_INET6;
+          local_inet6_addr.sin6_port = 0;
+          local_inet6_addr.sin6_addr = in6addr_any;
+        }
+      else
+        local_inet6_addr = *ACE_reinterpret_cast (sockaddr_in6 *,
+                                                  local_sap.get_addr ());
+
+      if (local_inet6_addr.sin6_port == 0)
+        {
+          /* XXX Need to write bind_port for IPv6 network */
+          printf("Cannot bind to a port that is not specified for IPv6 yet\n");
+          /*
+          if (ACE::bind_port (this->get_handle (),
+                              local_inet6_addr.sin6_addr.s_addr) == -1)
+          */
+            error = 1;
+        }
+      else if (ACE_OS::bind (this->get_handle (),
+                             ACE_reinterpret_cast (sockaddr *,
+                                                   &local_inet6_addr),
+                             sizeof local_inet6_addr) == -1)
+        error = 1;
+    } else
+#endif
   if (protocol_family == PF_INET)
     {
       sockaddr_in local_inet_addr;
