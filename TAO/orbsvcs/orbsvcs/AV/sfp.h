@@ -213,6 +213,9 @@ public:
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = 0);
 
+  virtual int send_frame (const char*buf,
+                          size_t len);
+  
   virtual int destroy (void);
   virtual int set_policies (const TAO_AV_PolicyList &policies);
 

@@ -216,9 +216,7 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
                                TAO_AV_frame_info * /*frame_info*/)
 {
   int result = this->transport_->send (frame);
-  if (result < 0)
-    return result;
-  return 0;
+  return result;
 }
 
 int
@@ -228,6 +226,15 @@ TAO_AV_TCP_Object::send_frame (const iovec *iov,
 {
   return this->transport_->send (iov,iovcnt);
 }
+
+int
+TAO_AV_TCP_Object::send_frame (const char*buf,
+                               size_t len)
+{
+  int result = this->transport_->send (buf, len, 0);
+  return result;
+}
+
 
 TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
@@ -460,27 +467,25 @@ TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor (void)
 int
 TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Acceptor::make_svc_handler\n"));
-  //  TAO_AV_Callback *callback = 0;
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_TCP_Acceptor::make_svc_handler\n"
+                ));
+
   if (this->endpoint_ != 0)
     {
-//       this->endpoint_->get_callback (this->flowname_.c_str (),
-//                                      callback);
       ACE_NEW_RETURN (tcp_handler,
-                      //                      TAO_AV_TCP_Flow_Handler (callback),
                       TAO_AV_TCP_Flow_Handler,
                       -1);
+
       TAO_AV_Protocol_Object *object =
-//         this->flow_protocol_factory_->make_protocol_object (callback,
-//                                                             tcp_handler->transport ());
         this->flow_protocol_factory_->make_protocol_object (this->entry_,
                                                             this->endpoint_,
                                                             tcp_handler,
                                                             tcp_handler->transport ());
+
       tcp_handler->protocol_object (object);
-      //      callback->protocol_object (object);
-//       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
-//                                             object);
+
       this->endpoint_->set_flow_handler (this->flowname_.c_str (),tcp_handler);
       this->entry_->protocol_object (object);
       this->entry_->handler (tcp_handler);
@@ -495,26 +500,42 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                            TAO_AV_Flow_Protocol_Factory *factory)
 {
   this->flow_protocol_factory_ = factory;
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Acceptor::open "));
+
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_TCP_Acceptor::open "));
+
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
   ACE_Addr *address = entry->address ();
+
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
+  
   inet_addr->set (inet_addr->get_port_number (),
                   inet_addr->get_host_name ());
+  
   char buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
                              BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Acceptor::open: %s",
-              buf));
+  
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_TCP_Acceptor::open: %s",
+                buf
+                ));
+
   int result = this->acceptor_.open (this,
                                      av_core->reactor (),
                                      *inet_addr,
                                      entry);
+
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Acceptor::open failed"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO_AV_TCP_Acceptor::open failed"),
+                      -1);
+
   entry->set_local_addr (address);
   return 0;
 }
@@ -530,24 +551,38 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   this->endpoint_ = endpoint;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
+  
   ACE_INET_Addr *address;
   ACE_NEW_RETURN (address,
                   ACE_INET_Addr ("0"),
                   -1);
+  
   int result = this->acceptor_.open (this,
                                      av_core->reactor (),
                                      *address,
                                      entry);
 
+  
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Acceptor::open failed"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO_AV_TCP_Acceptor::open failed"),
+                      -1);
+
   this->acceptor_.acceptor ().get_local_addr (*address);
+  
   address->set (address->get_port_number (),
                 address->get_host_name ());
+  
   char buf[BUFSIZ];
   address->addr_to_string (buf,BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Acceptor::open_default: %s\n",buf));
+  
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_TCP_Acceptor::open_default: %s\n",
+                buf));
+  
   entry->set_local_addr (address);
+  
   return 0;
 }
 

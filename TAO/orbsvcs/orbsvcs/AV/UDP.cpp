@@ -38,7 +38,7 @@ TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 
 int
 TAO_AV_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv, 
-                                               const void *arg)
+                                         const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -46,10 +46,15 @@ TAO_AV_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::set_remote_address\n"));
-  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,address);
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::set_remote_address\n"));
+  
+  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,
+                                               address);
   this->peer_addr_ = *inet_addr;
-  TAO_AV_UDP_Transport *transport = ACE_dynamic_cast (TAO_AV_UDP_Transport*,this->transport_);
+  TAO_AV_UDP_Transport *transport = ACE_dynamic_cast (TAO_AV_UDP_Transport*,
+                                                      this->transport_);
+  
   return transport->set_remote_address (*inet_addr);
 }
 
@@ -57,7 +62,11 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
 ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle (void) const
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::get_handle:%d\n",this->sock_dgram_.get_handle ()));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_UDP_Flow_Handler::get_handle:%d\n",
+                this->sock_dgram_.get_handle ()));
+
   return this->sock_dgram_.get_handle () ;
 }
 
@@ -258,14 +267,18 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->flow_protocol_factory_ = factory;
   this->flowname_ = entry->flowname ();
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) entry->address ();
-//   inet_addr->set (inet_addr->get_port_number (),
-//                   inet_addr->get_host_name ());
+
   char buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
                              BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open: %s",
-                                       buf));
+  
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_UDP_Acceptor::open: %s",
+                buf));
+
   int result = this->open_i (inet_addr);
+  
   if (result < 0)
     return result;
   return 0;
@@ -296,21 +309,25 @@ int
 TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
   int result = -1;
-  //  TAO_AV_Callback *callback = 0;  
-  //   this->endpoint_->get_callback (this->flowname_.c_str (),
-  //                                  callback);
+
   ACE_INET_Addr *local_addr;
   TAO_AV_Flow_Handler *flow_handler = 0;
+
   if (this->entry_->is_multicast ())
     {
       TAO_AV_UDP_MCast_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
                       TAO_AV_UDP_MCast_Flow_Handler,
                       -1);
+  
       flow_handler = handler;
       result = handler->get_mcast_socket ()->subscribe (*inet_addr);
+      
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::subscribe failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_AV_UDP_MCast_connector::subscribe failed\n"),
+                          -1);
+
       // Now disable Multicast loopback.
       // @@Should we make this a policy?
 #ifdef ACE_HAS_IP_MULTICAST
@@ -389,10 +406,15 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   char buf[BUFSIZ];
   local_addr->addr_to_string (buf,BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_AV_UDP_ACCEPTOR::open:%s \n",
+                buf));
+  
   this->entry_->set_local_addr (local_addr);
   this->entry_->handler (flow_handler);
-  // call activate svc handler.
+  
+// call activate svc handler.
   return this->activate_svc_handler (flow_handler);
 }
 
@@ -430,30 +452,29 @@ int
 TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Transport *&transport)
 {
+        
+  ACE_INET_Addr *local_addr;
+  
   int result = -1;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
-  ACE_Addr *remote_addr = entry->address ();
-  ACE_UNUSED_ARG (remote_addr);
-  ACE_INET_Addr *local_addr;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr ("0"),
-                  -1);
 
-  //  TAO_AV_Callback *callback = 0;  
-//   this->endpoint_->get_callback (this->flowname_.c_str (),
-//                                  callback);
-  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,entry->address ());
+  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,
+                                               entry->address ());
+  
   TAO_AV_Flow_Handler *flow_handler = 0;
+  
   if (entry->is_multicast ())
     {
       TAO_AV_UDP_MCast_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
-                      //                      TAO_AV_UDP_MCast_Flow_Handler (callback),
                       TAO_AV_UDP_MCast_Flow_Handler,
                       -1);
+
       flow_handler = handler;
+      
       result = handler->get_mcast_socket ()->subscribe (*inet_addr);
+      
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
       // Now disable Multicast loopback.
@@ -484,15 +505,23 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
     }
   else
     {
+
+      ACE_NEW_RETURN (local_addr,
+                      ACE_INET_Addr ("0"),
+                      -1);
+      
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
-                      //                      TAO_AV_UDP_Flow_Handler (callback),
                       TAO_AV_UDP_Flow_Handler,
                       -1);
+      
       flow_handler = handler;
+      
       result = handler->open (*local_addr);
+      
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
+      
       // set the socket buffer sizes to 64k.
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -512,33 +541,38 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
         return 0;
 
       handler->set_remote_address  (inet_addr);
-      ACE_NEW_RETURN (local_addr,
-                      ACE_INET_Addr,
-                      -1);
+      
       result = handler->get_socket ()->get_local_addr (*local_addr);
+
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+      
       local_addr->set (local_addr->get_port_number (),
                        local_addr->get_host_name ());
     }
+
   TAO_AV_Protocol_Object *object =
     this->flow_protocol_factory_->make_protocol_object (this->entry_,
                                                         this->endpoint_,
                                                         flow_handler,
                                                         flow_handler->transport ());
   flow_handler->protocol_object (object);
-  //  callback->protocol_object (object);
-//   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
-//                                         object);
-  this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
+
+  this->endpoint_->set_flow_handler (this->flowname_.c_str (),
+                                     flow_handler);
+
   this->entry_->protocol_object (object);
 
   char buf[BUFSIZ];
   local_addr->addr_to_string (buf,BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+
+  if (TAO_debug_level > 0) 
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+
   entry->set_local_addr (local_addr);
   entry->handler (flow_handler);
   transport = flow_handler->transport ();
+
   // call activate svc handler.
   return this->activate_svc_handler (flow_handler);
 }
@@ -642,6 +676,16 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                TAO_AV_frame_info * /*frame_info*/)
 {
   return this->transport_->send (iov,iovcnt);
+}
+
+int
+TAO_AV_UDP_Object::send_frame (const char*buf,
+                               size_t len)
+{
+  int result = this->transport_->send (buf, len, 0);
+  if (result < 0)
+    return result;
+  return 0;
 }
 
 TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
