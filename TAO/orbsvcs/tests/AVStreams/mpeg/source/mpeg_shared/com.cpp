@@ -514,7 +514,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
 	      ntohs(addressIn.sin_port));
       
-      /*
+      
       i = sizeof(addressIn);
       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
 	fprintf(stderr,
@@ -525,7 +525,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	close(cfd);
 	return -1;
       }
-      */
+      
       if (time_write_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
 	fprintf(stderr,
 		"Error ComOpenConnPair: pid %d failed to write (IP addr) to TCP cfd:",
