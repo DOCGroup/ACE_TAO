@@ -73,10 +73,7 @@ public:
   /// Close all open connectors.
   int close_all (void);
 
-  /// For this list of preconnections call the connector specific
-  /// preconnect method for each preconnection.
-  int preconnect (TAO_ORB_Core *orb_core,
-                  TAO_EndpointSet &preconnections);
+
 
   /**
    * This is where the transport protocol is selected based on some
@@ -106,11 +103,6 @@ public:
   TAO_ConnectorSetIterator end (void);
 
 private:
-  /// Put the preconnects in a form that makes it simple for protocol
-  /// implementers to parse.
-  int preprocess_preconnects (TAO_ORB_Core *orb_core,
-                              TAO_EndpointSet &preconnects);
-
   // Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))

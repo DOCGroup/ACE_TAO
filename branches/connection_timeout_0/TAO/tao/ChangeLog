@@ -1,0 +1,70 @@
+Thu Apr 11 14:36:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin does the following 
+
+	  - Splits the file Pluggable.{h,cpp,i} into two files namely
+	    Transport_Acceptor.{h,cpp,inl} and
+	    Transport_Connector.{h,cpp,inl}. 
+
+	  - Removes support for preconnects () totally. The code for
+	    preconnects is just #if 0'ed now. We can remove the code
+	    totally once these changes stabilizes. 
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.i: Files to be removed from the repository. 
+
+	* tao/Transport_Acceptor.h:
+	* tao/Transport_Acceptor.cpp:
+	* tao/Transport_Acceptor.inl:
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.inl: New files to the repository. 
+	
+	* tao/Acceptor_Registry.cpp: 
+	* tao/IIOP_Acceptor.h:
+	* tao/Tagged_Profile.cpp
+
+	* tao/PortableServer/Default_Acceptor_Filter.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/Strategies/DIOP_Acceptor.h:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Acceptor.h:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Acceptor.h:
+	* tao/Strategies/UIOP_Connector.h: Changed the #include's of
+	  Pluggable.h to Transport_Acceptor.h or Transport_Connector.h, as
+	  the case may be
+		
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_State.cpp:
+	* tao/Pluggable_Messaging.cpp: Removed #include's of Pluggable.h
+	  since they are not needed.  
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed a few
+	  unnecessary #includes. 
+
+	* tao/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/Messaging/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/Strategies/Makefile: Updated dependencies. 
+
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp: Removed the method preconnects () and
+	  template instantiations needed for them. 
+	
+	* tao/Connector_Registry.cpp:
+	* tao/Connector_Registry.h: 
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/ORB_Core.cpp:Removed references necessary for preconnects. 
+
+	
+

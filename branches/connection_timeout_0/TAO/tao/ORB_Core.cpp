@@ -367,15 +367,15 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           //   protocol://addr1,addr2,...,addrN
           //
           // where "V.v" is an optional protocol version for each
-          // addr.  All preconnect or endpoint strings should be of
-          // the above form(s).
+          // addr.  All endpoint strings should be of the above
+          // form(s).
           //
           // Multiple sets of endpoint may be seperated by a semi-colon `;'.
           // For example:
           //
           //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
           //
-          // All preconnect or endpoint strings should be of the above form(s).
+          // All endpoint strings should be of the above form(s).
 
           this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR(current_arg)
                                      ACE_ENV_ARG_PARAMETER);
@@ -555,6 +555,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_LIB_TEXT("-ORBPreconnect"))))
         {
+#if 0
+          /*
+           *
+           *  TODO: Needs to go. Leaving it around for things to
+           *  settle down.
+           */
           // Get a string which describes the connections we want to
           // cache up-front, thus reducing the latency of the first call.
           //
@@ -574,6 +580,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           ACE_CString preconnections (ACE_TEXT_ALWAYS_CHAR(current_arg));
 
+
           if (this->orb_params ()->preconnects (preconnections) != 0)
             {
               ACE_ERROR ((LM_ERROR,
@@ -588,6 +595,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                   CORBA::COMPLETED_NO),
                                 -1);
             }
+#endif /*if 0*/
 
           // validate_connection() supports the same functionality as
           // the -ORBPreconnect option, and more.  Multiple
@@ -1034,11 +1042,18 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                         CORBA::COMPLETED_NO),
                       -1);
 
+#if 0
+  /*
+   *   TODO: No support for preconnect. Needs to be removed, when
+   *   things settle down.
+   *
+   */
   // Have the connector registry parse the preconnects.
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (
             this,
             this->orb_params ()->preconnects ());
+#endif /*if 0*/
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.

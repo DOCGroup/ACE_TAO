@@ -7,7 +7,7 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 
 ACE_RCSID (tao,

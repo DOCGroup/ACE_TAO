@@ -1,7 +1,7 @@
 // @(#) $Id$
 
 #include "Default_Acceptor_Filter.h"
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 
 ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
 

@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 #include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 

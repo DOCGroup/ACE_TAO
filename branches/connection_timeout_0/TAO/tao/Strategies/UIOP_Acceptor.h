@@ -23,7 +23,7 @@
 #define TAO_UIOP_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@
 #include "tao/GIOP_Message_Version.h"
 
 
-// TAO UIOP_Acceptor concrete call defination
+// TAO UIOP_Acceptor concrete call definition
 
 class TAO_Strategies_Export TAO_UIOP_Acceptor : public TAO_Acceptor
 {
