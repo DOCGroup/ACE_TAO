@@ -99,6 +99,7 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   (void) ACE_OS::memset ((void *) &this->inet_addr_,
                          0,
                          sizeof this->inet_addr_);
+  this->set((u_short)0,INADDR_ANY);
 }
 
 int
