@@ -70,33 +70,29 @@ TAO_SHMIOP_Handler_Base::TAO_SHMIOP_Handler_Base (ACE_Thread_Manager *t)
 
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_Handler_Base (t),
+    TAO_Connection_Handler (0),
     transport_ (this, 0),
     acceptor_factory_ (0),
-    orb_core_ (0),
-    tss_resources_ (0),
     refcount_ (1)
-
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core_ != 0);
+  ACE_ASSERT (this->orb_core () != 0);
 }
 
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                            CORBA::Boolean flag,
+                                                                            CORBA::Boolean lite_flag,
                                                                             void *)
   : TAO_SHMIOP_Handler_Base (orb_core),
+    TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (0),
-    orb_core_ (orb_core),
-    tss_resources_ (orb_core->get_tss_resources ()),
-    refcount_ (1),
-    lite_flag_ (flag)
+    refcount_ (1)
 {
-    if (lite_flag_)
+    if (lite_flag)
     {
       ACE_NEW (this->acceptor_factory_,
                TAO_GIOP_Message_Lite (orb_core));
@@ -116,29 +112,15 @@ TAO_SHMIOP_Server_Connection_Handler::~TAO_SHMIOP_Server_Connection_Handler (voi
 int
 TAO_SHMIOP_Server_Connection_Handler::open (void*)
 {
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-  int sndbufsize =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int rcvbufsize =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-
-  if (this->peer ().set_option (SOL_SOCKET,
-                                SO_SNDBUF,
-                                (void *) &sndbufsize,
-                                sizeof (sndbufsize)) == -1
-      && errno != ENOTSUP)
+  if (this->set_socket_option (this->peer (),
+                               this->orb_core ()->orb_params ()->sock_sndbuf_size (),
+                               this->orb_core ()->orb_params ()->sock_rcvbuf_size ())
+      == -1)
     return -1;
-  else if (this->peer ().set_option (SOL_SOCKET,
-                                     SO_RCVBUF,
-                                     (void *) &rcvbufsize,
-                                     sizeof (rcvbufsize)) == -1
-           && errno != ENOTSUP)
-    return -1;
-#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
 #if defined (TCP_NODELAY)
   int nodelay =
-    this->orb_core_->orb_params ()->nodelay ();
+    this->orb_core ()->orb_params ()->nodelay ();
 
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
@@ -146,11 +128,6 @@ TAO_SHMIOP_Server_Connection_Handler::open (void*)
                                 sizeof (nodelay)) == -1)
     return -1;
 #endif /* TCP_NODELAY */
-
-  (void) this->peer ().enable (ACE_CLOEXEC);
-  // Set the close-on-exec flag for that file descriptor. If the
-  // operation fails we are out of luck (some platforms do not support
-  // it and return -1).
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
@@ -222,11 +199,7 @@ TAO_SHMIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Remove the handle from the ORB Core's handle set so that it
       // isn't included in the set that is passed to the reactor upon
       // ORB destruction.
-      TAO_Server_Strategy_Factory *f =
-        this->orb_core_->server_factory ();
-
-      if (f->activate_server_connections () == 0)
-        (void) this->orb_core_->remove_handle (handle);
+      this->remove_handle (handle);
 
       this->peer().remove ();
       return TAO_SHMIOP_SVC_HANDLER::handle_close (handle, rm);
@@ -243,56 +216,8 @@ TAO_SHMIOP_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  // Inheriting the ORB_Core tss stuff from the parent thread.
-  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) SHMIOP_Server_Connection_Handler::svc begin\n")));
-
-  // Here we simply synthesize the "typical" event loop one might find
-  // in a reactive handler, except that this can simply block waiting
-  // for input.
-
-  ACE_Time_Value *max_wait_time = 0;
-  ACE_Time_Value timeout;
-  ACE_Time_Value current_timeout;
-  if (this->orb_core_->thread_per_connection_timeout (timeout))
-    {
-      current_timeout = timeout;
-      max_wait_time = &current_timeout;
-    }
-
-  while (!this->orb_core_->has_shutdown ()
-         && result >= 0)
-    {
-      result = handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
-
-      if (result == -1 && errno == ETIME)
-        {
-          // Ignore timeouts, they are only used to wake up and
-          // shutdown.
-          result = 0;
-
-          // Reset errno to make sure we don't trip over an old value
-          // of errno in case it is not reset when the recv() call
-          // fails if the socket has been closed.
-          errno = 0;
-        }
-
-      current_timeout = timeout;
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) SHMIOP_Server_Connection_Handler::svc - ")
-                    ACE_TEXT ("loop <%d>\n"), current_timeout.msec ()));
-    }
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) SHMIOP_Server_Connection_Handler::svc end\n")));
-
-  return result;
+  // Call the implementation here
+  return this->svc_i ();
 }
 
 int
@@ -308,7 +233,7 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   this->refcount_++;
 
   int result = this->acceptor_factory_->handle_input (this->transport (),
-                                                      this->orb_core_,
+                                                      this->orb_core (),
                                                       this->transport_.message_state_,
                                                       max_wait_time);
 
@@ -346,14 +271,14 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   // Steal the input CDR from the message state.
   TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (ms.cdr),
-                          this->orb_core_);
+                          this->orb_core ());
 
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
   result =
     this->acceptor_factory_->process_client_message (this->transport (),
-                                                     this->orb_core_,
+                                                     this->orb_core (),
                                                      input_cdr,
                                                      message_type);
   if (result != -1)
@@ -372,13 +297,12 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 TAO_SHMIOP_Client_Connection_Handler::
 TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
-                                      CORBA::Boolean flag)
+                                      CORBA::Boolean lite_flag)
   : TAO_SHMIOP_Handler_Base (t),
-    transport_ (this, orb_core),
-    orb_core_ (orb_core),
-    lite_flag_ (flag)
+    TAO_Connection_Handler (orb_core),
+    transport_ (this, orb_core)
 {
-  this->transport_.use_lite (lite_flag_);
+  this->transport_.use_lite (lite_flag);
 }
 
 TAO_SHMIOP_Client_Connection_Handler::~TAO_SHMIOP_Client_Connection_Handler (void)
@@ -390,32 +314,15 @@ TAO_SHMIOP_Client_Connection_Handler::open (void *)
 {
   // @@ TODO: This flags should be set using the RT CORBA policies...
 
-  // Here is where we could enable all sorts of things such as
-  // nonblock I/O, sock buf sizes, TCP no-delay, etc.
-
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-  int sndbufsize =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int rcvbufsize =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-
-  if (this->peer ().set_option (SOL_SOCKET,
-                                SO_SNDBUF,
-                                ACE_reinterpret_cast (void *, &sndbufsize),
-                                sizeof (sndbufsize)) == -1
-      && errno != ENOTSUP)
+  if (this->set_socket_option (this->peer (),
+                               this->orb_core ()->orb_params ()->sock_sndbuf_size (),
+                               this->orb_core ()->orb_params ()->sock_rcvbuf_size ())
+      == -1)
     return -1;
-  else if (this->peer ().set_option (SOL_SOCKET,
-                                     SO_RCVBUF,
-                                     ACE_reinterpret_cast (void *, &rcvbufsize),
-                                     sizeof (rcvbufsize)) == -1
-           && errno != ENOTSUP)
-    return -1;
-#endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
 #if defined (TCP_NODELAY)
   int nodelay =
-    this->orb_core_->orb_params ()->nodelay ();
+    this->orb_core ()->orb_params ()->nodelay ();
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,
@@ -424,11 +331,6 @@ TAO_SHMIOP_Client_Connection_Handler::open (void *)
                        ACE_TEXT ("NODELAY failed\n")),
                       -1);
 #endif /* TCP_NODELAY */
-
-  (void) this->peer ().enable (ACE_CLOEXEC);
-  // Set the close-on-exec flag for that file descriptor. If the
-  // operation fails we are out of luck (some platforms do not support
-  // it and return -1).
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
@@ -471,39 +373,19 @@ TAO_SHMIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_SHMIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                                    const void *)
+TAO_SHMIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                                    ACE_Time_Value *)
 {
-  //
-  // This method is called when buffering timer expires.
-  //
-
-  ACE_Time_Value *max_wait_time = 0;
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
-    this->orb_core_->stubless_relative_roundtrip_timeout ();
-
-  // Automatically release the policy
-  CORBA::Object_var auto_release = timeout_policy;
-
-  ACE_Time_Value max_wait_time_value;
-
-  // If max_wait_time is not zero then this is not the first attempt
-  // to send the request, the timeout value includes *all* those
-  // attempts.
-  if (timeout_policy != 0)
-    {
-      timeout_policy->set_time_value (max_wait_time_value);
-      max_wait_time = &max_wait_time_value;
-    }
+  ACE_NOTSUP_RETURN (-1);
+}
 
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
+int
+TAO_SHMIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &val,
+                                                    const void *ptr)
+{
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages (max_wait_time);
+  this->transport ()->send_buffered_messages (this->handle_timeout_i (val, ptr));
 
   return 0;
 }
@@ -556,19 +438,9 @@ TAO_SHMIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 int
 TAO_SHMIOP_Client_Connection_Handler::handle_cleanup (void)
 {
-  // Deregister this handler with the ACE_Reactor.
-  if (this->reactor ())
-    {
-      ACE_Reactor_Mask mask =
-        ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
-
-      // Make sure there are no timers.
-      this->reactor ()->cancel_timer (this);
-
-      // Remove self from reactor.
-      this->reactor ()->remove_handler (this, mask);
-    }
-
+  // Call the implementation.
+  this->handle_cleanup_i (this->reactor (),
+                          this);
   this->peer ().close ();
 
   return 0;
