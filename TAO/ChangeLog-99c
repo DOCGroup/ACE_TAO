@@ -1,3 +1,12 @@
+Fri Jul 16 15:51:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Profile.cpp:
+	  Fixed warning under egcs-2.95
+
+	* examples/Simple/echo/run_test.pl:
+	  Added $EXEPREFIX thanks to Russell L. Carter
+	  <rcarter@consys.com> for pointing this out
+
 Fri Jul 16 15:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* */Makefile:
