@@ -137,12 +137,7 @@ Compiling:
 		! Note: Make sure to recompile RtecEventChannelAdmin.idl!
 
 	Supplier: 
-
-		cp ../NavWeap.idl .
-
 		make
-
-
 
 
     DOVE Browser: 
@@ -158,8 +153,6 @@ Compiling:
 
 
 	DOVE MIB:
-		cp ../NavWeap.idl .
-			
 		make
 
        
