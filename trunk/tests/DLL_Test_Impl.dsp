@@ -155,6 +155,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\DLL_Test_Impl.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
