@@ -1,3 +1,19 @@
+Wed May  5 02:20:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/Environment.{h,i,cpp}:
+	  Added _var and _out classes.
+
+	* tao/Any.{h,i,cpp}:
+	  Edited the comment for the Any_var extraction
+	  operators, added the Any_out -> operator, which
+	  was missing, and made a cosmetic change to Any.cpp.
+
+	* tao/Typecode.{h,i}:
+	  Moved the operator assigning a TypeCode_var to a
+	  TypeCode_out to private: and removed the 
+	  implementation - it's not allowed.
+
 Tue May  4 23:50:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
@@ -246,9 +262,10 @@ Mon May  3 17:19:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Any.{h,i}:
           Added insertion and extraction operators for Any_var.
-          CORBA spec requires these for all extraction and
-          copying insertion operators defined as members of
-          Any.
+          CORBA spec requires these for all copying insertion 
+	  operators defined as members of Any. The extraction
+	  operators are there as a tip of the hat to user of
+	  other ORBs that may be used to them.
 
 Mon May  3 16:09:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
