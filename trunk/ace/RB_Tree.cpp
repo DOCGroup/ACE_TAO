@@ -153,7 +153,7 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
           T *item = &(current->right ()->item ());
           current->right ()->parent (current);
           RB_rebalance (current->right ());
-          root_->color (BLACK);
+          root_->color (RB_Tree_Node<KEY, T>::BLACK);
           return item;
         }
         else
@@ -186,7 +186,7 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
           T *item = &(current->left ()->item ());
           current->left ()->parent (current);
           RB_rebalance (current->left ());
-          root_->color (BLACK);
+          root_->color (RB_Tree_Node<KEY, T>::BLACK);
           return item;
         }
         else
@@ -210,7 +210,7 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
     root_ = new RB_Tree_Node<KEY, T> (k, t);
     if (root_)
     {
-      root_->color (BLACK);
+      root_->color (RB_Tree_Node<KEY, T>::BLACK);
       return &(root_->item ());
     }
     else
@@ -234,7 +234,7 @@ template <class KEY, class T>  int
 RB_Tree<KEY, T>::remove (const KEY &k)
 {
   // find a matching node, if there is one
-  RB_Tree_Node<KEY, T> *z = find_node (k);
+  RB_Tree_Node<KEY, T> *x, *z = find_node (k);
 
   if ((z) && (! this->lessthan (z->key (), k))
       && (! this->lessthan (k, z->key ())))
@@ -422,11 +422,11 @@ RB_Tree<KEY, T>::RB_delete_fixup (RB_Tree_Node<KEY, T> * x)
           w->left ()->color (RB_Tree_Node<KEY, T>::BLACK);
           w->color (RB_Tree_Node<KEY, T>::RED);
           RB_rotate_right (w);
-          w = x->parent->right ();
+          w = x->parent ()->right ();
         }
-        w->color (x->parent->color ());
-        x->parent->color (RB_Tree_Node<KEY, T>::BLACK);
-        w->right->color (RB_Tree_Node<KEY, T>::BLACK);
+        w->color (x->parent ()->color ());
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        w->right ()->color (RB_Tree_Node<KEY, T>::BLACK);
         RB_rotate_left (x->parent ());
         x = root_;
       }
@@ -454,11 +454,11 @@ RB_Tree<KEY, T>::RB_delete_fixup (RB_Tree_Node<KEY, T> * x)
           w->right ()->color (RB_Tree_Node<KEY, T>::BLACK);
           w->color (RB_Tree_Node<KEY, T>::RED);
           RB_rotate_left (w);
-          w = x->parent->left ();
+          w = x->parent ()->left ();
         }
-        w->color (x->parent->color ());
-        x->parent->color (RB_Tree_Node<KEY, T>::BLACK);
-        w->left->color (RB_Tree_Node<KEY, T>::BLACK);
+        w->color (x->parent ()->color ());
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        w->left ()->color (RB_Tree_Node<KEY, T>::BLACK);
         RB_rotate_right (x->parent ());
         x = root_;
       }
@@ -527,7 +527,8 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
 {
   RB_Tree_Node<KEY, T> *y = 0;
 
-  while ((x) && (x->parent ()) && (x->parent ()->color () == RED))
+  while ((x) && (x->parent ())
+         && (x->parent ()->color () == RB_Tree_Node<KEY, T>::RED))
   {
     if (! x->parent ()->parent ())
     {
@@ -541,12 +542,12 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
     if (x->parent () == x->parent ()->parent ()->left ())
     {
       y = x->parent ()->parent ()->right ();
-      if (y && (y->color () == RED))
+      if (y && (y->color () == RB_Tree_Node<KEY, T>::RED))
       {
         // handle case 1 (see CLR book, pp. 269)
-        x->parent ()->color (BLACK);
-        y->color (BLACK);
-        x->parent ()->parent ()->color (RED);
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        y->color (RB_Tree_Node<KEY, T>::BLACK);
+        x->parent ()->parent ()->color (RB_Tree_Node<KEY, T>::RED);
         x = x->parent ()->parent ();
       }
       else
@@ -559,20 +560,20 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
         }
 
         // handle case 3 (see CLR book, pp. 269)
-        x->parent ()->color (BLACK);
-        x->parent ()->parent ()->color (RED);
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        x->parent ()->parent ()->color (RB_Tree_Node<KEY, T>::RED);
         RB_rotate_right (x->parent ()->parent ());
       }
     }
     else
     {
       y = x->parent ()->parent ()->left ();
-      if (y && (y->color () == RED))
+      if (y && (y->color () == RB_Tree_Node<KEY, T>::RED))
       {
         // handle case 1 (see CLR book, pp. 269)
-        x->parent ()->color (BLACK);
-        y->color (BLACK);
-        x->parent ()->parent ()->color (RED);
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        y->color (RB_Tree_Node<KEY, T>::BLACK);
+        x->parent ()->parent ()->color (RB_Tree_Node<KEY, T>::RED);
         x = x->parent ()->parent ();
       }
       else
@@ -585,8 +586,8 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
         }
 
         // handle case 3 (see CLR book, pp. 269)
-        x->parent ()->color (BLACK);
-        x->parent ()->parent ()->color (RED);
+        x->parent ()->color (RB_Tree_Node<KEY, T>::BLACK);
+        x->parent ()->parent ()->color (RB_Tree_Node<KEY, T>::RED);
         RB_rotate_left (x->parent ()->parent ());
       }
     }
