@@ -3,14 +3,14 @@
 
 // Containers.i
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Bounded_Stack<T>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::is_empty");
   return this->top_ == 0;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Bounded_Stack<T>::is_full (void) const
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::is_full");
@@ -64,24 +64,24 @@ ACE_Bounded_Stack<T>::size (void) const
 
 //----------------------------------------
 
-template <class T, size_t SIZE> ACE_INLINE int 
-ACE_Fixed_Stack<T, SIZE>::is_empty (void) const
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Stack<T, ACE_SIZE>::is_empty (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::is_empty");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::is_empty");
   return this->top_ == 0;
 }
 
-template <class T, size_t SIZE> ACE_INLINE int 
-ACE_Fixed_Stack<T, SIZE>::is_full (void) const
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Stack<T, ACE_SIZE>::is_full (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::is_full");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::is_full");
   return this->top_ >= this->size_;
 }
 
-template <class T, size_t SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, SIZE>::push (const T &new_item)
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Stack<T, ACE_SIZE>::push (const T &new_item)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::push");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::push");
   if (this->is_full () == 0)
     {
       this->stack_[this->top_++] = new_item;
@@ -91,10 +91,10 @@ ACE_Fixed_Stack<T, SIZE>::push (const T &new_item)
     return -1;
 }
 
-template <class T, size_t SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, SIZE>::pop (T &item)
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Stack<T, ACE_SIZE>::pop (T &item)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::pop");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::pop");
   if (this->is_empty () == 0)
     {
       item = this->stack_[--this->top_];
@@ -104,10 +104,10 @@ ACE_Fixed_Stack<T, SIZE>::pop (T &item)
     return -1;
 }
 
-template <class T, size_t SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, SIZE>::top (T &item) const
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Stack<T, ACE_SIZE>::top (T &item) const
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::top");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::top");
   if (this->is_empty () == 0)
     {
       item = this->stack_[this->top_ - 1];
@@ -117,13 +117,13 @@ ACE_Fixed_Stack<T, SIZE>::top (T &item) const
     return -1;
 }
 
-template <class T, size_t SIZE> ACE_INLINE size_t
-ACE_Fixed_Stack<T, SIZE>::size (void) const
+template <class T, size_t ACE_SIZE> ACE_INLINE size_t
+ACE_Fixed_Stack<T, ACE_SIZE>::size (void) const
 {
   return this->size_;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Stack<T>::is_empty (void) const
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::is_empty");
@@ -143,7 +143,7 @@ ACE_Unbounded_Stack<T>::top (T &item) const
     return -1;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Stack<T>::is_full (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Stack<T>::is_full");
@@ -156,7 +156,7 @@ ACE_Unbounded_Stack<T>::size (void) const
   return this->cur_size_;
 }
 
-// --- 
+// ---
 
 template <class T> ACE_INLINE size_t
 ACE_Unbounded_Queue<T>::size (void) const
@@ -164,62 +164,62 @@ ACE_Unbounded_Queue<T>::size (void) const
   return this->cur_size_;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Queue<T>::is_empty (void) const
 {
   //  ACE_TRACE ("ACE_Unbounded_Queue<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Queue<T>::is_full (void) const
 {
   //  ACE_TRACE ("ACE_Unbounded_Queue<T>::is_full");
   return 0; // We should implement a "node of last resort for this..."
 }
 
-// --- 
+// ---
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Set<T>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Unbounded_Set<T>::is_full (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::is_full");
   return 0; // We should implement a "node of last resort for this..."
 }
 
-// --- 
+// ---
 
-template <class T, size_t SIZE> ACE_INLINE int 
-ACE_Fixed_Set<T, SIZE>::is_empty (void) const
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Set<T, ACE_SIZE>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::is_empty");
   return this->cur_size_ == 0;
 }
 
-template <class T, size_t SIZE> ACE_INLINE int 
-ACE_Fixed_Set<T, SIZE>::is_full (void) const
+template <class T, size_t ACE_SIZE> ACE_INLINE int
+ACE_Fixed_Set<T, ACE_SIZE>::is_full (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::is_full");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::is_full");
   return this->cur_size_ == this->max_size_;
 }
 
-// --- 
+// ---
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Bounded_Set<T>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::is_empty");
   return this->cur_size_ == 0;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Bounded_Set<T>::is_full (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::is_full");
@@ -228,7 +228,7 @@ ACE_Bounded_Set<T>::is_full (void) const
 
 // --
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet_Iterator<T>::first (void)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::first");
@@ -237,7 +237,7 @@ ACE_Ordered_MultiSet_Iterator<T>::first (void)
   return (current_ ? 1 : 0);
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet_Iterator<T>::last (void)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::last");
@@ -246,7 +246,7 @@ ACE_Ordered_MultiSet_Iterator<T>::last (void)
   return (current_ ? 1 : 0);
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet_Iterator<T>::advance (void)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::advance");
@@ -256,7 +256,7 @@ ACE_Ordered_MultiSet_Iterator<T>::advance (void)
   return (current_ ? 1 : 0);
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet_Iterator<T>::retreat (void)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::retreat");
@@ -284,7 +284,7 @@ ACE_Ordered_MultiSet_Iterator<T>::dump (void) const
 
 // --
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet<T>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::is_empty");
@@ -297,4 +297,3 @@ ACE_Ordered_MultiSet<T>::size (void) const
 // ACE_TRACE ("ACE_Unbounded_Set<T>::size");
   return this->cur_size_;
 }
-

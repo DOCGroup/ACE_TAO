@@ -72,34 +72,34 @@ ACE_Bounded_Stack<T>::~ACE_Bounded_Stack (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Stack)
 
-template <class T, size_t SIZE> void
-ACE_Fixed_Stack<T, SIZE>::dump (void) const
+template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Stack<T, ACE_SIZE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::dump");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::dump");
 }
 
-template<class T, size_t SIZE>
-ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack (void)
+template<class T, size_t ACE_SIZE>
+ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (void)
   : top_ (0),
-    size_ (SIZE)
+    size_ (ACE_SIZE)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
 }
 
-template<class T, size_t SIZE>
-ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s)
+template<class T, size_t ACE_SIZE>
+ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
   : top_ (s.top_),
     size_ (s.size_)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
   for (size_t i = 0; i < this->top_; i++)
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T, size_t SIZE> void
-ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
+template<class T, size_t ACE_SIZE> void
+ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::operator=");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::operator=");
   if (&s != this)
     {
       this->top_ = s.top_;
@@ -109,10 +109,10 @@ ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
     }
 }
 
-template<class T, size_t SIZE>
-ACE_Fixed_Stack<T, SIZE>::~ACE_Fixed_Stack (void)
+template<class T, size_t ACE_SIZE>
+ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack (void)
 {
-  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::~ACE_Fixed_Stack");
+  ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack");
 
   delete [] this->stack_;
 }
@@ -935,8 +935,8 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
 
-template <class T, size_t SIZE> size_t
-ACE_Fixed_Set<T, SIZE>::size (void) const
+template <class T, size_t ACE_SIZE> size_t
+ACE_Fixed_Set<T, ACE_SIZE>::size (void) const
 {
   return this->cur_size_;
 }
@@ -955,21 +955,21 @@ ACE_Unbounded_Set<T>::size (void) const
   return this->cur_size_;
 }
 
-template <class T, size_t SIZE> void
-ACE_Fixed_Set<T, SIZE>::dump (void) const
+template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Set<T, ACE_SIZE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::dump");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::dump");
 }
 
-template <class T, size_t SIZE>
-ACE_Fixed_Set<T, SIZE>::~ACE_Fixed_Set (void)
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set<T, ACE_SIZE>::~ACE_Fixed_Set (void)
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::~ACE_Fixed_Set");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::~ACE_Fixed_Set");
   this->cur_size_ = 0;
 }
 
-template <class T, size_t SIZE>
-ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &fs)
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
   : cur_size_ (fs.cur_size_)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::ACE_Fixed_Set");
@@ -978,8 +978,8 @@ ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &fs)
     this->search_structure_[i] = fs.search_structure_[i];
 }
 
-template <class T, size_t SIZE> void
-ACE_Fixed_Set<T, SIZE>::operator= (const ACE_Fixed_Set<T, SIZE> &fs)
+template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::operator=");
 
@@ -992,20 +992,20 @@ ACE_Fixed_Set<T, SIZE>::operator= (const ACE_Fixed_Set<T, SIZE> &fs)
     }
 }
 
-template <class T, size_t SIZE>
-ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (void)
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (void)
   : cur_size_ (0),
-    max_size_ (SIZE)
+    max_size_ (ACE_SIZE)
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set");
   for (size_t i = 0; i < this->max_size_; i++)
     this->search_structure_[i].is_free_ = 1;
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set<T, SIZE>::find (const T &item) const
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::find");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::find");
 
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item
@@ -1015,11 +1015,11 @@ ACE_Fixed_Set<T, SIZE>::find (const T &item) const
   return -1;
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set<T, SIZE>::insert (const T &item)
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
 
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::insert");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::insert");
   int first_free = -1;   // Keep track of first free slot.
   size_t i;
 
@@ -1055,10 +1055,10 @@ ACE_Fixed_Set<T, SIZE>::insert (const T &item)
     }
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set<T, SIZE>::remove (const T &item)
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
 {
-  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::remove");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::remove");
 
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item)
@@ -1088,25 +1088,25 @@ ACE_Fixed_Set<T, SIZE>::remove (const T &item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Iterator)
 
-template <class T, size_t SIZE> void
-ACE_Fixed_Set_Iterator<T, SIZE>::dump (void) const
+template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::dump");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump");
 }
 
-template <class T, size_t SIZE>
-ACE_Fixed_Set_Iterator<T, SIZE>::ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, SIZE> &s)
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s)
   : s_ (s),
     next_ (-1)
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::ACE_Fixed_Set_Iterator");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Iterator");
   this->advance ();
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set_Iterator<T, SIZE>::advance (void)
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance (void)
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::advance");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance");
 
   for (++this->next_;
        ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
@@ -1117,27 +1117,27 @@ ACE_Fixed_Set_Iterator<T, SIZE>::advance (void)
   return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set_Iterator<T, SIZE>::first (void)
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::first (void)
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::first");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::first");
 
   next_ = -1;
   return this->advance ();
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set_Iterator<T, SIZE>::done (void) const
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done (void) const
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::done");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done");
 
   return ACE_static_cast (size_t, this->next_) >= this->s_.cur_size_;
 }
 
-template <class T, size_t SIZE> int
-ACE_Fixed_Set_Iterator<T, SIZE>::next (T *&item)
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next (T *&item)
 {
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::next");
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next");
   if (ACE_static_cast (size_t, this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
