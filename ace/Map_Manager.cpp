@@ -536,7 +536,8 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::current_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::current_size");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, (size_t) -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 
+                          ACE_static_cast(size_t, -1));
   return this->cur_size_;
 }
 
@@ -544,7 +545,8 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, (size_t) -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 
+                          ACE_static_cast(size_t, -1));
   return this->total_size_;
 }
 
@@ -578,7 +580,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> 
 
   if (this->map_man_.search_structure_ != 0 
       // Note that this->next_ is never negative at this point...
-      && size_t (this->next_) < this->map_man_.cur_size_)
+      && ACE_static_cast(size_t, this->next_) < this->map_man_.cur_size_)
     {
       mm = &this->map_man_.search_structure_[this->next_];
       return 1;
@@ -595,7 +597,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 
   return this->map_man_.search_structure_ == 0
     // Note that this->next_ is never negative at this point...
-    || size_t (this->next_) >= this->map_man_.cur_size_;
+    || ACE_static_cast(size_t, this->next_) >= this->map_man_.cur_size_;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -605,11 +607,11 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_.lock_, -1);
 
   for (++this->next_;
-       size_t (this->next_) < this->map_man_.cur_size_
+       ACE_static_cast(size_t, this->next_) < this->map_man_.cur_size_
          && this->map_man_.search_structure_[this->next_].is_free_;
        this->next_++)
     continue;
-  return size_t (this->next_) < this->map_man_.cur_size_;
+  return ACE_static_cast(size_t, this->next_) < this->map_man_.cur_size_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
