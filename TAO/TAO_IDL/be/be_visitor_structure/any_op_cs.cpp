@@ -104,7 +104,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
       << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any._tao_get_cdr ());"
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
       << be_nl
       << "if (stream.decode (" << node->tc_name ()
       << ", _tao_elem, 0, ACE_TRY_ENV)" << be_nl

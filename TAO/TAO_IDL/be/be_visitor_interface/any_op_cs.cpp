@@ -85,7 +85,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "if (!type->equal (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any._tao_get_cdr ());"
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
       << be_nl
       << "CORBA::Object_var _tao_obj_var;" << be_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl

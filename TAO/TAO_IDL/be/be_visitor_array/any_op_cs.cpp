@@ -91,7 +91,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "_tao_elem.out () = " << node->name () << "_alloc ();" << be_nl
       << "if (!_tao_elem.in ()) return 0;" << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any._tao_get_cdr ());"
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
       << be_nl
       << "if (stream.decode (" << node->tc_name ()
       << ", _tao_elem.inout (), 0, ACE_TRY_ENV)" << be_nl
