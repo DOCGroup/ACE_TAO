@@ -197,16 +197,18 @@ private:
  *
  * Keep the relevant information to perform throughput and latency
  * analysis, including:
- * 1) Minimum, Average and Maximum latency
- * 2) Jitter for the latency
- * 3) Linear regression for throughput
- * 4) Accumulate results from several samples to obtain aggregated
- *    results, across several threads or experiments.
+ * <OL>
+ * <LI> Minimum, Average and Maximum latency</LI>
+ * <LI> Jitter for the latency</LI>
+ * <LI> Linear regression for throughput</LI>
+ * <LI> Accumulate results from several samples to obtain aggregated
+ *    results, across several threads or experiments.</LI>
+ * </OL>
  *
- * @TODO: The idea behind this class was to use linear regression to
- *        determine if the throughput was linear or exhibited jitter.
- *        Unfortunately it never worked quite right, so only average
- *        throughput is computed.
+ * @todo The idea behind this class was to use linear regression to
+ *       determine if the throughput was linear or exhibited jitter.
+ *       Unfortunately it never worked quite right, so only average
+ *       throughput is computed.
  */
 class ACE_Export ACE_Throughput_Stats : public ACE_Basic_Stats
 {
