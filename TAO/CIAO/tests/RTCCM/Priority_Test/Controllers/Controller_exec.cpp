@@ -5,6 +5,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include "ace/Env_Value_T.h"
 
 /// Default constructor.
 MyImpl::Controller_exec_i::Controller_exec_i ()

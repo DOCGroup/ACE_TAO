@@ -46,6 +46,7 @@ PTImpl::Pulser::start (CORBA::Long hertz)
   if (hertz == 0 || this->active_ != 0)        // Not valid
     return -1;
 
+  this->active_ = 1;
   long usec = 1000000 / hertz;
 
   this->tid_ = this->reactor ()->schedule_timer (this,
@@ -53,7 +54,6 @@ PTImpl::Pulser::start (CORBA::Long hertz)
                                                  ACE_Time_Value (0, usec),
                                                  ACE_Time_Value (0, usec));
 
-  this->active_ = 1;
   return 0;
 }
 
@@ -62,10 +62,8 @@ PTImpl::Pulser::stop (void)
 {
   if (this->active_ == 0)       // Not valid.
     return -1;
-
-  this->reactor ()->cancel_timer (this);
-
-  this->active_ = 0;
+  else
+    this->active_ = 0;
   return 0;
 }
 
@@ -93,13 +91,10 @@ int
 PTImpl::Pulser::handle_timeout (const ACE_Time_Value &,
                                        const void *)
 {
-  this->pulser_callback_->pulse ();
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
-//               this,
-//               tv.sec (),
-//               tv.usec ()));
+  if (this->active_ == 0)
+    this->reactor ()->cancel_timer (this);
+  else
+    this->pulser_callback_->pulse ();
 
   return 0;
 }
