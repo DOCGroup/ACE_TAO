@@ -1,3 +1,10 @@
+Sat May 27 20:55:24 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/test_config.h:
+
+	  Added missing include for "ace/Log_Msg.h."  This fixes a
+	  compile-time error from Sun C++ 5.0.
+
 Sat May 27 20:41:14 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Hash_Map_Manager_T.h:
