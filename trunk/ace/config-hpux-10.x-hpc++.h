@@ -113,6 +113,7 @@
 // If being compiled without exceptions though (+noeh), it doesn't.
 #  if defined (ACE_HAS_EXCEPTIONS)
 #    define ACE_NEW_THROWS_EXCEPTIONS
+#    define ACE_HAS_NEW_NOTHROW
 #  endif /* ACE_HAS_EXCEPTIONS */
 
 #endif /* __cplusplus < 199707L */
