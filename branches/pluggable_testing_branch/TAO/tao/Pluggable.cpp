@@ -135,7 +135,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (ior_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // No colon ':' in the IOR!
     }
   else
@@ -165,7 +165,7 @@ TAO_Connector::make_mprofile (const char *string,
   // Tell the MProfile object how many Profiles it should hold.
   if (mprofile.set (profile_count) != 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Error while setting the MProfile size!
     }
 
@@ -192,7 +192,7 @@ TAO_Connector::make_mprofile (const char *string,
     }
   else
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Problem in IOR between protocol prefix and double slash "//"
     }
 
@@ -260,7 +260,7 @@ TAO_Connector::make_mprofile (const char *string,
                                   profile,
                                   ACE_TRY_ENV) != 0)
             {
-              ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
               // Failure:  Problem during profile creation
             }
 
@@ -269,14 +269,14 @@ TAO_Connector::make_mprofile (const char *string,
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) != 0)
             {
-              ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+          ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
           // Unable to seperate endpoints
         }
     }

@@ -1448,7 +1448,7 @@ CORBA_ORB::string_to_object (const char *str,
       //    call, saving precious microseconds in an area of the code
       //    that is invoked only once ;-)
 
-      TAO_MProfile mprofile (1);
+      TAO_MProfile mprofile (0);
       // It is safe to declare this on the stack since the contents of
       // mprofile get copied.
 
@@ -1457,7 +1457,7 @@ CORBA_ORB::string_to_object (const char *str,
                                                                  ACE_TRY_ENV)
           != 0)
         {
-          ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Object::_nil ());
+          ACE_THROW_RETURN (CORBA::INITIALIZE (), CORBA::Object::_nil ());
         }
 
       // Now make the TAO_Stub.
@@ -1823,7 +1823,7 @@ CORBA::instance (void)
           // Note that CORBA::ORB_init() will also acquire the static
           // lock, but that's ok since it's a recursive lock.
           CORBA::Environment ACE_TRY_ENV;
-          CORBA::instance_ = CORBA::ORB_init (argc, argv, "",
+          CORBA::instance_ = CORBA::ORB_init (argc, argv, "default_orb",
                                               ACE_TRY_ENV);
         }
     }
