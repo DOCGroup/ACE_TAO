@@ -65,6 +65,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           // Behaved synchronously, reiterate
           continue;
         case JAWS_IO_Handler::READ_ERROR:
+        case JAWS_IO_Handler::READ_ERROR_A:
           return -1;
         default:
           // This needs to be a value that tells the framework that
