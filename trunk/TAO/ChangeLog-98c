@@ -1,3 +1,16 @@
+Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/On_Demand_Activation/run_test.pl: Added a perl script
+ 	  that makes it easier to run this test.
+
+	* tests/POA/On_Demand_Activation/svc.conf:  Removed this file.
+	
+	* tests/POA/On_Demand_Activation/server.cpp: Added the ability to
+ 	  write IORs to files.
+	
+	* TAO_IDL/be/be_decl.cpp (compute_repoID): Add the "/" only if
+ 	  there is a prefix.
+
 Wed Sep 10 13:14:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
