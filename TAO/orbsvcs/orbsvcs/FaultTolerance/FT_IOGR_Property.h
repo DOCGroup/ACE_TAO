@@ -26,6 +26,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
+#include "fault_tol_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
