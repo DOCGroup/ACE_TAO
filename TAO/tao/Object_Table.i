@@ -30,7 +30,9 @@ ACE_INLINE PortableServer::ObjectId *
 TAO_Object_Table_Impl::create_object_id (PortableServer::Servant servant,
                                          CORBA::Environment &env)
 {
-  // This function is supposed to always fail.
+  // This function is supposed to always fail.  Only
+  // TAO_Active_Demux_ObjTable::create_object_id is supposed to
+  // succeed.
 
   ACE_UNUSED_ARG (servant);
 
