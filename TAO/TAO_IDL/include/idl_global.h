@@ -67,9 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
+// May of them could be forward declared.. 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
+#include "ace/Synch_T.h"
 #include "idl_bool.h"
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
