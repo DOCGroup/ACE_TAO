@@ -73,7 +73,7 @@ TAO_SSLIOP_X509_var::operator= (const ::TAO_SSLIOP_X509_var &p)
       this->x509_ = TAO_SSLIOP_X509::_duplicate (p.ptr ());
     }
 
-  return *this;  
+  return *this;
 }
 
 ACE_INLINE TAO_SSLIOP_X509_var &
