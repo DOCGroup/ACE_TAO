@@ -88,7 +88,7 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, iorinterceptor, objrefte
   }
 }
 
-project(Deployment_stub) : taolib_with_idl, valuetype {
+project(Deployment_stub) : taolib_with_idl, valuetype, ciao_server_dnc {
   sharedname   =  Deployment_stub
 
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
