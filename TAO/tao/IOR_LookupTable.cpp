@@ -71,6 +71,28 @@ TAO_IOR_LookupTable::add_ior (const ACE_CString &object_name,
 }
 
 int
+TAO_IOR_LookupTable::del_ior (const ACE_CString &object_name)
+{
+  // Remove the entry
+  switch (this->table_.unbind (object_name))
+    {
+    case -1: // Failure.
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) Unable to unbind <%s>\n",
+                    object_name.c_str ()));
+      return -1;
+    }
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) IOR Table <%s> removed\n",
+                object_name.c_str ()));
+
+  return 0;
+}
+
+int
 TAO_IOR_LookupTable::find_ior (const ACE_CString &object_name,
                                ACE_CString &ior)
 {
