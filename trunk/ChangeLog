@@ -1,3 +1,11 @@
+Wed Oct 20 10:42:22 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ftserverorb.mpb:
+
+          The ftserverorb base project needs to inherit from portablegroup
+          to get the required settings (since TAO_FT_ServerORB depends on
+          TAO_PortableGroup and TAO_Messaging).
+
 Tue Oct 19 20:42:06 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.inl:
