@@ -5,8 +5,8 @@ module BasicSP
 {
   component BMDisplay
     {
-      uses ReadData dataIn;
-      consumes  DataAvailable inDataAvailable;
+      consumes  DataAvailable data_ready;
+      uses ReadData comp_data;
     };
 
   home BMDisplayHome manages BMDisplay

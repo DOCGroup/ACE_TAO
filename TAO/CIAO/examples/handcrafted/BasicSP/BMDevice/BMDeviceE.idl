@@ -27,8 +27,8 @@ module BasicSP
   local interface CCM_BMDevice
     : Components::EnterpriseComponent
   {
-    CCM_ReadData get_data_out ();
-    void push_timeout20 (in TimeOut ev);
+    CCM_ReadData get_data_read ();
+    void push_timeout (in TimeOut ev);
   };
 
   /** Context Interface
@@ -40,7 +40,7 @@ module BasicSP
   local interface CCM_BMDevice_Context
   : Components::SessionContext
   {
-    void push_out_data (in DataAvailable ev);
+    void push_data_available (in DataAvailable ev);
   };
 
   local interface CCM_BMDeviceHomeExplicit
@@ -55,10 +55,10 @@ module BasicSP
   };
 
   local interface CCM_BMDeviceHome
-    : CCM_NavDisplayHomeExplicit,
-      CCM_NavDisplayHomeImplicit
+    : CCM_BMDeviceHomeExplicit,
+      CCM_BMDeviceHomeImplicit
   {
   };
 };
 
-#endif /* NAVDISPLAYE_IDL */
+#endif /* CIAO_BMDEVICEE_IDL */

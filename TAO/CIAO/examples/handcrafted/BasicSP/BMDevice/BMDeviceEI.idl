@@ -19,7 +19,8 @@ module BasicSP
    * @interface BMDevice_Exec
    */
   local interface BMDevice_Exec :
-    CCM_BM_Device,
+    CCM_BMDevice,
+    CCM_ReadData,
     Components::SessionComponent
   {
   };
