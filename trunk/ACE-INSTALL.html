@@ -153,9 +153,34 @@ try to help you fix the problems.
       you don't have this patch, the sv* commands for compiling
       and linking will not be present on the system.<P>
 
-      If you are using AIX 4.2.1 or later, there is no patch needed;
+      If you are using AIX 4.2.1 or later, this patch isn't needed;
       the dynamic library APIs are included in the base operating
-      system.<P>
+      system.<p> 
+
+      However, another patch may be needed.  Thanks to
+      Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt; for submitting
+      the following useful information.<p>
+
+      When building on AIX 4.2.1, using the xlC V3.1 compilers, you may
+      get the following error when building the ACE shared library.<p>
+      <pre>
+makeC++SharedLib_r -p 0 -o libACE.so  -bI:/lib/pse.exp  -L/usr/local/src/ACE_wra
+ppers/ace -L./ -ltli_r -ldl libACE.a
+ld: 0711-317 ERROR: Undefined symbol: .__CurrentException
+ld: 0711-345 Use the -bloadmap or -bnoquiet option to obtain more information.
+make: *** [libACE.so] Error 8
+      </pre>
+
+      To fix this error, you need a patch to the supporting xlC related
+      libraries.  To obtain this patch, go to the
+      <a href="http://service.software.ibm.com/support/rs6000">
+      IBM public patch website</a>, and retrieve the patch
+      PTF U453697, or its successor, for xlC.<p>
+
+      You may wish to retrieve this patch with the fixdist tool, also
+      available at the website.  Installation of this patch will install
+      patched versions of the C++ libraries, which correctly define this
+      symbol.<p>
 
       BTW, here's a technique from Rob Jordan &lt<A
       HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
@@ -803,7 +828,7 @@ card.  This is one method:<P>
       MS Loopback Adapter<P>
 </OL>
 
-<B>ALPHA CONFIGURATIONS</B><P>
+<B>ALPHA CONFIGURATIONS</B>
 
 <P>Many project files already contain Alpha NT configurations.  For those that
 do not, follow these steps to add them.</P>
@@ -1277,7 +1302,7 @@ $ACE_ROOT, and then invoke the top-level Makefile with the
 % mkdir build-SunOS5
 % cd build-SunOS5
 % make -f ../Makefile clone
-% (cd ace; echo "\#include "ace/config-sunos5.5-g++.h" > config.h)
+% (cd ace; echo "\#include "ace/config-sunos5.5-g++.h" &gt; config.h)
 % (cd include/makeincludes; ln -s platform_sunos5-g++.h platform_macros.GNU)
 % setenv ACE_ROOT $cwd
 % make
@@ -1379,7 +1404,7 @@ specific platforms, e.g., debug=1 opt=1 is supported by g++ but
 not all other C++ compilers.<P>
 
 If you use Purify or Quantify:  purify or quantify <strong>must</strong>
-be on your <code>PATH</strong>.  By default, ACE puts the Purify/Quantify
+be on your <code>PATH</code>.  By default, ACE puts the Purify/Quantify
 caches below <code>/tmp</code>.  To override that, set the
 <code>PURE_CACHE_BASE_DIR</code> variable, either in your environment
 or on the <code>make</code> make command line, to the destination
