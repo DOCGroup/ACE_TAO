@@ -4,411 +4,411 @@ Thu Apr 17 16:15:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  follow.
 
 	Wed Mar 26 08:00:11 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Added check for the fgetwc() function.
-	
+
 	  * m4/config_h.m4 (ACE_LACKS_FGETWC):
-	
+
 	    Added autoheader template for this macro.
-	
+
 	Tue Mar 25 08:33:55 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Call the AC_PROG_EGREP macro to make sure the $EGREP shell
 	    variable is set.
-	
+
 	Tue Mar 25 08:22:03 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * m4/ace.m4:
 	  * m4/compiler.m4:
 	  * m4/platform.m4:
-	
+
 	    Applied Steve's change below to the remaining 'test -n/-z
 	    "$GXX"' instances.  Addresses some problems in non-GNU compiler
 	    builds.
-	
+
 	    Replaced all instances "egrep" with the `configure' script
 	    defined "$EGREP".  This improves the `configure' script's
 	    portability.
-	
+
 	Fri Mar 21 23:17:26 2003  Steve Huston  <shuston@riverace.com>
-	
+
 	  * configure.ac: Changed <test -n "$GXX"> to <test "$GXX" = yes> to
 	    work when GXX is set to no, not nul.
-	
+
 	Wed Mar 19 11:29:25 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac (ACE_HAS_POSIX_GETPWNAM_R):
-	
+
 	    Only define this macro if the user hasn't disabled reentrant
 	    function support.
-	
+
 	Wed Mar 19 11:10:50 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    If reentrant functions are enabled by the user and detected by
 	    the `configure' script, make sure "_REENTRANT" is added to the
 	    preprocessor flags.  [Bug 411]
-	
+
 	    Added test for ACE_HAS_POSIX_GETPWNAM_R macro.  Fixes problems
 	    on Linux when threading is disabled.  [Bug 914]
-	
+
 	    The restartable system calls test was re-enabled in earlier
 	    commits.  [Bug 275]
-	
+
 	  * m4/compiler.m4 (OCXXFLAGS):
-	
+
 	    Added missing HP-UX aCC compiler optimization flag.
-	
+
 	  * m4/config_h.m4 (ACE_HAS_POSIX_GETPWNAM_R):
-	
+
 	    Added autoheader template for this macro.
-	
+
 	Fri Mar 14 11:38:56 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * tests/Dirent_Test.cpp (TEST_ENTRY):
-	
+
 	    Changed name of file from "Dirent_Test.cpp" to "Makefile".  The
 	    latter is the only one guaranteed to exist in autoconf based
 	    VPATH builds.  Dirent_Test was failing since "Dirent_Test.cpp"
 	    did not exist in the current working directory so pick one that
 	    will always exist.
-	
+
 	Fri Mar 14 10:49:48 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac (bsearch, mktemp, qsort, rand_r):
-	
+
 	    Temporarily select C as the test language when detecting these
 	    functions to work around a bug in some versions of Autoconf when
 	    C++ is selected as the test language.  This fixes problems where
 	    the following macros were incorrectly defined:
-	
+
 	  	ACE_LACKS_BSEARCH
 	  	ACE_LACKS_MKTEMP
 	  	ACE_LACKS_QSORT
 	  	ACE_HAS_REENTRANT_FUNCTIONS
-	
+
 	    The correct definition of the ACE_HAS_REENTRANT_FUNCTIONS macro
 	    should also correct problems exhibited by the ACE one-button
 	    tests on multi-CPU hosts.
-	
+
 	    (ACE_LACKS_STRUCT_DIR):
-	
+
 	    Added test that determines if this macro should be defined.
-	
+
 	  * m4/config_h.m4 (ACE_HAS_SCANDIR, ACE_LACKS_STRUCT_DIR):
-	
+
 	    Added templates for these preprocessor macros.
-	
+
 	Thu Mar 13 15:49:21 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * bin/bootstrap:
-	
+
 	    Fixed an error about a missing `ace/config.h.in' configuration
 	    header template file when running `automake'.  `Automake' should
 	    be invoked after `autoheader' to make sure the configuration
 	    header template files exist beforehand.  Thanks to Steve Huston
 	    <shuston@riverace.com> for reporting the error, and providing a
 	    means to reproduce it.
-	
+
 	Wed Mar 12 13:48:31 2003  Steve Huston  <shuston@riverace.com>
-	
+
 	* bin/bootstrap: Changed PAGER to be set using ${name:-value} instead
 	  of test -z; HP-UX /bin/sh complained if the PAGER env var wasn't set.
-	
+
 	Wed Feb 19 17:02:42 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac (AC_CONFIG_FILES):
-	
+
 	    Added RMCast, QoS and SSL Makefiles to the list of files to be
 	    generated.
-	
+
 	  * Makefile.am (ACLOCAL_AMFLAGS):
-	
+
 	    Define this variable.  It contains options to be passed to
 	    `aclocal' whenever the generated Makefile invokes `aclocal'.
 	    Addresses failed automatic attempts at regenerating the
 	    `configure' script.
-	
+
 	    (CONFIGURE_DEPENDENCIES):
-	
+
 	    Define this variable to include all of the ACE-specific M4 files
 	    in the `m4' directory.  Those files will be included in the list
 	    of dependencies for the `configure' script.  Addresses failed
 	    automatic attempts at regenerating the `configure' script.
-	
+
 	  * ace/Makefile.am (DIST_SUBDIRS):
-	
+
 	    Added RMCast, QoS and SSL subdirectories to the list of
 	    directories to include in the ACE distribution.
-	
+
 	    (SUBDIRS):
-	
+
 	    Conditionally build the RMCast, QoS and SSL subdirectories.  The
 	    user may explicitly enable or disable them using the
 	    "--with-rmcast", "--with-qos" and "--with-ssl" configure script
 	    options, respectively.
-	
+
 	    (libACE_la_SOURCES):
-	
+
 	    Added $(libACE_Codecs_la_SOURCES) to the list of ACE library
 	    sources.  Fixes "unresolved symol" link-time errors when
 	    building the `Codecs_Test' one-button test.
-	
+
 	  * ace/RMCast/Makefile.am:
 	  * ace/QoS/Makefile.am:
 	  * ace/SSL/Makefile.am:
-	
+
 	    Added these Automake input files for the ACE_RMCast, ACE_QoS and
 	    ACE_SSL libraries, respectively.
-	
+
 	  * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
-	
+
 	    Added "--with-rmcast", "--with-qos" and "--with-ssl"
 	    configuration options that allow the user to explicitly enable
 	    or disable the ACE_RMCast, ACE_QoS and ACE_SSL libraries,
 	    respectively.  The ACE_RMCast is enabled by default, while the
 	    ACE_QoS and ACE_SSL libraries are not.
-	
+
 	  * tests/Makefile.am:
-	
+
 	    Build CDR_Array_Test, Codecs_Test and Tokens_Test.
-	
+
 	Fri Feb 14 10:02:30 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * Makefile.am (all-local):
-	
+
 	    Create a link to the $(top_srcdir)/bin directory if one doesn't
 	    exist.  It is needed for the automated regression tests we run.
-	
+
 	    (distclean-local):
-	
+
 	    Added this Automake recognized target.  It will clean up the
 	    `bin' link and accompanying stamp file if they exist.
-	
+
 	  * tests/Makefile.am (all-local):
-	
+
 	    Create a stamp file to mark whether or not the scripts and data
 	    files are actually links to those in $(top_srcdir)/tests.
-	
+
 	    (bin):
-	
+
 	    Moved the rules in this target to all-local target in
 	    $(top_srcdir)/Makefile.am.  The link to the `bin' directory
 	    should be made in the top-level directory, not the `tests'
 	    directory.  This should address problems in running the
 	    automated regression tests.
-	
+
 	    Removed this target.  It is longer needed.
-	
+
 	    (distclean-local):
-	
+
 	    Only delete the scripts and data files if the stamp file created
 	    by the all-local target exists.  Prevents those in the source
 	    directory from being erased once builds in the source directory
 	    are re-enabled.
-	
+
 	Tue Feb 11 14:27:08 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * tests/Makefile.am (all-local):
-	
+
 	    Added rules to generate links to the scripts and data files in
 	    the top-level `tests' source directory.  The Scoreboard requires
 	    that `run_test.pl' exists in the current working directory, and
 	    some tests require that their corresponding data files exist in
 	    that directory, too.  Thanks to Steve for pointing this out.
-	
+
 	Mon Feb 10 14:42:59 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Generate tests/Makefile.
-	
+
 	    Updated and re-enabled XtReactor support.
-	
+
 	  * Makefile.am:
-	
+
 	    Added ACE one-button test directory to the sub-directory list.
-	
+
 	  * tests/Makefile.am:
-	
+
 	    Updated one-button test list.  It was missing some new tests.
-	
+
 	Wed Feb  5 13:50:09 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Added check for snprintf().
-	
+
 	    Added check for mutex timeouts (e.g. pthread_mutex_timedlock()).
-	
+
 	    Updated STL map and queue conflict tests to take into account
 	    the "std" namespace, if necessary.
-	
+
 	    Updated "new() throws bad_alloc" test to take into account the
 	    "std" namespace, if necessary.
-	
+
 	  * m4/config_h.m4 (ACE_HAS_SNPRINTF, ACE_HAS_MUTEX_TIMEOUTS):
-	
+
 	    Added autoheader templates for these macros.
-	
+
 	Wed Feb  5 11:54:22 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * Makefile.am:
-	
+
 	    Neglected to commit this file in the previous commit.  Added
 	    `apps' directory to the list of subdirectories.
-	
+
 	Sat Feb  1 14:21:38 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Added gperf related Makefiles to the list of files to generate.
-	
+
 	  * apps/Makefile.am:
 	  * apps/gperf/Makefile.am:
 	  * apps/gperf/src/Makefile.am:
-	
+
 	    Updated for use with Automake 1.7.x or better.
-	
+
 	  * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
-	
+
 	    Enabled ACE gperf support.
-	
+
 	Sat Feb  1 13:22:59 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * bin/bootstrap:
-	
+
 	    Removed workspace/release bootstrapping code.  Newer versions of
 	    automake obviate the need to make a distinction due to improved
 	    dependency tracking support.
-	
+
 	Sat Feb  1 13:14:08 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * ace/Makefile.am (TEMPLATE_FILES):
-	
+
 	    Added missing "Templates_Instantiations.cpp" file to this list.
 	    Fixes builds from a source tree created by "make dist".
-	
+
 	Sat Feb  1 12:44:52 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * Makefile.am (EXTRA_DIST):
-	
+
 	    Removed "BIBLIOGRAPHY" from this list since that file no longer
 	    exists.  "make dist" now works once again.
-	
+
 	Sat Feb  1 12:40:11 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * ace/Makefile.am (libACE_Utils_la_SOURCES):
-	
+
 	    Removed duplicate "Filecache.cpp" entry.  Fixes "multiple
 	    definition of symbol" errors at link-time.
-	
+
 	Sat Feb  1 12:24:11 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Do not define the _POSIX_THREADS and
 	    _POSIX_THREAD_SAFE_FUNCTIONS preprocessor macros.  They are
 	    feature test macros defined by the platform, and are not meant
 	    to be defined by anything other than the platform itself.
-	
+
 	  * m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
-	
+
 	    Fixed autoheader templates for the ACE_UINT64_TYPEDEF and
 	    _POSIX_PTHREAD_SEMANTICS macros so that they include a "#undef
 	    ..." in the template.  Without the "#undef" the value of the
 	    macro will not be substituted by `configure' script.  That led
 	    to build failures.  Those failures have been corrected by this
 	    fix.
-	
+
 	    Removed autoheader templates for the _POSIX_THREADS and
 	    _POSIX_THREAD_SAFE_FUNCTIONS preprocessor macros.  They are
 	    feature test macros defined by the platform, and are not meant
 	    to be defined by anything other than the platform itself.
-	
+
 	    Added descriptions for many preprocessor macros potentially
 	    defined/substituted by the `configure' script.
-	
+
 	Sat Feb  1 10:20:45 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * Makefile.am:
-	
+
 	    Updated list of files and directories to be distributed.
 	    Removed files that no longer from the list.
-	
+
 	  * ace/Makefile.am:
-	
+
 	    Updated header, inline, source and template file lists to
 	    include new files.
-	
+
 	Wed Jan 29 13:54:21 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Fixed autoconf warnings about AC_DEFINE being called in second
 	    argument of AC_CACHE_VAL.  The second argument should only set
 	    the value of cache ID variable.  No other side effects should
 	    occur.
-	
+
 	Tue Jan 28 14:57:50 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * bin/bootstrap:
-	
+
 	    Corrected invocation order `libtoolize' and `autoconf'.
 	    `libtoolize' should be run prior to `autoconf'.  Fixes an error
 	    concerning a missing `libtool' script.
-	
+
 	Fri Jan 17 20:21:41 2003  Steve Huston  <shuston@riverace.com>
-	
+
 	        * ace/Makefile.am: Fix syntax errors for libACE_Sockets_la_SOURCES.
-	
+
 	Tue Jan  7 22:59:05 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Enable Libtool and Automake support.
-	
+
 	  * bin/bootstrap:
-	
+
 	    Call `libtoolize' to add libtool support files to the ACE
 	    distribution.
-	
+
 	  * m4/config_h.m4:
-	
+
 	    Added ACE_LACKS_ACE_CODECS macro template (for the sake of
 	    completeness).
-	
+
 	  * m4/subsets.m4:
-	
+
 	    Added support for "--enable-lib-codecs" configure script
 	    option.
-	
+
 	Wed Jan  1 10:28:27 2003  Ossama Othman  <ossama@uci.edu>
-	
+
 	  * configure.ac:
-	
+
 	    Ported old `configure.in' file to the latest Autoconf
 	    `configure.ac' syntax.
-	
+
 	    Initialize Automake with the new AM_INIT_AUTOMAKE macro format.
-	
+
 	  * bin/bootstrap:
-	
+
 	    Updated `autoheader' invocation to latest command line format.
-	
+
 	    Commented out documentation generation shell script code.  At
 	    this early stage in the new autotool effort, we need not deal
 	    with documentation generation.
-	
+
 	    Commented out ACE workspace/release configuration shell script
 	    code.  It may be re-enabled in the future when it is clearer how
 	    releases will be performed.
-	
+
 	  * m4/ace.m4:
 	  * m4/acinclude.m4:
 	  * m4/compiler.m4:
@@ -416,12 +416,12 @@ Thu Apr 17 16:15:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  * m4/platform.m4:
 	  * m4/subsets.m4:
 	  * m4/threads.m4:
-	
+
 	    Updated all macros to the latest Autoconf 2.57 syntax.
-	
+
 	  * acconfig.h:
 	  * m4/config_h.m4:
-	
+
 	    Replaced old `config.h' header template (acconfig.h) with the
 	    latest "AH_TEMPLATE" form of the configuration header template.
 
