@@ -278,7 +278,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 
       // Create a new output CDR stream
 
-# if 0
+#if 0
 #if defined(ACE_HAS_PURIFY)
       // Only inititialize the buffer if we're compiling with Purify.
       // Otherwise, there is no real need to do so, especially since
@@ -288,8 +288,6 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 #else
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
-#endif /*if 0*/
-      /*
       TAO_OutputCDR output (repbuf,
 			    sizeof repbuf,
 			    TAO_ENCAP_BYTE_ORDER,
@@ -301,6 +299,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 			    TAO_DEF_GIOP_MINOR,
 			    this->orb_core_->to_iso8859 (),
 			    this->orb_core_->to_unicode ());*/
+#endif /* 0 */
 
       // Make the reply message
       if (this->mesg_base_->generate_exception_reply (*this->outgoing_,

@@ -33,6 +33,13 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+  if (connection_handler_ != 0)
+    {
+      // REFCNT: Matches one of
+      // TAO_Transport::connection_handler_close() or
+      // TAO_Transport::close_connection_shared.
+      this->connection_handler_->incr_refcount();
+    }
   if (flag)
     {
       // Use the lite version of the protocol
@@ -49,6 +56,7 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
+  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -211,10 +219,10 @@ TAO_UIOP_Transport::messaging_init (CORBA::Octet major,
   return 1;
 }
 
-ACE_Event_Handler *
+TAO_Connection_Handler *
 TAO_UIOP_Transport::invalidate_event_handler_i (void)
 {
-  ACE_Event_Handler * eh = this->connection_handler_;
+  TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
 }

@@ -85,6 +85,7 @@ public:
   /** @name Event Handler overloads
    */
   virtual int resume_handler (void);
+  virtual int close_connection (void);
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -112,7 +113,6 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  void handle_close_i (void);
   virtual int release_os_resources (void);
   virtual void pos_io_hook (int & return_value);
   //@}

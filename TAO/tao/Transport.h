@@ -459,7 +459,7 @@ protected:
    *
    * @return The old event handler
    */
-  virtual ACE_Event_Handler * invalidate_event_handler_i (void) = 0;
+  virtual TAO_Connection_Handler * invalidate_event_handler_i (void) = 0;
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
@@ -845,7 +845,7 @@ private:
   /// not pending
   void reset_flush_timer (void);
 
-  
+
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
@@ -863,11 +863,14 @@ private:
   int notify_reactor (void);
 
   /// Grab the mutex and then call invalidate_event_handler_i()
-  ACE_Event_Handler * invalidate_event_handler (void);
+  TAO_Connection_Handler * invalidate_event_handler (void);
 
   /// Notify all the components inside a Transport when the underlying
   /// connection is closed.
   void send_connection_closed_notifications (void);
+
+  /// Assume the lock is held
+  void send_connection_closed_notifications_i (void);
 
   /// Implement close_connection() assuming the handler_lock_ is held.
   void close_connection_i (void);
@@ -883,7 +886,7 @@ private:
   /// Close the underlying connection, implements the code shared by
   /// all the close_connection_* variants.
   void close_connection_shared (int disable_purge,
-                                ACE_Event_Handler * eh);
+                                TAO_Connection_Handler * eh);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
