@@ -1,3 +1,8 @@
+Thu Aug 20 14:39:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.{h,cpp} (ACE_Process::wait): Added a parameter of int* to
+	  get back the exit status of a child process.
+
 Thu Aug 20 14:33:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* etc/ACE-porting.html: Generalized the discussion to cover
