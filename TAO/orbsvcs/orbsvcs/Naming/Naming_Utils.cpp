@@ -7,6 +7,7 @@
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
@@ -14,7 +15,13 @@ TAO_Naming_Server::TAO_Naming_Server (void)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
-    context_index_ (0)
+    context_index_ (0),
+    ior_output_file_ (0),
+    pid_file_name_ (0),
+    context_size_ (ACE_DEFAULT_MAP_SIZE),
+    persistence_file_name_ (0),
+    base_address_ (TAO_NAMING_BASE_ADDR),
+    multicast_ (1)
 {
 }
 
@@ -29,7 +36,13 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
-    context_index_ (0)
+    context_index_ (0),
+    ior_output_file_ (0),
+    pid_file_name_ (0),
+    context_size_ (ACE_DEFAULT_MAP_SIZE),
+    persistence_file_name_ (0),
+    base_address_ (TAO_NAMING_BASE_ADDR),
+    multicast_ (1)
 {
   if (this->init (orb,
                   poa,
@@ -113,6 +126,195 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 }
 
 int
+TAO_Naming_Server::parse_args (int argc,
+                               char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:f:m:");
+  int c;
+  int size, result;
+  long address;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'd':  // debug flag.
+        TAO_debug_level++;
+        break;
+      case 'o': // outputs the naming service ior to a file.
+        this->ior_output_file_ =
+          ACE_OS::fopen (get_opts.optarg, "w");
+
+        if (this->ior_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;
+      case 'p':
+        this->pid_file_name_ = get_opts.optarg;
+        break;
+      case 'f':
+        this->persistence_file_name_ = get_opts.optarg;
+        break;
+      case 's':
+        size = ACE_OS::atoi (get_opts.optarg);
+        if (size >= 0)
+          this->context_size_ = size;
+        break;
+      case 'b':
+        result = ::sscanf (get_opts.optarg,
+                           "%ld",
+                           &address);
+        if (result == 0 || result == EOF)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to process <-b> option"),
+                            -1);
+        this->base_address_ = (void *) address;
+        break;
+      case 'm':
+        this->multicast_ = ACE_OS::atoi(get_opts.optarg);
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-NScontextname <contextname> "
+                           "-o <ior_output_file> "
+                           "-p <pid_file_name> "
+                           "-f <persistence_file_name> "
+                           "-b <base_address> "
+                           "-m <1=enable multicast(default), 0=disable multicast "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  return 0;
+}
+
+int
+TAO_Naming_Server::init_with_orb (int argc, 
+                                  char *argv [],
+                                  CORBA::ORB_ptr orb)
+{
+  int result;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Duplicate the ORB
+      this->orb_ = CORBA::ORB::_duplicate (orb);
+
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      if (CORBA::is_nil (poa_object.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
+
+      // Get the POA object.
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in (),
+                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get the POA_Manager.
+      PortableServer::POAManager_var poa_manager =
+        this->root_poa_->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+
+      // Id Assignment policy
+      policies[0] =
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
+                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Lifespan policy
+      policies[1] =
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
+                                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // We use a different POA, otherwise the user would have to change
+      // the object key each time it invokes the server.
+      this->ns_poa_ = this->root_poa_->create_POA ("NameService",
+                                                   poa_manager.in (),
+                                                   policies,
+                                                   ACE_TRY_ENV);
+      // Warning!  If create_POA fails, then the policies won't be
+      // destroyed and there will be hell to pay in memory leaks!
+      ACE_TRY_CHECK;
+
+      // Creation of the new POAs over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0;
+           i < policies.length ();
+           ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      // Check the non-ORB arguments.  this needs to come before we
+      // initialize my_naming_server so that we can pass on some of
+      // the command-line arguments.
+      result = this->parse_args (argc, argv);
+
+      if (result < 0)
+        return result;
+      
+      result = this->init (orb,
+                           this->ns_poa_.in (),
+                           this->context_size_,
+                           0,
+                           0,
+                           this->persistence_file_name_,
+                           this->base_address_,
+                           this->multicast_);
+      if (result == -1)
+        return result;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::init");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  if (this->ior_output_file_ != 0)
+    {
+      CORBA::String_var str =
+        this->naming_service_ior ();
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
+      ACE_OS::fclose (this->ior_output_file_);
+    }
+  
+  if (this->pid_file_name_ != 0)
+    {
+      FILE *pidf = fopen (this->pid_file_name_, "w");
+      if (pidf != 0)
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           ACE_static_cast (long, ACE_OS::getpid ()));
+          ACE_OS::fclose (pidf);
+        }
+    }
+  return 0;
+}
+
+int
 TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
                                     const ACE_TCHAR
@@ -167,7 +369,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         orb->object_to_string (this->naming_context_.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       // Make the Naming Service locatable through iioploc.
       if (orb->_tao_add_to_IOR_table ("NameService",
                                       this->naming_context_.in ())
@@ -265,6 +467,29 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   return 0;
 }
 
+int
+TAO_Naming_Server::fini (void)
+{
+  // Destroy the child POA ns_poa that is created when initializing
+  // the Naming Service
+  ACE_TRY_NEW_ENV
+    {
+      this->ns_poa_->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (this->orb_->_tao_del_from_IOR_table ("NameService") != 0
+          && TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "TAO_Naming_Server: cannot remove entry from IOR table\n"));
+    }
+  ACE_CATCHANY
+    {
+      // Ignore
+    }
+  ACE_ENDTRY;
+  return 0;
+}
+  
 char*
 TAO_Naming_Server::naming_service_ior (void)
 {
@@ -286,9 +511,9 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
          ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
       delete this->ior_multicast_;
     }
-
-  delete context_index_;
+  delete context_index_; 
 }
+
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
