@@ -1,3 +1,14 @@
+Fri Jun 13 03:13:51 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* examples/OS/Process/Process.{mdp,mak}: For some reasons, I got
+ 	  an "unknown link error, please refer to documentation for
+ 	  appropriate technical supports" when building this example on NT
+ 	  (didn't help much, did it?)  Reassigning the linked library
+ 	  solved the problem.
+
+	* examples/OS/Process/process.cpp: Updated to adopt the changes in
+ 	  the latest ACE_Process.
+
 Thu Jun 12 15:48:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/ACE.cpp (get_ip_interfaces): Corrected code in the BSDish
