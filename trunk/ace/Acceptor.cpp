@@ -580,6 +580,14 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
   this->use_select_ = use_select;
 
+  // Set the peer acceptor's handle into non-blocking mode.  This is a
+  // safe-guard against the race condition that can otherwise occur
+  // between the time when <select> indicates that a passive-mode
+  // socket handle is "ready" and when we call <accept>.  During this
+  // interval, the client can shutdown the connection, in which case,
+  // the <accept> call can hang!
+  this->peer_acceptor_.enable (ACE_NONBLOCK);
+
   return this->reactor ()->register_handler
     (this,
      ACE_Event_Handler::ACCEPT_MASK);
