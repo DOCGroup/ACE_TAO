@@ -29,7 +29,7 @@
 
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
-    cubit_key_ ("key0"),
+    cubit_key_ (ACE_OS::strdup ("key0")),
     loop_count_ (250),
     exit_later_ (0),
     cubit_ (Cubit::_nil ()),
