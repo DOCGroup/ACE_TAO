@@ -151,7 +151,13 @@ public:
 
   /// Handle one of the notify call on the <handle>. This could be
   /// because of a thread trying to unblock the <Reactor_Impl>
-  virtual int dispatch_notify (ACE_HANDLE handle);
+  virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
+
+  /// Read one of the notify call on the <handle> into the
+  /// <buffer>. This could be because of a thread trying to unblock
+  /// the <Reactor_Impl>
+  virtual int read_notify_pipe (ACE_HANDLE handle,
+                                ACE_Notification_Buffer &buffer);
 
   /// Called back by the <ACE_Select_Reactor> when a thread wants to
   /// unblock us.
@@ -193,7 +199,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
+protected:
   /**
    * Keep a back pointer to the <ACE_Select_Reactor>.  If this value
    * if NULL then the <ACE_Select_Reactor> has been initialized with

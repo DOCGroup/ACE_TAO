@@ -1,3 +1,44 @@
+Fri Aug 31 19:14:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor_Impl.h: Added a new method by name read_notify_pipe
+	  (). Also changed the dispatch_notify () to take in a
+	  Notification buffer instead of a ACE_HANDLE.
+
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Select_Reactor_Base.h: Made the following changes
+
+	  - Implemented read_notify_pipe (). Will read just one message from
+	    the notify pipe or one message from the notification queue.
+	
+	  - Reimplemented dispatch_notify (). This method would just
+	    dispatch the upcall using the information in the notification
+	    buffer. 
+	
+	  - The handle_input () now uses the read_notify_pipe () and
+	    dispatch_notify () to achieve what it was doing before.
+
+	  - The notify () call now sends one notify message on the pipe
+	    for every message in the notification queue. 
+	  
+	* ace/TP_Reactor.cpp (handle_socket_events): 
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.i: We had a race condition. The race condition
+	  was because two threads were trying to read from the notify_pipe
+	  at the same instance. This race condition was fixed by adding a
+	  call to read_notify_pipe () with the lock held and then calling
+	  dispatch_notify () with the buffer read after releasing the
+	  lock.  Did the following minor modifications
+
+	  - Changed dispatch_socket_events () as dispatch_socket_event ()
+	    as we were dispatching only one event.
+	  
+	  - We dont grab the token in the constructor of the token. We
+	    have to make a call specfically to grab_token () to get the
+	    token. 
+
+	The above checkins should fix the correctness of the reactor
+	problems that we have been seeing.
+
 Fri Aug 31 18:30:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * bin/auto_run_tests.lst:

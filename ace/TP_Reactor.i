@@ -48,14 +48,11 @@ ACE_EH_Dispatch_Info::dispatch (void) const
 /************************************************************************/
 
 ACE_INLINE
-ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token,
-                                        ACE_Time_Value *max_wait_time,
-                                        int &result)
+ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token)
+
   :token_ (token),
    owner_ (0)
 {
-  result = this->grab_token (max_wait_time);
-
 }
 
 ACE_INLINE
@@ -71,7 +68,7 @@ ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
 ACE_INLINE void
 ACE_TP_Token_Guard::release_token (void)
 {
-  if (this->owner_ == 1)
+  if (this->owner_)
     {
       ACE_MT (this->token_.release ());
 
@@ -90,7 +87,6 @@ ACE_TP_Token_Guard::is_owner (void)
 /************************************************************************/
 // Methods for ACE_TP_Reactor
 /************************************************************************/
-
 ACE_INLINE void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {

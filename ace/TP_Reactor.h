@@ -32,12 +32,11 @@
 #include "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
-
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @class ACE_EH_Dispatch_Info
@@ -89,9 +88,7 @@ class ACE_Export ACE_TP_Token_Guard
 public:
 
   /// Constructor that will grab the token for us
-  ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token,
-                      ACE_Time_Value *max_wait_time,
-                      int &result);
+  ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
 
   /// Destructor. This will release the token if it hasnt been
   /// released till this point
@@ -103,8 +100,6 @@ public:
   /// Returns whether the thread that created this object ownes the
   /// token or not.
   int is_owner (void);
-
-private:
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
@@ -125,7 +120,6 @@ private:
 
   ACE_UNIMPLEMENTED_FUNC (ACE_TP_Token_Guard (void))
 };
-
 
 /**
  * @class ACE_TP_Reactor
@@ -183,10 +177,6 @@ public:
                   ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
                   int mask_signals = 1);
-
-  // = Reactor calls
-  virtual void max_notify_iterations (int iter);
-  virtual int max_notify_iterations (void);
 
   // = Event loop drivers.
 
@@ -247,21 +237,31 @@ public:
 protected:
   // = Internal methods that do the actual work.
 
+
+  /// Dispatch just 1 signal, timer, notification handlers
+  int dispatch_i (ACE_Time_Value *max_wait_time,
+                  ACE_TP_Token_Guard &guard);
+
   /// Get the event that needs dispatching.It could be either a
   /// signal, timer, notification handlers or return possibly 1 I/O
   /// handler for dispatching. In the most common use case, this would
   /// return 1 I/O handler for dispatching
   int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
+  /// Method to handle signals
+  /// NOTE: It is just busted at this point in time.
   int handle_signals (int &event_count,
                       ACE_TP_Token_Guard &g);
 
+  /// Handle timer events
   int handle_timer_events (int &event_count,
                            ACE_TP_Token_Guard &g);
 
+  /// Handle notify events
   int handle_notify_events (int &event_count,
                             ACE_TP_Token_Guard &g);
 
+  /// handle socket events
   int handle_socket_events (int &event_count,
                             ACE_TP_Token_Guard &g);
 
@@ -273,11 +273,16 @@ protected:
                               ACE_EH_PTMF callback);
 private:
 
+  /// Get the handle of the notify pipe from the ready set if there is
+  /// an event  in the notify pipe.
   ACE_HANDLE get_notify_handle (void);
 
+  /// Get socket event dispatch information.
   int get_socket_event_info (ACE_EH_Dispatch_Info &info);
 
-  int dispatch_socket_events (ACE_EH_Dispatch_Info &info);
+  /// Notify the appropriate <callback> in the context of the <eh>
+  /// associated with <handle> that a particular event has occurred.
+  int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
 private:
   /// Deny access since member-wise won't work...
