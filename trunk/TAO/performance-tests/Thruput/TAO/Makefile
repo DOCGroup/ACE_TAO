@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS     	= -lTAO
-
 IDL_FILES = ttcp
 IDL_SRC   = ttcpC.cpp ttcpS.cpp
 PROG_SRCS = $(IDL_SRC) client.cpp ttcp_i.cpp server.cpp utils.cpp tmplinst.cpp

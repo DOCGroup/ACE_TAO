@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = ami_test
 IDL_SRC   = \
 	$(addsuffix C.cpp, $(IDL_FILES)) \

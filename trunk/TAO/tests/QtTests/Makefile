@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 BIN = client server
@@ -26,8 +24,8 @@ TEST_MOC_OBJ = test_i_moc.o
 endif #qt_reactor
 
 ifeq ($(qt_reactor),)
-CLNT_MOC = 
-TEST_MOC = 
+CLNT_MOC =
+TEST_MOC =
 endif #qt_reactor
 
 SRC = $(addsuffix .cpp, $(BIN) test_i $(CLNT_MOC) $(TEST_MOC)) $(IDL_SRC)

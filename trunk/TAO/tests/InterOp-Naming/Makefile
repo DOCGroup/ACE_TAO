@@ -17,8 +17,6 @@ IDL_SRC = \
 	INSC.cpp \
 	INSS.cpp
 
-LDLIBS = -lTAO
-
 PROG_SRCS = \
 	INS_test_client.cpp \
 	INS_i.cpp \
