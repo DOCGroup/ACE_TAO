@@ -43,7 +43,6 @@
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Collocated_Object.h"
 #include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if defined(_MSC_VER)
@@ -447,7 +446,7 @@ the_TAO_ConstructionPolicy_Strategized_Proxy_Broker (void);
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_Domain_Export _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl
-  : public virtual TAO_ThruPOA_Object_Proxy_Impl,
+  : 
     public virtual ::POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl
 {
 public:
@@ -523,8 +522,7 @@ public:
 //
 
 class TAO_Domain_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl
-  : public virtual TAO_Direct_Object_Proxy_Impl,
-    public virtual ::POA_CORBA::_TAO_Policy_Direct_Proxy_Impl
+    : public virtual ::POA_CORBA::_TAO_Policy_Direct_Proxy_Impl
 
 {
 public:

@@ -1,3 +1,15 @@
+Mon Sep 15 21:04:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile.dirs: Added the DynamicInterface only if the
+	  messaging library is compiled. 
+
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS.h: Fixed simple compilation errors that have
+	  long been untouched. 
+
+	* tao/Messaging/Asynch_Invocation.cpp: Fixed a warning with g++. 
+
+
 Mon Sep 15 20:22:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.cpp:
