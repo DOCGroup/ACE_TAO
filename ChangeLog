@@ -1,3 +1,12 @@
+Wed May 12 06:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          After the ::WSASend call we must check the return value and in case
+          of an error we must call ACE_OS::set_errno_to_wsa_last_error to set
+          errno. After the other ::WSA calls we must call also this method
+          instead of ACE_OS::set_errno_to_last_error. This fixes bugzilla
+          bug 1815.
+
 Tue May 11 17:39:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.rc: Converted back to
