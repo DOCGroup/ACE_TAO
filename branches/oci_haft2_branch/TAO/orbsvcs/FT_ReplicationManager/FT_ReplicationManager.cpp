@@ -649,7 +649,7 @@ TAO::FT_ReplicationManager::set_primary_member (
 
   tag_component.object_group_ref_version += 1;
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("%T %n (%P|%t) - set_primary_member: Setting IOGR version to %u\n"), 
+    ACE_TEXT ("%T %n (%P|%t) - set_primary_member: Setting IOGR version to %u\n"),
     ACE_static_cast(unsigned, tag_component.object_group_ref_version)
     ));
 
@@ -802,7 +802,7 @@ TAO::FT_ReplicationManager::add_member (
 
   tag_component.object_group_ref_version += 1;
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("%T %n (%P|%t) - add_member: Setting IOGR version to %u\n"), 
+    ACE_TEXT ("%T %n (%P|%t) - add_member: Setting IOGR version to %u\n"),
     ACE_static_cast(unsigned, tag_component.object_group_ref_version)
     ));
 
