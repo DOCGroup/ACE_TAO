@@ -186,7 +186,7 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
 {
   IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
 
-  svr_req._opname = hdr.operation; // why are we copying this when we can just pass in
+  svr_req.opname_ = hdr.operation; // why are we copying this when we can just pass in
                                    // a handle to the hdr?
 
   this->dispatch (hdr.object_key, svr_req, 0 /* this is IIOP residue */, env);
@@ -235,12 +235,12 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
       response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) response.encode (except_tc, x, 0, env2);
     }
-  else if (svr_req._exception)
+  else if (svr_req.exception_)
     {	// any exception at all
       CORBA::Exception *x;
       CORBA::TypeCode_ptr except_tc;
 
-      x = (CORBA::Exception *) svr_req._exception->value ();
+      x = (CORBA::Exception *) svr_req.exception_->value ();
       except_tc = svr_req.exception_->type ();
 
       // Finish the GIOP Reply header, then marshal the exception.
