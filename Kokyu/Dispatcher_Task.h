@@ -28,8 +28,6 @@ namespace Kokyu
 class Dispatch_Queue_Item : public ACE_Message_Block
 {
 public:
-  Dispatch_Queue_Item (const Dispatch_Command* , const QoSDescriptor&);
-
   Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,

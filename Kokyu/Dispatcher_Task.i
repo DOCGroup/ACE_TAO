@@ -48,15 +48,6 @@ Dispatcher_Task::get_curr_config_info() const
 ACE_INLINE
 Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info)
- :command_ (cmd), qos_info_ (qos_info)
-{
-   this->init_i (qos_info);
-}
-
-ACE_INLINE
-Dispatch_Queue_Item::Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Data_Block *data_block,
         int flags,

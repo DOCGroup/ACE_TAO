@@ -69,7 +69,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
 
-  if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+  if (ACE_OS::thr_setprio (thr_handle, 
+                           this->blocked_prio_, 
+                           this->sched_policy_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -81,12 +83,12 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   -1);
   item->thread_handle (thr_handle);
 
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
-  if (ready_queue_.insert (item) == -1)
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
+  if (this->ready_queue_.insert (item) == -1)
     return -1;
 
 #ifdef KOKYU_DSRT_LOGGING
-  ready_queue_.dump ();
+  this->ready_queue_.dump ();
 
   ACE_DEBUG ((LM_DEBUG, 
               "(%t|%T):schedule_i after ready_q.insert\n")); 
@@ -95,7 +97,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, cond_guard, run_cond_lock_, -1);
-  ready_queue_.most_eligible (item_var);
+  this->ready_queue_.most_eligible (item_var);
 
   guard.release ();
 
@@ -107,13 +109,13 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   thr_handle)); 
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t|%T):curr scheduled thr handle = %d\n", 
-                  curr_scheduled_thr_handle_)); 
+                  this->curr_scheduled_thr_handle_)); 
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t|%T):most eligible thr handle = %d \n",
                   most_eligible_thr_handle)); 
 #endif
 
-  if (curr_scheduled_thr_handle_ == thr_handle &&
+  if (this->curr_scheduled_thr_handle_ == thr_handle &&
       most_eligible_thr_handle != thr_handle)
     {
 #ifdef KOKYU_DSRT_LOGGING
@@ -122,9 +124,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   "most eligible thr handle != curr thr handle. "
                   "about to do a broadcast on CV to wake up most eligible\n")); 
 #endif
-      curr_scheduled_thr_handle_ = most_eligible_thr_handle;
+      this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
       //wake up the most eligible thread
-      run_cond_.broadcast ();
+      this->run_cond_.broadcast ();
     }
 
   //if the current thread is not the most eligible, then wait.
@@ -132,8 +134,8 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   //scheduled currently, then wait.
   while (most_eligible_thr_handle != thr_handle ||
          (most_eligible_thr_handle == thr_handle && 
-          curr_scheduled_thr_handle_ != thr_handle &&
-          curr_scheduled_thr_handle_ != 0))
+          this->curr_scheduled_thr_handle_ != thr_handle &&
+          this->curr_scheduled_thr_handle_ != 0))
     {
       ACE_Time_Value tv (60,0);
       tv += ACE_OS::gettimeofday ();
@@ -142,16 +144,16 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t|%T): About to block on cv\n"));
 #endif
-      if (run_cond_.wait (&tv) == -1) 
+      if (this->run_cond_.wait (&tv) == -1) 
         {
           ACE_ERROR ((LM_ERROR, 
                       "(%t|%T): run_cond.wait timed out -- Possible Lockup\n"));
         }
-      ready_queue_.most_eligible (item_var);
+      this->ready_queue_.most_eligible (item_var);
       most_eligible_thr_handle = item_var->thread_handle ();
     }
-  curr_scheduled_guid_ = item_var->guid ();
-  curr_scheduled_thr_handle_ = most_eligible_thr_handle;
+  this->curr_scheduled_guid_ = item_var->guid ();
+  this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, 
@@ -159,7 +161,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   thr_handle));
 #endif
 
-  if (ACE_OS::thr_setprio (thr_handle, active_prio_, sched_policy_) == -1)
+  if (ACE_OS::thr_setprio (thr_handle, 
+                           this->active_prio_, 
+                           this->sched_policy_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -185,7 +189,7 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule_i (Guid_t guid, Block_Flag_t flag)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block entered\n"));
@@ -213,7 +217,9 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
       ACE_DEBUG ((LM_DEBUG, "(%t|%T): update schedule: %d found\n", thr_handle));
 #endif
 
-      if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+      if (ACE_OS::thr_setprio (thr_handle, 
+                               this->blocked_prio_, 
+                               this->sched_policy_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
@@ -240,7 +246,7 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 cancel_schedule_i (Guid_t guid)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -249,21 +255,21 @@ cancel_schedule_i (Guid_t guid)
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): about to remove guid\n"));
 #endif
 
-  ready_queue_.remove (guid);
+  this->ready_queue_.remove (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ready_queue_.dump ();
+  this->ready_queue_.dump ();
 #endif
 
-  if (curr_scheduled_thr_handle_ == thr_handle)
+  if (this->curr_scheduled_thr_handle_ == thr_handle)
     {
-      curr_scheduled_guid_ = 0;
-      curr_scheduled_thr_handle_ = 0;
+      this->curr_scheduled_guid_ = 0;
+      this->curr_scheduled_thr_handle_ = 0;
     }
 
   ACE_GUARD_RETURN (cond_lock_t,
-                    mon, run_cond_lock_, 0);
-  run_cond_.broadcast ();
+                    mon, this->run_cond_lock_, 0);
+  this->run_cond_.broadcast ();
   return 0;
 }
 
@@ -271,7 +277,7 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  shutdown_flagged_ = 1;
+  this->shutdown_flagged_ = 1;
   return 0;
 }
 
