@@ -13,7 +13,6 @@ LIBNAME  = libTAO_RT_NotifyTests
 LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 
 
 TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
@@ -40,6 +39,7 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(minimum_corba),0)
 ifeq (RT_Notify,$(findstring RT_Notify,$(TAO_ORBSVCS)))
   LIB = $(LIB2)

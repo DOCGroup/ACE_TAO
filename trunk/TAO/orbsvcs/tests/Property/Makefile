@@ -21,9 +21,6 @@ SRC=server.cpp client.cpp
 
 BIN2 = server client
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -32,6 +29,9 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(corba_messaging),1)
   ifeq (Property,$(findstring Property,$(TAO_ORBSVCS)))
     BIN = $(BIN2)
