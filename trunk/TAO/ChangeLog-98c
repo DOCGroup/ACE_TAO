@@ -1,7 +1,9 @@
 Tue Nov 17 10:25:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: removed
-          obsolete -s option.
+          obsolete client/server -s option.  Added support for
+          -l, -n, and -t options to the script, see its usage message
+          for decriptions.
 
 Mon Nov 16 20:22:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
