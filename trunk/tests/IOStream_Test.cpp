@@ -209,21 +209,22 @@ client (void *arg = 0)
   long l;
   double d;
 
-  while( !(server >> i) )
+  while (!(server >> i))
     {
-      int eof = server.eof();
-      if( eof )
+      int eof = server.eof ();
+      if (eof)
  	{
-          ACE_DEBUG((LM_DEBUG, "(%P|%t) Unrecoverable stream error/eof\n" ));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Unrecoverable stream error/eof\n"));
           break;
  	}
       else
  	{
-          ACE_DEBUG((LM_DEBUG, "(%P|%t) Recoverable stream error (timeout)\n" ));
-          server.clear(0);
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Recoverable stream error (timeout)\n"));
+          server.clear (0);
  	}
     }
 
+  server >> i;
   server >> f1;
   server >> l;
   server >> f2;
@@ -332,7 +333,7 @@ server (void *arg = 0)
     }
 
   ACE_DEBUG ((LM_DEBUG, ")\n"));
-#endif
+#endif /* ACE_HAS_STRING_CLASS */
 
   // Send some non-textual data to the client.  We use a single
   // character to separate the fields but we could have used any valid
@@ -340,9 +341,8 @@ server (void *arg = 0)
   // filled or when we flush it with an explicit client.sync() command
   // or the implicit <<endl.
 
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server sleeping\n" ));
-  ACE_OS::sleep(30);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server sleeping\n"));
+  ACE_OS::sleep (30);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
   client_handler << 1 << " ";
