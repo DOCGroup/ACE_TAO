@@ -151,7 +151,12 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
                                             int flags)
-  : lock_ (name, flags)
+  : lock_ (name, flags
+#if defined (ACE_WIN32)
+           )
+#else
+           , S_IRUSR | S_IWUSR)
+#endif /* ACE_WIN32 */
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
