@@ -819,10 +819,10 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_init", node->fullname ());
+  ACE_OS::sprintf (fname, "%s_init", node->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_init", node->local_name ()->get_string ());
+  ACE_OS::sprintf (lname, "%s_init", node->local_name ());
 
   // destructor
   *os << fname << "::~" << lname << " ()" << be_nl

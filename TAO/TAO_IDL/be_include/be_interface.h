@@ -16,7 +16,8 @@
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
 //    and
-//    Aniruddha Gokhale
+//    Aniruddha Gokhale,
+//    Michael Kircher
 //
 // ============================================================================
 
@@ -24,6 +25,217 @@
 #define TAO_BE_INTERFACE_H
 
 class TAO_OutStream;
+class be_interface;
+
+// This class serves as a strategy base class for the differences
+// in generating e.g. ami reply handlers.
+
+class be_interface_type_strategy
+{
+public:
+  be_interface_type_strategy (be_interface *node)
+    : local_name_(0),
+      full_name_(0),
+      flat_name_(0),
+      repoID_(0),
+      full_skel_name_(0),
+      full_coll_name_(0),
+      local_coll_name_(0),
+      relative_skel_name_(0),
+      node_ (node)
+  {
+  };
+
+  virtual ~be_interface_type_strategy ()
+  {
+    if (this->local_name_ != 0)
+      delete [] this->local_name_;
+    if (this->full_name_ != 0)
+      delete [] this->full_name_;
+    if (this->flat_name_ != 0)
+      delete [] this->flat_name_;
+    if (this->repoID_ != 0)
+      delete [] this->repoID_;
+    if (this->full_skel_name_ != 0)
+      delete [] this->full_skel_name_;
+    if (this->full_coll_name_ != 0)
+      delete [] this->full_coll_name_;
+    if (this->local_coll_name_ != 0)
+      delete [] this->local_coll_name_;
+    if (this->relative_skel_name_ != 0)
+      delete [] this->relative_skel_name_;
+  }
+  virtual const char *local_name (void) = 0;
+  // return the local name
+
+  virtual const char *full_name (void) = 0;
+  // return the stringified full name
+
+  virtual const char *flat_name (void) = 0;
+  // return the flattened full scoped name.
+
+  virtual const char *repoID (void) = 0;
+  // retrieve the repository ID.
+
+  virtual const char *full_skel_name (void) = 0;
+  // retrieve the fully scoped skel class name.
+
+  virtual const char *full_coll_name (int) = 0;
+  // retrieve the fully qualified collocated class name
+
+  virtual const char *local_coll_name (int) = 0;
+  // retrieve the fully qualified collocated class name.
+
+  const char *relative_skel_name (const char *skel_name);
+  // relative skeleton name
+
+  const char* relative_name (const char *localname,
+                             const char *othername);
+
+  void compute_names (const char* name,
+                     const char* prefix,
+                     const char* suffix,
+                     char *&new_name);
+  // compute the names using the local prefix and suffix
+
+  void compute_coll_names (int type,
+                           const char *prefix,
+                           const char *suffix);
+  // compute the collocation names
+
+  virtual TAO_OutStream *get_out_stream () = 0;
+  // return the out stream depending on the strategy
+  // -> the client stub (e.g. AMI)  or server skeleton
+  // outstream is returned.
+
+  virtual const char *get_out_stream_fname () = 0;
+  // return the file name of the output stream.
+
+protected:
+  
+  char *local_name_;
+
+  char *full_name_;
+
+  char *flat_name_;
+
+  char *repoID_;
+
+  char *full_skel_name_;
+
+  char *full_coll_name_;
+
+  char *local_coll_name_;
+
+  char *relative_skel_name_;
+
+  be_interface *node_;
+  // The node we strategize
+};
+
+
+
+class be_interface_ami_handler_strategy 
+  : public be_interface_type_strategy
+{
+public:
+  // begin overridden methods.
+  be_interface_ami_handler_strategy (be_interface *node)
+    : be_interface_type_strategy (node),
+      prefix_("AMI_"),
+      suffix_("_Handler")
+  {
+  };
+
+  virtual ~be_interface_ami_handler_strategy ()
+  {
+  };
+
+  const char * local_name (void);
+  // return the local name
+
+  virtual const char *full_name (void);
+  // return the stringified full name
+
+  virtual const char *flat_name (void);
+  // return the flattened full scoped name.
+
+  virtual const char *repoID (void);
+  // retrieve the repository ID.
+
+  virtual const char *full_skel_name (void);
+  // retrieve the fully scoped skel class name.
+
+  virtual const char *full_coll_name (int);
+  // retrieve the fully qualified collocated class name
+
+  virtual const char *local_coll_name (int);
+  // retrieve the fully qualified collocated class name.
+
+  virtual TAO_OutStream *get_out_stream ();
+  // return the out stream depending on the strategy
+  // return the client stub
+
+  virtual const char *get_out_stream_fname ();
+  // return the file name of the output stream.
+
+  // end of overridden methods
+private:
+
+  const char *prefix_;
+  // The prefix to the interface
+   
+  const char *suffix_;
+  // The suffix to the interface
+};
+
+
+class be_interface_default_strategy
+  : public be_interface_type_strategy
+{
+public:
+  // begin overridden methods.
+  be_interface_default_strategy (be_interface *node)
+    : be_interface_type_strategy (node)
+  {
+  };
+
+  virtual ~be_interface_default_strategy ()
+  {
+  };
+
+  const char * local_name (void);
+  // return the local name
+
+  virtual const char *full_name (void);
+  // return the stringified full name
+
+  virtual const char *flat_name (void);
+  // return the flattened full scoped name.
+
+  virtual const char *repoID (void);
+  // retrieve the repository ID.
+
+  virtual const char *full_skel_name (void);
+  // retrieve the fully scoped skel class name.
+
+  virtual const char *full_coll_name (int);
+  // retrieve the fully qualified collocated class name
+
+  virtual const char *local_coll_name (int);
+  // retrieve the fully qualified collocated class name.
+
+  virtual TAO_OutStream *get_out_stream ();
+  // return the out stream depending on the strategy
+  // return the server skeleton
+
+  virtual const char *get_out_stream_fname ();
+  // return the file name of the output stream.
+
+  // end of overridden methods
+};
+
+
 
 /*
  * BE_Interface
@@ -42,7 +254,6 @@ public:
     THRU_POA = 0,
     DIRECT = 1
   };
-  // Collocated stubs type value.
 
   // used to pass functions to the template method
   typedef int (*tao_code_emitter) (be_interface *, be_interface *, TAO_OutStream *);
@@ -51,13 +262,49 @@ public:
   be_interface (void);
   // Default constructor
 
-  be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
+  be_interface (UTL_ScopedName *n, 
+                AST_Interface **ih, 
+                long nih,
                 UTL_StrList *p);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
   // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
 
   ~be_interface (void);
   // dtor
+
+  be_interface_type_strategy *set_strategy (be_interface_type_strategy *new_strategy);
+  // Set the strategy to generate the names
+
+  // Methods, which access the strategy
+
+  const char *local_name (void) const;
+  // return the local name
+
+  const char *full_name (void) const;
+  // return the stringified full name
+
+  const char *flat_name (void) const;
+  // return the flattened full scoped name.
+
+  const char *repoID (void) const;
+  // retrieve the repository ID.
+
+  const char *full_skel_name (void) const;
+  // retrieve the fully scoped skel class name.
+
+  const char *full_coll_name (int) const;
+  // retrieve the fully qualified collocated class name
+
+  const char *local_coll_name (int) const;
+  // retrieve the fully qualified collocated class name.
+
+  const char *be_interface::relative_skel_name (const char *skel_name);
+  // relative skeleton name
+
+  void compute_full_skel_name (const char *prefix,char *&skel_name);
+  // Build up the skeleton name
+
+  static const char *relative_name (const char *localname, const char *othername);
 
   virtual void gen_def_ctors (TAO_OutStream* os);
   //call the default constructors of all the base classes
@@ -86,13 +333,6 @@ public:
   // Generate the out class implementation.
   // If any one of the argument is 0, then use the name giin this
   // node, else use the arguments.
-
-  const char *full_skel_name (void);
-  // Retrieve the fully scoped skel class name.
-
-  const char *ami_handler_full_skel_name (void);
-  // Retrieve the fully scoped skel AMI handler class name
-
   //
   // Each interface (to fix names "T") also defines two help classes,
   // the "collocated" class inherits from T, but delegates on the
@@ -104,34 +344,10 @@ public:
   // defines the stubs (all operations in T are pure virtual).
   // @@ TODO currently the stub class is not implemented.
   //
-  const char *full_coll_name (int);
-  // Retrieve the fully qualified collocated class name
-
-  const char *ami_handler_full_coll_name (void);
-  // Retrieve the fully qualified collocated AMI handler class name
-
-  const char *local_coll_name (int) const;
-  // Retrieve the fully qualified collocated class name.
-
-  const char *ami_handler_local_coll_name (void);
-  // Retrieve the fully qualified collocated AMI handler class name.
-
-  const char *ami_handler_local_name (void);
-  // Retrieve the local name of the AMI handler
-
-  int compute_coll_names (const char *local_name,
-                          char *&coll_local_name,
-                          char *&coll_full_name);
-  // Generate collocated local and full names for the arbitrary local
-  // name under the scope of this interface. Usefull to generate AMI
-  // Handlers.
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
-
-  const char *relative_skel_name (const char *other_class_name);
-  // relative skeleton name
 
   int in_mult_inheritance (void);
   // am I in some form of multiple inheritance
@@ -166,6 +382,12 @@ public:
   // helper method passed to the template method to generate code for the
   // operation table
 
+  static int ami_handler_gen_optable_helper (be_interface *,
+                                             be_interface *,
+                                             TAO_OutStream *os);
+  // helper method passed to the template method to generate code for the
+  // operation table
+
   static int gen_skel_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
@@ -197,22 +419,11 @@ public:
   //helper method to generate a call to the copy constructors of all the base classes
 
 
-  void compute_fullskelname (void);
-  void compute_fullskelname (char *&skelname, const char * prefix);
-  // compute the fully scoped skel class name
-
   int gen_operation_table (void);
   // generate the operation table including entries for inherited interfaces
 
-  static const char *relative_name (const char* our_name,
-                                    const char *other_class_name);
-  // relative name for collocated class.
-
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
-
-  void compute_coll_name (int);
-  // compute the fully qualified collocated class name.
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
@@ -249,33 +460,15 @@ private:
   void gen_linear_search_instance (void);
   // Create an instance of the linear search optable.
 
-  char *full_skel_name_;
-  // Fully scoped skeleton name.
-
-  char *ami_handler_full_skel_name_;
-  // Fully scoped AMI Handler skeleton name
-
   int skel_count_;
   // Number of static skeletons in the operation table.
-
-  char *full_coll_name_;
-  // Full collocated name
-
-  char *ami_handler_full_coll_name_;
-  // Full collocated name of the AMI handler
-
-  char *local_coll_name_;
-  // Local collocated name
-
-  char *ami_handler_local_coll_name_;
-  // Local collocated name of the AMI handler
-
-  char *ami_handler_local_name_;
-  // Local name of the AMI Handler
 
   int in_mult_inheritance_;
   // am I directly or indirectly involved in a multiple inheritance. If the
   // value is -1 => not computed yet.
+
+  be_interface_type_strategy *strategy_;
+  // Member for holding the strategy for generating names
 };
 
 #endif  // if !defined
