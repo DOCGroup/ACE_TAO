@@ -127,7 +127,7 @@ main (int, char *[])
 
   Priority_Task tasks[ACE_MAX_ITERATIONS];
 
-  int i;
+  size_t i;
 
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.

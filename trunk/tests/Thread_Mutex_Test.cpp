@@ -28,7 +28,7 @@ test (void *args)
   ACE_Thread_Mutex *mutex = (ACE_Thread_Mutex *) args;
   ACE_OS::srand (ACE_OS::time (0));
 
-  for (int i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = trying to acquire on iteration %d\n", i));
       ACE_ASSERT (mutex->acquire () == 0);
@@ -45,7 +45,7 @@ test (void *args)
 
   return 0;
 }
-#endif /* ACE_HAS_THREADS */	
+#endif /* ACE_HAS_THREADS */
 
 static void
 spawn (void)
@@ -64,7 +64,7 @@ spawn (void)
 
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */	
+#endif /* ACE_HAS_THREADS */
 }
 
 int
