@@ -75,6 +75,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CDR_File_Test"=.\CDR_File_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Cache_Map_Manager_Test"=.\Cache_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
