@@ -18,6 +18,7 @@
 #define ACE_CONTAINERS_T_H
 
 #include "ace/ACE.h"
+#include "ace/Containers.h"      /* Need ACE_DLList_Node */
 
 class ACE_Allocator;
 
