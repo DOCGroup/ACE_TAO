@@ -1,15 +1,24 @@
-Thu May 22 14:12:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+Wed May 23 14:39:01 1997  Brian Mendel  <bmendel@mdc.com>
 
-	* IIOP/lib/giop.cpp (start): Code now returns immediately when an
- 	connection is not successfully made.
+        * IIOP/lib/objtable.{h,cpp}:  Added template specialization of 
+        ACE_Hash_Map_Manager for char*'s.
+
+        * IIOP/test/cubitS.cpp:  Fixed type_id to be of type CORBA_String_var.
+        Also, added a debug msg to print the object address to show the 
+        object for which the request is made.
+
+        * IIOP/test/svr.cpp:  Added capability to create multiple Cubit
+        objects via command line options.  Added -n for number of objects and
+        -k for specifying a base name.  For instance, -k Beevis -n 2 creates
+        Beevis1 and Beevis2 objects.  The clnt can then specify a specific
+        object for the request as usual.
 
 Wed May 22 12:28:45 1997  Brian Mendel  <bmendel@mdc.com>
 
-        * IIOP/test/clnt.cpp: Deleted VxWorks specific sections.  Command
- 	line is now working for VxWorks.
-	
-        * IIOP/test/svr.cpp: Deleted VxWOrks specific sections.  Command
- 	line is now working for VxWorks.
+        * IIOP/test/clnt.cpp:  Deleted VxWorks specific sections.  Command
+        line is now working for VxWorks.
+        * IIOP/test/svr.cpp:  Deleted VxWOrks specific sections.  Command line
+        is now working for VxWorks.
 
 Wed May 22 11:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
