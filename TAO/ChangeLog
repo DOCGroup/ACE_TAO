@@ -1,16 +1,29 @@
+Wed Oct 27 07:15:25 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/HTIOP/AMI/client.cpp:
+        * orbsvcs/tests/HTIOP/AMI/server.cpp:
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp:
+
+          Removed unnessesary CORBA environment arguments from
+          ACE_OS::socket_init().
+
+        * orbsvcs/tests/HTIOP/BiDirectional/server.cpp:
+
+          Added a necessary CORBA environment argument.
+
 Tue Oct 26 13:42:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
         * orbsvcs//IFRService/ModuleDef_i.cpp:
-        
+
           Cosmetic changes.
-          
+
         * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Contained_i.h:
         * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
         * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
-        
+
           Fixed a bug in entering a nested struct or union into the IFR.
           The IFR create_* methods for structs and unions require a
           list of members to be passed. If one of the members is also
@@ -27,16 +40,16 @@ Tue Oct 26 13:42:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Oct 26 11:14:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
 
-	  Don't maintain a separate array of log id's, as it wasn't being
-	  updated when logs were removed, copied, etc.  Generate the list
-	  only when it is needed in TAO_LogMgr_i::list_logs_by_id().
+          Don't maintain a separate array of log id's, as it wasn't being
+          updated when logs were removed, copied, etc.  Generate the list
+          only when it is needed in TAO_LogMgr_i::list_logs_by_id().
 
 Tue Oct 26 12:59:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
