@@ -4,14 +4,11 @@ This directory houses a collection of tests which exercise TAO support
 for features defined in the RT-CORBA specification.  OMG Real-time
 CORBA specification is available at:
 http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03 (or check the OMG website
-for a more recent version).  More information on TAO's implementation
-of RT-CORBA 1.0 specification is available at:
+for a more recent version).  
 
-http://www.cs.wustl.edu/~schmidt/corba-research-realtime.html
-
-and information on the status of TAO's RT-CORBA status is available at
-
-$TAO_ROOT/docs/releasenotes/RTCorba.html
+More information on TAO's implementation of RT-CORBA 1.0 specification
+is available at:
+$TAO_ROOT/docs/rtcorba/index.html
 
 Each individual subdirectory contains a README file with more
 information on the corresponding test.  The list of tests so far
