@@ -37,6 +37,8 @@ my(%keywords) = ('if'              => 1,
                  'comment'         => 1,
                  'flag_overrides'  => 1,
                  'marker'          => 1,
+                 'uc'              => 1,
+                 'lc'              => 1,
                 );
 
 # ************************************************************
@@ -614,6 +616,28 @@ sub handle_special {
 }
 
 
+sub handle_uc {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = uc($self->get_value_with_default($name));
+    $self->append_current($val);
+  }
+}
+
+
+sub handle_lc {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = lc($self->get_value_with_default($name));
+    $self->append_current($val);
+  }
+}
+
+
 sub handle_noextension {
   my($self) = shift;
   my($name) = shift;
@@ -770,6 +794,12 @@ sub process_name {
       }
       elsif ($name eq 'marker') {
         $self->handle_marker($val);
+      }
+      elsif ($name eq 'uc') {
+        $self->handle_uc($val);
+      }
+      elsif ($name eq 'lc') {
+        $self->handle_lc($val);
       }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);

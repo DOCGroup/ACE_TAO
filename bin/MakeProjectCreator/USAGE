@@ -16,8 +16,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
-              [-type <borland | em3 | ghs | gnuace | make | nmake |
-                      va4 | vc6 | vc7 | vc71>]
+              [-type <automake | borland | em3 | ghs | gnuace | make |
+                      nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
@@ -124,8 +124,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
-              [-type <borland | em3 | ghs | gnuace | make | nmake |
-                      va4 | vc6 | vc7 | vc71>]
+              [-type <automake | borland | em3 | ghs | gnuace | make |
+                      nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
