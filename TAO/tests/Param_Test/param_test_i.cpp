@@ -360,6 +360,20 @@ Param_Test_i::test_objref (Coffee_ptr o1,
   return ret;
 }
 
+// test for typecodes
+CORBA::TypeCode_ptr
+Param_Test_i::test_typecode (CORBA::TypeCode_ptr t1,
+                             CORBA::TypeCode_ptr &t2,
+                             CORBA::TypeCode_out t3,
+                             CORBA::Environment &env)
+{
+  // we simply assign t1 to the others
+  CORBA::TypeCode_ptr retval = CORBA::TypeCode::_duplicate (t1);
+  t2 = CORBA::TypeCode::_duplicate (t1);
+  t3 = CORBA::TypeCode::_duplicate (t1);
+  return retval;
+}
+
 // test for Anys
 CORBA::Any *
 Param_Test_i::test_any (const CORBA::Any &a1,

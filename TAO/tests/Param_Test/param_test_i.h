@@ -126,7 +126,7 @@ public:
       Param_Test::Bounded_Coffee_Mix_out s3,
       CORBA::Environment &env
      );
-  // = End of sequences tests.... 
+  // = End of sequences tests....
 
   virtual Param_Test::Var_Struct *
   test_var_struct (const Param_Test::Var_Struct &s1,
@@ -152,6 +152,13 @@ public:
                Coffee_out o3,
                CORBA::Environment &env);
   // test for object references
+
+  virtual CORBA::TypeCode_ptr
+  test_typecode (CORBA::TypeCode_ptr t1,
+                 CORBA::TypeCode_ptr &o2,
+                 CORBA::TypeCode_out o3,
+                 CORBA::Environment &env);
+  // test for typecodes
 
   virtual CORBA::Any *
   test_any (const CORBA::Any &a1,
