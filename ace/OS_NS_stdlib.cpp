@@ -13,10 +13,10 @@ ACE_RCSID(ace, OS_NS_stdlib, "$Id$")
 
 #include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_LACKS_MKTEMP)
+#if defined (ACE_LACKS_MKTEMP) || defined (ACE_LACKS_REALPATH)
 #  include "ace/OS_NS_stdio.h"
 #  include "ace/OS_NS_sys_stat.h"
-#endif /* ACE_LACKS_MKTEMP */
+#endif /* ACE_LACKS_MKTEMP || ACE_LACKS_REALPATH */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
@@ -258,6 +258,175 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
 {
   return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
 }
+
+#if defined (ACE_LACKS_REALPATH)
+ACE_TCHAR *
+ACE_OS::realpath (const ACE_TCHAR *file_name,
+		  ACE_TCHAR *resolved_name)
+{
+  ACE_OS_TRACE ("ACE_OS::realpath");
+  
+  if(file_name == 0)
+    {
+      // Single Unix Specification V3:
+      //   Return an error if parameter is a null pointer.
+      errno = EINVAL;
+      return 0;
+    }
+  
+  if (*file_name == '\0')
+    {
+      // Single Unix Specification V3:
+      //   Return an error if the file_name argument points
+      //   to an empty string.
+      errno = ENOENT;
+      return 0;
+    }
+  
+  char* rpath;
+  
+  if (resolved_name == 0)
+    {
+      // Single Unix Specification V3:
+      //   Return an error if parameter is a null pointer.
+      //   
+      // To match glibc realpath() and Win32 _fullpath() behavior,
+      // allocate room for the return value if resolved_name is
+      // a null pointer.
+      rpath = static_cast<char*>(ACE_OS::malloc (PATH_MAX));
+      if (rpath == 0)
+	{
+	  errno = ENOMEM;
+	  return 0;
+	}
+    }
+  else
+    {
+      rpath = resolved_name;
+    }
+  
+  char* dest;
+  
+  if (*file_name != '/')
+    {
+      // file_name is relative path so CWD needs to be added
+      if (ACE_OS::getcwd (rpath, PATH_MAX) == 0)
+	{
+	  if (resolved_name == 0)
+	    ACE_OS::free (rpath);
+	  return 0;
+	}
+      dest = ACE_OS::strchr (rpath, '\0');
+    }
+  else
+    {
+      dest = rpath;
+    }
+  
+  char expand_buf[PATH_MAX]; // Extra buffer needed to expand symbolic links
+  int nlinks = 0;
+  
+  while (*file_name)
+  {
+      *dest++ = '/';
+      
+      // Skip multiple separators
+      while (*file_name == '/')
+	++file_name;
+      
+      char* start = dest;
+      
+      // Process one path component
+      while (*file_name && *file_name != '/')
+	{
+	  *dest++ = *file_name++;
+	  if (dest - rpath > PATH_MAX)
+          {
+	      errno = ENAMETOOLONG;
+	      if (resolved_name == 0)
+		ACE_OS::free (rpath);
+	      return 0;
+	    }
+	}
+      
+      if (start == dest) // Are we done?
+	{
+	  if (dest - rpath > 1)
+	    --dest; // Remove trailing separator if not at root
+	  break;
+	}
+      else if (dest - start == 1 && *start == '.')
+	{
+	  dest -= 2; // Remove "./"
+	}
+      else if (dest - start == 2 && *start == '.' && *(start +1) == '.')
+	{
+	  dest -= 3; // Remove "../"
+	  if (dest > rpath) // Remove the last path component if not at root
+	    while (*--dest != '/')
+	      ;
+	}
+      else
+	{
+	  ACE_stat st;
+	  
+	  *dest = '\0';
+	  if (ACE_OS::lstat(rpath, &st) < 0)
+	    {
+	      if (resolved_name == 0)
+		ACE_OS::free (rpath);
+	      return 0;
+	    }
+	  
+	  // Check if current path is a link
+	  if (S_ISLNK (st.st_mode))
+	    {
+	      if (++nlinks > MAXSYMLINKS)
+		{
+		  errno = ELOOP;
+		  if (resolved_name == 0)
+		    ACE_OS::free (rpath);
+		  return 0;
+		}
+	      
+	      char link_buf[PATH_MAX];
+	      
+	      int link_len = ACE_OS::readlink (rpath, link_buf, PATH_MAX);
+	      int tail_len = ACE_OS::strlen (file_name) + 1;
+	      
+	      // Check if there is room to expand link?
+	      if (link_len + tail_len > PATH_MAX)
+		{
+		  errno = ENAMETOOLONG;
+		  if (resolved_name == 0)
+		    ACE_OS::free (rpath);
+		  return 0;
+		}
+	      
+	      // Move tail and prefix it with expanded link
+	      ACE_OS::memmove (expand_buf + link_len, file_name, tail_len);
+	      ACE_OS::memcpy (expand_buf, link_buf, link_len);
+	      
+	      if (*link_buf == '/') // Absolute link?
+		{
+		  dest = rpath;
+		}
+	      else // Relative link, remove expanded link component
+		{
+		  --dest;
+		  while (*--dest != '/')
+		    ;
+		}
+	      file_name = expand_buf; // Source path is now in expand_buf
+	    }
+	}
+    }
+  
+  *dest = '\0';
+  
+  return rpath;
+}
+#endif /* ACE_LACKS_REALPATH */
 
 #if defined (ACE_LACKS_STRTOL)
 long

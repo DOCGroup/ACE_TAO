@@ -1,25 +1,34 @@
+Fri May 14 06:56:20 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/config-lynxos.h:
+
+	 Added ACE_OS::realpath() implementation.
+	
 Thu May 13 20:23:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.h:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.h:
 
-	  Added missing "ace/svc_export.h" include.  Fixes compile-time
-	  errors in multithread-enabled builds.
+          Added missing "ace/svc_export.h" include.  Fixes compile-time
+          errors in multithread-enabled builds.
 
 Thu May 13 18:37:52 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
-	  #include "ace/Service_Object.h" for the non-AIO case.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
+          #include "ace/Service_Object.h" for the non-AIO case.
 
 Thu May 13 21:39:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file
-	name to make file names shorter. Thanks to Chad Elliott
-	<elliott_c@ociweb.com> for a patch.
+        * bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file
+        name to make file names shorter. Thanks to Chad Elliott
+        <elliott_c@ociweb.com> for a patch.
 
 Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* docs/ACE-guidelines.html: Added guideline about long file
-	names.
+        * docs/ACE-guidelines.html: Added guideline about long file
+        names.
 
 Thu May 13 18:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -56,75 +65,75 @@ Thu May 13 07:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May 12 21:26:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
 
-	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Fixes
-	  single-threaded build compile-time errors.
+          Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Fixes
+          single-threaded build compile-time errors.
 
-	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:
-	* performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.h:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:
+        * performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.h:
 
-	  #ifdef out the code if ACE_HAS_THREADS is not defined.  This
-	  code is only meant to be used when multithreading support in ACE
-	  is enabled.  Fixes single-threaded build compile-time errors.
+          #ifdef out the code if ACE_HAS_THREADS is not defined.  This
+          code is only meant to be used when multithreading support in ACE
+          is enabled.  Fixes single-threaded build compile-time errors.
 
 Wed May 12 20:13:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Local_Tokens.cpp:
-	* ace/Log_Msg_IPC.cpp:
-	* ace/Log_Msg_NT_Event_Log.cpp:
-	* ace/Log_Msg_UNIX_Syslog.cpp:
-	* ace/Log_Record.cpp:
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_IO.cpp:
-	* ace/Memory_Pool.cpp:
-	* ace/Message_Block.cpp:
-	* ace/Message_Block_T.cpp:
-	* ace/Message_Queue.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Log_Msg_IPC.cpp:
+        * ace/Log_Msg_NT_Event_Log.cpp:
+        * ace/Log_Msg_UNIX_Syslog.cpp:
+        * ace/Log_Record.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_IO.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block_T.cpp:
+        * ace/Message_Queue.cpp:
 
           Replaced deprecated ACE cast macro usage with ANSI C++ cast
           counterparts.
 
-	* ace/Profile_Timer.h (ACE_Profile_Timer::ACE_Elapsed_Time):
+        * ace/Profile_Timer.h (ACE_Profile_Timer::ACE_Elapsed_Time):
 
-	  Corrected Doxygen documentation for this class.
+          Corrected Doxygen documentation for this class.
 
-	* ace/Profile_Timer.cpp (elapsed_time):
+        * ace/Profile_Timer.cpp (elapsed_time):
 
-	  Corrected comments in this method.
+          Corrected comments in this method.
 
-	* ace/RW_Mutex.h:
+        * ace/RW_Mutex.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
 Wed May 12 16:48:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: If built on
-	  a platform that doesn't offer AIO, display an error message on
-	  service load, and fail.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: If built on
+          a platform that doesn't offer AIO, display an error message on
+          service load, and fail.
 
 Wed May 12 11:34:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-freebsd.h: Reverted this change:
-	  Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
-	  because I mistakenly wiped out AIOCB_Proactor support, not
-	  CB_Proactor support. Thanks to Matthew Corey for correcting
-	  me on this.
+        * ace/config-freebsd.h: Reverted this change:
+          Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
+          because I mistakenly wiped out AIOCB_Proactor support, not
+          CB_Proactor support. Thanks to Matthew Corey for correcting
+          me on this.
 
-	* ace/POSIX_CB_Proactor.{h cpp}: Also related to:
-	  Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
-	  Removed the __FreeBSD_version_ check and all FreeBSD-specific
-	  code from ACE_POSIX_CB_Proactor. This class is no longer compiled
-	  on FreeBSD per Matthew Corey's advice.
+        * ace/POSIX_CB_Proactor.{h cpp}: Also related to:
+          Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
+          Removed the __FreeBSD_version_ check and all FreeBSD-specific
+          code from ACE_POSIX_CB_Proactor. This class is no longer compiled
+          on FreeBSD per Matthew Corey's advice.
 
-	* ace/Proactor.cpp (ctor): Added __FreeBSD__ to the condition under
-	  which ACE_POSIX_CB_Proactor is not used as the default
-	  implementation. Thanks to Bill Cassanova for reporting this.
+        * ace/Proactor.cpp (ctor): Added __FreeBSD__ to the condition under
+          which ACE_POSIX_CB_Proactor is not used as the default
+          implementation. Thanks to Bill Cassanova for reporting this.
 
 Wed May 12 13:29:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -160,7 +169,7 @@ Wed May 12 07:03:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.h:
           Removed usage of ACE_INLINE_FOR_GNUC and improved doxygen
-	  documentation
+          documentation
 
         * ace/Memory_Pool.h:
           Improved doxygen documentation

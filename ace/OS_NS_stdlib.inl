@@ -291,6 +291,21 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 
 #endif /* !ACE_WIN32 */
 
+#if !defined (ACE_LACKS_REALPATH)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::realpath (const ACE_TCHAR *file_name,
+		  ACE_TCHAR *resolved_name)
+{
+# if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  return ::_wfullpath (resolved_name, file_name, PATH_MAX);
+# elif defined (ACE_WIN32)
+  return ::_fullpath (resolved_name, file_name, PATH_MAX);
+# else /* ACE_WIN32 */
+  return ::realpath (file_name, resolved_name);
+# endif /* ! ACE_WIN32 */
+}
+#endif /* !ACE_LACKS_REALPATH */
+
 ACE_INLINE ACE_EXIT_HOOK
 ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
 {
