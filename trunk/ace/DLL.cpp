@@ -5,7 +5,10 @@
 #include "ace/DLL.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
-  
+ 
+// Default constructor. Also, by default, the object will be closed 
+// before it is destroyed.
+
 ACE_DLL::ACE_DLL (int close_on_destruction)
   : handle_ (ACE_SHLIB_INVALID_HANDLE),
     close_on_destruction_ (close_on_destruction)
@@ -20,14 +23,14 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
                   int close_on_destruction)
   : close_on_destruction_ (close_on_destruction)
 {
-  // If the library name is not given don't open the file.
+  // If the library name is not given, don't open the file.
   if (dll_name != 0)
    {
      this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
 
      // The ACE_SHLIB_HANDLE object is obtained.
 
-     if (this->handle_ == 0)
+     if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
        ACE_ERROR ((LM_ERROR,
                    "%s\n",
                    this->error ()));
@@ -36,12 +39,12 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
 
 // The library is closed before the class gets destroyed depending on
 // the close_on_destruction value specified which is stored in
-// close_mode_.
+// close_on_destruction_.
 
 ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasn't been already.
-  if (this->close_on_destruction_ != 0 
+  if (this->close_on_destruction_ == 0 
       && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     this->close ();
 }
@@ -71,7 +74,7 @@ ACE_DLL::open (ACE_DL_TYPE dll_name,
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
 
-  if (this->handle_ == 0)
+  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s\n", this->error ()),
                       -1);
@@ -98,7 +101,7 @@ ACE_DLL::close (void)
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
       int retval = ACE_OS::dlclose (this->handle_);
-      this->handle_ = 0;
+      this->handle_ = ACE_SHLIB_INVALID_HANDLE;
       return retval;
     }
   else
@@ -124,7 +127,7 @@ ACE_DLL::get_handle (int become_owner)
   // rights to close it on destruction. The new controller has to do
   // it explicitly.
   if (become_owner == 0)
-    this->close_on_destruction_ = 0;
+    this->close_on_destruction_ = 1;
 
   // Return the handle requested by the user.
   return this->handle_;
