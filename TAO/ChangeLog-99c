@@ -1,3 +1,13 @@
+Sun May 16 10:59:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	  Added missing template instantiations, at least IRIX/MIPSPro
+	  needs them.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Removed unused variable
+
 Sun May 16 10:35:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
