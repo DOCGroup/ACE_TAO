@@ -37,11 +37,11 @@ static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
 // static data members
-ACE_Filecache * ACE_Filecache::cvf_ = 0;
+ACE_Filecache *ACE_Filecache::cvf_ = 0;
 ACE_SYNCH_RW_MUTEX ACE_Filecache::lock_;
 
-// this is how you make data opaque in C++
-// I'd like to do this with ACE_Filecache_Object too, but Doug would pro'ly kill me
+// This is how you make data opaque in C++ I'd like to do this with
+// ACE_Filecache_Object too, but Doug would pro'ly kill me.
 class ACE_Filecache_Singleton
 {
 public:
@@ -59,9 +59,9 @@ private:
   ACE_Filecache * singleton_;
 };
 
-// This singleton is necessary for now in order to delete the temporary
-// files that are created for the cache.  This won't be needed in the
-// future when we remove reliance on copying files.
+// This singleton is necessary for now in order to delete the
+// temporary files that are created for the cache.  This won't be
+// needed in the future when we remove reliance on copying files.
 static ACE_Filecache_Singleton cvf_singleton;
 
 void
