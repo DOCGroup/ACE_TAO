@@ -1,3 +1,9 @@
+Mon Jan 04 12:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Scheduler_Utilities.{h, i}: added 
+	  ACE_NEW_THROW_RETURN, lots of comments.
+
 Mon Jan 04 12:04:37 1999  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/orbsvcs/CosEvent/*
