@@ -11,7 +11,7 @@ override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Ge 1
 # The following lines tell the souce code that the trading
 # service is available.
 
-LDLIBS = -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 IDL_SRC = \
         LoggerC.cpp LoggerS.cpp
