@@ -65,12 +65,12 @@ public:
 private:
   typedef TAO_SVC_HANDLER BASECLASS;
   // Trait indicating the base class.
-  
+
   u_char expecting_response_;
   // State flag which, if non-zero, indicates that this handler is
   // looking to get input.  Otherwise, any input received is
   // unexpected.
-  
+
   u_char input_available_;
   // Flag indicating whether or not input is available.  Only valid
   // when <expecting_response_> is non-zero.
@@ -88,7 +88,7 @@ public:
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.  Argument is unused.
-  
+
   virtual int svc (void);
   // Only used when the handler is turned into an active object by
   // calling <activate>.  This serves as the event loop in such cases.
@@ -153,8 +153,12 @@ protected:
   // Pointer to the object adapter parameters.
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/Connect.i"
+#endif /* __ACE_INLINE__ */
+
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
                               ACE_SOCK_ACCEPTOR>
-	TAO_ACCEPTOR;
+        TAO_ACCEPTOR;
 
 #endif /* TAO_CONNECT_H */

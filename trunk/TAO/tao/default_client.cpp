@@ -1,5 +1,11 @@
+// $Id$
+
 #include "tao/default_client.h"
 #include "tao/ORB_Core.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/default_client.i"
+#endif /* ! __ACE_INLINE__ */
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {

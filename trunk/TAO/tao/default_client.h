@@ -42,6 +42,10 @@ public:
   // Parse svc.conf arguments
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/default_client.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_CLIENT_H */

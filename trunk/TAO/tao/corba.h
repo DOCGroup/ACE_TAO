@@ -204,48 +204,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/IIOP_Interpreter.h"
 #include "tao/GIOP.h"
 
-// The following *.i files are always included here
-#  if !defined(__ACE_INLINE__)
-#    undef ACE_INLINE
-#    define ACE_INLINE inline
-#    define do_undef_on_ACE_INLINE
-#  endif
-
-#if 0 /* These are now #included by their .h/.cpp files. */
-#include "tao/ORB_Core.i"
-#include "tao/Typecode.i"
-#include "tao/NVList.i"
-#include "tao/Any.i"
-#include "tao/Stub.i"
-#include "tao/Object.i"
-#include "tao/ORB.i"
-#include "tao/Marshal.i"
-#include "tao/CDR.i"
-#include "tao/GIOP.i"
-#include "tao/IIOP_ORB.i"
-#include "tao/IIOP_Object.i"
-#include "tao/Server_Request.i"
-#include "tao/Request.i"
-#include "tao/params.i"
-#include "Exception.i"
-#endif /* 0 */
-
-#  if defined (do_undef_on_ACE_INLINE)
-#    undef do_undef_on_ACE_INLINE
-#    undef ACE_INLINE
-#    define ACE_INLINE
-#  endif /* do_undef_on_ACE_INLINE */
-
-// The following *.i files are conditionally included here.
-#if defined (__ACE_INLINE__)
-#include "tao/default_client.i"
-#include "tao/default_server.i"
-#include "tao/Connect.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (__ACE_INLINE__)
-#endif /* __ACE_INLINE__ */
-
 #include "tao/singletons.h"
 
 #if !defined (ACE_NESTED_CLASS)
