@@ -74,7 +74,7 @@
       with an ampersand '<CODE>&amp;</CODE>' as follows:
     <BLOCKQUOTE>
       <CODE>
-	-ORBEndpoint iiop://foo:1234/option1=value1&option2=value2
+	-ORBEndpoint 'iiop://foo:1234/option1=value1&option2=value2'
       </CODE>
     </BLOCKQUOTE>
     <P>
@@ -83,7 +83,10 @@
       i.e. for IIOP endpoints.  This character may differ for other
       types of pluggable protocol endpoints.  For example, UIOP
       endpoint-specifc options are separated from the address by a
-      vertical bar '<CODE>|</CODE>'.
+      vertical bar '<CODE>|</CODE>'.  Also note that when using more
+      than option, quotes should be used to prevent the shell from
+      interpreting the ampersand '<CODE>&amp;</CODE>' as a command to
+      tell the shell to backgroup a job.
 
     <hr>
     <P>
@@ -181,14 +184,14 @@
     <BLOCKQUOTE>
       <P>
 	<CODE>
-	  -ORBEndpoint iiop://foo1
+	  -ORBEndpoint iiop://foo2
 	</CODE>
     </BLOCKQUOTE>
     or:
     <BLOCKQUOTE>
       <P>
 	<CODE>
-	  -ORBEndpoint iiop://foo1.bar.baz
+	  -ORBEndpoint iiop://foo2.bar.baz
 	</CODE>
     </BLOCKQUOTE>
     <P>
@@ -204,7 +207,7 @@
     <BLOCKQUOTE>
       <P>
 	<CODE>
-	  -ORBEndpoint iiop://foo1:1234
+	  -ORBEndpoint iiop://foo2:1234
 	</CODE>
     </BLOCKQUOTE>
     <P>
@@ -221,7 +224,7 @@
     <BLOCKQUOTE>
       <P>
 	<CODE>
-	  -ORBEndpoint iiop://foo1:my_protocol
+	  -ORBEndpoint iiop://foo2:my_protocol
 	</CODE>
     </BLOCKQUOTE>
     <P>
@@ -384,9 +387,13 @@
     <BLOCKQUOTE>
       <P>
 	<CODE>
-	  -ORBEndpoint uiop://1.0@/tmp/my_rendezvous_point|priority=50
+	  -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|priority=50'
 	</CODE>
     </BLOCKQUOTE>
+    <P>
+      Notice that the endpoint is quoted to prevent the shell from
+      interpreting the vertical bar '<CODE>|</CODE>' as the shell
+      "pipe" character.
     <P>
     <h3>UIOP Address Format</h3>
     <P>
@@ -444,15 +451,15 @@
     <UL>
       <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo1</CODE>
       <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
-      <LI><CODE>-ORBEndpoint uiop://1.1@/tmp/bar|priority=300</CODE></LI>
-      <LI><CODE>-ORBEndpoint uiop://|priority=2</CODE>
+      <LI><CODE>-ORBEndpoint 'uiop://1.1@/tmp/bar|priority=300'</CODE></LI>
+      <LI><CODE>-ORBEndpoint 'uiop://|priority=2'</CODE>
     </UL>
 
     <hr>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Thu May 18 11:41:48 PDT 2000
+Last modified: Thu May 18 17:01:44 PDT 2000
 <!-- hhmts end -->
   </body>
 </html>
