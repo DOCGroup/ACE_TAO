@@ -152,13 +152,16 @@ void *CLD_Handler::forward () {
   ACE_Message_Block *blocks[ACE_IOV_MAX];
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
+  ACE_Time_Value timeout;
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
   ACE_Sig_Action original_action;
   no_sigpipe.register_action (SIGPIPE, &original_action);
 
-  ACE_Time_Value timeout (ACE_OS::gettimeofday ());
-  timeout += FLUSH_TIMEOUT;
   for (;;) {
+    if (message_index == 0) {
+      timeout = ACE_OS::gettimeofday ();
+      timeout += FLUSH_TIMEOUT;
+    }
     ACE_Message_Block *mblk = 0;
     if (msg_queue_.dequeue_head (mblk, &timeout) == -1) {
       if (errno != EWOULDBLOCK) break;
@@ -175,8 +178,6 @@ void *CLD_Handler::forward () {
          >= FLUSH_TIMEOUT)) {
       if (send (blocks, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
-      ACE_Time_Value timeout (ACE_OS::gettimeofday ());
-      timeout += FLUSH_TIMEOUT;
     }
   }
 
