@@ -615,8 +615,14 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   ACE_RANDR_TYPE seed =
     static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ());
 
-  static ACE_TCHAR const MAX_VAL =
-    std::numeric_limits<ACE_TCHAR>::max ();
+  // We only care about UTF-8 / ASCII characters in generated
+  // filenames.  A UTF-16 or UTF-32 character could potentially cause
+  // a very large space to be searched in the below do/while() loop,
+  // greatly slowing down this mkstemp() implementation.  It is more
+  // practical to limit the search space to UTF-8 / ASCII characters
+  // (i.e. 127 characters).
+  static float const MAX_VAL =
+    static_cast<float> (std::numeric_limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
   // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific
@@ -628,7 +634,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
 
   // Factor out the constant coefficient.
   static float const coefficient =
-    static_cast<float> (MAX_VAL / (RAND_MAX + 1.0));
+    static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
   // @@ These nested loops may be ineffecient.  Improvements are
   //    welcome.
