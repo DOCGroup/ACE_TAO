@@ -1,3 +1,8 @@
+Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: ignored shared_libs_only
+	  in modules that only build a static lib.
+
 Thu Sep 11 00:24:04 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* netsvcs/lib/README: The entry point for the time service client
