@@ -1,32 +1,38 @@
+Mon Feb 16 09:36:08 2004  David Smith  <dts@prismtechnologies.com>
+
+        * tao/Exception.cpp:
+        * tao/ORB.cpp:
+        Prevents compile errors on HPUX, but is not the real fix.
+
 Sun Feb 15 14:06:33 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent.mpc
         * orbsvcs/orbsvcs/EventChannel/ObjectGroupManagerHandler.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/ObjectGroupManagerHandler.h:
- 	* orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.h:
- 	* orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.h:
- 	* orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.h:
- 	* orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.h:
- 	* orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.h:
- 	* orbsvcs/orbsvcs/EventChannel/Replication_Service.cpp:
- 	* orbsvcs/orbsvcs/EventChannel/Replication_Service.h:
- 	* orbsvcs/orbsvcs/EventChannel/Replication_Strategy.h:
- 	Changed for using AMI calls when adding new replicas to a
- 	object group under AMI replication strategy.
+        * orbsvcs/orbsvcs/EventChannel/ObjectGroupManagerHandler.h:
+        * orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.h:
+        * orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.h:
+        * orbsvcs/orbsvcs/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/EventChannel/Replication_Service.h:
+        * orbsvcs/orbsvcs/EventChannel/Replication_Strategy.h:
+        Changed for using AMI calls when adding new replicas to a
+        object group under AMI replication strategy.
 
 
 Sun Feb 15 08:09:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
- 	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
-	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
 
-	  Fixes for the Win32 builds.
+          Fixes for the Win32 builds.
 
 Sun Feb 15 00:20:28 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -35,17 +41,17 @@ Sun Feb 15 00:20:28 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Sat Feb 14 15:10:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
-	* performance-tests/Anyop/Anyop.dsp:
-	* performance-tests/Anyop/Anyop.dsw:
-	* tests/DynAny_Test/basic_test.dsp:
-	* tests/Param_Test/anyop.dsp:
-	* tests/Param_Test/client.dsp:
-	* tests/Param_Test/server.dsp:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * performance-tests/Anyop/Anyop.dsp:
+        * performance-tests/Anyop/Anyop.dsw:
+        * tests/DynAny_Test/basic_test.dsp:
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
 
-	  Fixed a bunch of path problems that prevented them from getting
-	  compiled fine.
+          Fixed a bunch of path problems that prevented them from getting
+          compiled fine.
 
 Sat Feb 14 13:24:03 2004  Steve Totten  <totten_s@ociweb.com>
 
@@ -56,15 +62,15 @@ Sat Feb 14 13:24:03 2004  Steve Totten  <totten_s@ociweb.com>
 
 Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Any_Impl.cpp:
-	* tao/Any_Impl.h:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl.h:
 
-	  Added a mutex around refcounting to address problems as outlined
-	  in
+          Added a mutex around refcounting to address problems as outlined
+          in
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
 
-	  Thanks to Torsten Kuepper for reporting the problem.
+          Thanks to Torsten Kuepper for reporting the problem.
 
 Fri Feb 13 15:34:22 EST 2004 Kevin Bryan <bryank@cs.uri.edu>
 
