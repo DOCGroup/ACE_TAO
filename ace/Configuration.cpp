@@ -248,10 +248,13 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
       VALUETYPE type;
       ACE_TString line;
       ACE_TCHAR int_value[32];
+      ACE_TCHAR bin_value[3];
+      void* binary_data;
+      u_int binary_length;
       ACE_TString string_value;
       while (!enumerate_values (section, index, name, type))
         {
-          line = name + ACE_TEXT ("=");
+          line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
           switch (type)
             {
             case INTEGER:
@@ -260,7 +263,8 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                 if (get_integer_value (section, name.fast_rep (), value))
                   return -2;
 
-                ACE_OS::sprintf (int_value, ACE_TEXT ("#%d"), value);
+                ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), value);
+                line += ACE_TEXT("dword:");
                 line += int_value;
                 break;
               }
@@ -272,12 +276,32 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                   return -2;
 
                 line += ACE_TEXT ("\"");
-                line += string_value;
+                line += string_value + ACE_TEXT("\"");
                 break;
               }
             case BINARY:
               {
                 // not supported yet - maybe use BASE64 codeing?
+                if(get_binary_value(section, 
+                                    name.fast_rep(),
+                                    binary_data,
+                                    binary_length))
+                  return -2;
+
+                line += ACE_TEXT ("hex:");
+
+                unsigned char* ptr = (unsigned char*)binary_data;
+                while(binary_length)
+                {
+                  if(ptr != binary_data)
+                  {
+                    line += ACE_TEXT (",");
+                  }
+                  ACE_OS::sprintf(ACE_TEXT (bin_value), "%02x", *ptr);
+                  line += bin_value;
+                  --binary_length;
+                  ++ptr;
+                }
                 break;
               }
             default:
@@ -349,7 +373,12 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
         {
           // We have a new section here, strip out the section name
           int length = ACE_OS::strlen (buffer);
-          buffer[length - 2] = 0;
+          ACE_TCHAR* end = ACE_OS::strrchr(buffer, ACE_TEXT(']'));
+          if(!end)
+          {
+            return -3;
+          }
+          *end = 0;
 
           if (expand_path (root_, buffer + 1, section, 1))
             return -3;
@@ -357,6 +386,69 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
           continue;
         }
 
+      if(buffer[0] == ACE_TEXT ('"'))
+      {
+        // we have a value
+        ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
+        if (!end)  // no closing quote, not a value so just skip it
+          continue;
+
+        // null terminate the name
+        *end = 0;
+        ACE_TCHAR* name = buffer + 1;
+        end+=2;
+        // determine the type
+        if (*end == '\"')
+          {
+            // string type
+            // truncate trailing "
+            ++end;
+            ACE_TCHAR* trailing = ACE_OS::strrchr(end, '"');
+            if(trailing)
+            {
+              *trailing = 0;
+            }
+            if (set_string_value (section, name, end))
+              return -4;
+          }
+        else if (ACE_OS::strncmp(end, "dword:", 6) == 0)
+          {
+            // number type
+            ACE_TCHAR* endptr = 0;
+            u_int value = ACE_OS::strtoul(end + 6, &endptr, 16);
+            if (set_integer_value (section, name, value))
+              return -4;
+          }
+        else if(ACE_OS::strncmp(end, "hex:", 4) == 0)
+          {
+            // binary type
+            u_int string_length = ACE_OS::strlen(end+4);
+            // divide by 3 to get the actual buffer length
+            u_int length = string_length / 3;
+            u_int remaining = length;
+            u_char* data = new u_char[length];
+            u_char* out = data;
+            ACE_TCHAR* in = end + 4;
+            ACE_TCHAR* endptr = 0;
+            while(remaining)
+            {
+              u_char charin = (u_char)ACE_OS::strtoul(in, &endptr, 16);
+              *out = charin;
+              ++out;
+              --remaining;
+              in += 3;
+            }
+            if(set_binary_value(section, name, data, length))
+              return -4;
+          }
+        else
+          {
+            // invalid type, ignore
+            continue;
+          }
+      }
+    }
+    /*
       // assume this is a value, read in the value name
       ACE_TCHAR* end = ACE_OS::strchr (buffer, ACE_TEXT ('='));
       if (!end)  // no =, not a value so just skip it
@@ -385,6 +477,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
           continue;
         }
     }
+        */
 
   if (ferror (in))
     return -1;
@@ -751,6 +844,46 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   ACE_OS::memcpy (new_data, buffer, length);
   data = new_data;
+  return 0;
+}
+
+int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type_out)
+{
+  if (validate_name (name))
+    return -1;
+
+  HKEY base_key;
+  if (load_key (key, base_key))
+    return -1;
+
+  unsigned char buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
+  DWORD type;
+  if (::RegQueryValueEx (base_key, 
+                         name, 
+                         NULL, 
+                         &type, 
+                         (BYTE*)&buffer, 
+                         &buffer_length) != ERROR_SUCCESS)
+    return -1;
+
+  switch(type)
+  {
+  case REG_SZ:
+    type_out = STRING;
+    break;
+  case REG_DWORD:
+    type_out = INTEGER;
+    break;
+  case REG_BINARY:
+    type_out = BINARY;
+    break;
+  default:
+    return -1; // unknown type
+  }
+ 
   return 0;
 }
 
@@ -1551,39 +1684,41 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   if (load_key (key, section))
     return -1;
 
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
-  ACE_Configuration_Section_IntId IntId;
-  if (index_->find (ExtId, IntId, allocator_))
+  ACE_Configuration_ExtId section_ext (section.fast_rep ());
+  ACE_Configuration_Section_IntId section_int;
+  if (index_->find (section_ext, section_int, allocator_))
     return -2;
 
-  ACE_Configuration_ExtId VExtIdFind (name);
-  ACE_Configuration_Value_IntId VIntIdFind;
-  // See if it exists first
-  if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
+  // Get the entry for this item (if it exists)
+  VALUE_ENTRY* entry;
+  ACE_Configuration_ExtId item_name(name);
+  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+    {
+      // found item, replace it
+      // Free the old value
+      entry->int_id_.free(allocator_);
+      // Allocate the new value in this heap
+      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+      ACE_OS::strcpy (pers_value, value.fast_rep());
+      ACE_Configuration_Value_IntId new_value_int(pers_value);
+      entry->int_id_ = new_value_int;
+    }
+  else
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
-      ACE_Configuration_ExtId VExtId (pers_name);
-      ACE_Configuration_Value_IntId VIntId (pers_value);
-      if (IntId.value_hash_map_->bind (VExtId, VIntId, allocator_))
+      ACE_Configuration_ExtId item_name(pers_name);
+      ACE_Configuration_Value_IntId item_value(pers_value);
+      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);
           return -3;
         }
       return 0;
-    }
-  else
-    {
-      // Free the old value memory
-      VIntIdFind.free (allocator_);
-      // Assign a new value
-      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_value, value.fast_rep ());
-      VIntIdFind = ACE_Configuration_Value_IntId (pers_value);
     }
 
   return 0;
@@ -1603,31 +1738,35 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     return -1;
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
-  ACE_Configuration_Section_IntId IntId;
-  if (index_->find (ExtId, IntId, allocator_))
+  ACE_Configuration_ExtId section_ext(section.fast_rep ());
+  ACE_Configuration_Section_IntId section_int;
+  if (index_->find (section_ext, section_int, allocator_))
     return -2;  // section does not exist
 
-  // See if it exists first
-  ACE_Configuration_ExtId VExtId (name);
-  ACE_Configuration_Value_IntId VIntId;
-  if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
+  // Get the entry for this item (if it exists)
+  VALUE_ENTRY* entry;
+  ACE_Configuration_ExtId item_name(name);
+  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+    {
+      // found item, replace it
+      ACE_Configuration_Value_IntId new_value_int(value);
+      entry->int_id_ = new_value_int;
+    }
+  else
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_Configuration_ExtId VExtId (pers_name);
-      ACE_Configuration_Value_IntId VIntId (value);
-      if (IntId.value_hash_map_->bind (VExtId, VIntId, allocator_))
-        return -3;
-
+      ACE_Configuration_ExtId item_name(pers_name);
+      ACE_Configuration_Value_IntId item_value(value);
+      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
+        {
+          allocator_->free (pers_name);
+          return -3;
+        }
       return 0;
     }
-  else
-    {
-      // rebind it
-      VIntId = ACE_Configuration_Value_IntId (value);
-    }
+  
   return 0;
 }
 
@@ -1645,6 +1784,45 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (load_key (key, section))
     return -1;
 
+  // Find this section
+  ACE_Configuration_ExtId section_ext (section.fast_rep ());
+  ACE_Configuration_Section_IntId section_int;
+  if (index_->find (section_ext, section_int, allocator_))
+    return -2;    // section does not exist
+
+  // Get the entry for this item (if it exists)
+  VALUE_ENTRY* entry;
+  ACE_Configuration_ExtId item_name(name);
+  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+    {
+      // found item, replace it
+      // Free the old value
+      entry->int_id_.free(allocator_);
+      // Allocate the new value in this heap
+      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_OS::memcpy (pers_value, data, length);
+      ACE_Configuration_Value_IntId new_value_int(pers_value, length);
+      entry->int_id_ = new_value_int;
+    }
+  else
+    {
+      // it doesn't exist, bind it
+      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_OS::strcpy (pers_name, name);
+      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_OS::memcpy (pers_value, data, length);
+      ACE_Configuration_ExtId item_name(pers_name);
+      ACE_Configuration_Value_IntId item_value(pers_value, length);
+      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
+        {
+          allocator_->free (pers_value);
+          allocator_->free (pers_name);
+          return -3;
+        }
+      return 0;
+    }
+
+/*
   // Find this section
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
@@ -1680,7 +1858,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       ACE_OS::memcpy (pers_value, data, length);
       VIntIdFind = ACE_Configuration_Value_IntId (pers_value, length);
     }
-
+*/
   return 0;
 }
 
@@ -1789,6 +1967,36 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
   length = VIntId.length_;
   return 0;
 }
+
+int 
+ACE_Configuration_Heap::find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type_out)
+{
+  if (validate_name (name))
+    return -1;
+
+  // Get the section name from the key
+  ACE_TString section;
+  if (load_key (key, section))
+    return -1;
+
+  // Find this section
+  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_Section_IntId IntId;
+  if (index_->find (ExtId, IntId, allocator_))
+    return -1;    // section does not exist
+  
+  // Find it
+  ACE_Configuration_ExtId ValueExtId (name);
+  VALUE_ENTRY* value_entry;
+  if (((VALUE_HASH*)IntId.value_hash_map_)->find (ValueExtId, value_entry))
+    return -1;  // value does not exist
+
+  type_out = value_entry->int_id_.type_;
+  return 0;
+}
+
 
 int
 ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,

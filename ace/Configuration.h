@@ -23,7 +23,6 @@
 //    - Add locking for thread safety.
 //    - Need to investigate what happens if memory mapped file gets mapped to 
 //      a location different than it was created with.
-//    - Implement export and import of binary values
 //    - Add dynamic buffer when importing.  currently it will not allow
 //      importing of values greater than a fixed ammount (4096 bytes)
 //    - Replace unsigned int with a type that is fixed accross platforms.
@@ -209,7 +208,15 @@ public:
   // <data> and sets <length> to the length of the data.  caller is
   // responsible for freeing <data>.  Returns non zero on error (if
   // value is not binary).
-  
+
+  virtual int find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type) = 0;
+  // checks to see if an entry of <name> is in <key> and places the 
+  // data type in <type>.  Returns 0 on success (entry is found), 
+  // -1 on error
+
+
   virtual int remove_value (const ACE_Configuration_Section_Key& key, 
                             const ACE_TCHAR* name) = 0;
   // Removes the the value <name> from <key>.  returns non zero on
@@ -343,6 +350,10 @@ public:
                                 const ACE_TCHAR* name, 
                                 void*& data, 
                                 u_int& length);
+
+  virtual int find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type);
 
   virtual int remove_value (const ACE_Configuration_Section_Key& key, 
                             const ACE_TCHAR* name);
@@ -636,6 +647,10 @@ public:
                                 const ACE_TCHAR* name, 
                                 void* &data, 
                                 u_int &length);
+
+  virtual int find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type);
 
   virtual int remove_value (const ACE_Configuration_Section_Key& key, 
                             const ACE_TCHAR* name);
