@@ -98,8 +98,16 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
       char const * env_decl = "ACE_ENV_ARG_DECL";
-      if(node->argument_count() == 0)
-        env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+
+      if (node->argument_count() == 0)
+        {
+          env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+        }
+      else
+        {
+          *os << be_nl;
+        }
+
       *os << env_decl;
 
       if (!amh_valuetype)
@@ -153,7 +161,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       /***********************************************************/
       else
         {
-          *os << " = 0;" << be_uidt_nl;
+          *os << " = 0;" << be_uidt_nl << be_nl;
         }
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
