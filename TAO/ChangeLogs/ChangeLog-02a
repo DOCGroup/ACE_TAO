@@ -1,3 +1,31 @@
+Tue Mar 06 23:34:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CONV_FRAMEC.cpp (operator>>=):
+	* tao/DomainC.cpp (operator>>=):
+	* tao/DynamicC.cpp (operator>>=):
+	* tao/GIOPC.cpp (operator>>=):
+	* tao/IIOPC.cpp (operator>>=):
+	* tao/OctetSeqC.cpp (operator>>=):
+	* tao/StringSeqC.cpp (operator>>=):
+	* tao/TAOC.cpp (operator>>=):
+	* orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp
+	  (authorize_level1):
+	* tests/Portable_Interceptors/Benchmark/client.cpp (run_test):
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+	  (svr_worker):
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
+
+	  Added missing ACE_CHECK/ACE_TRY_CHECK macros.
+
+	* orbsvcs/tests/LoadBalancing/server.cpp (main): 
+	* orbsvcs/tests/Security/RejectInsecure/server.cpp (main):
+	* orbsvcs/tests/Security/SecurityLevel1/server.cpp (main): 
+	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
+	  (authorize_level1):
+
+	  Added missing ACE_TRY_ENV macros to the
+	  resolve_initial_references() call.
+
 Wed Mar  7 07:46:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor

@@ -1214,8 +1214,6 @@ Cubit_Client::print_stats (const char *call_name,
 int
 Cubit_Client::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   u_int i;
 
   ACE_Profile_Timer timer;
@@ -1224,371 +1222,405 @@ Cubit_Client::run ()
 
   // Show the results one type at a time.
 
-  // VOID
-  if (this->check_enabled (TAO_ENABLE_CUBIT_VOID))
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
+      // VOID
+      if (this->check_enabled (TAO_ENABLE_CUBIT_VOID))
         {
-          this->cube_void (i,
-                           ACE_TRY_ENV);
-        }
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
 
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_void",
-                         elapsed_time);
-    }
-
-  // SHORT
-  if (this->check_enabled (TAO_ENABLE_CUBIT_SHORT))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_short (i,
-                            ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_short",
-                         elapsed_time);
-    }
-
-  // OCTET
-  if (this->check_enabled (TAO_ENABLE_CUBIT_OCTET))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_octet (i,
-                            ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_octet",
-                         elapsed_time);
-    }
-
-  // LONG
-  if (this->check_enabled (TAO_ENABLE_CUBIT_LONG))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_long (i,
-                           ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-      this->print_stats ("cube_long",
-                         elapsed_time);
-    }
-
-  // STRUCT
-  if (this->check_enabled (TAO_ENABLE_CUBIT_STRUCT))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_struct (i,
-                             ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_struct",
-                         elapsed_time);
-    }
-
-  // UNION
-  if (this->check_enabled (TAO_ENABLE_CUBIT_UNION))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_union (ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_union_stub call",
-                         elapsed_time);
-    }
-
-  // SMALL LONG SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_LONG_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_long_sequence (this->loop_count_,
-                                    4,
-                                    ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_small_sequence<long>",
-                         elapsed_time);
-    }
-
-  // LARGE LONG SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_LONG_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_long_sequence (this->loop_count_,
-                                    1024,
-                                    ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_large_sequence<long>",
-                         elapsed_time);
-    }
-
-  // SMALL OCTET SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      if (bytes_in_octet_sequence_ > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Running sequence<octet> test with %u bytes "
-                      "in the sequence.\n", bytes_in_octet_sequence_));
           for (i = 0; i < this->loop_count_; ++i)
             {
-              this->cube_octet_sequence (this->loop_count_,
-                                         bytes_in_octet_sequence_,
-                                         ACE_TRY_ENV);
-            }
-        }
-      else
-        {
-          for (i = 0; i < this->loop_count_; ++i)
-            {
-              this->cube_octet_sequence (this->loop_count_,
-                                         16,
-                                         ACE_TRY_ENV);
-            }
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_small_sequence<octet>",
-                         elapsed_time);
-    }
-
-  // LARGE OCTET SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_octet_sequence (this->loop_count_,
-                                     4096,
-                                     ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_large_sequence<octet>",
-                         elapsed_time);
-    }
-
-  // SMALL MANY SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_many_sequence (this->loop_count_,
-                                    4,
-                                    ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_small_sequence<many>",
-                         elapsed_time);
-    }
-
-  // LARGE MANY SEQUENCES
-  if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_many_sequence (this->loop_count_,
-                                    1024,
-                                    ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_large_sequence<many>",
-                         elapsed_time);
-    }
-
-  // MIXIN
-  if (this->check_enabled (TAO_ENABLE_CUBIT_MIXIN))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_short (i,
-                            ACE_TRY_ENV);
-          this->cube_octet (i,
-                            ACE_TRY_ENV);
-          this->cube_long (i,
-                           ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-      this->print_stats ("cube mixin (short/octet/long)",
-                         elapsed_time);
-    }
-
-  // RTI
-  if (this->check_enabled (TAO_ENABLE_CUBIT_RTI_DATA))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_rti_data (this->loop_count_,
-                               2,
-                               5,
+              this->cube_void (i,
                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_void",
+                             elapsed_time);
         }
 
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_rti_data",
-                         elapsed_time);
-    }
-
-  // ONEWAY
-  if (this->check_enabled (TAO_ENABLE_CUBIT_ONE_WAY))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
+      // SHORT
+      if (this->check_enabled (TAO_ENABLE_CUBIT_SHORT))
         {
-          this->cube_oneway (i,
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_short (i,
+                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_short",
+                             elapsed_time);
+        }
+
+      // OCTET
+      if (this->check_enabled (TAO_ENABLE_CUBIT_OCTET))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_octet (i,
+                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_octet",
+                             elapsed_time);
+        }
+
+      // LONG
+      if (this->check_enabled (TAO_ENABLE_CUBIT_LONG))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_long (i,
+                               ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+          this->print_stats ("cube_long",
+                             elapsed_time);
+        }
+
+      // STRUCT
+      if (this->check_enabled (TAO_ENABLE_CUBIT_STRUCT))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_struct (i,
+                                 ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_struct",
+                             elapsed_time);
+        }
+
+      // UNION
+      if (this->check_enabled (TAO_ENABLE_CUBIT_UNION))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_union (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_union_stub call",
+                             elapsed_time);
+        }
+
+      // SMALL LONG SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_LONG_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_long_sequence (this->loop_count_,
+                                        4,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_small_sequence<long>",
+                             elapsed_time);
+        }
+
+      // LARGE LONG SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_LONG_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_long_sequence (this->loop_count_,
+                                        1024,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_large_sequence<long>",
+                             elapsed_time);
+        }
+
+      // SMALL OCTET SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          if (bytes_in_octet_sequence_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Running sequence<octet> test with %u bytes "
+                          "in the sequence.\n", bytes_in_octet_sequence_));
+              for (i = 0; i < this->loop_count_; ++i)
+                {
+                  this->cube_octet_sequence (this->loop_count_,
+                                             bytes_in_octet_sequence_,
+                                             ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+          else
+            {
+              for (i = 0; i < this->loop_count_; ++i)
+                {
+                  this->cube_octet_sequence (this->loop_count_,
+                                             16,
+                                             ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_small_sequence<octet>",
+                             elapsed_time);
+        }
+
+      // LARGE OCTET SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_octet_sequence (this->loop_count_,
+                                         4096,
+                                         ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_large_sequence<octet>",
+                             elapsed_time);
+        }
+
+      // SMALL MANY SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_many_sequence (this->loop_count_,
+                                        4,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_small_sequence<many>",
+                             elapsed_time);
+        }
+
+      // LARGE MANY SEQUENCES
+      if (this->check_enabled (TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_many_sequence (this->loop_count_,
+                                        1024,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_large_sequence<many>",
+                             elapsed_time);
+        }
+
+      // MIXIN
+      if (this->check_enabled (TAO_ENABLE_CUBIT_MIXIN))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_short (i,
+                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              this->cube_octet (i,
+                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              this->cube_long (i,
+                               ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+          this->print_stats ("cube mixin (short/octet/long)",
+                             elapsed_time);
+        }
+
+      // RTI
+      if (this->check_enabled (TAO_ENABLE_CUBIT_RTI_DATA))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_rti_data (this->loop_count_,
+                                   2,
+                                   5,
+                                   ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_rti_data",
+                             elapsed_time);
+        }
+
+      // ONEWAY
+      if (this->check_enabled (TAO_ENABLE_CUBIT_ONE_WAY))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_oneway (i,
+                                 ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_oneway",
+                             elapsed_time);
+        }
+
+      // ANY - LONG
+      if (this->check_enabled (TAO_ENABLE_CUBIT_ANY))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_any (i,
+                              ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+          this->print_stats ("cube_any",
+                             elapsed_time);
+        }
+
+      // ANY - STRUCT
+      if (this->check_enabled (TAO_ENABLE_CUBIT_ANY_STRUCT))
+        {
+          this->call_count_ = 0;
+          this->error_count_ = 0;
+          timer.start ();
+
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_any_struct (i,
+                                     ACE_TRY_ENV);
+
+              ACE_TRY_CHECK;
+            }
+
+          timer.stop ();
+          timer.elapsed_time (elapsed_time);
+
+          this->print_stats ("cube_any_struct",
+                             elapsed_time);
+        }
+
+      this->shutdown_server (this->shutdown_,
                              ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_oneway",
-                         elapsed_time);
+      ACE_TRY_CHECK;
     }
-
-  // ANY - LONG
-  if (this->check_enabled (TAO_ENABLE_CUBIT_ANY))
+  ACE_CATCHANY
     {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_any (i,
-                           ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-      this->print_stats ("cube_any",
-                         elapsed_time);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Cubit_Client::run");
     }
-
-  // ANY - STRUCT
-  if (this->check_enabled (TAO_ENABLE_CUBIT_ANY_STRUCT))
-    {
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-      timer.start ();
-
-      for (i = 0; i < this->loop_count_; ++i)
-        {
-          this->cube_any_struct (i,
-                             ACE_TRY_ENV);
-        }
-
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      this->print_stats ("cube_any_struct",
-                         elapsed_time);
-    }
-
-  this->shutdown_server (this->shutdown_,
-                         ACE_TRY_ENV);
+  ACE_ENDTRY;
 
   return this->error_count_ == 0 ? 0 : 1;
 }
@@ -1613,6 +1645,7 @@ Cubit_Client::shutdown_server (int do_shutdown,
                                "Cubit::shutdown_server");
         }
       ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
     }
 
   return 0;

@@ -2,7 +2,9 @@
 
 #include "SLevel1_Test_i.h"
 
-ACE_RCSID (SecurityLevel1, server, "$Id$")
+ACE_RCSID (SecurityLevel1,
+           server,
+           "$Id$")
 
 const char *ior_output_file = 0;
 
@@ -18,7 +20,9 @@ main (int argc, char *argv[])
 
       /// Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -29,13 +33,13 @@ main (int argc, char *argv[])
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      SLevel1_Server_i level1_server ();
+      SLevel1_Server_i level1_server (orb.in ());
       
       SLevel1_Server_var server = 
         level1_server._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::String_var ior = 
+      CORBA::String_var ior =
         orb->object_to_string (server.in (), 
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -54,16 +58,20 @@ main (int argc, char *argv[])
 	}
 
       // Start the ORB
-      orb->run ();
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
-  ACE_CATCH (CORBA::SytemException, ex)
+  ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "System Exception raised: %s", ex));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
     }
   ACE_ENDTRY;
 
