@@ -5,10 +5,11 @@
     <!-- $Id$ -->
   </head>
 
-<BODY text = "#000000"
-link="#000fff"
-vlink="#ff0f0f"
-bgcolor="#ffffff">
+  <BODY text = "#000000"
+    link="#000fff"
+    vlink="#ff0f0f"
+    bgcolor="#ffffff">
+
     <h3>Introduction - A very simple client</h3>
 
     <P>We will start with a reasonably simple IDL interface, we want
@@ -18,14 +19,20 @@ bgcolor="#ffffff">
       overkill, but it will motivate a number of elements that are
       interesting to learn on the start.
     </P>
-    <P>So we have define an IDL interface:
+
+    <H3>Defining the IDL interfaces</H3>
+
+    <P>At the very least we want an operation to query the stock
+      price, as in:
+    </P>
 <PRE>
     interface Stock {
       double price ();
     };
 </PRE>
-    but stocks usually have symbols and full names, so why not add a
-    couple of attributes to query them:
+    <P>but stocks usually have symbols and full names, so why not add
+      a couple of attributes to query them:
+    </P>
 <PRE>
     interface Stock {
       double price ();
@@ -34,41 +41,42 @@ bgcolor="#ffffff">
       readonly attribute string full_name;
     };
 </PRE>
-    </P>
     <P>We also need some interface to gain access to the
-      <TT>Stock</TT> object references from their symbols,
-      usually we call this kind of interface a <I>Factory</I>,
+      <CODE>Stock</CODE> object references from their symbols,
+      usually we call this kind of interface a <EM>Factory</EM>,
       and they look like this:
+    </P>
 <PRE>
   interface Stock_Factory {
     Stock get_stock (in string stock_symbol);
   };
 </PRE>
-      Notice how arguments have a <I>direction</I>, they are qualified
-      as <I>input only (<TT>in</TT>)</I>,
-      <I>output only (<TT>out</TT>)</I>
-      or <I>input-output (<TT>inout</TT>)</I> arguments.
+    <P>Notice how arguments have a <EM>direction</EM>, they are
+      qualified as <EM>input only (<CODE>in</CODE>)</EM>,
+      <EM>output only (<CODE>out</CODE>)</EM>
+      or <EM>input-output (<CODE>inout</CODE>)</EM> arguments.
       There is a problem though, what happens if the stock symbol is
       invalid?  The CORBA way is to raise an exception:
+    </P>
 <PRE>
   exception Invalid_Stock_Symbol {};
 </PRE>
-      and then make the exception part of the
-      <TT>Stock_Factory</TT> interface:
+    <P>and then make the exception part of the
+      <CODE>Stock_Factory</CODE> interface:
+    </P>
 <PRE>
   interface Stock_Factory {
     Stock get_stock (in string stock_symbol)
       raises (Invalid_Stock_Symbol);
   };
 </PRE>
-    </P>
 
     <P>Finally we put all this IDL constructs in a module to avoid
       namespace pollution to obtain the
       <A HREF="../Quoter.idl">Quoter.idl</A> file.
     </P>
 
-    <H3>The generated files</H3>
+    <H3>The Generated Files</H3>
 
     <P>Let's take a minute to look at the generated code,
       you don't need to do this often, in fact you rarely have to do
@@ -78,37 +86,38 @@ bgcolor="#ffffff">
     <P>To generate the code you must
       invoke the IDL compiler, like
       this:
+    </P>
 <PRE>
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
 </PRE>
-      The complete documentation of the IDL compiler and its options
+    <P>The complete documentation of the IDL compiler and its options
       are include are in the
       <A HREF="../../../../compiler.html">compiler.html</A>,
       naturally this file included in the distribution.
     </P>
 
     <P>TAO generates 9 files for each IDL file,
-      the <TT>QuoterC.h</TT>, <TT>QuoterC.i</TT>
-      and <TT>QuoterC.cpp</TT> contain the client-side interfaces,
+      the <CODE>QuoterC.h</CODE>, <CODE>QuoterC.i</CODE>
+      and <CODE>QuoterC.cpp</CODE> contain the client-side interfaces,
       notice that the inline functions are on a separate file so you
       can optionally compile them out-of-line for smaller code.
       Pure clients only need to link the object file
-      generated from <TT>QuoterC.cpp</TT>.
+      generated from <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Similarly the <TT>QuoterS.h</TT>, <TT>QuoterS.i</TT>
-      and <TT>QuoterS.cpp</TT> contain the server-side
-      <I>skeletons</I>. Servers must link the object files generated
-      from <TT>QuoterS.cpp</TT> <B>and</B> <TT>QuoterC.cpp</TT>.
+      Similarly the <CODE>QuoterS.h</CODE>, <CODE>QuoterS.i</CODE>
+      and <CODE>QuoterS.cpp</CODE> contain the server-side
+      <EM>skeletons</EM>. Servers must link the object files generated
+      from <CODE>QuoterS.cpp</CODE> <STRONG>and</STRONG> <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Finally <TT>QuoterS_T.h</TT>, <TT>QuoterS_T.i</TT>
-      and <TT>QuoterS_T.cpp</TT> contain the <I>TIE</I> classes,
+      Finally <CODE>QuoterS_T.h</CODE>, <CODE>QuoterS_T.i</CODE>
+      and <CODE>QuoterS_T.cpp</CODE> contain the <EM>TIE</EM> classes,
       this are the standard (after the CORBA 2.2 spec) skeletons based
       on composition instead of inheritance.
       They are on a separate file only because some compilers cannot
       handle mixed template and non-template code in the same source
-      file, you <B>do not</B> need to compile these files in any
+      file, you <STRONG>do not</STRONG> need to compile these files in any
       platform.
       Also notice that if your platform does not support namespaces
       then you may be unable to use the TIE approach for some IDL
@@ -119,7 +128,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
       using options in the IDL compiler, check the documentation for
       more details.  Notice though that you should use consistent
       extensions across your project, otherwise you may have problems
-      with some <TT>#include</TT> directives in your IDL source.
+      with some <CODE>#include</CODE> directives in your IDL source.
     </P>
 
     <H3>Building a simple client</H3>
@@ -127,6 +136,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
     <P>With our simple IDL interface ready we want to start with a
       simple client.  The first thing to do in any CORBA client or
       server is initialize the ORB:
+    </P>
 <PRE>
 int main (int argc, char* argv[])
 {
@@ -136,14 +146,15 @@ int main (int argc, char* argv[])
       CORBA::ORB_init (argc, argv,
                        "" /* the ORB name, it can be anything! */);
 </PRE>
-      since the ORB initialization can fail, and in fact, any CORBA
-      operation can raise a <TT>CORBA::SystemExpception</TT> we use
-      a <TT>try/catch</TT> block to check for any failures.
+    <P>Since the ORB initialization can fail, and in fact, any CORBA
+      operation can raise a <CODE>CORBA::SystemExpception</CODE> we use
+      a <CODE>try/catch</CODE> block to check for any failures.
       Needless to say this is very naive, some failures can be
       temporary and we should have a better way to recover from
       errors, but this is enough for our example.
-      In consequence, at the end of <TT>main()</TT> we catch all
+      In consequence, at the end of <CODE>main()</CODE> we catch all
       kinds of CORBA exceptions:
+    </P>
 <PRE>
   }
   catch (CORBA::Exception &ex) {
@@ -152,10 +163,11 @@ int main (int argc, char* argv[])
   return 0;
 }
 </PRE>
-      We must not forget that the ORB is a resource that must be
+    <P>We must not forget that the ORB is a resource that must be
       released by the application, until CORBA 2.3 there was no
       standard way to do this. TAO has adopted the new specification,
       so our client should really look like this:
+    </P>
 <PRE>
 int main (int argc, char* argv[])
 {
@@ -175,11 +187,10 @@ int main (int argc, char* argv[])
   return 0;
 }
 </PRE>
-    </P>
 
     <P>Just a few words about the ORB name, the spec requires the ORB
       to return the same ORB pointer if the same ORB id is used in
-      <TT>CORBA::init</TT>,
+      <CODE>CORBA::init</CODE>,
       the implementation is free to return the same pointer even if
       different ids are used,
       usually this is not a problem as most applications instantiate a
@@ -196,8 +207,9 @@ int main (int argc, char* argv[])
       string passed in the first argument.
     </P>
     <P>The easiest way is to use the first argument to get the string,
-      and then use <TT>string_to_object()</TT> to conver it into an
+      and then use <CODE>string_to_object()</CODE> to conver it into an
       object reference:
+    </P>
 <PRE>
     CORBA::Object_var factory_object =
       orb->string_to_object (argv[1]);
@@ -205,18 +217,19 @@ int main (int argc, char* argv[])
     Quoter::Stock_Factory_var factory =
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 </PRE>
-      There are a few interesting things about TAO, first it supports
-      the <TT>file:</TT> scheme for object references, so the first
-      argument could be <TT>file://a_file_name</TT>, in that case
-      the ORB will open the file named <TT>"a_file_name"</TT> and
+    <P>There are a few interesting things about TAO, first it supports
+      the <CODE>file:</CODE> scheme for object references, so the first
+      argument could be <CODE>file://a_file_name</CODE>, in that case
+      the ORB will open the file named <CODE>"a_file_name"</CODE> and
       read the IOR from that file.
-      TAO also supports the <TT>iioploc:</TT> scheme, for example
-      <TT>iioploc://ace.cs.wustl.edu:12345/Stock_Factory</TT>.
+      TAO also supports the <CODE>iioploc:</CODE> scheme, for example
+      <CODE>iioploc://ace.cs.wustl.edu:12345/Stock_Factory</CODE>.
       So using a string can be a very powerful bootstrapping protocol.
     </P>
     <P>Before we go any further, at this point we are using interfaces
       generated by the IDL compiler, so we must include the correct
       header file!
+    </P>
 <PRE>
 #include "QuoterC.h"
 </PRE>
@@ -228,9 +241,9 @@ int main (int argc, char* argv[])
     </P>
 
     <P>Another interesting TAO feature is the support for
-      <TT>_unchecked_narrow()</TT>,
+      <CODE>_unchecked_narrow()</CODE>,
       this is part of the CORBA Messaging specification and
-      essentially performs the same work as <TT>_narrow()</TT>,
+      essentially performs the same work as <CODE>_narrow()</CODE>,
       but it does not check the types remotely,
       it you have compile time knowledge that ensures the correctness
       of the narrow operation, it is more efficient to use the
@@ -239,6 +252,7 @@ int main (int argc, char* argv[])
 
     <P>Now we can use the rest of the arguments to obtain the stock
       objects:
+    </P>
 <PRE>
     for (int i = 2; i != argc; ++i) {
       try {
@@ -246,7 +260,6 @@ int main (int argc, char* argv[])
         Quoter::Stock_var stock =
           factory->get_stock (argv[i]);
 </PRE>
-    </P>
 
     <H3>Exercise 1</H3>
 
@@ -258,17 +271,18 @@ int main (int argc, char* argv[])
     <P>You don't need to do everything,
       the <A HREF="../Quoter.idl">Quoter.idl</A> file and
       a <A HREF="Makefile">Makefile</A> are provided, just
-      implement the <TT>client.cpp</TT> file.
+      implement the <CODE>client.cpp</CODE> file.
       Cut & paste the ORB initialization code, and anything you find
       useful from above, you can even cheat and look at the soluition,
       but it is going to be some really boring 30 minutes if you do!
     </P>
 
     <H4>Solution</H4>
+
     <P>Look at the
       <A HREF="client.cpp">client.cpp</A> file, it should
       not be much different from yours.  Count the number of lines in
-      your client, the idl file and the <TT>QuoterC.*</TT> files, do
+      your client, the idl file and the <CODE>QuoterC.*</CODE> files, do
       you want to write all that code ever again?
     </P>
 
@@ -283,7 +297,7 @@ int main (int argc, char* argv[])
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 14:19:15 CST 1999
+Last modified: Sun Nov 28 18:51:24 CST 1999
 <!-- hhmts end -->
   </body>
 </html>
