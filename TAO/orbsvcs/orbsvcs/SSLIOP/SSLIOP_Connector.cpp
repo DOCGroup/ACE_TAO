@@ -130,6 +130,18 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                TAO_Transport_Descriptor_Interface *desc
                                ACE_ENV_ARG_DECL)
 {
+  return this->connect (invocation,
+		  	desc,
+			0
+			ACE_ENV_ARG_PARAMETER);
+}
+
+int
+TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                               TAO_Transport_Descriptor_Interface *desc,
+                               ACE_Time_Value *timeout
+                               ACE_ENV_ARG_DECL)
+{
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
@@ -244,7 +256,8 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
       || ssl_endpoint->ssl_component ().port == 0)
     {
       return this->iiop_connect (ssl_endpoint,
-                                 invocation
+                                 invocation,
+                                 timeout
                                  ACE_ENV_ARG_PARAMETER);
     }
 
@@ -252,7 +265,8 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                qop,
                                trust,
                                invocation,
-                               desc
+                               desc,
+                               timeout
                                ACE_ENV_ARG_PARAMETER);
 }
 
@@ -299,7 +313,8 @@ TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 
 int
 TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                    TAO_GIOP_Invocation *invocation
+                                    TAO_GIOP_Invocation *invocation,
+                                    ACE_Time_Value *timeout
                                     ACE_ENV_ARG_DECL)
 {
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
@@ -334,7 +349,8 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
   // Note that the IIOP-only transport descriptor is used!
   return this->TAO_IIOP_SSL_Connector::connect (invocation,
-                                                &iiop_desc
+                                                &iiop_desc,
+                                                timeout
                                                 ACE_ENV_ARG_PARAMETER);
 }
 
@@ -343,11 +359,10 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                       Security::QOP qop,
                                       const Security::EstablishTrust &trust,
                                       TAO_GIOP_Invocation *invocation,
-                                      TAO_Transport_Descriptor_Interface *desc
+                                      TAO_Transport_Descriptor_Interface *desc,
+                                      ACE_Time_Value *max_wait_time
                                       ACE_ENV_ARG_DECL)
 {
-  TAO_Transport *&transport = invocation->transport ();
-
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
   // @@ The following check for "required insecurity" seems odd, but
@@ -409,10 +424,10 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
         desc,
         base_transport) == 0)
     {
-      if (TAO_debug_level > 5)
+      if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing transport with ID %d\n"),
+                    ACE_TEXT ("got existing transport[%d]\n"),
                     base_transport->id ()));
     }
   else
@@ -498,21 +513,6 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       svc_handler = safe_handler.release ();
 
-      // Get the max_wait_time
-      ACE_Time_Value *max_wait_time = 0;
-
-      ACE_Time_Value connection_timeout;
-      int timeout = 0;
-
-      this->orb_core ()->connection_timeout (invocation->stub (),
-                                             timeout,
-                                             connection_timeout);
-      if (!timeout)
-        max_wait_time =
-          invocation->max_wait_time ();
-      else
-        max_wait_time = &connection_timeout;
-
       // Get the right synch options
       ACE_Synch_Options synch_options;
 
@@ -530,6 +530,13 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // strategy.
       if (result == -1 && errno == EWOULDBLOCK)
         {
+          if (TAO_debug_level)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect(), "
+                        "going to wait for connection completion on local"
+                        "handle [%d]\n",
+                        svc_handler->get_handle ()));
+
           result =
             this->active_connect_strategy_->wait (svc_handler,
                                                   max_wait_time);
@@ -539,16 +546,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // increment to the handler is done in make_svc_handler (). Now
       // that we dont need the reference to it anymore we can decrement
       // the refcount whether the connection is successful ot not.
-      long refcount = svc_handler->decr_refcount ();
-
-      ACE_ASSERT (refcount >= 0);
-      ACE_UNUSED_ARG (refcount);
-     
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect -  ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
+      svc_handler->decr_refcount ();
 
       if (result == -1)
         {
@@ -558,8 +556,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
               ssl_endpoint->addr_to_string (buffer,
                                             sizeof (buffer) - 1);
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %N:%l, connection to ")
-                          ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
+                          ACE_TEXT ("TAO (%P|%t) %N:%l, SSL connection to ")
+                          ACE_TEXT ("<%s:%d> failed (%p)\n"),
                           buffer,
                           remote_address.get_port_number (),
                           ACE_TEXT ("errno")));
@@ -567,6 +565,13 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
           return -1;
         }
+
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect(): "
+                    "new SSL connection to port %d on transport[%d]\n",
+                    remote_address.get_port_number (),
+                    svc_handler->peer ().get_handle ()));
 
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
 
@@ -583,25 +588,28 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       if (retval != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                      ACE_TEXT ("(%P|%t) SSLIOP_Connector::ssliop_connect ")
                       ACE_TEXT ("could not add the new connection to ")
-                      ACE_TEXT ("Cache.\n")));
+                      ACE_TEXT ("cache.\n")));
+        }
+
+      // If the wait strategy wants us to be registered with the reactor
+      // then we do so.
+      int ret = base_transport->wait_strategy ()->register_handler ();
+
+      if (ret != 0 && TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                      ACE_LIB_TEXT ("could not add the new connection ")
+                      ACE_LIB_TEXT ("to reactor\n")));
         }
     }
 
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so.
-  int ret =  base_transport->wait_strategy ()->register_handler ();
-
-  if (ret != 0 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
-    }
-
   // No need to _duplicate and release since base_transport
-  // is going out of scope.  transport now has control of base_transport.
+  // is going out of scope.  Transport now has control of
+  // base_transport.
+  TAO_Transport *&transport = invocation->transport ();
   transport = base_transport;
 
   return 0;

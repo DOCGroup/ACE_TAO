@@ -28,8 +28,8 @@
 
 #include "IIOP_SSL_Acceptor.h"
 #include "SSLIOP_Connection_Handler.h"
+#include "SSLIOP_Accept_Strategy.h"
 
-#include "ace/SSL/SSL_SOCK_Acceptor.h"
 
 #include "orbsvcs/SSLIOPC.h"
 
@@ -47,7 +47,8 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor
 public:
 
   /// Constructor.
-  TAO_SSLIOP_Acceptor (Security::QOP qop);
+  TAO_SSLIOP_Acceptor (Security::QOP qop,
+                       const ACE_Time_Value & timeout);
 
   /// Destructor.
   ~TAO_SSLIOP_Acceptor (void);
@@ -55,7 +56,7 @@ public:
   typedef ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler> TAO_SSLIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler> TAO_SSLIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_ACCEPT_STRATEGY;
+  typedef TAO_SSLIOP_Accept_Strategy TAO_SSLIOP_ACCEPT_STRATEGY;
 
   /**
    * @name The TAO_Acceptor Methods
@@ -138,6 +139,14 @@ private:
   /// State that will be passed to each SSLIOP connection handler upon
   /// creation.
   TAO_SSLIOP_Connection_Handler_State handler_state_;
+
+  /// The accept() timeout.
+  /**
+   * This timeout includes the overall time to complete the SSL
+   * handshake.  This includes both the TCP handshake and the SSL
+   * handshake.
+   */
+  const ACE_Time_Value timeout_;
 
 };
 

@@ -115,6 +115,10 @@ SOURCE=.\SSLIOP\ssl_endpoints.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Accept_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -212,6 +216,10 @@ SOURCE=.\SSLIOP\IIOP_SSL_Transport.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\ssl_endpoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Accept_Strategy.h
 # End Source File
 # Begin Source File
 

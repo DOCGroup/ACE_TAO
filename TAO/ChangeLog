@@ -1,3 +1,59 @@
+Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+
+	  New TAO_SSLIOP-specific TAO_Accept_Strategy implementation.
+	  This accept strategy builds on on the TAO_Accept_Strategy
+	  implementation.  It sub-classes that class, and overrides the
+	  accept_svc_handler() method so that a timeout value may be
+	  passed to the underlying peer acceptor.  This is necessary to
+	  defend against a simple Denial-of-Service attack.  See the
+	  comments in the header for details.  [Bug 1348]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  Added new "-SSLAcceptTimeout" option.  This option allows
+	  applications to override the default 10 second TAO_SSLIOP
+	  accept() timeout.
+
+	  (make_acceptor):
+
+	  Pass the timeout value to the SSLIOP_Acceptor's constructor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+
+	  Updated use the new TAO_SSLIOP_Accept_Strategy implementation
+	  instead of the generic one supplied by TAO.  [Bug 1348]
+
+	  Cache the accept timeout value in a member variable.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	  (TAO_SSLIOP_Acceptor):
+
+	  Initialize the accept timeout member from the value passed to
+	  this constructor from the SSLIOP_Factory.
+
+	  (ssliop_open_i):
+
+	  Pass the accept timeout value to the
+	  TAO_SSLIOP_Accept_Strategy's constructor.  [Bug 1348]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Only register the connection handler with the reactor when
+	  creating a new connection.  Previously, the connection handler
+	  was registered each time an invocation was made even if a
+	  connection was previously established.  This caused a loop to
+	  occur in the active connection code if the server side was
+	  shutdown ungracefully.  [Bug 1299]
+
+	* orbsvcs/tests/Security/Secure_Invocation/client.bor (TAO_IDL):
+	* orbsvcs/tests/Security/Secure_Invocation/server.bor (TAO_IDL):
+
+	  Removed "-GC" option from the TAO_IDL flags.  This test does not
+	  require AMI callbacks.
+
 Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
@@ -18,6 +74,7 @@ Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
 	  Rearranged code to avoid deadlock in <connect> methods.
 
+>>>>>>> 1.793
 Wed Nov 13 10:41:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
