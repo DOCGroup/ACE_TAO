@@ -5492,9 +5492,12 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #define ACE_TEXT_STRING ACE_WString
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
+#define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) \
+ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #else
 #define ASYS_MULTIBYTE_STRING(WIDE_STRING) \
 ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+#define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 #else
 #define ACE_WIDE_STRING(ASCII_STRING) ASCII_STRING
