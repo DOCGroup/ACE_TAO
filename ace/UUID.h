@@ -40,15 +40,12 @@ namespace ACE_Utils
     NodeID& nodeID (void);
     void nodeID (NodeID&);
 
-    /// Assignment Operation
-    UUID_node &operator=(const UUID_node &right);
+    ///// Equality Operations
+    //bool operator == (const UUID_node& right) const;
+    //bool operator != (const UUID_node& right) const;
 
-    /// Equality Operations
-    bool operator == (const UUID_node& right) const;
-    bool operator != (const UUID_node& right) const;
-
-    /// Relational Operations
-    bool operator <  (const UUID_node& right) const;
+    ///// Relational Operations
+    //bool operator <  (const UUID_node& right) const;
 
   private:
     NodeID nodeID_;
@@ -80,9 +77,6 @@ namespace ACE_Utils
 
     /// Constructor
     UUID (void);
-
-    /// Copy constructor
-    UUID (const UUID &right);
 
     /// Constructs a UUID from a string representation.
     UUID (const ACE_CString& uuidString);
@@ -119,20 +113,21 @@ namespace ACE_Utils
 
     static UUID NIL_UUID;
 
-    /// Assignment Operation
-    UUID & operator= (const UUID &right);
-
     /// Equality Operations
-    bool operator== (const UUID &right) const;
-    bool operator!= (const UUID &right) const;
+    //bool operator== (const UUID &right) const;
+    //bool operator!= (const UUID &right) const;
 
     /// Relational Operations
-    bool operator<  (const UUID &right) const;
-    bool operator>  (const UUID &right) const;
-    bool operator<= (const UUID &right) const;
-    bool operator>= (const UUID &right) const;
+    //bool operator<  (const UUID &right) const;
+    //bool operator>  (const UUID &right) const;
+    //bool operator<= (const UUID &right) const;
+    //bool operator>= (const UUID &right) const;
 
   private:
+    // Copy constructor and assignment operator were not implemented
+    // correctly, so I removed their implementation as an easy solution.
+    UUID (const UUID&);
+    UUID& operator= (const UUID&);
 
     /// Data Members for Class Attributes
     ACE_UINT32 timeLow_;
