@@ -120,4 +120,16 @@ interface Client
   attribute End::Value v;
 };
 
-
+/*
+ * Illegal recursion.
+ * One day I'll add a mechanism to check for illegal IDL
+ * files as well as legal ones.
+ 
+interface Test
+{
+  struct TestInfo
+  {
+    Test atest;
+  };
+};
+*/
