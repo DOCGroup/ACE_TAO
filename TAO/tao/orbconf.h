@@ -125,7 +125,15 @@
 // behavior of the MSVC++ compiler
 #if defined (ACE_HAS_USING_KEYWORD)
 #define TAO_NAMESPACE namespace
+
+#ifdef TAO_ORBSVCS_BUILD_DLL
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
+#else
+#define TAO_NAMESPACE_STORAGE_CLASS TAO_EXPORT_MACRO
+#endif
+
+//#define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
+
 #define TAO_NAMESPACE_BEGIN(NS)  namespace NS {
 #define TAO_NAMESPACE_END  };
 #define TAO_NAMESPACE_TYPE(TYPE)

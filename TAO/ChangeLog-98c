@@ -1,3 +1,8 @@
+Fri Jul  3 19:54:03 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/orbconf.h: Changed the TAO_NAMESPACE_STORAGE_CLASS macros to 
+	  work better with namespaces on MSVC.
+
 Fri Jul  3 18:40:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
