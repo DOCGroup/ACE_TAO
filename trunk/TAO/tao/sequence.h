@@ -48,7 +48,7 @@ public:
   // Must deallocate the buffer and then set it to zero.
 
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
   // Some sequences (of objects and strings) require some cleanup if
   // the sequence is shrunk. The spec requires the destructor to
   // release the objects only from position <0> to <length-1>; so
@@ -59,13 +59,13 @@ protected:
   // Default constructor.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
-		     CORBA::ULong length,
-		     void* buffer,
-		     CORBA::Boolean release = CORBA::B_FALSE);
+                     CORBA::ULong length,
+                     void* buffer,
+                     CORBA::Boolean release = CORBA::B_FALSE);
   // Constructor with control of ownership.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
-		     void* buffer);
+                     void* buffer);
   // Assume ownership and set length to 0.
 
   TAO_Base_Sequence (const TAO_Base_Sequence& rhs);
@@ -120,14 +120,17 @@ protected:
   TAO_Unbounded_Base_Sequence (void);
   // Default constructor.
 
+  virtual ~TAO_Unbounded_Base_Sequence (void);
+  // destructor.
+
   TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
-			       CORBA::ULong length,
-			       void* buffer,
-			       CORBA::Boolean release = 0);
+                               CORBA::ULong length,
+                               void* buffer,
+                               CORBA::Boolean release = 0);
   // Constructor with control of ownership.
 
   TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
-			       void* buffer);
+                               void* buffer);
   // Assume ownership and set length to 0.
 };
 
@@ -156,14 +159,17 @@ protected:
   TAO_Bounded_Base_Sequence (void);
   // Default constructor.
 
+  virtual ~TAO_Bounded_Base_Sequence (void);
+  // destructor.
+
   TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-		     CORBA::ULong length,
-		     void* buffer,
-		     CORBA::Boolean release = 0);
+                     CORBA::ULong length,
+                     void* buffer,
+                     CORBA::Boolean release = 0);
   // Constructor with control of ownership.
 
   TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-		     void* buffer);
+                     void* buffer);
   // Assume ownership and set length to 0.
 };
 
@@ -176,7 +182,7 @@ class TAO_Export TAO_String_Manager
   //
   // = DESCRIPTION
   //   Similar to the mapping for sequences of objects (and other
-  //   pseudo objects) the mapping for sequences of strings 
+  //   pseudo objects) the mapping for sequences of strings
   //   requires an auxiliar class or <Manager> to handle the
   //   allocation and deallocation of the string.
   //   The main difference with respect to String_var classes is that
@@ -198,7 +204,7 @@ public:
   // friend template<CORBA::ULong MAX>
   //   class TAO_Bounded_String_Sequence<TAO_String_Manager,MAX>;
 
-  
+
   TAO_String_Manager (const TAO_String_Manager &);
   // copy constructor
 
@@ -235,7 +241,7 @@ class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Seque
   //  release their members based on some global <release> flag.
 
   // = SPEC
-  // 16.8 Mapping for Structured Types 
+  // 16.8 Mapping for Structured Types
   // The mapping for struct, union, and sequence (but not array) is a
   // C++ struct or class with a default constructor, a copy
   // constructor, an assignment operator, and a destructor.
@@ -263,22 +269,22 @@ public:
   // constructor'' shown in the example above). This allows
   // applications to control how much buffer space is initially
   // allocated by the sequence. This constructor also sets the length
-  // to 0 and the release flag to TRUE. 
+  // to 0 and the release flag to TRUE.
 
   TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
-				 CORBA::ULong length,
-				 char* *data,
-				 CORBA::Boolean release=0);
+                                 CORBA::ULong length,
+                                 char* *data,
+                                 CORBA::Boolean release=0);
   // The ``T *data'' constructor (as shown in the example above)
   // allows the length and contents of a bounded or unbounded sequence
   // to be set. For unbounded sequences, it also allows the initial
   // value of the maximum length to be set. For this constructor,
   // ownership of the contents vector is determined by the release
   // parameter---FALSE means the caller owns the storage, while TRUE
-  // means that the sequence assumes ownership of the storage. 
+  // means that the sequence assumes ownership of the storage.
   // If release is TRUE, the contents vector must have been allocated
   // using the sequence allocbuf function, and the sequence will pass
-  // it to freebuf when finished with it. 
+  // it to freebuf when finished with it.
 
   TAO_Unbounded_String_Sequence(const TAO_Unbounded_String_Sequence&);
   // The copy constructor performs a deep copy from the existing
@@ -289,23 +295,23 @@ public:
   // The copy constructor creates a new sequence with the same maximum
   // and length as the given sequence, copies each of its current
   // elements (items zero through length-1), and sets the release
-  // flag to TRUE. 
+  // flag to TRUE.
 
   ~TAO_Unbounded_String_Sequence (void);
-  // The destructor releases all object reference memebrs and frees
+  // The destructor releases all object reference members and frees
   // all string members.
 
   TAO_Unbounded_String_Sequence &operator= (const TAO_Unbounded_String_Sequence &);
   // The assignment operator first releases all object reference
   // members and frees all string  members, and then performs a
-  // deep­copy to create a new structure. 
+  // deep­copy to create a new structure.
   //
   // The assignment operator deep­copies its parameter, releasing
   // old storage if necessary. It behaves as if the original sequence
   // is destroyed via its destructor and then the source sequence
   // copied using the copy constructor. If release=TRUE, the
   // destructor destroys each of the current elements (items zero
-  // through length--1). 
+  // through length--1).
   // For an unbounded sequence, if a reallocation is necessary due to
   // a change in the length and the sequence was created using the
   // release=TRUE parameter in its constructor, the sequence will
@@ -326,7 +332,7 @@ public:
   // references, which are initialized to suitably typed nil object
   // references. A null pointer is returned if allocbuf for some
   // reason cannot allocate the requested vector. Vectors allocated by
-  // allocbuf should be freed using the freebuf function. 
+  // allocbuf should be freed using the freebuf function.
 
   static void freebuf (char* *);
   // The freebuf function ensures that the destructor for each element
@@ -338,7 +344,7 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
 };
 
 

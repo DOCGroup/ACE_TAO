@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "tao/corba.h"
 
@@ -19,6 +17,22 @@ TAO_Base_Sequence::~TAO_Base_Sequence (void)
 void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
 {
   // default is no op.
+}
+
+// *************************************************************
+// Operations for class TAO_Unbounded_Base_Sequence
+// *************************************************************
+
+TAO_Unbounded_Base_Sequence::~TAO_Unbounded_Base_Sequence (void)
+{
+}
+
+// *************************************************************
+// Operations for class TAO_Bounded_Base_Sequence
+// *************************************************************
+
+TAO_Bounded_Base_Sequence::~TAO_Bounded_Base_Sequence (void)
+{
 }
 
 // *************************************************************
@@ -67,7 +81,7 @@ TAO_String_Manager::operator= (const char * p)
 TAO_Unbounded_String_Sequence::
 TAO_Unbounded_String_Sequence (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum,
-				 TAO_Unbounded_String_Sequence::allocbuf (maximum))
+                                 TAO_Unbounded_String_Sequence::allocbuf (maximum))
 {
 }
 
@@ -101,18 +115,18 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
       char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-	{
-	  CORBA::string_free (tmp[i]);
-	  tmp[i] = 0;
-	}
+        {
+          CORBA::string_free (tmp[i]);
+          tmp[i] = 0;
+        }
 
       if (this->maximum_ < rhs.maximum_)
-	{
+        {
           // free the older buffer
           TAO_Unbounded_String_Sequence::freebuf (tmp);
-	  this->buffer_ =
-	    TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
-	}
+          this->buffer_ =
+            TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
+        }
     }
   else
     this->buffer_ =
@@ -179,7 +193,7 @@ TAO_Unbounded_String_Sequence::_allocate_buffer (CORBA::ULong length)
           tmp [i] = old[i];
 
       if (this->release_)
-	delete[] old;
+        delete[] old;
     }
   this->buffer_ = tmp;
 }
@@ -206,7 +220,7 @@ TAO_Unbounded_String_Sequence::_deallocate_buffer (void)
 
 void
 TAO_Unbounded_String_Sequence::_shrink_buffer (CORBA::ULong nl,
-					       CORBA::ULong ol)
+                                               CORBA::ULong ol)
 {
   char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
   for (CORBA::ULong i = nl; i < ol; ++i)
