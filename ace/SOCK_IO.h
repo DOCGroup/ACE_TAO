@@ -72,7 +72,7 @@ public:
                  int n,
                  const ACE_Time_Value *timeout = 0) const;
 
-  /// Same as above.  Deprecated.
+  /// @deprecated Same as above.  Deprecated.
   ssize_t recv (iovec iov[],
                 size_t n,
                 const ACE_Time_Value *timeout = 0) const;
