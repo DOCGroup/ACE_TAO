@@ -51,6 +51,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
 $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
 
+unlink $iorfile_1;
+unlink $iorfile_2;
+
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile");
 
 ACE::waitforfile ($iorfile_1);
