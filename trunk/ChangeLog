@@ -1,3 +1,13 @@
+Fri Aug 11 16:24:13 2000  Shawn Hannan  <hannan@tango.cs.wustl.edu>
+
+	* ace/OS.i: For VXWORKS, changed checks of errno against
+	  S_objLib_OBJ_TIMEOUT to S_objLib_OBJ_UNAVAILABLE after calls
+	  to semTake with timeout parameter set to NO_WAIT (i.e., 0).  
+	  semTake will set errno to _UNAVAILABLE, not _TIMEOUT, if
+ 	  the semaphore is empty and the timeout parameter is 0.
+	  Thanks to Peter Fischer <fischer@softec.de> for reporting
+	  this.
+
 Fri Aug 11 13:20:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/gperf/src/gperf_lib.dsp: Changed the format for generated
