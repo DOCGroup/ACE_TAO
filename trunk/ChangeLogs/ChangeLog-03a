@@ -1,3 +1,10 @@
+Thu Jul 11 16:28:24 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Scatter_Gather_Test.cpp: Changed Writer to derive
+          from ACE_Handler, not ACE_Service_Handler. It's not the target of
+          an asynch connection factory, and declares an open() method that
+          hides the one in ACE_Service_Handler.
+
 Thu Jul 11 16:15:49 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/SR_Configurable_Logging_Server.dsp:
