@@ -1,3 +1,8 @@
+Sun Sep 19 14:51:32 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/tao_orb_tests.lst:
+	  Add yet another test to the list.
+
 Sun Sep 19 13:49:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* bin/MakeProjectCreator/config/global.features:
