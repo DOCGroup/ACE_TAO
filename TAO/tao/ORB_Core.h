@@ -405,19 +405,6 @@ protected:
   // A string of comma-separated <{host}>:<{port}> pairs used to
   // pre-establish connections using <preconnect>.
 
-  typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> TSS_MALLOC;
-  typedef ACE_Allocator_Adapter<TSS_MALLOC> TSS_ALLOCATOR;
-
-  TSS_ALLOCATOR output_cdr_dblock_allocator_;
-  // The Allocator for the ACE_Data_Blocks used in the input CDRs.
-
-  TSS_ALLOCATOR output_cdr_buffer_allocator_;
-  // The Allocator for the input CDR buffers
-
-  ACE_Allocator *input_cdr_dblock_allocator_;
-  ACE_Allocator *input_cdr_buffer_allocator_;
-  // Cache the resource factory allocators.
-
   CORBA_Environment* default_environment_;
   // The default environment for the thread.
 
@@ -571,6 +558,10 @@ public:
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   // Access the input CDR allocators.
 
+  virtual ACE_Allocator* output_cdr_dblock_allocator (void);
+  virtual ACE_Allocator* output_cdr_buffer_allocator (void);
+  // Access the output CDR allocators.
+
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
   // The Message Blocks used for input CDRs must have appropiate
   // locking strategies.
@@ -659,6 +650,9 @@ public:
     ACE_Allocator *input_cdr_buffer_allocator_;
     // The allocators for the input CDR streams.
 
+    ACE_Allocator *output_cdr_dblock_allocator_;
+    ACE_Allocator *output_cdr_buffer_allocator_;
+    // The allocators for the output CDR streams.
   };
 
 protected:
