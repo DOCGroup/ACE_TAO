@@ -46,6 +46,11 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endp
 // TAO_AV_Endpoint_Process_Strategy
 // ----------------------------------------------------------------------
 
+TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
+  : process_options_ (process_options)
+{
+}
+
 int
 TAO_AV_Endpoint_Process_Strategy::activate (void)
 {
@@ -167,6 +172,11 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &env)
 // TAO_AV_Endpoint_Process_Strategy_A
 // ----------------------------------------------------------------------
 
+TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options)
+  : TAO_AV_Endpoint_Process_Strategy (process_options)
+{
+}
+
 int
 TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                                            AVStreams::VDev_ptr &vdev,
@@ -212,6 +222,11 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &env
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Process_Strategy_B
 // ----------------------------------------------------------------------
+
+TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options)
+  : TAO_AV_Endpoint_Process_Strategy (process_options)
+{
+}
 
 int
 TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
