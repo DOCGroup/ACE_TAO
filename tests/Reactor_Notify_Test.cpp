@@ -70,14 +70,28 @@ Supplier_Task::Supplier_Task (void)
 int
 Supplier_Task::open (void *)
 {
+  // Create the pipe.
   if (this->pipe_.open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open failed"), -1);
-  else if (this->activate (THR_BOUND | THR_DETACHED))
-    // Make this an Active Object.
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "activate failed"), -1);
-  else if (ACE_Reactor::instance()->register_handler 
-      (this->pipe_.write_handle (), this, ACE_Event_Handler::WRITE_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "open failed"),
+                      -1);
+  // Register the pipe's write handle with the <Reactor> for writing.
+  // This should mean that it's always "active."
+  else if (ACE_Reactor::instance ()->register_handler 
+      (this->pipe_.write_handle (),
+       this,
+       ACE_Event_Handler::WRITE_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "register_handler failed"),
+                      -1);
+  // Make this an Active Object.
+  else if (this->activate (THR_BOUND | THR_DETACHED) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "activate failed"),
+                      -1);
   else
     return 0;
 }
@@ -87,9 +101,12 @@ Supplier_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Supplier_Task::close\n"));
 
-  if (ACE_Reactor::instance()->remove_handler
-      (this->pipe_.write_handle (), ACE_Event_Handler::WRITE_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "remove_handler failed"));
+  if (ACE_Reactor::instance ()->remove_handler
+      (this->pipe_.write_handle (),
+       ACE_Event_Handler::WRITE_MASK) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%t) %p\n",
+                "remove_handler failed"));
   return 0;
 }
 
@@ -104,44 +121,61 @@ Supplier_Task::svc (void)
 {
   size_t i;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) **** starting unlimited notifications test\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) **** starting unlimited notifications test\n"));
 
   // Allow an unlimited number of iterations per
   // <ACE_Reactor::notify>.
-  ACE_Reactor::instance()->max_notify_iterations (-1);
+  ACE_Reactor::instance ()->max_notify_iterations (-1);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) notifying reactor\n"));
-      // Notify the Reactor.
-      if (ACE_Reactor::instance()->notify (this) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) notifying reactor\n"));
+      // Notify the Reactor, which will call <handle_exception>.
+      if (ACE_Reactor::instance ()->notify (this) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "notify"),
+                          -1);
 
       // Wait for our <handle_exception> method to release the
       // semaphore.
       else if (this->waiter_.acquire () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "acquire"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "acquire"),
+                          -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) **** starting limited notifications test\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t) **** starting limited notifications test\n"));
 
   // Only allow 1 iteration per <ACE_Reactor::notify>
-  ACE_Reactor::instance()->max_notify_iterations (1);
+  ACE_Reactor::instance ()->max_notify_iterations (1);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) notifying reactor\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) notifying reactor\n"));
       // Notify the Reactor.
-      if (ACE_Reactor::instance()->notify (this) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+      if (ACE_Reactor::instance ()->notify (this) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "notify"),
+                          -1);
 
       // Wait for our <handle_exception> method to release the
       // semaphore.
       else if (this->waiter_.acquire () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "acquire"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "acquire"),
+                          -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) **** exiting thread test\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t) **** exiting thread test\n"));
   return 0;
 }
 
@@ -149,7 +183,8 @@ int
 Supplier_Task::handle_exception (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == ACE_INVALID_HANDLE);
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_exception\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) handle_exception\n"));
 
   this->waiter_.release ();
   return 0;
@@ -159,7 +194,8 @@ int
 Supplier_Task::handle_output (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == this->pipe_.write_handle ());
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_output\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) handle_output\n"));
   return 0;
 }
 
@@ -177,28 +213,33 @@ main (int, char *[])
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   if (task.open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) open failed\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) open failed\n"),
+                      -1);
   else
     {
-      ACE_Time_Value timeout (2);
-
       int shutdown = 0;
-      for (int iteration = 1; !shutdown; iteration++)
-	{
-	  // Use a timeout to inform the Reactor when to shutdown.
-	  switch (ACE_Reactor::instance()->handle_events (timeout))
-	    {
-	    case -1:
-	      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), -1);
-	      /* NOTREACHED */
-	    case 0:
+
+      for (int iteration = 1; shutdown == 0; iteration++)
+        {
+          ACE_Time_Value timeout (2);
+
+          // Use a timeout to inform the Reactor when to shutdown.
+          switch (ACE_Reactor::instance ()->handle_events (timeout))
+            {
+            case -1:
+              ACE_ERROR_RETURN ((LM_ERROR, 
+                                 "(%t) %p\n",
+                                 "reactor"),
+                                -1);
+              /* NOTREACHED */
+            case 0:
               shutdown = 1;
               break;
-	    default:
-	      // ACE_DEBUG ((LM_DEBUG, "(%t) done dispatching %d\n", iteration));
-	      ;
-	    }
-	}
+            default:
+              break;;
+            }
+        }
     }
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
