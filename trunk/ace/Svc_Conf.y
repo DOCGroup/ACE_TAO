@@ -153,8 +153,8 @@ module
           if (mt->init (args.argc (), args.argv ()) == -1
               || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
             {
-              ACE_ERROR ((LM_ERROR, "dynamic initialization failed for Module %s\n",
-                          $<static_node_>1->name ()));
+              ACE_ERROR ((LM_ERROR, ASYS_TEXT ("dynamic initialization failed for Module %s\n"),
+                          ASYS_WIDE_STRING ($<static_node_>1->name ())));
               yyerrno++;
             }
         }
@@ -184,8 +184,9 @@ module
       if (mt != 0
           && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "cannot remove Module_Type %s from STREAM_Type %s\n",
-                     $<static_node_>1->name (), ($<static_node_>-1)->name ()));
+          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                     ASYS_WIDE_STRING ($<static_node_>1->name ()),
+                     ASYS_WIDE_STRING (($<static_node_>-1)->name ())));
           yyerrno++;
         }
     }
@@ -275,8 +276,8 @@ pathname
 void
 yyerror (char *s)
 {
-  ACE_ERROR ((LM_ERROR, "[error %d] on line %d: %s\n",
-              ++yyerrno, yylineno, s));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("[error %d] on line %d: %s\n"),
+              ++yyerrno, yylineno, ASYS_WIDE_STRING (s)));
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
@@ -292,8 +293,9 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
 
   if (sr == 0 || st == 0 || mt == 0)
     {
-      ACE_ERROR ((LM_ERROR, "cannot locate Module_Type %s in STREAM_Type %s\n",
-                 svc_name, str_rec->name ()));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
+                  ASYS_WIDE_STRING (svc_name),
+                  ASYS_WIDE_STRING (str_rec->name ())));
       yyerrno++;
     }
 
@@ -312,8 +314,9 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
 
   if (sr == 0 || st == 0 || mt == 0)
     {
-      ACE_ERROR ((LM_ERROR, "cannot locate Module_Type %s or STREAM_Type %s\n",
-                  svc_type->name (), str_rec->name ()));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
+                  ASYS_WIDE_STRING (svc_type->name ()),
+                  ASYS_WIDE_STRING (str_rec->name ())));
       yyerrno++;
     }
 
@@ -325,8 +328,9 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "warning: assigning Module_Type name %s to Module %s since names differ\n",
-                  module_type_name, mp->name ()));
+                  ASYS_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
+                  ASYS_WIDE_STRING (module_type_name),
+                  ASYS_WIDE_STRING (mp->name ())));
       mp->name (module_type_name);
     }
 
@@ -363,7 +367,7 @@ ace_create_service_type (const char *name,
                       0);
       break;
     default:
-      ACE_ERROR ((LM_ERROR, "unknown case\n"));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("unknown case\n")));
       yyerrno++;
       break;
     }
