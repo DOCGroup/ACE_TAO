@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
-
 #include "portableserver_export.h"
 
 namespace TAO
@@ -48,19 +46,13 @@ namespace TAO
   public:
     virtual ~ORT_Adapter_Factory (void);
 
-    // @@ Johnny, is there need to specify an exception specification
-    //    containing CORBA::SystemException for this method?  Removing
-    //    it would allow us to avoid including "tao/SystemException.h"
-    //    above.
+    /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create (
-        ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        ACE_ENV_SINGLE_ARG_DECL) = 0;
 
-    // @@ Johnny, same as above.
     virtual void destroy (
         TAO::ORT_Adapter * adapter
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        ACE_ENV_ARG_DECL) = 0;
   };
 }
 

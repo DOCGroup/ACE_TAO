@@ -43,15 +43,12 @@ namespace TAO
 
     /// Create an adapter
     virtual TAO::ORT_Adapter * create (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_SINGLE_ARG_DECL);
 
     /// Destroy an adapter that is created by this factory
     virtual void destroy (
         TAO::ORT_Adapter * adapter
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL);
 
     // Used to force the initialization of the code.
     static int Initializer (void);

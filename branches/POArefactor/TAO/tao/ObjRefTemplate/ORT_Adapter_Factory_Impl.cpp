@@ -16,14 +16,12 @@ namespace TAO
 
   ORT_Adapter *
   ORT_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ORT_Adapter_Impl * new_ort_adapter = 0;
 
-    ACE_NEW_THROW_EX (new_ort_adapter,
-                      TAO::ORT_Adapter_Impl,
-                      CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
+    ACE_NEW_RETURN (new_ort_adapter,
+                    TAO::ORT_Adapter_Impl,
+                    0);
 
     return new_ort_adapter;
   }
@@ -31,7 +29,6 @@ namespace TAO
   void
   ORT_Adapter_Factory_Impl::destroy (ORT_Adapter * adapter
                                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     delete adapter;
   }
