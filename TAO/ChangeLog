@@ -1,3 +1,8 @@
+Sat Jun 21 14:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Removed not needed explicit template instantiations
+
 Fri Jun 20 17:45:46 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/AMI/run_test.pl
@@ -26,12 +31,12 @@ Fri Jun 20 15:42:14 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Fri Jun 20 14:48:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	* orbsvcs/Event_Service/Event_Service.cpp:
 
 	  Added missing explicit instantiations that were causing build
