@@ -120,8 +120,17 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
   CORBA::Exception *e;
   excp >>= *e;*/
 
-  TAO_ClientRequest_Info *ri = ACE_dynamic_cast (TAO_ClientRequest_Info *,
-                                                 rinfo);
+  TAO_ClientRequest_Info *ri 
+    =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
+                             rinfo->_tao_QueryInterface
+                             (
+                              ACE_reinterpret_cast
+                              (
+                               ptr_arith_t,
+                               &PortableInterceptor::ClientRequestInfo::_narrow
+                               )
+                              )
+                             );
 
   CORBA::Exception *e = ri->_received_exception ();
 
@@ -245,9 +254,18 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
   excp >>= *e;
   */
 
-  TAO_ServerRequest_Info *ri = ACE_dynamic_cast (TAO_ServerRequest_Info *,
-                                                 rinfo);
-
+  TAO_ServerRequest_Info *ri 
+    =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
+                             rinfo->_tao_QueryInterface
+                             (
+                              ACE_reinterpret_cast
+                              (
+                               ptr_arith_t,
+                               &PortableInterceptor::ServerRequestInfo::_narrow
+                               )
+                              )
+                             );
+  
   CORBA::Exception *e = ri->_sending_exception ();
   ACE_DEBUG ((LM_DEBUG, 
               "Exception ID=%s\n", e->_id ()));
