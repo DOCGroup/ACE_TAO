@@ -368,6 +368,48 @@ sub check_for_tchar
     }
 }
 
+
+
+# This checks to make sure files include ace/post.h if ace/pre.h is included
+# and vice versa.
+sub check_for_pre_and_post ()
+{
+    print "Running pre.h/post.h test\n";
+    foreach $file (@files_h) {
+        my $pre = 0;
+        my $post = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_pre_and_post/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_pre_and_post/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (/^\s*#\s*include\s*\"ace\/pre\.h\"/) {
+                        ++$pre;
+                    }
+                    if (/^\s*#\s*include\s*\"ace\/post\.h\"/) {
+                        ++$post;
+                    }
+                }
+            }
+            close (FILE);
+
+            if ($disable == 0 && $pre != $post) {
+                print_error ("pre.h/post.h mismatch in $file");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+
 ##############################################################################
 
 our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
@@ -406,7 +448,8 @@ check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
-check_for_tchar () if ($opt_l >= 6);
+check_for_tchar () if ($opt_l >= 4);
+check_for_pre_and_post () if ($opt_l >= 4);
 
 print "\n$errors error(s), $warnings warnings(s)\n";
 
