@@ -1,6 +1,6 @@
 Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Change the
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
 	meaning of the -s flag to "don't use the naming service" and made
 	using the naming service the default.
 
