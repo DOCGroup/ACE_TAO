@@ -92,54 +92,19 @@ int
 JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  // Tell the acceptor to listen on this->port_, which makes an
+  // Tell the acceptor to listen on this->port_, which sets up an
   // asynchronous I/O request to the OS.
 
-  // return this->acceptor_.open (address,
-  // JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE);
+  return this->acceptor_.open (address,
+                               JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
+                               0,
+                               backlog,
+                               1,
+                               0,
+                               0,
+                               0,
+                               0);
 
-  // Create the listener socket
-  this->handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
-  if (this->handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE_OS::socket")), -1);
-
-  // Reuse the address
-  int one = 1;
-  if (ACE_OS::setsockopt (this->handle_,
-                          SOL_SOCKET,
-                          SO_REUSEADDR,
-                          (const char*) &one,
-                          sizeof one) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE_OS::setsockopt")), -1);
-
-  // If port is not specified, bind to any port.
-  static ACE_INET_Addr sa ((const ACE_INET_Addr &) ACE_Addr::sap_any);
-
-  if (address == sa && ACE::bind_port (this->handle_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE::bind_port")), -1);
-
-  // Bind to the specified port.
-  if (ACE_OS::bind (this->handle_,
-		    (sockaddr *) address.get_addr (),
-		    address.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::bind"),
-                      -1);
-
-  // Start listening
-  if (ACE_OS::listen (this->handle_, backlog) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::listen"), -1);
-
-  return 0;
 #else
   ACE_UNUSED_ARG (address);
   return -1;
@@ -166,11 +131,10 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
 }
 
 int
-JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
+JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read, const void *act)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  // Do nothing, since asynchronous accepts have already been created.
-  return 0;
+  return this->acceptor_.accept (bytes_to_read, act);
 #else
   ACE_UNUSED_ARG (bytes_to_read);
   return -1;
@@ -197,10 +161,12 @@ JAWS_IO_Asynch_Acceptor::get_handle (void)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Asynch_Acceptor<JAWS_Asynch_Handler>;
 template class ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Asynch_Acceptor<JAWS_Asynch_Handler>
 #pragma instantiate  ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
 #pragma instantiate  ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
