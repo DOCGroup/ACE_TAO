@@ -25,7 +25,7 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
        5,   5,  20,  50,  40,  20, 110,   0,  45,  35,
       95,  55, 252, 252, 252, 252, 252, 252,
     };
-  return len + asso_values[str[(int) 1]] + asso_values[str[(int) 0]] + asso_values[str[(int) len - 1]];
+  return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
 }
 
 const struct TAO_IDL_CPP_Keyword_Entry *

@@ -15,8 +15,8 @@ TAO_ExceptionDef_i::TAO_ExceptionDef_i (
     TAO_Repository_i *repo
   )
   : TAO_IRObject_i (repo),
-    TAO_Container_i (repo),
-    TAO_Contained_i (repo)
+    TAO_Contained_i (repo),
+    TAO_Container_i (repo)
 {
 }
 

@@ -1,3 +1,33 @@
+Fri Jul 25 17:07:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+
+	  Removed unused copy constructors and assignment
+	  operators, inserted only for older versions
+	  of gcc no longer supported.
+
+        * TAO_IDL/fe/fe_lookup.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+
+          Fixed more gcc 3.3 warnings, about array subscript
+	  values of type char and about the order of base
+	  class constructor calls in copy constructors.
+
 Fri Jul 25 13:15:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/except.cpp:

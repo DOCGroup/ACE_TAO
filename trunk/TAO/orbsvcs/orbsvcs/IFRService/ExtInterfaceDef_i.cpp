@@ -15,8 +15,8 @@ TAO_ExtInterfaceDef_i::TAO_ExtInterfaceDef_i (
     TAO_Container_i (repo),
     TAO_Contained_i (repo),
     TAO_IDLType_i (repo),
-    TAO_InterfaceAttrExtension_i (repo),
-    TAO_InterfaceDef_i (repo)
+    TAO_InterfaceDef_i (repo),
+    TAO_InterfaceAttrExtension_i (repo)
 {
 }
 
