@@ -2,7 +2,8 @@ Fri Jul 26 15:52:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Fixed a problem with handle_event
 	  (ACE_Time_Value &). It should be calling the TP_Reactor's
-	  handle_event () instead of Select_Reactor's. 
+	  handle_event () instead of Select_Reactor's. This should fix
+	  [BUGID 1257]. 
 
 Fri Jul 26 10:11:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
