@@ -148,7 +148,12 @@ public:
   // 0 then the <functor> will be invoked.  Returns 1 if cancellation
   // succeeded and 0 if the <timer_id> wasn't found.
 
-  virtual int expire (const ACE_Time_Value &current_time);
+  virtual int expire (void);
+  // Run the <functor> for all timers whose values are <=
+  // <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
+  // the number of timers canceled.
+
+  int expire (const ACE_Time_Value &);
   // Run the <functor> for all timers whose values are <= <cur_time>.
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.

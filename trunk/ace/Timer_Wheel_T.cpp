@@ -482,6 +482,14 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::iter (void)
   return this->iterator_;
 }
 
+// Dummy version of expire to get rid of warnings in Sun CC 4.2
+
+template <class TYPE, class FUNCTOR, class LOCK> int
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::expire ()
+{
+  return INHERITED::expire ();
+}
+
 
 // Specialized expire which expires in total order.  It is optimized by keeping 
 // track of the list with the earliest element and the next earliest list.  It 
