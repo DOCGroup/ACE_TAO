@@ -1,3 +1,9 @@
+Wed Jul  5 23:36:12 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.i:
+	  Added PACE functionality to funcitons whose counterparts were
+	  recent additions to PACE.
+
 Wed Jul  5 14:04:50 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SUN_Proactor: Added yet another handle_events() method to keep
@@ -26,9 +32,9 @@ Wed Jul 05 11:24:51 2000  Steve Huston  <shuston@riverace.com>
 Tue Jul  4 10:12:12 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SUN_Proactor: Added a new method with the name/signature
-  
+
           virtual int handle_events (ACE_Time_Value &);
-	  
+
 	  so that we get the appropriate overloading/overriding behavior.
   	  Thanks to Marina for reporting this.
 
