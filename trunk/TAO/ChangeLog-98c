@@ -1,3 +1,9 @@
+1998-01-27  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/POA/FindPOA:Added comments to all files
+	* tests/POA/On_Demand_Activation: Added comments to all files
+	* tests/POA/Generic_Servant: Added comments to all files
+
 Mon Jan 26 21:29:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/compat/objbase.h: don't #define NOERROR on DIGITAL_UNIX,
