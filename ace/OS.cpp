@@ -1987,43 +1987,88 @@ ACE_OS::fork_exec (char *argv[])
 
 #if defined (ACE_NEEDS_WRITEV)
 
-// "Fake" writev for sites without it.  Note that this is totally
-// broken for multi-threaded applications since the <send_n> calls are
-// not atomic...
+// "Fake" writev for sites without it.  Note that this is thread-safe.
 
 extern "C" int
-writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *vp, int vpcount)
+writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
 // ACE_TRACE ("::writev");
 
-  int count;
+  size_t length = 0;
+  size_t i;
 
-  for (count = 0; --vpcount >= 0; count += vp->iov_len, vp++)
-    if (ACE::send_n (handle, vp->iov_base, vp->iov_len) < 0)
+  // Determine the total length of all the buffers in <iov>.
+  for (i = 0; i < n; i++)
+    if (iov[i].iov_len < 0)
       return -1;
+    else
+      length += iov[i].iov_len;
 
-  return count;
+  char *buf;
+
+#if defined (ACE_HAS_ALLOCA)
+  buf = (iovec *) alloca (length);
+#else 
+  ACE_NEW_RETURN (buf, length, -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  char *ptr = buf;
+
+  for (i = 0; i < n; i++)
+    {
+      ACE_OS::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
+      ptr += iov[i].iov_len;
+    }
+
+  ssize_t result = ACE_SOCK_Dgram::send_n (handle, buf, length);
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] buf;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  return result;
 }
 #endif /* ACE_NEEDS_WRITEV */
 
 #if defined (ACE_NEEDS_READV)
 
-// "Fake" readv for sites without it.  Note that this is totally
-// broken for multi-threaded applications since the <send_n> calls are
-// not atomic...
+// "Fake" readv for sites without it.  Note that this is thread-safe.
 
 extern "C" int
 readv (ACE_HANDLE handle, struct iovec *vp, int vpcount)
 {
 // ACE_TRACE ("::readv");
 
-  int count;
+  ssize_t length = 0;
+  size_t i;
 
-  for (count = 0; --vpcount >= 0; count += vp->iov_len, vp++)
-    if (ACE::recv_n (handle, vp->iov_base, vp->iov_len) < 0)
+  for (i = 0; i < n; i++)
+    if (iov[i].iov_len < 0)
       return -1;
+    else
+      length += iov[i].iov_len;
 
-  return count;
+#if defined (ACE_HAS_ALLOCA)
+  buf = (iovec *) alloca (length);
+#else 
+  ACE_NEW_RETURN (buf, length, -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  length = ACE_SOCK_Dgram::recv_n (buf, length);
+
+  if (length != -1)
+    {
+      char *ptr = buf;
+
+      for (i = 0; i < n; i++)
+	{
+	  ACE_OS::memcpy (iov[i].iov_base, ptr, iov[i].iov_len);
+	  ptr += iov[i].iov_len;
+	}
+    }
+
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] buf;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  return length;
 }
 #endif /* ACE_NEEDS_READV */
 

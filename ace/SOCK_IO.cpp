@@ -52,11 +52,10 @@ ACE_SOCK_IO::send (size_t n, ...) const
 
   va_list argp;  
   size_t total_tuples = n / 2;
-  ssize_t result;
-#if defined (ACE_HAS_ALLOCA)
-  iovec *iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
-#else 
   iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else 
   ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -68,7 +67,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  result = ACE_OS::writev (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::writev (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -88,13 +87,11 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
   va_list argp;  
-  size_t  total_tuples = n / 2;
-  ssize_t result;
-#if defined (ACE_HAS_ALLOCA)
-  iovec *iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
-#else
+  size_t total_tuples = n / 2;
   iovec *iovp;
-  
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
   ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -106,7 +103,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  result = ACE_OS::readv (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::readv (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */

@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "Logging_Acceptor.h"
@@ -51,7 +50,9 @@ Logging_Acceptor::get_handle (void) const
 int
 Logging_Acceptor::handle_input (ACE_HANDLE)
 {
-  Logging_Handler *svc_handler = new Logging_Handler;
+  Logging_Handler *svc_handler;
+  
+  ACE_NEW_RETURN (svc_handler, Logging_Handler, -1);
 
   // Accept the connection from a client client daemon.
 
