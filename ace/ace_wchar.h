@@ -60,7 +60,9 @@
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
-# elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE)
+# elif defined (ACE_HAS_WINCE)
+#   include /**/ <wtypes.h>
+# elif !defined (__BORLANDC__)
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)

@@ -100,27 +100,27 @@ while ( $#ARGV >= 0)
 }
  
 if (!defined @configs) {
-    if (!defined $ENV{DEFAULT_CONFIGS}) {
+    if (!defined $ENV{PIPPEN_CONFIGS}) {
         print STDERR "Error: No config specified\n";
         exit 1;
     }
 
-    @configs = split /:/, $ENV{DEFAULT_CONFIGS};
+    @configs = split /:/, $ENV{PIPPEN_CONFIGS};
 }
 
 if (!defined $extension) {
-    if (!defined $ENV{DEFAULT_COMPILER}) {
+    if (!defined $ENV{PIPPEN_COMPILER}) {
         print STDERR "Error: No compiler specified\n";
         exit 1;
     }
     
-    if ($ENV{DEFAULT_COMPILER} eq "evc3") {
+    if ($ENV{PIPPEN_COMPILER} eq "evc3") {
         $extension = "vcp";
     }
-    elsif ($ENV{DEFAULT_COMPILER} eq "msvc6") {
+    elsif ($ENV{PIPPEN_COMPILER} eq "msvc6") {
         $extension = "dsp";
     }
-    elsif ($ENV{DEFAULT_COMPILER} eq "msvc7") {
+    elsif ($ENV{PIPPEN_COMPILER} eq "msvc7") {
         $extension = "vcproj";
     }
 }
@@ -237,7 +237,7 @@ foreach my $project (keys %projects) {
     
     foreach my $config (@configs) {
         foreach my $proj_config ($proj->Configs ()) {
-            if ($proj_config =~ m/$config/i) {
+            if ($proj_config =~ m/\Q$config\E/i) {
                 print " \"$proj_config\"" if ($verbose);
                 my $name = $proj->DepOutputFile ($proj_config);
                            

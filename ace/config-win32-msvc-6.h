@@ -173,7 +173,9 @@
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif
 
-# define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+# if !defined (ACE_ENDTHREADEX)
+#   define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+# endif 
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_6_H */
