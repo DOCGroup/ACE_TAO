@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=IDL_Cubit Server - Win32 static Debug
+CFG=IDL_Cubit Server - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,14 +13,14 @@ CFG=IDL_Cubit Server - Win32 static Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="IDL_Cubit Server - Win32 static Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="IDL_Cubit Server - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "IDL_Cubit Server - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "IDL_Cubit Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Server - Win32 static Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Server - Win32 static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Server - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Server - Win32 Static Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib TAO_PortableServer.lib TAO_Strategies.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib TAO_PortableServer.lib TAO_Strategies.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 Debug"
 
@@ -80,7 +80,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_Strategiesd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 static Debug"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -90,13 +90,13 @@ LINK32=link.exe
 # PROP BASE Target_Dir "server"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "static_Debug"
-# PROP Intermediate_Dir "static_Debug"
+# PROP Output_Dir "Static_Debug"
+# PROP Intermediate_Dir "Static_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -105,9 +105,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
-# ADD LINK32 acesd.lib TAOsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Strategiessd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 static Release"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -132,7 +132,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
-# ADD LINK32 aces.lib TAOs.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_Strategiess.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
@@ -140,8 +140,8 @@ LINK32=link.exe
 
 # Name "IDL_Cubit Server - Win32 Release"
 # Name "IDL_Cubit Server - Win32 Debug"
-# Name "IDL_Cubit Server - Win32 static Debug"
-# Name "IDL_Cubit Server - Win32 static Release"
+# Name "IDL_Cubit Server - Win32 Static Debug"
+# Name "IDL_Cubit Server - Win32 Static Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -278,7 +278,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 static Debug"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl_static.exe"	
@@ -287,7 +287,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl_static -Ge1 -Gd $(InputName).idl
+	..\..\..\..\..\bin\tao_idl_static -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -317,7 +317,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 static Release"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 Static Release"
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1

@@ -1,10 +1,23 @@
+Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Strategies/strategies_export.h:
+
+          Added TAO_AS_STATIC_LIBS check.
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+
+          Updated the static configurations' build options.          
+
 Tue Dec 19 19:22:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO_Static.dsp
 	   
 	  Added the new files.
 
-Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
@@ -16,7 +29,7 @@ Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
           typedef string<a+3> foo;
           typedef long bar[a+1];
 
-Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Container_i.cpp:
         * orbsvcs/IFR_Service/Container_i.h:
@@ -54,7 +67,7 @@ Tue Dec 19 12:16:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  IOR is passed in.  Thanks to Jerry Jiang <javalist@21cn.com> for
  	  reporting this problem.
 
-Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.yy:
 
@@ -331,7 +344,7 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  In TAO_POA_Policies constructor, narrowed down the pointers
 	  returned to the correct policy_vars.
 
-Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/y.tab.cpp:
@@ -628,7 +641,7 @@ Mon Dec 18 16:44:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Added ServerRequestInfo.inl to the list of inline sources.
 
-Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Exception.cpp:
         * tao/Dynamic_Adapter.h:
@@ -666,7 +679,7 @@ Mon Dec 18 10:45:33 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	  Fixed compile warnings.
 
-Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Exception.cpp:
         * tao/Exception.h:
