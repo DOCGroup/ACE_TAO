@@ -112,14 +112,14 @@ win32_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
-ssize_t
-win32_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
+pace_ssize_t
+pace_win32_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
   DWORD bytes_written; /* This is set to 0 byte WriteFile. */
 
   if (WriteFile (fildes, buf, nbyte, &bytes_written, 0))
     {
-      return (ssize_t) bytes_written;
+      return (pace_ssize_t) bytes_written;
     }
   else
     {

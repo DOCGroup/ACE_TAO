@@ -79,25 +79,25 @@ typedef ssize_t pace_ssize_t;
 #endif /* PACE_SSIZE_T */
 
 #if (PACE_HAS_POSIX_DI_UOF)
-  int win32_close (PACE_HANDLE fildes);
+  int pace_win32_close (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_HANDLE win32_dup (PACE_HANDLE fildes);
+  PACE_HANDLE pace_win32_dup (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  int win32_ftruncate (PACE_HANDLE fildes, pace_off_t length);
+  int pace_win32_ftruncate (PACE_HANDLE fildes, pace_off_t length);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_FM_UOF)
-  pace_off_t win32_lseek (PACE_HANDLE fildes,
+  pace_off_t pace_win32_lseek (PACE_HANDLE fildes,
                           pace_off_t offset,
                           int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
-  ssize_t win32_write (PACE_HANDLE fildes,
+  pace_ssize_t pace_win32_write (PACE_HANDLE fildes,
                        const void * buf,
                        size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
