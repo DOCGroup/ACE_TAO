@@ -1827,11 +1827,17 @@ int
 ACE::max_handles (void)
 {
   ACE_TRACE ("ACE::max_handles");
+int
+ACE::max_handles (void)
+{
+  ACE_TRACE ("ACE::max_handles");
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
 # if defined (RLIM_INFINITY)
   if (rl.rlim_cur != RLIM_INFINITY)
+    return rl.rlim_cur;
+#else
     return rl.rlim_cur;
 # endif /* RLIM_INFINITY */
 # if defined (_SC_OPEN_MAX)
