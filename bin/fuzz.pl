@@ -14,7 +14,6 @@ use Getopt::Std;
 #
 # Add tests for these:
 #
-# - Using TAO_TRY macros instead of ACE_TRY
 # - no relative path to tao_idl in the .dsp files
 # - Linking to wrong type of library in dsp's
 # - not setting up the release configs correctly in dsp files
@@ -1135,6 +1134,42 @@ sub check_for_include ()
     }
 }
 
+# This test verifies that all equality, relational and logical
+# operators return bool, as is the norm for modern C++.
+sub check_for_non_bool_operators ()
+{
+    print "Running non-bool equality, relational and logical operator check\n";
+    # Only bother looking at the headers.  The C++ compiler will flag
+    # mismatched return types that developers introduce.
+    foreach $file (@files_h, @files_inl, @files_cpp) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+	    my $found_bool = 0;
+            while (<FILE>) {
+                ++$line;
+
+		if ($found_bool == 0 && (/[^\w]bool\s*$/ || /^bool\s*$/))
+		  {
+		    $found_bool = 1;
+		    next;
+		  }
+
+                if ($found_bool == 0
+		    && /(?<![^\w]bool)(\s+|s+\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
+		    && !/^\s*return\s+/) {
+                    print_error ("non-bool return type for operator in $file on line $line");
+                }
+
+		$found_bool = 0;
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 
 ##############################################################################
 
@@ -1176,7 +1211,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_ace_check
            check_for_changelog_errors
            check_for_ptr_arith_t
-           check_for_include\n";
+           check_for_include
+           check_for_non_bool_operators\n";
     exit (1);
 }
 
@@ -1206,10 +1242,10 @@ print "--------------------Configuration: Fuzz - Level ",$opt_l,
 
 check_for_noncvs_files () if ($opt_l >= 1);
 # Commenting out the following checks for short while before BFO. We
-# don't want to have noise that we cannot fix for the timebeing. 
-# check_for_synch_include () if ($opt_l >= 1);
-# check_for_OS_h_include () if ($opt_l >= 1);
-# check_for_streams_include () if ($opt_l >= 1);
+# don't want to have noise that we cannot fix for the time being.
+check_for_synch_include () if ($opt_l >= 1);
+check_for_OS_h_include () if ($opt_l >= 1);
+check_for_streams_include () if ($opt_l >= 1);
 check_for_dependency_file () if ($opt_l >= 1);
 check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
@@ -1231,6 +1267,7 @@ check_for_ace_check () if ($opt_l >= 3);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
+check_for_non_bool_operators () if ($opt_l > 2);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
