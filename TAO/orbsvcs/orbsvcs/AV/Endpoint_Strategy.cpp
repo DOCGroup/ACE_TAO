@@ -15,6 +15,7 @@
 // ============================================================================
 
 #include "Endpoint_Strategy.h"
+#include "ace/Process_Semaphore.h"
 
 ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
 
@@ -116,7 +117,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                    "TAO_AV_Process_Semaphore",
                    this->host_,
                    ACE_static_cast (long int, this->pid_));
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
               sem_str));
@@ -374,7 +375,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
     vdev = this->vdev_;
   }
   ACE_CATCHANY
-    { 
+    {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
       return -1;
     }

@@ -1,20 +1,25 @@
+Sat Sep 23 08:15:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+          Add missing #include, at least it is needed with Sun/CC
+
 Sat Sep 23 00:47:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MProfile.h:
-	* tao/MProfile.i: Added ACE_MT to <mutex_>'s decl and reference.
+        * tao/MProfile.h:
+        * tao/MProfile.i: Added ACE_MT to <mutex_>'s decl and reference.
 
 Fri Sep 22 17:40:09 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityAdmin.idl:
-	* orbsvcs/orbsvcs/SecurityLevel1.idl:
-	* orbsvcs/orbsvcs/SecurityLevel2.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityAdmin.idl:
+        * orbsvcs/orbsvcs/SecurityLevel1.idl:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceable.idl:
 
-	  Uncommented IDL version pragmas.  They are currently ignored by
-	  TAO_IDL so there is no harm in uncommenting.  This will be
-	  useful In the event that TAO_IDL begins to support IDL version
-	  pragmas.
+          Uncommented IDL version pragmas.  They are currently ignored by
+          TAO_IDL so there is no harm in uncommenting.  This will be
+          useful In the event that TAO_IDL begins to support IDL version
+          pragmas.
 
 Fri Sep 22 14:22:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -29,22 +34,22 @@ Fri Sep 22 14:22:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Sep 22 14:21:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/README:
+        * orbsvcs/tests/ImplRepo/README:
 
-	  Updated list of command line options for the perl
-	  script, to reflect the new tests that have been
-	  added (persistence test and ImR NT service test).
-	  Also added documentation on the NT service test.
+          Updated list of command line options for the perl
+          script, to reflect the new tests that have been
+          added (persistence test and ImR NT service test).
+          Also added documentation on the NT service test.
 
-	* orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
 
-	  Added NT_ImplRepo_Service project (from
-	  orbsvcs/ImplRepo_Service) to test workspace.
+          Added NT_ImplRepo_Service project (from
+          orbsvcs/ImplRepo_Service) to test workspace.
 
-	* docs/implrepo/usersguide.html:
+        * docs/implrepo/usersguide.html:
 
-	  Added section on running the Implementation
-	  Repository as an NT service.
+          Added section on running the Implementation
+          Repository as an NT service.
 
 Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -76,75 +81,75 @@ Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Sep 22 12:20:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
 
-	  Added missing quotes around a couple of ACE_ROOTs,
-	  $DIR_SEPARATORs in place of some '/'s, and the
-	  recently added tests to the usage message.
+          Added missing quotes around a couple of ACE_ROOTs,
+          $DIR_SEPARATORs in place of some '/'s, and the
+          recently added tests to the usage message.
 
 Thu Sep 21 19:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_produce.cpp:
 
-	  Recently some cleanup code was added at the end of
-	  the method BE_produce(). This code is now abstracted
-	  into a method BE_cleanup(), which is called at the
-	  end of BE_produce, and also by BE_abort(), so that the
-	  cleanup can be executed even if code generation is not
-	  completed.
+          Recently some cleanup code was added at the end of
+          the method BE_produce(). This code is now abstracted
+          into a method BE_cleanup(), which is called at the
+          end of BE_produce, and also by BE_abort(), so that the
+          cleanup can be executed even if code generation is not
+          completed.
 
-	* TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_decl.h:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Thu Sep 21 18:29:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Abstract_Servant_Base.h:
+        * tao/Abstract_Servant_Base.h:
 
-	  Removed useless forward declaration of ServerRequest, which
-	  was source of compilation error on sunCC.
+          Removed useless forward declaration of ServerRequest, which
+          was source of compilation error on sunCC.
 
-	* tao/Remote_Object_Proxy_Impl.h:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Impl.h:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
 
-	  Now this class inherit virtually from <TAO_Object_Proxy_Impl>
-	  this is needed to enable domincance in the new-coming IDL
-	  generated code for proxies.
+          Now this class inherit virtually from <TAO_Object_Proxy_Impl>
+          this is needed to enable domincance in the new-coming IDL
+          generated code for proxies.
 
 Thu Sep 21 16:48:50 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
-	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_FE_LIB.dsp:  Added pre-link rules to remove
-	  corresponding TAO_IDL executables if any of these libraries gets
-	  relinked (i.e., updated.)  These rules achieve the same
-	  functionality that Makefile.dependencies does by forcing relink
-	  of TAO_IDL executables.
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:  Added pre-link rules to remove
+          corresponding TAO_IDL executables if any of these libraries gets
+          relinked (i.e., updated.)  These rules achieve the same
+          functionality that Makefile.dependencies does by forcing relink
+          of TAO_IDL executables.
 
 Thu Sep 21 15:11:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile: Fixed a
-	  bug with static builds.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile: Fixed a
+          bug with static builds.
 
 Thu Sep 21 15:10:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	  Fixed a bug with static builds.
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+          Fixed a bug with static builds.
 
 Thu Sep 21 14:13:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORManip_Loader.h:
-	* tao/IORManipulation/IORManipulation.h:
-	* tao/IORManipulation/IORManipulation.cpp:
-	* tests/IORManipulation/IORTest.cpp:
-	* tests/IORManipulation/Makefile: Fixed a bug with static
-	  builds. Thanks to Carlos for helping out with this.
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORManip_Loader.h:
+        * tao/IORManipulation/IORManipulation.h:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tests/IORManipulation/IORTest.cpp:
+        * tests/IORManipulation/Makefile: Fixed a bug with static
+          builds. Thanks to Carlos for helping out with this.
 
 Thu Sep 21 10:08:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
