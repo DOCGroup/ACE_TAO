@@ -1,3 +1,16 @@
+Fri Feb 13 09:47:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp (clone_from):
+
+	  The check that is done before we go for an allocation needs to
+	  include the CDR alignment. 
+	  
+	* ace/TMCast/Group.cpp:
+	 
+	  Use standard macros like ACE_SYNCH_MUTEX that can compile in
+	  single-threaded and multi-threaded builds. Thanks to Duane 
+	  Binder for providing the patches.
+
 Fri Feb 13 10:50:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Timers/Task.cpp: In main(), interval should be
