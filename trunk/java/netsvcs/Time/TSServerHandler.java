@@ -72,7 +72,7 @@ public class TSServerHandler extends SvcHandler
 	    long time = System.currentTimeMillis();
 
 	    // Send as a string
-	    this.peer ().send ("" + time + '\n');
+	    this.peer ().send ("" + time);
 
 	    ACE.DEBUG("Time: " + new Date(time));
 	  }
