@@ -19,8 +19,6 @@
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
-//  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2
-//  unless you set ACE_HAS_WINSOCK2 to 0 in the config.h file.
 #if !defined (ACE_HAS_WINNT4)
 # define ACE_HAS_WINNT4 1      // assuming Win NT 4.0 or greater
 #endif

@@ -1,3 +1,11 @@
+Tue Mar  6 10:16:31 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:
+
+          Removed old comment about ACE_HAS_WINSOCK2 being related to
+          ACE_HAS_WINNT4.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for pointing this out.
+
 Tue Mar  6 10:13:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/RMCast/RMCast_Fragment_Test.cpp:
