@@ -1,3 +1,8 @@
+Fri Sep  8 15:51:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IORManipulation/IORManipulation.h (LocalObject): Fixed
+	  compile errors in Win32
+
 Fri Sep  8 14:27:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MProfile/client.cpp:

@@ -65,9 +65,9 @@ public:
     CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ())
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
-        TAO_IOP::TAO_IOR_Manipulation::Duplicate,
-        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
+        TAO_IOP::EmptyProfileList,
+        TAO_IOP::Duplicate,
+        TAO_IOP::Invalid_IOR
       ));
 
   virtual CORBA::Object_ptr add_profiles (
@@ -76,9 +76,9 @@ public:
       CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ())
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
-        TAO_IOP::TAO_IOR_Manipulation::Duplicate,
-        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
+        TAO_IOP::EmptyProfileList,
+        TAO_IOP::Duplicate,
+        TAO_IOP::Invalid_IOR
       ));
 
   virtual CORBA::Object_ptr remove_profiles (
@@ -87,9 +87,9 @@ public:
     CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ())
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
-        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
-        TAO_IOP::TAO_IOR_Manipulation::NotFound
+        TAO_IOP::Invalid_IOR,
+        TAO_IOP::EmptyProfileList,
+        TAO_IOP::NotFound
       ));
 
   virtual CORBA::Boolean set_property (
