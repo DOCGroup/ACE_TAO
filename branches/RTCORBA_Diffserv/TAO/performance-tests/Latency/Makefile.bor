@@ -1,0 +1,15 @@
+#
+# $Id$
+#
+
+DIRS = \
+  AMI \
+  AMH \
+  DII \
+  Deferred \
+  DSI \
+  Single_Threaded \
+  Thread_Pool \
+  Thread_Per_Connection
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

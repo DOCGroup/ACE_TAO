@@ -1,0 +1,15 @@
+// $Id$
+                        Telecom Log Service
+                        ===================
+
+This is an implementation of the telecom log service.
+Currently we support the DsLogAdmin interface.
+
+The idl spec is $TAO_ROOT/orbsvcs/orbsvcs/DsLogAdmin.idl
+
+The example in $TAO_ROOT/orbsvcs/examples/Log/Client demonstrates a simple
+usage of the Log service.
+
+The Log Service implementation is in $TAO_ROOT/orbsvcs/orbsvcs/Log
+
+send suggestions, bugs, praise to Pradeep Gore <pradeep@cs.wustl.edu>

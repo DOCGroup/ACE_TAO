@@ -1,0 +1,20 @@
+#
+# Makefile for building the ACE Naming examples
+#
+
+NAMES = \
+        test_multiple_contexts \
+        test_non_existent \
+        test_open \
+        test_writers
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
