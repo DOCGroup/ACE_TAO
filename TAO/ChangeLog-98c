@@ -1,3 +1,13 @@
+Wed Aug 26 16:32:18 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/include/idl_global.h: 
+	* TAO_IDL/driver/drv_preproc.cpp: 
+		Fixed the relative #include path generation. tao_idl now
+	puts header names derived from the #include'd idl files as they
+	appear originally in the main idl file.
+
 Wed Aug 26 13:12:57 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/client.cpp
