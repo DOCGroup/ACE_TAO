@@ -1,3 +1,10 @@
+Thu Feb 26 16:48:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added new macros for ACE_FILE_STREAM and
+ 	  ACE_FILE_CONNECTOR to be consistent with the ACE_SOCK_* stuff,
+ 	  etc.  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting
+ 	  this.
+
 Thu Feb 26 11:14:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Parse_Node.cpp (ACE_Location_Node): reordered initializers
