@@ -1,3 +1,13 @@
+Tue Apr 20 13:22:28 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+
+          Added code to make LoadManager use corbaloc.
+
+          Thanks to Eric Mcwhorter <emcwhorter@rightnow.com>
+          for the suggested fix.
+
 Tue Apr 20 12:46:59 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
