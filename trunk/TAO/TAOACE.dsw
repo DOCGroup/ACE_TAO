@@ -348,6 +348,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DsEventLogAdmin"=.\orbsvcs\orbsvcs\DsEventLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsLogAdmin
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "DsLogAdmin"=.\orbsvcs\orbsvcs\DsLogAdmin.dsp - Package Owner=<4>
 
 Package=<5>
@@ -357,16 +375,31 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name CosTrading
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ETCL DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsNotifyLogAdmin"=.\orbsvcs\orbsvcs\DsNotifyLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsLogAdmin
     End Project Dependency
 }}}
 
@@ -883,6 +916,24 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEventLog"=.\orbsvcs\orbsvcs\RTEventLog.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsLogAdmin
     End Project Dependency
 }}}
 
