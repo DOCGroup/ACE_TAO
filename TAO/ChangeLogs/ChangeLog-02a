@@ -1,3 +1,30 @@
+Tue Oct 17 01:13:25 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile
+	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile.bor
+	* tests/RTCORBA/MT_Client_Protocol_Priority/README
+	* tests/RTCORBA/MT_Client_Protocol_Priority/MT_Client_Protocol_Priority.dsw
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.bor
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.bor
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/test.idl
+
+	  Added new RTCORBA multithreaded test.  Several client threads of
+	  different priority and different ClientProtocolPolicy
+	  Current-level overrides concurrently make invocations on one
+	  object reference, which has a CLIENT_PROPAGATED priority model.
+
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/README:
+
+	  Updated to include the new MT_Client_Protocol_Priority test.
+
 Mon Oct 16 18:54:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_array.cpp:
