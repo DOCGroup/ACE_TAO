@@ -145,7 +145,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   if (node->has_native ()) // native exists => no stub
     {
-      be_predefined_type bpt (AST_PredefinedType::PredefinedType::PT_void,
+      be_predefined_type bpt (AST_PredefinedType::PT_void,
                               0);
 
       int status = this->gen_raise_exception (&bpt,
