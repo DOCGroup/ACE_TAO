@@ -492,17 +492,22 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
 {
 
   ACE_ARGV  tmp_args (this->argv_);
-  char high_thread_args[3*BUFSIZ];
-  char low_thread_args[3*BUFSIZ];
+  char *arg_buf = tmp_args.buf ();
 
-  ACE_OS::strcpy (high_thread_args,
-                  tmp_args.buf ());
+  char *low_thread_args;
+
+  int arg_len = strlen (arg_buf);
+
+  ACE_NEW_RETURN (low_thread_args,
+                  char [arg_len+1],
+                  -1);
+
   ACE_OS::strcpy (low_thread_args,
-                  tmp_args.buf ());
+                  arg_buf);
   char *args1;
 
   ACE_NEW_RETURN (args1,
-                  char[3*BUFSIZ],
+                  char[ACE_DEFAULT_ARGV_BUFSIZ],
                   -1);
   int i;
 
@@ -535,6 +540,14 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                    GLOBALS::instance ()->base_port,
                    GLOBALS::instance ()->hostname);
 
+  char *high_thread_args;
+  int args1_len = strlen (args1);
+
+  ACE_NEW_RETURN (high_thread_args,
+                  char [arg_len + args1_len +1],
+                  -1);
+
+  ACE_OS::strcpy (high_thread_args,arg_buf);
   ACE_OS::strcat (high_thread_args,args1);
   Cubit_Task *high_priority_task;
 
@@ -656,16 +669,10 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
   for (i = number_of_low_priority_servants; i > 0; i--)
     {
       char *args;
-      char *new_args;
 
       ACE_NEW_RETURN (args,
-                      char [3*BUFSIZ],
+                      char [ACE_DEFAULT_ARGV_BUFSIZ],
                       -1);
-
-      ACE_NEW_RETURN (new_args,
-                      char [3*BUFSIZ],
-                      -1);
-      ACE_OS::strcpy (new_args,low_thread_args);
       ACE_OS::sprintf (args,
                        "-ORBport %d "
                        "-ORBhost %s "
@@ -674,6 +681,13 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                        "-ORBrcvsock 32768 ",
                        (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i,
                        GLOBALS::instance ()->hostname);
+
+      int args_len = strlen (args);
+      char *new_args;
+      
+      ACE_NEW_RETURN  (new_args,
+                       char [arg_len + args_len +1],
+                       -1);
 
       ACE_OS::strcat (new_args,args);
 
