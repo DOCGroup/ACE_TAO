@@ -57,7 +57,8 @@ int main (int argc, char *argv[])
   // Not sure why but reuse_addr set to true/1 causes problems for
   // FORE/XTI/ATM - this is now handled in
   // ACE_TLI_Connector::connect()
-  if (con.connect (cli_stream, remote_addr, 
+  if (con.connect (cli_stream,
+                   remote_addr, 
                    (ACE_Time_Value *) &ACE_Time_Value::zero, 
                    local_addr,
                    1,
