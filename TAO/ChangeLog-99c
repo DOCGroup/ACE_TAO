@@ -6,7 +6,8 @@ Thu Jul  8 22:55:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	  between the "ami_phase3" branch and the current branch. 
   
   	  Most of the support for the AMI Callback is added. But all the
-	  AMI specific code is commented out using "TAO_HAS
+	  AMI specific code is commented out using
+	  "TAO_HAS_CORBA_MESSAGING" and "TAO_POLLER".
 
 Thu Jul  8 21:50:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
