@@ -10,52 +10,6 @@
 # include "tao/GIOP_Message_Connectors.i"
 #endif /* __ACE_INLINE__ */
 
-CORBA::Boolean
-TAO_GIOP_Message_Connectors::
-  write_request_header (const TAO_Operation_Details &opdetails,
-                        TAO_Target_Specification & /*spec*/,
-                        TAO_OutputCDR &msg)
-{
-  // Adding only stuff that are common to all versions of GIOP.
-  // @@ Note: If at any stage we feel that this amount of granularity
-  // for factorisation is not important we can dispense with it
-  // anyway.
-
-  // First the request id
-  msg << opdetails.request_id ();
-
-  const CORBA::Octet response_flags = opdetails.response_flags ();
-
-   // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
-  if (response_flags == 131)
-    msg << CORBA::Any::from_octet (1);
-
-  // Second the response flags
-  // Sync scope - ignored by server if request is not oneway.
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
-    // No response required.
-    msg << CORBA::Any::from_octet (0);
-  
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
-    // Return before dispatching servant.  We're also setting the high
-    // bit here. This is a temporary fix until the rest of GIOP 1.2 is
-    // implemented in TAO.
-    msg << CORBA::Any::from_octet (129);
-  
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
-    // Return after dispatching servant.
-    msg << CORBA::Any::from_octet (3);
-
-  else
-    // Until more flags are defined by the OMG.
-    return 0;
-
-  return 1;
-}
-
 int
 TAO_GIOP_Message_Connectors::
   parse_reply (TAO_Message_State_Factory &mesg_state,
@@ -161,11 +115,37 @@ TAO_GIOP_Message_Connector_11::
   // This is sepecific to GIOP 1.1. So put them here
   msg << opdetails.service_info ();
 
-  // Let us  call our parent class to check what he can do for
-  // us.
-  TAO_GIOP_Message_Connectors::write_request_header (opdetails,
-                                                     spec,
-                                                     msg);
+  // First the request id
+  msg << opdetails.request_id ();
+
+  const CORBA::Octet response_flags = opdetails.response_flags ();
+
+   // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
+  if (response_flags == 131)
+    msg << CORBA::Any::from_octet (1);
+
+  // Second the response flags
+  // Sync scope - ignored by server if request is not oneway.
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+    // No response required.
+    msg << CORBA::Any::from_octet (0);
+  
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+    // Return before dispatching servant.  We're also setting the high
+    // bit here. This is a temporary fix until the rest of GIOP 1.2 is
+    // implemented in TAO.
+    msg << CORBA::Any::from_octet (129);
+  
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+    // Return after dispatching servant.
+    msg << CORBA::Any::from_octet (3);
+
+  else
+    // Until more flags are defined by the OMG.
+    return 0;
 
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check

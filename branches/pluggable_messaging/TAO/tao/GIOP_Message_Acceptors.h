@@ -100,16 +100,25 @@ private:
                   CORBA::Octet def_minor);
   
   TAO_GIOP_Message_Accept_State *accept_state_;
+  // This indicates the strategy that we are using for this request
   
   TAO_GIOP_Message_Accept_Impl implementations_;
+  // Different strategies that we know
   
-
   TAO_OutputCDR output_;
   // The output CDR stream
   
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
   // A buffer that we will use to initialise the CDR stream
 
+  // Quoting Carlos,
+  // Remember that the same connection could receive multiple
+  // requests concurrently.  Currently the ORB cannot do this, but we
+  // want to do it in the future....
+ 
+  // The above will not work for the case that Carlos mentions, but
+  // till then we can have it here. This gets us better performance.
+  
   ////////////////////////////////////////////////////
   // Inherited methods. Should not be here in the first place? 
   ////////////////////////////////////////////////////

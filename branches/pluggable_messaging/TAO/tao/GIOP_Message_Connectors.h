@@ -32,12 +32,6 @@ class TAO_Export TAO_GIOP_Message_Connectors:
   //   class. 
   
 protected:
-  virtual CORBA::Boolean 
-  write_request_header (const TAO_Operation_Details &opdetails,
-                        TAO_Target_Specification &spec,
-                        TAO_OutputCDR &msg);
-  // Write the GIOP request header.
-  
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Connector_Params &params);
   // Parse the reply message from the server

@@ -54,6 +54,8 @@ TAO_GIOP_Message_Acceptors::
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
                             this->minor_version ());
+
+  
   
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
