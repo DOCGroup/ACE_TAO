@@ -1,3 +1,9 @@
+Wed Jul 16 11:07:26 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tao/Muxed_TMS.cpp
+	  Removed an unused variable trying to get rid of the
+	  compile warning message.
+
 Wed Jul 16 10:17:57 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tests/Makefile
