@@ -640,15 +640,6 @@ public:
                      PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
 protected:
-  PortableServer::ObjectId *servant_to_system_id_i (
-      PortableServer::Servant p_servant,
-      CORBA::Short &priority
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
-
   PortableServer::Servant reference_to_servant_i (
       CORBA::Object_ptr reference
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -746,11 +737,14 @@ protected:
       ACE_ENV_ARG_DECL
     );
 
+public:
+    // @todo Temporarily for servant retention
   CORBA::Object_ptr
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+protected:
 
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one and hold the POA lock
@@ -874,8 +868,10 @@ protected:
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
+public:
+    // @todo Temporarily for servant retention
   CORBA::ULong caller_key_to_object_;
-
+protected:
   PortableServer::Servant servant_for_key_to_object_;
 
   struct Key_To_Object_Params

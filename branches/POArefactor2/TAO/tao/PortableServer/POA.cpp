@@ -1424,91 +1424,6 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
     servant_to_id (servant ACE_ENV_ARG_PARAMETER);
 }
 
-PortableServer::ObjectId *
-TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
-                                 CORBA::Short &priority
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-/// @todo Johnny, this has to move out to the policy strategies
-
-  // This operation requires the RETAIN and either the UNIQUE_ID or
-  // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
-  // exception is raised.
-  if (!(this->cached_policies_.servant_retention () == PortableServer::RETAIN
-        && (this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID
-            || this->cached_policies_.implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
-    }
-
-  // This operation has three possible behaviors.
-
-  // If the POA has the UNIQUE_ID policy and the specified servant is
-  // active, the Object Id associated with that servant is returned.
-  PortableServer::ObjectId_var system_id;
-  if (this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID &&
-      this->active_object_map ().
-      find_system_id_using_servant (servant,
-                                    system_id.out (),
-                                    priority) != -1)
-    {
-      return system_id._retn ();
-    }
-
-  // If the POA has the IMPLICIT_ACTIVATION policy and either the POA
-  // has the MULTIPLE_ID policy or the specified servant is not
-  // active, the servant is activated using a POA-generated Object Id
-  // and the Interface Id associated with the servant, and that Object
-  // Id is returned.
-  if (this->cached_policies_.implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
-    {
-      // If we reach here, then we either have the MULTIPLE_ID policy
-      // or we have the UNIQUE_ID policy and we are not in the active
-      // object map.
-      PortableServer::ObjectId_var system_id;
-      if (this->active_object_map ().
-          bind_using_system_id_returning_system_id (servant,
-                                                    priority,
-                                                    system_id.out ()) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
-      //
-      // Everything is finally ok
-      //
-
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
-      // If this operation causes the object to be activated, _add_ref
-      // is invoked at least once on the Servant argument before
-      // returning. Otherwise, the POA does not increment or decrement
-      // the reference count of the Servant passed to this function.
-      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      return system_id._retn ();
-    }
-
-  // Otherwise, the ServantNotActive exception is raised.
-  ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
-                    0);
-}
-
 CORBA::Object_ptr
 TAO_POA::servant_to_reference_i (PortableServer::Servant servant
                                  ACE_ENV_ARG_DECL)
@@ -1516,50 +1431,8 @@ TAO_POA::servant_to_reference_i (PortableServer::Servant servant
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-/// @todo Johnny, this has to move out to the policy strategies
-
-  // Note: The allocation of an Object Id value and installation in
-  // the Active Object Map caused by implicit activation may actually
-  // be deferred until an attempt is made to externalize the
-  // reference. The real requirement here is that a reference is
-  // produced that will behave appropriately (that is, yield a
-  // consistent Object Id value when asked politely).
-  CORBA::Short priority =
-    this->cached_policies_.server_priority ();
-
-  PortableServer::ObjectId_var system_id =
-    this->servant_to_system_id_i (servant,
-                                  priority
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  PortableServer::ObjectId user_id;
-
-  // This operation requires the RETAIN, therefore don't worry about
-  // the NON_RETAIN case.
-  if (this->active_object_map ().
-      find_user_id_using_system_id (system_id.in (),
-                                    user_id) != 0)
-    {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        CORBA::Object::_nil ());
-    }
-
-  // Remember params for potentially invoking <key_to_object> later.
-  this->key_to_object_params_.set (system_id,
-                                   servant->_interface_repository_id (),
-                                   servant,
-                                   1,
-                                   priority);
-
-  // Ask the ORT to create the object.
-  // @@NOTE:There is a possible deadlock lurking here. We held the
-  // lock, and we are possibly trying to make a call into the
-  // application code. Think what would happen if the app calls us
-  // back. We need to get to this at some point.
-  return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
-                                              user_id
-                                              ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    servant_to_reference (servant ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant

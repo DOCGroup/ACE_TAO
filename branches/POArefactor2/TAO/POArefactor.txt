@@ -1,3 +1,21 @@
+Mon Nov  1 09:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Implemented servant_to_reference in the servant retain strategy.
+          Moved servant_to_system_id_i to the retan servant retain strategy,
+          it is only needed for that strategy. Made temporarily some members
+          in the POA public so that things keep compiling, will look how to
+          make this consistent later.
+
+Mon Nov  1 08:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,i}:
+          Removed servant_to_system_id, this method is protected, so not
+          callable from the outside and not used. The servant_to_system_id_i
+          is a helper method that is used, but there is no need for
+          servant_to_system_id.
+
 Mon Nov  1 07:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategy.h:

@@ -166,6 +166,15 @@ namespace TAO
       deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
                             ACE_ENV_ARG_DECL);
 
+      PortableServer::ObjectId *servant_to_system_id_i (
+          PortableServer::Servant p_servant,
+          CORBA::Short &priority
+          ACE_ENV_ARG_DECL
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy));
+
     private:
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
