@@ -1,3 +1,13 @@
+Thu May 27 09:55:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	  Fixed problem with generated code for arrays in interpretive
+	  marshaling based skeletons.
+
+	* TAO_IDL/be_include/be_codegen.h:
+	  Minor cosmetic fixes.
+
 Thu May 27 09:16:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:
@@ -134,6 +144,9 @@ Wed May 26 18:51:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  UNIX domain) sockets as the transport mechanism.  The protocol
 	  is loaded by default but no endpoints are created unless an
 	  explicit -ORBendpoint option is used.
+
+	* Most of these changes where implemented by Fred Kuhns and Ossama 
+	  Othman. I am simply the humble CVS merger
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
 	* orbsvcs/Time_Service/IR_Helper.h:
