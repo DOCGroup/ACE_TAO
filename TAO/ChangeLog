@@ -1552,6 +1552,9 @@ Thu Nov  6 22:32:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Transport.cpp: Construct the Reply_Params using the
           transport instead of the ORB_Core.
 
+
+	  This fixes [BUG 1615]
+
 Fri Nov  7 02:08:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
