@@ -1678,6 +1678,9 @@ case_branch :
 	  AST_UnionBranch	*b = NULL;
 	  AST_Field		*f = $3;
 
+          ACE_UNUSED_ARG (l);
+          ACE_UNUSED_ARG (d);
+
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemCompleted);
 	  /*
 	   * Create several nodes representing branches of a union.
