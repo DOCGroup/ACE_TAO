@@ -126,16 +126,25 @@ DRV_cpp_init()
   if (cpp_path != 0)
       cpp_loc = cpp_path;
 #if defined (_MSC_VER)
-  cpp_path.open ("MSVCDir", (char*) 0);
-  if (cpp_path != 0)
+  else
     {
-      cpp_loc = new char[BUFSIZ];
-      ACE_OS::strcpy (cpp_loc, cpp_path);
-      ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
+      cpp_path.open ("MSVCDir", (char*) 0);
+
+      if (cpp_path != 0)
+        {
+          cpp_loc = new char[BUFSIZ];
+          ACE_OS::strcpy (cpp_loc, cpp_path);
+          ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
+        }
+      else
+        cpp_loc = idl_global->cpp_location();
     }
-#endif /* _MSC_VER */
+
+#else
   else
       cpp_loc = idl_global->cpp_location();
+#endif /* _MSC_VER */
+
   DRV_cpp_putarg (cpp_loc);
 #if defined (ACE_WIN32)
   DRV_cpp_putarg ("-nologo");
