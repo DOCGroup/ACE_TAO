@@ -1,3 +1,14 @@
+Sat Sep 18 15:11:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IORManipulation.cpp:
+
+	  Changed instances of "CORBA_Object *" to "CORBA::Object_var."
+	  Previously I introduced an auto_ptr<CORBA_Object> instantiation,
+	  which was incorrect.
+ 	
+	  Removed auto_ptr<CORBA_Object> instantiations, further reducing
+	  TAO's footprint.
+
 Sat Sep 18 14:15:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IORManipulation.cpp (merge_iors, remove_profiles):
