@@ -1,3 +1,11 @@
+Tue Jun 20 14:53:12 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/defines.h:
+
+	  This file needs to be included first! It was calling #including
+	  itself from the posix directory but was doing so off of macros
+	  that itself defined.
+
 Mon Jun 19 05:03:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/ctype.h
