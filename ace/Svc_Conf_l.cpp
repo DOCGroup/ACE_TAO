@@ -1161,8 +1161,8 @@ ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses 
 #endif
 			}
 
-		if ( num_to_read > ACE_YY_READ_BUF_SIZE )
-			num_to_read = ACE_YY_READ_BUF_SIZE;
+		if ( num_to_read * sizeof (ACE_TCHAR) > ACE_YY_READ_BUF_SIZE )
+			num_to_read = ACE_YY_READ_BUF_SIZE / sizeof (ACE_TCHAR);
 
 		/* Read in more data. */
 		ACE_YY_INPUT( (&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move]),
