@@ -58,8 +58,6 @@ be_sequence::create_name (void)
   UTL_ScopedName *n = NULL;
   be_decl *d;   // may point to a typedef node
   be_decl *scope; // scope in which we are defined
-  be_type *t;  // our base type
-  AST_Expression *v; // our bounds
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
 
@@ -131,7 +129,6 @@ be_sequence::gen_client_header (void)
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
   be_type *bt;       // type node
-  be_decl *d;        // temporary
   be_state *s;       // state based code gen object
 
   if (!this->cli_hdr_gen_)
@@ -277,18 +274,42 @@ be_sequence::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
-
+  be_type *bt; // base type
+  be_state *s; //state object
 
   if (!this->cli_stub_gen_)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      // pass info
-      cg->outstream (cs);
-      cg->node (this);
+
+      // retrieve base type
+      bt = be_type::narrow_from_decl (this->base_type ());
+      if (!bt)
+        return -1;
+
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
+      s = cg->make_state ();
+
+      // generate stubs for our base type if it itself is a sequence
+      if (!s || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                "be_sequence::gen_client_stubs - base type code gen\n"), -1);
+        }
+      cg->pop ();
+
+      // generate the methods of the sequence C++ mapping
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS);
+      s = cg->make_state ();
+
+      if (!s)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                "be_sequence::gen_client_stubs - invalid state\n"), -1);
+        }
+
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -312,7 +333,105 @@ be_sequence::gen_client_stubs (void)
 
       cg->pop ();
       this->cli_stub_gen_ = I_TRUE;
+    }
+  return 0;
+}
 
+// Generates the client-side inline information
+int
+be_sequence::gen_client_inline (void)
+{
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  be_state *s;       // code gen state
+  be_type *bt;  // base type
+
+  if (!this->cli_inline_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+      ci = cg->client_inline ();
+
+      // retrieve base type
+      bt = be_type::narrow_from_decl (this->base_type ());
+      if (!bt)
+        return -1;
+
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
+      s = cg->make_state ();
+
+      // generate inline methods for our base type if it itself is a sequence
+      if (!s || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                "be_sequence::gen_client_inline - base type code gen\n"), -1);
+        }
+      cg->pop ();
+
+      // generate the methods of the sequence C++ mapping
+      cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CI);
+      s = cg->make_state ();
+
+      if (!s)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                "be_sequence::gen_client_inline - invalid state\n"), -1);
+        }
+
+      // the allocbuf method
+      ci->indent ();
+      *ci << "ACE_INLINE ";
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+             "be_sequence - base type code gen failure\n"), -1);
+        }
+      *ci << " *" << nl;
+      *ci << this->name () << "::allocbuf (CORBA::ULong nelems)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return new ";
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+             "be_sequence - base type code gen failure\n"), -1);
+        }
+      *ci << "[nelems]; // allocate from heap\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // freebuf method
+      ci->indent ();
+      *ci << "ACE_INLINE void" << nl;
+      *ci << this->name () << "::freebuf (";
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+             "be_sequence - base type code gen failure\n"), -1);
+        }
+      *ci << " *seq)" << nl;
+      *ci << "{\n";
+      ci->indent ();
+      *ci << "delete [] seq;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // default constructor
+
+      if (this->gen_var_impl () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_sequence: _var impl code gen failed\n"));
+          return -1;
+        }
+      if (this->gen_out_impl () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_sequence: _out impl code gen failed\n"));
+          return -1;
+        }
+
+      this->cli_inline_gen_ = I_TRUE;
+      cg->pop ();
     }
   return 0;
 }
@@ -329,42 +448,6 @@ be_sequence::gen_server_skeletons (void)
   return 0;
 }
 
-// Generates the client-side inline information
-int
-be_sequence::gen_client_inline (void)
-{
-  if (!this->cli_inline_gen_)
-    {
-      be_type *bt;
-
-      if (this->gen_var_impl () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_sequence: _var impl code gen failed\n"));
-          return -1;
-        }
-      if (this->gen_out_impl () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_sequence: _out impl code gen failed\n"));
-          return -1;
-        }
-
-      // if our base type is an anonymous sequence, we generate its client
-      // inline methods
-      bt = be_type::narrow_from_decl (this->base_type ());
-      if (bt->node_type () == AST_Decl::NT_sequence)
-        {
-          if (bt->gen_client_inline () == -1)
-            {
-              ACE_ERROR ((LM_ERROR,
-                "be_sequence: inline code gen for base type seq failed\n"));
-              return -1;
-            }
-        }
-      this->cli_inline_gen_ = I_TRUE;
-    }
-  return 0;
-}
-
 // Generates the server-side inline
 int
 be_sequence::gen_server_inline (void)
@@ -372,6 +455,582 @@ be_sequence::gen_server_inline (void)
   // nothing to be done
   return 0;
 }
+
+// generate the _var definition for ourself
+int
+be_sequence::gen_var_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  char namebuf [NAMEBUFSIZE];  // names
+  be_state *s;       // code gen state
+  be_type *bt;  // base type
+
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+  cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
+  s = cg->make_state ();
+
+  if (!s)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_var_defn - invalid state obj\n"), -1);
+    }
+
+  // retrieve base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+
+  // generate the var definition (always in the client header).
+  // Depending upon the data type, there are some differences which we account
+  // for over here.
+
+  ch->indent (); // start with whatever was our current indent level
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+  // default constr
+  *ch << namebuf << " (void); // default constructor" << nl;
+  // constr
+  *ch << namebuf << " (" << this->local_name () << " *);" << nl;
+  // copy constructor
+  *ch << namebuf << " (const " << namebuf <<
+    " &); // copy constructor" << nl;
+  // destructor
+  *ch << "~" << namebuf << " (void); // destructor" << nl;
+  *ch << nl;
+  // assignment operator from a pointer
+  *ch << namebuf << " &operator= (" << this->local_name () << " *);" << nl;
+  // assignment from _var
+  *ch << namebuf << " &operator= (const " << namebuf <<
+    " &);" << nl;
+
+  // arrow operator
+  *ch << this->local_name () << " *operator-> (void);" << nl;
+  *ch << "const " << this->local_name () << " *operator-> (void) const;" << nl;
+  *ch << nl;
+
+  // other extra types (cast operators, [] operator, and others)
+
+  // cast operator
+  *ch << "operator const " << this->local_name () << " &() const;" << nl;
+  *ch << "operator " << this->local_name () << " &();" << nl;
+  *ch << "operator " << this->local_name () << " &() const;" << nl;
+
+  // overloaded [] operator. The const version is not required for sequences
+
+  // gen code for base return type
+  if (s->gen_code (bt, this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_var_impl - base type codegen failed\n"), -1);
+    }
+  *ch << " &operator[] (CORBA::ULong index);" << nl;
+
+  *ch << "// in, inout, out, _retn " << nl;
+  // the return types of in, out, inout, and _retn are based on the parameter
+  // passing rules and the base type
+  *ch << "const " << this->local_name () << " &in (void) const;" << nl;
+  *ch << this->local_name () << " &inout (void);" << nl;
+  *ch << this->local_name () << " *&out (void);" << nl;
+  *ch << this->local_name () << " *_retn (void);" << nl;
+
+  // generate an additional member function that returns the underlying pointer
+  *ch << this->local_name () << " *ptr (void) const;\n";
+
+  *ch << "\n";
+  ch->decr_indent ();
+
+  // generate the private section
+  *ch << "private:\n";
+  ch->incr_indent ();
+  *ch << this->local_name () << " *ptr_;\n";
+
+  ch->decr_indent ();
+  *ch << "};\n\n";
+  cg->pop ();
+
+  return 0;
+}
+
+// implementation of the _var class. All of these get generated in the inline
+// file
+int
+be_sequence::gen_var_impl (void)
+{
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
+  be_state *s;       // code gen state
+  be_type *bt;  // base type
+
+
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, "%s_var", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+
+  cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CI);
+  s = cg->make_state ();
+
+  if (!s)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_var_impl - invalid state obj\n"), -1);
+    }
+
+  // retrieve base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+
+  // generate the var implementation in the inline file
+  ci->indent (); // start with whatever was our current indent level
+
+  *ci << "// *************************************************************"
+      << nl;
+  *ci << "// Inline operations for class " << fname << nl;
+  *ci << "// *************************************************************\n\n";
+
+  // default constr
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname <<
+    " (void) // default constructor" << nl;
+  *ci << "\t" << ": ptr_ (0)" << nl;
+  *ci << "{}\n\n";
+
+  // constr from a _ptr
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "{}\n\n";
+
+  // copy constructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (const " << fname <<
+    " &p) // copy constructor" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "if (p.ptr_)" << nl;
+  *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
+  *ci << "else" << nl;
+  *ci << "\tthis->ptr_ = 0;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // destructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::~" << lname << " (void) // destructor" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "delete this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator from a pointer
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << name () <<
+    " *p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "delete this->ptr_;" << nl;
+  *ci << "this->ptr_ = p;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator from _var
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (const " << fname <<
+    "_var &p) // deep copy" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "if (this != &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "delete this->ptr_;" << nl;
+  *ci << "this->ptr_ = new " << this->name () << " (*p.ptr_);\n";
+  ci->decr_indent ();
+  *ci << "}" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // two arrow operators
+  ci->indent ();
+  *ci << "ACE_INLINE const " << fname << " *" << nl;
+  *ci << fname << "::operator-> (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " *" << nl;
+  *ci << fname << "::operator-> (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // other extra methods - 3 cast operator ()
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator const " << name () <<
+    " &() const // cast" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return *this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << name () << " &() // cast " << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return *this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << name () << " &() const// cast " << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return *this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // operator []
+  ci->indent ();
+  *ci << "ACE_INLINE ";
+  // gen code for base return type
+  if (s->gen_code (bt, this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_var_impl - base type codegen failed\n"), -1);
+    }
+  *ci << " " << nl;
+  *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_->operator[] (index);\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // in, inout, out, and _retn
+  ci->indent ();
+  *ci << "ACE_INLINE const " << name () << " &" << nl;
+  *ci << fname << "::in (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return *this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << " &" << nl;
+  *ci << fname << "::inout (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return *this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "// mapping for variable size " << nl;
+  *ci << "ACE_INLINE " << name () << " *&" << nl;
+  *ci << fname << "::out (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "delete this->ptr_;" << nl;
+  *ci << "this->ptr_ = 0;" << nl;
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << " *" << nl;
+  *ci << fname << "::_retn (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << this->name () << " *tmp = this->ptr_;" << nl;
+  *ci << "this->ptr_ = 0;" << nl;
+  *ci << "return tmp;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // the additional ptr () member function
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << " *" << nl;
+  *ci << fname << "::ptr (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  cg->pop ();
+
+  return 0;
+}
+
+// generate the _out definition
+int
+be_sequence::gen_out_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
+  be_state *s;       // code gen state
+  be_type *bt;  // base type
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (namebuf, "%s_out", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+  cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
+  s = cg->make_state ();
+
+  if (!s)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_out_defn - invalid state obj\n"), -1);
+    }
+
+  // retrieve base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+
+  // generate the out definition (always in the client header)
+  ch->indent (); // start with whatever was our current indent level
+
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+
+  // No default constructor
+
+  // constructor from a pointer
+  *ch << namebuf << " (" << this->local_name () << " *&);" << nl;
+  // constructor from a _var &
+  *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
+  // constructor from a _out &
+  *ch << namebuf << " (" << namebuf << " &);" << nl;
+  // assignment operator from a _out &
+  *ch << namebuf << " &operator= (" << namebuf << " &);" << nl;
+  // assignment operator from a pointer &, cast operator, ptr fn, operator
+  // -> and any other extra operators
+  // assignment
+  *ch << namebuf << " &operator= (" << this->local_name () << " *);" << nl;
+  // operator ()
+  *ch << "operator " << this->local_name () << " *&();" << nl;
+  // ptr fn
+  *ch << this->local_name () << " *&ptr (void);" << nl;
+  // operator ->
+  *ch << this->local_name () << " *operator-> (void);" << nl;
+
+  // overloaded [] operator only for sequence. The const version is not
+  // required
+
+  // gen code for base return type
+  if (s->gen_code (bt, this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_var_impl - base type codegen failed\n"), -1);
+    }
+  *ch << " &operator[] (CORBA::ULong index);" << nl;
+  *ch << "\n";
+  ch->decr_indent ();
+  *ch << "private:\n";
+  ch->incr_indent ();
+
+  *ch << this->local_name () << " *&ptr_;" << nl;
+  *ch << "// assignment from T_var not allowed" << nl;
+  *ch << "void operator= (const " << this->local_name () << "_var &);\n";
+
+  ch->decr_indent ();
+  *ch << "};\n\n";
+
+  cg->pop ();
+  return 0;
+}
+
+int
+be_sequence::gen_out_impl (void)
+{
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _out names
+  be_state *s;       // code gen state
+  be_type *bt;  // base type
+
+
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, "%s_out", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+
+  cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CI);
+  s = cg->make_state ();
+
+  if (!s)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_out_impl - invalid state obj\n"), -1);
+    }
+
+  // retrieve base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+
+  // generate the out implementation in the inline file
+
+  ci->indent (); // start with whatever was our current indent level
+
+  *ci << "// *************************************************************"
+      << nl;
+  *ci << "// Inline operations for class " << fname << nl;
+  *ci << "// *************************************************************\n\n";
+
+  // constr from a pointer
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << name () << " *&p)" << nl;
+  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = 0;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // constructor from _var &
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << this->name () <<
+    "_var &p) // constructor from _var" << nl;
+  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "delete this->ptr_;" << nl;
+  *ci << "this->ptr_ = 0;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // copy constructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << fname <<
+    " &p) // copy constructor" << nl;
+  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "{}\n\n";
+
+  // assignment operator from _out &
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << fname <<
+    " &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = p.ptr_;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment from _var is not allowed by a private declaration
+
+  // assignment operator from pointer
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << this->name () <<
+    " *p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = p;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // other extra methods - cast operator ()
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << this->name () <<
+    " *&() // cast" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // ptr function
+  ci->indent ();
+  *ci << "ACE_INLINE " << this->name () << " *&" << nl;
+  *ci << fname << "::ptr (void) // ptr" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // operator ->
+  ci->indent ();
+  *ci << "ACE_INLINE " << this->name () << " *" << nl;
+  *ci << fname << "::operator-> (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // sequence has an additional method
+  ci->indent ();
+  *ci << "ACE_INLINE ";
+  // gen code for base return type
+  if (s->gen_code (bt, this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          "be_sequence::gen_out_impl - base type codegen failed\n"), -1);
+    }
+  *ci << nl;
+  *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_->operator[] (index);\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  cg->pop ();
+  return 0;
+}
+
 // generate typecode.
 // Typecode for sequences comprises the enumerated value followed by the
 // encapsulation of the parameters

@@ -67,7 +67,8 @@ be_typedef::gen_client_header (void)
       s = cg->make_state ();
 
       bt = be_type::narrow_from_decl (this->base_type ());
-      // first generate the mapping for our type
+      // first generate the mapping for our type. As a side effect, also
+      // generate the mapping for the typedef
       if (!s || !bt || (s->gen_code (bt, this) == -1))
         {
           ACE_ERROR ((LM_ERROR, "be_typedef: error generating code for base type\n"));
@@ -86,10 +87,7 @@ be_typedef::gen_client_stubs (void)
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
   be_type *bt;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (bt);
-  ACE_UNUSED_ARG (nl);
+  be_state *s;       // state based code gen object
 
   if (!this->cli_stub_gen_)
     {
@@ -98,12 +96,23 @@ be_typedef::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      // pass info
-      cg->outstream (cs);
+
       cg->node (this); // pass ourselves. For typedefs, this is very important,
                        // because other nodes's code generation may depend on
                        // whether they were typedefed or not.
 
+      s = cg->make_state ();
+
+      bt = be_type::narrow_from_decl (this->base_type ());
+      // first generate the mapping for our type. As a side effect, also
+      // generate the mapping for the typedef
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR ((LM_ERROR, "be_typedef: error generating code for base type\n"));
+          return -1;
+        }
+
+#if 0
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -127,22 +136,11 @@ be_typedef::gen_client_stubs (void)
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
+#endif
       this->cli_stub_gen_ = I_TRUE;
       cg->pop ();
     }
 
-  return 0;
-}
-
-int
-be_typedef::gen_server_header (void)
-{
-  return 0;
-}
-
-int
-be_typedef::gen_server_skeletons (void)
-{
   return 0;
 }
 
@@ -153,7 +151,7 @@ be_typedef::gen_client_inline (void)
   be_type *bt;       // type node
   be_state *s;       // state based code gen object
 
-  if (!this->cli_hdr_gen_) // not already generated
+  if (!this->cli_inline_gen_) // not already generated
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -171,8 +169,20 @@ be_typedef::gen_client_inline (void)
         }
 
       cg->pop ();
-      this->cli_hdr_gen_ = I_TRUE;
+      this->cli_inline_gen_ = I_TRUE;
     }
+  return 0;
+}
+
+int
+be_typedef::gen_server_header (void)
+{
+  return 0;
+}
+
+int
+be_typedef::gen_server_skeletons (void)
+{
   return 0;
 }
 

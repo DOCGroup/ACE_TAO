@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_module.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -32,21 +32,13 @@ be_module::be_module (UTL_ScopedName *n, UTL_StrList *p)
   : AST_Decl (AST_Decl::NT_module, n, p),
     UTL_Scope (AST_Decl::NT_module)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // compute the flattened fully scoped name 
-  compute_flatname ();
 }
 
 // ----------------------------------------
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// generate the client header 
+// generate the client header
 int be_module::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
@@ -77,7 +69,7 @@ int be_module::gen_client_header (void)
   // that only legal syntactic elements appear in our scope.
   if (be_scope::gen_client_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_client_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_client_header\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -97,7 +89,7 @@ int be_module::gen_client_stubs (void)
   // gen code for elements in the scope
   if (be_scope::gen_client_stubs () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_client_stubs\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_client_stubs\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -138,7 +130,7 @@ int be_module::gen_server_header (void)
 
   if (be_scope::gen_server_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_server_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_server_header\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -157,7 +149,7 @@ int be_module::gen_server_skeletons (void)
 
   if (be_scope::gen_server_skeletons () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_server_skeletons\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_server_skeletons\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -166,7 +158,7 @@ int be_module::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_module::gen_client_inline (void)
 {
   // retrieve a singleton instance of the code generator
@@ -176,7 +168,7 @@ be_module::gen_client_inline (void)
   // gen code for elements in the scope
   if (be_scope::gen_client_inline () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_client_inline\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_client_inline\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -186,7 +178,7 @@ be_module::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_module::gen_server_inline (void)
 {
   // retrieve a singleton instance of the code generator
@@ -196,7 +188,7 @@ be_module::gen_server_inline (void)
   // gen code for elements in the scope
   if (be_scope::gen_server_inline () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_server_inline\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_server_inline\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -209,5 +201,3 @@ be_module::gen_server_inline (void)
 IMPL_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl)
 IMPL_NARROW_FROM_DECL (be_module)
 IMPL_NARROW_FROM_SCOPE (be_module)
-
-  

@@ -87,14 +87,17 @@ TAO_CodeGen::make_state (void)
       return TAO_BE_STATE_ARGUMENT::instance ();
     case TAO_TYPEDEF_CH:
     case TAO_TYPEDEF_CS:
+    case TAO_TYPEDEF_CI:
       return TAO_BE_STATE_TYPEDEF::instance ();
     case TAO_ARRAY_DEFN_CH:
     case TAO_ARRAY_OTHER_CH:
     case TAO_ARRAY_DEFN_CI:
       return TAO_BE_STATE_ARRAY::instance ();
     case TAO_SEQUENCE_BASE_CH:
+    case TAO_SEQUENCE_BASE_CS:
     case TAO_SEQUENCE_BASE_CI:
     case TAO_SEQUENCE_BODY_CH:
+    case TAO_SEQUENCE_BODY_CS:
     case TAO_SEQUENCE_BODY_CI:
       return TAO_BE_STATE_SEQUENCE::instance ();
     default:
