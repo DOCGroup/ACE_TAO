@@ -2785,7 +2785,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
-      result = ::WaitForSingleObject (cv->sema_.count_nonzero_, msec_timeout);
+      result = ACE_OS::sema_wait (&cv->sema_,
+                                  ACE_Time_Value (0, msec_timeout * 1000));
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #else
       // Inline the call to ACE_OS::sema_wait () because it takes an
@@ -2926,8 +2927,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
 #if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#else 
-  result = ::WaitForSingleObject (cv->sema_.count_nonzero_, msec_timeout);
+#else
+  result = ACE_OS::sema_wait (&cv->sema_,
+                              ACE_Time_Value (0, msec_timeout * 1000));
 #endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
@@ -2991,7 +2993,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
 #else
-  result = ::WaitForSingleObject (cv->sema_.count_nonzero_, INFINITE);
+  result = ACE_OS::sema_wait (&cv->sema_);
 #endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
