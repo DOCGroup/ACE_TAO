@@ -7,6 +7,7 @@
 #include "tao/CORBA_methods.h"
 
 #include "ace/ARGV.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (tao,
            DLL_ORB,
@@ -62,7 +63,7 @@ TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
 
       int new_argc = new_argv.argc ();
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE) || defined (ACE_USES_WCHAR)
       {
           // Copy command line parameter from new_argv.
           ACE_Argv_Type_Converter command_line(new_argc, new_argv.argv());

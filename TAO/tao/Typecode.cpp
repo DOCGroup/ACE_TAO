@@ -2684,7 +2684,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TypeCode::private_member_label -- ")
-                  ACE_TEXT ("error reading from stream")));
+                  ACE_TEXT ("error reading from stream\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }

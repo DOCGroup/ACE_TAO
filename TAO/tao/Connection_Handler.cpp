@@ -42,7 +42,7 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "TAO (%P|%t) - Connection_Handler::~Connection_Handler,"
-                  "release_os_resources() failed %p\n"));
+                  "release_os_resources() failed %m\n"));
     }
 
   // @@ TODO Use auto_ptr<>

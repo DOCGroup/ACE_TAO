@@ -23,8 +23,8 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
-                    ACE_TEXT ("extracting request id")));
+                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply :")
+                    ACE_TEXT ("extracting request id\n")));
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,
@@ -36,8 +36,8 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
-                    ACE_TEXT ("extracting reply status")));
+                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, ")
+                    ACE_TEXT ("extracting reply status\n")));
       return -1;
     }
 
@@ -101,7 +101,7 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t|%N|%l):parse_locate_reply, ")
-                    ACE_TEXT ("extracting request id \n")));
+                    ACE_TEXT ("extracting request id\n")));
 
       return -1;
     }

@@ -40,8 +40,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                    ACE_LIB_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
                    ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
                    n_threads,
-                   flags,
-                   THR_BOUND));
+                   flags));
     }
 
   return TAO_TPC_BASE::activate (flags,
