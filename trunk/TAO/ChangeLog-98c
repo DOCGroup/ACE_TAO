@@ -1,5 +1,12 @@
 Sat Nov  8 21:27:34 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tao/orb_core.cpp (init): Removed the code that always binded us
+ 	  to our hostname.  This is unnecessary and makes it hard to use
+ 	  other interfaces on the same host (such as localhost or some ATM
+ 	  interface, etc.).  With this change (and the corresponding
+ 	  changes to ACE_INET_Addr::get_host_name()), we can now bind to
+ 	  INADDR_ANY.
+
 	* docs/releasenotes: Added Marina's documentation for the Trader
  	  and cleaned up all the other entries to make them consistent.
 
