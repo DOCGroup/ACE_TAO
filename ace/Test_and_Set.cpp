@@ -3,7 +3,8 @@
 #ifndef ACE_TEST_AND_SET_C
 #define ACE_TEST_AND_SET_C
 
-#include "Test_and_Set.h"
+#include "ace/Test_and_Set.h"
+#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1368,6 +1368,7 @@ public:
 # include "ace/Process_Semaphore.h"
 # include "ace/Process_Mutex.h"
 # include "ace/RW_Process_Mutex.h"
+# include "ace/Test_and_Set.h"
 #endif  /* ACE_LEGACY_MODE */
 
 template <class ACE_LOCK>
