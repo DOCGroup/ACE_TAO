@@ -149,6 +149,7 @@ IDL_GlobalData::IDL_GlobalData (void)
 #else
       exception_support_ (I_FALSE),
 #endif
+      use_raw_throw_ (I_FALSE),
       opt_tc_ (I_FALSE),
       case_diff_error_ (I_TRUE),
       ami_call_back_ (I_FALSE),
@@ -1457,6 +1458,18 @@ idl_bool
 IDL_GlobalData::exception_support (void)
 {
   return this->exception_support_;
+}
+
+void 
+IDL_GlobalData::use_raw_throw (idl_bool val)
+{
+  this->use_raw_throw_ = val;
+}
+
+idl_bool
+IDL_GlobalData::use_raw_throw (void)
+{
+  return this->use_raw_throw_;
 }
 
 void

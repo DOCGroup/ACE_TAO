@@ -710,11 +710,16 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   *os << "," << be_nl << "this," << be_nl
       << this->compute_operation_name (node)
-      << "," << be_nl // _tao_call.service_info (), "
+      << "," << be_nl
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_RETHROW;" << be_uidt_nl
-      << "}" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  if (idl_global->use_raw_throw ())
+    *os << "throw;" << be_uidt_nl;
+  else
+    *os << "ACE_RETHROW;" << be_uidt_nl;
+
+  *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;\n";
 
   if (this->gen_check_exception (bt) == -1)
@@ -740,8 +745,12 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
 
   if (this->void_return_type (bt))
     {
-      *os << "ACE_THROW ("
-          << excep << " (" << completion_status << "));\n";
+      if (idl_global->use_raw_throw ())
+        *os << "throw (";
+      else
+        *os << "ACE_THROW (";
+
+      *os << excep << " (" << completion_status << "));\n";
     }
   else
     {
@@ -769,8 +778,12 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
 
   if (this->void_return_type (bt))
     {
-      *os << "TAO_INTERCEPTOR_THROW ("
-          << excep << " ("
+      if (idl_global->use_raw_throw ())
+        *os << "throw (";
+      else
+        *os << "TAO_INTERCEPTOR_THROW (";
+
+      *os << excep << " ("
           << completion_status << ")"
           << ");";
     }
