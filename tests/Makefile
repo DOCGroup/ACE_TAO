@@ -193,7 +193,8 @@ libService_Config_DLL.$(SOEXT): Service_Config_DLL.cpp Service_Config_DLL.h
 	@$(MAKE) -f Makefile.Service_Config_DLL
 
 realclean: clean
-	-$(RM) libDLL_Test.$(SOEXT) log/compilations.log*
+	-$(RM) libDLL_Test.$(SOEXT) libService_Config_DLL.*
+	-$(RM) log/compilations.log*
 
 
 #----------------------------------------------------------------------------
