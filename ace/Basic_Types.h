@@ -150,58 +150,58 @@
 #   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
 # else /* ! ACE_HAS_LONGLONG_T */
 
-class ACE_Export ACE_U_LongLong
-  // = TITLE
-  //     Unsigned long long for platforms that don't have one.
-  //
-  // = DESCRIPTION
-  //     Provide our own unsigned long long.  This is intended to be
-  //     use with ACE_High_Res_Timer, so the division operator assumes
-  //     that the quotient fits into a u_long.
-  //     Please note that the constructor takes (optionally) two values.
-  //     The high one contributes 0x100000000 times its value.  So,
-  //     for example, (0, 2) is _not_ 20000000000, but instead
-  //     0x200000000.  To emphasize this, the default values are expressed
-  //     in hex, and dump () outputs the value in hex.
-{
-public:
-  // = Initialization and termination methods.
-  ACE_U_LongLong (const u_long lo = 0x0, const u_long hi = 0x0);
-  ACE_U_LongLong (const ACE_U_LongLong &);
-  ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-  ~ACE_U_LongLong (void);
+    class ACE_Export ACE_U_LongLong
+      // = TITLE
+      //     Unsigned long long for platforms that don't have one.
+      //
+      // = DESCRIPTION
+      //     Provide our own unsigned long long.  This is intended to be
+      //     use with ACE_High_Res_Timer, so the division operator assumes
+      //     that the quotient fits into a u_long.
+      //     Please note that the constructor takes (optionally) two values.
+      //     The high one contributes 0x100000000 times its value.  So,
+      //     for example, (0, 2) is _not_ 20000000000, but instead
+      //     0x200000000.  To emphasize this, the default values are expressed
+      //     in hex, and dump () outputs the value in hex.
+    {
+    public:
+      // = Initialization and termination methods.
+      ACE_U_LongLong (const ACE_UINT32 lo = 0x0, const ACE_UINT32 hi = 0x0);
+      ACE_U_LongLong (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator= (const ACE_U_LongLong &);
+      ~ACE_U_LongLong (void);
 
-  // = Overloaded relation operators.
-  int operator== (const ACE_U_LongLong &) const;
-  int operator!= (const ACE_U_LongLong &) const;
-  int operator< (const ACE_U_LongLong &) const;
-  int operator<= (const ACE_U_LongLong &) const;
-  int operator> (const ACE_U_LongLong &) const;
-  int operator>= (const ACE_U_LongLong &) const;
+      // = Overloaded relation operators.
+      int operator== (const ACE_U_LongLong &) const;
+      int operator!= (const ACE_U_LongLong &) const;
+      int operator< (const ACE_U_LongLong &) const;
+      int operator<= (const ACE_U_LongLong &) const;
+      int operator> (const ACE_U_LongLong &) const;
+      int operator>= (const ACE_U_LongLong &) const;
 
-  ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-  ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-  u_long operator/ (const u_long) const;
+      ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
+      ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+      ACE_UINT32 operator/ (const ACE_UINT32) const;
 
-  ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-  ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
-  // = Helper methods.
-  void output (FILE * = stdout) const;
-  // Outputs the value to the FILE, in hex.
+      // = Helper methods.
+      void output (FILE * = stdout) const;
+      // Outputs the value to the FILE, in hex.
 
-  u_long hi (void) const;
-  u_long lo (void) const;
+      ACE_UINT32 hi (void) const;
+      ACE_UINT32 lo (void) const;
 
-  void hi (const u_long hi);
-  void lo (const u_long lo);
+      void hi (const ACE_UINT32 hi);
+      void lo (const ACE_UINT32 lo);
 
-  ACE_ALLOC_HOOK_DECLARE;
+      ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  u_long hi_;
-  u_long lo_;
-};
+    private:
+      ACE_UINT32 hi_;
+      ACE_UINT32 lo_;
+    };
 
 #   define ACE_SIZEOF_LONG_LONG 8
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
