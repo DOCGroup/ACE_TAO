@@ -1,3 +1,31 @@
+Thu Dec  7 11:59:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Strategies/simple_test.idl:
+	* tests/Strategies/client.cpp:
+	* tests/Strategies/server.cpp:
+	* tests/Strategies/simple_test_i.h:
+	* tests/Strategies/simple_test_i.i:
+	* tests/Strategies/simple_test_i.cpp:
+	* tests/Strategies/Makefile :
+	* tests/Strategies/svc.conf:
+	* tests/Strategies/advanced_svc.conf:
+	* tests/Strategies/README:
+
+	  Moved the test to show how to load default and advanced
+	  strategies to the correct place.
+		
+	* tao/Strategies/tests/simple_test.idl:
+	* tao/Strategies/tests/client.cpp:
+	* tao/Strategies/tests/server.cpp:
+	* tao/Strategies/tests/simple_test_i.h:
+	* tao/Strategies/tests/simple_test_i.i:
+	* tao/Strategies/tests/simple_test_i.cpp:
+	* tao/Strategies/tests/Makefile :
+	* tao/Strategies/tests/svc.conf:
+	* tao/Strategies/tests/advanced_svc.conf:
+	* tao/Strategies/tests/README:
+	  Removed.
+
 Thu Dec  7 11:44:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/client.bor:
@@ -21,7 +49,7 @@ Thu Dec  7 13:45:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Fixed a bug in _tao_QueryInterface(). The last line
 	  was making a call to DynAny::_tao_QueryInterface()
-	  instead of the override in the immediate base class. Thanks 
+	  instead of the override in the immediate base class. Thanks
 	  to Michael Rushton <miker@mbmnz.co.nz> for reporting
 	  the failure of DynStruct::_narrow(), which led to this
 	  discovery.
