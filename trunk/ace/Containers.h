@@ -482,7 +482,7 @@ public:
   // = Iteration methods.
 
   T *next (void) const;
-  // Return the address of next (current) unvisited ACE_DNode,
+  // Return the address of next (current) unvisited item in the list.
   // 0 if there is no more element available.
 
   int advance (void);
