@@ -1,3 +1,9 @@
+Thu Nov 25 18:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
+          Removed TAO_POA pointer, left by accident here, it is now in the
+          base, but this caused all tests to crash in my branch.
+
 Thu Nov 25 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RTCORBA.pidl:
