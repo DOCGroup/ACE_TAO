@@ -11,7 +11,6 @@ use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("mtcubit.ior");
-$sleeptime = 3;
 $iterations = 1000;
 $low_priority_threads = 1;
 $thread_per_rate = '';
@@ -57,19 +56,19 @@ $CL = new PerlACE::Process ("client", "$thread_per_rate -f $iorfile -t $threads 
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill ();
-  exit 1;
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
 $client = $CL->SpawnWaitKill (180);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill ();
-}
-
 $SV->Kill ();
 
 unlink $iorfile;
 
-exit $client == 0  ?  0  :  1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    exit 1;
+}
+
+exit 0;
