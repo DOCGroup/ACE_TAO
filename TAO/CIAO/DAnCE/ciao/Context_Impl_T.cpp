@@ -43,14 +43,26 @@ namespace CIAO
   {
     if (CORBA::is_nil (this->component_.in ()))
     {
-      CORBA::Object_var obj =
+      ACE_DEBUG ((LM_DEBUG, "i am about to call get_CCM_object ()\n"));
+
+      CORBA::Object_var obj;
+      ACE_TRY {
+      if (this->servant_ == 0) ACE_DEBUG ((LM_DEBUG, "Cranky \n"));
+      obj =
         this->container_->get_objref (this->servant_
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+       }
+      ACE_CATCHANY { ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                          "Caught Exception \n"); return 0;}
+      ACE_ENDTRY;
+
+      ACE_DEBUG ((LM_DEBUG, "got the object ref\n"));
 
       this->component_ = COMP::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_DEBUG ((LM_DEBUG, "got the component\n"));
 
       if (CORBA::is_nil (this->component_.in ()))
       {
