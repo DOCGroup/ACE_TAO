@@ -1,3 +1,17 @@
+Thu Aug 16 11:38:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+
+          Fixed typo in MFC release configuration.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+        * tao/TAO.dsw:
+
+          Removed unnecessary "_Static" substring from static
+          release and debug library names. Also fixed path for 
+          TypeCodeFactory_Static.dsp in the workspace. Thanks to
+          Frank Wolf <fwolf@gum.de> for pointing these out.
+
 Thu Aug 16 10:04:33 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
