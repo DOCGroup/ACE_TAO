@@ -145,7 +145,8 @@ namespace TAO
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
         // will not help.
-        CORBA::TCKind const tck = tc->kind ();
+        CORBA::TCKind const tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
         
         // We don't want the rd_ptr of unk to move, in case it is
         // shared by another Any. This copies the state, not the buffer.
