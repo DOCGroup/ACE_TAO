@@ -1,8 +1,18 @@
+Sun Jan 24 16:17:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* OS.h:
+	* config-g++-common.h:
+	* config-osf1-4.0.h:
+	* config-psos-diab.h:
+	* config-psos-tm.h: Replace ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+	  with ACE_HAS_WORKING_EXPLITCIT_TEMPLATE_DESTRUCTOR to reflect
+	  the true problem.  Thanks to Ossama for suggesting the name.
+
 Sun Jan 24 16:20:17 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/ACE-FMM:
 	Added an entry about the DONT_CALL flag to remove_handler().
-	
+
 	* docs/tutorials/00[45789]:
 	* docs/tutorials/01[012]:
 	Many changes from Yamuna, Pradeep, Kirthika and Ossama.  In all,
@@ -16,21 +26,21 @@ Sun Jan 24 14:23:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Jan 24 02:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/lib/URL_Addr.cpp: 
-	* websvcs/lib/URL_Addr.h: 
-	* websvcs/lib/URL_Addr.i: 
-	* websvcs/tests/Test_URL_Addr.cpp: 
-	  Added support for mailto: URLs	
+	* websvcs/lib/URL_Addr.cpp:
+	* websvcs/lib/URL_Addr.h:
+	* websvcs/lib/URL_Addr.i:
+	* websvcs/tests/Test_URL_Addr.cpp:
+	  Added support for mailto: URLs
 
 Sat Jan 23 23:53:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/Makefile: 
-	* websvcs/lib/Makefile: 
-	* websvcs/lib/URL_Addr.h: 
-	* websvcs/lib/URL_Addr.i: 
-	* websvcs/lib/URL_Addr.cpp: 
-	* websvcs/tests/Makefile: 
-	* websvcs/tests/Test_URL_Addr.cpp: 
+	* websvcs/Makefile:
+	* websvcs/lib/Makefile:
+	* websvcs/lib/URL_Addr.h:
+	* websvcs/lib/URL_Addr.i:
+	* websvcs/lib/URL_Addr.cpp:
+	* websvcs/tests/Makefile:
+	* websvcs/tests/Test_URL_Addr.cpp:
 	  Added a small library to keep basic Web related wrappers. The
 	  first set is a small collection of URL address classes,
 	  including HTTP and FTP representations.
