@@ -306,8 +306,8 @@ public:
 private:
   // Methods to gain access to the actual address of
   // the underlying internet address structure.
-  void *addr_pointer(void) const;
-  size_t addr_size(void) const;
+  void *ip_addr_pointer(void) const;
+  size_t ip_addr_size(void) const;
 
   // Initialize the underlying internet address structure.
   // This sets the structure to zeros and sets the address
