@@ -60,6 +60,10 @@ public:
   virtual int purge_connections (void);
   // Explicit purging of connection entries from the connection cache.
 
+  virtual int mark_as_closed_i (const void *recycling_act);
+  // Mark as closed (non-locking version). This is used during the cleanup of the
+  // connections purged.
+
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
@@ -109,9 +113,6 @@ protected:
                                ACE_Recyclable_State new_state);
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
   // Get/Set <recycle_state> (non-locking version).
-
-  virtual int mark_as_closed_i (const void *recycling_act);
-  // Mark as closed (non-locking version).
 
   virtual int cleanup_hint_i (const void *recycling_act);
   // Cleanup hint.
