@@ -8,7 +8,7 @@ GIOP::Invocation::get_value (CORBA::TypeCode_ptr tc,
   (void) stream.decode (tc, value, 0, env);
 }
 
-void 
+ACE_INLINE void 
 GIOP::Invocation::put_param (CORBA::TypeCode_ptr tc, 
 			     void *value, 
 			     CORBA::Environment &env)
