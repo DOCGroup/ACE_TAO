@@ -1,3 +1,13 @@
+Tue Jun 15 22:16:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_command.cpp 
+	* orbsvcs/tests/Concurrency/CC_test_utils.cpp 
+	* orbsvcs/tests/Concurrency/CC_tests.cpp 
+	* orbsvcs/Logging_Service/Logging_Service_i.h,cpp 
+	  Added ACE_const_cast statements. Those should have been checked
+	  in a while ago, but I screwed up. Also, I migrated the TAO_THROW
+	  macros to ACE_THROW macros in the Concurrency files.
+	
 Tue Jun 15 20:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:

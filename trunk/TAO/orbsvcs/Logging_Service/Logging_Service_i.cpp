@@ -5,7 +5,7 @@
 ACE_RCSID(Logging_Service, Logging_Service_i, "$Id$")
 
 Logger_Server::Logger_Server (void)
-  :service_name_ ("LoggingService")
+  :service_name_ (ACE_const_cast (char *,"LoggingService"))
 {
   // Do nothing 
 }
