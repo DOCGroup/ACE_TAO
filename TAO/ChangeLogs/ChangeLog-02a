@@ -1,3 +1,11 @@
+Sat Apr 06 15:50:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/POA_BiDir/POA_BiDir.cpp (main): Fixed a compiler
+	  error in Win32.
+
+	* examples/POA/POA_BiDir/POA_BiDir.dsp: Fixed the workspace files
+	  to compile and link properly on Win32. 
+	
 Sat Apr  6 15:27:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Makefile: Added the new test to the list of tests. 
@@ -15,7 +23,6 @@ Sat Apr  6 12:27:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/POA/POA_BiDir/run_test.pl*: A new test that tests
 	  multiple POA's with one of the POA's assigned BiDirGIOP
 	  policy. 
-
 
 Sat Apr  6 12:10:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 

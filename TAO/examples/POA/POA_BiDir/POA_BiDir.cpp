@@ -158,9 +158,9 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
-           i < bidir_policy.length ();
-           ++i)
+      for (CORBA::ULong k = 0;
+           k < bidir_policy.length ();
+           ++k)
         {
           bidir_policy[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;

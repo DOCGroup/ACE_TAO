@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="POA NewPOA" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="POA POA_BiDir" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=POA NewPOA - Win32 Debug
+CFG=POA POA_BiDir - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "NewPOA.mak".
+!MESSAGE NMAKE /f "POA_BiDir.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "NewPOA.mak" CFG="POA NewPOA - Win32 Debug"
+!MESSAGE NMAKE /f "POA_BiDir.mak" CFG="POA POA_BiDir - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA NewPOA - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "POA NewPOA - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA POA_BiDir - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA POA_BiDir - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=POA NewPOA - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "POA NewPOA - Win32 Release"
+!IF  "$(CFG)" == "POA POA_BiDir - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 tao.lib ace.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "POA NewPOA - Win32 Debug"
+!ELSEIF  "$(CFG)" == "POA POA_BiDir - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -84,14 +84,14 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "POA NewPOA - Win32 Release"
-# Name "POA NewPOA - Win32 Debug"
+# Name "POA POA_BiDir - Win32 Release"
+# Name "POA POA_BiDir - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\NewPOA.cpp
+SOURCE=.\POA_BiDir.cpp
 # End Source File
 # End Group
 # End Target
