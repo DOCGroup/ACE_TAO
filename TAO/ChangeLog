@@ -1,3 +1,17 @@
+Fri Dec 27 07:56:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_generator.cpp (create_module):
+
+	  Added a line to propagate the prefix of a module to a reopening of
+	  that module in another IDL file, overlooked in the changes of
+
+	  Wed Dec 11 18:26:09 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	  which was causing a reference (in a third IDL file) to a member of 
+	  the reopened module to lack the correct prefix, if it had been set. 
+	  Thanks to Nanbor Wang <nanbor@cse.wustl.edu> for reporting the 
+	  problem.
+
 Fri Dec 27 07:15:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/Simple/Simple_Util.h: Somehow missed this in my checkin. 
