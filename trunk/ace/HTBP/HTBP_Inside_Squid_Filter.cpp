@@ -40,7 +40,7 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
     {
       char addr_buff[BUFSIZ];
       const char *token = 0;
-      size_t toklen;
+      size_t toklen = 0;
       if ( (( i >> 1) << 1) != i)
         {
           token = format [i >> 1];

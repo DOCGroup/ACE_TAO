@@ -1,8 +1,14 @@
+Tue Oct 26 09:39:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+
+          Set toklen to zero to avoid using it in an uninitialized state.
+
 Tue Oct 26 12:28:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
 
-          Fixed sections for 'ifeq ("$(OS)", "Windows_NT")' since these 
+          Fixed sections for 'ifeq ("$(OS)", "Windows_NT")' since these
           now get hit again as the OS variable works again (see previous).
           Needed this for VxWorks cross-builds on NT.
 
@@ -10,8 +16,8 @@ Tue Oct 26 12:22:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/ace.mpc:
 
-          Changed 'OS' filegroup to 'ACE_OS' since otherwise with GNU 
-          makefiles the OS environment variable gets overruled (and this 
+          Changed 'OS' filegroup to 'ACE_OS' since otherwise with GNU
+          makefiles the OS environment variable gets overruled (and this
           is/was supposed to be used in rules.local.GNU).
 
 Tue Oct 26 10:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -71,37 +77,37 @@ Sun Oct 24 08:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Oct 23 11:27:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/WIN32_Asynch_IO.cpp (shared_write): Changed the return values
-	  for ACE_Asynch_Write_Stream::write() and
- 	  ACE_Asynch_Read_Stream::read() so that they return 0 rather than
- 	  1.  This makes the code more portable between Windows and POSIX.
-  	  Thanks to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>
- 	  for reporting this.
+        * ace/WIN32_Asynch_IO.cpp (shared_write): Changed the return values
+          for ACE_Asynch_Write_Stream::write() and
+          ACE_Asynch_Read_Stream::read() so that they return 0 rather than
+          1.  This makes the code more portable between Windows and POSIX.
+          Thanks to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>
+          for reporting this.
 
-	* ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager):
-	  Added a call to
+        * ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager):
+          Added a call to
 
-	  ACE_Flag_Manip::set_flags (this->pipe_.read_handle (), ACE_NONBLOCK);
+          ACE_Flag_Manip::set_flags (this->pipe_.read_handle (), ACE_NONBLOCK);
 
-	  so that the ACE_POSIX_AIOCB_Proactor doesn't hang on SuSe Linux
- 	  9.1.  Thanks to Vukajlo <vukajlo@finsoft.co.yu> for reporting
- 	  this fix.
+          so that the ACE_POSIX_AIOCB_Proactor doesn't hang on SuSe Linux
+          9.1.  Thanks to Vukajlo <vukajlo@finsoft.co.yu> for reporting
+          this fix.
 
 Fri Oct 22 17:55:32 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Added check for ACE_LACKS_WCTYPE_H.
+        * configure.ac: Added check for ACE_LACKS_WCTYPE_H.
 
 Fri Oct 22 17:00:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/sys/os_stat.h: Add more values for the 'mode' flags
-	  for WinCE and use the macros defined for them in the Windows API.
+        * ace/os_include/sys/os_stat.h: Add more values for the 'mode' flags
+          for WinCE and use the macros defined for them in the Windows API.
 
-	* ace/OS_NS_sys_stat.inl (stat): Set the st_mode value for WinCE.
+        * ace/OS_NS_sys_stat.inl (stat): Set the st_mode value for WinCE.
 
-	* tests/Dirent_Test.cpp: Don't attempt ACE_OS::chdir() for
-	  ACE_LACKS_CHDIR; the method isn't declared on those platforms.
+        * tests/Dirent_Test.cpp: Don't attempt ACE_OS::chdir() for
+          ACE_LACKS_CHDIR; the method isn't declared on those platforms.
 
-	* tests/Time_Value_Test.cpp: Removed stray #include <iostream>.
+        * tests/Time_Value_Test.cpp: Removed stray #include <iostream>.
 
 Fri Oct 22 11:10:55 2004  Chad Elliott  <elliott_c@ociweb.com>
 
