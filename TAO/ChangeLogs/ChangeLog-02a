@@ -1,3 +1,18 @@
+Mon Apr 23 11:47:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/Client_Task.h:
+        * tests/AMI_Buffering/Client_Task.cpp:
+        * tests/AMI_Buffering/client.cpp:
+          The client event loop can be explicitly terminated now.
+
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+          Add new driver script for timeout based flushing, but initiated
+          via the Reactor.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Renamed the second part of the test, 'liveness' is a more
+          descriptive term.
+
 Mon Apr 23 10:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/svc.conf:

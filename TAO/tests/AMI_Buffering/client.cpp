@@ -23,7 +23,7 @@ const int TIMEOUT_MILLISECONDS = 50;
 const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 
 /// Check that no more than 10% of the messages are not sent.
-const double PROGRESS_TOLERANCE = 0.9;
+const double LIVENESS_TOLERANCE = 0.9;
 
 /// Factor in GIOP overhead in the buffer size test
 const double GIOP_OVERHEAD = 0.9;
@@ -112,6 +112,26 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (root_poa.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil RootPOA\n"),
+                          1);
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -205,12 +225,17 @@ main (int argc, char *argv[])
                       "ERROR: No test was configured\n"));
         }
 
+      client_task.terminate_loop ();
+
       client_task.thr_mgr ()->wait ();
-      
+
       ami_buffering->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ami_buffering_admin->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
@@ -305,14 +330,13 @@ configure_policies (CORBA::ORB_ptr orb,
 }
 
 int
-run_progress_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
+run_liveness_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
                    Test::AMI_Buffering_ptr ami_buffering,
                    Test::AMI_Buffering_ptr flusher,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
                    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DEBUG ((LM_DEBUG, "Liveness test\n"));
-
+  ACE_DEBUG ((LM_DEBUG, ".... checking for liveness\n"));
   int test_failed = 0;
 
   // Get back in sync with the server...
@@ -325,14 +349,14 @@ run_progress_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
     ami_buffering_admin->request_count (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int progress_test_iterations = int(send_count);
+  int liveness_test_iterations = int(send_count);
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  for (int i = 0; i != progress_test_iterations; ++i)
+  for (int i = 0; i != liveness_test_iterations; ++i)
     {
       ami_buffering->sendc_receive_data (reply_handler,
                                          payload,
@@ -348,7 +372,7 @@ run_progress_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
       // expect it to fall too far behind, i.e. at least 90% of the
       // messages should be delivered....
       CORBA::ULong expected =
-        CORBA::ULong (PROGRESS_TOLERANCE * send_count);
+        CORBA::ULong (LIVENESS_TOLERANCE * send_count);
 
       if (receive_count < expected)
         {
@@ -465,15 +489,15 @@ run_message_count (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (reply_handler.in (),
+  int liveness_test_failed =
+    run_liveness_test (reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
   return test_failed;
@@ -581,15 +605,15 @@ run_timeout (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (reply_handler.in (),
+  int liveness_test_failed =
+    run_liveness_test (reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
   return test_failed;
@@ -703,16 +727,18 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (reply_handler.in (),
+#if 0
+  int liveness_test_failed =
+    run_liveness_test (reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
+#endif /* 0 */
 
 
   return test_failed;
@@ -822,15 +848,15 @@ run_buffer_size (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (reply_handler.in (),
+  int liveness_test_failed =
+    run_liveness_test (reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
   return test_failed;
