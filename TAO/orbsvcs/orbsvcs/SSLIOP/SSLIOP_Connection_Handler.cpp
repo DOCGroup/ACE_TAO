@@ -97,6 +97,10 @@ TAO_SSLIOP_Connection_Handler::open (void*)
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
+
+  if (this->peer ().enable (ACE_NONBLOCK) == -1)
+    return -1;
+
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.
   ACE_INET_Addr addr;
@@ -163,6 +167,10 @@ TAO_SSLIOP_Connection_Handler::svc (void)
   // This method is called when an instance is "activated", i.e.,
   // turned into an active object.  Presumably, activation spawns a
   // thread with this method as the "worker function".
+
+  // Clear the non-blocking mode here
+  ACE_Flag_Manip::clr_flags (this->get_handle (),
+                             ACE_NONBLOCK);
 
   // Call the implementation here
   return this->svc_i ();
