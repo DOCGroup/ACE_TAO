@@ -74,10 +74,6 @@ public:
    */
   int disconnect_callbacks;
 
-  /// Flags for the Consumer Admin
-  int busy_hwm;
-  int max_write_delay;
-
   /**
    * The scheduling service that we will use with this event channel.
    * Notice that this is optional and will only take effect if the EC
@@ -225,11 +221,6 @@ public:
   /// Obtain the scheduler, the user must release
   CORBA::Object_ptr scheduler (void);
 
-  /// Control the concurrency of the delayed connect/disconnect
-  /// operations.
-  int busy_hwm (void) const;
-  int max_write_delay (void) const;
-
   // = The RtecEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -342,21 +333,19 @@ protected:
   /// The scheduling strategy
   TAO_EC_Scheduling_Strategy *scheduling_strategy_;
 
-  /// Consumer/Supplier reconnection flags
+  /// Consumer reconnection flags
   int consumer_reconnect_;
+
+  /// Supplier reconnection flags
   int supplier_reconnect_;
 
   /// If not zero we send callbacks when a proxy is disconnected
   int disconnect_callbacks_;
 
-  /// Control the level of concurrency in the supplier sets with
-  /// delayed operations
-  int busy_hwm_;
-  int max_write_delay_;
-
-  /// Strategies to disconnect misbehaving or destroyed consumers and
-  /// suppliers
+  /// Strategies to disconnect misbehaving or destroyed consumers
   TAO_EC_ConsumerControl *consumer_control_;
+
+  /// Strategies to disconnect misbehaving or destroyed suppliers
   TAO_EC_SupplierControl *supplier_control_;
 
   /// Mutex to protect the internal state
