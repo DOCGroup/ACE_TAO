@@ -11,6 +11,8 @@
 
 ACE_RCSID(tao, RT_Protocols_Hooks, "$Id$");
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 TAO_RT_Protocols_Hooks::Client_Protocols_Hook TAO_RT_Protocols_Hooks::client_protocols_hook_ = 0;
 TAO_RT_Protocols_Hooks::Server_Protocols_Hook TAO_RT_Protocols_Hooks::server_protocols_hook_ = 0;
 
@@ -33,11 +35,11 @@ TAO_RT_Protocols_Hooks::call_client_protocols_hook (
 {
   if (TAO_RT_Protocols_Hooks::client_protocols_hook_ == 0)
     return -1;
-  
+
   (*TAO_RT_Protocols_Hooks::client_protocols_hook_) (orb_core,
                                                      properties,
                                                      protocol_type);
-  
+
   return 0;
 }
 
@@ -60,11 +62,11 @@ TAO_RT_Protocols_Hooks::call_server_protocols_hook (
   if (TAO_RT_Protocols_Hooks::server_protocols_hook_ == 0)
     return -1;
 
-  int result_value = 
+  int result_value =
     (*TAO_RT_Protocols_Hooks::server_protocols_hook_) (orb_core,
                                                        properties,
                                                        protocol_type);
-  
+
   if (result_value != 0)
     return -1;
 
@@ -89,15 +91,15 @@ TAO_RT_Protocols_Hooks::call_policy_type_hook (CORBA::PolicyList *&policy_list,
 
   for (unsigned int i = 0; i < length; ++i)
     {
-      if (((*policy_list)[i]->policy_type () == 
+      if (((*policy_list)[i]->policy_type () ==
            RTCORBA::PRIORITY_MODEL_POLICY_TYPE))
         policy_type = 0;
 
-      else if (((*policy_list)[i]->policy_type () == 
+      else if (((*policy_list)[i]->policy_type () ==
                 RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE))
         policy_type = 1;
 
-      else if (((*policy_list)[i]->policy_type () == 
+      else if (((*policy_list)[i]->policy_type () ==
                 RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE))
         policy_type = 2;
     }
@@ -175,12 +177,12 @@ TAO_RT_Protocols_Hooks::effective_client_protocol_hook (
                            CORBA::Policy_ptr override,
                            CORBA::Policy_ptr exposed,
                            CORBA::Environment &ACE_TRY_ENV)
-{  
+{
   RTCORBA::ClientProtocolPolicy_var override_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (override,
                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-  
+
   TAO_ClientProtocolPolicy *override_policy =
     ACE_static_cast (TAO_ClientProtocolPolicy *,
                      override_policy_var.in ());
@@ -189,14 +191,14 @@ TAO_RT_Protocols_Hooks::effective_client_protocol_hook (
     RTCORBA::ClientProtocolPolicy::_narrow (exposed,
                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-  
+
   TAO_ClientProtocolPolicy *exposed_policy =
     ACE_static_cast (TAO_ClientProtocolPolicy *,
                      exposed_policy_var.in ());
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
-  RTCORBA::ProtocolList &protocols_rep_var = 
+  RTCORBA::ProtocolList &protocols_rep_var =
     exposed_policy->protocols_rep ();
 
   if (protocols_rep_var.length () == 0)
@@ -242,7 +244,7 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
           || (cdr << client_priority)
           == 0)
         ACE_THROW (CORBA::MARSHAL ());
-      
+
       // @@ The piece of code that comes here should go. It should
       // be something like this.
       // IOP::ServiceContext context;
@@ -337,7 +339,7 @@ TAO_RT_Protocols_Hooks::select_endpoint_hook (
                           TAO_Profile *& profile,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  RTCORBA::ClientProtocolPolicy_var cp_policy = 
+  RTCORBA::ClientProtocolPolicy_var cp_policy =
     RTCORBA::ClientProtocolPolicy::_narrow (client_protocol_policy,
                                             ACE_TRY_ENV);
   ACE_CHECK;
@@ -348,10 +350,10 @@ TAO_RT_Protocols_Hooks::select_endpoint_hook (
 
   RTCORBA::ProtocolList & protocols =
     client_protocol->protocols_rep ();
-  
+
   CORBA::ULong protocol_index =
     invocation->get_endpoint_selection_state ().client_protocol_index_;
-  
+
   if (protocols.length () == protocol_index)
     // We have tried all the protocols specified in the client
     // protocol policy with no success.  Throw exception.
@@ -362,7 +364,7 @@ TAO_RT_Protocols_Hooks::select_endpoint_hook (
           if (invocation->get_inconsistent_policies ())
             {
               invocation->get_inconsistent_policies ()->length (1);
-              CORBA::PolicyList_var inconsistent_policies = 
+              CORBA::PolicyList_var inconsistent_policies =
                 invocation->get_inconsistent_policies ();
               inconsistent_policies [0u] =
                 CORBA::Policy::_duplicate (invocation->
@@ -375,7 +377,7 @@ TAO_RT_Protocols_Hooks::select_endpoint_hook (
         // connection could not be established.
         ACE_THROW (CORBA::COMM_FAILURE ());
     }
-  
+
   // Find a Profile for the next protocol we would like to try.
   TAO_MProfile& mprofile = invocation->get_stub ()->base_profiles ();
 
@@ -402,6 +404,8 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_RT_Protocols_Hooks)
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

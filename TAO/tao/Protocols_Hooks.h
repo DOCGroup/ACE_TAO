@@ -34,6 +34,8 @@ public:
   /// destructor
   virtual ~TAO_Protocols_Hooks (void);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
   virtual int call_client_protocols_hook (TAO_ORB_Core *orb_core,
                                           RTCORBA::ProtocolProperties_var &
                                           properties,
@@ -44,6 +46,7 @@ public:
                                           properties,
                                           const char *protocol_type);
 
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /**
    * to get the policy_type in Long format.

@@ -1,3 +1,20 @@
+Tue Dec 19 11:47:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Protocols_Hooks.cpp : 
+	* tao/Protocols_Hooks.h : 
+	* tao/Default_Protocols_Hooks.cpp : 
+	* tao/Default_Protocols_Hooks.h : 
+	* tao/RT_Protocols_Hooks.cpp : 
+	* tao/RT_Protocols_Hooks.h :
+	
+	* tao/RT_Invocation_Endpoint_Selectors.i : 
+	* tao/Invocation_Endpoint_Selectors.i : 
+
+	* tao/Invocation.h : 
+	* tao/Invocation.i : 
+
+	  Added TAO_HAS_RT_CORBA if-def guards.
+	  
 Tue Dec 19 12:16:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* utils/nslist/nslist.cpp (main): Added a fix to check if non-existent 
