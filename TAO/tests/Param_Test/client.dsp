@@ -167,6 +167,10 @@ SOURCE=.\param_testSer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\recursive_struct.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\results.cpp
 # End Source File
 # Begin Source File
@@ -311,6 +315,10 @@ SOURCE=.\Param_TestSer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\recursive_struct.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\results.h
 # End Source File
 # Begin Source File
@@ -367,11 +375,7 @@ SOURCE=.\var_struct.h
 # PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\Param_TestC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Param_TestS.i
+SOURCE=.\param_testCli.i
 # End Source File
 # End Group
 # Begin Group "IDL Files"
