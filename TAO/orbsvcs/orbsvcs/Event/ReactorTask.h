@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Timer_List.h"
-
+#include "ace/Reactor.h"
 #include "Local_ESTypes.h"
 #include "RT_Task.h"
 
