@@ -3084,6 +3084,10 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #   include /**/ <unistd.h>
 # endif /* ACE_LACKS_UNISTD_H */
 
+# if defined (ACE_HAS_AIO_CALLS)
+#   include /**/ <aio.h>
+# endif /* ACE_HAS_AIO_CALLS */
+
 # if !defined (ACE_LACKS_PARAM_H)
 #   include /**/ <sys/param.h>
 # endif /* ACE_LACKS_PARAM_H */
@@ -5773,5 +5777,37 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #else
 # define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+
+#if defined (ACE_WIN32)
+typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
+typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
+typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
+
+#define ACE_INFINITE INFINITE
+#define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
+#define ACE_WAIT_FAILED WAIT_FAILED
+#define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
+
+#define ACE_FALSE FALSE
+#define ACE_TRUE TRUE
+#else /* ACE_WIN32 */
+struct ACE_TRANSMIT_FILE_BUFFERS
+{
+  void *Head;
+  size_t HeadLength;
+  void *Tail;
+  size_t TailLength;
+};
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
+
+#define ACE_INFINITE LONG_MAX
+#define ACE_STATUS_TIMEOUT LONG_MAX
+#define ACE_WAIT_FAILED LONG_MAX
+#define ACE_WAIT_TIMEOUT LONG_MAX
+
+#define ACE_TRUE 1
+#define ACE_FALSE 0
+#endif /* ACE_WIN32 */
 
 #endif  /* ACE_OS_H */
