@@ -5,6 +5,14 @@ Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
           a char * initializer.
         * apps/gperf/src/Options.cpp: Fixed -j processing (typo).
 
+        * docs/tutorials/017/barrier.cpp: Can't init a long with a thread ID.
+          On HP-UX 10.20, it's a struct.
+        * docs/tutorials/017/Barrier_i.cpp: Use ACE_OS::thr_equal to check
+          equality of thread IDs.
+
+        * docs/tutorials/019/server/cpp: Removed redefinition of char *s from
+          'for' loop.  Works around a compiler issue, but isn't needed anyway.
+
 Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/ACE.cpp: 
