@@ -1,3 +1,11 @@
+Sat Jan 17 00:56:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tests/Proactor_Test_IPV6.cpp
+	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+	* tests/SOCK_Test_IPv6.cpp:
+
+	  Fixed compilation errors in builds that don't have IPV6 enabled. 
+
 Sat Jan 17 00:45:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Multihomed_INET_Addr_Test_IPV6.dsp:

@@ -1875,7 +1875,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // First, set up all the defaults then let any args change them.
   both = 1;                       // client and server simultaneosly
   duplex = 1;                     // full duplex is on
+#if defined (ACE_HAS_IPV6)
   host = ACE_IPV6_LOCALHOST;      // server to connect (IPv6 localhost)
+#else
+   host = ACE_LOCALHOST;
+#endif /*ACE_HAS_IPV6*/
   port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
   max_aio_operations = 512;       // POSIX Proactor params
   proactor_type = DEFAULT;        // Proactor type = default
