@@ -5,11 +5,4 @@ interface Counter
   void increment ();
   long get_count ();
   oneway void shutdown ();
- 
-  // @@ Angelo, please don't use more code than you need to.  For this
-  // test you only need one method, if that much.
-  
-  // @@ Marina I simplified the interface.
 };
-
-// @@ Angelo, please add README file.

@@ -1,3 +1,13 @@
+Sat Jun 17 23:02:34 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/Exposed_Policies/Counter.idl
+	* tests/Exposed_Policies/Counter_i.cpp
+	* tests/Exposed_Policies/Counter_i.h
+	* tests/Exposed_Policies/README
+	* tests/Exposed_Policies/client.cpp
+	* tests/Exposed_Policies/server.cpp:
+	  Code review.  Left a bunch of @@ comments for Angelo.
+
 Sat Jun 17 20:57:52 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
