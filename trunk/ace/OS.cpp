@@ -3851,7 +3851,10 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 
     ++unique_name;
     if (::tsd_create (ACE_reinterpret_cast (char *, unique_name),
-                      0, TSD_NOALLOC, &tsdanchor, key) != 0)
+                      0,
+                      TSD_NOALLOC,
+                      (void ****) &tsdanchor,
+                      key) != 0)
       {
         return -1;
       }
