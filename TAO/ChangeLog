@@ -1,3 +1,29 @@
+Thu Sep 16 11:49:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+        
+          Removed code that has been long commented out.
+          
+        * TAO_IDL/be/be_visitor_traits.cpp (visit_array):
+        
+          Removed unused code to generate an #ifdef guard based on the
+          unaliased type name of the array element and all the dimensions.
+          
+        * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_array):
+        
+          Added generation of #ifdef guard removed from the above visitor.
+          This change eliminates a compile error when two arrays with
+          identical element types are both used as operation parameters.
+          Thanks to Jean-Christophe Cota 
+          <jean-christophe.cota@eurocontrol.int> for sending in the 
+          example IDL file that uncovered the bug.
+          
+        * tests/IDL_Test/array.idl:
+        
+          Added interface with an operation containing parameters of
+          arrays with identical element types which already existed in
+          the IDL file.
+
 Thu Sep 16 11:03:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Miop/McastHello/README:
