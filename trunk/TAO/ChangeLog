@@ -22,7 +22,8 @@ Wed May  5 17:07:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           Plugged several holes in error checking for components
           and homes, and created new error messages to be more
           informative in some of these cases. Also cleaned up and
-          untangled the code in fe_interface_header.cpp.
+          untangled the code in fe_interface_header.cpp. The fix
+          closes [BUGID:1801].
 
 Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
