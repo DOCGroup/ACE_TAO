@@ -3,6 +3,9 @@ Thu Aug 13 15:20:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Sched/Scheduler.cpp (dispatch_configuration):
           made int return type explicit.
 
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp: added
+          ACE_Unbounded_Set<RtecScheduler::Config_Info> template instatiations.
+
 Thu Aug 13 15:16:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAOACE.dsw:  When I changed the name of TAO_IDL's project
