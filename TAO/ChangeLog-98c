@@ -1,3 +1,7 @@
+Sun Aug 23 16:17:03 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html: Updated documentation about new options.
+
 Sun Aug 23 16:11:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp: Commented out
