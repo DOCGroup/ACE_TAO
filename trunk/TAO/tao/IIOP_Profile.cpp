@@ -37,7 +37,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -61,7 +61,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -80,7 +80,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -105,7 +105,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -124,7 +124,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 
   if (host)
@@ -151,7 +151,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 
   if (host)
@@ -178,7 +178,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   ACE_UNUSED_ARG (version);
 
@@ -200,7 +200,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
     hint_(0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 
   ACE_NEW (this->host_,
@@ -221,7 +221,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     hint_(0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 
   ACE_NEW (this->host_,
@@ -242,7 +242,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const Version &version)
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 }
 
@@ -257,7 +257,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string, CORBA::Environment &env)
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
   parse_string (string, env);
 }
@@ -273,7 +273,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (void)
     hint_ (0),
     // what about refcount_lock_ (),
     refcount_ (1),
-    fwd_profiles_ (0)
+    forward_to_ (0)
 {
 }
 
@@ -315,9 +315,9 @@ TAO_IIOP_Profile:: ~TAO_IIOP_Profile ()
   delete [] this->host_;
   this->host_ = 0;
 
-  if (fwd_profiles_)
+  if (forward_to_)
   {
-    delete fwd_profiles_;
+    delete forward_to_;
   }
 
 }
@@ -632,13 +632,13 @@ TAO_IIOP_Profile::addr_to_string(void)
   return s;
 }
 
-char *
+const char *
 TAO_IIOP_Profile::host (void)
 {
   return this->host_;
 }
 
-char *
+const char *
 TAO_IIOP_Profile::host (const char *h)
 {
   if (this->host_)
@@ -670,13 +670,13 @@ TAO_IIOP_Profile::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-Version *
+const Version *
 TAO_IIOP_Profile::version (void)
 {
   return &this->version_;
 }
 
-Version *
+const Version *
 TAO_IIOP_Profile::version (Version *v)
 {
   this->version_ = *v;
@@ -765,26 +765,26 @@ TAO_IIOP_Profile::_decr_refcnt (void)
 
 
 void
-TAO_IIOP_Profile::fwd_profiles (TAO_MProfile *mprofiles)
+TAO_IIOP_Profile::forward_to (TAO_MProfile *mprofiles)
 {
   // we assume ownership of the profile list!!
-  if (fwd_profiles_)
-    delete this->fwd_profiles_;
+  if (forward_to_)
+    delete this->forward_to_;
 
-  this->fwd_profiles_ = new TAO_MProfile (mprofiles);
+  this->forward_to_ = new TAO_MProfile (mprofiles);
 
 }
 
 TAO_MProfile *
-TAO_IIOP_Profile::fwd_profiles (void)
+TAO_IIOP_Profile::forward_to (void)
 {
-  return this->fwd_profiles_;
+  return this->forward_to_;
 }
 
 TAO_MProfile *
-TAO_IIOP_Profile::get_fwd_profiles (void)
+TAO_IIOP_Profile::get_forward_to (void)
 {
-  return new TAO_MProfile (this->fwd_profiles_);
+  return new TAO_MProfile (this->forward_to_);
 }
 
 CORBA::String

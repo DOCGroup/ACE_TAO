@@ -141,25 +141,22 @@ public:
   // @@ Fred, please fill in here.
 
   virtual void reset_hint (void) = 0;
-  // This methoid is used with a connection has been reset requiring
-  // the hint to be cleaned up and reset to NULL.
+  // this methoid is used with a connection has been reset requiring the
+  // hint to be cleaned up and reset to NULL.
 
-  // @@ Fred, please rename this "forward_profiles".
-  virtual void fwd_profiles (TAO_MProfile *mprofiles) = 0;
-  // Object will assume ownership for this object!!
+  virtual void forward_to (TAO_MProfile *mprofiles) = 0;
+  // object will assume ownership for this object!!
 
-  // @@ Fred, please rename this "forward_profiles".
-  virtual TAO_MProfile *fwd_profiles (void) = 0;
-  // This object keeps ownership of this object.
-
-  // @@ Fred, please rename this "get_forward_profiles".
-  virtual TAO_MProfile *get_fwd_profiles (void) = 0;
-  // Copy of MProfile, user must delete.
+  virtual TAO_MProfile *get_forward_to (void) = 0;
+  // copy of MProfile, user must delete.
 
   virtual CORBA::ULong _incr_refcnt (void) = 0;
   virtual CORBA::ULong _decr_refcnt (void) = 0;
 
 protected:
+  virtual TAO_MProfile *forward_to (void) = 0;
+  // this object keeps ownership of this object
+
   virtual ~TAO_Profile (void);
   // If you have a virtual method you need a virtual dtor.
 

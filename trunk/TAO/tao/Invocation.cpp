@@ -406,20 +406,18 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   //
   // @@ add and use a "forward count", to prevent loss of data
   // in forwarding chains during concurrent calls -- only a
-  // forward that's a response to the current fwd_profile should
+  // forward that's a response to the current forward_profile should
   // be recorded here. (This is just an optimization, and is not
   // related to correctness.)
 
   // New for Multiple profile.  Get the MProfile list from the
-  // forwarded object refererence, and assign it to the current profile
-  // in use.  Note, it should not be the case that the current profile
-  // in use already has a forward profile defined!  That is, even if we
-  // were using a forward_profile in the request which resulted in this
-  // location_forward response, it will have a null fwd_mprofiles list.
+  // forwarded object refererence
 
-  data_->set_fwd_profiles (stubobj->get_profiles ());
+  data_->add_forward_profiles (stubobj->get_profiles ());
   // store the new profile list and set the first forwarding profile
-  // note: this has to be and is thread safe
+  // note: this has to be and is thread safe.  Also get_profiles returns
+  // a pointer to a new MProfile object which we give to data_ (Our
+  // STUB_Object.)
 
   // The object is no longer needed, because we have now the STUB_Object
   // @@ Is this exception safe?

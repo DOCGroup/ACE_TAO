@@ -97,19 +97,14 @@ public:
   // Return the index of this entry or -1 if it can not be added.
   // this object assumes ownership of this profile!!
 
-  void fwded_mprofile (TAO_MProfile *mprofiles);
+  void forward_from (TAO_MProfile *mprofiles);
   // @@ Fred, can you please change the name of this method to
   // "forwarded_mprofile()"?  In general, it's better to use complete
   // names.
+  // Set a pointer to the MProfile whose 'current' TAO_Profile was forwarded
+  // This object is the set of forwarding profiles.
 
-  // Set a pointer to the profile which was forwarded.  NOTE, the
-  // forwarding profile *MUST* be set at object creation.  And it can
-  // not be altered once it's set!
-
-  TAO_MProfile *fwded_mprofile (void);
-  // @@ Fred, can you please change the name of this method to
-  // "forwarded_mprofile()"?  In general, it's better to use complete
-  // names.
+  TAO_MProfile *forward_from (void);
   // Returns a pointer to the profile which was forwarded.  
 
   CORBA::Boolean is_equivalent (TAO_MProfile *first,
@@ -134,15 +129,13 @@ protected:
 
 private:
 
-  TAO_MProfile *fwded_mprofile_;
-  // @@ Fred, can you please change all "fwded" to "forwarded"?
-
-  // Used for chaining references when the current profile is
-  // forwarded.  Note, this will only be valid for an MProfile which
-  // contains a list of fwd_profiles for some initial or base profile.
-  // This is a backward reference to the profile list which received
-  // the relocate message.  The actual profile what was forwarded will
-  // be fwded_mprofile_->get_current_profile ()
+  TAO_MProfile  *forward_from_;
+  // Used for chaning references when the current profile is forwarded.
+  // Note, this will only be valid for an MProfile which contains a list of
+  // forward_profiles for some initial or base profile.
+  // This is a backward reference to the profile list which received the 
+  // relocate message.  The actual profile what was forwarded will be
+  // forward_from_->get_current_profile ()
 
   TAO_Profile_ptr *pfiles_;
   // Actual list of profiles.

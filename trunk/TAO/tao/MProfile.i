@@ -6,7 +6,7 @@
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  fwded_mprofile_(0),
+  :  forward_from_(0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -17,7 +17,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (TAO_MProfile *mprofiles)
-  :  fwded_mprofile_(0),
+  :  forward_from_(0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -159,16 +159,18 @@ TAO_MProfile::give_profile (TAO_Profile *pfile)
   return last_ - 1;
 }
 
-ACE_INLINE void
-TAO_MProfile::fwded_mprofile (TAO_MProfile *fwded)
+ACE_INLINE
+void
+TAO_MProfile::forward_from (TAO_MProfile *from)
 {
-  this->fwded_mprofile_ = fwded;
+  this->forward_from_ = from;
 }
 
-ACE_INLINE TAO_MProfile *
-TAO_MProfile::fwded_mprofile (void)
+ACE_INLINE
+TAO_MProfile *
+TAO_MProfile::forward_from (void)
 {
-  return this->fwded_mprofile_;
+  return this->forward_from_;
 }
 
 ACE_INLINE CORBA::ULong

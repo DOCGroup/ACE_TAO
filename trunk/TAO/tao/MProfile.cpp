@@ -25,9 +25,14 @@ TAO_MProfile::set (CORBA::ULong sz)
 
       if (this->size_)
         delete [] this->pfiles_;
-
-      if (this->fwded_mprofile_)
-        delete this->fwded_mprofile_;
+  
+    if (forward_from_)
+      delete forward_from_;
+  
+    pfiles_ = 0;
+    current_ = 0;
+    size_ = 0;
+    last_= 0;
 
       this->pfiles_ = 0;
       this->current_ = 0;
@@ -76,9 +81,9 @@ TAO_MProfile::set (CORBA::ULong sz)
   this->last_ = 0;
   this->current_ = 0;
 
-  // @@ since we are being reset, get rid of fwd references!
-  if (fwded_mprofile_)
-    delete fwded_mprofile_;
+  // @@ since we are being reset, get rid of forward references!
+  if (forward_from_)
+    delete forward_from_;
 
   return size_;
 }
@@ -100,7 +105,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
 
   // These are set in set (ULong);
   // this->current_ = 0;
-  // this->fwded_mprofile_ = 0;
+  // this->forward_from_ = 0;
 
   // Now reference all profiles.
   for (TAO_PHandle h = 0 ; h < this->size_ ; h++ )
@@ -110,10 +115,12 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
           this->pfiles_[h] = mprofile->pfiles_[h];
           this->pfiles_[h]->_incr_refcnt ();
         }
-    }
+    } // for (TAO_PHandle ...)
 
-  if (mprofile->fwded_mprofile_)
-    this->fwded_mprofile_ = mprofile->fwded_mprofile_;
+  if (mprofile->forward_from_)
+    {
+      this->forward_from_ = mprofile->forward_from_;
+    }
 
   return 1;
 }
