@@ -32,7 +32,7 @@ ifdef VXWORKS
   clobber.nested: any
   depend.nested: any
   rcs_info.nested: any
-  any:
+  any clean realclean:
 	@echo These examples won\'t run or build for VxWorks.
 else
   include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
