@@ -1,3 +1,14 @@
+Mon Apr 26 10:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* src/Version.cpp (version_string): 
+
+	  Updated version string to "2.8 (ACE version)" since 2.7 is used
+	  by the old Cygnus maintained gperf.
+
+	* src/*.{h,cpp}:
+
+	  Updated copyright/distribution information to GPL v2 style notice.
+
 Sun Apr 25 16:16:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* mdate-sh: Added this file to the CVS repository.  It will be
