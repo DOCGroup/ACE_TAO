@@ -89,11 +89,19 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\Coordinator.cpp
+SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client.cpp
+SOURCE=.\Peer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Session.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Session_Task.cpp
 # End Source File
 # Begin Source File
 
@@ -109,7 +117,15 @@ SOURCE=.\TestS.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\Coordinator.h
+SOURCE=.\Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Session.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Session_Task.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

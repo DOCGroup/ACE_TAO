@@ -1,3 +1,14 @@
+Fri Mar 16 15:49:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+          Fixed debugging message for cancel_output.
+
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/server.dsp:
+          Fixed project files, the first version commited missed some
+          changes.
+
 Thu Mar 15 10:46:52 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Big_Oneways/Makefile:
