@@ -122,6 +122,15 @@ POA_Messaging::RebindPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::RebindPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::SyncScopePolicy::SyncScopePolicy (void)
@@ -221,6 +230,15 @@ POA_Messaging::SyncScopePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
                   Messaging::SyncScopePolicy::_nil ());
 
   return retval;
+}
+
+void
+POA_Messaging::SyncScopePolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************
@@ -324,6 +342,15 @@ POA_Messaging::RequestPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::RequestPriorityPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
@@ -423,6 +450,15 @@ POA_Messaging::ReplyPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
                   Messaging::ReplyPriorityPolicy::_nil ());
 
   return retval;
+}
+
+void
+POA_Messaging::ReplyPriorityPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************
@@ -526,6 +562,15 @@ POA_Messaging::RequestStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::RequestStartTimePolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
@@ -625,6 +670,15 @@ POA_Messaging::RequestEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
                   Messaging::RequestEndTimePolicy::_nil ());
 
   return retval;
+}
+
+void
+POA_Messaging::RequestEndTimePolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************
@@ -728,6 +782,15 @@ POA_Messaging::ReplyStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::ReplyStartTimePolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
@@ -827,6 +890,15 @@ POA_Messaging::ReplyEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
                   Messaging::ReplyEndTimePolicy::_nil ());
 
   return retval;
+}
+
+void
+POA_Messaging::ReplyEndTimePolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************
@@ -932,6 +1004,15 @@ POA_Messaging::RelativeRequestTimeoutPolicy::_this (CORBA_Environment &ACE_TRY_E
   return retval;
 }
 
+void
+POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
@@ -1033,6 +1114,15 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::_this (CORBA_Environment &ACE_TRY
     );
 
   return retval;
+}
+
+void
+POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************
@@ -1138,6 +1228,15 @@ POA_Messaging::RoutingPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::RoutingPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
@@ -1241,6 +1340,15 @@ POA_Messaging::MaxHopsPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
+void
+POA_Messaging::MaxHopsPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
+}
+
 // ****************************************************************
 
 POA_Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
@@ -1342,6 +1450,15 @@ POA_Messaging::QueueOrderPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
     );
 
   return retval;
+}
+
+void
+POA_Messaging::QueueOrderPolicy::_dispatch (
+        CORBA::ServerRequest &,
+        void *,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 // ****************************************************************

@@ -57,6 +57,12 @@ TAO_NAMESPACE  POA_Messaging
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RebindPolicy     : public virtual Messaging::RebindPolicy,
@@ -172,6 +178,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_SyncScopePolicy     : public virtual Messaging::SyncScopePolicy,
@@ -287,6 +299,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RequestPriorityPolicy     : public virtual Messaging::RequestPriorityPolicy,
@@ -402,6 +420,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_ReplyPriorityPolicy     : public virtual Messaging::ReplyPriorityPolicy,
@@ -517,6 +541,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RequestStartTimePolicy     : public virtual Messaging::RequestStartTimePolicy,
@@ -632,6 +662,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RequestEndTimePolicy     : public virtual Messaging::RequestEndTimePolicy,
@@ -747,6 +783,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_ReplyStartTimePolicy     : public virtual Messaging::ReplyStartTimePolicy,
@@ -862,6 +904,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_ReplyEndTimePolicy     : public virtual Messaging::ReplyEndTimePolicy,
@@ -977,6 +1025,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RelativeRequestTimeoutPolicy     : public virtual Messaging::RelativeRequestTimeoutPolicy,
@@ -1092,6 +1146,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RelativeRoundtripTimeoutPolicy     : public virtual Messaging::RelativeRoundtripTimeoutPolicy,
@@ -1207,6 +1267,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_RoutingPolicy     : public virtual Messaging::RoutingPolicy,
@@ -1322,6 +1388,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_MaxHopsPolicy     : public virtual Messaging::MaxHopsPolicy,
@@ -1437,6 +1509,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_QueueOrderPolicy     : public virtual Messaging::QueueOrderPolicy,
@@ -1573,6 +1651,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
@@ -1791,6 +1875,12 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   };
 
   class TAO_Export _tao_collocated_Poller     : public virtual Messaging::Poller,
