@@ -486,7 +486,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
   : data_ (data),
     opname (operation),
     do_rsvp (is_roundtrip),
-    stream (&buffer [0], sizeof buffer)
+    stream (&buffer [0], sizeof buffer),
+    handler_ (0)
 {
   // The assumption that thread ids are ints is false and horribly
   // implementation-dependent, so this code just sucks.  But, at least
@@ -765,7 +766,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // point in the code however!  Some minor restructuring needs to
       // happen.
       //
-      handler_->idle (1);
+      handler_->close ();
       handler_ = 0;
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -833,8 +834,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         IIOP::ProfileBody *old = data_->fwd_profile_i (0);
 	delete old;
 
-        handler_->peer ().close ();
-        handler_->idle (1);
+        handler_->peer ().close (); // @@ (CJC) Is this necessary given that we call close below?
+        handler_->close ();
         handler_ = 0;
 	return TAO_GIOP_LOCATION_FORWARD;
       }
@@ -1079,8 +1080,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	env.clear ();
 
 	// Make sure a new connection is used next time.
-	handler_->idle (1);
+	handler_->close ();
 	handler_ = 0; // @@ not sure this is correct!
+        // @@ We shouldn't need to do this b/c TAO_GIOP_Invocations
+        // get created on a per-call basis.  Must check on this.
       }
     break;
     }
