@@ -423,6 +423,8 @@ DRV_check_for_include (const char* buf)
 
   // Terminate this string.
   file_name [i] = '\0';
+  
+  size_t len = ACE_OS::strlen (file_name);
 
   // Some backends pass this file through, others don't.
   if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
@@ -435,6 +437,18 @@ DRV_check_for_include (const char* buf)
         {
           DRV_get_orb_idl_includes ();
         }
+    }
+  // We have special lookup for orb.idl (TAO_ROOT/tao) that
+  // also kicks in for .pidl files. If one of the latter is
+  // included as a local name only, we add the 'tao/' prefix
+  // so the generated C++ include files will be correct.
+  else if (ACE_OS::strcmp (file_name + len - 5, ".pidl") == 0
+           && ACE_OS::strchr (file_name, '/') == 0
+           && ACE_OS::strchr (file_name, '\\') == 0)
+    {
+      ACE_CString fixed_name ("tao/");
+      fixed_name += file_name;
+      idl_global->add_to_included_idl_files (fixed_name.rep ());
     }
   else
     {

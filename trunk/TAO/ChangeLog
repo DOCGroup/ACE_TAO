@@ -1,3 +1,15 @@
+Thu Aug 26 12:37:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include):
+        
+          Added check for .pidl file included as a local filename.
+          Because of lookup quirks necessary for orb.idl, the
+          above case will also be found, even without a proper
+          -I option, but the generated C++ include will be incorrect.
+          So we add the necessary path to the .pidl filename before
+          it is stored for later validation and code generation.
+          This closes [BUGID:1608].
+
 Thu Aug 26 11:22:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Abstract_Interface/Abstract_Interface.mpc:
