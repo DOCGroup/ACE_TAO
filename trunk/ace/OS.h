@@ -1362,6 +1362,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 #define ACE_SEH_TRY __try
 #define ACE_SEH_EXCEPT(X) __except(X)
+#define ACE_SEH_FINALLY __finally
 
 // The "null" device on Win32.
 #define ACE_DEV_NULL "nul"
@@ -1625,6 +1626,7 @@ typedef char TCHAR;
 
 #define ACE_SEH_TRY
 #define ACE_SEH_EXCEPT(X)
+#define ACE_SEH_FINALLY
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"

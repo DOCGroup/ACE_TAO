@@ -1,3 +1,19 @@
+Fri Feb 21 04:12:31 1997    <irfan@TWOSTEP>
+
+	* ace/OS.h: Added ACE_SEH_FINALLY.
+
+	* ace/ReactorEx.h: Added ACE_ReactorEx_Test as a friend class. I
+ 	  think we should have one such friend class for all classes in
+ 	  ACE.
+
+	* examples/Reactor/ReactorEx/test_exceptions.cpp: New test which
+ 	  checks how ReactorEx deals with structured exceptions thrown by
+ 	  user code
+
+	* ace/ReactorEx.cpp (safe_dispatch): Added protection against
+ 	  structured exceptions caused by user code when dispatching
+ 	  handles
+
 Wed Feb 19 14:41:18 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Reactor.cpp: Modified to use timer_queue_->gettimeofday().
