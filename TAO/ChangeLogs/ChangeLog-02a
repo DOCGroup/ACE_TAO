@@ -55,7 +55,8 @@ Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  additions to its scope, and the lookup functions have
 	  been simplified. Thanks to Andreas Terstegge 
 	  <Andreas.Terstegge@nokia.com> for sending in an example
-	  IDl file that pointed out this bug.
+	  IDl file that pointed out this bug. This closes out 
+	  Bugzilla bug #400
 
 	* TAO_IDL/util/utl_string.cpp:
 	  Added calls to 'delete' in destructor for two char*
