@@ -981,7 +981,7 @@ IDL3_Client::component_port_test (
 
 int
 IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds
-                            ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (pds.length () != PROVIDES_LEN)
     {
@@ -1035,7 +1035,7 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds
 
 int
 IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds
-                        ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (uds.length () != USES_LEN)
     {
@@ -1109,7 +1109,7 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
                               const char *port_type,
                               const char **names,
                               const char **ids
-                              ACE_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (eds.length () != seq_length)
     {
@@ -1457,7 +1457,7 @@ int
 IDL3_Client::valuetype_member_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
     const char *prefix
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   CORBA::ULong length = desc->members.length ();
@@ -1517,7 +1517,7 @@ int
 IDL3_Client::valuetype_factory_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
     const char *prefix
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   CORBA::ULong length = desc->initializers.length ();
@@ -1698,7 +1698,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
 
 int
 IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
-                                ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::ULong length = hd->factories.length ();
 
@@ -1796,7 +1796,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
 
 int
 IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd
-                               ACE_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::ULong length = hd->finders.length ();
 
