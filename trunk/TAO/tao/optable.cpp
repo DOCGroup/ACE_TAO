@@ -6,7 +6,7 @@ TAO_Operation_Table::~TAO_Operation_Table (void)
 }
 
 // Template Specialization for char*
-int 
+int
 ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
 									     const char *const &id2)
 {
@@ -23,7 +23,7 @@ ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>::hash (cons
 // constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
 						    CORBA::ULong dbsize,
-						    CORBA::ULong hashtblsize) 
+						    CORBA::ULong hashtblsize)
 {
   if (hashtblsize > 0)
     this->hash_.open (hashtblsize);
@@ -48,15 +48,17 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
        iterator.next (entry) != 0;
        iterator.advance ())
     {
-      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory and stored
-					  // the string. So we free the memory
+      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory
+                                                   // and stored the string. So
+                                                   // we free the memory
+      entry->ext_id_ = 0;
       entry->int_id_ = 0;  // we do not own this. So we just set it to 0
     }
 
   this->hash_.close ();
 }
 
-int 
+int
 TAO_Dynamic_Hash_OpTable::bind (const CORBA::String &opname,
                                 const TAO_Skeleton skel_ptr)
 {
@@ -91,7 +93,7 @@ TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
   delete [] this->tbl_;
 }
 
-int 
+int
 TAO_Linear_OpTable::bind (const CORBA::String &opname,
                           const TAO_Skeleton skel_ptr)
 {
@@ -137,14 +139,15 @@ TAO_Linear_OpTable_Entry::TAO_Linear_OpTable_Entry (void)
 // destructor
 TAO_Linear_OpTable_Entry::~TAO_Linear_OpTable_Entry (void)
 {
-  CORBA::string_free (opname_);
+  CORBA::string_free (this->opname_);
+  this->opname_ = 0;
   this->skel_ptr_ = 0;  // cannot delete this as we do not own it
 }
 
 // Active Demux search strategy
 TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
 						    TAO_operation_db_entry *db,
-						    CORBA::ULong dbsize) 
+						    CORBA::ULong dbsize)
   : next_ (0),
     tablesize_ (dbsize),
     tbl_ (new TAO_Active_Demux_OpTable_Entry[dbsize])
@@ -214,21 +217,21 @@ TAO_Operation_Table_Parameters::~TAO_Operation_Table_Parameters (void)
 {
 }
 
-void 
+void
 TAO_Operation_Table_Parameters::lookup_strategy (TAO_Operation_Table_Parameters::DEMUX_STRATEGY s)
 {
   this->type_ = s;
 }
 
 // get the lookup type
-TAO_Operation_Table_Parameters::DEMUX_STRATEGY 
+TAO_Operation_Table_Parameters::DEMUX_STRATEGY
 TAO_Operation_Table_Parameters::lookup_strategy (void) const
 {
   return this->type_;
 }
 
 // set the concrete strategy
-void 
+void
 TAO_Operation_Table_Parameters::concrete_strategy (TAO_Operation_Table *ot)
 {
   this->strategy_ = ot;
@@ -248,7 +251,7 @@ TAO_Operation_Table_Factory::~TAO_Operation_Table_Factory (void)
 {
 }
 
-TAO_Operation_Table * 
+TAO_Operation_Table *
 TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 {
   TAO_Operation_Table_Parameters *p = TAO_OP_TABLE_PARAMETERS::instance ();

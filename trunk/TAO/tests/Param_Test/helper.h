@@ -22,6 +22,8 @@
 
 #include "param_testC.h"
 
+#define TEST_BUFSIZE 128
+
 class Generator
 {
 public:
@@ -38,8 +40,8 @@ public:
   CORBA::Octet gen_octet (void);
   CORBA::Float gen_float (void);
   CORBA::Double gen_double (void);
-  CORBA::String gen_string (CORBA::ULong len);
 #endif
+  CORBA::String gen_string (void);
 private:
 };
 

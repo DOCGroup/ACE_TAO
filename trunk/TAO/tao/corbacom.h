@@ -165,14 +165,17 @@ struct CORBA_SEQUENCE
 };
 
 class TAO_Export CORBA
+{
   // = TITLE
   //    Provides the CORBA namespace.
   //
   // = DESCRIPTION
   //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
   //    for all standard types Foo.
-{
 public:
+  // typedef void Status; // g++ doesn't like this
+  // return status of operations in a number of standard CORBA classes.
+
 #  if	SIZEOF_BOOL != 0
   typedef bool			Boolean;
 #    define B_FALSE false
@@ -531,6 +534,14 @@ public:
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
 
+  // = Kinds of typecodes.
+
+  // Do not change these enum values, or duplicate them if you need to
+  // add values.  They are used to index tables, and if you change the
+  // values you'll need to find and update all of those tables.  The
+  // values are also part of the Common Data Representation, and hence
+  // are part of IIOP and other ORB protocols.
+
   enum TCKind
   {
     tk_null               = 0,
@@ -637,9 +648,9 @@ public:
   static TypeCode_ptr _tc_BadKind;
 
   static ORB_ptr ORB_init (int &argc,
-			   char *const *argv,
-			   char *orb_name,
-			   Environment &env);
+                           char *const *argv,
+                           const char *orb_name,
+                           Environment &env);
   // ORB initialisation, per OMG document 94-9-46.
 
   // Define flags for NVList add methods
@@ -651,13 +662,12 @@ public:
     IN_COPY_VALUE = 0x08,
     OUT_LIST_MEMORY = 0x10
   };
-};
+};  // end of class (namespace) CORBA
 
 typedef CORBA::OctetSeq TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
-                             //			     CORBA::Object_ptr,
                              void *, // object_ptr
                              void *, // context_ptr
                              CORBA::Environment &);

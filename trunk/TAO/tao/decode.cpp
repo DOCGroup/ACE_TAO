@@ -543,6 +543,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     {
       *(CORBA::Object_ptr *) data = CORBA::Object::_nil ();
       CORBA::string_free (type_hint);
+      type_hint = 0;
     }
   else
     {

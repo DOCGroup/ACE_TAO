@@ -57,12 +57,13 @@ interface Param_Test
   // object references
   Coffee make_coffee (); // make an Coffee object
   Coffee test_Coffee (in Coffee o1, inout Coffee o2, out Coffee o3);
+  */
 
   // strings unbounded
-  string test_ubstring (in string s1,
-                        inout string s2,
-                        out string s3);
-
+  string test_unbounded_string (in string s1,
+                                inout string s2,
+                                out string s3);
+  /*
   // strings bounded
   const unsigned long STRLEN = 10;
   string<STRLEN> test_bstring (in string<STRLEN> s1,

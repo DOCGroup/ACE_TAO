@@ -20,8 +20,8 @@
 
 // Constructor.p
 Options::Options (void)
-  : param_test_key_ ("param_test"),
-    hostname_ (ACE_DEFAULT_SERVER_HOST),
+  : param_test_key_ (CORBA::string_dup ("param_test")),
+    hostname_ (CORBA::string_dup (ACE_DEFAULT_SERVER_HOST)),
     portnum_ (TAO_DEFAULT_SERVER_PORT),
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
@@ -33,7 +33,9 @@ Options::~Options (void)
 {
   // Free resources
   CORBA::string_free (this->param_test_key_);
+  this->param_test_key_ = 0;
   CORBA::string_free (this->hostname_);
+  this->hostname_ = 0;
 }
 
 // Parses the command line arguments and returns an error status.
@@ -53,12 +55,14 @@ Options::parse_args (int argc, char **argv)
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'h':
+        CORBA::string_free (this->hostname_); // release old one
         this->hostname_ = CORBA::string_dup (get_opts.optarg);
         break;
       case 'p':
         this->portnum_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'k':			// stringified objref
+        CORBA::string_free (this->param_test_key_); // release old one
         this->param_test_key_ = CORBA::string_dup (get_opts.optarg);
         break;
       case 'i':  // invocation
@@ -68,6 +72,8 @@ Options::parse_args (int argc, char **argv)
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.optarg, "short"))
           this->test_type_ = Options::TEST_SHORT;
+        if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
+          this->test_type_ = Options::TEST_UNBOUNDED_STRING;
         break;
       case '?':
       default:
