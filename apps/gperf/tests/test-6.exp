@@ -1,4 +1,5 @@
 -a	Generate ANSI standard C output code, i.e., function prototypes.
+-B	Generate code for Binary Search.
 -c	Generate comparison code using strncmp rather than strcmp.
 -C	Make the contents of generated lookup tables constant, i.e., readonly.
 -d	Enables the debugging option (produces verbose output to the standard error).
@@ -78,5 +79,5 @@
 -V	Exits silently with a value of 0.
 -Z	Allow user to specify name of generated C++ class.  Default
 	name is `Perfect_Hash.'
-Usage: ../src/gperf [-acCdDef[num]gGhH<hashname>i<init>IjJk<keys>K<keyname>lL<language>mMnN<function name>oOprs<size>S<switches>tTvVZ<class name>].
+Usage: ../src/gperf [-aBcCdDef[num]gGhH<hashname>i<init>IjJk<keys>K<keyname>lL<language>mMnN<function name>oOprs<size>S<switches>tTvVZ<class name>].
 (type ../src/gperf -h for help)
