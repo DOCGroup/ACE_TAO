@@ -7,10 +7,10 @@
 // both resumed and suspended entries).
 
 ACE_INLINE int
-ACE_Service_Repository::current_size (void)
+ACE_Service_Repository::current_size (void) const
 {
   ACE_TRACE ("ACE_Service_Repository::current_size");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->lock_, -1));
   return this->current_size_;
 }
 
@@ -18,10 +18,10 @@ ACE_Service_Repository::current_size (void)
 // table.
 
 ACE_INLINE int
-ACE_Service_Repository::total_size (void)
+ACE_Service_Repository::total_size (void) const
 {
   ACE_TRACE ("ACE_Service_Repository::total_size");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->lock_, -1));
   return this->total_size_;
 }
 

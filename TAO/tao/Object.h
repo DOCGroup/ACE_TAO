@@ -37,19 +37,19 @@ class TAO_Abstract_ServantBase;
 class TAO_Export CORBA_Object
 {
 public:
-  /// destructor
+  /// Destructor.
   virtual ~CORBA_Object (void);
 
-  /// address of this variable used in _unchecked_narrow
+  /// Address of this variable used in <_unchecked_narrow>.
   static int _tao_class_id;
 
-  /// increment the ref count
+  /// Increment the ref count.
   static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
 
-  /// return a NUL object
+  /// Return a NULL object.
   static CORBA_Object_ptr _nil (void);
 
-  /// no-op it is just here to simplify some templates.
+  /// No-op it is just here to simplify some templates.
   ACE_INLINE_FOR_GNUC
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
                                    CORBA_Environment &ACE_TRY_ENV =

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
 #include "ace/pre.h"
@@ -57,7 +56,7 @@ public:
   /// maintains ownership.
   const TAO_GIOP_Message_Version &version (void) const;
 
-  /// Get a poiter to the TAO_ORB_Core
+  /// Get a pointer to the <TAO_ORB_Core>.
   TAO_ORB_Core *orb_core (void) const;
 
   /// Increase the reference count by one on this object.
