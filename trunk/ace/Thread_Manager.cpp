@@ -1197,7 +1197,7 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 ACE_Thread_Control::~ACE_Thread_Control (void)
 {
   ACE_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
-#if defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS)
+#if defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS) || defined (ACE_HAS_TSS_EMULATION)
   this->exit (this->status_, 0);
 #else
   this->exit (this->status_, 1);
@@ -1215,7 +1215,11 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     return this->tm_->exit (exit_status, do_thr_exit);
   else
     {
+#if !defined (ACE_HAS_TSS_EMULATION)
+      // With ACE_HAS_TSS_EMULATION, we let ACE_Thread_Adapter::invoke ()
+      // exit the thread after cleaning up TSS.
       ACE_Thread::exit (exit_status);
+#endif /* ! ACE_HAS_TSS_EMULATION */
       return 0;
     }
 }
