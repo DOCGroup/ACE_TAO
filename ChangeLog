@@ -1,3 +1,15 @@
+Tue Jan 11 23:16:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Added test for existence of `/dev/poll' device file.  If that
+	  file exists and is readable define the "ACE_HAS_DEV_POLL"
+	  preprocessor symbol.
+
+	* m4/config_h.m4:
+
+	  Minor preprocessor symbol documentation fixes.
+
 Tue Jan 11 22:32:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (remove_handler_i):
