@@ -11,22 +11,22 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID(RT_Notify, TAO_NS_CosNotify_Service, "$Id$")
+ACE_RCSID(RT_Notify, TAO_CosNotify_Service, "$Id$")
 
-TAO_NS_CosNotify_Service::TAO_NS_CosNotify_Service (void)
+TAO_CosNotify_Service::TAO_CosNotify_Service (void)
   : factory_ (0)
   , builder_ (0)
 {
 }
 
-TAO_NS_CosNotify_Service::~TAO_NS_CosNotify_Service ()
+TAO_CosNotify_Service::~TAO_CosNotify_Service ()
 {
   delete this->factory_;
   delete this->builder_;
 }
 
 int
-TAO_NS_CosNotify_Service::init (int argc, char *argv[])
+TAO_CosNotify_Service::init (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -142,7 +142,7 @@ TAO_NS_CosNotify_Service::init (int argc, char *argv[])
 }
 
 void
-TAO_NS_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int threads)
+TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int threads)
 {
   NotifyExt::ThreadPoolParams tp_params =
     {0, (unsigned)threads, 0, 0, 0, 0, 0 };
@@ -153,13 +153,13 @@ TAO_NS_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int 
 }
 
 int
-TAO_NS_CosNotify_Service::fini (void)
+TAO_CosNotify_Service::fini (void)
 {
   return 0;
 }
 
 void
-TAO_NS_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
@@ -168,7 +168,7 @@ TAO_NS_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   /// first, init the main thread.
   //this->init_main_thread (orb ACE_ENV_ARG_PARAMETER);
@@ -203,7 +203,7 @@ TAO_NS_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_CosNotify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_Sched_Params::Policy sched_policy;
   long thr_sched_policy = orb->orb_core ()->orb_params ()->sched_policy ();
@@ -267,7 +267,7 @@ TAO_NS_CosNotify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_
 }
 
 void
-TAO_NS_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->factory_ = ACE_Dynamic_Service<TAO_NS_Factory>::instance ("TAO_NS_Factory");
 
@@ -281,7 +281,7 @@ TAO_NS_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->builder_,
                     TAO_NS_Builder (),
@@ -292,13 +292,13 @@ TAO_NS_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_NS_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   return this->builder_->build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_CosNotify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
 {
   // NOP.
 }
@@ -308,21 +308,21 @@ TAO_NS_CosNotify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_AR
 ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,
                        ACE_TEXT (TAO_NOTIFY_DEF_EMO_FACTORY_NAME),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_NS_CosNotify_Service),
+                       &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
 /*********************************************************************************************************************/
-/*
-ACE_STATIC_SVC_DEFINE (TAO_NS_CosNotify_Service,
+
+ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        ACE_TEXT (TAO_NS_COS_NOTIFICATION_SERVICE_NAME),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_NS_CosNotify_Service),
+                       &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-*/
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_CosNotify_Service)
+
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/
 
