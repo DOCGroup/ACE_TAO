@@ -56,7 +56,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_ETCL.lib TAO_Svc_Utils.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmin.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:".\ETCL"
+# ADD LINK32 TAO_ETCL.lib TAO_DynamicAny.lib TAO_Svc_Utils.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmin.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:".\ETCL" /libpath:"..\..\tao\DynamicAny"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 Debug"
 
@@ -82,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_ETCLd.lib TAO_DynamicAnyd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmind.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:".\ETCL"
+# ADD LINK32 TAO_ETCLd.lib TAO_DynamicAnyd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmind.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\DynamicAny" /libpath:"..\..\..\ace" /libpath:".\ETCL"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 MFC Debug"
