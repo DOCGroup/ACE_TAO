@@ -644,7 +644,8 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
       // Extract endpoints sequence.
       TAO_IIOPEndpointSequence endpoints;
-      in_cdr >> endpoints;
+      if ((in_cdr >> endpoints) == 0)
+        return 0;
 
       // Get the priority of the first endpoint.  It's other data is
       // extracted as part of the standard iiop decoding.

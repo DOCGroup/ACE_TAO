@@ -37,6 +37,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     reactor_registry_type_ (TAO_SINGLE_REACTOR),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
+    parser_names_count_ (0),
+    parser_names_ (0),
     protocol_factories_ (),
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
     purge_percentage_ (TAO_PURGE_PERCENT),
