@@ -1,4 +1,7 @@
-Thu May 13 10:51:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu May 13 11:28:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Registry.cpp (close): Only close <key_> when we do own a
+	  key.
 
 	* netsvcs/lib/Name_Handler.cpp (resolve): The atype string needs
 	  to be delete[]'ed once we are done with it.  Thanks to Valery
