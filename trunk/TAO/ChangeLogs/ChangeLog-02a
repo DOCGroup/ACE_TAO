@@ -1,3 +1,11 @@
+Tue Jan  4 00:34:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs/LifeCycle_Service/Factory_Trader.cpp: Fixes for KAI that
+	  missed the last round and fixes that were needed after the last
+	  round.
+
 Mon Jan  3 20:33:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
@@ -5,8 +13,8 @@ Mon Jan  3 20:33:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
 	* orbsvcs/tests/Trading/Offer_Exporter.cpp: Fixes for KAI that
 	  missed the last round and fixes that were needed after the last
-	  round. 
-	
+	  round.
+
 Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
@@ -18,7 +26,7 @@ Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/tests/Property/client.cpp: KAI needed fixes in these
 	  files to compile clean. There was a need to explicitly use an
 	  unsigned integer to avoid overloading amibiguity. Essentially
-	  the same fix as 'Mon Jan 03 10:55:36 2000  David L. Levine'. 
+	  the same fix as 'Mon Jan 03 10:55:36 2000  David L. Levine'.
 
 Mon Jan  3 14:45:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
