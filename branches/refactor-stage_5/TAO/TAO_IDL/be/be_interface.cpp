@@ -158,7 +158,7 @@ be_interface::full_name (void)
 }
 
 const char *
-be_interface::flat_name (void) const
+be_interface::flat_name (void)
 {
   // Return the flattened full scoped name.
   return this->strategy_->flat_name ();

@@ -84,7 +84,7 @@ public:
   virtual const char *full_name (void);
   // Return the stringified full name.
 
-  const char *flat_name (void) const;
+  virtual const char *flat_name (void);
   // Return the flattened full scoped name.
 
   virtual const char *repoID (void) const;

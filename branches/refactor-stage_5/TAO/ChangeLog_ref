@@ -1,3 +1,21 @@
+Thu Aug 28 11:42:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/include/ast_decl.h:
+
+          Fixed code generation bugs caught by building the ORB services.
+          Also made all the flat_name() methods virtual and non-const,
+          since the be_interface version overrides the AST_Decl version,
+          and the AST_Decl version is non-const. Finally, made
+          be_sequence::gen_name() public, since it is now used by the
+          traits visitor to guard against duplicate arg traits template
+          class specializations when a sequence is used in an operation
+          in multiple IDL files, perhaps with an additional layer of
+          typedef.
+
 Thu Aug 28 10:19:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Profile_Transport_Resolver.cpp:

@@ -99,9 +99,8 @@ public:
   void field_node (be_field *node);
   // Accessors for the member.
 
-protected:
   virtual char *gen_name (void);
-  // Helper to create_name.
+  // Helper to create_name, also used by the traits visitor.
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,
