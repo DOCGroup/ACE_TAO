@@ -295,7 +295,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "if (!ACE_OS::strcmp (\"" << node->repoID ()
       << "\", repository_id))" << be_idt_nl
-      << "return ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "return ACE_static_cast (" << be_idt << be_idt_nl
       << node->name () << "_ptr," << be_nl
       << "new " << node->full_coll_name () << " (this, stub)" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
