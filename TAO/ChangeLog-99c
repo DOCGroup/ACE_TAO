@@ -1,3 +1,8 @@
+Mon Oct 11 11:15:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Sync_Strategies.cpp (dequeue_head): Fixed an unused arg
+	  warning.  Thanks to David for pointing this out.
+
 Mon Oct 11 10:10:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 1.0.6 released.
