@@ -1094,7 +1094,9 @@ TAO_ORB_Core::fini (void)
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
+#if (TAO_HAS_RT_CORBA == 1)
   CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::release (this->implrepo_service_);
 
