@@ -10,7 +10,7 @@
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "PCI_Handler.h"
-#include "CompIntfDesc_Handler.h"
+#include "CompIntrDesc_Handler.h"
 
 #include <iostream>
 
@@ -22,18 +22,19 @@ namespace CIAO
   namespace Config_Handler
   {
     CompIntrDesc_Handler::CompIntrDesc_Handler (DOMDocument* doc, unsigned long filter)
-      : traverse_ (doc),
+      : // traverse_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
-        iter_ (traverse_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
+        iter_ (doc->createNodeIterator (this->root_,
+					this->filter_,
+					0,
+					true)),
         release_ (true)
     {}
 
     CompIntrDesc_Handler::CompIntrDesc_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : // traverse_ (0),
+	root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 

@@ -124,6 +124,7 @@ module Deployment {
     ::CORBA::StringSeq supportedType;
     string idlFile;
     Properties configProperty;
+    Properties infoProperty;
     ComponentPortDescriptions port;
     ComponentPropertyDescriptions property;
   };
