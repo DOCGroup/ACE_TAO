@@ -1,3 +1,17 @@
+Fri Jan 23 14:47:18 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/POA/{FindPOA,RootPOA,NewPOA}/Makefile: Added
+ 	-L$(TAO_ROOT)/tao to LDFLAGS.
+
+	* tests/POA/NewPOA/NewPOA.cpp: 
+	* tests/POA/RootPOA/RootPOA.cpp: 
+	* tests/POA/FindPOA/FindPOA.cpp: 
+	Used the ::in() method as first	argument to _narrow() calls.
+
+	* tests/{Makefile,README}: Updated for new tests.
+
+	* tao/poa.cpp: Added explicit template instantiations.
+
 Fri Jan 23 14:30:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/poa.h: 

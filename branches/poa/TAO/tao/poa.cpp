@@ -3306,3 +3306,75 @@ TAO_POA_Current::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
 {
   this->cookie_ = cookie;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>;
+template class ACE_Auto_Basic_Ptr<TAO_POA>;
+template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Thread_Policy>;
+template class ACE_Lock_Adapter<ACE_Null_Mutex>;
+template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
+template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
+template class ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
+template class ACE_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
+template class ACE_Read_Guard<ACE_Lock>;
+template class ACE_Unbounded_Set<TAO_POA *>;
+template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
+template class ACE_Write_Guard<ACE_Lock>;
+template class TAO_Object_Manager<PortableServer::Policy>;
+template class TAO_Unbounded_Object_Sequence<PortableServer::Policy>;
+template class auto_ptr<TAO_Id_Assignment_Policy>;
+template class auto_ptr<TAO_Id_Uniqueness_Policy>;
+template class auto_ptr<TAO_Implicit_Activation_Policy>;
+template class auto_ptr<TAO_Lifespan_Policy>;
+template class auto_ptr<TAO_Object_Table_Iterator_Impl>;
+template class auto_ptr<TAO_POA>;
+template class auto_ptr<TAO_Request_Processing_Policy>;
+template class auto_ptr<TAO_Servant_Retention_Policy>;
+template class auto_ptr<TAO_Thread_Policy>;
+template class ACE_Map_Entry<ACE_CString, TAO_POA *>;
+template class ACE_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
+template class ACE_Node<TAO_POA *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Thread_Policy>
+#pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
+#pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
+#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+#pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
+#pragma instantiate ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_Lock>
+#pragma instantiate ACE_Unbounded_Set<TAO_POA *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
+#pragma instantiate ACE_Write_Guard<ACE_Lock>
+#pragma instantiate TAO_Object_Manager<PortableServer::Policy>
+#pragma instantiate TAO_Unbounded_Object_Sequence<PortableServer::Policy>
+#pragma instantiate auto_ptr<TAO_Id_Assignment_Policy>
+#pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
+#pragma instantiate auto_ptr<TAO_Implicit_Activation_Policy>
+#pragma instantiate auto_ptr<TAO_Lifespan_Policy>
+#pragma instantiate auto_ptr<TAO_Object_Table_Iterator_Impl>
+#pragma instantiate auto_ptr<TAO_POA>
+#pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
+#pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>
+#pragma instantiate auto_ptr<TAO_Thread_Policy>
+#pragma instantiate ACE_Map_Entry<ACE_CString, TAO_POA *>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Node<TAO_POA *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

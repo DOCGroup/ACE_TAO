@@ -6,9 +6,10 @@ BIN = RootPOA
 
 LSRC = 	$(addsuffix .cpp,$(BIN))
 
-CPPFLAGS += -I$(ACE_ROOT)/TAO
+CPPFLAGS += -I$(TAO_ROOT)
 
 LDLIBS     =  -lTAO
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

@@ -15,7 +15,7 @@ main (int argc, char **argv)
 
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj, env);
+  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
