@@ -32,6 +32,8 @@
 // IRIX needs this for the throw specs
 #include "PolicyC.h"
 
+#include "ace/Synch.h"
+
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
@@ -53,23 +55,19 @@ class TAO_Stub;
 class TAO_Acceptor_Filter;
 class TAO_ValueFactory_Map;
 
-class CORBA_ORB_ObjectIdList;
-class CORBA_ORB_ObjectIdList_var;
-class CORBA_ORB_ObjectIdList_out;
-
-class CORBA_ORB_ObjectIdList;
-class CORBA_ORB_ObjectIdList_var;
-class CORBA_ORB_ObjectIdList_out;
-
-class CORBA_ORB_RequestSeq;
-class CORBA_ORB_RequestSeq_var;
-class CORBA_ORB_RequestSeq_out;
-
 
 // ****************************************************************
 
 namespace CORBA
 {
+  class ORB_ObjectIdList;
+  class ORB_ObjectIdList_var;
+  class ORB_ObjectIdList_out;
+
+  class ORB_RequestSeq;
+  class ORB_RequestSeq_var;
+  class ORB_RequestSeq_out;
+
   /**
    * @class ORB
    *
@@ -114,10 +112,10 @@ namespace CORBA
     typedef CORBA::String_out ObjectId_out;
     static CORBA::TypeCode_ptr _tc_ObjectId;
 
-    typedef CORBA_ORB_ObjectIdList ObjectIdList;
-    typedef CORBA_ORB_ObjectIdList_var ObjectIdList_var;
-    typedef CORBA_ORB_ObjectIdList_out ObjectIdList_out;
-    typedef CORBA_ORB_ObjectIdList *ObjectIdList_ptr;
+    typedef CORBA::ORB_ObjectIdList ObjectIdList;
+    typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
+    typedef CORBA::ORB_ObjectIdList_out ObjectIdList_out;
+    typedef CORBA::ORB_ObjectIdList *ObjectIdList_ptr;
     static CORBA::TypeCode_ptr _tc_ObjectIdList;
 
     /// Return a duplicate of @c orb.
@@ -168,9 +166,9 @@ namespace CORBA
     // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
     // send_multiple_requests_*().  See Request.{h,i,cpp} for
     // definitions.
-    typedef CORBA_ORB_RequestSeq RequestSeq;
-    typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
-    typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
+    typedef CORBA::ORB_RequestSeq RequestSeq;
+    typedef CORBA::ORB_RequestSeq_var RequestSeq_var;
+    typedef CORBA::ORB_RequestSeq_out RequestSeq_out;
 
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
@@ -199,10 +197,10 @@ namespace CORBA
       CORBA::ServiceInformation_out service_information
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &req
+    void send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &req
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &req
+    void send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &req
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void get_next_response (CORBA::Request_ptr &req

@@ -23,12 +23,12 @@
 #define _CORBA_ORB_OBJECTIDLIST_CS_
 
 // *************************************************************
-// CORBA_ORB_ObjectIdList
+// CORBA::ORB_ObjectIdList
 // *************************************************************
 
-CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (void)
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (void)
 {}
-CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max) // uses max size
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (CORBA::ULong max) // uses max size
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -37,7 +37,7 @@ CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max) // uses max si
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
-CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -46,7 +46,7 @@ CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max, CORBA::ULong l
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
-CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &seq) // copy ctor
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (const CORBA::ORB_ObjectIdList &seq) // copy ctor
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -55,7 +55,7 @@ CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &se
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
-CORBA_ORB_ObjectIdList::~CORBA_ORB_ObjectIdList (void) // dtor
+CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void) // dtor
 {}
 
 
@@ -78,12 +78,12 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
       0, // string length
   0,
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (CORBA::tk_alias, sizeof (_oc_CORBA_ORB_ObjectIdList), (char *) &_oc_CORBA_ORB_ObjectIdList, 0, sizeof (CORBA_ORB_ObjectIdList));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (CORBA::tk_alias, sizeof (_oc_CORBA_ORB_ObjectIdList), (char *) &_oc_CORBA_ORB_ObjectIdList, 0, sizeof (CORBA::ORB_ObjectIdList));
 CORBA::TypeCode_ptr CORBA::ORB::_tc_ObjectIdList = &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
 
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA_ORB_ObjectIdList &_tao_elem
+    const CORBA::ORB_ObjectIdList &_tao_elem
   ) // copying
 {
     TAO_OutputCDR stream;
@@ -97,7 +97,7 @@ void operator<<= (
 CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ORB_ObjectIdList &_tao_sequence
+    const CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -112,7 +112,7 @@ operator<< (
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
+operator>> (TAO_InputCDR &strm, CORBA::ORB_ObjectIdList &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
@@ -128,13 +128,13 @@ operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
   return 0; // error
 }
 
-void CORBA_ORB_ObjectIdList::_tao_any_destructor (void *x)
+void CORBA::ORB_ObjectIdList::_tao_any_destructor (void *x)
 {
-  CORBA_ORB_ObjectIdList *tmp = ACE_static_cast(CORBA_ORB_ObjectIdList*,x);
+  CORBA::ORB_ObjectIdList *tmp = ACE_static_cast (CORBA::ORB_ObjectIdList*, x);
   delete tmp;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem)
+void operator<<= (CORBA::Any &_tao_any, CORBA::ORB_ObjectIdList *_tao_elem)
 {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
@@ -144,10 +144,10 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem)
                            stream.begin (),
                            1,
                            _tao_elem,
-                           CORBA_ORB_ObjectIdList::_tao_any_destructor);
+                           CORBA::ORB_ObjectIdList::_tao_any_destructor);
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ORB_ObjectIdList *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -156,12 +156,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA_ORB_ObjectIdList *)_tao_any.value ();
+      _tao_elem = (CORBA::ORB_ObjectIdList *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA_ORB_ObjectIdList, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA::ORB_ObjectIdList, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr (),
                            _tao_any._tao_byte_order ());
       if (stream >> *_tao_elem)
@@ -170,7 +170,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
             CORBA::ORB::_tc_ObjectIdList,
             1,
             _tao_elem,
-            CORBA_ORB_ObjectIdList::_tao_any_destructor);
+            CORBA::ORB_ObjectIdList::_tao_any_destructor);
         return 1;
       }
       else
