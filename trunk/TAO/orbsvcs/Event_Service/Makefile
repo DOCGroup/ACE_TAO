@@ -11,7 +11,11 @@ BIN2 = Event_Service
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+    ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+      BIN = $(BIN2)
+    endif # Naming
+  endif # Event
 endif # Event2
 
 #----------------------------------------------------------------------------
