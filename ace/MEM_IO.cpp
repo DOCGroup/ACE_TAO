@@ -48,11 +48,9 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 
   if (retv == 0)
     {
-      // Something bad has happened.  It looks like only Solaris and
-      // Win32 will fall into this place when the other end closes the
-      // connection.
-      errno = EIO;
-      return -1;
+      //      ACE_DEBUG ((LM_INFO, "MEM_Stream closed\n"));
+      buf = 0;
+      return 0;
     }
   else if (retv != sizeof (off_t))
     {
