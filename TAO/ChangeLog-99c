@@ -1,47 +1,54 @@
+Sat Dec 18 09:40:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: insert TimeBase at beginning
+          of IDL_SRCS instead of appending at end, so that the
+          TimeBase files get generated first.  They're needed by
+          other files.
+
 Sat Dec 18 01:16:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp: Added the
-	  ability to quantify only the relevant areas of the code, i.e.,
-	  the remote calls. Also, timers can be selectively turned off.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp: Added the
+          ability to quantify only the relevant areas of the code, i.e.,
+          the remote calls. Also, timers can be selectively turned off.
 
-	* tao/Sync_Strategies.cpp (timer_check): Optimized to access the
-	  ORB's reactor only when required.
+        * tao/Sync_Strategies.cpp (timer_check): Optimized to access the
+          ORB's reactor only when required.
 
-	* tao/Pluggable.cpp (reset_queued_message): Selection of the next
-	  message block to adjust was incorrect.  The correct way is to
-	  chase the continuation chain and then go to the next
-	  continuation chain.
+        * tao/Pluggable.cpp (reset_queued_message): Selection of the next
+          message block to adjust was incorrect.  The correct way is to
+          chase the continuation chain and then go to the next
+          continuation chain.
 
 Fri Dec 17 15:44:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface.cpp:
-	  Fixed a bug in checking for name clash of inherited
-	  members in IDL files. Thanks to
-	  Andrey Nechypurenko <andreynech@yahoo.com> for sending
-	  in the example file and to Jon Biggar <jon@floorboard.com>
-	  for providing his best guess on a scoping and name
-	  resolution case not explicitly covered by the spec.
+        * TAO_IDL/ast/ast_interface.cpp:
+          Fixed a bug in checking for name clash of inherited
+          members in IDL files. Thanks to
+          Andrey Nechypurenko <andreynech@yahoo.com> for sending
+          in the example file and to Jon Biggar <jon@floorboard.com>
+          for providing his best guess on a scoping and name
+          resolution case not explicitly covered by the spec.
 
-	* tests/ IDL_Test/interface.idl:
-	  Added above example to the test suite.
+        * tests/ IDL_Test/interface.idl:
+          Added above example to the test suite.
 
 Fri Dec 17 15:39:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Added a brief section on tags.
+          Added a brief section on tags.
 
 Fri Dec 17 02:26:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/README:
-	* orbsvcs/Notify_Service/README:
-	  added README's for the Notification Service.
+        * orbsvcs/orbsvcs/Notify/README:
+        * orbsvcs/Notify_Service/README:
+          added README's for the Notification Service.
         * orbsvcs/orbsvcs/Makefile:
-	  added the Notification Service to the orbsvcs
-	* orbsvcs/Notify_Service/Makefile:
-	  added a makefile for the Notify_Service
-	* orbsvcs/examples/Notify/Filter/Makefile:
-	  added a makefile for the filter example.
+          added the Notification Service to the orbsvcs
+        * orbsvcs/Notify_Service/Makefile:
+          added a makefile for the Notify_Service
+        * orbsvcs/examples/Notify/Filter/Makefile:
+          added a makefile for the filter example.
 
 Fri Dec 17 01:18:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -61,150 +68,150 @@ Fri Dec 17 01:18:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Dec 16 21:11:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Added a note stressing the fact that it should not be necessary
-	  to make any changes to ACE or TAO in order to implement a
-	  pluggable protocol.
+          Added a note stressing the fact that it should not be necessary
+          to make any changes to ACE or TAO in order to implement a
+          pluggable protocol.
 
 Thu Dec 16 20:37:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Added HTML name attributes to some ORB option descriptions.
+          Added HTML name attributes to some ORB option descriptions.
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Added many more useful hyperlinks
+          Added many more useful hyperlinks
 
-	* docs/img5.png:
+        * docs/img5.png:
 
-	  Scaled to 75% of original size.  Thanks to Doug for pointing out
-	  the original size was very large.
+          Scaled to 75% of original size.  Thanks to Doug for pointing out
+          the original size was very large.
 
 Thu Dec 16 18:52:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Added missing closing tag.  Sections that were incorrectly
-	  considered part of another section are now in the right place.
+          Added missing closing tag.  Sections that were incorrectly
+          considered part of another section are now in the right place.
 
-	  Added Bruce Trask to the list of authors.
+          Added Bruce Trask to the list of authors.
 
-	  Added hyperlinks to referenced papers and to ToC entries.
+          Added hyperlinks to referenced papers and to ToC entries.
 
 Thu Dec 16 17:25:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp (list):
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp (list):
 
-	  Added missing ACE_CHECK after call to ACE_NEW_THROW_EX.
+          Added missing ACE_CHECK after call to ACE_NEW_THROW_EX.
 
 Thu Dec 16 14:53:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/index.html:
+        * docs/index.html:
 
-	  Updated with new location of pluggable protocols framework
-	  documentation.
+          Updated with new location of pluggable protocols framework
+          documentation.
 
-	* docs/pluggable_protocols/cross_ref_motif.png:
-	* docs/pluggable_protocols/img1.png:
-	* docs/pluggable_protocols/img2.png:
-	* docs/pluggable_protocols/img3.png:
-	* docs/pluggable_protocols/img4.png:
-	* docs/pluggable_protocols/img5.png:
-	* docs/pluggable_protocols/index.html:
-	* docs/pluggable_protocols/pluggable_protocols.css
+        * docs/pluggable_protocols/cross_ref_motif.png:
+        * docs/pluggable_protocols/img1.png:
+        * docs/pluggable_protocols/img2.png:
+        * docs/pluggable_protocols/img3.png:
+        * docs/pluggable_protocols/img4.png:
+        * docs/pluggable_protocols/img5.png:
+        * docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/pluggable_protocols.css
 
-	  Added detailed pluggable protocol framework documentation.
+          Added detailed pluggable protocol framework documentation.
 
-	* docs/pluggable.html:
+        * docs/pluggable.html:
 
-	  Merged this documentation into the new pluggable protocols
-	  documentation, and removed this file.
+          Merged this documentation into the new pluggable protocols
+          documentation, and removed this file.
 
-	* tao/Profile.cpp:
-	* tao/Profile.h:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/UIOP_Profile.h:
-	* tao/UIOP_Profile.i:
-	* tao/IIOP_Connector.cpp:
-	* tao/UIOP_Connector.cpp:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.i:
+        * tao/IIOP_Connector.cpp:
+        * tao/UIOP_Connector.cpp:
 
-	  Changed "get_object_key_delimiter" method name to
-	  "object_key_delimiter" to match coding style used for pluggable
-	  protocols framework.  Similarly, the "object_key_delimiter"
-	  static string variable was changed to "object_key_delimiter_."
+          Changed "get_object_key_delimiter" method name to
+          "object_key_delimiter" to match coding style used for pluggable
+          protocols framework.  Similarly, the "object_key_delimiter"
+          static string variable was changed to "object_key_delimiter_."
 
-	  Made object_key_delimiter() method non-inline.  There is no
-	  point in inlining virtual methods.
+          Made object_key_delimiter() method non-inline.  There is no
+          point in inlining virtual methods.
 
-	  There is no point in returning a "const char" object key
-	  delimiter since it isn't possible to modify the original one
-	  (i.e. the returned value is not a reference or a pointer).  A
-	  "char" return value will do.
+          There is no point in returning a "const char" object key
+          delimiter since it isn't possible to modify the original one
+          (i.e. the returned value is not a reference or a pointer).  A
+          "char" return value will do.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
-	* tao/POA.cpp (key_to_object, imr_notify_startup):
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+        * tao/POA.cpp (key_to_object, imr_notify_startup):
 
-	  Changed use of get_object_key_delimiter() to
-	  object_key_delimiter().
+          Changed use of get_object_key_delimiter() to
+          object_key_delimiter().
 
-	* tao/POA.cpp (destroy_i):
+        * tao/POA.cpp (destroy_i):
 
-	  Fixed warning about better conversion operator.
+          Fixed warning about better conversion operator.
 
-	* tao/ImplRepoC.h:
+        * tao/ImplRepoC.h:
 
-	  Moved inclusion of "ace/streams.h" after "tao/corbafwd.h."
-	  "ace/streams.h" is included only if
-	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is defined but since
-	  ace/streams.h was the first file included there was no way to
-	  tell if ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION was defined.
+          Moved inclusion of "ace/streams.h" after "tao/corbafwd.h."
+          "ace/streams.h" is included only if
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is defined but since
+          ace/streams.h was the first file included there was no way to
+          tell if ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION was defined.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Dec 16 14:31:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ImplRepoC.h: Propagated the change
-	  "Wed Dec 15 19:00:00 1999  Kirthika Parameswaran
-	  <kirthika@cs.wustl.edu>"
-	  to the file. Apparently the files were generated before the
-	  change. This should hopefully fix the Single threaded build
-	  problem.
+        * tao/ImplRepoC.h: Propagated the change
+          "Wed Dec 15 19:00:00 1999  Kirthika Parameswaran
+          <kirthika@cs.wustl.edu>"
+          to the file. Apparently the files were generated before the
+          change. This should hopefully fix the Single threaded build
+          problem.
 
 Thu Dec 16 02:24:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/test.idl:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.h:
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test.idl:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.h:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
 
-	  Distinguished between work based operations and payload based
-	  operations.
+          Distinguished between work based operations and payload based
+          operations.
 
 Thu Dec 16 02:23:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
 
-	  - Removed flush_queue().
-	  - Combined reliable_test() and buffered_test() into oneway_test().
-	  - Server IOR can now be specified on the command line.
-	  - Removed use of magic constants.
-	  - factored out RT setting code.
-	  - Remove extra globals.
-	  - Simplified and cleaned up a bunch of small things.
+          - Removed flush_queue().
+          - Combined reliable_test() and buffered_test() into oneway_test().
+          - Server IOR can now be specified on the command line.
+          - Removed use of magic constants.
+          - factored out RT setting code.
+          - Remove extra globals.
+          - Simplified and cleaned up a bunch of small things.
 
-	* examples/POA/Explicit_Activation/server.cpp: Added parse_args
-	  and factored out RT setting code.
+        * examples/POA/Explicit_Activation/server.cpp: Added parse_args
+          and factored out RT setting code.
 
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp (oneway_op
-	  and twoway_op): Added calls to ACE::is_prime().  This will make
-	  sure to eat some CPU.  The empty "for" loops would probably have
-	  been removed by an optimizing compiler.
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp (oneway_op
+          and twoway_op): Added calls to ACE::is_prime().  This will make
+          sure to eat some CPU.  The empty "for" loops would probably have
+          been removed by an optimizing compiler.
 
 Wed Dec 15 22:15:09 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -223,9 +230,9 @@ Wed Dec 15 22:15:09 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Dec 15 20:21:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Collocation/Diamond_i.h:
-	* tests/Collocation/Diamond_i.cpp: Replaced CORBA::String with
-	  char*.
+        * tests/Collocation/Diamond_i.h:
+        * tests/Collocation/Diamond_i.cpp: Replaced CORBA::String with
+          char*.
 
 Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -391,222 +398,222 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Dec 15 19:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
-	(visit_interface): Changed ACE_Recurisive_Thread_Mutex to
-	ACE_SYNCH_RECURSIVE_MUTEX to take care of single-threaded case
-	too. Thanks to Jeff Parsons <parsons@cs.wustl.edu> for pointing it
-	out.
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
+        (visit_interface): Changed ACE_Recurisive_Thread_Mutex to
+        ACE_SYNCH_RECURSIVE_MUTEX to take care of single-threaded case
+        too. Thanks to Jeff Parsons <parsons@cs.wustl.edu> for pointing it
+        out.
 
 Tue Dec 14 20:22:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Factory.h:
-	* tao/Pluggable.h:
-	* tao/Profile.h:
-	* tao/Protocol_Factory.h:
-	* tao/UIOP_Factory.cpp:
-	* tao/UIOP_Factory.h:
+        * tao/IIOP_Factory.h:
+        * tao/Pluggable.h:
+        * tao/Profile.h:
+        * tao/Protocol_Factory.h:
+        * tao/UIOP_Factory.cpp:
+        * tao/UIOP_Factory.h:
 
-	  Cosmetic updates, spelling corrections, etc.
+          Cosmetic updates, spelling corrections, etc.
 
 Tue Dec 14 13:51:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* utils/nslist/nslist.dsp: Fixed the release build settings.
-	  Thanks to Mike Vitalo <mvitalo@sprynet.com> for reporting this.
+        * utils/nslist/nslist.dsp: Fixed the release build settings.
+          Thanks to Mike Vitalo <mvitalo@sprynet.com> for reporting this.
 
 Tue Dec 14 09:40:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/IOR-parser/ior-handler.h: Changed "class IOR" to
-	  "struct IOR" to make MSVC++ happy.  Thanks to Mike Vitalo
- 	  <mvitalo@infoglide.com> for reporting this.
+        * utils/IOR-parser/ior-handler.h: Changed "class IOR" to
+          "struct IOR" to make MSVC++ happy.  Thanks to Mike Vitalo
+          <mvitalo@infoglide.com> for reporting this.
 
 Mon Dec 13 16:21:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	  Fixed typo in ACE_Debug message.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          Fixed typo in ACE_Debug message.
 
 Mon Dec 13 13:50:13 1999  Krishnakumar Elakkara Pathayapura  <krish@danzon.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	  fixed template instantiation
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+          fixed template instantiation
 
 Mon Dec 13 11:36:11 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
 
-	  Changed use of TAO_AcceptorSetItor to TAO_AcceptorSetIterator.
-	  Thanks to Bala for pointing this out.
+          Changed use of TAO_AcceptorSetItor to TAO_AcceptorSetIterator.
+          Thanks to Bala for pointing this out.
 
 Mon Dec 13 04:52:37 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
-	  added these files for the Notification Service implementation.
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.{h,cpp}:
-	  added these helper classes for writing structured events consumers
-	  and suppliers for the Notification Service.
-	* orbsvcs/Notify/Notify_Service.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
+          added these files for the Notification Service implementation.
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.{h,cpp}:
+          added these helper classes for writing structured events consumers
+          and suppliers for the Notification Service.
+        * orbsvcs/Notify/Notify_Service.{h,cpp}:
           - Added this file for the Notification Service front end process.
-	  - Resisters the CosNotifyChannelAdmin::EventChannelFactory object as
-	    "NotifyEventChannelFactory" with the Naming Service.
+          - Resisters the CosNotifyChannelAdmin::EventChannelFactory object as
+            "NotifyEventChannelFactory" with the Naming Service.
         * orbscvs/examples/Notify/Filter/Filter.{h,cpp}:
-	* orbscvs/examples/Notify/Filter/main.cpp:
-	* orbscvs/examples/Notify/Filter/README:
-	  An example to show how to do write a client for Notify and how
-	  to do filtering.
+        * orbscvs/examples/Notify/Filter/main.cpp:
+        * orbscvs/examples/Notify/Filter/README:
+          An example to show how to do write a client for Notify and how
+          to do filtering.
 
 Sun Dec 12 20:07:03 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* orbsvcs/examples/Log/test/Makefile:
-	* orbsvcs/examples/Log/test/BasicLog_Test.cpp
-	* orbsvcs/examples/Log/test/BasicLog_Test.h:
-	* orbsvcs/examples/Log/test/client.cpp:
-	Additional tests for the logging service. Thanks to
-	keith brown <kalbrown@ix.netcom.com> for sending them
-	in.
+        * orbsvcs/examples/Log/test/Makefile:
+        * orbsvcs/examples/Log/test/BasicLog_Test.cpp
+        * orbsvcs/examples/Log/test/BasicLog_Test.h:
+        * orbsvcs/examples/Log/test/client.cpp:
+        Additional tests for the logging service. Thanks to
+        keith brown <kalbrown@ix.netcom.com> for sending them
+        in.
 
 Sun Dec 12 18:00:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Added missing ACE_CHECK_RETURN call after call to
-	  ACE_NEW_THROW_EX.
+          Added missing ACE_CHECK_RETURN call after call to
+          ACE_NEW_THROW_EX.
 
 Sun Dec 12 15:32:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/params.h:
-	* tao/params.i:
-	* tao/params.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
 
-	  Changed endpoint container to ACE_Unbounded_Queue to allow
-	  -ORBEndpoint command line options such as the following to work
-	  as expected:
-		-ORBEndpoint 'iiop://;iiop://'
-	  This change will allow multiple default endpoints to be created
-	  easily.  [Bug 369]
+          Changed endpoint container to ACE_Unbounded_Queue to allow
+          -ORBEndpoint command line options such as the following to work
+          as expected:
+                -ORBEndpoint 'iiop://;iiop://'
+          This change will allow multiple default endpoints to be created
+          easily.  [Bug 369]
 
-	  Note that this change does not increase TAO's footprint because
-	  an ACE_Unbounded_Queue of the same type already exists in ACE.
+          Note that this change does not increase TAO's footprint because
+          an ACE_Unbounded_Queue of the same type already exists in ACE.
 
-	* tao/Acceptor_Registy.h:
-	* tao/Acceptor_Registy.i:
-	* tao/Acceptor_Registy.cpp:
-	* tao/Connector_Registry.h:
-	* tao/Connector_Registry.cpp:
+        * tao/Acceptor_Registy.h:
+        * tao/Acceptor_Registy.i:
+        * tao/Acceptor_Registy.cpp:
+        * tao/Connector_Registry.h:
+        * tao/Connector_Registry.cpp:
 
-	  Changed underlying TAO_Acceptor and TAO_Connector container from
-	  an ACE_Unbounded_Set to a simple array.  These changes reduce
-	  the pluggable protocol framework footprint because a total of
-	  six container related template instantiations were removed in
-	  the process.
+          Changed underlying TAO_Acceptor and TAO_Connector container from
+          an ACE_Unbounded_Set to a simple array.  These changes reduce
+          the pluggable protocol framework footprint because a total of
+          six container related template instantiations were removed in
+          the process.
 
-	  Removed included headers that weren't needed for anything.
+          Removed included headers that weren't needed for anything.
 
-	* tao/Connector_Registry.i:
+        * tao/Connector_Registry.i:
 
-	  Added this file.  It contains the same iterator style begin/end
-	  methods that the TAO_Acceptor_Registry uses.
+          Added this file.  It contains the same iterator style begin/end
+          methods that the TAO_Acceptor_Registry uses.
 
-	* tao/Pool_Per_Endpoint.cpp (run):
-	* orbsvcs/orbsvcs/IR_Helper.cpp (notify_startup):
+        * tao/Pool_Per_Endpoint.cpp (run):
+        * orbsvcs/orbsvcs/IR_Helper.cpp (notify_startup):
 
-	  The acceptor set iterator typedef in `tao/Acceptor_Registry.h'
-	  was changed to "TAO_AcceptorSetIterator."
+          The acceptor set iterator typedef in `tao/Acceptor_Registry.h'
+          was changed to "TAO_AcceptorSetIterator."
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* tao/Makefile.am (INLINE_FILES):
+        * tao/Makefile.am (INLINE_FILES):
 
-	  Added Connector_Registry.i to the list of inline files.
+          Added Connector_Registry.i to the list of inline files.
 
 Sat Dec 12 15:15:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/append.cpp:
-	* tao/Any.cpp:
-	* tao/CDR_Interpreter.cpp:
-	* tao/Connector_Registry.cpp:
-	* tao/decode.cpp:
-	* tao/deep_free.cpp:
-	* tao/default_client.cpp:
-	* tao/default_resource.cpp:
-	* tao/default_server.cpp:
-	* tao/DomainS.cpp:
-	* tao/decode.cpp:
-	* tao/Environment.cpp:
-	* tao/Exception.cpp:
-	* tao/GIOP.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Connect.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Invocation.cpp:
-	* tao/MessagingS_T.i:
-	* tao/NVList.cpp:
-	* tao/Operation_Table.cpp:
-	* tao/Object.cpp:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/Pluggable.cpp:
-	* tao/POA.cpp:
-	* tao/POAS.cpp:
-	* tao/Pool_Per_Endpoint.cpp:
-	* tao/Reactor_Per_Priority.cpp:
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Request.cpp:
-	* tao/Servant_Base.cpp:
-	* tao/skip.cpp:
-	* tao/Stub.cpp:
-	* tao/Stub.i:
-	* tao/TAO.cpp:
-	* tao/Transport_Mux_Strategy:
-	* tao/Typecode.cpp:
-	* tao/Valuebase.cpp:
-	* tao/Wait_Strategy.cpp:
-	  Added ASYS_TEXT macros to make the statements WCHAR compliant.
-	  Also replaced naked 'assert' calls with ACE_ASSERT macros.
-	* tao/tao_ce.{dsp, dsw}:
-	  Added the WinCE workspace for tao.
+        * tao/Acceptor_Registry.cpp:
+        * tao/append.cpp:
+        * tao/Any.cpp:
+        * tao/CDR_Interpreter.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        * tao/DomainS.cpp:
+        * tao/decode.cpp:
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/GIOP.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connect.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/MessagingS_T.i:
+        * tao/NVList.cpp:
+        * tao/Operation_Table.cpp:
+        * tao/Object.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Pluggable.cpp:
+        * tao/POA.cpp:
+        * tao/POAS.cpp:
+        * tao/Pool_Per_Endpoint.cpp:
+        * tao/Reactor_Per_Priority.cpp:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Request.cpp:
+        * tao/Servant_Base.cpp:
+        * tao/skip.cpp:
+        * tao/Stub.cpp:
+        * tao/Stub.i:
+        * tao/TAO.cpp:
+        * tao/Transport_Mux_Strategy:
+        * tao/Typecode.cpp:
+        * tao/Valuebase.cpp:
+        * tao/Wait_Strategy.cpp:
+          Added ASYS_TEXT macros to make the statements WCHAR compliant.
+          Also replaced naked 'assert' calls with ACE_ASSERT macros.
+        * tao/tao_ce.{dsp, dsw}:
+          Added the WinCE workspace for tao.
 
 Sat Dec 11 21:34:40 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	  Fixed the template instantiation.
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+          Fixed the template instantiation.
 
 Sat Dec 11 18:56:24 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Removed possibly
-	  uninitialized variable use from display_server_information ().
+        * orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Removed possibly
+          uninitialized variable use from display_server_information ().
 
 Sat Dec 11 14:33:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
           Added template instantiations for ACE_Hash and ACE_Equal_To
 
 Sat Dec 11 14:31:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile.am (pkginclude_HEADERS):
+        * tao/Makefile.am (pkginclude_HEADERS):
 
-	  Split header file list into `.h' files (HEADER_FILES) and `.i'
-	  (INLINE_FILES).  This gets around a limitation on Solaris.
+          Split header file list into `.h' files (HEADER_FILES) and `.i'
+          (INLINE_FILES).  This gets around a limitation on Solaris.
 
 Sat Dec 11 10:15:42 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Changed -ORBDebug flag to not
-	  eat following argument.  Thanks to Mark L Boriack
- 	  <mboriack@std.saic.com> for reporting this.
+        * tao/ORB_Core.cpp (init): Changed -ORBDebug flag to not
+          eat following argument.  Thanks to Mark L Boriack
+          <mboriack@std.saic.com> for reporting this.
 
-	  -ORBDaemon, -ORBSkipServiceConfigOpen, -ORBGIOPLite to follow
- 	  similar behavior. In the past, these flags would accept 'longer'
- 	  names ... but by their nature, they should never be longer. The
- 	  flags following this group may have their arguments immediately
- 	  following, but not this group.
+          -ORBDaemon, -ORBSkipServiceConfigOpen, -ORBGIOPLite to follow
+          similar behavior. In the past, these flags would accept 'longer'
+          names ... but by their nature, they should never be longer. The
+          flags following this group may have their arguments immediately
+          following, but not this group.
 
 Sat Dec 11 00:08:50 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -619,34 +626,34 @@ Sat Dec 11 00:08:50 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Dec 10 15:33:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs: Added the new pluggable.html document that explains
-	  how to write pluggable protocols for TAO.  Thanks to Bruce Trask
- 	  <btrask@contactsystems.com> for contributing this.
+        * docs: Added the new pluggable.html document that explains
+          how to write pluggable protocols for TAO.  Thanks to Bruce Trask
+          <btrask@contactsystems.com> for contributing this.
 
 Fri Dec 10 16:13:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.h.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test.idl:
-	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
-	* performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
-	* performance-tests/RTCorba/Oneways/Reliable/README:
-	  Added new command line argument that will control how much
-	  'work' is done by the servant. This is useful when
-	  comparing reliable oneways with twoway requests.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.h.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test.idl:
+        * performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+        * performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
+        * performance-tests/RTCorba/Oneways/Reliable/README:
+          Added new command line argument that will control how much
+          'work' is done by the servant. This is useful when
+          comparing reliable oneways with twoway requests.
 
 Fri Dec 10 14:09:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
-	  Compile settings for .idl file had been set but not
-	  checked in.
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+          Compile settings for .idl file had been set but not
+          checked in.
 
 Fri Dec 10 12:04:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html:
-	  Made several updates relating to the IDL compiler.
+        * docs/releasenotes/TODO.html:
+          Made several updates relating to the IDL compiler.
 
 Fri Dec 10 09:00:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
