@@ -18,7 +18,7 @@ Thu May  2 01:44:35 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu May  2 00:39:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Security/*/Maefile: Updated dependencies. This
+	* orbsvcs/tests/Security/*/Makefile: Updated dependencies. This
 	  should fix a lot of SunCC51 errors. 
 
 Thu May  2 00:28:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -162,7 +162,7 @@ Wed May  1 23:21:00 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Changed the includes
 	  to the new file.
-	
+
 Wed May  1 21:01:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (fini):
