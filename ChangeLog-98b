@@ -1,3 +1,22 @@
+Fri May 22 12:20:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace: Other parts of ACE were modified to use the new
+ 	  ACE_IO_Vector class.
+
+	* ace/OS.h (ACE_IO_Vector): Added a new class that inherits from
+ 	  the correct IO_Vector class provided by the platform.  
+
+	  writev() and readv() were being emulated on Win32 in ACE.  A new
+ 	  ACE_OS::writev() and ACE_OS::readv() has been added to ACE to
+ 	  that uses WSASend() and WSARecv() respectively.  However, in
+ 	  order for you to exploit these new functions, you must use
+ 	  ACE_IO_Vector instead of iovec.  The ideal situation would have
+ 	  been to totally replace iovec with ACE_IO_Vector but that would
+ 	  break too much code. So, if you keep using iovec, you will use
+ 	  the expenses and slow emulations.  If you want to use WSASend()
+ 	  and WSARecv(), switch over to ACE_IO_Vector. It will work on
+ 	  both Win32 and non-Win32 platforms.
+	
 Fri May 22 07:53:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-pthread.h: removed two

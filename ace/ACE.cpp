@@ -796,19 +796,19 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 
   va_list argp;
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector *) alloca (total_tuples * sizeof (ACE_IO_Vector));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
 
   for (size_t i = 0; i < total_tuples; i++)
     {
-      iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len  = va_arg (argp, int);
+      iovp[i].buffer (va_arg (argp, void *));
+      iovp[i].length (va_arg (argp, ssize_t));
     }
 
   ssize_t result = ACE_OS::writev (handle, iovp, total_tuples);
@@ -832,19 +832,19 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 
   va_list argp;
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector *) alloca (total_tuples * sizeof (ACE_IO_Vector));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
 
   for (size_t i = 0; i < total_tuples; i++)
     {
-      iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len  = va_arg (argp, int);
+      iovp[i].buffer (va_arg (argp, void *));
+      iovp[i].length (va_arg (argp, ssize_t));
     }
 
   ssize_t result = ACE_OS::readv (handle, iovp, total_tuples);
@@ -1239,6 +1239,64 @@ ACE::readv (ACE_HANDLE handle,
 ssize_t
 ACE::writev (ACE_HANDLE handle,
              const struct iovec *iov,
+             int iovcnt,
+             const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::writev");
+#if defined (ACE_HAS_WRITEV_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::writev (handle, iov, iovcnt);
+  else {
+     ACE_Time_Value copy = *timeout;
+     copy += ACE_OS::gettimeofday ();
+     timespec_t ts = copy;
+     return ::writev_timedwait (handle, iov, iovcnt, &ts);
+  }
+#else
+  int val;
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+     return -1;
+  else
+    {
+      ssize_t bytes_written = ACE_OS::writev (handle, iov, iovcnt);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_WRITEV_TIMEDWAIT */
+}
+
+ssize_t
+ACE::readv (ACE_HANDLE handle,
+            struct ACE_IO_Vector *iov,
+            int iovcnt,
+            const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::readv");
+#if defined (ACE_HAS_READV_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::readv (handle, iov, iovcnt);
+  else {
+     ACE_Time_Value copy = *timeout;
+     copy += ACE_OS::gettimeofday ();
+     timespec_t ts = copy;
+     return ::readv_timedwait (handle, iov, iovcnt, &ts);
+  }
+#else
+  int val;
+  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+     return -1;
+  else
+    {
+      ssize_t bytes_read = ACE_OS::readv (handle, iov, iovcnt);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_read;
+    }
+#endif /* ACE_HAS_READV_TIMEDWAIT */
+}
+
+ssize_t
+ACE::writev (ACE_HANDLE handle,
+             const struct ACE_IO_Vector *iov,
              int iovcnt,
              const ACE_Time_Value *timeout)
 {

@@ -44,6 +44,31 @@ ACE_SOCK_IO::recv (iovec *io_vec)
 #endif /* FIONREAD */
 }
 
+ssize_t
+ACE_SOCK_IO::recv (ACE_IO_Vector *io_vec)
+{
+#if defined (FIONREAD)
+  u_long inlen;
+
+  if (ACE_OS::ioctl (this->get_handle (), FIONREAD,
+                     (u_long *) &inlen) == -1)
+    return -1;
+  else if (inlen > 0)
+    {
+      char *buffer = 0;
+      ACE_NEW_RETURN (buffer, char[inlen], -1);
+      io_vec->buffer (buffer);
+      io_vec->length (this->recv (io_vec->buffer (), inlen));
+      return io_vec->length ();
+    }
+  else
+    return 0; 
+#else
+    io_vec = io_vec;
+    ACE_NOTSUP_RETURN (-1);
+#endif /* FIONREAD */
+}
+
 // Send N char *ptrs and int lengths.  Note that the char *'s precede
 // the ints (basically, an varargs version of writev).  The count N is
 // the *total* number of trailing arguments, *not* a couple of the
@@ -56,19 +81,19 @@ ACE_SOCK_IO::send (size_t n, ...) const
 
   va_list argp;  
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector *) alloca (total_tuples * sizeof (ACE_IO_Vector));
 #else 
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
 
   for (size_t i = 0; i < total_tuples; i++)
     {
-      iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len  = va_arg (argp, int);
+      iovp[i].buffer (va_arg (argp, void *));
+      iovp[i].length (va_arg (argp, ssize_t));
     }
 
   ssize_t result = ACE_OS::writev (this->get_handle (), iovp, total_tuples);
@@ -92,19 +117,19 @@ ACE_SOCK_IO::recv (size_t n, ...) const
 
   va_list argp;  
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector *) alloca (total_tuples * sizeof (ACE_IO_Vector));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
 
   for (size_t i = 0; i < total_tuples; i++)
     {
-      iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len  = va_arg (argp, int);
+      iovp[i].buffer (va_arg (argp, void *));
+      iovp[i].length (va_arg (argp, ssize_t));
     }
 
   ssize_t result = ACE_OS::readv (this->get_handle (), iovp, total_tuples);
