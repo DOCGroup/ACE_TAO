@@ -259,6 +259,7 @@ TAO/tests/AMI/ami_test.dsw, AMI_Test_Simple_Client:
 TAO/tests/Timeout/Timeout.dsw, Timeout Server:
 TAO/tests/Timeout/Timeout.dsw, Timeout Client:
 TAO/tests/Policies/Policies.dsw, Manipulation:
+TAO/tests/RTCORBA/RTMutex/RTMutex.dsw, RTMutex Server:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Server:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Client:
 TAO/tests/Smart_Proxies/Smart_Proxies.dsw, server:
@@ -479,6 +480,7 @@ TAO/tests/Faults/Faults.dsw, Faults Pong:
 TAO/tests/AMI/ami_test.dsw, AMI_Test_Server:
 TAO/tests/AMI/ami_test.dsw, AMI_Test_Client:
 TAO/tests/AMI/ami_test.dsw, AMI_Test_Simple_Client:
+TAO/tests/RTCORBA/RTMutex/RTMutex.dsw, RTMutex Server:
 TAO/tests/Timeout/Timeout.dsw, Timeout Server:
 TAO/tests/Timeout/Timeout.dsw, Timeout Client:
 TAO/tests/Policies/Policies.dsw, Manipulation:
@@ -751,3 +753,8 @@ if ( $Build_LIB )
 }
 
 print "End\n";
+
+
+
+
+
