@@ -54,14 +54,15 @@ main (int argc, char **argv)
     // Check if we are running the test with collocation optimization enabled.
     {
       test_collocation = 1;
-      ACE_DEBUG ((LM_DEBUG, "Using collocation optimization\n"));
+      ACE_DEBUG ((LM_DEBUG, "%s: Using collocation optimization\n", argv[0]));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "Not using collocation optimization\n"));
+    ACE_DEBUG ((LM_DEBUG, "%s: Not using collocation optimization\n", argv[0]));
 
-  Cubit_Client cubit_client (test_collocation);
+  Cubit_Client cubit_client (test_collocation, 1);
   // We want to test collocation, so create
-  // cubit_client with parameter 1 set.
+  // cubit_client with parameter 1 set.  Make sure
+  // the server shuts itself down afterward.
 
   CORBA::Environment env;
   ACE_Barrier barrier (2);
