@@ -1,3 +1,10 @@
+Fri Aug 23 07:16:13 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+
+          Fixed a problem where the pch header files is not in the list of
+          header files.
+
 Fri Aug 23 06:07:38 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/OS.h (ACE_OS):
