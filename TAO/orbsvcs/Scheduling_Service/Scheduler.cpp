@@ -259,6 +259,8 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
                                        ACE_Thread_Mutex>;
   template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
                                   ACE_Thread_Mutex>;
+  template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
+                                  ACE_Thread_Mutex>;
   template class ACE_Read_Guard<ACE_Thread_Mutex>;
   template class ACE_Write_Guard<ACE_Thread_Mutex>;
 #else
@@ -267,6 +269,8 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
   template class ACE_Map_Iterator_Base<ACE_CString, RT_Info **,
                                        ACE_Null_Mutex>;
   template class ACE_Map_Iterator<ACE_CString, RT_Info **,
+                                  ACE_Null_Mutex>;
+  template class ACE_Map_Reverse_Iterator<ACE_CString, RT_Info **,
                                   ACE_Null_Mutex>;
   template class ACE_Read_Guard<ACE_Null_Mutex>;
   template class ACE_Write_Guard<ACE_Null_Mutex>;
@@ -282,12 +286,14 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 #pragma instantiate class ACE_Map_Manager<ACE_CString, RT_Info **, ACE_Thread_Mutex>
 #pragma instantiate class ACE_Map_Iterator_Base<ACE_CString, RT_Info **, ACE_Thread_Mutex>
 #pragma instantiate class ACE_Map_Iterator<ACE_CString, RT_Info **, ACE_Thread_Mutex>
+#pragma instantiate class ACE_Map_Reverse_Iterator<ACE_CString, RT_Info **, ACE_Thread_Mutex>
 #pragma instantiate class ACE_Read_Guard<ACE_Thread_Mutex>
 #pragma instantiate class ACE_Write_Guard<ACE_Thread_Mutex>
 #else
 #pragma instantiate class ACE_Map_Manager<ACE_CString, RT_Info **, ACE_Null_Mutex>
 #pragma instantiate class ACE_Map_Iterator_Base<ACE_CString, RT_Info **, ACE_Null_Mutex>
 #pragma instantiate class ACE_Map_Iterator<ACE_CString, RT_Info **, ACE_Null_Mutex>
+#pragma instantiate class ACE_Map_Reverse_Iterator<ACE_CString, RT_Info **, ACE_Null_Mutex>
 #pragma instantiate class ACE_Read_Guard<ACE_Null_Mutex>
 #pragma instantiate class ACE_Write_Guard<ACE_Null_Mutex>
 #endif /* ACE_HAS_THREADS */
