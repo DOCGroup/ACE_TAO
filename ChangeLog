@@ -1,3 +1,11 @@
+Tue Mar 16 09:40:36 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          When adjusting template values, based on the -value_template
+          option, we must deal with them as arrays to maintain spaces within
+          individual values.
+
 Tue Mar 16 07:55:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:

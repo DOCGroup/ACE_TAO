@@ -149,9 +149,13 @@ sub adjust_value {
   ## or overrides for the template values.
   if (defined $self->{'addtemp'}->{$name}) {
     my($val) = $self->{'addtemp'}->{$name};
+    my($arr) = $self->create_array($$val[1]);
     if ($$val[0] > 0) {
       if (UNIVERSAL::isa($value, 'ARRAY')) {
-        push(@$value, $$val[1]);
+        ## We need to make $value a new array reference ($arr)
+        ## to avoid modifying the array reference pointed to by $value
+        unshift(@$arr, @$value);
+        $value = $arr;
       }
       else {
         $value .= " $$val[1]";
@@ -168,13 +172,22 @@ sub adjust_value {
 
       $value = [];
       foreach my $part (@$parts) {
-        if ($part ne $$val[1] && $part ne '') {
-          push(@$value, $part);
+        if ($part ne '') {
+          my($found) = 0;
+          foreach my $ae (@$arr) {
+            if ($part eq $ae) {
+              $found = 1;
+              last;
+            }
+          }
+          if (!$found) {
+            push(@$value, $part);
+          }
         }
       }
     }
     else {
-      $value = [ $$val[1] ];
+      $value = $arr;
     }
   }
 
