@@ -129,6 +129,8 @@ public:
   ACE_Log_Msg (void);
   // Initialize logger.
 
+  ~ACE_Log_Msg (void);
+
   int open (const char *prog_name, 
 	    u_long options_flags = ACE_Log_Msg::STDERR, 
 	    LPCTSTR logger_key = 0);
