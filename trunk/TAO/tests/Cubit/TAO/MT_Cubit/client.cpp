@@ -749,6 +749,15 @@ main (int argc, char *argv[])
 
   Task_State ts (argc, argv);
 
+  // preliminary argument processing
+  for (int i=0 ; i< argc; i++)
+    {
+      if ((ACE_OS::strcmp (argv[i],"-r") == 0))
+        ts.thread_per_rate_ = 1;
+      else if ((ACE_OS::strcmp (argv[i],"-t") == 0) && (i-1 < argc))
+        ts.thread_count_ = ACE_OS::atoi (argv[i+1]);
+    }
+
 #if defined (CHORUS)
   // start the pccTimer for chorus classix
   int pTime;
