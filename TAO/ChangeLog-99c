@@ -1,3 +1,20 @@
+Thu Feb 25 20:19:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+
+	Modified these files so that they will compile if ACE was built
+	without thread support by changing ACE_MT_SYNCH macros to
+	ACE_SYNCH and by using the ACE_SYNCH_SEMAPHORE macro instead of
+	ACE_Thread_Semaphore.  Thanks to Doug for suggesting the ACE_SYNCH
+	changes.
+
+	ACE_Condition in Task_Client.h for the unthreaded case will be
+	dealt with soon.
+
 Thu Feb 25 18:16:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
@@ -21,7 +38,7 @@ Thu Feb 25 15:53:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TAO_IDL/be
 	  TAO_IDL/driver
 	Changed the TAO_TRY macros with ACE_TRY macros in the
-	IDl generated stubs and skeletons
+	IDL generated stubs and skeletons
 
 Thu Feb 25 15:35:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
