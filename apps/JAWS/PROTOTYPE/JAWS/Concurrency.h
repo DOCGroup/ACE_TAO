@@ -14,7 +14,7 @@
 class JAWS_Data_Block;
 class JAWS_Dispatch_Policy;
 
-class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
+class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
   //     Base class for different concurrency models
   //
@@ -49,7 +49,7 @@ protected:
   ACE_SYNCH_MUTEX lock_;
 };
 
-class JAWS_Dispatcher
+class JAWS_Export JAWS_Dispatcher
   // = TITLE
   //     The class that is responsible to delivering events to the
   //     appropriate concurrency mechanism.
@@ -69,7 +69,7 @@ private:
   JAWS_Dispatch_Policy *policy_;
 };
 
-class JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
+class JAWS_Export JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
   // = TITLE
   //     Used to implement Thread Pool Concurrency Strategy
   //
@@ -88,7 +88,7 @@ private:
   int maxthreads_;
 };
 
-class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
+class JAWS_Export JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
   // = TITLE
   //     Used to implement Thread Per Request Concurrency Strategy
   //

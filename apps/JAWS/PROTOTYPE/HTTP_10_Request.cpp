@@ -81,7 +81,7 @@ JAWS_HTTP_10_Request::parse_request_line (char *request_line)
   *ptr = '\0';
   ptr += offset;
 
-  char *lasts; // for strtok_r
+  char *lasts = 0; // for strtok_r
 
   // Get the request type.
   this->got_request_line_ = 1;
