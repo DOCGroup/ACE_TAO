@@ -19,24 +19,32 @@
 int
 main (int argc, char* argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "NestedUpcall server starting\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "NestedUpcall server starting\n"));
 
   TAO_TRY
     {
+      // @@ Chris, can you please try to replace most of this boiler
+      // plate code with the TAO_Object_Manager stuff that Sumedh has
+      // devised?  If we need to generalize his implementation to
+      // handle some of the things you do (e.g., create a special
+      // POAManager) please let me know.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "server", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Initialize the object adapter
+      // Initialize the object adapter.
       CORBA::Object_var poa_object =
 	orb->resolve_initial_references("RootPOA");
+
       if (CORBA::is_nil (poa_object.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);
 
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
+	PortableServer::POA::_narrow (poa_object.in(),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
@@ -80,9 +88,11 @@ main (int argc, char* argv[])
         orb->object_to_string (reactor.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) The reactor IOR is <%s>\n", str.in()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) The reactor IOR is <%s>\n",
+                  str.in ()));
       
-      // Run the server now
+      // Run the server now.
       orb->run ();
     }
   TAO_CATCHANY
