@@ -1,3 +1,7 @@
+Tue Apr 14 00:46:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.40 released.
+
 Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Made the destructor of ACE_Thread_Adapter private to
