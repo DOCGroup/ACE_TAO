@@ -56,6 +56,7 @@ Command_Handler::init (void)
 int
 Command_Handler::resolve_video_reference (void)
 {
+  /*
   TAO_TRY
     {
       CORBA::Object_var naming_obj =
@@ -72,6 +73,7 @@ Command_Handler::resolve_video_reference (void)
       CosNaming::Name Video_Control_name (1);
 
       Video_Control_name.length (1);
+      Video_Control_name [0].id = CORBA::string_dup ("Video_Control");
       Video_Control_name [0].id = CORBA::string_dup ("Video_Control");
       CORBA::Object_var Video_Control_obj =
         naming_context->resolve (Video_Control_name,
@@ -94,7 +96,46 @@ Command_Handler::resolve_video_reference (void)
       return -1;
     }
   TAO_ENDTRY;
+  */
+  TAO_TRY
+    {
+      CORBA::Object_var naming_obj =
+        this->orb_manager_->orb ()->resolve_initial_references ("NameService");
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          -1);
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
+      CosNaming::Name video_mmdevice_name (1);
+
+      video_mmdevice_name.length (1);
+      video_mmdevice_name [0].id = CORBA::string_dup ("Video_MMDevice");
+      CORBA::Object_var video_mmdevice_obj =
+        naming_context->resolve (video_mmdevice_name,
+                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->video_mmdevice_ =
+        AVStreams::MMDevice::_narrow (video_mmdevice_obj.in (),
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (CORBA::is_nil (this->video_mmdevice_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve Video_Mmdevice in Naming service <%s>\n"),
+                          -1);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Command_Handler::resolve_video_reference");
+      return -1;
+    }
+  TAO_ENDTRY;
+  
   return 0;
 }
 
@@ -1546,6 +1587,9 @@ Command_Handler::connect_to_video_server (char *address,
                        "(%P|%t) command_handler: resolve_video_reference returned -1"),
                        -1);
 
+  return 0;
+  // ~~Short cut to just find the mmdevice from the Naming service.
+
   CORBA::UShort server_port;
   ACE_INET_Addr local_addr;
   CORBA::String client_address_string;
@@ -2468,3 +2512,74 @@ Client_Sig_Handler::TimerProcessing (void)
   }
   //  cerr << "Timerprocessing signal-handler done\n";
 }
+
+int
+Video_Client_StreamEndPoint::handle_preconnect (void)
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
+  CORBA::UShort server_port;
+  ACE_INET_Addr local_addr;
+  CORBA::String client_address_string;
+  
+  ACE_NEW_RETURN (client_address_string,
+                  char [BUFSIZ],
+                  -1);
+  // Get the local UDP address
+  if (this->dgram_.open (ACE_Addr::sap_any) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram open failed %p"),-1);
+
+      // set the socket buffer sizes to 64k.
+  int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+
+  if (this->dgram_.set_option (SOL_SOCKET,
+                               SO_SNDBUF,
+                               (void *) &sndbufsize,
+                               sizeof (sndbufsize)) == -1
+      && errno != ENOTSUP)
+    return -1;
+  else if (this->dgram_.set_option (SOL_SOCKET,
+                                    SO_RCVBUF,
+                                    (void *) &rcvbufsize,
+                                    sizeof (rcvbufsize)) == -1
+           && errno != ENOTSUP)
+    return -1;
+
+  if (this->dgram_.get_local_addr (local_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),-1);
+  // form a string 
+  ::sprintf (client_address_string,
+             "%s:%d",
+             local_addr.get_host_name (),
+             local_addr.get_port_number ());
+      
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Client string is %s\n",
+              client_address_string));
+  return 0;
+}
+
+int
+Video_Client_StreamEndPoint::handle_postconnect (void)
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
+  return 0;
+}
+
+CORBA::Boolean
+Video_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
+                                      AVStreams::streamQoS &qos_spec, 
+                                      const AVStreams::flowSpec &the_spec,  
+                                      CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Client_StreamEndPoint::connect () \n"));
+  this->handle_preconnect ();
+  responder->request_connection (this->_this (env),
+                                 0,
+                                 qos_spec,
+                                 the_spec,
+                                 env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
+  this->handle_postconnect ();
+}
+

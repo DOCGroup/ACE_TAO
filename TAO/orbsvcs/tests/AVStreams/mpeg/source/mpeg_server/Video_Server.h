@@ -43,6 +43,7 @@
 #include "mpeg_server/Video_Control_State.h"
 #include "mpeg_server/Globals.h"
 #include "mpeg_server/Video_Control_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 
 class Video_Control_i;
 
@@ -111,6 +112,38 @@ private:
   
 };
 
+// The stream endpoint
+class Video_Server_StreamEndPoint :
+  public virtual TAO_Server_StreamEndPoint
+{
+public:
+  virtual int handle_open (void) ;
+  // called when streamendpoint is instantiated
+
+  virtual int handle_close (void) ;
+  // called when streamendpoint is being destructed
+
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env) ;
+  // Application needs to define this
+  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+                             CORBA::Environment &env) ;
+  // Application needs to define this
+
+  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+                               CORBA::Environment &env) ;
+  // Application needs to define this
+
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
+                                                      CORBA::Environment &env) ;
+
+private:
+  ACE_SOCK_CODgram dgram_;
+  
+};
+
 class Video_Server
 {
   // = TITLE
@@ -148,7 +181,12 @@ private:
   // and in the naming service
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
+  
+  TAO_VDev *video_vdev_;
+  // The video device
 
+  Video_Server_StreamEndPoint *video_streamendpoint_;
+  // The video server stream endpoint.
 };
 
 #endif /* MPEG_VIDEO_SERVER_H */
