@@ -52,7 +52,7 @@ public:
   int run ();
   // Execute client example code.
 
-  int init (int argc, char **argv, char *collocation_test_ior = 0);
+  int init (int argc, char **argv, const char *collocation_test_ior = 0);
   // Initialize the client communication endpoint with server.
   // <collocation_test_ior> is used to pass in the ior file name.
 
@@ -61,7 +61,7 @@ private:
   // Simple function that returns the substraction of 117 from the
   // parameter.
 
-  int read_ior (char *filename);
+  int read_ior (const char *filename);
   // Function to read the cubit factory ior from a file.
 
   int parse_args (void);

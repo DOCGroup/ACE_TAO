@@ -15,11 +15,15 @@ svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
-  char *fake[] = {"server", "-o", THE_IOR_FILE };
+  const char *fake[] = {"server", "-o", THE_IOR_FILE };
 
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (3, fake, ACE_TRY_ENV) == -1)
+      if (cubit_server.init (3, 
+                             ACE_const_cast (char **, 
+                                             fake), 
+                             ACE_TRY_ENV) 
+          == -1)
         return (void *) 1;
       else
         {
