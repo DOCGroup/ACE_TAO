@@ -3309,7 +3309,7 @@ ACE::strnnew (const char *str, size_t n)
   // NUL-terminated).
 
   for (len = 0;
-       len < n && *t++ != ACE_TEXT_WIDE'\0';
+       len < n && *t++ != L'\0';
        len++)
     continue;
 
