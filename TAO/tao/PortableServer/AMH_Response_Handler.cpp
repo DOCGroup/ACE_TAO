@@ -46,10 +46,6 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
 void
 TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 {
-  // @@ Mayur: you had ACE_SYNCH_MUTEX in the header file, but
-  //    TAO_SYNCH_MUTEX on the .cpp file, careful with that stuff!
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-
   if (this->reply_status_ != TAO_RS_UNINITIALIZED)
   {
     // @@ Mayur: the comment is incorrect, you want to raise an
@@ -89,29 +85,40 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
       reply_params.reply_status_ = this->exception_type_;
     }
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\tgenerating reply header ... \n")));
-  this->mesg_base_->generate_reply_header (this->_tao_out,
-                                           reply_params);
-  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Done Initialising RH. \n")));
+  {
+    // @@ Mayur: you had ACE_SYNCH_MUTEX in the header file, but
+    //    TAO_SYNCH_MUTEX on the .cpp file, careful with that stuff!
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    
+    
+    //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\tgenerating reply header ... \n")));
+    this->mesg_base_->generate_reply_header (this->_tao_out,
+                                             reply_params);
+    //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Done Initialising RH. \n")));
 
-  // We are done initialising the reply
-  this->reply_status_ = TAO_RS_INITIALIZED;
+    // We are done initialising the reply
+    this->reply_status_ = TAO_RS_INITIALIZED;
+  }
+
 }
 
 void
 TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-  // If the reply has not been initialised, raise an exception
-  if (this->reply_status_ != TAO_RS_INITIALIZED)
-    {
-      // Raise exception ... when exceptions have been implemented, send the
-      // appropriate exception to the client
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("ERROR. Tried calling method twice  \n")));
-    }
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    
+    // If the reply has not been initialised, raise an exception
+    if (this->reply_status_ != TAO_RS_INITIALIZED)
+      {
+        // Raise exception ... when exceptions have been implemented, send the
+        // appropriate exception to the client
+        ACE_ERROR ((LM_ERROR, ACE_TEXT("ERROR. Tried calling method twice  \n")));
+      }
+    this->reply_status_ = TAO_RS_SENDING;
+  }
 
-  this->reply_status_ = TAO_RS_SENDING;
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_RH sending message ... \n")));
 
@@ -143,7 +150,10 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
         }
     }
 
-  this->reply_status_ = TAO_RS_SENT;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    this->reply_status_ = TAO_RS_SENT;
+  }
 }
 
 void
