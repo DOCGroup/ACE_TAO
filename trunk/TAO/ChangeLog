@@ -1,3 +1,16 @@
+Wed Apr 30 13:19:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+          Changed generated code so that an octet sequence in an IDL
+          file inherits from TAO_Unbounded_Sequence<CORBA::Octet>,
+          rather than from the TAO_specific CORBA::OctetSeq, as it
+          was recently changed to do. This change caused a host of
+          problems, and since CORBA::OctetSeq is a spec extension,
+          it now seems best to use it only in the TAO hand-crafted
+          files.
+
 Wed Apr 30 10:45:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
