@@ -1,4 +1,0 @@
-project(activity): namingexe, rt_server {
-  exename = activity
-}
-
