@@ -13,7 +13,7 @@ ifndef COOL_DIR
 endif # COOL_DIR
 
 ifndef MVME_DIR
-  MVME_DIR=/project/doc/mvme/mvme177/appl
+  MVME_DIR=/project/doc/mvme/mvme177/
 endif # MVME_DIR
 
 ifndef MVME_INCL
