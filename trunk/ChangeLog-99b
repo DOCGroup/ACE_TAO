@@ -1,3 +1,9 @@
+Mon May  3 18:04:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_aiocb_ace.cpp: Added this
+	file. If this test is sucessful, ACE_POSIX_AIOCB_PROACTOR could be
+	defined for a platform.
+
 Mon May 03 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.cpp: fixed bug in ACE_RB_Tree::RB_delete_fixup in which
