@@ -309,7 +309,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                   this->get () == 'd' &&
                   this->get () == 'i' &&
                   this->get () == 'n' &&
-                  this->get () == 'g' &&
+                  this->get () == 'e' &&
                   this->skip_equal () == 0 &&
                   this->get_quoted_string (astring) == 0)
                 {
