@@ -428,12 +428,6 @@ AS_IF([test "$ac_cv_header_dirent_dirent_h" = yes ||
 dnl Check for sys/wait.h Posix.1 compliance
 AC_HEADER_SYS_WAIT
 
-AS_IF([test "$ac_cv_cygwin" = yes],
-  [
-   AC_CHECK_HEADER([cygwin32/socket.h],
-                   [AC_DEFINE([ACE_HAS_CYGWIN32_SOCKET_H])],)
-  ],[])
-
 AC_CHECK_HEADER([dlfcn.h],
   [
    dnl We already checked for dlopen in the previous library checks however,
