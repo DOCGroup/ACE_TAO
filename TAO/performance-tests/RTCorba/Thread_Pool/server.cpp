@@ -77,8 +77,8 @@ static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
 static CORBA::ULong number_of_lanes = 0;
 
-static const char *bands_file = "empty_file";
-static const char *lanes_file = "empty_file";
+static const char *bands_file = "empty-file";
+static const char *lanes_file = "empty-file";
 
 int
 parse_args (int argc, char *argv[])
@@ -241,7 +241,7 @@ main (int argc, char *argv[])
                                                   ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      else if (ACE_OS::strcmp (lanes_file, "empty_file") != 0)
+      else if (ACE_OS::strcmp (lanes_file, "empty-file") != 0)
         {
           result =
             get_priority_lanes ("server",
