@@ -31,30 +31,84 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   int errors = 0;
   // For this test, the length of the ACE_Obstack must be larger than
   // both of these strings, but less than their sum.
-  const ACE_TCHAR *str1 = ACE_TEXT ("Mary had a little lamb.");
-  const ACE_TCHAR *str2 = ACE_TEXT ("It's fleece was white as snow.");
-  ACE_Obstack_T<ACE_TCHAR> stack (ACE_OS_String::strlen (str2) + 5);
+  const ACE_TCHAR str1[] = ACE_TEXT ("Mary had a little lamb.");
+  const ACE_TCHAR str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
+  ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);
 
-  // This test checks to see that if a request can't be lengthened,
-  // the first part of it doesn't get lost.
   for (size_t i = 0; i < ACE_OS_String::strlen (str1); i++)
     stack.grow_fast (str1[i]);
-  if (stack.request (ACE_OS_String::strlen (str2)) == 0) {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Request allowed but it should overflow\n")));
-    ++errors;
-  }
+
   ACE_TCHAR *str = stack.freeze ();
-  if (str == 0) {
+
+  if (str == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
+      ++errors;
+    }
+  else if (ACE_OS_String::strcmp (str, str1) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("Lost first string; expected: %s, have: %s\n"),
+                  str1, str));
+      ++errors;
+    }
+
+  for (size_t j = 0; j < ACE_OS_String::strlen (str2); ++j)
+    stack.grow (str2[j]);
+
+  ACE_TCHAR* temp = stack.freeze();
+
+  if (temp == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
+      ++errors;
+    }
+  else if (ACE_OS::strcmp (temp, str2) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("Lost second string; expected: %s, have: %s\n"),
+                  str2, temp));
+    ++errors;
+    }
+
+  for (size_t k = 0; k < ACE_OS_String::strlen (str1); ++k)
+    stack.grow (str1[k]);
+
+  ACE_TCHAR* tmp = stack.freeze ();
+  if (tmp == 0)
+    {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
     ++errors;
   }
-  else if (ACE_OS_String::strcmp (str, str1) != 0) {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Lost a string; expected: %s, have: %s\n"),
-                str1, str));
+  else if (ACE_OS_String::strcmp (tmp, str1) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Lost third string; expected: %s, have: %s\n"),
+                str1, tmp));
     ++errors;
   }
-  else
+
+  stack.unwind (temp);
+
+  for (size_t l = 0; l < ACE_OS_String::strlen (str2); ++l)
+    stack.grow (str2[l]);
+
+  temp = stack.freeze();
+
+  if (temp == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
+      ++errors;
+    }
+  else if (ACE_OS::strcmp (temp, str2) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Lost fourth string; expected: %s, have: %s\n"),
+                str2, temp));
+    ++errors;
+  }
+
+  if (!errors)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test ok\n")));
 
   ACE_END_TEST;
