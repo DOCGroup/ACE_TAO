@@ -143,6 +143,16 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "DSI_Gateway_Service - Win32 Release"
 
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl.exe -Ge 1 $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "DSI_Gateway_Service - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
