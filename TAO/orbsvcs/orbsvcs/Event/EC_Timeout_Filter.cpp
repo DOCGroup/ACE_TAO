@@ -14,22 +14,39 @@ ACE_RCSID(Event, EC_Timeout_Filter, "$Id$")
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel *event_channel,
       const TAO_EC_QOS_Info& qos_info,
+      RtecEventComm::EventType type,
       RtecEventComm::Time period)
   : event_channel_ (event_channel),
-    qos_info_ (qos_info)
+    qos_info_ (qos_info),
+    type_ (type)
 {
   ACE_Time_Value tv_delta;
   ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, period);
 
-  ACE_Time_Value tv_interval;
-  ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, period);
-
   TAO_EC_Timeout_Generator *tg =
     this->event_channel_->timeout_generator ();
-  this->id_ =
-    tg->schedule_timer (this,
-                        tv_delta,
-                        tv_interval);
+
+  if (type == ACE_ES_EVENT_INTERVAL_TIMEOUT)
+    {
+      ACE_Time_Value tv_interval;
+      ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, period);
+
+      this->id_ =
+        tg->schedule_timer (this,
+                            tv_delta,
+                            tv_interval);
+    }
+  else
+    {
+      this->id_ =
+        tg->schedule_timer (this,
+                            tv_delta);
+    }
+
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "EC_Timeout_Filter - interval = %d:%d, ID = %d\n",
+  //              tv_interval.sec (), tv_interval.usec (),
+  //              this->id_));
 }
 
 TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter (void)
