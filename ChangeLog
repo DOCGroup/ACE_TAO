@@ -1,7 +1,18 @@
+Wed Jun 16 08:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.{h,cpp,i,inl}:
+        * ace/Makefile.ac:
+        * ace/ace.mpc:
+          Replaced all .i files with its .inl version. Cvs can't handle
+          rename, so the .i file is removed and the same contents is
+          added as .inl, so if you need history, it can be that you
+          have to look at the .i file for the complete history. Updated
+          the .h and .cpp files for the needed includes.
+
 Tue Jun 15 23:31:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-	  Changed ACE_HAS_UCONTEXT_T test to include <signal.h> and 
+	  Changed ACE_HAS_UCONTEXT_T test to include <signal.h> and
 	  <ucontext.h> (if it exists).
 	  This fixes bugzilla bug 1844.
 
