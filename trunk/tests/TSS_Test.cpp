@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -25,7 +25,9 @@
 #include "ace/Log_Msg.h"
 #include "test_config.h"
 
-static int iterations = 100;
+#if defined (ACE_HAS_THREADS)
+
+static const int ITERATIONS = 100;
 
 class Errno
 {
@@ -110,7 +112,7 @@ worker (void *c)
   if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-  ip = new int;
+  ACE_NEW_RETURN (ip, int, 0);
 
   if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
@@ -120,7 +122,7 @@ worker (void *c)
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ip = new int;
+      ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
 
@@ -152,14 +154,14 @@ worker (void *c)
       {
 	// Use the guard to serialize access
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0));
-	ACE_ASSERT (TSS_Error->flags () == iterations);
+	ACE_ASSERT (TSS_Error->flags () == ITERATIONS);
       }
       key = 0;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ip = new int;
+      ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
 
@@ -187,32 +189,35 @@ handler (int signum)
   ACE_Service_Config::thr_mgr ()->exit (0);
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_TSS<Errno>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* ACE_HAS_THREADS */
+
 int 
 main (int, char *argv[])
 {
   ACE_START_TEST ("TSS_Test.cpp");
   
+#if defined (ACE_MT_SAFE)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   
-#if defined (ACE_HAS_THREADS)
   int threads = ACE_MAX_THREADS;
 
   if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
 					       ACE_THR_FUNC (&worker), 
-					       (void *) iterations,
+					       (void *) ITERATIONS,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
 
   ACE_Service_Config::thr_mgr ()->wait ();
 #else
-  worker ((void *) iterations);
-#endif /* ACE_HAS_THREADS */
-
+  ACE_ERROR ((LM_ERROR, 
+	      "threads are not supported on this platform\n"));
+#endif /* defined (ACE_MT_SAFE) */
   ACE_END_TEST;
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_TSS<Errno>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

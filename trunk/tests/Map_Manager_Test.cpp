@@ -19,6 +19,7 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h"
+#include "test_config.h"
 
 typedef ACE_Null_Mutex MUTEX;
 typedef int KEY;
@@ -30,7 +31,7 @@ typedef ACE_Map_Reverse_Iterator <KEY, VALUE, MUTEX> REVERSE_ITERATOR;
 typedef ACE_Map_Entry <KEY, VALUE> ENTRY;
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Map_Manager_Test.cpp");
 

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -130,7 +130,8 @@ produce (Thread_Pool &thread_pool)
   for (int n;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = new ACE_Message_Block (BUFSIZ);
+      ACE_Message_Block *mb;
+      ACE_NEW (mb, ACE_Message_Block (BUFSIZ));
 
 #if defined (manual)
       ACE_DEBUG ((LM_DEBUG, 
@@ -186,10 +187,13 @@ produce (Thread_Pool &thread_pool)
     }
 }
 
+#endif /* ACE_HAS_THREADS */
+
 int 
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Thread_Pool_Test.cpp");
+#if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
   
   ACE_DEBUG ((LM_DEBUG, "(%t) argc = %d, threads = %d\n", 
@@ -208,14 +212,9 @@ main (int argc, char *argv[])
   ACE_Service_Config::thr_mgr ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */

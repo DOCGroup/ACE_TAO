@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -22,7 +22,7 @@
 #include "test_config.h"
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Time_Value_Test.cpp");
 

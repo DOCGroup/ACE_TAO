@@ -46,7 +46,10 @@ peer1 (void *)
   if (con.connect (c_stream, addr) == -1)
     ACE_DEBUG ((LM_DEBUG, "(%t) peer1 ACE_UPIPE_Connector failed\n"));
 
-  ACE_Message_Block *mb = new ACE_Message_Block (20);
+  ACE_Message_Block *mb;
+
+  ACE_NEW_RETURN (mb, ACE_Message_Block (20), 0);
+
   mb->copy ("hello", 6);
 
   if (c_stream.send (mb) == -1)
@@ -141,11 +144,14 @@ peer2 (void *)
   return 0;
 }
 
+#endif /* ACE_HAS_THREADS */
+
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("UPIPE_SAP_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   // Spawn a peer2 thread.
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (peer2), 
 					     (void *) 0,
@@ -154,14 +160,9 @@ main (int argc, char *argv[])
 
   // Wait for peer2 and peer1 threads to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR, "threads not supported on this platform\n"), -1);
-}
-#endif /* ACE_HAS_THREADS */

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -126,7 +126,8 @@ Producer::svc (void)
       d[0] = c;
       d[1] = '\0';
 
-      ACE_Message_Block *mb = new ACE_Message_Block (2);
+      ACE_Message_Block *mb;
+      ACE_NEW_RETURN (mb, ACE_Message_Block (2), -1);
       ACE_OS::strcpy (mb->rd_ptr (), d);
 
       mb->wr_ptr (2);
@@ -192,19 +193,25 @@ Consumer::svc (void)
   return 0;
 }
 
+#endif /* ACE_HAS_THREADS */
+
 // Main driver function.
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Buffer_Stream_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon (argv[0]);
 
   // Control hierachically-related active objects
   MT_Stream stream;
-  MT_Module *cm = new MT_Module ("Consumer", new Consumer);
-  MT_Module *pm = new MT_Module ("Producer", new Producer);
+  MT_Module *cm;
+  MT_Module *pm; 
+
+  ACE_NEW_RETURN (cm, MT_Module ("Consumer", new Consumer), -1);
+  ACE_NEW_RETURN (pm, MT_Module ("Producer", new Producer), -1);
 
   // Create Producer and Consumer Modules and push them onto the
   // STREAM.  All processing is performed in the STREAM.
@@ -217,18 +224,12 @@ main (int argc, char *argv[])
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */
 
 
 

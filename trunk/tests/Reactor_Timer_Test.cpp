@@ -99,7 +99,5 @@ main (int, char *argv[])
     reactor.handle_events ();
 
   ACE_END_TEST;
-
   return 0;
 }
-
