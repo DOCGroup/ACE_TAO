@@ -40,7 +40,7 @@ ACE_Dynamic_Service<SERVICE>::instance (const char *name)
   else
     {
       const void *obj = type->object ();
-      return ACE_dynamic_cast (SERVICE *, obj);
+      return ACE_reinterpret_cast (SERVICE *, obj);
     }
 }
 
