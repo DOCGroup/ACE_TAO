@@ -1,8 +1,8 @@
 // $Id$
 
 #include "Process_Factory.h"
+#include "Server_Task.h"
 #include "ace/Get_Opt.h"
-#include "ace/Process_Manager.h"
 
 ACE_RCSID(Client_Leaks, server, "$Id$")
 
@@ -62,14 +62,14 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Process_Factory *process_impl;
-      ACE_NEW_RETURN (process_impl,
+      Process_Factory *process_factory_impl;
+      ACE_NEW_RETURN (process_factory_impl,
                       Process_Factory (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(process_impl);
+      PortableServer::ServantBase_var owner_transfer(process_factory_impl);
 
       Test::Process_Factory_var process =
-        process_impl->_this (ACE_TRY_ENV);
+        process_factory_impl->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
@@ -89,8 +89,15 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      Server_Task server_task (orb.in (),
+                               ACE_Thread_Manager::instance ());
+
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
+        }
+
+      ACE_Thread_Manager::instance ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
@@ -99,10 +106,6 @@ main (int argc, char *argv[])
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - waiting for children\n"));
-      ACE_Time_Value tv (5, 0);
-      ACE_Process_Manager::instance ()->wait (tv);
     }
   ACE_CATCHANY
     {

@@ -1,17 +1,18 @@
 // $Id$
 
-#include "TestC.h"
+#include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Client_Leaks, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int iterations = 1200;
+int iterations = 100;
+int threads = 12;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -25,47 +26,23 @@ parse_args (int argc, char *argv[])
 	iterations = ACE_OS::atoi (get_opts.optarg);
 	break;
 
+      case 'n':
+	threads = ACE_OS::atoi (get_opts.optarg);
+	break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
 			   "-k <ior> "
 			   "-i <iterations> "
+			   "-i <threads> "
                            "\n",
                            argv [0]),
                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
-}
-
-void
-run_iteration (Test::Process_Factory_ptr process_factory,
-               CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      Test::Process_var process =
-        process_factory->create_new_process (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      (void) process->get_process_id (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      process->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH(Test::Spawn_Failed, ignored)
-    {
-      // Ignore this exception, it is usually caused by a transient
-      // condition
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
-    }
-  ACE_ENDTRY;
 }
 
 int
@@ -96,19 +73,15 @@ main (int argc, char *argv[])
                             1);
         }
 
-      for (int i = 0; i != iterations; ++i)
-        {
-          run_iteration (process_factory.in (),
-                         ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+      Client_Task client_task (process_factory.in (),
+                               iterations);
 
-          if (i % 50 == 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) - client %d / %d iterations\n",
-                          i, iterations));
-            }
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                threads, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
+      ACE_Thread_Manager::instance ()->wait ();
 
       process_factory->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;

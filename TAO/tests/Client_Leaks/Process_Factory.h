@@ -24,6 +24,9 @@ public:
   /// Constructor
   Process_Factory (CORBA::ORB_ptr orb);
 
+  /// Return 1 if the shutdown message has been received already
+  int shutdown_received (void);
+
   // = The skeleton methods
   virtual Test::Process_ptr create_new_process (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
@@ -35,6 +38,9 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
+
+  /// Set to 1 when the test has finished
+  int shutdown_received_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -34,4 +34,11 @@ module Test
     /// Shutdown the process
     oneway void shutdown ();
   };
+
+  /// Used by the Process Factory to receive the IOR of newly created
+  /// processes
+  interface Startup_Callback
+  {
+    void started (in Process the_process);
+  };
 };
