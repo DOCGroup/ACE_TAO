@@ -21,7 +21,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::TAO_Notify_ProxySupplier (TAO_Notify_Con
    dispatching_task_ (0),
    filter_eval_task_ (0)
 {
-  event_manager_ = consumer_admin->get_event_manager ();
+  this->event_manager_ = consumer_admin->get_event_manager ();
 }
 
 template <class SERVANT_TYPE> void
@@ -39,7 +39,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
   ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    event_manager_->resource_factory ();
+    this->event_manager_->resource_factory ();
 
   // Create the task to forward filtering/dispatching commands to:
   this->dispatching_task_ =
@@ -86,7 +86,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
   ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    event_manager_->resource_factory ();
+    this->event_manager_->resource_factory ();
 
   event_manager_objects_factory->destroy_dispatching_task (this->dispatching_task_);
   event_manager_objects_factory->destroy_source_eval_task (this->filter_eval_task_);
