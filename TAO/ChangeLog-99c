@@ -1,3 +1,12 @@
+Thu Dec  2 16:13:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/TAO_Perf_Tests.dsw:
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+	  Changed the displayed name of the reliable oneways test
+	  projects, and added them to the performance tests
+	  workspace.
+
 Thu Dec  2 14:44:28 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/Makefile
