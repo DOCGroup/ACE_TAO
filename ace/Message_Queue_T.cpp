@@ -28,7 +28,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump");
 
-  this->queue_->dump ();
+  this->queue_.dump ();
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
@@ -36,7 +36,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes (size_t new
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes");
 
-  this->queue_->message_bytes (new_value);
+  this->queue_.message_bytes (new_value);
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
@@ -44,7 +44,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (size_t ne
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length");
 
-  this->queue_->message_length (new_value);
+  this->queue_.message_length (new_value);
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
@@ -66,8 +66,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex");
-
-  delete this->queue_;
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
@@ -77,7 +75,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open (size_t hwm,
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open");
 
-  return this->queue_->open ();
+  return this->queue_.open (hwm, lwm, hs);
 }
 
 // Clean up the queue if we have not already done so!
@@ -87,7 +85,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close");
 
-  return this->queue_->close ();
+  return this->queue_.close ();
 }
 
 // Take a look at the first item without removing it.
@@ -100,7 +98,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head (ACE_ME
 
   ACE_Message_Block *mb;
 
-  int cur_count = this->queue_->peek_dequeue_head (mb, timeout);
+  int cur_count = this->queue_.peek_dequeue_head (mb, timeout);
 
   if (cur_count != -1)
     first_item  = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
@@ -122,7 +120,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE
                                      DEFUALT_PRIORITY),
                   -1);
 
-  return this->queue_->enqueue_head (mb, timeout);
+  return this->queue_.enqueue_head (mb, timeout);
 }
 
 // Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
@@ -152,7 +150,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
                                      DEFUALT_PRIORITY ),
                   -1);
 
-  return this->queue_->enqueue_prio (mb, timeout);
+  return this->queue_.enqueue_prio (mb, timeout);
 }
 
 // Block indefinitely waiting for an item to arrive,
@@ -172,7 +170,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
                                      DEFUALT_PRIORITY),
                   -1);
 
-  return this->queue_->enqueue_tail (mb, timeout);
+  return this->queue_.enqueue_tail (mb, timeout);
 }
 
 // Remove an item from the front of the queue.  If timeout == 0 block
@@ -188,7 +186,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
   ACE_Message_Block *mb;
 
   // Dequeue the message.
-  if (this->queue_->dequeue_head (mb, timeout) != -1 )
+  if (this->queue_.dequeue_head (mb, timeout) != -1 )
     {
       first_item = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
       // Delete the message block.
@@ -204,7 +202,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify");
 
-  return this->queue_->notify ();
+  return this->queue_.notify ();
 }
 
 template <ACE_SYNCH_DECL>
