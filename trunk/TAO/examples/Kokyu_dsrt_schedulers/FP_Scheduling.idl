@@ -36,8 +36,8 @@
  *
  */
 
-#include <tao/RTScheduling/RTScheduler_include.pidl>
-#include <tao/RTCORBA/RTCORBA_include.pidl>
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
 
 module FP_Scheduling
 {

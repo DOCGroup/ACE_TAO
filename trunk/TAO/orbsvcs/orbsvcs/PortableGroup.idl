@@ -12,8 +12,8 @@
 #define _PORTABLEGROUP_IDL_
 
 #include "CosNaming.idl"
-#include <tao/IOP.pidl>
-#include <tao/GIOP.pidl>
+#include "tao/IOP.pidl"
+#include "tao/GIOP.pidl"
 #include <orb.idl>
 #include "PortableGroup_Simple_DS.idl"
 

@@ -18,7 +18,7 @@
 #ifndef _PORTABLEGROUP_SIMPLE_DS_IDL_
 #define _PORTABLEGROUP_SIMPLE_DS_IDL_
 
-#include <tao/GIOP.pidl>
+#include "tao/GIOP.pidl"
 
 module PortableGroup
 {

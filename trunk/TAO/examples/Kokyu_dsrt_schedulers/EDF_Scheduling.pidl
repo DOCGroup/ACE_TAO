@@ -36,8 +36,8 @@
  *
  */
 
-#include <tao/RTScheduling/RTScheduler.pidl>
-#include <tao/RTCORBA/RTCORBA.pidl>
+#include "tao/RTScheduling/RTScheduler.pidl"
+#include "tao/RTCORBA/RTCORBA.pidl"
 
 module EDF_Scheduling
 {
