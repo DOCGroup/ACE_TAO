@@ -675,7 +675,10 @@ TAO_AV_RTCP_Callback::send_report (int bye)
                       -1);
     }
   else
-    sdes.add_item (my_ssrc, sdes_type, (unsigned char)value.length (), value.c_str ());
+    {
+      unsigned char length = (unsigned char)(value.length() & 0xFF);
+      sdes.add_item (my_ssrc, sdes_type, length, value.c_str ());
+    }
 
   // create the message block
   char *cp_ptr;
