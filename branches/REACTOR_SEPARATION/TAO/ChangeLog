@@ -1,3 +1,23 @@
+Tue Dec  7 21:05:12 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtTests/README (Module):
+	Described a problem with ORB shutdown.
+
+	* tests/QtTests/svc.conf.xml (Module):
+	* tests/QtTests/svc.conf (Module):
+	Change shared library where QtResource factory can be found from TAO to
+	TAO_QtReactor.
+
+	* tests/QtTests/server.cpp (Module):
+	* tests/QtTests/client.cpp (Module):
+	Removed silly mistake related with removing ACE_HAS_QT macros.
+
+Tue Dec  7 20:48:26 2004  Marek Brudka  <mbrudka@aster.pl>
+	* tao/tao_qtreactor.mpc (Module):
+	* tao/qt_resource.h (Module):
+	* tao/TAO_QtReactor_export.h (Module):
+	Created and applied export macros for TAO_QtReactor.
+
 Mon Dec  6 00:35:59 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* TAO_IDL/.cvsignore (Module):

@@ -1,3 +1,13 @@
+Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* ace/ace_qtreactor.mpc (Module):
+	* ace/QtReactor_export.h (Module):
+	* ace/QtReactor.h (Module):
+	* ace/ACE_QtReactor_export.h (Module):
+	Change QtReactor_export.h into ACE_QtReactor_export.h to avoid possible,
+	though not very probably name conflict and remain consistent
+	with TAO_QtReact_export.
+
 Tue Dec  7 00:23:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* ace/ace_qtreactor.mpc (Module):

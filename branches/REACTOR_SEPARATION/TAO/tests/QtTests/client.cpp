@@ -5,15 +5,6 @@
 
 ACE_RCSID(QtTests, client, "$Id$")
 
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Qt not supported on this platform\n"));
-  return 0;
-}
-
-#else
 #include "client.h"
 
 int
