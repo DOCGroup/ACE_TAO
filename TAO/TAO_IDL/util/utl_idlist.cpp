@@ -147,12 +147,24 @@ UTL_IdList::first_component (void)
 int
 UTL_IdList::compare (UTL_IdList *other)
 {
+  // Strip away any leading empty segments.
+
+  if (ACE_OS::strlen (this->pd_car_data->get_string ()) == 0)
+    {
+      return ((UTL_IdList *) this->tail ())->compare (other);
+    }
+
+  if (ACE_OS::strlen (other->pd_car_data->get_string ()) == 0)
+    {
+      return this->compare ((UTL_IdList *) other->tail ());
+    }
+
   long this_length = this->length ();
 
   if (this_length != other->length ())
     {
       return 1;
-    }
+   }
 
   Identifier *this_id = 0;
   Identifier *other_id = 0;

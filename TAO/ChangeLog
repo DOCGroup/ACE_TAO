@@ -1,3 +1,25 @@
+Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Cosmetic changes.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+	  Modified the action code for the 'typeprefix' production as follows:
+	  if the typeprefix occurs in a module and is applied to that module,
+	  we apply the prefix to the current scope instead of doing a lookup
+	  on the scope's name. In the case of a reopened module, a lookup will 
+	  return the previous opening, and the prefix will not be applied to
+	  the current opening. To determine if the above conditions hold, the
+	  current scope's name and the first typeprefix argument are compared.
+
+        * TAO_IDL/util/utl_idlist.cpp:
+
+	  Modified the compare() method to ignore any leading empty segments.
+
 Thu Sep 26 17:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Any.cpp: In operator<< (TAO_OutputCDR& cdr, const CORBA::Any
