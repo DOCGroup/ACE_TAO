@@ -95,10 +95,16 @@ namespace CIAO
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
-      typedef ACE_Hash_Map_Manager_Ex<const char *,
+      typedef
+      ACE_Hash_Map_Manager_Ex
+      < const char *,
         Deployment::DomainApplicationManager_ptr,
-        ACE_Hash<const char *>, ACE_Equal_To<const char *>,
-        TAO_SYNCH_MUTEX> Table;
+	ACE_Hash<const char *>,
+	ACE_Equal_To<const char *>,
+	TAO_SYNCH_MUTEX
+      >
+      Table;
+
       typedef Table::iterator Iterator;
 
       // Helper operations to maintain list of NodeApplication
@@ -119,6 +125,8 @@ namespace CIAO
 
       // Path to the initialization file
       char * init_file_;
+
+      Deployment::DomainApplicationManager_var dam_;
     };
 
 };

@@ -113,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
       ACE_DEBUG ((LM_DEBUG, "Executor: start Launch application....."));
       // Start the Application immediately
-      int start = 1;
+      int start = 0;
       dapp_mgr->startLaunch (properties.in (), start);
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
@@ -127,9 +127,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       char dummy [256];
       std::cin.getline (dummy, 256);
-
       // Tear down the assembly
+
+      ACE_DEBUG ((LM_DEBUG, "Executor: destroy the application....."));
+      dapp_mgr->destroyApplication ();
+      ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
+      ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
     }
   catch (CORBA::Exception& ex)

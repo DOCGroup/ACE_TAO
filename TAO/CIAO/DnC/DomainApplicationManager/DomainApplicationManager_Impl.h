@@ -69,7 +69,9 @@ namespace CIAO
                                    PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
                                    const Deployment::DeploymentPlan &plan,
-                                   char * deployment_file);
+                                   char * deployment_file)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -158,7 +160,7 @@ namespace CIAO
      * InvalidReference exception if the appliction referen is
      * unknown.
      */
-    virtual void destroyApplication ()
+    virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StopError));
 
@@ -167,6 +169,15 @@ namespace CIAO
      */
     virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // This is a helper function to destroy the NodeAppManager.
+    // Since we don't want to do so in the destructor so we will
+    // ask the ExecutionManager to do this on us when the same IDL
+    // op invoked on it. This is part of the result for merging DAM
+    // with DA.
+    virtual void destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError));
 
   protected:
     /**
@@ -192,19 +203,20 @@ namespace CIAO
      * Cache the incoming connections, which is a sequence of Connections,
      * into the <all_connections_> list.
      */
-    void add_connections (::Deployment::Connections & incoming_conn);
+    void add_connections (const Deployment::Connections & incoming_conn);
 
     /**
      * Given a child deployment plan, find the <Connections> sequence
      * of the "providedReference" for the component instances in the
      * child deployment plan as Receiver side.
      */
-    bool get_outgoing_connections (Deployment::Connections_out outgoing_conn,
-                                   const Deployment::DeploymentPlan &plan);
+    Deployment::Connections *
+    get_outgoing_connections (const Deployment::DeploymentPlan &plan);
 
     // This is a helper function to find the connection for a component.
     bool
-    get_outgoing_connections_i (const char * instname, Deployment::Connections * retv);
+    get_outgoing_connections_i (const char * instname,
+				Deployment::Connections & retv);
 
     // Dump connections, a static method
     static void dump_connections (const ::Deployment::Connections & connections);
