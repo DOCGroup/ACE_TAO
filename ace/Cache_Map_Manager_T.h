@@ -61,10 +61,6 @@ public:
   typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
   typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
   typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
-  typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
-  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-
   // The actual value mapped to the key in the map. The <attributes>
   // are used by the strategy and is transparent to the user of this
   // class.
