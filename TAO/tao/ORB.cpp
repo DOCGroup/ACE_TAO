@@ -398,7 +398,7 @@ CORBA_ORB::resolve_name_service (void)
   // the command-line.
   if (name_service_ior == 0)
     // Third, check to see if the user has an environment variable.
-    name_service_ior = ACE_OS::getenv ("NameService");
+    name_service_ior = ACE_OS::getenv ("NameServiceIOR");
 
   if (name_service_ior != 0)
     {
@@ -455,7 +455,7 @@ CORBA_ORB::resolve_trading_service (void)
       // the command-line.
       if (trading_service_ior == 0)
         // Third, check to see if the user has an environment variable.
-        trading_service_ior = ACE_OS::getenv ("TradingService");
+        trading_service_ior = ACE_OS::getenv ("TradingServiceIOR");
 
       if (trading_service_ior != 0)
         {
