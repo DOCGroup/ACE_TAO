@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Simple_util.h"
 #include "Grid_i.h"
 
@@ -38,7 +39,6 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -48,4 +48,3 @@ template class Server<Grid_Factory_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Server<Grid_Factory_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

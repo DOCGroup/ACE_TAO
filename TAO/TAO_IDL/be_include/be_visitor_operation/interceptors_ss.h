@@ -46,6 +46,14 @@ public:
   virtual int visit_operation (be_operation *node);
   // visit the operation
 
+private:
+  int generate_class_declaration (TAO_OutStream *os,
+                                  be_operation *node);
+  // Generate the declaration for the helper RequestInfo class
+
+  int generate_class_definition (TAO_OutStream *os,
+                                 be_operation *node);
+  // Generate the definition for the helper RequestInfo class
 };
 
 #endif /* _BE_VISITOR_OPERATION_INTERCEPTORS_SS_H_ */
