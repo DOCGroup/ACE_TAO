@@ -2692,6 +2692,8 @@ public:
   static time_t time (time_t *tloc);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock, struct tm *res);
+  static struct tm *gmtime (const time_t *clock);
+  static struct tm *gmtime_r (const time_t *clock, struct tm *res);
   static char *asctime (const struct tm *tm);
   static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock, char *buf, int buflen);
