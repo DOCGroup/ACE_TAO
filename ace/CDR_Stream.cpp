@@ -177,29 +177,6 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
   this->current_ = &this->start_;
 }
 
-ACE_OutputCDR::~ACE_OutputCDR (void)
-{
-  if (this->start_.cont () != 0)
-    {
-      ACE_Message_Block::release (this->start_.cont ());
-      this->start_.cont (0);
-    }
-  this->current_ = 0;
-}
-
-void
-ACE_OutputCDR::reset (void)
-{
-  this->current_ = &this->start_;
-  ACE_CDR::mb_align (&this->start_);
-}
-
-size_t
-ACE_OutputCDR::total_length (void) const
-{
-  return ACE_CDR::total_length (this->begin (), this->end ());
-}
-
 int
 ACE_OutputCDR::grow_and_adjust (size_t size,
                                 size_t align,
@@ -704,10 +681,6 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
        i != rhs.end ();
        i = i->cont ())
     this->start_.copy (i->rd_ptr (), i->length ());
-}
-
-ACE_InputCDR::~ACE_InputCDR (void)
-{
 }
 
 ACE_CDR::Boolean
