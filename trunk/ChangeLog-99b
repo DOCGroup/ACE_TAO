@@ -1,5 +1,6 @@
 Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.h:
         * examples/Connection/non_blocking/CPP-connector.h:
         * examples/Connection/non_blocking/CPP-acceptor.h:
           Added #pragma implementation, for AIX IBM C++.
@@ -8,6 +9,14 @@ Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
           Split the Options class to a new file, CPP-inclient.h,
           to make IBM C++ (xlC) like it.
+
+        * examples/IOStream/server/iostream_server.cpp: Split the Handler
+          class off to new iostream_server.h file, to make IBM C++ (xlC)
+          like it.
+
+        * examples/Logger/Acceptor-server/server_loggerd.cpp: Moved the Options
+          and handler classes' definitions to new server_loggerd.h file to
+          build with AIX IBM C++.
 
         * examples/IPC_SAP/SOCK_SAP/Makefile:
         * examples/Connection/non_blocking/Makefile:
