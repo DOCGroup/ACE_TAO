@@ -69,7 +69,8 @@ ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {
 #if defined (ACE_HAS_IPV6)
-  const unsigned int *addr = (const unsigned int*)this->addr_pointer();
+  // XXX do migration code
+  const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
   return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
 #else
   return this->get_ip_address () + this->get_port_number ();
