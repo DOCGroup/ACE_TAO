@@ -7,7 +7,7 @@
 //    TAO/tests/IDL_Cubit
 //
 // = FILENAME
-//    clnt.h
+//    client.h
 //
 // = DESCRIPTION
 //      This class implements a simple "cube" CORBA client for the Cubit
@@ -46,34 +46,36 @@ public:
 
 private:
   int init_naming_service (void);
-  // function to initialize the naming service
+  // Function to initialize the naming service.
 
   int func (u_int i);
-  // simple function that returns the substraction of 117 from the parameter.
+  // Simple function that returns the substraction of 117 from the
+  // parameter.
 
   int read_ior (char *filename);
-  // function to read the cubit factory ior from a file
+  // Function to read the cubit factory ior from a file.
 
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  void print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-  // prints the time stats
+  void print_stats (const char *call_name,
+                    ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
+  // Prints the time stats.
 
   void cube_union_stub (void);
   // Exercise the union.  Cube a union.
 
   void cube_union_dii (void);
-  // Exercise the union using dii.
+  // Exercise the union using DII.
 
   void cube_struct (int i);
   // calculate the cube from a struct.
 
   void cube_long (int i);
-  // calculate the cube from a long
+  // calculate the cube from a long.
 
   void cube_octet (int i);
-  // Cube an octet
+  // Cube an octet.
 
   void cube_short (int i);
   // Cube a short.
@@ -100,7 +102,7 @@ private:
   // Number of times to do the cube operations.
 
   int shutdown_;
-  // Flag to tell server to  shutdown.
+  // Flag to tell server to shutdown.
 
   Cubit_Factory_var factory_;
   // factory pointer for cubit.
@@ -118,13 +120,13 @@ private:
   // # of calls made to functions.
 
   u_int error_count_;
-  // #  of errors incurred in the lifetime of the application.
+  // # of errors incurred in the lifetime of the application.
 
   FILE *cubit_factory_ior_file_;
   // File from which to obtain the IOR.
 
   ACE_HANDLE f_handle_;
-  // File handle to read the IOR
+  // File handle to read the IOR.
 
   int use_naming_service_;
   // Flag to tell client to use Namingservice to find the cubit
