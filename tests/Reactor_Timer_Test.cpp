@@ -99,8 +99,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
   else if (current_count == -1)
     {
-      int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
-                                                                   ACE_Time_Value (count + 1));
+      int result =
+        this->reactor ()->reset_timer_interval (this->timer_id (),
+                                                ACE_Time_Value (count + 1));
       ACE_ASSERT (result != -1);
     }
   count += (1 + odd);
@@ -120,7 +121,7 @@ Time_Handler::timer_id (long t)
 }
 
 static void
-test_registering_all_handlers (void)
+test_registering_all_handlers (ACE_Reactor *reactor)
 {
   ACE_Trace t ("test_registering_all_handler", __LINE__, __FILE__);
   Time_Handler rt[ACE_MAX_TIMERS];
@@ -128,20 +129,21 @@ test_registering_all_handlers (void)
 
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
+      rt[i].reactor (reactor);
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[i], 
-                                                  (const void *) i, 
-                                                  ACE_Time_Value (2 * i + 1));
+        reactor->schedule_timer (&rt[i], 
+                                 (const void *) i, 
+                                 ACE_Time_Value (2 * i + 1));
       ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    reactor->handle_events ();
 }
 
 static void
-test_registering_one_handler (void)
+test_registering_one_handler (ACE_Reactor *reactor)
 {
   ACE_Trace t ("test_registering_one_handler", __LINE__, __FILE__);
   Time_Handler rt[ACE_MAX_TIMERS];
@@ -150,21 +152,22 @@ test_registering_one_handler (void)
   done = 0;
   count = 0;
 
+  rt[0].reactor (reactor);
   for (size_t i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[0],
-                                                  (const void *) i,
-                                                  ACE_Time_Value (2 * i + 1));
+        reactor->schedule_timer (&rt[0],
+                                 (const void *) i,
+                                 ACE_Time_Value (2 * i + 1));
       ACE_ASSERT (t_id[i] != -1);
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    reactor->handle_events ();
 }
 
 static void
-test_canceling_odd_timers (void)
+test_canceling_odd_timers (ACE_Reactor *reactor)
 {
   ACE_Trace t ("test_canceling_odd_timers", __LINE__, __FILE__);
   Time_Handler rt[ACE_MAX_TIMERS];
@@ -176,9 +179,10 @@ test_canceling_odd_timers (void)
 
   for (size_t i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
     {
-      t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
-                                                          (const void *) i,
-                                                          ACE_Time_Value (2 * i + 1));
+      rt[i].reactor (reactor);
+      t_id[i] = reactor->schedule_timer (&rt[i],
+                                         (const void *) i,
+                                         ACE_Time_Value (2 * i + 1));
       ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
@@ -188,16 +192,16 @@ test_canceling_odd_timers (void)
     if (ACE_ODD (rt[j].timer_id ()))
       {
         int result = 
-          ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
+          reactor->cancel_timer (rt[j].timer_id ());
         ACE_ASSERT (result != -1);
       }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    reactor->handle_events ();
 }
 
 static void
-test_resetting_timer_intervals (void)
+test_resetting_timer_intervals (ACE_Reactor *reactor)
 {
   ACE_Trace t ("test_resetting_timer_intervals", __LINE__, __FILE__);
   Time_Handler rt;
@@ -207,19 +211,19 @@ test_resetting_timer_intervals (void)
   count = 0;
   odd = 0;
 
+  rt.reactor (reactor);
   t_id =
-    ACE_Reactor::instance ()->schedule_timer 
-    (&rt, 
-     (const void *) -1,
-     ACE_Time_Value (1),
-     // Start off by making this an interval timer.
-     ACE_Time_Value (1));
+    reactor->schedule_timer (&rt, 
+                             (const void *) -1,
+                             ACE_Time_Value (1),
+                             // Start off by making this an interval timer.
+                             ACE_Time_Value (1));
 
   ACE_ASSERT (t_id != -1);
   rt.timer_id (t_id);
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    reactor->handle_events ();
 }
 
 int
@@ -227,18 +231,29 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Reactor_Timer_Test"));
 
+  ACE_DEBUG ((LM_DEBUG, "Testing with a non-singleton reactor\n"));
+
+  ACE_Reactor other_reactor;
+  test_registering_all_handlers (&other_reactor);
+  test_registering_one_handler (&other_reactor);
+  test_canceling_odd_timers (&other_reactor);
+  test_resetting_timer_intervals (&other_reactor);
+
   // Register all different handlers, i.e., one per timer.
-  test_registering_all_handlers ();
+  ACE_Reactor *reactor =
+    ACE_Reactor::instance ();
+  test_registering_all_handlers (reactor);
 
   // Now try multiple timers for ONE event handler (should produce the
   // same result).
-  test_registering_one_handler ();
+  test_registering_one_handler (reactor);
 
   // Try canceling handlers with odd numbered timer ids.
-  test_canceling_odd_timers ();
+  test_canceling_odd_timers (reactor);
 
   // Make sure <reset_timer_inverval> works.
-  test_resetting_timer_intervals ();
+  test_resetting_timer_intervals (reactor);
+
 
   ACE_END_TEST;
   return 0;
