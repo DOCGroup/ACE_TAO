@@ -1,3 +1,9 @@
+Fri Jan  7 10:02:02 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/RTNodeApplication/RTServer_Impl.cpp (init): Changed to
+	  call the virtual function defined by the parent explicitly with
+	  this pointer to work around a VC6 bug.
+
 Wed Jan  5 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.inl:
