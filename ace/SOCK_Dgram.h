@@ -36,6 +36,9 @@ public:
                   int reuse_addr = 0);
   // Initiate a socket dgram.
 
+  ~ACE_SOCK_Dgram (void);
+  // Default dtor.
+
   int open (const ACE_Addr &local, 
             int protocol_family = PF_INET, 
             int protocol = 0,

@@ -94,6 +94,12 @@ ACE_Sig_Set::sigset (void)
   return this->sigset_;
 }
 
+ACE_INLINE
+ACE_Sig_Action::~ACE_Sig_Action (void)
+{
+  ACE_TRACE ("ACE_Sig_Action::~ACE_Sig_Action");
+}
+
 ACE_INLINE int
 ACE_Sig_Action::flags (void)
 {
@@ -262,9 +268,24 @@ ACE_Sig_Guard::~ACE_Sig_Guard (void)
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 }
 
+ACE_INLINE
+ACE_Sig_Handler::ACE_Sig_Handler (void)
+{
+}
+
+ACE_INLINE
+ACE_Sig_Handler::~ACE_Sig_Handler (void)
+{
+}
+
 ACE_INLINE int
 ACE_Sig_Handler::in_range (int signum)
 {
   ACE_TRACE ("ACE_Sig_Handler::in_range");
   return signum > 0 && signum < ACE_NSIG;
+}
+
+ACE_INLINE
+ACE_Sig_Adapter::~ACE_Sig_Adapter (void)
+{
 }

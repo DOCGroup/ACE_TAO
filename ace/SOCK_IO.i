@@ -5,6 +5,18 @@
 
 // Send an n byte message to the connected socket.
 
+ASYS_INLINE
+ACE_SOCK_IO::ACE_SOCK_IO (void)
+{
+  ACE_TRACE ("ACE_SOCK_IO::ACE_SOCK_IO");
+}
+
+ASYS_INLINE
+ACE_SOCK_IO::~ACE_SOCK_IO (void)
+{
+  ACE_TRACE ("ACE_SOCK_IO::~ACE_SOCK_IO");
+}
+
 ASYS_INLINE ssize_t  
 ACE_SOCK_IO::send (const void *buf, size_t n, int flags) const
 {

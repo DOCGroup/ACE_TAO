@@ -5,6 +5,12 @@
 
 // Used to return the underlying handle_. 
 
+ASYS_INLINE
+ACE_IPC_SAP::~ACE_IPC_SAP (void)
+{
+  ACE_TRACE ("ACE_IPC_SAP::~ACE_IPC_SAP");
+}
+
 ASYS_INLINE ACE_HANDLE
 ACE_IPC_SAP::get_handle (void) const
 {

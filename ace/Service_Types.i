@@ -27,6 +27,12 @@ ACE_Service_Type_Impl::name (const ASYS_TCHAR *n)
   ACE_OS::strcpy ((ASYS_TCHAR *) this->name_, n);
 }
 
+ACE_INLINE
+ACE_Service_Object_Type::~ACE_Service_Object_Type (void)
+{
+  ACE_TRACE ("ACE_Service_Object_Type::~ACE_Service_Object_Type");
+}
+
 ACE_INLINE int
 ACE_Service_Object_Type::suspend (void) const
 {
@@ -47,4 +53,17 @@ ACE_Service_Object_Type::info (ASYS_TCHAR **str, size_t len) const
   ACE_TRACE ("ACE_Service_Object_Type::info");
   return ((ACE_Service_Object *) this->object ())->info (str, len);  
 }
+
+ACE_INLINE
+ACE_Module_Type::~ACE_Module_Type (void)
+{
+  ACE_TRACE ("ACE_Module_Type::~ACE_Module_Type");
+}
+
+ACE_INLINE
+ACE_Stream_Type::~ACE_Stream_Type (void)
+{
+  ACE_TRACE ("ACE_Stream_Type::~ACE_Stream_Type");
+}
+
 

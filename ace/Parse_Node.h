@@ -53,6 +53,7 @@ class ACE_Export ACE_Suspend_Node : public ACE_Parse_Node
   //     Suspend a Service Node.
 public:
   ACE_Suspend_Node (const char *name);
+  ~ACE_Suspend_Node (void);
 
   virtual void apply (void);
 
@@ -69,6 +70,7 @@ class ACE_Export ACE_Resume_Node : public ACE_Parse_Node
   //     Resume a Service Node.
 public:
   ACE_Resume_Node (const char *name);
+  ~ACE_Resume_Node (void);
 
   virtual void apply (void);
 
@@ -85,7 +87,8 @@ class ACE_Export ACE_Remove_Node : public ACE_Parse_Node
   //     Remove a Service Node.
 public:
   ACE_Remove_Node (const char *name);
-
+  ~ACE_Remove_Node (void);
+  
   virtual void apply (void);
 
   void dump (void) const;

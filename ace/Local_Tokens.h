@@ -179,6 +179,9 @@ public:
   // These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
 
+  ~ACE_TSS_TPQ_Entry (void);
+  // Destructor.
+
   virtual ACE_TPQ_Entry *make_TSS_TYPE (void) const;
   // Allows us to pass args to the construction of the TSS object.
 
@@ -224,6 +227,9 @@ public:
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
   // Construction.
 
+  ~ACE_TPQ_Iterator (void);
+  // Destructor.
+
   int next (ACE_TPQ_Entry *&next_item);
   // Pass back the <next_item>.
 
@@ -261,6 +267,9 @@ public:
 
   ACE_Token_Proxy_Queue (void);
   // Construction.
+
+  ~ACE_Token_Proxy_Queue (void);
+  // Destructor
 
   void enqueue (ACE_TPQ_Entry* new_entry,
 		int position);
@@ -320,6 +329,9 @@ public:
 
   ACE_Tokens (void);
   // Null constructor.
+
+  ~ACE_Tokens (void);
+  // Destructor
 
   virtual int acquire (ACE_TPQ_Entry *caller,
 		       int ignore_deadlock,
@@ -819,8 +831,11 @@ class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
   // = TITLE
   //   No op class for nonthreaded platform protocols.
 public:
-  ACE_Null_Token (void) {};
+  ACE_Null_Token (void);
   // Construction.
+
+  ~ACE_Null_Token (void);
+  // Destructor
 
   virtual int acquire (int /* notify */ = 0,
 		       void (* /* sleep_hook */ )(void *) = 0,
@@ -882,6 +897,9 @@ public:
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
 
+  ~ACE_Local_Mutex (void);
+  // Destructor
+
   void dump (void) const;
   // Dump the state of the class.
 
@@ -928,6 +946,9 @@ public:
   // <token_name> uniquely id's the token.
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
+
+  ~ACE_Local_RLock (void);
+  // Destructor
 
   void dump (void) const;
   // Dump the state of the class.
@@ -978,6 +999,9 @@ public:
   // <token_name> uniquely id's the token.
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
+
+  ~ACE_Local_WLock (void);
+  // Destructor
 
   void dump (void) const;
   // Dump the state of the class.

@@ -3,6 +3,12 @@
 
 // SOCK.i
 
+ASYS_INLINE
+ACE_SOCK::~ACE_SOCK (void)
+{
+  ACE_TRACE ("ACE_SOCK::~ACE_SOCK");
+}
+
 ASYS_INLINE int 
 ACE_SOCK::set_option (int level, 
 		      int option, 

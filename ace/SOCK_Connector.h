@@ -56,6 +56,9 @@ public:
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
+  ~ACE_SOCK_Connector (void);
+  // Default dtor.
+
   int connect (ACE_SOCK_Stream &new_stream, 
 	       const ACE_Addr &remote_sap,
 	       ACE_Time_Value *timeout = 0,

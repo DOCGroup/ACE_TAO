@@ -26,6 +26,10 @@ class ACE_Export ACE_SOCK_IO : public ACE_SOCK
   //     Defines the methods for the ACE socket wrapper I/O routines
   //     (e.g., send/recv).
 public:
+  ACE_SOCK_IO (void);
+  ~ACE_SOCK_IO (void);
+  // Default ctor/dtor.
+
   ssize_t send (const void *buf,
                 size_t n,
                 int flags) const;

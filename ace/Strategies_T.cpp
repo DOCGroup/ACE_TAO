@@ -12,6 +12,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/Strategies_T.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Singleton_Strategy)
 
 template<class SVC_HANDLER>

@@ -55,6 +55,9 @@ public:
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
 
+  ~ACE_Log_Record (void);
+  // Default dtor.
+
 #if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
   int print (const ASYS_TCHAR host_name[], 
 	     u_long verbose_flag,

@@ -29,6 +29,9 @@ public:
   ACE_Obchunk (size_t size);
   // Constructor.
 
+  ~ACE_Obchunk (void);
+  // dtor.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -95,5 +98,9 @@ protected:
   class ACE_Obchunk *curr_;
   // Pointer to the current Obchunk.
 };
+
+#if defined (__ACE_INLINE__)
+#include "ace/Obstack.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_OBSTACK_H */

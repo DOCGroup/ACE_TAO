@@ -3,6 +3,10 @@
 #define ACE_BUILD_DLL
 #include "ace/Obstack.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Obstack.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Obstack)
 
 void

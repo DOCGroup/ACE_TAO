@@ -60,6 +60,9 @@ public:
   // <port_name> and an Internet <ip_addr>.  This method assumes that
   // <ip_addr> is in host byte order.
 
+  ~ACE_INET_Addr (void);
+  // Default dtor.
+
   // = Direct initialization methods (useful after the object has been
   // constructed).
   int set (const ACE_INET_Addr &);

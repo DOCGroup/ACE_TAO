@@ -103,6 +103,9 @@ public:
   ACE_Sig_Action (const ACE_Sig_Action &s);
   ACE_Sig_Action (struct sigaction *);
 
+  ~ACE_Sig_Action (void);
+  // Default dtor.
+
   // = Signal action management.
   int register_action (int signum, ACE_Sig_Action *oaction = 0);
   // Register <this> as the current disposition and store old
@@ -190,6 +193,10 @@ class ACE_Export ACE_Sig_Handler
   //    <signum>, the <handle_signal> method of the registered
   //    <ACE_Event_Handler> is invoked automatically.
 public:
+  ACE_Sig_Handler (void);
+  ~ACE_Sig_Handler (void);
+  // Default ctor/dtor.
+
   // = Registration and removal methods.
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -263,6 +270,7 @@ public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
   ACE_Sig_Adapter (ACE_Sig_Handler_Ex, int sigkey = 0);
+  ~ACE_Sig_Adapter (void);
 
   int sigkey (void);
   // Returns this signal key that's used to remove this from the

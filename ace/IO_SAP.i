@@ -3,6 +3,12 @@
 
 // IO_SAP.i
 
+ASYS_INLINE
+ACE_IO_SAP::~ACE_IO_SAP (void)
+{
+  ACE_TRACE ("ACE_IO_SAP::~ACE_IO_SAP");
+}
+
 // Used to return the underlying handle_. 
 
 ASYS_INLINE ACE_HANDLE
