@@ -1,0 +1,21 @@
+
+#
+# Makefile for building the preempt Misc performance-test
+# 
+
+NAME = preempt
+  
+OBJFILES = \
+	$(OBJDIR)\preempt.obj
+  
+CPPDIR = .;..
+
+IDLDIR = .
+  
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+  
+# 
+# IDL Build rules
+# 
+  
+

@@ -1,0 +1,14 @@
+#
+# Makefile for building the Multicast server
+#
+
+NAME = server
+
+OBJFILES = \
+	$(OBJDIR)\Log_Wrapper.obj \
+	$(OBJDIR)\server.obj
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
