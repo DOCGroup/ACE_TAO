@@ -3,7 +3,7 @@
 ACE_INLINE CORBA::Boolean
 TAO_EC_ProxyPushConsumer::is_connected (void) const
 {
-  return !CORBA::is_nil (this->supplier_.in ());
+  return this->supplier_ != 0;
 }
 
 ACE_INLINE RtecEventComm::PushSupplier_ptr

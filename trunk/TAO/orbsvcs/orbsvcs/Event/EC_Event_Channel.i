@@ -12,6 +12,12 @@ TAO_EC_Event_Channel::filter_builder (void) const
   return this->filter_builder_;
 }
 
+ACE_INLINE TAO_EC_Supplier_Filter_Builder*
+TAO_EC_Event_Channel::supplier_filter_builder (void) const
+{
+  return this->supplier_filter_builder_;
+}
+
 ACE_INLINE TAO_EC_ConsumerAdmin*
 TAO_EC_Event_Channel::consumer_admin (void) const
 {

@@ -20,8 +20,6 @@ ACE_RCSID(Event, EC_Null_Factory, "$Id$")
 
 TAO_EC_Null_Factory::~TAO_EC_Null_Factory (void)
 {
-  delete this->supplier_filtering_;
-  this->supplier_filtering_ = 0;
 }
 
 TAO_EC_Dispatching*
@@ -87,11 +85,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x)
 TAO_EC_ProxyPushConsumer*
 TAO_EC_Null_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
 {
-  if (this->supplier_filtering_ == 0)
-    ACE_NEW_RETURN (this->supplier_filtering_,
-                    TAO_EC_Null_SupplierFiltering (ec),
-                    0);
-  return new TAO_EC_ProxyPushConsumer (ec, this->supplier_filtering_);
+  return new TAO_EC_ProxyPushConsumer (ec);
 }
 
 void

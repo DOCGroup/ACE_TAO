@@ -48,7 +48,7 @@ ECT_Throughput::ECT_Throughput (void)
     pid_file_name_ (0),
     active_count_ (0),
     reactive_ec_ (0),
-    new_ec_ (0),
+    new_ec_ (1),
     ec_concurrency_hwm_ (1)
 {
 }
@@ -414,9 +414,13 @@ ECT_Throughput::connect_suppliers
 void
 ECT_Throughput::activate_suppliers (CORBA::Environment &)
 {
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->activate ();
+      this->suppliers_[i]->activate (THR_BOUND|THR_SCHED_FIFO,
+                                     1, 0, min_priority);
     }
 }
 

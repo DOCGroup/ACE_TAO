@@ -75,6 +75,9 @@ public:
   TAO_EC_Filter_Builder* filter_builder (void) const;
   // Access the filter builder....
 
+  TAO_EC_Supplier_Filter_Builder* supplier_filter_builder (void) const;
+  // Access the filter builder....
+
   TAO_EC_ConsumerAdmin* consumer_admin (void) const;
   // Access the consumer admin implementation, useful for controlling
   // the activation...
@@ -170,6 +173,9 @@ private:
 
   TAO_EC_Filter_Builder *filter_builder_;
   // The filter builder
+
+  TAO_EC_Supplier_Filter_Builder *supplier_filter_builder_;
+  // The filter builder for suppliers
 
   TAO_EC_ConsumerAdmin *consumer_admin_;
   // The ConsumerAdmin implementation

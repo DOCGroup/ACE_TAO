@@ -3,6 +3,7 @@
 #include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
 #include "EC_SupplierFiltering.h"
+#include "EC_Supplier_Filter_Builder.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ProxyConsumer.i"
@@ -11,12 +12,10 @@
 ACE_RCSID(Event, EC_ProxyConsumer, "$Id$")
 
 TAO_EC_ProxyPushConsumer::
-    TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec,
-                              TAO_EC_SupplierFiltering* filtering)
+    TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec)
   : event_channel_ (ec),
-    supplier_filtering_ (filtering)
+    filter_ (0)
 {
-  this->supplier_filtering_->bind (this);
 }
 
 TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
@@ -40,14 +39,16 @@ void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_filtering_->connected (supplier, ACE_TRY_ENV);
+  if (this->is_connected ())
+    this->filter_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_filtering_->disconnected (supplier, ACE_TRY_ENV);
+  if (this->is_connected ())
+    this->filter_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
@@ -75,6 +76,10 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
     RtecEventComm::PushSupplier::_duplicate (push_supplier);
   this->qos_ = qos;
 
+  this->filter_ =
+    this->event_channel_->supplier_filter_builder ()->create (this->qos_);
+  this->filter_->bind (this);
+
   // Notify the event channel...
   this->event_channel_->connected (this, ACE_TRY_ENV);
 }
@@ -83,7 +88,10 @@ void
 TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_filtering_->push (event, ACE_TRY_ENV);
+  if (this->is_connected () == 0)
+    return; // @@ THROW something???
+
+  this->filter_->push (event, ACE_TRY_ENV);
 }
 
 void
@@ -102,8 +110,9 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->supplier_filtering_->unbind (this);
-  this->supplier_filtering_ = 0;
+  this->filter_->unbind (this);
+  this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
+  this->filter_ = 0;
 
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);

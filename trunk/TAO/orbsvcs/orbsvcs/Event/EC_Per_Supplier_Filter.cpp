@@ -41,7 +41,6 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
     return;
 
   this->consumer_ = 0;
-  delete this;
 }
 
 void
@@ -60,10 +59,13 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
         pub.publications[j].event;
       RtecEventComm::EventType type = event.header.type;
 
-      if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
-        continue;
+      // ACE_DEBUG ((LM_DEBUG, "In %x trying to match %d\n", this, type));
+
+      // if (0 <= type && type < ACE_ES_EVENT_UNDEFINED)
+      // continue;
       if (supplier->can_match (event.header))
         {
+          // ACE_DEBUG ((LM_DEBUG, "  Matches %x\n", supplier));
           this->supplier_set_->connected (supplier, ACE_TRY_ENV);
           return;
         }
@@ -107,4 +109,20 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
           ACE_CHECK;
         }
     }
+}
+
+// ****************************************************************
+
+TAO_EC_SupplierFiltering*
+TAO_EC_Per_Supplier_Filter_Builder::create (
+    RtecEventChannelAdmin::SupplierQOS&)
+{
+  return new TAO_EC_Per_Supplier_Filter (this->event_channel_);
+}
+
+void
+TAO_EC_Per_Supplier_Filter_Builder::destroy (
+    TAO_EC_SupplierFiltering* x)
+{
+  delete x;
 }

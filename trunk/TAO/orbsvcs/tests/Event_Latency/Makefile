@@ -165,6 +165,8 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -184,8 +186,6 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
@@ -341,7 +341,8 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- Event_Latency.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -357,6 +358,21 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.i \
+ Event_Latency.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 

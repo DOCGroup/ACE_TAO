@@ -1,3 +1,68 @@
+Sun Apr 25 16:05:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  The EC_Factories create a Supplier_Filter_Builder now. This
+	  simplifies some of the memory managment in the system: now the
+	  EC must handle the builder and the builder handles the object it 
+	  creates.  I was able to lift a restriction of the factories
+	  implemented so far: they can be used from multile ECs now.
+
+	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.i:
+	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	  The EC_Factory creates a factory object for the supplier-side
+	  filters. Analogous to the consumer-side filter builder.
+	  The ProxyPushConsumer uses this object to create its filter, but 
+	  the creation is deferred until the user connects to the
+	  ProxyConsumer (as it is done in the consumer side).
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	  Moved the trivial supplier-side filter to its own filter. Added
+	  a builder for it.
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	  Fixed some problems with late registration of
+	  suppliers/consumers.
+
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  Fixed several bugs during consumer/supplier match. Also added a
+	  supplier filter builder for this type.
+	  The EC_Default_Factory has support for it too.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	  Fixed comments.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  Use the new EC by default.
+	  Start the threads at the right priority.
+
+	* orbsvcs/tests/EC_Throughput/ec.conf:
+	  Enabled the per-supplier filters by default.
+
+	* Updated many makefiles.
+
 Sat Apr 24 22:57:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:

@@ -39,7 +39,7 @@ class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
   //   Abstract base class for the filter builders.
   //
   // = DESCRIPTION
-  //   The creation of a builder hierarchy is controlled by a
+  //   The creation of a filter hierarchy is controlled by a
   //   Filter_Builder. The relationship between TAO_EC_Filter and
   //   TAO_EC_Filter_Builder follows the "Builder Pattern" (Gamma et
   //   al.)

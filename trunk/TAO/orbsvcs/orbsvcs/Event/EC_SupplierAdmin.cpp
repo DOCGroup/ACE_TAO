@@ -2,6 +2,7 @@
 
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
+#include "EC_ProxySupplier.h"
 #include "EC_Event_Channel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -42,6 +43,9 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
        ++i)
     {
       (*i)->connected (supplier, ACE_TRY_ENV);
+      ACE_CHECK;
+      supplier->connected (*i, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -55,6 +59,9 @@ TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
        ++i)
     {
       (*i)->disconnected (supplier, ACE_TRY_ENV);
+      ACE_CHECK;
+      supplier->disconnected (*i, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

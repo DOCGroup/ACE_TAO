@@ -42,12 +42,10 @@ class TAO_ORBSVCS_Export TAO_EC_Default_Factory : public TAO_EC_Factory
   //   This class allows the user to experiment with different EC
   //   configurations.  Using a command-line like interface the user
   //   can specify which strategies will this factory generate.
-  //   Since the class can be dynamically loaded the strategies can be 
+  //   Since the class can be dynamically loaded the strategies can be
   //   set in the service configurator file.
   //
   // = MEMORY MANAGMENT
-  //   A single event channel instance can be used with an instance of
-  //   this class.
   //
 public:
   TAO_EC_Default_Factory (void);
@@ -60,14 +58,6 @@ public:
   virtual int init (int argc, char* argv[]);
   virtual int fini (void);
 
-  TAO_EC_SupplierFiltering*
-      supplier_filtering (TAO_EC_Event_Channel *ec);
-  // Helper method, the supplier filtering could be shared between all
-  // the ProxyPushConsumer objects. In that case it is created and
-  // owned by the factory.
-  // Alternatively each ProxyPushConsumer could have its own, in that
-  // case this method creates them on demand.
-
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel*);
@@ -77,6 +67,10 @@ public:
       create_filter_builder (TAO_EC_Event_Channel*);
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*);
+  virtual TAO_EC_Supplier_Filter_Builder*
+      create_supplier_filter_builder (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
   virtual TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel*);
   virtual void
@@ -119,6 +113,7 @@ public:
 private:
   int dispatching_;
   int filtering_;
+  int supplier_filtering_;
   int timeout_;
   int observer_;
   int supplier_set_;
@@ -127,12 +122,6 @@ private:
   int consumer_admin_lock_;
   int supplier_admin_lock_;
   // Several flags to control the kind of object created.
-
-  TAO_EC_SupplierFiltering* supplier_filtering_;
-  // The filtering strategy
-
-  ACE_SYNCH_MUTEX lock_;
-  // A mutex to control the internal state of the factory
 };
 
 #if defined (__ACE_INLINE__)

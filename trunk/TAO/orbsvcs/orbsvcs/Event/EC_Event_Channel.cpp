@@ -43,6 +43,8 @@ TAO_EC_Event_Channel (PortableServer::POA_ptr supplier_poa,
     this->factory_->create_dispatching (this);
   this->filter_builder_ =
     this->factory_->create_filter_builder (this);
+  this->supplier_filter_builder_ =
+    this->factory_->create_supplier_filter_builder (this);
   this->consumer_admin_ =
     this->factory_->create_consumer_admin (this);
   this->supplier_admin_ =
@@ -59,6 +61,8 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->dispatching_ = 0;
   this->factory_->destroy_filter_builder (this->filter_builder_);
   this->filter_builder_ = 0;
+  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
+  this->supplier_filter_builder_ = 0;
   this->factory_->destroy_consumer_admin (this->consumer_admin_);
   this->consumer_admin_ = 0;
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
