@@ -1,6 +1,20 @@
+Wed Feb 18 09:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	  Fixed include paths
+
 Tue Feb 17 17:03:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/MT_Client/test_i.cpp (shutdown): 
+	* tests/MT_Client/test_i.cpp (shutdown):
 	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
 	* performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp:
 
@@ -16,25 +30,25 @@ Tue Feb 17 16:56:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  manager on its own. This solves all sorts of crashes during
 	  shutdown and hack like the one in "Fri Feb  6 10:48:07 2004
 	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". We need to
-	  fix the patches applied. 
-	
+	  fix the patches applied.
+
  	* tao/Acceptor_Impl.cpp:
 
-	  Pass TAO_ORB_Core to the Thread_Per_Connection_Handler during 
-	  creation. 
+	  Pass TAO_ORB_Core to the Thread_Per_Connection_Handler during
+	  creation.
 
 Tue Feb 17 16:06:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
-        
+
           Removed the check for 'already referenced' when adding
           a forward declared interface to the module. A forward
           declared interface may be redeclared any number of times
           in the same scope, referenced or not.
-          
+
         * TAO_IDL/be/be_generator.cpp:
         * TAO_IDL/fe/fe_declarator.cpp:
-        
+
           Added code to make sure that the propagation of a prefix to
           nested scopes doesn't get skipped. Thanks to John Fletcher
           <john.fletcher@rd.bbc.co.uk> for sending in a complex
@@ -49,7 +63,7 @@ Tue Feb 17 13:04:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Feb 17 03:31:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open): 
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open):
 
 	  The address explicitly specified by the application was
 	  incorrectly passed as 0.0.0.0 to the acceptor. This was due to
