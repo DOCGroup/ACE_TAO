@@ -24,7 +24,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 
-template<class SVC_HANDLER> 
+template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
   // = TITLE
@@ -37,8 +37,8 @@ class ACE_Recycling_Strategy
 public:
   virtual ~ACE_Recycling_Strategy (void);
   // Virtual Destructor
-  
-  virtual int assign_recycler (SVC_HANDLER *svc_handler, 
+
+  virtual int assign_recycler (SVC_HANDLER *svc_handler,
                                ACE_Connection_Recycling_Strategy *recycler,
                                const void *recycling_act);
   // Tell the Svc_Handler something about the recycler, so that it can
@@ -180,36 +180,6 @@ protected:
 
   ACE_Service_Repository *svc_rep_;
   // Pointer to the <Service_Repository>.
-};
-
-template <class SVC_HANDLER>
-class ACE_Svc_Handler_Pool_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
-{
-  // = TITLE
-  //     Defines the interface for specifying a creation strategy for
-  //     a <SVC_HANDLER> that always returns the same <SVC_HANDLER> (i.e.,
-  //     it's a Singleton).
-  //
-  // = DESCRIPTION
-  //     Yadda, yadda... Unfinished...
-  //     Note that this class takes over the ownership of the
-  //     SVC_HANDLER passed into it as a parameter and it becomes
-  //     responsible for deleting this object.
-public:
-  // = Initialization and termination methods.
-  ACE_Svc_Handler_Pool_Strategy (ACE_Thread_Manager * = 0);
-  virtual ~ACE_Svc_Handler_Pool_Strategy (void);
-
-  // = Factory method.
-  virtual int make_svc_handler (SVC_HANDLER *&);
-  // Create a Singleton SVC_HANDLER by always returning the same
-  // SVC_HANDLER.  Returns -1 on failure, else 0.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 template <class SVC_HANDLER>
@@ -361,43 +331,6 @@ protected:
 
   size_t n_threads_;
   // Number of threads to spawn.
-};
-
-template <class SVC_HANDLER>
-class ACE_Thread_Pool_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
-{
-  // = TITLE
-  //     Defines the interface for specifying a concurrency strategy
-  //     for a <SVC_HANDLER> based on multithreading.
-  //
-  // = DESCRIPTION
-  //     This class provides a strategy that handle requests from
-  //     clients concurrently using the current thread's context.  It
-  //     "activates" the user-supplied <SVC_HANDLER> by calling it's
-  //     svc () method directly.
-public:
-  // = Intialization and termination methods.
-  ACE_Thread_Pool_Strategy (int flags = 0);
-  // "Do-nothing constructor"
-
-  virtual ~ACE_Thread_Pool_Strategy (void);
-
-  // = Factory method.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
-  // Activate the <svc_handler> with an appropriate concurrency
-  // strategy.  This method activates the SVC_HANDLER by first calling
-  // its open() method and then calling its activate() method to turn
-  // it into an active object.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-protected:
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> inherited;
 };
 
 template <class SVC_HANDLER>
@@ -729,14 +662,14 @@ private:
 
 template <class T>
 class ACE_Refcounted_Hash_Recyclable :  public ACE_Refcountable,
-                                        public ACE_Hashable, 
+                                        public ACE_Hashable,
                                         public ACE_Recyclable
 {
 public:
   ACE_Refcounted_Hash_Recyclable (void);
   // Default constructor.
 
-  ACE_Refcounted_Hash_Recyclable (const T &t, 
+  ACE_Refcounted_Hash_Recyclable (const T &t,
                                   int refcount = 0,
                                   ACE_Recyclable::State state = ACE_Recyclable::UNKNOWN);
   // Constructor.
@@ -752,7 +685,7 @@ public:
 
 protected:
   u_long hash_i (void) const;
-  // Computes and returns hash value.  
+  // Computes and returns hash value.
 
   T t_;
 };
@@ -810,7 +743,7 @@ public:
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
   // Template method for activating a new <svc_handler>
 
-  virtual int assign_recycler (SVC_HANDLER *svc_handler, 
+  virtual int assign_recycler (SVC_HANDLER *svc_handler,
                                ACE_Connection_Recycling_Strategy *recycler,
                                const void *recycling_act);
   // Template method for setting the recycler information of the
@@ -852,25 +785,25 @@ public:
   // Cleanup hint.
 
   // = Define some useful typedefs.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> 
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
           CREATION_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           CONCURRENCY_STRATEGY;
-  typedef ACE_Recycling_Strategy<SVC_HANDLER> 
+  typedef ACE_Recycling_Strategy<SVC_HANDLER>
           RECYCLING_STRATEGY;
 
   // = Super class
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           CONNECT_STRATEGY;
 
   // = Typedefs for managing the map
-  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> 
+  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Iterator <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP_ITERATOR;
-  typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *> 
+  typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *>
           CONNECTION_MAP_ENTRY;
 
   // = Strategy accessors

@@ -6,7 +6,7 @@ ACE_Hash_Addr<ADDR_T>::~ACE_Hash_Addr (void)
 {
 }
 
-template<class SVC_HANDLER> ASYS_INLINE 
+template<class SVC_HANDLER> ASYS_INLINE
 ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy (void)
 {
 }
@@ -50,30 +50,6 @@ ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler");
   sh = this->svc_handler_;
-  return 0;
-}
-
-template <class SVC_HANDLER> ASYS_INLINE
-ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::ACE_Svc_Handler_Pool_Strategy (ACE_Thread_Manager *tm)
-{
-  ACE_TRACE ("ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::ACE_Svc_Handler_Pool_Strategy");
-  this->open (tm);
-}
-
-template <class SVC_HANDLER> ASYS_INLINE
-ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::~ACE_Svc_Handler_Pool_Strategy (void)
-{
-  ACE_TRACE ("ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::~ACE_Svc_Handler_Pool_Strategy");
-}
-
-// Create a Singleton SVC_HANDLER by always returning the same
-// SVC_HANDLER.
-
-template <class SVC_HANDLER> ASYS_INLINE int
-ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
-{
-  ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler");
-  ACE_NEW_RETURN (sh, SVC_HANDLER, 0);
   return 0;
 }
 
@@ -200,19 +176,6 @@ template <class SVC_HANDLER> ASYS_INLINE
 ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy");
-}
-
-template <class SVC_HANDLER> ASYS_INLINE
-ACE_Thread_Pool_Strategy<SVC_HANDLER>::ACE_Thread_Pool_Strategy (int flags)
-  : ACE_Concurrency_Strategy<SVC_HANDLER> (flags)
-{
-  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
-}
-
-template <class SVC_HANDLER> ASYS_INLINE
-ACE_Thread_Pool_Strategy<SVC_HANDLER>::~ACE_Thread_Pool_Strategy (void)
-{
-  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::~ACE_Thread_Pool_Strategy");
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE int
@@ -377,7 +340,7 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
 }
 
 template <class T> ASYS_INLINE
-ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t, 
+ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
                                                                    int refcount,
                                                                    ACE_Recyclable::State state)
   : ACE_Refcountable (refcount),
@@ -398,22 +361,22 @@ ACE_Refcounted_Hash_Recyclable<T>::hash_i (void) const
   return this->t_.hash ();
 }
 
-template <class T> ASYS_INLINE int 
+template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
   if (this->state () != ACE_Recyclable::IDLE)
     return 0;
   else
-    return this->t_ == rhs.t_;  
+    return this->t_ == rhs.t_;
 }
 
-template <class T> ASYS_INLINE int 
+template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
 {
   if (this->state () != ACE_Recyclable::IDLE)
     return 0;
   else
-    return this->t_ == rhs;  
+    return this->t_ == rhs;
 }
 
 template<class ADDR_T> ASYS_INLINE
