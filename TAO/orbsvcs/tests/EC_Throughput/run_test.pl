@@ -31,7 +31,7 @@ print STDERR "================ Collocated tests, multi threaded\n";
 
 $T = new PerlACE::Process ("ECT_Throughput",
                            "-ORBSvcConf $ec_mt_conf" 
-                           . "-m new -u 10000 -n 1 -t 0 -c 4");
+                           . " -m new -u 10000 -n 1 -t 0 -c 4");
 
 $test = $T->SpawnWaitKill (60);
 
