@@ -21,11 +21,10 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
-  cdr << TAO_ENCAP_BYTE_ORDER;
-  cdr << this->attributes_.id ();
-  cdr << this->attributes_.name ();
-
-  return true;
+  return
+    (cdr << TAO_ENCAP_BYTE_ORDER)
+    && (cdr << this->attributes_.id ())
+    && (cdr << this->attributes_.name ());
 }
 
 template <typename StringType, class RefCountPolicy>

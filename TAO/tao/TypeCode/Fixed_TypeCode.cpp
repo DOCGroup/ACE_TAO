@@ -20,10 +20,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
   // marshaled immediately following the TCKind.  No CDR encapsulation
   // is to be created.
 
-  cdr << this->digits_;
-  cdr << this->scale_;
-
-  return true;
+  return (cdr << this->digits_) && (cdr << this->scale_);
 }
 
 template <class RefCountPolicy>

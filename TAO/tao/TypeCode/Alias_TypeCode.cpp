@@ -28,15 +28,14 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::tao_marshal (
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
-  cdr << TAO_ENCAP_BYTE_ORDER;
-  cdr << this->attributes_.id ();
-  cdr << this->attributes_.name ();
+  return
+    (cdr << TAO_ENCAP_BYTE_ORDER)
+    && (cdr << this->attributes_.id ())
+    && (cdr << this->attributes_.name ())
 
-  // @@ Is recursion an issue for typedefs/aliases?
+    // @@ Is recursion an issue for typedefs/aliases?
 
-  cdr << *(this->content_type_.in ());
-
-  return true;
+    && (cdr << *(this->content_type_.in ()));
 }
 
 template <typename StringType, class RefCountPolicy>

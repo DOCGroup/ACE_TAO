@@ -168,23 +168,21 @@ CORBA::TypeCode::concrete_base_type_i (ACE_ENV_SINGLE_ARG_DECL) const
 
 bool
 TAO::operator<< (TAO_OutputCDR & cdr,
-                 CORBA::TypeCode const * x)
+                 CORBA::TypeCode const * tc)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  if (x == 0)
+  if (tc == 0)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
                         false);
     }
 
-  CORBA::ULong const kind = x->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
-  cdr << kind;
-
-  return x->tao_marshal (cdr);
+  return (cdr << kind) && tc->tao_marshal (cdr);
 }
 
 CORBA::TCKind

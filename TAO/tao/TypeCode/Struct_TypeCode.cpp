@@ -24,10 +24,14 @@ TAO::TypeCode::Struct<StringType,
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
-  cdr << TAO_ENCAP_BYTE_ORDER;
-  cdr << this->base_attributes_.id ();
-  cdr << this->base_attributes_.name ();
-  cdr << this->nfields_;
+  bool const success =
+    (cdr << TAO_ENCAP_BYTE_ORDER)
+    && (cdr << this->base_attributes_.id ())
+    && (cdr << this->base_attributes_.name ())
+    && (cdr << this->nfields_);
+
+  if (!success)
+    return false;
 
   Field<STRING_TYPE> const * const begin = this->fields ();
   Field<STRING_TYPE> const * const end   = begin + this->nfields_;
@@ -35,9 +39,10 @@ TAO::TypeCode::Struct<StringType,
   for (Field<STRING_TYPE> const * i = begin; i != end; ++i)
     {
       Field<STRING_TYPE> const & field = *i;
-
-      cdr << field.get_name ();
-      cdr << *(field.type);
+      
+      if (!(cdr << field.get_name ())
+          || !(cdr << *(field.type)))
+        return false;
     }
 
   return true;

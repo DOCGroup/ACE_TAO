@@ -20,9 +20,7 @@ TAO::TypeCode::String<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
   // marshaled immediately following the TCKind.  No CDR encapsulation
   // is to be created.
 
-  cdr << this->length_;
-
-  return true;
+  return (cdr << this->length_);
 }
 
 template <class RefCountPolicy>

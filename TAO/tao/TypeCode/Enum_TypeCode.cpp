@@ -24,10 +24,14 @@ TAO::TypeCode::Enum<StringType,
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
-  cdr << TAO_ENCAP_BYTE_ORDER;
-  cdr << this->base_attributes_.id ();
-  cdr << this->base_attributes_.name ();
-  cdr << this->nenumerators_;
+  bool const success =
+    (cdr << TAO_ENCAP_BYTE_ORDER)
+    && (cdr << this->base_attributes_.id ())
+    && (cdr << this->base_attributes_.name ())
+    && (cdr << this->nenumerators_);
+
+  if (!success)
+    return false;
 
   Enumerator<STRING_TYPE> const * const begin = this->enumerators ();
   Enumerator<STRING_TYPE> const * const end   = begin + this->nenumerators_;
@@ -36,7 +40,8 @@ TAO::TypeCode::Enum<StringType,
     {
       Enumerator<STRING_TYPE> const & enumerator = *i;
 
-      cdr << enumerator.get_name ();
+      if (!(cdr << enumerator.get_name ()))
+        return false;
     }
 
   return true;
