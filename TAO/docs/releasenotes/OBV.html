@@ -12,48 +12,47 @@
         <h1><a name="orb"></a>Objects-by-Value</h1>
         Points of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
         <a href="mailto: bosk@ipmce.ru">Boris Kolpackov</a>
+        <a href="mailto:g.edwards@vanderbilt.edu">George Edwards</a>
 
-        <p>Last Update: 2002/07/29 </p>
+        <p>Last Update: 2003/06/30 </p>
       </center>
 
-      <p>Objects-by-Value (OBV) describes the new type, <CODE>valuetype</CODE>.
-        It is introduced in CORBA 2.3
+      <p>Objects-by-Value (OBV) describes the new type, <CODE>valuetype</CODE>, introduced in CORBA 2.3
         <br>(Core:
-        <a href="ftp://ftp.omg.org/pub/docs/ptc/98-12-04.pdf">ptc/98-12-04.pdf
-        </a> Mapping to C++:
-        <a href="ftp://ftp.omg.org/pub/docs/ptc/98-09-03.pdf">ptc/98-09-03.pdf</a>).
-        This first implementation was contributed from
-        <a href="mailto: kuepper2@uni-wuppertal.de">Torsten Kuepper</a>.
-      <CODDE>Valuetype</CODE>s are similar to IDL <CODE>struct</CODE>s extended with 
-        these features:
+        <a href="http://www.omg.org/cgi-bin/apps/doc?formal/02-12-06.pdf">formal/02-12-06.pdf</a>; Mapping to C++:
+        <a href="http://www.omg.org/cgi-bin/apps/doc?formal/03-06-03.pdf">formal/03-06-03.pdf</a>).
+       <p>The original TAO implementation was contributed by
+        <a href="mailto: kuepper2@uni-wuppertal.de">Torsten Kuepper</a>, and has subsequently been enhanced and corrected by <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a> and <a href="mailto:g.edwards@vanderbilt.edu">George Edwards</a>.
+      <p><CODE>Valuetype</CODE>s are similar to IDL <CODE>struct</CODE>s extended with 
+        these capabilities:
       <ul>
-        <li><p>Encapsulate state and operations with local implementation.</p>
+        <li><p>Encapsulate both state information and operations in an implementation that is guaranteed to be local.</p>
         </li>
 
-        <li><p>Single inheritance from a <CODE>valuetype</CODE> and
-            multiple inheritance from abstract
-            <CODE>valuetype</CODE>s. Eventually support of an
-            interface.</p> 
+        <li><p>Can be declared <CODE>abstract</CODE>, in which case no state members are defined.</p> 
         </li>
-        <li><p>References to other <CODE>valuetype</CODE>s, with the
+<li><p>Can inherit from a single concrete <CODE>valuetype</CODE> and multiple <CODE>abstract valuetype</CODE>s.</p></li>
+<li><p>Can support a single concrete <CODE>interface</CODE>, allowing them to be manipulated as either a valuetype or an object reference.</p></li>
+<li><p>Can support multiple <CODE>abstract interface</CODE>s, allowing them to be substituted for those interfaces in operation invocations.</p></li>
+        <li><p>Can hold references to other <CODE>valuetype</CODE>s, with the
             possibility of NULL references or shared (aliased) references.</p>
         </li>
       </ul>
 
-      <p><CODE>Valuetype</CODE>s will likely be used to implement
-      abstract datatypes (ADT)s that can be copied to another process.
-      All processes that use the <CODE>valuetype</CODE> must have an
-      implementation for it since CORBA does not support code
-      migration, a la Java RMI.</p> 
-
+<p>Valuetypes have the following uses:
+<UL>
+<li><p>Implement abstract datatypes (ADTs) that can be copied to another process.</p></li>
+<li><p>Represent <CODE>eventtype</CODE>s in the Event Service.</p></li>
+<li><p>Ensure operations are executed locally for increased performance.</p></li>
+</UL>
       <a name="current"><h3>Current status:</h3></a>
 
       <ul>
         <li><p>The IDL compiler understands <CODE>valuetype</CODE>. 
         Relevant options of TAO's IDL compiler are: <P>
             <UL>
-            <LI>-Gv Enable OBV support
-            <LI>-Sv Disable OBV support (default)
+            <LI>-Gv Enable OBV support (default)
+            <LI>-Sv Disable OBV support
             <LI>-Wb,obv_opt_accessor Make accessor and modifier functions inline.
             Overriding them is not allowed in this mode.
             </UL>
@@ -62,31 +61,36 @@
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in
             <A HREF="../../examples/OBV/Typed_Events">$TAO_ROOT/TAO/examples/OBV/Typed_Events</A>.
-            <CODE>Valuetype</CODE>s could even reference other
+            <CODE>Valuetype</CODE>s can reference other
             <CODE>valuetype</CODE> objects (but without sharing).
           </p>
         </li>
         <li>
-          <p> Support for valuetypes as members of IDL aggregate types has been
+          <p>Support for valuetypes as members of IDL aggregate types has been
               added.</p>
         </li>
         <li>
-          <p> Support for inheritance from interface (supports) has been added. </p>
+          <p>Support for inheritance from a concrete interface (<CODE>supports</CODE>) has been added. There is an example in <A HREF="../../tests/OBV/Supports">$TAO_ROOT/TAO/tests/OBV/Supports</A>.</p>
         </li>
+<li>
+<p>Support for inheritance from abstract interfaces has been added. There is an example in <A HREF="../../tests/Abstract_Interface">$TAO_ROOT/TAO/tests/Abstract_Interface</A>.</p>
         <li>
-          <p> Support for abstract interfaces has been added.</p>
+          <p>Support for forward declared valuetypes defined in another compilation
+              unit has been added. See <A HREF="../../examples/OBV/Typed_Events">$TAO_ROOT/TAO/examples/OBV/Typed_Events</A>.</p>
         </li>
-        <li>
-          <p> Support for forward declared valuetypes defined in another compilation
-              unit has been added.</p>
-        </li>
+<li>
+<p>Support for recursively-defined valuetypes has been added. See <A HREF="../../tests/OBV/Supports">$TAO_ROOT/TAO/tests/OBV/Supports</A>.</p>
+</li>
+<li>
+<p>Support for user-declared factories has been added. See <A HREF="../../tests/OBV/Factory">$TAO_ROOT/TAO/tests/OBV/Factory</A>.</p>
+</li>
       </ul>
 
       <a name="issues"><h3>Known issues:</h3></a>
 
       <ul>
         <li><p><CODE>Valuetype</CODE>s work only in conjunction with
-            compiled marshalling (<CODE>-Gc</CODE>, currently default for
+            compiled marshaling (<CODE>-Gc</CODE>, currently default for
             <CODE>tao_idl</CODE>). 
           </p>
         </li>
@@ -98,6 +102,9 @@
         <li><p>No support for <CODE>valuebox</CODE>es
           </p>
         </li>
+<li>
+<p>
+No support for <CODE>valuetype</CODE>s with cyclic references.</p></li>
 
         <li><p>No support for fragmentation (chunking) of the marshalled
             <CODE>valuetype</CODE> object. Hence no support for truncation or
@@ -109,12 +116,6 @@
             from the CORBA specs and needs to be changed. But the
             optimized mode  (<CODE>-Wb,obv_opt_accessor</CODE>) should be
             unaffected by that.
-          </p>
-        </li>
-
-        <li><p>Obtaining a repository id of a <CODE>valuetype</CODE>
-            is currently non-standard. Hashed repository ids are not
-            implemented. 
           </p>
         </li>
 
