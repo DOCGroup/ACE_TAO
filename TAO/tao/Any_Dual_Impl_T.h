@@ -68,6 +68,8 @@ namespace TAO
     virtual void free_value (void);
 
   protected:
+    void value (const T &);
+
     T * value_;
   };
 };

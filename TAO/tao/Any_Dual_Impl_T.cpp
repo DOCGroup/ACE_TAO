@@ -33,6 +33,13 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
 {
 }
 
+template<typename T> void
+TAO::Any_Dual_Impl_T<T>::value (const T & val)
+{
+  ACE_NEW (this->value_,
+           T (val));
+}
+
 template<typename T>
 TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
                                           CORBA::TypeCode_ptr tc,
@@ -40,8 +47,7 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
   : Any_Impl (destructor,
               tc)
 {
-  ACE_NEW (this->value_,
-           T (val));
+  this->value (val);
 }
 
 template<typename T>
