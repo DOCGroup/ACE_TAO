@@ -273,14 +273,56 @@ namespace Deployment
     Dump_Obj dump_obj("ComponentPropertyDescription");
     
     dump ("name", comppropdesc.name);
-    ACE_DEBUG ((LM_DEBUG, "%stype: ???", Dump_Obj::indent()));  // TODO:
+
+    ACE_DEBUG ((LM_DEBUG, "%stype: ", Dump_Obj::indent()));
+    switch (comppropdesc.type.in()->kind()) {
+    case ::CORBA::tk_null: ACE_DEBUG ((LM_DEBUG, "tk_null\n")); break;
+    case ::CORBA::tk_void: ACE_DEBUG ((LM_DEBUG, "tk_void\n")); break;
+    case ::CORBA::tk_short: ACE_DEBUG ((LM_DEBUG, "tk_short\n")); break;
+    case ::CORBA::tk_long: ACE_DEBUG ((LM_DEBUG, "tk_long\n")); break;
+    case ::CORBA::tk_ushort: ACE_DEBUG ((LM_DEBUG, "tk_ushort\n")); break;
+    case ::CORBA::tk_ulong: ACE_DEBUG ((LM_DEBUG, "tk_ulong\n")); break;
+    case ::CORBA::tk_float: ACE_DEBUG ((LM_DEBUG, "tk_float\n")); break;
+    case ::CORBA::tk_double: ACE_DEBUG ((LM_DEBUG, "tk_double\n")); break;
+    case ::CORBA::tk_boolean: ACE_DEBUG ((LM_DEBUG, "tk_boolean\n")); break;
+    case ::CORBA::tk_char: ACE_DEBUG ((LM_DEBUG, "tk_char\n")); break;
+    case ::CORBA::tk_octet: ACE_DEBUG ((LM_DEBUG, "tk_octet\n")); break;
+    case ::CORBA::tk_any: ACE_DEBUG ((LM_DEBUG, "tk_any\n")); break;
+    case ::CORBA::tk_TypeCode: ACE_DEBUG ((LM_DEBUG, "tk_TypeCode\n")); break;
+    case ::CORBA::tk_Principal: ACE_DEBUG ((LM_DEBUG, "tk_Principal\n")); break;
+    case ::CORBA::tk_objref: ACE_DEBUG ((LM_DEBUG, "tk_objref\n")); break;
+    case ::CORBA::tk_struct: ACE_DEBUG ((LM_DEBUG, "tk_struct\n")); break;
+    case ::CORBA::tk_union: ACE_DEBUG ((LM_DEBUG, "tk_union\n")); break;
+    case ::CORBA::tk_enum: ACE_DEBUG ((LM_DEBUG, "tk_enum\n")); break;
+    case ::CORBA::tk_string: ACE_DEBUG ((LM_DEBUG, "tk_string\n")); break;
+    case ::CORBA::tk_sequence: ACE_DEBUG ((LM_DEBUG, "tk_sequence\n")); break;
+    case ::CORBA::tk_array: ACE_DEBUG ((LM_DEBUG, "tk_array\n")); break;
+    case ::CORBA::tk_alias: ACE_DEBUG ((LM_DEBUG, "tk_alias\n")); break;
+    case ::CORBA::tk_except: ACE_DEBUG ((LM_DEBUG, "tk_except\n")); break;
+    case ::CORBA::tk_longlong: ACE_DEBUG ((LM_DEBUG, "tk_longlong\n")); break;
+    case ::CORBA::tk_ulonglong: ACE_DEBUG ((LM_DEBUG, "tk_ulonglong\n")); break;
+    case ::CORBA::tk_longdouble: ACE_DEBUG ((LM_DEBUG, "tk_longdouble\n")); break;
+    case ::CORBA::tk_wchar: ACE_DEBUG ((LM_DEBUG, "tk_wchar\n")); break;
+    case ::CORBA::tk_wstring: ACE_DEBUG ((LM_DEBUG, "tk_wstring\n")); break;
+    case ::CORBA::tk_fixed: ACE_DEBUG ((LM_DEBUG, "tk_fixed\n")); break;
+    case ::CORBA::tk_value: ACE_DEBUG ((LM_DEBUG, "tk_value\n")); break;
+    case ::CORBA::tk_value_box: ACE_DEBUG ((LM_DEBUG, "tk_value_box\n")); break;
+    case ::CORBA::tk_native: ACE_DEBUG ((LM_DEBUG, "tk_native\n")); break;
+    case ::CORBA::tk_abstract_interface: ACE_DEBUG ((LM_DEBUG, "tk_abstract_interface\n")); break;
+    case ::CORBA::tk_local_interface: ACE_DEBUG ((LM_DEBUG, "tk_local_interface\n")); break;
+    case ::CORBA::tk_component: ACE_DEBUG ((LM_DEBUG, "tk_component\n")); break;
+    case ::CORBA::tk_home: ACE_DEBUG ((LM_DEBUG, "tk_home\n")); break;
+    case ::CORBA::tk_event: ACE_DEBUG ((LM_DEBUG, "tk_event\n")); break;
+    default:
+      break;
+    };
   }
 
   // ComponentInterfaceDescription
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
   {
-    Dump_Obj dump_obj("ComponentInterfaceDescription");
+    Dump_Obj dump_obj("ComponentInterfaceDescription", cid);
 
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
