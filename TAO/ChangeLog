@@ -1,3 +1,9 @@
+Thu Jan 16 12:29:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* COPYING: Extended the validity of the copyright notice from 2002
+	  to 2003. Should have been done yesterday.., anyway, better late 
+	  than never.
+
 Thu Jan 16 10:52:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
