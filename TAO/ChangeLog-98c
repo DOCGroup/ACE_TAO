@@ -1,5 +1,9 @@
 Wed Dec 30 21:12:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
+	  Added code to check the effectiveness of the hashing of
+ 	  servants.
+
 	* tao/ORB_Core.cpp (root_poa): Reset the root_poa_reference_ when
  	  the root_poa_ is changed.
 
