@@ -1,13 +1,13 @@
 /**
- * @file Client_Group.h
+ * @file Loopback_Pair.h
  *
  * $Id$
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-#ifndef TAO_PERF_RTEC_CLIENT_GROUP_H
-#define TAO_PERF_RTEC_CLIENT_GROUP_H
+#ifndef TAO_PERF_RTEC_LOOPBACK_PAIR_H
+#define TAO_PERF_RTEC_LOOPBACK_PAIR_H
 
 #include "Servant_var.h"
 
@@ -15,17 +15,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Consumer.h"
-#include "Supplier.h"
-#include "Loopback_Pair.h"
+#include "Loopback_Supplier.h"
+#include "Loopback_Consumer.h"
 
 /**
- * @class Client_Group
+ * @class Loopback_Pair
  *
- * @brief Simplify the initialization of a Supplier/Consumer pair
- *        connected through a Loopback.
+ * @brief Simplify the initialization of a Loopback connection through
+ *        the event channel.
  */
-class TAO_RTEC_Perf_Export Client_Group
+class TAO_RTEC_Perf_Export Loopback_Pair
 {
 public:
   /// Constructor
@@ -33,7 +32,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Client_Group (void);
+  Loopback_Pair (void);
 
   /**
    * @param experiment_id For tests that run multiple experiments
@@ -49,10 +48,7 @@ public:
    *
    */
   void init (CORBA::Long experiment_id,
-             CORBA::Long base_event_type,
-             CORBA::ULong iterations,
-             CORBA::Long workload_in_usecs,
-             ACE_UINT32 gsf);
+             CORBA::Long base_event_type);
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec
@@ -64,23 +60,18 @@ public:
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
-
-  Consumer *consumer (void) const;
-
   Loopback_Supplier *loopback_supplier (void) const;
 
   Loopback_Consumer *loopback_consumer (void) const;
   //@}
 
 private:
-  Servant_var<Supplier> supplier_;
-  Servant_var<Consumer> consumer_;
-  Loopback_Pair loopback_pair_;
+  Servant_var<Loopback_Supplier> loopback_supplier_;
+  Servant_var<Loopback_Consumer> loopback_consumer_;
 };
 
 #if defined(__ACE_INLINE__)
-#include "Client_Group.inl"
+#include "Loopback_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_PERF_RTEC_CLIENT_GROUP_H */
+#endif /* TAO_PERF_RTEC_LOOPBACK_PAIR_H */

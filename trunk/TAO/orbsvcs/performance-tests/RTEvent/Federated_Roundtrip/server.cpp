@@ -7,6 +7,10 @@
 #include "RTEC_Initializer.h"
 #include "RTCORBA_Setup.h"
 #include "SyncScope_Setup.h"
+#include "Loopback_Pair.h"
+#include "Auto_Disconnect.h"
+
+#include "orbsvcs/Event_Service_Constants.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
@@ -18,7 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(TAO_PERF_RTEC_Roundtrip, server, "$Id$")
+ACE_RCSID(TAO_PERF_RTEC_Federated_Roundtrip, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 int use_rt_corba = 0;
@@ -56,6 +60,8 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
+  const CORBA::Long experiment_id = 1;
+
   TAO_EC_Default_Factory::init_svcs ();
 
   RT_Class test_scheduling;
@@ -124,6 +130,22 @@ int main (int argc, char *argv[])
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      Loopback_Pair high_priority_pair;
+      high_priority_pair.init (experiment_id,
+                               ACE_ES_EVENT_UNDEFINED);
+      high_priority_pair.connect (ec.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      Auto_Disconnect<Loopback_Pair> high_priority_disconnect (&high_priority_pair);
+
+      Loopback_Pair low_priority_pair;
+      low_priority_pair.init (experiment_id,
+                              ACE_ES_EVENT_UNDEFINED + 2);
+      low_priority_pair.connect (ec.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      Auto_Disconnect<Loopback_Pair> low_priority_disconnect (&low_priority_pair);
 
       do {
         ACE_Time_Value tv (1, 0);

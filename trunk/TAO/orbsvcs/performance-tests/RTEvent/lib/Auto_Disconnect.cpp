@@ -10,13 +10,14 @@
 
 #include "Auto_Disconnect.h"
 #include "tao/Environment.h"
+#include "ace/Swap.h"
 
 #if !defined(__ACE_INLINE__)
 #include "Auto_Disconnect.inl"
 #endif /* __ACE_INLINE__ */
 
-template<class SERVANT>
-Auto_Disconnect<SERVANT>::~Auto_Disconnect ()
+template<class Client>
+Auto_Disconnect<Client>::~Auto_Disconnect ()
 {
   if (this->client_ == 0)
     return;
@@ -30,6 +31,14 @@ Auto_Disconnect<SERVANT>::~Auto_Disconnect ()
     //    would make it impossible to use this class effectively.
     //    Read Servant_var.cpp for more details.
   } ACE_ENDTRY;
+}
+
+template<class Client> Auto_Disconnect<Client>&
+Auto_Disconnect<Client>::operator= (Client *client)
+{
+  Auto_Disconnect<Client> tmp (client);
+  ACE_Swap<Client*>::swap (this->client_, tmp.client_);
+  return *this;
 }
 
 #endif /* TAO_PERF_RTEC_AUTO_DISCONNECT_CPP */

@@ -1,3 +1,38 @@
+Fri Mar  1 18:56:21 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.cpp:
+	  Add methods to reset the contained pointer, useful when
+	  declaring arrays of Auto_Disconnect objects.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Pair.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Pair.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Pair.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
+	  Factor out code to create a Loopback_Consumer/Loopback_Supplier
+	  pair.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
+	  New helper class to set the SyncScope policy.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Take advantage of the new classes to implement the client and
+	  server.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+	  Start new test to measure the roundtrip delay (and scalability)
+	  of the federated architecture.
+
 Fri Mar  1 15:17:27 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Messaging/Messaging.cpp:
@@ -30,7 +65,7 @@ Fri Mar  1 10:41:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Lite.cpp:
 	* tao/Tagged_Profile.cpp: Made some cosmetic fixes. Further, made
 	  sure that return values in case of errors are consistent, for the
-	  sake of uniformity. Thanks to Don Hinton for pointing this out. 
+	  sake of uniformity. Thanks to Don Hinton for pointing this out.
 
 Fri Mar  1 07:56:43 2002  Carlos O'Ryan  <coryan@uci.edu>
 
