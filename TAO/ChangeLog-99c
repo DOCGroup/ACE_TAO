@@ -1,3 +1,13 @@
+Thu Sep 30 20:32:57 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* docs/minimumTAO.html:
+	  Fixed a bad link.
+
+Thu Sep 30 20:21:21 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* examples/Load_Balancing/run_test.pl:
+	  Added a perl script to run the demo.
+
 Thu Sep 30 18:21:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_expression.h:
@@ -13,7 +23,7 @@ Thu Sep 30 16:25:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/ORB.h: Added two more methods within the CORBA::ORB
 	  class. The methods are create_alias_tc () &
 	  create_struct_tc(). These were requested by Jarek Tomasewzki
-	  <jarek-tomasewski@vertel.de>. 
+	  <jarek-tomasewski@vertel.de>.
 
 Thu Sep 30 14:58:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -50,7 +60,7 @@ Thu Sep 30 12:40:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be_include/be_interface_strategy.h,
 	  TAO_IDL/be_include/be_visitor_operation.h:
 	  Removed AMI dpendecies.
-	
+
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
 	  TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp,
 	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
@@ -83,14 +93,14 @@ Thu Sep 30 05:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
 	  Added missing const in readonly accessor of sequence.
-	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de> 
+	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de>
 	  for sending this fix.
 
         * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  Changed set accessor of sequence member. 
-	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de> 
+	  Changed set accessor of sequence member.
+	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de>
 	  for sending this fix.
-	
+
 	* docs/releasenotes/index.html: Documented the current
 	  status of AMI.
 
@@ -113,7 +123,7 @@ Wed Sep 29 15:35:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * docs/implrepo/index.html:
         * docs/implrepo/tao_ir.html:
         * docs/implrepo/usersguide.html:
-          
+
           Replaced -ORBImplRepoServiceIOR with -ORBInitRef.
 
         * examples/Callback_Quoter/run_test.pl:
@@ -124,7 +134,7 @@ Wed Sep 29 15:35:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 Wed Sep 29 15:32:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
-	  In >>= (to_object), decode from the stream using 
+	  In >>= (to_object), decode from the stream using
 	  the contained type rather than CORBA::Object. The
 	  widening happens upon assignment to the Object_ptr
 	  in the to_object struct.
@@ -177,7 +187,7 @@ Wed Sep 29 13:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
 	  Fixed some things regarding the handling of the sequence of
 	  octets.
-	
+
 	* tests/AMI/simple_client.cpp,
 	  tests/AMI/ami_test_i.cpp: Cosmetic changes.
 
@@ -244,7 +254,7 @@ Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_cs.h,
 	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ch.h,
 	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ci.h:
-	  Removed these files, part of them got replaced by the 
+	  Removed these files, part of them got replaced by the
 	  following four files.
 
 	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp,
@@ -253,7 +263,7 @@ Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be_include/be_visitor_valuetype/ami_exception_holder_ch.h:
 	  Crafted these files after the above mentioned removed files.
 
-	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/tao_idl.dsp:
 	  Added the file TAO_IDL/be_include/be_interface_strategy.h
 
 	* TAO_IDL/be/be_interface.cpp
@@ -279,7 +289,7 @@ Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp,
 	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
 	  Refined the code generation for exception holders.
-	
+
 	* TAO_IDL/be/be_visitor_interface.cpp,
 	  TAO_IDL/be/be_visitor_argument.cpp,
 	  TAO_IDL/be/be_visitor_factory.cpp,
@@ -301,7 +311,7 @@ Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp,
 	  TAO_IDL/be_include/be_visitor_valuetype.h:
 	  Did some minor corrections and enhancements to produce
-	  correct code. 
+	  correct code.
 
 
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
@@ -317,12 +327,12 @@ Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  arguments to the two invoke () methods, this resulted
 	  in removing one of them because the difference was just
 	  in the representation of the exception list. We do not
-	  need to hand over exceptions because they get caught 
+	  need to hand over exceptions because they get caught
 	  by the reply handler reply stub and not by invoke
 	  as in the SMI case.
 
 	* tests/AMI/simple_client.cpp:
-	  Corrected the name of the return value to be conform 
+	  Corrected the name of the return value to be conform
 	  with the Messaging spec, which says it is named "ami_return_val".
 
 Tue Sep 28 19:45:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
