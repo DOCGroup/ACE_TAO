@@ -1,7 +1,13 @@
+Fri Dec 17 21:20:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/TTY_IO.cpp (control): added static cast of TCSETS to
+          int to avoid cxx 6.3 warning about conversion of unsigned
+          int to int.  Also added the cast to TCGETS.
+
 Fri Dec 17 14:40:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Local_Tokens.h (ACE_TSS_TPQ_Entry): Made the destructor
-	  virtual to avoid warnings from egcs.
+        * ace/Local_Tokens.h (ACE_TSS_TPQ_Entry): Made the destructor
+          virtual to avoid warnings from egcs.
 
 Fri Dec 17 13:27:24 1999  Steve Huston  <shuston@riverace.com>
 
@@ -10,167 +16,167 @@ Fri Dec 17 13:27:24 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Dec 17 11:38:09 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* We just reached our 800th external contributor: Andrey
- 	  Nechypurenko <andreynech@yahoo.com>.  Andrey gets a free copy of
- 	  ACE+TAO as a prize!
+        * We just reached our 800th external contributor: Andrey
+          Nechypurenko <andreynech@yahoo.com>.  Andrey gets a free copy of
+          ACE+TAO as a prize!
 
-	* ace/config-linux-common.h: Wrapped the #define
- 	  ACE_DEFAULT_SELECT_REACTOR_SIZE with a #if !defined() so that
- 	  users can override this.  Thanks to Charlie Duke
- 	  <cduke@wpine.com> for suggesting this.
+        * ace/config-linux-common.h: Wrapped the #define
+          ACE_DEFAULT_SELECT_REACTOR_SIZE with a #if !defined() so that
+          users can override this.  Thanks to Charlie Duke
+          <cduke@wpine.com> for suggesting this.
 
 Thu Dec 16 12:26:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/auto_compile_win32.pl: Took out Concurrency Service from the
-	  build list.
+        * bin/auto_compile_win32.pl: Took out Concurrency Service from the
+          build list.
 
 Wed Dec 15 21:24:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/config-win32-common.h (ACE_DEFAULT_MAX_SOCKET_BUFSIZ):
-	  Windows doesn't like 65536 ;-) If 65536 is specified, it is
-	  listenly ignored by the OS, i.e., setsockopt does not fail, and
-	  you get stuck with the default size of 8k.
+        * ace/config-win32-common.h (ACE_DEFAULT_MAX_SOCKET_BUFSIZ):
+          Windows doesn't like 65536 ;-) If 65536 is specified, it is
+          listenly ignored by the OS, i.e., setsockopt does not fail, and
+          you get stuck with the default size of 8k.
 
 Tue Dec 14 08:57:03 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.h: Added a #ifdef for WINSOCK2_GQOS for removing the
-	  errors on NT due to the previous change in ACE_Flow_Spec class.
+        * ace/OS.h: Added a #ifdef for WINSOCK2_GQOS for removing the
+          errors on NT due to the previous change in ACE_Flow_Spec class.
 
 Tue Dec 14 07:49:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.i:
-	* ace/OS.h: Extended the ACE_Flow_Spec and ACE_QoS classes to
- 	  accommodate the use of such classes for non-Win32
-	  platforms. These changes are motivated by the new ACE QoS
-	  classes that will soon be included with ACE.
+        * ace/OS.i:
+        * ace/OS.h: Extended the ACE_Flow_Spec and ACE_QoS classes to
+          accommodate the use of such classes for non-Win32
+          platforms. These changes are motivated by the new ACE QoS
+          classes that will soon be included with ACE.
 
 Mon Dec 13 16:23:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.{h,cpp}: Made print_alignment_info available for all
-	  configuration.
+        * ace/Malloc.{h,cpp}: Made print_alignment_info available for all
+          configuration.
 
 Mon Dec 13 02:49:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp (remap): Commented out the printout of remap
-	  message in MMAP_Memory_Pool as this function is called from the
-	  signal handler.  (It didn't really cause any problem but we
-	  shouldn't use ACE_DEBUG from signal handlers anyway.)
+        * ace/Memory_Pool.cpp (remap): Commented out the printout of remap
+          message in MMAP_Memory_Pool as this function is called from the
+          signal handler.  (It didn't really cause any problem but we
+          shouldn't use ACE_DEBUG from signal handlers anyway.)
 
 Mon Dec 13 01:12:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (update_state): make_changes() calls into
-	  user code which can request other changes.  So keep looping
-	  until all requested changes are completed.  Thanks to Edan Ayal
-	  <EdanA@cti2.com> for reporting this problem!
+        * ace/WFMO_Reactor.cpp (update_state): make_changes() calls into
+          user code which can request other changes.  So keep looping
+          until all requested changes are completed.  Thanks to Edan Ayal
+          <EdanA@cti2.com> for reporting this problem!
 
 Sun Dec 12 20:10:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-hpux-10.x.h: Tweaked ACE_MALLOC_PADDING,
-	  ACE_MALLOC_ALIGN, and ACE_CONTROL_BLOCK_ALIGN_LONGS manually for
-	  HPUX.
+        * ace/config-hpux-10.x.h: Tweaked ACE_MALLOC_PADDING,
+          ACE_MALLOC_ALIGN, and ACE_CONTROL_BLOCK_ALIGN_LONGS manually for
+          HPUX.
 
-	* tests/Malloc_Test.cpp: Added an ACE_TEST_REMAP_ON_FAULT macro
-	  which is not defined on linux only.  Linux seems to have problem
-	  calling mmap from within the signal handler.
+        * tests/Malloc_Test.cpp: Added an ACE_TEST_REMAP_ON_FAULT macro
+          which is not defined on linux only.  Linux seems to have problem
+          calling mmap from within the signal handler.
 
 Sat Dec 11 15:00:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp (main): Alignment information should only
-	  be printed when ACE_NDEBUG is not defined.
+        * tests/Malloc_Test.cpp (main): Alignment information should only
+          be printed when ACE_NDEBUG is not defined.
 
 Sat Dec 11 14:27:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile.am (pkginclude_HEADERS):
+        * ace/Makefile.am (pkginclude_HEADERS):
 
-	  Split header file list into `.h' files (HEADER_FILES) and `.i'
-	  (INLINE_FILES).  This gets around a limitation on Solaris.
+          Split header file list into `.h' files (HEADER_FILES) and `.i'
+          (INLINE_FILES).  This gets around a limitation on Solaris.
 
 Sat Dec 11 10:40:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-lynxos.h: Added ACE_HAS_TYPENAME_KEYWORD.
+        * ace/config-lynxos.h: Added ACE_HAS_TYPENAME_KEYWORD.
 
 Fri Dec 11 11:13:54 1999  James Hu  <jxh@entera.com>
 
-	* ace/Dirent.i:
+        * ace/Dirent.i:
           Constructor with a path passed in was not initializing dirp_.
 
 Fri Dec 10 17:29:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h:
-	* ace/Malloc.cpp:  Added <print_alignment_info> methods for both
-	  control block.  They are only available for debug version.
+        * ace/Malloc.h:
+        * ace/Malloc.cpp:  Added <print_alignment_info> methods for both
+          control block.  They are only available for debug version.
 
-	* tests/Malloc_Test.cpp: Removed temporary debug print out and
-	  changed to use <print_alignment_info>.
+        * tests/Malloc_Test.cpp: Removed temporary debug print out and
+          changed to use <print_alignment_info>.
 
-	  This test no longer forces the mmap to remap.  Linux doesn't
-	  handle the case correctly.
+          This test no longer forces the mmap to remap.  Linux doesn't
+          handle the case correctly.
 
 Fri Dec 10 15:37:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Clarified how the clone procedure should
-	  work.  Thank to Jerry D. De Master <jdemaste@ipdinc.com>
-	  for suggesting this.
+        * ACE-INSTALL.html: Clarified how the clone procedure should
+          work.  Thank to Jerry D. De Master <jdemaste@ipdinc.com>
+          for suggesting this.
 
-	* ace/OS.h: Changed the value of O_NDELAY from 0 to 1 on
-	  Windows NT.  Thanks to Craig Perras <cperras@watchguard.com> for
- 	  reporting this.
+        * ace/OS.h: Changed the value of O_NDELAY from 0 to 1 on
+          Windows NT.  Thanks to Craig Perras <cperras@watchguard.com> for
+          reporting this.
 
 Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Configuration.cpp:
+        * ace/Configuration.cpp:
 
-	  Added a comment stating that ACE_SYNCH_MUTEX should not be used
-	  in the template instantiations because the resulting template
-	  instantiation for the single-threaded case already exists in
-	  ACE.  Thanks to Doug for letting me know about this.
+          Added a comment stating that ACE_SYNCH_MUTEX should not be used
+          in the template instantiations because the resulting template
+          instantiation for the single-threaded case already exists in
+          ACE.  Thanks to Doug for letting me know about this.
 
-	* m4/compiler.m4 (CXXFLAGS):
+        * m4/compiler.m4 (CXXFLAGS):
 
-	  Added missing flags that fix Sun C++ 5.0 weirdness on Solaris.
+          Added missing flags that fix Sun C++ 5.0 weirdness on Solaris.
 
 Fri Dec 10 14:35:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h (_RWSTD_NO_EXCEPTIONS):
+        * acconfig.h (_RWSTD_NO_EXCEPTIONS):
 
-	  Sun CC 5.0 without exception support needs this macro to be
-	  defined to prevent warnings from occurring due to its broken
-	  <memory> header.
+          Sun CC 5.0 without exception support needs this macro to be
+          defined to prevent warnings from occurring due to its broken
+          <memory> header.
 
-	* configure.in:
+        * configure.in:
 
-	  Added a few "checkpoints" where the cache is saved to aid in
-	  debugging.
+          Added a few "checkpoints" where the cache is saved to aid in
+          debugging.
 
-	  (ACE_HAS_THREAD_SPECIFIC_STORAGE):
+          (ACE_HAS_THREAD_SPECIFIC_STORAGE):
 
-	  Added check for pthread_keycreate().  Old POSIX threads
-	  implementations used pthread_keycreate() instead of
-	  pthread_key_create().
+          Added check for pthread_keycreate().  Old POSIX threads
+          implementations used pthread_keycreate() instead of
+          pthread_key_create().
 
-	  (ACE_HAS_SIG_C_FUNC):
-	  (ACE_HAS_THR_C_FUNC):
-	  (ACE_HAS_THR_C_DEST):
+          (ACE_HAS_SIG_C_FUNC):
+          (ACE_HAS_THR_C_FUNC):
+          (ACE_HAS_THR_C_DEST):
 
-	  Added tests that check if signal handlers, thread start
-	  routines, and thread destructors should be declared `extern
-	  "C"'.  These changes allow clean builds on Solaris 7 with Sun CC
-	  5.0.
+          Added tests that check if signal handlers, thread start
+          routines, and thread destructors should be declared `extern
+          "C"'.  These changes allow clean builds on Solaris 7 with Sun CC
+          5.0.
 
-	  (ACE_HAS_STDARG_THR_DEST):
+          (ACE_HAS_STDARG_THR_DEST):
 
-	  Check if thread destructor argument to pthread_key_create (or
-	  pthread_keycreate) should be of type `void(*)(...)'.
+          Check if thread destructor argument to pthread_key_create (or
+          pthread_keycreate) should be of type `void(*)(...)'.
 
-	* m4/compiler.m4 (_RWSTD_NO_EXCEPTIONS):
+        * m4/compiler.m4 (_RWSTD_NO_EXCEPTIONS):
 
-	  Define _RWSTD_NO_EXCEPTIONS when compiling on Solaris with Sun
-	  CC 5.0 without exceptions.
+          Define _RWSTD_NO_EXCEPTIONS when compiling on Solaris with Sun
+          CC 5.0 without exceptions.
 
 Fri Dec 10 11:43:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/run_tests.lst: Disabled the MT_Reactor_Timer_Test
-	  until Darrell can fix the timer queue.
+        * tests/run_tests.lst: Disabled the MT_Reactor_Timer_Test
+          until Darrell can fix the timer queue.
 
 Fri Dec 10 07:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
