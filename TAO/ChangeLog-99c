@@ -1,3 +1,8 @@
+Mon Dec 27 23:38:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:  Added missing ImpoRepo* files.  Thanks to
+	  Mogens Hansen <mogens_h@dk-online.dk> for reporting this.
+
 Mon Dec 27 19:09:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/compiler.html: Updated the documentation for the compiler

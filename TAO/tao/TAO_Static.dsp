@@ -274,6 +274,18 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\InconsistentTypeCodeC.cpp
 # End Source File
 # Begin Source File
@@ -782,6 +794,18 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
@@ -1219,6 +1243,18 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 
