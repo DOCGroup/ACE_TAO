@@ -1,3 +1,13 @@
+Fri Jul  2 19:50:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: There was a typo in the ACE_WIN32CALL_RETURN() macro
+	  for Borland C++.  Thanks to Jody Hagins <jody@atdesk.com> for
+ 	  reporting this.
+
+        * ace/config-win32-borland.h: Clarified the fact that this file
+	  shouldn't be #included directly.  Thanks to Thaddeus Olczyk
+ 	  <olczyk@interaccess.com> for motivating this.
+
 Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.x-hpc++.h: Added
@@ -10,12 +20,6 @@ Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
 
         * websvcs/tests/Makefile: Replace VLDLIBS with correct LDLIBS. Now
           works on AIX.
-
-Fri Jul  2 19:50:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/config-win32-borland.h: Clarified the fact that this file
-	  shouldn't be #included directly.  Thanks to Thaddeus Olczyk
- 	  <olczyk@interaccess.com> for motivating this.
 
 Fri Jul  2 19:37:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
