@@ -1,3 +1,8 @@
+Mon Dec 21 09:15:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.i: 
+	  Fixed some warnings reported by David.
+
 Mon Dec 21 08:30:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/Makefile:

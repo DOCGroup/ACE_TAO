@@ -7,21 +7,26 @@ ECT_Driver::Latency_Stats::Latency_Stats (void)
   :  n_ (0),
      sum_ (0),
      sum2_ (0),
-     min_ (INT_MAX),
-     max_ (INT_MIN)
+     min_ (0),
+     max_ (0)
 {
 }
 
 ACE_INLINE
 void ECT_Driver::Latency_Stats::sample (ACE_hrtime_t sample)
 {
-  this->n_ ++;
   this->sum_ += sample;
   this->sum2_ += sample * sample;
-  if (this->min_ > sample)
+  if (this->n_ == 0)
+    {
+      this->min_ = sample;
+      this->max_ = sample;
+    }
+  else if (this->min_ > sample)
     this->min_ = sample;
-  if (this->max_ < sample)
+  else if (this->max_ < sample)
     this->max_ = sample;
+  this->n_++;
 }
 
 // ****************************************************************
