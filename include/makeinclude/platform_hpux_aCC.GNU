@@ -97,7 +97,11 @@ else
   endif
 endif
 
-# Suppress warning 302 ((...) parameter list is a non-portable feature)
+ifeq ($(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS))), 1123)
+  itanium = 1
+endif
+
+# Suppress Warning 302 ((...) parameter list is a non-portable feature)
 CCFLAGS		+= +W302
 CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
@@ -126,7 +130,7 @@ AR              = /usr/ccs/bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s -z
-SOFLAGS		+= -b 
+SOFLAGS		+= -b
 
 ifeq ($(distrib),1)
 
@@ -146,18 +150,29 @@ endif
 SOEXT		= sl
 
 ifeq ($(buildbits),32)
-CCFLAGS		+= +DA1.1 +DS1.1
+  ifeq ($(itanium),1)
+    CCFLAGS += +DD32
+  else
+    CCFLAGS += +DA1.1 +DS1.1
+  endif
 else
 ifeq ($(buildbits),64)
-  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-    ## Without the W, it isn't really a 64-bit build
-    CCFLAGS     += +DA2.0W +DS2.0W
+  ifeq ($(itanium),1)
+    CCFLAGS += +DD64
   else
-    CCFLAGS     += +DA2.0 +DS2.0
+    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+      ## Without the W, it isn't really a 64-bit build
+      CCFLAGS += +DA2.0W +DS2.0W
+    else
+      CCFLAGS += +DA2.0 +DS2.0
+    endif
   endif
 LDFLAGS		+= -Wl,+vnocompatwarnings
 else
-CCFLAGS         += +DAportable
+  ifneq ($(itanium),1)
+    # HP aCC on Itanium doesn't support this option, defaults to 32bit then.
+    CCFLAGS += +DAportable
+  endif
 endif
 endif
 
