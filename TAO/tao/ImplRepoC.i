@@ -497,6 +497,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1219,6 +1220,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

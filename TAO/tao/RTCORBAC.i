@@ -261,6 +261,7 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
       {
         result = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1320,6 +1321,7 @@ RTCORBA::PriorityBand_var::ptr (void) const
       {
         result = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -2610,6 +2612,7 @@ RTCORBA::Protocol_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
