@@ -1341,7 +1341,7 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
 
   // POSIX.1 dropped the cuserid() function.
   // GNU GLIBC and other platforms correctly deprecate the cuserid()
-  // function.    
+  // function.
 
   if (maxlen == 0)
     {
@@ -8150,7 +8150,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS::poll (struct pollfd *pollfds, u_long len, ACE_Time_Value *timeout)
+ACE_OS::poll (struct pollfd *pollfds, u_long len, const ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
