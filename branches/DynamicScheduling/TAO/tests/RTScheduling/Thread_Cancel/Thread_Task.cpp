@@ -8,7 +8,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long> index = 0;
 RTScheduling::Current::IdType*
 Thread_Task::guids (void)
 {
-  return *(this->guid_);
+  return this->guid_;
 }
 
 int
@@ -58,7 +58,7 @@ Thread_Task::svc (void)
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->guid_[index++] = this->current_->id ();
+      this->guid_[index++] = *(this->current_->id ());
       
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
@@ -105,6 +105,7 @@ Thread_Task::svc (void)
   ACE_ENDTRY;
   return 0;
 }
+
 
 
 
