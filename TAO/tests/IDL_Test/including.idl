@@ -54,7 +54,7 @@ interface iface
   enum postal
   {
     ME,
-	  FE
+    TAO_FE	// FE is #defined on HP-UX 10.20, so I prefix it with TAO
   };
     
   struct using_incl
