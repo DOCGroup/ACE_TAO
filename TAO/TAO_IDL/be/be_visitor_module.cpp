@@ -577,10 +577,9 @@ be_visitor_module_ch::visit_module (be_module *node)
 
       os->indent (); // start from whatever indentation level we were at
       // now generate the class definition
-      *os << "class " << idl_global->export_macro ()
+      *os << "TAO_NAMESPACE " << idl_global->export_macro ()
 	  << " " << node->local_name () << be_nl
-          << "{" << be_nl
-          << "public:\n";
+          << "{\n";
       os->incr_indent (0);
 
       // generate code for the module definition by traversing thru the

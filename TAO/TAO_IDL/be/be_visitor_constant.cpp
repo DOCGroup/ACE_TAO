@@ -44,7 +44,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!node->cli_hdr_gen ())
+  if (!node->cli_hdr_gen () && !node->imported ())
     {
       // if we are defined in the outermost scope, then the value is assigned
       // to us here itself, else it will be in the *.cpp file
@@ -84,7 +84,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!node->cli_hdr_gen ())
+  if (!node->cli_stub_gen () && !node->imported ())
     {
       if (node->is_nested ())
         {
