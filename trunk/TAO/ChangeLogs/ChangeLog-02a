@@ -1,3 +1,14 @@
+Fri Mar 23 15:16:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (deactivate_all_objects_i):
+	  Yesterday's change to
+	  Active_Object_Map::find_servant_and_system_id_using_user_id()
+	  broke POA::deactivate_all_objects_i() because this method was
+	  trying to find entries in the map that don't have valid
+	  servants.  To fix this, I added a new method
+	  POA::deactivate_map_entry() that does not require looking up the
+	  entry in the map again.
+
 Fri Mar 23 10:06:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/ImplRepo/Makefile:
