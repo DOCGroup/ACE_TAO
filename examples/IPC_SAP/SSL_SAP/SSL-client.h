@@ -10,7 +10,7 @@
 #include "ace/OS.h"
 #include "ace/Synch.h"
 
-#include "SSL_SOCK_Stream.h"
+#include "ace/SSL/SSL_SOCK_Stream.h"
 
 class Options
   // = TITLE

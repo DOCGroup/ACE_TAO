@@ -21,7 +21,7 @@
 
 #include "ace/SOCK.h"
 
-#include "SSL_Export.h"
+#include "ace/SSL/SSL_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -81,7 +81,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK.i"
+#include "ace/SSL/SSL_SOCK.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

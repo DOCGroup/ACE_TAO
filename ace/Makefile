@@ -4,6 +4,10 @@
 #       Makefile for the entire ACE release
 #----------------------------------------------------------------------------
 
+ifneq ($(ssl),)
+  DIRS += SSL
+endif # ssl
+
 MAKEFILE = Makefile
 LIB      = libACE.a
 SHLIB    = libACE.$(SOEXT)
@@ -391,7 +395,7 @@ ACELIB =
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 #### Disable installs in this ($(ACE_ROOT)/ace) directory, because this
 #### is the (default) destination of installs anyways.  This line prevents
@@ -414,6 +418,9 @@ realclean:
 # AIX template compilation speedup hack
 
 ACE_All: 0_ACE_All_Src.cpp 0_ACE_All_Tmp.cpp
+
+# Build ACE before descending into subdirectories.
+all.nested: all.local
 
 0_ACE_All_Src.h:
 	@echo;

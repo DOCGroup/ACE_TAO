@@ -11,7 +11,7 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
-#include "SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
 
 #include "SSL-server-fancy.h"
 

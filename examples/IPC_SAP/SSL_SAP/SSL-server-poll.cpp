@@ -7,8 +7,8 @@
 
 #include "ace/INET_Addr.h"
 
-#include "SSL_SOCK_Acceptor.h"
-#include "SSL_SOCK_Stream.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Stream.h"
 
 ACE_RCSID(SSL_SAP, SSL_server_poll, "$Id$")
 

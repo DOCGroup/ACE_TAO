@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-#include "SSL_SOCK_Connector.h"
+#include "ace/SSL/SSL_SOCK_Connector.h"
 
 #include "SSL-client-simple.h"
 

@@ -29,8 +29,8 @@
 
 #include "ace/Synch_T.h"
 
-#include "SSL_SOCK.h"
-#include "SSL_Context.h"
+#include "ace/SSL/SSL_SOCK.h"
+#include "ace/SSL/SSL_Context.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -242,7 +242,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Stream.i"
+#include "ace/SSL/SSL_SOCK_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SSL_SOCK_STREAM_H */

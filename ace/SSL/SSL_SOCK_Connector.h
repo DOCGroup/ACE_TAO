@@ -22,7 +22,6 @@
 
 #include "ace/pre.h"
 
-#include "SSL_SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,6 +29,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_SSL)
+
+#include "ace/SSL/SSL_SOCK_Stream.h"
 
 class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
@@ -197,7 +198,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Connector.i"
+#include "ace/SSL/SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SSL_SOCK_CONNECTOR_H */

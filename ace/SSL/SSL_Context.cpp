@@ -18,11 +18,11 @@
 
 #if defined (ACE_HAS_SSL)
 
-#include "SSL_Context.h"
-#include "sslconf.h"
+#include "ace/SSL/SSL_Context.h"
+#include "ace/SSL/sslconf.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SSL_Context.i"
+#include "ace/SSL/SSL_Context.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Synch.h"
