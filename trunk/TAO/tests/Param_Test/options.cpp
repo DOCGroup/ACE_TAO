@@ -139,6 +139,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_EXCEPTION;
         else if (!ACE_OS::strcmp (get_opts.optarg, "big_union"))
           this->test_type_ = Options::TEST_BIG_UNION;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "complex_any"))
+          this->test_type_ = Options::TEST_COMPLEX_ANY;
          break;
 
       case '?':
