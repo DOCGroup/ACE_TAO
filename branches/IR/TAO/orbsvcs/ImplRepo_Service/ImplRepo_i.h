@@ -101,11 +101,16 @@ public:
                        ImplementationRepository::ServerObject_ptr server_object,
                        CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Called by the server to update transient information such as current location of
-  // the <server> and its ping object.
+  // the <server> and its ServerObject.
 
   virtual void server_is_shutting_down (const char * server,
                                         CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
   // What the server should call before it shuts down.
+
+  virtual void find (const char * server,
+                     ImplementationRepository::ServerInformation_out info,
+                     CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Returns the startup information for a server
 
   virtual void list (CORBA::ULong how_many,
                      ImplementationRepository::ServerInformationList_out server_list,

@@ -21,7 +21,7 @@ Server_Info::Server_Info (const ACE_TString POA_name,
   working_dir_ (working_dir),
   host_ (""),
   port_ (0),
-  ping_ior_ ("")
+  server_object_ior_ ("")
 {
   // Nothing
 }
@@ -39,11 +39,11 @@ Server_Info::~Server_Info ()
 void 
 Server_Info::update_running_info (const ACE_TString host,
                                   const unsigned short port,
-                                  const ACE_TString ping_ior)
+                                  const ACE_TString server_object_ior)
 {
   this->host_ = host;
   this->port_ = port;
-  this->ping_ior_ = ping_ior;
+  this->server_object_ior_ = server_object_ior;
 }
 
 
@@ -65,11 +65,11 @@ Server_Info::get_startup_info (ACE_TString &logical_server_name,
 void 
 Server_Info::get_running_info (ACE_TString &host,
                                unsigned short &port,
-                               ACE_TString &ping_ior)
+                               ACE_TString &server_object_ior)
 {
   host = this->host_;
   port = this->port_;
-  ping_ior = this->ping_ior_;
+  server_object_ior = this->server_object_ior_;
 }
 
 // Default Constructor
@@ -103,14 +103,14 @@ int
 Server_Repository::update (const ACE_TString POA_name,
                            const ACE_TString host,
                            const unsigned short port,
-                           const ACE_TString ping_ior)
+                           const ACE_TString server_object_ior)
 {
   Server_Info *server;
   int retval = this->repository_.find (POA_name, server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->update_running_info (host, port, ping_ior);
+    server->update_running_info (host, port, server_object_ior);
 
   return retval;
 }
@@ -141,14 +141,14 @@ int
 Server_Repository::get_running_info (const ACE_TString POA_name,
                                      ACE_TString &host,
                                      unsigned short &port,
-                                     ACE_TString &ping_ior)
+                                     ACE_TString &server_object_ior)
 {
   Server_Info *server;
   int retval = this->repository_.find (POA_name, server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->get_running_info (host, port, ping_ior);
+    server->get_running_info (host, port, server_object_ior);
 
   return retval;
 }
