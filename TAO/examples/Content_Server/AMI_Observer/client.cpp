@@ -49,8 +49,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Narrow to a Naming Context
-      CosNaming::NamingContext_var nc;
-      nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+      CosNaming::NamingContext_var nc = 
+        CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
            i < argc - 1;  // Don't include the program name.
            ++i)
         {
-          Push_Iterator_Handler * handler = 0;
+          Push_Iterator_Handler *handler = 0;
           ACE_NEW_RETURN (handler,
                           Push_Iterator_Handler,
                           -1);
