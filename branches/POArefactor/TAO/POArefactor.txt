@@ -1,3 +1,9 @@
+Thu Oct  7 11:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:
+          Moved implementation to header file and started with implementing
+          this strategy
+
 Thu Oct  7 10:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:
