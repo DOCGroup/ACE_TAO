@@ -340,9 +340,10 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes <handle>.  If <mask> includes <ACE_Event_Handler::DONT_CALL>
-   * then the <handle_close> method of the associated <event_handler>
-   * is not invoked.
+   * Removes the <ACE_Event_Handler> associated with <handle>.  If
+   * <mask> includes <ACE_Event_Handler::DONT_CALL> then the
+   * <handle_close> method of the associated <event_handler> is not
+   * invoked.
    */
   virtual int remove_handler (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask);

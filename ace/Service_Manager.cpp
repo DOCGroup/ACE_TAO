@@ -161,17 +161,18 @@ int
 ACE_Service_Manager::list_services (void)
 {
   ACE_TRACE ("ACE_Service_Manager::list_services");
-  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
+  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance (), 0);
 
   for (const ACE_Service_Type *sr;
        sri.next (sr) != 0;
        sri.advance ())
     {
-      int len = ACE_OS::strlen (sr->name ()) + 1;
+      int len = ACE_OS::strlen (sr->name ()) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
+      ACE_OS::strcat (buf, (sr->active ()) ? " (active) " : " (paused) ");
 
       p[-1] = ' ';
       p[0]  = '\0';

@@ -1,3 +1,16 @@
+Tue Mar 13 06:04:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Service_Manager.cpp (list_services): Add an indication of whether
+	  a service is active or paused.  Thanks to Mike Curtis for this
+ 	  improvement.
+
+	* ace/Reactor.h: Clarified that the remove_handler (handle, mask)
+	  method also removes the event handle.  Thanks to Pierre Fayolle
+ 	  <fayolle@enseirb.fr> for reporting this.
+
+	* tests/Logging_Strategy_Test.cpp (get_statistic): Replace struct stat
+	  with ACE_stat.  Thanks to Johnny Willemsen for reporting this.
+
 Tue Mar 13 00:35:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.i (deactivated): Reverted this change
