@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = 1.7;
+  $self->{'version'}  = 1.8;
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -237,7 +237,12 @@ sub run {
       $options->{'global'} = $global;
     }
   }
+  ## Save the original directory outside of the loop
+  ## to avoid calling it multiple times.
+  my($orig_dir) = $self->getcwd();
+
   ## Always add the default include paths
+  unshift(@{$options->{'include'}}, $orig_dir);
   unshift(@{$options->{'include'}}, $self->{'path'} . '/templates');
   unshift(@{$options->{'include'}}, $self->{'path'} . '/config');
 
@@ -275,10 +280,6 @@ sub run {
 
   ## Set up un-buffered output for the progress callback
   $| = 1;
-
-  ## Save the original directory outside of the loop
-  ## to avoid calling it multiple times.
-  my($orig_dir) = $self->getcwd();
 
   ## Generate the files
   foreach my $cfile (@{$options->{'input'}}) {

@@ -1,3 +1,9 @@
+Fri Apr 11 13:37:34 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Insert the starting directory into the include path by default.
+
 Fri Apr 11 13:09:36 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
