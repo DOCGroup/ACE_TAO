@@ -1,4 +1,19 @@
-Mon Jan 26 02:31:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 26 02:53:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Namespace related macros are now ifdef'ed by
+	  ACE_HAS_BROKEN_NAMESPACES instead of ACE_ORBIX_HAS_NAMESPACES.
+
+	* ace/README
+	* ace/config-win32-common.h: Added a new flag
+	  ACE_HAS_BROKEN_NAMESPACES to deal with MSVC's broken namespace
+	  support.
+
+	* ace/config-win32.h: Re-enable defining ACE_ORBIX_HAS_NAMESPACES
+	  for Win32.
+
+	* ace/config-WinCE.h: Temporary file to hold WinCE specific
+	  configurations.  It will probably be merged with
+	  config-win32-common.h in some point.
 
 	* ace/ace_dll.dsp: Added WinCE x86 emulation mode project
  	  definition.
