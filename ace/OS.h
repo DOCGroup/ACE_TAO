@@ -6961,6 +6961,18 @@ ACE_MAIN (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
 } \
 int \
 ace_main_i
+#     if defined (ACE_WIN32) && defined (UNICODE)
+#     define wmain \
+ace_main_i (int, ASYS_TCHAR *[]);                  /* forward declaration */ \
+int \
+wmain (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
+{ \
+  ACE_MAIN_OBJECT_MANAGER \
+  return ace_main_i (argc, argv);           /* what the user calls "main" */ \
+} \
+int \
+ace_main_i
+#     endif /* ACE_WIN32 && UNICODE */
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
