@@ -375,8 +375,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                                          env);
       TAO_CHECK_ENV_RETURN (env, 1);
     }
-  return 0;
   TAO_ENDTRY;
+  return 0;
 }
 
 void
@@ -585,8 +585,8 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,
                          flows_any,
                          env);
   TAO_CHECK_ENV_PRINT_RETURN (env,"TAO_StreamEndPoint::add_fep",0);
-  return flow_name;
   TAO_ENDTRY;
+  return flow_name;
 }
 
 void
@@ -1078,8 +1078,8 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr the_fdev,
                          flows_any,
                          env);
   TAO_CHECK_ENV_PRINT_RETURN(env,"TAO_MMDevice::add_fdev",0);
-  return flow_name;
   TAO_ENDTRY;
+  return flow_name;
 }
 
 // Gets the FDev object associated with this flow.
