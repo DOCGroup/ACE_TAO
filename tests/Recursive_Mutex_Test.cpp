@@ -37,9 +37,12 @@ USELIB("..\ace\aced.lib");
   // Chorus can't handle 100 iterations:
   //   [amThrd.C:154]: Failed to allocate an AmActor
   static size_t n_iterations = 45;
-#else  /* ! CHORUS */
+#elif defined (__Lynx__)  &&  defined (__powerpc__)
+  // The test hangs after 68 iterations on our LynxOS/PPC host.
+  static size_t n_iterations = 65;
+#else  /* ! CHORUS  &&  ! (__Lynx__ && __powerpc__) */
   static size_t n_iterations = 100;
-#endif /* ! CHORUS */
+#endif /* ! CHORUS  &&  ! (__Lynx__ && __powerpc__) */
 static size_t n_threads = ACE_MAX_THREADS;
 
 static void
@@ -69,7 +72,7 @@ static void *
 worker (void *arg)
 {
   ACE_Recursive_Thread_Mutex *rm =
-    ACE_reinterpret_cast (ACE_Recursive_Thread_Mutex *, 
+    ACE_reinterpret_cast (ACE_Recursive_Thread_Mutex *,
                           arg);
   recursive_worker (0, rm);
   return 0;
