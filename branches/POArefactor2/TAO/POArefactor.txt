@@ -1,3 +1,13 @@
+Tue Nov 23 12:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Print an error if the IORInterceptor Adapter Factory can't be
+          retrieved. Someway some tests can't get the IORInterceptor factory,
+          no idea why yet, but now it is more clear what is the problem
+
+        * tao/IORInterceptor/*C.{h,cpp,inl}:
+          Regenerated
+
 Tue Nov 23 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*FactoryImpl.cpp:
