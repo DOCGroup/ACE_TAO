@@ -918,6 +918,10 @@ extern "C" pthread_t pthread_self (void);
 
 #if !defined (ACE_HAS_WINCE)
 #include /**/ <time.h>
+#if defined (__Lynx__)
+# include /**/ <st.h>
+# include /**/ <sem.h>
+#endif /* __Lynx__ */
 #endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_NEEDS_SYSTIME_H)
@@ -1675,8 +1679,14 @@ typedef tid_t ACE_hthread_t;
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
 typedef pthread_key_t ACE_thread_key_t;
-typedef pthread_mutex_t ACE_mutex_t;
-typedef pthread_cond_t ACE_cond_t;
+#if defined (__Lynx_Native_Cond__)
+  // pthread_cond_{,timed}wait is broken in LynxOS 2.5.0, so use cv_t.
+ typedef struct_synch ACE_mutex_t;
+ typedef struct synch ACE_cond_t;
+#elif !defined (ACE_LACKS_COND_T)
+ typedef pthread_mutex_t ACE_mutex_t;
+ typedef pthread_cond_t ACE_cond_t;
+#endif /* __Lynx_Native_Cond__ && ! ACE_LACKS_COND_T */
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #    if !defined (PTHREAD_CANCEL_DISABLE)
@@ -2068,7 +2078,7 @@ protected:
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
 
-#if (defined (VXWORKS) || defined (ACE_PSOS))
+#if defined (VXWORKS) || defined (ACE_PSOS)
   ACE_sema_t waiters_done_;
   // A semaphore used by the broadcast/signal thread to wait for all
   // the waiting thread(s) to wake up and be released from the
@@ -3148,6 +3158,18 @@ extern "C"
 #define MAP_SHARED 0
 #define MAP_FIXED 0
 #endif /* ACE_LACKS_MMAP */
+
+#if !defined (ACE_MAP_PRIVATE)
+# define ACE_MAP_PRIVATE MAP_PRIVATE
+#endif /* ! ACE_MAP_PRIVATE */
+
+#if !defined (ACE_MAP_SHARED)
+# define ACE_MAP_SHARED MAP_SHARED
+#endif /* ! ACE_MAP_SHARED */
+
+#if !defined (ACE_MAP_FIXED)
+# define ACE_MAP_FIXED MAP_FIXED
+#endif /* ! ACE_MAP_FIXED */
 
 // Fixes a problem with HP/UX.
 #if defined (ACE_HAS_BROKEN_MMAP_H)
@@ -4254,6 +4276,10 @@ public:
                           int mode,
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
+  static ACE_HANDLE shm_open (const char *filename,
+                              int mode,
+                              int perms = 0,
+                              LPSECURITY_ATTRIBUTES sa = 0);
   static int putmsg (ACE_HANDLE handle,
                      const struct strbuf *ctl,
                      const struct strbuf *data,
@@ -4329,6 +4355,7 @@ public:
   static char *getcwd (char *,
                        size_t);
   static int unlink (const char *path);
+  static int shm_unlink (const char *path);
   static char *tempnam (const char *dir,
                         const char *pfx);
 #endif /* ACE_HAS_UNICODE_ONLY */
