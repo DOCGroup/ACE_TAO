@@ -1,3 +1,13 @@
+Sat Jan  3 19:31:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* APG/Reactor/Timer_State_Data.cpp:
+	* APG/Streams/Answerer.cpp:
+	* APG/Streams/Util.h:
+	* APG/ThreadManagement/Priorities.cpp:
+	* APG/ThreadSafety/Mutex.cpp:
+
+	  Fixed more unused variable warnings.
+
 Sat Jan  3 17:26:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Naming/Temperature_Monitor2.cpp:

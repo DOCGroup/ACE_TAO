@@ -86,7 +86,7 @@ public:
   }
 
 private:
-  void updateAverageTemperature (TemperatureSensor *sensor)
+  void updateAverageTemperature (TemperatureSensor *)
   {
     // ...
   }

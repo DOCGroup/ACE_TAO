@@ -23,7 +23,7 @@ public:
     return 0;
   }
 
-  void process_message (ACE_Message_Block *mb)
+  void process_message (ACE_Message_Block *)
   {
     ACE_DEBUG ((LM_DEBUG, 
                 ACE_TEXT ("(%t) Processing message %C\n"),
