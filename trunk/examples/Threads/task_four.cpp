@@ -177,7 +177,7 @@ Invoker_Task::svc (void)
       ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "set_grp"));
 
   size_t n_tasks = thr_mgr->num_tasks_in_group (1);
-  ACE_DEBUG ((LM_DEBUG, "Number of tasks in group 1: %d\n", ntasks)) ;
+  ACE_DEBUG ((LM_DEBUG, "Number of tasks in group 1: %d\n", n_tasks)) ;
 
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
