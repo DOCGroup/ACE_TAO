@@ -1,3 +1,8 @@
+Thu Jun 22 13:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.cpp: Removed an extra 'g' from the very beginning of the
+          file.
+
 Thu Jun 22 14:11:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (ACE_OS::thr_keycreate): Add some type cast to compile
