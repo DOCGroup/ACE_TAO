@@ -258,7 +258,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 
@@ -274,7 +274,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
