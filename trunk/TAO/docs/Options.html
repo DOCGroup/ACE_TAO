@@ -47,23 +47,23 @@ vector, any options that it recognizes.</P> </blockquote>
 <H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
 
 <blockquote>
-<P><TABLE BORDER="2" WIDTH="80%" HEIGHT="96" CELLSPACING="2" CELLPADDING=
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING=
 "0">
 <TR>
-<TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="57%">Description</TH></TR>
+<TH>Option</TH>
+<TH>Description</TH></TR>
 <!-- <TR NAME="ORBsvcconf"> -->
-<TD HEIGHT="30"><CODE>-ORBsvcconf</CODE> <EM>config file name</EM></TD>
+<TD><CODE>-ORBsvcconf</CODE> <EM>config file name</EM></TD>
 <TD>Specifies the name of the file from which it will read dynamic service configuration
 directives <EM>ala</EM> ACE's Service Configurator.</TD></TR>
-<TD HEIGHT="30"><CODE>-ORBsvcconfdirective</CODE> <EM>directive string</EM></TD>
+<TD><CODE>-ORBsvcconfdirective</CODE> <EM>directivestring</EM></TD>
 <TD>Specifies a service configuration
 directive, which is passed to ACE's Service Configurator.</TD></TR>
 <TR>
-<TD HEIGHT="17"><CODE>-ORBdaemon</CODE></TD>
+<TD><CODE>-ORBdaemon</CODE></TD>
 <TD>Specifies that the ORB should <I>daemonize</I> itself.</TD></TR>
 <TR>
-<TD HEIGHT="17"><CODE>-ORBdebug</CODE></TD>
+<TD><CODE>-ORBdebug</CODE></TD>
 <TD>Turns on the output of debugging messages within ACE's Service Configurator
 componentry.</TD></TR>
 <TR>
@@ -126,10 +126,10 @@ copied instead of appended to the CDR stream.</TD></TR>
 <H3><CODE>CORBA::POA</CODE><A NAME="POA"></A></H3>
 
 <blockquote>
-<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="80%">
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
 <TR>
-<TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="57%">Description</TH></TR>
+<TH>Option</TH>
+<TH>Description</TH></TR>
 <TR>
 <TD><CODE>-OAid</CODE> <EM>OA Identifier</EM></TD>
 <TD>Associates <I><EM>OA Identifier</EM></I> with the Object Adapter.</TD></TR>
@@ -140,18 +140,17 @@ copied instead of appended to the CDR stream.</TD></TR>
 <H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
 
 <blockquote>
-<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="80%" HEIGHT=
-"186">
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
 <TR>
-<TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="57%">Description</TH></TR>
+<TH>Option</TH>
+<TH>Description</TH></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBresources</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBresources</CODE> <EM>which</EM></TD>
 <TD>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBpoa</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBpoa</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBpoa"></a>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the Root POA.</TD></TR>
@@ -162,32 +161,31 @@ copied instead of appended to the CDR stream.</TD></TR>
 <H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
 
 <blockquote>
-<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="80%" HEIGHT=
-"186">
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
 <TR>
-<TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="57%">Description</TH></TR>
+<TH>Option</TH>
+<TH>Description</TH></TR>
 <TR>
-<TD HEIGHT="17"><CODE>-ORBconcurrency</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBconcurrency</CODE> <EM>which</EM></TD>
 <TD>Specify which concurrency strategy to use.  Range of values is <code>reactive</code>
 for a purely Reactor-driven concurrency strategy or
 <code>thread-per-connection</code> for creating a new thread to service each connection.</TD></TR>
 <TR>
-<TD HEIGHT="30"><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
+<TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
 <TD>Specify the size of the object table. If not specified, the default value
 is 64.</TD></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBdemuxstrategy</CODE> <EM>demultiplexing strategy</EM></TD>
+<TD><CODE>-ORBdemuxstrategy</CODE> <EM>demultiplexing strategy</EM></TD>
 <TD>Specify the demultiplexing lookup strategy. The <EM>demultiplexing strategy</EM>
 can be one of <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>,
 or <CODE>user</CODE>.</TD></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
+<TD><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
 <TD>Specify the flags used for thread creation. Flags can be any logical-OR
 combination of <CODE>THR_DETACHED</CODE>, <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
 <CODE>THE_SUSPENDED</CODE>.</TD></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD>
+<TD><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD>
 <TD><a name="-ORBpoalock"></a>Specify the type of lock to be used for
 POA accesses.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
@@ -195,7 +193,7 @@ used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
 <code>null</code>.</TD></TR>
 <TR>
-<TD HEIGHT="43"><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD>
+<TD><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD>
 <TD><a name="-ORBpoamgrlock"></a>Specify the type of lock to be used for
 POA Manager accesses.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
