@@ -701,6 +701,13 @@ public:
                             CORBA::Object_out forward_to
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+    /// Helper.
+    int prepare_for_upcall_i (const TAO::ObjectKey &key,
+                              const char *operation,
+                              CORBA::Object_out forward_to,
+                              int &wait_occurred_restart_call
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
     /// Run pre_invoke for a remote request.
     void pre_invoke_remote_request (TAO_ServerRequest &req
                                     ACE_ENV_ARG_DECL);

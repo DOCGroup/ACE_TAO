@@ -97,11 +97,16 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // servant itself but in the priority that this servant will run at.
   // Note that the operation name is bogus: it is not used because the
   // IMPLICIT_ACTIVATION policy is not allowed with SERVER_DECLARED
-  // policy.
+  // policy.  Similarly, since there is no implicit activation, there
+  // is no chance of waiting on a condition variable and hence the
+  // <wait_occurred_restart_call_ignored> can be ignored.
+  int wait_occurred_restart_call_ignored = 0;
+
   poa->locate_servant_i ("operation not used",
                          servant_upcall.system_id_,
                          servant_upcall,
-                         servant_upcall.current_context_
+                         servant_upcall.current_context_,
+                         wait_occurred_restart_call_ignored
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

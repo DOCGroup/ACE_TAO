@@ -48,10 +48,10 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: DatabaseC.h DatabaseC.i DatabaseC.cpp DatabaseS.h DatabaseS.i DatabaseS.cpp DatabaseS_T.h DatabaseS_T.i DatabaseS_T.cpp
 
 server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_DYNAMIC_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) DatabaseC.* DatabaseS.* DatabaseS_T.*

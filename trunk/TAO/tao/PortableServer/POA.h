@@ -643,14 +643,17 @@ protected:
                                 TAO_Acceptor_Registry &acceptor_registry
                                 ACE_ENV_ARG_DECL);
 
-  int is_servant_in_map (PortableServer::Servant servant);
+  int is_servant_in_map (PortableServer::Servant servant,
+                         int &wait_occurred_restart_call);
 
   int is_user_id_in_map (const PortableServer::ObjectId &user_id,
                          CORBA::Short priority,
-                         int &priorities_match);
+                         int &priorities_match,
+                         int &wait_occurred_restart_call);
 
   PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
-                                               CORBA::Short priority
+                                               CORBA::Short priority,
+                                               int &wait_occurred_restart_call
                                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantAlreadyActive,
@@ -658,7 +661,8 @@ protected:
 
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
-                                  CORBA::Short priority
+                                  CORBA::Short priority,
+                                  int &wait_occurred_restart_call
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantAlreadyActive,
@@ -793,7 +797,8 @@ protected:
   PortableServer::Servant locate_servant_i (const char *operation,
                                             const PortableServer::ObjectId &id,
                                             TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                                            TAO_POA_Current_Impl &poa_current_impl
+                                            TAO_POA_Current_Impl &poa_current_impl,
+                                            int &wait_occurred_restart_call
                                             ACE_ENV_ARG_DECL);
 
   const TAO_Creation_Time &creation_time (void);
