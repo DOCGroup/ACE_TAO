@@ -89,7 +89,7 @@ TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
 TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
 TAO/tests/Nested_Event_Loop/run_test.pl
-TAO/tests/POA/Identity/run_test.pl !MINIMUM
+TAO/tests/POA/Identity/run_test.pl: !MINIMUM
 TAO/tests/POA/Policies/run_test.pl
 TAO/tests/POA/Excessive_Object_Deactivations/run_test.pl
 TAO/tests/POA/Persistent_ID/run_test.pl
