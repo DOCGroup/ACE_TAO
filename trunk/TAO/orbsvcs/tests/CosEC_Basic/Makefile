@@ -1,15 +1,13 @@
 # $Id$
 
-BIN = CosEC_Basic
-
 SRC = $(BIN:%=%$(VAR).cpp) \
-	CosECConsumer.cpp \
-	CosECSupplier.cpp
+      CosECConsumer.cpp \
+      CosECSupplier.cpp
 
-LDLIBS= -lorbsvcs -lTAO
+LDLIBS = -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
@@ -20,13 +18,23 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+  BIN = CosEC_Basic
+endif # CosEvent
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
-#### Local rules and variables...
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #       Dependencies
