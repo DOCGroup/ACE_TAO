@@ -30,7 +30,9 @@
 CORBA_Environment TAO_TRY_ENV; \
 try {
 #define TAO_CATCH(TYPE,VAR) \
-} catch (TYPE & VAR) {
+} catch (TYPE & VAR) { \
+ACE_UNUSED_ARG (VAR);
+
 #define TAO_CATCHANY \
 } catch (...) {
 #define TAO_ENDTRY }
