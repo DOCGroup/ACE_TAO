@@ -1,3 +1,14 @@
+Thu Nov  2 15:07:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+
+	  Uninlined the declarations of the overloaded CORBA::release 
+	  and CORBA::is_nil methods for Request, ServerRequest and
+	  Context. Also moved the declarations of 
+	  CORBA::release (ServerRequest) and 
+	  CORBA::is_nil (ServerRequest) inside the minimum CORBA
+	  guards, since ServerRequest is now used only for DSI.
+
 Thu Nov  2 12:03:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Dynamic_Adapter.cpp:
