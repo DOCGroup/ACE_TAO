@@ -15,6 +15,53 @@ ACE_RCSID (IFRService,
            ComponentDef_i, 
            "$Id$")
 
+// Specialization.
+template<>
+void
+TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple (
+    CORBA::ComponentIR::UsesDescriptionSeq &desc_seq,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key,
+    CORBA::ULong index
+  )
+{
+  CORBA::ULong is_multiple = 0;
+  config->get_integer_value (key,
+                             "is_multiple",
+                             is_multiple);
+  desc_seq[index].is_multiple = 
+    ACE_static_cast (CORBA::Boolean,
+                     is_multiple);
+}
+
+// Specialization.
+template<>
+void 
+TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
+    CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
+    ACE_TString &holder,
+    CORBA::ULong index
+  )
+{
+  desc_seq[index].event = holder.fast_rep ();
+}
+
+/// Specialization.
+template<>
+void
+TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
+    CORBA::Boolean is_multiple,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key
+  )
+{
+  config->set_integer_value (key,
+                             "is_multiple",
+                             is_multiple);
+}
+
+// ==============================================================
+
 TAO_ComponentDef_i::TAO_ComponentDef_i (
     TAO_Repository_i *repo
   )
@@ -756,50 +803,4 @@ TAO_ComponentDef_i::name_clash (const char *name)
   
   return 0;
 }
-
-// Specialization.
-template<>
-void
-TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple (
-    CORBA::ComponentIR::UsesDescriptionSeq &desc_seq,
-    ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key,
-    CORBA::ULong index
-  )
-{
-  CORBA::ULong is_multiple = 0;
-  config->get_integer_value (key,
-                             "is_multiple",
-                             is_multiple);
-  desc_seq[index].is_multiple = 
-    ACE_static_cast (CORBA::Boolean,
-                     is_multiple);
-}
-
-// Specialization.
-template<>
-void 
-TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
-    CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
-    ACE_TString &holder,
-    CORBA::ULong index
-  )
-{
-  desc_seq[index].event = holder.fast_rep ();
-}
-
-/// Specialization.
-template<>
-void
-TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
-    CORBA::Boolean is_multiple,
-    ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
-{
-  config->set_integer_value (key,
-                             "is_multiple",
-                             is_multiple);
-}
-
 
