@@ -161,6 +161,12 @@ public:
   int remove (const ACE_TString POA_name);
   // Removes the server from the Repository.
 
+  HASH_IR_ITER *new_iterator ();
+  // Returns a new iterator that travels over the repository.
+
+  size_t get_repository_size ();
+  // Returns the number of entries in the repository.
+
 private:
   HASH_IR_MAP repository_;
 };

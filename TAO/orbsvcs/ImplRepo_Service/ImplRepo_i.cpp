@@ -489,28 +489,28 @@ ImplRepo_i::list (CORBA::ULong how_many,
                     CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  // Dynamically allocate the iterator.
+  // Get a new iterator
+  Server_Repository::HASH_IR_ITER *hash_iter = this->repository_.new_iterator ();
 
-  Server_Repository::HASH_IR_ITER *hash_iter = 0;
+  // Check for a memory error.
+  if (hash_iter == 0)
+  {
+    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    ACE_CHECK;
+  }
+  
+  // Number of servers that will go into the server_list.
+  CORBA::ULong n;
 
-  ACE_NEW_THROW_EX (hash_iter,
-                    Server_Repository::HASH_IR_ITER (this->repository_),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  ACE_CHECK;
+  if (this->repository_.get_repository_size () > how_many)
+    n = how_many;
+  else
+    n = this->repository_.get_repository_size ();
 
 
   
-  // Number of bindings that will go into the BindingList.
-  CORBA::ULong n;
-
   // A pointer to BindingIterator servant.
   TAO_Hash_Binding_Iterator *bind_iter = 0;
-
-  // Calculate number of bindings that will go into bl.
-  if (this->context_.current_size () > how_many)
-    n = how_many;
-  else
-    n = this->context_.current_size ();
 
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
@@ -750,3 +750,80 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));
 }
+
+
+// Plain old constructor
+
+IR_Iterator::IR_Iterator (Server_Repository::HASH_IR_ITER *iterator,
+                          PortableServer::POA_ptr poa)
+  : iterator_ (iterator),
+    poa_ (poa)
+{
+  // Nothing
+}
+
+
+// Destructor
+
+IR_Iterator::~IR_Iterator ()
+{
+  delete iterator_;
+}
+
+
+// Returns the next list of up to <how_many> servers.  If empty, will return
+// false.
+
+CORBA::Boolean 
+IR_Iterator::next_n (CORBA::ULong how_many,
+                     ImplementationRepository::ServerInformationList_out server_list,
+                     CORBA::Environment &ACE_TRY_ENV)
+{
+  // We perform an allocation before obtaining the lock so that an out
+  // parameter is allocated in case we fail to obtain the lock.
+  ACE_NEW_THROW_EX (bl,
+                    CosNaming::BindingList (0),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+  // Obtain a lock.
+  ACE_GUARD_THROW_EX (ACE_Lock,
+                      ace_mon,
+                      *this->lock_,
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  // If there are no more bindings...
+  if (hash_iter_->done ())
+      return 0;
+  else
+    {
+      // Initially assume that iterator has the requested number of
+      // bindings.
+      bl->length (how_many);
+
+      TAO_Hash_Naming_Context::HASH_MAP::ENTRY *hash_entry;
+
+      // Iterate and populate the BindingList.
+
+      for (CORBA::ULong i = 0; i < how_many; i++)
+        {
+          hash_iter_->next (hash_entry);
+
+          if (TAO_Hash_Naming_Context::populate_binding (hash_entry, bl[i]) == 0)
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+
+          if (hash_iter_->advance () == 0)
+            {
+              // If no more bindings left, reset length to the actual
+              // number of bindings populated and get out of the loop.
+              bl->length (i + 1);
+              break;
+            }
+        }
+      return 1;
+    }
+}
+
+void IR_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Destroys the iterator.
+
