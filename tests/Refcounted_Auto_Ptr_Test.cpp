@@ -27,7 +27,6 @@
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Refcounted_Auto_Ptr.h"
-#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tests, Refcounted_Auto_Ptr_Test, "Refcounted_Auto_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
 
@@ -40,7 +39,7 @@ struct Printer
 
   void print (void);
 
-  char *message_;
+  const char *message_;
 };
 
 typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
@@ -263,17 +262,19 @@ static int n_loops = 10;
 
 template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
+template class ACE_Auto_Basic_Ptr<Printer>;
 template class auto_ptr<Scheduler>;
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
-#pragma instantiate auto_ptr<Scheduler>;
-#pragma instantiate auto_ptr<ACE_Method_Request>;
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>;
+#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>
+#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>
+#pragma instantiate ACE_Auto_Basic_Ptr<Printer>
+#pragma instantiate auto_ptr<Scheduler>
+#pragma instantiate auto_ptr<ACE_Method_Request>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
