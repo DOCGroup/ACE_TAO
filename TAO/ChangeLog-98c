@@ -5,7 +5,7 @@ Wed Jul 15 12:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	  resources and multiple threads. It is achieved through
 	  the leader follower model.
 
-	* tao/GIOP.cpp: The suspended Client Connection Handler
+	* tao/Invocation.cpp: The suspended Client Connection Handler
 	  from Connect.cpp get resumed (TAO_GIOP_Invocation::invoke).
 
 	* tao/ORB.{h,cpp}: The run method conforms to the rules
