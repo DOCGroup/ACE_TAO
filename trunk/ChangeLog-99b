@@ -6,6 +6,8 @@ Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>b
 	 is called, it wakes up all the threads blocked on waiting for
 	 completions and end the event loop.
 
+	Thanks to  "Edwin D. Windes" <ewindes@usa.net> for reporting the issue.
+
 	* ace/Proactor.h: 
 	* ace/Proactor.cpp:
 	Added static helper methods and states to post the wakeup
