@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    TAO_DynamicAny
-//
-// = FILENAME
-//    DynUnion_i.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    DynUnion_i.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNUNION_I_H
 #define TAO_DYNUNION_I_H
@@ -33,28 +30,28 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_DynUnion_i
+ *
+ * Implementation of Dynamic Any type for Unions.
+ */
 class TAO_DynamicAny_Export TAO_DynUnion_i
   : public virtual DynamicAny::DynUnion,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //    TAO_DynUnion_i
-  //
-  // = DESCRIPTION
-  //    Implementation of Dynamic Any type for Unions.
 public:
+  /// Constructor.
   TAO_DynUnion_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_DynUnion_i (void);
-  // Destructor.
 
+  /// Constructor taking an Any argument.
   void init (const CORBA::Any& any ACE_ENV_ARG_DECL);
-  // Constructor taking an Any argument.
 
+  /// Constructor taking a typecode argument.
   void init (CORBA::TypeCode_ptr tc ACE_ENV_ARG_DECL);
-  // Constructor taking a typecode argument.
 
   // = LocalObject methods.
   static TAO_DynUnion_i *_narrow (
@@ -178,8 +175,8 @@ public:
       ));
 
 private:
-  // Code common to the constructor from an Any arg and the member
-  // function from_any().
+  /// Code common to the constructor from an Any arg and the member
+  /// function from_any().
   void set_from_any (const CORBA::Any &any,
                      CORBA::Boolean from_factory
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -189,10 +186,10 @@ private:
         DynamicAny::DynAnyFactory::InconsistentTypeCode
       ));
 
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common (void);
 
-  // Iterative check for label value match.
+  /// Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA::Any &my_any,
                               const CORBA::Any &other_any
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -200,16 +197,16 @@ private:
         CORBA::SystemException
       ));
 
-  // Use copy() or assign() instead of these.
+  /// Use copy() or assign() instead of these.
   TAO_DynUnion_i (const TAO_DynUnion_i &src);
   TAO_DynUnion_i &operator= (const TAO_DynUnion_i &src);
 
 private:
-  // Just two components.
+  /// Just two components.
   DynamicAny::DynAny_var member_;
   DynamicAny::DynAny_var discriminator_;
 
-  // The active member's slot in the union type code.
+  /// The active member's slot in the union type code.
   CORBA::ULong member_slot_;
 };
 
