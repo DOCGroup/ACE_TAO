@@ -1,5 +1,8 @@
 Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
 
+	* orbsvcs/Naming_Service/Naming_Utils.cpp: Added this new file
+	which implements the TAO_Naming_Server class.
+
 	* tests/Cubit/TAO/IDL_Cubit/client.cpp (read_ior): Added 2 new
 	methods read_ior and init_naming_service.
 
