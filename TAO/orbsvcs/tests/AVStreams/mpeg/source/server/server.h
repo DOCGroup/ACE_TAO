@@ -42,6 +42,7 @@
 #endif /* NATIVE_ATM */
 
 #include "mpeg_server/Video_Server.h"
+#include "mpeg_server/Audio_Server.h"
 
 // Forward declaration.
 class AV_Svc_Handler;
@@ -108,6 +109,9 @@ private:
 
   Video_Server *vs_;
   // @@ need a similar component for audio!
+  
+  Audio_Server *as_;
+  // the audio server.
 };
 
 class AV_Server_Sig_Handler 

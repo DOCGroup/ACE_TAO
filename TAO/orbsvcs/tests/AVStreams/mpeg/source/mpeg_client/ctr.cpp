@@ -689,8 +689,8 @@ static int InitAudioChannel(char * phostname, char * af)
     INITaudioPara para;
     INITaudioReply reply;
     unsigned char tmp;
-    tmp = CmdINITaudio;
-    AudioWrite(&tmp, 1);
+    //     tmp = CmdINITaudio;
+    //     AudioWrite(&tmp, 1);
     para.sn = htonl(shared->cmdsn);
     para.version = htonl(VERSION);
     para.para.encodeType = htonl(shared->AFPara.encodeType);
