@@ -1,3 +1,9 @@
+Fri Jun 16 16:05:52 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/tests/{Makefile,Stdio_Test,Posix_SP_Test.c}:
+          Updated the tests to more informational and adding uname -s
+          information for some different platforms.
+
 Fri Jun 16 14:11:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/*.h
