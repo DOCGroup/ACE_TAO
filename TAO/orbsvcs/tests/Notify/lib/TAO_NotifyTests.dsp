@@ -43,7 +43,7 @@ RSC=rc.exe
 BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosNotification.lib TAO_ETCL.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_DynamicAny.lib TAO_PortableServer.lib TAO.lib ACE.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll  /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosEvent.lib TAO_CosNotification.lib TAO_ETCL.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_DynamicAny.lib TAO_PortableServer.lib TAO.lib ACE.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll  /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll"
 
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Debug"
 
@@ -59,7 +59,7 @@ LINK32=link.exe
 BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosNotificationd.lib TAO_ETCLd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_DynamicAnyd.lib TAO_PortableServerd.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll /debug /pdb:TAO_NotifyTestsd.pdb /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosEventd.lib TAO_CosNotificationd.lib TAO_ETCLd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_DynamicAnyd.lib TAO_PortableServerd.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll /debug /pdb:TAO_NotifyTestsd.pdb /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll"
 
 !ENDIF
 
@@ -212,10 +212,6 @@ SOURCE=.\Activation_ManagerS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Application_Command.h
 # End Source File
 # Begin Source File
@@ -340,21 +336,12 @@ SOURCE=.\Activation_ManagerS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Task_Stats.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Activation_ManagerS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # Begin Source File
 
 SOURCE=.\Command_Factory_T.cpp

@@ -84,10 +84,6 @@ SOURCE=.\RT_Test_FilterFactory.cpp
 # PROP Default_Filter "h;hpp;hxx;hh"
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Command_Factory_T.h
 # End Source File
 # Begin Source File
@@ -104,17 +100,20 @@ SOURCE=.\RT_Test_FilterFactory.h
 # PROP Default_Filter "i;inl"
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.i
+SOURCE=.\Activation_ManagerC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Activation_ManagerS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Task_Stats.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Activation_ManagerS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # Begin Source File
 
 SOURCE=.\Command_Factory_T.cpp
