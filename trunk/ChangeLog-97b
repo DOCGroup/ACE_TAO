@@ -58,6 +58,8 @@ Wed Oct 29 15:56:01 1997  David L. Levine  <levine@cs.wustl.edu>
           remove dynamic allocation from ACE_TSS_Info.  Also, enabled call
           of ACE_Task close hook before calling TSS destructors.
 
+        * ace/OS.cpp: changed a few TSS 0 keys to ACE_OS::NULL_key.
+
         * ace/Thread_Manager.cpp (ace_thread_manager_adapter): with
           TSS_EMULATION, moved the call of tss_close () from here to
           ACE_Thread_Adapter::invoke () so that it can be called after
