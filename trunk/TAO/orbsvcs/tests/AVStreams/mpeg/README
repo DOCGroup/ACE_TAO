@@ -50,3 +50,17 @@ You can also give the audio and video files on the command line like
 
 vcr -v video_file_path -a audio_file_path.
 
+Using the Trading Service:
+==========================
+
+The mpeg client can also be run using the Trading service to find the
+server which can give the best QoS and other properties.
+
+The files for the Trader Agent  are in
+$TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
+
+For more instructions read the $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery/README.
+
+
+Nagarajan Surendran (naga@cs.wustl.edu)
+Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
