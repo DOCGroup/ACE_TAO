@@ -13,13 +13,12 @@
 #endif /* __ACE_INLINE__ */
 
 template <class TYPE, class LOCK> void
-ACE_Singleton<TYPE, LOCK>::dump (void) const
+ACE_Singleton<TYPE, LOCK>::dump (void)
 {
   ACE_TRACE ("ACE_Singleton<TYPE, LOCK>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", this->instance_));
+  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", instance_));
   ace_singleton_lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */

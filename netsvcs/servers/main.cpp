@@ -60,36 +60,36 @@ main (int argc, char *argv[])
 	  l_argv[1] = 0;
 	  Service_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
-	  if (so->init (1, l_argv) == -1)
+	  if (sp_2->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_TS_Server_Acceptor", 1));
 
 	  l_argv[0] = argv[0];
 	  l_argv[1] = "-p 10011";
 	  l_argv[2] = 0;
-	  Service_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
+	  Service_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
-	  if (sp_2->init (2, l_argv) == -1)
+	  if (sp_3->init (2, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_TS_Clerk_Processor", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
 	  l_argv[1] = 0;
-	  Service_Ptr sp_3 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
+	  Service_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
 
-	  if (sp_3->init (1, l_argv) == -1)
+	  if (sp_4->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Token_Service", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = 0;
-	  Service_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
+	  Service_Ptr sp_5 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
 
-	  if (sp_4->init (1, l_argv) == -1)
+	  if (sp_5->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging_Service", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = 0;
-	  Service_Ptr sp_5 = ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
+	  Service_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
 
-	  if (sp_5->init (1, l_argv) == -1)
+	  if (sp_6->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Thr_Logging_Service", 1));
 	}
 

@@ -53,7 +53,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
       ACE_Method_Object *mo = (ACE_Method_Object *) mb->base ();
 
       // Delete the message block.
-      delete mb;
+      mb->release ();
       return mo;
     }
   else

@@ -68,7 +68,7 @@ consumer (void *args)
       // Free up the buffer memory and the Message_Block. Note that
       // the destructor of Message Block will delete the the actual
       // buffer.
-      delete mb;
+      mb->release ();
 
       if (length == 0)
 	break;

@@ -74,7 +74,7 @@ ACE_Stream_Head<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
   return ioc->rval ();
 }
 
-/* Performs canonical flushing at the ACE_Stream Head */
+// Performs canonical flushing at the ACE_Stream Head.
 
 template <ACE_SYNCH_1> int
 ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
@@ -82,20 +82,22 @@ ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush");
   char *cp = mb->rd_ptr ();
 
-  if (*cp & ACE_Task_Flags::ACE_FLUSHR)
+  if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHR))
     {
       this->flush (ACE_Task_Flags::ACE_FLUSHALL);
-      *cp &= ~ACE_Task_Flags::ACE_FLUSHR;
+      ACE_CLR_BITS (*cp, ACE_Task_Flags::ACE_FLUSHR);
     }
-  if (*cp & ACE_Task_Flags::ACE_FLUSHW)
+
+  if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHW))
     return this->reply (mb);
   else
-    delete mb;
+    mb->release ();
   return 0;
 }
 
 template <ACE_SYNCH_1> int 
-ACE_Stream_Head<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+ACE_Stream_Head<ACE_SYNCH_2>::put (ACE_Message_Block *mb, 
+				   ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::put");
   int res = 0;
@@ -105,10 +107,8 @@ ACE_Stream_Head<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
     return res;
 
   if (this->is_writer ())
-    {
-      return this->put_next (mb, tv);
-    }
-  else /* this->is_reader () */
+    return this->put_next (mb, tv);
+  else // this->is_reader () 
     {      
       switch (mb->msg_type ())
 	{
@@ -215,7 +215,7 @@ ACE_Stream_Tail<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
   return this->reply (mb);
 }
 
-/* Perform flush algorithm as though we were the driver */
+// Perform flush algorithm as though we were the driver.
 
 template <ACE_SYNCH_1> int
 ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
@@ -223,27 +223,29 @@ ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush");
   char *cp = mb->rd_ptr ();
 
-  if (*cp & ACE_Task_Flags::ACE_FLUSHW)
+  if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHW))
     {
       this->flush (ACE_Task_Flags::ACE_FLUSHALL);
-      *cp &= ~ACE_Task_Flags::ACE_FLUSHW;
+      ACE_BIT_CLR (*cp, ACE_Task_Flags::ACE_FLUSHW);
     }
-  if (*cp & ACE_Task_Flags::ACE_FLUSHR)
+
+  if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHR))
     {
       this->sibling ()->flush (ACE_Task_Flags::ACE_FLUSHALL);
       return this->reply (mb);
     }
   else
-    delete mb;
+    mb->release ();
+
   return 0;
 }
 
 template <ACE_SYNCH_1> int 
-ACE_Stream_Tail<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *
-
-)
+ACE_Stream_Tail<ACE_SYNCH_2>::put (ACE_Message_Block *mb, 
+				   ACE_Time_Value *)
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::put");
+
   if (this->is_writer ())
     {
       switch (mb->msg_type ())
@@ -252,7 +254,7 @@ ACE_Stream_Tail<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *
 	  return this->control (mb);
 	  /* NOTREACHED */
 	default:
-	  delete mb;
+	  mb->release ();
 	}
     }
 

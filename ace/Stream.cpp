@@ -348,26 +348,28 @@ ACE_Stream<ACE_SYNCH_2>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  // Create a data block that contains the user-supplied data.
-  ACE_Message_Block *db = 
-    new ACE_Message_Block (sizeof (int), 
-			   ACE_Message_Block::MB_IOCTL, 
-			   0, 
-			   (char *) a);
+  ACE_Message_Block *db = 0;
 
-  // Create a control block that contains the control field and a
-  // pointer to the data block.
+  // Try to create a data block that contains the user-supplied data.
+  ACE_NEW_RETURN (db, ACE_Message_Block (sizeof (int), 
+					 ACE_Message_Block::MB_IOCTL, 
+					 0, 
+					 (char *) a), -1);
+
+  // Try to create a control block <cb> that contains the control
+  // field and a pointer to the data block <db> in <cb>'s continuation
+  // field.
   ACE_Message_Block *cb = 
     new ACE_Message_Block (sizeof ioc, 
 			   ACE_Message_Block::MB_IOCTL, 
 			   db, 
 			   (char *) &ioc);
 
-  // Make sure all of the allocation succeeded before continuing.
-  if (db == 0 || cb == 0)
+  // If we can't allocate <cb> then we need to delete db and return
+  // -1.
+  if (cb == 0)
     {
-      delete cb; 
-      delete db; 
+      db->release (); 
       errno = ENOMEM;
       return -1;
     }
@@ -381,7 +383,9 @@ ACE_Stream<ACE_SYNCH_2>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   else
     result = ((ACE_IO_Cntl_Msg *) cb->rd_ptr ())->rval ();
 
-  delete cb; // This also deletes db...
+  // This will also release db if it's reference count == 0.
+  cb->release (); 
+
   return result;
 }
 

@@ -48,6 +48,7 @@ void
 Peer_Router_Context::release (void)
 {
   this->reference_count_--;
+
   if (this->reference_count_ == 0)
     delete this;
 }
@@ -141,6 +142,17 @@ Peer_Handler::Peer_Handler (Peer_Router_Context *prc)
 }
 
 #if 0
+
+// Right now, Peer_Handlers are purely Reactive, i.e., they all run in
+// a single thread of control.  It would be easy to make them Active
+// Objects by calling activate() in Peer_Handler::open(), making
+// Peer_Handler::put() enqueue each message on the message queue, and
+// (3) then running the following svc() routine to route each message
+// to its final destination within a separate thread.  Note that we'd
+// want to move the svc() call up to the Consumer_Router and
+// Supplier_Router level in order to get the right level of control
+// for input and output.
+
 Peer_Handler::svc (void)
 {
   ACE_Thread_Control thread_control (tm);
@@ -184,10 +196,20 @@ Peer_Handler::svc (void)
 #endif
 
 int
-Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
+Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
-  return this->peer ().send_n (mb->rd_ptr (), 
-			       mb->length ());
+#if 0
+  // If we're running as Active Objects just enqueue the message here.
+  return this->putq (mb, tv);
+#else
+  int result = 0;
+
+  result = this->peer ().send_n (mb->rd_ptr (), 
+				 mb->length ());
+  // Release the memory.
+  mb->release ();
+  return result;
+#endif
 }
 
 // Initialize a newly connected handler.
@@ -203,16 +225,18 @@ Peer_Handler::open (void *)
   else
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "info"), -1);
 #if 0
+  // If we're running as an Active Object activate the Peer_Handler
+  // here.
   if (this->activate (Options::instance ()->t_flags ()) == -1)
      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activation of thread failed"), -1);
-#endif
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) Peer_Handler::open registering with Reactor for handle_input\n"));
-
+#else
   // Register with the Reactor to receive messages from our Peer.
   if (ACE_Service_Config::reactor ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+#endif
 
   // Insert outselves into the routing map.
   else if (this->prc_->bind_peer (this->get_handle (), this) == -1)
@@ -239,8 +263,8 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   // Check for memory failures.
   if (db == 0 || hb == 0)
     {
-      delete hb;
-      delete db;
+      hb->release ();
+      db->release ();
       errno = ENOMEM;
       return -1;
     }

@@ -13,6 +13,13 @@
 #include "Handle_Thr_Stream.i"
 #endif /* __ACE_INLINE__ */
 
+// Shorthand names.
+#define SH SVC_HANDLER 
+#define PR_AC_1 ACE_PEER_ACCEPTOR_1
+#define PR_AC_2 ACE_PEER_ACCEPTOR_2
+#define PR_ST_1 ACE_PEER_STREAM_1
+#define PR_ST_2 ACE_PEER_STREAM_2
+
 template <class SH, PR_AC_1> 
 Handle_Thr_Acceptor<SH, PR_AC_2>::~Handle_Thr_Acceptor (void)
 {
@@ -145,6 +152,12 @@ CLI_Stream<PR_ST_2>::svc (void)
   ACE_DEBUG ((LM_DEBUG, "(%t) sent reply %s", buf));
   return 0;
 }
+
+#undef SH
+#undef PR_AC_1
+#undef PR_AC_2
+#undef PR_ST_1
+#undef PR_ST_2
 
 //----------------------------------------
 

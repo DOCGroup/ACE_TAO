@@ -306,7 +306,7 @@ Gateway::parse_consumer_config_file (void)
 
   // Read config file line at a time.
   for (Consumer_Config_Info cci;
-       consumer_file.read_entry (cci, line_number) != FP::EOFILE);
+       consumer_file.read_entry (cci, line_number) != FP::EOFILE;
        )
     {
       file_empty = 0;
