@@ -4,7 +4,6 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
-#include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -126,7 +125,8 @@ public:
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
 #if defined (ACE_LACKS_FORK)
-  puts ("This requires fork()\n");
+  ACE_DEBUG ((LM_DEBUG,
+              "This example requires fork()\n"));
 #else
   // Create a child process so that we can test our
   // ability to handle SIGCHLD
