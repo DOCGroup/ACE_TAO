@@ -60,16 +60,10 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *n
   // statement because the type of member assigned is based on the value
   // of the discriminant
   os->indent ();
-  if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
-    {
-      *os << "case " << ub->label ()->label_val ()->n ()  << ":" << be_nl;
-      *os << "{" << be_idt << "\n";
-    }
-  else
-    {
-      *os << "case " << ub->label ()->label_val () << ":" << be_nl;
-      *os << "{" << be_idt << "\n";
-    }
+  *os << "case ";
+  node->gen_label_value (os);
+  *os << ":" << be_nl;
+  *os << "{" << be_idt << "\n";
 
   // first generate the type information
   be_type *bt = be_type::narrow_from_decl (node->field_type ());

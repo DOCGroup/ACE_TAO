@@ -1,3 +1,24 @@
+Fri Feb 26 21:03:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  Added support for forwarding in stubs generated with compiled
+	  marshaling.
+	  We use the new ACE_TRY macros to do this.
+
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_union_label.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	  Fixed code generation for unions whose discriminators are
+	  enums. It wasn't prefixing the enum label with the scope where
+	  the enum was generated i.e. for enums defined inside a module
+	  Foo it was using "value1" instead of "Foo::value1".
+
 Fri Feb 26 18:29:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/implrepo.conf

@@ -25,4 +25,3 @@ be_union_label::accept (be_visitor *visitor)
 {
   return visitor->visit_union_label (this);
 }
-

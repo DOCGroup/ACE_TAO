@@ -140,16 +140,8 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
     }
   else
     {
-      AST_Expression *e = b->label ()->label_val ();
       *os << "case ";
-      if (e->ec () == AST_Expression::EC_symbol)
-        {
-          *os << e->n ();
-        }
-      else
-        {
-          *os << e;
-        }
+      b->gen_label_value (os);
       *os << ":" << be_idt_nl
           << "{" << be_idt_nl;
     }

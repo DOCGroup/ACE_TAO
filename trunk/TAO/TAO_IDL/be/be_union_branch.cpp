@@ -113,6 +113,46 @@ be_union_branch::compute_size_type (void)
 }
 
 int
+be_union_branch::gen_label_value (TAO_OutStream *os)
+{
+  AST_Expression *e = this->label ()->label_val ();
+  if (e->ec () != AST_Expression::EC_symbol)
+    {
+      // Easy, just a number...
+      *os << e;
+      return 0;
+    }
+
+  // If the enum is not in the global scope we have to prefix it.
+  be_union *u =
+    be_union::narrow_from_scope (this->defined_in ());
+  if (u == 0)
+    return -1;
+
+  be_type* dt =
+    be_type::narrow_from_decl (u->disc_type ());
+  if (dt == 0)
+    return -1;
+
+  // Find where was the enum defined, if it was defined in the globa
+  // scope, then it is easy to generate the enum values....
+  be_scope* scope = 
+    be_scope::narrow_from_scope (dt->defined_in ());
+  if (scope == 0)
+    {
+      *os << e->n ();
+      return 0;
+    }
+
+  // But if it was generated inside a module or something similar then 
+  // we must prefix the enum value with something... 
+  be_decl* decl = 
+    scope->decl ();
+  *os << decl->fullname () << "::" << e->n ();
+  return 0;
+}
+
+int
 be_union_branch::accept (be_visitor *visitor)
 {
   return visitor->visit_union_branch (this);

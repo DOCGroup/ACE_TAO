@@ -66,15 +66,9 @@ visit_union_branch (be_union_branch *node)
     }
 
   this->ctx_->node (node); // save the node
-
-  if (node->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
-    {
-      *os << "case " << node->label ()->label_val ()->n ()  << ":" << be_idt_nl;
-    }
-  else
-    {
-      *os << "case " << node->label ()->label_val () << ":" << be_idt_nl;
-    }
+  *os << "case ";
+  node->gen_label_value (os);
+  *os << ":" << be_idt_nl;
 
   if (bt->accept (this) == -1)
     {
@@ -119,7 +113,7 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
-  // on 
+  // on
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -131,7 +125,7 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
                            bt->local_name ()->get_string ());
         }
       else
@@ -193,7 +187,7 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name () 
+  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name ()
       << "_->inout ();" << be_uidt_nl;
 
   return 0;
