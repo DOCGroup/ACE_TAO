@@ -793,6 +793,13 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 
 #endif /* WIN32 */
 
+ACE_INLINE int 
+ACE_OS::stat (const char *file, struct stat *stp)
+{
+  // ACE_TRACE ("ACE_OS::stat");
+  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+}
+
 ACE_INLINE time_t 
 ACE_OS::time (time_t *tloc)
 {
@@ -1005,11 +1012,19 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
     {
     case USYNC_PROCESS: 
       // Timeout can't occur, so don't bother checking...
-      if (::WaitForSingleObject(m->proc_mutex_, INFINITE) == WAIT_OBJECT_0)
-	return 0;
-      else
-	// This is a hack, we need to find an appropriate mapping...
-	ACE_FAIL_RETURN (-1); 
+      
+      switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
+	{
+	case WAIT_OBJECT_0:
+	  return 0;
+	case WAIT_ABANDONED:
+	  errno = WAIT_ABANDONED;
+	  return -1;
+	default:
+	  // This is a hack, we need to find an appropriate mapping...
+	  errno = ::GetLastError ();
+	  return -1;
+	}
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
     default:
@@ -1040,14 +1055,18 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     case USYNC_PROCESS: 
       {
 	// Try for 0 milliseconds - i.e. nonblocking.
-	DWORD result = ::WaitForSingleObject(m->proc_mutex_, 0);
-
-	if (result == WAIT_OBJECT_0)
-	  return 0;
-	else
+	switch (::WaitForSingleObject (m->proc_mutex_, 0))
 	  {
-	    errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-	    // This is a hack, we need to find an appropriate mapping...
+	  case WAIT_OBJECT_0:
+	    return 0;
+	  case WAIT_ABANDONED:
+	    errno = WAIT_ABANDONED;
+	    return -1;  
+	  case WAIT_TIMEOUT:
+	    errno = ETIME;
+	    return -1;
+	  default:
+	    errno = ::GetLastError ();
 	    return -1;
 	  }
       }
@@ -1499,9 +1518,19 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-      result = -1;
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
+      result = -1;  
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1599,8 +1628,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
       result = -1;
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
@@ -1651,9 +1690,18 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = ::GetLastError ();
-      result = -1;
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1991,10 +2039,17 @@ ACE_INLINE int
 ACE_OS::event_wait (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  if (::WaitForSingleObject (*event, INFINITE) == WAIT_OBJECT_0)
-    return 0;
-  else
-    ACE_FAIL_RETURN (-1);
+  switch (::WaitForSingleObject (*event, INFINITE))
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      errno = ::GetLastError ();
+      return -1;
+    }
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -2060,12 +2115,17 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
       result = ::WaitForSingleObject (*event, relative_time.msec ());
     }
-  if (result == WAIT_OBJECT_0)
-    return 0;
-  else
+
+  switch (result)
     {
-      errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
       // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
       return -1;
     }
 #elif defined (ACE_HAS_THREADS)
@@ -2421,12 +2481,24 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+// It would be really cool to add another version of select that would
+// function like the one we're defending against below!
 ACE_INLINE int 
 ACE_OS::select (int width, 
 		fd_set *rfds, fd_set *wfds, fd_set *efds, 
 		const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
+#if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
+  // We must defend against non-conformity!
+  ACE_Time_Value copy;
+
+  if (timeout != 0)
+    {
+      copy = *timeout;
+      timeout = &copy;
+    }
+#endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
@@ -2440,11 +2512,18 @@ ACE_OS::select (int width,
 		const ACE_Time_Value &timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
+#ifdef ACE_HAS_NONCONST_SELECT_TIMEVAL
+#  define ___ACE_TIMEOUT copy
+  ACE_Time_Value copy(timeout);
+#else
+#  define ___ACE_TIMEOUT timeout
+#endif
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) &timeout) , int, -1);
+				 (timeval *) &___ACE_TIMEOUT) , int, -1);
+#undef ___ACE_TIMEOUT
 }
 
 ACE_INLINE int 
@@ -2527,6 +2606,7 @@ ACE_OS::getprotobyname_r (const char *name,
     return 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getprotobyname (name),
 			struct protoent *, 0,
 			buffer, sizeof (ACE_PROTOENT_DATA));
@@ -2573,6 +2653,7 @@ ACE_OS::getprotobynumber_r (int proto,
     return 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getprotobynumber (proto),
 			struct protoent *, 0,
 			buffer, sizeof (ACE_PROTOENT_DATA));
@@ -2795,6 +2876,8 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
     }
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NETDBCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
 			struct hostent *, 0,
 			buffer, sizeof (ACE_HOSTENT_DATA));
@@ -2842,6 +2925,8 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
     }
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NETDBCALL_RETURN (::gethostbyname (name),
 			struct hostent *, 0,
 			buffer, sizeof (ACE_HOSTENT_DATA));
@@ -2886,6 +2971,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
     return (struct servent *) 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getservbyname (svc, proto),
 			struct servent *, 0,
 			buf, sizeof (ACE_SERVENT_DATA));
@@ -3253,10 +3339,18 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result;
 
 #elif defined (ACE_HAS_WTHREADS)
-  if (::WaitForSingleObject (*s, INFINITE) == WAIT_OBJECT_0)
-    return 0;
-  else
-    ACE_FAIL_RETURN (-1);
+  switch (::WaitForSingleObject (*s, INFINITE))
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
+      return -1;
+    }
   /* NOTREACHED */
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3285,6 +3379,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   return ::ResumeThread (target_thread) != ACE_SYSCALL_FAILED ? 0 : -1;
@@ -3374,9 +3469,8 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   return prio == THREAD_PRIORITY_ERROR_RETURN ? -1 : 0;
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
-#else
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
 
@@ -3421,6 +3515,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (thr_id);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -3501,6 +3596,8 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
   // I didn't manage to find pthread_cancel anywhere in the MIT pthread
   // implementation. So I'll just leave this instead, and see what
   // breaks. -- jwr
+  ACE_UNUSED_ARG (old_state);
+  ACE_UNUSED_ARG (new_state);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3536,6 +3633,8 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   // I didn't manage to find pthread_cancel anywhere int the MIT pthread
   // implementation. So I'll just leave this instead, and see what
   // breaks. -- jwr
+  ACE_UNUSED_ARG (new_type);
+  ACE_UNUSED_ARG (old_type);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3565,6 +3664,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   // I didn't manage to find pthread_cancel anywhere int the MIT
   // pthread implementation. So I'll just leave this instead, and
   // see what breaks. -- jwr
+  ACE_UNUSED_ARG (t_id);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3828,9 +3928,10 @@ ACE_OS::thr_setconcurrency (int hint)
 				       ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG(hint);
+  ACE_UNUSED_ARG (hint);
 	
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
@@ -3853,11 +3954,17 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   struct sched_param param;
   int policy = 0;
+  int result;
 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), 
+                                result), // not sure if use of result here is cool, cjc
+              int, -1, result);
+  if (result == -1) 
+    return result; // error in pthread_getschedparam
   param.sched_priority = prio;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), 
-				       ace_result_), 
-		     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), 
+                                       result),
+                     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 
@@ -3880,6 +3987,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)
@@ -3961,6 +4069,19 @@ ACE_OS::readv (ACE_HANDLE handle,
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
 }
 
+ACE_INLINE int
+ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
+{
+  // ACE_TRACE ("ACE_OS::clock_gettime");
+#if defined (ACE_HAS_CLOCK_GETTIME)
+  ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
+#else
+  ACE_UNUSED_ARG (clockid);
+  ACE_UNUSED_ARG (ts);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_CLOCK_GETTIME */
+}
+
 ACE_INLINE ACE_Time_Value
 ACE_OS::gettimeofday (void)
 {
@@ -4005,9 +4126,8 @@ ACE_OS::gettimeofday (void)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
   struct timespec ts;
-  
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, &ts), result),
-              int, -1, result);
+
+  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
 
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
@@ -5778,7 +5898,7 @@ ACE_OS::ioctl (ACE_HANDLE handle, int cmd, void *val)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, (u_long *) val), int, -1);
 #elif defined (VXWORKS)
-  // this may not work very well...
+  // This may not work very well...
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ioctl (handle, cmd, (int) val), ace_result_),
                      int, -1);
 #else
@@ -6098,6 +6218,13 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 }
 
 ACE_INLINE int 
+ACE_OS::stat (const wchar_t *file, struct stat *stp)
+{
+  // ACE_TRACE ("ACE_OS::stat");
+  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+}
+
+ACE_INLINE int 
 ACE_OS::system (const wchar_t *command)
 {
   ACE_OSCALL_RETURN (::_wsystem (command), int, -1);    
@@ -6119,6 +6246,14 @@ ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
+
+#if defined (ACE_LACKS_COND_T)
+ACE_INLINE long
+ACE_cond_t::waiters (void) const
+{
+  return this->waiters_;
+}
+#endif /* ACE_LACKS_COND_T */
 
 #if 0
 ACE_INLINE int 
