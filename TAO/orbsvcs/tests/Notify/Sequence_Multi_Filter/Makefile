@@ -29,10 +29,6 @@ SRC = common.cpp $(IDL_SRC) \
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
 TAO_IDLFLAGS += -Ge 1
 
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Notify
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -41,6 +37,10 @@ endif # Notify
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Notify
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
