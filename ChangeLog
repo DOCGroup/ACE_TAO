@@ -1,3 +1,8 @@
+Thu May 17 14:36:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SString.cpp: Fixed a bug in the check_allocate() method.
+	  Thanks to Wayne Erchak <wayne@stentor.com> for reporting this.
+
 Thu May 17 12:16:57 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/CDR_Stream.h (ACE_InputCDR): 
