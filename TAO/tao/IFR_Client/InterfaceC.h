@@ -37,6 +37,10 @@
 #include "tao/Typecode.h"
 #include "tao/Remote_Object_Proxy_Impl.h"
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+  #include "tao/ClientRequestInfo.h"
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
+
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
@@ -166,7 +170,7 @@
   protected:
     // This methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
-    virtual void _tao_setup_collocation (int collocated);
+    virtual void CORBA_IRObject_setup_collocation (int collocated);
 
     CORBA_IRObject (
         TAO_Stub *objref,
@@ -182,8 +186,97 @@
   private:
     CORBA_IRObject (const CORBA_IRObject &);
     void operator= (const CORBA_IRObject &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get : public TAO_ClientRequestInfo
+    {
+    public:
+      friend class CORBA_IRObject;
+      
+      friend class _TAO_IRObject_Remote_Proxy_Impl;
+      friend class _TAO_IRObject_ThruPOA_Proxy_Impl;
+      friend class _TAO_IRObject_Direct_Proxy_Impl;
+    
+      TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get (
+          TAO_GIOP_Invocation *_tao_invocation,
+          CORBA::Object_ptr _tao_target,
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        );
+    
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+  private:
+    TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get (const TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get &);
+    void operator= (const TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get &);
+    void result (IR_DefinitionKind result);
+    // update the result 
+    IR_DefinitionKind _result;
+  };
+  
+  class TAO_ClientRequestInfo_CORBA_IRObject_destroy : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class CORBA_IRObject;
+    
+    friend class _TAO_IRObject_Remote_Proxy_Impl;
+    friend class _TAO_IRObject_ThruPOA_Proxy_Impl;
+    friend class _TAO_IRObject_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_CORBA_IRObject_destroy (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_CORBA_IRObject_destroy (const TAO_ClientRequestInfo_CORBA_IRObject_destroy &);
+    void operator= (const TAO_ClientRequestInfo_CORBA_IRObject_destroy &);
+  
   };
 
+#endif /* TAO_HAS_INTERCEPTORS */
+
+};
 
 // The Proxy Implementations are used by each interface to
 // perform a call. Each different implementation encapsulate
@@ -668,7 +761,7 @@ public:
   protected:
     // This methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
-    virtual void _tao_setup_collocation (int collocated);
+    virtual void IR_Contained_setup_collocation (int collocated);
 
     IR_Contained (
         TAO_Stub *objref,
@@ -685,7 +778,480 @@ public:
     IR_Contained (const IR_Contained &);
     void operator= (const IR_Contained &);
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ClientRequestInfo_IR_Contained_id_get : public TAO_ClientRequestInfo
+    {
+    public:
+      friend class IR_Contained;
+      
+      friend class _TAO_Contained_Remote_Proxy_Impl;
+      friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+      friend class _TAO_Contained_Direct_Proxy_Impl;
+    
+      TAO_ClientRequestInfo_IR_Contained_id_get (
+          TAO_GIOP_Invocation *_tao_invocation,
+          CORBA::Object_ptr _tao_target,
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        );
+    
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV = 
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+  private:
+    TAO_ClientRequestInfo_IR_Contained_id_get (const TAO_ClientRequestInfo_IR_Contained_id_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_id_get &);
+    void result (char * result);
+    // update the result 
+    char * _result;
   };
+  
+  class TAO_ClientRequestInfo_IR_Contained_id_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+    
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_Contained_id_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_Contained_id_set (const TAO_ClientRequestInfo_IR_Contained_id_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_id_set &);
+    const char * id_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_name_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+  TAO_ClientRequestInfo_IR_Contained_name_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_name_get (const TAO_ClientRequestInfo_IR_Contained_name_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_name_get &);
+    void result (char * result);
+    // update the result 
+    char * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_name_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_name_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * name,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_name_set (const TAO_ClientRequestInfo_IR_Contained_name_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_name_set &);
+    const char * name_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_version_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_version_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_version_get (const TAO_ClientRequestInfo_IR_Contained_version_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_version_get &);
+    void result (char * result);
+    // update the result 
+    char * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_version_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_version_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_version_set (const TAO_ClientRequestInfo_IR_Contained_version_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_version_set &);
+    const char * version_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_defined_in_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_defined_in_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_defined_in_get (const TAO_ClientRequestInfo_IR_Contained_defined_in_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_defined_in_get &);
+    void result (IR_Container_ptr result);
+    // update the result 
+    IR_Container_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_absolute_name_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_absolute_name_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_absolute_name_get (const TAO_ClientRequestInfo_IR_Contained_absolute_name_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_absolute_name_get &);
+    void result (char * result);
+    // update the result 
+    char * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_containing_repository_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_containing_repository_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_containing_repository_get (const TAO_ClientRequestInfo_IR_Contained_containing_repository_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_containing_repository_get &);
+    void result (IR_Repository_ptr result);
+    // update the result 
+    IR_Repository_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_describe : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_describe (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_describe (const TAO_ClientRequestInfo_IR_Contained_describe &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_describe &);
+    void result (ACE_NESTED_CLASS (IR_Contained,Description) * result);
+    // update the result 
+    ACE_NESTED_CLASS (IR_Contained,Description) * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Contained_move : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Contained;
+  
+    friend class _TAO_Contained_Remote_Proxy_Impl;
+    friend class _TAO_Contained_ThruPOA_Proxy_Impl;
+    friend class _TAO_Contained_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Contained_move (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_Container_ptr new_container,
+        const char * new_name,
+        const char * new_version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Contained_move (const TAO_ClientRequestInfo_IR_Contained_move &);
+    void operator= (const TAO_ClientRequestInfo_IR_Contained_move &);
+    IR_Container_ptr new_container_;
+    const char * new_name_;
+    const char * new_version_;
+  
+  };
+
+  #endif /* TAO_HAS_INTERCEPTORS */
+
+};
 
 
 // The Proxy Implementations are used by each interface to
@@ -4325,6 +4891,7 @@ public:
 
     Description & operator[] (CORBA::ULong index);
     const Description & operator[] (CORBA::ULong index) const;
+
     // in, inout, out, _retn
     const DescriptionSeq &in (void) const;
     DescriptionSeq &inout (void);
@@ -4526,7 +5093,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_Container_setup_collocation (int collocated);
 
   IR_Container (
       TAO_Stub *objref,
@@ -4542,6 +5109,768 @@ protected:
 private:
   IR_Container (const IR_Container &);
   void operator= (const IR_Container &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_Container_lookup : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+    
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_Container_lookup (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * search_name,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_Container_lookup (const TAO_ClientRequestInfo_IR_Container_lookup &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_lookup &);
+    const char * search_name_;
+    void result (IR_Contained_ptr result);
+    // update the result 
+    IR_Contained_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_contents : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_contents (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_contents (const TAO_ClientRequestInfo_IR_Container_contents &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_contents &);
+    const IR_DefinitionKind & limit_type_;
+    const CORBA::Boolean & exclude_inherited_;
+    void result (IR_ContainedSeq * result);
+    // update the result 
+    IR_ContainedSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_lookup_name : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_lookup_name (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * search_name,
+        const CORBA::Long & levels_to_search,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_lookup_name (const TAO_ClientRequestInfo_IR_Container_lookup_name &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_lookup_name &);
+    const char * search_name_;
+    const CORBA::Long & levels_to_search_;
+    const IR_DefinitionKind & limit_type_;
+    const CORBA::Boolean & exclude_inherited_;
+    void result (IR_ContainedSeq * result);
+    // update the result 
+    IR_ContainedSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_describe_contents : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_describe_contents (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        const CORBA::Long & max_returned_objs,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_describe_contents (const TAO_ClientRequestInfo_IR_Container_describe_contents &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_describe_contents &);
+    const IR_DefinitionKind & limit_type_;
+    const CORBA::Boolean & exclude_inherited_;
+    const CORBA::Long & max_returned_objs_;
+    void result (ACE_NESTED_CLASS (IR_Container,DescriptionSeq) * result);
+    // update the result 
+    ACE_NESTED_CLASS (IR_Container,DescriptionSeq) * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_module : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_module (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_module (const TAO_ClientRequestInfo_IR_Container_create_module &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_module &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    void result (IR_ModuleDef_ptr result);
+    // update the result 
+    IR_ModuleDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_constant : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_constant (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        const CORBA::Any & value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_constant (const TAO_ClientRequestInfo_IR_Container_create_constant &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_constant &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr type_;
+    const CORBA::Any & value_;
+    void result (IR_ConstantDef_ptr result);
+    // update the result 
+    IR_ConstantDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_struct : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_struct (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_struct (const TAO_ClientRequestInfo_IR_Container_create_struct &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_struct &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_StructMemberSeq & members_;
+    void result (IR_StructDef_ptr result);
+    // update the result 
+    IR_StructDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_union : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_union (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr discriminator_type,
+        const IR_UnionMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_union (const TAO_ClientRequestInfo_IR_Container_create_union &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_union &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr discriminator_type_;
+    const IR_UnionMemberSeq & members_;
+    void result (IR_UnionDef_ptr result);
+    // update the result 
+    IR_UnionDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_enum : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_enum (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_EnumMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_enum (const TAO_ClientRequestInfo_IR_Container_create_enum &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_enum &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_EnumMemberSeq & members_;
+    void result (IR_EnumDef_ptr result);
+    // update the result 
+    IR_EnumDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_alias : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_alias (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr original_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_alias (const TAO_ClientRequestInfo_IR_Container_create_alias &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_alias &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr original_type_;
+    void result (IR_AliasDef_ptr result);
+    // update the result 
+    IR_AliasDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_interface : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_interface (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_InterfaceDefSeq & base_interfaces,
+        const CORBA::Boolean & is_abstract,
+        const CORBA::Boolean & is_local,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_interface (const TAO_ClientRequestInfo_IR_Container_create_interface &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_interface &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_InterfaceDefSeq & base_interfaces_;
+    const CORBA::Boolean & is_abstract_;
+    const CORBA::Boolean & is_local_;
+    void result (IR_InterfaceDef_ptr result);
+    // update the result 
+    IR_InterfaceDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_value : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_value (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA::Boolean & is_custom,
+        const CORBA::Boolean & is_abstract,
+        IR_ValueDef_ptr base_value,
+        const CORBA::Boolean & is_truncatable,
+        const IR_ValueDefSeq & abstract_base_values,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        const IR_InitializerSeq & initializers,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_value (const TAO_ClientRequestInfo_IR_Container_create_value &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_value &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const CORBA::Boolean & is_custom_;
+    const CORBA::Boolean & is_abstract_;
+    IR_ValueDef_ptr base_value_;
+    const CORBA::Boolean & is_truncatable_;
+    const IR_ValueDefSeq & abstract_base_values_;
+    const IR_InterfaceDefSeq & supported_interfaces_;
+    const IR_InitializerSeq & initializers_;
+    void result (IR_ValueDef_ptr result);
+    // update the result 
+    IR_ValueDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_value_box : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_value_box (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_value_box (const TAO_ClientRequestInfo_IR_Container_create_value_box &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_value_box &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr original_type_def_;
+    void result (IR_ValueBoxDef_ptr result);
+    // update the result 
+    IR_ValueBoxDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_exception : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_exception (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_exception (const TAO_ClientRequestInfo_IR_Container_create_exception &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_exception &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_StructMemberSeq & members_;
+    void result (IR_ExceptionDef_ptr result);
+    // update the result 
+    IR_ExceptionDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Container_create_native : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Container;
+
+    friend class _TAO_Container_Remote_Proxy_Impl;
+    friend class _TAO_Container_ThruPOA_Proxy_Impl;
+    friend class _TAO_Container_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Container_create_native (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Container_create_native (const TAO_ClientRequestInfo_IR_Container_create_native &);
+    void operator= (const TAO_ClientRequestInfo_IR_Container_create_native &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    void result (IR_NativeDef_ptr result);
+    // update the result 
+    IR_NativeDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -5023,7 +6352,7 @@ class _TAO_IDLType_Remote_Proxy_Impl;
 class _TAO_IDLType_Proxy_Broker;
 class _TAO_IDLType_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export IR_IDLType: public virtual CORBA_IRObject
+class TAO_IFR_Client_Export IR_IDLType : public virtual CORBA_IRObject
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -5076,7 +6405,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_IDLType_setup_collocation (int collocated);
 
   IR_IDLType (
       TAO_Stub *objref,
@@ -5092,6 +6421,56 @@ protected:
 private:
   IR_IDLType (const IR_IDLType &);
   void operator= (const IR_IDLType &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_IDLType_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_IDLType;
+    
+    friend class _TAO_IDLType_Remote_Proxy_Impl;
+    friend class _TAO_IDLType_ThruPOA_Proxy_Impl;
+    friend class _TAO_IDLType_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_IDLType_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_IDLType_type_get (const TAO_ClientRequestInfo_IR_IDLType_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_IDLType_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -5617,7 +6996,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_Repository_setup_collocation (int collocated);
 
   IR_Repository (
       TAO_Stub *objref,
@@ -5633,6 +7012,372 @@ protected:
 private:
   IR_Repository (const IR_Repository &);
   void operator= (const IR_Repository &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_Repository_lookup_id : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+    
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_Repository_lookup_id (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * search_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_Repository_lookup_id (const TAO_ClientRequestInfo_IR_Repository_lookup_id &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_lookup_id &);
+    const char * search_id_;
+    void result (IR_Contained_ptr result);
+    // update the result 
+    IR_Contained_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_get_canonical_typecode : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_get_canonical_typecode (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::TypeCode_ptr tc,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_get_canonical_typecode (const TAO_ClientRequestInfo_IR_Repository_get_canonical_typecode &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_get_canonical_typecode &);
+    CORBA::TypeCode_ptr tc_;
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_get_primitive : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_get_primitive (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_PrimitiveKind & kind,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_get_primitive (const TAO_ClientRequestInfo_IR_Repository_get_primitive &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_get_primitive &);
+    const IR_PrimitiveKind & kind_;
+    void result (IR_PrimitiveDef_ptr result);
+    // update the result 
+    IR_PrimitiveDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_create_string : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_create_string (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_create_string (const TAO_ClientRequestInfo_IR_Repository_create_string &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_create_string &);
+    const CORBA::ULong & bound_;
+    void result (IR_StringDef_ptr result);
+    // update the result 
+    IR_StringDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_create_wstring : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_create_wstring (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_create_wstring (const TAO_ClientRequestInfo_IR_Repository_create_wstring &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_create_wstring &);
+    const CORBA::ULong & bound_;
+    void result (IR_WstringDef_ptr result);
+    // update the result 
+    IR_WstringDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_create_sequence : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_create_sequence (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        IR_IDLType_ptr element_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_create_sequence (const TAO_ClientRequestInfo_IR_Repository_create_sequence &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_create_sequence &);
+    const CORBA::ULong & bound_;
+    IR_IDLType_ptr element_type_;
+    void result (IR_SequenceDef_ptr result);
+    // update the result 
+    IR_SequenceDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_create_array : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_create_array (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & length,
+        IR_IDLType_ptr element_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_create_array (const TAO_ClientRequestInfo_IR_Repository_create_array &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_create_array &);
+    const CORBA::ULong & length_;
+    IR_IDLType_ptr element_type_;
+    void result (IR_ArrayDef_ptr result);
+    // update the result 
+    IR_ArrayDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_Repository_create_fixed : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_Repository;
+  
+    friend class _TAO_Repository_Remote_Proxy_Impl;
+    friend class _TAO_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_Repository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_Repository_create_fixed (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::UShort & digits,
+        const CORBA::Short & scale,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_Repository_create_fixed (const TAO_ClientRequestInfo_IR_Repository_create_fixed &);
+    void operator= (const TAO_ClientRequestInfo_IR_Repository_create_fixed &);
+    const CORBA::UShort & digits_;
+    const CORBA::Short & scale_;
+    void result (IR_FixedDef_ptr result);
+    // update the result 
+    IR_FixedDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -6018,7 +7763,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ComponentRepository_setup_collocation (int collocated);
 
   IR_ComponentRepository (
       TAO_Stub *objref,
@@ -6034,6 +7779,120 @@ protected:
 private:
   IR_ComponentRepository (const IR_ComponentRepository &);
   void operator= (const IR_ComponentRepository &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ComponentRepository_create_component : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentRepository;
+  
+    friend class _TAO_ComponentRepository_Remote_Proxy_Impl;
+    friend class _TAO_ComponentRepository_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentRepository_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ComponentRepository_create_component (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ComponentDef_ptr base_component,
+        const IR_InterfaceDefSeq & supports_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ComponentRepository_create_component (const TAO_ClientRequestInfo_IR_ComponentRepository_create_component &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentRepository_create_component &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_ComponentDef_ptr base_component_;
+    const IR_InterfaceDefSeq & supports_interfaces_;
+    void result (IR_ComponentDef_ptr result);
+    // update the result 
+    IR_ComponentDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentRepository_create_home : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentRepository;
+  
+    friend class _TAO_ComponentRepository_Remote_Proxy_Impl;
+    friend class _TAO_ComponentRepository_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentRepository_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentRepository_create_home (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_HomeDef_ptr base_home,
+        IR_ComponentDef_ptr managed_component,
+        IR_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentRepository_create_home (const TAO_ClientRequestInfo_IR_ComponentRepository_create_home &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentRepository_create_home &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_HomeDef_ptr base_home_;
+    IR_ComponentDef_ptr managed_component_;
+    IR_ValueDef_ptr primary_key_;
+    void result (IR_HomeDef_ptr result);
+    // update the result 
+    IR_HomeDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -6251,7 +8110,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ModuleDef_setup_collocation (int collocated);
 
   IR_ModuleDef (
       TAO_Stub *objref,
@@ -6267,6 +8126,14 @@ protected:
 private:
   IR_ModuleDef (const IR_ModuleDef &);
   void operator= (const IR_ModuleDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -6536,7 +8403,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ConstantDef_setup_collocation (int collocated);
 
   IR_ConstantDef (
       TAO_Stub *objref,
@@ -6552,6 +8419,224 @@ protected:
 private:
   IR_ConstantDef (const IR_ConstantDef &);
   void operator= (const IR_ConstantDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ConstantDef_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ConstantDef;
+    
+    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ConstantDef_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ConstantDef_type_get (const TAO_ClientRequestInfo_IR_ConstantDef_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ConstantDef_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ConstantDef_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ConstantDef;
+  
+    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ConstantDef_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ConstantDef_type_def_get (const TAO_ClientRequestInfo_IR_ConstantDef_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ConstantDef_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ConstantDef_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ConstantDef;
+  
+    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ConstantDef_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ConstantDef_type_def_set (const TAO_ClientRequestInfo_IR_ConstantDef_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ConstantDef_type_def_set &);
+    IR_IDLType_ptr type_def_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ConstantDef_value_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ConstantDef;
+  
+    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ConstantDef_value_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ConstantDef_value_get (const TAO_ClientRequestInfo_IR_ConstantDef_value_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ConstantDef_value_get &);
+    void result (CORBA::Any * result);
+    // update the result 
+    CORBA::Any * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ConstantDef_value_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ConstantDef;
+  
+    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ConstantDef_value_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Any & value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ConstantDef_value_set (const TAO_ClientRequestInfo_IR_ConstantDef_value_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ConstantDef_value_set &);
+    const CORBA::Any & value_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -6701,7 +8786,6 @@ class TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_ConstantDef_Proxy_Broker (void);
-
   virtual _TAO_ConstantDef_Proxy_Impl &select_proxy (
     IR_ConstantDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
@@ -6908,7 +8992,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_TypedefDef_setup_collocation (int collocated);
 
   IR_TypedefDef (
       TAO_Stub *objref,
@@ -6924,6 +9008,14 @@ protected:
 private:
   IR_TypedefDef (const IR_TypedefDef &);
   void operator= (const IR_TypedefDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -6991,7 +9083,6 @@ class TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Broker
 {
 public:
   virtual ~_TAO_TypedefDef_Proxy_Broker (void);
-
   virtual _TAO_TypedefDef_Proxy_Impl &select_proxy (
     IR_TypedefDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
@@ -7169,7 +9260,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_StructDef_setup_collocation (int collocated);
 
   IR_StructDef (
       TAO_Stub *objref,
@@ -7185,6 +9276,98 @@ protected:
 private:
   IR_StructDef (const IR_StructDef &);
   void operator= (const IR_StructDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_StructDef_members_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_StructDef;
+    
+    friend class _TAO_StructDef_Remote_Proxy_Impl;
+    friend class _TAO_StructDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_StructDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_StructDef_members_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_StructDef_members_get (const TAO_ClientRequestInfo_IR_StructDef_members_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_StructDef_members_get &);
+    void result (IR_StructMemberSeq * result);
+    // update the result 
+    IR_StructMemberSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_StructDef_members_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_StructDef;
+  
+    friend class _TAO_StructDef_Remote_Proxy_Impl;
+    friend class _TAO_StructDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_StructDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_StructDef_members_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_StructDef_members_set (const TAO_ClientRequestInfo_IR_StructDef_members_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_StructDef_members_set &);
+    const IR_StructMemberSeq & members_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -7426,7 +9609,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_UnionDef_setup_collocation (int collocated);
 
   IR_UnionDef (
       TAO_Stub *objref,
@@ -7442,6 +9625,224 @@ protected:
 private:
  IR_UnionDef (const IR_UnionDef &);
   void operator= (const IR_UnionDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UnionDef;
+    
+    friend class _TAO_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_get (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UnionDef;
+  
+    friend class _TAO_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_get (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UnionDef;
+  
+    friend class _TAO_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr discriminator_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_set (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_UnionDef_discriminator_type_def_set &);
+    IR_IDLType_ptr discriminator_type_def_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_UnionDef_members_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UnionDef;
+  
+    friend class _TAO_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_UnionDef_members_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_UnionDef_members_get (const TAO_ClientRequestInfo_IR_UnionDef_members_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_UnionDef_members_get &);
+    void result (IR_UnionMemberSeq * result);
+    // update the result 
+    IR_UnionMemberSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_UnionDef_members_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UnionDef;
+  
+    friend class _TAO_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_UnionDef_members_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_UnionMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_UnionDef_members_set (const TAO_ClientRequestInfo_IR_UnionDef_members_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_UnionDef_members_set &);
+    const IR_UnionMemberSeq & members_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -7708,7 +10109,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_EnumDef_setup_collocation (int collocated);
 
   IR_EnumDef (
       TAO_Stub *objref,
@@ -7724,6 +10125,98 @@ protected:
 private:
   IR_EnumDef (const IR_EnumDef &);
   void operator= (const IR_EnumDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_EnumDef_members_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_EnumDef;
+    
+    friend class _TAO_EnumDef_Remote_Proxy_Impl;
+    friend class _TAO_EnumDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_EnumDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_EnumDef_members_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_EnumDef_members_get (const TAO_ClientRequestInfo_IR_EnumDef_members_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_EnumDef_members_get &);
+    void result (IR_EnumMemberSeq * result);
+    // update the result 
+    IR_EnumMemberSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_EnumDef_members_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_EnumDef;
+  
+    friend class _TAO_EnumDef_Remote_Proxy_Impl;
+    friend class _TAO_EnumDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_EnumDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_EnumDef_members_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_EnumMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_EnumDef_members_set (const TAO_ClientRequestInfo_IR_EnumDef_members_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_EnumDef_members_set &);
+    const IR_EnumMemberSeq & members_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -7938,7 +10431,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_AliasDef_setup_collocation (int collocated);
 
   IR_AliasDef (
       TAO_Stub *objref,
@@ -7954,6 +10447,98 @@ protected:
 private:
   IR_AliasDef (const IR_AliasDef &);
   void operator= (const IR_AliasDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_AliasDef_original_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AliasDef;
+    
+    friend class _TAO_AliasDef_Remote_Proxy_Impl;
+    friend class _TAO_AliasDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AliasDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_AliasDef_original_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_AliasDef_original_type_def_get (const TAO_ClientRequestInfo_IR_AliasDef_original_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_AliasDef_original_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_AliasDef_original_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AliasDef;
+  
+    friend class _TAO_AliasDef_Remote_Proxy_Impl;
+    friend class _TAO_AliasDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AliasDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_AliasDef_original_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_AliasDef_original_type_def_set (const TAO_ClientRequestInfo_IR_AliasDef_original_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_AliasDef_original_type_def_set &);
+    IR_IDLType_ptr original_type_def_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -8151,7 +10736,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_NativeDef_setup_collocation (int collocated);
 
   IR_NativeDef (
       TAO_Stub *objref,
@@ -8167,6 +10752,14 @@ protected:
 private:
   IR_NativeDef (const IR_NativeDef &);
   void operator= (const IR_NativeDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -8267,13 +10860,13 @@ public:
 
 private:
   _TAO_NativeDef_Remote_Proxy_Impl remote_proxy_impl_;
-};
-
-// This funxtion is used to get an handle to the unique instance
+// This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
-_TAO_NativeDef_Remote_Proxy_Broker *the_TAO_NativeDef_Remote_Proxy_Broker (void);
+public:
+  static _TAO_NativeDef_Remote_Proxy_Broker *the_TAO_NativeDef_Remote_Proxy_Broker (void);
+};
 
 //
 //              End Remote Proxy Broker Declaration
@@ -8338,7 +10931,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_PrimitiveDef_setup_collocation (int collocated);
 
   IR_PrimitiveDef (
       TAO_Stub *objref,
@@ -8354,6 +10947,56 @@ protected:
 private:
   IR_PrimitiveDef (const IR_PrimitiveDef &);
   void operator= (const IR_PrimitiveDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_PrimitiveDef_kind_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_PrimitiveDef;
+    
+    friend class _TAO_PrimitiveDef_Remote_Proxy_Impl;
+    friend class _TAO_PrimitiveDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_PrimitiveDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_PrimitiveDef_kind_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_PrimitiveDef_kind_get (const TAO_ClientRequestInfo_IR_PrimitiveDef_kind_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_PrimitiveDef_kind_get &);
+    void result (IR_PrimitiveKind result);
+    // update the result 
+    IR_PrimitiveKind _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -8550,7 +11193,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_StringDef_setup_collocation (int collocated);
 
   IR_StringDef (
       TAO_Stub *objref,
@@ -8566,6 +11209,98 @@ protected:
 private:
   IR_StringDef (const IR_StringDef &);
   void operator= (const IR_StringDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_StringDef_bound_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_StringDef;
+    
+    friend class _TAO_StringDef_Remote_Proxy_Impl;
+    friend class _TAO_StringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_StringDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_StringDef_bound_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_StringDef_bound_get (const TAO_ClientRequestInfo_IR_StringDef_bound_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_StringDef_bound_get &);
+    void result (CORBA::ULong result);
+    // update the result 
+    CORBA::ULong _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_StringDef_bound_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_StringDef;
+  
+    friend class _TAO_StringDef_Remote_Proxy_Impl;
+    friend class _TAO_StringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_StringDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_StringDef_bound_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_StringDef_bound_set (const TAO_ClientRequestInfo_IR_StringDef_bound_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_StringDef_bound_set &);
+    const CORBA::ULong & bound_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -8780,7 +11515,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_WstringDef_setup_collocation (int collocated);
 
   IR_WstringDef (
       TAO_Stub *objref,
@@ -8796,6 +11531,98 @@ protected:
 private:
   IR_WstringDef (const IR_WstringDef &);
   void operator= (const IR_WstringDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_WstringDef_bound_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_WstringDef;
+    
+    friend class _TAO_WstringDef_Remote_Proxy_Impl;
+    friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_WstringDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_WstringDef_bound_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_WstringDef_bound_get (const TAO_ClientRequestInfo_IR_WstringDef_bound_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_WstringDef_bound_get &);
+    void result (CORBA::ULong result);
+    // update the result 
+    CORBA::ULong _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_WstringDef_bound_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_WstringDef;
+  
+    friend class _TAO_WstringDef_Remote_Proxy_Impl;
+    friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_WstringDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_WstringDef_bound_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_WstringDef_bound_set (const TAO_ClientRequestInfo_IR_WstringDef_bound_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_WstringDef_bound_set &);
+    const CORBA::ULong & bound_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -9027,7 +11854,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_FixedDef_setup_collocation (int collocated);
 
   IR_FixedDef (
       TAO_Stub *objref,
@@ -9043,6 +11870,182 @@ protected:
 private:
   IR_FixedDef (const IR_FixedDef &);
   void operator= (const IR_FixedDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_FixedDef_digits_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_FixedDef;
+    
+    friend class _TAO_FixedDef_Remote_Proxy_Impl;
+    friend class _TAO_FixedDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_FixedDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_FixedDef_digits_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_FixedDef_digits_get (const TAO_ClientRequestInfo_IR_FixedDef_digits_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_FixedDef_digits_get &);
+    void result (CORBA::UShort result);
+    // update the result 
+    CORBA::UShort _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_FixedDef_digits_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_FixedDef;
+  
+    friend class _TAO_FixedDef_Remote_Proxy_Impl;
+    friend class _TAO_FixedDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_FixedDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_FixedDef_digits_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::UShort & digits,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_FixedDef_digits_set (const TAO_ClientRequestInfo_IR_FixedDef_digits_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_FixedDef_digits_set &);
+    const CORBA::UShort & digits_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_FixedDef_scale_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_FixedDef;
+  
+    friend class _TAO_FixedDef_Remote_Proxy_Impl;
+    friend class _TAO_FixedDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_FixedDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_FixedDef_scale_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_FixedDef_scale_get (const TAO_ClientRequestInfo_IR_FixedDef_scale_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_FixedDef_scale_get &);
+    void result (CORBA::Short result);
+    // update the result 
+    CORBA::Short _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_FixedDef_scale_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_FixedDef;
+  
+    friend class _TAO_FixedDef_Remote_Proxy_Impl;
+    friend class _TAO_FixedDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_FixedDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_FixedDef_scale_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Short & scale,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_FixedDef_scale_set (const TAO_ClientRequestInfo_IR_FixedDef_scale_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_FixedDef_scale_set &);
+    const CORBA::Short & scale_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -9316,7 +12319,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_SequenceDef_setup_collocation (int collocated);
 
   IR_SequenceDef (
       TAO_Stub *objref,
@@ -9332,6 +12335,224 @@ protected:
 private:
   IR_SequenceDef (const IR_SequenceDef &);
   void operator= (const IR_SequenceDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_SequenceDef_bound_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_SequenceDef;
+    
+    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_SequenceDef_bound_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_SequenceDef_bound_get (const TAO_ClientRequestInfo_IR_SequenceDef_bound_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_bound_get &);
+    void result (CORBA::ULong result);
+    // update the result 
+    CORBA::ULong _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_SequenceDef_bound_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_SequenceDef;
+  
+    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_SequenceDef_bound_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_SequenceDef_bound_set (const TAO_ClientRequestInfo_IR_SequenceDef_bound_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_bound_set &);
+    const CORBA::ULong & bound_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_SequenceDef_element_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_SequenceDef;
+  
+    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_get (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_SequenceDef;
+  
+    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_SequenceDef;
+  
+    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr element_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set &);
+    IR_IDLType_ptr element_type_def_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -9622,7 +12843,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ArrayDef_setup_collocation (int collocated);
 
   IR_ArrayDef (
       TAO_Stub *objref,
@@ -9638,6 +12859,224 @@ protected:
 private:
   IR_ArrayDef (const IR_ArrayDef &);
   void operator= (const IR_ArrayDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ArrayDef_length_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ArrayDef;
+    
+    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ArrayDef_length_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ArrayDef_length_get (const TAO_ClientRequestInfo_IR_ArrayDef_length_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ArrayDef_length_get &);
+    void result (CORBA::ULong result);
+    // update the result 
+    CORBA::ULong _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ArrayDef_length_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ArrayDef;
+  
+    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ArrayDef_length_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::ULong & length,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ArrayDef_length_set (const TAO_ClientRequestInfo_IR_ArrayDef_length_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ArrayDef_length_set &);
+    const CORBA::ULong & length_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ArrayDef_element_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ArrayDef;
+  
+    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_get (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ArrayDef;
+  
+    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_get (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ArrayDef;
+  
+    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr element_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_set (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ArrayDef_element_type_def_set &);
+    IR_IDLType_ptr element_type_def_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -9912,7 +13351,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ExceptionDef_setup_collocation (int collocated);
 
   IR_ExceptionDef (
       TAO_Stub *objref,
@@ -9928,6 +13367,140 @@ protected:
 private:
   IR_ExceptionDef (const IR_ExceptionDef &);
   void operator= (const IR_ExceptionDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ExceptionDef_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ExceptionDef;
+    
+    friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
+    friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ExceptionDef_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ExceptionDef_type_get (const TAO_ClientRequestInfo_IR_ExceptionDef_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ExceptionDef_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ExceptionDef_members_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ExceptionDef;
+  
+    friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
+    friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ExceptionDef_members_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ExceptionDef_members_get (const TAO_ClientRequestInfo_IR_ExceptionDef_members_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ExceptionDef_members_get &);
+    void result (IR_StructMemberSeq * result);
+    // update the result 
+    IR_StructMemberSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ExceptionDef_members_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ExceptionDef;
+  
+    friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
+    friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ExceptionDef_members_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ExceptionDef_members_set (const TAO_ClientRequestInfo_IR_ExceptionDef_members_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ExceptionDef_members_set &);
+    const IR_StructMemberSeq & members_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -10535,7 +14108,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_AttributeDef_setup_collocation (int collocated);
 
   IR_AttributeDef (
       TAO_Stub *objref,
@@ -10551,6 +14124,224 @@ protected:
 private:
   IR_AttributeDef (const IR_AttributeDef &);
   void operator= (const IR_AttributeDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_AttributeDef_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AttributeDef;
+    
+    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_AttributeDef_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_AttributeDef_type_get (const TAO_ClientRequestInfo_IR_AttributeDef_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_AttributeDef_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_AttributeDef_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AttributeDef;
+  
+    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_AttributeDef_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_AttributeDef_type_def_get (const TAO_ClientRequestInfo_IR_AttributeDef_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_AttributeDef_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_AttributeDef_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AttributeDef;
+  
+    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_AttributeDef_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_AttributeDef_type_def_set (const TAO_ClientRequestInfo_IR_AttributeDef_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_AttributeDef_type_def_set &);
+    IR_IDLType_ptr type_def_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_AttributeDef_mode_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AttributeDef;
+  
+    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_AttributeDef_mode_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_AttributeDef_mode_get (const TAO_ClientRequestInfo_IR_AttributeDef_mode_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_AttributeDef_mode_get &);
+    void result (IR_AttributeMode result);
+    // update the result 
+    IR_AttributeMode _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_AttributeDef_mode_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_AttributeDef;
+  
+    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_AttributeDef_mode_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_AttributeMode & mode,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_AttributeDef_mode_set (const TAO_ClientRequestInfo_IR_AttributeDef_mode_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_AttributeDef_mode_set &);
+    const IR_AttributeMode & mode_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -11269,7 +15060,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_OperationDef_setup_collocation (int collocated);
 
   IR_OperationDef (
       TAO_Stub *objref,
@@ -11285,6 +15076,476 @@ protected:
 private:
   IR_OperationDef (const IR_OperationDef &);
   void operator= (const IR_OperationDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_OperationDef_result_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+    
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_OperationDef_result_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_result_get (const TAO_ClientRequestInfo_IR_OperationDef_result_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_result_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_result_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_result_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_result_def_get (const TAO_ClientRequestInfo_IR_OperationDef_result_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_result_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_result_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_result_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr result_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_result_def_set (const TAO_ClientRequestInfo_IR_OperationDef_result_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_result_def_set &);
+    IR_IDLType_ptr result_def_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_params_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_params_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_params_get (const TAO_ClientRequestInfo_IR_OperationDef_params_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_params_get &);
+    void result (IR_ParDescriptionSeq * result);
+    // update the result 
+    IR_ParDescriptionSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_params_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_params_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_ParDescriptionSeq & params,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_params_set (const TAO_ClientRequestInfo_IR_OperationDef_params_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_params_set &);
+    const IR_ParDescriptionSeq & params_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_mode_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_mode_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_mode_get (const TAO_ClientRequestInfo_IR_OperationDef_mode_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_mode_get &);
+    void result (IR_OperationMode result);
+    // update the result 
+    IR_OperationMode _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_mode_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_mode_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_OperationMode & mode,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_mode_set (const TAO_ClientRequestInfo_IR_OperationDef_mode_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_mode_set &);
+    const IR_OperationMode & mode_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_contexts_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_contexts_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_contexts_get (const TAO_ClientRequestInfo_IR_OperationDef_contexts_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_contexts_get &);
+    void result (IR_ContextIdSeq * result);
+    // update the result 
+    IR_ContextIdSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_contexts_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_contexts_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_contexts_set (const TAO_ClientRequestInfo_IR_OperationDef_contexts_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_contexts_set &);
+    const IR_ContextIdSeq & contexts_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_exceptions_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_exceptions_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_exceptions_get (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_get &);
+    void result (IR_ExceptionDefSeq * result);
+    // update the result 
+    IR_ExceptionDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_OperationDef_exceptions_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_OperationDef;
+  
+    friend class _TAO_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_OperationDef_exceptions_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_OperationDef_exceptions_set (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_set &);
+    const IR_ExceptionDefSeq & exceptions_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -12119,7 +16380,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_InterfaceDef_setup_collocation (int collocated);
 
   IR_InterfaceDef (
       TAO_Stub *objref,
@@ -12135,6 +16396,424 @@ protected:
 private:
   IR_InterfaceDef (const IR_InterfaceDef &);
   void operator= (const IR_InterfaceDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+    
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_get (const TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_get &);
+    void result (IR_InterfaceDefSeq * result);
+    // update the result 
+    IR_InterfaceDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_InterfaceDefSeq & base_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_set (const TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_base_interfaces_set &);
+    const IR_InterfaceDefSeq & base_interfaces_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_get (const TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Boolean & is_abstract,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_set (const TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_is_abstract_set &);
+    const CORBA::Boolean & is_abstract_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_is_local_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_local_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_local_get (const TAO_ClientRequestInfo_IR_InterfaceDef_is_local_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_is_local_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_is_local_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_local_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Boolean & is_local,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_local_set (const TAO_ClientRequestInfo_IR_InterfaceDef_is_local_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_is_local_set &);
+    const CORBA::Boolean & is_local_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_is_a : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_a (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * interface_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_is_a (const TAO_ClientRequestInfo_IR_InterfaceDef_is_a &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_is_a &);
+    const char * interface_id_;
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_create_attribute : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_create_attribute (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        IR_AttributeMode & mode,
+        const IR_ExceptionDefSeq & get_exceptions,
+        const IR_ExceptionDefSeq & put_exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_create_attribute (const TAO_ClientRequestInfo_IR_InterfaceDef_create_attribute &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_create_attribute &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr type_;
+    const IR_AttributeMode & mode_;
+    const IR_ExceptionDefSeq & get_exceptions_;
+    const IR_ExceptionDefSeq & put_exceptions_;
+    void result (IR_AttributeDef_ptr result);
+    // update the result 
+    IR_AttributeDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_InterfaceDef_create_operation : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_InterfaceDef;
+  
+    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_InterfaceDef_create_operation (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr result,
+        IR_OperationMode & mode,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_InterfaceDef_create_operation (const TAO_ClientRequestInfo_IR_InterfaceDef_create_operation &);
+    void operator= (const TAO_ClientRequestInfo_IR_InterfaceDef_create_operation &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr result_;
+    const IR_OperationMode & mode_;
+    const IR_ParDescriptionSeq & params_;
+    const IR_ExceptionDefSeq & exceptions_;
+    const IR_ContextIdSeq & contexts_;
+    void result (IR_OperationDef_ptr result);
+    // update the result 
+    IR_OperationDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -12825,7 +17504,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ValueMemberDef_setup_collocation (int collocated);
 
   IR_ValueMemberDef (
       TAO_Stub *objref,
@@ -12841,6 +17520,224 @@ protected:
 private:
   IR_ValueMemberDef (const IR_ValueMemberDef &);
   void operator= (const IR_ValueMemberDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ValueMemberDef_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueMemberDef;
+    
+    friend class _TAO_ValueMemberDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_get (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_get &);
+    void result (CORBA::TypeCode_ptr result);
+    // update the result 
+    CORBA::TypeCode_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueMemberDef;
+  
+    friend class _TAO_ValueMemberDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_get (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueMemberDef;
+  
+    friend class _TAO_ValueMemberDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_set (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueMemberDef_type_def_set &);
+    IR_IDLType_ptr type_def_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueMemberDef_access_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueMemberDef;
+  
+    friend class _TAO_ValueMemberDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueMemberDef_access_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueMemberDef_access_get (const TAO_ClientRequestInfo_IR_ValueMemberDef_access_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueMemberDef_access_get &);
+    void result (CORBA::Visibility result);
+    // update the result 
+    CORBA::Visibility _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueMemberDef_access_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueMemberDef;
+  
+    friend class _TAO_ValueMemberDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueMemberDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueMemberDef_access_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Visibility & access,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueMemberDef_access_set (const TAO_ClientRequestInfo_IR_ValueMemberDef_access_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueMemberDef_access_set &);
+    const CORBA::Visibility & access_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -13260,7 +18157,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ValueDef_setup_collocation (int collocated);
 
   IR_ValueDef (
       TAO_Stub *objref,
@@ -13276,6 +18173,812 @@ protected:
 private:
   IR_ValueDef (const IR_ValueDef &);
   void operator= (const IR_ValueDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+    
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_get (const TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_get &);
+    void result (IR_InterfaceDefSeq * result);
+    // update the result 
+    IR_InterfaceDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_set (const TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_supported_interfaces_set &);
+    const IR_InterfaceDefSeq & supported_interfaces_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_initializers_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_initializers_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_initializers_get (const TAO_ClientRequestInfo_IR_ValueDef_initializers_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_initializers_get &);
+    void result (IR_InitializerSeq * result);
+    // update the result 
+    IR_InitializerSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_initializers_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_initializers_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_InitializerSeq & initializers,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_initializers_set (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
+    const IR_InitializerSeq & initializers_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_base_value_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_base_value_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_base_value_get (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
+    void result (IR_ValueDef_ptr result);
+    // update the result 
+    IR_ValueDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_base_value_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_base_value_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_ValueDef_ptr base_value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_base_value_set (const TAO_ClientRequestInfo_IR_ValueDef_base_value_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_base_value_set &);
+    IR_ValueDef_ptr base_value_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_get (const TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_get &);
+    void result (IR_ValueDefSeq * result);
+    // update the result 
+    IR_ValueDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_ValueDefSeq & abstract_base_values,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_set (const TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_abstract_base_values_set &);
+    const IR_ValueDefSeq & abstract_base_values_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_abstract_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_abstract_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_abstract_get (const TAO_ClientRequestInfo_IR_ValueDef_is_abstract_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_abstract_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_abstract_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_abstract_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Boolean & is_abstract,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_abstract_set (const TAO_ClientRequestInfo_IR_ValueDef_is_abstract_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_abstract_set &);
+    const CORBA::Boolean & is_abstract_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_custom_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_custom_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_custom_get (const TAO_ClientRequestInfo_IR_ValueDef_is_custom_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_custom_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_custom_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_custom_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Boolean & is_custom,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_custom_set (const TAO_ClientRequestInfo_IR_ValueDef_is_custom_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_custom_set &);
+    const CORBA::Boolean & is_custom_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_get (const TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const CORBA::Boolean & is_truncatable,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_set (const TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_truncatable_set &);
+    const CORBA::Boolean & is_truncatable_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_is_a : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_is_a (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_is_a (const TAO_ClientRequestInfo_IR_ValueDef_is_a &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_is_a &);
+    const char * id_;
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_create_value_member : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_create_value_member (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        const CORBA::Visibility & access,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_create_value_member (const TAO_ClientRequestInfo_IR_ValueDef_create_value_member &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_create_value_member &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr type_;
+    const CORBA::Visibility & access_;
+    void result (IR_ValueMemberDef_ptr result);
+    // update the result 
+    IR_ValueMemberDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_create_attribute : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_create_attribute (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        IR_AttributeMode & mode,
+        const IR_ExceptionDefSeq & get_exceptions,
+        const IR_ExceptionDefSeq & put_exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_create_attribute (const TAO_ClientRequestInfo_IR_ValueDef_create_attribute &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_create_attribute &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr type_;
+    const IR_AttributeMode & mode_;
+    const IR_ExceptionDefSeq & get_exceptions_;
+    const IR_ExceptionDefSeq & put_exceptions_;
+    void result (IR_AttributeDef_ptr result);
+    // update the result 
+    IR_AttributeDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueDef_create_operation : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueDef;
+  
+    friend class _TAO_ValueDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueDef_create_operation (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr result,
+        IR_OperationMode & mode,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueDef_create_operation (const TAO_ClientRequestInfo_IR_ValueDef_create_operation &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueDef_create_operation &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_IDLType_ptr result_;
+    const IR_OperationMode & mode_;
+    const IR_ParDescriptionSeq & params_;
+    const IR_ExceptionDefSeq & exceptions_;
+    const IR_ContextIdSeq & contexts_;
+    void result (IR_OperationDef_ptr result);
+    // update the result 
+    IR_OperationDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -13877,7 +19580,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ValueBoxDef_setup_collocation (int collocated);
 
   IR_ValueBoxDef (
       TAO_Stub *objref,
@@ -13893,6 +19596,98 @@ protected:
 private:
   IR_ValueBoxDef (const IR_ValueBoxDef &);
   void operator= (const IR_ValueBoxDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueBoxDef;
+    
+    friend class _TAO_ValueBoxDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueBoxDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueBoxDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_get (const TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_get &);
+    void result (IR_IDLType_ptr result);
+    // update the result 
+    IR_IDLType_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ValueBoxDef;
+  
+    friend class _TAO_ValueBoxDef_Remote_Proxy_Impl;
+    friend class _TAO_ValueBoxDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ValueBoxDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_set (const TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ValueBoxDef_original_type_def_set &);
+    IR_IDLType_ptr original_type_def_;
+  
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -14098,7 +19893,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ProvidesDef_setup_collocation (int collocated);
 
   IR_ProvidesDef (
       TAO_Stub *objref,
@@ -14114,6 +19909,56 @@ protected:
 private:
   IR_ProvidesDef (const IR_ProvidesDef &);
   void operator= (const IR_ProvidesDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ProvidesDef;
+    
+    friend class _TAO_ProvidesDef_Remote_Proxy_Impl;
+    friend class _TAO_ProvidesDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ProvidesDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (const TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get &);
+    void result (IR_InterfaceDef_ptr result);
+    // update the result 
+    IR_InterfaceDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -14372,7 +20217,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_UsesDef_setup_collocation (int collocated);
 
   IR_UsesDef (
       TAO_Stub *objref,
@@ -14388,6 +20233,98 @@ protected:
 private:
   IR_UsesDef (const IR_UsesDef &);
   void operator= (const IR_UsesDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_UsesDef_interface_type_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UsesDef;
+    
+    friend class _TAO_UsesDef_Remote_Proxy_Impl;
+    friend class _TAO_UsesDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UsesDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (const TAO_ClientRequestInfo_IR_UsesDef_interface_type_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_UsesDef_interface_type_get &);
+    void result (IR_InterfaceDef_ptr result);
+    // update the result 
+    IR_InterfaceDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_UsesDef;
+  
+    friend class _TAO_UsesDef_Remote_Proxy_Impl;
+    friend class _TAO_UsesDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_UsesDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (const TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -14906,7 +20843,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_EventDef_setup_collocation (int collocated);
 
   IR_EventDef (
       TAO_Stub *objref,
@@ -14922,6 +20859,100 @@ protected:
 private:
   IR_EventDef (const IR_EventDef &);
   void operator= (const IR_EventDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_EventDef_is_a : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_EventDef;
+    
+    friend class _TAO_EventDef_Remote_Proxy_Impl;
+    friend class _TAO_EventDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_EventDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_EventDef_is_a (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * event_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_EventDef_is_a (const TAO_ClientRequestInfo_IR_EventDef_is_a &);
+    void operator= (const TAO_ClientRequestInfo_IR_EventDef_is_a &);
+    const char * event_id_;
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_EventDef_event_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_EventDef;
+  
+    friend class _TAO_EventDef_Remote_Proxy_Impl;
+    friend class _TAO_EventDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_EventDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_EventDef_event_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_EventDef_event_get (const TAO_ClientRequestInfo_IR_EventDef_event_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_EventDef_event_get &);
+    void result (IR_ValueDef_ptr result);
+    // update the result 
+    IR_ValueDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -15182,7 +21213,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_EmitsDef_setup_collocation (int collocated);
 
   IR_EmitsDef (
       TAO_Stub *objref,
@@ -15198,6 +21229,14 @@ protected:
 private:
   IR_EmitsDef (const IR_EmitsDef &);
   void operator= (const IR_EmitsDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -15360,7 +21399,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_PublishesDef_setup_collocation (int collocated);
 
   IR_PublishesDef (
       TAO_Stub *objref,
@@ -15376,6 +21415,14 @@ protected:
 private:
   IR_PublishesDef (const IR_PublishesDef &);
   void operator= (const IR_PublishesDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -15539,7 +21586,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ConsumesDef_setup_collocation (int collocated);
 
   IR_ConsumesDef (
       TAO_Stub *objref,
@@ -15555,6 +21602,14 @@ protected:
 private:
   IR_ConsumesDef (const IR_ConsumesDef &);
   void operator= (const IR_ConsumesDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -15852,7 +21907,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_ComponentDef_setup_collocation (int collocated);
 
   IR_ComponentDef (
       TAO_Stub *objref,
@@ -15868,6 +21923,644 @@ protected:
 private:
   IR_ComponentDef (const IR_ComponentDef &);
   void operator= (const IR_ComponentDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+    
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get &);
+    void result (IR_InterfaceDefSeq * result);
+    // update the result 
+    IR_InterfaceDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set &);
+    const IR_InterfaceDefSeq & supported_interfaces_;
+  
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_base_component_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_base_component_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_base_component_get (const TAO_ClientRequestInfo_IR_ComponentDef_base_component_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_base_component_get &);
+    void result (IR_ComponentDef_ptr result);
+    // update the result 
+    IR_ComponentDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get (const TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get &);
+    void result (IR_ProvidesDefSeq * result);
+    // update the result 
+    IR_ProvidesDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get (const TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get &);
+    void result (IR_UsesDefSeq * result);
+    // update the result 
+    IR_UsesDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get (const TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get &);
+    void result (IR_EmitsDefSeq * result);
+    // update the result 
+    IR_EmitsDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get (const TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get &);
+    void result (IR_PublishesDefSeq * result);
+    // update the result 
+    IR_PublishesDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get (const TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get &);
+    void result (IR_ConsumesDefSeq * result);
+    // update the result 
+    IR_ConsumesDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get (const TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_create_provides : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_create_provides (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_InterfaceDef_ptr interface_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_create_provides (const TAO_ClientRequestInfo_IR_ComponentDef_create_provides &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_create_provides &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_InterfaceDef_ptr interface_type_;
+    void result (IR_ProvidesDef_ptr result);
+    // update the result 
+    IR_ProvidesDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_create_uses : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_create_uses (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_InterfaceDef_ptr interface_type,
+        const CORBA::Boolean & is_multiple,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_create_uses (const TAO_ClientRequestInfo_IR_ComponentDef_create_uses &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_create_uses &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_InterfaceDef_ptr interface_type_;
+    const CORBA::Boolean & is_multiple_;
+    void result (IR_UsesDef_ptr result);
+    // update the result 
+    IR_UsesDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_create_emits : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_create_emits (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_create_emits (const TAO_ClientRequestInfo_IR_ComponentDef_create_emits &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_create_emits &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_ValueDef_ptr value_;
+    void result (IR_EmitsDef_ptr result);
+    // update the result 
+    IR_EmitsDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_create_publishes : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_create_publishes (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_create_publishes (const TAO_ClientRequestInfo_IR_ComponentDef_create_publishes &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_create_publishes &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_ValueDef_ptr value_;
+    void result (IR_PublishesDef_ptr result);
+    // update the result 
+    IR_PublishesDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_ComponentDef_create_consumes : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_ComponentDef;
+  
+    friend class _TAO_ComponentDef_Remote_Proxy_Impl;
+    friend class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_ComponentDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_ComponentDef_create_consumes (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_ComponentDef_create_consumes (const TAO_ClientRequestInfo_IR_ComponentDef_create_consumes &);
+    void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_create_consumes &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_ValueDef_ptr value_;
+    void result (IR_ConsumesDef_ptr result);
+    // update the result 
+    IR_ConsumesDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 // The Proxy Implementations are used by each interface to
@@ -16386,7 +23079,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_PrimaryKeyDef_setup_collocation (int collocated);
 
   IR_PrimaryKeyDef (
       TAO_Stub *objref,
@@ -16402,6 +23095,100 @@ protected:
 private:
   IR_PrimaryKeyDef (const IR_PrimaryKeyDef &);
   void operator= (const IR_PrimaryKeyDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_PrimaryKeyDef;
+    
+    friend class _TAO_PrimaryKeyDef_Remote_Proxy_Impl;
+    friend class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_PrimaryKeyDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * primary_key_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a &);
+    void operator= (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a &);
+    const char * primary_key_id_;
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_PrimaryKeyDef;
+  
+    friend class _TAO_PrimaryKeyDef_Remote_Proxy_Impl;
+    friend class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_PrimaryKeyDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
+    void result (IR_ValueDef_ptr result);
+    // update the result 
+    IR_ValueDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -16662,7 +23449,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_FactoryDef_setup_collocation (int collocated);
 
   IR_FactoryDef (
       TAO_Stub *objref,
@@ -16678,6 +23465,14 @@ protected:
 private:
   IR_FactoryDef (const IR_FactoryDef &);
   void operator= (const IR_FactoryDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -16841,7 +23636,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_FinderDef_setup_collocation (int collocated);
 
   IR_FinderDef (
       TAO_Stub *objref,
@@ -16857,6 +23652,14 @@ protected:
 private:
   IR_FinderDef (const IR_FinderDef &);
   void operator= (const IR_FinderDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -17106,7 +23909,7 @@ protected:
 protected:
   // This methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode
-  virtual void _tao_setup_collocation (int collocated);
+  virtual void IR_HomeDef_setup_collocation (int collocated);
 
   IR_HomeDef (
       TAO_Stub *objref,
@@ -17122,6 +23925,420 @@ protected:
 private:
   IR_HomeDef (const IR_HomeDef &);
   void operator= (const IR_HomeDef &);
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ClientRequestInfo_IR_HomeDef_base_home_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+    
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+  
+    TAO_ClientRequestInfo_IR_HomeDef_base_home_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+  
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_base_home_get (const TAO_ClientRequestInfo_IR_HomeDef_base_home_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_base_home_get &);
+    void result (IR_HomeDef_ptr result);
+    // update the result 
+    IR_HomeDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_managed_component_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_managed_component_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_managed_component_get (const TAO_ClientRequestInfo_IR_HomeDef_managed_component_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_managed_component_get &);
+    void result (IR_ComponentDef_ptr result);
+    // update the result 
+    IR_ComponentDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_primary_key_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_primary_key_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_primary_key_get (const TAO_ClientRequestInfo_IR_HomeDef_primary_key_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_primary_key_get &);
+    void result (IR_PrimaryKeyDef_ptr result);
+    // update the result 
+    IR_PrimaryKeyDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_factories_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_factories_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_factories_get (const TAO_ClientRequestInfo_IR_HomeDef_factories_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_factories_get &);
+    void result (IR_FactoryDefSeq * result);
+    // update the result 
+    IR_FactoryDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_finders_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_finders_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_finders_get (const TAO_ClientRequestInfo_IR_HomeDef_finders_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_finders_get &);
+    void result (IR_FinderDefSeq * result);
+    // update the result 
+    IR_FinderDefSeq * _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_is_basic_get : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_is_basic_get (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_is_basic_get (const TAO_ClientRequestInfo_IR_HomeDef_is_basic_get &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_is_basic_get &);
+    void result (CORBA::Boolean result);
+    // update the result 
+    CORBA::Boolean _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_create_primary_key : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_create_primary_key (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_create_primary_key (const TAO_ClientRequestInfo_IR_HomeDef_create_primary_key &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_create_primary_key &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    IR_ValueDef_ptr primary_key_;
+    void result (IR_PrimaryKeyDef_ptr result);
+    // update the result 
+    IR_PrimaryKeyDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_create_factory : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_create_factory (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_create_factory (const TAO_ClientRequestInfo_IR_HomeDef_create_factory &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_create_factory &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_ParDescriptionSeq & params_;
+    const IR_ExceptionDefSeq & exceptions_;
+    void result (IR_FactoryDef_ptr result);
+    // update the result 
+    IR_FactoryDef_ptr _result;
+  };
+
+  class TAO_ClientRequestInfo_IR_HomeDef_create_finder : public TAO_ClientRequestInfo
+  {
+  public:
+    friend class IR_HomeDef;
+  
+    friend class _TAO_HomeDef_Remote_Proxy_Impl;
+    friend class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_HomeDef_Direct_Proxy_Impl;
+
+    TAO_ClientRequestInfo_IR_HomeDef_create_finder (
+        TAO_GIOP_Invocation *_tao_invocation,
+        CORBA::Object_ptr _tao_target,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    TAO_ClientRequestInfo_IR_HomeDef_create_finder (const TAO_ClientRequestInfo_IR_HomeDef_create_finder &);
+    void operator= (const TAO_ClientRequestInfo_IR_HomeDef_create_finder &);
+    const char * id_;
+    const char * name_;
+    const char * version_;
+    const IR_ParDescriptionSeq & params_;
+    const IR_ExceptionDefSeq & exceptions_;
+    void result (IR_FinderDef_ptr result);
+    // update the result 
+    IR_FinderDef_ptr _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 
@@ -17476,17 +24693,165 @@ private:
   void operator= (const IR_HomeDescription_var &);
 };
 
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_DefinitionKind);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_DefinitionKind &);
+// Proxy Broker Factory function pointer declarations.
+
 extern TAO_IFR_Client_Export _TAO_IRObject_Proxy_Broker * (*_TAO_IRObject_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
-// Any operators for interface CORBA_IRObject
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_IRObject_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_IRObject *&);
+
 extern TAO_IFR_Client_Export _TAO_Contained_Proxy_Broker * (*_TAO_Contained_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
+
+extern TAO_IFR_Client_Export _TAO_Container_Proxy_Broker * (*_TAO_Container_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_IDLType_Proxy_Broker * (*_TAO_IDLType_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker * (*_TAO_Repository_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Broker * (*_TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker * (*_TAO_ModuleDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker * (*_TAO_ConstantDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Broker * (*_TAO_TypedefDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker * (*_TAO_StructDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker * (*_TAO_UnionDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker * (*_TAO_EnumDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker * (*_TAO_AliasDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker * (*_TAO_NativeDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker * (*_TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker * (*_TAO_StringDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker * (*_TAO_WstringDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_FixedDef_Proxy_Broker * (*_TAO_FixedDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker * (*_TAO_SequenceDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker * (*_TAO_ArrayDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker * (*_TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker * (*_TAO_AttributeDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker * (*_TAO_OperationDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker * (*_TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ValueMemberDef_Proxy_Broker * (*_TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ValueDef_Proxy_Broker * (*_TAO_ValueDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ValueBoxDef_Proxy_Broker * (*_TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Broker * (*_TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Broker * (*_TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_EventDef_Proxy_Broker * (*_TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_EmitsDef_Proxy_Broker * (*_TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_PublishesDef_Proxy_Broker * (*_TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ConsumesDef_Proxy_Broker * (*_TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Broker * (*_TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Broker * (*_TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Broker * (*_TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Broker * (*_TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+extern TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Broker * (*_TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_DefinitionKind);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_DefinitionKind &);
+// Any operators for interface CORBA_IRObject
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_IRObject_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_IRObject *&);
 // Any operators for interface IR_Contained
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Contained_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Contained *&);
@@ -17570,10 +24935,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_EnumMemberSeq &);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EnumMemberSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumMemberSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EnumMemberSeq *&);
-extern TAO_IFR_Client_Export _TAO_Container_Proxy_Broker * (*_TAO_Container_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
-// Any operators for interface IR_Container
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Container_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Container::Description &); // copying version
@@ -17584,29 +24945,17 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_Container::Descri
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Container::DescriptionSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Container::DescriptionSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_Container::DescriptionSeq *&);
-extern TAO_IFR_Client_Export _TAO_IDLType_Proxy_Broker * (*_TAO_IDLType_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_IDLType
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_IDLType_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_IDLType *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimitiveKind);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveKind &);
-extern TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker * (*_TAO_Repository_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_Repository
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_Repository_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_Repository *&);
-extern TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Broker * (*_TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ComponentRepository
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentRepository_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentRepository *&);
-extern TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker * (*_TAO_ModuleDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ModuleDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ModuleDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDef *&);
@@ -17614,9 +24963,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ModuleDescription
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ModuleDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ModuleDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ModuleDescription *&);
-extern TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker * (*_TAO_ConstantDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ConstantDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConstantDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDef *&);
@@ -17624,9 +24970,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ConstantDescripti
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConstantDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConstantDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ConstantDescription *&);
-extern TAO_IFR_Client_Export _TAO_TypedefDef_Proxy_Broker * (*_TAO_TypedefDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_TypedefDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_TypedefDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypedefDef *&);
@@ -17634,75 +24977,39 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_TypeDescription &
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_TypeDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_TypeDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_TypeDescription *&);
-extern TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker * (*_TAO_StructDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_StructDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StructDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StructDef *&);
-extern TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker * (*_TAO_UnionDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_UnionDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UnionDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UnionDef *&);
-extern TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker * (*_TAO_EnumDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_EnumDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EnumDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EnumDef *&);
-extern TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker * (*_TAO_AliasDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_AliasDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AliasDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AliasDef *&);
-extern TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker * (*_TAO_NativeDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_NativeDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_NativeDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_NativeDef *&);
-extern TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker * (*_TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_PrimitiveDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimitiveDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimitiveDef *&);
-extern TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker * (*_TAO_StringDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_StringDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_StringDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_StringDef *&);
-extern TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker * (*_TAO_WstringDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_WstringDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_WstringDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_WstringDef *&);
-extern TAO_IFR_Client_Export _TAO_FixedDef_Proxy_Broker * (*_TAO_FixedDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_FixedDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FixedDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FixedDef *&);
-extern TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker * (*_TAO_SequenceDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_SequenceDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_SequenceDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_SequenceDef *&);
-extern TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker * (*_TAO_ArrayDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ArrayDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ArrayDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ArrayDef *&);
-extern TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker * (*_TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ExceptionDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ExceptionDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExceptionDef *&);
@@ -17720,9 +25027,6 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ExcDesc
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ExcDescriptionSeq *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttributeMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeMode &);
-extern TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker * (*_TAO_AttributeDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_AttributeDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttributeDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttributeDef *&);
@@ -17746,9 +25050,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ContextIdSeq &); 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ContextIdSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ContextIdSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ContextIdSeq *&);
-extern TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker * (*_TAO_OperationDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_OperationDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_OperationDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_OperationDef *&);
@@ -17768,9 +25069,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_AttrDescriptionSe
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_AttrDescriptionSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_AttrDescriptionSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_AttrDescriptionSeq *&);
-extern TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker * (*_TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_InterfaceDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_InterfaceDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_InterfaceDef *&);
@@ -17786,15 +25084,9 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueMemberSeq &)
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueMemberSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueMemberSeq *&);
-extern TAO_IFR_Client_Export _TAO_ValueMemberDef_Proxy_Broker * (*_TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ValueMemberDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueMemberDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueMemberDef *&);
-extern TAO_IFR_Client_Export _TAO_ValueDef_Proxy_Broker * (*_TAO_ValueDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ValueDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDef *&);
@@ -17802,15 +25094,9 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ValueDescription 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ValueDescription *&);
-extern TAO_IFR_Client_Export _TAO_ValueBoxDef_Proxy_Broker * (*_TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ValueBoxDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ValueBoxDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ValueBoxDef *&);
-extern TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Broker * (*_TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ProvidesDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDef *&);
@@ -17818,9 +25104,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ProvidesDescripti
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ProvidesDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ProvidesDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ProvidesDescription *&);
-extern TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Broker * (*_TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_UsesDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDef *&);
@@ -17836,9 +25119,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_UsesDescSeq &); /
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_UsesDescSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_UsesDescSeq *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_UsesDescSeq *&);
-extern TAO_IFR_Client_Export _TAO_EventDef_Proxy_Broker * (*_TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_EventDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EventDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDef *&);
@@ -17846,27 +25126,15 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_EventDescription 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EventDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EventDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_EventDescription *&);
-extern TAO_IFR_Client_Export _TAO_EmitsDef_Proxy_Broker * (*_TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_EmitsDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_EmitsDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_EmitsDef *&);
-extern TAO_IFR_Client_Export _TAO_PublishesDef_Proxy_Broker * (*_TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_PublishesDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PublishesDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PublishesDef *&);
-extern TAO_IFR_Client_Export _TAO_ConsumesDef_Proxy_Broker * (*_TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ConsumesDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ConsumesDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ConsumesDef *&);
-extern TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Broker * (*_TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_ComponentDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDef *&);
@@ -17874,9 +25142,6 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_ComponentDescript
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_ComponentDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_ComponentDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_ComponentDescription *&);
-extern TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Broker * (*_TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_PrimaryKeyDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDef *&);
@@ -17884,21 +25149,12 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR_PrimaryKeyDescrip
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_PrimaryKeyDescription*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_PrimaryKeyDescription *&); // deprecated
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR_PrimaryKeyDescription *&);
-extern TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Broker * (*_TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_FactoryDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FactoryDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FactoryDef *&);
-extern TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Broker * (*_TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_FinderDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_FinderDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_FinderDef *&);
-extern TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Broker * (*_TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface IR_HomeDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR_HomeDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR_HomeDef *&);
@@ -18151,15 +25407,15 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeMode &); //
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::AttributeMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeMode &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDef_ptr );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDef_ptr &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDescription &);
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDescription &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_OperationMode &); //
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::OperationMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_OperationMode &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterMode &); //
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::ParameterMode &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ParameterMode &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterDescription &);
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ParameterDescription &);
 
