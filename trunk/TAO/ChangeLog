@@ -14,8 +14,8 @@ Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed unnecessary "tao/Object.h" include.
 
-	* tao/Any_Dual_Impl_T.cpp: 
-	* tao/Any_SystemException.cpp: 
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_SystemException.cpp:
 
 	  Include "tao/Environment.h" to pull in CORBA::Environment
 	  declaration.
@@ -103,7 +103,7 @@ Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Transport_Mux_Strategy.cpp:
 
-	  No need to include "Reply_Dispatcher.h"
+	  No need to include "Reply_Dispatcher.h".
 
 	* tao/TypeCodeFactory_Adapter.h:
 
@@ -127,19 +127,19 @@ Thu Aug 28 03:46:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Aug 27 17:37:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc 
-        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.cpp 
-        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h 
-        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.cpp 
-        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h 
-        * tests/Portable_Interceptors/Bug_1559/client.cpp 
-        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp 
-        * tests/Portable_Interceptors/Bug_1559/interceptors.h 
-        * tests/Portable_Interceptors/Bug_1559/run_test.pl 
-        * tests/Portable_Interceptors/Bug_1559/server.cpp 
-        * tests/Portable_Interceptors/Bug_1559/test.idl 
-        * tests/Portable_Interceptors/Bug_1559/test_i.cpp 
-        * tests/Portable_Interceptors/Bug_1559/test_i.h 
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/client.cpp
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp
+        * tests/Portable_Interceptors/Bug_1559/interceptors.h
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl
+        * tests/Portable_Interceptors/Bug_1559/server.cpp
+        * tests/Portable_Interceptors/Bug_1559/test.idl
+        * tests/Portable_Interceptors/Bug_1559/test_i.cpp
+        * tests/Portable_Interceptors/Bug_1559/test_i.h
 
           Added test for portable interceptors. The test verifies that
           service context manipulation works when a LOCATION_FORWARD is
