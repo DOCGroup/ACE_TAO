@@ -1,7 +1,12 @@
+Thu Oct 30 07:00:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/TAO_IDL_BE.bor:
+          Add missing files.
+
 Wed Oct 29 21:35:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed compilation
-	  errors in Win32 core builds. Strange that g++ missed this. 
+	  errors in Win32 core builds. Strange that g++ missed this.
 
 Wed Oct 29 21:10:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -36,12 +41,12 @@ Wed Oct 29 19:41:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
 	* orbsvcs/orbsvcs/Notify/Factory.h:
 
-	  Forward declared CORBA::Environment in all these header files. 
-	
+	  Forward declared CORBA::Environment in all these header files.
+
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
-         
-	  #included Environment.h. 
+
+	  #included Environment.h.
 
 	  The above fixes should take care of the build problems with
 	  SuSE static builds.
