@@ -157,7 +157,7 @@ public class ImageApp extends Applet
     Choice choice = new Choice ();
 
     // Add the default choice first
-    choice.addItem ("None");
+    choice.addItem ("Filters:");
 
     // Now do the file processing -- to determine which filters need
     // to be loaded.

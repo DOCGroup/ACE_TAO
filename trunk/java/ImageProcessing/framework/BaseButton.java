@@ -206,7 +206,7 @@ class ChoicePanel extends Panel
     String displayString = null;
     String filterName = this.choice_.getSelectedItem ();
 
-    if (filterName.compareTo ("None") == 0)
+    if (filterName.compareTo ("Filters:") == 0)
       displayString = "No filter selected";
     else
       {
