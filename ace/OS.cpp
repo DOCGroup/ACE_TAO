@@ -1739,20 +1739,24 @@ ACE_Thread_Adapter::invoke (void)
         }
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+      int using_afx = ACE_BIT_ENABLED (this->thr_desc_->flags (), THR_USE_AFX);
+# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
       // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
 
-# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+# if defined (ACE_WIN32)
       // Exit the thread.
       // Allow CWinThread-destructor to be invoked from AfxEndThread.
       // _endthreadex will be called from AfxEndThread so don't exit the
       // thread now if we are running an MFC thread.
-      CWinThread *pThread = ::AfxGetThread ();
-      if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-        ::_endthreadex ((DWORD) status);
-      else
+#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+      if (using_afx)
         ::AfxEndThread ((DWORD)status);
-# endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+      else /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+#  endif
+        ::_endthreadex ((DWORD) status);
+# endif /* ACE_WIN32 */
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
