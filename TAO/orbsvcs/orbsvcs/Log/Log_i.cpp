@@ -1069,7 +1069,7 @@ Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-bool
+CORBA::Boolean
 Log_i::validate_capacity_alarm_thresholds (
     const DsLogAdmin::CapacityAlarmThresholdList & threshs
     ACE_ENV_ARG_DECL_NOT_USED)
@@ -1102,14 +1102,15 @@ Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       TimeBase::TimeT current_time;
       ACE_Time_Value now = ACE_OS::gettimeofday ();
-      ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
+      ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
 
       // work out when sunday is in nanoseconds.
       timeval t;
       t = (timeval) now;
       struct tm *sunday;
 
-      sunday = ACE_OS::localtime (&t.tv_sec);
+      time_t clock = (time_t) t.tv_sec;
+      sunday = ACE_OS::localtime (&clock);
 
       sunday->tm_sec = 0;
       sunday->tm_min = 0;
@@ -1119,7 +1120,8 @@ Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       t.tv_sec = ACE_OS::mktime (sunday) ;
       t.tv_usec = 0;
 
-      TimeBase::TimeT nano_sunday = (CORBA::ULongLong) t.tv_sec * 10000000;
+      TimeBase::TimeT nano_sunday =
+        (CORBA::ULongLong) t.tv_sec * 10000000;
 
       for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
         {
@@ -1370,4 +1372,3 @@ template class TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
