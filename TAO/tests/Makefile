@@ -41,6 +41,7 @@ DIRS  = CDR \
 	Object_Loader \
 	MProfile \
 	MProfile_Forwarding \
+	MProfile_Connection_Timeout \
 	Native_Exceptions \
 	Faults \
 	Param_Test \
