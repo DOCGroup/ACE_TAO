@@ -2623,7 +2623,7 @@ TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type
   if (CORBA::is_nil (result.in ()))
     {
       result = this->get_policy (type
-                                 ACE_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -2631,7 +2631,8 @@ TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type
 }
 
 CORBA::Policy_ptr
-TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
+TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type
+                                 ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var result;
 

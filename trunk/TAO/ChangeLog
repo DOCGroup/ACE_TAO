@@ -1,3 +1,9 @@
+Fri Oct  1 18:22:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (get_policy_including_current): 
+
+	  Some more problems that missed the last checkin.
+
 Fri Oct  1 18:13:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Default_Protocols_Hooks.cpp:
