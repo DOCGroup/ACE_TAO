@@ -29,6 +29,11 @@ public:
   virtual void shutdown_excep(Test::AMI_EchoExceptionHolder * h
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC((CORBA::SystemException));
+
+  CORBA::ULong replies (void) const;
+
+private:
+  CORBA::ULong replies_;
 };
 
 #endif /* Echo_Handler__h_ */
