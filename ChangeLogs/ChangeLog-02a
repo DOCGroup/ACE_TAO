@@ -1,3 +1,13 @@
+Fri May 26 15:58:52 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace\Select_Reactor_Base.cpp (open):
+
+          Re-enabled the change that added ability to set the handle limit
+	  to a value greater than FD_SETSIZE on platforms that support
+	  this functionality.  This was made possible by Steve Huston's
+	  change to the ACE::max_handles() method described several
+	  ChangeLog entries below.
+
 Fri May 26 14:27:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
