@@ -17,16 +17,6 @@
 int
 main (int, char *[])
 {
-  // Until the ACE_Service_Configurator's underlying parser (generated
-  // by byacc) becomes reentrant, we need to explicitly load the file
-  // IOR parser before initializing the ORB.
-  if (ACE_Service_Config::process_directive ("dynamic FILE_Parser Service_Object * TAO:_make_TAO_FILE_Parser()") != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ERROR: Client unable to initialize \"file\" "
-                       "IOR parser."),
-                      -1);
-
   // Process a Service Configurator directive that will cause the test
   // client module to be dynamically loaded.
   //
@@ -37,7 +27,7 @@ main (int, char *[])
   //
   // In the process of doing this, the Test method provided by target
   // CORBA object will be invoked.
-  if (ACE_Service_Config::process_directive ("dynamic Client_Module Service_Object * Test_Client_Module:_make_Test_Client_Module() \"-k file://test.ior\"") != 0)
+  if (ACE_Service_Config::process_directive ("dynamic Client_Module Service_Object * Test_Client_Module:_make_Test_Client_Module() \"-k file://test.ior -ORBDebugLevel 4 -ORBDebug\"") != 0)
     {
 
       ACE_ERROR_RETURN ((LM_ERROR,
