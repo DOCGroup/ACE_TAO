@@ -189,4 +189,5 @@ private:
 #include "ace/Refcounted_Auto_Ptr.i"
 
 #include "ace/post.h"
-#endif /* ACE_AUTO_PTR_H */
+#endif /* ACE_REFCOUNTED_AUTO_PTR_H */
+

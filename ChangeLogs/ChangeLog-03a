@@ -1,3 +1,8 @@
+Fri Feb 22 15:54:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/Refcounted_Auto_Ptr.h: Fix comment, thanks to 
+	Serge Kolgan <skolgan@objectsciences.com>.
+
 Fri Feb 22 09:31:35 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/QoS/QoS_Session_Factory.h (ACE_QoS_Session_Type):
