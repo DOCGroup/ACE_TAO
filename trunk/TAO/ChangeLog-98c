@@ -1,4 +1,6 @@
-Fri Dec 18 13:33:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Dec 18 16:18:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Any.{i,cpp} (free_value):  Moved it to cpp file.
 
 	* be/be_visitor_interface/any_op_cs.cpp (>>=):
 	  Fixed a memory management problem.
