@@ -74,7 +74,7 @@ public:
   CORBA_Any &return_value (void);
 
   void invoke (CORBA::Environment &ACE_TRY_ENV =
-               CORBA::Environment::default_environment ());
+                 CORBA::Environment::default_environment ());
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the
   // result argument specified on <create_request>. The behavior is
@@ -85,10 +85,18 @@ public:
   // as the user may not be able to propagate the exceptions
 
   void send_oneway (CORBA::Environment &ACE_TRY_ENV =
-                    CORBA::Environment::default_environment ());
+                      CORBA::Environment::default_environment ());
   // Send a oneway request.
   // A default argument is set, but please note that this not recommended
-  // as the user may not be able to propagate the exceptions
+  // as the user may not be able to propagate the exceptions.
+
+  // NOT IMPLEMENTED - these next 3 will just throw CORBA::NO_IMPLEMENT.
+  void send_deferred (CORBA::Environment &ACE_TRY_ENV =
+                        CORBA::Environment::default_environment ());
+  void get_response (CORBA::Environment &ACE_TRY_ENV =
+                      CORBA::Environment::default_environment ());
+  CORBA::Boolean poll_response (CORBA::Environment &ACE_TRY_ENV =
+                                  CORBA::Environment::default_environment ());
 
   // Pseudo object methods
   static CORBA_Request* _duplicate (CORBA_Request*);

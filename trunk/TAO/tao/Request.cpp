@@ -110,4 +110,28 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
                          ACE_TRY_ENV);
 }
 
+void
+CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_Request::get_response (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+CORBA::Boolean
+CORBA_Request::poll_response (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
+}
+
+
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
