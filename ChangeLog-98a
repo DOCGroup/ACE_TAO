@@ -1,3 +1,36 @@
+Tue Mar 17 16:02:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor: Changes were made to WFMO_Reactor to make it
+ 	  easier to extend it to handle window messages:
+
+	  - dispatch_handler() checks if there are window messages that
+ 	    need to be dispatched if the <index> matches <max_handlep1>.
+  	    If there are, they are dispatched by calling
+ 	    dispatch_window_messages().
+
+	  - dispatch_window_messages() is a noop for WFMO_Reactor.
+
+	  - Checking the return values from Wait*() functions was changed
+ 	    as (WAIT_OBJECT_0 + nCount) is now a valid index.
+
+	  - Checking for remaining handles was abstracted into
+ 	    poll_remaining_handles().
+
+	  - Expiring of timer was abstracted out into expire_timers().
+  	    Only the owner thread expires the timers.
+
+	  - calculate_timeout() was removed from
+ 	    wait_for_multiple_events().
+
+	* ace/Msg_WFMO_Reactor: A new Reactor that specializes the
+ 	  WFMO_Reactor.  WFMO_Reactor uses MsgWaitForMultipleObjects while
+ 	  Msg_WFMO_Reactor uses MsgWaitForMultipleObjects.  This allows
+ 	  the Msg_WFMO_Reactor to react on Windows and COM/DCOM messages
+ 	  in addition to the regular WFMO_Reactor events.
+
+	  Thanks to Beskrovny Evgeny (evgeny_beskrovny@icomverse.com) of
+ 	  Comverse Network Systems for contributing this to ACE.
+
 Tue Mar 17 13:15:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Future.cpp: Added missing ACE_MT macros so that we now
