@@ -1,3 +1,9 @@
+Thu Sep  9 06:46:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+
+	  Changed CosNotification_Skel project to inherit from event_skel.
+
 Thu Sep  9 06:15:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
