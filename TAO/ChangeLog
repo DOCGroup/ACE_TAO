@@ -1,3 +1,15 @@
+Sat Oct 11 05:57:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+	  Added library paths to fix build errors in MSVC6 debug builds.
+	
+	* orbsvcs/examples/Notify/ThreadPool/ThreadPool.dsp:
+	  Removed this file since it was not getting used anywhere and
+	  incorrect also causing build errors. There were two other .dsp
+	  files (Consumer.dsp and Supplier.dsp) in the same directory
+	  which were getting built properly and these .dsp files include
+	  all the files in that directory between them.
+	
 Fri Oct 10 23:04:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: 
