@@ -456,88 +456,86 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
   }
 }
 
-void Options_Manager::_show_usage(ostream& out, ACE_TCHAR const * const opts_set)
+void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 {
   // Show usage message.  KEEP THE DEFAULTS DISPLAYED HERE IN SYNC
   // WITH THE DEFAULTS SET AT THE BEGINNING OF THE CONSTRUCTOR.
 
-  out << __program_name << " - Measures round trip latency statistics of ACE synchronous" << endl;
+  ACE_OS::fprintf (out, "%s - Measures round trip latency statistics of ACE synchronous\n", __program_name);
   // indent past program name
   for (unsigned int i=0;i<ACE_OS::strlen(__program_name);++i)
-    out << " ";
+    ACE_OS::fprintf (out, " ");
 
   if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_clt")) ||
       ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_srv"))    ) {
-    out << "   messaging (SOCK_Stream) using unmarshalled ACE_CDR::Octet." << endl;
+    ACE_OS::fprintf (out, "   messaging (SOCK_Stream) using unmarshalled ACE_CDR::Octet.\n");
   } else {
-    out << "   messaging (SOCK_SEQPACK) using unmarshalled ACE_CDR::Octet." << endl;
+    ACE_OS::fprintf (out, "   messaging (SOCK_SEQPACK) using unmarshalled ACE_CDR::Octet.\n");
   }
 
-  out << "USAGE: " << __program_name << " [ -<flag> [<val>] | --<name> [<val>] ]..." << endl;
-
-  out << endl;
+  ACE_OS::fprintf (out, "USAGE: %s [ -<flag> [<val>] | --<name> [<val>] ]...\n\n", __program_name);
 
   if (!ACE_OS::strcmp (ACE_TEXT ("client-opts"), opts_set)){
-    out << "  Flag  Args           Option-Name                 Default"    << endl;
-    out << "   -c   int            test-iterations             1000000"    << endl;
-    out << "   -n   none           test-enable-nagle           NO NAGLING" << endl;
+    ACE_OS::fprintf (out,   "  Flag  Args           Option-Name                 Default\n"
+    					    "   -c   int            test-iterations             1000000\n"
+    				        "   -n   none           test-enable-nagle           NO NAGLING\n");
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_clt"))) {
-      out << "   -t   str (sctp|tcp) test-transport-protocol     sctp"       << endl;
+      ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -m   dbl            histogram-min-bin           0"     << endl;
-    out << "   -M   dbl            histogram-max-bin           10000" << endl;
-    out << "   -x   int            histogram-num-outliers      100"   << endl;
-    out << "   -b   int            histogram-bin-count         1000"  << endl;
+    ACE_OS::fprintf (out, "   -m   dbl            histogram-min-bin           0\n"
+    				      "   -M   dbl            histogram-max-bin           10000\n"
+    					  "   -x   int            histogram-num-outliers      100\n"
+    					  "   -b   int            histogram-bin-count         1000\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -C   int            client-port                 assigned by kernel"     << endl;
-    out << "   -i   str            client-connect-addr         INADDR_ANY" << endl;
+    ACE_OS::fprintf (out, "   -C   int            client-port                 assigned by kernel\n"
+    					  "   -i   str            client-connect-addr         INADDR_ANY\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -p   int            server-port                 45453"     << endl;
-    out << "   -H   str            server-host                 localhost" << endl;
+    ACE_OS::fprintf (out, "   -p   int            server-port                 45453\n"
+    				      "   -H   str            server-host                 localhost\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -s   int (0-16)     payload-size-power-of-2     <MUST SET VALUE>" << endl;
+    ACE_OS::fprintf (out, "   -s   int (0-16)     payload-size-power-of-2     <MUST SET VALUE>\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -h   none           help" << endl;
+    ACE_OS::fprintf (out, "   -h   none           help\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
   } else if (!ACE_OS::strcmp(ACE_TEXT ("server-opts"), opts_set)){
-    out << "  Flag  Args           Option-Name                 Default"    << endl;
-    out << "   -n   none           test-enable-nagle           NO NAGLING" << endl;
+    ACE_OS::fprintf (out, "  Flag  Args           Option-Name                 Default\n"
+    				      "   -n   none           test-enable-nagle           NO NAGLING\n");
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_srv"))) {
-      out << "   -t   str (sctp|tcp) test-transport-protocol     sctp"       << endl;
+      ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
-    out << "   -p   int            server-port                 45453"     << endl;
+    ACE_OS::fprintf (out, "   -p   int            server-port                 45453\n");
 
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_SEQPACK_srv"))) {
-      out << "   -a   w.x.y.z,a.b.c.d,...  server-accept-addr    INADDR_ANY" << endl;
-      out << "        (comma-separated                                     " << endl;
-      out << "         list of one or more                                 " << endl;
-      out << "         addresses)                                          " << endl;
+      ACE_OS::fprintf (out, "   -a   w.x.y.z,a.b.c.d,...  server-accept-addr    INADDR_ANY\n"
+      					    "        (comma-separated                                     \n"
+      						"         list of one or more                                 \n"
+      						"         addresses)                                          \n");
     } else {
-      out << "   -a   w.x.y.z        server-accept-addr          INADDR_ANY" << endl;
+      ACE_OS::fprintf (out, "   -a   w.x.y.z        server-accept-addr          INADDR_ANY\n");
     }
 
-    out << "   -h   none           help" << endl;
+    ACE_OS::fprintf (out, "   -h   none           help\n");
 
-    out << endl;
+    ACE_OS::fprintf (out, "\n");
 
   } else {
-    out << "Invalid options set specified." << endl;
+    ACE_OS::fprintf (out, "Invalid options set specified.\n");
   }
 
   return;
