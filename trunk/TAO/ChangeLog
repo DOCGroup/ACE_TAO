@@ -1,3 +1,8 @@
+Wed Nov 12 16:44:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>"
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (init):
+          Changed ACE_THROW to ACE_THROW_RETURN to fix compile error.
+
 Wed Nov 12 14:51:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Makefile:
