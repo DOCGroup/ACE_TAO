@@ -520,20 +520,21 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
   do
     {
       next_earliest_time = cur_time;
+      next_earliest = this->wheel_size_;
 
       // Find 2nd earliest position
       for (i = 0; i < this->wheel_size_; i++)
         {
           if (i != earliest
               && this->wheel_[i]->get_next () != this->wheel_[i]            
-              && this->wheel_[i]->get_next ()->get_timer_value () < next_earliest_time)
+              && this->wheel_[i]->get_next ()->get_timer_value () <= next_earliest_time)
             {
               next_earliest = i;
               next_earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
             }
         }
 
-      while (this->wheel_[earliest]->get_next ()->get_timer_value () < next_earliest_time)
+      while (this->wheel_[earliest]->get_next ()->get_timer_value () <= next_earliest_time)
         {
           // Remove the first node in the earliest position
           ACE_Timer_Node_T<TYPE> *expired = this->wheel_[earliest]->get_next ();
@@ -573,7 +574,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
             break;
         }
 
-      if (next_earliest_time == cur_time)
+      if (next_earliest_time == this->wheel_size_)
         break;
 
       earliest = next_earliest;
